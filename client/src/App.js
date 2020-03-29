@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
+import { NeedHelp } from './pages/NeedHelp';
 import { About } from './pages/About';
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
                     <Switch>
                         <Route exact path="/">
                             <Home />
+                        </Route>
+                        <Route path="/need-help">
+                            <NeedHelp />
                         </Route>
                         <Route path="/about">
                             <About />

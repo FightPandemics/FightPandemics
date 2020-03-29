@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom"
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -15,7 +16,9 @@ export const Home = () => {
             <p>We help you be prepared to stop them.</p>
             <div style={{ display: "flex", margin: "10px 100px" }}>
                 <div style={{ flexGrow: 1, marginRight: "16px" }}>
-                    <Button block variant="primary">I need help</Button>
+                    <Link to="/need-help">
+                        <Button block variant="primary">I need help</Button>
+                    </Link>
                 </div>
                 <div style={{ flexGrow: 1 }}>
                     <Button block variant="light">I want to help</Button>
