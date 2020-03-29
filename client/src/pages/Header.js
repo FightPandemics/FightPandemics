@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { NavLink  } from 'react-router-dom';
 import { useAuth0 } from "../react-auth0-spa";
-import logo from '../assets/logo.svg';
+//import { NavLink  } from 'react-router-dom';
+
 export const Header = () => {
     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
     return (
@@ -10,21 +10,15 @@ export const Header = () => {
             <Container>
                 <Navbar.Brand href="#home">
                     <img
-                        src={logo}
+                        src="../assets/logo.svg"
                         width="200"
-                        height="50"
+                        height="30"
                         className="d-inline-block align-top"
                         alt="Fight Pandemics logo"
                     />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse>
-                    <Nav className="mr-auto">
-                        <Nav.Item><NavLink exact to="/">Home</NavLink></Nav.Item>
-                        <Nav.Item><NavLink to="/about">About us</NavLink></Nav.Item>
-                        <Nav.Item><NavLink to="/medical">Medical Info</NavLink></Nav.Item>
-                    </Nav>
-                </Navbar.Collapse>
+
                 <Nav>
                     {!isAuthenticated && (<Nav.Link onClick={() => loginWithRedirect({})}>Login</Nav.Link>)}
                     {!isAuthenticated && (<Nav.Link onClick={() => loginWithRedirect({})}>Signup</Nav.Link>)}
