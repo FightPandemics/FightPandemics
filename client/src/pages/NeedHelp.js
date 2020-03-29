@@ -60,15 +60,20 @@ const Step1 = (props) => {
     );
 };
 
-const onGeoSuccess = (pos) => {
-    const { coords } = pos;
-    console.log('got pos:', { pos });
-    WIZARD_STATE.answers.push({ location: coords });
+const getGeoLocation = () => {
+    return new Promise((resolve, reject) => {
+        const onGeoSuccess = (pos) => {
+            const { coords } = pos;
+            console.log('got pos:', { pos });
+            resolve(coords);
+        };
+        const onGeoError = () => {
+            reject(new Error('failed getting location'));
+        };
+        navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError);
+    })
 };
 
-const onGeoError = () => {
-    WIZARD_STATE.answers.push({ location: 'unknown' });
-};
 
 const Step2 = (props) => {
     return (
@@ -76,10 +81,15 @@ const Step2 = (props) => {
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">Where are you located?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
-                <Form.Check.Input style={CHECKBOX_INPUT_STYLES} type="radio" onChange={() => {
-                    navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError);
-                    WIZARD_STATE.answers.push({ location:  '' });
-                    props.nextStep()
+                <Form.Check.Input style={CHECKBOX_INPUT_STYLES} type="radio" onChange={async () => {
+                    try {
+                        const location = await getGeoLocation();
+                        WIZARD_STATE.answers.push({ location });
+                    } catch {
+                        WIZARD_STATE.answers.push({ location:  'unknown' });
+                    } finally {
+                        props.nextStep()
+                    }
                 }} />
                 <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
                     Detect my location
