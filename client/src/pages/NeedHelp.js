@@ -113,8 +113,10 @@ const Step3 = (props) => {
         <div>
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">What is your email address?</h2>
-            <Form.Control placeholder="Type your email" />
-            <Button block variant="primary" onClick={() => {}}>Submit</Button>
+            <div style={{ marginRight: '50px' }}>
+                <Form.Control className="mb-3" placeholder="Type your email" />
+                <Button block variant="primary" onClick={() => {}}>Submit</Button>
+            </div>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { useAuth0 } from "./react-auth0-spa";
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
 import { NeedHelp } from './pages/NeedHelp';
+import { OfferHelp } from './pages/OfferHelp';
 import { About } from './pages/About';
 import { Medical } from './pages/Medical';
 
@@ -26,6 +27,9 @@ function App() {
                         </Route>
                         <Route path="/need-help">
                             <NeedHelp />
+                        </Route>
+                        <Route path="/offer-help">
+                            <OfferHelp />
                         </Route>
                         <Route path="/about">
                             <About />

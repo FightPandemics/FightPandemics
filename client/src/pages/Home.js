@@ -21,7 +21,9 @@ export const Home = () => {
                     </Link>
                 </div>
                 <div style={{ flexGrow: 1 }}>
-                    <Button block variant="light">I want to help</Button>
+                    <Link to="/offer-help">
+                        <Button block variant="light">I want to help</Button>
+                    </Link>
                 </div>
             </div>
         </div>
