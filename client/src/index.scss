@@ -1,5 +1,6 @@
 // Override default Bootstrap variables before the import
 $body-bg: #f3f3f3;
+$blue: #1890ff;
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
@@ -15,4 +16,18 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
+}
+
+.nav-item {
+  padding: 5px 10px;
+  > a {
+    color: #000;
+  }
+  .active {
+    color: $blue;
+  }
+}
+
+.btn-light {
+  border: 1px solid #ddd;
 }
