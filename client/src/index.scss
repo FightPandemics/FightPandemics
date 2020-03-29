@@ -20,12 +20,15 @@ code {
 
 .nav-item {
   padding: 5px 10px;
-  > a {
-    color: #000;
+  > a, > a.nav-link {
+    color: #000 !important;
+    display: inline;
+    padding: 0;
   }
   .active {
     color: $blue;
   }
+  .nav-link {}
 }
 
 .btn-light {

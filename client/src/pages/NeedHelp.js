@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap'
+import React from 'react';
+import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
-import { Link } from "react-router-dom"
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
