@@ -82,7 +82,7 @@ const Step1 = (props) => {
                     props.nextStep()
                 }}/>
                 <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-                    Doesn't matter
+                    Do not detect my location
                 </Form.Check.Label>
             </Form.Check>
         </div>
