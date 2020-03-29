@@ -13,7 +13,7 @@ export const Header = () => {
                 <Navbar.Brand href="#home">
                     <img
                         src={logo}
-                        width="200"
+                        width="210"
                         height="50"
                         className="d-inline-block align-top"
                         alt="Fight Pandemics logo"
