@@ -18,8 +18,10 @@ app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose
-  .connect(db)
-  .then(() => console.log("MongoDB Connected Successfully"))
+
+  .connect(db, { useNewUrlParser: true })
+  .then(() => newFunction()("MongoDB Connected Successfully"))
+
   .catch(err => console.log(err));
 
 // Passportn Middleware

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
+import ProgressBar25 from '../assets/ProgressBar25.png'
+import ProgressBar50 from '../assets/ProgressBar50.png'
+import ProgressBar75 from '../assets/ProgressBar75.png'
+import ProgressBar99 from '../assets/ProgressBar99.png'
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -59,6 +63,13 @@ const WIZARD_STATE = {
 const Step1 = (props) => {
     return (
         <div>
+
+            <div className="progress-bar">
+            <img src ={ProgressBar25} alt="progress-bar-25%"/>   
+            </div>
+            <br/>
+
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">Where are you located?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
@@ -82,7 +93,7 @@ const Step1 = (props) => {
                     props.nextStep()
                 }}/>
                 <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-                    Doesn't matter
+                    Do not detect my location
                 </Form.Check.Label>
             </Form.Check>
         </div>
@@ -92,6 +103,12 @@ const Step1 = (props) => {
 const Step2 = (props) => {
     return (
         <div>
+
+<           div className="progress-bar">
+            <img src ={ProgressBar50} alt="progress-bar-50%/"/>   
+            </div>
+            <br/>
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h5 className="mb-4">We are not a provider of healthcare services.</h5>
             <h6 className="mb-5">This service is provided in good faith as a last resort for those who are otherwise unable
@@ -110,6 +127,14 @@ const Step2 = (props) => {
 const Step3 = (props) => {
     return (
         <div>
+
+            <div className="progress-bar">
+            <img src ={ProgressBar75} alt="progress-bar-75%"/>   
+            </div>
+            <br/>
+
+
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">How do you want to contribute?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-vol">
@@ -146,6 +171,12 @@ const Step3 = (props) => {
 const Step4 = (props) => {
     return (
         <div>
+            
+            <div className="progress-bar">
+            <img src ={ProgressBar99} alt="progress-bar-99%"/>   
+            </div>
+            <br/>
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">What is your email address?</h2>
             <div style={{ marginRight: '50px' }}>
