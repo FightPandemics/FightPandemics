@@ -5,6 +5,7 @@ const passport = require("passport");
 const path = require("path");
 
 const users = require("./backend/routes/users");
+const geo = require("./backend/routes/geo");
 
 const app = express();
 
@@ -17,8 +18,10 @@ app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose
+
   .connect(db, { useNewUrlParser: true })
   .then(() => newFunction()("MongoDB Connected Successfully"))
+
   .catch(err => console.log(err));
 
 // Passportn Middleware
@@ -29,6 +32,7 @@ require("./backend/config/passport")(passport);
 
 // Use these routes
 app.use("/api/users", users);
+app.use("/api/geo", geo);
 
 //  Serve static asset assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -43,6 +47,3 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 5050;
 
 app.listen(port, () => console.log(`Web App is live on port ${port}`));
-function newFunction() {
-  return console.log;
-}
