@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StepWizard from "react-step-wizard";
 
 import { CheckBoxItem } from "../components/CheckBoxItem";
