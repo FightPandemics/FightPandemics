@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
+import ProgressBarComp from '../components/ProgressBarComp.jsx'
+
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -59,6 +61,8 @@ const WIZARD_STATE = {
 const Step1 = (props) => {
     return (
         <div>
+
+<ProgressBarComp />
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">Where are you located?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
