@@ -2,10 +2,9 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
 import ProgressBar25 from '../assets/ProgressBar25.png'
-import ProgressBar33 from '../assets/ProgressBar33.png'
 import ProgressBar50 from '../assets/ProgressBar50.png'
-import ProgressBar66 from '../assets/ProgressBar66.png'
 import ProgressBar75 from '../assets/ProgressBar75.png'
+import ProgressBar99 from '../assets/ProgressBar99.png'
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -172,6 +171,12 @@ const Step3 = (props) => {
 const Step4 = (props) => {
     return (
         <div>
+            
+            <div className="progress-bar">
+            <img src ={ProgressBar99} alt="progress-bar-99%"/>   
+            </div>
+            <br/>
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">What is your email address?</h2>
             <div style={{ marginRight: '50px' }}>
