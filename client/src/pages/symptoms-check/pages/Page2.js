@@ -73,18 +73,19 @@ const Page2 = () => {
           padding: "100px"
         }}
       >
-        <span>  <Link className="btn btn-outline-info ist-group-item-action active mt-3 mr-3 float-left">
-          What's Your age ?
-        </Link>
-          </span>
-      
+        <span>
+          {" "}
+          <Link className="btn btn-outline-info ist-group-item-action active mt-3 mr-3 float-left">
+            What's Your age ?
+          </Link>
+        </span>
 
-      <span>
-      <Link className="btn btn-outline-warning ist-group-item-action active mt-3 float-left">
-          This is intended only for people who are ≥18yo <br /> (link out to
-          CDC).
-        </Link>
-      </span>
+        <span>
+          <Link className="btn btn-outline-warning ist-group-item-action active mt-3 float-left">
+            This is intended only for people who are ≥18yo <br /> (link out to
+            CDC).
+          </Link>
+        </span>
       </div>
       <span>
         {" "}
