@@ -1,39 +1,23 @@
-import React from 'react';
-import { Button, Form } from 'react-bootstrap';
-import StepWizard from 'react-step-wizard';
+
+=======
+import React from "react";
+import StepWizard from "react-step-wizard";
+
+import { CheckBoxItem } from "../components/CheckBoxItem";
+import { asyncGetGeoLocation } from "../utils/geolocation";
 import ProgressBar33 from '../assets/ProgressBar33.png'
 import ProgressBar66 from '../assets/ProgressBar66.png'
 import ProgressBar99 from '../assets/ProgressBar99.png'
+import Step3 from "../pages/Step3";
+
 const CONTAINER_STYLES = {
-    marginTop: "160px",
-    width: "600px",
-};
-
-const CHECKBOX_STYLES = {
-    display: 'flex',
-    border: '1px solid #bbb',
-    borderRadius: '3px',
-    padding: '15px',
-    margin: '15px 50px 15px 0',
-};
-
-const CHECKBOX_INPUT_STYLES = {
-    cursor: 'pointer',
-    margin: '15px',
-    position: 'relative',
-};
-
-const CHECKBOX_LABEL_STYLES = {
-    cursor: 'pointer',
-    display: 'block',
-    margin: '15px',
+  marginTop: "160px",
+  width: "600px"
 };
 
 // todo: should find or update step wizard to pass data from event instead of mutating this state
-const WIZARD_STATE = {
-    answers: [],
-    currentStep: 0,
-};
+const needHelpAnswers = [];
+
 
 const Step1 = (props) => {
     return (
@@ -68,18 +52,25 @@ const Step1 = (props) => {
     );
 };
 
-const getGeoLocation = () => {
-    return new Promise((resolve, reject) => {
-        const onGeoSuccess = (pos) => {
-            const { coords } = pos;
-            console.log('got pos:', { pos });
-            resolve(coords);
-        };
-        const onGeoError = () => {
-            reject(new Error('failed getting location'));
-        };
-        navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError);
-    })
+
+  return (
+    <div>
+      <h5 className="text-primary">
+        Question {props.currentStep} / {props.totalSteps}
+      </h5>
+      <h2 className="mb-5">What type of help do you need?</h2>
+      <CheckBoxItem
+        id="type-medical"
+        label="Medical: I believe I might have symptoms of COVID-19."
+        onSelect={onSelectMedical}
+      />
+      <CheckBoxItem
+        id="type-other"
+        label="Other Help: I need assistance getting groceries/medicine/etc."
+        onSelect={onSelectOther}
+      />
+    </div>
+  );
 };
 
 
@@ -140,22 +131,51 @@ const Step3 = (props) => {
         </div>
     );
 };
+=======
+const Step2 = props => {
+  const selectLocationDetection = async () => {
+    try {
+      const location = await asyncGetGeoLocation();
+      needHelpAnswers.push({ location });
+    } catch {
+      needHelpAnswers.push({ location: "unknown" });
+    } finally {
+      props.nextStep();
+    }
+  };
+  const rejectLocationDetection = () => {
+    needHelpAnswers.push({ location: "unknown" });
+    props.nextStep();
+  };
+  return (
+    <div>
+      <h5 className="text-primary">
+        Question {props.currentStep} / {props.totalSteps}
+      </h5>
+      <h2 className="mb-5">Where are you located?</h2>
+      <CheckBoxItem
+        id="detect"
+        label="Detect my location"
+        onSelect={selectLocationDetection}
+      />
+      <CheckBoxItem
+        id="reject"
+        label="Doesn't matter"
+        onSelect={rejectLocationDetection}
+      />
+    </div>
+  );
+};
+
 
 export const NeedHelp = () => {
-    // const [state, setState] = useState(INITIAL_STATE);
-    return (
-        <div className="mx-auto" style={CONTAINER_STYLES}>
-            <StepWizard onStepChange={(step, answer) => {
-                console.log({ step, answer })
-                /*setState({
-                    answers: [...state.answers, answer],
-                    currentStep: state.currentStep +1,
-                });*/
-            }}>
-                <Step1 />
-                <Step2 />
-                <Step3 />
-            </StepWizard>
-        </div>
-    );
-}
+  return (
+    <div className="mx-auto" style={CONTAINER_STYLES}>
+      <StepWizard>
+        <Step1 />
+        <Step2 />
+        <Step3 />
+      </StepWizard>
+    </div>
+  );
+};
