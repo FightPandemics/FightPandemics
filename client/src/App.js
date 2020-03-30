@@ -9,6 +9,7 @@ import { NeedHelp } from './pages/NeedHelp';
 import { OfferHelp } from './pages/OfferHelp';
 import { About } from './pages/About';
 import { Medical } from './pages/Medical';
+import { AirTableCOVID } from './pages/AirTableCOVID';
 
 function App() {
   const { loading } = useAuth0();
@@ -36,6 +37,9 @@ function App() {
                         </Route>
                         <Route path="/medical">
                             <Medical />
+                        </Route>
+                        <Route path="/AirTableCOVID">
+                            <AirTableCOVID />
                         </Route>
                     </Switch>
                 </Container>

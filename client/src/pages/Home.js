@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { AirTableCOVID } from './AirTableCOVID';
 import { Link } from "react-router-dom"
+
+{/* <AirTableCOVID/> */}
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -27,7 +28,6 @@ export const Home = () => {
                     </Link>
                 </div>
             </div>
-         <AirTableCOVID/>
         </div>
     );
 }
