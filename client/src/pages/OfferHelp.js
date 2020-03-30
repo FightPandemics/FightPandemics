@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
-import ProgressBarComp from '../components/ProgressBarComp.jsx'
-
+import ProgressBar25 from '../assets/ProgressBar25.png'
+import ProgressBar33 from '../assets/ProgressBar33.png'
+import ProgressBar50 from '../assets/ProgressBar50.png'
+import ProgressBar66 from '../assets/ProgressBar66.png'
+import ProgressBar75 from '../assets/ProgressBar75.png'
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -62,7 +65,12 @@ const Step1 = (props) => {
     return (
         <div>
 
-<ProgressBarComp />
+            <div className="progress-bar">
+            <img src ={ProgressBar25} alt="progress-bar-25%"/>   
+            </div>
+            <br/>
+
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">Where are you located?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
@@ -96,6 +104,12 @@ const Step1 = (props) => {
 const Step2 = (props) => {
     return (
         <div>
+
+<           div className="progress-bar">
+            <img src ={ProgressBar50} alt="progress-bar-50%/"/>   
+            </div>
+            <br/>
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h5 className="mb-4">We are not a provider of healthcare services.</h5>
             <h6 className="mb-5">This service is provided in good faith as a last resort for those who are otherwise unable
@@ -114,6 +128,14 @@ const Step2 = (props) => {
 const Step3 = (props) => {
     return (
         <div>
+
+            <div className="progress-bar">
+            <img src ={ProgressBar75} alt="progress-bar-75%"/>   
+            </div>
+            <br/>
+
+
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">How do you want to contribute?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-vol">

@@ -44,6 +44,7 @@ class ProgressBarComp extends React.Component {
   const ProgressBar = (props) => {
     return (
         <div className="progress-bar">
+
           <Filler percentage={props.percentage} />
         </div>
       )
@@ -52,10 +53,10 @@ class ProgressBarComp extends React.Component {
   const Filler = (props) => {
     return <div className="filler" style={{ width: `${props.percentage}%` }} />
   }
+
   
-
-
   export default ProgressBarComp
+
   // ReactDOM.render(
   //   <ProgressBarComp />,
   //   document.querySelector('#app')

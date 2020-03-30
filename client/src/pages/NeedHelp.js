@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import StepWizard from 'react-step-wizard';
-import ProgressBarComp from '../components/ProgressBarComp.jsx'
-
+import ProgressBar33 from '../assets/ProgressBar33.png'
+import ProgressBar66 from '../assets/ProgressBar66.png'
 
 const CONTAINER_STYLES = {
     marginTop: "160px",
@@ -39,8 +39,10 @@ const Step1 = (props) => {
     return (
         <div>
 
-<ProgressBarComp />
-
+            <div className="progress-bar">
+            <img src ={ProgressBar33} alt="progress-bar-33%"/>   
+            </div>
+            <br/>
 
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">What type of help do you need?</h2>
@@ -84,6 +86,13 @@ const getGeoLocation = () => {
 const Step2 = (props) => {
     return (
         <div>
+
+            <div className="progress-bar">
+            <img src ={ProgressBar66} alt="progress-bar-66%"/>   
+            </div>
+            <br/>
+
+
             <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
             <h2 className="mb-5">Where are you located?</h2>
             <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
