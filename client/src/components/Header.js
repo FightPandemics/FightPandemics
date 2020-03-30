@@ -27,6 +27,8 @@ export const Header = () => {
                         <Nav.Item><NavLink exact to="/">Home</NavLink></Nav.Item>
                         <Nav.Item><NavLink to="/about">About us</NavLink></Nav.Item>
                         <Nav.Item><NavLink to="/medical">Medical Info</NavLink></Nav.Item>
+                        <Nav.Item><NavLink to="/AirTableCOVID">Coronovirus Resources</NavLink></Nav.Item>
+
                     </Nav>
                     <Nav>
                         {!isAuthenticated && (<Nav.Item><Nav.Link onClick={() => loginWithRedirect({})}>Login</Nav.Link></Nav.Item>)}

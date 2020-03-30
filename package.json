@@ -4,9 +4,11 @@
   "description": "Help to to fight global pandemics",
   "main": "server.js",
   "scripts": {
+    "postinstall": "npm i --prefix client && npm i --only=dev --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server": "nodemon server.js ",
     "client": "npm start --prefix client",
+    "build": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +24,7 @@
     "concurrently": "^5.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "local-reverse-geocoder": "^0.8.0",
     "mongoose": "^5.9.6",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
