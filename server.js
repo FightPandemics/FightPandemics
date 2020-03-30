@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // Connect to MongoDB
 mongoose
   .connect(db)
-  .then(() => newFunction()("MongoDB Connected Successfully"))
+  .then(() => console.log("MongoDB Connected Successfully"))
   .catch(err => console.log(err));
 
 // Passportn Middleware
@@ -30,7 +30,7 @@ require("./backend/config/passport")(passport);
 
 // Use these routes
 app.use("/api/users", users);
-app.use("/api/geo", users);
+app.use("/api/geo", geo);
 
 //  Serve static asset assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -45,6 +45,3 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 5050;
 
 app.listen(port, () => console.log(`Web App is live on port ${port}`));
-function newFunction() {
-  return console.log;
-}
