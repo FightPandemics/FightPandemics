@@ -1,15 +1,11 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useAuth0 } from "./react-auth0-spa";
 
 import { Header } from './components/Header';
-import { Home } from './pages/Home';
-import { NeedHelp } from './pages/NeedHelp';
-import { OfferHelp } from './pages/OfferHelp';
-import { About } from './pages/About';
-import { Medical } from './pages/Medical';
-import { AirTableCOVID } from './pages/AirTableCOVID';
+import { RouteWithSubRoutes } from './components/RouteWithSubRoutes';
+import { routes } from './routes';
 
 function App() {
   const { loading } = useAuth0();
@@ -23,24 +19,9 @@ function App() {
             <main>
                 <Container>
                     <Switch>
-                        <Route exact path="/">
-                            <Home />
-                        </Route>
-                        <Route path="/need-help">
-                            <NeedHelp />
-                        </Route>
-                        <Route path="/offer-help">
-                            <OfferHelp />
-                        </Route>
-                        <Route path="/about">
-                            <About />
-                        </Route>
-                        <Route path="/medical">
-                            <Medical />
-                        </Route>
-                        <Route path="/AirTableCOVID">
-                            <AirTableCOVID />
-                        </Route>
+                        {routes.map((route, i) => (
+                            <RouteWithSubRoutes key={i} {...route} />
+                        ))}
                     </Switch>
                 </Container>
             </main>
