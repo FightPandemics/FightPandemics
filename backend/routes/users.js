@@ -26,7 +26,7 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     // console.log(email);
     if (user) {
       errors.email = "Email already exists";
@@ -36,7 +36,7 @@ router.post("/register", (req, res) => {
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -45,8 +45,8 @@ router.post("/register", (req, res) => {
         newUser.password = hash;
         newUser
           .save()
-          .then(user => res.json(user))
-          .catch(err => console.log(err));
+          .then((user) => res.json(user))
+          .catch((err) => console.log(err));
       });
     });
   });
@@ -68,7 +68,7 @@ router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   // // Find user by email
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     // Check for user
     if (!user) {
       errors.email = "User not found, please check your credentials";
@@ -76,7 +76,7 @@ router.post("/login", (req, res) => {
     }
 
     //   // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
         // User Matched
         const payload = { id: user.id, email: user.email }; // Create JWT Payload
@@ -90,7 +90,7 @@ router.post("/login", (req, res) => {
             console.log(keys.secretOrKey),
               res.json({
                 success: true,
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
               });
           }
         );
@@ -110,13 +110,13 @@ router.post("/login", (req, res) => {
 router.get(
   "/current",
   passport.authenticate("jwt", {
-    session: false
+    session: false,
   }),
   (req, res) => {
     res.json({
       id: req.user.id,
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
     });
   }
 );

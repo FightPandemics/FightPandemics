@@ -2,6 +2,8 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
+import { RouteWithSubRoutes } from "./components/RouteWithSubRoutes";
+import { routes } from "./routes";
 
 import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
@@ -75,6 +77,9 @@ function App() {
               <Route path="/page7">
                 <Page7 />
               </Route>
+              {routes.map((route, i) => (
+                <RouteWithSubRoutes key={i} {...route} />
+              ))}
             </Switch>
           </Container>
         </main>

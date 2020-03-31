@@ -11,8 +11,11 @@
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
     "http-proxy-middleware": "^1.0.3",
+    "husky": "^4.2.3",
     "jwt-decode": "^2.2.0",
+    "lint-staged": "^10.1.1",
     "moment": "^2.24.0",
+    "prettier": "^2.0.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
@@ -49,5 +52,14 @@
   "devDependencies": {
     "node-sass": "^4.13.1"
   },
-  "proxy": "http://localhost:5050"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  }
 }
