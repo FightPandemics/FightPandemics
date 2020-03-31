@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
+
+import { getLocalStorageJson } from '../utils/local-storage';
 
 const CONTAINER_STYLES = {
     marginTop: "30px",
@@ -15,16 +17,15 @@ const INITIAL_STATE = {
     country: '',
 };
 
-const needHelpAnswers = localStorage.getItem('needHelpAnswers');
-const geolocation = { latitude: 0, longitude: 0 };
+const needHelpAnswers = getLocalStorageJson('needHelpAnswers') || [];
+const geolocation = needHelpAnswers.find(answer => Object.keys(answer).includes('location')).location;
 
 export const Medical = () => {
     const [state, setState] = useState(INITIAL_STATE);
     useEffect(() => {
         (async function fetchData() {
-            const result = await axios.post('/api/geo/country', { geolocation });
+            const result = await axios.post('/api/geo/country', geolocation );
             setState({ ...state, country: result.data });
-            console.log({ needHelpAnswers, result });
         })();
     }, [geolocation]);
 

@@ -8,9 +8,9 @@ import { RouteWithSubRoutes } from './components/RouteWithSubRoutes';
 import { routes } from './routes';
 
 function App() {
-    const { loading } = useAuth0()
+    const { loading } = useAuth0();
     if (loading) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
     return (
         <div className="App">
@@ -27,7 +27,7 @@ function App() {
                 </main>
             </Router>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;

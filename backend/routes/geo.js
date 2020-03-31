@@ -1,8 +1,12 @@
+const axios = require('axios');
 const express = require('express');
 
+const countries = require('../data/countries');
 const { validateGeolocation } = require('../validation/geolocation');
 
 const router = express.Router();
+const GEO_SERVICE_URL = 'http://127.0.0.1:5000/geo-service';
+const countryMap = countries.reduce((map, { name, code }) => map.set(code, name), new Map());
 
 /**
  * @route POST api/geo/country
@@ -10,17 +14,21 @@ const router = express.Router();
  * @access Public
  */
 router.post("/country", (req, res) => {
-    const { errors, isValid } = validateGeolocation(req.body);
+    const { body: { latitude, longitude } } = req;
+    const { errors, isValid } = validateGeolocation({ latitude, longitude });
 
-    // Check Validation
     if (!isValid) {
         return res.status(400).json(errors);
     }
 
-    // tddo : connect to geo client
-   res.json({
-       country: 'BE',
-   });
+    axios
+        .get(`${GEO_SERVICE_URL}?lat=${latitude}&long=${longitude}`)
+        .then(({ data: response }) => {
+            const { cc: code } = response.data;
+            const name = countryMap.get(code);
+
+            res.json({ code, name });
+        });
 });
 
 module.exports = router;

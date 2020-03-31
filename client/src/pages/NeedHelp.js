@@ -86,7 +86,7 @@ const Step3 = withRouter((props) => {
     const onChange = (evt) => setEmail(evt.target.value);
     const onSubmit = () => {
         needHelpAnswers.push({ email });
-        localStorage.setItem('needHelpAnswers', needHelpAnswers);
+        localStorage.setItem('needHelpAnswers', JSON.stringify(needHelpAnswers));
         props.history.push({
             pathname: '/medical',
             data: { needHelpAnswers: needHelpAnswers },
