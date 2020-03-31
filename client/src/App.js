@@ -1,35 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { useAuth0 } from "./react-auth0-spa";
-
-import { Header } from './components/Header';
-import { RouteWithSubRoutes } from './components/RouteWithSubRoutes';
-import { routes } from './routes';
-
-function App() {
-    const { loading } = useAuth0();
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    return (
-        <div className="App">
-            <Router>
-                <Header/>
-                <main>
-                    <Container>
-                        <Switch>
-                            { routes.map((route, i) => (
-                                <RouteWithSubRoutes key={ i } { ...route } />
-                            )) }
-                        </Switch>
-                    </Container>
-                </main>
-            </Router>
-        </div>
-    );
-=======
 import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -45,13 +13,13 @@ import { Medical } from "./pages/Medical";
 import FindHelp from "./pages/find-help/FindHelp";
 import SymptomsCheck from "./pages/symptoms-check/SymptomsCheck";
 
-import Page1 from "./pages/symptoms-check/pages/Page1";
-import Page2 from "./pages/symptoms-check/pages/Page2";
-import Page3 from "./pages/symptoms-check/pages/Page3";
-import Page4 from "./pages/symptoms-check/pages/Page4";
-import Page5 from "./pages/symptoms-check/pages/Page5";
-import Page6 from "./pages/symptoms-check/pages/Page6";
-
+import Page1 from "./pages/symptoms-check/pages/page1/Page1";
+import Page2 from "./pages/symptoms-check/pages/page2/Page2";
+import Page3 from "./pages/symptoms-check/pages/page3/Page3";
+import Page4 from "./pages/symptoms-check/pages/page4/Page4";
+import Page5 from "./pages/symptoms-check/pages/page5/Page5";
+import Page6 from "./pages/symptoms-check/pages/page6/Page6";
+import Page7 from "./pages/symptoms-check/pages/page7/Page7";
 
 function App() {
   const { loading } = useAuth0();
@@ -104,13 +72,15 @@ function App() {
               <Route path="/page6">
                 <Page6 />
               </Route>
+              <Route path="/page7">
+                <Page7 />
+              </Route>
             </Switch>
           </Container>
         </main>
       </Router>
     </div>
   );
->>>>>>> Flesh out the symptoms testing plage, add find-help route
 }
 
 export default App;

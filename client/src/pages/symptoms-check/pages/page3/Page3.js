@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 
-const Page6 = ({ imageUrl }) => {
+const Page3 = ({ imageUrl }) => {
   return (
     <div className="page-wrapper">
       <div className="content-wrapper">
@@ -15,32 +15,37 @@ const Page6 = ({ imageUrl }) => {
 
           <div>
             <h3>
-              Accordingly to what you know, have you been exposed<br /> to others who
-              are known to have COVID-19 during the last 2 weeks? <br />
-              Please, select all that apply.
+              {" "}
+              Do you have any of these pre-existing medical conditions? <br />{" "}
+              Please, select all that apply.{" "}
             </h3>
             <ButtonGroup>
-              <DropdownButton className="select-option" as={ButtonGroup} title="Select From Options">
+              <DropdownButton as={ButtonGroup} title="Select From Options">
                 <Dropdown.Item eventKey="">
-                  I live with someone who has tested positive for COVID-19
+                  Diseases or conditions that make it hard to cough
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="1">
-                  I had close contact with someone who has tested positive for
-                  <br />
-                  COVID-19 (close contact means 10 minutes or more spent
-                  <br />
-                  together within 6 feet from each other or were exposed to
-                  their sneeze or cough)
+                  Kidney failure that needs dialysis
                 </Dropdown.Item>
-                <Dropdown.Item>
-                  I was near someone who has tested positive for COVID-19 (this
-                  <br />
-                  means at least 6-feet away and not exposed to their cough or
-                  sneeze)
+                <Dropdown.Item eventKey="2">
+                  Cirrhosis of the liver
                 </Dropdown.Item>
-                <Dropdown.Item>
-                  I haven't been exposed to anyone with COVID-19
+                <Dropdown.Item eventKey="1">
+                  {" "}
+                  Asthma or chronic lung disease
                 </Dropdown.Item>
+                <Dropdown.Item eventKey="2">Pregnancy</Dropdown.Item>
+                <Dropdown.Item eventKey="1">
+                  Diabetes with complications
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="2">
+                  Weakend immune system
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="2">
+                  Congestive heart failure
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="2">Extreme obesity</Dropdown.Item>
+                <Dropdown.Item eventKey="2">None of these</Dropdown.Item>
               </DropdownButton>
             </ButtonGroup>
             <br />
@@ -49,7 +54,7 @@ const Page6 = ({ imageUrl }) => {
               <span>
                 {" "}
                 <Link
-                  to="/page5"
+                  to="/page2"
                   className="btn btn-outline-success mr-4 text-center"
                 >
                   Go Back
@@ -58,7 +63,7 @@ const Page6 = ({ imageUrl }) => {
               <span>
                 {" "}
                 <Link
-                  to="/page7"
+                  to="/page4"
                   className="btn btn-outline-success mr-4 text-center"
                 >
                   Next Page
@@ -72,4 +77,4 @@ const Page6 = ({ imageUrl }) => {
   );
 };
 
-export default Page6;
+export default Page3;
