@@ -19,26 +19,34 @@ const INITIAL_STATE = {
 };
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
+console.log({ needHelpAnswers });
 
 const getGeoLocation = () => {
-  if (needHelpAnswers && needHelpAnswers.length) {
-    return needHelpAnswers.find((answer) =>
-      Object.keys(answer).includes("location")
-    ).location;
-  }
-  return undefined;
+  return needHelpAnswers?.find((answer) =>
+    Object.keys(answer).includes("location")
+  )?.location;
 };
 
 export const Medical = () => {
   const [state, setState] = useState(INITIAL_STATE);
-  const fetchData = () => {
+  const fetchGeoData = () => {
     const geolocation = getGeoLocation();
     axios
       .post("/api/geo/country", geolocation)
       .then((res) => setState({ ...state, country: res.data }))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
-  useEffect(fetchData, []);
+  useEffect(fetchGeoData, []);
+  // todo: fetch number with correct api call
+  const fetchNumber = () => {
+    axios
+      .get(
+        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g`
+      )
+      .then((res) => setState({ ...state, emergencyNumber: res.data }))
+      .catch((err) => console.error(err));
+  };
+  useEffect(fetchNumber, []);
   console.log({ state });
   return (
     <div className="text-center mx-auto" style={CONTAINER_STYLES}>
