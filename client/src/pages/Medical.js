@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 import { getLocalStorageJson } from '../utils/local-storage';
 
@@ -18,7 +19,7 @@ const INITIAL_STATE = {
 };
 
 const needHelpAnswers = getLocalStorageJson('needHelpAnswers') || [];
-const geolocation = needHelpAnswers.find(answer => Object.keys(answer).includes('location')).location;
+const geolocation = needHelpAnswers.length && needHelpAnswers.find(answer => Object.keys(answer).includes('location')).location || undefined;
 
 export const Medical = () => {
     const [state, setState] = useState(INITIAL_STATE);
@@ -29,7 +30,7 @@ export const Medical = () => {
         })();
     }, [geolocation]);
 
-    return (
+    return geolocation ? (
         <div className="text-center mx-auto" style={ CONTAINER_STYLES }>
             <h5>Local Emergency Number</h5>
             <h1 className="text-primary display-4 font-weight-bolder">911</h1>
@@ -48,5 +49,5 @@ export const Medical = () => {
                 </Nav>
             </div>
         </div>
-    );
+    ) : <Redirect to="/"></Redirect>;
 };
