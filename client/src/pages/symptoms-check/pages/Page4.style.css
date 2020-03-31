@@ -85,28 +85,28 @@ label {
   cursor: pointer;
 }
 
-#toggle2:checked~#section-2 {
+#toggle2:checked ~ #section-2 {
   opacity: 1;
 }
 
-#toggle2:checked~#section-1 {
+#toggle2:checked ~ #section-1 {
   opacity: 0;
   transform: scale(0.95);
   pointer-events: none;
 }
 
-#toggle2:checked~#section-2 .image-container,
-#toggle2:checked~#section-2 .info-container {
+#toggle2:checked ~ #section-2 .image-container,
+#toggle2:checked ~ #section-2 .info-container {
   opacity: 1;
   transform: translateY(0);
 }
 
-#toggle3:checked~#section-1 {
+#toggle3:checked ~ #section-1 {
   transition: transform 0.5s 0.5s, opacity 0.5s 0.5s;
 }
 
-#toggle3:checked~#section-2 .image-container,
-#toggle3:checked~#section-2 .info-container {
+#toggle3:checked ~ #section-2 .image-container,
+#toggle3:checked ~ #section-2 .info-container {
   transition: transform 0.5s, opacity 0.5s;
 }
 

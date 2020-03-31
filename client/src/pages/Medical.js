@@ -39,7 +39,7 @@ export const Medical = () => {
       .catch((err) => console.log(err));
   };
   useEffect(fetchData, []);
-
+  console.log({ state });
   return (
     <div className="text-center mx-auto" style={CONTAINER_STYLES}>
       <h5>Local Emergency Number</h5>
@@ -59,7 +59,6 @@ export const Medical = () => {
           >
             Symptoms check
           </Link>
-
           <Link
             to="/find-help"
             className="btn btn-outline-info mb-3 float-left"

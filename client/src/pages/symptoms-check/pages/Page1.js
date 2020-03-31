@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-
 
 const Page1 = ({ imageUrl }) => {
   return (
@@ -28,7 +26,6 @@ const Page1 = ({ imageUrl }) => {
             <br />
 
             <Link
-              className=""
               to="/page2"
               className="btn btn-outline-success mr-4 text-center"
             >

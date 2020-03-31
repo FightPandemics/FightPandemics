@@ -15,9 +15,10 @@ const Page7 = ({ imageUrl }) => {
 
           <div>
             <h4>
-              In your day-to-day life, do you work or live in a care facility?<br />
-              This may include hospitals, care homes, emergency rooms, <br />and other
-              medical settings.
+              In your day-to-day life, do you work or live in a care facility?
+              <br />
+              This may include hospitals, care homes, emergency rooms, <br />
+              and other medical settings.
             </h4>
             <ButtonGroup>
               <DropdownButton
@@ -26,18 +27,21 @@ const Page7 = ({ imageUrl }) => {
                 title="Select From Options"
               >
                 <Dropdown.Item eventKey="">
-                I live in a care facility (e.g. care home or assisted living)
+                  I live in a care facility (e.g. care home or assisted living)
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="1">
-                I have worked in a care facility during the last 2 weeks
-                (e.g. Hospitals, assisted living facilities, etc. <br />
-                This includes part-time jobs and volunteering)
+                  I have worked in a care facility during the last 2 weeks (e.g.
+                  Hospitals, assisted living facilities, etc. <br />
+                  This includes part-time jobs and volunteering)
                 </Dropdown.Item>
                 <Dropdown.Item>
-                I plan to work in a care facility during the next 2 weeks<br /> (e.g. Hospitals, assisted living facilities, etc. This includes part-time jobs and volunteering)
+                  I plan to work in a care facility during the next 2 weeks
+                  <br /> (e.g. Hospitals, assisted living facilities, etc. This
+                  includes part-time jobs and volunteering)
                 </Dropdown.Item>
                 <Dropdown.Item>
-                No, I don't live or work in a hospital or any other care facility
+                  No, I don't live or work in a hospital or any other care
+                  facility
                 </Dropdown.Item>
               </DropdownButton>
             </ButtonGroup>

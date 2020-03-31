@@ -53,7 +53,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonGroup, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 
 const Page2 = ({ imageUrl }) => {
   return (

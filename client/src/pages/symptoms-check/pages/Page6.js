@@ -15,12 +15,17 @@ const Page6 = ({ imageUrl }) => {
 
           <div>
             <h3>
-              Accordingly to what you know, have you been exposed<br /> to others who
-              are known to have COVID-19 during the last 2 weeks? <br />
+              Accordingly to what you know, have you been exposed
+              <br /> to others who are known to have COVID-19 during the last 2
+              weeks? <br />
               Please, select all that apply.
             </h3>
             <ButtonGroup>
-              <DropdownButton className="select-option" as={ButtonGroup} title="Select From Options">
+              <DropdownButton
+                className="select-option"
+                as={ButtonGroup}
+                title="Select From Options"
+              >
                 <Dropdown.Item eventKey="">
                   I live with someone who has tested positive for COVID-19
                 </Dropdown.Item>

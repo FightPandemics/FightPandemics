@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Page4 from "../symptoms-check/pages/page4/Page4.style.css";
 
 const SymptomsCheck = ({ imageUrl }) => {
   return (
