@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Page4 from "../symptoms-check/pages/page4/Page4.style.css";
+import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-const SymptomsCheck = ({ imageUrl }) => {
+
+const Page1 = ({ imageUrl }) => {
   return (
     <div className="page-wrapper">
       <div className="content-wrapper">
@@ -14,9 +16,19 @@ const SymptomsCheck = ({ imageUrl }) => {
           </div>
 
           <div className="info-container">
-            <h1> Welcome </h1>
-            <p>Help Answer this few questions</p>
+            <h1> What is your age? </h1>
+            <ButtonGroup>
+              <DropdownButton as={ButtonGroup} title="Please Select">
+                <Dropdown.Item eventKey="1">{`< 18`}</Dropdown.Item>
+                <Dropdown.Item eventKey="1">18 - 64</Dropdown.Item>
+                <Dropdown.Item eventKey="2">65+</Dropdown.Item>
+              </DropdownButton>
+            </ButtonGroup>
+
+            <br />
+
             <Link
+              className=""
               to="/page2"
               className="btn btn-outline-success mr-4 text-center"
             >
@@ -29,4 +41,4 @@ const SymptomsCheck = ({ imageUrl }) => {
   );
 };
 
-export default SymptomsCheck;
+export default Page1;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 
-const Page6 = ({ imageUrl }) => {
+const Page7 = ({ imageUrl }) => {
   return (
     <div className="page-wrapper">
       <div className="content-wrapper">
@@ -14,32 +14,30 @@ const Page6 = ({ imageUrl }) => {
           </div>
 
           <div>
-            <h3>
-              Accordingly to what you know, have you been exposed<br /> to others who
-              are known to have COVID-19 during the last 2 weeks? <br />
-              Please, select all that apply.
-            </h3>
+            <h4>
+              In your day-to-day life, do you work or live in a care facility?<br />
+              This may include hospitals, care homes, emergency rooms, <br />and other
+              medical settings.
+            </h4>
             <ButtonGroup>
-              <DropdownButton className="select-option" as={ButtonGroup} title="Select From Options">
+              <DropdownButton
+                className="select-option"
+                as={ButtonGroup}
+                title="Select From Options"
+              >
                 <Dropdown.Item eventKey="">
-                  I live with someone who has tested positive for COVID-19
+                I live in a care facility (e.g. care home or assisted living)
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="1">
-                  I had close contact with someone who has tested positive for
-                  <br />
-                  COVID-19 (close contact means 10 minutes or more spent
-                  <br />
-                  together within 6 feet from each other or were exposed to
-                  their sneeze or cough)
+                I have worked in a care facility during the last 2 weeks
+                (e.g. Hospitals, assisted living facilities, etc. <br />
+                This includes part-time jobs and volunteering)
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  I was near someone who has tested positive for COVID-19 (this
-                  <br />
-                  means at least 6-feet away and not exposed to their cough or
-                  sneeze)
+                I plan to work in a care facility during the next 2 weeks<br /> (e.g. Hospitals, assisted living facilities, etc. This includes part-time jobs and volunteering)
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  I haven't been exposed to anyone with COVID-19
+                No, I don't live or work in a hospital or any other care facility
                 </Dropdown.Item>
               </DropdownButton>
             </ButtonGroup>
@@ -49,7 +47,7 @@ const Page6 = ({ imageUrl }) => {
               <span>
                 {" "}
                 <Link
-                  to="/page5"
+                  to="/page6"
                   className="btn btn-outline-success mr-4 text-center"
                 >
                   Go Back
@@ -58,7 +56,7 @@ const Page6 = ({ imageUrl }) => {
               <span>
                 {" "}
                 <Link
-                  to="/page7"
+                  to="/medical"
                   className="btn btn-outline-success mr-4 text-center"
                 >
                   Next Page
@@ -72,4 +70,4 @@ const Page6 = ({ imageUrl }) => {
   );
 };
 
-export default Page6;
+export default Page7;
