@@ -17,3 +17,9 @@ Currently, there is no easy way to find all the information at the local and glo
     If you are interested please join our slack group:
 
 https://join.slack.com/t/fightpandemics/shared_invite/zt-d22gzk51-IMItXWfVQswn4YvHmKajnw
+
+## Getting Started
+1. Make sure mongodb and Node are installed and that the mongod process is running.
+2. Add your mongo URI and secret key to `backend/config/keys_dev.js`.
+3. Run `npm install` in both the root and `client` folders.
+4. Run `npm run dev` to start the Express server and open the React app in the browser.
