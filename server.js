@@ -18,9 +18,9 @@ app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected Successfully"))
-  .catch(err => console.log(err));
+  .catch(err => console.log(`MongoDB Connection Error: ${err}`));
 
 // Passportn Middleware
 app.use(passport.initialize());
