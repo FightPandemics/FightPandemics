@@ -1,27 +1,34 @@
-import { Home } from './pages/Home';
-import { NeedHelp } from './pages/NeedHelp';
-import { OfferHelp } from './pages/OfferHelp';
-import { About } from './pages/About';
-import { Medical } from './pages/Medical';
-import { AirTableCOVID } from './pages/AirTableCOVID';
+import { Home } from "./pages/Home";
+import { NeedHelp } from "./pages/NeedHelp";
+import { OfferHelp } from "./pages/OfferHelp";
+import { About } from "./pages/About";
+import { Medical } from "./pages/Medical";
+import { AirTableCOVID } from "./pages/AirTableCOVID";
 
-export const routes = [{
+export const routes = [
+  {
     path: "/",
     component: Home,
     exact: true,
-}, {
-    path: '/need-help',
+  },
+  {
+    path: "/need-help",
     component: NeedHelp,
-}, {
-    path: '/offer-help',
+  },
+  {
+    path: "/offer-help",
     component: OfferHelp,
-}, {
-    path: '/about',
+  },
+  {
+    path: "/about",
     component: About,
-}, {
-    path: '/medical',
+  },
+  {
+    path: "/medical",
     component: Medical,
-}, {
-    path: '/AirTableCOVID',
+  },
+  {
+    path: "/AirTableCOVID",
     component: AirTableCOVID,
-}];
+  },
+];

@@ -9,19 +9,19 @@ const CONTAINER_STYLES = {
   width: "600px",
   flexDirection: "column",
   alignItems: "stretch",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
 };
 
 const INITIAL_STATE = {
   emergencyNumber: "",
-  country: ""
+  country: "",
 };
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
 
 const getGeoLocation = () => {
   if (needHelpAnswers && needHelpAnswers.length) {
-    return needHelpAnswers.find(answer =>
+    return needHelpAnswers.find((answer) =>
       Object.keys(answer).includes("location")
     ).location;
   }
@@ -34,8 +34,8 @@ export const Medical = () => {
     const geolocation = getGeoLocation();
     axios
       .post("/api/geo/country", geolocation)
-      .then(res => setState({ ...state, country: res.data }))
-      .catch(err => console.log(err));
+      .then((res) => setState({ ...state, country: res.data }))
+      .catch((err) => console.log(err));
   };
   useEffect(fetchData, []);
 

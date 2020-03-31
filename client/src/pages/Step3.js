@@ -11,7 +11,7 @@ class Step3 extends Component {
     super(props);
     this.state = {
       email: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
