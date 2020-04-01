@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import StepWizard from "react-step-wizard";
 import { withRouter } from "react-router-dom";
 
-import { CheckBoxItem } from "../components/CheckBoxItem";
+import CheckBoxItem from "../components/CheckBoxItem";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 
 // import Step3 from "../pages/Step3";

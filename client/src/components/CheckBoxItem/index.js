@@ -26,7 +26,7 @@ const CheckBoxLabel = styled(Form.Check.Label)`
   margin: 15px;
 `;
 
-export const CheckBoxItem = ({ id, label, onSelect }) => {
+const CheckBoxItem = ({ id, label, onSelect }) => {
   return (
     <CheckBoxContainer type="radio" id={id}>
       <CheckBoxInput type="radio" onChange={onSelect} />
@@ -34,3 +34,5 @@ export const CheckBoxItem = ({ id, label, onSelect }) => {
     </CheckBoxContainer>
   );
 };
+
+export default CheckBoxItem;
