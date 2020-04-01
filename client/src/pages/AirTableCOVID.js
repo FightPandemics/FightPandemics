@@ -12,7 +12,7 @@ export class AirTableCOVID extends Component {
   getCovidData = () => {
     axios
       .get(
-        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g`
+        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g`,
       )
       .then((res) => {
         this.setState({ covid: res.data.records });

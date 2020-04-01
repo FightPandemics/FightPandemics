@@ -13,7 +13,7 @@ const onRedirectCallback = (appState) => {
   history.push(
     appState && appState.targetUrl
       ? appState.targetUrl
-      : window.location.pathname
+      : window.location.pathname,
   );
 };
 
@@ -26,7 +26,7 @@ ReactDOM.render(
   >
     <App />
   </Auth0Provider>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 serviceWorker.unregister();
