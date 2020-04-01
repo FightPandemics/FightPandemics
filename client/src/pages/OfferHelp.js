@@ -1,109 +1,60 @@
-import React from "react";
-import { Button, Form } from "react-bootstrap";
-import StepWizard from "react-step-wizard";
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { Button } from "grommet";
 
 import Title from "../components/Typography/Title";
+import { asyncGetGeoLocation } from "../utils/geolocation";
+import {
+  AnswerButton,
+  StyledWizard,
+  WizardContainer,
+  WizardStep,
+  WizardNav,
+} from "../components/StepWizard";
 
-const CONTAINER_STYLES = {
-  marginTop: "160px",
-  width: "600px",
-};
-
-const CHECKBOX_STYLES = {
-  display: "flex",
-  border: "1px solid #bbb",
-  borderRadius: "3px",
-  padding: "15px",
-  margin: "15px 50px 15px 0",
-};
-
-const CHECKBOX_INPUT_STYLES = {
-  cursor: "pointer",
-  margin: "15px",
-  position: "relative",
-};
-
-const CHECKBOX_LABEL_STYLES = {
-  cursor: "pointer",
-  display: "block",
-  margin: "15px",
-};
-
-const getGeoLocation = () => {
-  return new Promise((resolve, reject) => {
-    const onGeoSuccess = (pos) => {
-      const { coords } = pos;
-      console.log("got pos:", { pos });
-      resolve(coords);
-    };
-    const onGeoError = () => {
-      reject(new Error("failed getting location"));
-    };
-    navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
-  });
-};
-
-// todo: should find or update step wizard to pass data from event instead of mutating this state
-const WIZARD_STATE = {
+const INITIAL_STATE = {
   answers: [],
-  currentStep: 0,
 };
-
-/*const Step1 = (props) => {
-    return (
-        <div>
-            <h5 className="text-primary">Question {props.currentStep} / {props.totalSteps}</h5>
-            <h2 className="mb-5">What type of help can you give?</h2>
-        </div>
-    );
-};*/
 
 const Step1 = (props) => {
+  const selectLocationDetection = async () => {
+    try {
+      const location = await asyncGetGeoLocation();
+      props.update("location", location);
+    } catch {
+      props.update("location", "unknown");
+    } finally {
+      props.nextStep();
+    }
+  };
+  const rejectLocationDetection = () => {
+    props.update("location", "unknown");
+    props.nextStep();
+  };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
       <Title className="mb-5">Where are you located?</Title>
-      <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
-        <Form.Check.Input
-          style={CHECKBOX_INPUT_STYLES}
-          type="radio"
-          onChange={async () => {
-            try {
-              const location = await getGeoLocation();
-              WIZARD_STATE.answers.push({ location });
-            } catch {
-              WIZARD_STATE.answers.push({ location: "unknown" });
-            } finally {
-              props.nextStep();
-            }
-          }}
-        />
-        <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-          Detect my location
-        </Form.Check.Label>
-      </Form.Check>
-      <Form.Check style={CHECKBOX_STYLES} type="radio" id="location-unkonwn">
-        <Form.Check.Input
-          style={CHECKBOX_INPUT_STYLES}
-          type="radio"
-          onChange={() => {
-            WIZARD_STATE.answers.push({ location: "unknown" });
-            props.nextStep();
-          }}
-        />
-        <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-          Doesn't matter
-        </Form.Check.Label>
-      </Form.Check>
-    </div>
+      <AnswerButton onSelect={selectLocationDetection}>
+        Detect my location
+      </AnswerButton>
+      <AnswerButton onSelect={rejectLocationDetection}>
+        Doesn't matter
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
 const Step2 = (props) => {
+  const onSelectAnswer = () => {
+    props.update("noMedicalProviderUnderstood", true);
+    props.nextStep();
+  };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
@@ -118,98 +69,82 @@ const Step2 = (props) => {
           Please consult a medical professional for advice.
         </h4>
       </strong>
-      <div style={{ marginRight: "50px" }}>
-        <Button
-          block
-          variant="primary"
-          onClick={() => {
-            WIZARD_STATE.answers.push({ type: "i understand" });
-            props.nextStep();
-          }}
-        >
-          I Understand
-        </Button>
-      </div>
-    </div>
+      <AnswerButton onSelect={() => onSelectAnswer()}>
+        I Understand.
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
 const Step3 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("helpTypeOffered", answer);
+    props.nextStep();
+  };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
       <Title className="mb-5">How do you want to contribute?</Title>
-      <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-vol">
-        <Form.Check.Input
-          style={CHECKBOX_INPUT_STYLES}
-          type="radio"
-          onChange={() => {
-            WIZARD_STATE.answers.push({ type: "as a volunteer" });
-            props.nextStep();
-          }}
-        />
-        <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-          As a volunteer
-        </Form.Check.Label>
-      </Form.Check>
-      <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-doc-inv">
-        <Form.Check.Input
-          style={CHECKBOX_INPUT_STYLES}
-          type="radio"
-          onChange={() => {
-            WIZARD_STATE.answers.push({ type: "as a doctor investor" });
-            props.nextStep();
-          }}
-        />
-        <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-          As a Doctor / Investor
-        </Form.Check.Label>
-      </Form.Check>
-      <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-org">
-        <Form.Check.Input
-          style={CHECKBOX_INPUT_STYLES}
-          type="radio"
-          onChange={() => {
-            WIZARD_STATE.answers.push({ type: "as a organisation" });
-            props.nextStep();
-          }}
-        />
-        <Form.Check.Label style={CHECKBOX_LABEL_STYLES}>
-          As a Organisation
-        </Form.Check.Label>
-      </Form.Check>
-    </div>
+      <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
+        As a volunteer
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("doctor investor")}>
+        As a Doctor / Investor
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("organisation")}>
+        As a Organisation
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
 const Step4 = (props) => {
+  const [email, setEmail] = useState("");
+  const onChange = (evt) => setEmail(evt.target.value);
+  const onSubmit = () => {
+    props.update("email", email);
+  };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
       <Title className="mb-5">What is your email address?</Title>
       <div style={{ marginRight: "50px" }}>
-        <Form.Control className="mb-3" placeholder="Type your email" />
-        <Button block variant="primary" onClick={() => {}}>
-          Submit
-        </Button>
+        <Form.Control
+          className="mb-3"
+          placeholder="Type your email"
+          onChange={onChange}
+        />
+        <Button fill primary label="Submit" onClick={onSubmit} />
       </div>
-    </div>
+    </WizardStep>
   );
 };
 
-export const OfferHelp = () => {
+export const OfferHelp = withRouter((props) => {
+  const [state, setState] = useState(INITIAL_STATE);
+  const updateAnswers = (key, value) => {
+    const { answers } = state;
+    const updatedAnswers = { ...answers, [key]: value };
+    setState({ ...state, updatedAnswers });
+    if (key === "email") {
+      localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
+      props.history.push({
+        pathname: "/medical",
+      });
+    }
+  };
   return (
-    <div className="mx-auto" style={CONTAINER_STYLES}>
-      <StepWizard>
-        <Step1 />
-        <Step2 />
-        <Step3 />
-        <Step4 />
-      </StepWizard>
-    </div>
+    <WizardContainer>
+      <StyledWizard isHashEnabled nav={<WizardNav />}>
+        <Step1 hashKey={"Step1"} update={updateAnswers} />
+        <Step2 hashKey={"Step2"} update={updateAnswers} />
+        <Step3 hashKey={"Step3"} update={updateAnswers} />
+        <Step4 hashKey={"Step3"} update={updateAnswers} />
+      </StyledWizard>
+    </WizardContainer>
   );
-};
+});
