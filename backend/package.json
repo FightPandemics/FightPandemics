@@ -5,12 +5,8 @@
   "description": "Help to to fight global pandemics",
   "main": "server.js",
   "scripts": {
-    "postinstall": "npm i --prefix client && npm i --only=dev --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js ",
-    "client": "npm start --prefix client",
-    "build": "npm run build --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

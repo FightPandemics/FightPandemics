@@ -4,14 +4,14 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
 
-const users = require("./backend/routes/users");
-const posts = require("./backend/routes/posts");
-const geo = require("./backend/routes/geo");
+const users = require("./routes/users");
+const posts = require("./routes/posts");
+const geo = require("./routes/geo");
 
 const app = express();
 
 // DB Config
-const db = require("./backend/config/keys").mongoURI;
+const db = require("./config/keys").mongoURI;
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +27,7 @@ mongoose
 app.use(passport.initialize());
 
 // Passport config
-require("./backend/config/passport")(passport);
+require("./config/passport")(passport);
 
 // Use these routes
 app.use("/api/users", users);
@@ -53,10 +53,10 @@ app.use((error, req, res, next) => {
 //  Serve static asset assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set Static Folder
-  app.use(express.static("client/build"));
+  app.use(express.static("../client/build"));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
 
