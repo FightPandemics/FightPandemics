@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import StepWizard from "react-step-wizard";
 
+import Title from "../components/Typography/Title";
+
 const CONTAINER_STYLES = {
   marginTop: "160px",
   width: "600px",
@@ -62,7 +64,7 @@ const Step1 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">Where are you located?</h2>
+      <Title className="mb-5">Where are you located?</Title>
       <Form.Check style={CHECKBOX_STYLES} type="radio" id="detect">
         <Form.Check.Input
           style={CHECKBOX_INPUT_STYLES}
@@ -138,7 +140,7 @@ const Step3 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">How do you want to contribute?</h2>
+      <Title className="mb-5">How do you want to contribute?</Title>
       <Form.Check style={CHECKBOX_STYLES} type="radio" id="type-vol">
         <Form.Check.Input
           style={CHECKBOX_INPUT_STYLES}
@@ -188,7 +190,7 @@ const Step4 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">What is your email address?</h2>
+      <Title className="mb-5">What is your email address?</Title>
       <div style={{ marginRight: "50px" }}>
         <Form.Control className="mb-3" placeholder="Type your email" />
         <Button block variant="primary" onClick={() => {}}>
