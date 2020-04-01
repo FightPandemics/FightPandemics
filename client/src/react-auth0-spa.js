@@ -1,6 +1,8 @@
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import axios from "axios";
+import setAuthToken from './utils/setAuthToken';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -22,7 +24,6 @@ export const Auth0Provider = ({
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
-
       if (
         window.location.search.includes("code=") &&
         window.location.search.includes("state=")
@@ -43,6 +44,23 @@ export const Auth0Provider = ({
       setLoading(false);
     };
     initAuth0();
+
+    if (user) {
+      const reqData = {
+        firstName: user.given_name,
+        lastName: user.family_name,
+        email: user.email
+      };
+  
+      axios
+        .post("/api/users/auth", reqData)
+        .then(({ token }) => {
+          setAuthToken(token);
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+    }
     // eslint-disable-next-line
   }, []);
 

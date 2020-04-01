@@ -4,16 +4,15 @@ const isEmpty = require("./is-empty");
 module.exports = function validateRegisterInput(data) {
   const errors = {};
 
-  data.name = !isEmpty(data.name) ? data.name : "";
+  data.firstName = !isEmpty(data.firstName) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
-  data.password = !isEmpty(data.password) ? data.password : "";
-  data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+  // data.accessToken = !isEmpty(data.accessToken) ? data.accessToken : "";
 
-  if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
+  if (!Validator.isLength(data.firstName, { min: 2, max: 30 })) {
     errors.name = "Name must be between 2 and 30 characters";
   }
 
-  if (Validator.isEmpty(data.name)) {
+  if (Validator.isEmpty(data.firstName)) {
     errors.name = "Name field is required";
   }
 
@@ -25,21 +24,9 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email is invalid";
   }
 
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
-  }
-
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be at least 6 characters";
-  }
-
-  if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm Password field is required";
-  }
-
-  if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = "Passwords must match";
-  }
+  // if (Validator.isEmpty(data.accessToken)) {
+  //   errors.accessToken = "Access Token field is required";
+  // }
 
   return {
     errors,
