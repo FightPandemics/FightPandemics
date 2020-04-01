@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { getAirtableRecord } from '../utils/airtable';
 import { getLocalStorageJson } from "../utils/local-storage";
 
 const CONTAINER_STYLES = {
@@ -16,6 +17,8 @@ const CONTAINER_STYLES = {
 const INITIAL_STATE = {
   emergencyNumber: "",
   country: "",
+  errorMessage: null,
+  loading: true
 };
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
@@ -29,29 +32,47 @@ const getGeoLocation = () => {
 
 export const Medical = () => {
   const [state, setState] = useState(INITIAL_STATE);
+  
+  const fetchNumber = (countryName) => {
+    getAirtableRecord(countryName, "Country").then((record) => {
+      const errorMessage = "Sorry, we could not locate the emergency number for your country.";
+      if (!record) return setState({ ...state, loading: false, errorMessage });
+
+      const emergencyNumber = record.fields.Ambulance;
+      setState({ ...state, emergencyNumber, loading: false });
+      localStorage.setItem('emergencyNumber', emergencyNumber);
+    });
+  };
+
   const fetchGeoData = () => {
     const geolocation = getGeoLocation();
     axios
       .post("/api/geo/country", geolocation)
-      .then((res) => setState({ ...state, country: res.data }))
+      .then((res) => {
+        setState({ ...state, country: res.data });
+        localStorage.setItem('country', JSON.stringify(res.data));
+
+        fetchNumber(res?.data?.name);
+      })
       .catch((err) => console.error(err));
   };
-  useEffect(fetchGeoData, []);
-  // todo: fetch number with correct api call
-  const fetchNumber = () => {
-    axios
-      .get(
-        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g`
-      )
-      .then((res) => setState({ ...state, emergencyNumber: res.data }))
-      .catch((err) => console.error(err));
+
+  const initializeMedicalState = () => {
+    const country = getLocalStorageJson('country');
+    const emergencyNumber = getLocalStorageJson('emergencyNumber');
+
+    if (!country || !emergencyNumber) fetchGeoData();
+    else setState({ ...state, emergencyNumber, country, loading: false });
   };
-  useEffect(fetchNumber, []);
-  console.log({ state });
+  
+  useEffect(initializeMedicalState, []);
+
   return (
     <div className="text-center mx-auto" style={CONTAINER_STYLES}>
       <h5>Local Emergency Number</h5>
-      <h1 className="text-primary display-4 font-weight-bolder">911</h1>
+      <h1 className="text-primary display-4 font-weight-bolder">
+        {state.loading ? "Loading..." : state.emergencyNumber || state.errorMessage}
+      </h1>
       <div style={{ display: "flex", margin: "30px 10px 10px 50px" }}>
         <Nav variant="med-info">
           <Link
