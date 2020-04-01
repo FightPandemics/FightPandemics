@@ -1,13 +1,13 @@
 // Override default Bootstrap variables before the import
 $body-bg: #f3f3f3;
-$blue: #1890ff;
+$blue: #425af2;
 
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 
 body {
   margin: 0;
-  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+  font-family: "Poppins", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
