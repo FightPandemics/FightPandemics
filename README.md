@@ -19,4 +19,5 @@ Currently, there is no easy way to find all the information at the local and glo
 https://join.slack.com/t/fightpandemics/shared_invite/zt-d22gzk51-IMItXWfVQswn4YvHmKajnw
 
 ## Getting Started
-1. Run `docker-compose up` and goto `localhost:3000` in the browser.
+1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
+2. Run `docker-compose up` and goto `localhost:3000` in the browser.
