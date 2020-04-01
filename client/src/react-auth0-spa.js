@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import axios from "axios";
-import setAuthToken from './utils/setAuthToken';
+import { setAuthToken, getAuthToken } from './utils/auth-token';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -45,7 +45,7 @@ export const Auth0Provider = ({
     };
     initAuth0();
 
-    if (user) {
+    if (user && !getAuthToken()) {
       const reqData = {
         firstName: user.given_name,
         lastName: user.family_name,
@@ -79,6 +79,9 @@ export const Auth0Provider = ({
   };
 
   const handleRedirectCallback = async () => {
+    // Reset Auth Token
+    setAuthToken(null);
+
     setLoading(true);
     await auth0Client.handleRedirectCallback();
     const user = await auth0Client.getUser();
