@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
+
 import { RouteWithSubRoutes } from "./components/RouteWithSubRoutes";
 import { routes } from "./routes";
 
@@ -11,17 +12,7 @@ import { NeedHelp } from "./pages/NeedHelp";
 import { OfferHelp } from "./pages/OfferHelp";
 import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
-
-import FindHelp from "./pages/find-help/FindHelp";
-import SymptomsCheck from "./pages/symptoms-check/SymptomsCheck";
-
-import Page1 from "./pages/symptoms-check/pages/page1/Page1";
-import Page2 from "./pages/symptoms-check/pages/page2/Page2";
-import Page3 from "./pages/symptoms-check/pages/page3/Page3";
-import Page4 from "./pages/symptoms-check/pages/page4/Page4";
-import Page5 from "./pages/symptoms-check/pages/page5/Page5";
-import Page6 from "./pages/symptoms-check/pages/page6/Page6";
-import Page7 from "./pages/symptoms-check/pages/page7/Page7";
+import { SymptomsCheck } from "./pages/SymptomsCheck";
 
 function App() {
   const { loading } = useAuth0();
@@ -50,32 +41,8 @@ function App() {
               <Route path="/medical">
                 <Medical />
               </Route>
-              <Route path="/find-help">
-                <FindHelp />
-              </Route>
               <Route path="/symptoms-check">
                 <SymptomsCheck />
-              </Route>
-              <Route path="/page1">
-                <Page1 />
-              </Route>
-              <Route path="/page2">
-                <Page2 />
-              </Route>
-              <Route path="/page3">
-                <Page3 />
-              </Route>
-              <Route path="/page4">
-                <Page4 />
-              </Route>
-              <Route path="/page5">
-                <Page5 />
-              </Route>
-              <Route path="/page6">
-                <Page6 />
-              </Route>
-              <Route path="/page7">
-                <Page7 />
               </Route>
               {routes.map((route, i) => (
                 <RouteWithSubRoutes key={i} {...route} />

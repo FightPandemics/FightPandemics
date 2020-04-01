@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-// import axios from "axios";
-// import { withRouter, Route, Redirect } from "react-router-dom";
-// import PropTypes from "prop-types";
 
 class Step3 extends Component {
   constructor(props) {

@@ -4,31 +4,42 @@ import { OfferHelp } from "./pages/OfferHelp";
 import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
+// import FindHelp from "./pages/find-help/FindHelp";
+import { SymptomsCheck } from "./pages/SymptomsCheck";
+
 
 export const routes = [
   {
     path: "/",
     component: Home,
-    exact: true,
+    exact: true
   },
   {
     path: "/need-help",
-    component: NeedHelp,
+    component: NeedHelp
   },
   {
     path: "/offer-help",
-    component: OfferHelp,
+    component: OfferHelp
   },
   {
     path: "/about",
-    component: About,
+    component: About
   },
   {
     path: "/medical",
-    component: Medical,
+    component: Medical
   },
   {
     path: "/AirTableCOVID",
-    component: AirTableCOVID,
+    component: AirTableCOVID
   },
+  // {
+  //   path: "/find-help",
+  //   component: FindHelp,
+  // },
+  {
+    path: "/symptoms-check",
+    component: SymptomsCheck
+  }
 ];
