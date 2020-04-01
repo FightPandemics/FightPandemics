@@ -46,7 +46,7 @@ class Step3 extends Component {
     return (
       <div>
         <div>
-          <h2 className="mb-5">What is your email address?</h2>
+          <Title className="mb-5">What is your email address?</Title>
           <div style={{ marginRight: "50px" }}>
             <Form onSubmit={this.onSubmit}>
               <Form.Control

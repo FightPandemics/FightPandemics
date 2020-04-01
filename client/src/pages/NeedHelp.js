@@ -3,7 +3,8 @@ import { Button, Form } from "react-bootstrap";
 import StepWizard from "react-step-wizard";
 import { withRouter } from "react-router-dom";
 
-import { CheckBoxItem } from "../components/CheckBoxItem";
+import CheckBoxItem from "../components/CheckBoxItem";
+import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 
 // import Step3 from "../pages/Step3";
@@ -31,7 +32,7 @@ const Step1 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">What type of help do you need?</h2>
+      <Title className="mb-5">What type of help do you need?</Title>
       <CheckBoxItem
         id="type-medical"
         label="Medical: I believe I might have symptoms of COVID-19."
@@ -66,7 +67,7 @@ const Step2 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">Where are you located?</h2>
+      <Title className="mb-5">Where are you located?</Title>
       <CheckBoxItem
         id="detect"
         label="Detect my location"
@@ -97,7 +98,7 @@ const Step3 = withRouter((props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">What is your email address?</h2>
+      <Title className="mb-5">What is your email address?</Title>
       <div style={{ marginRight: "50px" }}>
         <Form.Control
           className="mb-3"
