@@ -9,15 +9,14 @@ opts.secretOrKey = config.jwt.key;
 
 module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(opts, (jwtPayload, done) => {
-      User.findById(jwtPayload.id)
-        .then((user) => {
-          if (user) {
-            return done(null, user);
-          }
-          return done(null, false);
-        })
-        .catch((err) => pino.error(err));
+    new JwtStrategy(opts, async (jwtPayload, done) => {
+      try {
+        const user = await User.findById(jwtPayload.id);
+        return done(null, user || false);
+      } catch (err) {
+        pino.error(err);
+        return done(err);
+      }
     }),
   );
 };

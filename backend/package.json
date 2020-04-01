@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js -L server.js",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint . --fix"
   },
   "husky": {
     "hooks": {
