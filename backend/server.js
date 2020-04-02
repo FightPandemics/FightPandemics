@@ -1,69 +1,31 @@
-const express = require("express");
+require("dotenv").config();
 const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const path = require("path");
+const http = require("http");
+const createApp = require("./lib");
+const { config, validateConfig } = require("./config");
 
-const users = require("./routes/users");
-const posts = require("./routes/posts");
-const geo = require("./routes/geo");
-
-const app = express();
-app.use(cors());
-
-// DB Config
-const db = require("./config/keys").mongoURI;
-
-// Body parser middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+validateConfig(config);
+const server = http.createServer(createApp());
 
 // Connect to MongoDB
-mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((err) => console.log(`MongoDB Connection Error: ${err}`));
-
-// Passportn Middleware
-app.use(passport.initialize());
-
-// Passport config
-require("./config/passport")(passport);
-
-// Use these routes
-app.use("/api/users", users);
-app.use("/api/posts", posts);
-app.use("/api/geo", geo);
-
-// Error Handling Middleware
-app.use((req, res, next) => {
-  const error = new Error(`Page not found for ${req.url}`);
-  error.status = 404;
-  next(error);
+mongoose.connect(config.mongo.host, config.mongo.params);
+mongoose.connection.once("open", function () {
+  // All OK - fire (emit) a ready event.
+  server.emit("ready");
 });
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500).send({
-    error: {
-      status: error.status || 500,
-      message: error.message || "Internal Server Error",
-    },
-  });
+server.on("ready", function () {
+  server
+    .listen(config.server.port)
+    .on("listening", () => {
+      console.info({
+        message: `Listening on ${server.address().address}:${
+          server.address().port
+        }`,
+      });
+    })
+    .on("error", (err) => {
+      console.fatal({ message: "Cannot start http server", err });
+      throw err;
+    });
 });
-
-//  Serve static asset assets if in production
-if (process.env.NODE_ENV === "production") {
-  // Set Static Folder
-  app.use(express.static("../client/build"));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-  });
-}
-
-const port = process.env.PORT || 5050;
-
-const server = app.listen(port, () =>
-  console.log(`Web App is live on port ${port}`),
-);

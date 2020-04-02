@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const keys = require("../config/keys");
+const config = require("../../config");
 
 // Load Input Validation
 const validateRegisterInput = require("../validation/register");
@@ -82,18 +82,12 @@ router.post("/login", (req, res) => {
         const payload = { id: user.id, email: user.email }; // Create JWT Payload
 
         // Sign Token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            console.log(keys.secretOrKey),
-              res.json({
-                success: true,
-                token: `Bearer ${token}`,
-              });
-          }
-        );
+        jwt.sign(payload, config.jwt.key, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: true,
+            token: `Bearer ${token}`,
+          });
+        });
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json(errors);
@@ -118,7 +112,7 @@ router.get(
       name: req.user.name,
       email: req.user.email,
     });
-  }
+  },
 );
 
 module.exports = router;

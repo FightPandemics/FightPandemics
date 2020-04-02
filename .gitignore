@@ -1,6 +1,4 @@
 **/.env
-/backend/config/keys_dev.js
 /data
 /geo-service/venv
-node_modules
-package-lock.json
+**/node_modules
