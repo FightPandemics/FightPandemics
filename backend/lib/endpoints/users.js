@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const config = require("../../config");
+const { config } = require("../../config");
 
 // Load Input Validation
 const validateRegisterInput = require("../validation/register");

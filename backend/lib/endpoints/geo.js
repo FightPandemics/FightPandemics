@@ -3,7 +3,7 @@ const express = require("express");
 
 const countries = require("../data/countries");
 const { validateGeolocation } = require("../validation/geolocation");
-const { geoService } = require("../../config");
+const { config } = require("../../config");
 
 const router = express.Router();
 const countryMap = countries.reduce(
@@ -27,7 +27,7 @@ router.post("/country", (req, res) => {
   }
 
   axios
-    .get(`${geoService.host}?lat=${latitude}&long=${longitude}`)
+    .get(`${config.geoService.host}?lat=${latitude}&long=${longitude}`)
     .then(({ data: response }) => {
       const { cc: code } = response.data;
       const name = countryMap.get(code);
