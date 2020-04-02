@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import axios from "axios";
-import { setAuthToken, getAuthToken } from './utils/auth-token';
+import { setAuthToken, getAuthToken } from "./utils/auth-token";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -43,20 +43,20 @@ export const Auth0Provider = ({
       }
 
       setLoading(false);
-    }
+    };
     initAuth0();
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (user && !getAuthToken()) {
-      console.log('calling Auth API')
+      console.log("calling Auth API");
       const reqData = {
         firstName: user.given_name,
         lastName: user.family_name,
-        email: user.email
+        email: user.email,
       };
-  
+
       axios
         .post("/api/users/auth", reqData)
         .then(({ data }) => {
@@ -66,7 +66,7 @@ export const Auth0Provider = ({
           console.log(err);
         });
     }
-  }, [user])
+  }, [user]);
 
   const loginWithPopup = async (params = {}) => {
     clearAuthToken();
@@ -91,11 +91,11 @@ export const Auth0Provider = ({
     setIsAuthenticated(true);
     setUser(user);
   };
-  
-  const clearAuthToken = async() => {
+
+  const clearAuthToken = async () => {
     // Reset Auth Token
     setAuthToken(null);
-  }
+  };
 
   return (
     <Auth0Context.Provider
