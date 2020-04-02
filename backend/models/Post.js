@@ -40,7 +40,6 @@ const PostSchema = new Schema({
   status: {
     type: Boolean,
     required: true,
-    default: undefined,
   },
   tags: [String],
   language: [String],
