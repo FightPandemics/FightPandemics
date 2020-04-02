@@ -1,62 +1,24 @@
 import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { NavBar, Icon } from 'antd-mobile';
 import { Link, NavLink } from "react-router-dom";
 
-import { useAuth0 } from "../react-auth0-spa";
 import logo from "../assets/logo.svg";
 import Logo from "./Logo";
 
-export const Header = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
+export default ({ onMenuClick }) => {
   return (
-    <Navbar variant="light" bg="white" expand="lg">
-      <Container>
-        <Navbar.Brand>
+    <div className="header">
+      <NavBar
+        mode="light"
+        leftContent={
           <Link to="/">
             <Logo src={logo} alt="Fight Pandemics logo" />
           </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse>
-          <Nav className="mr-auto">
-            <Nav.Item>
-              <NavLink exact to="/">
-                Home
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/about">About us</NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/medical">Medical Info</NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/AirTableCOVID">Coronovirus Resources</NavLink>
-            </Nav.Item>
-          </Nav>
-          <Nav>
-            {isAuthenticated ? (
-              <Nav.Item>
-                <Nav.Link onClick={() => logout()}>Log out</Nav.Link>
-              </Nav.Item>
-            ) : (
-              <>
-                <Nav.Item>
-                  <Nav.Link onClick={() => loginWithRedirect({})}>
-                    Login
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link onClick={() => loginWithRedirect({})}>
-                    Sign up
-                  </Nav.Link>
-                </Nav.Item>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        }
+        rightContent={
+          <Icon type="ellipsis" onClick={onMenuClick} />
+        }
+      />
+    </div>
   );
 };

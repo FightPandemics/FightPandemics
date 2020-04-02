@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "airtable": "^0.8.1",
+    "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
@@ -36,9 +37,9 @@
     "typeface-roboto": "^0.0.75"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,7 +58,8 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "react-app-rewired": "^2.1.5"
   },
   "husky": {
     "hooks": {
