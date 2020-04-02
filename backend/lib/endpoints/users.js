@@ -43,7 +43,7 @@ router.post("/auth", (req, res) => {
     const payload = { id: user._id, email: user.email };
 
     // Sign Token
-    jwt.sign(payload, config.jwt.key, { expiresIn: "7d" }, (err, token) => {
+    jwt.sign(payload, config.jwt.key, config.jwt.params, (err, token) => {
       if (err) {
         pino.log(err);
         res.status(500).send(err);

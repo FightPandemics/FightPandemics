@@ -14,22 +14,19 @@ const config = {
     port: process.env.PORT || 8000,
   },
   mongo: {
-    get host() {
-      return `mongodb://${process.env.MONGO_URI}`;
-    },
+    host: `mongodb://${process.env.MONGO_URI}`,
     params: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
   },
   geoService: {
-    get host() {
-      return process.env.GEO_SERVICE_URL;
-    },
+    host: process.env.GEO_SERVICE_URL,
   },
   jwt: {
-    get key() {
-      return process.env.JWT_KEY;
+    key: process.env.JWT_KEY,
+    params: {
+      expiresIn: "7d",
     },
   },
 };
