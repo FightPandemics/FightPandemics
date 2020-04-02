@@ -1,0 +1,39 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    command: mongod
+    volumes:
+      - "./data:/data/db"
+  geo:
+    build: geo-service
+    container_name: geo-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./geo-service:/app"
+  backend:
+    build:
+      context: backend
+      args:
+        NODE_ENV: dev
+    environment:
+      GEO_SERVICE_URL: http://0.0.0.0:5000/geo-service
+    ports:
+      - "5050:5050"
+    volumes:
+      - "./backend:/app"
+      - "/app/node_modules"
+    depends_on: [mongo]
+  client:
+    build: client
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./client:/app"
+      - "/app/node_modules"
+    stdin_open: true
+    depends_on: [mongo, geo, backend]
