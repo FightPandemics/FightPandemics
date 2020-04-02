@@ -1,8 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const pino = require("pino");
 const { config } = require("../../config");
 
 // Load Input Validation
@@ -44,7 +44,10 @@ router.post("/auth", (req, res) => {
 
     // Sign Token
     jwt.sign(payload, config.jwt.key, { expiresIn: "7d" }, (err, token) => {
-      console.log(err);
+      if (err) {
+        pino.log(err);
+        res.status(404).send(err);
+      }
       res.json({
         success: true,
         token: `Bearer ${token}`,

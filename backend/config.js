@@ -15,7 +15,7 @@ const config = {
   },
   mongo: {
     get host() {
-      return process.env.MONGO_URI;
+      return `mongodb://${process.env.MONGO_URI}`;
     },
     params: {
       useNewUrlParser: true,

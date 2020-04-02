@@ -1,16 +1,21 @@
 version: "3"
 services:
-  mongodb:
+  mongo:
     image: mongo
     container_name: mongo
     restart: always
-    ports:
-      - "27017:27017"
-    command: mongod
-    volumes:
-      - "./data:/data/db"
     networks:
       - fp_network
+    
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - fp_network
+    depends_on:
+      - mongo
 
   geo-service:
     build: geo-service
@@ -34,7 +39,8 @@ services:
     volumes:
       - "./backend:/opt/app"
     depends_on:
-      - mongodb
+      - mongo
+      - mongo-express
     networks:
       - fp_network
 
@@ -48,7 +54,7 @@ services:
       - "./client:/app"
     stdin_open: true
     depends_on:
-      - mongodb
+      - mongo
       - geo-service
       - backend-service
     networks:

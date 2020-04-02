@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
+const pino = require("pino")();
+const pinoExpress = require("pino-express");
 
 const passportMiddleware = require("./middlewares/passport");
 const errorMiddleware = require("./middlewares/error");
@@ -13,6 +15,7 @@ function createApp() {
   const app = express();
   app.disable("etag").disable("x-powered-by");
   app.use(cors());
+  app.use(pinoExpress(pino));
   app.use(express.json());
 
   // Passportn Middleware

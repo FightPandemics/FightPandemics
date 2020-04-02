@@ -25,6 +25,8 @@
     "mongoose": "^5.9.6",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "pino": "^6.0.0",
+    "pino-express": "^1.1.1",
     "validator": "^13.0.0"
   },
   "devDependencies": {

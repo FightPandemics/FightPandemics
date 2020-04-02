@@ -1,5 +1,6 @@
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
+const pino = require("pino");
 
 const User = require("../models/User");
 const { config } = require("../../config");
@@ -18,7 +19,7 @@ module.exports = (passport) => {
           }
           return done(null, false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => pino.error(err));
     }),
   );
 };
