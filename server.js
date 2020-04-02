@@ -5,6 +5,7 @@ const passport = require("passport");
 const path = require("path");
 
 const users = require("./backend/routes/users");
+const posts = require("./backend/routes/posts");
 const geo = require("./backend/routes/geo");
 
 const app = express();
@@ -30,7 +31,24 @@ require("./backend/config/passport")(passport);
 
 // Use these routes
 app.use("/api/users", users);
+app.use("/api/posts", posts);
 app.use("/api/geo", geo);
+
+// Error Handling Middleware
+app.use((req, res, next) => {
+  const error = new Error(`Page not found for ${req.url}`);
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).send({
+    error: {
+      status: error.status || 500,
+      message: error.message || "Internal Server Error",
+    },
+  });
+});
 
 //  Serve static asset assets if in production
 if (process.env.NODE_ENV === "production") {
