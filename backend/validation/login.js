@@ -5,7 +5,7 @@ module.exports = function validateLoginInput(data) {
   const errors = {};
 
   data.email = !isEmpty(data.email) ? data.email : "";
-  data.password = !isEmpty(data.password) ? data.password : "";
+  // data.accessToken = !isEmpty(data.accessToken) ? data.accessToken : "";
 
   if (!Validator.isEmail(data.email)) {
     errors.email = "Email is invalid";
@@ -15,9 +15,9 @@ module.exports = function validateLoginInput(data) {
     errors.email = "Email Field is required";
   }
 
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password Field is required";
-  }
+  // if (Validator.isEmpty(data.accessToken)) {
+  //   errors.accessToken = "Access Token Field is required";
+  // }
 
   return {
     errors,
