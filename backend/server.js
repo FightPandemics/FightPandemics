@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
@@ -9,6 +10,7 @@ const posts = require("./routes/posts");
 const geo = require("./routes/geo");
 
 const app = express();
+app.use(cors());
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -62,4 +64,6 @@ if (process.env.NODE_ENV === "production") {
 
 const port = process.env.PORT || 5050;
 
-app.listen(port, () => console.log(`Web App is live on port ${port}`));
+const server = app.listen(port, () =>
+  console.log(`Web App is live on port ${port}`),
+);
