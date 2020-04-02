@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   mongo:
     image: mongo
@@ -8,8 +8,6 @@ services:
     command: mongod
     volumes:
       - "~/data:/data/db"
-    networks: 
-      - fightpandemics
   geo:
     build: geo-service
     container_name: geo-service
@@ -17,20 +15,16 @@ services:
       - "5000:5000"
     volumes:
       - "./geo-service:/app"
-    networks: 
-      - fightpandemics
   backend:
     build:
       context: backend
-      args: 
+      args:
         NODE_ENV: dev
     ports:
       - "5050:5050"
     volumes:
       - "./backend:/app"
       - "/app/node_modules"
-    networks: 
-      - fightpandemics
     depends_on: [mongo]
   client:
     build: client
@@ -41,8 +35,3 @@ services:
       - "/app/node_modules"
     stdin_open: true
     depends_on: [mongo, geo, backend]
-    networks: 
-      - fightpandemics
-networks: 
-  fightpandemics:
-    driver: bridge
