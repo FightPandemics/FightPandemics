@@ -49,7 +49,7 @@ services:
       context: client
     restart: always
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - "./client:/app"
     stdin_open: true
