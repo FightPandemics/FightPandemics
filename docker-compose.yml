@@ -36,8 +36,8 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    volumes:
-      - "./backend:/app"
+    # volumes:
+    #   - "./backend:/app"
     depends_on:
       - mongo
       - mongo-express
@@ -50,8 +50,8 @@ services:
     restart: always
     ports:
       - "3000:80"
-    volumes:
-      - "./client:/app"
+    # volumes:
+    #   - "./client:/app"
     stdin_open: true
     depends_on:
       - mongo

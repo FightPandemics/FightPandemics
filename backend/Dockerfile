@@ -5,7 +5,6 @@ WORKDIR '/app'
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm install --production
 RUN echo "{\"version\": \"$GIT_COMMIT\"}" > version.json
 
 FROM builder
