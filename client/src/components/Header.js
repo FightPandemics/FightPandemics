@@ -9,26 +9,6 @@ import Logo from "./Logo";
 export const Header = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-  const renderAuthSection = () => {
-    if (isAuthenticated) {
-      return (
-        <>
-          <Nav.Item>
-            <Nav.Link onClick={() => loginWithRedirect({})}>Login</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link onClick={() => loginWithRedirect({})}>Signup</Nav.Link>
-          </Nav.Item>
-        </>
-      );
-    }
-    return (
-      <Nav.Item>
-        <Nav.Link onClick={() => logout()}>Log out</Nav.Link>
-      </Nav.Item>
-    );
-  };
-
   return (
     <Navbar variant="light" bg="white" expand="lg">
       <Container>
@@ -55,7 +35,26 @@ export const Header = () => {
               <NavLink to="/AirTableCOVID">Coronovirus Resources</NavLink>
             </Nav.Item>
           </Nav>
-          <Nav>{renderAuthSection()}</Nav>
+          <Nav>
+            {isAuthenticated ? (
+              <Nav.Item>
+                <Nav.Link onClick={() => logout()}>Log out</Nav.Link>
+              </Nav.Item>
+            ) : (
+              <>
+                <Nav.Item>
+                  <Nav.Link onClick={() => loginWithRedirect({})}>
+                    Login
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link onClick={() => loginWithRedirect({})}>
+                    Sign up
+                  </Nav.Link>
+                </Nav.Item>
+              </>
+            )}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

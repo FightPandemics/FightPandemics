@@ -1,6 +1,8 @@
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import axios from "axios";
+import { setAuthToken, getAuthToken } from "./utils/auth-token";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -22,7 +24,6 @@ export const Auth0Provider = ({
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
-
       if (
         window.location.search.includes("code=") &&
         window.location.search.includes("state=")
@@ -33,8 +34,9 @@ export const Auth0Provider = ({
 
       const isAuthenticated = await auth0FromHook.isAuthenticated();
 
-      setIsAuthenticated(isAuthenticated);
+      console.log("isAuth == " + isAuthenticated);
 
+      setIsAuthenticated(isAuthenticated);
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         setUser(user);
@@ -46,7 +48,28 @@ export const Auth0Provider = ({
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (user && !getAuthToken()) {
+      console.log("calling Auth API");
+      const reqData = {
+        firstName: user.given_name,
+        lastName: user.family_name,
+        email: user.email,
+      };
+
+      axios
+        .post("/api/users/auth", reqData)
+        .then(({ data }) => {
+          setAuthToken(data.token);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [user]);
+
   const loginWithPopup = async (params = {}) => {
+    clearAuthToken();
     setPopupOpen(true);
     try {
       await auth0Client.loginWithPopup(params);
@@ -68,6 +91,12 @@ export const Auth0Provider = ({
     setIsAuthenticated(true);
     setUser(user);
   };
+
+  const clearAuthToken = async () => {
+    // Reset Auth Token
+    setAuthToken(null);
+  };
+
   return (
     <Auth0Context.Provider
       value={{
@@ -78,7 +107,10 @@ export const Auth0Provider = ({
         loginWithPopup,
         handleRedirectCallback,
         getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
-        loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
+        loginWithRedirect: (...p) => {
+          clearAuthToken();
+          auth0Client.loginWithRedirect(...p);
+        },
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
         logout: (...p) => auth0Client.logout(...p),

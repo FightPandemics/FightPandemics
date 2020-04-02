@@ -2,3 +2,4 @@
 /data
 /geo-service/venv
 **/node_modules
+.vscode
