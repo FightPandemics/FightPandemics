@@ -34,18 +34,23 @@ export const Auth0Provider = ({
 
       const isAuthenticated = await auth0FromHook.isAuthenticated();
 
-      setIsAuthenticated(isAuthenticated);
+      console.log("isAuth == " + isAuthenticated);
 
+      setIsAuthenticated(isAuthenticated);
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         setUser(user);
       }
 
       setLoading(false);
-    };
+    }
     initAuth0();
+    // eslint-disable-next-line
+  }, []);
 
+  useEffect(() => {
     if (user && !getAuthToken()) {
+      console.log('calling Auth API')
       const reqData = {
         firstName: user.given_name,
         lastName: user.family_name,
@@ -54,17 +59,17 @@ export const Auth0Provider = ({
   
       axios
         .post("/api/users/auth", reqData)
-        .then(({ token }) => {
-          setAuthToken(token);
+        .then(({ data }) => {
+          setAuthToken(data.token);
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         });
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [user])
 
   const loginWithPopup = async (params = {}) => {
+    clearAuthToken();
     setPopupOpen(true);
     try {
       await auth0Client.loginWithPopup(params);
@@ -79,9 +84,6 @@ export const Auth0Provider = ({
   };
 
   const handleRedirectCallback = async () => {
-    // Reset Auth Token
-    setAuthToken(null);
-
     setLoading(true);
     await auth0Client.handleRedirectCallback();
     const user = await auth0Client.getUser();
@@ -89,6 +91,12 @@ export const Auth0Provider = ({
     setIsAuthenticated(true);
     setUser(user);
   };
+  
+  const clearAuthToken = async() => {
+    // Reset Auth Token
+    setAuthToken(null);
+  }
+
   return (
     <Auth0Context.Provider
       value={{
@@ -99,7 +107,10 @@ export const Auth0Provider = ({
         loginWithPopup,
         handleRedirectCallback,
         getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
-        loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
+        loginWithRedirect: (...p) => {
+          clearAuthToken();
+          auth0Client.loginWithRedirect(...p);
+        },
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
         logout: (...p) => auth0Client.logout(...p),

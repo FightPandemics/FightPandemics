@@ -2,7 +2,6 @@ const { Schema, model } = require('mongoose')
 
 // User Schema
 const UserSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   firstName: {
     type: String,
     required: true,

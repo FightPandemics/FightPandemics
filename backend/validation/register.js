@@ -4,7 +4,7 @@ const isEmpty = require("./is-empty");
 module.exports = function validateRegisterInput(data) {
   const errors = {};
 
-  data.firstName = !isEmpty(data.firstName) ? data.name : "";
+  data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   // data.accessToken = !isEmpty(data.accessToken) ? data.accessToken : "";
 
