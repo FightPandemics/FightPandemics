@@ -1,13 +1,12 @@
-import { Grommet } from "grommet";
 import React from "react";
-import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { useAuth0 } from "./react-auth0-spa";
-import { Header } from "./components/Header";
-import { RouteWithSubRoutes } from "./components/RouteWithSubRoutes";
+import { RouteWithSubRoutes } from "./templates/RouteWithSubRoutes";
 import { routes } from "./routes";
+import 'antd-mobile/dist/antd-mobile.css';
 import { theme } from "./constants/theme";
+import history from './utils/history';
 
 function App() {
   const { loading } = useAuth0();
@@ -15,20 +14,13 @@ function App() {
     return <div>Loading...</div>;
   }
   return (
-    <Grommet plain theme={theme} className="App">
-      <Router>
-        <Header />
-        <main>
-          <Container>
-            <Switch>
-              {routes.map((route, i) => (
-                <RouteWithSubRoutes key={i} {...route} />
-              ))}
-            </Switch>
-          </Container>
-        </main>
+      <Router history={history}>
+        <Switch>
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+        </Switch>
       </Router>
-    </Grommet>
   );
 }
 

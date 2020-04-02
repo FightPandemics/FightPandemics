@@ -1,37 +1,49 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import ImageButton from "../components/Button/ImageButton";
 
-const CONTAINER_STYLES = {
-  marginTop: "160px",
-  width: "600px",
-};
+const FlexChild = styled.div`
+  flex-grow: 1
+`
 
 export const Home = () => {
   return (
-    <div className="text-center mx-auto" style={CONTAINER_STYLES}>
-      <h5 className="text-primary">WELCOME TO FIGHT PANDEMICS</h5>
-      <h1 className="display-4 font-weight-bolder">
-        Help us prevent the spread of COVID-19
-      </h1>
+    <div className="text-center">
+      <h4 className="text-light">Welcome to FightPandemics</h4>
+      <h2>Help us prevent the spread of COVID-19</h2>
       <p>Pandemics are bound to continue to happen.</p>
       <p>We help you be prepared to stop them.</p>
-      <div style={{ display: "flex", margin: "10px 100px" }}>
-        <div style={{ flexGrow: 1, marginRight: "16px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <FlexChild>
           <Link to="/need-help">
-            <Button block variant="primary">
+            <ImageButton
+              type="ghost"
+              inactiveImg={require("~/assets/thermometer-unselected.svg")}
+              activeImg={require("~/assets/thermometer-selected.svg")}
+            >
               I need help
-            </Button>
+            </ImageButton>
           </Link>
-        </div>
-        <div style={{ flexGrow: 1 }}>
+        </FlexChild>
+        <FlexChild>
           <Link to="/offer-help">
-            <Button block variant="light">
+            <ImageButton
+              type="ghost"
+              inactiveImg={require("~/assets/help-gesture-unselected.svg")}
+              activeImg={require("~/assets/help-gesture-selected.svg")}
+            >
               I want to help
-            </Button>
+            </ImageButton>
           </Link>
-        </div>
+        </FlexChild>
       </div>
+      <p>
+        <Link to="/AirTableCOVID">
+          {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+          Skip
+        </Link>
+      </p>
     </div>
   );
 };

@@ -1,14 +1,10 @@
-// Override default Bootstrap variables before the import
-$body-bg: #fff;
-$blue: #425af2;
-
-// Import Bootstrap and its default variables
-@import "~bootstrap/scss/bootstrap.scss";
+// Import Theme Style
+@import "./styles/theme.scss";
 
 body {
   margin: 0;
-  font-family: "Poppins", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  background: $body-bg;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,6 +12,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.text-center {
+  text-align: center!important;
+}
+
+.app-drawer .am-drawer-sidebar {
+  background-color: $white;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.app-drawer .am-drawer-sidebar .am-list {
+  width: 200px;
+  padding: 0;
+}
+
+.text-light {
+  font-weight: 100;
 }
 
 .nav-item {
@@ -27,7 +41,7 @@ code {
     padding: 0;
   }
   .active {
-    color: $blue;
+    color: $royal-blue;
   }
 }
 
