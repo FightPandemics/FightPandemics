@@ -37,7 +37,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./backend:/opt/app"
+      - "./backend:/app"
     depends_on:
       - mongo
       - mongo-express
