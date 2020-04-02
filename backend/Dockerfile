@@ -3,7 +3,7 @@ ARG GIT_COMMIT
 ARG NODE_ENV
 WORKDIR '/app'
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --production
 COPY . .
 RUN echo "{\"version\": \"$GIT_COMMIT\"}" > version.json
 
