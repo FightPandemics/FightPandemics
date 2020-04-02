@@ -5,7 +5,7 @@ const countries = require("../data/countries");
 const { validateGeolocation } = require("../validation/geolocation");
 
 const router = express.Router();
-const GEO_SERVICE_URL = "http://0.0.0.0:5000/geo-service";
+const GEO_SERVICE_URL = process.env.GEO_SERVICE_URL;
 const countryMap = countries.reduce(
   (map, { name, code }) => map.set(code, name),
   new Map(),

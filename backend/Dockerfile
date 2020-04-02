@@ -1,16 +1,13 @@
-FROM node:slim
+FROM node:12-alpine
 
 WORKDIR /app
 
-COPY package.json .
-
-COPY package-lock.json .
+COPY package.json package-lock.json ./
 
 RUN npm install && npm install -g nodemon
 
 ARG NODE_ENV
-ENV NODE_ENV=${NODE_ENV}
 
 COPY . .
 
-CMD ["npm", "run", "server"]
+CMD ["npm", "start"]

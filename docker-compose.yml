@@ -7,7 +7,7 @@ services:
       - "27017:27017"
     command: mongod
     volumes:
-      - "~/data:/data/db"
+      - "./data:/data/db"
   geo:
     build: geo-service
     container_name: geo-service
@@ -20,6 +20,8 @@ services:
       context: backend
       args:
         NODE_ENV: dev
+    environment:
+      GEO_SERVICE_URL: http://0.0.0.0:5000/geo-service
     ports:
       - "5050:5050"
     volumes:
