@@ -2,38 +2,64 @@ version: "3"
 services:
   mongo:
     image: mongo
-    container_name: mongodb
+    container_name: mongo
+    restart: always
+    networks:
+      - fp_network
+    
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - "27017:27017"
-    command: mongod
-    volumes:
-      - "./data:/data/db"
-  geo:
+      - 8081:8081
+    networks:
+      - fp_network
+    depends_on:
+      - mongo
+
+  geo-service:
     build: geo-service
     container_name: geo-service
     ports:
       - "5000:5000"
     volumes:
       - "./geo-service:/app"
-  backend:
+    networks:
+      - fp_network
+
+  backend-service:
     build:
       context: backend
       args:
         NODE_ENV: dev
-    environment:
-      GEO_SERVICE_URL: http://0.0.0.0:5000/geo-service
+    container_name: backend-service
+    restart: always
     ports:
-      - "5050:5050"
-    volumes:
-      - "./backend:/app"
-      - "/app/node_modules"
-    depends_on: [mongo]
+      - "8000:8000"
+    # volumes:
+    #   - "./backend:/app"
+    depends_on:
+      - mongo
+      - mongo-express
+    networks:
+      - fp_network
+
   client:
-    build: client
+    build:
+      context: client
+    restart: always
     ports:
-      - "3000:3000"
-    volumes:
-      - "./client:/app"
-      - "/app/node_modules"
+      - "3000:80"
+    # volumes:
+    #   - "./client:/app"
     stdin_open: true
-    depends_on: [mongo, geo, backend]
+    depends_on:
+      - mongo
+      - geo-service
+      - backend-service
+    networks:
+      - fp_network
+
+networks:
+  fp_network:
+    driver: bridge

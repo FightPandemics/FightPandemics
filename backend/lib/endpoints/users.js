@@ -1,16 +1,16 @@
 const express = require("express");
-
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const keys = require("../config/keys");
+const pino = require("pino");
+const { config } = require("../../config");
 
 // Load Input Validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 
 // Import User Model
-const User = require("../models/user");
+const User = require("../models/User");
 
 /**
  * @route POST api/users/auth
@@ -28,7 +28,7 @@ router.post("/auth", (req, res) => {
 
       if (validateData.isValid) {
         user = new User({
-          ...req.body
+          ...req.body,
         });
         user.save();
       }
@@ -43,18 +43,16 @@ router.post("/auth", (req, res) => {
     const payload = { id: user._id, email: user.email };
 
     // Sign Token
-    jwt.sign(
-      payload,
-      keys.secretOrKey,
-      { expiresIn: "7d" },
-      (err, token) => {
-        console.log(err);
-        res.json({
-          success: true,
-          token: `Bearer ${token}`,
-        });
+    jwt.sign(payload, config.jwt.key, config.jwt.params, (err, token) => {
+      if (err) {
+        pino.log(err);
+        res.status(500).send(err);
       }
-    );
+      res.json({
+        success: true,
+        token: `Bearer ${token}`,
+      });
+    });
   });
 });
 
@@ -74,7 +72,7 @@ router.get(
       name: req.user.name,
       email: req.user.email,
     });
-  }
+  },
 );
 
 module.exports = router;
