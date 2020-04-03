@@ -73,9 +73,36 @@ router.post(
     req.body.authorId = req.user.id;
     req.body.postId = postId;
     new Comment(req.body).save().then((comment) => {
-      Post.findOneAndUpdate({ _id: postId }, { $push: { comments: comment } })
-        .then((post) => res.status(200).json(comment))
+      Post.findOneAndUpdate(
+        { _id: postId },
+        { $push: { comments: comment } },
+        { new: true },
+      )
+        .then((post) => res.status(200).json(post))
         .catch((err) => res.status(404).send(err));
+    });
+  },
+);
+
+/**
+ * @route POST api/posts/:postId/like
+ * @desc Like/Unlike a post once
+ * @access Protected
+ */
+router.post(
+  "/:postId/like",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findOne({ _id: req.params.postId }, (err, post) => {
+      const userId = req.user.id;
+      if (!post.likes.includes(userId)) {
+        post.likes.push(userId);
+      } else {
+        let index = post.likes.indexOf(userId);
+        if (index > -1) post.likes.splice(index, 1);
+      }
+      post.save();
+      res.json(post);
     });
   },
 );
