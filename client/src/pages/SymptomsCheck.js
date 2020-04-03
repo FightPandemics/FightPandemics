@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import {
   AnswerButton,
   AnswerCheckbox,
+  getAnswersMap,
+  getCheckedAnswers,
   StyledWizard,
   WizardContainer,
   WizardStep,
@@ -76,13 +78,7 @@ const STEP_2_ANSWERS = [
 ];
 
 const STEP_2_STATE = {
-  answers: STEP_2_ANSWERS.reduce(
-    (answersMap, answer) => ({
-      ...answersMap,
-      [answer]: false,
-    }),
-    {},
-  ),
+  answers: getAnswersMap(STEP_2_ANSWERS),
   none: false,
 };
 
@@ -90,14 +86,17 @@ const Step2 = (props) => {
   const [state, updateState] = useState(STEP_2_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
-    console.log("toggleAnswer", answer);
-    // props.update("symptoms", { ...answers, [answer]: !answers[answer] });
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("symptoms", checkedAnswers);
   };
   const toggleNone = () => {
-    updateState({ ...state, none: !none });
-    // props.update("symptoms1", {})
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("symptoms", newNone ? [] : getCheckedAnswers(answers));
   };
-  console.log("Step2", { answers, none });
+
   return (
     <WizardStep>
       <h5 className="text-primary">
@@ -111,7 +110,7 @@ const Step2 = (props) => {
           key={i}
           text={answer}
           onSelect={() => toggleAnswer(answer)}
-          checked={checked}
+          checked={!none && checked}
         />
       ))}
       <AnswerCheckbox
@@ -135,13 +134,7 @@ const STEP_3_ANSWERS = [
 ];
 
 const STEP_3_STATE = {
-  answers: STEP_3_ANSWERS.reduce(
-    (answersMap, answer) => ({
-      ...answersMap,
-      [answer]: false,
-    }),
-    {},
-  ),
+  answers: getAnswersMap(STEP_3_ANSWERS),
   none: false,
 };
 
@@ -149,14 +142,17 @@ const Step3 = (props) => {
   const [state, updateState] = useState(STEP_3_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
-    console.log("toggleAnswer", answer);
-    // props.update("medical conditions", { ...answers, [answer]: !answers[answer] });
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("conditions", checkedAnswers);
   };
   const toggleNone = () => {
-    updateState({ ...state, none: !none });
-    // props.update("symptoms1", {})
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
-  console.log({ answers });
+
   return (
     <WizardStep>
       <h5 className="text-primary">
@@ -273,7 +269,6 @@ const Step6 = (props) => {
 const Step7 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
-    props.nextStep();
   };
 
   return (
@@ -286,24 +281,21 @@ const Step7 = (props) => {
         may include hospitals, care homes, emergency rooms, and other medical
         settings?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
-        &lt; 18: I am less than 18
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
-        They live in a care facility (This includes nursing homes and assisted
+      <AnswerButton onSelect={() => onSelectAnswer("currently living")}>
+        I live in a care facility (This includes nursing homes and assisted
         living)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("worked in last 14 days")}>
         Worked in a care facility in the last 14 days (This includes hospitals,
         assisted living facilities, etc. This includes part-time jobs and
         volunteering)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("planning to")}>
         Plan to work in care facility in the next 14 days (This includes
         hospitals, assisted living facilities, etc. This includes part-time jobs
         and volunteering)"
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("no")}>
         No (They do not live or work in a long-term care facility)
       </AnswerButton>
     </div>
@@ -316,7 +308,7 @@ export const SymptomsCheck = () => {
     const { answers } = state;
     const updatedAnswers = { ...answers, [key]: value };
     setState({ ...state, updatedAnswers });
-    if (key === "email") {
+    if (key === "careFacility") {
       localStorage.setItem(
         "symptomsCheckAnswers",
         JSON.stringify(updatedAnswers),
