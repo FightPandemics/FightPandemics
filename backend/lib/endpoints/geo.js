@@ -1,6 +1,6 @@
 const express = require("express");
 const { config } = require("../../config");
-const { findByLatLong } = require("../externals/geo");
+const { findByLatLong } = require("../components/Geo");
 const { geoSchema } = require("./schema/geo");
 
 const router = express.Router();

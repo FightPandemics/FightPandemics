@@ -19,7 +19,8 @@ const config = {
   jwt: {
     key: process.env.JWT_KEY,
     params: {
-      expiresIn: "7d",
+      algorithm: "RS512",
+      noTimestamp: true,
     },
   },
   auth: {

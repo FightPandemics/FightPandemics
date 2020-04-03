@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 
 const passportMiddleware = require("./middlewares/passport");
 const errorMiddleware = require("./middlewares/error");
+const accessTokenMiddleware = require("./middlewares/access-token");
 const version = require("./endpoints/version");
 const users = require("./endpoints/users");
 const posts = require("./endpoints/posts");
@@ -22,7 +23,7 @@ function createApp() {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.get("/version", version);
-  app.post("/api/signup", signUp);
+  app.post("/api/signup", accessTokenMiddleware, signUp);
 
   // Private Endpoints
   app.use(passport.initialize());

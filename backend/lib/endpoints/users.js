@@ -1,8 +1,8 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { authSchema } = require("./schema/users");
 const { config } = require("../../config");
+const { createToken } = require("../components/Jwt");
 const User = require("../models/User");
 
 const router = express.Router();
@@ -32,16 +32,16 @@ router.post("/auth", async (req, res) => {
   const payload = { id: user._id, email: user.email };
 
   // Sign Token
-  return jwt.sign(payload, config.jwt.key, config.jwt.params, (err, token) => {
-    if (err) {
-      req.log.error(err);
-      res.status(500).send(err);
-    }
-    res.json({
+  try {
+    const token = await createToken(payload);
+    return res.json({
       success: true,
       token: `Bearer ${token}`,
     });
-  });
+  } catch (err) {
+    req.log.error(err);
+    return res.status(500).send(err);
+  }
 });
 
 /**
