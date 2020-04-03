@@ -19,12 +19,12 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @route GET api/posts/post/:postId
+ * @route GET api/posts/:postId
  * @desc Get a post by post id
  * @access Public
  */
 
-router.get("/post/:postId", (req, res) => {
+router.get("/:postId", (req, res) => {
   Post.findById(req.params.postId)
     .then((post) => res.json(post))
     .catch((err) => res.status(404).send(err));
@@ -109,12 +109,12 @@ router.post(
 );
 
 /**
- * @route PATCH api/posts/post/:postId
+ * @route PATCH api/posts/:postId
  * @desc Update a post by post id
  * @access Protected
  */
 router.patch(
-  "/post/:postId",
+  "/:postId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.findById(req.params.postId)
@@ -132,12 +132,12 @@ router.patch(
 );
 
 /**
- * @route DELETE api/posts/post/:postId
+ * @route DELETE api/posts/:postId
  * @desc Delete a post by post id
  * @access Protected
  */
 router.delete(
-  "/post/:postId",
+  "/:postId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.findOneAndRemove(req.params.postId, (err) => {
