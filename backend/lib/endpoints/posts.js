@@ -1,7 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
+
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 /**
  * @route GET api/posts/
@@ -17,25 +19,25 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @route GET api/posts/post/:postId
+ * @route GET api/posts/:postId
  * @desc Get a post by post id
  * @access Public
  */
 
-router.get("/post/:postId", (req, res) => {
+router.get("/:postId", (req, res) => {
   Post.findById(req.params.postId)
     .then((post) => res.json(post))
     .catch((err) => res.status(404).send(err));
 });
 
 /**
- * @route GET api/posts/user/:ownerId
+ * @route GET api/posts/user/:authorId
  * @desc Get all posts of a user
  * @access Public
  */
 
-router.get("/user/:ownerId", (req, res) => {
-  Post.find({ ownerId: req.params.ownerId })
+router.get("/user/:authorId", (req, res) => {
+  Post.find({ authorId: req.params.authorId })
     .sort({ date: -1 }) // sort by date in reverse order to get the newest
     .then((posts) => res.json(posts))
     .catch((err) => res.status(404).send(err));
@@ -50,7 +52,7 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    req.body.ownerId = req.user.id;
+    req.body.authorId = req.user.id;
     new Post(req.body)
       .save()
       .then((post) => res.status(200).json(post))
@@ -59,12 +61,32 @@ router.post(
 );
 
 /**
- * @route PATCH api/posts/post/:postId
+ * @route POST api/posts/:postId/comment
+ * @desc Create a comment by post id
+ * @access Protected
+ */
+router.post(
+  "/:postId/comment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const postId = req.params.postId;
+    req.body.authorId = req.user.id;
+    req.body.postId = postId;
+    new Comment(req.body).save().then((comment) => {
+      Post.findOneAndUpdate({ _id: postId }, { $push: { comments: comment } })
+        .then((post) => res.status(200).json(comment))
+        .catch((err) => res.status(404).send(err));
+    });
+  },
+);
+
+/**
+ * @route PATCH api/posts/:postId
  * @desc Update a post by post id
  * @access Protected
  */
 router.patch(
-  "/post/:postId",
+  "/:postId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.findById(req.params.postId)
@@ -82,12 +104,12 @@ router.patch(
 );
 
 /**
- * @route DELETE api/posts/post/:postId
+ * @route DELETE api/posts/:postId
  * @desc Delete a post by post id
  * @access Protected
  */
 router.delete(
-  "/post/:postId",
+  "/:postId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.findOneAndRemove(req.params.postId, (err) => {
