@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const WizardContainer = styled.div`
-  margin-top: 160px;
+  margin: 100px 0 0 0;
   max-width: 600px;
 `;
 

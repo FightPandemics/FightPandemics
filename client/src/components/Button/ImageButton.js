@@ -8,30 +8,42 @@ const FlexDiv = styled.div`
   width: 150px;
   display: flex;
   flex-flow: column;
-`
+`;
 
-const NestedImage = styled.img`
-  content: url('${props => props.inactiveImg}');
-
-  .am-button-active & {
-    content: url('${props => props.activeImg}');
+const NestedImage = styled.img.attrs((props) => {
+  console.log("img", { props });
+  return {
+    src: props.inactiveImg,
+  };
+})`
+  &:hover {
+    content: url('${(props) => props.activeImg}');
   }
-`
+`;
 
-export default ({ inactiveImg, activeImg, children, ...props}) => {
+const DEFAULT_HEIGHT = 140;
+const DEFAULT_WIDTH = 140;
+
+export default ({
+  inactiveImg,
+  activeImg,
+  height = DEFAULT_HEIGHT,
+  width = DEFAULT_WIDTH,
+  children,
+  ...props
+}) => {
+  console.log({ inactiveImg });
   return (
-    <FeedbackButton
-      style={{height: "unset"}}
-      inline
-      {...props}
-    >
+    <FeedbackButton style={{ height: "unset" }} inline {...props}>
       <FlexDiv>
         <NestedImage
           inactiveImg={inactiveImg}
           activeImg={activeImg || inactiveImg}
+          height={height}
+          width={width}
         />
         {children}
       </FlexDiv>
     </FeedbackButton>
   );
-}
+};
