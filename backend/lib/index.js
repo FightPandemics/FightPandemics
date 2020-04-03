@@ -9,6 +9,7 @@ const passportMiddleware = require("./middlewares/passport");
 const errorMiddleware = require("./middlewares/error");
 const version = require("./endpoints/version");
 const users = require("./endpoints/users");
+const likes = require("./endpoints/likes");
 const posts = require("./endpoints/posts");
 const geo = require("./endpoints/geo");
 
@@ -29,6 +30,7 @@ function createApp() {
   app.get("/version", version());
   app.use("/api/users", users);
   app.use("/api/posts", posts);
+  app.use("/api/likes", likes);
   app.use("/api/geo", geo);
 
   app.use(errorMiddleware);
