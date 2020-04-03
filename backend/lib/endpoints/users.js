@@ -1,59 +1,47 @@
 const express = require("express");
-const router = express.Router();
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const pino = require("pino");
+const { authSchema } = require("./schema/users");
 const { config } = require("../../config");
-
-// Load Input Validation
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
-
-// Import User Model
+const { createToken } = require("../components/Jwt");
 const User = require("../models/User");
+
+const router = express.Router();
 
 /**
  * @route POST api/users/auth
  * @desc Allow Users to login/register
  * @access Public
  */
-router.post("/auth", (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
-    // console.log(email);
-    let validateData;
-    if (user) {
-      validateData = validateLoginInput(req.body);
-    } else {
-      validateData = validateRegisterInput(req.body);
+router.post("/auth", async (req, res) => {
+  const { error, value: validatedData } = authSchema.validate(
+    req.body,
+    config.joi.params,
+  );
+  if (error) res.status(400).json(error);
 
-      if (validateData.isValid) {
-        user = new User({
-          ...req.body,
-        });
-        user.save();
-      }
-    }
-
-    // Check Validation
-    if (!validateData.isValid) {
-      return res.status(400).json(validateData.errors);
-    }
-
-    // Create JWT Payload
-    const payload = { id: user._id, email: user.email };
-
-    // Sign Token
-    jwt.sign(payload, config.jwt.key, config.jwt.params, (err, token) => {
-      if (err) {
-        pino.log(err);
-        res.status(500).send(err);
-      }
-      res.json({
-        success: true,
-        token: `Bearer ${token}`,
-      });
+  let user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    user = new User({
+      ...user,
+      ...validatedData,
     });
-  });
+    user.save();
+  }
+
+  // Create JWT Payload
+  const payload = { id: user._id, email: user.email };
+
+  // Sign Token
+  try {
+    const token = await createToken(payload);
+    return res.json({
+      success: true,
+      token: `Bearer ${token}`,
+    });
+  } catch (err) {
+    req.log.error(err);
+    return res.status(500).send(err);
+  }
 });
 
 /**

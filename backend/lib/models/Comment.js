@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const CommentSchema = new Schema({
   authorId: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   postId: {
     type: Schema.Types.ObjectId,
-    ref: "posts",
+    ref: "Post",
     required: true,
   },
   comment: {
@@ -19,4 +19,4 @@ const CommentSchema = new Schema({
   },
 });
 
-module.exports = Comment = mongoose.model("comments", CommentSchema);
+module.exports = mongoose.model("Comment", CommentSchema);

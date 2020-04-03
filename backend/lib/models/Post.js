@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
-const CommentSchema = require("./Comment").schema;
+const { Schema } = mongoose;
+const { schema: CommentSchema } = require("./Comment");
 
 // Create Schema
 const PostSchema = new Schema({
   authorId: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   title: {
@@ -55,4 +55,4 @@ const PostSchema = new Schema({
   postEmail: String,
 });
 
-module.exports = Post = mongoose.model("posts", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);

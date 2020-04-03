@@ -1,6 +1,6 @@
-const path = require("path");
 const pkg = require("../../package.json");
-const doc = require(path.resolve(__dirname, "../../version.json"));
+
+const doc = require("../../version.json");
 
 const versionDetails = {
   commit: doc.version,
@@ -8,4 +8,4 @@ const versionDetails = {
   version: pkg.version,
 };
 
-module.exports = () => (req, res) => res.json(versionDetails);
+module.exports = (req, res) => res.json(versionDetails);
