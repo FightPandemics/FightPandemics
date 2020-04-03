@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Create Schema
 const PostSchema = new Schema({
@@ -50,4 +50,4 @@ const PostSchema = new Schema({
   postEmail: String,
 });
 
-module.exports = Post = mongoose.model("posts", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);
