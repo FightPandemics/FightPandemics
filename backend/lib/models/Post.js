@@ -5,7 +5,7 @@ const CommentSchema = require("./Comment").schema;
 
 // Create Schema
 const PostSchema = new Schema({
-  ownerId: {
+  authorId: {
     type: Schema.Types.ObjectId,
     ref: "users",
     required: true,

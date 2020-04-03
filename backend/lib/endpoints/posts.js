@@ -31,13 +31,13 @@ router.get("/:postId", (req, res) => {
 });
 
 /**
- * @route GET api/posts/user/:ownerId
+ * @route GET api/posts/user/:authorId
  * @desc Get all posts of a user
  * @access Public
  */
 
-router.get("/user/:ownerId", (req, res) => {
-  Post.find({ ownerId: req.params.ownerId })
+router.get("/user/:authorId", (req, res) => {
+  Post.find({ authorId: req.params.authorId })
     .sort({ date: -1 }) // sort by date in reverse order to get the newest
     .then((posts) => res.json(posts))
     .catch((err) => res.status(404).send(err));
@@ -52,7 +52,7 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    req.body.ownerId = req.user.id;
+    req.body.authorId = req.user.id;
     new Post(req.body)
       .save()
       .then((post) => res.status(200).json(post))
@@ -70,7 +70,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const postId = req.params.postId;
-    req.body.ownerId = req.user.id;
+    req.body.authorId = req.user.id;
     req.body.postId = postId;
     Post.findById(postId)
       .then((post) => {
