@@ -17,6 +17,10 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
+  likes: {
+    type: [Schema.Types.ObjectId],
+    ref: "likes",
+  },
 });
 
 module.exports = Comment = mongoose.model("comments", CommentSchema);

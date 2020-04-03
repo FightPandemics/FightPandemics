@@ -25,11 +25,35 @@ router.post(
         newLike.save();
         post.likes.push(newLike);
         post.save();
-        res.status(200).json(post.likes);
+        res.status(200).json(post);
       })
       .catch((err) => res.status(404).send(err));
   },
 );
 
+/**
+ * @route POST api/likes/comment/:commentId
+ * @desc Like a post
+ * @access Protected
+ */
+
+router.post(
+  "/comment/:commentId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Comment.findById(req.params.commentId)
+      .then((comment) => {
+        const newLike = new Like({
+          likedBy: req.user.id,
+          likedComment: comment._id,
+        });
+        newLike.save();
+        comment.likes.push(newLike);
+        comment.save();
+        res.status(200).json(comment);
+      })
+      .catch((err) => res.status(404).send(err));
+  },
+);
 
 module.exports = router;
