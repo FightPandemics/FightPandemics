@@ -46,10 +46,6 @@ const PostSchema = new Schema({
     type: [CommentSchema],
     default: [],
   },
-  likes: {
-    type: [Schema.Types.ObjectId],
-    ref: "likes",
-  },
   tags: [String],
   language: [String],
   website: String,
