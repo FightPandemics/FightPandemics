@@ -94,6 +94,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.findOne({ _id: req.params.postId }, (err, post) => {
+      if (err) res.send(err);
       const userId = req.user.id;
       if (!post.likes.includes(userId)) {
         post.likes.push(userId);
@@ -102,7 +103,7 @@ router.post(
         if (index > -1) post.likes.splice(index, 1);
       }
       post.save();
-      res.json(post);
+      res.status(200).json(post);
     });
   },
 );
