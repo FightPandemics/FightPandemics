@@ -69,7 +69,7 @@ router.get(
   (req, res) => {
     res.json({
       id: req.user.id,
-      name: req.user.name,
+      firstName: req.user.firstName,
       email: req.user.email,
     });
   },

@@ -3,6 +3,7 @@ const cors = require("cors");
 const passport = require("passport");
 const pino = require("pino")();
 const pinoExpress = require("pino-express");
+var bodyParser = require("body-parser");
 
 const passportMiddleware = require("./middlewares/passport");
 const errorMiddleware = require("./middlewares/error");
@@ -17,6 +18,8 @@ function createApp() {
   app.use(cors());
   app.use(pinoExpress(pino));
   app.use(express.json());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded());
 
   // Passportn Middleware
   app.use(passport.initialize());
