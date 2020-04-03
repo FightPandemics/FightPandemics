@@ -72,15 +72,11 @@ router.post(
     const postId = req.params.postId;
     req.body.authorId = req.user.id;
     req.body.postId = postId;
-    Post.findById(postId)
-      .then((post) => {
-        const newComment = new Comment(req.body);
-        post.comments.push(newComment);
-        newComment.save();
-        post.save();
-        res.status(200).json(newComment);
-      })
-      .catch((err) => res.status(404).send(err));
+    new Comment(req.body).save().then((comment) => {
+      Post.findOneAndUpdate({ _id: postId }, { $push: { comments: comment } })
+        .then((post) => res.status(200).json(comment))
+        .catch((err) => res.status(404).send(err));
+    });
   },
 );
 
