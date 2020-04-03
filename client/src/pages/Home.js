@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import ImageButton from "../components/Button/ImageButton";
 
-const FlexChild = styled.div`
-  flex-grow: 1
-`
+const needHelpInactive = require("../assets/thermometer-unselected.svg");
+const needHelpActive = require("../assets/thermometer-selected.svg");
+const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
+const offerHelpActive = require("../assets/help-gesture-selected.svg");
 
-export const Home = () => {
+const FlexChild = styled.div`
+  flex-grow: 1;
+`;
+
+export const Home = (props) => {
+  console.log("render home", { props });
   return (
     <div className="text-center">
       <h4 className="text-light">Welcome to FightPandemics</h4>
@@ -16,26 +22,24 @@ export const Home = () => {
       <p>We help you be prepared to stop them.</p>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <FlexChild>
-          <Link to="/need-help">
-            <ImageButton
-              type="ghost"
-              inactiveImg={require("~/assets/thermometer-unselected.svg")}
-              activeImg={require("~/assets/thermometer-selected.svg")}
-            >
-              I need help
-            </ImageButton>
-          </Link>
+          <ImageButton
+            type="ghost"
+            inactiveImg={needHelpInactive}
+            activeImg={needHelpActive}
+            onClick={() => props.history.push("/need-help")}
+          >
+            I need help
+          </ImageButton>
         </FlexChild>
         <FlexChild>
-          <Link to="/offer-help">
-            <ImageButton
-              type="ghost"
-              inactiveImg={require("~/assets/help-gesture-unselected.svg")}
-              activeImg={require("~/assets/help-gesture-selected.svg")}
-            >
-              I want to help
-            </ImageButton>
-          </Link>
+          <ImageButton
+            type="ghost"
+            inactiveImg={offerHelpInactive}
+            activeImg={offerHelpActive}
+            onClick={() => props.history.push("/offer-help")}
+          >
+            I want to help
+          </ImageButton>
         </FlexChild>
       </div>
       <p>

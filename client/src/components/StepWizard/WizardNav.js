@@ -7,6 +7,7 @@ import { PRIMARY } from "../../constants/colors";
 const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 10px 0;
 `;
 
 const CircleButton = styled(Button)`

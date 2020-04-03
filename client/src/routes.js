@@ -5,13 +5,7 @@ import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
 import FindHelp from "./pages/find-help/FindHelp";
-import SymptomsCheck from "./pages/SymptomsCheck";
-import Page1 from "./pages/symptoms-check/pages/Page1";
-import Page2 from "./pages/symptoms-check/pages/Page2";
-import Page3 from "./pages/symptoms-check/pages/Page3";
-import Page4 from "./pages/symptoms-check/pages/Page4";
-import Page5 from "./pages/symptoms-check/pages/Page5";
-import Page6 from "./pages/symptoms-check/pages/Page6";
+import { SymptomsCheck } from "./pages/SymptomsCheck";
 
 export const routes = [
   {

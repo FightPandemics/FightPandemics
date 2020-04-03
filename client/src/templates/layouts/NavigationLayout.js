@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import { Drawer, List } from 'antd-mobile';
+import { Drawer, List } from "antd-mobile";
 import { useAuth0 } from "~/react-auth0-spa";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from '~/components/Header';
+import Header from "~/components/Header";
 
-const StyleDrawer = {
+const drawerStyles = {
   position: "relative",
-  overflow: "auto",
-  "-webkit-overflow-scrolling": "touch"
-}
+  overflow: "hidden",
+  WebkitOverflowScrolling: "touch",
+};
 
-const StyleSidebar = {
-  background: "#425AF2"
-}
+const sidebarStyle = {
+  background: "#425AF2",
+};
 
 const Main = styled.main`
   margin-left: 20px;
   margin-right: 20px;
-`
+`;
 
-const NavList = styled(List).attrs(props => ({
-  activeStyle: false
-}))`
+const NavList = styled(List)`
   & .am-list-body {
     background: unset;
     position: absolute;
@@ -39,10 +37,10 @@ const NavList = styled(List).attrs(props => ({
       height: 0px !important;
     }
   }
-`
+`;
 
-const NavItem = styled(List.Item).attrs(props => ({
-  onClick: props.onClick || (() => props.history.push(props.link))
+const NavItem = styled(List.Item).attrs((props) => ({
+  onClick: props.onClick || (() => props.history.push(props.link)),
 }))`
   background: unset;
 
@@ -51,42 +49,34 @@ const NavItem = styled(List.Item).attrs(props => ({
   }
 
   &.am-list-item-active {
-    background: #B8C2F8;
+    background: #b8c2f8;
   }
-`
+`;
 
 export default (props) => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const history = useHistory();
 
-  const [ drawerOpened, setDrawerOpened ] = useState(false);
+  const [drawerOpened, setDrawerOpened] = useState(false);
 
   const toggleDrawer = () => {
-    setDrawerOpened(!drawerOpened)
-  }
+    setDrawerOpened(!drawerOpened);
+  };
 
-  const loginFunc = () => loginWithRedirect({})
-
-  const openLink = (link) => history.push(link)
+  const loginFunc = () => loginWithRedirect({});
 
   const drawerMenu = () => (
     <NavList>
       {isAuthenticated ? (
         <>
           <NavItem>
-            <Link to="/profile">
-              Profile
-            </Link>
+            <Link to="/profile">Profile</Link>
           </NavItem>
         </>
       ) : (
         <>
-          <NavItem onClick={loginFunc}>
-            Login
-          </NavItem>
-          <NavItem onClick={loginFunc}>
-            Register
-          </NavItem>
+          <NavItem onClick={loginFunc}>Login</NavItem>
+          <NavItem onClick={loginFunc}>Register</NavItem>
         </>
       )}
       <NavItem history={history} link="/about">
@@ -96,25 +86,26 @@ export default (props) => {
         Data Privacy
       </NavItem>
     </NavList>
-  )
+  );
 
   return (
-    <div>
+    <Drawer
+      style={{
+        minHeight: document.documentElement.clientHeight,
+        ...drawerStyles,
+      }}
+      enableDragHandle
+      open={drawerOpened}
+      onOpenChange={toggleDrawer}
+      position="right"
+      sidebar={drawerMenu()}
+      sidebarStyle={sidebarStyle}
+      className="app-drawer"
+    >
       <Header onMenuClick={toggleDrawer} />
-      <Drawer
-        style={{ minHeight: document.documentElement.clientHeight, ...StyleDrawer }}
-        enableDragHandle
-        open={drawerOpened}
-        onOpenChange={toggleDrawer}
-        position='right'
-        sidebar={drawerMenu()}
-        sidebarStyle={StyleSidebar}
-        className="app-drawer"
-      >
-        <Main>
-          <props.component {...props} />
-        </Main>
-      </Drawer>
-    </div>
-  )
-}
+      <Main>
+        <props.component {...props} />
+      </Main>
+    </Drawer>
+  );
+};

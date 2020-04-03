@@ -5,8 +5,7 @@ import { Checkbox } from "antd-mobile";
 import { PRIMARY } from "../../constants/colors";
 
 const AnswerStyles = styled.div`
-  display: block;
-  background-color: #fff;
+  display: flex;
   border: 2px solid ${PRIMARY};
   border-radius: 8px;
   box-sizing: border-box;
@@ -19,10 +18,10 @@ const AnswerStyles = styled.div`
   }
 `;
 
-const AnswerCheckbox = ({ children, checked, onSelect }) => {
+const AnswerCheckbox = ({ text, checked, onSelect }) => {
   return (
     <AnswerStyles onClick={onSelect}>
-      <>{children}</>
+      <span>{text}</span>
       <Checkbox checked={checked} />
     </AnswerStyles>
   );
