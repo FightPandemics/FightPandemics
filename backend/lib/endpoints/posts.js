@@ -1,7 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
+
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 /**
  * @route GET api/posts/
@@ -55,6 +57,30 @@ router.post(
       .save()
       .then((post) => res.status(200).json(post))
       .catch((err) => res.status(400).send(err));
+  },
+);
+
+/**
+ * @route POST api/posts/:postId/comment
+ * @desc Create a comment by post id
+ * @access Protected
+ */
+router.post(
+  "/:postId/comment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const postId = req.params.postId;
+    req.body.ownerId = req.user.id;
+    req.body.postId = postId;
+    Post.findById(postId)
+      .then((post) => {
+        const newComment = new Comment(req.body);
+        post.comments.push(newComment);
+        newComment.save();
+        post.save();
+        res.status(200).json(newComment);
+      })
+      .catch((err) => res.status(404).send(err));
   },
 );
 

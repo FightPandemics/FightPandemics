@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
+const CommentSchema = require("./Comment").schema;
 
 // Create Schema
 const PostSchema = new Schema({
@@ -40,6 +41,10 @@ const PostSchema = new Schema({
   status: {
     type: Boolean,
     required: true,
+  },
+  comments: {
+    type: [CommentSchema],
+    default: [],
   },
   tags: [String],
   language: [String],
