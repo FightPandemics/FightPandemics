@@ -81,30 +81,6 @@ router.post(
 );
 
 /**
- * @route POST api/posts/:postId/like
- * @desc Like/Unlike a post
- * @access Protected
- */
-router.post(
-  "/:postId/like",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Post.findById(req.params.postId)
-      .then((post) => {
-        const userId = req.user.id;
-        if (!post.likes.includes(userId)) {
-          post.likes.push(userId);
-        } else {
-          post.likes = post.likes.filter((id) => id === userId);
-        }
-        post.save();
-        res.status(200).json(post);
-      })
-      .catch((err) => res.status(404).send(err));
-  },
-);
-
-/**
  * @route PATCH api/posts/:postId
  * @desc Update a post by post id
  * @access Protected
