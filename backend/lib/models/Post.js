@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
+const { schema: CommentSchema } = require("./Comment");
 
 // Create Schema
 const PostSchema = new Schema({
-  ownerId: {
+  authorId: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   title: {
@@ -40,6 +41,10 @@ const PostSchema = new Schema({
   status: {
     type: Boolean,
     required: true,
+  },
+  comments: {
+    type: [CommentSchema],
+    default: [],
   },
   tags: [String],
   language: [String],
