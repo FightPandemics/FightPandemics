@@ -62,12 +62,14 @@ router.get("/user/:authorId", async (req, res) => {
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    req.body.authorId = req.user.id;
-    new Post(req.body)
-      .save()
-      .then((post) => res.status(200).json(post))
-      .catch((err) => res.status(400).send(err));
+  async (req, res) => {
+    try {
+      req.body.authorId = req.user.id;
+      const newPost = await new Post(req.body).save();
+      res.status(200).json(newPost);
+    } catch (error) {
+      res.status(404).send(error);
+    }
   },
 );
 
