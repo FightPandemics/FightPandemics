@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Modal, List, Button } from "antd-mobile";
+import { Modal, Accordion, Button } from "antd-mobile";
 import { DARK_GRAY } from "../../constants/colors";
 import FilterOptionButton from "../Button/FilterOptionButton";
+import FilterTag from "../Tag/FilterTag";
 import filterOptions from "../../assets/data/filterOptions";
 
 const FilterBoxWrapper = styled.div`
@@ -28,7 +29,9 @@ export default () => {
     setModal(false);
     setClickedLabel("");
   };
-
+  const onChange = (key) => {
+    console.log(key);
+  };
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
@@ -36,7 +39,8 @@ export default () => {
         <FilterOptionButton
           handleClick={openModal(filter.label)}
           key={idx}
-          filter={filter}
+          label={filter.label}
+          icon={true}
         />
       ))}
       <Modal
@@ -48,19 +52,17 @@ export default () => {
           console.log("afterClose");
         }}
       >
-        <List
-          renderHeader={() => <div>Placeholder Text</div>}
-          className="popup-list"
-        >
-          {Object.values(filterOptions).map((filter, index) => (
-            <List.Item key={index}>{filter.label}</List.Item>
+        <Accordion className="my-accordion" onChange={onChange}>
+          {Object.values(filterOptions).map((filter) => (
+            <Accordion.Panel header={filter.label}>
+              {Object.values(filter.options).map((option) => (
+                <FilterTag label={option} />
+              ))}
+            </Accordion.Panel>
           ))}
-          <List.Item>
-            <Button type="primary" onClick={openModal(clickedLabel)}>
-              Apply Filters
-            </Button>
-          </List.Item>
-        </List>
+        </Accordion>
+        <Button>Quit Filters</Button>
+        <Button>Apply Filters</Button>
       </Modal>
     </FilterBoxWrapper>
   );

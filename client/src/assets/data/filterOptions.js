@@ -1,5 +1,5 @@
 module.exports = {
-  location: { label: "Location" },
+  location: { label: "Location", options: [] },
   provider: {
     label: "Provider",
     options: ["Individuals", "Communities", "Organizations", "Government"],

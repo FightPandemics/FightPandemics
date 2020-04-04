@@ -40,11 +40,10 @@ const labelStyles = {
   letterSpacing: "1px",
 };
 
-export default ({ filter, handleClick }) => {
-  const { label } = filter;
+export default ({ label, handleClick }) => {
   return (
-    <Option onClick={handleClick}>
-      <div style={labelWrapperStyles}>
+    <Option>
+      <div onClick={handleClick} style={labelWrapperStyles}>
         <span style={labelStyles}>{label}</span>
         <Icon type="down" size="xxs" />
       </div>
