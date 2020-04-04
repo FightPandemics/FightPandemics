@@ -15,6 +15,7 @@ const Option = styled(Button)`
   margin-right: 7px;
   line-height: 30px;
   border-radius: 6px;
+  padding: 5px 10px;
   &.am-button {
     &:before {
       content: normal !important;
@@ -39,9 +40,9 @@ const labelStyles = {
   letterSpacing: "1px",
 };
 
-export default ({ label }) => {
+export default ({ label, handleClick }) => {
   return (
-    <Option>
+    <Option onClick={handleClick}>
       <div style={labelWrapperStyles}>
         <span style={labelStyles}>{label}</span>
         <Icon type="down" size="xxs" />

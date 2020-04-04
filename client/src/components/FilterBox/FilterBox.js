@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Modal, List, Button, WhiteSpace, WingBlank, Icon } from "antd-mobile";
 import FilterOptionButton from "../Button/FilterOptionButton";
 import { DARK_GRAY } from "../../constants/colors";
 
@@ -19,7 +20,11 @@ export default () => {
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
       {labels.map((label, idx) => (
-        <FilterOptionButton key={idx} label={label} />
+        <FilterOptionButton
+          handleClick={() => console.log("clicked")}
+          key={idx}
+          label={label}
+        />
       ))}
     </FilterBoxWrapper>
   );
