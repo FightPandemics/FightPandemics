@@ -36,7 +36,7 @@ export const routes = [
   },
   {
     path: "/find-help",
-    component: FindHelp,
+    component: Feed,
   },
   {
     path: "/symptoms-check",

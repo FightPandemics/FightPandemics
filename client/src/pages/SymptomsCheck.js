@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { Button, Radio } from 'antd';
+import { Link, withRouter } from "react-router-dom";
+import "../styles/style.css"; 
+
+
 
 import {
   AnswerButton,
@@ -10,6 +15,7 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
+
 
 const INITIAL_STATE = {
   answers: [],
@@ -53,6 +59,12 @@ const Step1 = (props) => {
 
   return (
     <WizardStep>
+      <p className="mb-99">
+        <Link to="medical">
+          {/* By clicking on “X”, users can exit the symptoms questions to medical page */}
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -99,6 +111,11 @@ const Step2 = (props) => {
 
   return (
     <WizardStep>
+      <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -155,9 +172,15 @@ const Step3 = (props) => {
 
   return (
     <WizardStep>
+      <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
+      
       <h2 className="mb-5">
         Do you have any of these pre-existing medical conditions? Please, select
         all that apply?
@@ -181,24 +204,40 @@ const Step3 = (props) => {
 
 const Step4 = (props) => {
   const onSelectAnswer = (answer) => {
+    
     props.update("traveledLast14Days", answer);
     props.nextStep();
+    
   };
+  // const { size } = this.state;
+
 
   return (
     <div>
+       <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 1} 
       </h5>
+     
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
       </h2>
+      
       <AnswerButton onSelect={() => onSelectAnswer("medical")}>
         Yes
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
         No
       </AnswerButton>
+      
+
+      {/* <Button type="link" size={size}>
+          Link
+        </Button> */}
     </div>
   );
 };
@@ -211,6 +250,11 @@ const Step5 = (props) => {
 
   return (
     <div>
+      <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -239,6 +283,11 @@ const Step6 = (props) => {
 
   return (
     <div>
+      <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -269,10 +318,18 @@ const Step6 = (props) => {
 const Step7 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
+    props.nextStep();
+    // props.goToStep(3);
+
   };
 
   return (
     <div>
+      <p className="mb-99">
+        <Link to="medical">
+          X
+        </Link>
+      </p>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
@@ -302,6 +359,30 @@ const Step7 = (props) => {
   );
 };
 
+const Step8 = (props) => {
+
+  return (
+    <div>
+      
+      <h5 className="text-primary">
+        Result 
+      </h5>
+      <h2 className="mb-5">
+        - Testing recommended
+
+        - Contact your occupational health
+
+        - Contact your provider if symptoms worsen
+
+        - Self isolate
+      </h2>
+      
+    </div>
+  );
+};
+
+
+
 export const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
@@ -327,6 +408,8 @@ export const SymptomsCheck = () => {
         <Step5 hashKey={"Step5"} update={updateAnswers} />
         <Step6 hashKey={"Step6"} update={updateAnswers} />
         <Step7 hashKey={"Step7"} update={updateAnswers} />
+        <Step8 hashKey={"Step8"} update={updateAnswers} />
+
       </StyledWizard>
     </WizardContainer>
   );
