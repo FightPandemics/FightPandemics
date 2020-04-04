@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal, Accordion, Button } from "antd-mobile";
 import { DARK_GRAY } from "../../constants/colors";
-import FilterOptionButton from "../Button/FilterOptionButton";
-import FilterTag from "../Tag/FilterTag";
 import filterOptions from "../../assets/data/filterOptions";
-import FilterAccordion from "../Accordion/FilterAccordion";
+import FilterTag from "../Tag/FilterTag";
+import FilterOptionButton from "../Button/FilterOptionButton";
+import {
+  FilterAccordion,
+  FilterAccordionPanel,
+} from "../Accordion/FilterAccordion";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
@@ -53,17 +56,15 @@ export default () => {
           console.log("afterClose");
         }}
       >
-        <Accordion className="my-accordion" onChange={onChange}>
+        <FilterAccordion className="my-accordion" onChange={onChange}>
           {Object.values(filterOptions).map((filter) => (
-            <FilterAccordion header={filter.label}>
-              <div style={{ margin: "10px 15px", textAlign: "center" }}>
-                {Object.values(filter.options).map((option) => (
-                  <FilterTag label={option} />
-                ))}
-              </div>
-            </FilterAccordion>
+            <FilterAccordionPanel header={filter.label}>
+              {Object.values(filter.options).map((option) => (
+                <FilterTag label={option} />
+              ))}
+            </FilterAccordionPanel>
           ))}
-        </Accordion>
+        </FilterAccordion>
       </Modal>
     </FilterBoxWrapper>
   );
