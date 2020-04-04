@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import FilterOptionButton from "../Button/FilterOptionButton";
-import { Modal, List, Button, WhiteSpace, WingBlank, Icon } from "antd-mobile";
+import { Modal, List, Button } from "antd-mobile";
 import { DARK_GRAY } from "../../constants/colors";
+import FilterOptionButton from "../Button/FilterOptionButton";
+import filterOptions from "../../assets/data/filterOptions";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
@@ -23,10 +24,13 @@ export default () => {
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
-      {labels.map((label, idx) => (
-        <FilterOptionButton handleClick={toggleModal} key={idx} label={label} />
+      {Object.values(filterOptions).map((filter, idx) => (
+        <FilterOptionButton
+          handleClick={toggleModal}
+          key={idx}
+          filter={filter}
+        />
       ))}
-      <WhiteSpace />
       <Modal
         popup
         visible={modal}

@@ -40,7 +40,8 @@ const labelStyles = {
   letterSpacing: "1px",
 };
 
-export default ({ label, handleClick }) => {
+export default ({ filter, handleClick }) => {
+  const { label } = filter;
   return (
     <Option onClick={handleClick}>
       <div style={labelWrapperStyles}>
