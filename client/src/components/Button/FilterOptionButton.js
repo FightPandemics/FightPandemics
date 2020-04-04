@@ -14,6 +14,7 @@ const Option = styled(Button)`
   margin-top: 7px;
   margin-right: 7px;
   line-height: 30px;
+  border-radius: 6px;
   &.am-button {
     &:before {
       content: normal !important;
@@ -32,7 +33,7 @@ const labelStyles = {
   alignItems: "center",
 };
 
-export const FilterOptionButton = ({ label }) => {
+export default ({ label }) => {
   return (
     <Option>
       <div style={labelStyles}>

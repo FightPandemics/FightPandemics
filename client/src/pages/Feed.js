@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-import { FilterOptionButton } from "../components/Button/FilterOptionButton";
+import FilterBox from "../components/FilterBox/FilterBox";
 
-const FeedContainer = styled.div`
+const FeedWraper = styled.div`
   width: 100%;
   padding: 20px 0;
 `;
 
 const Feed = () => {
   return (
-    <FeedContainer>
-      <FilterOptionButton label={"Location"} />
-    </FeedContainer>
+    <FeedWraper>
+      <FilterBox />
+    </FeedWraper>
   );
 };
 
