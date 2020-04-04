@@ -155,11 +155,15 @@ router.patch(
 router.delete(
   "/:postId",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Post.findOneAndRemove(req.params.postId, (err) => {
-      if (err) res.status(404).send(err);
-      res.status(200).send("Sucessfully deleted post.");
-    });
+  async (req, res) => {
+    try {
+      const removedPost = await Post.findOneAndRemove({
+        _id: req.params.postId,
+      });
+      res.status(200).json({ sucessMessage: "Successfully deleted post" });
+    } catch (error) {
+      res.status(404).send(error);
+    }
   },
 );
 module.exports = router;
