@@ -28,16 +28,22 @@ const Option = styled(Button)`
   }
 `;
 
-const labelStyles = {
+const labelWrapperStyles = {
   display: "flex",
   alignItems: "center",
+};
+
+const labelStyles = {
+  marginRight: "4px",
+  fontWeight: "600",
+  letterSpacing: "1px",
 };
 
 export default ({ label }) => {
   return (
     <Option>
-      <div style={labelStyles}>
-        <span style={{ marginRight: "4px", fontWeight: "600" }}>{label}</span>
+      <div style={labelWrapperStyles}>
+        <span style={labelStyles}>{label}</span>
         <Icon type="down" size="xxs" />
       </div>
     </Option>
