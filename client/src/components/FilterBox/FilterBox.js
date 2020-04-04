@@ -16,17 +16,25 @@ const FilterTitle = styled.p`
 
 export default () => {
   const [modal, setModal] = useState(false);
-  const labels = ["Location", "Provider", "Type", "Looking for"];
-  const toggleModal = (e) => {
+  const [clickedLabel, setClickedLabel] = useState("");
+
+  const openModal = (label) => (e) => {
     e.preventDefault();
-    setModal(!modal);
+    setModal(true);
+    setClickedLabel(label);
   };
+
+  const closeModal = () => {
+    setModal(false);
+    setClickedLabel("");
+  };
+
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
       {Object.values(filterOptions).map((filter, idx) => (
         <FilterOptionButton
-          handleClick={toggleModal}
+          handleClick={openModal(filter.label)}
           key={idx}
           filter={filter}
         />
@@ -34,7 +42,7 @@ export default () => {
       <Modal
         popup
         visible={modal}
-        onClose={toggleModal}
+        onClose={closeModal}
         animationType="slide-up"
         afterClose={() => {
           console.log("afterClose");
@@ -44,11 +52,11 @@ export default () => {
           renderHeader={() => <div>Placeholder Text</div>}
           className="popup-list"
         >
-          {labels.map((i, index) => (
-            <List.Item key={index}>{i}</List.Item>
+          {Object.values(filterOptions).map((filter, index) => (
+            <List.Item key={index}>{filter.label}</List.Item>
           ))}
           <List.Item>
-            <Button type="primary" onClick={toggleModal}>
+            <Button type="primary" onClick={openModal(clickedLabel)}>
               Apply Filters
             </Button>
           </List.Item>
