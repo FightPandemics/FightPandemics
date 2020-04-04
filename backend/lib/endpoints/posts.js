@@ -81,19 +81,21 @@ router.post(
 router.post(
   "/:postId/comment",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const postId = req.params.postId;
-    req.body.authorId = req.user.id;
-    req.body.postId = postId;
-    new Comment(req.body).save().then((comment) => {
-      Post.findOneAndUpdate(
+  async (req, res) => {
+    try {
+      const postId = req.params.postId;
+      req.body.authorId = req.user.id;
+      req.body.postId = postId;
+      const newComment = await new Comment(req.body).save();
+      const updatedPost = await Post.findOneAndUpdate(
         { _id: postId },
-        { $push: { comments: comment } },
+        { $push: { comments: newComment } },
         { new: true },
-      )
-        .then((post) => res.status(200).json(post))
-        .catch((err) => res.status(404).send(err));
-    });
+      );
+      res.status(200).json(updatedPost);
+    } catch (error) {
+      res.status(404).send(error);
+    }
   },
 );
 
