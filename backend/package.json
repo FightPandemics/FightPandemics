@@ -1,0 +1,61 @@
+{
+  "name": "fightpandemics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Help to to fight global pandemics",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js -L server.js",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  },
+  "keywords": [
+    "fight",
+    "pandemics"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "atob": "^2.1.2",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "pino": "^6.0.0",
+    "pino-express": "^1.1.1",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-utils": "^2.0.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.1",
+    "nock": "^12.0.3",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.2",
+    "supertest": "^4.0.2"
+  }
+}

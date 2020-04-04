@@ -1,4 +1,5 @@
-node_modules
-package-lock.json
-/backend/config/keys_dev.js
+**/.env
+/data
 /geo-service/venv
+**/node_modules
+.vscode

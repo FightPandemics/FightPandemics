@@ -1,37 +1,53 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import styled from "styled-components";
+import ImageButton from "../components/Button/ImageButton";
 
-const CONTAINER_STYLES = {
-  marginTop: "160px",
-  width: "600px",
-};
+const needHelpInactive = require("../assets/thermometer-unselected.svg");
+const needHelpActive = require("../assets/thermometer-selected.svg");
+const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
+const offerHelpActive = require("../assets/help-gesture-selected.svg");
 
-export const Home = () => {
+const FlexChild = styled.div`
+  flex-grow: 1;
+`;
+
+export const Home = (props) => {
+  console.log("render home", { props });
   return (
-    <div className="text-center mx-auto" style={CONTAINER_STYLES}>
-      <h5 className="text-primary">WELCOME TO FIGHT PANDEMICS</h5>
-      <h1 className="display-4 font-weight-bolder">
-        Help us prevent the spread of COVID-19
-      </h1>
+    <div className="text-center">
+      <h4 className="text-light">Welcome to FightPandemics</h4>
+      <h2>Help us prevent the spread of COVID-19</h2>
       <p>Pandemics are bound to continue to happen.</p>
       <p>We help you be prepared to stop them.</p>
-      <div style={{ display: "flex", margin: "10px 100px" }}>
-        <div style={{ flexGrow: 1, marginRight: "16px" }}>
-          <Link to="/need-help">
-            <Button block variant="primary">
-              I need help
-            </Button>
-          </Link>
-        </div>
-        <div style={{ flexGrow: 1 }}>
-          <Link to="/offer-help">
-            <Button block variant="light">
-              I want to help
-            </Button>
-          </Link>
-        </div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <FlexChild>
+          <ImageButton
+            type="ghost"
+            inactiveImg={needHelpInactive}
+            activeImg={needHelpActive}
+            onClick={() => props.history.push("/need-help")}
+          >
+            I need help
+          </ImageButton>
+        </FlexChild>
+        <FlexChild>
+          <ImageButton
+            type="ghost"
+            inactiveImg={offerHelpInactive}
+            activeImg={offerHelpActive}
+            onClick={() => props.history.push("/offer-help")}
+          >
+            I want to help
+          </ImageButton>
+        </FlexChild>
       </div>
+      <p>
+        <Link to="/AirTableCOVID">
+          {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+          Skip
+        </Link>
+      </p>
     </div>
   );
 };

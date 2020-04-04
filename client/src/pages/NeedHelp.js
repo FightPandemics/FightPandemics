@@ -1,48 +1,41 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import StepWizard from "react-step-wizard";
+import { Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { Button } from "grommet";
 
-import { CheckBoxItem } from "../components/CheckBoxItem";
+import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
+import {
+  AnswerButton,
+  StyledWizard,
+  WizardContainer,
+  WizardStep,
+  WizardNav,
+} from "../components/StepWizard";
 
-// import Step3 from "../pages/Step3";
-
-const CONTAINER_STYLES = {
-  marginTop: "160px",
-  width: "600px",
+const INITIAL_STATE = {
+  answers: [],
 };
 
-// todo: should find or update step wizard to pass data from event instead of mutating this state
-const needHelpAnswers = [];
-
 const Step1 = (props) => {
-  const onSelectMedical = () => {
-    needHelpAnswers.push({ type: "need medical help" });
+  const onSelectAnswer = (answer) => {
+    props.update("helpTypeNeeded", answer);
     props.nextStep();
   };
-  const onSelectOther = () => {
-    needHelpAnswers.push({ type: "other, non medical" });
-    props.nextStep();
-  };
-
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">What type of help do you need?</h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="Medical: I believe I might have symptoms of COVID-19."
-        onSelect={onSelectMedical}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Other Help: I need assistance getting groceries/medicine/etc."
-        onSelect={onSelectOther}
-      />
-    </div>
+      <Title className="mb-5">What type of help do you need?</Title>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
+        <strong>Other Help:</strong> I need assistance getting
+        groceries/medicine/etc.
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
@@ -50,76 +43,77 @@ const Step2 = (props) => {
   const selectLocationDetection = async () => {
     try {
       const location = await asyncGetGeoLocation();
-      needHelpAnswers.push({ location });
+      props.update("location", location);
     } catch {
-      needHelpAnswers.push({ location: "unknown" });
+      props.update("location", "unknown");
     } finally {
       props.nextStep();
     }
   };
   const rejectLocationDetection = () => {
-    needHelpAnswers.push({ location: "unknown" });
+    props.update("location", "unknown");
     props.nextStep();
   };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">Where are you located?</h2>
-      <CheckBoxItem
-        id="detect"
-        label="Detect my location"
-        onSelect={selectLocationDetection}
-      />
-      <CheckBoxItem
-        id="reject"
-        label="Doesn't matter"
-        onSelect={rejectLocationDetection}
-      />
-    </div>
+      <Title className="mb-5">Where are you located?</Title>
+      <AnswerButton onSelect={selectLocationDetection}>
+        Detect my location
+      </AnswerButton>
+      <AnswerButton onSelect={rejectLocationDetection}>
+        Doesn't matter
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
-const Step3 = withRouter((props) => {
+const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const onChange = (evt) => setEmail(evt.target.value);
   const onSubmit = () => {
-    needHelpAnswers.push({ email });
-    localStorage.setItem("needHelpAnswers", JSON.stringify(needHelpAnswers));
-    props.history.push({
-      pathname: "/medical",
-      data: { needHelpAnswers: needHelpAnswers },
-    });
+    props.update("email", email);
   };
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h2 className="mb-5">What is your email address?</h2>
+      <Title className="mb-5">What is your email address?</Title>
       <div style={{ marginRight: "50px" }}>
         <Form.Control
           className="mb-3"
           placeholder="Type your email"
           onChange={onChange}
         />
-        <Button block variant="primary" onClick={onSubmit}>
-          Submit
-        </Button>
+        <Button fill primary label="Submit" onClick={onSubmit} />
       </div>
-    </div>
-  );
-});
-
-export const NeedHelp = () => {
-  return (
-    <div className="mx-auto" style={CONTAINER_STYLES}>
-      <StepWizard>
-        <Step1 />
-        <Step2 />
-        <Step3 />
-      </StepWizard>
-    </div>
+    </WizardStep>
   );
 };
+
+export const NeedHelp = withRouter((props) => {
+  const [state, setState] = useState(INITIAL_STATE);
+  const updateAnswers = (key, value) => {
+    const { answers } = state;
+    const updatedAnswers = { ...answers, [key]: value };
+    setState({ ...state, updatedAnswers });
+    if (key === "email") {
+      localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
+      props.history.push({
+        pathname: "/medical",
+      });
+    }
+  };
+  return (
+    <WizardContainer className="mx-auto">
+      <StyledWizard isHashEnabled nav={<WizardNav />}>
+        <Step1 hashKey={"Step1"} update={updateAnswers} />
+        <Step2 hashKey={"Step2"} update={updateAnswers} />
+        <Step3 hashKey={"Step3"} update={updateAnswers} />
+      </StyledWizard>
+    </WizardContainer>
+  );
+});

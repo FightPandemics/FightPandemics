@@ -3,10 +3,11 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
 
-import { RouteWithSubRoutes } from "./components/RouteWithSubRoutes";
+import { RouteWithSubRoutes } from "./templates/RouteWithSubRoutes";
 import { routes } from "./routes";
+import history from "./utils/history";
 
-import { Header } from "./components/Header";
+import Header from "./components/Header";
 import { Home } from "./pages/Home";
 import { NeedHelp } from "./pages/NeedHelp";
 import { OfferHelp } from "./pages/OfferHelp";
@@ -19,6 +20,7 @@ function App() {
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log({ loading });
   return (
     <div className="App">
       <Router>
@@ -44,9 +46,13 @@ function App() {
               <Route path="/symptoms-check">
                 <SymptomsCheck />
               </Route>
-              {routes.map((route, i) => (
-                <RouteWithSubRoutes key={i} {...route} />
-              ))}
+              <Router history={history}>
+                <Switch>
+                  {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={i} {...route} />
+                  ))}
+                </Switch>
+              </Router>
             </Switch>
           </Container>
         </main>

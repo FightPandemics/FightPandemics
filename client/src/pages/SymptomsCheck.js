@@ -1,350 +1,274 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import StepWizard from "react-step-wizard";
-import { withRouter } from "react-router-dom";
 
-import { CheckBoxItem } from "../components/CheckBoxItem";
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import {
+  AnswerButton,
+  AnswerCheckbox,
+  getAnswersMap,
+  getCheckedAnswers,
+  StyledWizard,
+  WizardContainer,
+  WizardStep,
+  WizardNav,
+} from "../components/StepWizard";
 
-// import Step3 from "../pages/Step3";
-
-const CONTAINER_STYLES = {
-  marginTop: "160px",
-  width: "600px"
+const INITIAL_STATE = {
+  answers: [],
 };
 
-// todo: should find or update step wizard to pass data from event instead of mutating this state
-const Welcome = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
+const Welcome = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("symptoms", answer);
     props.nextStep();
   };
 
   return (
-    <div>
-      <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+    <WizardStep>
+      <h6 className="text-primary">Before you start</h6>
+      <h5 className="mb-5">
+        Stop or call your local emergency number 911 if you or anyone else have
+        any of these symptoms
       </h5>
-      <h2 className="mb-5">
-        Welcome !!! <br /> BEFORE YOU BEGIN
-      </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="If you have ANY of the following symptoms, CALL YOUR LOCAL 
-        EMERGENCY NUMBER IMMEDIATELY 
-        (911 IF YOU ARE IN THE US, CLICK HERE FOR A COMPLETE LIST OF 
-          EMERGENCY NUMBERS BY COUNTRY )"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Constant chest pain or pressure
-        Extreme difficulty breathing
-        Severe, constant dizziness or lightheadedness
-        Slurred speech
-        Difficulty waking up "
-        onSelect={onSelectOther}
-      />
-    </div>
+      <ol>
+        <li>Constant chest pain or pressure</li>
+        <li>Extreme difficulty breathing</li>
+        <li>Severe, constant dizziness or lightheadedness</li>
+        <li>Slurred speech</li>
+        <li>Difficulty waking up </li>
+      </ol>
+      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+        <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+        <strong>Medical:</strong> I do not have symptoms.
+      </AnswerButton>
+    </WizardStep>
   );
 };
 
-const symptomsCheckAnswer = [];
-
-const Step1 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
+const Step1 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("age", answer);
     props.nextStep();
   };
 
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
-      <h2 className="mb-5">
-        Do you have any of these symptoms? Please, select all that apply?
-      </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="< 18: I am less than 18"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="18 - 64: I am between 18 and 64."
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="65+: I am above 65."
-        onSelect={onSelectOther}
-      />
-    </div>
+      <h2 className="mb-5">How old are you?</h2>
+      <AnswerButton onSelect={() => onSelectAnswer("under 18")}>
+        under 18
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("18-64")}>
+        18-64
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("65+")}>65+</AnswerButton>
+    </WizardStep>
   );
 };
 
-const Step2 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
+const STEP_2_ANSWERS = [
+  "Sore throat",
+  "Aching throughout the body",
+  "Vomiting or diarrhea",
+  "Fever, chills or sweating",
+  "Difficulty breathing",
+  "New or worsening cough",
+];
+
+const STEP_2_STATE = {
+  answers: getAnswersMap(STEP_2_ANSWERS),
+  none: false,
+};
+
+const Step2 = (props) => {
+  const [state, updateState] = useState(STEP_2_STATE);
+  const { answers, none } = state;
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("symptoms", checkedAnswers);
   };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
-    props.nextStep();
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("symptoms", newNone ? [] : getCheckedAnswers(answers));
   };
 
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
-        Do you have any of these symptoms? Please, select all that apply?
+        Do you have any of these symptoms? Please, select all that apply:
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="Sore throat"
-        onSelect={onSelectLessThanEigthen}
+      {Object.entries(answers).map(([answer, checked], i) => (
+        <AnswerCheckbox
+          key={i}
+          text={answer}
+          onSelect={() => toggleAnswer(answer)}
+          checked={!none && checked}
+        />
+      ))}
+      <AnswerCheckbox
+        text={"None of these"}
+        onSelect={toggleNone}
+        checked={none}
       />
-      <CheckBoxItem
-        id="type-other"
-        label="Aching throughout the body"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Vomiting or diarrhea"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-medical"
-        label="Fever, chills or sweating"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Difficulty breathing"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="New or worsening cough"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="None of these"
-        onSelect={onSelectOther}
-      />
-    </div>
+    </WizardStep>
   );
 };
 
-const Step3 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
+const STEP_3_ANSWERS = [
+  "Diseases or conditions that make it hard to cough",
+  "Kidney failure that needs dialysis",
+  "Cirrhosis of the liver",
+  "Asthma or chronic lung disease",
+  "Diabetes with complications",
+  "Extreme obesity",
+  "Weakened immune system",
+  "Congestive heart failure",
+];
+
+const STEP_3_STATE = {
+  answers: getAnswersMap(STEP_3_ANSWERS),
+  none: false,
+};
+
+const Step3 = (props) => {
+  const [state, updateState] = useState(STEP_3_STATE);
+  const { answers, none } = state;
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("conditions", checkedAnswers);
   };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
-    props.nextStep();
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
 
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Do you have any of these pre-existing medical conditions? Please, select
         all that apply?
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="Diseases or conditions that make it hard to cough"
-        onSelect={onSelectLessThanEigthen}
+      {Object.entries(answers).map(([answer, checked], i) => (
+        <AnswerCheckbox
+          key={i}
+          text={answer}
+          onSelect={() => toggleAnswer(answer)}
+          checked={checked}
+        />
+      ))}
+      <AnswerCheckbox
+        text={"None of these"}
+        onSelect={toggleNone}
+        checked={none}
       />
-      <CheckBoxItem
-        id="type-other"
-        label="Kidney failure that needs dialysis"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Cirrhosis of the liver"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-medical"
-        label="Asthma or chronic lung disease"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Pregnancy"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Diabetes with complications"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Extreme obesity"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Weakened immune system"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Congestive heart failure"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="None of these"
-        onSelect={onSelectOther}
-      />
-    </div>
+    </WizardStep>
   );
 };
 
-const Step4 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
+const Step4 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("traveledLast14Days", answer);
     props.nextStep();
   };
 
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="Yes"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem id="type-other" label="No" onSelect={onSelectOther} />
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        Yes
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
+        No
+      </AnswerButton>
     </div>
   );
 };
 
-const Step5 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
+const Step5 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("exposureAreaLast2Weeks", answer);
     props.nextStep();
   };
 
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         If so, have you traveled to an area severely affected by the COVID-19
         outbreak?
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="I live in an area severely affected by the COVID-19 outbreak"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="I have visited an area severely affected by the COVID-19 outbreak"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="I am sure."
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-medical"
-        label="None of these apply"
-        onSelect={onSelectLessThanEigthen}
-      />
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        I live in an area severely affected by the COVID-19 outbreak
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        I have visited an area severely affected by the COVID-19 outbreak
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        None of these apply
+      </AnswerButton>
     </div>
   );
 };
 
-const Step6 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
+const Step6 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("exposureLast14Days", answer);
     props.nextStep();
   };
 
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Accordingly to what you know, have you been exposed to others who are
         known to have COVID-19 during the last 2 weeks? Please, select all that
         apply.
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="I live with someone who has COVID-19"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="I had close contact with someone with COVID-19 (10 minutes or more spent together within 6 feet from each other or were exposed to their sneeze or cough)S"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="I was near someone with COVID-19 (at least 6-feet away and not exposed to their cough or sneeze)"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-medical"
-        label="No exposure"
-        onSelect={onSelectLessThanEigthen}
-      />
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        I live with someone who has COVID-19
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        I had close contact with someone with COVID-19 (10 minutes or more spent
+        together within 6 feet from each other or were exposed to their sneeze
+        or cough)
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        I was near someone with COVID-19 (at least 6-feet away and not exposed
+        to their cough or sneeze)
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+        No exposure
+      </AnswerButton>
     </div>
   );
 };
 
-const Step7 = props => {
-  const onSelectLessThanEigthen = () => {
-    symptomsCheckAnswer.push({ type: "need medical help" });
-    props.nextStep();
-  };
-  const onSelectOther = () => {
-    symptomsCheckAnswer.push({ type: "other, non medical" });
-    props.nextStep();
+const Step7 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("careFacility", answer);
   };
 
   return (
@@ -357,48 +281,53 @@ const Step7 = props => {
         may include hospitals, care homes, emergency rooms, and other medical
         settings?
       </h2>
-      <CheckBoxItem
-        id="type-medical"
-        label="< 18: I am less than 18"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="They live in a care facility (This includes nursing homes and assisted living)"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="Worked in a care facility in the last 14 days (This includes hospitals, assisted living facilities, etc. This includes part-time jobs and volunteering)"
-        onSelect={onSelectOther}
-      />
-      <CheckBoxItem
-        id="type-medical"
-        label="Plan to work in care facility in the next 14 days (This includes hospitals, assisted living facilities, etc. This includes part-time jobs and volunteering)"
-        onSelect={onSelectLessThanEigthen}
-      />
-      <CheckBoxItem
-        id="type-other"
-        label="No (They do not live or work in a long-term care facility)"
-        onSelect={onSelectOther}
-      />
+      <AnswerButton onSelect={() => onSelectAnswer("currently living")}>
+        I live in a care facility (This includes nursing homes and assisted
+        living)
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("worked in last 14 days")}>
+        Worked in a care facility in the last 14 days (This includes hospitals,
+        assisted living facilities, etc. This includes part-time jobs and
+        volunteering)
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("planning to")}>
+        Plan to work in care facility in the next 14 days (This includes
+        hospitals, assisted living facilities, etc. This includes part-time jobs
+        and volunteering)"
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+        No (They do not live or work in a long-term care facility)
+      </AnswerButton>
     </div>
   );
 };
 
 export const SymptomsCheck = () => {
+  const [state, setState] = useState(INITIAL_STATE);
+  const updateAnswers = (key, value) => {
+    const { answers } = state;
+    const updatedAnswers = { ...answers, [key]: value };
+    setState({ ...state, updatedAnswers });
+    if (key === "careFacility") {
+      localStorage.setItem(
+        "symptomsCheckAnswers",
+        JSON.stringify(updatedAnswers),
+      );
+    }
+  };
+
   return (
-    <div className="mx-auto" style={CONTAINER_STYLES}>
-      <StepWizard>
-        <Welcome />
-        <Step1 />
-        <Step2 />
-        <Step3 />
-        <Step4 />
-        <Step5 />
-        <Step6 />
-        <Step7 />
-      </StepWizard>
-    </div>
+    <WizardContainer className="mx-auto">
+      <StyledWizard isHashEnabled nav={<WizardNav />}>
+        <Welcome update={updateAnswers} />
+        <Step1 hashKey={"Step1"} update={updateAnswers} />
+        <Step2 hashKey={"Step2"} update={updateAnswers} />
+        <Step3 hashKey={"Step3"} update={updateAnswers} />
+        <Step4 hashKey={"Step4"} update={updateAnswers} />
+        <Step5 hashKey={"Step5"} update={updateAnswers} />
+        <Step6 hashKey={"Step6"} update={updateAnswers} />
+        <Step7 hashKey={"Step7"} update={updateAnswers} />
+      </StyledWizard>
+    </WizardContainer>
   );
 };
