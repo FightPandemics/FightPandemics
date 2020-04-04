@@ -6,9 +6,7 @@ export default styled(Button)`
   border: 2px solid #425af2 !important;
   cursor: pointer;
   color: #000;
-  &:hover,
-  &:active,
-  &.am-button-active {
+  &:hover, &.am-button-active {
     background-color: #425af2;
     color: #fff;
   }

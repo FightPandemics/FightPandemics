@@ -11,12 +11,11 @@ const FlexDiv = styled.div`
 `;
 
 const NestedImage = styled.img.attrs((props) => {
-  console.log("img", { props });
   return {
     src: props.inactiveImg,
   };
 })`
-  &:hover {
+  .am-button-active &, .am-button:hover & {
     content: url('${(props) => props.activeImg}');
   }
 `;
