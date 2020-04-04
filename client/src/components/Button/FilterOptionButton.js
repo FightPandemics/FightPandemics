@@ -37,7 +37,7 @@ export default ({ label }) => {
   return (
     <Option>
       <div style={labelStyles}>
-        <span style={{ marginRight: "4px" }}>{label}</span>
+        <span style={{ marginRight: "4px", fontWeight: "600" }}>{label}</span>
         <Icon type="down" size="xxs" />
       </div>
     </Option>
