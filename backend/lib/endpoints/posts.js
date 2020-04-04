@@ -11,11 +11,13 @@ const Comment = require("../models/Comment");
  * @access Public
  */
 
-router.get("/", (req, res) => {
-  Post.find()
-    .sort({ date: -1 }) // sort by date in reverse order to get the newest
-    .then((posts) => res.json(posts))
-    .catch((err) => res.status(404).send(err));
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ date: -1 });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 /**
