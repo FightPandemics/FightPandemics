@@ -24,10 +24,13 @@ router.get("/", (req, res) => {
  * @access Public
  */
 
-router.get("/:postId", (req, res) => {
-  Post.findById(req.params.postId)
-    .then((post) => res.json(post))
-    .catch((err) => res.status(404).send(err));
+router.get("/:postId", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 /**
