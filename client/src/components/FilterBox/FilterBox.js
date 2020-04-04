@@ -5,6 +5,7 @@ import { DARK_GRAY } from "../../constants/colors";
 import FilterOptionButton from "../Button/FilterOptionButton";
 import FilterTag from "../Tag/FilterTag";
 import filterOptions from "../../assets/data/filterOptions";
+import FilterAccordion from "../Accordion/FilterAccordion";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
@@ -54,15 +55,15 @@ export default () => {
       >
         <Accordion className="my-accordion" onChange={onChange}>
           {Object.values(filterOptions).map((filter) => (
-            <Accordion.Panel header={filter.label}>
-              {Object.values(filter.options).map((option) => (
-                <FilterTag label={option} />
-              ))}
-            </Accordion.Panel>
+            <FilterAccordion header={filter.label}>
+              <div style={{ margin: "10px 15px", textAlign: "center" }}>
+                {Object.values(filter.options).map((option) => (
+                  <FilterTag label={option} />
+                ))}
+              </div>
+            </FilterAccordion>
           ))}
         </Accordion>
-        <Button>Quit Filters</Button>
-        <Button>Apply Filters</Button>
       </Modal>
     </FilterBoxWrapper>
   );
