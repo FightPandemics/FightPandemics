@@ -157,12 +157,10 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const removedPost = await Post.findOneAndRemove({
-        _id: req.params.postId,
-      });
-      res.status(200).json({ sucessMessage: "Successfully deleted post" });
+      const removedPost = await Post.findByIdAndRemove(req.params.postId);
+      res.status(200).json(removedPost);
     } catch (error) {
-      res.status(404).send(error);
+      res.send(error); // not sure why error is {} here
     }
   },
 );
