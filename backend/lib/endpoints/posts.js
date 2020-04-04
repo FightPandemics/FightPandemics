@@ -131,18 +131,19 @@ router.post(
 router.patch(
   "/:postId",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Post.findById(req.params.postId)
-      .then((post) => {
-        for (let key in req.body) {
-          if (post[key] && post[key] !== req.body[key]) {
-            post[key] = req.body[key];
-          }
+  async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.postId);
+      for (let key in req.body) {
+        if (post[key] && post[key] !== req.body[key]) {
+          post[key] = req.body[key];
         }
-        post.save();
-        res.status(200).json(post);
-      })
-      .catch((err) => res.send(404).res.send(err));
+      }
+      post.save();
+      res.status(200).json(post);
+    } catch (error) {
+      res.status(404).send(error);
+    }
   },
 );
 
