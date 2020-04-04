@@ -13,8 +13,8 @@ const Comment = require("../models/Comment");
 
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find().sort({ date: -1 });
-    res.status(200).json(posts);
+    const sortedPosts = await Post.find().sort({ date: -1 });
+    res.status(200).json(sortedPosts);
   } catch (error) {
     res.status(404).send(error);
   }
@@ -41,11 +41,17 @@ router.get("/:postId", async (req, res) => {
  * @access Public
  */
 
-router.get("/user/:authorId", (req, res) => {
-  Post.find({ authorId: req.params.authorId })
-    .sort({ date: -1 }) // sort by date in reverse order to get the newest
-    .then((posts) => res.json(posts))
-    .catch((err) => res.status(404).send(err));
+router.get("/user/:authorId", async (req, res) => {
+  try {
+    const sortedPosts = await Post.find({ authorId: req.params.authorId }).sort(
+      {
+        date: -1,
+      },
+    );
+    res.status(200).json(sortedPosts);
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 /**
