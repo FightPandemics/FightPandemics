@@ -1,0 +1,20 @@
+{
+  "title": "Comment",
+  "type": "object",
+  "properties": {
+    "authorId": {
+      "type": "string"
+    },
+    "postId": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "authorId",
+    "postId",
+    "comment"
+  ]
+}
