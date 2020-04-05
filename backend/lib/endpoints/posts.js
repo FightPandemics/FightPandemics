@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const Like = require("../models/Like");
 
 /**
  * @route GET api/posts/
@@ -68,7 +69,7 @@ router.post(
       const newPost = await new Post(req.body).save();
       res.status(200).json(newPost);
     } catch (error) {
-      res.status(404).send(error);
+      res.status(500).send(error);
     }
   },
 );
@@ -94,7 +95,7 @@ router.post(
       );
       res.status(200).json(updatedPost);
     } catch (error) {
-      res.status(404).send(error);
+      res.status(500).send(error);
     }
   },
 );
@@ -107,19 +108,32 @@ router.post(
 router.post(
   "/:postId/like",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Post.findOne({ _id: req.params.postId }, (err, post) => {
-      if (err) res.send(err);
-      const userId = req.user.id;
-      if (!post.likes.includes(userId)) {
-        post.likes.push(userId);
+  async (req, res) => {
+    try {
+      const postId = req.params.postId;
+      const data = { userId: req.user.id, postId };
+      const like = await Like.findOne(data);
+      let updatedPost;
+
+      if (!like) {
+        const newLike = await new Like(data).save();
+        updatedPost = await Post.findOneAndUpdate(
+          { _id: postId },
+          { $push: { likes: newLike._id } },
+          { new: true },
+        );
       } else {
-        let index = post.likes.indexOf(userId);
-        if (index > -1) post.likes.splice(index, 1);
+        const removeLike = await Like.findByIdAndRemove(like._id);
+        updatedPost = await Post.findOneAndUpdate(
+          { _id: postId },
+          { $pull: { likes: like._id } },
+          { new: true },
+        );
       }
-      post.save();
-      res.status(200).json(post);
-    });
+      res.json(updatedPost);
+    } catch (error) {
+      res.status(500).send(error);
+    }
   },
 );
 
@@ -160,7 +174,7 @@ router.delete(
       const removedPost = await Post.findByIdAndRemove(req.params.postId);
       res.status(200).json(removedPost);
     } catch (error) {
-      res.send(error); // not sure why error is {} here
+      res.status(404).send(error); // not sure why error is {} here
     }
   },
 );

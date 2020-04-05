@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 const CommentSchema = require("./Comment").schema;
+const LikeSchema = require("./Like").schema;
 
 const PostSchema = new Schema({
   authorId: {
@@ -47,7 +48,8 @@ const PostSchema = new Schema({
   },
   likes: {
     type: [Schema.Types.ObjectId],
-    ref: "users",
+    refs: "likes",
+    default: [],
   },
   tags: [String],
   language: [String],
