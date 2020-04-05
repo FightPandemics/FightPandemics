@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "~/components/Header";
+import Main from "./Main";
 
 const drawerStyles = {
   position: "relative",
@@ -15,11 +16,6 @@ const drawerStyles = {
 const sidebarStyle = {
   background: "#425AF2",
 };
-
-const Main = styled.main`
-  margin-left: 20px;
-  margin-right: 20px;
-`;
 
 const NavList = styled(List)`
   & .am-list-body {
@@ -75,8 +71,12 @@ export default (props) => {
         </>
       ) : (
         <>
-          <NavItem onClick={loginFunc}>Login</NavItem>
-          <NavItem onClick={loginFunc}>Register</NavItem>
+          <NavItem history={history} link="/auth/login">
+            Login
+          </NavItem>
+          <NavItem history={history} link="/auth/signup">
+            Register
+          </NavItem>
         </>
       )}
       <NavItem history={history} link="/about">
@@ -102,7 +102,7 @@ export default (props) => {
       sidebarStyle={sidebarStyle}
       className="app-drawer"
     >
-      <Header onMenuClick={toggleDrawer} />
+      <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
       <Main>
         <props.component {...props} />
       </Main>
