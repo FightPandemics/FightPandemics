@@ -22,6 +22,10 @@ const FilterTag = styled(Tag)`
   }
 `;
 
-export default ({ label }) => {
-  return <FilterTag>{label}</FilterTag>;
+export default ({ label, handleClick }) => {
+  return (
+    <FilterTag>
+      <div onClick={handleClick}>{label}</div>
+    </FilterTag>
+  );
 };

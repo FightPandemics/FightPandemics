@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
@@ -20,16 +20,38 @@ const FilterBoxWrapper = styled.div`
 export default () => {
   const [modal, setModal] = useState(false);
   const [activePanel, setActivePanel] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({});
   const filters = Object.values(filterOptions);
+
+  useEffect(() => {
+    console.log(selectedFilters);
+  }, [selectedFilters]);
+
   const openModal = (panelIdx) => (e) => {
     e.preventDefault();
     setModal(true);
     setActivePanel(`${panelIdx}`);
   };
+
   const closeModal = () => {
     setModal(false);
     setActivePanel(null);
   };
+
+  const handleTag = (label, option) => (e) => {
+    e.preventDefault();
+    const options = selectedFilters[label] || [];
+    const optionIdx = options.indexOf(option);
+    let newOptions;
+    if (optionIdx === -1) {
+      newOptions = [...options, option];
+    } else {
+      options.splice(optionIdx, 1);
+      newOptions = options;
+    }
+    setSelectedFilters({ ...selectedFilters, [label]: newOptions });
+  };
+
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <FilterOptionButton
@@ -39,13 +61,18 @@ export default () => {
       />
     ));
   };
+
   const renderFilterPanels = (filters) => {
     return filters.map((filter, idx) => {
       if (filter.label !== "Location") {
         return (
           <FilterAccordionPanel header={filter.label} key={idx}>
             {Object.values(filter.options).map((option, idx) => (
-              <FilterTag label={option} key={idx} />
+              <FilterTag
+                handleClick={handleTag(filter.label, option)}
+                label={option}
+                key={idx}
+              />
             ))}
           </FilterAccordionPanel>
         );
