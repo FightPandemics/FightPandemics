@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
@@ -7,6 +7,7 @@ import FilterTitle from "../Typography/Title/FilterTitle";
 import FilterOptionButton from "../Button/FilterOptionButton";
 import CustomButton from "../../components/Button/CustomButton";
 import CustomList from "../../components/List/CustomList";
+import LocationSearch from "../../components/Input/LocationSearch";
 import {
   FilterAccordion,
   FilterAccordionPanel,
@@ -19,7 +20,6 @@ const FilterBoxWrapper = styled.div`
 export default () => {
   const [modal, setModal] = useState(true);
   const [clickedLabel, setClickedLabel] = useState("");
-  const [location, setLocation] = useState("");
   const filters = Object.values(filterOptions);
   const openModal = (label) => (e) => {
     e.preventDefault();
@@ -29,6 +29,15 @@ export default () => {
   const closeModal = () => {
     setModal(false);
     setClickedLabel("");
+  };
+  const renderFilterOptions = (filters) => {
+    return filters.map((filter, idx) => (
+      <FilterOptionButton
+        handleClick={openModal(filter.label)}
+        key={idx}
+        label={filter.label}
+      />
+    ));
   };
   const renderFilterPanels = (filters) => {
     return filters.map((filter, idx) => {
@@ -43,7 +52,7 @@ export default () => {
       } else {
         return (
           <FilterAccordionPanel header={filter.label} key={idx}>
-            <SearchBar placeholder="Search" maxLength={8} />
+            <LocationSearch />
           </FilterAccordionPanel>
         );
       }
@@ -53,13 +62,7 @@ export default () => {
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
-      {filters.map((filter, idx) => (
-        <FilterOptionButton
-          handleClick={openModal(filter.label)}
-          key={idx}
-          label={filter.label}
-        />
-      ))}
+      {renderFilterOptions(filters)}
       <Modal
         popup
         visible={modal}
