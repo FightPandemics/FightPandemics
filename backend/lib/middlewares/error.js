@@ -5,4 +5,5 @@ module.exports = (error, req, res, next) => {
       message: error.message || "Internal Server Error",
     });
   }
+  next();
 };

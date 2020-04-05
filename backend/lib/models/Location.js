@@ -1,7 +1,6 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require("mongoose");
 
 // User Schema
-const LocationSchema = new Schema({
-})
+const LocationSchema = new Schema({});
 
-module.exports = model("Location", LocationSchema)
+module.exports = model("Location", LocationSchema);

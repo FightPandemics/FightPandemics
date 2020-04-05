@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const http = require("http");
+
 const createApp = require("./lib");
 const { config, validateConfig } = require("./config");
 
@@ -9,12 +10,13 @@ const server = http.createServer(createApp());
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.host, config.mongo.params);
-mongoose.connection.once("open", function () {
+mongoose.connection.once("open", () => {
   // All OK - fire (emit) a ready event.
   server.emit("ready");
 });
 
-server.on("ready", function () {
+/* eslint-disable no-console */
+server.on("ready", () => {
   server
     .listen(config.server.port)
     .on("listening", () => {
@@ -29,3 +31,4 @@ server.on("ready", function () {
       throw err;
     });
 });
+/* eslint-enable no-console */

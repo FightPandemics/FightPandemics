@@ -1,7 +1,5 @@
-const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const pino = require("pino");
-
 const User = require("../models/User");
 const { config } = require("../../config");
 
@@ -11,15 +9,14 @@ opts.secretOrKey = config.jwt.key;
 
 module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
-        .then((user) => {
-          if (user) {
-            return done(null, user);
-          }
-          return done(null, false);
-        })
-        .catch((err) => pino.error(err));
+    new JwtStrategy(opts, async (jwtPayload, done) => {
+      try {
+        const user = await User.findById(jwtPayload.id);
+        return done(null, user || false);
+      } catch (err) {
+        pino.error(err);
+        return done(err);
+      }
     }),
   );
 };

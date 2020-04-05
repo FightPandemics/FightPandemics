@@ -16,8 +16,6 @@ Currently, there is no easy way to find all the information at the local and glo
     
     If you are interested please join our slack group:
 
-https://join.slack.com/t/fightpandemics/shared_invite/zt-d22gzk51-IMItXWfVQswn4YvHmKajnw
-
 ## Getting Started
 1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
 1. `cp backend/.env.example backend/.env`
