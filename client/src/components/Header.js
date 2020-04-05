@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import Logo from "./Logo";
 
-export default ({ onMenuClick }) => {
+export default ({ onMenuClick, ...props }) => {
   return (
-    <div className="header">
+    <div className="header" {...props}>
       <NavBar
         mode="light"
         leftContent={
