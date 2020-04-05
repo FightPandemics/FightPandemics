@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
@@ -22,10 +22,6 @@ export default () => {
   const [activePanel, setActivePanel] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({});
   const filters = Object.values(filterOptions);
-
-  useEffect(() => {
-    console.log(selectedFilters);
-  }, [selectedFilters]);
 
   const openModal = (panelIdx) => (e) => {
     e.preventDefault();
@@ -79,6 +75,10 @@ export default () => {
                 handleClick={handleTag(filter.label, option)}
                 label={option}
                 key={idx}
+                selected={
+                  selectedFilters[filter.label] &&
+                  selectedFilters[filter.label].includes(option)
+                }
               />
             ))}
           </FilterAccordionPanel>

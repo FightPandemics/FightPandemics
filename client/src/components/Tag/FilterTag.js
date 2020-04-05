@@ -22,9 +22,9 @@ const FilterTag = styled(Tag)`
   }
 `;
 
-export default ({ label, handleClick }) => {
+export default ({ label, selected, handleClick }) => {
   return (
-    <FilterTag>
+    <FilterTag selected={selected}>
       <div onClick={handleClick}>{label}</div>
     </FilterTag>
   );

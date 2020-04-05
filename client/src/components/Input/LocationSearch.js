@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
 
@@ -12,12 +12,8 @@ const StyledSearchBar = styled(SearchBar)`
 
 export default () => {
   const [location, setLocation] = useState("");
-  useEffect(() => {
-    // integrate API endpoint here
-    console.log(location);
-  });
   const shareMyLocation = () => {
-    // handle logic for sharing location
+    // integrate API endpoint
   };
   const onChange = (value) => {
     setLocation(value);
