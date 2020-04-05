@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js -L server.js",
     "test": "jest",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "schemas": "node ./generateSchemas.js"
   },
   "husky": {
     "hooks": {
@@ -28,6 +29,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
     "atob": "^2.1.2",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",

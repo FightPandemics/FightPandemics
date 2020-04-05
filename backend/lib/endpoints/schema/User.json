@@ -1,0 +1,30 @@
+{
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "accessToken": {
+      "type": "string"
+    },
+    "dateJoined": {
+      "type": "string"
+    },
+    "location": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

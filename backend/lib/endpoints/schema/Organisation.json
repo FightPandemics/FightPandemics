@@ -1,0 +1,20 @@
+{
+  "title": "Organisation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "userId",
+    "name"
+  ]
+}

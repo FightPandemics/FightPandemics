@@ -8,10 +8,76 @@ info:
 servers:
   - url: 'http://localhost:8000/api/v1'
     description: Local API V1
-  - description: ''
-paths: {}
+paths:
+  /posts:
+    get:
+      summary: List all posts
+      operationId: listPosts
+      tags:
+        - posts
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of posts
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref:  '#/components/schemas/Post'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /posts/{postId}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - name: postId
+          in: path
+          description: The id of the post
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
 components:
   schemas:
+    Error:
+      title: Error
+      type: object
+      description: A standard error object.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+      x-tags:
+        - Common
     User:
       title: User
       type: object
