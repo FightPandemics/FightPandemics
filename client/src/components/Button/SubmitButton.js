@@ -5,8 +5,8 @@ import styled from "styled-components";
 const StyledButton = styled(Button).attrs({
   type: "primary",
 })`
-  background: #7d4cdb;
-  border-radius: 18px;
+  background: #425af2;
+  border-radius: 46px;
   font-weight: bold;
 `;
 

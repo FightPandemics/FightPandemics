@@ -25,6 +25,10 @@ const StyleLabel = {
   textAlign: "left",
 };
 
+const StyleSocialIcon = {
+  justifyContent: "unset",
+};
+
 const SectionDiv = styled.div`
   text-transform: uppercase;
   color: #d7d7d7;
@@ -48,8 +52,8 @@ const FlexBox = styled(Flex).attrs((props) => ({
 const SocialButton = styled(Button).attrs((props) => ({
   inline: true,
 }))`
-  width: 160px;
-  margin: 0.7rem;
+  width: 150px;
+  margin: 0.5rem;
 `;
 
 export default ({ isLoginForm }) => {
@@ -83,6 +87,7 @@ export default ({ isLoginForm }) => {
           />
         </InputWrapper>
         <WhiteSpace />
+        <WhiteSpace />
         <SubmitButton
           title={isLoginForm ? "Continue" : "Sign Up"}
           onClick={loginWithEmail}
@@ -110,24 +115,28 @@ export default ({ isLoginForm }) => {
       <WhiteSpace />
       <FlexBox>
         <SocialButton
+          style={StyleSocialIcon}
           icon={<FacebookIcon />}
           onClick={() => loginWithConnection("fb")}
         >
           Facebook
         </SocialButton>
         <SocialButton
+          style={StyleSocialIcon}
           icon={<GmailIcon />}
           onClick={() => loginWithConnection("gmail")}
         >
           Gmail
         </SocialButton>
         <SocialButton
+          style={StyleSocialIcon}
           icon={<TwitterIcon />}
           onClick={() => loginWithConnection("twitter")}
         >
           Twitter
         </SocialButton>
         <SocialButton
+          style={StyleSocialIcon}
           icon={<LinkedinIcon />}
           onClick={() => loginWithConnection("linkedin")}
         >
