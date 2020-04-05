@@ -38,6 +38,13 @@ export default () => {
     setActivePanel(null);
   };
 
+  const handleQuit = (e) => {
+    e.preventDefault();
+    setModal(false);
+    setActivePanel(null);
+    setSelectedFilters({});
+  };
+
   const handleTag = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedFilters[label] || [];
@@ -110,6 +117,7 @@ export default () => {
               roundborder="true"
               large="true"
               whitebg="true"
+              onClick={handleQuit}
             >
               Quit filters
             </CustomButton>
@@ -118,6 +126,7 @@ export default () => {
               roundborder="true"
               large="true"
               primary="true"
+              onClick={closeModal}
             >
               Apply filters
             </CustomButton>
