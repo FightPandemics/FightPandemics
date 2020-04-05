@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import LabelledInput from "./LabelledInput";
+import withLabel from "./with-label";
 import Input from "./BaseInput";
 
 export default ({
@@ -12,14 +12,13 @@ export default ({
   inputStyle,
   ...props
 }) => {
-  return (
-    <LabelledInput label={label} style={labelStyle}>
-      <Input
-        type={type}
-        style={inputStyle}
-        placeholder={placeholder}
-        {...props}
-      />
-    </LabelledInput>
-  );
+  const TextField = withLabel(() => (
+    <Input
+      type={type}
+      style={inputStyle}
+      placeholder={placeholder}
+      {...props}
+    />
+  ));
+  return <TextField label={label} style={labelStyle} />;
 };

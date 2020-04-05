@@ -1,7 +1,8 @@
-import React from "react";
+import styled from "styled-components";
 
 import IconTwitter from "~/assets/icons/social-twitter.svg";
+import SvgIcon from "./SvgIcon";
 
-export default (props) => {
-  return <img {...props} src={IconTwitter}></img>;
-};
+export default styled(SvgIcon).attrs((props) => ({
+  src: IconTwitter,
+}))``;

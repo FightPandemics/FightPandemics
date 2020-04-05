@@ -1,7 +1,8 @@
-import React from "react";
+import styled from "styled-components";
 
 import IconLinkedin from "~/assets/icons/social-linkedin.svg";
+import SvgIcon from "./SvgIcon";
 
-export default (props) => {
-  return <img {...props} src={IconLinkedin}></img>;
-};
+export default styled(SvgIcon).attrs((props) => ({
+  src: IconLinkedin,
+}))``;

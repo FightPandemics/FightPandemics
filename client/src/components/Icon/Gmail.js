@@ -1,7 +1,8 @@
-import React from "react";
+import styled from "styled-components";
 
+import SvgIcon from "./SvgIcon";
 import IconGoogle from "~/assets/icons/social-google.svg";
 
-export default (props) => {
-  return <img {...props} src={IconGoogle}></img>;
-};
+export default styled(SvgIcon).attrs((props) => ({
+  src: IconGoogle,
+}))``;
