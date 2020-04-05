@@ -6,10 +6,10 @@ services:
     restart: always
     networks:
       - fp_network
-    
+
   mongo-express:
     image: mongo-express
-    container_name: 'mongo-express'
+    container_name: "mongo-express"
     restart: always
     ports:
       - 8081:8081
@@ -41,11 +41,33 @@ services:
     volumes:
       - "./backend:/app"
       - "/app/node_modules"
-    working_dir: '/app'
+    working_dir: "/app"
     depends_on:
       - mongo
     networks:
       - fp_network
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    volumes:
+      - "./backend/api_docs:/usr/share/nginx/html/api_docs"
+    environment:
+      - URL=/api_docs/api-v1.yaml
+    restart: always
+    ports:
+      - 8001:8080
+
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: "swagger-editor"
+    volumes:
+      - "./backend/api_docs:/usr/share/nginx/html/api_docs"
+    environment:
+      - URL=/api_docs/api-v1.yaml
+    restart: always
+    ports:
+      - 8002:8080
 
   client:
     build:
@@ -58,7 +80,7 @@ services:
     volumes:
       - "./client:/app"
       - "/app/node_modules"
-    working_dir: '/app'
+    working_dir: "/app"
     stdin_open: true
     tty: true
     networks:

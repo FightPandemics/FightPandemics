@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose;
-const { schema: CommentSchema } = require("./Comment");
+const Schema = mongoose.Schema;
+const CommentSchema = require("./Comment").schema;
+const LikeSchema = require("./Like").schema;
 
-// Create Schema
 const PostSchema = new Schema({
   authorId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     required: true,
   },
   title: {
@@ -46,6 +46,11 @@ const PostSchema = new Schema({
     type: [CommentSchema],
     default: [],
   },
+  likes: {
+    type: [Schema.Types.ObjectId],
+    refs: "likes",
+    default: [],
+  },
   tags: [String],
   language: [String],
   website: String,
@@ -55,4 +60,4 @@ const PostSchema = new Schema({
   postEmail: String,
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+module.exports = Post = mongoose.model("posts", PostSchema);

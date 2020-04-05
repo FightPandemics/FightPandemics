@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const http = require("http");
+
 const createApp = require("./lib");
 const { config, validateConfig } = require("./config");
 
