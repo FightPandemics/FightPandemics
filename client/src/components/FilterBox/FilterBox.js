@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
@@ -21,8 +21,11 @@ export default () => {
   const [modal, setModal] = useState(false);
   const [activePanel, setActivePanel] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({});
+  const [location, setLocation] = useState("");
   const filters = Object.values(filterOptions);
-
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
   const openModal = (panelIdx) => (e) => {
     e.preventDefault();
     setModal(true);
@@ -40,6 +43,12 @@ export default () => {
     setActivePanel(null);
     setSelectedFilters({});
   };
+
+  const handleLocation = (value) => {
+    setLocation(value);
+  };
+
+  const shareMyLocation = () => {};
 
   const handleTag = (label, option) => (e) => {
     e.preventDefault();
@@ -86,7 +95,11 @@ export default () => {
       } else {
         return (
           <FilterAccordionPanel header={filter.label} key={idx}>
-            <LocationSearch />
+            <LocationSearch
+              location={location}
+              handleLocation={handleLocation}
+              shareMyLocation={shareMyLocation}
+            />
           </FilterAccordionPanel>
         );
       }

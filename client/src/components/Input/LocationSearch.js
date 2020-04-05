@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
 
@@ -10,14 +10,7 @@ const StyledSearchBar = styled(SearchBar)`
   }
 `;
 
-export default () => {
-  const [location, setLocation] = useState("");
-  const shareMyLocation = () => {
-    // integrate API endpoint
-  };
-  const onChange = (value) => {
-    setLocation(value);
-  };
+export default ({ location, handleLocation, shareMyLocation }) => {
   return (
     <div className="location-search">
       <WhiteSpace />
@@ -26,10 +19,10 @@ export default () => {
         placeholder="Zip code, neighborhood, or city"
         maxLength={100}
         value={location}
-        onChange={onChange}
+        onChange={handleLocation}
       />
       <WhiteSpace />
-      <div onClick={shareMyLocation} href="#">
+      <div onClick={shareMyLocation}>
         <Icon type="right" />
         Share My Location
       </div>
