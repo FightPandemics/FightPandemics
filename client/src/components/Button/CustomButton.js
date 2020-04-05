@@ -15,7 +15,7 @@ export default styled(Button)`
   line-height: normal;
   height: 100%;
   cursor: pointer;
-  margin-right: 4px;
+  margin-right: 25px;
   ${(props) =>
     props.primary &&
     css`
@@ -37,11 +37,11 @@ export default styled(Button)`
   ${(props) =>
     props.large &&
     css`
-      padding: 10px 40px;
+      padding: 10px 35px;
       font-size: 15px;
       &.am-button {
         &:before {
-          border-radius: 40px !important;
+          border-radius: 45px !important;
         }
       }
     `}
@@ -49,7 +49,7 @@ export default styled(Button)`
   ${(props) =>
     props.roundborder &&
     css`
-      border-radius: 40px;
+      border-radius: 45px;
     `}
 
   ${(props) =>
