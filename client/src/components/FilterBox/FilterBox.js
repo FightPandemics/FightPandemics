@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Modal, Accordion, List, Button } from "antd-mobile";
+import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
 import FilterTag from "../Tag/FilterTag";
 import FilterTitle from "../Typography/Title/FilterTitle";
@@ -19,6 +19,7 @@ const FilterBoxWrapper = styled.div`
 export default () => {
   const [modal, setModal] = useState(true);
   const [clickedLabel, setClickedLabel] = useState("");
+  const [location, setLocation] = useState("");
   const filters = Object.values(filterOptions);
   const openModal = (label) => (e) => {
     e.preventDefault();
@@ -29,6 +30,26 @@ export default () => {
     setModal(false);
     setClickedLabel("");
   };
+  const renderFilterPanels = (filters) => {
+    return filters.map((filter, idx) => {
+      if (filter.label !== "Location") {
+        return (
+          <FilterAccordionPanel header={filter.label} key={idx}>
+            {Object.values(filter.options).map((option, idx) => (
+              <FilterTag label={option} key={idx} />
+            ))}
+          </FilterAccordionPanel>
+        );
+      } else {
+        return (
+          <FilterAccordionPanel header={filter.label} key={idx}>
+            <SearchBar placeholder="Search" maxLength={8} />
+          </FilterAccordionPanel>
+        );
+      }
+    });
+  };
+
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
@@ -46,13 +67,7 @@ export default () => {
         animationType="slide-up"
       >
         <FilterAccordion className="my-accordion">
-          {filters.map((filter, idx) => (
-            <FilterAccordionPanel header={filter.label} key={idx}>
-              {Object.values(filter.options).map((option, idx) => (
-                <FilterTag label={option} key={idx} />
-              ))}
-            </FilterAccordionPanel>
-          ))}
+          {renderFilterPanels(filters)}
         </FilterAccordion>
         <CustomList center="true">
           <List.Item>

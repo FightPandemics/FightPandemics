@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Accordion } from "antd-mobile";
-import { ROYAL_BLUE } from "../../constants/colors";
 
 export const FilterAccordion = styled(Accordion)`
   &.am-accordion {
