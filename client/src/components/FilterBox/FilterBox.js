@@ -18,22 +18,22 @@ const FilterBoxWrapper = styled.div`
 `;
 
 export default () => {
-  const [modal, setModal] = useState(true);
-  const [clickedLabel, setClickedLabel] = useState("");
+  const [modal, setModal] = useState(false);
+  const [activePanel, setActivePanel] = useState("");
   const filters = Object.values(filterOptions);
-  const openModal = (label) => (e) => {
+  const openModal = (panelIdx) => (e) => {
     e.preventDefault();
     setModal(true);
-    setClickedLabel(label);
+    setActivePanel(`${panelIdx}`);
   };
   const closeModal = () => {
     setModal(false);
-    setClickedLabel("");
+    setActivePanel(null);
   };
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <FilterOptionButton
-        handleClick={openModal(filter.label)}
+        handleClick={openModal(idx)}
         key={idx}
         label={filter.label}
       />
@@ -69,7 +69,10 @@ export default () => {
         onClose={closeModal}
         animationType="slide-up"
       >
-        <FilterAccordion className="my-accordion">
+        <FilterAccordion
+          defaultActiveKey={activePanel}
+          className="my-accordion"
+        >
           {renderFilterPanels(filters)}
         </FilterAccordion>
         <CustomList center="true">
