@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   location: { label: "Location", options: [] },
   provider: {
     label: "Provider",
