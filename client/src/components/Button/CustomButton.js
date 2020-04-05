@@ -16,19 +16,16 @@ export default styled(Button)`
   height: 100%;
   cursor: pointer;
   margin-right: 4px;
-
   ${(props) =>
     props.primary &&
     css`
       background-color: ${ROYAL_BLUE};
       color: #fff;
-
       &.am-button {
         &:before {
           border: 2px solid ${ROYAL_BLUE} !important;
         }
       }
-
       &:hover,
       &:active,
       &.am-button-active {
@@ -42,7 +39,6 @@ export default styled(Button)`
     css`
       padding: 10px 40px;
       font-size: 15px;
-
       &.am-button {
         &:before {
           border-radius: 40px !important;
@@ -61,13 +57,11 @@ export default styled(Button)`
     css`
       background-color: #fff;
       color: ${ROYAL_BLUE};
-
       &.am-button {
         &:before {
           border: 2px solid ${ROYAL_BLUE} !important;
         }
       }
-
       &:hover,
       &:active,
       &.am-button-active {
