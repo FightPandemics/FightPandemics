@@ -5,11 +5,12 @@ import { DARK_GRAY } from "../../constants/colors";
 import filterOptions from "../../assets/data/filterOptions";
 import FilterTag from "../Tag/FilterTag";
 import FilterOptionButton from "../Button/FilterOptionButton";
+import CustomButton from "../../components/Button/CustomButton";
+import CustomList from "../../components/List/CustomList";
 import {
   FilterAccordion,
   FilterAccordionPanel,
 } from "../Accordion/FilterAccordion";
-import CustomButton from "../../components/Button/CustomButton";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
@@ -65,9 +66,10 @@ export default () => {
             </FilterAccordionPanel>
           ))}
         </FilterAccordion>
-        <List>
+        <CustomList center="true">
           <List.Item>
             <CustomButton
+              // for some reason react wants boolean values for styled components
               inline="true"
               roundborder="true"
               large="true"
@@ -84,7 +86,7 @@ export default () => {
               Apply filters
             </CustomButton>
           </List.Item>
-        </List>
+        </CustomList>
       </Modal>
     </FilterBoxWrapper>
   );

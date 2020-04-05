@@ -15,8 +15,7 @@ export default styled(Button)`
   line-height: normal;
   height: 100%;
   cursor: pointer;
-
-  
+  margin-right: 4px;
 
   ${(props) =>
     props.primary &&
