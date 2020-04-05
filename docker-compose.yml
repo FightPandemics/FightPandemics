@@ -6,7 +6,7 @@ services:
     restart: always
     networks:
       - fp_network
-    
+
   mongo-express:
     image: mongo-express
     container_name: 'mongo-express'
@@ -18,13 +18,15 @@ services:
     depends_on:
       - mongo
 
-  geo-service:
-    build: geo-service
-    container_name: geo-service
+  py-service:
+    build: py-service
+    container_name: py-service
     ports:
       - "5000:5000"
     volumes:
-      - "./geo-service:/app"
+      - "./py-service:/app"
+    depends_on:
+      - mongo
     networks:
       - fp_network
 
