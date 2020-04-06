@@ -117,6 +117,7 @@ export default () => {
         <FilterAccordion
           defaultActiveKey={activePanel}
           className="my-accordion"
+          accordion
         >
           {renderFilterPanels(filters)}
         </FilterAccordion>
