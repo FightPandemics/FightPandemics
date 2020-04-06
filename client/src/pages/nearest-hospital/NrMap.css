@@ -1,0 +1,14 @@
+.card {
+  width: 96%;
+  height: 205px;
+  margin: 30px auto;
+}
+.scrollable {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.map-container {
+  width: 96%;
+  margin: 30px auto;
+}
