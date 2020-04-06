@@ -12,9 +12,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "id",
-    "userId",
-    "name"
-  ]
+  "required": ["id", "userId", "name"]
 }

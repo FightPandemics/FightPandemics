@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const { Schema } = mongoose;
+const { Schema } = require("mongoose");
 
 const CommentSchema = new Schema({
   authorId: {
@@ -19,4 +17,4 @@ const CommentSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Comment", CommentSchema);
+module.exports = CommentSchema;
