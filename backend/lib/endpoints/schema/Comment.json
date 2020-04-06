@@ -12,9 +12,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "authorId",
-    "postId",
-    "comment"
-  ]
+  "required": ["authorId", "postId", "comment"]
 }

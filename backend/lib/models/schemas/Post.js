@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
 
-const Schema = mongoose.Schema;
-const CommentSchema = require("./Comment").schema;
-const LikeSchema = require("./Like").schema;
+const CommentSchema = require("./Comment");
+// const LikeSchema = require("./Like");
 
 const PostSchema = new Schema({
   authorId: {
@@ -20,27 +19,23 @@ const PostSchema = new Schema({
   },
   type: {
     type: [String],
-    required: true,
-    default: undefined,
+    // required: true,
   },
   shareWith: {
     type: [String],
-    required: true,
-    default: undefined,
+    // required: true,
   },
   looking: {
     type: [String],
-    required: true,
-    default: undefined,
+    // required: true,
   },
   needs: {
     type: [String],
-    required: true,
-    default: undefined,
+    // required: true,
   },
   status: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   comments: {
     type: [CommentSchema],
@@ -60,4 +55,4 @@ const PostSchema = new Schema({
   postEmail: String,
 });
 
-module.exports = Post = mongoose.model("posts", PostSchema);
+module.exports = PostSchema;

@@ -10,10 +10,6 @@
       "type": "string"
     }
   },
-  "required": [
-    "code"
-  ],
-  "x-tags": [
-    "Common"
-  ]
+  "required": ["code"],
+  "x-tags": ["Common"]
 }

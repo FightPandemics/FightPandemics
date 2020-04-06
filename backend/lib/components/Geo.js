@@ -12,11 +12,15 @@ const countryMap = JSON.parse(countries).reduce(
 const getCountryByCode = (code) => countryMap.get(code);
 
 const findByLatLong = async (lat, long) => {
-  const { data } = await axios.get(
-    `${config.geoService.host}?lat=${lat}&long=${long}`,
+  const { data: response } = await axios.get(
+    `${config.geoService.host}/geo-service?lat=${lat}&long=${long}`,
   );
-
-  const { cc: code } = data;
+  if (!response.result) {
+    throw new Error("Failed getting location info");
+  }
+  const {
+    data: { cc: code },
+  } = response;
   const name = getCountryByCode(code);
   return { code, name };
 };
