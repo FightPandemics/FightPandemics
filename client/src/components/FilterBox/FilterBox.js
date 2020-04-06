@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Modal, Accordion, SearchBar, List, Button } from "antd-mobile";
+import { Modal, List } from "antd-mobile";
 import filterOptions from "../../assets/data/filterOptions";
 import FilterTag from "../Tag/FilterTag";
 import FilterTitle from "../Typography/Title/FilterTitle";
