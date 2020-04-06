@@ -12,7 +12,7 @@ import {
 } from "../components/StepWizard";
 
 const INITIAL_STATE = {
-  answers: [],
+  // answers: []
 };
 
 const Welcome = (props) => {
@@ -48,6 +48,7 @@ const Welcome = (props) => {
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
+    console.dir(props);
     props.nextStep();
   };
 
@@ -266,6 +267,7 @@ const Step6 = (props) => {
   );
 };
 
+/**selections are not coming out as xpected */
 const Step7 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
@@ -302,19 +304,21 @@ const Step7 = (props) => {
   );
 };
 
+// const Step8 = (props) => {
+//   console.log("MMMMMAAAA", props);
+
+//   return (
+//     <div>
+//      {/* { props } */}
+//     </div>
+//   );
+// };
 export const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
-    const { answers } = state;
-    const updatedAnswers = { ...answers, [key]: value };
-    setState({ ...state, updatedAnswers });
-    if (key === "careFacility") {
-      localStorage.setItem(
-        "symptomsCheckAnswers",
-        JSON.stringify(updatedAnswers),
-      );
-    }
+    setState({ ...state, [key]: value });
   };
+  localStorage.setItem("symptomsCheckAnswers", JSON.stringify(state));
 
   return (
     <WizardContainer className="mx-auto">
@@ -327,6 +331,7 @@ export const SymptomsCheck = () => {
         <Step5 hashKey={"Step5"} update={updateAnswers} />
         <Step6 hashKey={"Step6"} update={updateAnswers} />
         <Step7 hashKey={"Step7"} update={updateAnswers} />
+        {/* <Step8 anState={state} /> */}
       </StyledWizard>
     </WizardContainer>
   );
