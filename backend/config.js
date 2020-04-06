@@ -17,7 +17,7 @@ const config = {
     host: `http://${process.env.GEO_SERVICE_URL}`,
   },
   auth: {
-    domain: `https://${process.env.AUTH_HOST}`,
+    domain: `https://${process.env.AUTH_DOMAIN}`,
     clientId: process.env.AUTH_CLIENT_ID,
     secretKey: process.env.AUTH_SECRET_KEY,
     appUrl: process.env.AUTH_APP_URL,

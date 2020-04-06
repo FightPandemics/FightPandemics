@@ -1,26 +1,22 @@
 const cors = require("cors");
-const fastify = require("fastify");
-
+const passport = require("./plugins/passport");
+const version = require("./endpoints/version");
 const auth = require("./endpoints/auth");
 const geo = require("./endpoints/geo");
 const posts = require("./endpoints/posts");
-const users = require("./endpoints/users");
-const version = require("./endpoints/version");
+const user = require("./endpoints/user");
 
-module.exports = function createApp(config) {
-  const app = fastify({
-    logger: true,
-  });
-
-  app.register(require("./plugins/mongoose-connector"), config.mongo);
-  app.register(require("./plugins/auth"), config.auth);
+function createServer(app) {
   app.use(cors());
+  app.register(passport);
 
   app.get("/api/version", version);
   app.register(auth, { prefix: "/api/auth" });
+  app.register(user, { prefix: "/api/user" });
   app.register(geo, { prefix: "/api/geo" });
   app.register(posts, { prefix: "/api/posts" });
-  app.register(users, { prefix: "/api/users" });
 
   return app;
-};
+}
+
+module.exports = createServer;
