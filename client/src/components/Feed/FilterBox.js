@@ -35,6 +35,7 @@ export default () => {
     setModal(false);
     setActivePanel(null);
     setSelectedFilters({});
+    setLocation("");
   };
 
   const handleLocation = (value) => {
@@ -43,18 +44,25 @@ export default () => {
 
   const shareMyLocation = () => {};
 
-  const handleTag = (label, option) => (e) => {
+  const handleOption = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedFilters[label] || [];
-    const optionIdx = options.indexOf(option);
-    let newOptions;
-    if (optionIdx === -1) {
-      newOptions = [...options, option];
+    let newOptions =
+      options.indexOf(option) > -1
+        ? options.filter((o) => o !== option)
+        : [...options, option];
+
+    if (newOptions.length) {
+      setSelectedFilters({ ...selectedFilters, [label]: newOptions });
+      return;
     } else {
-      options.splice(optionIdx, 1);
-      newOptions = options;
+      // handles the case when a user deselects all options in a filter
+      // remove that filter from state, otherwise state is { a: [], b: [1, 2, 3] }
+      const labels = Object.keys(selectedFilters).filter((l) => l !== label);
+      let newState = {};
+      labels.forEach((label) => (newState[label] = selectedFilters[label]));
+      setSelectedFilters(newState);
     }
-    setSelectedFilters({ ...selectedFilters, [label]: newOptions });
   };
 
   const renderFilterOptions = (filters) => {
@@ -80,7 +88,7 @@ export default () => {
         <FilterAccordion
           filters={filters}
           location={location}
-          handleTag={handleTag}
+          handleOption={handleOption}
           activePanel={activePanel}
           setActivePanel={setActivePanel}
           handleLocation={handleLocation}

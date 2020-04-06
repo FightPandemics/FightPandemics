@@ -15,7 +15,7 @@ export default ({ location, handleLocation, shareMyLocation }) => {
     <div className="location-search">
       <WhiteSpace />
       <StyledSearchBar
-        cancelText="Search"
+        cancelText="Cancel"
         placeholder="Zip code, neighborhood, or city"
         maxLength={100}
         value={location}

@@ -10,13 +10,13 @@ export default ({
   filters,
   activePanel,
   setActivePanel,
-  handleTag,
+  handleOption,
   location,
   handleLocation,
   shareMyLocation,
   selectedFilters,
 }) => {
-  const renderFilterPanels = (filters) => {
+  const renderPanels = (filters) => {
     return filters.map((filter, idx) => {
       if (filter.label === "Location") {
         return (
@@ -35,7 +35,7 @@ export default ({
               <FilterTag
                 key={idx}
                 label={option}
-                handleClick={handleTag(filter.label, option)}
+                handleClick={handleOption(filter.label, option)}
                 selected={
                   selectedFilters[filter.label] &&
                   selectedFilters[filter.label].includes(option)
@@ -54,7 +54,7 @@ export default ({
       defaultActiveKey={activePanel}
       className="my-accordion"
     >
-      {renderFilterPanels(filters)}
+      {renderPanels(filters)}
     </FilterAccordion>
   );
 };
