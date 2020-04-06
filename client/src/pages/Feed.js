@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import FilterBox from "../components/FilterBox/FilterBox";
+import FilterBox from "../components/Feed/FilterBox";
 
 const FeedWraper = styled.div`
   width: 100%;

@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
+import CustomList from "../../components/List/CustomList";
+import CustomButton from "../../components/Button/CustomButton";
 import filterOptions from "../../assets/data/filterOptions";
-import FilterTag from "../Tag/FilterTag";
 import FilterTitle from "../Typography/Title/FilterTitle";
 import FilterOptionButton from "../Button/FilterOptionButton";
-import CustomButton from "../../components/Button/CustomButton";
-import CustomList from "../../components/List/CustomList";
-import LocationSearch from "../../components/Input/LocationSearch";
-import {
-  FilterAccordion,
-  FilterAccordionPanel,
-} from "../Accordion/FilterAccordion";
+import FilterAccordion from "./FilterAccordion";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
@@ -72,38 +67,6 @@ export default () => {
     ));
   };
 
-  const renderFilterPanels = (filters) => {
-    return filters.map((filter, idx) => {
-      if (filter.label !== "Location") {
-        return (
-          <FilterAccordionPanel header={filter.label} key={idx}>
-            {Object.values(filter.options).map((option, idx) => (
-              <FilterTag
-                handleClick={handleTag(filter.label, option)}
-                label={option}
-                key={idx}
-                selected={
-                  selectedFilters[filter.label] &&
-                  selectedFilters[filter.label].includes(option)
-                }
-              />
-            ))}
-          </FilterAccordionPanel>
-        );
-      } else {
-        return (
-          <FilterAccordionPanel header={filter.label} key={idx}>
-            <LocationSearch
-              location={location}
-              handleLocation={handleLocation}
-              shareMyLocation={shareMyLocation}
-            />
-          </FilterAccordionPanel>
-        );
-      }
-    });
-  };
-
   return (
     <FilterBoxWrapper>
       <FilterTitle>Filter by</FilterTitle>
@@ -115,12 +78,15 @@ export default () => {
         animationType="slide-up"
       >
         <FilterAccordion
-          defaultActiveKey={activePanel}
-          className="my-accordion"
-          accordion
-        >
-          {renderFilterPanels(filters)}
-        </FilterAccordion>
+          filters={filters}
+          location={location}
+          handleTag={handleTag}
+          activePanel={activePanel}
+          setActivePanel={setActivePanel}
+          handleLocation={handleLocation}
+          shareMyLocation={shareMyLocation}
+          selectedFilters={selectedFilters}
+        />
         <CustomList center="true">
           <List.Item>
             <CustomButton
