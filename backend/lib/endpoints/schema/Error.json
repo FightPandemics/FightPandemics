@@ -4,12 +4,14 @@
   "description": "A standard error object.",
   "properties": {
     "code": {
-      "type": "string"
+      "type": "integer",
+      "format": "int32"
     },
     "message": {
       "type": "string"
     }
   },
-  "required": ["code"],
-  "x-tags": ["Common"]
+  "required": [
+    "code"
+  ]
 }

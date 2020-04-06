@@ -6,48 +6,89 @@ info:
   license:
     name: MIT
 servers:
-  - url: 'http://localhost:8000/api/v1'
+  - url: 'http://fightpandemics.com/api'
+    description: FightPandemics API V1
+  - url: 'http://localhost:8000/api'
     description: Local API V1
 paths:
   /posts:
     get:
       summary: List all posts
-      operationId: listPosts
-      tags:
-        - posts
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
-          schema:
-            type: integer
-            format: int32
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
-          description: A paged array of posts
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
+          description: A pages list of posts.
           content:
             application/json:
               schema:
-                $ref:  '#/components/schemas/Post'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /posts/{postId}:
+    post:
+      summary: Create a new post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          description: A single post.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  '/posts/{postId}':
+    parameters:
+      - name: postId
+        in: path
+        description: The id of the post
+        required: true
+        schema:
+          type: string
     get:
-      summary: Get a user by ID
+      summary: Get a post by id
+      responses:
+        '200':
+          description: A single post.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    patch:
+      summary: Update a post by id
+      responses:
+        '200':
+          description: The updated post.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  '/users/current:':
+    get:
+      summary: Get logged in user
+      responses:
+        '200':
+          description: The currently logged-in user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  '/users/{userId}':
+    get:
+      summary: Get a user by id
       parameters:
-        - name: postId
+        - name: userId
           in: path
-          description: The id of the post
+          description: The id of the user
           required: true
           schema:
             type: string
@@ -57,12 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
+                $ref: '#/components/schemas/User'
 components:
   schemas:
     Error:
@@ -71,13 +107,12 @@ components:
       description: A standard error object.
       properties:
         code:
-          type: string
+          type: integer
+          format: int32
         message:
           type: string
       required:
         - code
-      x-tags:
-        - Common
     User:
       title: User
       type: object
@@ -175,6 +210,47 @@ components:
         - authorId
         - postId
         - comment
+  parameters:
+    skip:
+      name: skip
+      in: query
+      description: number of items to skip
+      schema:
+        type: integer
+        format: int32
+    limit:
+      name: limit
+      in: query
+      description: How many items to return at one time (max 100)
+      schema:
+        type: integer
+        format: int32
+  responses:
+    Unauthorized:
+      description: Unauthorized.
+    NotFound:
+      description: Entity not found.
+    IllegalInput:
+      description: Illegal input for operation.
+    GeneralError:
+      description: General Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  requestBodies:
+    User:
+      description: user to add or update
+      content: 
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/User'
+    Post:
+      description: user to add or update
+      content: 
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/Post'
   securitySchemes:
     API Key - 1:
       name: API Key
