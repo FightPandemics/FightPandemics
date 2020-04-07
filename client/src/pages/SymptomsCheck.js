@@ -10,10 +10,9 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
+import { ResultsPage } from "./ResultsPage.js";
 
-const INITIAL_STATE = {
-  // answers: []
-};
+const INITIAL_STATE = {};
 
 const Welcome = (props) => {
   const onSelectAnswer = (answer) => {
@@ -48,7 +47,6 @@ const Welcome = (props) => {
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
-    console.dir(props);
     props.nextStep();
   };
 
@@ -267,10 +265,10 @@ const Step6 = (props) => {
   );
 };
 
-/**selections are not coming out as xpected */
 const Step7 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
+    props.nextStep();
   };
 
   return (
@@ -304,15 +302,6 @@ const Step7 = (props) => {
   );
 };
 
-// const Step8 = (props) => {
-//   console.log("MMMMMAAAA", props);
-
-//   return (
-//     <div>
-//      {/* { props } */}
-//     </div>
-//   );
-// };
 export const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
@@ -331,7 +320,7 @@ export const SymptomsCheck = () => {
         <Step5 hashKey={"Step5"} update={updateAnswers} />
         <Step6 hashKey={"Step6"} update={updateAnswers} />
         <Step7 hashKey={"Step7"} update={updateAnswers} />
-        {/* <Step8 anState={state} /> */}
+        <ResultsPage val={state} />
       </StyledWizard>
     </WizardContainer>
   );
