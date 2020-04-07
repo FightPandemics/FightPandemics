@@ -139,16 +139,16 @@ export default ({ post }) => {
         </a>
       </Card.Body>
       <Card.Body>
-        <div class="social-icons">
-          <div class="social-icon">
+        <div className="social-icons">
+          <div className="social-icon">
             <HeartIcon className="social-icon-svg" />
             <span>{numLikes}</span>
           </div>
-          <div class="social-icon">
+          <div className="social-icon">
             <CommentIcon className="social-icon-svg" />
             <span>{numComments}</span>
           </div>
-          <div class="social-icon">
+          <div className="social-icon">
             <ShareIcon className="social-icon-svg" />
             <span>{numShares}</span>
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Tag } from "antd-mobile";
 import { ROYAL_BLUE } from "../../constants/colors";
 
