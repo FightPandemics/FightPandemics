@@ -93,6 +93,11 @@ const CloseNav = styled(Button).attrs((props) => ({
   &::before {
     display: none;
   }
+
+  .am-icon {
+    stroke-width: 2px;
+    stroke: #fff;
+  }
 `;
 
 export default (props) => {
