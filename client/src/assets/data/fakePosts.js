@@ -2,25 +2,28 @@ export default [
   {
     _id: 0,
     author: "Lily Luke",
-    title: "I need help",
+    title: "Disinfecting clorax wipes needed",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora iste eum molestiae eligendi aut ad quibusdam quisquam ab obcaecati sapiente qui, repellat aliquid aspernatur harum soluta esse, totam voluptates maxime.",
+      "Does anyone have an extra pack of disinfecting Clorax wipes? I would be very grateful if you could sell me one. Two people in our family have chronic pulmonary diseases, including my son. We are isolated, but my husband might infect us, as he works with people a lot. We need to constantly disinfect all the surfaces. We've been searching for over a week, but they seem to be gone everywhere. Maybe someone has a stockpile or seen them in stores?",
     type: ["Medical Supplies"],
+    location: "Manchester, UK",
   },
   {
     _id: 1,
-    author: "John Blue",
-    title: "This is a much longer title to test UI",
+    author: "Notion",
+    title: "Disinfecting clorax wipes needed",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora iste eum molestiae eligendi aut ad quibusdam quisquam ab obcaecati sapiente qui, repellat aliquid aspernatur harum soluta esse, totam voluptates maxime.",
-    type: ["Education", "Legal", "Funding", "R&D"],
+      "Does anyone have an extra pack of disinfecting Clorax wipes? I would be very grateful if you could sell me one.",
+    type: ["Education", "Legal"],
+    location: "Paris, France",
   },
   {
     _id: 2,
-    author: "John Blue",
-    title: "Another long title to test the positioning of the UI",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora iste eum molestiae eligendi aut ad quibusdam quisquam ab obcaecati sapiente qui, repellat aliquid aspernatur harum soluta esse, totam voluptates maxime.Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora iste eum molestiae eligendi aut ad quibusdam quisquam ab obcaecati sapiente qui, repellat aliquid aspernatur harum soluta esse, totam voluptates maxime.",
-    type: ["Education", "Legal"],
+    author: "Bob Blue",
+    title:
+      "I don't know what to name this title. But the point is, this is a very long title.",
+    description: "This is a short post.",
+    type: ["Education", "Legal", "Funding", "R&D"],
+    location: "Global",
   },
 ];

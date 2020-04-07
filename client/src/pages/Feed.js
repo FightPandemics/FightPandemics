@@ -39,11 +39,11 @@ const Feed = () => {
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedFilters[label] || [];
+    let optionIdx = options.indexOf(option);
     let newOptions =
-      options.indexOf(option) > -1
+      optionIdx > -1
         ? options.filter((o) => o !== option)
         : [...options, option];
-
     if (newOptions.length) {
       return setSelectedFilters({ ...selectedFilters, [label]: newOptions });
     } else {
@@ -52,6 +52,7 @@ const Feed = () => {
       return setSelectedFilters(newState);
     }
   };
+
   return (
     <FeedWraper>
       <FilterBox
@@ -67,7 +68,7 @@ const Feed = () => {
         setActivePanel={setActivePanel}
         shareMyLocation={shareMyLocation}
       />
-      <Posts posts={fakePosts} />
+      <Posts filteredPosts={fakePosts} />
     </FeedWraper>
   );
 };

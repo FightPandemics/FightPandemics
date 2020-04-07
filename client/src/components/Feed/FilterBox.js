@@ -9,6 +9,7 @@ import FilterAccordion from "./FilterAccordion";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
+  margin-bottom: 40px;
 `;
 
 export default ({
