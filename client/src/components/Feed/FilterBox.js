@@ -19,15 +19,10 @@ export default () => {
   const [location, setLocation] = useState("");
   const filters = Object.values(filterOptions);
 
-  const openModal = (panelIdx) => (e) => {
-    e.preventDefault();
-    setModal(true);
-    setActivePanel(`${panelIdx}`);
-  };
-
-  const closeModal = () => {
-    setModal(false);
-    setActivePanel(null);
+  const handleModal = (isOpen, panelIdx) => (e) => {
+    let idx = !panelIdx ? null : `${panelIdx}`;
+    setModal(isOpen);
+    setActivePanel(idx);
   };
 
   const handleQuit = (e) => {
@@ -53,22 +48,21 @@ export default () => {
         : [...options, option];
 
     if (newOptions.length) {
-      setSelectedFilters({ ...selectedFilters, [label]: newOptions });
-      return;
+      return setSelectedFilters({ ...selectedFilters, [label]: newOptions });
     } else {
       // handles the case when a user deselects all options in a filter
       // remove that filter from state, otherwise state is { a: [], b: [1, 2, 3] }
-      const labels = Object.keys(selectedFilters).filter((l) => l !== label);
       let newState = {};
+      const labels = Object.keys(selectedFilters).filter((l) => l !== label);
       labels.forEach((label) => (newState[label] = selectedFilters[label]));
-      setSelectedFilters(newState);
+      return setSelectedFilters(newState);
     }
   };
 
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <FilterOptionButton
-        handleClick={openModal(idx)}
+        handleClick={handleModal(true, idx)}
         key={idx}
         label={filter.label}
       />
@@ -82,7 +76,7 @@ export default () => {
       <Modal
         popup
         visible={modal}
-        onClose={closeModal}
+        onClose={handleModal(false)}
         animationType="slide-up"
       >
         <FilterAccordion
@@ -112,7 +106,7 @@ export default () => {
               roundborder="true"
               large="true"
               primary="true"
-              onClick={closeModal}
+              onClick={handleModal(false)}
             >
               Apply filters
             </CustomButton>
