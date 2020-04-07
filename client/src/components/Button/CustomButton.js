@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import { Button } from "antd-mobile";
 import { ROYAL_BLUE, SELAGO } from "../../constants/colors";

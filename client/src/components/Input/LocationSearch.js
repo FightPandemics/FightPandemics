@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
 
 const StyledSearchBar = styled(SearchBar)`
@@ -15,7 +15,7 @@ export default ({ location, handleLocation, shareMyLocation }) => {
     <div className="location-search">
       <WhiteSpace />
       <StyledSearchBar
-        cancelText="Search"
+        cancelText="Cancel"
         placeholder="Zip code, neighborhood, or city"
         maxLength={100}
         value={location}
