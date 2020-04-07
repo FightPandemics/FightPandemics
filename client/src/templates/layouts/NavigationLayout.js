@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, List } from "antd-mobile";
+import { Drawer, List, Button, Icon } from "antd-mobile";
 import { useAuth0 } from "~/react-auth0-spa";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -18,6 +18,10 @@ const sidebarStyle = {
 };
 
 const NavList = styled(List)`
+  width: 63vw !important;
+  @media screen and (min-width: 1024px) {
+    width: 20vw !important;
+  }
   & .am-list-body {
     background: unset;
     border-width: 0 !important;
@@ -66,6 +70,31 @@ const NavItem = styled(List.Item).attrs((props) => ({
   }
 `;
 
+const CloseNav = styled(Button).attrs((props) => ({
+  inline: true,
+  icon: "cross",
+  size: "lg",
+}))`
+  background: unset;
+  border-width: 0 !important;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 2rem;
+  position: absolute;
+  top: 4px;
+  left: 0;
+  z-index: 300;
+
+  &.am-button-active {
+    background: none;
+    color: #fff;
+  }
+  &::before {
+    display: none;
+  }
+`;
+
 export default (props) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const history = useHistory();
@@ -79,30 +108,30 @@ export default (props) => {
   const loginFunc = () => loginWithRedirect({});
 
   const drawerMenu = () => (
-    <NavList>
-      {isAuthenticated ? (
-        <>
-          <NavItem>
-            <Link to="/profile">Profile</Link>
-          </NavItem>
-        </>
-      ) : (
-        <>
-          <NavItem history={history} link="/auth/login">
-            Login
-          </NavItem>
-          <NavItem history={history} link="/auth/signup">
-            Register
-          </NavItem>
-        </>
-      )}
-      <NavItem history={history} link="/about">
-        About Us
-      </NavItem>
-      <NavItem history={history} link="/privacy">
-        Data Privacy
-      </NavItem>
-    </NavList>
+    <>
+      <NavList>
+        {isAuthenticated ? (
+          <>
+            <NavItem>
+              <Link to="/profile">Profile</Link>
+            </NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem history={history} link="/auth/signup">
+              Login / Register
+            </NavItem>
+          </>
+        )}
+        <NavItem history={history} link="/about">
+          About Us
+        </NavItem>
+        <NavItem history={history} link="/privacy">
+          Data Privacy
+        </NavItem>
+      </NavList>
+      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+    </>
   );
 
   return (
@@ -118,7 +147,6 @@ export default (props) => {
       sidebar={drawerMenu()}
       sidebarStyle={sidebarStyle}
       className="app-drawer"
-      closable
     >
       <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
       <Main>
