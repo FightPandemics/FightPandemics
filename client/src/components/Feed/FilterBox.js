@@ -20,9 +20,9 @@ export default () => {
   const filters = Object.values(filterOptions);
 
   const handleModal = (isOpen, panelIdx) => (e) => {
-    let idx = !panelIdx ? null : `${panelIdx}`;
+    e.preventDefault();
     setModal(isOpen);
-    setActivePanel(idx);
+    setActivePanel(panelIdx ? `${panelIdx}` : null);
   };
 
   const handleQuit = (e) => {
@@ -52,9 +52,8 @@ export default () => {
     } else {
       // handles the case when a user deselects all options in a filter
       // remove that filter from state, otherwise state is { a: [], b: [1, 2, 3] }
-      let newState = {};
-      const labels = Object.keys(selectedFilters).filter((l) => l !== label);
-      labels.forEach((label) => (newState[label] = selectedFilters[label]));
+      let newState = Object.assign({}, selectedFilters);
+      delete newState[label];
       return setSelectedFilters(newState);
     }
   };
