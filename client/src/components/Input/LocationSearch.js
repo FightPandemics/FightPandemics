@@ -24,8 +24,8 @@ export default ({ location, handleLocation, shareMyLocation }) => {
       />
       <WhiteSpace size="lg" />
       <WhiteSpace />
-      <div className="share-my-location" onClick={shareMyLocation}>
-        <ShareLocationIcon />
+      <div onClick={shareMyLocation}>
+        <ShareLocationIcon style={{ marginRight: "10px" }} />
         Share My Location
       </div>
       <WhiteSpace />

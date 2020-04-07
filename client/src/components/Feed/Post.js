@@ -108,7 +108,7 @@ export default ({ post }) => {
 
   const renderTags = () => {
     return tags.map((tag, idx) => (
-      <FilterTag label={tag} selected={false} key={idx} />
+      <FilterTag label={tag} selected={false} disabled={true} key={idx} />
     ));
   };
 
