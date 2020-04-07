@@ -20,11 +20,16 @@ const sidebarStyle = {
 const NavList = styled(List)`
   & .am-list-body {
     background: unset;
+    border-width: 0 !important;
     position: absolute;
-    top: 50%;
+    top: 35vh;
     width: 100%;
     transform: translateY(-50%);
-
+    & div:not(:last-child) {
+      & .am-list-line {
+        border-bottom: 0;
+      }
+    }
     &::after {
       height: 0px !important;
     }
@@ -39,9 +44,21 @@ const NavItem = styled(List.Item).attrs((props) => ({
   onClick: props.onClick || (() => props.history.push(props.link)),
 }))`
   background: unset;
-
-  & .am-list-content {
-    color: #fff !important;
+  padding-left: 24px;
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    & .am-list-content {
+      color: #fff;
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-size: 1.715rem;
+      font-weight: 600;
+      line-height: 4.286rem;
+      padding: 0;
+    }
   }
 
   &.am-list-item-active {
@@ -101,6 +118,7 @@ export default (props) => {
       sidebar={drawerMenu()}
       sidebarStyle={sidebarStyle}
       className="app-drawer"
+      closable
     >
       <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
       <Main>
