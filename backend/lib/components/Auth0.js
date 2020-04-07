@@ -11,15 +11,15 @@ const errorHandler = (err) => {
 };
 
 const buildOauthUrl = (provider) => {
-  const qParams = [
-    `scope=${provider.scope}`,
-    `response_type=code`,
-    `client_id=${config.auth.clientId}`,
-    `state=${config.auth.state}`,
-    `audience=${config.auth.domain}/api/v2/`,
-    `redirect_uri=${config.auth.appUrl}/login/callback`,
-    `connection=${provider.name}`,
-  ].join("&");
+  const qParams = qs.stringify({
+    response_type: "code",
+    scope: provider.scope,
+    client_id: config.auth.clientId,
+    state: config.auth.state,
+    audience: `${config.auth.domain}/api/v2/`,
+    redirect_uri: `${config.auth.appUrl}/login/callback`,
+    connection: provider.name,
+  });
   return `${config.auth.domain}/authorize?${qParams}`;
 };
 
