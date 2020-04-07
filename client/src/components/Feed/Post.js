@@ -8,6 +8,7 @@ import HeartIcon from "../Icon/heart";
 import CommentIcon from "../Icon/comment";
 import ShareIcon from "../Icon/share";
 import StatusIcon from "../Icon/status-indicator";
+import CreatPostIcon from "../Icon/create-post";
 
 const CustomCard = styled(Card)`
   margin-bottom: 65px;
@@ -56,6 +57,12 @@ const CustomCard = styled(Card)`
       .view-more {
         color: ${ROYAL_BLUE};
         font-weight: bold;
+      }
+
+      .test {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
 
       .social-icons {
@@ -132,12 +139,15 @@ export default ({ post }) => {
         <h1>{title}</h1>
         <p>{description}</p>
       </Card.Body>
-      <WhiteSpace size="sm" />
       <Card.Body>
-        <a className="view-more" href="">
-          View More
-        </a>
+        <div className="test">
+          <a className="view-more" href="">
+            View More
+          </a>
+          <CreatPostIcon style={{ marginTop: "-40px" }} />
+        </div>
       </Card.Body>
+      <WhiteSpace size="lg" />
       <Card.Body>
         <div className="social-icons">
           <div className="social-icon">
