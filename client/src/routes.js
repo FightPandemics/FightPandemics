@@ -6,6 +6,7 @@ import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
 import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
+import { Profile } from "./pages/Profile";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 
@@ -62,5 +63,9 @@ export const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/profile",
+    component: Profile,
   },
 ];

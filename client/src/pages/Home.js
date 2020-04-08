@@ -48,6 +48,12 @@ export const Home = (props) => {
           Skip
         </Link>
       </p>
+      <p>
+        <Link to="/profile">
+          {/* Profile link for viewing purposes */}
+          Profile
+        </Link>
+      </p>
     </div>
   );
 };
