@@ -28,7 +28,7 @@ const authenticate = async (grantType, payload = {}) => {
     grant_type: grantType,
     audience: `${config.auth.domain}/api/v2/`,
     client_id: config.auth.clientId,
-    client_secret: process.env.AUTH_SECRET_KEY,
+    client_secret: config.auth.secretKey,
     ...payload,
   };
   return axios

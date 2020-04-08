@@ -5,9 +5,9 @@ const { config } = require("../../config");
  * /api/auth
  */
 async function routes(app) {
-  app.get("/social", async (_, res) => {
+  app.get("/social", async (_, reply) => {
     const defaultScope = "openid profile email";
-    return res.send({
+    return reply.send({
       google: Auth0.buildOauthUrl({
         name: "google-oauth2",
         scope: defaultScope,
@@ -17,26 +17,26 @@ async function routes(app) {
     });
   });
 
-  app.post("/oauth", async (req, res) => {
+  app.post("/oauth", async (req, reply) => {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== config.auth.state) {
-        res.code(401).send({ message: "Invalid state" });
+        reply.code(401).send({ message: "Invalid state" });
       }
       const accessToken = await Auth0.authenticate("authorization_code", {
         code,
         redirect_uri: `${config.auth.appUrl}/login/callback`,
       });
-      return res.send({ token: accessToken });
+      return reply.send({ token: accessToken });
     } catch (err) {
-      return res.code(err.statusCode).send(err);
+      return reply.code(err.statusCode).send(err);
     }
   });
 
   app.post(
     "/authenticate",
     { preValidation: [app.getServerToken] },
-    async (req, res) => {
+    async (req, reply) => {
       const { token } = req;
       const payload = {
         connection: "Username-Password-Authentication",
@@ -50,7 +50,7 @@ async function routes(app) {
         await Auth0.createUser(token, payload);
       } catch (err) {
         if (err.statusCode !== 409) {
-          return res.code(err.statusCode).send(err);
+          return reply.code(err.statusCode).send(err);
         }
       }
 
@@ -59,7 +59,7 @@ async function routes(app) {
         password: req.body.password,
         scope: "openid",
       });
-      return res.send({ token: accessToken });
+      return reply.send({ token: accessToken });
     },
   );
 }
