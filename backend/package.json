@@ -38,10 +38,8 @@
     "fastify-plugin": "^1.6.1",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
-    "jwks-rsa": "^1.7.0",
     "mongoose": "^5.9.6",
     "node-cache": "^5.1.0",
-    "querystring": "^0.2.0",
     "validator": "^13.0.0"
   },
   "devDependencies": {
