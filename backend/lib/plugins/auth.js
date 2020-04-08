@@ -15,7 +15,7 @@ const cache = new NodeCache({
   useClones: false,
 });
 
-const passportPlugin = async (app) => {
+const authPlugin = async (app) => {
   app.register(fastifyJwt, {
     secret: fastifySecretProvider({
       cache: true,
@@ -28,15 +28,15 @@ const passportPlugin = async (app) => {
     decode: { complete: true },
   });
 
-  app.decorate("authenticate", async (request, reply) => {
+  app.decorate("authenticate", async (req, reply) => {
     try {
-      await request.jwtVerify();
+      await req.jwtVerify();
     } catch (err) {
       reply.send(err);
     }
   });
 
-  app.decorate("getServerToken", async (req, res) => {
+  app.decorate("getServerToken", async (req, reply) => {
     const msg = {
       ok: "Token assigned successfully!",
       expired: "Token expired, going to refresh..",
@@ -54,7 +54,7 @@ const passportPlugin = async (app) => {
         token = await Auth0.authenticate("client_credentials");
       }
     } catch (err) {
-      res.code(500).send({ message: msg.error });
+      reply.code(500).send({ message: msg.error });
     }
 
     cache.set(key, token);
@@ -63,4 +63,4 @@ const passportPlugin = async (app) => {
   });
 };
 
-module.exports = fp(passportPlugin);
+module.exports = fp(authPlugin);
