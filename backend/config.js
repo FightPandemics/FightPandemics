@@ -16,18 +16,12 @@ const config = {
   geoService: {
     host: `http://${process.env.GEO_SERVICE_URL}`,
   },
-  jwt: {
-    key: process.env.JWT_KEY,
-    params: {
-      algorithm: "RS512",
-      noTimestamp: true,
-    },
-  },
   auth: {
-    domain: `https://${process.env.AUTH_HOST}`,
-
+    domain: `https://${process.env.AUTH_DOMAIN}`,
     clientId: process.env.AUTH_CLIENT_ID,
-    secret: process.env.AUTH_SECRET_KEY,
+    secretKey: process.env.AUTH_SECRET_KEY,
+    appUrl: process.env.AUTH_APP_URL,
+    state: process.env.AUTH_STATE,
   },
   joi: {
     params: {
@@ -40,10 +34,10 @@ const validateConfig = () => {
   assert.ok(config.server.port, "Ensure PORT env is provided");
   assert.ok(config.mongo.uri, "Ensure MONGO_URI env is provided");
   assert.ok(config.geoService.host, "Ensure GEO_SERVICE_URL env is provided.");
-  assert.ok(config.jwt.key, "Ensure JWT_KEY env is provided.");
-  assert.ok(config.auth.domain, "Ensure AUTH_HOST env is provided.");
+  assert.ok(config.auth.domain, "Ensure AUTH_DOMAIN env is provided.");
   assert.ok(config.auth.clientId, "Ensure AUTH_CLIENT_ID env is provided.");
-  assert.ok(config.auth.secret, "Ensure AUTH_SECRET_KEY env is provided.");
+  assert.ok(config.auth.secretKey, "Ensure AUTH_SECRET_KEY env is provided.");
+  assert.ok(config.auth.state, "Ensure AUTH_STATE env is provided.");
 };
 
 module.exports = { config, validateConfig };

@@ -1,9 +1,9 @@
 const cors = require("cors");
 const fastify = require("fastify");
 
+const auth = require("./endpoints/auth");
 const geo = require("./endpoints/geo");
 const posts = require("./endpoints/posts");
-// const signup = require("./endpoints/signup");
 const users = require("./endpoints/users");
 const version = require("./endpoints/version");
 
@@ -13,14 +13,11 @@ module.exports = function createApp(config) {
   });
 
   app.register(require("./plugins/mongoose-connector"), config.mongo);
-  // app.register(require("fastify-auth0-verify"), config.auth);
+  app.register(require("./plugins/auth"), config.auth);
   app.use(cors());
 
   app.get("/api/version", version);
-  // app.post("/api/signup", { preValidation: app.authenticate }, signup);
-
-  // Private Endpoints
-
+  app.register(auth, { prefix: "/api/auth" });
   app.register(geo, { prefix: "/api/geo" });
   app.register(posts, { prefix: "/api/posts" });
   app.register(users, { prefix: "/api/users" });
