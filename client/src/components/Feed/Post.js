@@ -4,9 +4,14 @@ import { Card, WhiteSpace } from "antd-mobile";
 import FilterTag from "../../components/Tag/FilterTag";
 import TextInput from "../../components/Input/TextInput";
 import { ROYAL_BLUE, DARK_GRAY, SELAGO } from "../../constants/colors";
+import HeartIcon from "../Icon/heart";
+import CommentIcon from "../Icon/comment";
+import ShareIcon from "../Icon/share";
+import StatusIcon from "../Icon/status-indicator";
+import CreatPostIcon from "../Icon/create-post";
 
 const CustomCard = styled(Card)`
-  margin-bottom: 40px;
+  margin-bottom: 65px;
   &.am-card,
   .am-card-body {
     &::before {
@@ -28,8 +33,11 @@ const CustomCard = styled(Card)`
       .am-card-header-extra {
         text-align: unset;
         font-size: 13px;
-        margin-left: 52px;
-        margin-top: -17px;
+        margin-left: 47px;
+        margin-top: -13px;
+        .status-icon {
+          margin-right: 8px;
+        }
       }
     }
     .am-card-body {
@@ -51,14 +59,25 @@ const CustomCard = styled(Card)`
         font-weight: bold;
       }
 
+      .test {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       .social-icons {
+        display: flex;
       }
       .social-icon {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         color: ${DARK_GRAY};
-        margin-right: 50px;
-        img {
+        margin-right: 46px;
+        .social-icon-svg {
           margin-right: 10px;
+        }
+        span {
+          font-size: 15px;
         }
       }
     }
@@ -96,7 +115,7 @@ export default ({ post }) => {
 
   const renderTags = () => {
     return tags.map((tag, idx) => (
-      <FilterTag label={tag} selected={false} key={idx} />
+      <FilterTag label={tag} selected={false} disabled={true} key={idx} />
     ));
   };
 
@@ -105,7 +124,12 @@ export default ({ post }) => {
       <Card.Header
         title={author}
         thumbStyle={thumbStyle}
-        extra={<span># {location}</span>}
+        extra={
+          <span>
+            <StatusIcon className="status-icon" />
+            {location}
+          </span>
+        }
         thumb={photoUrl}
       />
       <WhiteSpace size="lg" />
@@ -115,36 +139,27 @@ export default ({ post }) => {
         <h1>{title}</h1>
         <p>{description}</p>
       </Card.Body>
-      <WhiteSpace size="sm" />
       <Card.Body>
-        <a class="view-more" href="">
-          View More
-        </a>
+        <div className="test">
+          <a className="view-more" href="">
+            View More
+          </a>
+          <CreatPostIcon style={{ marginTop: "-40px" }} />
+        </div>
       </Card.Body>
+      <WhiteSpace size="lg" />
       <Card.Body>
-        <div class="social-icons">
-          <div class="social-icon">
-            <img
-              style={{ width: "15px", height: "15px" }}
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQsRidJC_XT8z0t0r4nqJF2YTxJp7xP80vCky7UPRmKxAeTXvde&usqp=CAU"
-              alt="social"
-            />
+        <div className="social-icons">
+          <div className="social-icon">
+            <HeartIcon className="social-icon-svg" />
             <span>{numLikes}</span>
           </div>
-          <div class="social-icon">
-            <img
-              style={{ width: "20px", height: "20px" }}
-              src="https://lh3.googleusercontent.com/-W4_-RfoF-Gj1Heb6ZePq4SbNThOn8cPb9NCOiV0HuBrzSU-V2YHkTO4rz6wUOO1tY0"
-              alt="social"
-            />
+          <div className="social-icon">
+            <CommentIcon className="social-icon-svg" />
             <span>{numComments}</span>
           </div>
-          <div class="social-icon">
-            <img
-              style={{ width: "15px", height: "15px" }}
-              src="https://library.kissclipart.com/20180830/iuw/kissclipart-arrow-bullet-icon-clipart-computer-icons-arrow-bul-da4eb4d84fc18db6.png"
-              alt="social"
-            />
+          <div className="social-icon">
+            <ShareIcon className="social-icon-svg" />
             <span>{numShares}</span>
           </div>
         </div>

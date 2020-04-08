@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
+import ShareLocationIcon from "../Icon/share-my-location";
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
@@ -21,9 +22,10 @@ export default ({ location, handleLocation, shareMyLocation }) => {
         value={location}
         onChange={handleLocation}
       />
+      <WhiteSpace size="lg" />
       <WhiteSpace />
       <div onClick={shareMyLocation}>
-        <Icon type="right" />
+        <ShareLocationIcon style={{ marginRight: "10px" }} />
         Share My Location
       </div>
       <WhiteSpace />

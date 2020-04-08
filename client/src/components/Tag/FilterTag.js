@@ -1,15 +1,16 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Tag } from "antd-mobile";
 import { ROYAL_BLUE } from "../../constants/colors";
 
 const FilterTag = styled(Tag)`
   &.am-tag-normal {
-    padding: 0 8px;
+    padding: 0 15px;
   }
 
   &.am-tag-normal,
-  &.am-tag-active {
+  &.am-tag-active,
+  &.am-tag-disabled {
     color: ${ROYAL_BLUE};
     font-size: 12px;
     margin: 5px 3px;
@@ -19,6 +20,11 @@ const FilterTag = styled(Tag)`
     }
   }
 
+  &.am-tag-disabled {
+    background-color: unset;
+    padding: 0 8px;
+  }
+
   &.am-tag-active {
     color: #fff !important;
     background-color: ${ROYAL_BLUE} !important;
@@ -26,9 +32,9 @@ const FilterTag = styled(Tag)`
   }
 `;
 
-export default ({ label, selected, handleClick }) => {
+export default ({ label, selected, disabled, handleClick }) => {
   return (
-    <FilterTag selected={selected}>
+    <FilterTag disabled={disabled} selected={selected}>
       <div onClick={handleClick}>{label}</div>
     </FilterTag>
   );

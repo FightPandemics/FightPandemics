@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Icon } from "antd-mobile";
 import { SELAGO, ROYAL_BLUE } from "../../constants/colors";
+import DownArrow from "../Icon/down-arrow";
 
 const Option = styled(Button)`
   display: inline-block;
@@ -45,7 +46,7 @@ export default ({ label, handleClick }) => {
     <Option>
       <div onClick={handleClick} style={labelWrapperStyles}>
         <span style={labelStyles}>{label}</span>
-        <Icon type="down" size="xxs" />
+        <DownArrow />
       </div>
     </Option>
   );
