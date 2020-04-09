@@ -10,9 +10,6 @@ import TextInput from "../../components/Input/TextInput";
 import { SELAGO } from "../../constants/colors";
 
 export default ({ post }) => {
-  const [showComments, setShowComments] = useState(false);
-  const [copied, setCopied] = useState(false);
-
   const {
     title,
     description,
@@ -26,6 +23,16 @@ export default ({ post }) => {
     url,
     comments,
   } = post;
+
+  const [showComments, setShowComments] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // mock API to test functionality
+  const [liked, setLiked] = useState(false);
+  const [shared, setShared] = useState(false);
+  const [fakeLikes, setFakeLikes] = useState(numLikes);
+  const [fakeComments, setFakeComments] = useState(numComments);
+  const [fakeShares, setFakeShares] = useState(numShares);
 
   const thumbStyle = {
     borderRadius: "40px",
@@ -76,11 +83,19 @@ export default ({ post }) => {
       <Card.Body>
         <PostSocial
           url={url}
-          numLikes={numLikes}
-          numComments={numComments}
-          numShares={numShares}
-          onCopy={() => setCopied(!copied)}
+          numLikes={fakeLikes}
+          numComments={fakeComments}
+          numShares={fakeShares}
           setShowComments={() => setShowComments(!showComments)}
+          onCopyLink={() => {
+            if (!shared) setFakeShares(fakeShares + 1);
+            setShared(true);
+            return setCopied(!copied);
+          }}
+          likePost={() => {
+            liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
+            return setLiked(!liked);
+          }}
         />
       </Card.Body>
       <Card.Body>

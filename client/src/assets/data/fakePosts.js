@@ -12,18 +12,20 @@ export default [
         _id: 0,
         name: "Rob Till",
         comment: "I can help. Where can we meet? I'm north from you.",
-        comments: [],
+        numLikes: 2,
+        children: [],
       },
       {
-        _id: 0,
+        _id: 1,
         name: "Brian Loop",
         comment: "I have many in stock.",
-        comments: [
+        numLikes: 7,
+        children: [
           {
-            _id: 0,
+            _id: 2,
             name: "Lily Luke",
             comment: "Interested! How much?",
-            comments: [],
+            children: [],
           },
         ],
       },
@@ -46,18 +48,20 @@ export default [
         _id: 0,
         name: "Rob Till",
         comment: "I can help. Where can we meet? I'm north from you.",
-        comments: [],
+        numLikes: 15,
+        children: [],
       },
       {
-        _id: 0,
+        _id: 1,
         name: "Brian Loop",
         comment: "I have many in stock.",
-        comments: [
+        numLikes: 241,
+        children: [
           {
-            _id: 0,
+            _id: 2,
             name: "Rob Till",
             comment: "I can help. Where can we meet? I'm north from you.",
-            comments: [],
+            children: [],
           },
         ],
       },
@@ -83,18 +87,21 @@ export default [
         _id: 0,
         name: "Rob Till",
         comment: "I can help. Where can we meet? I'm north from you.",
-        comments: [],
+        children: [],
+        numLikes: 0,
       },
       {
-        _id: 0,
+        _id: 1,
         name: "Brian Loop",
         comment: "I have many in stock.",
-        comments: [
+        numLikes: 32,
+        children: [
           {
-            _id: 0,
+            _id: 2,
             name: "Lily Luke",
             comment: "Interested! How much?",
-            comments: [],
+            numLikes: 1,
+            children: [],
           },
         ],
       },

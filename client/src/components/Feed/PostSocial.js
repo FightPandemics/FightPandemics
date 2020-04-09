@@ -9,13 +9,13 @@ export default ({
   numLikes,
   numComments,
   numShares,
-  onCopy,
+  onCopyLink,
   setShowComments,
+  likePost,
 }) => {
-  const fakeLoggedIn = true;
   return (
     <div className="social-icons">
-      <div className="social-icon">
+      <div className="social-icon" onClick={likePost}>
         <HeartIcon className="social-icon-svg" />
         <span>{numLikes}</span>
       </div>
@@ -24,7 +24,7 @@ export default ({
         <span>{numComments}</span>
       </div>
       <div className="social-icon">
-        <CopyToClipboard text={url} onCopy={onCopy}>
+        <CopyToClipboard text={url} onCopy={onCopyLink}>
           <span>
             <ShareIcon className="social-icon-svg" />
             <span>{numShares}</span>

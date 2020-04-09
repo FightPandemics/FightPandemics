@@ -1,5 +1,6 @@
 import React from "react";
 
-export default () => {
+export default ({ comments }) => {
+  const { name, comment, children, numLikes } = comments;
   return <div>comments</div>;
 };

@@ -35,7 +35,7 @@ const labelWrapperStyles = {
 };
 
 const labelStyles = {
-  marginRight: "5px",
+  marginRight: "10px",
   fontWeight: "600",
   letterSpacing: "1px",
 };
