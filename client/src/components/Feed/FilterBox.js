@@ -21,7 +21,7 @@ export default () => {
       <FilterOptionButton
         key={idx}
         label={filter.label}
-        handleClick={handleModal(true, idx)}
+        handleClick={handleModal(idx)}
       />
     ));
   };
@@ -32,7 +32,7 @@ export default () => {
       <Modal
         popup
         visible={modal}
-        onClose={handleModal(false)}
+        onClose={handleModal(null)}
         animationType="slide-up"
       >
         <FilterAccordion />
@@ -53,7 +53,7 @@ export default () => {
               roundborder="true"
               large="true"
               primary="true"
-              onClick={handleModal(false)}
+              onClick={handleModal(null)}
             >
               Apply filters
             </CustomButton>

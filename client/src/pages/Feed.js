@@ -9,9 +9,8 @@ import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
-  TOGGLE_MODAL,
-  SET_ACTIVE_PANEL,
-  SET_LOCATION,
+  TOGGLE_STATE,
+  SET_VALUE,
 } from "../actions/feedActions";
 
 const FeedWraper = styled.div`
@@ -33,27 +32,26 @@ const Feed = () => {
   const { modal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
 
-  const handleModal = (isOpen, panelIdx) => (e) => {
+  const handleModal = (panelIdx) => (e) => {
     e.preventDefault();
-    feedDispatch({ type: TOGGLE_MODAL });
+    feedDispatch({ type: TOGGLE_STATE, key: "modal" });
     feedDispatch({
-      type: SET_ACTIVE_PANEL,
+      type: SET_VALUE,
+      key: "activePanel",
       value: panelIdx > -1 ? `${panelIdx}` : null,
     });
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
+    feedDispatch({ type: TOGGLE_STATE, key: "modal" });
+    feedDispatch({ type: SET_VALUE, key: "location", value: "" });
+    feedDispatch({ type: SET_VALUE, key: "activePanel", value: null });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
-    feedDispatch({ type: SET_LOCATION, value: "" });
-    feedDispatch({ type: TOGGLE_MODAL });
-    feedDispatch({
-      type: SET_ACTIVE_PANEL,
-      value: null,
-    });
   };
 
-  const handleLocation = (value) => feedDispatch({ type: SET_LOCATION, value });
+  const handleLocation = (value) =>
+    feedDispatch({ type: SET_VALUE, key: "location", value });
 
   const handleOption = (label, option) => (e) => {
     e.preventDefault();

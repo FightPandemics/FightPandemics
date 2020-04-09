@@ -1,6 +1,5 @@
 export const ADD_OPTION = "ADD_OPTION";
 export const REMOVE_OPTION = "REMOVE_OPTION";
 export const REMOVE_ALL_OPTIONS = "REMOVE_ALL_OPTIONS";
-export const TOGGLE_MODAL = "TOGGLE_MODAL";
-export const SET_ACTIVE_PANEL = "SET_ACTIVE_PANEL";
-export const SET_LOCATION = "SET_LOCATION";
+export const TOGGLE_STATE = "TOGGLE_STATE";
+export const SET_VALUE = "SET_VALUE";
