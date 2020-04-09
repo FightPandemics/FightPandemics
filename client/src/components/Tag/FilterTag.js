@@ -11,13 +11,11 @@ const FilterTag = styled(Tag)`
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
+    border: 1px solid ${ROYAL_BLUE} !important;
+    border-radius: 40px !important;
     color: ${ROYAL_BLUE};
     font-size: 12px;
     margin: 5px 3px;
-    &:before {
-      border: 2px solid ${ROYAL_BLUE} !important;
-      border-radius: 40px !important;
-    }
   }
 
   &.am-tag-disabled {
