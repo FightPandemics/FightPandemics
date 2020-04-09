@@ -6,6 +6,10 @@ const { config, validateConfig } = require("./config");
 validateConfig(config);
 const server = createServer(config);
 
+server.ready(async () => {
+  await server.oas();
+});
+
 server.listen(config.server.port, "0.0.0.0", (err, address) => {
   if (err) {
     server.log.error(err);
