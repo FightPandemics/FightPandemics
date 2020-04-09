@@ -54,12 +54,6 @@ export default styled(Card)`
         font-weight: 500;
       }
 
-      .test {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
       .social-icons {
         display: flex;
       }

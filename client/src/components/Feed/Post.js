@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import styled from "styled-components";
-import { Card, WhiteSpace } from "antd-mobile";
+import { Modal, Card, WhiteSpace } from "antd-mobile";
 import { SELAGO } from "../../constants/colors";
 import PostCard from "./PostCard";
 import FilterTag from "../../components/Tag/FilterTag";
@@ -12,6 +13,8 @@ import StatusIcon from "../Icon/status-indicator";
 
 export default ({ post }) => {
   const [expanded, setExpanded] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const {
     title,
     description,
@@ -22,6 +25,7 @@ export default ({ post }) => {
     numLikes,
     numComments,
     numShares,
+    url,
   } = post;
 
   const thumbStyle = {
@@ -66,11 +70,9 @@ export default ({ post }) => {
         <p>{description}</p>
       </Card.Body>
       <Card.Body>
-        <div className="test">
-          <a className="view-more" href="">
-            View More
-          </a>
-        </div>
+        <a className="view-more" href="">
+          View More
+        </a>
       </Card.Body>
       <Card.Body>
         <div className="social-icons">
@@ -83,8 +85,12 @@ export default ({ post }) => {
             <span>{numComments}</span>
           </div>
           <div className="social-icon">
-            <ShareIcon className="social-icon-svg" />
-            <span>{numShares}</span>
+            <CopyToClipboard text={url} onCopy={() => setCopied(!copied)}>
+              <span>
+                <ShareIcon className="social-icon-svg" />
+                <span>{numShares}</span>
+              </span>
+            </CopyToClipboard>
           </div>
         </div>
       </Card.Body>
@@ -95,6 +101,15 @@ export default ({ post }) => {
           placeholder={"Write a comment ..."}
         />
       </Card.Body>
+      <Modal
+        onClose={() => setCopied(!copied)}
+        maskClosable={true}
+        closable={true}
+        visible={copied}
+        transparent
+      >
+        <h1 style={{ color: "black" }}>Link Copied!</h1>
+      </Modal>
     </PostCard>
   );
 };
