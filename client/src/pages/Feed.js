@@ -4,6 +4,7 @@ import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
+import useToggle from "../hooks/useToggleState";
 import { optionsReducer } from "../reducers/feedReducers";
 import {
   ADD_OPTION,
@@ -19,7 +20,7 @@ const FeedWraper = styled.div`
 export const FeedContext = React.createContext();
 
 const Feed = () => {
-  const [modal, setModal] = useState(false);
+  const [modal, toggleModal] = useToggle(false);
   const [activePanel, setActivePanel] = useState("");
   const [location, setLocation] = useState("");
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
@@ -27,13 +28,13 @@ const Feed = () => {
 
   const handleModal = (isOpen, panelIdx) => (e) => {
     e.preventDefault();
-    setModal(isOpen);
+    toggleModal();
     setActivePanel(panelIdx > -1 ? `${panelIdx}` : null);
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    setModal(false);
+    toggleModal();
     setActivePanel(null);
     setLocation("");
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
