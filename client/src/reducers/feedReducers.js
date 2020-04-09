@@ -21,7 +21,7 @@ export const feedReducer = (oldState, action) => {
       newState.location = value;
       return newState;
     default:
-      return newState;
+      return oldState;
   }
 };
 
