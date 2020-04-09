@@ -14,7 +14,7 @@ export default ({
   location,
   handleLocation,
   shareMyLocation,
-  selectedFilters,
+  selectedOptions,
 }) => {
   const renderPanels = (filters) => {
     return filters.map((filter, idx) => {
@@ -37,8 +37,8 @@ export default ({
                 label={option}
                 handleClick={handleOption(filter.label, option)}
                 selected={
-                  selectedFilters[filter.label] &&
-                  selectedFilters[filter.label].includes(option)
+                  selectedOptions[filter.label] &&
+                  selectedOptions[filter.label].includes(option)
                 }
               />
             ))}

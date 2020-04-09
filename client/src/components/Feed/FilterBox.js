@@ -17,7 +17,7 @@ export default ({
   location,
   filters,
   activePanel,
-  selectedFilters,
+  selectedOptions,
   handleOption,
   handleModal,
   handleQuit,
@@ -53,7 +53,7 @@ export default ({
           setActivePanel={setActivePanel}
           handleLocation={handleLocation}
           shareMyLocation={shareMyLocation}
-          selectedFilters={selectedFilters}
+          selectedOptions={selectedOptions}
         />
         <CustomList center="true">
           <List.Item>

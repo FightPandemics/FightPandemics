@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import styled from "styled-components";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
+import { optionsReducer } from "../reducers/feedReducers";
+import {
+  ADD_OPTION,
+  REMOVE_OPTION,
+  REMOVE_ALL_OPTIONS,
+} from "../actions/feedOptions";
 
 const FeedWraper = styled.div`
   width: 100%;
@@ -13,8 +19,8 @@ const FeedWraper = styled.div`
 const Feed = () => {
   const [modal, setModal] = useState(false);
   const [activePanel, setActivePanel] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState({});
   const [location, setLocation] = useState("");
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
 
   const handleModal = (isOpen, panelIdx) => (e) => {
     e.preventDefault();
@@ -26,8 +32,8 @@ const Feed = () => {
     e.preventDefault();
     setModal(false);
     setActivePanel(null);
-    setSelectedFilters({});
     setLocation("");
+    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
   const handleLocation = (value) => {
@@ -38,19 +44,13 @@ const Feed = () => {
 
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
-    const options = selectedFilters[label] || [];
-    let optionIdx = options.indexOf(option);
-    let newOptions =
-      optionIdx > -1
-        ? options.filter((o) => o !== option)
-        : [...options, option];
-    if (newOptions.length) {
-      return setSelectedFilters({ ...selectedFilters, [label]: newOptions });
-    } else {
-      let newState = Object.assign({}, selectedFilters);
-      delete newState[label]; // remove filter from state, otherwise state is { a: [], b: [1, 2, 3] }
-      return setSelectedFilters(newState);
-    }
+    const options = selectedOptions[label] || [];
+    const optionIdx = options.indexOf(option);
+    const action = {
+      type: optionIdx > -1 ? REMOVE_OPTION : ADD_OPTION,
+      payload: { option, label },
+    };
+    return optionsDispatch(action);
   };
 
   return (
@@ -60,7 +60,7 @@ const Feed = () => {
         location={location}
         filters={filterOptions}
         activePanel={activePanel}
-        selectedFilters={selectedFilters}
+        selectedOptions={selectedOptions}
         handleOption={handleOption}
         handleModal={handleModal}
         handleQuit={handleQuit}
