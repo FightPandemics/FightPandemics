@@ -7,15 +7,12 @@ import {
 } from "../actions/feedActions";
 
 export const feedReducer = (oldState, action) => {
-  let newState = Object.assign({}, oldState);
   const { type, key, value } = action;
   switch (type) {
     case TOGGLE_STATE:
-      newState[key] = !newState[key];
-      return newState;
+      return { ...oldState, [key]: !oldState[key] };
     case SET_VALUE:
-      newState[key] = value;
-      return newState;
+      return { ...oldState, [key]: value };
     default:
       return oldState;
   }
@@ -23,12 +20,10 @@ export const feedReducer = (oldState, action) => {
 
 export const optionsReducer = (oldState, action) => {
   const { option, label } = action.payload;
-  let newState = Object.assign({}, oldState);
-  newState[label] = newState[label] || [];
+  const newState = Object.assign({}, oldState);
   switch (action.type) {
     case ADD_OPTION:
-      newState[label].push(option);
-      return newState;
+      return { ...oldState, [label]: [...(oldState[label] || []), option] };
     case REMOVE_OPTION:
       newState[label] = newState[label].filter((o) => o !== option);
       if (!newState[label].length) delete newState[label];
