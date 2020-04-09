@@ -23,7 +23,7 @@ const StyledWelcome = styled(Heading)`
   font-weight: 300;
   font-size: ${theme.typography.size.large};
   line-height: 3rem;
-  margin: 3rem auto 0;
+  margin: 3.6rem auto 0;
   text-align: center;
 `;
 
@@ -36,6 +36,8 @@ const StyledStrapline = styled(StyledWelcome)`
 const StyledP = styled.p`
   font-family: ${theme.typography.font.family.display}, sans-serif;
   font-size: ${theme.typography.size.medium};
+  line-height: 2.1rem;
+  margin: 0;
 `;
 
 const OnboardingContainer = styled.div`
