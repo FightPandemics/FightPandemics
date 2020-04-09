@@ -22,7 +22,7 @@ services:
     build: geo-service
     container_name: geo-service
     ports:
-      - "5000:5000"
+      - 5000:5000
     volumes:
       - "./geo-service:/app"
     networks:
@@ -37,11 +37,11 @@ services:
     container_name: backend-service
     restart: always
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - "./backend:/app"
       - "/app/node_modules"
-    working_dir: "/app"
+    working_dir: /app
     depends_on:
       - mongo
     networks:
@@ -76,11 +76,11 @@ services:
     restart: always
     container_name: client
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - "./client:/app"
       - "/app/node_modules"
-    working_dir: "/app"
+    working_dir: /app
     stdin_open: true
     tty: true
     networks:
