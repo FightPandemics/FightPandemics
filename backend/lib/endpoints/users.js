@@ -1,5 +1,7 @@
 const httpErrors = require("http-errors");
 
+const { getUserByIdSchema } = require("./schema/posts");
+
 /*
  * /api/users
  */
@@ -20,17 +22,21 @@ async function routes(app) {
     };
   });
 
-  app.get("/:userId", { preValidation: [app.authenticate] }, async (req) => {
-    const result = await User.findById(req.params.userId);
-    if (result === null) {
-      return new httpErrors.NotFound();
-    }
-    return {
-      id: result._id,
-      firstName: result.firstName,
-      lastName: result.firstName,
-    };
-  });
+  app.get(
+    "/:userId",
+    { preValidation: [app.authenticate], schema: getUserByIdSchema },
+    async (req) => {
+      const result = await User.findById(req.params.userId);
+      if (result === null) {
+        return new httpErrors.NotFound();
+      }
+      return {
+        id: result._id,
+        firstName: result.firstName,
+        lastName: result.firstName,
+      };
+    },
+  );
 }
 
 module.exports = routes;
