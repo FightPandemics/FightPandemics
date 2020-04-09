@@ -24,7 +24,7 @@ export default ({ post }) => {
     comments,
   } = post;
 
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
   const [copied, setCopied] = useState(false);
 
   // mock API to test functionality

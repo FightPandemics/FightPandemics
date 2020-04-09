@@ -13,7 +13,14 @@ export default [
         name: "Rob Till",
         comment: "I can help. Where can we meet? I'm north from you.",
         numLikes: 2,
-        children: [],
+        children: [
+          {
+            _id: 6,
+            name: "Lily Luke",
+            comment: "Perfect!! just sent you a meeting spot. Let's meet soon.",
+            children: [],
+          },
+        ],
       },
       {
         _id: 1,
@@ -25,7 +32,14 @@ export default [
             _id: 2,
             name: "Lily Luke",
             comment: "Interested! How much?",
-            children: [],
+            children: [
+              {
+                _id: 3,
+                name: "Brian Loop",
+                comment: "4 pack for $20. Sounds good?",
+                children: [],
+              },
+            ],
           },
         ],
       },
