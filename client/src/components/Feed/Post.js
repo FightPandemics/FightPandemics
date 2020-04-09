@@ -51,13 +51,14 @@ const CustomCard = styled(Card)`
       }
 
       p {
+        font-weight: 400;
         font-size: 13.5px;
         line-height: 20px;
       }
 
       .view-more {
         color: ${ROYAL_BLUE};
-        font-weight: bold;
+        font-weight: 500;
       }
 
       .test {
@@ -148,7 +149,6 @@ export default ({ post }) => {
           </a>
         </div>
       </Card.Body>
-      <WhiteSpace size="lg" />
       <Card.Body>
         <div className="social-icons">
           <div className="social-icon">

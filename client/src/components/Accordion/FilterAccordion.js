@@ -3,7 +3,7 @@ import { Accordion } from "antd-mobile";
 
 export const FilterAccordion = styled(Accordion)`
   &.am-accordion {
-    padding: 20px 5px;
+    padding: 20px 0;
     &:before {
       content: normal !important;
     }

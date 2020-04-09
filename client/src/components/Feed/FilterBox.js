@@ -9,8 +9,8 @@ import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
 
 const FilterBoxWrapper = styled.div`
-  width: 100%;
   margin-bottom: 40px;
+  padding: 0 7px;
 `;
 
 export default () => {

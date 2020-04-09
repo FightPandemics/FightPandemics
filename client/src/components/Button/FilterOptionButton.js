@@ -11,7 +11,6 @@ const Option = styled(Button)`
   cursor: pointer;
   font-size: 13px;
   height: 100%;
-  padding: 0 10px;
   margin-top: 7px;
   margin-right: 7px;
   line-height: 30px;
@@ -36,7 +35,7 @@ const labelWrapperStyles = {
 };
 
 const labelStyles = {
-  marginRight: "4px",
+  marginRight: "5px",
   fontWeight: "600",
   letterSpacing: "1px",
 };
