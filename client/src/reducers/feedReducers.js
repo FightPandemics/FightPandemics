@@ -2,7 +2,28 @@ import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
-} from "../actions/feedOptions";
+  TOGGLE_MODAL,
+  SET_ACTIVE_PANEL,
+  SET_LOCATION,
+} from "../actions/feedActions";
+
+export const feedReducer = (oldState, action) => {
+  let newState = Object.assign({}, oldState);
+  const { value } = action;
+  switch (action.type) {
+    case TOGGLE_MODAL:
+      newState.modal = !newState.modal;
+      return newState;
+    case SET_ACTIVE_PANEL:
+      newState.activePanel = value;
+      return newState;
+    case SET_LOCATION:
+      newState.location = value;
+      return newState;
+    default:
+      return newState;
+  }
+};
 
 export const optionsReducer = (oldState, action) => {
   const { option, label } = action.payload;

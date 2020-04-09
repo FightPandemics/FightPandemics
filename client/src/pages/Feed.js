@@ -4,13 +4,15 @@ import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
-import useToggle from "../hooks/useToggleState";
-import { optionsReducer } from "../reducers/feedReducers";
+import { optionsReducer, feedReducer } from "../reducers/feedReducers";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
-} from "../actions/feedOptions";
+  TOGGLE_MODAL,
+  SET_ACTIVE_PANEL,
+  SET_LOCATION,
+} from "../actions/feedActions";
 
 const FeedWraper = styled.div`
   width: 100%;
@@ -19,55 +21,63 @@ const FeedWraper = styled.div`
 
 export const FeedContext = React.createContext();
 
+const initialState = {
+  modal: false,
+  activePanel: null,
+  location: "",
+};
+
 const Feed = () => {
-  const [modal, toggleModal] = useToggle(false);
-  const [activePanel, setActivePanel] = useState("");
-  const [location, setLocation] = useState("");
+  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const { modal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
 
   const handleModal = (isOpen, panelIdx) => (e) => {
     e.preventDefault();
-    toggleModal();
-    setActivePanel(panelIdx > -1 ? `${panelIdx}` : null);
+    feedDispatch({ type: TOGGLE_MODAL });
+    feedDispatch({
+      type: SET_ACTIVE_PANEL,
+      value: panelIdx > -1 ? `${panelIdx}` : null,
+    });
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    toggleModal();
-    setActivePanel(null);
-    setLocation("");
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    feedDispatch({ type: SET_LOCATION, value: "" });
+    feedDispatch({ type: TOGGLE_MODAL });
+    feedDispatch({
+      type: SET_ACTIVE_PANEL,
+      value: null,
+    });
   };
 
-  const handleLocation = (value) => {
-    setLocation(value);
-  };
+  const handleLocation = (value) => feedDispatch({ type: SET_LOCATION, value });
 
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedOptions[label] || [];
     const optionIdx = options.indexOf(option);
-    const action = {
+    return optionsDispatch({
       type: optionIdx > -1 ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
-    };
-    return optionsDispatch(action);
+    });
   };
 
   return (
     <FeedContext.Provider
       value={{
-        modal,
-        location,
         filters,
+        modal,
         activePanel,
+        location,
+        feedDispatch,
         selectedOptions,
         handleOption,
         handleModal,
         handleQuit,
         handleLocation,
-        setActivePanel,
       }}
     >
       <FeedWraper>

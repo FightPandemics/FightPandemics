@@ -16,7 +16,6 @@ const FilterBoxWrapper = styled.div`
 export default () => {
   const feedContext = useContext(FeedContext);
   const { filters, modal, handleModal, handleQuit } = feedContext;
-
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <FilterOptionButton
