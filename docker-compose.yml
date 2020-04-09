@@ -47,28 +47,6 @@ services:
     networks:
       - fp_network
 
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    container_name: "swagger-ui"
-    volumes:
-      - "./backend/api_docs:/usr/share/nginx/html/api_docs"
-    environment:
-      - URL=/api_docs/api-v1.yaml
-    restart: always
-    ports:
-      - 8001:8080
-
-  swagger-editor:
-    image: swaggerapi/swagger-editor
-    container_name: "swagger-editor"
-    volumes:
-      - "./backend/api_docs:/usr/share/nginx/html/api_docs"
-    environment:
-      - URL=/api_docs/api-v1.yaml
-    restart: always
-    ports:
-      - 8002:8080
-
   client:
     build:
       context: client
