@@ -12,8 +12,10 @@ import CreatPostIcon from "../Icon/create-post";
 
 const CustomCard = styled(Card)`
   margin-bottom: 65px;
+  border: unset !important;
   &.am-card,
   .am-card-body {
+    border-top: unset;
     &::before {
       content: normal !important;
     }

@@ -10,11 +10,13 @@ export const FilterAccordion = styled(Accordion)`
 `;
 
 export const FilterAccordionPanel = styled(Accordion.Panel)`
+  cursor: pointer;
   margin: 10px;
   text-align: center;
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
+      border-bottom: unset !important;
       &:after {
         content: normal !important;
       }
