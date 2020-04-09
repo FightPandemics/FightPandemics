@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
@@ -32,26 +32,29 @@ const Feed = () => {
   const { modal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
 
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
+
   const handleModal = (panelIdx) => (e) => {
     e.preventDefault();
-    feedDispatch({ type: TOGGLE_STATE, key: "modal" });
-    feedDispatch({
-      type: SET_VALUE,
-      key: "activePanel",
-      value: panelIdx > -1 ? `${panelIdx}` : null,
-    });
+    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(
+      SET_VALUE,
+      "activePanel",
+      panelIdx > -1 ? `${panelIdx}` : null,
+    );
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    feedDispatch({ type: TOGGLE_STATE, key: "modal" });
-    feedDispatch({ type: SET_VALUE, key: "location", value: "" });
-    feedDispatch({ type: SET_VALUE, key: "activePanel", value: null });
+    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(SET_VALUE, "location", "");
+    dispatchAction(SET_VALUE, "activePanel", null);
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
   const handleLocation = (value) =>
-    feedDispatch({ type: SET_VALUE, key: "location", value });
+    dispatchAction(SET_VALUE, "location", value);
 
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
@@ -70,7 +73,7 @@ const Feed = () => {
         modal,
         activePanel,
         location,
-        feedDispatch,
+        dispatchAction,
         selectedOptions,
         handleOption,
         handleModal,
