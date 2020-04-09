@@ -16,11 +16,14 @@ const FeedWraper = styled.div`
   padding: 20px 0;
 `;
 
+export const FeedContext = React.createContext();
+
 const Feed = () => {
   const [modal, setModal] = useState(false);
   const [activePanel, setActivePanel] = useState("");
   const [location, setLocation] = useState("");
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const filters = Object.values(filterOptions);
 
   const handleModal = (isOpen, panelIdx) => (e) => {
     e.preventDefault();
@@ -40,8 +43,6 @@ const Feed = () => {
     setLocation(value);
   };
 
-  const shareMyLocation = () => {};
-
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedOptions[label] || [];
@@ -54,22 +55,25 @@ const Feed = () => {
   };
 
   return (
-    <FeedWraper>
-      <FilterBox
-        modal={modal}
-        location={location}
-        filters={filterOptions}
-        activePanel={activePanel}
-        selectedOptions={selectedOptions}
-        handleOption={handleOption}
-        handleModal={handleModal}
-        handleQuit={handleQuit}
-        handleLocation={handleLocation}
-        setActivePanel={setActivePanel}
-        shareMyLocation={shareMyLocation}
-      />
-      <Posts filteredPosts={fakePosts} />
-    </FeedWraper>
+    <FeedContext.Provider
+      value={{
+        modal,
+        location,
+        filters,
+        activePanel,
+        selectedOptions,
+        handleOption,
+        handleModal,
+        handleQuit,
+        handleLocation,
+        setActivePanel,
+      }}
+    >
+      <FeedWraper>
+        <FilterBox />
+        <Posts filteredPosts={fakePosts} />
+      </FeedWraper>
+    </FeedContext.Provider>
   );
 };
 

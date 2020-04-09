@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
 import CustomList from "../../components/List/CustomList";
@@ -6,26 +6,17 @@ import CustomButton from "../../components/Button/CustomButton";
 import FilterTitle from "../Typography/Title/FilterTitle";
 import FilterOptionButton from "../Button/FilterOptionButton";
 import FilterAccordion from "./FilterAccordion";
+import { FeedContext } from "../../pages/Feed";
 
 const FilterBoxWrapper = styled.div`
   width: 100%;
   margin-bottom: 40px;
 `;
 
-export default ({
-  modal,
-  location,
-  filters,
-  activePanel,
-  selectedOptions,
-  handleOption,
-  handleModal,
-  handleQuit,
-  handleLocation,
-  setActivePanel,
-  shareMyLocation,
-}) => {
-  filters = Object.values(filters);
+export default () => {
+  const feedContext = useContext(FeedContext);
+  const { filters, modal, handleModal, handleQuit } = feedContext;
+
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <FilterOptionButton
@@ -45,16 +36,7 @@ export default ({
         onClose={handleModal(false)}
         animationType="slide-up"
       >
-        <FilterAccordion
-          filters={filters}
-          location={location}
-          handleOption={handleOption}
-          activePanel={activePanel}
-          setActivePanel={setActivePanel}
-          handleLocation={handleLocation}
-          shareMyLocation={shareMyLocation}
-          selectedOptions={selectedOptions}
-        />
+        <FilterAccordion />
         <CustomList center="true">
           <List.Item>
             <CustomButton
