@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { FeedContext } from "../../pages/Feed.js";
 import FilterTag from "../Tag/FilterTag";
 import LocationSearch from "../../components/Input/LocationSearch";
 import {
@@ -6,26 +7,22 @@ import {
   FilterAccordionPanel,
 } from "../Accordion/FilterAccordion";
 
-export default ({
-  filters,
-  activePanel,
-  setActivePanel,
-  handleOption,
-  location,
-  handleLocation,
-  shareMyLocation,
-  selectedFilters,
-}) => {
+export default () => {
+  const feedContext = useContext(FeedContext);
+  const {
+    modal,
+    filters,
+    activePanel,
+    handleOption,
+    selectedOptions,
+  } = feedContext;
+
   const renderPanels = (filters) => {
     return filters.map((filter, idx) => {
       if (filter.label === "Location") {
         return (
           <FilterAccordionPanel header="Location" key={idx}>
-            <LocationSearch
-              location={location}
-              handleLocation={handleLocation}
-              shareMyLocation={shareMyLocation}
-            />
+            <LocationSearch />
           </FilterAccordionPanel>
         );
       } else {
@@ -37,8 +34,8 @@ export default ({
                 label={option}
                 handleClick={handleOption(filter.label, option)}
                 selected={
-                  selectedFilters[filter.label] &&
-                  selectedFilters[filter.label].includes(option)
+                  selectedOptions[filter.label] &&
+                  selectedOptions[filter.label].includes(option)
                 }
               />
             ))}
