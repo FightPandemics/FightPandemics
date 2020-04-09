@@ -7,6 +7,27 @@ export default [
     numShares: 10,
     title: "Disinfecting clorax wipes needed",
     url: "www.test.com/0",
+    comments: [
+      {
+        _id: 0,
+        name: "Rob Till",
+        comment: "I can help. Where can we meet? I'm north from you.",
+        comments: [],
+      },
+      {
+        _id: 0,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        comments: [
+          {
+            _id: 0,
+            name: "Lily Luke",
+            comment: "Interested! How much?",
+            comments: [],
+          },
+        ],
+      },
+    ],
     description:
       "Does anyone have an extra pack of disinfecting Clorax wipes? I would be very grateful if you could sell me one. Two people in our family have chronic pulmonary diseases, including my son. We are isolated, but my husband might infect us, as he works with people a lot. We need to constantly disinfect all the surfaces. We've been searching for over a week, but they seem to be gone everywhere. Maybe someone has a stockpile or seen them in stores?",
     tags: ["Medical Supplies"],
@@ -20,6 +41,27 @@ export default [
     numLikes: 12,
     numComments: 3,
     numShares: 10,
+    comments: [
+      {
+        _id: 0,
+        name: "Rob Till",
+        comment: "I can help. Where can we meet? I'm north from you.",
+        comments: [],
+      },
+      {
+        _id: 0,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        comments: [
+          {
+            _id: 0,
+            name: "Rob Till",
+            comment: "I can help. Where can we meet? I'm north from you.",
+            comments: [],
+          },
+        ],
+      },
+    ],
     url: "www.test.com/1",
     photoUrl:
       "https://cdn.iconscout.com/icon/free/png-512/notion-1693557-1442598.png",
@@ -36,6 +78,27 @@ export default [
     numComments: 2,
     numShares: 7,
     url: "www.test.com/2",
+    comments: [
+      {
+        _id: 0,
+        name: "Rob Till",
+        comment: "I can help. Where can we meet? I'm north from you.",
+        comments: [],
+      },
+      {
+        _id: 0,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        comments: [
+          {
+            _id: 0,
+            name: "Lily Luke",
+            comment: "Interested! How much?",
+            comments: [],
+          },
+        ],
+      },
+    ],
     title:
       "I don't know what to name this title. But the point is, this is a very long title.",
     description: "This is a short post.",

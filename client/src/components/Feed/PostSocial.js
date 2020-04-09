@@ -4,14 +4,22 @@ import CommentIcon from "../Icon/comment";
 import ShareIcon from "../Icon/share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-export default ({ url, numLikes, numComments, numShares, onCopy }) => {
+export default ({
+  url,
+  numLikes,
+  numComments,
+  numShares,
+  onCopy,
+  setShowComments,
+}) => {
+  const fakeLoggedIn = true;
   return (
     <div className="social-icons">
       <div className="social-icon">
         <HeartIcon className="social-icon-svg" />
         <span>{numLikes}</span>
       </div>
-      <div className="social-icon">
+      <div className="social-icon" onClick={setShowComments}>
         <CommentIcon className="social-icon-svg" />
         <span>{numComments}</span>
       </div>

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { SELAGO } from "../../constants/colors";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
+import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
-import TextInput from "../../components/Input/TextInput";
 import StatusIcon from "../Icon/status-indicator";
+import TextInput from "../../components/Input/TextInput";
+import { SELAGO } from "../../constants/colors";
 
 export default ({ post }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const {
@@ -23,6 +24,7 @@ export default ({ post }) => {
     numComments,
     numShares,
     url,
+    comments,
   } = post;
 
   const thumbStyle = {
@@ -78,6 +80,7 @@ export default ({ post }) => {
           numComments={numComments}
           numShares={numShares}
           onCopy={() => setCopied(!copied)}
+          setShowComments={() => setShowComments(!showComments)}
         />
       </Card.Body>
       <Card.Body>
@@ -86,6 +89,7 @@ export default ({ post }) => {
           style={commentStyles}
           placeholder={"Write a comment ..."}
         />
+        {showComments ? <Comments comments={comments} /> : ""}
       </Card.Body>
       <Modal
         onClose={() => setCopied(!copied)}
