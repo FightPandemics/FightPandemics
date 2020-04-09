@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import styled from "styled-components";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
 import { SELAGO } from "../../constants/colors";
+import { Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
+import PostSocial from "./PostSocial";
 import FilterTag from "../../components/Tag/FilterTag";
 import TextInput from "../../components/Input/TextInput";
-import HeartIcon from "../Icon/heart";
-import CommentIcon from "../Icon/comment";
-import ShareIcon from "../Icon/share";
 import StatusIcon from "../Icon/status-indicator";
 
 export default ({ post }) => {
@@ -75,24 +72,13 @@ export default ({ post }) => {
         </a>
       </Card.Body>
       <Card.Body>
-        <div className="social-icons">
-          <div className="social-icon">
-            <HeartIcon className="social-icon-svg" />
-            <span>{numLikes}</span>
-          </div>
-          <div className="social-icon">
-            <CommentIcon className="social-icon-svg" />
-            <span>{numComments}</span>
-          </div>
-          <div className="social-icon">
-            <CopyToClipboard text={url} onCopy={() => setCopied(!copied)}>
-              <span>
-                <ShareIcon className="social-icon-svg" />
-                <span>{numShares}</span>
-              </span>
-            </CopyToClipboard>
-          </div>
-        </div>
+        <PostSocial
+          url={url}
+          numLikes={numLikes}
+          numComments={numComments}
+          numShares={numShares}
+          onCopy={() => setCopied(!copied)}
+        />
       </Card.Body>
       <Card.Body>
         <TextInput
