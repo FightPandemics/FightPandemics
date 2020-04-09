@@ -16,6 +16,10 @@ const FilterTag = styled(Tag)`
     color: ${ROYAL_BLUE};
     font-size: 12px;
     margin: 5px 3px;
+
+    &:before {
+      border: unset !important;
+    }
   }
 
   &.am-tag-disabled {

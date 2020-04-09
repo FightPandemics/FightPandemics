@@ -9,7 +9,6 @@ import CommentIcon from "../Icon/comment";
 import ShareIcon from "../Icon/share";
 import StatusIcon from "../Icon/status-indicator";
 
-
 const CustomCard = styled(Card)`
   margin-bottom: 65px;
   border: unset !important;
@@ -75,6 +74,7 @@ const CustomCard = styled(Card)`
         align-items: center;
         color: ${DARK_GRAY};
         margin-right: 46px;
+        cursor: pointer;
         .social-icon-svg {
           margin-right: 10px;
         }
