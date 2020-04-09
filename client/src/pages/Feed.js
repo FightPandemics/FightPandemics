@@ -59,9 +59,9 @@ const Feed = () => {
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
     const options = selectedOptions[label] || [];
-    const optionIdx = options.indexOf(option);
+    const hasOption = options.includes(option);
     return optionsDispatch({
-      type: optionIdx > -1 ? REMOVE_OPTION : ADD_OPTION,
+      type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
     });
   };
