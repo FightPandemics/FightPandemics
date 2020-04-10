@@ -6,7 +6,7 @@ import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
 import StatusIcon from "../Icon/status-indicator";
 import TextInput from "../../components/Input/TextInput";
-import { SELAGO } from "../../constants/colors";
+import { LIGHTER_GRAY } from "../../constants/colors";
 
 export default ({ post }) => {
   const {
@@ -23,7 +23,7 @@ export default ({ post }) => {
     comments,
   } = post;
 
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
   const [copied, setCopied] = useState(false);
 
   // mock API to test functionality
@@ -41,7 +41,7 @@ export default ({ post }) => {
   };
 
   const commentStyles = {
-    backgroundColor: SELAGO,
+    backgroundColor: LIGHTER_GRAY,
     width: "96%",
     borderBottom: "unset",
     borderRadius: "40px",
@@ -67,7 +67,7 @@ export default ({ post }) => {
         }
         thumb={photoUrl}
       />
-      <WhiteSpace size="lg" />
+      <WhiteSpace size="md" />
       <Card.Body>{renderTags()}</Card.Body>
       <WhiteSpace />
       <Card.Body>

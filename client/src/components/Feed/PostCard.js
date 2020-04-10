@@ -17,18 +17,17 @@ export default styled(Card)`
 
       .am-card-header-content {
         align-items: unset;
-        font-size: 15px;
+        font-size: 14px;
 
         img {
-          margin-top: -5px;
           margin-right: 7px;
         }
       }
       .am-card-header-extra {
         text-align: unset;
-        font-size: 13px;
+        font-size: 11px;
         margin-left: 47px;
-        margin-top: -13px;
+        margin-top: -18px;
         .status-icon {
           margin-right: 8px;
         }
@@ -41,18 +40,19 @@ export default styled(Card)`
       h1 {
         font-weight: bold;
         line-height: 27px;
-        font-size: 21px;
+        font-size: 22px;
       }
 
       .post-description {
         font-weight: 400;
-        font-size: 13.5px;
+        font-size: 14px;
         line-height: 20px;
       }
 
       .view-more {
-        color: ${ROYAL_BLUE};
+        font-size: 16px;
         font-weight: 500;
+        color: ${ROYAL_BLUE};
       }
 
       .social-icons {
@@ -68,7 +68,7 @@ export default styled(Card)`
             margin-right: 10px;
           }
           span {
-            font-size: 15px;
+            font-size: 14px;
           }
         }
       }

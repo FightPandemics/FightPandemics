@@ -14,7 +14,7 @@ const FilterTag = styled(Tag)`
     border: 1px solid ${ROYAL_BLUE} !important;
     border-radius: 40px !important;
     color: ${ROYAL_BLUE};
-    font-size: 12px;
+    font-size: 11px;
     margin: 5px 3px;
 
     &:before {

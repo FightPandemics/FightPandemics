@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NestedComments from "./NestedComments";
 
 const CommentsWrapper = styled.div`
-  padding: 0 5px;
+  padding-right: 15px;
   margin: 20px 0;
 `;
 
