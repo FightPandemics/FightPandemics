@@ -7,7 +7,6 @@
   "extends": ["airbnb-base", "plugin:prettier/recommended"],
   "rules": {
     "global-require": "off",
-    "no-underscore-dangle": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["generateSchemas.js"]}]
+    "no-underscore-dangle": "off"
   }
 }

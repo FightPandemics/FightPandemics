@@ -1,3 +1,5 @@
+// todo: add auth schema's
+
 // {
 //   connection: "Username-Password-Authentication",
 //   email: "john.doe@gmail.com",
