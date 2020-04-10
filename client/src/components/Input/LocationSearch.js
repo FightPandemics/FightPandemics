@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
+import { SearchBar, WhiteSpace } from "antd-mobile";
 import ShareLocationIcon from "../Icon/share-my-location";
 import { FeedContext } from "../../pages/Feed.js";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import StyledButton from "../components/Button/SubmitButton";
 
 import { AnswerButton } from "../components/StepWizard";
 

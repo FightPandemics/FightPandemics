@@ -9,13 +9,7 @@ import {
 
 export default () => {
   const feedContext = useContext(FeedContext);
-  const {
-    modal,
-    filters,
-    activePanel,
-    handleOption,
-    selectedOptions,
-  } = feedContext;
+  const { filters, activePanel, handleOption, selectedOptions } = feedContext;
 
   const renderPanels = (filters) => {
     return filters.map((filter, idx) => {

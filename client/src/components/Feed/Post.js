@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Card, WhiteSpace } from "antd-mobile";
 import FilterTag from "../../components/Tag/FilterTag";
@@ -85,7 +85,6 @@ const CustomCard = styled(Card)`
 `;
 
 export default ({ post }) => {
-  const [expanded, setExpanded] = useState(false);
   const {
     title,
     description,

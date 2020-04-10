@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Icon } from "antd-mobile";
+import { Button } from "antd-mobile";
 import { SELAGO, ROYAL_BLUE } from "../../constants/colors";
 import DownArrow from "../Icon/down-arrow";
 
