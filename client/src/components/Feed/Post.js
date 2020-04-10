@@ -1,88 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Card, WhiteSpace } from "antd-mobile";
+import { Modal, Card, WhiteSpace } from "antd-mobile";
+import PostCard from "./PostCard";
+import PostSocial from "./PostSocial";
+import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
-import TextInput from "../../components/Input/TextInput";
-import { ROYAL_BLUE, DARK_GRAY, SELAGO } from "../../constants/colors";
-import HeartIcon from "../Icon/heart";
-import CommentIcon from "../Icon/comment";
-import ShareIcon from "../Icon/share";
 import StatusIcon from "../Icon/status-indicator";
-import CreatPostIcon from "../Icon/create-post";
-
-const CustomCard = styled(Card)`
-  margin-bottom: 65px;
-  &.am-card,
-  .am-card-body {
-    &::before {
-      content: normal !important;
-    }
-    .am-card-header {
-      display: block;
-      padding: 0;
-
-      .am-card-header-content {
-        align-items: unset;
-        font-size: 15px;
-
-        img {
-          margin-top: -5px;
-          margin-right: 7px;
-        }
-      }
-      .am-card-header-extra {
-        text-align: unset;
-        font-size: 13px;
-        margin-left: 47px;
-        margin-top: -13px;
-        .status-icon {
-          margin-right: 8px;
-        }
-      }
-    }
-    .am-card-body {
-      padding: 0;
-      color: black;
-
-      h1 {
-        font-size: 21px;
-        margin: 0;
-      }
-
-      p {
-        font-size: 13.5px;
-        line-height: 20px;
-      }
-
-      .view-more {
-        color: ${ROYAL_BLUE};
-        font-weight: bold;
-      }
-
-      .test {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .social-icons {
-        display: flex;
-      }
-      .social-icon {
-        display: flex;
-        align-items: center;
-        color: ${DARK_GRAY};
-        margin-right: 46px;
-        .social-icon-svg {
-          margin-right: 10px;
-        }
-        span {
-          font-size: 15px;
-        }
-      }
-    }
-  }
-`;
+import TextInput from "../../components/Input/TextInput";
+import { SELAGO } from "../../constants/colors";
 
 export default ({ post }) => {
   const {
@@ -95,7 +20,19 @@ export default ({ post }) => {
     numLikes,
     numComments,
     numShares,
+    url,
+    comments,
   } = post;
+
+  const [showComments, setShowComments] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // mock API to test functionality
+  const [liked, setLiked] = useState(false);
+  const [shared, setShared] = useState(false);
+  const [fakeLikes, setFakeLikes] = useState(numLikes);
+  const [fakeComments, setFakeComments] = useState(numComments);
+  const [fakeShares, setFakeShares] = useState(numShares);
 
   const thumbStyle = {
     borderRadius: "40px",
@@ -106,7 +43,7 @@ export default ({ post }) => {
 
   const commentStyles = {
     backgroundColor: SELAGO,
-    width: "86%",
+    width: "96%",
     borderBottom: "unset",
     borderRadius: "40px",
     padding: "14px",
@@ -119,7 +56,7 @@ export default ({ post }) => {
   };
 
   return (
-    <CustomCard>
+    <PostCard>
       <Card.Header
         title={author}
         thumbStyle={thumbStyle}
@@ -139,29 +76,27 @@ export default ({ post }) => {
         <p>{description}</p>
       </Card.Body>
       <Card.Body>
-        <div className="test">
-          <a className="view-more" href="">
-            View More
-          </a>
-          <CreatPostIcon style={{ marginTop: "-40px" }} />
-        </div>
+        <a className="view-more" href="">
+          View More
+        </a>
       </Card.Body>
-      <WhiteSpace size="lg" />
       <Card.Body>
-        <div className="social-icons">
-          <div className="social-icon">
-            <HeartIcon className="social-icon-svg" />
-            <span>{numLikes}</span>
-          </div>
-          <div className="social-icon">
-            <CommentIcon className="social-icon-svg" />
-            <span>{numComments}</span>
-          </div>
-          <div className="social-icon">
-            <ShareIcon className="social-icon-svg" />
-            <span>{numShares}</span>
-          </div>
-        </div>
+        <PostSocial
+          url={url}
+          numLikes={fakeLikes}
+          numComments={fakeComments}
+          numShares={fakeShares}
+          setShowComments={() => setShowComments(!showComments)}
+          onCopyLink={() => {
+            if (!shared) setFakeShares(fakeShares + 1);
+            setShared(true);
+            return setCopied(!copied);
+          }}
+          likePost={() => {
+            liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
+            return setLiked(!liked);
+          }}
+        />
       </Card.Body>
       <Card.Body>
         <TextInput
@@ -169,7 +104,17 @@ export default ({ post }) => {
           style={commentStyles}
           placeholder={"Write a comment ..."}
         />
+        {showComments ? <Comments comments={comments} /> : ""}
       </Card.Body>
-    </CustomCard>
+      <Modal
+        onClose={() => setCopied(!copied)}
+        maskClosable={true}
+        closable={true}
+        visible={copied}
+        transparent
+      >
+        <h1 style={{ color: "black" }}>Link Copied!</h1>
+      </Modal>
+    </PostCard>
   );
 };
