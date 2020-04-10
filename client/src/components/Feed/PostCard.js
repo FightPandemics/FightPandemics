@@ -1,6 +1,6 @@
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { ROYAL_BLUE, DARK_GRAY, SELAGO } from "../../constants/colors";
+import { ROYAL_BLUE, DARK_GRAY } from "../../constants/colors";
 
 export default styled(Card)`
   margin-bottom: 65px;

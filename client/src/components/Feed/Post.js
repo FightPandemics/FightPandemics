@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
@@ -83,6 +82,9 @@ export default ({ post }) => {
       <Card.Body>
         <PostSocial
           url={url}
+          liked={liked}
+          shared={shared}
+          showComments={showComments}
           numLikes={fakeLikes}
           numComments={fakeComments}
           numShares={fakeShares}
