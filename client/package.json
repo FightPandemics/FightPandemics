@@ -26,7 +26,6 @@
     "polished": "^3.5.1",
     "prettier": "^2.0.2",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.0.0",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
