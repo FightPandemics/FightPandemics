@@ -18,12 +18,27 @@ const CircleButton = styled(Button)`
 
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
-    <Button plain onClick={previousStep} icon={<FormPreviousLink />} />
+    {currentStep > 1 ? (
+      <Button
+        plain
+        onClick={previousStep}
+        icon={<FormPreviousLink />}
+        a11yTitle={`Navigate to step ${currentStep - 1}`}
+      />
+    ) : (
+      <Button
+        plain
+        href="/"
+        icon={<FormPreviousLink />}
+        a11yTitle="Navigate to the homepage"
+      />
+    )}
     {currentStep < totalSteps && (
       <CircleButton
         primary
         color="primary"
         onClick={nextStep}
+        a11yTitle={`Navigate to step ${currentStep + 1}`}
         icon={<FormNextLink color="#fff" />}
       />
     )}

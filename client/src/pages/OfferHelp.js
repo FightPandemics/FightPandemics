@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Button } from "grommet";
+import styled from "styled-components";
 
 import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
@@ -12,10 +13,43 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
+import { theme } from "../constants/theme";
 
 const INITIAL_STATE = {
   answers: [],
 };
+
+const FormGroup = styled(Form.Group)`
+  display: flex;
+  color: ${theme.colors.primary};
+  flex-flow: column wrap;
+`;
+
+const FormLabel = styled(Form.Label)`
+  ${theme.form.label}
+`;
+
+const UserEmailField = styled(Form.Control)`
+  ${theme.form.input}
+  border-color: ${theme.colors.primary};
+  border-width: 0 0 1px 0;
+  color: ${theme.colors.darkGray};
+  padding: 5px 0;
+  margin-top: 5px;
+`;
+
+const SubmitButton = styled(Button)`
+  ${theme.form.button}
+`;
+
+const StepTitle = styled.h2`
+  font-size: ${theme.typography.heading.two};
+  margin-bottom: 50px;
+`;
+
+const Skip = styled.p`
+  ${theme.typography.paragraph.skip}
+`;
 
 const Step1 = (props) => {
   const selectLocationDetection = async () => {
@@ -58,17 +92,17 @@ const Step2 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <h5 className="mb-4">We are not a provider of healthcare services.</h5>
-      <h6 className="mb-5">
+      <StepTitle style={{ marginBottom: "20px" }}>
+        We are not a provider of healthcare services.
+      </StepTitle>
+      <p>
         This service is provided in good faith as a last resort for those who
         are otherwise unable to obtain help and resource during the
         unprecedented public health emergency.
-      </h6>
-      <strong>
-        <h4 className="mb-4">
-          Please consult a medical professional for advice.
-        </h4>
-      </strong>
+      </p>
+      <h4>
+        <strong>Please consult a medical professional for advice.</strong>
+      </h4>
       <AnswerButton onSelect={() => onSelectAnswer()}>
         I Understand.
       </AnswerButton>
@@ -86,7 +120,7 @@ const Step3 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <Title className="mb-5">How do you want to contribute?</Title>
+      <StepTitle>How do you want to contribute?</StepTitle>
       <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
         As a volunteer
       </AnswerButton>
@@ -111,15 +145,26 @@ const Step4 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
       </h5>
-      <Title className="mb-5">What is your email address?</Title>
-      <div style={{ marginRight: "50px" }}>
-        <Form.Control
-          className="mb-3"
-          placeholder="Type your email"
-          onChange={onChange}
-        />
-        <Button fill primary label="Submit" onClick={onSubmit} />
+      <StepTitle>What is your email address?</StepTitle>
+      <div style={{ marginRight: "50px", marginBottom: "20px" }}>
+        <FormGroup controlId="userEmailGroup">
+          <FormLabel>Email</FormLabel>
+          <UserEmailField
+            type="email"
+            name="userEmail"
+            placeholder="Type your email"
+            onChange={onChange}
+            value={email}
+          />
+        </FormGroup>
       </div>
+      <SubmitButton fill primary label="Submit" onClick={onSubmit} />
+      <Skip>
+        <Link to="/AirTableCOVID">
+          {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+          Skip
+        </Link>
+      </Skip>
     </WizardStep>
   );
 };
