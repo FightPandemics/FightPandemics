@@ -4,7 +4,7 @@ import CreatPostIcon from "../Icon/create-post";
 
 const ceatePostStyles = {
   position: "fixed",
-  bottom: "19%",
+  bottom: "5%",
   right: "5%",
 };
 

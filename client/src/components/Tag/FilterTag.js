@@ -5,17 +5,17 @@ import { ROYAL_BLUE } from "../../constants/colors";
 
 const FilterTag = styled(Tag)`
   &.am-tag-normal {
-    padding: 0 15px;
+    padding: 0 1.5rem;
   }
 
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
-    border: 1px solid ${ROYAL_BLUE} !important;
-    border-radius: 40px !important;
+    border: 0.1rem solid ${ROYAL_BLUE} !important;
+    border-radius: 4rem !important;
     color: ${ROYAL_BLUE};
-    font-size: 11px;
-    margin: 5px 3px;
+    font-size: 1.1rem;
+    margin: 0.5rem 0.3rem;
 
     &:before {
       border: unset !important;
@@ -24,13 +24,13 @@ const FilterTag = styled(Tag)`
 
   &.am-tag-disabled {
     background-color: unset;
-    padding: 0 8px;
+    padding: 0 0.8rem;
   }
 
   &.am-tag-active {
     color: #fff !important;
     background-color: ${ROYAL_BLUE} !important;
-    border-radius: 40px !important;
+    border-radius: 4rem !important;
   }
 `;
 

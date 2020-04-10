@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ROYAL_BLUE, DARK_GRAY } from "../../constants/colors";
 
 export default styled(Card)`
-  margin-bottom: 65px;
+  margin-bottom: 4rem;
   border: unset !important;
   &.am-card,
   .am-card-body {
@@ -17,19 +17,19 @@ export default styled(Card)`
 
       .am-card-header-content {
         align-items: unset;
-        font-size: 14px;
+        font-size: 1.4rem;
 
         img {
-          margin-right: 7px;
+          margin-right: 0.7rem;
         }
       }
       .am-card-header-extra {
         text-align: unset;
-        font-size: 11px;
-        margin-left: 47px;
-        margin-top: -18px;
+        font-size: 1.1rem;
+        margin-left: 4.7rem;
+        margin-top: -1.8rem;
         .status-icon {
-          margin-right: 8px;
+          margin-right: 0.8rem;
         }
       }
     }
@@ -39,18 +39,18 @@ export default styled(Card)`
 
       h1 {
         font-weight: bold;
-        line-height: 27px;
-        font-size: 22px;
+        line-height: 2.7rem;
+        font-size: 2.2rem;
       }
 
       .post-description {
         font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 1.4rem;
+        line-height: 2rem;
       }
 
       .view-more {
-        font-size: 16px;
+        font-size: 1.6rem;
         font-weight: 500;
         color: ${ROYAL_BLUE};
       }
@@ -59,16 +59,16 @@ export default styled(Card)`
         display: flex;
 
         span {
-          width: 40px;
+          width: 4rem;
         }
         .social-icon {
           color: ${DARK_GRAY};
           cursor: pointer;
           .social-icon-svg {
-            margin-right: 10px;
+            margin-right: 1rem;
           }
           span {
-            font-size: 14px;
+            font-size: 1.4rem;
           }
         }
       }

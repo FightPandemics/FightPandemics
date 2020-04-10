@@ -3,8 +3,8 @@ import styled from "styled-components";
 import NestedComments from "./NestedComments";
 
 const CommentsWrapper = styled.div`
-  padding-right: 15px;
-  margin: 20px 0;
+  padding-right: 1.5rem;
+  margin: 2rem 0;
 `;
 
 export default ({ comments }) => {

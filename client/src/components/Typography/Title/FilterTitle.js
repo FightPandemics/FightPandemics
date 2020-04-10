@@ -3,6 +3,6 @@ import { DARK_GRAY } from "../../../constants/colors";
 
 export default styled.p`
   color: ${DARK_GRAY};
-  margin: 5px;
-  font-size: 14px;
+  margin: 0.5rem;
+  font-size: 1.4rem;
 `;
