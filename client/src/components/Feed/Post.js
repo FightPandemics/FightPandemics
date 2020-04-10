@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
