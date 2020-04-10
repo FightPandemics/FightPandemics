@@ -57,10 +57,10 @@ const addCommentSchema = {
 };
 
 module.exports = {
-  getPostsSchema,
-  getPostByIdSchema,
+  addCommentSchema,
   createPostSchema,
   deletePostSchema,
+  getPostByIdSchema,
+  getPostsSchema,
   updatePostSchema,
-  addCommentSchema,
 };
