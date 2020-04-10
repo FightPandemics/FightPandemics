@@ -10,7 +10,6 @@ import { FeedContext } from "../../pages/Feed";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 40px;
-  padding: 0 7px;
 `;
 
 export default () => {

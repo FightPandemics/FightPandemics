@@ -36,7 +36,7 @@ export default [
               {
                 _id: 3,
                 name: "Brian Loop",
-                comment: "4 pack for $20. Sounds good?",
+                comment: "4 packs for 20 pounds. Sounds good?",
                 children: [],
               },
             ],
@@ -109,15 +109,7 @@ export default [
         name: "Brian Loop",
         comment: "I have many in stock.",
         numLikes: 32,
-        children: [
-          {
-            _id: 2,
-            name: "Lily Luke",
-            comment: "Interested! How much?",
-            numLikes: 1,
-            children: [],
-          },
-        ],
+        children: [],
       },
     ],
     title:

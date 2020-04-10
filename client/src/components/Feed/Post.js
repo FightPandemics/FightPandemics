@@ -24,7 +24,7 @@ export default ({ post }) => {
     comments,
   } = post;
 
-  const [showComments, setShowComments] = useState(true);
+  const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // mock API to test functionality
@@ -43,7 +43,7 @@ export default ({ post }) => {
 
   const commentStyles = {
     backgroundColor: SELAGO,
-    width: "86%",
+    width: "96%",
     borderBottom: "unset",
     borderRadius: "40px",
     padding: "14px",
