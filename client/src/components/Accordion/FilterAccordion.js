@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Accordion } from "antd-mobile";
 
 export const FilterAccordion = styled(Accordion)`
