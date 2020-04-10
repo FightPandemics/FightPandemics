@@ -10,22 +10,22 @@ const Auth0 = require("../components/Auth0");
 
 const ttlSeconds = 86400;
 const cache = new NodeCache({
-  stdTTL: ttlSeconds,
   checkperiod: ttlSeconds * 0.2,
+  stdTTL: ttlSeconds,
   useClones: false,
 });
 
 const authPlugin = async (app) => {
   app.register(fastifyJwt, {
+    algorithms: ["RS256"],
+    audience: `${auth.domain}/api/v2/`,
+    decode: { complete: true },
     secret: fastifySecretProvider({
       cache: true,
-      rateLimit: true,
       jwksRequestsPerMinute: 5,
       jwksUri: `${auth.domain}/.well-known/jwks.json`,
+      rateLimit: true,
     }),
-    audience: `${auth.domain}/api/v2/`,
-    algorithms: ["RS256"],
-    decode: { complete: true },
   });
 
   app.decorate("authenticate", async (req, reply) => {
@@ -38,9 +38,9 @@ const authPlugin = async (app) => {
 
   app.decorate("getServerToken", async (req, reply) => {
     const msg = {
-      ok: "Token assigned successfully!",
-      expired: "Token expired, going to refresh..",
       error: "Error trying to retrieve the token",
+      expired: "Token expired, going to refresh..",
+      ok: "Token assigned successfully!",
     };
     const key = "token";
 

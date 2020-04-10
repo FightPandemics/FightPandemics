@@ -4,32 +4,38 @@ const CommentSchema = require("./Comment");
 // const LikeSchema = require("./Like");
 
 const PostSchema = new Schema({
+  androidUrl: String,
   authorId: {
-    type: Schema.Types.ObjectId,
     ref: "users",
     required: true,
+    type: Schema.Types.ObjectId,
   },
-  title: {
-    type: String,
-    required: true,
+  comments: {
+    default: [],
+    type: [CommentSchema],
   },
   description: {
-    type: String,
     required: true,
+    type: String,
   },
-  type: {
-    type: [String],
-    // required: true,
-  },
-  shareWith: {
-    type: [String],
-    // required: true,
+  iosUrl: String,
+  language: [String],
+  likes: {
+    default: [],
+    refs: "likes",
+    type: [Schema.Types.ObjectId],
   },
   looking: {
     type: [String],
     // required: true,
   },
+  media: String,
   needs: {
+    type: [String],
+    // required: true,
+  },
+  postEmail: String,
+  shareWith: {
     type: [String],
     // required: true,
   },
@@ -37,22 +43,16 @@ const PostSchema = new Schema({
     type: Boolean,
     // required: true,
   },
-  comments: {
-    type: [CommentSchema],
-    default: [],
-  },
-  likes: {
-    type: [Schema.Types.ObjectId],
-    refs: "likes",
-    default: [],
-  },
   tags: [String],
-  language: [String],
+  title: {
+    required: true,
+    type: String,
+  },
+  type: {
+    type: [String],
+    // required: true,
+  },
   website: String,
-  iosUrl: String,
-  androidUrl: String,
-  media: String,
-  postEmail: String,
 });
 
 module.exports = PostSchema;

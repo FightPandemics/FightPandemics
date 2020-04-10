@@ -15,10 +15,10 @@ async function routes(app) {
       return new httpErrors.NotFound();
     }
     return {
-      id: result._id,
-      firstName: result.firstName,
-      lastName: result.firstName,
       email: result.email,
+      firstName: result.firstName,
+      id: result._id,
+      lastName: result.firstName,
     };
   });
 
@@ -31,8 +31,8 @@ async function routes(app) {
         return new httpErrors.NotFound();
       }
       return {
-        id: result._id,
         firstName: result.firstName,
+        id: result._id,
         lastName: result.firstName,
       };
     },
