@@ -19,34 +19,46 @@ export default ({
   setShowComments,
   likePost,
 }) => {
+  const renderLikeIcon = () => {
+    return liked ? (
+      <HeartGrayIcon className="social-icon-svg" />
+    ) : (
+      <HeartIcon className="social-icon-svg" />
+    );
+  };
+
+  const renderCommentIcon = () => {
+    return showComments ? (
+      <CommentGrayIcon className="social-icon-svg" />
+    ) : (
+      <CommentIcon className="social-icon-svg" />
+    );
+  };
+
+  const renderShareIcon = () => {
+    return shared ? (
+      <ShareGrayIcon className="social-icon-svg" />
+    ) : (
+      <ShareIcon className="social-icon-svg" />
+    );
+  };
+
   return (
     <div className="social-icons">
       <div className="social-icon" onClick={likePost}>
-        {liked ? (
-          <HeartGrayIcon className="social-icon-svg" />
-        ) : (
-          <HeartIcon className="social-icon-svg" />
-        )}
+        {renderLikeIcon()}
         <span>{numLikes}</span>
       </div>
       <span></span>
       <div className="social-icon" onClick={setShowComments}>
-        {showComments ? (
-          <CommentGrayIcon className="social-icon-svg" />
-        ) : (
-          <CommentIcon className="social-icon-svg" />
-        )}
+        {renderCommentIcon()}
         <span>{numComments}</span>
       </div>
       <span></span>
       <div className="social-icon">
         <CopyToClipboard text={url} onCopy={onCopyLink}>
           <span>
-            {shared ? (
-              <ShareGrayIcon className="social-icon-svg" />
-            ) : (
-              <ShareIcon className="social-icon-svg" />
-            )}
+            {renderShareIcon()}
             <span>{numShares}</span>
           </span>
         </CopyToClipboard>

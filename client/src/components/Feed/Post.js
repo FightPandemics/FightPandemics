@@ -23,7 +23,7 @@ export default ({ post }) => {
     comments,
   } = post;
 
-  const [showComments, setShowComments] = useState(true);
+  const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // mock API to test functionality
@@ -54,62 +54,8 @@ export default ({ post }) => {
     ));
   };
 
-  return (
-    <PostCard>
-      <Card.Header
-        title={author}
-        thumbStyle={thumbStyle}
-        extra={
-          <span>
-            <StatusIcon className="status-icon" />
-            {location}
-          </span>
-        }
-        thumb={photoUrl}
-      />
-      <WhiteSpace size="md" />
-      <Card.Body>{renderTags()}</Card.Body>
-      <WhiteSpace />
-      <Card.Body>
-        <h1>{title}</h1>
-        <div className="post-description">
-          <p>{description}</p>
-        </div>
-      </Card.Body>
-      <Card.Body>
-        <a className="view-more" href="">
-          View More
-        </a>
-      </Card.Body>
-      <Card.Body>
-        <PostSocial
-          url={url}
-          liked={liked}
-          shared={shared}
-          showComments={showComments}
-          numLikes={fakeLikes}
-          numComments={fakeComments}
-          numShares={fakeShares}
-          setShowComments={() => setShowComments(!showComments)}
-          onCopyLink={() => {
-            if (!shared) setFakeShares(fakeShares + 1);
-            setShared(true);
-            return setCopied(!copied);
-          }}
-          likePost={() => {
-            liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
-            return setLiked(!liked);
-          }}
-        />
-      </Card.Body>
-      <Card.Body>
-        <TextInput
-          type={"text"}
-          style={commentStyles}
-          placeholder={"Write a comment ..."}
-        />
-        {showComments ? <Comments comments={comments} /> : ""}
-      </Card.Body>
+  const renderShareModal = () => {
+    return (
       <Modal
         onClose={() => setCopied(!copied)}
         maskClosable={true}
@@ -119,6 +65,66 @@ export default ({ post }) => {
       >
         <h1 style={{ color: "black" }}>Link Copied!</h1>
       </Modal>
+    );
+  };
+
+  const renderSocialIcons = () => {
+    return (
+      <PostSocial
+        url={url}
+        liked={liked}
+        shared={shared}
+        showComments={showComments}
+        numLikes={fakeLikes}
+        numComments={fakeComments}
+        numShares={fakeShares}
+        setShowComments={() => setShowComments(!showComments)}
+        onCopyLink={() => {
+          if (!shared) setFakeShares(fakeShares + 1);
+          setShared(true);
+          return setCopied(!copied);
+        }}
+        likePost={() => {
+          liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
+          return setLiked(!liked);
+        }}
+      />
+    );
+  };
+
+  return (
+    <PostCard>
+      <Card.Header
+        title={author}
+        thumb={photoUrl}
+        thumbStyle={thumbStyle}
+        extra={
+          <span>
+            <StatusIcon className="status-icon" />
+            {location}
+          </span>
+        }
+      />
+      <WhiteSpace size="md" />
+      <Card.Body>{renderTags()}</Card.Body>
+      <WhiteSpace />
+      <Card.Body>
+        <h1>{title}</h1>
+        <p className="post-description">{description}</p>
+      </Card.Body>
+      <Card.Body>
+        <a className="view-more">View More</a>
+      </Card.Body>
+      <Card.Body>{renderSocialIcons()}</Card.Body>
+      <Card.Body>
+        <TextInput
+          type={"text"}
+          style={commentStyles}
+          placeholder={"Write a comment ..."}
+        />
+        {showComments ? <Comments comments={comments} /> : ""}
+      </Card.Body>
+      {renderShareModal()}
     </PostCard>
   );
 };

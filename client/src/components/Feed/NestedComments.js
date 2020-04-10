@@ -2,21 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Comment, Avatar } from "antd";
 import { LIGHTER_GRAY } from "../../constants/colors";
-import HeartSmallIcon from "../Icon/heart-small";
-
-const Likes = styled.div`
-  background: #fff;
-  position: absolute;
-  width: 3.6rem;
-  height: 1.7rem;
-  font-size: 1.1rem;
-  padding-left: 0.5rem;
-  border-radius: 0.85rem;
-  box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.06);
-  img {
-    margin-right: 0.5rem;
-  }
-`;
 
 const StyledComment = styled(Comment)`
   &.ant-comment {
@@ -63,15 +48,7 @@ const StyledComment = styled(Comment)`
 
 const NestedComments = ({ comment }) => {
   const nestedComments = (comment.children || []).map((comment) => {
-    return (
-      <React.Fragment>
-        <NestedComments comment={comment} key={comment._id} />
-        <Likes key={comment._id}>
-          <HeartSmallIcon />
-          {comment.numLikes}
-        </Likes>
-      </React.Fragment>
-    );
+    return <NestedComments comment={comment} key={comment._id} />;
   });
   return (
     <StyledComment
