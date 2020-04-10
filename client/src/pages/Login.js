@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
-
+import ImageButton from "../components/Button/ImageButton";
 import {
   FacebookIcon,
   TwitterIcon,
