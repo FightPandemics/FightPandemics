@@ -8,6 +8,7 @@ import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
+import NearestHospital from "./pages/NearestHospital";
 
 export const routes = [
   {
@@ -46,6 +47,10 @@ export const routes = [
   {
     path: "/medical",
     component: Medical,
+  },
+  {
+    path: "/nearest-hospital",
+    component: NearestHospital,
   },
   {
     path: "/AirTableCOVID",
