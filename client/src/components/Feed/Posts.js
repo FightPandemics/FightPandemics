@@ -4,8 +4,8 @@ import CreatPostIcon from "../Icon/create-post";
 
 const ceatePostStyles = {
   position: "fixed",
-  bottom: "20%",
-  right: "10%",
+  bottom: "19%",
+  right: "5%",
 };
 
 export default ({ filteredPosts }) => {

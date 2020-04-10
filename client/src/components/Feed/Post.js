@@ -72,7 +72,9 @@ export default ({ post }) => {
       <WhiteSpace />
       <Card.Body>
         <h1>{title}</h1>
-        <p>{description}</p>
+        <div className="post-description">
+          <p>{description}</p>
+        </div>
       </Card.Body>
       <Card.Body>
         <a className="view-more" href="">

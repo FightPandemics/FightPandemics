@@ -39,11 +39,12 @@ export default styled(Card)`
       color: black;
 
       h1 {
+        font-weight: bold;
+        line-height: 27px;
         font-size: 21px;
-        margin: 0;
       }
 
-      p {
+      .post-description {
         font-weight: 400;
         font-size: 13.5px;
         line-height: 20px;
@@ -56,18 +57,19 @@ export default styled(Card)`
 
       .social-icons {
         display: flex;
-      }
-      .social-icon {
-        display: flex;
-        align-items: center;
-        color: ${DARK_GRAY};
-        margin-right: 46px;
-        cursor: pointer;
-        .social-icon-svg {
-          margin-right: 10px;
-        }
+
         span {
-          font-size: 15px;
+          width: 40px;
+        }
+        .social-icon {
+          color: ${DARK_GRAY};
+          cursor: pointer;
+          .social-icon-svg {
+            margin-right: 10px;
+          }
+          span {
+            font-size: 15px;
+          }
         }
       }
     }

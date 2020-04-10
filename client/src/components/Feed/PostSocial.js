@@ -29,6 +29,7 @@ export default ({
         )}
         <span>{numLikes}</span>
       </div>
+      <span></span>
       <div className="social-icon" onClick={setShowComments}>
         {showComments ? (
           <CommentGrayIcon className="social-icon-svg" />
@@ -37,6 +38,7 @@ export default ({
         )}
         <span>{numComments}</span>
       </div>
+      <span></span>
       <div className="social-icon">
         <CopyToClipboard text={url} onCopy={onCopyLink}>
           <span>
