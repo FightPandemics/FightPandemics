@@ -1,22 +1,28 @@
 import React from "react";
-import { WhiteSpace } from "antd-mobile";
-import { MenuOutlined } from "@ant-design/icons";
-
+import { Popover, WhiteSpace } from "antd-mobile";
+import { MenuOutlined, EditOutlined } from "@ant-design/icons";
 const linkedinIcon = require("../assets/icons/social-linkedin.svg");
 const twitterIcon = require("../assets/icons/social-twitter.svg");
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
+
+// dummy data props,context, redux etc
 const firstName = "Cees";
 const lastName = "Wang";
+const about =
+  "  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diamnonummy nibh euismod tincidunt ut laoreet dolore magna";
 const email = "ceeswang@Test.com";
 const location = "NY, USA";
 const needHelp = true;
+const Item = Popover.Item;
 
 function getInitials(firstName, lastName) {
+  // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
 }
 
-export const Profile = () => {
+export const Profile = (props) => {
+  // dummy data props,context, redux etc
   return (
     <div style={profile}>
       <div style={backgroundHeader}>
@@ -31,7 +37,41 @@ export const Profile = () => {
           />
         </div>
       </div>
-      <div style={userInfoStyle}>
+      <div style={userInfoStyle} className="userInfo">
+        <Popover
+          mask
+          overlay={[
+            <Item key="editAccountInfo" value="Edit Account Information">
+              Edit Account Information
+            </Item>,
+            <Item
+              key="editProfile"
+              value="Edit Profile"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Edit Profile
+            </Item>,
+          ]}
+          align={{
+            overflow: { adjustY: 0, adjustX: 0 },
+            offset: [0, 10],
+          }}
+          onSelect={(opt) =>
+            opt.key === "editAccountInfo"
+              ? props.history.push("/")
+              : props.history.push("/edit-profile")
+          }
+        >
+          <EditOutlined
+            style={{
+              color: "#425AF2",
+              fontSize: "2rem",
+              alignSelf: "flex-end",
+              marginRight: "2rem",
+              marginTop: "2rem",
+            }}
+          />
+        </Popover>
         <div style={initialsStyle}>{getInitials(firstName, lastName)}</div>
         <div style={nameStyle}>{`${firstName + " " + lastName}`}</div>
         <div style={emailStyle}>{email}</div>
@@ -50,23 +90,19 @@ export const Profile = () => {
           <img style={iconStyle} src={linkedinIcon} />
           <img style={iconStyle} src={twitterIcon} />
         </div>
-        <WhiteSpace />
-        <div style={sections}>
-          <section>
-            <div style={title}>About</div>
-            <WhiteSpace />
-            <div style={about}>
-              {" "}
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna.
-            </div>
-          </section>
+      </div>
+      <WhiteSpace />
+      <div style={sections}>
+        <section>
+          <div style={title}>About</div>
           <WhiteSpace />
-          <section>
-            <div style={title}>My activity</div>
-            <WhiteSpace />
-          </section>
-        </div>
+          <div style={aboutStyle}> {about}</div>
+        </section>
+        <WhiteSpace />
+        <section>
+          <div style={title}>My activity</div>
+          <WhiteSpace />
+        </section>
       </div>
     </div>
   );
@@ -74,9 +110,6 @@ export const Profile = () => {
 
 //styling
 
-const wrapper = {
-  height: "40vh",
-};
 const profile = {
   backgroundColor: "#F9F9F9",
   height: "100vh",
@@ -92,19 +125,18 @@ const backgroundHeader = {
   right: "0",
   backgroundColor: "#425AF2",
   borderBottomRightRadius: "30px",
-  position: "absolute",
+  position: "relative",
 };
 
 const userInfoStyle = {
-  height: "30%",
   backgroundColor: "#FFFFFF",
-  marginTop: "10vh",
+  marginTop: "-13vh",
   left: "0",
   right: "0",
   marginLeft: "2.5rem",
   marginRight: "2.5rem",
   borderRadius: "10px",
-  position: "absolute",
+  position: "relative",
   zIndex: "8",
   filter: "drop-shadow(#00000012 5px 0px 5px)",
   flexDirection: "column",
@@ -118,16 +150,18 @@ const title = {
 };
 
 const sections = {
-  // width: '100vw',
+  display: "flex",
+  marginLeft: "2.5rem",
+  marginRight: "2.5rem",
+  flexDirection: "column",
 };
 
-const about = {
+const aboutStyle = {
   backgroundColor: "#FFFFFF",
   borderRadius: "5px",
 };
 
 const initialsStyle = {
-  marginTop: "3rem",
   marginBottom: "1rem",
   borderRadius: "50%",
   border: "0.2rem solid #425AF2",
@@ -155,6 +189,7 @@ const locationStyle = {
 };
 
 const iconsContainer = {
+  marginTop: "1rem",
   display: "flex",
   flexDirection: "row",
   width: "100%",
