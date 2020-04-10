@@ -1,6 +1,6 @@
 const httpErrors = require("http-errors");
 
-const { getUserByIdSchema } = require("./schema/posts");
+const { getUserByIdSchema } = require("./schema/users");
 
 /*
  * /api/users
