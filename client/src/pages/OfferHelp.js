@@ -42,6 +42,11 @@ const SubmitButton = styled(Button)`
   ${theme.form.button}
 `;
 
+const WizardProgress = styled.h5`
+  font-size: ${theme.typography.size.large};
+  font-weight: normal;
+`;
+
 const StepTitle = styled.h2`
   font-size: ${theme.typography.heading.two};
   margin-bottom: 50px;
@@ -68,10 +73,10 @@ const Step1 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">Where are you located?</Title>
+      </WizardProgress>
+      <StepTitle className="mb-5">Where are you located?</StepTitle>
       <AnswerButton onSelect={selectLocationDetection}>
         Detect my location
       </AnswerButton>
@@ -89,9 +94,9 @@ const Step2 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
+      </WizardProgress>
       <StepTitle style={{ marginBottom: "20px" }}>
         We are not a provider of healthcare services.
       </StepTitle>
@@ -117,9 +122,9 @@ const Step3 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
+      </WizardProgress>
       <StepTitle>How do you want to contribute?</StepTitle>
       <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
         As a volunteer
@@ -142,9 +147,9 @@ const Step4 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
+      </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
       <div style={{ marginRight: "50px", marginBottom: "20px" }}>
         <FormGroup controlId="userEmailGroup">
@@ -183,7 +188,7 @@ export const OfferHelp = withRouter((props) => {
     }
   };
   return (
-    <WizardContainer>
+    <WizardContainer className="wizard-container">
       <StyledWizard isHashEnabled nav={<WizardNav />}>
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />
