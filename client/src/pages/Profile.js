@@ -1,8 +1,10 @@
 import React from "react";
 import { Popover, WhiteSpace } from "antd-mobile";
 import { MenuOutlined, EditOutlined } from "@ant-design/icons";
-const linkedinIcon = require("../assets/icons/social-linkedin.svg");
-const twitterIcon = require("../assets/icons/social-twitter.svg");
+const linkedinIcon = require("../assets/icons/social-linkedin-blue.svg");
+const twitterIcon = require("../assets/icons/social-twitter-blue.svg");
+const editIcon = require("../assets/icons/edit.svg");
+const menuIcon = require("../assets/icons/menu.svg");
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
@@ -27,14 +29,7 @@ export const Profile = (props) => {
     <div style={profile}>
       <div style={backgroundHeader}>
         <div style={{ textAlign: "right" }}>
-          <MenuOutlined
-            style={{
-              color: "#FFFFFF",
-              fontSize: "2rem",
-              marginTop: "3rem",
-              marginRight: "2rem",
-            }}
-          />
+          <img style={menuIconStyle} src={menuIcon} />
         </div>
       </div>
       <div style={userInfoStyle} className="userInfo">
@@ -58,19 +53,11 @@ export const Profile = (props) => {
           }}
           onSelect={(opt) =>
             opt.key === "editAccountInfo"
-              ? props.history.push("/")
+              ? props.history.push("/edit-account")
               : props.history.push("/edit-profile")
           }
         >
-          <EditOutlined
-            style={{
-              color: "#425AF2",
-              fontSize: "2rem",
-              alignSelf: "flex-end",
-              marginRight: "2rem",
-              marginTop: "2rem",
-            }}
-          />
+          <img style={editIconStyle} src={editIcon} />
         </Popover>
         <div style={initialsStyle}>{getInitials(firstName, lastName)}</div>
         <div style={nameStyle}>{`${firstName + " " + lastName}`}</div>
@@ -160,7 +147,18 @@ const aboutStyle = {
   backgroundColor: "#FFFFFF",
   borderRadius: "5px",
 };
+const menuIconStyle = {
+  color: "#FFFFFF",
+  marginTop: "3rem",
+  marginRight: "2rem",
+};
 
+const editIconStyle = {
+  color: "#425AF2",
+  alignSelf: "flex-end",
+  marginRight: "2rem",
+  marginTop: "2rem",
+};
 const initialsStyle = {
   marginBottom: "1rem",
   borderRadius: "50%",

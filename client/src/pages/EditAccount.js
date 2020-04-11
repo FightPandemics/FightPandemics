@@ -12,74 +12,99 @@ const githubURL = "http://github.com";
 const linkedinURL = "http://linkedin.com";
 const personalURL = "http://personal.com";
 
-const editProfile = true;
+const editAccount = true;
 
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
 }
 
-export default function EditProfile(props) {
+export default function EditAccount(props) {
   // dummy data props,context, redux etc
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
-    // make a put/patch request to backend to update users profile information
+    // make a put/patch request to backend to update users Account information
   };
 
   return (
     <div>
-      <div style={editProfileStyle}>
-        <div style={editProfileTitleStyle}>
-          {editProfile ? "Edit" : "Complete"} Profile
-        </div>
-        <div style={initialsStyle}>{getInitials(firstName, lastName)}</div>
-        <div style={changeProfilePicStyle}>Change</div>
+      <div style={editAccountStyle}>
+        <div style={editAccountTitleStyle}>Account Information</div>
       </div>
       <form style={editFormStyle} onSubmit={handleSubmit(onSubmit)}>
-        <label style={labelStyle}>Self-introduction</label>
+        <label style={labelStyle}>E-mail</label>
         <input
           style={inputFieldStyle}
           name="selfIntroduction"
           defaultValue={selfIntroduction}
           ref={register({ maxLength: 160 })}
         />
-        <label style={labelStyle}>Facebook URL</label>
+        <label style={labelStyle}>* Name</label>
         <input
           style={inputFieldStyle}
           name="facebookURL"
           defaultValue={facebookURL}
           ref={register}
         />
-        <label style={labelStyle}>LinkedIn URL</label>
+        <label style={labelStyle}>* Country</label>
         <input
           style={inputFieldStyle}
           name="linkedinURL"
           defaultValue={linkedinURL}
           ref={register}
         />
-        <label style={labelStyle}>Twitter URL</label>
+        <label style={labelStyle}>* Neigborhood</label>
         <input
           style={inputFieldStyle}
-          name="twitterURL"
-          defaultValue={twitterURL}
+          name="linkedinURL"
+          defaultValue={linkedinURL}
           ref={register}
         />
-        <label style={labelStyle}>GitHub URL</label>
-        <input
-          style={inputFieldStyle}
-          name="githubURL"
-          defaultValue={githubURL}
-          ref={register}
-        />
-        <label style={labelStyle}>Personal Website</label>
-        <input
-          style={inputFieldStyle}
-          name="personalURL"
-          defaultValue={personalURL}
-          ref={register}
-        />
+
+        <label style={labelStyle}>I want to</label>
+        <label>
+          <input
+            type="checkbox"
+            name="helping"
+            value="volunteer"
+            ref={register}
+          />
+          <span style={checkBoxStyle}></span>
+          Volunteer
+        </label>
+        <label>
+          <input type="checkbox" name="helping" value="donate" ref={register} />
+          <span style={checkBoxStyle}></span>
+          Donate
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="helping"
+            value="shareInfo"
+            ref={register}
+          />
+          <span style={checkBoxStyle}></span>
+          Share Information
+        </label>
+        <label style={labelStyle}>I need</label>
+        <label>
+          <input
+            type="checkbox"
+            name="helping"
+            value="medical"
+            ref={register}
+          />
+          <span style={checkBoxStyle}></span>
+          Medical Help
+        </label>
+        <label>
+          <input type="checkbox" name="helping" value="other" ref={register} />
+          <span style={checkBoxStyle}></span>
+          Other Help
+        </label>
         <input style={submitButtonStyle} type="submit" value="Save Changes" />
       </form>
     </div>
@@ -87,12 +112,12 @@ export default function EditProfile(props) {
 }
 
 //styling
-const editProfileStyle = {
+const editAccountStyle = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
 };
-const editProfileTitleStyle = {
+const editAccountTitleStyle = {
   fontWeight: "bolder",
   fontSize: "2rem",
   marginBottom: "3rem",
@@ -104,7 +129,7 @@ const editFormStyle = {
   flexDirection: "column",
 };
 
-const changeProfilePicStyle = {
+const changeAccountPicStyle = {
   color: "#425AF2",
   marginBottom: "3rem",
 };
@@ -145,4 +170,11 @@ const submitButtonStyle = {
   marginTop: "2rem",
   fontSize: "2rem",
   fontWeight: "bold",
+};
+
+const checkBoxStyle = {
+  height: "10rem",
+  width: "10rem",
+  borderRadius: "1rem",
+  border: "0.5rem solid #5970EC",
 };

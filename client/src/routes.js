@@ -7,7 +7,8 @@ import { AirTableCOVID } from "./pages/AirTableCOVID";
 import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import { Profile } from "./pages/Profile";
-import { EditProfile } from "./pages/EditProfile";
+import EditProfile from "./pages/EditProfile";
+import EditAccount from "./pages/EditAccount";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 
@@ -72,5 +73,9 @@ export const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
+  },
+  {
+    path: "/edit-account",
+    component: EditAccount,
   },
 ];
