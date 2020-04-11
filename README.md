@@ -23,7 +23,8 @@ Currently, there is no easy way to find all the information at the local and glo
     - No use of `.css` or `.scss` files
     - No Redux
 - **Backend**
-    - Fastify, MongoDB, Auth0
+    - Fastify, MongoDB
+    - Auth0, Google Maps API
 - **DevOps**
     - Docker
 
