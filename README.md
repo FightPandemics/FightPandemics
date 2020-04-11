@@ -12,8 +12,10 @@ Please check our notion to get a better understanding of the problem that we are
         - Desktop: coming soon
     - Use assets such as icons from the designs on Figma  
         - Select an icon -> right click -> Copy/Paste -> Copy as CSS/SVG
-        -  You can also get exact CSS values on Figma
+        - You can also get exact CSS values on Figma
     - No use of `.css` or `.scss` files, please style with styled-components instead
+    - For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
+    - Resuse components wherever possible
     - Limit the use of inline styling
     - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
     - Use global colors by importing values from `client/src/constants/colors.js`
