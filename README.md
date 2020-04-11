@@ -16,6 +16,7 @@ Please check our notion to get a better understanding of the problem that we are
     - No use of `.css` or `.scss` files, please style with styled-components instead
     - Limit the use of inline styling
     - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
+    - Use global colors by importing values from `client/src/constants/colors.js`
     - No Redux, as the project grow, we will likely use React's Context API
     - No use of other libraries like Material UI
 
