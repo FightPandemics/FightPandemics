@@ -10,14 +10,17 @@ export default [
     comments: [
       {
         _id: 0,
-        name: "Rob Till",
-        comment: "I can help. Where can we meet? I'm north from you.",
+        name: "Lily Luke",
+        comment:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque, eros id hendrerit elementum, odio augue efficitur diam, non pellentesque ex libero nec lectus. Integer lorem dolor, varius in nulla eu, pellentesque fermentum orci. Aliquam at quam pulvinar, tristique dui nec, consequat massa.",
         numLikes: 2,
         children: [
           {
             _id: 6,
             name: "Lily Luke",
-            comment: "Perfect!! just sent you a meeting spot. Let's meet soon.",
+            comment:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque, eros id hendrerit elementum, odio augue efficitur diam, non pellentesque ex libero nec lectus.",
+            numLikes: 7,
             children: [],
           },
         ],
@@ -32,11 +35,13 @@ export default [
             _id: 2,
             name: "Lily Luke",
             comment: "Interested! How much?",
+            numLikes: 4,
             children: [
               {
                 _id: 3,
                 name: "Brian Loop",
                 comment: "4 packs for 20 pounds. Sounds good?",
+                numLikes: 1,
                 children: [],
               },
             ],
@@ -75,6 +80,7 @@ export default [
             _id: 2,
             name: "Rob Till",
             comment: "I can help. Where can we meet? I'm north from you.",
+            numLikes: 5,
             children: [],
           },
         ],
@@ -102,7 +108,7 @@ export default [
         name: "Rob Till",
         comment: "I can help. Where can we meet? I'm north from you.",
         children: [],
-        numLikes: 0,
+        numLikes: 1,
       },
       {
         _id: 1,
