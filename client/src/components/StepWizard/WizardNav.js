@@ -24,6 +24,14 @@ const StyledWizardNav = styled.div`
   }
 `;
 
+const PrevButton = styled(Button)`
+  display: inline-flex;
+  align-items: center;
+  box-shadow: unset;
+  outline-color: transparent;
+  border-color: transparent;
+`;
+
 const CircleButton = styled(Button)`
   justify-self: flex-end;
   background-color: ${PRIMARY};
@@ -33,14 +41,14 @@ const CircleButton = styled(Button)`
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <Button
+      <PrevButton
         plain
         onClick={previousStep}
         icon={<FormPreviousLink />}
         a11yTitle={`Navigate to step ${currentStep - 1}`}
       />
     ) : (
-      <Button
+      <PrevButton
         plain
         href="/"
         icon={<FormPreviousLink />}
