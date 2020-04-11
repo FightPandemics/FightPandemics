@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import { validateEmail } from '../utils/common.js';
+import { useAlert } from 'react-alert';
+import { PASSWORD_MIN_LENGTH } from '../config';
+import { loginWithEmail, signup } from '../actions/authActions';
+import { useDispatch } from "react-redux";
 
 import {
   FacebookIcon,
@@ -9,8 +16,6 @@ import {
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
-import TextInput from "~/components/Input/TextInput";
-import PasswordInput from "~/components/Input/PasswordInput";
 import SubmitButton from "~/components/Button/SubmitButton";
 
 const InputWrapper = styled.div`
@@ -57,10 +62,71 @@ const SocialButton = styled(Button).attrs((props) => ({
   margin: 0.5rem;
 `;
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '100%',
+  },
+  resize:{
+    fontSize: 20
+  },  
+}));
+
 export default ({ isLoginForm }) => {
-  const loginWithEmail = () => {
-    document.getElementById("login-password").submit();
-  };
+
+  const classes = useStyles();
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleInputChangeEmail = e => {
+    setEmail(e.target.value);
+  }
+
+  const handleInputChangePassword = e => {
+    setPassword(e.target.value);
+  }
+
+  const handleLoginWithEmail = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail (email)) {
+      alert.show('Invalid email address!', {
+        type: 'error',
+      });
+      return;
+    }
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      alert.show('Password must be at least 6 characters', {
+        type: 'error',
+      });
+      return;
+    }
+    dispatch(loginWithEmail({ email, password }));
+  }
+
+  const handleSignup = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail (email)) {
+      alert.show('Invalid email address!', {
+        type: 'error',
+      });
+      return;
+    }
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      alert.show('Password must be at least 6 characters', {
+        type: 'error',
+      });
+      return;
+    }
+    dispatch(signup({ email, password }));
+  }  
 
   const loginWithConnection = (connection) => {};
 
@@ -69,29 +135,52 @@ export default ({ isLoginForm }) => {
       <h1>Welcome</h1>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <TextInput
-            label="E-mail"
+          <TextField
+            id="standard-email-input"
+            label="Email"
+            className={classes.textField}
             type="email"
-            labelStyle={StyleLabel}
-            inputStyle={StyleInput}
-            required
-            placeholder="Enter email address"
-          />
+            autoComplete="current-email"
+            margin="normal"
+            onChange={handleInputChangeEmail}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{ 
+              classes: {
+                root: classes.resize,
+              }
+            }} 
+          />                     
         </InputWrapper>
         <InputWrapper>
-          <PasswordInput
+          <TextField
+            id="standard-password-input"
             label="Password"
-            labelStyle={StyleLabel}
-            inputStyle={StyleInput}
-            required
-            placeholder="Enter password"
+            className={classes.textField}
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+            onChange={handleInputChangePassword}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{ 
+              classes: {
+                root: classes.resize,
+              }
+            }}            
           />
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <SubmitButton
-          title={isLoginForm ? "Continue" : "Sign Up"}
-          onClick={loginWithEmail}
+          title={isLoginForm ? "Login" : "Sign Up"}
+          onClick={isLoginForm? handleLoginWithEmail: handleSignup}
         />
       </form>
       <WhiteSpace />
