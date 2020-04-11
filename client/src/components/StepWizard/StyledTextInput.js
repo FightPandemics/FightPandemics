@@ -9,4 +9,5 @@ export default styled(TextInput)`
   color: ${theme.colors.darkGray};
   padding: 0.5rem 0;
   margin: 0.5rem 0;
+  width: 100%;
 `;
