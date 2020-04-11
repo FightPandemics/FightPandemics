@@ -16,9 +16,22 @@ Currently, there is no easy way to find all the information at the local and glo
     
     If you are interested please join our slack group:
 
+## Technologies
+- **Frontend**
+    - React Hooks, Ant Design, Ant Design Mobile,  styled-components
+    - Mobile first design
+    - No use of `.css` or `.scss` files
+    - No Redux
+- **Backend**
+    - Fastify, MongoDB, Auth0
+- **DevOps**
+    - Docker
+
 ## Getting Started
-1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
-1. `cp backend/.env.example backend/.env`
-1. Run `docker-compose up` and goto `localhost:3000` in the browser.
+1. Fork or clone the repo
+2. Check the projects tab for available tickets
+3. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
+4. `cp backend/.env.example backend/.env`
+5. Run `docker-compose up` and goto `localhost:3000` in the browser.
 
 To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
