@@ -24,3 +24,18 @@ Please check our notion to get a better understanding of the problem that we are
 5. Run `docker-compose up` and goto `localhost:3000` in the browser.
 
 To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
+
+
+## Adding NPM dependencies to package.json
+
+Note that whenever you add a new NPM dependency, you must run `npm install` from within the container. This is because
+NPM dependency installs may not necessarily be cross-platform. There are two ways that you can install the dependencies
+within the container:
+
+### Backend
+Run `docker-compose run backend-service npm install`, or `cd` into the `backend` directory and run `npm run install-docker`.
+
+### Client
+Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
+
+Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
