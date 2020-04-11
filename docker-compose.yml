@@ -40,6 +40,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - /app/node_modules/
     working_dir: /app
     depends_on:
       - mongo
@@ -56,6 +57,7 @@ services:
       - "3000:3000"
     volumes:
       - ./client:/app
+      - /app/node_modules
     working_dir: /app
     stdin_open: true
     tty: true
