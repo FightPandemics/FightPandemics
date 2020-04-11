@@ -8,9 +8,11 @@ Please check our notion to get a better understanding of the problem that we are
 - **Frontend**
     - React Hooks, Ant Design, Ant Design Mobile,  styled-components
     - Mobile first design
-    - Use assets such as icons from the designs on Figma  
-        - Select an icon -> right click -> Copy/Paste -> Copy as CSS/SVG
-        - You can also get exact CSS values on Figma
+    - Use assets such as icons from the designs on Figma
+        - Select the screen that you are going to design
+        - On the left side of figma, unlock the screen (Only the one that you are going to use)
+        - Select an icon or component -> right click -> Copy/Paste -> Copy as CSS/SVG
+        - You can also get exact CSS values on the top right of Figma
     - No use of `.css` or `.scss` files, please style with styled-components instead
     - For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
     - Resuse components wherever possible
