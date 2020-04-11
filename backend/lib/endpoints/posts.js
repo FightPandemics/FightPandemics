@@ -111,10 +111,35 @@ async function routes(app) {
       const updatedPost = await Post.findOneAndUpdate(
         { _id: postId, likedBy: { $ne: userId } },
         { $inc: { likesCount: 1 }, $push: { likedBy: userId } },
+        { new: true },
       );
       if (!updatedPost) {
         return new httpErrors.BadRequest();
       }
+
+      return {
+        likedBy: updatedPost.likedBy,
+        likesCount: updatedPost.likesCount,
+      };
+    },
+  );
+
+  app.delete(
+    "/:postId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
+    async (req) => {
+      const { postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId, likedBy: userId },
+        { $inc: { likesCount: -1 }, $pull: { likedBy: userId } },
+        { new: true },
+      );
+      if (!updatedPost) {
+        return new httpErrors.BadRequest();
+      }
+
       return {
         likedBy: updatedPost.likedBy,
         likesCount: updatedPost.likesCount,
