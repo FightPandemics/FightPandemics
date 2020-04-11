@@ -34,6 +34,7 @@ const theme = {
       xxlarge: "2.6rem",
     },
     heading: {
+      font: "Poppins",
       one: "4.2rem",
       two: "3.2rem",
       three: "2.6rem",
@@ -46,6 +47,7 @@ const theme = {
       skip: {
         textAlign: "center",
         color: PRIMARY,
+        marginTop: "1rem",
       },
     },
   },

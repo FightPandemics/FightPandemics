@@ -7,7 +7,21 @@ import { PRIMARY } from "../../constants/colors";
 const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 1rem 0;
+  height: 7rem;
+  margin-bottom: 1rem;
+  /* flex: 0; */
+
+  & + div {
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1;
+    max-height: calc(100% - 8rem); /* align-items: stretch; */
+    /* min-height: 100%; */
+    & > div {
+      min-height: 100%;
+    }
+  }
 `;
 
 const CircleButton = styled(Button)`
