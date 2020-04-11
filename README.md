@@ -10,9 +10,10 @@ Please check our notion to get a better understanding of the problem that we are
     - Mobile first design
     - Use assets such as icons from the designs on Figma
         - Select the screen that you are going to design
-        - On the left side of figma, unlock the screen (Only the one that you are going to use)
+        - On the left side of Figma, unlock the screen (Only the one that you are going to use)
         - Select an icon or component -> right click -> Copy/Paste -> Copy as CSS/SVG
         - You can also get exact CSS values on the top right of Figma
+        - After you are done with your screen, lock it again!!
     - No use of `.css` or `.scss` files, please style with styled-components instead
     - For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
     - Resuse components wherever possible
