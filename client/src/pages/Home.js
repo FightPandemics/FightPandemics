@@ -18,17 +18,15 @@ const FlexChild = styled.div`
 
 const StyledWelcome = styled(Heading)`
   font-family: "Poppins", sans-serif;
-  /* font-size: ${theme.typography.heading.four}; */
   font-style: normal;
   font-weight: 300;
   font-size: ${theme.typography.size.large};
   line-height: 3rem;
-  margin: 3.6rem auto 0;
+  margin: 2.5rem auto 0;
   text-align: center;
 `;
 
 const StyledStrapline = styled(StyledWelcome)`
-  font-size: ${theme.typography.size.xlarge};
   font-weight: bold;
   margin: 0 auto;
 `;

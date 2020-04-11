@@ -2,14 +2,14 @@ import React from "react";
 import FeedbackButton from "./FeedbackButton";
 import styled from "styled-components";
 
-const DEFAULT_HEIGHT = 92;
-const DEFAULT_WIDTH = 92;
+const DEFAULT_HEIGHT = 140;
+const DEFAULT_WIDTH = 140;
 
 const FlexDiv = styled.div`
   /* margin-top: 15px; */
   padding: 30px;
-  width: 150px;
-  height: ${150 / 1.25}px;
+  width: 24rem;
+  height: ${24 / 1.25}rem;
   display: flex;
   align-items: center;
   flex-flow: column;
