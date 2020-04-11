@@ -13,10 +13,12 @@ Currently, there is no easy way to find all the information at the local and glo
 - I**ndividuals that want to contribute with other resources.**
     1. Global and local grants and funds by Governments, VCs, Angels and crowdfunding campaigns.
     2. Global and local tools and services (For FREE, or reduced in price)
-    
+
     If you are interested please join our slack group:
 
 ## Getting Started
 1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
 1. `cp backend/.env.example backend/.env`
+1. Install `node_modules` in both the `client` and `backend` folders using the latest version of Node 12. This allows
+for the `node_modules` on the host to be seen by the Docker container, and also avoids the need to rebuild the container whenever a new dependency is added.
 1. Run `docker-compose up` and goto `localhost:3000` in the browser.
