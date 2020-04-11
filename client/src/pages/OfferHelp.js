@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-// import { Button } from "grommet";
-import styled from "styled-components";
 
-import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
   AnswerButton,
@@ -11,78 +8,20 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
+  WizardButtonGroup,
+  StepTitle,
+  SkipLink,
+  StyledTextInput,
+  WizardProgress,
+  WizardFormWrapper,
+  WizardFormGroup,
 } from "../components/StepWizard";
-import { theme, mq } from "../constants/theme";
-import TextInput from "../components/Input/TextInput";
 import SubmitButton from "../components/Button/SubmitButton";
 
 const INITIAL_STATE = {
   answers: [],
 };
 
-const FormGroup = styled.div`
-  display: flex;
-  flex: 1;
-  color: ${theme.colors.primary};
-  flex-flow: column wrap;
-
-  label {
-    ${theme.form.label}
-
-    p {
-      margin-bottom: 0.5rem;
-    }
-  }
-`;
-
-const FormLabel = styled.label``;
-
-const UserEmailField = styled(TextInput)`
-  ${theme.form.input}
-  border-color: ${theme.colors.primary};
-  border-width: 0 0 0.1rem 0;
-  color: ${theme.colors.darkGray};
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
-`;
-
-const ButtonGroup = styled.div`
-  flex: 0;
-`;
-
-const StyledSubmitButton = styled(SubmitButton)`
-  ${theme.form.button}
-`;
-
-const WizardProgress = styled.h5`
-  flex: 0;
-  font-size: ${theme.typography.size.large};
-  font-weight: normal;
-`;
-
-const StepTitle = styled.h2`
-  flex: 0;
-  font-family: ${theme.typography.heading.font};
-  font-weight: bold;
-  font-size: ${theme.typography.heading.two};
-  line-height: 4.3rem;
-  margin-bottom: 5rem;
-`;
-
-const Skip = styled.p`
-  ${theme.typography.paragraph.skip}
-`;
-
-const FormWrapper = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  flex: 1;
-  margin: 0;
-
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: 0 5rem 2rem 0;
-  }
-`;
 const Step1 = (props) => {
   const selectLocationDetection = async () => {
     try {
@@ -104,14 +43,14 @@ const Step1 = (props) => {
         Question {props.currentStep} / {props.totalSteps}
       </WizardProgress>
       <StepTitle className="mb-5">Where are you located?</StepTitle>
-      <FormWrapper>
+      <WizardFormWrapper>
         <AnswerButton onSelect={selectLocationDetection}>
           Detect my location
         </AnswerButton>
         <AnswerButton onSelect={rejectLocationDetection}>
           Doesn't matter
         </AnswerButton>
-      </FormWrapper>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
@@ -135,7 +74,7 @@ const Step2 = (props) => {
       >
         We are not a provider of healthcare services.
       </StepTitle>
-      <FormWrapper>
+      <WizardFormWrapper>
         <p>
           This service is provided in good faith as a last resort for those who
           are otherwise unable to obtain help and resource during the
@@ -147,7 +86,7 @@ const Step2 = (props) => {
         <AnswerButton onSelect={() => onSelectAnswer()}>
           I Understand.
         </AnswerButton>
-      </FormWrapper>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
@@ -165,7 +104,7 @@ const Step3 = (props) => {
       <StepTitle style={{ marginBottom: "0" }}>
         How do you want to contribute?
       </StepTitle>
-      <FormWrapper>
+      <WizardFormWrapper>
         <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
           As a volunteer
         </AnswerButton>
@@ -175,7 +114,7 @@ const Step3 = (props) => {
         <AnswerButton onSelect={() => onSelectAnswer("organisation")}>
           As a Organisation
         </AnswerButton>
-      </FormWrapper>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
@@ -192,9 +131,9 @@ const Step4 = (props) => {
         Question {props.currentStep} / {props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
-      <FormWrapper>
-        <FormGroup controlId="userEmailGroup">
-          <UserEmailField
+      <WizardFormWrapper>
+        <WizardFormGroup controlId="userEmailGroup">
+          <StyledTextInput
             type="email"
             name="userEmail"
             label="Email"
@@ -202,17 +141,17 @@ const Step4 = (props) => {
             onChange={onChange}
             value={email}
           />
-        </FormGroup>
-        <ButtonGroup>
-          <StyledSubmitButton fill primary title="Submit" onClick={onSubmit} />
-          <Skip>
+        </WizardFormGroup>
+        <WizardButtonGroup>
+          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SkipLink>
             <Link to="/AirTableCOVID">
               {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
               Skip
             </Link>
-          </Skip>
-        </ButtonGroup>
-      </FormWrapper>
+          </SkipLink>
+        </WizardButtonGroup>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };

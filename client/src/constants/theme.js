@@ -67,7 +67,10 @@ const theme = {
       vertical: "1rem",
     },
     primary: {
-      color: PRIMARY,
+      color: "#fff",
+      backgroundColor: PRIMARY,
+      borderRadius: "18px",
+      fontWeight: "bold",
     },
   },
   icon: {
