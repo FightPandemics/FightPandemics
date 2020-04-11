@@ -10,7 +10,7 @@ Currently, there is no easy way to find all the information at the local and glo
 - **Individuals that want to contribute with time at the local and global lever**
     1. Local Support: find local groups that are that are helping with buying groceries (cooperatives, telegram, WhatsApp groups), 3D printing or any other local help outside of medical support.
     2. Global Support: find teams that are working on solutions for fighting the pandemic (Software, Content, Blockchain DAOs)
-- I**ndividuals that want to contribute with other resources.**
+- **Individuals that want to contribute with other resources.**
     1. Global and local grants and funds by Governments, VCs, Angels and crowdfunding campaigns.
     2. Global and local tools and services (For FREE, or reduced in price)
 
