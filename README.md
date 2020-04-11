@@ -19,6 +19,19 @@ Currently, there is no easy way to find all the information at the local and glo
 ## Getting Started
 1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
 1. `cp backend/.env.example backend/.env`
-1. Install `node_modules` in both the `client` and `backend` folders using the latest version of Node 12. This allows
-for the `node_modules` on the host to be seen by the Docker container, and also avoids the need to rebuild the container whenever a new dependency is added.
 1. Run `docker-compose up` and goto `localhost:3000` in the browser.
+
+## Adding NPM dependencies to package.json
+
+Note that whenever you add a new NPM dependency, you must run `npm install` from within the container. This is because
+NPM dependency installs may not necessarily be cross-platform. There are two ways that you can install the dependencies
+within the container:
+
+### Backend
+Run `docker-compose run backend-service npm install`, or `cd` into the `backend` directory and run `npm run install-docker`.
+
+### Client
+Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
+
+Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are locked to
+specific versions.

@@ -43,7 +43,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "postinstall": "npm rebuild node-sass"
+    "postinstall": "npm rebuild node-sass",
+    "install-docker": "docker-compose run client npm install"
   },
   "eslintConfig": {
     "extends": "react-app"
