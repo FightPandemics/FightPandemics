@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import { Avatar } from "antd";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { ROYAL_BLUE, LIGHTER_GRAY } from "../../constants/colors";
 import HeartSmallIcon from "../Icon/heart-small";
 import StyledComment from "./StyledComment";
+import BaseInput from "../Input/BaseInput";
+
+const commentStyles = {
+  backgroundColor: LIGHTER_GRAY,
+  width: "96%",
+  borderBottom: "unset",
+  borderRadius: "40px",
+  padding: "14px",
+};
+
+const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 
 const NestedComments = ({ comment }) => {
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
+  const [fakeNumReplies, setFakeNumReplies] = useState(comment.children.length);
+  const [reply, setReply] = useState("");
+  const [showReply, setShowReply] = useState(false);
 
   const handleLikeComment = () => {
     likedComment
@@ -16,7 +30,7 @@ const NestedComments = ({ comment }) => {
   };
 
   const renderLikeButton = () => {
-    const style = likedComment ? { color: ROYAL_BLUE, fontWeight: "bold" } : {};
+    const style = likedComment ? clickedTextStyle : {};
     return (
       <span style={style} onClick={handleLikeComment} key="comment-basic-like">
         Like
@@ -24,8 +38,8 @@ const NestedComments = ({ comment }) => {
     );
   };
 
-  const renderNumLikes =
-    comment.numLikes > 0 ? (
+  const renderNumLikes = () => {
+    return fakeNumLikes > 0 ? (
       <span className="comment-likes">
         <HeartSmallIcon />
         {fakeNumLikes}
@@ -33,16 +47,57 @@ const NestedComments = ({ comment }) => {
     ) : (
       ""
     );
+  };
 
-  const renderReplyTo = <span key="comment-nested-reply-to">Reply</span>;
+  const handleReply = (e) => {
+    e.preventDefault();
+    const testNewReply = {
+      _id: 10,
+      name: "Guest User",
+      numLikes: 0,
+      children: [],
+      comment: reply,
+    };
+    comment.children.push(testNewReply); // not good but mocking API and testing UI
+    setFakeNumReplies(fakeNumReplies + 1);
+    setShowReply(!showReply);
+    setReply("");
+  };
+
+  const renderReplyInput = showReply ? (
+    <form onSubmit={handleReply}>
+      <BaseInput
+        type="text"
+        placeholder="Write a reply ..."
+        style={commentStyles}
+        value={reply}
+        onChange={(e) => setReply(e.target.value)}
+      />
+    </form>
+  ) : (
+    ""
+  );
+
+  const renderReply = () => {
+    const style = showReply ? clickedTextStyle : {};
+    return (
+      <span
+        style={style}
+        onClick={() => setShowReply(!showReply)}
+        key="comment-nested-reply-to"
+      >
+        Reply
+      </span>
+    );
+  };
   const renderTimeStamp = <span>1w</span>;
 
   const commentActions = [
     // order matters
     renderTimeStamp,
     renderLikeButton(),
-    renderReplyTo,
-    renderNumLikes,
+    renderReply(),
+    renderNumLikes(),
   ];
 
   const renderAvatar = (
@@ -66,6 +121,7 @@ const NestedComments = ({ comment }) => {
       >
         {nestedComments}
       </StyledComment>
+      {renderReplyInput}
     </div>
   );
 };
