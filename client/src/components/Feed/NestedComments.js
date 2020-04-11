@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Comment, Avatar } from "antd";
+import { Avatar } from "antd";
 import { ROYAL_BLUE } from "../../constants/colors";
 import HeartSmallIcon from "../Icon/heart-small";
 import StyledComment from "./StyledComment";

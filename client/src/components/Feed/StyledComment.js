@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Comment } from "antd";
 import { LIGHTER_GRAY, DARK_GRAY } from "../../constants/colors";
 
 export default styled(Comment)`
