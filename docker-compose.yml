@@ -36,6 +36,9 @@ services:
         NODE_ENV: dev
     container_name: backend-service
     restart: always
+    environment:
+      MONGO_URI: mongo
+      GEO_SERVICE_URL: geo-service:5000
     ports:
       - "8000:8000"
     volumes:
