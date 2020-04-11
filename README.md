@@ -8,8 +8,18 @@ Please check our notion to get a better understanding of the problem that we are
 - **Frontend**
     - React Hooks, Ant Design, Ant Design Mobile,  styled-components
     - Mobile first design
-    - No use of `.css` or `.scss` files
-    - No Redux
+    - Use assets such as icons from the designs on Figma  
+        - Select an icon -> right click -> Copy/Paste -> Copy as CSS/SVG
+        - You can also get exact CSS values on Figma
+    - No use of `.css` or `.scss` files, please style with styled-components instead
+    - For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
+    - Resuse components wherever possible
+    - Limit the use of inline styling
+    - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
+    - Use global colors by importing values from `client/src/constants/colors.js`
+    - No Redux, as the project grow, we will likely use React's Context API
+    - No use of other libraries like Material UI
+
 - **Backend**
     - Fastify, MongoDB
     - Auth0, Google Maps API
@@ -39,3 +49,6 @@ Run `docker-compose run backend-service npm install`, or `cd` into the `backend`
 Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
+
+## Other Resources ##
+Inital project setup: https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b
