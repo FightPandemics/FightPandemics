@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import { Button } from "grommet";
 import styled from "styled-components";
@@ -14,22 +13,24 @@ import {
   WizardNav,
 } from "../components/StepWizard";
 import { theme } from "../constants/theme";
+import TextInput from "../components/Input/TextInput";
+// import SubmitButton from "../components/Button/SubmitButton";
 
 const INITIAL_STATE = {
   answers: [],
 };
 
-const FormGroup = styled(Form.Group)`
+const FormGroup = styled.div`
   display: flex;
   color: ${theme.colors.primary};
   flex-flow: column wrap;
 `;
 
-const FormLabel = styled(Form.Label)`
+const FormLabel = styled.label`
   ${theme.form.label}
 `;
 
-const UserEmailField = styled(Form.Control)`
+const UserEmailField = styled(TextInput)`
   ${theme.form.input}
   border-color: ${theme.colors.primary};
   border-width: 0 0 1px 0;
@@ -162,14 +163,14 @@ const Step4 = (props) => {
             value={email}
           />
         </FormGroup>
+        <SubmitButton fill primary label="Submit" onClick={onSubmit} />
+        <Skip>
+          <Link to="/AirTableCOVID">
+            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+            Skip
+          </Link>
+        </Skip>
       </div>
-      <SubmitButton fill primary label="Submit" onClick={onSubmit} />
-      <Skip>
-        <Link to="/AirTableCOVID">
-          {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
-          Skip
-        </Link>
-      </Skip>
     </WizardStep>
   );
 };

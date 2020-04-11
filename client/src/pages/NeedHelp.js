@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { Button } from "grommet";
 
+import SubmitButton from "../components/Button/SubmitButton";
+import TextInput from "../components/Input/TextInput";
 import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
@@ -83,12 +83,12 @@ const Step3 = (props) => {
       </h5>
       <Title className="mb-5">What is your email address?</Title>
       <div style={{ marginRight: "50px" }}>
-        <Form.Control
-          className="mb-3"
+        <TextInput
           placeholder="Type your email"
+          style={{ marginBottom: "20px" }}
           onChange={onChange}
         />
-        <Button fill primary label="Submit" onClick={onSubmit} />
+        <SubmitButton title="Submit" onClick={onSubmit} />
       </div>
     </WizardStep>
   );

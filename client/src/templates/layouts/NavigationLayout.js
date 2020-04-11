@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, List, Button, Icon } from "antd-mobile";
+import { Drawer, List, Button } from "antd-mobile";
 import { useAuth0 } from "~/react-auth0-spa";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -102,7 +102,7 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 export default (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -110,8 +110,6 @@ export default (props) => {
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
   };
-
-  const loginFunc = () => loginWithRedirect({});
 
   const drawerMenu = () => (
     <>

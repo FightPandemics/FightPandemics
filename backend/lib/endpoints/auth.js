@@ -8,11 +8,11 @@ async function routes(app) {
   app.get("/social", async (_, reply) => {
     const defaultScope = "openid profile email";
     return reply.send({
+      facebook: Auth0.buildOauthUrl({ name: "facebook", scope: defaultScope }),
       google: Auth0.buildOauthUrl({
         name: "google-oauth2",
         scope: defaultScope,
       }),
-      facebook: Auth0.buildOauthUrl({ name: "facebook", scope: defaultScope }),
       linkedin: Auth0.buildOauthUrl({ name: "linkedin", scope: defaultScope }),
     });
   });
@@ -41,8 +41,8 @@ async function routes(app) {
       const payload = {
         connection: "Username-Password-Authentication",
         email: req.body.email,
-        password: req.body.password,
         email_verified: false,
+        password: req.body.password,
         verify_email: false,
       };
 
@@ -55,9 +55,9 @@ async function routes(app) {
       }
 
       const accessToken = await Auth0.authenticate("password", {
-        username: req.body.email,
         password: req.body.password,
         scope: "openid",
+        username: req.body.email,
       });
       return reply.send({ token: accessToken });
     },

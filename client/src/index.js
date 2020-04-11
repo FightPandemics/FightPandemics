@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "typeface-poppins";
 // import "typeface-work-sans";
 import "antd-mobile/dist/antd-mobile.css";
+import "antd/dist/antd.css";
 
 import "./index.scss";
 import App from "./App";

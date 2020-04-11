@@ -2,31 +2,26 @@ const assert = require("assert");
 const { name } = require("./package.json");
 
 const config = {
-  name,
-  server: {
-    port: process.env.PORT || 8000,
-  },
-  mongo: {
-    uri: `mongodb://${process.env.MONGO_URI}`,
-    params: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
+  auth: {
+    appUrl: process.env.AUTH_APP_URL,
+    clientId: process.env.AUTH_CLIENT_ID,
+    domain: `https://${process.env.AUTH_DOMAIN}`,
+    secretKey: process.env.AUTH_SECRET_KEY,
+    state: process.env.AUTH_STATE,
   },
   geoService: {
     host: `http://${process.env.GEO_SERVICE_URL}`,
   },
-  auth: {
-    domain: `https://${process.env.AUTH_DOMAIN}`,
-    clientId: process.env.AUTH_CLIENT_ID,
-    secretKey: process.env.AUTH_SECRET_KEY,
-    appUrl: process.env.AUTH_APP_URL,
-    state: process.env.AUTH_STATE,
-  },
-  joi: {
+  mongo: {
     params: {
-      allowUnknown: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     },
+    uri: `mongodb://${process.env.MONGO_URI}`,
+  },
+  name,
+  server: {
+    port: process.env.PORT || 8000,
   },
 };
 

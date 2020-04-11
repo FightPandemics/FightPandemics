@@ -20,3 +20,5 @@ Currently, there is no easy way to find all the information at the local and glo
 1. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
 1. `cp backend/.env.example backend/.env`
 1. Run `docker-compose up` and goto `localhost:3000` in the browser.
+
+To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
