@@ -8,8 +8,6 @@ Please check our notion to get a better understanding of the problem that we are
 - **Frontend**
     - React Hooks, Ant Design, Ant Design Mobile,  styled-components
     - Mobile first design
-        - Mobile: https://www.figma.com/file/4cV84H1jyMo0rJEAl3HNnJ/FightPandemics-landing-page?node-id=11%3A2
-        - Desktop: coming soon
     - Use assets such as icons from the designs on Figma  
         - Select an icon -> right click -> Copy/Paste -> Copy as CSS/SVG
         - You can also get exact CSS values on Figma
