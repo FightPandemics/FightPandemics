@@ -12,8 +12,6 @@ import {
 } from "../components/StepWizard";
 import { ResultsPage } from "./ResultsPage.js";
 import { Under18 } from "./CovidScreening/Under18";
-import { PlannedCareFacility } from "./CovidScreening/PlannedCareFacility";
-import { CareFacility } from "./CovidScreening/CareFacility";
 
 const INITIAL_STATE = {};
 
@@ -330,15 +328,6 @@ export const SymptomsCheck = () => {
   let displayMessage = [];
   if (state.age === "under 18") {
     return <Under18 />;
-  }
-  if (state.careFacility === "planning to") {
-    return <PlannedCareFacility />;
-  }
-  if (
-    state.careFacility === "worked in last 14 days" ||
-    state.careFacility === "currently living"
-  ) {
-    return <CareFacility />;
   }
 
   //message 1
