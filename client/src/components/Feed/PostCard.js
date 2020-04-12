@@ -1,6 +1,6 @@
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { ROYAL_BLUE, DARK_GRAY, LIGHTER_GRAY } from "../../constants/colors";
+import { ROYAL_BLUE, DARK_GRAY } from "../../constants/colors";
 
 export default styled(Card)`
   margin-bottom: 4rem;
@@ -40,15 +40,6 @@ export default styled(Card)`
     .am-card-body {
       padding: 0;
       color: black;
-
-      form input {
-        border-bottom: unset;
-        background-color: ${LIGHTER_GRAY};
-        width: 96%;
-        border-radius: 4rem;
-        padding: 1.4rem;
-      }
-
       h1 {
         font-weight: bold;
         line-height: 2.7rem;

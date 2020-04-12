@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
+import { Input, Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
 import StatusIcon from "../Icon/status-indicator";
 import BaseInput from "../../components/Input/BaseInput";
+import AutoSize from "../../components/Input/AutoSize";
 
 export default ({ post }) => {
   const [showComments, setShowComments] = useState(false);
@@ -69,14 +70,12 @@ export default ({ post }) => {
 
   const renderComments = (
     <Card.Body>
-      <form onSubmit={handleComment}>
-        <BaseInput
-          type="text"
-          placeholder="Write a comment ..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-      </form>
+      <AutoSize
+        placeholder={"Write a comment..."}
+        onPressEnter={handleComment}
+        onChange={(e) => setComment(e.target.value)}
+        value={comment}
+      />
       {showComments ? <Comments comments={post.comments} /> : ""}
     </Card.Body>
   );
