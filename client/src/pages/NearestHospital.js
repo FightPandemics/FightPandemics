@@ -6,9 +6,7 @@ class NearestHospital extends Component {
     return (
       <div>
         <br />
-        <h5 style={{ display: "flex", justifyContent: "center" }}>
-          Your Nearest Hospital
-        </h5>
+        <h2>Your Nearest Hospital</h2>
         <NrMap />
       </div>
     );
