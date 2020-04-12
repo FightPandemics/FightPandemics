@@ -16,6 +16,9 @@ import {
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
+  getAnswersMap,
+  getCheckedAnswers,
+  WizardCheckboxItem,
 } from "../components/StepWizard";
 import { IconButton, SubmitButton, CustomButton } from "../components/Button";
 import { ShareMyLocationIcon } from "../components/Icon";
@@ -27,10 +30,39 @@ const INITIAL_STATE = {
   answers: [],
 };
 
+const STEP_1_ANSWERS = [
+  "As a volunteer",
+  "As a Doctor / Investor",
+  "As a Organisation",
+];
+const STEP_1_STATE = {
+  answers: getAnswersMap(STEP_1_ANSWERS),
+  none: false,
+};
+
 const Step1 = (props) => {
+  const [state, updateState] = useState(STEP_1_STATE);
+  const { answers, none } = state;
+
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("helpTypeOffered", checkedAnswers);
+  };
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
+  };
+
   const onSelectAnswer = (answer) => {
+    console.log(answer);
+
     props.update("helpTypeOffered", answer);
-    props.nextStep();
+    console.log(props);
+
+    // props.nextStep();
   };
 
   return (
@@ -40,15 +72,15 @@ const Step1 = (props) => {
       </WizardProgress>
       <StepTitle>How do you want to contribute?</StepTitle>
       <WizardFormWrapper>
-        <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
-          As a volunteer
-        </AnswerButton>
-        <AnswerButton onSelect={() => onSelectAnswer("doctor investor")}>
-          As a Doctor / Investor
-        </AnswerButton>
-        <AnswerButton onSelect={() => onSelectAnswer("organisation")}>
-          As a Organisation
-        </AnswerButton>
+        {Object.entries(answers).map(([answer, checked], i) => (
+          <WizardCheckboxItem
+            key={i}
+            onChange={() => toggleAnswer(answer)}
+            checked={!none && checked}
+          >
+            {answer}
+          </WizardCheckboxItem>
+        ))}
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -113,7 +145,9 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => setEmail(evt.target.value);
+  const onChange = (evt) => {
+    setEmail(evt);
+  };
   const onSubmit = () => {
     props.update("email", email);
   };
@@ -131,7 +165,7 @@ const Step3 = (props) => {
             label="Email"
             placeholder="Type your email"
             onChange={onChange}
-            value={email}
+            value={email && email}
           />
         </WizardFormGroup>
         <WizardButtonGroup>
