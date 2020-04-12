@@ -329,54 +329,60 @@ export const SymptomsCheck = () => {
   if (state.age === "under 18") {
     return <Under18 />;
   }
+  const {
+    age,
+    traveledLast14Days,
+    exposureAreaLast2Weeks,
+    exposureLast14Days,
+    conditions,
+    symptoms,
+    careFacility,
+    medicalFacility,
+  } = state;
 
   //message 1
   let condition1 =
-    state.age === "18-64" &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.conditions !== undefined &&
-    state.conditions.length === 0 &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no";
+    age === "18-64" &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    conditions !== undefined &&
+    conditions.length === 0 &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    careFacility === "no" &&
+    medicalFacility === "no";
 
   let condition2 =
-    state.age === "18-64" &&
-    state.traveledLast14Days === "no" &&
-    state.exposureLast14Days === "no exposure" &&
-    state.exposureAreaLast2Weeks === "none" &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no" &&
-    state.conditions !== undefined &&
-    state.conditions.length === 0 &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0;
+    age === "18-64" &&
+    traveledLast14Days === "no" &&
+    exposureLast14Days === "no exposure" &&
+    exposureAreaLast2Weeks === "none" &&
+    careFacility === "no" &&
+    medicalFacility === "no" &&
+    conditions !== undefined &&
+    conditions.length === 0 &&
+    symptoms !== undefined &&
+    symptoms.length >= 0;
 
   let condition3 =
-    state.age === "65+" &&
-    state.traveledLast14Days === "no" &&
-    state.exposureLast14Days === "no exposure" &&
-    state.exposureAreaLast2Weeks === "none" &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no" &&
-    state.conditions !== undefined &&
-    state.conditions.length === 0 &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0;
+    age === "65+" &&
+    traveledLast14Days === "no" &&
+    exposureLast14Days === "no exposure" &&
+    exposureAreaLast2Weeks === "none" &&
+    careFacility === "no" &&
+    medicalFacility === "no" &&
+    conditions !== undefined &&
+    conditions.length === 0 &&
+    symptoms !== undefined &&
+    symptoms.length >= 0;
 
   let condition4 =
-    (state.age === "18-64" &&
-      state.symptoms !== undefined &&
-      state.symptoms.length === 0) ||
-    (state.age === "65+" &&
-      state.symptoms !== undefined &&
-      state.symptoms.length === 0);
+    (age === "18-64" && symptoms !== undefined && symptoms.length === 0) ||
+    (age === "65+" && symptoms !== undefined && symptoms.length === 0);
 
   if (condition1 || condition2 || condition3 || condition4) {
     displayMessage.push(
@@ -387,9 +393,9 @@ export const SymptomsCheck = () => {
 
   //message 2
   if (
-    (state.age === "65+" || state.age === "18-64") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0
+    (age === "65+" || age === "18-64") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0
   ) {
     displayMessage.push(
       "Monitor Symptoms",
@@ -399,57 +405,56 @@ export const SymptomsCheck = () => {
 
   //message 3
   let condition5 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.careFacility === "no" &&
-    (state.medicalFacility === "worked" ||
-      state.medicalFacility === "plan to work");
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    careFacility === "no" &&
+    (medicalFacility === "worked" || medicalFacility === "plan to work");
 
   let condition6 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    state.conditions !== undefined &&
-    state.conditions.length >= 0 &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    conditions !== undefined &&
+    conditions.length >= 0 &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    careFacility === "no" &&
+    medicalFacility === "no";
 
   let condition7 =
-    state.age === "65+" &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no";
+    age === "65+" &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    careFacility === "no" &&
+    medicalFacility === "no";
 
   let condition8 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    state.conditions !== undefined &&
-    state.conditions.length >= 0 &&
-    state.traveledLast14Days === "no" &&
-    state.exposureLast14Days === "no exposure" &&
-    state.exposureAreaLast2Weeks === "none" &&
-    state.careFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    conditions !== undefined &&
+    conditions.length >= 0 &&
+    traveledLast14Days === "no" &&
+    exposureLast14Days === "no exposure" &&
+    exposureAreaLast2Weeks === "none" &&
+    careFacility === "no";
 
   if (condition5 || condition6 || condition7 || condition8) {
     displayMessage.push(
@@ -460,11 +465,10 @@ export const SymptomsCheck = () => {
 
   //message 4
   let condition9 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    (state.medicalFacility === "plan to work" ||
-      state.medicalFacility === "worked");
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    (medicalFacility === "plan to work" || medicalFacility === "worked");
 
   if (condition9) {
     displayMessage.push(
@@ -475,10 +479,10 @@ export const SymptomsCheck = () => {
 
   //message 5
   let condition10 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0 &&
-    state.careFacility === "yes";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0 &&
+    careFacility === "yes";
   if (condition10) {
     displayMessage.push(
       "Call your Doctor or Care Team",
@@ -488,9 +492,9 @@ export const SymptomsCheck = () => {
 
   //message 6
   if (
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length >= 0
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length >= 0
   ) {
     displayMessage.push(
       "Isolate from others",
@@ -500,16 +504,16 @@ export const SymptomsCheck = () => {
 
   //message 7
   let condition11 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    medicalFacility === "no";
 
   if (condition11) {
     displayMessage.push(
@@ -521,20 +525,19 @@ export const SymptomsCheck = () => {
 
   //message 8
   let condition12 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    state.traveledLast14Days === "no" &&
-    state.exposureLast14Days === "no exposure" &&
-    state.exposureAreaLast2Weeks === "none" &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    traveledLast14Days === "no" &&
+    exposureLast14Days === "no exposure" &&
+    exposureAreaLast2Weeks === "none" &&
+    medicalFacility === "no";
 
   let condition13 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    (state.medicalFacility === "plan to work" ||
-      state.medicalFacility === "worked");
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    (medicalFacility === "plan to work" || medicalFacility === "worked");
 
   if (condition12 || condition13) {
     displayMessage.push(
@@ -545,31 +548,31 @@ export const SymptomsCheck = () => {
 
   //message 9
   let condition14 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    state.conditions !== undefined &&
-    state.conditions.length >= 0 &&
-    (state.traveledLast14Days === "yes" ||
-      state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    conditions !== undefined &&
+    conditions.length >= 0 &&
+    (traveledLast14Days === "yes" ||
+      exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    medicalFacility === "no";
 
   let condition15 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    state.traveledLast14Days === "yes" &&
-    (state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    traveledLast14Days === "yes" &&
+    (exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    careFacility === "no" &&
+    medicalFacility === "no";
 
   if (condition14 || condition15) {
     displayMessage.push(
@@ -591,15 +594,15 @@ export const SymptomsCheck = () => {
 
   //message 10
   let condition16 =
-    state.age === "65+" &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    state.conditions !== undefined &&
-    state.conditions.length >= 0 &&
-    state.traveledLast14Days === "no" &&
-    state.exposureLast14Days === "no exposure" &&
-    state.exposureAreaLast2Weeks === "none" &&
-    state.medicalFacility === "no";
+    age === "65+" &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    conditions !== undefined &&
+    conditions.length >= 0 &&
+    traveledLast14Days === "no" &&
+    exposureLast14Days === "no exposure" &&
+    exposureAreaLast2Weeks === "none" &&
+    medicalFacility === "no";
 
   if (condition16) {
     displayMessage.push(
@@ -610,17 +613,17 @@ export const SymptomsCheck = () => {
 
   //message 11
   let condition17 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length === 0 &&
-    state.traveledLast14Days === "yes" &&
-    (state.exposureLast14Days === "live with" ||
-      state.exposureLast14Days === "near someone 6ft" ||
-      state.exposureLast14Days === "close contact" ||
-      state.exposureAreaLast2Weeks === "live" ||
-      state.exposureAreaLast2Weeks === "visited") &&
-    state.careFacility === "no" &&
-    state.medicalFacility === "no";
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length === 0 &&
+    traveledLast14Days === "yes" &&
+    (exposureLast14Days === "live with" ||
+      exposureLast14Days === "near someone 6ft" ||
+      exposureLast14Days === "close contact" ||
+      exposureAreaLast2Weeks === "live" ||
+      exposureAreaLast2Weeks === "visited") &&
+    careFacility === "no" &&
+    medicalFacility === "no";
 
   if (condition17) {
     displayMessage.push(
@@ -631,9 +634,9 @@ export const SymptomsCheck = () => {
 
   //message 12
   let condition18 =
-    (state.age === "18-64" || state.age === "65+") &&
-    state.symptoms !== undefined &&
-    state.symptoms.length > 0;
+    (age === "18-64" || age === "65+") &&
+    symptoms !== undefined &&
+    symptoms.length > 0;
 
   if (condition18) {
     displayMessage.push(
