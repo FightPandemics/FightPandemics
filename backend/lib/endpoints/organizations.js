@@ -71,8 +71,8 @@ async function routes(app) {
       if (organization === null) {
         return reply.send(new httpErrors.NotFound());
       }
-      Organization.schema.eachPath((key) => {
-        if (req.body[key] && organization[key] !== req.body[key]) {
+      Object.keys(req.body).forEach((key) => {
+        if (organization[key] !== req.body[key]) {
           organization[key] = req.body[key];
         }
       });
