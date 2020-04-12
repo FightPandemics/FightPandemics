@@ -63,9 +63,6 @@ const SocialButton = styled(Button).attrs((props) => ({
 `;
 
 export default ({ isLoginForm }) => {
-//const LoginOrSignup = ({ isLoginForm }) => {
-
-  const classes = useStyles();
   const alert = useAlert();
   const dispatch = useDispatch();
 
