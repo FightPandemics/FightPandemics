@@ -6,6 +6,49 @@ export default [
     numComments: 3,
     numShares: 10,
     title: "Disinfecting clorax wipes needed",
+    url: "www.test.com/0",
+    comments: [
+      {
+        _id: 0,
+        name: "Lily Luke",
+        comment:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque, eros id hendrerit elementum, odio augue efficitur diam, non pellentesque ex libero nec lectus. Integer lorem dolor, varius in nulla eu, pellentesque fermentum orci. Aliquam at quam pulvinar, tristique dui nec, consequat massa.",
+        numLikes: 2,
+        children: [
+          {
+            _id: 6,
+            name: "Lily Luke",
+            comment:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque, eros id hendrerit elementum, odio augue efficitur diam, non pellentesque ex libero nec lectus.",
+            numLikes: 7,
+            children: [],
+          },
+        ],
+      },
+      {
+        _id: 1,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        numLikes: 7,
+        children: [
+          {
+            _id: 2,
+            name: "Lily Luke",
+            comment: "Interested! How much?",
+            numLikes: 4,
+            children: [
+              {
+                _id: 3,
+                name: "Brian Loop",
+                comment: "4 packs for 20 pounds. Sounds good?",
+                numLikes: 1,
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
     description:
       "Does anyone have an extra pack of disinfecting Clorax wipes? I would be very grateful if you could sell me one. Two people in our family have chronic pulmonary diseases, including my son. We are isolated, but my husband might infect us, as he works with people a lot. We need to constantly disinfect all the surfaces. We've been searching for over a week, but they seem to be gone everywhere. Maybe someone has a stockpile or seen them in stores?",
     tags: ["Medical Supplies"],
@@ -19,6 +62,31 @@ export default [
     numLikes: 12,
     numComments: 3,
     numShares: 10,
+    comments: [
+      {
+        _id: 0,
+        name: "Rob Till",
+        comment: "I can help. Where can we meet? I'm north from you.",
+        numLikes: 15,
+        children: [],
+      },
+      {
+        _id: 1,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        numLikes: 241,
+        children: [
+          {
+            _id: 2,
+            name: "Rob Till",
+            comment: "I can help. Where can we meet? I'm north from you.",
+            numLikes: 5,
+            children: [],
+          },
+        ],
+      },
+    ],
+    url: "www.test.com/1",
     photoUrl:
       "https://cdn.iconscout.com/icon/free/png-512/notion-1693557-1442598.png",
     title: "Disinfecting clorax wipes needed",
@@ -33,6 +101,23 @@ export default [
     numLikes: 9,
     numComments: 2,
     numShares: 7,
+    url: "www.test.com/2",
+    comments: [
+      {
+        _id: 0,
+        name: "Rob Till",
+        comment: "I can help. Where can we meet? I'm north from you.",
+        children: [],
+        numLikes: 1,
+      },
+      {
+        _id: 1,
+        name: "Brian Loop",
+        comment: "I have many in stock.",
+        numLikes: 32,
+        children: [],
+      },
+    ],
     title:
       "I don't know what to name this title. But the point is, this is a very long title.",
     description: "This is a short post.",

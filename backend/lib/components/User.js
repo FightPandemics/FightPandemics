@@ -1,15 +1,15 @@
 const created = (user) => ({
-  statusCode: 201,
   error: "User created successfully!",
+  statusCode: 201,
   user,
 });
 
 const alreadyExist = () => ({
-  statusCode: 409,
   error: "User already exist!",
+  statusCode: 409,
 });
 
 module.exports = {
-  created,
   alreadyExist,
+  created,
 };

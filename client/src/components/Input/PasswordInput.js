@@ -27,7 +27,6 @@ export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
   const passwordRef = useRef();
 
   const onToggleVisibility = () => {
-    const { current: input } = passwordRef;
     setVisible(!isVisible);
   };
 

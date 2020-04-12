@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { getAirtableRecord } from "../utils/airtable";
@@ -73,27 +72,21 @@ export const Medical = () => {
           : state.emergencyNumber || state.errorMessage}
       </h1>
       <div style={{ display: "flex", margin: "30px 10px 10px 50px" }}>
-        <Nav variant="med-info">
-          <Link
-            to="/nearest-hospital"
-            className="btn btn-outline-info mb-3 mr-4 float-left"
-          >
-            Nearest Hospitals
-          </Link>
-          <br />
-          <Link
-            to="/symptoms-check"
-            className="btn btn-outline-info mb-3 mr-4 float-left"
-          >
-            Symptoms check
-          </Link>
-          <Link
-            to="/find-help"
-            className="btn btn-outline-info mb-3 float-left"
-          >
-            Find Help
-          </Link>
-        </Nav>
+        <Link
+          to="/nearest-hospital"
+          className="btn btn-outline-info mb-3 mr-4 float-left"
+        >
+          Nearest Hospitals
+        </Link>
+        <Link
+          to="/symptoms-check"
+          className="btn btn-outline-info mb-3 mr-4 float-left"
+        >
+          Symptoms check
+        </Link>
+        <Link to="/find-help" className="btn btn-outline-info mb-3 float-left">
+          Find Help
+        </Link>
       </div>
     </div>
   );

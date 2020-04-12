@@ -27,6 +27,7 @@ const StyleLabel = {
 
 const StyleSocialIcon = {
   justifyContent: "unset",
+  cursor: "pointer",
 };
 
 const SectionDiv = styled.div`
