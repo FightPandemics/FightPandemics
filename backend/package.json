@@ -9,7 +9,8 @@
     "dev": "nodemon -L server.js",
     "test": "jest",
     "lint": "eslint . --fix",
-    "schemas": "node ./generateSchemas.js"
+    "schemas": "node ./generateSchemas.js",
+    "install-docker": "docker-compose run backend-service npm install"
   },
   "husky": {
     "hooks": {
