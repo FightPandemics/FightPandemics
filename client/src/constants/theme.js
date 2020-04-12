@@ -82,7 +82,6 @@ const theme = {
         width: 0,
         color: "transparent",
       },
-      boxShadow: "unset",
       display: "inline-flex",
       alignItems: "center",
       textAlign: "center",

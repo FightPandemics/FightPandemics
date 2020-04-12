@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import SubmitButton from "./SubmitButton";
-import { theme } from "../../constants/theme";
+import { theme, mq } from "../../constants/theme";
 const { button, colors } = theme;
 
 const IconButton = styled(SubmitButton).attrs()`
@@ -10,6 +10,10 @@ const IconButton = styled(SubmitButton).attrs()`
 
   &::before {
     display: none;
+
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      display: none !important;
+    }
   }
   span {
     flex: 0;
@@ -20,7 +24,6 @@ const IconButton = styled(SubmitButton).attrs()`
 
 export default (props) => {
   const { icon, title } = props;
-  console.log(props);
 
   return <IconButton icon={icon} title={title} />;
 };

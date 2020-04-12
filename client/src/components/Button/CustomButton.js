@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
 import { Button } from "antd-mobile";
-import { ROYAL_BLUE, SELAGO } from "../../constants/colors";
-import { theme } from "../../constants/theme";
+
+import { theme, mq } from "../../constants/theme";
 const { colors } = theme;
+const { tablet } = mq;
 /*
   Props accepted:
-  inline, primary, large, whitebg, roundborder
+  inline, primary, large, whitebg, roundborder, textOnly, width
 */
 
 export default styled(Button)`
@@ -87,6 +88,10 @@ export default styled(Button)`
       &.am-button {
         &:before {
           display: none;
+
+          @media screen and (min-width: ${tablet.narrow.minWidth}) {
+            display: none !important;
+          }
         }
 
         span {

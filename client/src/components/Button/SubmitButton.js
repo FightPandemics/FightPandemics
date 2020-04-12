@@ -11,7 +11,10 @@ export default ({ title, ...props }) => {
     };
   })`
     ${theme.button}
-    ${props.type && props.type === "primary" ? theme.button.primary : ""}
+    ${props.type && props.type === "primary"
+      ? theme.button.primary
+      : ""}
+    border-radius: 4.6rem;
   `;
   return <StyledButton {...props}>{title}</StyledButton>;
 };
