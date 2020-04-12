@@ -22,7 +22,13 @@ async function routes(app) {
     },
     async (req) => {
       // TODO: make sure user can only delete organizations they own
-      return Organization.findByIdAndRemove(req.params.organizationId);
+      const result = await Organization.findByIdAndRemove(
+        req.params.organizationId,
+      );
+      if (result === null) {
+        return new httpErrors.NotFound();
+      }
+      return result;
     },
   );
 
