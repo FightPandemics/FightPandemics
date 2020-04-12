@@ -30,26 +30,46 @@ export default styled(Comment)`
           position: relative;
           margin-top: 0;
           padding-left: 1.5rem;
-          li span {
-            padding-right: 2.3rem;
-            font-size: 1.1rem;
-            color: black;
-          }
-          .comment-likes {
-            background: #fff;
-            box-shadow: 0px 0.1rem 0.4rem rgba(0, 0, 0, 0.06);
-            border-radius: 0.85rem;
-            position: absolute;
-            min-width: 3.6rem;
-            min-height: 1.7rem;
-            right: -5px;
-            top: -40%;
-            padding: 0.2rem 0.3rem;
-            font-size: 11px;
-            color: ${DARK_GRAY};
-            img {
-              padding-left: 0.2rem;
-              padding-right: 0.7rem;
+          li {
+            span {
+              padding-right: 2.3rem;
+              font-size: 1.1rem;
+              color: black;
+            }
+            .comment-likes {
+              background: #fff;
+              color: ${DARK_GRAY};
+              font-size: 1.1rem;
+              box-shadow: 0px 0.1rem 0.4rem rgba(0, 0, 0, 0.06);
+              border-radius: 0.85rem;
+              position: absolute;
+              min-width: 3.6rem;
+              min-height: 1.7rem;
+              right: -5px;
+              top: -40%;
+              padding: 0.2rem 0.3rem;
+              img {
+                padding-left: 0.2rem;
+                padding-right: 0.7rem;
+              }
+            }
+            &:last-child {
+              margin-top: 1rem;
+              .reply-input {
+                display: flex;
+                align-items: center;
+                span {
+                  padding-right: 0;
+                  margin-right: 12px;
+                }
+                input {
+                  background-color: ${LIGHTER_GRAY};
+                  color: black;
+                  border-bottom: unset;
+                  border-radius: 4rem;
+                  padding: 1.4rem;
+                }
+              }
             }
           }
         }
