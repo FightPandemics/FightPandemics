@@ -13,6 +13,12 @@ const BrandLink = styled(Link)`
   display: inline-flex;
 `;
 
+const MenuToggle = styled(MenuIcon)`
+  cursor: pointer;
+  &:hover {
+  }
+`;
+
 export default ({ onMenuClick, ...props }) => {
   return (
     <div className="header" {...props}>
@@ -24,7 +30,7 @@ export default ({ onMenuClick, ...props }) => {
           </BrandLink>
         }
         rightContent={
-          <MenuIcon
+          <MenuToggle
             style={{ fontSize: 24 }}
             color="primary"
             onClick={onMenuClick}

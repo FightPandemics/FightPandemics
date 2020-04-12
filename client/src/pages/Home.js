@@ -62,7 +62,7 @@ export const Home = (props) => {
             activeImg={needHelpActive}
             onClick={() => props.history.push("/need-help")}
           >
-            I need help
+            Need Help
           </ImageButton>
         </FlexChild>
         <FlexChild>
@@ -72,7 +72,7 @@ export const Home = (props) => {
             activeImg={offerHelpActive}
             onClick={() => props.history.push("/offer-help")}
           >
-            I want to help
+            Give Help
           </ImageButton>
         </FlexChild>
       </OnboardingContainer>

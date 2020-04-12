@@ -5,8 +5,10 @@ import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 export default ({ title, ...props }) => {
-  const StyledButton = styled(Button).attrs({
-    type: "primary",
+  const StyledButton = styled(Button).attrs((props) => {
+    return {
+      type: "primary",
+    };
   })`
     ${theme.button}
     ${props.type && props.type === "primary" ? theme.button.primary : ""}

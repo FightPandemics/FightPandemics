@@ -1,15 +1,16 @@
 import styled, { css } from "styled-components";
 import { Button } from "antd-mobile";
 import { ROYAL_BLUE, SELAGO } from "../../constants/colors";
-
-/* 
-  Props accepted: 
+import { theme } from "../../constants/theme";
+const { colors } = theme;
+/*
+  Props accepted:
   inline, primary, large, whitebg, roundborder
 */
 
 export default styled(Button)`
   display: ${(props) => (props.inline ? "inline-block" : "initial")};
-  background-color: ${SELAGO};
+  background-color: ${colors.selago};
   color: #fff;
   line-height: normal;
   height: 100%;
@@ -17,24 +18,24 @@ export default styled(Button)`
   margin-right: 25px;
 
   &:hover {
-    border: 1px solid ${ROYAL_BLUE} !important;
+    border: 1px solid ${colors.royalBlue} !important;
   }
 
   ${(props) =>
     props.primary &&
     css`
-      background-color: ${ROYAL_BLUE};
+      background-color: ${colors.royalBlue};
       color: #fff;
       &.am-button {
         &:before {
-          border: 2px solid ${ROYAL_BLUE} !important;
+          border: 2px solid ${colors.royalBlue} !important;
         }
       }
       &:hover,
       &:active,
       &.am-button-active {
         background-color: #fff;
-        color: ${ROYAL_BLUE};
+        color: ${colors.royalBlue};
       }
     `}
 
@@ -60,17 +61,43 @@ export default styled(Button)`
     props.whitebg &&
     css`
       background-color: #fff;
-      color: ${ROYAL_BLUE};
+      color: ${colors.royalBlue};
       &.am-button {
         &:before {
-          border: 2px solid ${ROYAL_BLUE} !important;
+          border: 2px solid ${colors.royalBlue} !important;
         }
       }
       &:hover,
       &:active,
       &.am-button-active {
-        background-color: ${ROYAL_BLUE};
+        background-color: ${colors.royalBlue};
         color: #fff;
       }
     `}
+
+  ${(props) =>
+    props.textOnly &&
+    css`
+      display: ${(props) => (props.display ? props.display : "initial")};
+      background-color: transparent;
+      color: ${colors.royalBlue};
+      margin-right: 0;
+      height: auto;
+      text-overflow: unset;
+      &.am-button {
+        &:before {
+          display: none;
+        }
+
+        span {
+          white-space: normal;
+        }
+      }
+    `}
+
+    ${(props) =>
+      props.width &&
+      css`
+        width: ${props.width};
+      `};
 `;

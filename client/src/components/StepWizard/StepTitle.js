@@ -7,5 +7,5 @@ export default styled.h2`
   font-weight: bold;
   font-size: ${theme.typography.heading.two};
   line-height: 4.3rem;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 `;

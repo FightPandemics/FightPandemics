@@ -1,4 +1,4 @@
-import { PRIMARY, ROYAL_BLUE } from "./colors";
+import { PRIMARY, ROYAL_BLUE, DARK_GRAY, SELAGO } from "./colors";
 
 const theme = {
   global: {
@@ -21,6 +21,7 @@ const theme = {
       family: {
         display: "Poppins",
         body: "Work Sans",
+        button: "DM Sans",
       },
     },
     size: {
@@ -31,7 +32,7 @@ const theme = {
       large: "1.6rem",
       xlarge: "1.8rem",
       xxlarge: "2.2rem",
-      xxlarge: "2.6rem",
+      xxxlarge: "2.6rem",
     },
     heading: {
       font: "Poppins",
@@ -54,9 +55,11 @@ const theme = {
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
+    selago: SELAGO,
     darkGray: "#282828",
   },
   button: {
+    fontFamily: "DM Sans",
     border: {
       width: "0",
       radius: "24px",
@@ -71,6 +74,19 @@ const theme = {
       backgroundColor: PRIMARY,
       borderRadius: "18px",
       fontWeight: "bold",
+    },
+    iconAndText: {
+      color: DARK_GRAY,
+      backgroundColor: "transparent",
+      border: {
+        width: 0,
+        color: "transparent",
+      },
+      boxShadow: "unset",
+      display: "inline-flex",
+      alignItems: "center",
+      textAlign: "center",
+      width: "auto",
     },
   },
   icon: {

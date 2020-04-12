@@ -16,6 +16,12 @@ const WizardContainer = styled.div`
     margin: 0 auto;
     max-width: 375px;
   }
+
+  /* @media screen and (min-width: ${desktop.small.minWidth}) {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 650px;
+  } */
 `;
 
 export default WizardContainer;
