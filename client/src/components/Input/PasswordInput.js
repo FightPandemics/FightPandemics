@@ -22,7 +22,7 @@ const StyleEye = {
   opacity: 0.5,
 };
 
-export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
+export default ({ label, placeholder, labelStyle, inputStyle, value, onChange, ...props }) => {
   const [isVisible, setVisible] = useState(false);
   const passwordRef = useRef();
 
@@ -46,5 +46,5 @@ export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
     </div>
   ));
 
-  return <PasswordField label={label} style={labelStyle} />;
+  return <PasswordField label={label} style={labelStyle} value={value} onChange={onChange} />;
 };
