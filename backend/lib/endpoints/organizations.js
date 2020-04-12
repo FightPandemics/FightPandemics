@@ -71,11 +71,20 @@ async function routes(app) {
       if (organization === null) {
         return new httpErrors.NotFound();
       }
+      const updateProperties = updateOrganizationSchema.body.properties;
+      const errors = [];
       Object.keys(req.body).forEach((key) => {
+        if (!Object.prototype.hasOwnProperty.call(updateProperties, key)) {
+          errors.push(`${key} is not permitted to be set`);
+          return;
+        }
         if (organization[key] !== req.body[key]) {
           organization[key] = req.body[key];
         }
       });
+      if (errors.length > 0) {
+        return new httpErrors.BadRequest(errors.join("; "));
+      }
       return organization.save();
     },
   );
