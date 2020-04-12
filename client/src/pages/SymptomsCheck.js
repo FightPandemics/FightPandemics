@@ -341,17 +341,6 @@ export const SymptomsCheck = () => {
     return <CareFacility />;
   }
 
-  /**
-   * 1: how old are you state.age
-   * 2: Are you experiencing any of these symptoms state.symptoms
-   * 3:pre-existing  medical conditions (Do any of these apply to you) state.conditions
-   * 4: last 14 days travel state.traveledLast14Days==="yes"
-   * 5: last 14 days exposure  state.exposureLast14Days==="live with" state.exposureLast14Days: "near someone 6ft" state.exposureLast14Days: "close contact"
-   * 6:last 14 days area state.exposureAreaLast2Weeks === "live"
-   * 7: live in a care facility state.careFacility === "no"
-   * 8: work in a medical facility same as 8 on our platform
-   */
-
   //message 1
   let condition1 =
     state.age === "18-64" &&
@@ -481,6 +470,188 @@ export const SymptomsCheck = () => {
   }
 
   //message 4
+  let condition9 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    (state.medicalFacility === "plan to work" ||
+      state.medicalFacility === "worked");
+
+  if (condition9) {
+    displayMessage.push(
+      "Call your Work Health Provider",
+      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of CoVID-19",
+    );
+  }
+
+  //message 5
+  let condition10 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    state.careFacility === "yes";
+  if (condition10) {
+    displayMessage.push(
+      "Call your Doctor or Care Team",
+      "You should discuss your symptoms with the doctors or care team that look after your facility. Your doctor's response time may vary depending on number of cases in your region",
+    );
+  }
+
+  //message 6
+  if (
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0
+  ) {
+    displayMessage.push(
+      "Isolate from others",
+      "You should try to stay away from others for atleast 7 days from when the symptoms first appeared. Your isolation can end if your symptons improve significantly and if you have had no fever for atleast 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
+    );
+  }
+
+  //message 7
+  let condition11 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.medicalFacility === "no";
+
+  if (condition11) {
+    displayMessage.push(
+      "Quarantine at Home",
+      "You have been exposed. You should stay Home for the next 14 days and see if any symptoms appear",
+      "You should also try and limit your contact with others outside the home",
+    );
+  }
+
+  //message 8
+  let condition12 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    state.traveledLast14Days === "no" &&
+    state.exposureLast14Days === "no exposure" &&
+    state.exposureAreaLast2Weeks === "none" &&
+    state.medicalFacility === "no";
+
+  let condition13 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    (state.medicalFacility === "plan to work" ||
+      state.medicalFacility === "worked");
+
+  if (condition12 || condition13) {
+    displayMessage.push(
+      "Maintain Social Distance",
+      "Small but important steps can slow the spread of COVID-19. Avoid groups of people and keep six feet apart from anyone who's not part of the household. Especially avoid those showing symptoms.",
+    );
+  }
+
+  //message 9
+  let condition14 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    state.conditions !== undefined &&
+    state.conditions.length >= 0 &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.medicalFacility === "no";
+
+  let condition15 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    state.traveledLast14Days === "yes" &&
+    (state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no";
+
+  if (condition14 || condition15) {
+    displayMessage.push(
+      "Monitor Symptoms",
+      "Watch for COVID-19 symptoms such as cough, fever, difficulty breathing. Also check your temperature twice a day for two weeks. If symptoms get worse, call your doctor.",
+    );
+  }
+
+  /**
+   * 1: how old are you state.age
+   * 2: Are you experiencing any of these symptoms state.symptoms
+   * 3:pre-existing  medical conditions (Do any of these apply to you) state.conditions
+   * 4: last 14 days travel state.traveledLast14Days==="yes"
+   * 5: last 14 days exposure  state.exposureLast14Days==="live with" state.exposureLast14Days: "near someone 6ft" state.exposureLast14Days: "close contact"
+   * 6:last 14 days area state.exposureAreaLast2Weeks === "live"
+   * 7: live in a care facility state.careFacility === "no"
+   * 8: work in a medical facility same as 8 on our platform
+   */
+
+  //message 10
+  let condition16 =
+    state.age === "65+" &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    state.conditions !== undefined &&
+    state.conditions.length >= 0 &&
+    state.traveledLast14Days === "no" &&
+    state.exposureLast14Days === "no exposure" &&
+    state.exposureAreaLast2Weeks === "none" &&
+    state.medicalFacility === "no";
+
+  if (condition16) {
+    displayMessage.push(
+      "Ask about your Medications",
+      "If you are currently taking prescription medication, you should contact your doctor's office about getting a 30-day supply.",
+    );
+  }
+
+  //message 11
+  let condition17 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length === 0 &&
+    state.traveledLast14Days === "yes" &&
+    (state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no";
+
+  if (condition17) {
+    displayMessage.push(
+      "Take Precautions to Protect Others",
+      "You may need to wear a mask to help protect yourself and those around you.",
+    );
+  }
+
+  //message 12
+  let condition18 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length > 0;
+
+  if (condition18) {
+    displayMessage.push(
+      "Rest and Take care",
+      "Eat well, drink fluids, and get plenty of rest.",
+    );
+  }
 
   return (
     <WizardContainer className="mx-auto">
