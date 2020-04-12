@@ -1,12 +1,14 @@
 import React from "react";
 
 import { AnswerButton } from "../components/StepWizard";
+import { GenericMessage } from "./CovidScreening/GenericMessage";
 
 export const ResultsPage = (props) => {
   return (
     <>
       <h2>Practice Social Distancing</h2>
       <h3>Next Steps</h3>
+      <GenericMessage msg={props.msg} />
       1. Maintain Social Distancing
       <p>
         Small but important steps can slow the spread of COVID-19. Avoid groups

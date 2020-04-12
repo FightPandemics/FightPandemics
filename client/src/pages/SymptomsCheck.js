@@ -195,12 +195,8 @@ const Step4 = (props) => {
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
-        Yes
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
-        No
-      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("yes")}>Yes</AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("no")}>No</AnswerButton>
     </div>
   );
 };
@@ -220,13 +216,13 @@ const Step5 = (props) => {
         If so, have you traveled to an area severely affected by the COVID-19
         outbreak?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("live")}>
         I live in an area severely affected by the COVID-19 outbreak
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("visited")}>
         I have visited an area severely affected by the COVID-19 outbreak
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("none")}>
         None of these apply
       </AnswerButton>
     </div>
@@ -249,19 +245,19 @@ const Step6 = (props) => {
         known to have COVID-19 during the last 2 weeks? Please, select all that
         apply.
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("live with")}>
         I live with someone who has COVID-19
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("close contact")}>
         I had close contact with someone with COVID-19 (10 minutes or more spent
         together within 6 feet from each other or were exposed to their sneeze
         or cough)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("near someone 6ft")}>
         I was near someone with COVID-19 (at least 6-feet away and not exposed
         to their cough or sneeze)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("no exposure")}>
         No exposure
       </AnswerButton>
     </div>
@@ -280,26 +276,45 @@ const Step7 = (props) => {
         Question {props.currentStep} / {props.totalSteps}
       </h5>
       <h2 className="mb-5">
-        In your day-to-day life, do you work or live in a care facility? This
-        may include hospitals, care homes, emergency rooms, and other medical
-        settings?
+        Do you live in a care facility? This includes nursing homes or assisted
+        living facilities.
       </h2>
       <AnswerButton onSelect={() => onSelectAnswer("currently living")}>
-        I live in a care facility (This includes nursing homes and assisted
-        living)
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("worked in last 14 days")}>
-        Worked in a care facility in the last 14 days (This includes hospitals,
-        assisted living facilities, etc. This includes part-time jobs and
-        volunteering)
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("planning to")}>
-        Plan to work in care facility in the next 14 days (This includes
-        hospitals, assisted living facilities, etc. This includes part-time jobs
-        and volunteering)"
+        I live in a long-term care facility
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No (They do not live or work in a long-term care facility)
+        No, I dont live in a long-term care facility.
+      </AnswerButton>
+    </div>
+  );
+};
+
+const Step8 = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("medicalFacility", answer);
+    props.nextStep();
+  };
+
+  return (
+    <div>
+      <h5 className="text-primary">
+        Question {props.currentStep} / {props.totalSteps}
+      </h5>
+      <h2 className="mb-5">
+        Do you live in a medical facility? This includes a hospital, emergency
+        room, other medical setting, or long-term care facility.Select all that
+        apply.
+      </h2>
+      <AnswerButton onSelect={() => onSelectAnswer("worked")}>
+        I have worked in a hospital, or other care facility in the past 14 days.
+        This includes volunteering.
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("plan to work")}>
+        I plan to work in hospital, or other care facility in the next 14 days.
+        This includes volunteering
+      </AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+        No, I dont work or plan to work in a care facility.
       </AnswerButton>
     </div>
   );
@@ -311,7 +326,8 @@ export const SymptomsCheck = () => {
     setState({ ...state, [key]: value });
   };
   localStorage.setItem("symptomsCheckAnswers", JSON.stringify(state));
-  // console.log(state, " state++++")
+  console.log(state, " state++++");
+  let displayMessage = [];
   if (state.age === "under 18") {
     return <Under18 />;
   }
@@ -325,6 +341,147 @@ export const SymptomsCheck = () => {
     return <CareFacility />;
   }
 
+  /**
+   * 1: how old are you state.age
+   * 2: Are you experiencing any of these symptoms state.symptoms
+   * 3:pre-existing  medical conditions (Do any of these apply to you) state.conditions
+   * 4: last 14 days travel state.traveledLast14Days==="yes"
+   * 5: last 14 days exposure  state.exposureLast14Days==="live with" state.exposureLast14Days: "near someone 6ft" state.exposureLast14Days: "close contact"
+   * 6:last 14 days area state.exposureAreaLast2Weeks === "live"
+   * 7: live in a care facility state.careFacility === "no"
+   * 8: work in a medical facility same as 8 on our platform
+   */
+
+  //message 1
+  let condition1 =
+    state.age === "18-64" &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.conditions !== undefined &&
+    state.conditions.length === 0 &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no";
+
+  let condition2 =
+    state.age === "18-64" &&
+    state.traveledLast14Days === "no" &&
+    state.exposureLast14Days === "no exposure" &&
+    state.exposureAreaLast2Weeks === "none" &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no" &&
+    state.conditions !== undefined &&
+    state.conditions.length === 0 &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0;
+
+  let condition3 =
+    state.age === "65+" &&
+    state.traveledLast14Days === "no" &&
+    state.exposureLast14Days === "no exposure" &&
+    state.exposureAreaLast2Weeks === "none" &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no" &&
+    state.conditions !== undefined &&
+    state.conditions.length === 0 &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0;
+
+  let condition4 =
+    (state.age === "18-64" &&
+      state.symptoms !== undefined &&
+      state.symptoms.length === 0) ||
+    (state.age === "65+" &&
+      state.symptoms !== undefined &&
+      state.symptoms.length === 0);
+
+  if (condition1 || condition2 || condition3 || condition4) {
+    displayMessage.push(
+      "No test needed at this time",
+      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionaire again.",
+    );
+  }
+
+  //message 2
+  if (
+    (state.age === "65+" || state.age === "18-64") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0
+  ) {
+    displayMessage.push(
+      "Monitor Symptoms",
+      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your synptoms get worse contact your doctor's office",
+    );
+  }
+
+  //message 3
+  let condition5 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.careFacility === "no" &&
+    (state.medicalFacility === "worked" ||
+      state.medicalFacility === "plan to work");
+
+  let condition6 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    state.conditions !== undefined &&
+    state.conditions.length >= 0 &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no";
+
+  let condition7 =
+    state.age === "65+" &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    (state.traveledLast14Days === "yes" ||
+      state.exposureLast14Days === "live with" ||
+      state.exposureLast14Days === "near someone 6ft" ||
+      state.exposureLast14Days === "close contact" ||
+      state.exposureAreaLast2Weeks === "live" ||
+      state.exposureAreaLast2Weeks === "visited") &&
+    state.careFacility === "no" &&
+    state.medicalFacility === "no";
+
+  let condition8 =
+    (state.age === "18-64" || state.age === "65+") &&
+    state.symptoms !== undefined &&
+    state.symptoms.length >= 0 &&
+    state.conditions !== undefined &&
+    state.conditions.length >= 0 &&
+    state.traveledLast14Days === "no" &&
+    state.exposureLast14Days === "no exposure" &&
+    state.exposureAreaLast2Weeks === "none" &&
+    state.careFacility === "no";
+
+  if (condition5 || condition6 || condition7 || condition8) {
+    displayMessage.push(
+      "Talk to someone about Testing",
+      "Your Answers Suggest you may need to get tested for COVID-19.You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
+    );
+  }
+
+  //message 4
+
   return (
     <WizardContainer className="mx-auto">
       <StyledWizard isHashEnabled nav={<WizardNav />}>
@@ -336,7 +493,8 @@ export const SymptomsCheck = () => {
         <Step5 hashKey={"Step5"} update={updateAnswers} />
         <Step6 hashKey={"Step6"} update={updateAnswers} />
         <Step7 hashKey={"Step7"} update={updateAnswers} />
-        <ResultsPage val={state} />
+        <Step8 hashKey={"Step8"} update={updateAnswers} />
+        <ResultsPage val={state} msg={displayMessage} />
       </StyledWizard>
     </WizardContainer>
   );
