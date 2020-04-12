@@ -5,6 +5,7 @@ const {
   getPostByIdSchema,
   createPostSchema,
   deletePostSchema,
+  likeUnlikePostSchema,
   updatePostSchema,
   addCommentSchema,
 } = require("./schema/posts");
@@ -13,8 +14,9 @@ const {
  * /api/posts
  */
 async function routes(app) {
-  const Post = app.mongo.model("Post");
-  const Comment = app.mongo.model("Comment");
+  const { mongo } = app;
+  const Comment = mongo.model("Comment");
+  const Post = mongo.model("Post");
 
   // /posts
 
@@ -81,13 +83,13 @@ async function routes(app) {
   );
 
   app.post(
-    "/:postId/comment",
+    "/:postId/comments",
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
       const { postId } = req.params;
       // todo: get user id from JWT
       //  check if user is authorized to comment (depending on visibility for that post too)
-      req.body.authorId = "";
+      req.body.authorId = ""; // req.user.id;
       req.body.postId = postId;
       const newComment = await new Comment(req.body).save();
       const updatedPost = await Post.findOneAndUpdate(
@@ -96,6 +98,52 @@ async function routes(app) {
         { new: true },
       );
       return updatedPost;
+    },
+  );
+
+  app.put(
+    "/:postId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
+    async (req) => {
+      const { postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId, likes: { $ne: userId } },
+        { $inc: { likesCount: 1 }, $push: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedPost) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedPost.likes,
+        likesCount: updatedPost.likesCount,
+      };
+    },
+  );
+
+  app.delete(
+    "/:postId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
+    async (req) => {
+      const { postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId, likes: userId },
+        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedPost) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedPost.likes,
+        likesCount: updatedPost.likesCount,
+      };
     },
   );
 }

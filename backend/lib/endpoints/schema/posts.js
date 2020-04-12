@@ -12,9 +12,8 @@ const createPostSchema = {
     .prop("title", S.string().required())
     .prop("description", S.string().required())
     .prop("type", S.array().maxItems(10).items(S.string()).required())
-    .prop("shareWith", S.string().required())
+    .prop("shareWith", S.array().maxItems(10).items(S.string()))
     .prop("needs", S.array().maxItems(10).items(S.string()).required())
-    .prop("comments", S.array().items(S.string()).required())
     .prop("tags", S.array().items(S.string()).required())
     .prop("language", S.string().required())
     .prop("website", S.string())
@@ -35,9 +34,8 @@ const updatePostSchema = {
     .prop("title", S.string())
     .prop("description", S.string())
     .prop("type", S.array().maxItems(10).items(S.string()))
-    .prop("shareWith", S.string())
+    .prop("shareWith", S.array().maxItems(10).items(S.string()))
     .prop("needs", S.array().maxItems(10).items(S.string()))
-    .prop("comments", S.array().items(S.string()))
     .prop("tags", S.array().items(S.string()))
     .prop("language", S.string())
     .prop("website", S.string())
@@ -45,6 +43,12 @@ const updatePostSchema = {
     .prop("androidUrl", S.string())
     .prop("media", S.string()),
   params: S.object().prop("postId", S.string().required()),
+};
+
+const likeUnlikePostSchema = {
+  params: S.object()
+    .prop("postId", S.string().required())
+    .prop("userId", S.string().required()),
 };
 
 const deletePostSchema = {
@@ -62,5 +66,6 @@ module.exports = {
   deletePostSchema,
   getPostByIdSchema,
   getPostsSchema,
+  likeUnlikePostSchema,
   updatePostSchema,
 };

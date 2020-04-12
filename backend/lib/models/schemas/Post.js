@@ -11,7 +11,6 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId,
   },
   comments: {
-    default: [],
     type: [CommentSchema],
   },
   description: {
@@ -21,9 +20,10 @@ const PostSchema = new Schema({
   iosUrl: String,
   language: [String],
   likes: {
-    default: [],
-    refs: "likes",
     type: [Schema.Types.ObjectId],
+  },
+  likesCount: {
+    type: Number,
   },
   looking: {
     type: [String],
