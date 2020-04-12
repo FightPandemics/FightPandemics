@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import styled from "styled-components";
-import { ROYAL_BLUE, LIGHTER_GRAY } from "../../constants/colors";
+import { LIGHTER_GRAY } from "../../constants/colors";
 
 export default styled(Input.TextArea)`
   background-color: ${LIGHTER_GRAY};
@@ -11,6 +11,7 @@ export default styled(Input.TextArea)`
   width: 96%;
   border-radius: 4rem;
   padding: 1.4rem;
+  overflow: hidden;
 
   &.ant-input:focus,
   &.ant-input-focused {

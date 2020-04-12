@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Input, Modal, Card, WhiteSpace } from "antd-mobile";
+import { Modal, Card, WhiteSpace } from "antd-mobile";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
 import StatusIcon from "../Icon/status-indicator";
-import BaseInput from "../../components/Input/BaseInput";
 import AutoSize from "../../components/Input/AutoSize";
 
 export default ({ post }) => {

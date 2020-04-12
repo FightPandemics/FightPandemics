@@ -3,7 +3,7 @@ import { Avatar } from "antd";
 import { ROYAL_BLUE } from "../../constants/colors";
 import HeartSmallIcon from "../Icon/heart-small";
 import StyledComment from "./StyledComment";
-import BaseInput from "../Input/BaseInput";
+import AutoSize from "../../components/Input/AutoSize";
 
 const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 
@@ -66,14 +66,12 @@ const NestedComments = ({ comment }) => {
   const renderReplyInput = showReply ? (
     <div className="reply-input">
       {renderAvatar}
-      <form onSubmit={handleReply}>
-        <BaseInput
-          type="text"
-          placeholder="Write a reply ..."
-          value={reply}
-          onChange={(e) => setReply(e.target.value)}
-        />
-      </form>
+      <AutoSize
+        placeholder={"Write a reply..."}
+        onPressEnter={handleReply}
+        onChange={(e) => setReply(e.target.value)}
+        value={reply}
+      />
     </div>
   ) : (
     ""
