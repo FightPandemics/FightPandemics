@@ -95,7 +95,6 @@ const NestedComments = ({ comment }) => {
   const renderTimeStamp = <span>1w</span>;
 
   const commentActions = [
-    // order matters
     renderTimeStamp,
     renderLikeButton(),
     renderReply(),
