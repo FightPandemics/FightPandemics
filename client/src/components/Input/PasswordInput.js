@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import withLabel from "./with-label";
@@ -22,28 +22,38 @@ const StyleEye = {
   opacity: 0.5,
 };
 
+class PasswordInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isVisible: false, inputValue: "" };
+  }
+
+  render() {
+    const EyeIcon = this.state.isVisible ? VisibilityIcon : VisibilityOffIcon;
+    return (
+      <React.Fragment>
+        <Input
+          style={this.props.inputStyle}
+          placeholder={this.props.placeholder}
+          isVisible={this.state.isVisible}
+          value={this.state.inputValue}
+          onChange={(e) => this.setState({ inputValue: e.target.value })}
+        />
+        <EyeIcon
+          style={StyleEye}
+          onClick={() => this.setState({ isVisible: !this.state.isVisible })}
+        />
+      </React.Fragment>
+    );
+  }
+}
 export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
-  const [isVisible, setVisible] = useState(false);
-  const passwordRef = useRef();
-
-  const onToggleVisibility = () => {
-    setVisible(!isVisible);
-  };
-
-  const EyeIcon = isVisible ? VisibilityOffIcon : VisibilityIcon;
-
   const PasswordField = withLabel(() => (
-    <div>
-      <Input
-        style={inputStyle}
-        placeholder={placeholder}
-        ref={passwordRef}
-        isVisible={isVisible}
-        {...props}
-      />
-      <EyeIcon style={StyleEye} onClick={onToggleVisibility} />
-    </div>
+    <PasswordInput
+      inputStyle={inputStyle}
+      placeholder={placeholder}
+      {...props}
+    />
   ));
-
   return <PasswordField label={label} style={labelStyle} />;
 };
