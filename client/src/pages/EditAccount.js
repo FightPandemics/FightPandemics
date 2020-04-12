@@ -66,43 +66,58 @@ export default function EditAccount(props) {
         <label style={labelStyle}>I want to</label>
         <label>
           <input
+            style={checkBoxStyle}
             type="checkbox"
             name="helping"
             value="volunteer"
             ref={register}
           />
-          <span style={checkBoxStyle}></span>
+          <span style={customCheckBoxStyle}></span>
           Volunteer
         </label>
         <label>
-          <input type="checkbox" name="helping" value="donate" ref={register} />
-          <span style={checkBoxStyle}></span>
+          <input
+            style={checkBoxStyle}
+            type="checkbox"
+            name="helping"
+            value="donate"
+            ref={register}
+          />
+          <span style={customCheckBoxStyle}></span>
           Donate
         </label>
         <label>
           <input
+            style={checkBoxStyle}
             type="checkbox"
             name="helping"
             value="shareInfo"
             ref={register}
           />
-          <span style={checkBoxStyle}></span>
+          <span style={customCheckBoxStyle}></span>
           Share Information
         </label>
         <label style={labelStyle}>I need</label>
         <label>
           <input
+            style={checkBoxStyle}
             type="checkbox"
             name="helping"
             value="medical"
             ref={register}
           />
-          <span style={checkBoxStyle}></span>
+          <span style={customCheckBoxStyle}></span>
           Medical Help
         </label>
         <label>
-          <input type="checkbox" name="helping" value="other" ref={register} />
-          <span style={checkBoxStyle}></span>
+          <input
+            style={checkBoxStyle}
+            type="checkbox"
+            name="helping"
+            value="other"
+            ref={register}
+          />
+          <span style={customCheckBoxStyle}></span>
           Other Help
         </label>
         <input style={submitButtonStyle} type="submit" value="Save Changes" />
@@ -172,9 +187,14 @@ const submitButtonStyle = {
   fontWeight: "bold",
 };
 
+const customCheckBoxStyle = {
+  position: "absolute",
+  height: "2rem",
+  width: "2rem",
+  border: "0.3rem solid #000000",
+};
+
 const checkBoxStyle = {
-  height: "10rem",
-  width: "10rem",
-  borderRadius: "1rem",
-  border: "0.5rem solid #5970EC",
+  position: "absolute",
+  opacity: "0",
 };
