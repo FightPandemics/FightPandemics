@@ -6,31 +6,6 @@ import HeartSmallIcon from "../Icon/heart-small";
 import StyledComment from "./StyledComment";
 import BaseInput from "../Input/BaseInput";
 
-const replyInputStyle = {
-  backgroundColor: LIGHTER_GRAY,
-  width: "100%",
-  borderBottom: "unset",
-  borderRadius: "4rem",
-  padding: "1.4rem",
-  marginTop: "1rem",
-};
-
-const Reply = styled.div`
-  display: flex;
-  align-items: center;
-  span {
-    padding-right: 0 !important;
-  }
-  input {
-    background-color: ${LIGHTER_GRAY};
-    width: 100%;
-    border-bottom: unset;
-    border-radius: 4rem;
-    padding: 1.4rem;
-    margin-top: 1rem;
-  }
-`;
-
 const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 
 const NestedComments = ({ comment }) => {
@@ -90,8 +65,7 @@ const NestedComments = ({ comment }) => {
   };
 
   const renderReplyInput = showReply ? (
-    <Reply>
-      {renderAvatar}
+    <div className="reply-input">
       <form onSubmit={handleReply}>
         <BaseInput
           type="text"
@@ -100,7 +74,7 @@ const NestedComments = ({ comment }) => {
           onChange={(e) => setReply(e.target.value)}
         />
       </form>
-    </Reply>
+    </div>
   ) : (
     ""
   );

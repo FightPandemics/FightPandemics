@@ -46,7 +46,7 @@ export default styled(Comment)`
               min-width: 3.6rem;
               min-height: 1.7rem;
               right: -5px;
-              top: -40%;
+              top: -12px;
               padding: 0.2rem 0.3rem;
               img {
                 padding-left: 0.2rem;
@@ -54,10 +54,11 @@ export default styled(Comment)`
               }
             }
             &:last-child {
+              display: block;
               margin-top: 1rem;
               .reply-input {
-                display: flex;
-                align-items: center;
+                /* display: flex; */
+                /* align-items: center; */
                 span {
                   padding-right: 0;
                   margin-right: 12px;
@@ -68,6 +69,7 @@ export default styled(Comment)`
                   border-bottom: unset;
                   border-radius: 4rem;
                   padding: 1.4rem;
+                  width: 100%;
                 }
               }
             }
