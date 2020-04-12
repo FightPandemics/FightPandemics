@@ -57,8 +57,8 @@ export default styled(Comment)`
               display: block;
               margin-top: 1rem;
               .reply-input {
-                /* display: flex; */
-                /* align-items: center; */
+                display: flex;
+                align-items: center;
                 span {
                   padding-right: 0;
                   margin-right: 12px;

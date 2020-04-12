@@ -66,6 +66,7 @@ const NestedComments = ({ comment }) => {
 
   const renderReplyInput = showReply ? (
     <div className="reply-input">
+      {renderAvatar}
       <form onSubmit={handleReply}>
         <BaseInput
           type="text"
