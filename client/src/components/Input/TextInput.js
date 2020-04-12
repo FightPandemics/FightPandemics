@@ -10,6 +10,8 @@ export default ({
   placeholder,
   labelStyle,
   inputStyle,
+  value,
+  onChange,
   ...props
 }) => {
   const TextField = withLabel(() => (
@@ -20,5 +22,5 @@ export default ({
       {...props}
     />
   ));
-  return <TextField label={label} style={labelStyle} />;
+  return <TextField label={label} style={labelStyle} value={value} onChange={onChange}/>;
 };
