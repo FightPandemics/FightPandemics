@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { validateEmail } from '../utils/common.js';
 import { useAlert } from 'react-alert';
 import { PASSWORD_MIN_LENGTH } from '../config';
 import { loginWithEmail, signup } from '../actions/authActions';
 import { useDispatch } from "react-redux";
+import TextInput from "~/components/Input/TextInput";
+import PasswordInput from "~/components/Input/PasswordInput";
 
 import {
   FacebookIcon,
@@ -62,22 +62,8 @@ const SocialButton = styled(Button).attrs((props) => ({
   margin: 0.5rem;
 `;
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '100%',
-  },
-  resize:{
-    fontSize: 20
-  },  
-}));
-
 export default ({ isLoginForm }) => {
+//const LoginOrSignup = ({ isLoginForm }) => {
 
   const classes = useStyles();
   const alert = useAlert();
@@ -135,45 +121,26 @@ export default ({ isLoginForm }) => {
       <h1>Welcome</h1>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <TextField
-            id="standard-email-input"
-            label="Email"
-            className={classes.textField}
+          <TextInput
+            label="E-mail"
             type="email"
-            autoComplete="current-email"
-            margin="normal"
+            labelStyle={StyleLabel}
+            inputStyle={StyleInput}
+            required
+            placeholder="Enter email address"
+            value={email}
             onChange={handleInputChangeEmail}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{ 
-              classes: {
-                root: classes.resize,
-              }
-            }} 
-          />                     
+          />                    
         </InputWrapper>
         <InputWrapper>
-          <TextField
-            id="standard-password-input"
+          <PasswordInput
             label="Password"
-            className={classes.textField}
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-            onChange={handleInputChangePassword}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{ 
-              classes: {
-                root: classes.resize,
-              }
-            }}            
+            labelStyle={StyleLabel}
+            inputStyle={StyleInput}
+            required
+            placeholder="Enter password"
+            value={password}
+            onChange={handleInputChangePassword}            
           />
         </InputWrapper>
         <WhiteSpace />
@@ -236,3 +203,5 @@ export default ({ isLoginForm }) => {
     </div>
   );
 };
+
+//export default LoginOrSignup;
