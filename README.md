@@ -22,6 +22,15 @@ Please check our notion to get a better understanding of the problem that we are
     - Use global colors by importing values from `client/src/constants/colors.js`
     - No Redux, as the project grow, we will likely use React's Context API
     - No use of other libraries like Material UI
+    - For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
+        ```
+            import styled from "styled-components";
+            import { Button } from "antd";
+            
+            const StyledButton = styled(Button)`
+                // target antd selectors and override styles here
+            `;
+        ```
 
 - **Backend**
     - Fastify, MongoDB
