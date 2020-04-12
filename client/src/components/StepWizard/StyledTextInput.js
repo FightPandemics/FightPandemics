@@ -5,8 +5,16 @@ import { theme } from "../../constants/theme";
 export default styled(InputItem)`
   width: 100%;
 
-  .am-input-control {
+  &.am-list-item {
+    &.am-input-item {
+      padding-left: 0;
 
+      .am-list-line {
+        padding-right: 0;
+      }
+    }
+  }
+  .am-input-control {
     input {
       ${theme.form.input}
       color: ${theme.colors.darkGray};

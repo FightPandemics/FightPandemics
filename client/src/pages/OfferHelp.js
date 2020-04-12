@@ -104,7 +104,7 @@ const Step2 = (props) => {
     props.nextStep();
   };
 
-  const manualLocation = (evt) => setLocationSearch(evt.target.value); // I am not sure how best to perform the search at the moment.
+  const manualLocation = (evt) => setLocationSearch(evt); // I am not sure how best to perform the search at the moment.
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
