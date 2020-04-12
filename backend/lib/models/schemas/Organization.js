@@ -2,15 +2,12 @@ const { Schema } = require("mongoose");
 
 const OrganizationSchema = new Schema({
   address: {
-    required: false,
     type: String,
   },
   androidUrl: {
-    required: false,
     type: String,
   },
   description: {
-    required: false,
     type: String,
   },
   email: {
@@ -19,7 +16,6 @@ const OrganizationSchema = new Schema({
     unique: true,
   },
   global: {
-    required: false,
     type: Boolean,
   },
   industry: {
@@ -27,15 +23,12 @@ const OrganizationSchema = new Schema({
     type: String,
   },
   iosUrl: {
-    required: false,
     type: String,
   },
   language: {
-    required: false,
     type: String,
   },
   linkedinUrl: {
-    required: false,
     type: String,
   },
   location: {
@@ -55,7 +48,6 @@ const OrganizationSchema = new Schema({
     type: Schema.Types.ObjectId,
   },
   twitterUrl: {
-    required: false,
     type: String,
   },
   type: {
@@ -63,7 +55,6 @@ const OrganizationSchema = new Schema({
     type: String,
   },
   website: {
-    required: false,
     type: String,
   },
 });
