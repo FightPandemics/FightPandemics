@@ -109,8 +109,8 @@ async function routes(app) {
       // todo: get user id from JWT
       //  check if userId is the same as param, and if authorized to like (based on visibility)
       const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId, likedBy: { $ne: userId } },
-        { $inc: { likesCount: 1 }, $push: { likedBy: userId } },
+        { _id: postId, likes: { $ne: userId } },
+        { $inc: { likesCount: 1 }, $push: { likes: userId } },
         { new: true },
       );
       if (!updatedPost) {
@@ -118,7 +118,7 @@ async function routes(app) {
       }
 
       return {
-        likedBy: updatedPost.likedBy,
+        likes: updatedPost.likes,
         likesCount: updatedPost.likesCount,
       };
     },
@@ -132,8 +132,8 @@ async function routes(app) {
       // todo: get user id from JWT
       //  check if userId is the same as param, and if authorized to like (based on visibility)
       const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId, likedBy: userId },
-        { $inc: { likesCount: -1 }, $pull: { likedBy: userId } },
+        { _id: postId, likes: userId },
+        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
         { new: true },
       );
       if (!updatedPost) {
@@ -141,7 +141,7 @@ async function routes(app) {
       }
 
       return {
-        likedBy: updatedPost.likedBy,
+        likes: updatedPost.likes,
         likesCount: updatedPost.likesCount,
       };
     },

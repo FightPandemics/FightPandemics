@@ -19,7 +19,7 @@ const PostSchema = new Schema({
   },
   iosUrl: String,
   language: [String],
-  likedBy: {
+  likes: {
     type: [Schema.Types.ObjectId],
   },
   likesCount: {
