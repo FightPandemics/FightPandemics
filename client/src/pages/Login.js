@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
 import { validateEmail } from '../utils/common.js';
-import { useAlert } from 'react-alert';
 import { PASSWORD_MIN_LENGTH } from '../config';
 import { loginWithEmail, signup } from '../actions/authActions';
 import { useDispatch } from "react-redux";
-import TextInput from "~/components/Input/TextInput";
 import PasswordInput from "~/components/Input/PasswordInput";
+import { Toast } from 'antd-mobile';
+import Label from "~/components/Input/Label";
+import Input from "~/components/Input/BaseInput";
 
 import {
   FacebookIcon,
@@ -62,7 +63,7 @@ const SocialButton = styled(Button).attrs((props) => ({
 `;
 
 export default ({ isLoginForm }) => {
-  const alert = useAlert();
+  
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -79,15 +80,11 @@ export default ({ isLoginForm }) => {
   const handleLoginWithEmail = (evt) => {
     evt.preventDefault();
     if (!validateEmail (email)) {
-      alert.show('Invalid email address!', {
-        type: 'error',
-      });
+      Toast.fail('Invalid email address!', 3);
       return;
     }
     if (password.length < PASSWORD_MIN_LENGTH) {
-      alert.show('Password must be at least 6 characters', {
-        type: 'error',
-      });
+      Toast.fail('Password must be at least 6 characters', 3);
       return;
     }
     dispatch(loginWithEmail({ email, password }));
@@ -96,15 +93,11 @@ export default ({ isLoginForm }) => {
   const handleSignup = (evt) => {
     evt.preventDefault();
     if (!validateEmail (email)) {
-      alert.show('Invalid email address!', {
-        type: 'error',
-      });
+      Toast.fail('Invalid email address!', 3);
       return;
     }
     if (password.length < PASSWORD_MIN_LENGTH) {
-      alert.show('Password must be at least 6 characters', {
-        type: 'error',
-      });
+      Toast.fail('Password must be at least 6 characters', 3);
       return;
     }
     dispatch(signup({ email, password }));
@@ -117,26 +110,25 @@ export default ({ isLoginForm }) => {
       <h1>Welcome</h1>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <TextInput
-            label="E-mail"
+          <Label style={StyleLabel} label="E-mail"/>
+          <Input
             type="email"
-            labelStyle={StyleLabel}
-            inputStyle={StyleInput}
             required
             placeholder="Enter email address"
             value={email}
             onChange={handleInputChangeEmail}
+            style={StyleInput}
           />                    
         </InputWrapper>
-        <InputWrapper>
-          <PasswordInput
-            label="Password"
-            labelStyle={StyleLabel}
-            inputStyle={StyleInput}
+        <InputWrapper>   
+          <Label style={StyleLabel} label="Password"/>
+          <Input
+            type="password"
             required
             placeholder="Enter password"
             value={password}
-            onChange={handleInputChangePassword}            
+            onChange={handleInputChangePassword}
+            style={StyleInput}
           />
         </InputWrapper>
         <WhiteSpace />
