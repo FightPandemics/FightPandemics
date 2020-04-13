@@ -1,12 +1,13 @@
 import React from "react";
 
 const CONTAINER_STYLES = {
-  marginTop: "30px",
-  width: "600px",
-  flexDirection: "column",
-  alignItems: "stretch",
-  justifyContent: "space-between",
-};
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: 'calc(10px + 1vmin)',
+}
 
 export const About = () => {
   return (
