@@ -1,11 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
+import { Checkbox } from "antd";
+import styled from "styled-components";
 // dummy data props,context, redux etc
 const firstName = "Cees";
 const lastName = "Wang";
 const selfIntroduction =
-  "  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diamnonummy nibh euismod tincidunt ut laoreet dolore magna";
+  "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diamnonummy nibh euismod tincidunt ut laoreet dolore magna";
 const facebookURL = "http://facebook.com";
 const twitterURL = "http://twitter.com";
 const githubURL = "http://github.com";
@@ -19,6 +20,15 @@ function getInitials(firstName, lastName) {
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
 }
 
+const CustomCheckBox = styled.span`
+  position: absolute;
+  height: 2rem;
+  width: 2rem;
+  border: 0.1rem solid #646464;
+  borderradius: 0.2rem;
+  background-color: green;
+`;
+
 export default function EditAccount(props) {
   // dummy data props,context, redux etc
   const { register, handleSubmit } = useForm();
@@ -26,6 +36,9 @@ export default function EditAccount(props) {
   const onSubmit = (data) => {
     console.log(data);
     // make a put/patch request to backend to update users Account information
+  };
+  const onChange = (event) => {
+    console.log(event.target.checked);
   };
 
   return (
@@ -64,18 +77,42 @@ export default function EditAccount(props) {
         />
 
         <label style={labelStyle}>I want to</label>
-        <label>
+        <label class="ant-checkbox-wrapper">
+          <span class="ant-checkbox-checked">
+            <input
+              type="checkbox"
+              class="ant-checkbox-input"
+              name="helping"
+              value="volunteer"
+              ref={register}
+            />
+            <span class="ant-checkbox-inner"></span>
+          </span>
+          <span>Donate</span>
+        </label>
+
+        <label className="checkbox-label" style={checkBoxOptionStyle}>
           <input
             style={checkBoxStyle}
             type="checkbox"
             name="helping"
-            value="volunteer"
+            value="bla"
+            ref={register}
+          />
+          <Checkbox>Share Information</Checkbox>
+        </label>
+        <label className="checkbox-label" style={checkBoxOptionStyle}>
+          <input
+            style={checkBoxStyle}
+            type="checkbox"
+            name="helping"
+            value="moreInfo"
             ref={register}
           />
           <span style={customCheckBoxStyle}></span>
-          Volunteer
+          <span style={checkBoxTitle}>Donate</span>
         </label>
-        <label>
+        {/* <label style={checkBoxOptionStyle}>
           <input
             style={checkBoxStyle}
             type="checkbox"
@@ -84,9 +121,9 @@ export default function EditAccount(props) {
             ref={register}
           />
           <span style={customCheckBoxStyle}></span>
-          Donate
+          <span style={checkBoxTitle}>Donate</span>
         </label>
-        <label>
+        <label style={checkBoxOptionStyle}>
           <input
             style={checkBoxStyle}
             type="checkbox"
@@ -95,31 +132,31 @@ export default function EditAccount(props) {
             ref={register}
           />
           <span style={customCheckBoxStyle}></span>
-          Share Information
+          <span style={checkBoxTitle}>Share Information</span>
         </label>
         <label style={labelStyle}>I need</label>
-        <label>
+        <label style={checkBoxOptionStyle}>
           <input
             style={checkBoxStyle}
             type="checkbox"
-            name="helping"
+            name="needHelp"
             value="medical"
             ref={register}
           />
           <span style={customCheckBoxStyle}></span>
-          Medical Help
+          <span style={checkBoxTitle}>Medical Help</span>
         </label>
-        <label>
+        <label style={checkBoxOptionStyle}>
           <input
             style={checkBoxStyle}
             type="checkbox"
-            name="helping"
+            name="needHelp"
             value="other"
             ref={register}
           />
           <span style={customCheckBoxStyle}></span>
-          Other Help
-        </label>
+          <span style={checkBoxTitle}>Other Help</span>
+        </label> */}
         <input style={submitButtonStyle} type="submit" value="Save Changes" />
       </form>
     </div>
@@ -191,10 +228,19 @@ const customCheckBoxStyle = {
   position: "absolute",
   height: "2rem",
   width: "2rem",
-  border: "0.3rem solid #000000",
+  border: "0.1rem solid #646464",
+  borderRadius: "0.2rem",
 };
 
 const checkBoxStyle = {
   position: "absolute",
   opacity: "0",
+};
+
+const checkBoxTitle = {
+  marginLeft: "3rem",
+};
+
+const checkBoxOptionStyle = {
+  margin: "1rem 0",
 };

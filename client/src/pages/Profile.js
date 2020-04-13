@@ -1,6 +1,6 @@
 import React from "react";
 import { Popover, WhiteSpace } from "antd-mobile";
-import { MenuOutlined, EditOutlined } from "@ant-design/icons";
+import ProfilePic from "../components/Picture/ProfilePic";
 const linkedinIcon = require("../assets/icons/social-linkedin-blue.svg");
 const twitterIcon = require("../assets/icons/social-twitter-blue.svg");
 const editIcon = require("../assets/icons/edit.svg");
@@ -59,7 +59,7 @@ export const Profile = (props) => {
         >
           <img style={editIconStyle} src={editIcon} />
         </Popover>
-        <div style={initialsStyle}>{getInitials(firstName, lastName)}</div>
+        <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
         <div style={nameStyle}>{`${firstName + " " + lastName}`}</div>
         <div style={emailStyle}>{email}</div>
         <div style={locationStyle}>{location}</div>
