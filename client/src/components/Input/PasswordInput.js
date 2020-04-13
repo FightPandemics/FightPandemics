@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 import withLabel from "./with-label";
@@ -22,31 +22,24 @@ const StyleEye = {
   opacity: 0.5,
 };
 
-class PasswordInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isVisible: false, inputValue: "" };
-  }
+const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
+  const [isVisible, setVisible] = useState(false);
+  const passwordRef = useRef();
+  const EyeIcon = isVisible ? VisibilityIcon : VisibilityOffIcon;
+  return (
+    <>
+      <Input
+        style={inputStyle}
+        placeholder={placeholder}
+        isVisible={isVisible}
+        ref={passwordRef}
+        {...props}
+      />
+      <EyeIcon style={StyleEye} onClick={() => setVisible(!isVisible)} />
+    </>
+  );
+};
 
-  render() {
-    const EyeIcon = this.state.isVisible ? VisibilityIcon : VisibilityOffIcon;
-    return (
-      <React.Fragment>
-        <Input
-          style={this.props.inputStyle}
-          placeholder={this.props.placeholder}
-          isVisible={this.state.isVisible}
-          value={this.state.inputValue}
-          onChange={(e) => this.setState({ inputValue: e.target.value })}
-        />
-        <EyeIcon
-          style={StyleEye}
-          onClick={() => this.setState({ isVisible: !this.state.isVisible })}
-        />
-      </React.Fragment>
-    );
-  }
-}
 export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
   const PasswordField = withLabel(() => (
     <PasswordInput
