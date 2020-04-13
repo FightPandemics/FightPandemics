@@ -9,8 +9,9 @@ import { List } from "antd-mobile";
 export default styled(List)`
   &.am-list {
     .am-list-body {
+      border-top: unset;
       &::before {
-        content: normal !important;
+        content: unset !important;
       }
       .am-list-line {
         padding-right: 0;

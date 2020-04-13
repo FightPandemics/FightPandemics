@@ -1,75 +1,91 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
+import { optionsReducer, feedReducer } from "../reducers/feedReducers";
+import {
+  ADD_OPTION,
+  REMOVE_OPTION,
+  REMOVE_ALL_OPTIONS,
+  TOGGLE_STATE,
+  SET_VALUE,
+} from "../actions/feedActions";
 
 const FeedWraper = styled.div`
   width: 100%;
   padding: 20px 0;
 `;
 
-const Feed = () => {
-  const [modal, setModal] = useState(false);
-  const [activePanel, setActivePanel] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState({});
-  const [location, setLocation] = useState("");
+export const FeedContext = React.createContext();
 
-  const handleModal = (isOpen, panelIdx) => (e) => {
+const initialState = {
+  modal: false,
+  activePanel: null,
+  location: "",
+};
+
+const Feed = () => {
+  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const { modal, activePanel, location } = feedState;
+  const filters = Object.values(filterOptions);
+
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
+
+  const handleModal = (panelIdx) => (e) => {
     e.preventDefault();
-    setModal(isOpen);
-    setActivePanel(panelIdx > -1 ? `${panelIdx}` : null);
+    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(
+      SET_VALUE,
+      "activePanel",
+      panelIdx > -1 ? `${panelIdx}` : null,
+    );
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    setModal(false);
-    setActivePanel(null);
-    setSelectedFilters({});
-    setLocation("");
+    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(SET_VALUE, "location", "");
+    dispatchAction(SET_VALUE, "activePanel", null);
+    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
-  const handleLocation = (value) => {
-    setLocation(value);
-  };
-
-  const shareMyLocation = () => {};
+  const handleLocation = (value) =>
+    dispatchAction(SET_VALUE, "location", value);
 
   const handleOption = (label, option) => (e) => {
     e.preventDefault();
-    const options = selectedFilters[label] || [];
-    let optionIdx = options.indexOf(option);
-    let newOptions =
-      optionIdx > -1
-        ? options.filter((o) => o !== option)
-        : [...options, option];
-    if (newOptions.length) {
-      return setSelectedFilters({ ...selectedFilters, [label]: newOptions });
-    } else {
-      let newState = Object.assign({}, selectedFilters);
-      delete newState[label]; // remove filter from state, otherwise state is { a: [], b: [1, 2, 3] }
-      return setSelectedFilters(newState);
-    }
+    const options = selectedOptions[label] || [];
+    const hasOption = options.includes(option);
+    return optionsDispatch({
+      type: hasOption ? REMOVE_OPTION : ADD_OPTION,
+      payload: { option, label },
+    });
   };
 
   return (
-    <FeedWraper>
-      <FilterBox
-        modal={modal}
-        location={location}
-        filters={filterOptions}
-        activePanel={activePanel}
-        selectedFilters={selectedFilters}
-        handleOption={handleOption}
-        handleModal={handleModal}
-        handleQuit={handleQuit}
-        handleLocation={handleLocation}
-        setActivePanel={setActivePanel}
-        shareMyLocation={shareMyLocation}
-      />
-      <Posts filteredPosts={fakePosts} />
-    </FeedWraper>
+    <FeedContext.Provider
+      value={{
+        filters,
+        modal,
+        activePanel,
+        location,
+        dispatchAction,
+        selectedOptions,
+        handleOption,
+        handleModal,
+        handleQuit,
+        handleLocation,
+      }}
+    >
+      <FeedWraper>
+        <FilterBox />
+        <Posts filteredPosts={fakePosts} />
+      </FeedWraper>
+    </FeedContext.Provider>
   );
 };
 

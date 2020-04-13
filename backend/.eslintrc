@@ -8,6 +8,6 @@
   "rules": {
     "global-require": "off",
     "no-underscore-dangle": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["generateSchemas.js"]}]
+    "sort-keys": ["error", "asc"]
   }
 }

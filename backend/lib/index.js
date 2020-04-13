@@ -14,6 +14,9 @@ module.exports = function createApp(config) {
 
   app.register(require("./plugins/mongoose-connector"), config.mongo);
   app.register(require("./plugins/auth"), config.auth);
+  app.register(require("fastify-oas"), {
+    exposeRoute: true,
+  });
   app.use(cors());
 
   app.get("/api/version", version);

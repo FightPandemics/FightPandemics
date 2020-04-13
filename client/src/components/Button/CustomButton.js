@@ -15,6 +15,11 @@ export default styled(Button)`
   height: 100%;
   cursor: pointer;
   margin-right: 25px;
+
+  &:hover {
+    border: 1px solid ${ROYAL_BLUE} !important;
+  }
+
   ${(props) =>
     props.primary &&
     css`

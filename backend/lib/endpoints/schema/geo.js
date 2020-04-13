@@ -1,4 +1,11 @@
-// const geoSchema = Joi.object().keys({
-//   latitude: Joi.number().min(0).max(90).required(),
-//   longitude: Joi.number().min(-180).max(180).required(),
-// });
+const S = require("fluent-schema");
+
+const getCountrySchema = {
+  querystring: S.object()
+    .prop("latitude", S.number().minimum(0).maximum(90).required())
+    .prop("longitude", S.number().minimum(-180).maximum(180).required()),
+};
+
+module.exports = {
+  getCountrySchema,
+};

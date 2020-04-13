@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Card, Button, Badge } from "react-bootstrap";
+import { Badge } from "antd";
+import { Card } from "antd-mobile";
+
+import SubmitButton from "../components/Button/SubmitButton";
 
 // LatamBadgers!
 
@@ -31,42 +34,39 @@ export class AirTableCOVID extends Component {
     if (typeof covid === "object") {
       const listCovid = covid.map((e, index) => (
         <Card key={"card-" + index} style={{ marginTop: "16px" }}>
-          <Card.Header as="h5">{e.fields["Post Title"]}</Card.Header>
-          <Card.Body>
+          <h5>{e.fields["Post Title"]}</h5>
+          <div>
             <footer className="blockquote-footer">
               {e.fields["Region"] || "N/A"}
             </footer>
-            <Card.Title>
+            <h3>
               {e.fields["Tags Original"]
                 ? e.fields["Tags Original"].map((sub, i) => (
                     <React.Fragment key={"badge-" + index + "-" + i}>
-                      <Badge pill variant="primary">
-                        {sub}
-                      </Badge>{" "}
+                      <Badge>{sub}</Badge>{" "}
                     </React.Fragment>
                   ))
                 : ""}
-            </Card.Title>
-            <Card.Text>{e.fields["Description"]}</Card.Text>
+            </h3>
+            <p>{e.fields["Description"]}</p>
             {e.fields["Link to Product"] ? (
-              <Button
-                variant="primary"
+              <SubmitButton
                 href={e.fields["Link to Product"]}
+                title="Link to Product"
                 style={{ marginRight: "16px" }}
-              >
-                Link to Product
-              </Button>
+              />
             ) : (
               ""
             )}
             {e.fields["Link to Project Page"] ? (
-              <Button variant="primary" href={e.fields["Link to Project Page"]}>
-                Link to Project Page
-              </Button>
+              <SubmitButton
+                title="Link to Project Page"
+                href={e.fields["Link to Project Page"]}
+              />
             ) : (
               ""
             )}
-          </Card.Body>
+          </div>
         </Card>
       ));
       return <>{listCovid}</>;

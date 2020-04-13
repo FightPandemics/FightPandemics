@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "typeface-roboto";
 import "antd-mobile/dist/antd-mobile.css";
+import "antd/dist/antd.css";
 import "./index.scss";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-oldschool-dark';
