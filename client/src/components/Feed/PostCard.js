@@ -21,6 +21,10 @@ export default styled(Card)`
 
         img {
           margin-right: 0.7rem;
+          border-radius: 4rem;
+          width: 4rem;
+          height: 4rem;
+          max-width: 100%;
         }
       }
       .am-card-header-extra {
@@ -36,7 +40,6 @@ export default styled(Card)`
     .am-card-body {
       padding: 0;
       color: black;
-
       h1 {
         font-weight: bold;
         line-height: 2.7rem;
