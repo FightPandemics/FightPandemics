@@ -1,5 +1,5 @@
 import React from "react";
-export default ({ inputTitle, name, defaultValue, reference }) => {
+export default ({ inputTitle, name, defaultValue, reference, ...props }) => {
   return (
     <>
       <label style={{ color: "#425AF2" }}>{inputTitle}</label>
@@ -8,6 +8,7 @@ export default ({ inputTitle, name, defaultValue, reference }) => {
         name={name}
         defaultValue={defaultValue}
         ref={reference}
+        {...props}
       />
     </>
   );

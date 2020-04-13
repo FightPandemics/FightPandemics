@@ -1,22 +1,86 @@
 import React from "react";
 import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "../components/Picture/ProfilePic";
-const linkedinIcon = require("../assets/icons/social-linkedin-blue.svg");
-const twitterIcon = require("../assets/icons/social-twitter-blue.svg");
-const editIcon = require("../assets/icons/edit.svg");
-const menuIcon = require("../assets/icons/menu.svg");
+import LinkedinIcon from "../components/Icon/Linkedin-blue";
+import TwitterIcon from "../components/Icon/Twitter-blue";
+import Menu from "../components/Icon/menu";
+import Edit from "../components/Icon/edit";
+import Title from "../components/Title/Title";
+import styled from "styled-components";
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
 // dummy data props,context, redux etc
 const firstName = "Cees";
 const lastName = "Wang";
-const about =
-  "  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diamnonummy nibh euismod tincidunt ut laoreet dolore magna";
+const about = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
 const email = "ceeswang@Test.com";
 const location = "NY, USA";
 const needHelp = true;
 const Item = Popover.Item;
+
+const SectionHeader = (props) => (
+  <Title
+    style={{
+      color: "#939393",
+      fontWeight: "lighter",
+      fontSize: "1.5rem",
+      textAlign: "left",
+    }}
+    {...props}
+  />
+);
+const EditIcon = styled(Edit)`
+  color: #425af2;
+  align-self: flex-end;
+  margin-right: 2rem;
+  margin-top: 2rem;
+`;
+const MenuIcon = styled(Menu)`
+  color: #ffffff;
+  margin-right: 2rem;
+  margin-top: 3rem;
+  float: right;
+`;
+const BackgroundHeader = styled.div`
+  height: 23vh;
+  left: 0;
+  right: 0;
+  background-color: #425AF2;
+  border-bottom=right-radius: 30px;
+  position: relative;
+};
+`;
+const popover = (props) => {
+  return (
+    <Popover
+      mask
+      overlay={[
+        <Item key="editAccountInfo" value="Edit Account Information">
+          Edit Account Information
+        </Item>,
+        <Item
+          key="editProfile"
+          value="Edit Profile"
+          style={{ whiteSpace: "nowrap" }}
+        >
+          Edit Profile
+        </Item>,
+      ]}
+      align={{
+        overflow: { adjustY: 0, adjustX: 0 },
+        offset: [0, 10],
+      }}
+      onSelect={(opt) =>
+        opt.key === "editAccountInfo"
+          ? props.history.push("/edit-account")
+          : props.history.push("/edit-profile")
+      }
+    >
+      <EditIcon />
+    </Popover>
+  );
+};
 
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
@@ -27,42 +91,17 @@ export const Profile = (props) => {
   // dummy data props,context, redux etc
   return (
     <div style={profile}>
-      <div style={backgroundHeader}>
-        <div style={{ textAlign: "right" }}>
-          <img style={menuIconStyle} src={menuIcon} />
-        </div>
-      </div>
+      <BackgroundHeader>
+        <MenuIcon />
+      </BackgroundHeader>
       <div style={userInfoStyle} className="userInfo">
-        <Popover
-          mask
-          overlay={[
-            <Item key="editAccountInfo" value="Edit Account Information">
-              Edit Account Information
-            </Item>,
-            <Item
-              key="editProfile"
-              value="Edit Profile"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Edit Profile
-            </Item>,
-          ]}
-          align={{
-            overflow: { adjustY: 0, adjustX: 0 },
-            offset: [0, 10],
-          }}
-          onSelect={(opt) =>
-            opt.key === "editAccountInfo"
-              ? props.history.push("/edit-account")
-              : props.history.push("/edit-profile")
-          }
-        >
-          <img style={editIconStyle} src={editIcon} />
-        </Popover>
+        {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <div style={nameStyle}>{`${firstName + " " + lastName}`}</div>
-        <div style={emailStyle}>{email}</div>
-        <div style={locationStyle}>{location}</div>
+        <div style={{ color: "#000000", fontSize: "1.5rem" }}>{`${
+          firstName + " " + lastName
+        }`}</div>
+        <div style={{ color: "#77869E", fontSize: "1rem" }}>{email}</div>
+        <div style={{ color: "#5A6FF4", fontSize: "1.5rem" }}>{location}</div>
         <div style={iconsContainer}>
           <div style={statusContainer}>
             <img
@@ -74,20 +113,20 @@ export const Profile = (props) => {
             </div>
           </div>
           <div style={{ flex: "1" }}></div>
-          <img style={iconStyle} src={linkedinIcon} />
-          <img style={iconStyle} src={twitterIcon} />
+          <LinkedinIcon style={iconStyle} />
+          <TwitterIcon style={iconStyle} />
         </div>
       </div>
       <WhiteSpace />
       <div style={sections}>
         <section>
-          <div style={title}>About</div>
+          <SectionHeader title="About" />
           <WhiteSpace />
           <div style={aboutStyle}> {about}</div>
         </section>
         <WhiteSpace />
         <section>
-          <div style={title}>My activity</div>
+          <SectionHeader title="My Activity" />
           <WhiteSpace />
         </section>
       </div>
@@ -106,15 +145,6 @@ const profile = {
   flexDirection: "row",
 };
 
-const backgroundHeader = {
-  height: "23vh",
-  left: "0",
-  right: "0",
-  backgroundColor: "#425AF2",
-  borderBottomRightRadius: "30px",
-  position: "relative",
-};
-
 const userInfoStyle = {
   backgroundColor: "#FFFFFF",
   marginTop: "-13vh",
@@ -131,11 +161,6 @@ const userInfoStyle = {
   alignItems: "center",
 };
 
-const title = {
-  color: "#939393",
-  fontWeight: "lighter",
-};
-
 const sections = {
   display: "flex",
   marginLeft: "2.5rem",
@@ -147,18 +172,7 @@ const aboutStyle = {
   backgroundColor: "#FFFFFF",
   borderRadius: "5px",
 };
-const menuIconStyle = {
-  color: "#FFFFFF",
-  marginTop: "3rem",
-  marginRight: "2rem",
-};
 
-const editIconStyle = {
-  color: "#425AF2",
-  alignSelf: "flex-end",
-  marginRight: "2rem",
-  marginTop: "2rem",
-};
 const initialsStyle = {
   marginBottom: "1rem",
   borderRadius: "50%",
@@ -169,21 +183,6 @@ const initialsStyle = {
   width: "6rem",
   textAlign: "center",
   backgroundColor: "rgba(66, 90, 245, 0.04)",
-};
-
-const nameStyle = {
-  color: "#000000",
-  fontSize: "1.5rem",
-};
-
-const emailStyle = {
-  color: "#77869E",
-  fontSize: "1rem",
-};
-
-const locationStyle = {
-  color: "#5A6FF4",
-  fontSize: "1.5rem",
 };
 
 const iconsContainer = {

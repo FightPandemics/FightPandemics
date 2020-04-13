@@ -15,6 +15,12 @@ const personalURL = "http://personal.com";
 
 const editAccount = true;
 
+const StyledCheckbox = styled(Checkbox)`
+  &.ant-checkbox-checked {
+    color: red;
+  }
+`;
+
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
@@ -99,6 +105,7 @@ export default function EditAccount(props) {
             value="bla"
             ref={register}
           />
+          <StyledCheckbox>TESTING</StyledCheckbox>
           <Checkbox>Share Information</Checkbox>
         </label>
         <label className="checkbox-label" style={checkBoxOptionStyle}>
