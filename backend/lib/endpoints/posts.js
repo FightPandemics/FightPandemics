@@ -86,13 +86,17 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
-      const { postId } = req.params;
+      const { body, params } = req;
+      const { postId } = params;
       // todo: get user id from JWT
-      //  check if user is authorized to comment (depending on visibility for that post too)
-      req.body.authorId = ""; // req.user.id;
-      req.body.postId = postId;
-      const newComment = await new Comment(req.body).save();
-      const updatedPost = await Post.findOneAndUpdate(
+      //  check if user is authorized to comment (depending on visibility for that post)
+      const commentProps = {
+        ...body,
+        authorId: "", // req.user.id
+        postId,
+      };
+      const newComment = await new Comment(commentProps).save();
+      const updatedPost = await Comment.findOneAndUpdate(
         { _id: postId },
         { $push: { comments: newComment } },
         { new: true },
