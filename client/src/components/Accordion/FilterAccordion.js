@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Accordion } from "antd-mobile";
 
 export const FilterAccordion = styled(Accordion)`
+  font-family: "Poppins";
   &.am-accordion {
     padding: 2rem 0;
     &:before {
