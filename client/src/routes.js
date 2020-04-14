@@ -8,6 +8,7 @@ import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
+import CreatePost from "./pages/CreatePost";
 
 export const routes = [
   {
@@ -62,5 +63,9 @@ export const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/create-post",
+    component: CreatePost,
   },
 ];

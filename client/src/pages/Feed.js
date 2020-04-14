@@ -4,6 +4,7 @@ import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
+import CreatPostIcon from "../components/Icon/create-post";
 import { optionsReducer, feedReducer } from "../reducers/feedReducers";
 import {
   ADD_OPTION,
@@ -18,6 +19,12 @@ const FeedWraper = styled.div`
   width: 100%;
   padding: 20px 0;
 `;
+
+const ceatePostStyles = {
+  position: "fixed",
+  bottom: "5%",
+  right: "5%",
+};
 
 export const FeedContext = React.createContext();
 
@@ -67,6 +74,10 @@ const Feed = () => {
     });
   };
 
+  const handleCreatePost = () => {
+    console.log("clicked");
+  };
+
   return (
     <FeedContext.Provider
       value={{
@@ -85,6 +96,7 @@ const Feed = () => {
       <FeedWraper>
         <FilterBox />
         <Posts filteredPosts={fakePosts} />
+        <CreatPostIcon onClick={handleCreatePost} style={ceatePostStyles} />
       </FeedWraper>
     </FeedContext.Provider>
   );
