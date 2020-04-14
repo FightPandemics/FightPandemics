@@ -1,3 +1,4 @@
+const Ajv = require("ajv");
 const cors = require("cors");
 const fastify = require("fastify");
 
@@ -11,6 +12,16 @@ const version = require("./endpoints/version");
 module.exports = function createApp(config) {
   const app = fastify({
     logger: true,
+  });
+  const ajv = new Ajv({
+    removeAdditional: false,
+    useDefaults: true,
+    coerceTypes: true,
+    allErrors: true,
+    nullable: true,
+  });
+  app.setSchemaCompiler((schema) => {
+    return ajv.compile(schema);
   });
 
   app.register(require("./plugins/mongoose-connector"), config.mongo);
