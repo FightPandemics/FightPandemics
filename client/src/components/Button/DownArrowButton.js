@@ -12,6 +12,8 @@ const Option = styled(Button)`
   margin-top: 0.7rem;
   margin-right: 0.7rem;
   height: 100%;
+  cursor: pointer;
+  border: none;
 
   > * {
     font-family: "Poppins";
