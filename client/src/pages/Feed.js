@@ -14,6 +14,7 @@ import {
 } from "../actions/feedActions";
 
 const FeedWraper = styled.div`
+  font-family: "Poppins";
   width: 100%;
   padding: 20px 0;
 `;

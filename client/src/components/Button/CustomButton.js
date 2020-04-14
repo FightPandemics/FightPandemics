@@ -17,6 +17,7 @@ export default styled(Button)`
   height: 100%;
   cursor: pointer;
   margin-right: 25px;
+  font-family: "Poppins";
 
   &:hover {
     border: 1px solid ${colors.royalBlue} !important;
