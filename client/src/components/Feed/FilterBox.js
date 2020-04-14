@@ -4,7 +4,7 @@ import { Modal, List } from "antd-mobile";
 import CustomList from "../../components/List/CustomList";
 import CustomButton from "../../components/Button/CustomButton";
 import FilterTitle from "../Typography/Title/FilterTitle";
-import FilterOptionButton from "../Button/FilterOptionButton";
+import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
 
@@ -17,7 +17,7 @@ export default () => {
   const { filters, modal, handleModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
-      <FilterOptionButton
+      <DownArrowButton
         key={idx}
         label={filter.label}
         handleClick={handleModal(idx)}
