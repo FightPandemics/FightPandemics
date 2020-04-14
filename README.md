@@ -20,6 +20,7 @@ Please check our notion to get a better understanding of the problem that we are
     - Limit the use of inline styling
     - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
     - Use global colors by importing values from `client/src/constants/colors.js`
+    - We have the beginnings of a theme. The file can be found here: `src/constants/theme.js` which has sections for typography, colors, buttons styles and media queries.
     - Refrain from making the Redux state too big as it will affect speed performance. React’s Context API is ONLY helpful for avoiding nested prop threading so stick with Redux where Context fails.
     - No use of other libraries like Material UI
     - For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
