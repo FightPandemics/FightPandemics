@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button } from "antd-mobile";
 import DownArrow from "../Icon/down-arrow";
+import { ROYAL_BLUE } from "../../constants/colors";
 
 const Option = styled(Button)`
   display: inline-block;
@@ -15,14 +16,40 @@ const Option = styled(Button)`
   cursor: pointer;
   border: none;
 
+  ${(props) =>
+    props.long &&
+    css`
+      padding: 0 1rem;
+    `}
+
+  ${(props) =>
+    props.border &&
+    css`
+      border: 0.1rem solid ${ROYAL_BLUE} !important;
+    `}
+
   > * {
     font-family: "Poppins";
     font-size: 1.3rem;
     font-weight: 600;
     letter-spacing: 0.1rem;
 
+    ${(props) =>
+      props.long &&
+      css`
+        font-weight: 400;
+        font-size: 1.1rem;
+        letter-spacing: 0;
+      `}
+
     &:first-child {
       margin-right: 1.2rem;
+
+      ${(props) =>
+        props.long &&
+        css`
+          margin-right: 2rem;
+        `}
     }
   }
 
@@ -40,9 +67,16 @@ const Option = styled(Button)`
   }
 `;
 
-export default ({ label, handleClick, color, bgcolor }) => {
+export default ({ label, handleClick, color, bgcolor, long, border }) => {
   return (
-    <Option size="small" color={color} bgcolor={bgcolor} onClick={handleClick}>
+    <Option
+      size="small"
+      long={long}
+      border={border}
+      color={color}
+      bgcolor={bgcolor}
+      onClick={handleClick}
+    >
       {label}
       <DownArrow />
     </Option>
