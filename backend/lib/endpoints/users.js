@@ -41,10 +41,6 @@ async function routes(app) {
     async (req, reply) => {
       try {
         const { email, name, country, neighborhood } = req.body;
-        console.log(email)
-        console.log(name)
-        console.log(country)
-        console.log(neighborhood)
         return new User({
           "firstName": "myname",
           "email": "yay"
