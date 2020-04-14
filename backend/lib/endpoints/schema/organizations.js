@@ -2,6 +2,7 @@ const S = require("fluent-schema");
 
 const createOrganizationSchema = {
   body: S.object()
+    .additionalProperties(false)
     .prop("email", S.string().required())
     .prop("global", S.boolean())
     .prop("industry", S.string().required())
@@ -25,6 +26,7 @@ const getOrganizationsSchema = {
 
 const updateOrganizationSchema = {
   body: S.object()
+    .additionalProperties(false)
     .prop("address", S.string())
     .prop("androidUrl", S.string())
     .prop("description", S.string())
