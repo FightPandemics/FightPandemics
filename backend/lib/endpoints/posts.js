@@ -1,4 +1,5 @@
 const httpErrors = require("http-errors");
+const mongoose = require("mongoose");
 
 const {
   getPostsSchema,
@@ -47,10 +48,27 @@ async function routes(app) {
     "/:postId",
     { preValidation: [app.authenticate], schema: getPostByIdSchema },
     async (req, reply) => {
-      const post = await Post.findById(req.params.postId);
+      const { postId } = req.params;
+      const post = await Post.findById(postId);
       if (post === null) {
         return reply.send(new httpErrors.NotFound());
       }
+      post.comments = await Comment.aggregate([
+        {
+          $match: {
+            parentId: null,
+            postId: mongoose.Types.ObjectId(postId),
+          },
+        },
+        {
+          $lookup: {
+            as: "children",
+            foreignField: "parentId",
+            from: "comments",
+            localField: "_id",
+          },
+        },
+      ]);
       return post;
     },
   );
@@ -87,21 +105,22 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
       const { body, params } = req;
+      const { parentId } = body;
       const { postId } = params;
       // todo: get user id from JWT
       //  check if user is authorized to comment (depending on visibility for that post)
+      if (parentId) {
+        const parentPost = await Post.findById(parentId);
+        if (parentPost.postId !== postId) {
+          return new httpErrors.BadRequest();
+        }
+      }
       const commentProps = {
         ...body,
         authorId: "", // req.user.id
         postId,
       };
-      const newComment = await new Comment(commentProps).save();
-      const updatedPost = await Comment.findOneAndUpdate(
-        { _id: postId },
-        { $push: { comments: newComment } },
-        { new: true },
-      );
-      return updatedPost;
+      return new Comment(commentProps).save();
     },
   );
 
