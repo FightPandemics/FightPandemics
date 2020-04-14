@@ -15,13 +15,18 @@ const FilterBoxWrapper = styled.div`
 
 export default () => {
   const feedContext = useContext(FeedContext);
-  const { filters, modal, handleModal, handleQuit } = feedContext;
+  const {
+    filters,
+    filterBoxModal,
+    handleFilterBoxModal,
+    handleQuit,
+  } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
       <DownArrowButton
         key={idx}
         label={filter.label}
-        handleClick={handleModal(idx)}
+        handleClick={handleFilterBoxModal(idx)}
         color={ROYAL_BLUE}
         bgcolor={SELAGO}
       />
@@ -35,8 +40,8 @@ export default () => {
       {renderFilterOptions(filters)}
       <Modal
         popup
-        visible={modal}
-        onClose={handleModal(null)}
+        visible={filterBoxModal}
+        onClose={handleFilterBoxModal(null)}
         animationType="slide-up"
       >
         <FilterAccordion />
@@ -57,7 +62,7 @@ export default () => {
               roundborder="true"
               large="true"
               primary="true"
-              onClick={handleModal(null)}
+              onClick={handleFilterBoxModal(null)}
             >
               Apply filters
             </CustomButton>

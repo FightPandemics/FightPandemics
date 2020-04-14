@@ -1,4 +1,6 @@
 import React, { useReducer } from "react";
+import { Link } from "react-router-dom";
+import { Modal } from "antd-mobile";
 import styled from "styled-components";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
@@ -29,7 +31,8 @@ const ceatePostStyles = {
 export const FeedContext = React.createContext();
 
 const initialState = {
-  modal: false,
+  filterBoxModal: false,
+  createPostModal: false,
   activePanel: null,
   location: "",
 };
@@ -37,15 +40,15 @@ const initialState = {
 const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const { modal, activePanel, location } = feedState;
+  const { filterBoxModal, createPostModal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const handleModal = (panelIdx) => (e) => {
+  const handleFilterBoxModal = (panelIdx) => (e) => {
     e.preventDefault();
-    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(TOGGLE_STATE, "filterBoxModal");
     dispatchAction(
       SET_VALUE,
       "activePanel",
@@ -55,7 +58,7 @@ const Feed = () => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    dispatchAction(TOGGLE_STATE, "modal");
+    dispatchAction(TOGGLE_STATE, "filterBoxModal");
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
@@ -75,20 +78,54 @@ const Feed = () => {
   };
 
   const handleCreatePost = () => {
-    console.log("clicked");
+    dispatchAction(TOGGLE_STATE, "createPostModal");
+  };
+
+  const renderCreatePostModal = () => {
+    return (
+      <Modal
+        onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+        maskClosable={true}
+        closable={true}
+        visible={createPostModal}
+        transparent
+      >
+        Continue Posting As:
+        <Link
+          to={{
+            pathname: "/create-post",
+            state: {
+              filters,
+            },
+          }}
+        >
+          Individual
+        </Link>
+        <Link
+          to={{
+            pathname: "/create-post",
+            state: {
+              filters,
+            },
+          }}
+        >
+          Organization
+        </Link>
+      </Modal>
+    );
   };
 
   return (
     <FeedContext.Provider
       value={{
         filters,
-        modal,
+        filterBoxModal,
         activePanel,
         location,
         dispatchAction,
         selectedOptions,
         handleOption,
-        handleModal,
+        handleFilterBoxModal,
         handleQuit,
         handleLocation,
       }}
@@ -97,6 +134,7 @@ const Feed = () => {
         <FilterBox />
         <Posts filteredPosts={fakePosts} />
         <CreatPostIcon onClick={handleCreatePost} style={ceatePostStyles} />
+        {renderCreatePostModal()}
       </FeedWraper>
     </FeedContext.Provider>
   );
