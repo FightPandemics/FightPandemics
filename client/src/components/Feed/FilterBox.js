@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
 import CustomList from "../../components/List/CustomList";
 import CustomButton from "../../components/Button/CustomButton";
-import FilterTitle from "../Typography/Title/FilterTitle";
+import CustomH5 from "../Typography/Title/CustomH5";
 import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
-import { ROYAL_BLUE, SELAGO } from "../../constants/colors";
+import { ROYAL_BLUE, SELAGO, DARK_GRAY } from "../../constants/colors";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -29,7 +29,9 @@ export default () => {
   };
   return (
     <FilterBoxWrapper>
-      <FilterTitle>Filter by</FilterTitle>
+      <CustomH5 color={DARK_GRAY} fontsize={"1.4rem"}>
+        Filter by
+      </CustomH5>
       {renderFilterOptions(filters)}
       <Modal
         popup
