@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
 import CustomList from "../../components/List/CustomList";
 import CustomButton from "../../components/Button/CustomButton";
-import CustomH5 from "../Typography/Title/CustomH5";
+import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
@@ -34,9 +34,9 @@ export default () => {
   };
   return (
     <FilterBoxWrapper>
-      <CustomH5 color={DARK_GRAY} fontsize={"1.4rem"}>
+      <CustomH1 color={DARK_GRAY} fontsize={"1.4rem"} fontweight={"normal"}>
         Filter by
-      </CustomH5>
+      </CustomH1>
       {renderFilterOptions(filters)}
       <Modal
         popup
