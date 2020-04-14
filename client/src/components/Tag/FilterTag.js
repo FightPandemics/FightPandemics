@@ -8,20 +8,6 @@ const FilterTag = styled(Tag)`
     padding: 0 1.5rem;
   }
 
-  &.am-tag-normal,
-  &.am-tag-active,
-  &.am-tag-disabled {
-    border: 0.1rem solid ${ROYAL_BLUE} !important;
-    border-radius: 4rem !important;
-    color: ${ROYAL_BLUE};
-    font-size: 1.1rem;
-    margin: 0.5rem 0.3rem;
-
-    &:before {
-      border: unset !important;
-    }
-  }
-
   &.am-tag-disabled {
     background-color: unset;
     padding: 0 0.8rem;
@@ -31,6 +17,20 @@ const FilterTag = styled(Tag)`
     color: #fff !important;
     background-color: ${ROYAL_BLUE} !important;
     border-radius: 4rem !important;
+  }
+
+  &.am-tag-normal,
+  &.am-tag-active,
+  &.am-tag-disabled {
+    border: 0.1rem solid ${ROYAL_BLUE} !important;
+    color: ${ROYAL_BLUE};
+    border-radius: 4rem !important;
+    font-size: 1.1rem;
+    margin: 0.5rem 0.3rem;
+
+    &:before {
+      border: unset !important;
+    }
   }
 `;
 
