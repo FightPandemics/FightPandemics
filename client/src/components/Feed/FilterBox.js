@@ -7,6 +7,7 @@ import FilterTitle from "../Typography/Title/FilterTitle";
 import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
+import { ROYAL_BLUE, SELAGO } from "../../constants/colors";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -21,6 +22,8 @@ export default () => {
         key={idx}
         label={filter.label}
         handleClick={handleModal(idx)}
+        color={ROYAL_BLUE}
+        bgcolor={SELAGO}
       />
     ));
   };

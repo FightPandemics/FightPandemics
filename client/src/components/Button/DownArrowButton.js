@@ -1,52 +1,48 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "antd-mobile";
-import { SELAGO, ROYAL_BLUE } from "../../constants/colors";
 import DownArrow from "../Icon/down-arrow";
 
 const Option = styled(Button)`
   display: inline-block;
-  color: ${ROYAL_BLUE};
-  background-color: ${SELAGO};
-  cursor: pointer;
-  font-size: 1.3rem;
-  height: 100%;
-  margin-top: 0.7rem;
-  margin-right: 0.7rem;
-  line-height: 3rem;
+  color: ${(props) => props.color};
+  background-color: ${(props) => props.bgcolor};
   border-radius: 0.6rem;
   padding: 0.5rem 1rem;
+  margin-top: 0.7rem;
+  margin-right: 0.7rem;
+  height: 100%;
+
+  > * {
+    font-family: "Poppins";
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+
+    &:first-child {
+      margin-right: 1.2rem;
+    }
+  }
+
+  &:hover,
+  &:active,
+  &.am-button-active {
+    color: ${(props) => props.bgcolor};
+    background-color: ${(props) => props.color};
+  }
+
   &.am-button {
     &:before {
       content: normal !important;
     }
   }
-  &:hover,
-  &:active,
-  &.am-button-active {
-    background-color: ${ROYAL_BLUE};
-    color: #fff;
-  }
 `;
 
-const labelWrapperStyles = {
-  display: "flex",
-  alignItems: "center",
-};
-
-const labelStyles = {
-  marginRight: "1rem",
-  fontWeight: "600",
-  letterSpacing: "0.1rem",
-};
-
-export default ({ label, handleClick }) => {
+export default ({ label, handleClick, color, bgcolor }) => {
   return (
-    <Option>
-      <div onClick={handleClick} style={labelWrapperStyles}>
-        <span style={labelStyles}>{label}</span>
-        <DownArrow />
-      </div>
+    <Option size="small" color={color} bgcolor={bgcolor} onClick={handleClick}>
+      {label}
+      <DownArrow />
     </Option>
   );
 };
