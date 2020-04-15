@@ -48,7 +48,7 @@ const Option = styled(Button)`
       ${(props) =>
         props.long &&
         css`
-          margin-right: 2rem;
+          margin-right: 3rem;
         `}
     }
   }

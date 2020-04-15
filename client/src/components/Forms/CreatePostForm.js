@@ -69,12 +69,6 @@ export default () => {
       <Form.Item className="body" name="body">
         <StyledTextArea rows={12} placeholder="Write a post." />
       </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Post
-        </Button>
-      </Form.Item>
     </StyledForm>
   );
 };
