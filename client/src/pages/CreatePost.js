@@ -62,9 +62,10 @@ export default (props) => {
         <CustomModal
           content={
             <RadioGroup
-              block={true}
+              flex={true}
               onChange={handleSettings}
               options={options}
+              value={settings[selected]}
             />
           }
           onClose={closeModal}
@@ -91,6 +92,7 @@ export default (props) => {
           <RadioGroup
             onChange={(e) => setSettings({ ...settings, help: e.target.value })}
             options={helpTypes.options}
+            value={settings.help}
           />
         </div>
       </div>
