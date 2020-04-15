@@ -11,10 +11,6 @@ const CommentSchema = new Schema(
       required: true,
       type: String,
     },
-    createdAt: {
-      required: true,
-      type: Date,
-    },
     parentId: {
       ref: "Comment",
       type: Schema.Types.ObjectId,
@@ -30,8 +26,19 @@ const CommentSchema = new Schema(
   },
 );
 
+CommentSchema.add({
+  childCount: {
+    type: Schema.Types.Number,
+  },
+  children: {
+    ref: "Comment",
+    type: [CommentSchema],
+  },
+});
+
 CommentSchema.index({
   createdAt: 1,
+  parentId: 1,
   postId: 1,
 });
 
