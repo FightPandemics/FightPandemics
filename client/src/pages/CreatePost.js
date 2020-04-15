@@ -4,10 +4,11 @@ import { Radio } from "antd";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
+import CreatePostForm from "../components//Forms/CreatePostForm";
 import { ROYAL_BLUE, DARK_GRAY } from "../constants/colors";
 
 const CreatePostWrapper = styled.div`
-  font-famlily: "Poppins";
+  font-family: "Poppins";
   padding: 2rem 0;
 
   .title {
@@ -74,6 +75,7 @@ export default (props) => {
         </div>
       </div>
       <HorizontalLine />
+      <CreatePostForm />
     </CreatePostWrapper>
   );
 };
