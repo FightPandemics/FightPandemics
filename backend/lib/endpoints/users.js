@@ -36,7 +36,7 @@ async function routes(app) {
     },
   );
 
-  app.post(
+  app.put(
     "/signup/createProfile",
     { schema: createProfileSchema },
     async (req, reply) => {
