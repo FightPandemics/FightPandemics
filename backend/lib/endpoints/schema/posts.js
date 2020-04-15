@@ -46,9 +46,7 @@ const updatePostSchema = {
 };
 
 const likeUnlikePostSchema = {
-  params: S.object()
-    .prop("postId", S.string().required())
-    .prop("userId", S.string().required()),
+  params: S.object().prop("postId", S.string().required()),
 };
 
 const deletePostSchema = {
@@ -60,12 +58,27 @@ const addCommentSchema = {
   params: S.object().prop("postId", S.string().required()),
 };
 
+const deleteCommentSchema = {
+  params: S.object()
+    .prop("commentId", S.string().required())
+    .prop("postId", S.string().required()),
+};
+
+const updateCommentSchema = {
+  body: S.object().prop("comment", S.string().required()),
+  params: S.object()
+    .prop("commentId", S.string().required())
+    .prop("postId", S.string().required()),
+};
+
 module.exports = {
   addCommentSchema,
   createPostSchema,
+  deleteCommentSchema,
   deletePostSchema,
   getPostByIdSchema,
   getPostsSchema,
   likeUnlikePostSchema,
+  updateCommentSchema,
   updatePostSchema,
 };
