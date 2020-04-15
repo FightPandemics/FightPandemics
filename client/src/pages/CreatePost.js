@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Radio } from "antd";
 import { Modal } from "antd-mobile";
+import CustomModal from "../components/CreatePost/CustomModal";
+import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
@@ -38,6 +40,11 @@ export default (props) => {
     setOptions(setting.options);
     setSelected(setting.type);
   };
+
+  const handleSettings = (e) => {
+    setSettings({ ...settings, [selected]: e.target.value });
+  };
+
   return (
     <CreatePostStyled>
       <CustomH1
@@ -49,25 +56,11 @@ export default (props) => {
         Create a Post
       </CustomH1>
       <div className="settings">
-        <Modal
+        <CustomModal
+          content={<RadioGroup options={options} />}
           onClose={() => setModal(!modal)}
-          maskClosable={true}
-          closable={true}
           visible={modal}
-          transparent
-        >
-          <Radio.Group
-            onChange={(e) =>
-              setSettings({ ...settings, [selected]: e.target.value })
-            }
-          >
-            {options.map((option, idx) => (
-              <Radio value={option} key={idx}>
-                {option.text}
-              </Radio>
-            ))}
-          </Radio.Group>
-        </Modal>
+        />
         <div className="buttons">
           <DownArrowButton
             handleClick={showModal(shareWith)}
