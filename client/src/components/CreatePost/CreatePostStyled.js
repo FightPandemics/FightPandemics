@@ -39,5 +39,6 @@ export default styled.div`
   .submit-btn {
     font-family: "Poppins";
     background-color: ${ROYAL_BLUE};
+    margin-bottom: 3rem;
   }
 `;

@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import FilterTag from "./FilterTag";
-import { DARK_GRAY } from "../../constants/colors";
+import { DARK_GRAY, ROYAL_BLUE } from "../../constants/colors";
 
 const AddTagsWrapper = styled.div`
-  font-family: "Poppins";
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 
@@ -15,10 +14,17 @@ const AddTagsWrapper = styled.div`
     color: ${DARK_GRAY};
   }
 
+  .am-tag-active,
+  .am-tag-disabled {
+    border: 0.1rem solid ${ROYAL_BLUE} !important;
+    background-color: #fff !important;
+    color: ${ROYAL_BLUE} !important;
+  }
+
   p {
+    font-family: "Poppins";
     font-size: 1.1rem;
     color: black;
-    font-weight: bold;
   }
 `;
 
