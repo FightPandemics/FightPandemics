@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Tag } from "antd-mobile";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { theme } from "../../constants/theme";
+
+const { royalBlue } = theme.colors;
+const { xsmall } = theme.typography.size;
 
 const FilterTag = styled(Tag)`
   &.am-tag-normal {
@@ -15,17 +18,17 @@ const FilterTag = styled(Tag)`
 
   &.am-tag-active {
     color: #fff !important;
-    background-color: ${ROYAL_BLUE} !important;
+    background-color: ${royalBlue} !important;
     border-radius: 4rem !important;
   }
 
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
-    border: 0.1rem solid ${ROYAL_BLUE} !important;
-    color: ${ROYAL_BLUE};
+    font-size: ${xsmall};
+    color: ${royalBlue};
+    border: 0.1rem solid ${royalBlue} !important;
     border-radius: 4rem !important;
-    font-size: 1.1rem;
     margin: 0.5rem 0.3rem;
 
     &:before {
