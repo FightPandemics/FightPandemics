@@ -7,6 +7,7 @@ const {
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
+  likeUnlikeCommentSchema,
   likeUnlikePostSchema,
   updateCommentSchema,
   updatePostSchema,
@@ -251,6 +252,52 @@ async function routes(app) {
       return {
         likes: updatedPost.likes,
         likesCount: updatedPost.likesCount,
+      };
+    },
+  );
+
+  app.put(
+    "/:postId/comments/:commentId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    async (req) => {
+      const { commentId, postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, likes: { $ne: userId }, postId },
+        { $inc: { likesCount: 1 }, $push: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedComment.likes,
+        likesCount: updatedComment.likesCount,
+      };
+    },
+  );
+
+  app.delete(
+    "/:postId/comments/:commentId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    async (req) => {
+      const { commentId, postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, likes: userId, postId },
+        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedComment.likes,
+        likesCount: updatedComment.likesCount,
       };
     },
   );

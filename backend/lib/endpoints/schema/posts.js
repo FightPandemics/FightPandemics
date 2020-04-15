@@ -49,6 +49,13 @@ const likeUnlikePostSchema = {
   params: S.object().prop("postId", S.string().required()),
 };
 
+const likeUnlikeCommentSchema = {
+  params: S.object()
+    .prop("postId", S.string().required())
+    .prop("commentId", S.string().required())
+    .prop("userId", S.string().required()),
+};
+
 const deletePostSchema = {
   params: S.object().prop("postId", S.string().required()),
 };
@@ -78,6 +85,7 @@ module.exports = {
   deletePostSchema,
   getPostByIdSchema,
   getPostsSchema,
+  likeUnlikeCommentSchema,
   likeUnlikePostSchema,
   updateCommentSchema,
   updatePostSchema,
