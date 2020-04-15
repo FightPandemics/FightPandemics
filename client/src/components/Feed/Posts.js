@@ -1,6 +1,5 @@
 import React from "react";
 import Post from "./Post";
-import CreatPostIcon from "../Icon/create-post";
 
 export default ({ filteredPosts }) => {
   return (
@@ -8,7 +7,6 @@ export default ({ filteredPosts }) => {
       {filteredPosts.map((post) => (
         <Post post={post} key={post._id} />
       ))}
-      
     </div>
   );
 };
