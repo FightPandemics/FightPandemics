@@ -26,6 +26,7 @@ const ceatePostStyles = {
   position: "fixed",
   bottom: "5%",
   right: "5%",
+  cursor: "pointer",
 };
 
 export const FeedContext = React.createContext();

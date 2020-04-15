@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { DARK_GRAY } from "../../../constants/colors";
 
 export default styled.h1`
   font-family: "Poppins";

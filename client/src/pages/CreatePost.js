@@ -7,7 +7,7 @@ import HorizontalLine from "../components/Icon/horizontal-line";
 import CreatePostForm from "../components//Forms/CreatePostForm";
 import SubmitButton from "../components/Button/SubmitButton";
 import AddTags from "../components/Tag/AddTags";
-import { ROYAL_BLUE, DARK_GRAY } from "../constants/colors";
+import { ROYAL_BLUE } from "../constants/colors";
 
 const CreatePostWrapper = styled.div`
   font-family: "Poppins";
