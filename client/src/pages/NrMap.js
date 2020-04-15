@@ -1,165 +1,178 @@
-import React, { Component, createRef } from "react";
-import Script from "react-load-script";
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Drop } from "grommet";
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
 
-const Wrapper = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(400px, 4fr))",
-  gridColumnGap: "0.5em",
-};
+const PhoneNo = styled.p`
+  color: #425af2;
+`;
 
-const Nested = {
-  height: "400px",
-  overflowY: "auto",
-};
-
-const MapStyle = {
-  margin: "2% auto",
-  width: "100%",
-  maxWidth: "800px",
-  height: "50vh",
-  minHeight: "300px",
-};
+const Wrapper = styled.div`
+  display: block;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-rows: auto;
+  align-items: stretch;
+  grid-column-gap: 0.5em;
+`;
+const Nested = styled.div`
+  height: 309px;
+  overflow-y: auto;
+`;
+const MapStyle = styled.div`
+  margin: 2% auto;
+  width: 100%;
+  maxwidth: 800px;
+  height: 50vh;
+  minheight: 300px;
+`;
+const Cards = styled.div`
+  border: 1px solid #eee;
+  box-shadow: 0 2px 6px #bababa;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+`;
 
 class NrMap extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      latitude: 52.520008,
+      longitude: 13.404954,
+      rec: [],
+      plcDtl: [],
+    };
+    this.googleMapRef = React.createRef();
   }
+  componentDidMount() {
+    const googleMapScript = document.createElement("script");
+    googleMapScript.src = url;
+    window.document.body.appendChild(googleMapScript);
 
-  handleScriptLoad() {
-    let map;
-    let pyrmont = new window.google.maps.LatLng(13.0827, 80.2707);
-
-    map = new window.google.maps.Map(document.getElementById("map"), {
-      center: pyrmont,
-      zoom: 12,
+    googleMapScript.addEventListener("load", () => {
+      this.googleMap = this.createGoogleMap();
+      this.marker = this.createMarker();
+      this.place = this.places();
+    });
+    this.getMyLocation();
+  }
+  createGoogleMap = () =>
+    new window.google.maps.Map(this.googleMapRef.current, {
+      zoom: 13,
+      center: {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+      },
       disableDefaultUI: true,
     });
+  places = () => {
+    new window.google.maps.places.PlacesService(this.googleMap).nearbySearch(
+      {
+        location: {
+          lat: this.state.latitude,
+          lng: this.state.longitude,
+        },
+        radius: 3000,
+        type: ["hospital"],
+      },
+      (results, status) => {
+        if (status !== "OK") return;
+        this.setState({ rec: results }, () => {
+          console.log(this.state.rec.place_id);
+          this.createMarker();
+          this.placeDetails();
+        });
+      },
+    );
+  };
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          let pos = new window.google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude,
-          );
-
-          new window.google.maps.InfoWindow({
-            map: map,
-          });
-
-          map.setCenter(pos);
-          let service = new window.google.maps.places.PlacesService(map);
-          service.nearbySearch(
-            {
-              location: pos,
-              radius: 3000,
-              type: ["hospital"],
-            },
-            function (results, status) {
-              if (status !== "OK") return;
-              createMarkers(results);
-            },
-          );
-
-          function createMarkers(places) {
-            let bounds = new window.google.maps.LatLngBounds();
-            for (var i = 0, place; (place = places[i]); i++) {
-              var request = {
-                placeId: place.place_id,
-                fields: [
-                  "name",
-                  "formatted_address",
-                  "formatted_phone_number",
-                  "opening_hours",
-                  "geometry",
-                  "icon",
-                ],
-              };
-              service.getDetails(request, callback);
-
-              function callback(place, status) {
-                if (
-                  status == window.google.maps.places.PlacesServiceStatus.OK
-                ) {
-                  let board = document.createElement("div");
-                  let str = "";
-                  str +=
-                    '<div style="border: 1px solid #eee;box-shadow: 0 2px 6px #bababa;border-radius: 10px;padding: 20px;margin: 10px;">';
-                  str += "<h3>" + place.name + "</h3>";
-                  str +=
-                    '<div><p class="card-text">' +
-                    place.formatted_address +
-                    '</p><p style="color: #425af2;" }>' +
-                    place.formatted_phone_number +
-                    "</p></div>";
-                  let image = {
-                    url: place.icon,
-                    size: new window.google.maps.Size(71, 71),
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(17, 34),
-                    scaledSize: new window.google.maps.Size(25, 25),
-                  };
-                  new window.google.maps.Marker({
-                    map: map,
-                    icon: image,
-                    title: place.name,
-                    position: place.geometry.location,
-                  });
-                  bounds.extend(place.geometry.location);
-                  board.innerHTML = str;
-                  str = "";
-                  document.getElementById("board").appendChild(board);
-                }
-                new window.google.maps.Marker({
-                  map: map,
-                  position: pos,
-                });
-                bounds.extend(pos);
-              }
-            }
+  placeDetails = () => {
+    this.state.rec.map((place) => {
+      let request = {
+        placeId: place.place_id,
+        fields: [
+          "name",
+          "formatted_address",
+          "formatted_phone_number",
+          "opening_hours",
+          "geometry",
+          "icon",
+        ],
+      };
+      new window.google.maps.places.PlacesService(this.googleMap).getDetails(
+        request,
+        (req, status) => {
+          if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+            this.setState((prevState) => ({
+              plcDtl: [...prevState.plcDtl, req],
+            }));
           }
         },
-        function () {
-          handleNoGeolocation(true);
+      );
+    });
+  };
+
+  createMarker = () => {
+    let image = {
+      url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
+      size: new window.google.maps.Size(71, 71),
+      origin: new window.google.maps.Point(0, 0),
+      anchor: new window.google.maps.Point(17, 34),
+      scaledSize: new window.google.maps.Size(25, 25),
+    };
+    this.state.rec.map((e) => {
+      new window.google.maps.Marker({
+        position: {
+          lat: e.geometry.location.lat(),
+          lng: e.geometry.location.lng(),
+        },
+        icon: image,
+        animation: window.google.maps.Animation.DROP,
+        map: this.googleMap,
+      });
+    });
+    new window.google.maps.Marker({
+      position: { lat: this.state.latitude, lng: this.state.longitude },
+      map: this.googleMap,
+    });
+  };
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation;
+
+    if (location) {
+      location.getCurrentPosition(
+        (position) => {
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          this.setState({
+            latitude: "err-latitude",
+            longitude: "err-longitude",
+          });
         },
       );
-    } else {
-      handleNoGeolocation(false);
-    }
-
-    function handleNoGeolocation(errorFlag) {
-      if (errorFlag) {
-        var content = "Error: The Geolocation service failed.";
-      } else {
-        var content = "Error: Your browser doesn't support geolocation.";
-      }
-
-      var options = {
-        map: map,
-        position: new window.google.maps.LatLng(60, 105),
-        content: content,
-      };
-
-      new window.google.maps.InfoWindow(options);
-      map.setCenter(options.position);
     }
   }
-
   render() {
+    const list = this.state.plcDtl.map((place) => {
+      return (
+        <Cards>
+          <h3>{place.name}</h3>
+          <p>{place.formatted_address}</p>
+          <PhoneNo>{place.formatted_phone_number}</PhoneNo>
+        </Cards>
+      );
+    });
     return (
-      <div>
-        <Script url={url} onLoad={this.handleScriptLoad} />
-        <div style={Wrapper}>
-          <div>
-            <div style={Nested} id="board"></div>
-          </div>
-          <div>
-            <div style={MapStyle} id="map"></div>
-          </div>
-        </div>
-      </div>
+      <Wrapper>
+        <Nested>{list}</Nested>
+        <MapStyle id="google-map" ref={this.googleMapRef} />
+      </Wrapper>
     );
   }
 }
