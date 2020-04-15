@@ -23,39 +23,35 @@ async function routes(app) {
 
   // /posts
 
-  app.get(
-    "/",
-    { preValidation: [app.authenticate], schema: getPostsSchema },
-    async (req) => {
-      // todo: add limit, skip, visibility filter, needs, tags ...
-      const { authorId } = req.params;
-      const aggregates = authorId ? [{ $match: { authorId } }] : [];
-      aggregates.push(
-        {
-          $lookup: {
-            as: "comments",
-            foreignField: "postId",
-            from: "comments",
-            localField: "_id",
-          },
+  app.get("/", { schema: getPostsSchema }, async (req) => {
+    // todo: add limit, skip, visibility filter, needs, tags ...
+    const { authorId } = req.params;
+    const aggregates = authorId ? [{ $match: { authorId } }] : [];
+    aggregates.push(
+      {
+        $lookup: {
+          as: "comments",
+          foreignField: "postId",
+          from: "comments",
+          localField: "_id",
         },
-        {
-          $project: {
-            _id: true,
-            commentsCount: {
-              $size: "$comments",
-            },
-            description: true,
-            likesCount: true,
-            shareWith: true,
-            tags: true,
-            title: true,
+      },
+      {
+        $project: {
+          _id: true,
+          commentsCount: {
+            $size: "$comments",
           },
+          description: true,
+          likesCount: true,
+          shareWith: true,
+          tags: true,
+          title: true,
         },
-      );
-      return Post.aggregate(aggregates);
-    },
-  );
+      },
+    );
+    return Post.aggregate(aggregates);
+  });
 
   app.post(
     "/",
@@ -111,8 +107,20 @@ async function routes(app) {
     "/:postId",
     { preValidation: [app.authenticate], schema: deletePostSchema },
     async (req) => {
+      const { postId } = req.params;
       // todo: make sure user can only delete their own posts
-      return Post.findByIdAndRemove(req.params.postId);
+      const deletedPost = await Post.findByIdAndRemove(postId);
+      if (!deletedPost) {
+        return new httpErrors.BadRequest();
+      }
+      const {
+        deletedCount: deletedCommentsCount,
+        ok,
+      } = await Comment.deleteMany({ postId });
+      if (ok !== 1) {
+        app.log.error("failed removing comments for deleted post", { postId });
+      }
+      return { deletedCommentsCount, deletedPost, success: true };
     },
   );
 
@@ -183,18 +191,18 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { body, params, user } = req;
-      const { comment } = body;
+      const { params, user } = req;
       const { commentId, postId } = params;
       // todo: get user id from JWT
       //  check if user is authorized to delete their own comment (visibility can change?)
       //  + also delete all sub comments?
-      const { ok, deletedCount } = await Comment.deleteOne(
-        { _id: commentId, authorId: user.id, postId },
-        { comment },
-        { new: true },
-      );
-      if (ok !== 1 || deletedCount !== 1) {
+      const { ok, deletedCount } = await Comment.deleteMany({
+        $or: [
+          { _id: commentId, authorId: user.id, postId },
+          { parentId: commentId, postId },
+        ],
+      });
+      if (ok !== 1 || deletedCount < 1) {
         return new httpErrors.BadRequest();
       }
       return { deletedCount, success: true };
