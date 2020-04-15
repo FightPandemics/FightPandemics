@@ -35,6 +35,7 @@
     "react-scripts": "3.4.1",
     "react-step-wizard": "^5.3.2",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.1",
     "typeface-poppins": "^0.0.72",
     "typeface-work-sans": "^0.0.72"

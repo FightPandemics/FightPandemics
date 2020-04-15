@@ -23,6 +23,7 @@ const StyleEye = {
 };
 
 const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
+
   const [isVisible, setVisible] = useState(false);
   const passwordRef = useRef();
   const EyeIcon = isVisible ? VisibilityIcon : VisibilityOffIcon;
