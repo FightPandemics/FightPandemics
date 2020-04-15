@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Radio } from "antd";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
+import HorizontalLine from "../components/Icon/horizontal-line";
 import { ROYAL_BLUE, DARK_GRAY } from "../constants/colors";
 
 const CreatePostWrapper = styled.div`
@@ -13,6 +14,7 @@ const CreatePostWrapper = styled.div`
     margin: 0;
   }
   .settings {
+    margin-bottom: 1rem;
     .buttons {
       margin-bottom: 0.5rem;
     }
@@ -71,6 +73,7 @@ export default (props) => {
           </Radio.Group>
         </div>
       </div>
+      <HorizontalLine />
     </CreatePostWrapper>
   );
 };
