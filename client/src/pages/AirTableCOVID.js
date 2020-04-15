@@ -30,7 +30,7 @@ export class AirTableCOVID extends Component {
     const { covid } = this.state;
     if (typeof covid === "object") {
       const listCovid = covid.map((e, index) => (
-        <Card style={{ marginTop: "16px" }}>
+        <Card key={"card-" + index} style={{ marginTop: "16px" }}>
           <Card.Header as="h5">{e.fields["Post Title"]}</Card.Header>
           <Card.Body>
             <footer className="blockquote-footer">
@@ -38,12 +38,12 @@ export class AirTableCOVID extends Component {
             </footer>
             <Card.Title>
               {e.fields["Tags Original"]
-                ? e.fields["Tags Original"].map((sub, index) => (
-                    <>
+                ? e.fields["Tags Original"].map((sub, i) => (
+                    <React.Fragment key={"badge-" + index + "-" + i}>
                       <Badge pill variant="primary">
                         {sub}
                       </Badge>{" "}
-                    </>
+                    </React.Fragment>
                   ))
                 : ""}
             </Card.Title>

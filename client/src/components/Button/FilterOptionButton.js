@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Icon } from "antd-mobile";
+import { Button } from "antd-mobile";
 import { SELAGO, ROYAL_BLUE } from "../../constants/colors";
+import DownArrow from "../Icon/down-arrow";
 
 const Option = styled(Button)`
   display: inline-block;
@@ -10,7 +11,6 @@ const Option = styled(Button)`
   cursor: pointer;
   font-size: 13px;
   height: 100%;
-  padding: 0 10px;
   margin-top: 7px;
   margin-right: 7px;
   line-height: 30px;
@@ -35,7 +35,7 @@ const labelWrapperStyles = {
 };
 
 const labelStyles = {
-  marginRight: "4px",
+  marginRight: "10px",
   fontWeight: "600",
   letterSpacing: "1px",
 };
@@ -45,7 +45,7 @@ export default ({ label, handleClick }) => {
     <Option>
       <div onClick={handleClick} style={labelWrapperStyles}>
         <span style={labelStyles}>{label}</span>
-        <Icon type="down" size="xxs" />
+        <DownArrow />
       </div>
     </Option>
   );

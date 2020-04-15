@@ -10,10 +10,12 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
+import { ResultsPage } from "./ResultsPage.js";
+import { Under18 } from "./CovidScreening/Under18";
+import { PlannedCareFacility } from "./CovidScreening/PlannedCareFacility";
+import { CareFacility } from "./CovidScreening/CareFacility";
 
-const INITIAL_STATE = {
-  answers: [],
-};
+const INITIAL_STATE = {};
 
 const Welcome = (props) => {
   const onSelectAnswer = (answer) => {
@@ -269,6 +271,7 @@ const Step6 = (props) => {
 const Step7 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
+    props.nextStep();
   };
 
   return (
@@ -305,16 +308,22 @@ const Step7 = (props) => {
 export const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
-    const { answers } = state;
-    const updatedAnswers = { ...answers, [key]: value };
-    setState({ ...state, updatedAnswers });
-    if (key === "careFacility") {
-      localStorage.setItem(
-        "symptomsCheckAnswers",
-        JSON.stringify(updatedAnswers),
-      );
-    }
+    setState({ ...state, [key]: value });
   };
+  localStorage.setItem("symptomsCheckAnswers", JSON.stringify(state));
+  // console.log(state, " state++++")
+  if (state.age === "under 18") {
+    return <Under18 />;
+  }
+  if (state.careFacility === "planning to") {
+    return <PlannedCareFacility />;
+  }
+  if (
+    state.careFacility === "worked in last 14 days" ||
+    state.careFacility === "currently living"
+  ) {
+    return <CareFacility />;
+  }
 
   return (
     <WizardContainer className="mx-auto">
@@ -327,6 +336,7 @@ export const SymptomsCheck = () => {
         <Step5 hashKey={"Step5"} update={updateAnswers} />
         <Step6 hashKey={"Step6"} update={updateAnswers} />
         <Step7 hashKey={"Step7"} update={updateAnswers} />
+        <ResultsPage val={state} />
       </StyledWizard>
     </WizardContainer>
   );

@@ -34,7 +34,7 @@ export const RouteWithSubRoutes = (route) => {
       path={route.path}
       render={(props) =>
         // pass the sub-routes down to keep nesting
-        switchLayout(route.layout, props)
+        switchLayout(route.layout, { ...props, ...route.props })
       }
     />
   );
