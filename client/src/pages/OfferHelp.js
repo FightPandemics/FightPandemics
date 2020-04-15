@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
-import { Button } from "grommet";
+import { withRouter, Link } from "react-router-dom";
+import styled from "styled-components";
 
-import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
   AnswerButton,
@@ -11,13 +9,86 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
+  WizardButtonGroup,
+  StepTitle,
+  SkipLink,
+  StyledTextInput,
+  WizardProgress,
+  WizardFormWrapper,
+  WizardFormGroup,
+  getAnswersMap,
+  getCheckedAnswers,
+  WizardCheckboxItem,
 } from "../components/StepWizard";
+import { IconButton, SubmitButton, CustomButton } from "../components/Button";
+import { ShareMyLocationIcon } from "../components/Icon";
+
+import { theme } from "../constants/theme";
+const { button } = theme;
 
 const INITIAL_STATE = {
   answers: [],
 };
 
+const STEP_1_ANSWERS = [
+  "As a volunteer",
+  "As a Doctor / Investor",
+  "As a Organisation",
+];
+const STEP_1_STATE = {
+  answers: getAnswersMap(STEP_1_ANSWERS),
+  none: false,
+};
+
 const Step1 = (props) => {
+  const [state, updateState] = useState(STEP_1_STATE);
+  const { answers, none } = state;
+
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("helpTypeOffered", checkedAnswers);
+  };
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
+  };
+
+  const onSelectAnswer = (answer) => {
+    console.log(answer);
+
+    props.update("helpTypeOffered", answer);
+    console.log(props);
+
+    // props.nextStep();
+  };
+
+  return (
+    <WizardStep>
+      <WizardProgress className="text-primary">
+        Question {props.currentStep} / {props.totalSteps}
+      </WizardProgress>
+      <StepTitle>How do you want to contribute?</StepTitle>
+      <WizardFormWrapper>
+        {Object.entries(answers).map(([answer, checked], i) => (
+          <WizardCheckboxItem
+            key={i}
+            onChange={() => toggleAnswer(answer)}
+            checked={!none && checked}
+          >
+            {answer}
+          </WizardCheckboxItem>
+        ))}
+      </WizardFormWrapper>
+    </WizardStep>
+  );
+};
+
+const Step2 = (props) => {
+  const [locationSearch, setLocationSearch] = useState("");
+
   const selectLocationDetection = async () => {
     try {
       const location = await asyncGetGeoLocation();
@@ -32,94 +103,81 @@ const Step1 = (props) => {
     props.update("location", "unknown");
     props.nextStep();
   };
-  return (
-    <WizardStep>
-      <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">Where are you located?</Title>
-      <AnswerButton onSelect={selectLocationDetection}>
-        Detect my location
-      </AnswerButton>
-      <AnswerButton onSelect={rejectLocationDetection}>
-        Doesn't matter
-      </AnswerButton>
-    </WizardStep>
-  );
-};
 
-const Step2 = (props) => {
-  const onSelectAnswer = () => {
-    props.update("noMedicalProviderUnderstood", true);
-    props.nextStep();
-  };
+  const manualLocation = (evt) => setLocationSearch(evt); // I am not sure how best to perform the search at the moment.
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <h5 className="mb-4">We are not a provider of healthcare services.</h5>
-      <h6 className="mb-5">
-        This service is provided in good faith as a last resort for those who
-        are otherwise unable to obtain help and resource during the
-        unprecedented public health emergency.
-      </h6>
-      <strong>
-        <h4 className="mb-4">
-          Please consult a medical professional for advice.
-        </h4>
-      </strong>
-      <AnswerButton onSelect={() => onSelectAnswer()}>
-        I Understand.
-      </AnswerButton>
+      </WizardProgress>
+      <StepTitle>Where are you located?</StepTitle>
+      <p>So we can show postings near you.</p>
+      <WizardFormWrapper>
+        <WizardFormGroup>
+          <StyledTextInput
+            type="text"
+            name="manualLocation"
+            label="Location search"
+            placeholder="Enter address, Zip Code or City"
+            onChange={manualLocation}
+            value={locationSearch}
+          />
+        </WizardFormGroup>
+        <IconButton
+          icon={<ShareMyLocationIcon />}
+          title="Share my location"
+          onSelect={selectLocationDetection}
+        />
+        <SkipLink>
+          <CustomButton
+            textOnly
+            width="50%"
+            display="inline-flex"
+            onSelect={rejectLocationDetection}
+          >
+            Show me postings from anywhere
+          </CustomButton>
+        </SkipLink>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
 
 const Step3 = (props) => {
-  const onSelectAnswer = (answer) => {
-    props.update("helpTypeOffered", answer);
-    props.nextStep();
-  };
-  return (
-    <WizardStep>
-      <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">How do you want to contribute?</Title>
-      <AnswerButton onSelect={() => onSelectAnswer("volunteer")}>
-        As a volunteer
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("doctor investor")}>
-        As a Doctor / Investor
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("organisation")}>
-        As a Organisation
-      </AnswerButton>
-    </WizardStep>
-  );
-};
-
-const Step4 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => setEmail(evt.target.value);
+  const onChange = (evt) => {
+    setEmail(evt);
+  };
   const onSubmit = () => {
     props.update("email", email);
   };
   return (
-    <WizardStep>
-      <h5 className="text-primary">
+    <WizardStep className="wizard-step">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">What is your email address?</Title>
-      <div style={{ marginRight: "50px" }}>
-        <Form.Control
-          className="mb-3"
-          placeholder="Type your email"
-          onChange={onChange}
-        />
-        <Button fill primary label="Submit" onClick={onSubmit} />
-      </div>
+      </WizardProgress>
+      <StepTitle>What is your email address?</StepTitle>
+      <WizardFormWrapper>
+        <WizardFormGroup controlId="userEmailGroup">
+          <StyledTextInput
+            type="email"
+            name="userEmail"
+            label="Email"
+            placeholder="Type your email"
+            onChange={onChange}
+            value={email && email}
+          />
+        </WizardFormGroup>
+        <WizardButtonGroup>
+          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SkipLink>
+            <Link to="/AirTableCOVID">
+              {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+              Skip
+            </Link>
+          </SkipLink>
+        </WizardButtonGroup>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
@@ -138,12 +196,11 @@ export const OfferHelp = withRouter((props) => {
     }
   };
   return (
-    <WizardContainer>
+    <WizardContainer className="wizard-container">
       <StyledWizard isHashEnabled nav={<WizardNav />}>
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />
         <Step3 hashKey={"Step3"} update={updateAnswers} />
-        <Step4 hashKey={"Step3"} update={updateAnswers} />
       </StyledWizard>
     </WizardContainer>
   );

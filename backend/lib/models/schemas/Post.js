@@ -1,58 +1,65 @@
 const { Schema } = require("mongoose");
 
 const CommentSchema = require("./Comment");
-// const LikeSchema = require("./Like");
 
-const PostSchema = new Schema({
-  authorId: {
-    type: Schema.Types.ObjectId,
-    ref: "users",
-    required: true,
+const PostSchema = new Schema(
+  {
+    androidUrl: String,
+    authorId: {
+      ref: "users",
+      required: true,
+      type: Schema.Types.ObjectId,
+    },
+    comments: {
+      type: [CommentSchema],
+    },
+    commentsCount: {
+      type: Number,
+    },
+    description: {
+      required: true,
+      type: String,
+    },
+    iosUrl: String,
+    language: [String],
+    likes: {
+      type: [Schema.Types.ObjectId],
+    },
+    likesCount: {
+      type: Number,
+    },
+    looking: {
+      type: [String],
+      // required: true,
+    },
+    media: String,
+    needs: {
+      type: [String],
+      // required: true,
+    },
+    postEmail: String,
+    shareWith: {
+      type: [String],
+      // required: true,
+    },
+    status: {
+      type: Boolean,
+      // required: true,
+    },
+    tags: [String],
+    title: {
+      required: true,
+      type: String,
+    },
+    type: {
+      type: [String],
+      // required: true,
+    },
+    website: String,
   },
-  title: {
-    type: String,
-    required: true,
+  {
+    timestamps: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: [String],
-    // required: true,
-  },
-  shareWith: {
-    type: [String],
-    // required: true,
-  },
-  looking: {
-    type: [String],
-    // required: true,
-  },
-  needs: {
-    type: [String],
-    // required: true,
-  },
-  status: {
-    type: Boolean,
-    // required: true,
-  },
-  comments: {
-    type: [CommentSchema],
-    default: [],
-  },
-  likes: {
-    type: [Schema.Types.ObjectId],
-    refs: "likes",
-    default: [],
-  },
-  tags: [String],
-  language: [String],
-  website: String,
-  iosUrl: String,
-  androidUrl: String,
-  media: String,
-  postEmail: String,
-});
+);
 
 module.exports = PostSchema;

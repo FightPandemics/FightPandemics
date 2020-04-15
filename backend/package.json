@@ -9,7 +9,7 @@
     "dev": "nodemon -L server.js",
     "test": "jest",
     "lint": "eslint . --fix",
-    "schemas": "node ./generateSchemas.js"
+    "install-docker": "docker-compose run backend-service npm install"
   },
   "husky": {
     "hooks": {
@@ -43,7 +43,6 @@
     "node-cache": "^5.1.0"
   },
   "devDependencies": {
-    "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -52,7 +51,6 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-utils": "^2.0.0",
     "husky": "^4.2.3",
-    "js-yaml": "^3.13.1",
     "lint-staged": "^10.1.1",
     "nock": "^12.0.3",
     "nodemon": "^2.0.2",

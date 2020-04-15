@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { Accordion } from "antd-mobile";
+import { theme } from "../../constants/theme";
+const { display } = theme.typography.font.family;
 
 export const FilterAccordion = styled(Accordion)`
+  font-family: ${display};
   &.am-accordion {
-    padding: 20px 0;
+    padding: 2rem 0;
     &:before {
       content: normal !important;
     }
@@ -13,7 +16,7 @@ export const FilterAccordion = styled(Accordion)`
 export const FilterAccordionPanel = styled(Accordion.Panel)`
   text-align: center;
   cursor: pointer;
-  margin: 12px;
+  margin: 1.2rem;
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
@@ -43,6 +46,6 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
     }
   }
   .am-accordion-content-box {
-    padding: 8px 5px;
+    padding: 0.8rem 0.5rem;
   }
 `;

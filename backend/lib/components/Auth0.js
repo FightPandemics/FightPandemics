@@ -2,48 +2,51 @@ const axios = require("axios");
 const qs = require("querystring");
 const { config } = require("../../config");
 
+const {
+  auth: { domain: AUTH_DOMAIN },
+} = config;
+
 const errorHandler = (err) => {
-  const { response } = err;
-  const { error, message } = response.data;
-  const statusCode = response.status || response.data.statusCode;
+  const {
+    response: { data, status },
+  } = err;
+  const { error, message } = data;
+  const statusCode = status || data.statusCode;
   // eslint-disable-next-line no-throw-literal
-  throw { statusCode, error, message };
+  throw { error, message, statusCode };
 };
 
 const buildOauthUrl = (provider) => {
   const qParams = qs.stringify({
+    audience: `${AUTH_DOMAIN}/api/v2/`,
+    client_id: config.auth.clientId,
+    connection: provider.name,
+    redirect_uri: `${config.auth.appUrl}/login/callback`,
     response_type: "code",
     scope: provider.scope,
-    client_id: config.auth.clientId,
     state: config.auth.state,
-    audience: `${config.auth.domain}/api/v2/`,
-    redirect_uri: `${config.auth.appUrl}/login/callback`,
-    connection: provider.name,
   });
-  return `${config.auth.domain}/authorize?${qParams}`;
+  return `${AUTH_DOMAIN}/authorize?${qParams}`;
 };
 
 const authenticate = async (grantType, payload = {}) => {
   const body = {
-    grant_type: grantType,
-    audience: `${config.auth.domain}/api/v2/`,
+    audience: `${AUTH_DOMAIN}/api/v2/`,
     client_id: config.auth.clientId,
     client_secret: config.auth.secretKey,
+    grant_type: grantType,
     ...payload,
   };
+
   return axios
-    .post(`${config.auth.domain}/oauth/token`, qs.stringify(body), {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
+    .post(`${AUTH_DOMAIN}/oauth/token`, body)
     .then(({ data }) => data.access_token)
     .catch(errorHandler);
 };
 
 const createUser = async (token, payload) => {
   return axios
-    .post(`${config.auth.domain}/api/v2/users`, payload, {
+    .post(`${AUTH_DOMAIN}/api/v2/users`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -54,7 +57,7 @@ const createUser = async (token, payload) => {
 
 const getUser = async (authorization) => {
   return axios
-    .get(`${config.auth.domain}/userinfo`, {
+    .get(`${AUTH_DOMAIN}/userinfo`, {
       headers: { Authorization: authorization },
     })
     .then(({ data }) => data)
@@ -62,8 +65,8 @@ const getUser = async (authorization) => {
 };
 
 module.exports = {
-  buildOauthUrl,
   authenticate,
-  getUser,
+  buildOauthUrl,
   createUser,
+  getUser,
 };

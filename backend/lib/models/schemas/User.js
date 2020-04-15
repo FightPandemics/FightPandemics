@@ -2,30 +2,30 @@ const { Schema } = require("mongoose");
 
 // User Schema
 const UserSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: false,
-  },
-  email: {
-    unique: true,
-    type: String,
-    required: true,
-  },
   accessToken: {
-    type: String,
     required: false,
+    type: String,
   },
   dateJoined: {
-    type: Date,
     default: Date.now,
+    type: Date,
+  },
+  email: {
+    required: true,
+    type: String,
+    unique: true,
+  },
+  firstName: {
+    required: true,
+    type: String,
+  },
+  lastName: {
+    required: false,
+    type: String,
   },
   location: {
-    type: Schema.Types.ObjectId,
     ref: "Location",
+    type: Schema.Types.ObjectId,
   },
 });
 
