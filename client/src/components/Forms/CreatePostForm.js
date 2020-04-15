@@ -13,6 +13,8 @@ const StyledInput = styled(Input)`
   font-size: 1.8rem;
   border: none;
   outline: none;
+  padding: 0;
+  margin-bottom: 2rem;
   &.ant-input:hover,
   &.ant-input:focus {
     border-right-width: unset !important;
@@ -24,8 +26,10 @@ const StyledInput = styled(Input)`
 const StyledTextArea = styled(Input.TextArea)`
   color: ${DARK_GRAY};
   font-size: 1.4rem;
+  resize: none;
   border: none;
   outline: none;
+  padding: 0;
   &.ant-input:hover,
   &.ant-input:focus {
     border-right-width: unset !important;
@@ -63,7 +67,7 @@ export default () => {
         <StyledInput placeholder="Title" />
       </Form.Item>
       <Form.Item className="body" name="body">
-        <StyledTextArea rows={10} placeholder="Write a post." />
+        <StyledTextArea rows={12} placeholder="Write a post." />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

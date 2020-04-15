@@ -43,7 +43,7 @@ const Option = styled(Button)`
       `}
 
     &:first-child {
-      margin-right: 1.2rem;
+      margin-right: 2rem;
 
       ${(props) =>
         props.long &&
