@@ -8,11 +8,10 @@ import SubmitButton from "../components/Button/SubmitButton";
 import AddTags from "../components/Tag/AddTags";
 import CreatePostStyled from "../components/CreatePost/CreatePostStyled";
 import { ROYAL_BLUE } from "../constants/colors";
+import filterOptions from "../assets/data/filterOptions";
 
 export default (props) => {
-  const { filters } = props.location.state;
-  const types = filters[2].options;
-
+  const types = Object.values(filterOptions)[2].options;
   return (
     <CreatePostStyled>
       <CustomH1
