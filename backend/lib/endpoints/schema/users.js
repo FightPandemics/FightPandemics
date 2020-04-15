@@ -7,11 +7,14 @@ const getUserByIdSchema = {
 
 const createProfileSchema = {
   body: S.object()
+    .prop("firstName", S.string().required())
+    .prop("lastName", S.string().required())
     .prop("email", S.string().required())
     .prop("name", S.string().required())
     .prop("country", S.string().required())
     .prop("neighborhood", S.string().required()),
 };
+
 
 module.exports = {
   getUserByIdSchema,
