@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Radio } from "antd";
+import { Modal } from "antd-mobile";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
@@ -9,9 +10,24 @@ import AddTags from "../components/Tag/AddTags";
 import CreatePostStyled from "../components/CreatePost/CreatePostStyled";
 import { ROYAL_BLUE } from "../constants/colors";
 import filterOptions from "../assets/data/filterOptions";
+import createPostSettings from "../assets//data/createPostSettings";
+
+const types = Object.values(filterOptions)[2].options;
+const { shareWith, expires, helpTypes } = createPostSettings;
+
+const initialState = {
+  modal: false,
+  settings: {
+    shareWith: shareWith.default,
+    expires: expires.default,
+    help: helpTypes.default,
+  },
+};
 
 export default (props) => {
-  const types = Object.values(filterOptions)[2].options;
+  const [modal, setModal] = useState(initialState.modal);
+  const [settings, setSettings] = useState(initialState.settings);
+  // debugger;
   return (
     <CreatePostStyled>
       <CustomH1
@@ -23,24 +39,43 @@ export default (props) => {
         Create a Post
       </CustomH1>
       <div className="settings">
+        <Modal
+          onClose={() => setModal(!modal)}
+          maskClosable={true}
+          closable={true}
+          visible={modal}
+          transparent
+        >
+          <Radio.Group>
+            <Radio value={"looking"}>Looking for help</Radio>
+            <Radio value={"offering"}>Offering to help</Radio>
+          </Radio.Group>
+        </Modal>
         <div className="buttons">
           <DownArrowButton
-            label={"Anyone"}
+            handleClick={() => setModal(!modal)}
+            label={settings.shareWith.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
             long="true"
           />
           <DownArrowButton
-            label={"Forever"}
+            handleClick={() => setModal(!modal)}
+            label={settings.expires.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
             long="true"
           />
         </div>
         <div className="inline">
-          <Radio.Group>
-            <Radio value={"looking"}>Looking for help</Radio>
-            <Radio value={"offering"}>Offering to help</Radio>
+          <Radio.Group
+            onChange={(e) => setSettings({ ...settings, help: e.target.value })}
+          >
+            {helpTypes.options.map((option, idx) => (
+              <Radio value={option} key={idx}>
+                {option.text}
+              </Radio>
+            ))}
           </Radio.Group>
         </div>
       </div>
