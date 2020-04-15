@@ -24,11 +24,34 @@ async function routes(app) {
   app.get(
     "/",
     { preValidation: [app.authenticate], schema: getPostsSchema },
-    async (req, reply) => {
+    async (req) => {
+      // todo: add limit, skip, visibility filter, needs, tags ...
       const { authorId } = req.params;
-      const filter = authorId ? { authorId: req.params.authorId } : {};
-      const sortedPosts = await Post.find(filter).sort({ date: -1 });
-      return reply.send(sortedPosts);
+      const aggregates = authorId ? [{ $match: { authorId } }] : [];
+      aggregates.push(
+        {
+          $lookup: {
+            as: "comments",
+            foreignField: "postId",
+            from: "comments",
+            localField: "_id",
+          },
+        },
+        {
+          $project: {
+            _id: true,
+            commentsCount: {
+              $size: "$comments",
+            },
+            description: true,
+            likesCount: true,
+            shareWith: true,
+            tags: true,
+            title: true,
+          },
+        },
+      );
+      return Post.aggregate(aggregates);
     },
   );
 
