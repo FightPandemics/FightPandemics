@@ -1,4 +1,4 @@
-import { PRIMARY, ROYAL_BLUE, DARK_GRAY, SELAGO } from "./colors";
+import { PRIMARY, ROYAL_BLUE, DARK_GRAY, LIGHTER_GRAY, SELAGO } from "./colors";
 
 const theme = {
   global: {
@@ -57,6 +57,7 @@ const theme = {
     royalBlue: ROYAL_BLUE,
     selago: SELAGO,
     darkGray: "#282828",
+    lighterGray: LIGHTER_GRAY,
   },
   button: {
     fontFamily: "DM Sans",
