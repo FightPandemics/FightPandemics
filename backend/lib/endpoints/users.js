@@ -41,7 +41,6 @@ async function routes(app) {
     { schema: createProfileSchema },
     async (req, reply) => {
       try {
-        Post(req.body).save();
         return new User(req.body).save();
       } catch (err) {
         return reply.code(err.statusCode).send(err);
