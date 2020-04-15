@@ -3,7 +3,7 @@ import Post from "./Post";
 
 export default ({ filteredPosts }) => {
   return (
-    <div>
+    <div className="feed-posts">
       {filteredPosts.map((post) => (
         <Post post={post} key={post._id} />
       ))}

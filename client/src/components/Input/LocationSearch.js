@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { SearchBar, Icon, WhiteSpace } from "antd-mobile";
+import { SearchBar, WhiteSpace } from "antd-mobile";
 import ShareLocationIcon from "../Icon/share-my-location";
 import { FeedContext } from "../../pages/Feed.js";
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
     background-color: #fff;
-    border: 1px solid black;
-    border-radius: 40px;
+    border: 0.1rem solid black;
+    border-radius: 4rem;
   }
 `;
 
@@ -28,7 +28,7 @@ export default () => {
       <WhiteSpace size="lg" />
       <WhiteSpace />
       <div>
-        <ShareLocationIcon style={{ marginRight: "10px" }} />
+        <ShareLocationIcon style={{ marginRight: "1rem" }} />
         Share My Location
       </div>
       <WhiteSpace />

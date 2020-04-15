@@ -1,34 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 import { Tag } from "antd-mobile";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { theme } from "../../constants/theme";
+
+const { royalBlue } = theme.colors;
+const { xsmall } = theme.typography.size;
 
 const FilterTag = styled(Tag)`
   &.am-tag-normal {
-    padding: 0 15px;
+    padding: 0 1.5rem;
+  }
+
+  &.am-tag-disabled {
+    background-color: unset;
+    padding: 0 0.8rem;
+  }
+
+  &.am-tag-active {
+    color: #fff !important;
+    background-color: ${royalBlue} !important;
+    border-radius: 4rem !important;
   }
 
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
-    color: ${ROYAL_BLUE};
-    font-size: 12px;
-    margin: 5px 3px;
+    font-size: ${xsmall};
+    color: ${royalBlue};
+    border: 0.1rem solid ${royalBlue} !important;
+    border-radius: 4rem !important;
+    margin: 0.5rem 0.3rem;
+
     &:before {
-      border: 2px solid ${ROYAL_BLUE} !important;
-      border-radius: 40px !important;
+      border: unset !important;
     }
-  }
-
-  &.am-tag-disabled {
-    background-color: unset;
-    padding: 0 8px;
-  }
-
-  &.am-tag-active {
-    color: #fff !important;
-    background-color: ${ROYAL_BLUE} !important;
-    border-radius: 40px !important;
   }
 `;
 

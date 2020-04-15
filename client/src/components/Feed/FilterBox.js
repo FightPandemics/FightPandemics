@@ -3,36 +3,40 @@ import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
 import CustomList from "../../components/List/CustomList";
 import CustomButton from "../../components/Button/CustomButton";
-import FilterTitle from "../Typography/Title/FilterTitle";
-import FilterOptionButton from "../Button/FilterOptionButton";
+import CustomH1 from "../Typography/Title/CustomH1";
+import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
+import { ROYAL_BLUE, SELAGO, DARK_GRAY } from "../../constants/colors";
 
 const FilterBoxWrapper = styled.div`
-  width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 4rem;
 `;
 
 export default () => {
   const feedContext = useContext(FeedContext);
-  const { filters, modal, handleModal, handleQuit } = feedContext;
+  const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
-      <FilterOptionButton
+      <DownArrowButton
         key={idx}
         label={filter.label}
-        handleClick={handleModal(idx)}
+        handleClick={handleFilterModal(idx)}
+        color={ROYAL_BLUE}
+        bgcolor={SELAGO}
       />
     ));
   };
   return (
     <FilterBoxWrapper>
-      <FilterTitle>Filter by</FilterTitle>
+      <CustomH1 color={DARK_GRAY} fontsize={"1.4rem"} fontweight={"normal"}>
+        Filter by
+      </CustomH1>
       {renderFilterOptions(filters)}
       <Modal
         popup
-        visible={modal}
-        onClose={handleModal(null)}
+        visible={filterModal}
+        onClose={handleFilterModal(null)}
         animationType="slide-up"
       >
         <FilterAccordion />
@@ -53,7 +57,7 @@ export default () => {
               roundborder="true"
               large="true"
               primary="true"
-              onClick={handleModal(null)}
+              onClick={handleFilterModal(null)}
             >
               Apply filters
             </CustomButton>

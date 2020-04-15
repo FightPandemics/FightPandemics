@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Drawer, List, Button, Icon } from "antd-mobile";
+import { Drawer, List, Button } from "antd-mobile";
 import { useAuth0 } from "~/react-auth0-spa";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "~/components/Header";
 import Main from "./Main";
+import { theme } from "../../constants/theme";
 
 const drawerStyles = {
   position: "relative",
@@ -14,7 +15,7 @@ const drawerStyles = {
 };
 
 const sidebarStyle = {
-  background: "#425AF2",
+  background: `${theme.colors.royalBlue}`,
 };
 
 const NavList = styled(List)`
@@ -58,9 +59,9 @@ const NavItem = styled(List.Item).attrs((props) => ({
       color: #fff;
       cursor: pointer;
       font-family: "Poppins", sans-serif;
-      font-size: 1.715rem;
+      font-size: 2.4rem;
       font-weight: 600;
-      line-height: 4.286rem;
+      line-height: 6rem;
       padding: 0;
     }
   }
@@ -83,7 +84,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   font-size: 2rem;
   position: absolute;
   top: 4px;
-  left: 0;
+  right: 0.4rem;
   z-index: 300;
 
   &.am-button-active {
@@ -101,7 +102,7 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 export default (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -109,8 +110,6 @@ export default (props) => {
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
   };
-
-  const loginFunc = () => loginWithRedirect({});
 
   const drawerMenu = () => (
     <>

@@ -9,6 +9,8 @@ import { SymptomsCheck } from "./pages/SymptomsCheck";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import NearestHospital from "./pages/NearestHospital";
+import CreatePost from "./pages/CreatePost";
+
 
 export const routes = [
   {
@@ -67,5 +69,9 @@ export const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/create-post",
+    component: CreatePost,
   },
 ];

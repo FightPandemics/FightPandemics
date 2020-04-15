@@ -22,29 +22,32 @@ const StyleEye = {
   opacity: 0.5,
 };
 
-export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
+const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
+
   const [isVisible, setVisible] = useState(false);
   const passwordRef = useRef();
-
-  const onToggleVisibility = () => {
-    const { current: input } = passwordRef;
-    setVisible(!isVisible);
-  };
-
-  const EyeIcon = isVisible ? VisibilityOffIcon : VisibilityIcon;
-
-  const PasswordField = withLabel(() => (
-    <div>
+  const EyeIcon = isVisible ? VisibilityIcon : VisibilityOffIcon;
+  return (
+    <>
       <Input
         style={inputStyle}
         placeholder={placeholder}
-        ref={passwordRef}
         isVisible={isVisible}
+        ref={passwordRef}
         {...props}
       />
-      <EyeIcon style={StyleEye} onClick={onToggleVisibility} />
-    </div>
-  ));
+      <EyeIcon style={StyleEye} onClick={() => setVisible(!isVisible)} />
+    </>
+  );
+};
 
+export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
+  const PasswordField = withLabel(() => (
+    <PasswordInput
+      inputStyle={inputStyle}
+      placeholder={placeholder}
+      {...props}
+    />
+  ));
   return <PasswordField label={label} style={labelStyle} />;
 };

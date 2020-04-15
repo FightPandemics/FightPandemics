@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar, Icon } from "antd-mobile";
+import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 
 import logo from "~/assets/logo.svg";
