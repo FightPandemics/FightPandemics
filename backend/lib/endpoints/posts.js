@@ -68,7 +68,16 @@ async function routes(app) {
             localField: "_id",
           },
         },
+        {
+          $addFields: {
+            childCount: {
+              $size: "$children",
+            },
+          },
+        },
       ]);
+      // todo: find a better way to return this from the comments aggregate
+      post.commentsCount = await Comment.find({ postId }).count();
       return post;
     },
   );
