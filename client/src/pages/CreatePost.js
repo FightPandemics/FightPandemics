@@ -6,6 +6,7 @@ import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
 import CreatePostForm from "../components//Forms/CreatePostForm";
 import SubmitButton from "../components/Button/SubmitButton";
+import AddTags from "../components/Tag/AddTags";
 import { ROYAL_BLUE, DARK_GRAY } from "../constants/colors";
 
 const CreatePostWrapper = styled.div`
@@ -51,6 +52,7 @@ const CreatePostWrapper = styled.div`
 
 export default (props) => {
   const { filters } = props.location.state;
+  const types = filters[2].options;
   return (
     <CreatePostWrapper>
       <CustomH1
@@ -88,6 +90,7 @@ export default (props) => {
       <HorizontalLine />
       <CreatePostForm />
       <HorizontalLine />
+      <AddTags filters={types} />
       <SubmitButton className="submit-btn" type="primary" title={"Post"} />
     </CreatePostWrapper>
   );
