@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "typeface-roboto";
+import "typeface-poppins";
+// import "typeface-work-sans";
 import "antd-mobile/dist/antd-mobile.css";
 import "antd/dist/antd.css";
 

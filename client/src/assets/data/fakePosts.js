@@ -13,7 +13,7 @@ export default [
         name: "Lily Luke",
         comment:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque, eros id hendrerit elementum, odio augue efficitur diam, non pellentesque ex libero nec lectus. Integer lorem dolor, varius in nulla eu, pellentesque fermentum orci. Aliquam at quam pulvinar, tristique dui nec, consequat massa.",
-        numLikes: 2,
+        numLikes: 0,
         children: [
           {
             _id: 6,

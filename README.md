@@ -8,8 +8,31 @@ Please check our notion to get a better understanding of the problem that we are
 - **Frontend**
     - React Hooks, Ant Design, Ant Design Mobile,  styled-components
     - Mobile first design
-    - No use of `.css` or `.scss` files
-    - No Redux
+    - Use assets such as icons from the designs on Figma
+        - Select the screen that you are going to design
+        - On the left side of Figma, unlock the screen (Only the one that you are going to use)
+        - Select an icon or component -> right click -> Copy/Paste -> Copy as CSS/SVG
+        - You can also get exact CSS values on the top right of Figma
+        - After you are done with your screen, lock it again!!
+    - No use of `.css` or `.scss` files, please style with styled-components instead
+    - For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
+    - Resuse components wherever possible
+    - Limit the use of inline styling
+    - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
+    - Use global colors by importing values from `client/src/constants/colors.js`
+    - We have the beginnings of a theme. The file can be found here: `src/constants/theme.js` which has sections for typography, colors, buttons styles and media queries.
+    - Refrain from making the Redux state too big as it will affect speed performance. React’s Context API is ONLY helpful for avoiding nested prop threading so stick with Redux where Context fails.
+    - No use of other libraries like Material UI
+    - For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
+        ```
+            import styled from "styled-components";
+            import { Button } from "antd";
+
+            const StyledButton = styled(Button)`
+                // target antd selectors and override styles here
+            `;
+        ```
+
 - **Backend**
     - Fastify, MongoDB
     - Auth0, Google Maps API
@@ -39,6 +62,10 @@ Run `docker-compose run backend-service npm install`, or `cd` into the `backend`
 Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
+
+
+## Other Resources ##
+Inital project setup: https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b
 
 
 ## Important Notes and Considerations

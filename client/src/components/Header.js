@@ -1,9 +1,23 @@
 import React from "react";
 import { NavBar, Icon } from "antd-mobile";
 import { Link } from "react-router-dom";
+import { Menu as MenuIcon } from "@material-ui/icons";
+// import { Menu as MenuIcon } from "grommet-icons";
+import styled from "styled-components";
 
 import logo from "../assets/logo.svg";
 import Logo from "./Logo";
+import { theme } from "../constants/theme";
+
+const BrandLink = styled(Link)`
+  display: inline-flex;
+`;
+
+const MenuToggle = styled(MenuIcon)`
+  cursor: pointer;
+  &:hover {
+  }
+`;
 
 export default ({ onMenuClick, ...props }) => {
   return (
@@ -11,11 +25,17 @@ export default ({ onMenuClick, ...props }) => {
       <NavBar
         mode="light"
         leftContent={
-          <Link to="/">
+          <BrandLink to="/">
             <Logo src={logo} alt="Fight Pandemics logo" />
-          </Link>
+          </BrandLink>
         }
-        rightContent={<Icon type="ellipsis" onClick={onMenuClick} />}
+        rightContent={
+          <MenuToggle
+            style={{ fontSize: 24 }}
+            color="primary"
+            onClick={onMenuClick}
+          />
+        }
       />
     </div>
   );
