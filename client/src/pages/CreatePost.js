@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Radio } from "antd";
-import { Modal } from "antd-mobile";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
@@ -33,7 +31,6 @@ export default (props) => {
   const [options, setOptions] = useState(initialState.options);
   const [settings, setSettings] = useState(initialState.settings);
   const [selected, setSelected] = useState(initialState.selected);
-  // debugger;
 
   const showModal = (setting) => (e) => {
     setModal(!modal);
@@ -63,9 +60,16 @@ export default (props) => {
       </CustomH1>
       <div className="settings">
         <CustomModal
-          content={<RadioGroup onChange={handleSettings} options={options} />}
+          content={
+            <RadioGroup
+              block={true}
+              onChange={handleSettings}
+              options={options}
+            />
+          }
           onClose={closeModal}
           visible={modal}
+          closable={false}
         />
         <div className="buttons">
           <DownArrowButton
