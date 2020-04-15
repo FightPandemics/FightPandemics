@@ -18,6 +18,14 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   cursor: pointer;
   margin: 1.2rem;
   &.am-accordion-item {
+    .am-accordion-header,
+    .am-accordion-content-box {
+      border-bottom: unset !important;
+      &:after {
+        content: unset !important;
+      }
+    }
+
     .am-accordion-header {
       display: flex !important;
       font-weight: bold !important;
@@ -37,16 +45,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       }
     }
   }
-
   .am-accordion-content-box {
     padding: 0.8rem 0.5rem;
-  }
-
-  .am-accordion-header,
-  .am-accordion-content-box {
-    border-bottom: unset !important;
-    &:after {
-      content: unset !important;
-    }
   }
 `;

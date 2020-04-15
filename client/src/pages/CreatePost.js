@@ -26,18 +26,16 @@ export default (props) => {
       <div className="settings">
         <div className="buttons">
           <DownArrowButton
-            long="true"
-            border="true"
             label={"Anyone"}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
+            long="true"
           />
           <DownArrowButton
-            long="true"
-            border="true"
             label={"Forever"}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
+            long="true"
           />
         </div>
         <div className="inline">

@@ -2,54 +2,35 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { Button } from "antd-mobile";
 import DownArrow from "../Icon/down-arrow";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { theme } from "../../constants/theme";
+const { colors, typography } = theme;
+const { display } = typography.font.family;
 
-const Option = styled(Button)`
+const Option = styled(Button).attrs((props) => {
+  return {
+    size: "small",
+  };
+})`
   display: inline-block;
   color: ${(props) => props.color};
   background-color: ${(props) => props.bgcolor};
+  padding: ${(props) => (props.long ? "0 1rem" : "0.5rem 1rem")};
   border-radius: 0.6rem;
-  padding: 0.5rem 1rem;
   margin-top: 0.7rem;
   margin-right: 0.7rem;
   height: 100%;
   cursor: pointer;
-  border: none;
-
-  ${(props) =>
-    props.long &&
-    css`
-      padding: 0 1rem;
-    `}
-
-  ${(props) =>
-    props.border &&
-    css`
-      border: 0.1rem solid ${ROYAL_BLUE} !important;
-    `}
+  border: ${(props) =>
+    props.long ? `0.1rem solid ${colors.royalBlue} !important` : "none"};
 
   > * {
-    font-family: "Poppins";
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-family: ${display};
+    font-weight: ${(props) => (props.long ? "normal" : "600")};
+    font-size: ${(props) => (props.long ? "1.1rem" : "1.3rem")};
     letter-spacing: 0.1rem;
 
-    ${(props) =>
-      props.long &&
-      css`
-        font-weight: 400;
-        font-size: 1.1rem;
-        letter-spacing: 0;
-      `}
-
     &:first-child {
-      margin-right: 2rem;
-
-      ${(props) =>
-        props.long &&
-        css`
-          margin-right: 3rem;
-        `}
+      margin-right: ${(props) => (props.long ? "3rem" : "1.4rem")};
     }
   }
 
@@ -67,16 +48,9 @@ const Option = styled(Button)`
   }
 `;
 
-export default ({ label, handleClick, color, bgcolor, long, border }) => {
+export default ({ label, handleClick, ...props }) => {
   return (
-    <Option
-      size="small"
-      long={long}
-      border={border}
-      color={color}
-      bgcolor={bgcolor}
-      onClick={handleClick}
-    >
+    <Option {...props} onClick={handleClick}>
       {label}
       <DownArrow />
     </Option>
