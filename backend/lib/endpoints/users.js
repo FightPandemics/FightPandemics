@@ -42,14 +42,11 @@ async function routes(app) {
       try {
         const { email, name, country, neighborhood } = req.body;
         return new User({
-          "firstName": "myname",
-          "email": "yay"
+          "email": email,
+          "name": name,
+          "country": country,
+          "neighborhood": neighborhood
         }).save();
-        // // // const newComment = await new Comment(req.body).save();
-        // const updatedPost = await User.insert(
-        //   { "email": email }
-        // ).catch((err) => console.log(err));
-        // return reply.code(204).send()
       } catch (err) {
         return reply.code(err.statusCode).send(err);
       }
