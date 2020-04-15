@@ -5,8 +5,10 @@ const {
   getPostsSchema,
   getPostByIdSchema,
   createPostSchema,
+  deleteCommentSchema,
   deletePostSchema,
   likeUnlikePostSchema,
+  updateCommentSchema,
   updatePostSchema,
   addCommentSchema,
 } = require("./schema/posts");
@@ -143,7 +145,7 @@ async function routes(app) {
       //  check if user is authorized to comment (depending on visibility for that post)
       if (parentId) {
         const parentPost = await Post.findById(parentId);
-        if (parentPost.postId !== postId) {
+        if (!parentPost || parentPost.postId !== postId) {
           return new httpErrors.BadRequest();
         }
       }
@@ -153,6 +155,49 @@ async function routes(app) {
         postId,
       };
       return new Comment(commentProps).save();
+    },
+  );
+
+  app.put(
+    "/:postId/comments/:commentId",
+    { preValidation: [app.authenticate], schema: updateCommentSchema },
+    async (req) => {
+      const { body, params, user } = req;
+      const { comment } = body;
+      const { commentId, postId } = params;
+      // todo: get user id from JWT
+      //  check if user is authorized to edit comment (only your own comment, visibility can change?)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, authorId: user.id, postId },
+        { comment },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+      return updatedComment;
+    },
+  );
+
+  app.delete(
+    "/:postId/comments/:commentId",
+    { preValidation: [app.authenticate], schema: deleteCommentSchema },
+    async (req) => {
+      const { body, params, user } = req;
+      const { comment } = body;
+      const { commentId, postId } = params;
+      // todo: get user id from JWT
+      //  check if user is authorized to delete their own comment (visibility can change?)
+      //  + also delete all sub comments?
+      const { ok, deletedCount } = await Comment.deleteOne(
+        { _id: commentId, authorId: user.id, postId },
+        { comment },
+        { new: true },
+      );
+      if (ok !== 1 || deletedCount !== 1) {
+        return new httpErrors.BadRequest();
+      }
+      return { deletedCount, success: true };
     },
   );
 
