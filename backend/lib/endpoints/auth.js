@@ -49,17 +49,18 @@ async function routes(app) {
       try {
         await Auth0.createUser(token, payload);
       } catch (err) {
+        // 409 means CONFLICT, e.g. user exists
         if (err.statusCode !== 409) {
           return reply.code(err.statusCode).send(err);
         }
       }
-
       const accessToken = await Auth0.authenticate("password", {
         password: req.body.password,
         scope: "openid",
         username: req.body.email,
       });
-      return reply.send({ token: accessToken });
+
+      return { token: accessToken };
     },
   );
 }

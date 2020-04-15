@@ -1,73 +1,119 @@
-import React from "react";
-import styled from "styled-components";
-import { Comment, Avatar } from "antd";
-import { LIGHTER_GRAY } from "../../constants/colors";
+import React, { useState } from "react";
+import { Avatar } from "antd";
+import { ROYAL_BLUE } from "../../constants/colors";
+import HeartSmallIcon from "../Icon/heart-small";
+import StyledComment from "./StyledComment";
+import AutoSize from "../../components/Input/AutoSize";
 
-const StyledComment = styled(Comment)`
-  &.ant-comment {
-    .ant-comment-inner {
-      padding: 1rem 0;
-      .ant-comment-content {
-        position: relative;
-        max-width: 30rem;
-        .ant-comment-content-author {
-          border-top-left-radius: 1.5rem;
-          border-top-right-radius: 1.5rem;
-          margin-bottom: 0;
-          padding: 1rem 0 0.5rem 1.5rem;
-          .ant-comment-content-author-name > * {
-            color: black;
-            font-weight: 500;
-            font-size: 1.4rem;
-          }
-        }
-        .ant-comment-content-detail {
-          border-bottom-left-radius: 1.5rem;
-          border-bottom-right-radius: 1.5rem;
-          padding: 0 1.5rem 1.5rem;
-          font-size: 1.4rem;
-          line-height: 140%;
-        }
-        .ant-comment-actions {
-          margin-top: 0;
-          padding-left: 1.5rem;
-          li span {
-            padding-right: 2.3rem;
-            font-size: 1.1rem;
-            color: black;
-          }
-        }
-        .ant-comment-content-author,
-        .ant-comment-content-detail {
-          background-color: ${LIGHTER_GRAY};
-        }
-      }
-    }
-  }
-`;
+const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 
 const NestedComments = ({ comment }) => {
+  const [likedComment, setLikedComment] = useState(false);
+  const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
+  const [fakeNumReplies, setFakeNumReplies] = useState(comment.children.length);
+  const [reply, setReply] = useState("");
+  const [showReply, setShowReply] = useState(false);
+
+  const renderAvatar = (
+    <Avatar
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
+      alt={`${comment.name}`}
+    />
+  );
+
+  const handleLikeComment = () => {
+    likedComment
+      ? setFakeNumLikes(fakeNumLikes - 1)
+      : setFakeNumLikes(fakeNumLikes + 1);
+    setLikedComment(!likedComment);
+  };
+
+  const renderLikeButton = () => {
+    const style = likedComment ? clickedTextStyle : {};
+    return (
+      <span style={style} onClick={handleLikeComment} key="comment-basic-like">
+        Like
+      </span>
+    );
+  };
+
+  const renderNumLikes = () => {
+    return fakeNumLikes > 0 ? (
+      <span className="comment-likes">
+        <HeartSmallIcon />
+        {fakeNumLikes}
+      </span>
+    ) : (
+      ""
+    );
+  };
+
+  const handleReply = (e) => {
+    e.preventDefault();
+    const testNewReply = {
+      _id: 10,
+      name: "Guest User",
+      numLikes: 0,
+      children: [],
+      comment: reply,
+    };
+    comment.children.push(testNewReply); // not good but mocking API and testing UI
+    setFakeNumReplies(fakeNumReplies + 1);
+    setShowReply(!showReply);
+    setReply("");
+  };
+
+  const renderReplyInput = showReply ? (
+    <div className="reply-input">
+      {renderAvatar}
+      <AutoSize
+        placeholder={"Write a reply..."}
+        onPressEnter={handleReply}
+        onChange={(e) => setReply(e.target.value)}
+        value={reply}
+      />
+    </div>
+  ) : (
+    ""
+  );
+
+  const renderReply = () => {
+    const style = showReply ? clickedTextStyle : {};
+    return (
+      <span
+        style={style}
+        onClick={() => setShowReply(!showReply)}
+        key="comment-nested-reply-to"
+      >
+        Reply
+      </span>
+    );
+  };
+  const renderTimeStamp = <span>1w</span>;
+
+  const commentActions = [
+    renderTimeStamp,
+    renderLikeButton(),
+    renderReply(),
+    renderNumLikes(),
+    renderReplyInput,
+  ];
+
   const nestedComments = (comment.children || []).map((comment) => {
     return <NestedComments comment={comment} key={comment._id} />;
   });
+
   return (
-    <StyledComment
-      actions={[
-        <span>1w</span>,
-        <span key="comment-basic-like">Like</span>,
-        <span key="comment-nested-reply-to">Reply</span>,
-      ]}
-      author={<span>{comment.name}</span>}
-      avatar={
-        <Avatar
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
-          alt={`${comment.name}`}
-        />
-      }
-      content={<p>{comment.comment}</p>}
-    >
-      {nestedComments}
-    </StyledComment>
+    <div>
+      <StyledComment
+        actions={commentActions}
+        author={<span>{comment.name}</span>}
+        avatar={renderAvatar}
+        content={<p>{comment.comment}</p>}
+      >
+        {nestedComments}
+      </StyledComment>
+    </div>
   );
 };
 
