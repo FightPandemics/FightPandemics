@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Button } from "antd-mobile";
 import DownArrow from "../Icon/down-arrow";
 import { theme } from "../../constants/theme";
