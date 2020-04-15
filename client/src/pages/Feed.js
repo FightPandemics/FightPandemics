@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "antd-mobile";
-import styled from "styled-components";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
+import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
 import CreatPostIcon from "../components/Icon/create-post";
@@ -16,40 +16,27 @@ import {
   SET_VALUE,
 } from "../actions/feedActions";
 
-const FeedWraper = styled.div`
-  font-family: "Poppins";
-  width: 100%;
-  padding: 20px 0;
-`;
-
-const ceatePostStyles = {
-  position: "fixed",
-  bottom: "5%",
-  right: "5%",
-  cursor: "pointer",
-};
-
 export const FeedContext = React.createContext();
 
 const initialState = {
-  filterBoxModal: false,
+  filterModal: false,
   createPostModal: false,
   activePanel: null,
   location: "",
 };
 
-const Feed = () => {
+export default () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const { filterBoxModal, createPostModal, activePanel, location } = feedState;
+  const { filterModal, createPostModal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const handleFilterBoxModal = (panelIdx) => (e) => {
+  const handleFilterModal = (panelIdx) => (e) => {
     e.preventDefault();
-    dispatchAction(TOGGLE_STATE, "filterBoxModal");
+    dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(
       SET_VALUE,
       "activePanel",
@@ -59,7 +46,7 @@ const Feed = () => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    dispatchAction(TOGGLE_STATE, "filterBoxModal");
+    dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
@@ -83,6 +70,12 @@ const Feed = () => {
   };
 
   const renderCreatePostModal = () => {
+    const data = {
+      pathname: "/create-post",
+      state: {
+        filters,
+      },
+    };
     return (
       <Modal
         onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
@@ -92,26 +85,8 @@ const Feed = () => {
         transparent
       >
         Continue Posting As:
-        <Link
-          to={{
-            pathname: "/create-post",
-            state: {
-              filters,
-            },
-          }}
-        >
-          Individual
-        </Link>
-        <Link
-          to={{
-            pathname: "/create-post",
-            state: {
-              filters,
-            },
-          }}
-        >
-          Organization
-        </Link>
+        <Link to={data}>Individual</Link>
+        <Link to={data}>Organization</Link>
       </Modal>
     );
   };
@@ -120,25 +95,23 @@ const Feed = () => {
     <FeedContext.Provider
       value={{
         filters,
-        filterBoxModal,
+        filterModal,
         activePanel,
         location,
         dispatchAction,
         selectedOptions,
         handleOption,
-        handleFilterBoxModal,
+        handleFilterModal,
         handleQuit,
         handleLocation,
       }}
     >
-      <FeedWraper>
+      <FeedWrapper>
         <FilterBox />
         <Posts filteredPosts={fakePosts} />
-        <CreatPostIcon onClick={handleCreatePost} style={ceatePostStyles} />
+        <CreatPostIcon onClick={handleCreatePost} className="create-post" />
         {renderCreatePostModal()}
-      </FeedWraper>
+      </FeedWrapper>
     </FeedContext.Provider>
   );
 };
-
-export default Feed;
