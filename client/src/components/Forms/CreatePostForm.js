@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Form, Input, Button } from "antd";
+import { Form, Input } from "antd";
 import { ROYAL_BLUE, DARK_GRAY } from "../../constants/colors";
 
 const StyledForm = styled(Form)`
@@ -42,9 +42,9 @@ const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+// const tailLayout = {
+//   wrapperCol: { offset: 8, span: 16 },
+// };
 
 export default () => {
   const onFinish = (values) => {
