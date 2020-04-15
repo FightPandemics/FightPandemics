@@ -25,6 +25,9 @@ export default styled.div`
       margin-left: 0.2rem;
     }
   }
+  .post-modal {
+    border-radius: 0;
+  }
   .submit-btn {
     font-family: ${display};
     background-color: ${royalBlue};

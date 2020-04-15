@@ -1,7 +1,7 @@
 export default {
   shareWith: {
     type: "shareWith",
-    label: "Share with ...",
+    title: "Share with ...",
     default: { text: "In my Zip Code", label: "Zip Code", value: "zipCode" },
     options: [
       { text: "In my Zip Code", label: "Zip Code", value: "zipCode" },
@@ -12,7 +12,7 @@ export default {
   },
   expires: {
     type: "expires",
-    label: "For how long do you want to keep your post?",
+    title: "For how long do you want to keep your post?",
     default: { text: "Forever", label: "Forever", value: "forever" },
     options: [
       { text: "Forever", label: "Forever", value: "forever" },
@@ -23,7 +23,7 @@ export default {
   },
   helpTypes: {
     type: "helpTypes",
-    label: "",
+    title: "",
     default: { text: "", label: "", value: "" },
     options: [
       { text: "Looking for help", label: "Looking", value: "looking" },

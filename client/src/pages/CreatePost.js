@@ -60,6 +60,8 @@ export default (props) => {
       </CustomH1>
       <div className="settings">
         <CustomModal
+          title={"Testing"}
+          className="post-modal"
           content={
             <RadioGroup
               flex={true}
