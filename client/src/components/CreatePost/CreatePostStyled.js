@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 const { darkGray, royalBlue } = theme.colors;
-const { display } = theme.typography.font.family.display;
+const { display } = theme.typography.font.family;
 const { medium } = theme.typography.size;
 
 export default styled.div`
