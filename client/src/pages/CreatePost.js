@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Radio } from "antd";
-import SettingsSelect from "../components/CreatePost/SettingsSelect";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
@@ -13,11 +12,6 @@ import { ROYAL_BLUE } from "../constants/colors";
 export default (props) => {
   const { filters } = props.location.state;
   const types = filters[2].options;
-  const [modal, setModal] = useState(false);
-
-  const handleClick = () => {
-    setModal(!modal);
-  };
 
   return (
     <CreatePostStyled>
@@ -29,15 +23,9 @@ export default (props) => {
       >
         Create a Post
       </CustomH1>
-      {modal ? (
-        <SettingsSelect onClose={() => setModal(!modal)} modal={modal} />
-      ) : (
-        ""
-      )}
       <div className="settings">
         <div className="buttons">
           <DownArrowButton
-            onClick={handleClick}
             long="true"
             border="true"
             label={"Anyone"}
@@ -45,7 +33,6 @@ export default (props) => {
             bgcolor={"#fff"}
           />
           <DownArrowButton
-            onClick={handleClick}
             long="true"
             border="true"
             label={"Forever"}
