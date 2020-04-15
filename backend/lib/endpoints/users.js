@@ -1,4 +1,4 @@
-const { getUserByIdSchema } = require("./schema/users");
+const { getUserByIdSchema, createProfileSchema } = require("./schema/users");
 
 /*
  * /api/users
@@ -38,15 +38,12 @@ async function routes(app) {
 
   app.post(
     "/signup/createProfile",
+    { schema: createProfileSchema },
     async (req, reply) => {
       try {
-        const { email, name, country, neighborhood } = req.body;
-        return new User({
-          "email": email,
-          "name": name,
-          "country": country,
-          "neighborhood": neighborhood
-        }).save();
+        // const { email, name, country, neighborhood } = req.body;
+        Post(req.body).save();
+        return new User(req.body).save();
       } catch (err) {
         return reply.code(err.statusCode).send(err);
       }
