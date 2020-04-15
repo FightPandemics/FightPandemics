@@ -17,6 +17,7 @@ const { shareWith, expires, helpTypes } = createPostSettings;
 
 const initialState = {
   modal: false,
+  options: [],
   settings: {
     shareWith: shareWith.default,
     expires: expires.default,
@@ -26,8 +27,14 @@ const initialState = {
 
 export default (props) => {
   const [modal, setModal] = useState(initialState.modal);
+  const [options, setOptions] = useState(initialState.options);
   const [settings, setSettings] = useState(initialState.settings);
   // debugger;
+
+  const showModal = (options) => (e) => {
+    setModal(!modal);
+    setOptions(options);
+  };
   return (
     <CreatePostStyled>
       <CustomH1
@@ -47,20 +54,23 @@ export default (props) => {
           transparent
         >
           <Radio.Group>
-            <Radio value={"looking"}>Looking for help</Radio>
-            <Radio value={"offering"}>Offering to help</Radio>
+            {options.map((option, idx) => (
+              <Radio value={option} key={idx}>
+                {option.text}
+              </Radio>
+            ))}
           </Radio.Group>
         </Modal>
         <div className="buttons">
           <DownArrowButton
-            handleClick={() => setModal(!modal)}
+            handleClick={showModal(shareWith.options)}
             label={settings.shareWith.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
             long="true"
           />
           <DownArrowButton
-            handleClick={() => setModal(!modal)}
+            handleClick={showModal(expires.options)}
             label={settings.expires.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
