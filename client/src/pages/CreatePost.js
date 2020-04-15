@@ -41,6 +41,12 @@ export default (props) => {
     setSelected(setting.type);
   };
 
+  const closeModal = (e) => {
+    setModal(!modal);
+    setOptions([]);
+    setSelected("");
+  };
+
   const handleSettings = (e) => {
     setSettings({ ...settings, [selected]: e.target.value });
   };
@@ -57,8 +63,8 @@ export default (props) => {
       </CustomH1>
       <div className="settings">
         <CustomModal
-          content={<RadioGroup options={options} />}
-          onClose={() => setModal(!modal)}
+          content={<RadioGroup onChange={handleSettings} options={options} />}
+          onClose={closeModal}
           visible={modal}
         />
         <div className="buttons">
@@ -78,15 +84,10 @@ export default (props) => {
           />
         </div>
         <div className="inline">
-          <Radio.Group
+          <RadioGroup
             onChange={(e) => setSettings({ ...settings, help: e.target.value })}
-          >
-            {helpTypes.options.map((option, idx) => (
-              <Radio value={option} key={idx}>
-                {option.text}
-              </Radio>
-            ))}
-          </Radio.Group>
+            options={helpTypes.options}
+          />
         </div>
       </div>
       <HorizontalLine />
