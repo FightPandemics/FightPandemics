@@ -39,3 +39,24 @@ Run `docker-compose run backend-service npm install`, or `cd` into the `backend`
 Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
+
+
+## Important Notes and Considerations
+
+We are noting any special considerations and handling done in the code so that developers are aware of these caveats
+while developing. This is a living document, so feel free to add any notes that you feel are worth mentioning here.
+
+### Backend
+
+* Set `.additionalProperties(false)` for each schema defined with FluentSchema, to return a 400 bad request error if any
+additional properties not defined in the schema are passed in through the request.
+    * We are using [FluentSchema](https://github.com/fastify/fluent-schema) to validate backend requests. This is the
+    default validator for Fastify, our backend framework. FluentSchema uses ajv under the hood, and compiles to the
+    more standard JSON Schema.
+    * Rather than silently suppress additional properties, as is the default behavior for Fastify's ajv configuration,
+    we are instead returning a 400 bad request error if additional properties are passed in. This makes it easier to
+    debug issues due to a misspelled property name.
+
+### Frontend
+
+TODO
