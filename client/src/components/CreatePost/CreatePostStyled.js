@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { theme } from "../../constants/theme";
+
+const { darkGray, royalBlue } = theme.colors;
+const { display } = theme.typography.font.family.display;
+const { medium } = theme.typography.size;
 
 export default styled.div`
-  font-family: "Poppins";
+  font-family: ${display};
   margin-top: 2rem;
 
   .title {
@@ -21,8 +25,8 @@ export default styled.div`
     .inline {
       margin-left: 0.2rem;
       span.ant-radio + * {
-        color: #282828;
-        font-size: 1.4rem;
+        font-size: ${medium};
+        color: ${darkGray};
         letter-spacing: 0;
       }
       .ant-radio-inner {
@@ -37,8 +41,8 @@ export default styled.div`
     }
   }
   .submit-btn {
-    font-family: "Poppins";
-    background-color: ${ROYAL_BLUE};
+    font-family: ${display};
+    background-color: ${royalBlue};
     margin-bottom: 3rem;
   }
 `;
