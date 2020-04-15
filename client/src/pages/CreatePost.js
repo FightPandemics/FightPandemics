@@ -18,6 +18,7 @@ const { shareWith, expires, helpTypes } = createPostSettings;
 const initialState = {
   modal: false,
   options: [],
+  selected: "",
   settings: {
     shareWith: shareWith.default,
     expires: expires.default,
@@ -29,11 +30,13 @@ export default (props) => {
   const [modal, setModal] = useState(initialState.modal);
   const [options, setOptions] = useState(initialState.options);
   const [settings, setSettings] = useState(initialState.settings);
+  const [selected, setSelected] = useState(initialState.selected);
   // debugger;
 
-  const showModal = (options) => (e) => {
+  const showModal = (setting) => (e) => {
     setModal(!modal);
-    setOptions(options);
+    setOptions(setting.options);
+    setSelected(setting.type);
   };
   return (
     <CreatePostStyled>
@@ -53,7 +56,11 @@ export default (props) => {
           visible={modal}
           transparent
         >
-          <Radio.Group>
+          <Radio.Group
+            onChange={(e) =>
+              setSettings({ ...settings, [selected]: e.target.value })
+            }
+          >
             {options.map((option, idx) => (
               <Radio value={option} key={idx}>
                 {option.text}
@@ -63,14 +70,14 @@ export default (props) => {
         </Modal>
         <div className="buttons">
           <DownArrowButton
-            handleClick={showModal(shareWith.options)}
+            handleClick={showModal(shareWith)}
             label={settings.shareWith.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
             long="true"
           />
           <DownArrowButton
-            handleClick={showModal(expires.options)}
+            handleClick={showModal(expires)}
             label={settings.expires.label}
             color={ROYAL_BLUE}
             bgcolor={"#fff"}
