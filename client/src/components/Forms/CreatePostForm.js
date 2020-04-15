@@ -6,6 +6,7 @@ import { ROYAL_BLUE, DARK_GRAY } from "../../constants/colors";
 const StyledForm = styled(Form)`
   font-family: "Poppins";
   margin-top: 2rem;
+  padding-right: 1.8rem;
 `;
 
 const StyledInput = styled(Input)`
