@@ -1,5 +1,4 @@
 const pkg = require("../../package.json");
-
 const doc = require("../../version.json");
 
 const versionDetails = {
@@ -8,4 +7,4 @@ const versionDetails = {
   version: pkg.version,
 };
 
-module.exports = (req, res) => res.json(versionDetails);
+module.exports = (req, reply) => reply.send(versionDetails);

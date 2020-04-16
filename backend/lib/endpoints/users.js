@@ -1,66 +1,42 @@
-const express = require("express");
-const passport = require("passport");
-const { authSchema } = require("./schema/users");
-const { config } = require("../../config");
-const { createToken } = require("../components/Jwt");
-const User = require("../models/User");
+const httpErrors = require("http-errors");
 
-const router = express.Router();
+const { getUserByIdSchema } = require("./schema/users");
 
-/**
- * @route POST api/users/auth
- * @desc Allow Users to login/register
- * @access Public
+/*
+ * /api/users
  */
-router.post("/auth", async (req, res) => {
-  const { error, value: validatedData } = authSchema.validate(
-    req.body,
-    config.joi.params,
+async function routes(app) {
+  const User = app.mongo.model("User");
+
+  app.get("/current", { preValidation: [app.authenticate] }, async () => {
+    // todo: get current user from JWT
+    const result = await User.findById("");
+    if (result === null) {
+      return new httpErrors.NotFound();
+    }
+    return {
+      email: result.email,
+      firstName: result.firstName,
+      id: result._id,
+      lastName: result.firstName,
+    };
+  });
+
+  app.get(
+    "/:userId",
+    { preValidation: [app.authenticate], schema: getUserByIdSchema },
+    async (req) => {
+      const result = await User.findById(req.params.userId);
+      if (result === null) {
+        return new httpErrors.NotFound();
+      }
+      return {
+        firstName: result.firstName,
+        id: result._id,
+        lastName: result.firstName,
+      };
+    },
   );
-  if (error) res.status(400).json(error);
+}
 
-  let user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    user = new User({
-      ...user,
-      ...validatedData,
-    });
-    user.save();
-  }
-
-  // Create JWT Payload
-  const payload = { id: user._id, email: user.email };
-
-  // Sign Token
-  try {
-    const token = await createToken(payload);
-    return res.json({
-      success: true,
-      token: `Bearer ${token}`,
-    });
-  } catch (err) {
-    req.log.error(err);
-    return res.status(500).send(err);
-  }
-});
-
-/**
- * @route GET api/users
- * @desc Return current user
- * @access Private
- */
-router.get(
-  "/current",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      firstName: req.user.firstName,
-      email: req.user.email,
-    });
-  },
-);
-
-module.exports = router;
+module.exports = routes;

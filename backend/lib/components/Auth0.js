@@ -1,47 +1,72 @@
 const axios = require("axios");
-const {
-  config: { auth },
-} = require("../../config");
-const User = require("./User");
+const qs = require("querystring");
+const { config } = require("../../config");
 
-const oauth = async () => {
-  return axios({
-    method: "POST",
-    url: `${auth.host}/oauth/token`,
-    data: {
-      client_id: auth.clientId,
-      client_secret: auth.secretKey,
-      audience: `${auth.host}/api/v2/`,
-      grant_type: "client_credentials",
-    },
-  })
+const {
+  auth: { domain: AUTH_DOMAIN },
+} = config;
+
+const errorHandler = (err) => {
+  const {
+    response: { data, status },
+  } = err;
+  const { error, message } = data;
+  const statusCode = status || data.statusCode;
+  // eslint-disable-next-line no-throw-literal
+  throw { error, message, statusCode };
+};
+
+const buildOauthUrl = (provider) => {
+  const qParams = qs.stringify({
+    audience: `${AUTH_DOMAIN}/api/v2/`,
+    client_id: config.auth.clientId,
+    connection: provider.name,
+    redirect_uri: `${config.auth.appUrl}/login/callback`,
+    response_type: "code",
+    scope: provider.scope,
+    state: config.auth.state,
+  });
+  return `${AUTH_DOMAIN}/authorize?${qParams}`;
+};
+
+const authenticate = async (grantType, payload = {}) => {
+  const body = {
+    audience: `${AUTH_DOMAIN}/api/v2/`,
+    client_id: config.auth.clientId,
+    client_secret: config.auth.secretKey,
+    grant_type: grantType,
+    ...payload,
+  };
+
+  return axios
+    .post(`${AUTH_DOMAIN}/oauth/token`, body)
     .then(({ data }) => data.access_token)
-    .catch((error) => {
-      throw error;
-    });
+    .catch(errorHandler);
 };
 
 const createUser = async (token, payload) => {
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  return axios({
-    method: "POST",
-    url: `${auth.host}/api/v2/users`,
-    headers,
-    data: payload,
-  })
-    .then(({ data }) => User.created(data))
-    .catch((error) => {
-      const { status } = error.response;
-      if (status === 409) {
-        return User.alreadyExist();
-      }
-      throw error;
-    });
+  return axios
+    .post(`${AUTH_DOMAIN}/api/v2/users`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({ data }) => data)
+    .catch(errorHandler);
+};
+
+const getUser = async (authorization) => {
+  return axios
+    .get(`${AUTH_DOMAIN}/userinfo`, {
+      headers: { Authorization: authorization },
+    })
+    .then(({ data }) => data)
+    .catch(errorHandler);
 };
 
 module.exports = {
-  oauth,
+  authenticate,
+  buildOauthUrl,
   createUser,
+  getUser,
 };

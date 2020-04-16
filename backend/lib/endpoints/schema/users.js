@@ -1,9 +1,9 @@
-const Joi = require("@hapi/joi");
+const S = require("fluent-schema");
 
-const authSchema = Joi.object().keys({
-  email: Joi.string().email().required(),
-});
+const getUserByIdSchema = {
+  params: S.object().prop("userId", S.string().required()),
+};
 
 module.exports = {
-  authSchema,
+  getUserByIdSchema,
 };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { Button } from "grommet";
 
+import SubmitButton from "../components/Button/SubmitButton";
+import TextInput from "../components/Input/TextInput";
 import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
@@ -11,6 +11,12 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
+  WizardButtonGroup,
+  StepTitle,
+  StyledTextInput,
+  WizardProgress,
+  WizardFormWrapper,
+  WizardFormGroup,
 } from "../components/StepWizard";
 
 const INITIAL_STATE = {
@@ -24,10 +30,10 @@ const Step1 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">What type of help do you need?</Title>
+      </WizardProgress>
+      <StepTitle>What type of help do you need?</StepTitle>
       <AnswerButton onSelect={() => onSelectAnswer("medical")}>
         <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
       </AnswerButton>
@@ -56,10 +62,10 @@ const Step2 = (props) => {
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">Where are you located?</Title>
+      </WizardProgress>
+      <StepTitle>Where are you located?</StepTitle>
       <AnswerButton onSelect={selectLocationDetection}>
         Detect my location
       </AnswerButton>
@@ -72,24 +78,31 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => setEmail(evt.target.value);
+  const onChange = (evt) => setEmail(evt);
   const onSubmit = () => {
     props.update("email", email);
   };
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <WizardProgress className="text-primary">
         Question {props.currentStep} / {props.totalSteps}
-      </h5>
-      <Title className="mb-5">What is your email address?</Title>
-      <div style={{ marginRight: "50px" }}>
-        <Form.Control
-          className="mb-3"
-          placeholder="Type your email"
-          onChange={onChange}
-        />
-        <Button fill primary label="Submit" onClick={onSubmit} />
-      </div>
+      </WizardProgress>
+      <StepTitle>What is your email address?</StepTitle>
+      <WizardFormWrapper>
+        <WizardFormGroup controlId="userEmailGroup">
+          <StyledTextInput
+            type="email"
+            name="userEmail"
+            label="Email"
+            placeholder="Type your email"
+            onChange={onChange}
+            value={email && email}
+          />
+        </WizardFormGroup>
+      </WizardFormWrapper>
+      <WizardButtonGroup>
+        <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+      </WizardButtonGroup>
     </WizardStep>
   );
 };
@@ -108,7 +121,7 @@ export const NeedHelp = withRouter((props) => {
     }
   };
   return (
-    <WizardContainer className="mx-auto">
+    <WizardContainer className="wizard-container">
       <StyledWizard isHashEnabled nav={<WizardNav />}>
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />

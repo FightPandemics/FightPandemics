@@ -1,41 +1,42 @@
-const express = require("express");
+const Ajv = require("ajv");
 const cors = require("cors");
-const passport = require("passport");
-const pino = require("pino")();
-const pinoExpress = require("pino-express");
-const bodyParser = require("body-parser");
+const fastify = require("fastify");
 
-const passportMiddleware = require("./middlewares/passport");
-const errorMiddleware = require("./middlewares/error");
-const accessTokenMiddleware = require("./middlewares/access-token");
-const version = require("./endpoints/version");
-const users = require("./endpoints/users");
-const posts = require("./endpoints/posts");
+const auth = require("./endpoints/auth");
 const geo = require("./endpoints/geo");
-const signUp = require("./endpoints/signup");
+const organizations = require("./endpoints/organizations");
+const posts = require("./endpoints/posts");
+const users = require("./endpoints/users");
+const version = require("./endpoints/version");
 
-function createApp() {
-  const app = express();
-  app.disable("etag").disable("x-powered-by");
+module.exports = function createApp(config) {
+  const app = fastify({
+    logger: true,
+  });
+  const ajv = new Ajv({
+    removeAdditional: false,
+    useDefaults: true,
+    coerceTypes: true,
+    allErrors: true,
+    nullable: true,
+  });
+  app.setSchemaCompiler((schema) => {
+    return ajv.compile(schema);
+  });
+
+  app.register(require("./plugins/mongoose-connector"), config.mongo);
+  app.register(require("./plugins/auth"), config.auth);
+  app.register(require("fastify-oas"), {
+    exposeRoute: true,
+  });
   app.use(cors());
-  app.use(pinoExpress(pino));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.get("/version", version);
-  app.post("/api/signup", accessTokenMiddleware, signUp);
-
-  // Private Endpoints
-  app.use(passport.initialize());
-  passportMiddleware(passport);
-
-  app.use("/api/users", users);
-  app.use("/api/posts", posts);
-  app.use("/api/geo", geo);
-
-  app.use(errorMiddleware);
+  app.get("/api/version", version);
+  app.register(auth, { prefix: "/api/auth" });
+  app.register(geo, { prefix: "/api/geo" });
+  app.register(organizations, { prefix: "api/organizations" });
+  app.register(posts, { prefix: "/api/posts" });
+  app.register(users, { prefix: "/api/users" });
 
   return app;
-}
-
-module.exports = createApp;
+};

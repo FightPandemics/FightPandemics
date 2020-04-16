@@ -14,7 +14,7 @@ const dateToEpoch = (date) => Math.round(date.getTime() / 1000);
 const bool = (env) => env == "true";
 
 module.exports = {
-  generateUUID,
-  dateToEpoch,
   bool,
+  dateToEpoch,
+  generateUUID,
 };

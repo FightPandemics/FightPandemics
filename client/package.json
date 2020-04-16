@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.5",
+    "@material-ui/core": "^4.9.9",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "airtable": "^0.8.1",
+    "antd": "^4.1.1",
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
@@ -23,8 +26,11 @@
     "polished": "^3.5.1",
     "prettier": "^2.0.2",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.0.0",
+    "react-alert": "^7.0.0",
+    "react-alert-template-oldschool-dark": "^1.0.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
+    "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
@@ -32,16 +38,18 @@
     "react-scripts": "3.4.1",
     "react-step-wizard": "^5.3.2",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.1",
     "typeface-poppins": "^0.0.72",
-    "typeface-roboto": "^0.0.75"
+    "typeface-work-sans": "^0.0.72"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "postinstall": "npm rebuild node-sass"
+    "postinstall": "npm rebuild node-sass",
+    "install-docker": "docker-compose run client npm install"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -7,12 +7,32 @@ import { AirTableCOVID } from "./pages/AirTableCOVID";
 import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import Feed from "./pages/Feed";
+import Login from "./pages/Login";
+import NearestHospital from "./pages/NearestHospital";
+import CreatePost from "./pages/CreatePost";
+
 
 export const routes = [
   {
     path: "/",
     component: Home,
     exact: true,
+  },
+  {
+    path: "/auth/login",
+    component: Login,
+    layout: "logo",
+    props: {
+      isLoginForm: true,
+    },
+  },
+  {
+    path: "/auth/signup",
+    component: Login,
+    layout: "logo",
+    props: {
+      isLoginForm: false,
+    },
   },
   {
     path: "/need-help",
@@ -31,6 +51,10 @@ export const routes = [
     component: Medical,
   },
   {
+    path: "/nearest-hospital",
+    component: NearestHospital,
+  },
+  {
     path: "/AirTableCOVID",
     component: AirTableCOVID,
   },
@@ -45,5 +69,9 @@ export const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/create-post",
+    component: CreatePost,
   },
 ];

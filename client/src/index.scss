@@ -1,10 +1,14 @@
 // Import Theme Style
 @import "./styles/theme.scss";
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   margin: 0;
   background: $body-bg;
-  font-family: $font-family;
+  font-family: "Work Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15,7 +19,7 @@ code {
 }
 
 .text-center {
-  text-align: center!important;
+  text-align: center !important;
 }
 
 .app-drawer .am-drawer-sidebar {
@@ -23,23 +27,26 @@ code {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
+
 .app-drawer .am-drawer-sidebar .am-list {
   width: 200px;
   padding: 0;
 }
 
 .text-light {
-  font-weight: 100;
+  font-weight: 500;
 }
 
 .nav-item {
   padding: 5px 10px;
+
   > a,
   > a.nav-link {
     color: #000 !important;
     display: inline;
     padding: 0;
   }
+
   .active {
     color: $royal-blue;
   }
