@@ -33,13 +33,14 @@ const StyledRadioGroup = styled(Radio.Group)`
   }
 `;
 
-export default ({ options, onChange, value, flex }) => {
+export default ({ options, onChange, value, defaultValue, flex }) => {
   return (
     <StyledRadioGroup
       size="large"
       flex={flex}
       onChange={onChange}
       value={value}
+      defaultValue={defaultValue}
     >
       {options.map((option, idx) => (
         <Radio value={option} key={idx}>

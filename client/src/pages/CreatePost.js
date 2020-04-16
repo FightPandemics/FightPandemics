@@ -48,6 +48,14 @@ export default (props) => {
     setSettings({ ...settings, [selected]: e.target.value });
   };
 
+  const initialDefaultValue = () => {
+    if (selected && selected === "shareWith") {
+      return settings.shareWith;
+    } else {
+      return settings.expires;
+    }
+  };
+
   return (
     <CreatePostStyled>
       <CustomH1
@@ -68,6 +76,7 @@ export default (props) => {
               onChange={handleSettings}
               options={options}
               value={settings[selected]}
+              defaultValue={settings[selected]}
             />
           }
           onClose={closeModal}
