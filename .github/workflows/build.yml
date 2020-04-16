@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: ypicard/get-branch-name-github-action@v1
       - name: docker
         uses: zenato/docker-action@v1.0.0
         with:
@@ -18,7 +19,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fight-pandemics/backend
-          tag: ${GITHUB_REF##*/}
+          tag: ${GITHUB_REF#refs/heads/}
   build_client:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +31,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fight-pandemics/client
-          tag: ${GITHUB_REF##*/}
+          tag: ${GITHUB_REF#refs/heads/}
   build_geo:
     runs-on: ubuntu-latest
     steps:
@@ -42,4 +43,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fight-pandemics/geo
-          tag: ${GITHUB_REF##*/}
+          tag: ${GITHUB_REF#refs/heads/}
