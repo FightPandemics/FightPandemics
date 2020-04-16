@@ -20,8 +20,18 @@ Please check our notion to get a better understanding of the problem that we are
     - Limit the use of inline styling
     - Limit the use of `px` values, currently the root font size is 62.5%, `1rem = 10px`
     - Use global colors by importing values from `client/src/constants/colors.js`
-    - No Redux, as the project grow, we will likely use React's Context API
+    - We have the beginnings of a theme. The file can be found here: `src/constants/theme.js` which has sections for typography, colors, buttons styles and media queries.
+    - Refrain from making the Redux state too big as it will affect speed performance. React’s Context API is ONLY helpful for avoiding nested prop threading so stick with Redux where Context fails.
     - No use of other libraries like Material UI
+    - For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
+        ```
+            import styled from "styled-components";
+            import { Button } from "antd";
+
+            const StyledButton = styled(Button)`
+                // target antd selectors and override styles here
+            `;
+        ```
 
 - **Backend**
     - Fastify, MongoDB
@@ -53,5 +63,27 @@ Run `docker-compose run client npm install`, or `cd` into the `client` directory
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
 
+
 ## Other Resources ##
 Inital project setup: https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b
+
+
+## Important Notes and Considerations
+
+We are noting any special considerations and handling done in the code so that developers are aware of these caveats
+while developing. This is a living document, so feel free to add any notes that you feel are worth mentioning here.
+
+### Backend
+
+* Set `.additionalProperties(false)` for each schema defined with FluentSchema, to return a 400 bad request error if any
+additional properties not defined in the schema are passed in through the request.
+    * We are using [FluentSchema](https://github.com/fastify/fluent-schema) to validate backend requests. This is the
+    default validator for Fastify, our backend framework. FluentSchema uses ajv under the hood, and compiles to the
+    more standard JSON Schema.
+    * Rather than silently suppress additional properties, as is the default behavior for Fastify's ajv configuration,
+    we are instead returning a 400 bad request error if additional properties are passed in. This makes it easier to
+    debug issues due to a misspelled property name.
+
+### Frontend
+
+TODO
