@@ -38,7 +38,7 @@ jobs:
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
-        run: >
+        run: |
           cat << EOF > main.tf
           module "main" {
             source = "github.com/FightPandemics/tf-fargate-task//module"
