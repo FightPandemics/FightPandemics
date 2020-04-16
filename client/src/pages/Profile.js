@@ -7,6 +7,7 @@ import Menu from "../components/Icon/menu";
 import Edit from "../components/Icon/edit";
 import Title from "../components/Title/Title";
 import styled from "styled-components";
+import { getInitials } from "../utils/userInfo";
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
@@ -89,11 +90,6 @@ export const Profile = (props) => {
   const location = "NY, USA";
   const needHelp = true;
   const Item = Popover.Item;
-
-  function getInitials(firstName, lastName) {
-    // function to get the initials given firstname and last name
-    return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
-  }
 
   const popover = (props) => {
     return (

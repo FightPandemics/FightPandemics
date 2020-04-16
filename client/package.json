@@ -26,6 +26,8 @@
     "polished": "^3.5.1",
     "prettier": "^2.0.2",
     "react": "^16.13.1",
+    "react-alert": "^7.0.0",
+    "react-alert-template-oldschool-dark": "^1.0.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-load-script": "0.0.6",
