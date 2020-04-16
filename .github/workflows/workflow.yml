@@ -3,7 +3,7 @@ name: backend
 on: push
 
 jobs:
-  build_image:
+  build_images:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,3 +22,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fightpandemics/${{ matrix.app }}
           tag_with_ref: true
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_images
+    steps:
+      - uses: actions/checkout@v2
+      - run: >
+          echo "Hello World" > hello.txt
