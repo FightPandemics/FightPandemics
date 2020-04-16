@@ -35,8 +35,48 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
+          AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
         run: >
-          echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
-          echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
+          cat << EOF > main.tf
+          module "main" {
+            source = "github.com/FightPandemics/tf-fargate-task//module"
+            image_tag = "deployment"
+            fp_context = "review"
+            subdomain = "deployment"
+            backend_env_variables = [
+              {
+                name = "PORT"
+                value = "8000"
+              },
+              {
+                name = "MONGO_URI"
+                value = "localhost:27017"
+              },
+              {
+                name = "GEO_SERVICE_URL"
+                value = "localhost:5000"
+              },
+              {
+                name = "AUTH_STATE"
+                value = "fight-pandemics"
+              },
+              {
+                name = "AUTH_APP_URL"
+                value = "http://localhost:8000"
+              },
+              {
+                name = "AUTH_SECRET_KEY"
+                value = "${AUTH_SECRET_KEY}"
+              },
+              {
+                name = "AUTH_DOMAIN"
+                value = "fightingpandemics.eu.auth0.com"
+              },
+              {
+                name = "AUTH_CLIENT_ID"
+                value = "${AUTH_CLIENT_ID}"
+              }
+            ]
+          }
+          EOF
