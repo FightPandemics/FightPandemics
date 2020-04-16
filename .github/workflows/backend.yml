@@ -1,4 +1,4 @@
-name: build_images
+name: backend
 
 on: push
 
@@ -16,5 +16,5 @@ jobs:
           path: ./${{ env.APP }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fight-pandemics/${{ env.APP }}
+          repository: fightpandemics/${{ env.APP }}
           tag_with_ref: true
