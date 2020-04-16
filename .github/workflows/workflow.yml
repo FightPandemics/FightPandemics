@@ -1,4 +1,4 @@
-name: backend
+name: fight-pandemics
 
 on: push
 
@@ -14,6 +14,13 @@ jobs:
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
+      - env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
+        run: >
+          echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
+          echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
+          cat .env
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:
@@ -27,5 +34,9 @@ jobs:
     needs: build_images
     steps:
       - uses: actions/checkout@v2
-      - run: >
-          echo "Hello World" > hello.txt
+      - env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
+        run: >
+          echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
+          echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
