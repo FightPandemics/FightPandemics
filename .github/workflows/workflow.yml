@@ -2,19 +2,23 @@ name: backend
 
 on: push
 
-env:
-  APP: backend
-
 jobs:
   build_image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app:
+          - backend
+          - client
+          - geo-service
+      fail-fast: true
     steps:
       - uses: actions/checkout@v2
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:
-          path: ./${{ env.APP }}
+          path: ./${{ matrix.app }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fightpandemics/${{ env.APP }}
+          repository: fightpandemics/${{ matrix.app }}
           tag_with_ref: true
