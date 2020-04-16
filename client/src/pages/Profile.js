@@ -10,15 +10,6 @@ import styled from "styled-components";
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
-// dummy data props,context, redux etc
-const firstName = "Cees";
-const lastName = "Wang";
-const about = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
-const email = "ceeswang@Test.com";
-const location = "NY, USA";
-const needHelp = true;
-const Item = Popover.Item;
-
 const SectionHeader = (props) => (
   <Title
     style={{
@@ -26,6 +17,7 @@ const SectionHeader = (props) => (
       fontWeight: "lighter",
       fontSize: "1.5rem",
       textAlign: "left",
+      marginLeft: "2.5rem",
     }}
     {...props}
   />
@@ -46,104 +38,147 @@ const BackgroundHeader = styled.div`
   height: 23vh;
   left: 0;
   right: 0;
-  background-color: #425AF2;
-  border-bottom=right-radius: 30px;
+  background-color: #425af2;
+  border-bottom-right-radius: 30px;
   position: relative;
-};
 `;
-const popover = (props) => {
-  return (
-    <Popover
-      mask
-      overlay={[
-        <Item key="editAccountInfo" value="Edit Account Information">
-          Edit Account Information
-        </Item>,
-        <Item
-          key="editProfile"
-          value="Edit Profile"
-          style={{ whiteSpace: "nowrap" }}
-        >
-          Edit Profile
-        </Item>,
-      ]}
-      align={{
-        overflow: { adjustY: 0, adjustX: 0 },
-        offset: [0, 10],
-      }}
-      onSelect={(opt) =>
-        opt.key === "editAccountInfo"
-          ? props.history.push("/edit-account")
-          : props.history.push("/edit-profile")
-      }
-    >
-      <EditIcon />
-    </Popover>
-  );
-};
-
-function getInitials(firstName, lastName) {
-  // function to get the initials given firstname and last name
-  return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
-}
+const AboutSection = styled.div`
+  background-color: #ffffff;
+  borderradius: 5px;
+  width: 100%;
+  font-size: 1.2rem;
+  color: #939393;
+  padding: 0 2rem;
+`;
+const ProfileLayout = styled.div`
+  background-color: #f9f9f9;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  max-height: 100%;
+  flex-direction: row;
+`;
+const IconsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+`;
+const HelpContainer = styled.div`
+  align-self: left;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border: 0.1rem solid #6c80ff;
+  border-radius: 0.2rem;
+  text-align: center;
+  align-items: center;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+`;
+const PlaceholderIcon = styled.div`
+  flex: 1;
+`;
 
 export const Profile = (props) => {
   // dummy data props,context, redux etc
+  const firstName = "Cees";
+  const lastName = "Wang";
+  const about = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
+  const email = "ceeswang@Test.com";
+  const location = "NY, USA";
+  const needHelp = true;
+  const Item = Popover.Item;
+
+  function getInitials(firstName, lastName) {
+    // function to get the initials given firstname and last name
+    return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+  }
+
+  const popover = (props) => {
+    return (
+      <Popover
+        mask
+        overlay={[
+          <Item key="editAccountInfo" value="Edit Account Information">
+            Edit Account Information
+          </Item>,
+          <Item
+            key="editProfile"
+            value="Edit Profile"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            Edit Profile
+          </Item>,
+        ]}
+        align={{
+          overflow: { adjustY: 0, adjustX: 0 },
+          offset: [0, 10],
+        }}
+        onSelect={(opt) =>
+          opt.key === "editAccountInfo"
+            ? props.history.push("/edit-account")
+            : props.history.push("/edit-profile")
+        }
+      >
+        <EditIcon />
+      </Popover>
+    );
+  };
+
   return (
-    <div style={profile}>
+    <ProfileLayout>
       <BackgroundHeader>
         <MenuIcon />
       </BackgroundHeader>
-      <div style={userInfoStyle} className="userInfo">
+      <div style={userInfoStyle}>
         {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <div style={{ color: "#000000", fontSize: "1.5rem" }}>{`${
-          firstName + " " + lastName
-        }`}</div>
-        <div style={{ color: "#77869E", fontSize: "1rem" }}>{email}</div>
-        <div style={{ color: "#5A6FF4", fontSize: "1.5rem" }}>{location}</div>
-        <div style={iconsContainer}>
-          <div style={statusContainer}>
+        <Title
+          title={`${firstName + " " + lastName}`}
+          style={{ color: "#000000", fontSize: "1.5rem" }}
+        />
+        <Title title={email} style={{ color: "#77869E", fontSize: "1rem" }} />
+        <Title
+          title={location}
+          style={{ color: "#5A6FF4", fontSize: "1.5rem", marginBottom: "1rem" }}
+        />
+        <IconsContainer>
+          <HelpContainer>
             <img
-              style={statusImgStyle}
+              style={{
+                marginTop: "1rem",
+                marginBottom: "0.5rem",
+                width: "35%",
+              }}
               src={needHelp ? needHelpInactive : offerHelpInactive}
             />
-            <div style={statusTextStyle}>
-              {needHelp ? "I need help" : "I want to help"}
-            </div>
-          </div>
-          <div style={{ flex: "1" }}></div>
+            <Title
+              title={needHelp ? "I need help" : "I want to help"}
+              style={{ fontSize: "0.8rem" }}
+            />
+          </HelpContainer>
+          <PlaceholderIcon />
           <LinkedinIcon style={iconStyle} />
           <TwitterIcon style={iconStyle} />
-        </div>
+        </IconsContainer>
       </div>
       <WhiteSpace />
-      <div style={sections}>
-        <section>
-          <SectionHeader title="About" />
-          <WhiteSpace />
-          <div style={aboutStyle}> {about}</div>
-        </section>
+      <section>
+        <SectionHeader title="About" />
         <WhiteSpace />
-        <section>
-          <SectionHeader title="My Activity" />
-          <WhiteSpace />
-        </section>
-      </div>
-    </div>
+        <AboutSection>{about}</AboutSection>
+      </section>
+      <WhiteSpace />
+      <section>
+        <SectionHeader title="My Activity" />
+        <WhiteSpace />
+      </section>
+    </ProfileLayout>
   );
 };
 
 //styling
-
-const profile = {
-  backgroundColor: "#F9F9F9",
-  height: "100vh",
-  width: "100vw",
-  maxWidth: "100%",
-  maxHeight: "100%",
-  flexDirection: "row",
-};
 
 const userInfoStyle = {
   backgroundColor: "#FFFFFF",
@@ -159,61 +194,6 @@ const userInfoStyle = {
   flexDirection: "column",
   display: "flex",
   alignItems: "center",
-};
-
-const sections = {
-  display: "flex",
-  marginLeft: "2.5rem",
-  marginRight: "2.5rem",
-  flexDirection: "column",
-};
-
-const aboutStyle = {
-  backgroundColor: "#FFFFFF",
-  borderRadius: "5px",
-};
-
-const initialsStyle = {
-  marginBottom: "1rem",
-  borderRadius: "50%",
-  border: "0.2rem solid #425AF2",
-  color: "#425AF2",
-  fontSize: "3rem",
-  lineHeight: "6rem",
-  width: "6rem",
-  textAlign: "center",
-  backgroundColor: "rgba(66, 90, 245, 0.04)",
-};
-
-const iconsContainer = {
-  marginTop: "1rem",
-  display: "flex",
-  flexDirection: "row",
-  width: "100%",
-  justifyContent: "space-between",
-};
-
-const statusContainer = {
-  alignSelf: "left",
-  display: "flex",
-  flexDirection: "column",
-  width: "30%",
-  border: "0.1rem solid #6C80FF",
-  borderRadius: "0.2rem",
-  textAlign: "center",
-  alignItems: "center",
-  marginLeft: "1rem",
-  marginBottom: "1rem",
-};
-
-const statusImgStyle = {
-  marginTop: "1rem",
-  marginBottom: "0.5rem",
-  width: "35%",
-};
-
-const statusTextStyle = {
-  fontSize: "0.8rem",
 };
 
 const iconStyle = {

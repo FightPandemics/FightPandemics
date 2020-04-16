@@ -73,10 +73,7 @@ export default function EditProfile(props) {
       />
       <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
       <ChangePicButton>Change</ChangePicButton>
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form style={{ display: "flex", flexDirection: "column" }}>
         <FormInput
           inputTitle="Self-introduction"
           name="selfIntroduction"
@@ -84,7 +81,13 @@ export default function EditProfile(props) {
           reference={register({ maxLength: 160 })}
         />
         {renderFormInputs()}
-        <SubmitButton title={"Save Changes"} style={{ marginBottom: "3rem" }} />
+        <SubmitButton
+          title={"Save Changes"}
+          style={{ marginTop: "1rem", marginBottom: "3rem" }}
+          onClick={handleSubmit(onSubmit)}
+        >
+          Save Changes
+        </SubmitButton>
       </form>
     </>
   );
