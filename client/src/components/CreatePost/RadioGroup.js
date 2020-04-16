@@ -13,7 +13,7 @@ const StyledRadioGroup = styled(Radio.Group)`
     align-items: center;
     flex-flow: row-reverse;
     justify-content: space-between;
-    padding: 1.3rem 0;
+    padding: ${(props) => props.padding};
 
     span.ant-radio + * {
       font-family: ${display};
@@ -33,11 +33,12 @@ const StyledRadioGroup = styled(Radio.Group)`
   }
 `;
 
-export default ({ options, onChange, value, defaultValue, flex }) => {
+export default ({ options, onChange, value, defaultValue, flex, padding }) => {
   return (
     <StyledRadioGroup
       size="large"
       flex={flex}
+      padding={padding}
       onChange={onChange}
       value={value}
       defaultValue={defaultValue}

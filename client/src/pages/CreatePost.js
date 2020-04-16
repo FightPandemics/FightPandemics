@@ -48,14 +48,6 @@ export default (props) => {
     setSettings({ ...settings, [selected]: e.target.value });
   };
 
-  const initialDefaultValue = () => {
-    if (selected && selected === "shareWith") {
-      return settings.shareWith;
-    } else {
-      return settings.expires;
-    }
-  };
-
   return (
     <CreatePostStyled>
       <CustomH1
@@ -73,6 +65,7 @@ export default (props) => {
           content={
             <RadioGroup
               flex={true}
+              padding={"1.3rem 0"}
               onChange={handleSettings}
               options={options}
               value={settings[selected]}
@@ -104,6 +97,7 @@ export default (props) => {
             onChange={(e) => setSettings({ ...settings, help: e.target.value })}
             options={helpTypes.options}
             value={settings.help}
+            padding={"0"}
           />
         </div>
       </div>
