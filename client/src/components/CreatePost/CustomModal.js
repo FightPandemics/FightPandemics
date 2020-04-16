@@ -22,6 +22,7 @@ const StyledModal = styled(Modal)`
       font-size: ${xxlarge};
       font-weight: bold;
       text-align: left;
+      margin-right: 5rem;
     }
   }
   .am-modal-content {

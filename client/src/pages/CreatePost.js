@@ -60,7 +60,7 @@ export default (props) => {
       </CustomH1>
       <div className="settings">
         <CustomModal
-          title={"Testing"}
+          title={selected ? createPostSettings[selected].title : ""}
           className="post-modal"
           content={
             <RadioGroup
