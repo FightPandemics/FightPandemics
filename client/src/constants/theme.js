@@ -1,4 +1,12 @@
-import { PRIMARY, ROYAL_BLUE, DARK_GRAY, LIGHTER_GRAY, SELAGO } from "./colors";
+import {
+  PRIMARY,
+  ROYAL_BLUE,
+  DARK_GRAY,
+  MEDIUM_GRAY,
+  LIGHT_GRAY,
+  LIGHTER_GRAY,
+  SELAGO,
+} from "./colors";
 
 const theme = {
   global: {
@@ -57,6 +65,8 @@ const theme = {
     royalBlue: ROYAL_BLUE,
     selago: SELAGO,
     darkGray: "#282828",
+    mediumGray: MEDIUM_GRAY,
+    lightGray: LIGHT_GRAY,
     lighterGray: LIGHTER_GRAY,
   },
   button: {

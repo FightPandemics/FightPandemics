@@ -1,32 +1,33 @@
 export default {
   shareWith: {
     type: "shareWith",
-    label: "Share with ...",
-    default: "Worldwide",
+    title: "Share with ...",
+    default: { text: "In my Zip Code", label: "Zip Code", value: "zipCode" },
     options: [
-      { label: "In my Zip Code", value: "Zip Code" },
-      { label: "In my State", value: "State" },
-      { label: "In my Country", value: "Country" },
-      { label: "Worldwide", value: "Worldwide" },
+      { text: "In my Zip Code", label: "Zip Code", value: "zipCode" },
+      { text: "In my State", label: "State", value: "state" },
+      { text: "In my Country", label: "Country", value: "country" },
+      { text: "Worldwide", label: "Worldwide", value: "worldwide" },
     ],
   },
   expires: {
     type: "expires",
-    label: "For how long do you want to keep your post?",
-    default: "Forever",
+    title: "For how long do you want to keep your post?",
+    default: { text: "Forever", label: "Forever", value: "forever" },
     options: [
-      { label: "Forever", value: "Forever" },
-      { label: "For a month", value: "Month" },
-      { label: "For a week", value: "Week" },
-      { label: "For a day", value: "Day" },
+      { text: "Forever", label: "Forever", value: "forever" },
+      { text: "For a month", label: "Month", value: "month" },
+      { text: "For a week", label: "Week", value: "week" },
+      { text: "For a day", label: "Day", value: "day" },
     ],
   },
   helpTypes: {
     type: "helpTypes",
-    label: "",
+    title: "",
+    default: { text: "", label: "", value: "" },
     options: [
-      { label: "Looking for help", value: "looking" },
-      { label: "Offering to help", value: "offering" },
+      { text: "Looking for help", label: "Looking", value: "looking" },
+      { text: "Offering to help", label: "Offering", value: "offering" },
     ],
   },
 };

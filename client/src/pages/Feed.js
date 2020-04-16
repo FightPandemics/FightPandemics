@@ -70,12 +70,6 @@ export default () => {
   };
 
   const renderCreatePostModal = () => {
-    const data = {
-      pathname: "/create-post",
-      state: {
-        filters,
-      },
-    };
     return (
       <Modal
         onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
@@ -85,8 +79,8 @@ export default () => {
         transparent
       >
         Continue Posting As:
-        <Link to={data}>Individual</Link>
-        <Link to={data}>Organization</Link>
+        <Link to="/create-post">Individual</Link>
+        <Link to="/create-post">Organization</Link>
       </Modal>
     );
   };
