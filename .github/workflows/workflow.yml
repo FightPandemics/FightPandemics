@@ -14,7 +14,8 @@ jobs:
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
-      - env:
+      - if: matrix.app == 'client'
+        env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
           AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
         run: >
