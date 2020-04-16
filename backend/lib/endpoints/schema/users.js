@@ -7,6 +7,7 @@ const getUserByIdSchema = {
 
 const createProfileSchema = {
   body: S.object()
+    .additionalProperties(false)
     .prop("firstName", S.string().required())
     .prop("lastName", S.string().required())
     .prop("email", S.string().required())
