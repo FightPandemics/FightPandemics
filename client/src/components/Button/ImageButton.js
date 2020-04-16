@@ -6,7 +6,7 @@ import { theme } from "../../constants/theme";
 
 const { typography } = theme;
 
-const DEFAULT_HEIGHT = 14;
+const DEFAULT_HEIGHT = 10;
 const DEFAULT_WIDTH = 14;
 
 const FlexDiv = styled.div`
