@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ypicard/get-branch-name-github-action@v1
+      - name: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - name: sanitize-branch-name
+        uses: yeouchien/sanitize-branch-name-action@v1
+        with:
+          branch-name: ${{ steps.get-branch-name.outputs.tag }}
       - name: docker
         uses: zenato/docker-action@v1.0.0
         with:
@@ -19,28 +24,40 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fight-pandemics/backend
-          tag: ${{ github.ref }}
+          tag: ${{ steps.sanitize-branch-name.outputs.sanitized-branch-name }}
   build_client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - name: sanitize-branch-name
+        uses: yeouchien/sanitize-branch-name-action@v1
+        with:
+          branch-name: ${{ steps.get-branch-name.outputs.tag }}
       - name: docker
         uses: zenato/docker-action@v1.0.0
         with:
           working-directory: ./client
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fight-pandemics/client
-          tag: ${{ github.ref }}
+          repository: fight-pandemics/clients
+          tag: ${{ steps.sanitize-branch-name.outputs.sanitized-branch-name }}
   build_geo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - name: sanitize-branch-name
+        uses: yeouchien/sanitize-branch-name-action@v1
+        with:
+          branch-name: ${{ steps.get-branch-name.outputs.tag }}
       - name: docker
         uses: zenato/docker-action@v1.0.0
         with:
           working-directory: ./geo-service
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: fight-pandemics/geo
-          tag: ${{ github.ref }}
+          repository: fight-pandemics/geo-service
+          tag: ${{ steps.sanitize-branch-name.outputs.sanitized-branch-name }}
