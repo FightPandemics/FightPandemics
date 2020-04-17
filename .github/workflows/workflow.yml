@@ -53,8 +53,6 @@ jobs:
               bucket = "fp-review-terraform-state"
               region = "us-east-1"
               key = "${IMAGE_TAG}.tfstate"
-              access_key = "${AWS_ACCESS_KEY_ID}"
-              secret_key = "${AWS_SECRET_ACCESS_KEY}"
             }
           }
           module "main" {
