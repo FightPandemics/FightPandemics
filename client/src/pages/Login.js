@@ -190,5 +190,3 @@ export default ({ isLoginForm }) => {
     </div>
   );
 };
-
-//export default LoginOrSignup;
