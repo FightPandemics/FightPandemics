@@ -40,9 +40,6 @@ jobs:
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
-          BRANCH_NAME: ${{ steps.get-branch-name.outputs.tag }}
-          IMAGE_TAG: ${{ steps.get-branch-name.outputs.tag }}
-          SUBDOMAIN: ${{ steps.get-branch-name.outputs.tag }}
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
@@ -52,14 +49,14 @@ jobs:
             backend "s3" {
               bucket = "fp-review-terraform-state"
               region = "us-east-1"
-              key = "${IMAGE_TAG}.tfstate"
+              key = "${{ steps.get-branch-name.outputs.tag }}.tfstate"
             }
           }
           module "main" {
             source = "github.com/FightPandemics/tf-fargate-task//module"
-            image_tag = "${IMAGE_TAG}"
+            image_tag = "${{ steps.get-branch-name.outputs.tag }}"
             fp_context = "review"
-            subdomain = "${SUBDOMAIN}"
+            subdomain = "${{ steps.get-branch-name.outputs.tag }}"
             backend_env_variables = [
               {
                 name = "PORT"
@@ -104,7 +101,7 @@ jobs:
           region: us-east-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: aws ecs update-service --cluster review-cluster --service ${BRANCH_NAME} --force-new-deployment
+          args: aws ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name.outputs.tag }} --force-new-deployment
         env:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
