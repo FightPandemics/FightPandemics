@@ -96,6 +96,7 @@ jobs:
             ]
           }
           EOF
+      - run: cat main.tf
       - uses: kciter/terraform-apply-for-aws-action@v3
         with:
           access_key_id: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
