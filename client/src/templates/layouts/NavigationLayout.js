@@ -122,7 +122,7 @@ export default (props) => {
           </>
         ) : (
           <>
-            <NavItem history={history} link="/auth/signup">
+            <NavItem history={history} link="/auth/login">
               Login / Register
             </NavItem>
           </>

@@ -32,7 +32,7 @@ const INITIAL_STATE = {
 
 const STEP_1_ANSWERS = [
   "As a volunteer",
-  "As a Doctor / Investor",
+  "As a Donor / Investor",
   "As a Organisation",
 ];
 const STEP_1_STATE = {
