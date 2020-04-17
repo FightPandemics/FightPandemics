@@ -49,14 +49,14 @@ jobs:
             backend "s3" {
               bucket = "fp-review-terraform-state"
               region = "us-east-1"
-              key = "${{ steps.get-branch-name.outputs.tag }}.tfstate"
+              key = "${{ steps.get-branch-name.outputs.branch }}.tfstate"
             }
           }
           module "main" {
             source = "github.com/FightPandemics/tf-fargate-task//module"
-            image_tag = "${{ steps.get-branch-name.outputs.tag }}"
+            image_tag = "${{ steps.get-branch-name.outputs.branch }}"
             fp_context = "review"
-            subdomain = "${{ steps.get-branch-name.outputs.tag }}"
+            subdomain = "${{ steps.get-branch-name.outputs.branch }}"
             backend_env_variables = [
               {
                 name = "PORT"
@@ -101,7 +101,7 @@ jobs:
           region: us-east-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: aws ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name.outputs.tag }} --force-new-deployment
+          args: aws ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name.outputs.branch }} --force-new-deployment
         env:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
