@@ -40,8 +40,12 @@ jobs:
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          BRANCH_NAME: ${{ steps.get-branch-name.outputs.tag }}
           IMAGE_TAG: ${{ steps.get-branch-name.outputs.tag }}
           SUBDOMAIN: ${{ steps.get-branch-name.outputs.tag }}
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
         run: |
           cat << EOF > main.tf
           terraform {
@@ -97,3 +101,10 @@ jobs:
           access_key_id: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
+      - uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: aws ecs update-service --cluster review-cluster --service ${BRANCH_NAME} --force-new-deployment
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
