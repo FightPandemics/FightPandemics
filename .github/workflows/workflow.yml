@@ -30,21 +30,32 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fightpandemics/${{ matrix.app }}
           tag_with_ref: true
-  deploy:
+  deploy_review:
     runs-on: ubuntu-latest
     needs: build_images
     steps:
       - uses: actions/checkout@v2
+      - name: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          IMAGE_TAG: ${{ steps.get-branch-name.outputs.tag }}
+          SUBDOMAIN: ${{ steps.get-branch-name.outputs.tag }}
         run: |
           cat << EOF > main.tf
+          terraform {
+            backend "s3" {
+              bucket = "fp-review-terraform-state"
+              region = "us-east-1"
+              key = "${IMAGE_TAG}.tfstate"
+            }
+          }
           module "main" {
             source = "github.com/FightPandemics/tf-fargate-task//module"
-            image_tag = "deployment"
+            image_tag = "${IMAGE_TAG}"
             fp_context = "review"
-            subdomain = "deployment"
+            subdomain = "${SUBDOMAIN}"
             backend_env_variables = [
               {
                 name = "PORT"
@@ -81,3 +92,8 @@ jobs:
             ]
           }
           EOF
+      - uses: kciter/terraform-apply-for-aws-action@v3
+        with:
+          access_key_id: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
