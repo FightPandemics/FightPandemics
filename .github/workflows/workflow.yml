@@ -35,7 +35,7 @@ jobs:
     needs: build_images
     steps:
       - uses: actions/checkout@v2
-      - name: get-branch-name
+      - id: get-branch-name
         uses: ypicard/get-branch-name-github-action@v1
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
