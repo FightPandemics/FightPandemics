@@ -36,8 +36,8 @@ async function routes(app) {
     },
   );
 
-  app.post(
-    "/signup/createProfile",
+  app.put(
+    "/:userId",
     { preValidation: [app.authenticate], schema: createProfileSchema },
     async (req, reply) => {
       try {
