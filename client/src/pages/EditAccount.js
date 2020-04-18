@@ -9,7 +9,10 @@ import UnderLineDescription from "../components/Input/UnderlineDescription";
 
 const Label = styled.label` 
   color: ${(props) => props.inputColor || "#425AF2"};
-  margin-top: 1.5rem;
+  padding-left: ${(props) => props.paddingLeft || ""};
+  margin-top: ${(props) => props.marginTop || "1.5rem"};
+  font-size: ${(props) => props.size || ""};
+  font-weight: ${(props) => props.weight || ""};
 };
 `;
 
@@ -63,7 +66,7 @@ export default function EditAccount(props) {
       return (
         <div key={key} style={{ margin: "1rem 0" }}>
           <Controller
-            as={Checkbox}
+            as={<Checkbox />}
             defaultValue={value[1]}
             name={value[0]}
             control={control}
@@ -191,11 +194,32 @@ export default function EditAccount(props) {
         {renderNeedHelp()}
         <SubmitButton
           title={"Save Changes"}
-          style={{ marginTop: "1rem", marginBottom: "3rem" }}
+          style={{ marginTop: "1rem", marginBottom: "1rem" }}
           onClick={handleSubmit(onSubmit)}
         >
           Save Changes
         </SubmitButton>
+        <div
+          style={{ display: "flex", marginTop: "1rem", marginBottom: "3rem" }}
+        >
+          <Controller
+            as={<Checkbox color="#646465" />}
+            defaultValue={false}
+            name={"policy"}
+            control={control}
+            onChange={([event]) => event.target.checked}
+          ></Controller>
+          <Label
+            size="1rem"
+            weight="bolder"
+            marginTop="0"
+            paddingLeft="10px"
+            inputColor="#646464"
+          >
+            By signing up, I agree to Fight Pandemics, Terms of Services and
+            Privacy Policy.
+          </Label>
+        </div>
       </form>
     </>
   );

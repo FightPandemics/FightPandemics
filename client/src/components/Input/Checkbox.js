@@ -7,7 +7,7 @@ const StyledCheckbox = styled(Checkbox)`
     height: 2rem;
   }
   .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #6076ef;
+    background-color: ${(props) => props.color || "#6076ef"};
     border-color: #939393;
   }
   .ant-checkbox-checked .ant-checkbox-inner::after {
