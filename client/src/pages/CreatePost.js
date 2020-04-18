@@ -7,6 +7,7 @@ import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
 import AddTags from "../components/Tag/AddTags";
+import SubmitButton from "../components/Button/SubmitButton";
 import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
@@ -151,7 +152,11 @@ export default (props) => {
         <div className="tags">
           <AddTags addTag={addTag} filters={types} />
         </div>
-        <button>Post</button>
+        <SubmitButton
+          title="Post"
+          handleClick={handleSubmit}
+          className="submit-btn"
+        />
       </StyledForm>
     </CreatePostWrapper>
   );
