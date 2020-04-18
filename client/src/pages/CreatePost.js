@@ -27,22 +27,16 @@ const initialState = {
   data: {
     title: "",
     body: "",
+    tags: [],
     shareWith: shareWith.default,
     expires: expires.default,
     help: helpTypes.default,
   },
-  errors: {
-    title: "",
-    body: "",
-    help: "",
-  },
-  required: ["title", "body", "help"],
 };
 
 export default (props) => {
   const [state, setState] = useState(initialState.state);
   const [data, setData] = useState(initialState.data);
-  const [errors, setErrors] = useState(initialState.errors);
   const { modal, selected, options } = state;
 
   const showModal = (setting) => (e) => {
@@ -63,17 +57,22 @@ export default (props) => {
     });
   };
 
-  const handleData = (key) => (e) => {
-    setData({ ...data, [key]: e.target.value });
+  const handleData = (field) => (e) => {
+    setData({ ...data, [field]: e.target.value });
+  };
+
+  const addTag = (tag) => (e) => {
+    const hasTag = data.tags.includes(tag);
+    if (hasTag) {
+      const tags = data.tags.filter((t) => t !== tag);
+      setData({ ...data, tags });
+    } else {
+      setData({ ...data, tags: [...data.tags, tag] });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
-  };
-
-  const requiredField = (data) => {
-    return data !== "";
   };
 
   return (
@@ -150,7 +149,7 @@ export default (props) => {
         </div>
         <HorizontalLine />
         <div className="tags">
-          <AddTags filters={types} />
+          <AddTags addTag={addTag} filters={types} />
         </div>
         <button>Post</button>
       </StyledForm>

@@ -70,3 +70,7 @@ export const StyledTextArea = styled(Input.TextArea)`
     box-shadow: unset;
   }
 `;
+
+export const ErrorMessage = styled.span`
+  color: red;
+`;
