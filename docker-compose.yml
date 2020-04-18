@@ -56,6 +56,8 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     container_name: client
+    environment:
+      BACKEND_SERVICE_URL: http://backend-service:8000
     ports:
       - "3000:3000"
     volumes:
