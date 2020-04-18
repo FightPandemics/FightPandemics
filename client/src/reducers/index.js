@@ -1,6 +1,4 @@
-import { 
-  SET_USER, 
-} from "../constants/action-types";
+import { SET_USER } from "../constants/action-types";
 
 const initialState = {
   user: null,
@@ -12,10 +10,10 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
-      }          
+      };
     default:
       return state;
   }
-};
+}
 
 export default rootReducer;
