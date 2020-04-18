@@ -23,23 +23,20 @@ const initialState = {
   modal: false,
   options: [],
   selected: "",
-  settings: {
+  data: {
+    title: "",
+    body: "",
     shareWith: shareWith.default,
     expires: expires.default,
     help: helpTypes.default,
-  },
-  content: {
-    title: "",
-    body: "",
   },
 };
 
 export default (props) => {
   const [modal, setModal] = useState(initialState.modal);
   const [options, setOptions] = useState(initialState.options);
-  const [settings, setSettings] = useState(initialState.settings);
   const [selected, setSelected] = useState(initialState.selected);
-  const [content, setContent] = useState(initialState.content);
+  const [data, setData] = useState(initialState.data);
 
   const showModal = (setting) => (e) => {
     setModal(!modal);
@@ -54,11 +51,11 @@ export default (props) => {
   };
 
   const handleSettings = (e) => {
-    setSettings({ ...settings, [selected]: e.target.value });
+    setData({ ...data, [selected]: e.target.value });
   };
 
   const handleInput = (type) => (e) => {
-    setContent({ ...content, [type]: e.target.value });
+    setData({ ...data, [type]: e.target.value });
   };
 
   return (
@@ -81,8 +78,8 @@ export default (props) => {
               padding={"1.3rem 0"}
               onChange={handleSettings}
               options={options}
-              value={settings[selected]}
-              defaultValue={settings[selected]}
+              value={data[selected]}
+              defaultValue={data[selected]}
             />
           }
           onClose={closeModal}
@@ -92,14 +89,14 @@ export default (props) => {
         <div className="buttons">
           <DownArrowButton
             handleClick={showModal(shareWith)}
-            label={settings.shareWith.label}
+            label={data.shareWith.label}
             color={theme.colors.royalBlue}
             bgcolor={"#fff"}
             long="true"
           />
           <DownArrowButton
             handleClick={showModal(expires)}
-            label={settings.expires.label}
+            label={data.expires.label}
             color={theme.colors.royalBlue}
             bgcolor={"#fff"}
             long="true"
@@ -107,9 +104,9 @@ export default (props) => {
         </div>
         <div className="inline">
           <RadioGroup
-            onChange={(e) => setSettings({ ...settings, help: e.target.value })}
+            onChange={(e) => setData({ ...data, help: e.target.value })}
             options={helpTypes.options}
-            value={settings.help}
+            value={data.help}
             padding={"0"}
           />
         </div>
@@ -118,12 +115,12 @@ export default (props) => {
       <StyledForm>
         <StyledInput
           onChange={handleInput("title")}
-          value={content.title}
+          value={data.title}
           placeholder="Title"
         />
         <StyledTextArea
           onChange={handleInput("body")}
-          value={content.body}
+          value={data.body}
           placeholder="Write a post."
           rows={12}
         />
