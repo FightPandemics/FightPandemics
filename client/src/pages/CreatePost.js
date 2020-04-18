@@ -19,9 +19,11 @@ const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
 
 const initialState = {
-  modal: false,
-  options: [],
-  selected: "",
+  state: {
+    modal: false,
+    options: [],
+    selected: "",
+  },
   data: {
     title: "",
     body: "",
@@ -29,24 +31,36 @@ const initialState = {
     expires: expires.default,
     help: helpTypes.default,
   },
+  errors: {
+    title: "",
+    body: "",
+    help: "",
+  },
+  required: ["title", "body", "help"],
 };
 
 export default (props) => {
-  const [modal, setModal] = useState(initialState.modal);
-  const [options, setOptions] = useState(initialState.options);
-  const [selected, setSelected] = useState(initialState.selected);
+  const [state, setState] = useState(initialState.state);
   const [data, setData] = useState(initialState.data);
+  const [errors, setErrors] = useState(initialState.errors);
+  const { modal, selected, options } = state;
 
   const showModal = (setting) => (e) => {
-    setModal(!modal);
-    setOptions(setting.options);
-    setSelected(setting.type);
+    setState({
+      ...state,
+      modal: !state.modal,
+      options: setting.options,
+      selected: setting.type,
+    });
   };
 
   const closeModal = (e) => {
-    setModal(!modal);
-    setOptions([]);
-    setSelected("");
+    setState({
+      ...state,
+      modal: !state.modal,
+      options: [],
+      selected: "",
+    });
   };
 
   const handleData = (key) => (e) => {
@@ -56,6 +70,10 @@ export default (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
+  };
+
+  const requiredField = (data) => {
+    return data !== "";
   };
 
   return (
@@ -113,23 +131,27 @@ export default (props) => {
           </div>
         </div>
         <HorizontalLine />
-        <label>
-          <StyledInput
-            onChange={handleData("title")}
-            value={data.title}
-            placeholder="Title"
-          />
-        </label>
-        <label>
-          <StyledTextArea
-            onChange={handleData("body")}
-            value={data.body}
-            placeholder="Write a post."
-            rows={12}
-          />
-        </label>
+        <div className="post-content">
+          <label>
+            <StyledInput
+              onChange={handleData("title")}
+              value={data.title}
+              placeholder="Title"
+            />
+          </label>
+          <label>
+            <StyledTextArea
+              onChange={handleData("body")}
+              value={data.body}
+              placeholder="Write a post."
+              rows={12}
+            />
+          </label>
+        </div>
         <HorizontalLine />
-        <AddTags filters={types} />
+        <div className="tags">
+          <AddTags filters={types} />
+        </div>
         <button>Post</button>
       </StyledForm>
     </CreatePostWrapper>
