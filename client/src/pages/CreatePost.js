@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import filterOptions from "../assets/data/filterOptions";
+import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
-import CreatePostForm from "../components//Forms/CreatePostForm";
 import SubmitButton from "../components/Button/SubmitButton";
 import AddTags from "../components/Tag/AddTags";
 import CreatePostStyled from "../components/CreatePost/CreatePostStyled";
-import { ROYAL_BLUE } from "../constants/colors";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
+import { theme } from "../constants/theme";
+import {
+  StyledForm,
+  StyledInput,
+  StyledTextArea,
+} from "../components/CreatePost/CreatePostForm";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
@@ -24,6 +28,10 @@ const initialState = {
     expires: expires.default,
     help: helpTypes.default,
   },
+  content: {
+    title: "",
+    body: "",
+  },
 };
 
 export default (props) => {
@@ -31,6 +39,7 @@ export default (props) => {
   const [options, setOptions] = useState(initialState.options);
   const [settings, setSettings] = useState(initialState.settings);
   const [selected, setSelected] = useState(initialState.selected);
+  const [content, setContent] = useState(initialState.content);
 
   const showModal = (setting) => (e) => {
     setModal(!modal);
@@ -46,6 +55,10 @@ export default (props) => {
 
   const handleSettings = (e) => {
     setSettings({ ...settings, [selected]: e.target.value });
+  };
+
+  const handleInput = (type) => (e) => {
+    setContent({ ...content, [type]: e.target.value });
   };
 
   return (
@@ -80,14 +93,14 @@ export default (props) => {
           <DownArrowButton
             handleClick={showModal(shareWith)}
             label={settings.shareWith.label}
-            color={ROYAL_BLUE}
+            color={theme.colors.royalBlue}
             bgcolor={"#fff"}
             long="true"
           />
           <DownArrowButton
             handleClick={showModal(expires)}
             label={settings.expires.label}
-            color={ROYAL_BLUE}
+            color={theme.colors.royalBlue}
             bgcolor={"#fff"}
             long="true"
           />
@@ -102,7 +115,19 @@ export default (props) => {
         </div>
       </div>
       <HorizontalLine />
-      <CreatePostForm />
+      <StyledForm>
+        <StyledInput
+          onChange={handleInput("title")}
+          value={content.title}
+          placeholder="Title"
+        />
+        <StyledTextArea
+          onChange={handleInput("body")}
+          value={content.body}
+          placeholder="Write a post."
+          rows={12}
+        />
+      </StyledForm>
       <HorizontalLine />
       <AddTags filters={types} />
       <SubmitButton className="submit-btn" type="primary" title={"Post"} />
