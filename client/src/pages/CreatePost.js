@@ -64,66 +64,70 @@ export default (props) => {
       >
         Create a Post
       </CustomH1>
-      <div className="settings">
-        <CustomModal
-          title={selected ? createPostSettings[selected].title : ""}
-          className="post-modal"
-          content={
-            <RadioGroup
-              flex={true}
-              padding={"1.3rem 0"}
-              onChange={handleData(selected)}
-              options={options}
-              value={data[selected]}
-              defaultValue={data[selected]}
-            />
-          }
-          onClose={closeModal}
-          visible={modal}
-          closable={false}
-        />
-        <div className="buttons">
-          <DownArrowButton
-            handleClick={showModal(shareWith)}
-            label={data.shareWith.label}
-            color={theme.colors.royalBlue}
-            bgcolor={"#fff"}
-            long="true"
-          />
-          <DownArrowButton
-            handleClick={showModal(expires)}
-            label={data.expires.label}
-            color={theme.colors.royalBlue}
-            bgcolor={"#fff"}
-            long="true"
-          />
-        </div>
-        <div className="inline">
-          <RadioGroup
-            onChange={(e) => setData({ ...data, help: e.target.value })}
-            options={helpTypes.options}
-            value={data.help}
-            padding={"0"}
-          />
-        </div>
-      </div>
-      <HorizontalLine />
       <StyledForm>
-        <StyledInput
-          onChange={handleData("title")}
-          value={data.title}
-          placeholder="Title"
-        />
-        <StyledTextArea
-          onChange={handleData("body")}
-          value={data.body}
-          placeholder="Write a post."
-          rows={12}
-        />
+        <div className="settings">
+          <CustomModal
+            title={selected ? createPostSettings[selected].title : ""}
+            className="post-modal"
+            content={
+              <RadioGroup
+                flex={true}
+                padding={"1.3rem 0"}
+                onChange={handleData(selected)}
+                options={options}
+                value={data[selected]}
+                defaultValue={data[selected]}
+              />
+            }
+            onClose={closeModal}
+            visible={modal}
+            closable={false}
+          />
+          <div className="buttons">
+            <DownArrowButton
+              handleClick={showModal(shareWith)}
+              label={data.shareWith.label}
+              color={theme.colors.royalBlue}
+              bgcolor={"#fff"}
+              long="true"
+            />
+            <DownArrowButton
+              handleClick={showModal(expires)}
+              label={data.expires.label}
+              color={theme.colors.royalBlue}
+              bgcolor={"#fff"}
+              long="true"
+            />
+          </div>
+          <div className="inline">
+            <RadioGroup
+              onChange={(e) => setData({ ...data, help: e.target.value })}
+              options={helpTypes.options}
+              value={data.help}
+              padding={"0"}
+            />
+          </div>
+        </div>
+        <HorizontalLine />
+        <label>
+          <StyledInput
+            onChange={handleData("title")}
+            value={data.title}
+            placeholder="Title"
+          />
+        </label>
+        <label>
+          <StyledTextArea
+            onChange={handleData("body")}
+            value={data.body}
+            placeholder="Write a post."
+            rows={12}
+          />
+        </label>
+        <HorizontalLine />
+        <AddTags filters={types} />
+        <SubmitButton className="submit-btn" type="primary" title={"Post"} />
       </StyledForm>
-      <HorizontalLine />
-      <AddTags filters={types} />
-      <SubmitButton className="submit-btn" type="primary" title={"Post"} />
     </CreatePostStyled>
   );
 };

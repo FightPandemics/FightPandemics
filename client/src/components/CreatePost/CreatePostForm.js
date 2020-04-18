@@ -8,8 +8,6 @@ const { royalBlue, darkGray } = theme.colors;
 
 export const StyledForm = styled.form`
   font-family: ${display};
-  margin-top: 2rem;
-  padding-right: 1.8rem;
 `;
 
 export const StyledInput = styled(Input)`
