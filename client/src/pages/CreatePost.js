@@ -50,12 +50,8 @@ export default (props) => {
     setSelected("");
   };
 
-  const handleSettings = (e) => {
-    setData({ ...data, [selected]: e.target.value });
-  };
-
-  const handleInput = (type) => (e) => {
-    setData({ ...data, [type]: e.target.value });
+  const handleData = (key) => (e) => {
+    setData({ ...data, [key]: e.target.value });
   };
 
   return (
@@ -76,7 +72,7 @@ export default (props) => {
             <RadioGroup
               flex={true}
               padding={"1.3rem 0"}
-              onChange={handleSettings}
+              onChange={handleData(selected)}
               options={options}
               value={data[selected]}
               defaultValue={data[selected]}
@@ -114,12 +110,12 @@ export default (props) => {
       <HorizontalLine />
       <StyledForm>
         <StyledInput
-          onChange={handleInput("title")}
+          onChange={handleData("title")}
           value={data.title}
           placeholder="Title"
         />
         <StyledTextArea
-          onChange={handleInput("body")}
+          onChange={handleData("body")}
           value={data.body}
           placeholder="Write a post."
           rows={12}
