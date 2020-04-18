@@ -6,15 +6,14 @@ import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import HorizontalLine from "../components/Icon/horizontal-line";
-import SubmitButton from "../components/Button/SubmitButton";
 import AddTags from "../components/Tag/AddTags";
-import CreatePostStyled from "../components/CreatePost/CreatePostStyled";
 import { theme } from "../constants/theme";
 import {
+  CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
-} from "../components/CreatePost/CreatePostForm";
+} from "../components/CreatePost/StyledCreatePost";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
@@ -54,8 +53,13 @@ export default (props) => {
     setData({ ...data, [key]: e.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(data);
+  };
+
   return (
-    <CreatePostStyled>
+    <CreatePostWrapper>
       <CustomH1
         className="title"
         fontsize={"2.2rem"}
@@ -64,7 +68,7 @@ export default (props) => {
       >
         Create a Post
       </CustomH1>
-      <StyledForm>
+      <StyledForm onSubmit={handleSubmit}>
         <div className="settings">
           <CustomModal
             title={selected ? createPostSettings[selected].title : ""}
@@ -126,8 +130,8 @@ export default (props) => {
         </label>
         <HorizontalLine />
         <AddTags filters={types} />
-        <SubmitButton className="submit-btn" type="primary" title={"Post"} />
+        <button>Post</button>
       </StyledForm>
-    </CreatePostStyled>
+    </CreatePostWrapper>
   );
 };
