@@ -107,9 +107,9 @@ export default (props) => {
     <CreatePostWrapper>
       <CustomH1
         className="title"
-        fontsize={"2.2rem"}
-        fontweight={"700"}
-        color={"black"}
+        fontsize="2.2rem"
+        fontweight="700"
+        color="black"
       >
         Create a Post
       </CustomH1>
@@ -121,7 +121,7 @@ export default (props) => {
             content={
               <RadioGroup
                 flex={true}
-                padding={"1.3rem 0"}
+                padding="1.3rem 0"
                 onChange={handleData(selected)}
                 options={options}
                 value={data[selected]}
@@ -137,15 +137,15 @@ export default (props) => {
               handleClick={showModal(shareWith)}
               label={data.shareWith}
               color={theme.colors.royalBlue}
-              bgcolor={"#fff"}
+              bgcolor="#fff"
               long="true"
             />
             <DownArrowButton
               handleClick={showModal(expires)}
               label={data.expires}
               color={theme.colors.royalBlue}
-              bgcolor={"#fff"}
-              long="true"
+              bgcolor="#fff"
+              long={true}
             />
           </div>
           <div className="inline">
@@ -153,7 +153,7 @@ export default (props) => {
               onChange={handleData("help")}
               options={helpTypes.options}
               value={data.help}
-              padding={"0"}
+              padding="0"
             />
             <span className="error-box">{renderError("help")}</span>
           </div>
