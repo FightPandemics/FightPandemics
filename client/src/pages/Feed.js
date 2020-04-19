@@ -7,7 +7,6 @@ import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
 import CreatPostIcon from "../components/Icon/create-post";
-import { theme } from "../constants/theme";
 import { optionsReducer, feedReducer } from "../reducers/feedReducers";
 import {
   ADD_OPTION,

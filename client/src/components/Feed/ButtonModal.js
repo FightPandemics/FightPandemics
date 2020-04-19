@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { Modal } from "antd-mobile";
 import { theme } from "../../constants/theme";
 
+const { royalBlue } = theme.colors;
+
 export default styled(Modal)`
-  font-family: "Poppins";
+  font-family: ${theme.typography.font.family.display};
   .title {
     font-weight: bold;
     margin-top: 0.5rem;
@@ -19,7 +21,7 @@ export default styled(Modal)`
     padding-left: 3rem;
     border-radius: 1rem;
     margin-bottom: 1.5rem;
-    border: 0.1rem solid ${theme.colors.royalBlue};
+    border: 0.1rem solid ${royalBlue};
 
     a {
       color: unset;
@@ -27,7 +29,7 @@ export default styled(Modal)`
   }
 
   .primary {
-    background-color: ${theme.colors.royalBlue};
+    background-color: ${royalBlue};
     color: #fff;
 
     &:hover,
@@ -44,7 +46,7 @@ export default styled(Modal)`
     &:hover,
     &:active,
     &:focus {
-      background-color: ${theme.colors.royalBlue};
+      background-color: ${royalBlue};
       color: #fff;
     }
   }
