@@ -29,9 +29,9 @@ const initialState = {
     title: "",
     body: "",
     tags: [],
-    shareWith: shareWith.default,
-    expires: expires.default,
-    help: helpTypes.default,
+    shareWith: shareWith.default.value,
+    expires: expires.default.value,
+    help: helpTypes.default.value,
   },
 };
 
@@ -108,14 +108,14 @@ export default (props) => {
           <div className="buttons">
             <DownArrowButton
               handleClick={showModal(shareWith)}
-              label={data.shareWith.label}
+              label={data.shareWith}
               color={theme.colors.royalBlue}
               bgcolor={"#fff"}
               long="true"
             />
             <DownArrowButton
               handleClick={showModal(expires)}
-              label={data.expires.label}
+              label={data.expires}
               color={theme.colors.royalBlue}
               bgcolor={"#fff"}
               long="true"

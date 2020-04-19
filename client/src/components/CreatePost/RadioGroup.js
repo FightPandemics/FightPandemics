@@ -44,7 +44,7 @@ export default ({ options, onChange, value, defaultValue, flex, padding }) => {
       defaultValue={defaultValue}
     >
       {options.map((option, idx) => (
-        <Radio value={option} key={idx}>
+        <Radio value={option.value} key={idx}>
           {option.text}
         </Radio>
       ))}
