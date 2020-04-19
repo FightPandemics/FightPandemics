@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { theme } from "../../constants/theme";
 
-export default ({ title, ...props }) => {
+export default ({ title, handleClick, ...props }) => {
   const StyledButton = styled(Button).attrs((props) => {
     return {
       type: "primary",
@@ -16,5 +16,9 @@ export default ({ title, ...props }) => {
       : ""}
     border-radius: 4.6rem;
   `;
-  return <StyledButton {...props}>{title}</StyledButton>;
+  return (
+    <StyledButton onClick={handleClick} {...props}>
+      {title}
+    </StyledButton>
+  );
 };
