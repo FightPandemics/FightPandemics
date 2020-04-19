@@ -1,6 +1,17 @@
 import axios from "axios";
 import { GET_ERRORS } from "./types";
-import { SET_USER } from "../constants/action-types";
+import { AUTH_INIT, AUTH_LOGIN, SET_USER } from "../constants/action-types";
+import { getAuthToken } from "../utils/auth-token";
+
+// Note: for production apps, both localstorage & cookies contain risks to store user & auth data
+export const initAuth = () => {
+  return (dispatch) => {
+    const token = getAuthToken();
+    if (token) {
+      dispatch({ type: AUTH_LOGIN, payload: { token } });
+    }
+  };
+};
 
 export const submitEmail = (userData, history) => (dispatch) => {
   axios
@@ -15,29 +26,15 @@ export const submitEmail = (userData, history) => (dispatch) => {
 };
 
 export const loginWithEmail = (payload) => {
-  return (dispatch) => {
-    console.log("payload", payload);
-    return axios
-      .post("/api/auth/authenticate", payload, {})
-      .then((res) => {
-        console.log("loginWithEmail response", res);
-        dispatch({ type: SET_USER, payload: res.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  return async (dispatch) => {
+    const res = await axios.post("/api/auth/authenticate", payload);
+    dispatch({ type: AUTH_LOGIN, payload: res.data });
   };
 };
 
 export const signup = (payload) => {
-  return (dispatch) => {
-    return axios
-      .post("/api/auth/authenticate", payload, {})
-      .then((res) => {
-        console.log("signup response", res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  return async (dispatch) => {
+    const res = axios.post("/api/auth/authenticate", payload);
+    dispatch({ type: AUTH_LOGIN, payload: res.data });
   };
 };

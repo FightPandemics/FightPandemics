@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 import LogoLayout from "./layouts/LogoLayout";
 import NavigationLayout from "./layouts/NavigationLayout";
@@ -32,10 +32,19 @@ export const RouteWithSubRoutes = (route) => {
   return (
     <Route
       path={route.path}
-      render={(props) =>
-        // pass the sub-routes down to keep nesting
-        switchLayout(route.layout, { ...props, ...route.props })
-      }
+      render={(props) => {
+        return !props.isPrivate || props.isAuthenticated ? (
+          // pass the sub-routes down to keep nesting
+          switchLayout(route.layout, { ...props, ...route.props })
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/auth/login",
+              state: { from: props.location },
+            }}
+          />
+        );
+      }}
     />
   );
 };
