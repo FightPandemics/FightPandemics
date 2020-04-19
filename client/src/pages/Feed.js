@@ -1,12 +1,13 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "antd-mobile";
+import ButtonModal from "../components/Feed/ButtonModal";
 import filterOptions from "../assets/data/filterOptions";
 import fakePosts from "../assets/data/fakePosts";
 import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
 import CreatPostIcon from "../components/Icon/create-post";
+import { theme } from "../constants/theme";
 import { optionsReducer, feedReducer } from "../reducers/feedReducers";
 import {
   ADD_OPTION,
@@ -71,17 +72,23 @@ export default () => {
 
   const renderCreatePostModal = () => {
     return (
-      <Modal
+      <ButtonModal
         onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
         maskClosable={true}
-        closable={true}
+        closable={false}
         visible={createPostModal}
         transparent
       >
-        Continue Posting As:
-        <Link to="/create-post">Individual</Link>
-        <Link to="/create-post">Organization</Link>
-      </Modal>
+        <h2 className="title">Continue Posting As</h2>
+        <div className="links">
+          <button className="primary">
+            <Link to="/create-post">Individual</Link>
+          </button>
+          <button className="outline">
+            <Link to="/create-post">Organization</Link>
+          </button>
+        </div>
+      </ButtonModal>
     );
   };
 
