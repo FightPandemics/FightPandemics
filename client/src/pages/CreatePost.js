@@ -33,11 +33,19 @@ const initialState = {
     expires: expires.default.value,
     help: helpTypes.default.value,
   },
+  errors: [],
+};
+
+const errorMsg = {
+  title: "Please include a title for your post.",
+  body: "Please include a body for your post.",
+  help: "Please select a type of help.",
 };
 
 export default (props) => {
   const [state, setState] = useState(initialState.state);
   const [data, setData] = useState(initialState.data);
+  const [errors, setErrors] = useState(initialState.errors);
   const { modal, selected, options } = state;
 
   const showModal = (setting) => (e) => {
@@ -60,6 +68,10 @@ export default (props) => {
 
   const handleData = (field) => (e) => {
     setData({ ...data, [field]: e.target.value });
+    if (errors.includes(field) && data[field]) {
+      const newErrors = errors.filter((error) => error !== field);
+      setErrors(newErrors);
+    }
   };
 
   const addTag = (tag) => (e) => {
@@ -72,8 +84,23 @@ export default (props) => {
     }
   };
 
+  const handleErrors = () => {
+    const newErrors = [];
+    for (let field in errorMsg) {
+      if (!errors.includes(field) && !data[field]) {
+        newErrors.push(field);
+      }
+    }
+    setErrors([...errors, ...newErrors]);
+  };
+
+  const renderError = (field) => {
+    if (errors.includes(field)) return errorMsg[field];
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleErrors();
   };
 
   return (
@@ -123,11 +150,12 @@ export default (props) => {
           </div>
           <div className="inline">
             <RadioGroup
-              onChange={(e) => setData({ ...data, help: e.target.value })}
+              onChange={handleData("help")}
               options={helpTypes.options}
               value={data.help}
               padding={"0"}
             />
+            <span className="error-box">{renderError("help")}</span>
           </div>
         </div>
         <HorizontalLine />
@@ -139,6 +167,7 @@ export default (props) => {
               placeholder="Title"
             />
           </label>
+          <span className="error-box">{renderError("title")}</span>
           <label>
             <StyledTextArea
               onChange={handleData("body")}
@@ -147,6 +176,7 @@ export default (props) => {
               rows={12}
             />
           </label>
+          <span className="error-box">{renderError("body")}</span>
         </div>
         <HorizontalLine />
         <div className="tags">

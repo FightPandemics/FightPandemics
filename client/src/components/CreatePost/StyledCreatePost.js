@@ -30,6 +30,9 @@ export const CreatePostWrapper = styled.div`
   .post-modal {
     border-radius: 0;
   }
+  .error-box {
+    color: red;
+  }
   .submit-btn {
     font-family: ${display};
     background-color: ${royalBlue};
@@ -47,7 +50,6 @@ export const StyledInput = styled(Input)`
   border: none;
   outline: none;
   padding: 0;
-  margin-bottom: 2rem;
   &.ant-input:hover,
   &.ant-input:focus {
     border-right-width: unset !important;
