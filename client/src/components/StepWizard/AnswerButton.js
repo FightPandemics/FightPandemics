@@ -3,7 +3,7 @@ import { PRIMARY } from "../../constants/colors";
 import { theme } from "../../constants/theme";
 import React from "react";
 
-const { colors, typography } = theme;
+const { typography } = theme;
 
 const AnswerStyles = styled.div`
   display: block;
