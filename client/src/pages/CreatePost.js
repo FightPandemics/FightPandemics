@@ -145,7 +145,7 @@ export default (props) => {
               label={data.expires}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
-              long={true}
+              long="true"
             />
           </div>
           <div className="inline">
