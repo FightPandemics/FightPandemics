@@ -1,22 +1,21 @@
+import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Button, Flex, WhiteSpace } from "antd-mobile";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import { validateEmail } from "../utils/common.js";
 import { PASSWORD_MIN_LENGTH } from "../config";
 import { loginWithEmail, signup } from "../actions/authActions";
-import { useDispatch } from "react-redux";
-import { Toast } from "antd-mobile";
+import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-
 import {
   FacebookIcon,
   TwitterIcon,
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
-import SubmitButton from "~/components/Button/SubmitButton";
 
 const InputWrapper = styled.div`
   width: 100%;
