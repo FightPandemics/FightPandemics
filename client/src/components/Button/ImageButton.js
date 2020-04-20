@@ -27,6 +27,7 @@ const FlexDiv = styled.div`
 const NestedImage = styled.img.attrs((props) => {
   return {
     src: props.src,
+    alt: props.alt,
   };
 })`
   width: ${DEFAULT_WIDTH}rem;
@@ -52,7 +53,16 @@ export default ({
       {...props}
     >
       <FlexDiv>
-        <NestedImage src={src} height={height} width={width} />
+        <NestedImage
+          src={src}
+          alt={
+            typeof children === "string" || children instanceof String
+              ? children
+              : ""
+          }
+          height={height}
+          width={width}
+        />
         {children}
       </FlexDiv>
     </FeedbackButton>
