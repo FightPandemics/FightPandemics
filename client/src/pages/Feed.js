@@ -1,4 +1,5 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import ButtonModal from "../components/Feed/ButtonModal";
 import filterOptions from "../assets/data/filterOptions";
@@ -19,17 +20,33 @@ import {
 export const FeedContext = React.createContext();
 
 const initialState = {
+  covidData: [],
   filterModal: false,
   createPostModal: false,
   activePanel: null,
   location: "",
 };
+const airtableAPI =
+  "https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g";
 
 export default () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const { filterModal, createPostModal, activePanel, location } = feedState;
   const filters = Object.values(filterOptions);
+
+  const getCovidData = useCallback(async () => {
+    try {
+      const res = await axios.get(airtableAPI);
+      dispatchAction(SET_VALUE, "covidData", res.data.records);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCovidData();
+  }, [getCovidData]);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
