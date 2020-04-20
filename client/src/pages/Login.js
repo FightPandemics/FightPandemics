@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
-import { validateEmail } from '../utils/common.js';
-import { PASSWORD_MIN_LENGTH } from '../config';
-import { loginWithEmail, signup } from '../actions/authActions';
+import { validateEmail } from "../utils/common.js";
+import { PASSWORD_MIN_LENGTH } from "../config";
+import { loginWithEmail, signup } from "../actions/authActions";
 import { useDispatch } from "react-redux";
-import PasswordInput from "~/components/Input/PasswordInput";
-import { Toast } from 'antd-mobile';
+import { Toast } from "antd-mobile";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
 
@@ -64,45 +63,44 @@ const SocialButton = styled(Button).attrs((props) => ({
 `;
 
 export default ({ isLoginForm }) => {
-  
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleInputChangeEmail = e => {
+  const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
-  const handleInputChangePassword = e => {
+  const handleInputChangePassword = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   const handleLoginWithEmail = (evt) => {
     evt.preventDefault();
-    if (!validateEmail (email)) {
-      Toast.fail('Invalid email address!', 3);
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 3);
       return;
     }
     if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail('Password must be at least 6 characters', 3);
+      Toast.fail("Password must be at least 6 characters", 3);
       return;
     }
     dispatch(loginWithEmail({ email, password }));
-  }
+  };
 
   const handleSignup = (evt) => {
     evt.preventDefault();
-    if (!validateEmail (email)) {
-      Toast.fail('Invalid email address!', 3);
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 3);
       return;
     }
     if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail('Password must be at least 6 characters', 3);
+      Toast.fail("Password must be at least 6 characters", 3);
       return;
     }
     dispatch(signup({ email, password }));
-  }  
+  };
 
   const loginWithConnection = (connection) => {};
 
@@ -111,7 +109,7 @@ export default ({ isLoginForm }) => {
       <h1>Welcome</h1>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <Label style={StyleLabel} label="E-mail"/>
+          <Label style={StyleLabel} label="E-mail" />
           <Input
             type="email"
             required
@@ -119,10 +117,10 @@ export default ({ isLoginForm }) => {
             value={email}
             onChange={handleInputChangeEmail}
             style={StyleInput}
-          />                    
+          />
         </InputWrapper>
-        <InputWrapper>   
-          <Label style={StyleLabel} label="Password"/>
+        <InputWrapper>
+          <Label style={StyleLabel} label="Password" />
           <Input
             type="password"
             required
@@ -136,7 +134,7 @@ export default ({ isLoginForm }) => {
         <WhiteSpace />
         <SubmitButton
           title={isLoginForm ? "Login" : "Sign Up"}
-          onClick={isLoginForm? handleLoginWithEmail: handleSignup}
+          onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
         />
       </form>
       <WhiteSpace />

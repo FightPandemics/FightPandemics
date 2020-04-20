@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
 import SubmitButton from "../components/Button/SubmitButton";
-import TextInput from "../components/Input/TextInput";
-import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
   AnswerButton,

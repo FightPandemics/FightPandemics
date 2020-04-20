@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-import styled from "styled-components";
 
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
-  AnswerButton,
   StyledWizard,
   WizardContainer,
   WizardStep,
@@ -22,9 +20,6 @@ import {
 } from "../components/StepWizard";
 import { IconButton, SubmitButton, CustomButton } from "../components/Button";
 import { ShareMyLocationIcon } from "../components/Icon";
-
-import { theme } from "../constants/theme";
-const { button } = theme;
 
 const INITIAL_STATE = {
   answers: [],
@@ -50,20 +45,20 @@ const Step1 = (props) => {
     updateState({ ...state, answers: updatedAnswers });
     props.update("helpTypeOffered", checkedAnswers);
   };
-  const toggleNone = () => {
-    const newNone = !none;
-    updateState({ ...state, none: newNone });
-    props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
-  };
+  // const toggleNone = () => {
+  //   const newNone = !none;
+  //   updateState({ ...state, none: newNone });
+  //   props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
+  // };
 
-  const onSelectAnswer = (answer) => {
-    console.log(answer);
+  // const onSelectAnswer = (answer) => {
+  //   console.log(answer);
 
-    props.update("helpTypeOffered", answer);
-    console.log(props);
+  //   props.update("helpTypeOffered", answer);
+  //   console.log(props);
 
-    // props.nextStep();
-  };
+  //   // props.nextStep();
+  // };
 
   return (
     <WizardStep>
