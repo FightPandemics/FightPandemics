@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import styled from "styled-components";
 
@@ -6,8 +6,8 @@ import { theme } from "../../constants/theme";
 
 const { typography } = theme;
 
-const DEFAULT_HEIGHT = 14;
-const DEFAULT_WIDTH = 14;
+const DEFAULT_HEIGHT = 10;
+const DEFAULT_WIDTH = 10;
 
 const FlexDiv = styled.div`
   /* margin-top: 15px; */
@@ -26,17 +26,12 @@ const FlexDiv = styled.div`
 
 const NestedImage = styled.img.attrs((props) => {
   return {
-    src: props.inactiveImg,
+    src: props.src,
   };
 })`
   width: ${DEFAULT_WIDTH}rem;
   height: ${DEFAULT_HEIGHT}rem;
   margin: 0 auto 2rem;
-  .am-button-active &, .am-button:hover &, .am-button:visited & {
-    content: url('${(props) => props.activeImg}');
-    width: ${DEFAULT_WIDTH}rem;
-    height: ${DEFAULT_HEIGHT}rem;
-  }
 `;
 
 export default ({
@@ -47,15 +42,17 @@ export default ({
   children,
   ...props
 }) => {
+  const [src, toggleSrc] = useState(inactiveImg);
   return (
-    <FeedbackButton style={{ height: "unset" }} inline {...props}>
+    <FeedbackButton
+      onMouseEnter={() => toggleSrc(activeImg)}
+      onMouseLeave={() => toggleSrc(inactiveImg)}
+      style={{ height: "unset" }}
+      inline
+      {...props}
+    >
       <FlexDiv>
-        <NestedImage
-          inactiveImg={inactiveImg}
-          activeImg={activeImg || inactiveImg}
-          height={height}
-          width={width}
-        />
+        <NestedImage src={src} height={height} width={width} />
         {children}
       </FlexDiv>
     </FeedbackButton>
