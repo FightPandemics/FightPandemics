@@ -34,7 +34,7 @@ async function routes(app) {
     }
   });
 
-  app.post("signup", { preValidation: [app.getServerToken] }, async (req) => {
+  app.post("/signup", { preValidation: [app.getServerToken] }, async (req) => {
     const { body, token } = req;
     const { email, password } = body;
     const payload = {
@@ -45,13 +45,11 @@ async function routes(app) {
       verify_email: false,
     };
     try {
-      const res = await Auth0.createUser(token, payload);
-      req.log.info(`User created successfully email= `);
-      console.log("createUser OK", { res });
+      await Auth0.createUser(token, payload);
+      req.log.info(`User created successfully email=${email}`);
     } catch (err) {
-      // 409 means CONFLICT, e.g. user exists
       if (err.statusCode === 409) {
-        return new httpErrors.Conflict();
+        return new httpErrors.Conflict("User already exists");
       }
       req.log.error("Error creating user", { err });
       return new httpErrors.InternalServerError();
@@ -64,7 +62,7 @@ async function routes(app) {
     return { token: accessToken };
   });
 
-  app.post("login", async (req) => {
+  app.post("/login", async (req) => {
     const token = await Auth0.authenticate("password", {
       password: req.body.password,
       scope: "openid",

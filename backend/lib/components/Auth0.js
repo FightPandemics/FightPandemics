@@ -1,4 +1,5 @@
 const axios = require("axios");
+const httpErrors = require("http-errors");
 const qs = require("querystring");
 const { config } = require("../../config");
 
@@ -14,14 +15,13 @@ const getAuthHeaders = (token) => {
   };
 };
 
-const returnError = (err) => {
+const wrapError = (err) => {
   const {
     response: { data, status },
   } = err;
-  const { error, message } = data;
+  const { message } = data;
   const statusCode = status || data.statusCode;
-  // eslint-disable-next-line no-throw-literal
-  throw { error, message, statusCode };
+  throw httpErrors(statusCode, message);
 };
 
 const buildOauthUrl = (provider) => {
@@ -46,31 +46,33 @@ const authenticate = async (grantType, payload = {}) => {
     ...payload,
   };
   try {
-    const res = axios.post(`${AUTH_DOMAIN}/oauth/token`, body);
-    console.log("oauth token response", { res });
-    return data.access_token;
+    const res = await axios.post(`${AUTH_DOMAIN}/oauth/token`, body);
+    return res.data.access_token;
   } catch (err) {
-    returnError(err);
+    return wrapError(err);
   }
 };
 
 const createUser = async (token, payload) => {
-  const res = await axios.post(
-    `${AUTH_DOMAIN}/api/v2/users`,
-    payload,
-    getAuthHeaders(token),
-  );
-  console.log("createUser", res);
-  return res.data;
+  try {
+    const res = await axios.post(
+      `${AUTH_DOMAIN}/api/v2/users`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
 };
 
-const getUser = async (authorization) => {
-  return axios
-    .get(`${AUTH_DOMAIN}/userinfo`, {
-      headers: { Authorization: authorization },
-    })
-    .then(({ data }) => data)
-    .catch(errorHandler);
+const getUser = async (token) => {
+  try {
+    const res = await axios.get(`${AUTH_DOMAIN}/userinfo`, getAuthHeaders(token));
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
 };
 
 module.exports = {
