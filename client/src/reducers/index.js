@@ -1,4 +1,9 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, SET_USER } from "../constants/action-types";
+import {
+  AUTH_LOGIN,
+  AUTH_LOGOUT,
+  AUTH_SIGNUP,
+  SET_USER,
+} from "../constants/action-types";
 
 const initialState = {
   accessToken: null,
@@ -9,6 +14,7 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_LOGIN:
+    case AUTH_SIGNUP:
       return {
         ...state,
         accessToken: action.payload.token,

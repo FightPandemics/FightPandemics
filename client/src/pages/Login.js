@@ -90,14 +90,14 @@ export default ({ isLoginForm }) => {
 
   const handleSignup = (evt) => {
     evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (!validateEmail(email)) {
+      "Invalid email address!"
+    }*/
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (password.length < PASSWORD_MIN_LENGTH) {
+      "Password must be at least 6 characters"
+    }*/
     dispatch(signup({ email, password }));
   };
 
