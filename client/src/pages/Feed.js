@@ -86,6 +86,9 @@ export default () => {
     dispatchAction(TOGGLE_STATE, "createPostModal");
   };
 
+  const filteredPosts = () =>
+    typeof feedState.covidData === "object" ? feedState.covidData : [];
+
   const renderCreatePostModal = () => {
     return (
       <ButtonModal
@@ -125,7 +128,7 @@ export default () => {
     >
       <FeedWrapper>
         <FilterBox />
-        <Posts filteredPosts={fakePosts} />
+        <Posts filteredPosts={filteredPosts()} />
         <CreatPostIcon onClick={handleCreatePost} className="create-post" />
         {renderCreatePostModal()}
       </FeedWrapper>

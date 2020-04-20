@@ -56,6 +56,7 @@ export default styled(Card)`
         font-weight: 400;
         font-size: ${medium};
         line-height: 2rem;
+        overflow-wrap: break-word;
       }
 
       .view-more {

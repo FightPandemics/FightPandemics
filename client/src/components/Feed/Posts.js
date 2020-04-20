@@ -5,7 +5,7 @@ export default ({ filteredPosts }) => {
   return (
     <div className="feed-posts">
       {filteredPosts.map((post) => (
-        <Post post={post} key={post._id} />
+        <Post post={post.fields} key={post.id} />
       ))}
     </div>
   );
