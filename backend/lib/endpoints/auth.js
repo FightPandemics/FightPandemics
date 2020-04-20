@@ -1,3 +1,4 @@
+const httpErrors = require("http-errors");
 const Auth0 = require("../components/Auth0");
 const { config } = require("../../config");
 
@@ -33,36 +34,44 @@ async function routes(app) {
     }
   });
 
-  app.post(
-    "/authenticate",
-    { preValidation: [app.getServerToken] },
-    async (req, reply) => {
-      const { token } = req;
-      const payload = {
-        connection: "Username-Password-Authentication",
-        email: req.body.email,
-        email_verified: false,
-        password: req.body.password,
-        verify_email: false,
-      };
-
-      try {
-        await Auth0.createUser(token, payload);
-      } catch (err) {
-        // 409 means CONFLICT, e.g. user exists
-        if (err.statusCode !== 409) {
-          return reply.code(err.statusCode).send(err);
-        }
+  app.post("signup", { preValidation: [app.getServerToken] }, async (req) => {
+    const { body, token } = req;
+    const { email, password } = body;
+    const payload = {
+      connection: "Username-Password-Authentication",
+      email,
+      email_verified: false,
+      password,
+      verify_email: false,
+    };
+    try {
+      const res = await Auth0.createUser(token, payload);
+      req.log.info(`User created successfully email= `);
+      console.log("createUser OK", { res });
+    } catch (err) {
+      // 409 means CONFLICT, e.g. user exists
+      if (err.statusCode === 409) {
+        return new httpErrors.Conflict();
       }
-      const accessToken = await Auth0.authenticate("password", {
-        password: req.body.password,
-        scope: "openid",
-        username: req.body.email,
-      });
+      req.log.error("Error creating user", { err });
+      return new httpErrors.InternalServerError();
+    }
+    const accessToken = await Auth0.authenticate("password", {
+      password: req.body.password,
+      scope: "openid",
+      username: req.body.email,
+    });
+    return { token: accessToken };
+  });
 
-      return { token: accessToken };
-    },
-  );
+  app.post("login", async (req) => {
+    const token = await Auth0.authenticate("password", {
+      password: req.body.password,
+      scope: "openid",
+      username: req.body.email,
+    });
+    return { token };
+  });
 }
 
 module.exports = routes;

@@ -6,7 +6,15 @@ const {
   auth: { domain: AUTH_DOMAIN },
 } = config;
 
-const errorHandler = (err) => {
+const getAuthHeaders = (token) => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
+const returnError = (err) => {
   const {
     response: { data, status },
   } = err;
@@ -37,22 +45,23 @@ const authenticate = async (grantType, payload = {}) => {
     grant_type: grantType,
     ...payload,
   };
-
-  return axios
-    .post(`${AUTH_DOMAIN}/oauth/token`, body)
-    .then(({ data }) => data.access_token)
-    .catch(errorHandler);
+  try {
+    const res = axios.post(`${AUTH_DOMAIN}/oauth/token`, body);
+    console.log("oauth token response", { res });
+    return data.access_token;
+  } catch (err) {
+    returnError(err);
+  }
 };
 
 const createUser = async (token, payload) => {
-  return axios
-    .post(`${AUTH_DOMAIN}/api/v2/users`, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(({ data }) => data)
-    .catch(errorHandler);
+  const res = await axios.post(
+    `${AUTH_DOMAIN}/api/v2/users`,
+    payload,
+    getAuthHeaders(token),
+  );
+  console.log("createUser", res);
+  return res.data;
 };
 
 const getUser = async (authorization) => {
