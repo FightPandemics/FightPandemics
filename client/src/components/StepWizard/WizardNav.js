@@ -1,8 +1,6 @@
 import { Button } from "grommet";
-import { FormNextLink, FormPreviousLink } from "grommet-icons";
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
 import NextArrow from "../../components/Icon/next-arrow";
 import BackArrow from "../../components/Icon/back-arrow";
 
@@ -32,10 +30,6 @@ const PrevButton = styled(Button)`
   box-shadow: unset;
   outline-color: transparent;
   border-color: transparent;
-`;
-
-const CircleButton = styled(Button)`
-  justify-self: flex-end;
 `;
 
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (

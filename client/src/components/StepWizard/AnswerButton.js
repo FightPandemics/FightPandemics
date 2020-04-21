@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { PRIMARY } from "../../constants/colors";
 import { theme } from "../../constants/theme";
 import React from "react";
 

@@ -92,7 +92,7 @@ const Step3 = (props) => {
             type="email"
             name="userEmail"
             label="Email"
-            placeholder="Type your email"
+            placeholder="Email"
             onChange={onChange}
             value={email && email}
           />
