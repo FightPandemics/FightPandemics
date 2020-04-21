@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { initAuth } from "./actions/authActions";
-import { RouteWithSubRoutes } from "./templates/RouteWithSubRoutes";
-import { routes } from "./routes";
+import routes from "./routes";
+import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 
 function App(props) {
   useEffect(() => {
     props.initAuth();
   }, []);
+
   return (
     <Router history={history}>
       <Switch>
@@ -25,8 +26,6 @@ function App(props) {
 const mapDispatchToProps = {
   initAuth: initAuth,
 };
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.isAuthenticated,
-});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

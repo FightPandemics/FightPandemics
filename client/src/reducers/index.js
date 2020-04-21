@@ -8,6 +8,7 @@ import {
 const initialState = {
   accessToken: null,
   isAuthenticated: false,
+  emailVerified: false,
   user: null,
 };
 
@@ -18,6 +19,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         accessToken: action.payload.token,
+        emailVerified: action.payload.emailVerified,
         isAuthenticated: true,
       };
     case AUTH_LOGOUT:
