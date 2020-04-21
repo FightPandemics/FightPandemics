@@ -109,14 +109,14 @@ const Step2 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
-      <p>So we can show postings near you.</p>
+      <p>We want to show you the most relevant results</p>
       <WizardFormWrapper>
         <WizardFormGroup>
           <StyledTextInput
             type="text"
             name="manualLocation"
             label="Location search"
-            placeholder="Enter address, Zip Code or City"
+            placeholder="Enter Address, Zip Code or City"
             onChange={manualLocation}
             value={locationSearch}
           />
