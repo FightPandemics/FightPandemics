@@ -46,9 +46,8 @@ async function routes(app) {
       const payload = {
         connection: "Username-Password-Authentication",
         email,
-        email_verified: false,
         password,
-        verify_email: false,
+        verify_email: true,
       };
       try {
         await Auth0.createUser(token, payload);
@@ -65,7 +64,7 @@ async function routes(app) {
         scope: "openid",
         username: req.body.email,
       });
-      return { token: accessToken };
+      return { emailVerified: false, token: accessToken };
     },
   );
 
@@ -77,7 +76,9 @@ async function routes(app) {
         scope: "openid",
         username: email,
       });
-      return { token };
+      const user = await Auth0.getUser(token);
+      const { email_verified: emailVerified } = user;
+      return { emailVerified, token };
     } catch (err) {
       if (err.statusCode === 403) {
         return new httpErrors.Unauthorized("Wrong email or password.");

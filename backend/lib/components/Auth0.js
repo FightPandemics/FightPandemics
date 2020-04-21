@@ -75,7 +75,10 @@ const createUser = async (token, payload) => {
 
 const getUser = async (token) => {
   try {
-    const res = await axios.get(`${AUTH_DOMAIN}/userinfo`, getAuthHeaders(token));
+    const res = await axios.get(
+      `${AUTH_DOMAIN}/userinfo`,
+      getAuthHeaders(token),
+    );
     return res.data;
   } catch (err) {
     return wrapError(err);
