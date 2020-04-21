@@ -43,7 +43,7 @@ export const Medical = () => {
   const fetchGeoData = () => {
     const geolocation = getGeoLocation();
     axios
-      .post("/api/geo/country", geolocation)
+      .get("/api/geo/country", geolocation) // TODO we need to authenticate
       .then((res) => {
         setState({ ...state, country: res.data });
         localStorage.setItem("country", JSON.stringify(res.data));
