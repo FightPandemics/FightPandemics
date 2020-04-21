@@ -29,11 +29,11 @@ const Step1 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What type of help do you need?</StepTitle>
       <AnswerButton onSelect={() => onSelectAnswer("medical")}>
-        <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
+        <strong>Medical:</strong> I have symptoms of COVID-19.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
         <strong>Other Help:</strong> I need assistance getting
