@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-
 import SubmitButton from "../components/Button/SubmitButton";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
@@ -16,6 +15,8 @@ import {
   WizardFormWrapper,
   WizardFormGroup,
 } from "../components/StepWizard";
+import { Toast } from "antd-mobile";
+import { validateEmail } from "../utils/common.js";
 
 const INITIAL_STATE = {
   answers: [],
@@ -77,7 +78,12 @@ const Step2 = (props) => {
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const onChange = (evt) => setEmail(evt);
-  const onSubmit = () => {
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 3);
+      return;
+    }
     props.update("email", email);
   };
   return (
