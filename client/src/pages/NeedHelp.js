@@ -61,7 +61,7 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
       <AnswerButton onSelect={selectLocationDetection}>
@@ -83,7 +83,7 @@ const Step3 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
       <WizardFormWrapper>
