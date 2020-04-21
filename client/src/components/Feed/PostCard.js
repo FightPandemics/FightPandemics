@@ -8,7 +8,7 @@ const { display } = typography.font.family;
 const { xsmall, medium, large, xxlarge } = typography.size;
 
 export default styled(Card)`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   border: unset !important;
   &.am-card,
   .am-card-body {

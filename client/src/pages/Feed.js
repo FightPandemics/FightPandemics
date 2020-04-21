@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ButtonModal from "../components/Feed/ButtonModal";
 import filterOptions from "../assets/data/filterOptions";
-import fakePosts from "../assets/data/fakePosts";
 import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
@@ -48,6 +47,7 @@ export default () => {
     getCovidData();
   }, [getCovidData]);
 
+  // useReducer not redux
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
@@ -66,7 +66,10 @@ export default () => {
     dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    optionsDispatch({
+      type: REMOVE_ALL_OPTIONS,
+      payload: {},
+    });
   };
 
   const handleLocation = (value) =>

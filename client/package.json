@@ -30,6 +30,7 @@
     "react-dom": "^16.13.1",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
+    "react-read-more-read-less": "^1.0.7",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",

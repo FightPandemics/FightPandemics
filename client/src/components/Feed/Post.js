@@ -1,4 +1,5 @@
 import React from "react";
+import ReactReadMoreReadLess from "react-read-more-read-less";
 // import React, { useState } from "react";
 import { Card, WhiteSpace } from "antd-mobile";
 // import { Modal, Card, WhiteSpace } from "antd-mobile";
@@ -48,30 +49,36 @@ export default ({ post }) => {
     />
   );
 
-  const renderContent = (
+  const renderContent = post["Description"] ? (
     <Card.Body>
       <h1>{post["Post Title"]}</h1>
-      <p className="post-description">{post["Description"]}</p>
+      <p className="post-description">
+        <ReactReadMoreReadLess
+          charLimit={200}
+          readMoreText={"View more"}
+          readLessText={"View less"}
+          readMoreClassName="view-more"
+          readLessClassName="view-more"
+          readMoreStyle={{ display: "block", marginTop: "2rem" }}
+          readLessStyle={{ display: "block", marginTop: "2rem" }}
+        >
+          {post["Description"]}
+        </ReactReadMoreReadLess>
+      </p>
     </Card.Body>
+  ) : (
+    ""
   );
 
-  const renderTags = () => {
-    if (post["Type"]) {
-      return (
-        <Card.Body>
-          {post["Type"].map((tag, idx) => (
-            <FilterTag label={tag} selected={false} disabled={true} key={idx} />
-          ))}
-        </Card.Body>
-      );
-    }
-  };
-
-  // const renderViewMore = (
-  //   <Card.Body>
-  //     <span className="view-more">View More</span>
-  //   </Card.Body>
-  // );
+  const renderTags = post["Type"] ? (
+    <Card.Body>
+      {post["Type"].map((tag, idx) => (
+        <FilterTag label={tag} selected={false} disabled={true} key={idx} />
+      ))}
+    </Card.Body>
+  ) : (
+    ""
+  );
 
   // const renderComments = (
   //   <Card.Body>
@@ -125,10 +132,9 @@ export default ({ post }) => {
     <PostCard>
       {renderHeader}
       <WhiteSpace size="md" />
-      {renderTags()}
+      {renderTags}
       <WhiteSpace />
       {renderContent}
-      {/* {renderViewMore} */}
       {/* {renderSocialIcons} */}
       {/* {renderComments} */}
       {/* {renderShareModal} */}
