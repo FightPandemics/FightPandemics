@@ -1,5 +1,7 @@
 const httpErrors = require("http-errors");
+
 const Auth0 = require("../components/Auth0");
+const { loginSchema, signupSchema } = require("./schema/auth");
 const { config } = require("../../config");
 
 /*
@@ -34,35 +36,40 @@ async function routes(app) {
     }
   });
 
-  app.post("/signup", { preValidation: [app.getServerToken] }, async (req) => {
-    const { body, token } = req;
-    const { email, password } = body;
-    const payload = {
-      connection: "Username-Password-Authentication",
-      email,
-      email_verified: false,
-      password,
-      verify_email: false,
-    };
-    try {
-      await Auth0.createUser(token, payload);
-      req.log.info(`User created successfully email=${email}`);
-    } catch (err) {
-      if (err.statusCode === 409) {
-        return new httpErrors.Conflict("User already exists");
+  // todo: add "password confirmation" check
+  app.post(
+    "/signup",
+    { preHandler: [app.getServerToken], schema: signupSchema },
+    async (req) => {
+      const { body, token } = req;
+      const { email, password } = body;
+      const payload = {
+        connection: "Username-Password-Authentication",
+        email,
+        email_verified: false,
+        password,
+        verify_email: false,
+      };
+      try {
+        await Auth0.createUser(token, payload);
+        req.log.info(`User created successfully email=${email}`);
+      } catch (err) {
+        if (err.statusCode === 409) {
+          return new httpErrors.Conflict("User already exists");
+        }
+        req.log.error("Error creating user", { err });
+        return new httpErrors.InternalServerError();
       }
-      req.log.error("Error creating user", { err });
-      return new httpErrors.InternalServerError();
-    }
-    const accessToken = await Auth0.authenticate("password", {
-      password: req.body.password,
-      scope: "openid",
-      username: req.body.email,
-    });
-    return { token: accessToken };
-  });
+      const accessToken = await Auth0.authenticate("password", {
+        password: req.body.password,
+        scope: "openid",
+        username: req.body.email,
+      });
+      return { token: accessToken };
+    },
+  );
 
-  app.post("/login", async (req) => {
+  app.post("/login", { schema: loginSchema }, async (req) => {
     const token = await Auth0.authenticate("password", {
       password: req.body.password,
       scope: "openid",
