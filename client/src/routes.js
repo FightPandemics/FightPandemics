@@ -22,6 +22,7 @@ export const routes = [
     layout: "logo",
     props: {
       isLoginForm: true,
+      isForgotPassword: false,
     },
   },
   {
@@ -30,6 +31,16 @@ export const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
+      isForgotPassword: false,
+    },
+  },
+  {
+    path: "/auth/forgot-password",
+    component: Login,
+    layout: "logo",
+    props: {
+      isLoginForm: false,
+      isForgotPassword: true,
     },
   },
   {

@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
 import { validateEmail } from "../utils/common.js";
 import { PASSWORD_MIN_LENGTH } from "../config";
-import { loginWithEmail, signup } from "../actions/authActions";
-import { useDispatch } from "react-redux";
+import {
+  loginWithEmail,
+  signup,
+  forgotPassword,
+  setSuccess,
+  setError,
+} from "../actions/authActions";
+import { connect, useDispatch } from "react-redux";
 import { Toast } from "antd-mobile";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
@@ -62,7 +68,14 @@ const SocialButton = styled(Button).attrs((props) => ({
   margin: 0.5rem;
 `;
 
-export default ({ isLoginForm }) => {
+const mapStateToProps = (state) => {
+  return {
+    success: state.success,
+    error: state.error,
+  };
+};
+
+const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
@@ -102,7 +115,37 @@ export default ({ isLoginForm }) => {
     dispatch(signup({ email, password }));
   };
 
+  const handleForgotPassword = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 3);
+      return;
+    }
+    dispatch(forgotPassword({ email }));
+  };
+
   const loginWithConnection = (connection) => {};
+
+  // clean up after component unmount
+  useEffect(() => {
+    console.log("error1", error);
+    console.log("success1", success);
+    return () => {
+      dispatch(setError(null));
+      dispatch(setSuccess(null));
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("error2", error);
+    console.log("success2", success);
+    if (error || success) {
+      Toast.fail(error ? error : success, 3, () => {
+        dispatch(setError(null));
+        dispatch(setSuccess(null));
+      });
+    }
+  }, [error, success]);
 
   return (
     <div className="text-center">
@@ -119,23 +162,37 @@ export default ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
-        <InputWrapper>
-          <Label style={StyleLabel} label="Password" />
-          <Input
-            type="password"
-            required
-            placeholder="Enter password"
-            value={password}
-            onChange={handleInputChangePassword}
-            style={StyleInput}
+        {!isForgotPassword && (
+          <InputWrapper>
+            <Label style={StyleLabel} label="Password" />
+            <Input
+              type="password"
+              required
+              placeholder="Enter password"
+              value={password}
+              onChange={handleInputChangePassword}
+              style={StyleInput}
+            />
+          </InputWrapper>
+        )}
+        <WhiteSpace />
+        <WhiteSpace />
+        {!isForgotPassword && (
+          <SubmitButton
+            title={isLoginForm && !isForgotPassword ? "Login" : "Sign Up"}
+            onClick={
+              isLoginForm && !isForgotPassword
+                ? handleLoginWithEmail
+                : handleSignup
+            }
           />
-        </InputWrapper>
-        <WhiteSpace />
-        <WhiteSpace />
-        <SubmitButton
-          title={isLoginForm ? "Login" : "Sign Up"}
-          onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
-        />
+        )}
+        {isForgotPassword && (
+          <SubmitButton
+            title="Reset my password"
+            onClick={handleForgotPassword}
+          />
+        )}
       </form>
       <WhiteSpace />
       {isLoginForm ? (
@@ -148,6 +205,13 @@ export default ({ isLoginForm }) => {
           </p>
         </>
       ) : (
+        !isForgotPassword && (
+          <p>
+            <Link to="/auth/login">Already have an account? Sign in!</Link>
+          </p>
+        )
+      )}
+      {isForgotPassword && !isLoginForm && (
         <p>
           <Link to="/auth/login">Already have an account? Sign in!</Link>
         </p>
@@ -191,4 +255,4 @@ export default ({ isLoginForm }) => {
   );
 };
 
-//export default LoginOrSignup;
+export default connect(mapStateToProps)(Login);
