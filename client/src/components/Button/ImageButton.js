@@ -21,7 +21,7 @@ const FlexDiv = styled.div`
   font-family: ${typography.font.family.display};
   font-size: ${typography.size.large};
   font-weight: normal;
-  line-height: 2.2rem;
+  line-height: 0.5rem;
 `;
 
 const NestedImage = styled.img.attrs((props) => {
