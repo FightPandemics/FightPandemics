@@ -128,8 +128,6 @@ const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
 
   // clean up after component unmount
   useEffect(() => {
-    console.log("error1", error);
-    console.log("success1", success);
     return () => {
       dispatch(setError(null));
       dispatch(setSuccess(null));
@@ -137,8 +135,6 @@ const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
   }, []);
 
   useEffect(() => {
-    console.log("error2", error);
-    console.log("success2", success);
     if (error || success) {
       Toast.fail(error ? error : success, 3, () => {
         dispatch(setError(null));
