@@ -3,13 +3,10 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import "antd/dist/antd.css";
+import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
 // import "typeface-work-sans";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { Provider } from "react-redux";
-import "antd-mobile/dist/antd-mobile.css";
-import "antd/dist/antd.css";
 
 import "./index.scss";
 import App from "./App";
