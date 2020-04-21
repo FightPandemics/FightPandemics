@@ -15,6 +15,13 @@ const getAuthHeaders = (token) => {
   };
 };
 
+// todo: check improving the error handling here, could also check & handle or pass the response message e.g.
+/*
+    data: {
+      error: 'invalid_grant',
+      error_description: 'Wrong email or password.'
+    }
+ */
 const wrapError = (err) => {
   const {
     response: { data, status },

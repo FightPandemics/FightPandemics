@@ -70,12 +70,21 @@ async function routes(app) {
   );
 
   app.post("/login", { schema: loginSchema }, async (req) => {
-    const token = await Auth0.authenticate("password", {
-      password: req.body.password,
-      scope: "openid",
-      username: req.body.email,
-    });
-    return { token };
+    const { email, password } = req.body;
+    try {
+      const token = await Auth0.authenticate("password", {
+        password,
+        scope: "openid",
+        username: email,
+      });
+      return { token };
+    } catch (err) {
+      if (err.statusCode === 403) {
+        return new httpErrors.Unauthorized("Wrong email or password.");
+      }
+      req.log.error("Error logging in", { err });
+      return new httpErrors.InternalServerError();
+    }
   });
 }
 
