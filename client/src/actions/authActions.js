@@ -31,7 +31,6 @@ export const loginWithEmail = (payload) => {
   return async (dispatch) => {
     try {
       const res = await axios.post("/api/auth/login", payload);
-      console.log("loginWithEmail", { res });
       dispatch({ type: AUTH_LOGIN, payload: res.data });
     } catch (err) {
       const message = err.response?.data?.message || err.message;

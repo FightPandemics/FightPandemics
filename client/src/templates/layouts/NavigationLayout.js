@@ -109,7 +109,6 @@ export default (props) => {
     setDrawerOpened(!drawerOpened);
   };
 
-  console.log("NavLayout", { props });
   const drawerMenu = () => (
     <>
       <NavList>
