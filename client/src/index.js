@@ -1,41 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import "antd/dist/antd.css";
+import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
 // import "typeface-work-sans";
-import "antd-mobile/dist/antd-mobile.css";
-import "antd/dist/antd.css";
+
 import "./index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "./react-auth0-spa";
-import config from "./auth_config.json";
-import history from "./utils/history";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { Provider } from "react-redux";
 import rootReducer from "./reducers";
-const store = createStore(rootReducer, applyMiddleware(thunk));
 
-// A function that routes the user to the right place
-// after login
-const onRedirectCallback = (appState) => {
-  history.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname,
-  );
-};
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Auth0Provider
-      domain={config.domain}
-      client_id={config.clientId}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <App />
-    </Auth0Provider>
+    <App />
   </Provider>,
   document.getElementById("root"),
 );
