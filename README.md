@@ -82,3 +82,6 @@ additional properties not defined in the schema are passed in through the reques
 * For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
 * Refrain from making the Redux state too big as it will affect speed performance. React’s Context API is ONLY helpful for avoiding nested prop threading so stick with Redux where Context fails.
 
+## Deployment
+
+TODO
