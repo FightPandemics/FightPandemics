@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "~/components/Header";
+import Footnote from "~/components/Footnote";
 import Main from "./Main";
 import { theme } from "../../constants/theme";
 
@@ -154,6 +155,7 @@ export default (props) => {
       <Main>
         <props.component {...props} />
       </Main>
+      <Footnote />
     </Drawer>
   );
 };
