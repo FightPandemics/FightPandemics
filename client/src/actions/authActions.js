@@ -39,6 +39,18 @@ export const loginWithEmail = (payload) => {
   };
 };
 
+export const authWithSocialProvider = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(`/api/auth/oauth`, payload);
+      dispatch({ type: AUTH_LOGIN, payload: res.data });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      Toast.fail(`Login failed, reason: ${message}`, 3);
+    }
+  };
+};
+
 export const signup = (payload) => {
   return async (dispatch) => {
     try {
