@@ -1,40 +1,46 @@
 const httpErrors = require("http-errors");
 
 const Auth0 = require("../components/Auth0");
-const { loginSchema, signupSchema } = require("./schema/auth");
+const {
+  loginSchema,
+  oAuthSchema,
+  oAuthProviderSchema,
+  signupSchema,
+} = require("./schema/auth");
 const { config } = require("../../config");
 
 /*
  * /api/auth
  */
 async function routes(app) {
-  app.get("/social", async (_, reply) => {
-    const defaultScope = "openid profile email";
-    return reply.send({
-      facebook: Auth0.buildOauthUrl({ name: "facebook", scope: defaultScope }),
-      google: Auth0.buildOauthUrl({
-        name: "google-oauth2",
-        scope: defaultScope,
-      }),
-      linkedin: Auth0.buildOauthUrl({ name: "linkedin", scope: defaultScope }),
-    });
-  });
-
-  app.post("/oauth", async (req, reply) => {
+  app.post("/oauth", { schema: oAuthSchema }, async (req) => {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== config.auth.state) {
-        reply.code(401).send({ message: "Invalid state" });
+        return new httpErrors.Unauthorized("Invalid state");
       }
       const accessToken = await Auth0.authenticate("authorization_code", {
         code,
-        redirect_uri: `${config.auth.appUrl}/login/callback`,
+        redirect_uri: req.headers.referer,
       });
-      return reply.send({ token: accessToken });
+      return { token: accessToken };
     } catch (err) {
-      return reply.code(err.statusCode).send(err);
+      req.log.error("OAuth error", err);
+      return new httpErrors.InternalServerError();
     }
   });
+
+  app.get(
+    "/oauth/:provider",
+    { schema: oAuthProviderSchema },
+    async (req, reply) => {
+      const { headers, params } = req;
+      const { provider } = params;
+      const providerName = provider === "google" ? "google-oauth2" : provider;
+      const url = Auth0.buildOauthUrl(providerName, headers.referer);
+      reply.redirect(url);
+    },
+  );
 
   // todo: add "password confirmation" check
   app.post(

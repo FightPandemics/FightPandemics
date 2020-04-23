@@ -31,14 +31,14 @@ const wrapError = (err) => {
   throw httpErrors(statusCode, message);
 };
 
-const buildOauthUrl = (provider) => {
+const buildOauthUrl = (connection, redirectTo) => {
   const qParams = qs.stringify({
     audience: `${AUTH_DOMAIN}/api/v2/`,
     client_id: config.auth.clientId,
-    connection: provider.name,
-    redirect_uri: `${config.auth.appUrl}/login/callback`,
+    connection,
+    redirect_uri: redirectTo,
     response_type: "code",
-    scope: provider.scope,
+    scope: "openid profile email",
     state: config.auth.state,
   });
   return `${AUTH_DOMAIN}/authorize?${qParams}`;
