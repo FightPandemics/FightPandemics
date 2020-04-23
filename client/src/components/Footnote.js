@@ -8,37 +8,29 @@ const { colors } = theme;
 
 const StyledFooter = styled.div`
   position: absolute;
-  width: 37.6rem;
-  height: 7.1rem;
   left: 0;
   bottom: 0;
-  top: 75.9rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 7.1rem;
 
   background: ${colors.selago};
-  text-align: center;
-  line-height: 1.5rem;
+  line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
 `;
 
 const Copyright = styled.div`
-  position: absolute;
-  width: 31.2rem;
-  height: 2.1rem;
-  left: 2.8rem;
-  top: 1.8rem;
-
   font-weight: 500;
   color: ${colors.darkGray};
 `;
 
 const Policies = styled.div`
-  position: absolute;
-  width: 32.6rem;
-  height: 1.5rem;
-  left: 2.1rem;
-  top: 3.9rem;
-
   color: ${colors.mediumGray};
 `;
 
