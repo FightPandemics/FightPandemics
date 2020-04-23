@@ -14,8 +14,27 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers";
+import zIndex from "@material-ui/core/styles/zIndex";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+const footerStyle = {
+  backgroundColor: "#fff",
+  fontSize: "10px",
+  boxShadow: "0 2px 6px #bababa",
+  textAlign: "center",
+  padding: "20px",
+  position: "fixed",
+  left: "0",
+  bottom: "0",
+  height: "60px",
+  width: "100%",
+  zIndex: "3",
+};
+const links = {
+  color: "silver",
+  padding: "6px",
+  textDecoration: "underline",
+};
 // A function that routes the user to the right place
 // after login
 const onRedirectCallback = (appState) => {
@@ -26,7 +45,22 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-ReactDOM.render(
+const Footer = () => (
+  <footer style={footerStyle}>
+    <span style={{ fontWeight: "bold" }}>
+      Copyright 2020 Fight Pandemic. All rights reserved.
+    </span>
+    <br />
+    <a style={links}>Terms and conditions</a>|
+    <a style={links}>Privacy Policy</a>|<a style={links}>Cookies Policy</a>
+  </footer>
+);
+
+const withFooter = (WrappedComponent) => () => [
+  <WrappedComponent key="1" />,
+  <Footer key="2" />,
+];
+const Wrapper = () => (
   <Provider store={store}>
     <Auth0Provider
       domain={config.domain}
@@ -36,8 +70,9 @@ ReactDOM.render(
     >
       <App />
     </Auth0Provider>
-  </Provider>,
-  document.getElementById("root"),
+  </Provider>
 );
+const WrapperWithFooter = withFooter(Wrapper);
+ReactDOM.render(<WrapperWithFooter />, document.getElementById("root"));
 
 serviceWorker.unregister();
