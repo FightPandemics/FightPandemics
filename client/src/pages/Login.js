@@ -1,22 +1,21 @@
+import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Button, Flex, WhiteSpace } from "antd-mobile";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import { validateEmail } from "../utils/common.js";
 import { PASSWORD_MIN_LENGTH } from "../config";
 import { loginWithEmail, signup } from "../actions/authActions";
-import { useDispatch } from "react-redux";
-import { Toast } from "antd-mobile";
+import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-
 import {
   FacebookIcon,
   TwitterIcon,
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
-import SubmitButton from "~/components/Button/SubmitButton";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -91,14 +90,14 @@ export default ({ isLoginForm }) => {
 
   const handleSignup = (evt) => {
     evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (!validateEmail(email)) {
+      "Invalid email address!"
+    }*/
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (password.length < PASSWORD_MIN_LENGTH) {
+      "Password must be at least 6 characters"
+    }*/
     dispatch(signup({ email, password }));
   };
 
@@ -190,5 +189,3 @@ export default ({ isLoginForm }) => {
     </div>
   );
 };
-
-//export default LoginOrSignup;

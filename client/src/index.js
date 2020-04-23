@@ -1,18 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import "antd/dist/antd.css";
+import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
 // import "typeface-work-sans";
-import "antd-mobile/dist/antd-mobile.css";
-import "antd/dist/antd.css";
+
 import "./index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "./react-auth0-spa";
-import config from "./auth_config.json";
-import history from "./utils/history";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { Provider } from "react-redux";
 import rootReducer from "./reducers";
 import zIndex from "@material-ui/core/styles/zIndex";
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -51,8 +49,8 @@ const Footer = () => (
       Copyright 2020 Fight Pandemic. All rights reserved.
     </span>
     <br />
-    <a style={links}>Terms and conditions</a>|
-    <a style={links}>Privacy Policy</a>|<a style={links}>Cookies Policy</a>
+    <a href="http://www.fightpandemics.com/terms-conditions" style={links}>Terms &amp; conditions</a>|
+    <a href="http://www.fightpandemics.com/privacy-policy" style={links}>Privacy Policy</a>|<a href="http://www.fightpandemics.com/cookies-policy" style={links}>Cookies Policy</a>
   </footer>
 );
 
