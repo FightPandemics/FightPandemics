@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { theme } from "../constants/theme";
 
 import styled from "styled-components";
+
+const { colors } = theme;
 
 const StyledFooter = styled.div`
   position: absolute;
@@ -11,7 +14,7 @@ const StyledFooter = styled.div`
   bottom: 0;
   top: 75.9rem;
 
-  background: #f3f4fe;
+  background: ${colors.selago};
   text-align: center;
   line-height: 1.5rem;
   font-family: Poppins;
@@ -26,7 +29,7 @@ const Copyright = styled.div`
   top: 1.8rem;
 
   font-weight: 500;
-  color: #282828;
+  color: ${colors.darkGray};
 `;
 
 const Policies = styled.div`
@@ -35,10 +38,12 @@ const Policies = styled.div`
   height: 1.5rem;
   left: 2.1rem;
   top: 3.9rem;
+
+  color: ${colors.mediumGray};
 `;
 
 const FooterLink = styled(Link)`
-  color: #939393;
+  color: ${colors.mediumGray};
   margin: 0 0.5rem;
   text-decoration-line: underline;
 `;
