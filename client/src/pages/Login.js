@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Button, Flex, WhiteSpace } from "antd-mobile";
+import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { validateEmail } from "../utils/common.js";
 import { PASSWORD_MIN_LENGTH } from "../config";
 import {
@@ -13,16 +14,15 @@ import {
 } from "../actions/authActions";
 import { connect, useDispatch } from "react-redux";
 import { Toast } from "antd-mobile";
+import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-
 import {
   FacebookIcon,
   TwitterIcon,
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
-import SubmitButton from "~/components/Button/SubmitButton";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -68,13 +68,6 @@ const SocialButton = styled(Button).attrs((props) => ({
   margin: 0.5rem;
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    success: state.success,
-    error: state.error,
-  };
-};
-
 const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
   const dispatch = useDispatch();
 
@@ -104,14 +97,14 @@ const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
 
   const handleSignup = (evt) => {
     evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (!validateEmail(email)) {
+      "Invalid email address!"
+    }*/
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (password.length < PASSWORD_MIN_LENGTH) {
+      "Password must be at least 6 characters"
+    }*/
     dispatch(signup({ email, password }));
   };
 
@@ -251,4 +244,12 @@ const Login = ({ isLoginForm, isForgotPassword, error, success }) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    success: state.success,
+    error: state.error,
+  };
+};
+
 export default connect(mapStateToProps)(Login);
+

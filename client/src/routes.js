@@ -7,10 +7,11 @@ import { AirTableCOVID } from "./pages/AirTableCOVID";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
+import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 
-export const routes = [
+const routes = [
   {
     path: "/",
     component: Home,
@@ -23,6 +24,7 @@ export const routes = [
     props: {
       isLoginForm: true,
       isForgotPassword: false,
+      notLoggedInOnly: true,
     },
   },
   {
@@ -41,6 +43,15 @@ export const routes = [
     props: {
       isLoginForm: false,
       isForgotPassword: true,
+      notLoggedInOnly: true,
+    },
+  },
+  {
+    path: "/auth/verify-email",
+    component: VerifyEmail,
+    layout: "logo",
+    props: {
+      loggedInOnly: true,
     },
   },
   {
@@ -84,3 +95,5 @@ export const routes = [
     component: CreatePost,
   },
 ];
+
+export default routes;

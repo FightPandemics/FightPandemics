@@ -1,4 +1,7 @@
+const httpErrors = require("http-errors");
+
 const Auth0 = require("../components/Auth0");
+const { loginSchema, signupSchema } = require("./schema/auth");
 const { config } = require("../../config");
 
 /*
@@ -33,36 +36,57 @@ async function routes(app) {
     }
   });
 
+  // todo: add "password confirmation" check
   app.post(
-    "/authenticate",
-    { preValidation: [app.getServerToken] },
-    async (req, reply) => {
-      const { token } = req;
+    "/signup",
+    { preHandler: [app.getServerToken], schema: signupSchema },
+    async (req) => {
+      const { body, token } = req;
+      const { email, password } = body;
       const payload = {
         connection: "Username-Password-Authentication",
-        email: req.body.email,
-        email_verified: false,
-        password: req.body.password,
-        verify_email: false,
+        email,
+        password,
+        verify_email: true,
       };
-
       try {
         await Auth0.createUser(token, payload);
+        req.log.info(`User created successfully email=${email}`);
       } catch (err) {
-        // 409 means CONFLICT, e.g. user exists
-        if (err.statusCode !== 409) {
-          return reply.code(err.statusCode).send(err);
+        if (err.statusCode === 409) {
+          return new httpErrors.Conflict("User already exists");
         }
+        req.log.error("Error creating user", { err });
+        return new httpErrors.InternalServerError();
       }
       const accessToken = await Auth0.authenticate("password", {
         password: req.body.password,
         scope: "openid",
         username: req.body.email,
       });
-
-      return { token: accessToken };
+      return { emailVerified: false, token: accessToken };
     },
   );
+
+  app.post("/login", { schema: loginSchema }, async (req) => {
+    const { email, password } = req.body;
+    try {
+      const token = await Auth0.authenticate("password", {
+        password,
+        scope: "openid",
+        username: email,
+      });
+      const user = await Auth0.getUser(token);
+      const { email_verified: emailVerified } = user;
+      return { emailVerified, token };
+    } catch (err) {
+      if (err.statusCode === 403) {
+        return new httpErrors.Unauthorized("Wrong email or password.");
+      }
+      req.log.error("Error logging in", { err });
+      return new httpErrors.InternalServerError();
+    }
+  });
 }
 
 module.exports = routes;
