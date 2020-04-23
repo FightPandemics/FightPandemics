@@ -84,4 +84,10 @@ additional properties not defined in the schema are passed in through the reques
 
 ## Deployment
 
-TODO
+Every time you push code up to the repository, a build based off of your feature branch will be deployed to AWS. You
+can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build
+successfully completes, you can access your built app at `<branch_name>.fightpandemics.xyz`, where `<branch_name>` is
+the *sanitized* branch name of your feature branch (i.e. if the branch name has a `/` in it, it will be converted to a
+`-`, e.g. `feature/hot-potato` will be converted to `feature-hot-potato`).
+
+_Coming soon: deployment to staging, and production._
