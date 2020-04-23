@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const { colors } = theme;
 
-const StyledFooter = styled.div`
+const StyledFooter = styled.footer`
   position: absolute;
   left: 0;
   bottom: 0;
