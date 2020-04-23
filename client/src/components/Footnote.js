@@ -35,12 +35,12 @@ const Policies = styled.div`
   height: 15px;
   left: 21px;
   top: 39px;
-
-  text-decoration-line: underline;
 `;
 
 const FooterLink = styled(Link)`
   color: #939393;
+  margin: 0 5px;
+  text-decoration-line: underline;
 `;
 
 export default () => {
