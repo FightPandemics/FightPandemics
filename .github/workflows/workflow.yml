@@ -1,6 +1,9 @@
 name: fight-pandemics
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - 'master'
 
 jobs:
   build_images:
