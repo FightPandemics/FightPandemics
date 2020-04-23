@@ -4,43 +4,43 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledFooter = styled.div`
-  position: "absolute",
-  width: "376px",
-  height: "71px",
-  left: "0",
-  bottom: "0",
-  top: "759px",
+  position: absolute;
+  width: 376px;
+  height: 71px;
+  left: 0;
+  bottom: 0;
+  top: 759px;
 
-  background: "#F3F4FE",
-  textAlign: "center",
-  lineHeight: "15px",
-  fontFamily: "Poppins",
-  fontSize: "11px"
+  background: #f3f4fe;
+  text-align: center;
+  line-height: 15px;
+  font-family: Poppins;
+  font-size: 11px;
 `;
 
 const Copyright = styled.div`
-  position: "absolute",
-  width: "312px",
-  height: "21px",
-  left: "28px",
-  top: "18px",
+  position: absolute;
+  width: 312px;
+  height: 21px;
+  left: 28px;
+  top: 18px;
 
-  fontWeight: "500",
-  color: "#282828",
+  font-weight: 500;
+  color: #282828;
 `;
 
 const Policies = styled.div`
-  position: "absolute",
-  width: "326px",
-  height: "15px",
-  left: "21px",
-  top: "39px",
+  position: absolute;
+  width: 326px;
+  height: 15px;
+  left: 21px;
+  top: 39px;
 
-  textDecorationLine: "underline",
+  text-decoration-line: underline;
 `;
 
 const FooterLink = styled(Link)`
-  color: "#939393";
+  color: #939393;
 `;
 
 export default () => {
