@@ -14,15 +14,25 @@ Please check our notion to get a better understanding of the problem that we are
 - **DevOps**
     - Docker
 
-## Getting Started
-1. Fork or clone the repo
-2. Check the projects tab for available tickets
-3. Create `client/.env` and add the `REACT_APP_AIRTABLE_API_KEY` and `REACT_APP_AIRTABLE_BASE` environment variables to it.
-4. `cp backend/.env.example backend/.env`
-5. Run `docker-compose up` and goto `localhost:3000` in the browser.
+## Getting Started as a Non-Technical Contributor
+
+Follow the inital project setup for non-engineers described in [Notion](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
+
+## Getting Started as a Developer
+
+1. If you want to contribute, fork this repository
+2. Clone it to your local development machine
+3. Copy `client/.env.example` to `client/.env`
+3. Copy `backend/.env.example` to `backend/.env`
+4. Replace `TODO` entries in both files with correct values (this is not needed to run the project in a responding but non-functional state). Consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b) and ask in Slack for AUTH variable values.
+5. Run `docker-compose up` this will take quite some time. (`Starting the development server...` is not the final line).
+6. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
+
+Contributing:
+
+* Check the projects tab of the original repository for available tickets.
 
 To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
-
 
 ## Adding NPM dependencies to package.json
 
@@ -37,11 +47,6 @@ Run `docker-compose run backend-service npm install`, or `cd` into the `backend`
 Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
-
-
-## Other Resources ##
-Inital project setup: https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b
-
 
 ## Important Notes and Considerations
 
