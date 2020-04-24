@@ -35,7 +35,7 @@ export default function EditAccount(props) {
     "I need assistance getting groceries, medicine, etc.";
   const traveling = true;
   const displayNeighborhood = false;
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -123,7 +123,8 @@ export default function EditAccount(props) {
             inputTitle={key}
             name={value[0]}
             defaultValue={value[1]}
-            reference={register}
+            reference={register({ required: true })}
+            error={!!errors[value[0]]}
           />
           <UnderLineDescription marginTop={"-1.5rem"}>
             {value[2] || null}

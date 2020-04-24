@@ -6,6 +6,7 @@ import TwitterIcon from "../components/Icon/Twitter-blue";
 import Menu from "../components/Icon/menu";
 import Edit from "../components/Icon/edit";
 import Title from "../components/Title/Title";
+import Feed from "./Feed";
 import styled from "styled-components";
 import { getInitials } from "../utils/userInfo";
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
@@ -43,7 +44,7 @@ const BackgroundHeader = styled.div`
   border-bottom-right-radius: 30px;
   position: relative;
 `;
-const AboutSection = styled.div`
+const AboutDescription = styled.div`
   background-color: #ffffff;
   borderradius: 5px;
   width: 100%;
@@ -81,6 +82,7 @@ const PlaceholderIcon = styled.div`
   flex: 1;
 `;
 
+const SectionContainer = styled.div``;
 export const Profile = (props) => {
   // dummy data props,context, redux etc
   const firstName = "Cees";
@@ -122,6 +124,10 @@ export const Profile = (props) => {
     );
   };
 
+  const renderMyActivities = () => {
+    // return <Feed/>;
+  };
+
   return (
     <ProfileLayout>
       <BackgroundHeader>
@@ -160,16 +166,13 @@ export const Profile = (props) => {
         </IconsContainer>
       </div>
       <WhiteSpace />
-      <section>
-        <SectionHeader title="About" />
-        <WhiteSpace />
-        <AboutSection>{about}</AboutSection>
-      </section>
+      <SectionHeader title="About" />
       <WhiteSpace />
-      <section>
-        <SectionHeader title="My Activity" />
-        <WhiteSpace />
-      </section>
+      <AboutDescription>{about}</AboutDescription>
+      <WhiteSpace />
+      <SectionHeader title="My Activity" />
+      <SectionContainer>{renderMyActivities()}</SectionContainer>
+      <WhiteSpace />
     </ProfileLayout>
   );
 };
