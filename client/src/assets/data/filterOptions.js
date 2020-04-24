@@ -1,7 +1,7 @@
 export default {
   location: { label: "Location", options: [] },
-  provider: {
-    label: "Provider",
+  fromWhom: {
+    label: "From Whom",
     options: [
       "Individuals",
       "Communities",
@@ -15,8 +15,8 @@ export default {
     label: "Type",
     options: [
       "Medical supplies",
-      "Groceries/food",
-      "Wellbeing / Mental",
+      "Groceries/Food",
+      "Wellbeing/Mental",
       "Entertainment",
       "Information",
       "Education",
@@ -29,7 +29,7 @@ export default {
     ],
   },
   lookingFor: {
-    label: "Looking For",
-    options: ["Looking for Help", "Offering to Help"],
+    label: "Need or give help",
+    options: ["Need Help", "Give Help"],
   },
 };

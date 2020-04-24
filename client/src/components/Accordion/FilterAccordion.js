@@ -17,6 +17,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   text-align: center;
   cursor: pointer;
   margin: 1.2rem;
+  text-align: left;
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
