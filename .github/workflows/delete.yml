@@ -1,7 +1,8 @@
 name: fight-pandemics-delete
 
 on:
-  delete:
+  pull_request:
+    types: [closed]
     branches-ignore:
       - 'master'
 
