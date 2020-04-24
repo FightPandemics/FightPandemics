@@ -1,27 +1,35 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import { theme } from "../constants/theme";
+const { colors } = theme;
 
 const TermsContainer = styled.div`
-  margin: 30px 0px;
+  margin: 3rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const TextContainer = styled.div`
-  max-width: 600px;
+  max-width: 60rem;
 `;
 
-const aList = styled.ol`
-  list-type: a;
+const AList = styled.ol`
+  type: a;
 `;
 
-const romanList = styled.ol`
-  list-type: I;
+const RomanList = styled.ol`
+  type: I;
 `;
 
-const iList = styled.ol`
-  list-type: i;
+const IList = styled.ol`
+  type: i;
+`;
+
+const TermsLink = styled(Link)`
+  color: ${colors.primary};
 `;
 
 export const TermsConditions = () => {
@@ -37,10 +45,10 @@ export const TermsConditions = () => {
         </p>
         <p>
           Users of this website may open an account as a:
-          <aList>
+          <AList>
             <li>Physical person</li>
             <li>Legal representative of a corporation</li>
-          </aList>
+          </AList>
         </p>
         <p>
           By using Fight Pandemics, including by simply viewing content on the
@@ -70,7 +78,7 @@ export const TermsConditions = () => {
           [(INCLUDING THE PROCEDURE TO OPT OUT OF ARBITRATION)].
         </p>
         <h4 className="text-primary display-6">Table of Contents</h4>
-        <romanList>
+        <RomanList>
           <li>User Obligations</li>
           <li>Privacy And Protection Of Personal Information</li>
           <li>Company Services And License</li>
@@ -83,22 +91,22 @@ export const TermsConditions = () => {
           <li>Arbitration</li>
           <li>Miscellaneous</li>
           <li>Definitions</li>
-        </romanList>
+        </RomanList>
         <h4 className="text-primary display-6">General Security Principles</h4>
-        <romanList>
+        <RomanList>
           <li>
             User Obligations
-            <aList>
+            <AList>
               <li>
                 <strong>To Act Responsibly.</strong>
                 You are promising to act responsibly – which means:
-                <iList>
+                <IList>
                   <li>
                     You are making the following Promises:
                     <ol>
                       <li>
                         <i>Requirements to Use the Services.</i>
-                        <aList>
+                        <AList>
                           <li>
                             That you have the right, authority, and capacity to
                             enter into this Agreement on your own behalf and on
@@ -140,11 +148,11 @@ export const TermsConditions = () => {
                             manner in all your interactions with Fight Pandemics
                             and with any other Fight Pandemics user.
                           </li>
-                        </aList>
+                        </AList>
                       </li>
                       <li>
                         <i>Requirements to Use the Services.</i>
-                        <aList>
+                        <AList>
                           <li>
                             That you will only provide Fight Pandemics with
                             Content that you have a right to provide to Fight
@@ -196,7 +204,7 @@ export const TermsConditions = () => {
                             connection with the display of any Content or other
                             information from the Services.
                           </li>
-                        </aList>
+                        </AList>
                       </li>
                     </ol>
                   </li>
@@ -259,14 +267,14 @@ export const TermsConditions = () => {
                       </li>
                     </ol>
                   </li>
-                </iList>
+                </IList>
               </li>
               <li>
                 <strong>Indemnify Fight Pandemics and Related Parties.</strong>
                 You are promising to hold the Company harmless against any
                 damage that may happen to us as a result of your use of Fight
                 Pandemics.
-                <iList>
+                <IList>
                   <li>
                     <i>Indemnity.</i> You agree to indemnify and hold the
                     Company and any Company Person harmless (including against
@@ -308,7 +316,7 @@ export const TermsConditions = () => {
                     emails or other communications such individuals make in that
                     capacity.
                   </li>
-                </iList>
+                </IList>
               </li>
               <li>
                 <strong>Confidentiality.</strong>
@@ -324,7 +332,7 @@ export const TermsConditions = () => {
               </li>
               <li>
                 <strong>Other User Obligations.</strong>
-                <iList>
+                <IList>
                   <li>
                     You promise to comply with the terms of the license set
                     forth in Section III (Company Services and License) of this
@@ -393,13 +401,13 @@ export const TermsConditions = () => {
                       </li>
                     </ol>
                   </li>
-                </iList>
+                </IList>
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             PRIVACY AND PROTECTION OF PERSONAL INFORMATION
-            <aList>
+            <AList>
               <li>
                 <strong>Privacy & Cookies Policy.</strong>
                 Fight Pandemics values your privacy. Please review our Privacy
@@ -414,15 +422,20 @@ export const TermsConditions = () => {
                 We may amend the Privacy Policy & Cookies Policy at any time in
                 our sole discretion, effective upon posting the amended Privacy
                 Policy & Cookies Policy at the domain of{" "}
-                <span>www.fightpandemics.com/privacy-policy</span> and{" "}
-                <span>www.fightpandemics.com/cookies-policy</span> where the
-                prior version of the Privacy Policy & the Cookies Policy was
-                posted, or by communicating these changes through any written or
-                other contact method we have established with you. Your use of
-                the Services following the date on which such amended Privacy
-                Policy & Cookies Policy is published will constitute consent to
-                such amendments to the extent they do not have retroactive
-                applicability.
+                <TermsLink href="#">
+                  www.fightpandemics.com/privacy-policy
+                </TermsLink>{" "}
+                and{" "}
+                <TermsLink href="#">
+                  www.fightpandemics.com/cookies-policy
+                </TermsLink>{" "}
+                where the prior version of the Privacy Policy & the Cookies
+                Policy was posted, or by communicating these changes through any
+                written or other contact method we have established with you.
+                Your use of the Services following the date on which such
+                amended Privacy Policy & Cookies Policy is published will
+                constitute consent to such amendments to the extent they do not
+                have retroactive applicability.
               </li>
               <li>
                 <strong>Data Processing Addendum.</strong>
@@ -430,9 +443,8 @@ export const TermsConditions = () => {
                 Pandemics processes any Personal Data (as defined in the DPA)
                 that is subject to the GDPR (as defined in the DPA), on your
                 behalf, in the provision of the Services, the terms of the data
-                processing addendum at <span>
-                  www.fightpandemics.com/dpa
-                </span>{" "}
+                processing addendum at{" "}
+                <TermsLink href="#">www.fightpandemics.com/dpa</TermsLink>{" "}
                 ("DPA"), which are hereby incorporated by reference, shall apply
                 and the parties agree to comply with such terms. For the
                 purposes of the Standard Contractual Clauses referenced in the
@@ -441,11 +453,11 @@ export const TermsConditions = () => {
                 including, without limitation, the Standard Contractual Clauses
                 and their Appendices.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             COMPANY SERVICES AND LICENSE
-            <aList>
+            <AList>
               <li>
                 <strong>License to Use the Service.</strong>
                 All right, title, and interest in and to the Services (excluding
@@ -463,7 +475,7 @@ export const TermsConditions = () => {
                 your reasonable internal business purposes in accordance with
                 the Agreement and any other guidelines and requirements that we
                 may implement from time-to-time], provided that you:
-                <iList>
+                <IList>
                   <li>
                     do not use the license to engage in any commercial activity
                   </li>
@@ -482,7 +494,7 @@ export const TermsConditions = () => {
                     make a reasonable attempt to delete Content that has been
                     deleted on Fight Pandemics.
                   </li>
-                </iList>
+                </IList>
               </li>
               <li>
                 <strong>No Claim to Any Rights in Your Information.</strong>
@@ -505,11 +517,11 @@ export const TermsConditions = () => {
                 hacker attack that will allow unauthorized viewing of material
                 or unsolicited contacts to occur.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             RESERVATION OF THE COMPANY'S RIGHTS
-            <aList>
+            <AList>
               <li>
                 <strong>Right to Control Content.</strong>
                 Fight Pandemics may, but is not required to, monitor or control
@@ -588,11 +600,11 @@ export const TermsConditions = () => {
                 sublicensable basis. For more information, see our Privacy &
                 Cookies Policy.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             LIMITS ON THE COMPANY'S OBLIGATIONS
-            <aList>
+            <AList>
               <li>
                 <strong>Introductions.</strong>
                 We are not obligated to introduce you to any other User of the
@@ -661,11 +673,11 @@ export const TermsConditions = () => {
                 illegality or any error, inaccuracy or problem in an
                 advertiser’s or sponsor’s Content.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             COPYRIGHT POLICY
-            <aList>
+            <AList>
               <li>
                 Fight Pandemics respects the intellectual property rights of
                 others and expects users of the Services to do the same. We will
@@ -730,11 +742,11 @@ export const TermsConditions = () => {
                 also terminate a user’s account if the user is determined to be
                 a repeat infringer.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             TERM AND TERMINATION
-            <aList>
+            <AList>
               <li>
                 Unless terminated by the Company, this Agreement will remain in
                 full force and effect while you use any of the Services. Subject
@@ -753,11 +765,11 @@ export const TermsConditions = () => {
                 their nature are designed to survive termination shall survive
                 any termination or expiration of this Agreement.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             DISCLAIMERS; LIMITATIONS; WAIVERS OF LIABILITY
-            <aList>
+            <AList>
               <li>
                 YOU EXPRESSLY AGREE THAT ACCESS TO AND USE OF THE SERVICES IS AT
                 YOUR SOLE RISK AND IS PROVIDED ON AN “AS IS” BASIS WITHOUT
@@ -844,11 +856,11 @@ export const TermsConditions = () => {
                 invalid, but all remaining provisions shall be in full force and
                 effect.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             DISPUTES WITH OTHERS
-            <aList>
+            <AList>
               <li>
                 We reserve the right, but have no obligation, to monitor and/or
                 manage disputes between you and other users of the Services. If
@@ -858,11 +870,11 @@ export const TermsConditions = () => {
                 known and unknown, arising out of, or in any way connected with,
                 such a dispute.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             ARBITRATION
-            <aList>
+            <AList>
               <li>
                 <strong>Informal Negotiations.</strong>
                 To expedite resolution and control the cost of any dispute,
@@ -899,36 +911,37 @@ export const TermsConditions = () => {
                 Association (“AAA”) and, where appropriate, the AAA’s
                 Supplementary Procedures for Consumer Related Disputes (“AAA
                 Consumer Rules”), both of which are available at the{" "}
-                <span>AAA website</span>. The determination of whether a Dispute
-                is subject to arbitration shall be governed by the Federal
-                Arbitration Act. The parties agree that the arbitrator shall
-                have exclusive authority to decide all issues relating to the
-                interpretation, applicability, enforceability and scope of this
-                arbitration agreement. Your arbitration fees and your share of
-                arbitrator compensation shall be governed by the AAA Rules and,
-                where appropriate, limited by the AAA Consumer Rules. The
-                arbitration may be conducted, at the option of the claimant,
-                either in person or by video conference. The arbitrator will
-                make a decision in writing, but need not provide a statement of
-                reasons unless requested by a party. The arbitrator must follow
-                applicable law, and any award may be challenged within a
-                reasonable period of time (not to exceed 30 days) if the
-                arbitrator fails to do so. Except as otherwise provided in this
-                Agreement, you and the Company may litigate in court to compel
-                arbitration, stay proceedings pending arbitration or to confirm,
-                modify, vacate or enter judgment on the award entered by the
-                arbitrator. Judgment upon any award rendered by the
-                arbitrator(s) may be entered and enforcement obtained thereon in
-                any court having jurisdiction. All arbitration proceedings shall
-                be closed to the public and confidential and all records
-                relating thereto shall be permanently sealed, except as
-                necessary to obtain court confirmation of the arbitration award.
-                Each party shall have the right to participate by video
-                conference in order to minimize travel and expense burdens.
-                Subject to Section VIII of this Agreement (Disclaimers;
-                Limitations; Waivers Of Liability), the arbitrator shall have
-                authority to grant any form of appropriate relief, whether legal
-                or equitable in nature, including specific performance.
+                <TermsLink href="#">AAA website</TermsLink>. The determination
+                of whether a Dispute is subject to arbitration shall be governed
+                by the Federal Arbitration Act. The parties agree that the
+                arbitrator shall have exclusive authority to decide all issues
+                relating to the interpretation, applicability, enforceability
+                and scope of this arbitration agreement. Your arbitration fees
+                and your share of arbitrator compensation shall be governed by
+                the AAA Rules and, where appropriate, limited by the AAA
+                Consumer Rules. The arbitration may be conducted, at the option
+                of the claimant, either in person or by video conference. The
+                arbitrator will make a decision in writing, but need not provide
+                a statement of reasons unless requested by a party. The
+                arbitrator must follow applicable law, and any award may be
+                challenged within a reasonable period of time (not to exceed 30
+                days) if the arbitrator fails to do so. Except as otherwise
+                provided in this Agreement, you and the Company may litigate in
+                court to compel arbitration, stay proceedings pending
+                arbitration or to confirm, modify, vacate or enter judgment on
+                the award entered by the arbitrator. Judgment upon any award
+                rendered by the arbitrator(s) may be entered and enforcement
+                obtained thereon in any court having jurisdiction. All
+                arbitration proceedings shall be closed to the public and
+                confidential and all records relating thereto shall be
+                permanently sealed, except as necessary to obtain court
+                confirmation of the arbitration award. Each party shall have the
+                right to participate by video conference in order to minimize
+                travel and expense burdens. Subject to Section VIII of this
+                Agreement (Disclaimers; Limitations; Waivers Of Liability), the
+                arbitrator shall have authority to grant any form of appropriate
+                relief, whether legal or equitable in nature, including specific
+                performance.
               </li>
               <li>
                 <strong>
@@ -977,14 +990,14 @@ export const TermsConditions = () => {
                 Section X (Arbitration) as of the date you first accepted the
                 Agreement (or accepted any subsequent changes to the Agreement).
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             MISCELLANEOUS
-            <aList>
+            <AList>
               <li>
                 Availability of Services.
-                <iList>
+                <IList>
                   <li>
                     The Company operates and controls the Services from its
                     offices in the United States. The Company makes no
@@ -1016,7 +1029,7 @@ export const TermsConditions = () => {
                     the United Nations Convention on Contracts for the
                     International Sale of Goods.
                   </li>
-                </iList>
+                </IList>
               </li>
               <li>
                 <strong>Injunctive Relief.</strong>
@@ -1081,7 +1094,7 @@ export const TermsConditions = () => {
               </li>
               <li>
                 <strong>Waiver and Severability.</strong>
-                <iList>
+                <IList>
                   <li>
                     The failure of the Company to require or enforce strict
                     performance by you of any provision of this Agreement or to
@@ -1114,7 +1127,7 @@ export const TermsConditions = () => {
                     jurisdiction within Delaware, and you and the Company agree
                     to submit to the personal jurisdiction of that court.
                   </li>
-                </iList>
+                </IList>
               </li>
               <li>
                 <strong>
@@ -1178,72 +1191,71 @@ export const TermsConditions = () => {
                 accordance with such provisions, any use of the Services by the
                 Government shall be governed solely by this Agreement.
               </li>
-            </aList>
+            </AList>
           </li>
           <li>
             DEFINITIONS
-            <aList>
+            <AList>
               <li>
-                a. "Community Rules": Participants in the Fight Pandemics
-                community will not, in connection with the Services: defame,
-                libel, disparage, threaten, harass or intimidate anyone,
-                including by the use of offensive comments related to race,
-                national origin, gender, sexual preference or physical handicap;
-                use any profane, obscene, pornographic or otherwise
-                objectionable content or language; promote or describe how to
-                perform violence, illegal drug or substance abuse, or any other
-                illegal activity; violate the personal, privacy, contractual,
-                intellectual property or other rights of any person; reveal,
-                with respect to personal or privacy rights, any personal
-                information about another individual, including an address,
-                phone number, email address, credit card number or other
-                information that could be used to track, contact or impersonate
-                that individual; violate this Agreement or any local, state,
-                federal or non-U.S. law, rule or regulation; trick, defraud,
-                deceive or mislead the Company or other users, such as by
-                submitting false reports of abuse or misconduct to the Company’s
-                support services, disguising the source of materials or other
-                information you submit to the Services or using tools which
-                anonymize your Internet protocol address to access the Services;
-                interfere with or disrupt (or attempt to interfere with or
-                disrupt) access and enjoyment of the Services of other users or
-                any host or network, including, without limitation, creating or
-                transmitting unwanted electronic communications such as “spam”
-                to other users, overloading, flooding or mail-bombing the
-                Services, or scripting the creation of Content in such a manner
-                as to interfere with or create an undue burden on the Services;
-                disparage, tarnish or otherwise harm, in the Company’s opinion,
-                the Company and/or the Services; upload or transmit (or attempt
-                to upload or transmit) any material that acts as a passive or
-                active information collection or transmission mechanism, such as
-                viruses, worms, Trojan horses, spyware, adware or any other
-                malicious or invasive code or program; reverse engineer,
-                decompile, reverse assemble, modify or attempt to discover or
-                copy any software, source code or structure that the Services
-                utilize to generate web pages or any software or other products
-                or processes accessible through the Services; access or search
-                (or attempt to access or search) the Services by any means, such
-                as any automated system or unauthorized script or software,
-                other than currently available, published interfaces provide by
-                Fight Pandemics, unless you have been specifically allowed to do
-                so in a separate Agreement with Fight Pandemics (note crawling
-                the Services is permissible in accordance with this Agreement,
-                but scraping the Services is expressly prohibited without the
-                prior consent of Fight Pandemics); remove, obscure or change any
-                copyright, trademark, hyperlink or other proprietary rights
-                notices contained in or on the Services or any website on which
-                the Services are offered or on a third party website and/or
-                Company software on which Company code is embeddable or embedded
-                on; remove, obscure or change any notice, banner, advertisement
-                or other branding on the Services; submit any Content or
-                material that falsely expresses or implies that such Content or
-                material is sponsored or endorsed by the Company; interfere with
-                or circumvent any security feature of the Services or any
-                feature that restricts or enforces limitations on use of or
-                access to the Services, such as probing or scanning the
-                vulnerability of any system, network or breach; or sell access
-                to the Services or any part thereof other than through a
-                mechanism approved by the Company.
+                "Community Rules": Participants in the Fight Pandemics community
+                will not, in connection with the Services: defame, libel,
+                disparage, threaten, harass or intimidate anyone, including by
+                the use of offensive comments related to race, national origin,
+                gender, sexual preference or physical handicap; use any profane,
+                obscene, pornographic or otherwise objectionable content or
+                language; promote or describe how to perform violence, illegal
+                drug or substance abuse, or any other illegal activity; violate
+                the personal, privacy, contractual, intellectual property or
+                other rights of any person; reveal, with respect to personal or
+                privacy rights, any personal information about another
+                individual, including an address, phone number, email address,
+                credit card number or other information that could be used to
+                track, contact or impersonate that individual; violate this
+                Agreement or any local, state, federal or non-U.S. law, rule or
+                regulation; trick, defraud, deceive or mislead the Company or
+                other users, such as by submitting false reports of abuse or
+                misconduct to the Company’s support services, disguising the
+                source of materials or other information you submit to the
+                Services or using tools which anonymize your Internet protocol
+                address to access the Services; interfere with or disrupt (or
+                attempt to interfere with or disrupt) access and enjoyment of
+                the Services of other users or any host or network, including,
+                without limitation, creating or transmitting unwanted electronic
+                communications such as “spam” to other users, overloading,
+                flooding or mail-bombing the Services, or scripting the creation
+                of Content in such a manner as to interfere with or create an
+                undue burden on the Services; disparage, tarnish or otherwise
+                harm, in the Company’s opinion, the Company and/or the Services;
+                upload or transmit (or attempt to upload or transmit) any
+                material that acts as a passive or active information collection
+                or transmission mechanism, such as viruses, worms, Trojan
+                horses, spyware, adware or any other malicious or invasive code
+                or program; reverse engineer, decompile, reverse assemble,
+                modify or attempt to discover or copy any software, source code
+                or structure that the Services utilize to generate web pages or
+                any software or other products or processes accessible through
+                the Services; access or search (or attempt to access or search)
+                the Services by any means, such as any automated system or
+                unauthorized script or software, other than currently available,
+                published interfaces provide by Fight Pandemics, unless you have
+                been specifically allowed to do so in a separate Agreement with
+                Fight Pandemics (note crawling the Services is permissible in
+                accordance with this Agreement, but scraping the Services is
+                expressly prohibited without the prior consent of Fight
+                Pandemics); remove, obscure or change any copyright, trademark,
+                hyperlink or other proprietary rights notices contained in or on
+                the Services or any website on which the Services are offered or
+                on a third party website and/or Company software on which
+                Company code is embeddable or embedded on; remove, obscure or
+                change any notice, banner, advertisement or other branding on
+                the Services; submit any Content or material that falsely
+                expresses or implies that such Content or material is sponsored
+                or endorsed by the Company; interfere with or circumvent any
+                security feature of the Services or any feature that restricts
+                or enforces limitations on use of or access to the Services,
+                such as probing or scanning the vulnerability of any system,
+                network or breach; or sell access to the Services or any part
+                thereof other than through a mechanism approved by the Company.
               </li>
               <li>
                 "Content" means any information, text, graphics or other
@@ -1251,9 +1263,9 @@ export const TermsConditions = () => {
                 Services. You retain ownership of all Content you submit, post,
                 display or otherwise make available on the Services.
               </li>
-            </aList>
+            </AList>
           </li>
-        </romanList>
+        </RomanList>
         <p>
           <i>
             The Company is an entity offering the transmission, routing or
