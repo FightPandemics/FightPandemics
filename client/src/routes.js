@@ -5,6 +5,7 @@ import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
+import { TermsConditions } from "./pages/TermsConditions";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -82,6 +83,10 @@ const routes = [
   {
     path: "/create-post",
     component: CreatePost,
+  },
+  {
+    path: "/terms-conditions",
+    component: TermsConditions,
   },
 ];
 
