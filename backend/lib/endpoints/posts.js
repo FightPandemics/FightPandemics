@@ -58,8 +58,7 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createPostSchema },
     async (req) => {
-      // todo add logged in user from jwt
-      req.body.authorId = ""; // req.user.id;
+      req.body.authorId = req.user.sub;
       return new Post(req.body).save();
     },
   );
@@ -109,8 +108,11 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: deletePostSchema },
     async (req) => {
       const { postId } = req.params;
-      // todo: make sure user can only delete their own posts
-      const deletedPost = await Post.findByIdAndRemove(postId);
+      const authorId = req.user.sub;
+      const deletedPost = await Post.findByIdAndRemove({
+        _id: postId,
+        authorId,
+      });
       if (!deletedPost) {
         return new httpErrors.BadRequest();
       }
@@ -129,8 +131,12 @@ async function routes(app) {
     "/:postId",
     { preValidation: [app.authenticate], schema: updatePostSchema },
     async (req, reply) => {
-      // todo: make sure user can only update their own post
-      const post = await Post.findById(req.params.postId);
+      const { postId } = req.params;
+      const authorId = req.user.sub;
+      const post = await Post.findOne({
+        __id: postId,
+        authorId,
+      });
       if (post === null) {
         return reply.send(new httpErrors.NotFound());
       }
@@ -147,11 +153,10 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
-      const { body, params } = req;
+      const { body, params, user } = req;
       const { parentId } = body;
       const { postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to comment (depending on visibility for that post)
+      const authorId = user.sub;
       if (parentId) {
         const parentPost = await Post.findById(parentId);
         if (!parentPost || parentPost.postId !== postId) {
@@ -160,7 +165,7 @@ async function routes(app) {
       }
       const commentProps = {
         ...body,
-        authorId: "", // req.user.id
+        authorId,
         postId,
       };
       return new Comment(commentProps).save();
@@ -174,10 +179,8 @@ async function routes(app) {
       const { body, params, user } = req;
       const { comment } = body;
       const { commentId, postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to edit comment (only your own comment, visibility can change?)
       const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, authorId: user.id, postId },
+        { _id: commentId, authorId: user.sub, postId },
         { comment },
         { new: true },
       );
@@ -194,12 +197,9 @@ async function routes(app) {
     async (req) => {
       const { params, user } = req;
       const { commentId, postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to delete their own comment (visibility can change?)
-      //  + also delete all sub comments?
       const { ok, deletedCount } = await Comment.deleteMany({
         $or: [
-          { _id: commentId, authorId: user.id, postId },
+          { _id: commentId, authorId: user.sub, postId },
           { parentId: commentId, postId },
         ],
       });
@@ -214,9 +214,8 @@ async function routes(app) {
     "/:postId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
-      const { postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const { postId, user } = req.params;
+      const userId = user.sub;
       const updatedPost = await Post.findOneAndUpdate(
         { _id: postId, likes: { $ne: userId } },
         { $inc: { likesCount: 1 }, $push: { likes: userId } },
@@ -237,9 +236,8 @@ async function routes(app) {
     "/:postId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
-      const { postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const { postId, user } = req.params;
+      const userId = user.sub;
       const updatedPost = await Post.findOneAndUpdate(
         { _id: postId, likes: userId },
         { $inc: { likesCount: -1 }, $pull: { likes: userId } },
@@ -260,9 +258,8 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const { commentId, postId, user } = req.params;
+      const userId = user.sub;
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: { $ne: userId }, postId },
         { $inc: { likesCount: 1 }, $push: { likes: userId } },
@@ -283,9 +280,8 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const { commentId, postId, user } = req.params;
+      const userId = user.sub;
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: userId, postId },
         { $inc: { likesCount: -1 }, $pull: { likes: userId } },

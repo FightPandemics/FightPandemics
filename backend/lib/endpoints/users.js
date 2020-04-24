@@ -8,9 +8,8 @@ const { getUserByIdSchema } = require("./schema/users");
 async function routes(app) {
   const User = app.mongo.model("User");
 
-  app.get("/current", { preValidation: [app.authenticate] }, async () => {
-    // todo: get current user from JWT
-    const result = await User.findById("");
+  app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
+    const result = await User.findById(req.user.sub);
     if (result === null) {
       return new httpErrors.NotFound();
     }
