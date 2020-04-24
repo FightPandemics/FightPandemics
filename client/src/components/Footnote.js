@@ -27,15 +27,15 @@ const StyledFooter = styled.footer`
 
 const Copyright = styled.div`
   font-weight: 500;
-  color: ${colors.darkGray};
+  color: ${colors.darkerGray};
 `;
 
 const Policies = styled.div`
-  color: ${colors.mediumGray};
+  color: ${colors.darkGray};
 `;
 
 const FooterLink = styled(Link)`
-  color: ${colors.mediumGray};
+  color: ${colors.darkGray};
   margin: 0 0.5rem;
   text-decoration-line: underline;
 `;
