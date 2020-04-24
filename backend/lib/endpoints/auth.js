@@ -19,11 +19,16 @@ async function routes(app) {
       if (decodeURIComponent(state) !== config.auth.state) {
         return new httpErrors.Unauthorized("Invalid state");
       }
-      const accessToken = await Auth0.authenticate("authorization_code", {
+      const token = await Auth0.authenticate("authorization_code", {
         code,
         redirect_uri: req.headers.referer,
       });
-      return { token: accessToken };
+      const user = await Auth0.getUser(token);
+      const { email_verified: emailVerified } = user;
+      /*
+       * todo: also return email address / maybe image for the "create profile" step if needed
+       */
+      return { emailVerified, token };
     } catch (err) {
       req.log.error("OAuth error", err);
       return new httpErrors.InternalServerError();
