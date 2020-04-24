@@ -21,7 +21,7 @@ const FilterTag = styled(Tag)`
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
-    padding: 0 1.2rem;
+    padding: 0 1rem;
     font-size: ${xsmall};
     color: ${royalBlue};
     border: 0.1rem solid ${royalBlue} !important;

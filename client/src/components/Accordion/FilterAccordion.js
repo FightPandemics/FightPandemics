@@ -47,13 +47,19 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   }
 
   .am-accordion-content-box {
-    padding: 0.8rem 0.5rem;
+    padding: 0.8rem 1rem;
   }
 
   &.filter-2,
   &.filter-3 {
     .am-accordion-content-box {
       text-align: left;
+    }
+  }
+
+  &.filter-3 {
+    .am-accordion-content-box {
+      padding-right: 2.1rem;
     }
   }
 
