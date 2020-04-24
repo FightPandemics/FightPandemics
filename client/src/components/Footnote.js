@@ -7,10 +7,6 @@ import styled from "styled-components";
 const { colors } = theme;
 
 const StyledFooter = styled.footer`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,6 +19,7 @@ const StyledFooter = styled.footer`
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
+  margin-top: 3rem;
 `;
 
 const Copyright = styled.div`
