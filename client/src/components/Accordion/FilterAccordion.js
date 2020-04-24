@@ -14,10 +14,9 @@ export const FilterAccordion = styled(Accordion)`
 `;
 
 export const FilterAccordionPanel = styled(Accordion.Panel)`
-  text-align: center;
   cursor: pointer;
   margin: 1.2rem;
-  text-align: left;
+
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
@@ -48,5 +47,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   }
   .am-accordion-content-box {
     padding: 0.8rem 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
   }
 `;
