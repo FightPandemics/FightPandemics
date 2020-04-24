@@ -1,7 +1,8 @@
 export default {
-  location: { label: "Location", options: [] },
+  location: { label: "Location", className: "filter-1", options: [] },
   fromWhom: {
     label: "From Whom",
+    className: "filter-2",
     options: [
       "Individuals",
       "Startup",
@@ -17,6 +18,7 @@ export default {
   },
   type: {
     label: "Type",
+    className: "filter-3",
     options: [
       "Medical supplies",
       "Groceries / Food",
@@ -34,6 +36,7 @@ export default {
   },
   lookingFor: {
     label: "Need or give help",
+    className: "filter-4",
     options: ["Need Help", "Give Help"],
   },
 };

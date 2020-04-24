@@ -8,7 +8,7 @@ const { xsmall } = theme.typography.size;
 
 const FilterTag = styled(Tag)`
   &.am-tag-normal {
-    padding: 0 1.5rem;
+    padding: 0 1.2rem;
   }
 
   &.am-tag-disabled {

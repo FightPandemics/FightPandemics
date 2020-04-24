@@ -15,13 +15,21 @@ export default () => {
     return filters.map((filter, idx) => {
       if (filter.label === "Location") {
         return (
-          <FilterAccordionPanel header="Location" key={idx}>
+          <FilterAccordionPanel
+            header={filter.label}
+            className={filter.className}
+            key={idx}
+          >
             <LocationSearch />
           </FilterAccordionPanel>
         );
       } else {
         return (
-          <FilterAccordionPanel header={filter.label} key={idx}>
+          <FilterAccordionPanel
+            header={filter.label}
+            className={filter.className}
+            key={idx}
+          >
             {Object.values(filter.options).map((option, idx) => (
               <FilterTag
                 key={idx}
