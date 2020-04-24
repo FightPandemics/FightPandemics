@@ -1,0 +1,86 @@
+name: fight-pandemics-delete
+
+on:
+  delete:
+    branches-ignore:
+      - 'master'
+
+jobs:
+  destroy_review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - id: get-branch-name-sanitized
+        name: Sanitize branch name
+        shell: bash
+        run: echo "::set-output name=branch::$(echo ${{ steps.get-branch-name.outputs.branch }} | sed 's/\//-/g')"
+      - env:
+          AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+        run: |
+          export BRANCH_NAME=${{ steps.get-branch-name-sanitized.outputs.branch }}
+          cat << EOF > main.tf
+          terraform {
+            backend "s3" {
+              bucket = "fp-review-terraform-state"
+              region = "us-east-1"
+              key = "${BRANCH_NAME}.tfstate"
+            }
+          }
+          module "main" {
+            source = "github.com/FightPandemics/tf-fargate-task//module"
+            image_tag = "${BRANCH_NAME}"
+            fp_context = "review"
+            subdomain = "${BRANCH_NAME}"
+            backend_env_variables = [
+              {
+                name = "PORT"
+                value = "8000"
+              },
+              {
+                name = "MONGO_URI"
+                value = "localhost:27017"
+              },
+              {
+                name = "GEO_SERVICE_URL"
+                value = "localhost:5000"
+              },
+              {
+                name = "AUTH_STATE"
+                value = "fight-pandemics"
+              },
+              {
+                name = "AUTH_APP_URL"
+                value = "http://localhost:8000"
+              },
+              {
+                name = "AUTH_SECRET_KEY"
+                value = "${AUTH_SECRET_KEY}"
+              },
+              {
+                name = "AUTH_DOMAIN"
+                value = "fightingpandemics.eu.auth0.com"
+              },
+              {
+                name = "AUTH_CLIENT_ID"
+                value = "${AUTH_CLIENT_ID}"
+              }
+            ]
+          }
+          EOF
+      - run: cat main.tf
+      - name: 'Terraform Destroy'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.13
+          tf_actions_subcommand: 'destroy'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
