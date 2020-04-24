@@ -60,8 +60,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   &.filter-4 {
     .am-accordion-content-box {
       display: flex;
-      justify-content: space-between;
-      padding: 0.8rem 1rem;
+      justify-content: space-around;
       .am-tag {
         padding: 0 4.2rem;
       }
