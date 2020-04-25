@@ -11,7 +11,7 @@ export default ({
     borderTopStyle: "hidden",
     borderLeftStyle: "hidden",
     borderRightStyle: "hidden",
-    borderColor: error ? "red" : "#5970EC",
+    borderColor: error ? "#FF5656" : "#5970EC",
     borderWidth: "thin",
     marginBottom: "2rem",
     marginTop: "0.4rem",
@@ -21,7 +21,9 @@ export default ({
   return (
     <>
       {inputTitle && (
-        <label style={{ color: error ? "red" : "#425AF2" }}>{inputTitle}</label>
+        <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
+          {inputTitle}
+        </label>
       )}
       <input
         style={inputFieldStyle}

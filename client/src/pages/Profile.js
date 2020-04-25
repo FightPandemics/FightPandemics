@@ -6,9 +6,12 @@ import TwitterIcon from "../components/Icon/Twitter-blue";
 import Menu from "../components/Icon/menu";
 import Edit from "../components/Icon/edit";
 import Title from "../components/Title/Title";
-import Feed from "./Feed";
 import styled from "styled-components";
 import { getInitials } from "../utils/userInfo";
+import fakePosts from "../assets/data/fakePosts"; // feed
+import Posts from "../components/Feed/Posts"; // feed
+import CreatPostIcon from "../components/Icon/create-post"; // feed
+import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
@@ -20,6 +23,7 @@ const SectionHeader = (props) => (
       fontSize: "1.5rem",
       textAlign: "left",
       marginLeft: "2.5rem",
+      marginBottom: "1rem",
     }}
     {...props}
   />
@@ -42,7 +46,7 @@ const BackgroundHeader = styled.div`
   right: 0;
   background-color: #425af2;
   border-bottom-right-radius: 30px;
-  position: relative;
+  position: relative;import { Link } from "react-router-dom";
 `;
 const AboutDescription = styled.div`
   background-color: #ffffff;
@@ -50,7 +54,7 @@ const AboutDescription = styled.div`
   width: 100%;
   font-size: 1.2rem;
   color: #939393;
-  padding: 0 2rem;
+  padding: 0 2.5rem;
 `;
 const ProfileLayout = styled.div`
   background-color: #f9f9f9;
@@ -125,7 +129,16 @@ export const Profile = (props) => {
   };
 
   const renderMyActivities = () => {
-    // return <Feed/>;
+    return (
+      <>
+        <div style={{ margin: "0 2.5rem" }}>
+          <FeedWrapper>
+            <Posts filteredPosts={fakePosts} />
+            <CreatPostIcon className="create-post" />
+          </FeedWrapper>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -170,8 +183,9 @@ export const Profile = (props) => {
       <WhiteSpace />
       <AboutDescription>{about}</AboutDescription>
       <WhiteSpace />
-      <SectionHeader title="My Activity" />
+      <SectionHeader title="My Activity" marginTop="2rem" />
       <SectionContainer>{renderMyActivities()}</SectionContainer>
+
       <WhiteSpace />
     </ProfileLayout>
   );

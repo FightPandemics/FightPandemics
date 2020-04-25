@@ -6,7 +6,6 @@ import styled from "styled-components";
 import FormInput from "../components/Input/FormInput";
 import Title from "../components/Title/Title";
 import UnderLineDescription from "../components/Input/UnderlineDescription";
-
 const Label = styled.label` 
   color: ${(props) => props.inputColor || "#425AF2"};
   padding-left: ${(props) => props.paddingLeft || ""};
