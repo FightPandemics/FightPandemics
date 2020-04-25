@@ -7,10 +7,6 @@ const { royalBlue } = theme.colors;
 const { xsmall } = theme.typography.size;
 
 const FilterTag = styled(Tag)`
-  &.am-tag-normal {
-    padding: 0 1.5rem;
-  }
-
   &.am-tag-disabled {
     background-color: unset;
     padding: 0 0.8rem;
@@ -25,6 +21,7 @@ const FilterTag = styled(Tag)`
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {
+    padding: 0 1rem;
     font-size: ${xsmall};
     color: ${royalBlue};
     border: 0.1rem solid ${royalBlue} !important;

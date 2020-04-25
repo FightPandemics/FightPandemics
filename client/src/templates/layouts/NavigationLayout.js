@@ -155,7 +155,7 @@ export default (props) => {
       <Main>
         <props.component {...props} />
       </Main>
-      <Footnote />
+      {/* <Footnote /> */}
     </Drawer>
   );
 };
