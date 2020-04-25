@@ -68,7 +68,8 @@ jobs:
           region: us-east-1
           variables: >
             env_name=${{ steps.get-branch-name-sanitized.outputs.branch }},
-            fp_context=review,auth_secret_key=${{ secrets.AUTH_SECRET_KEY }},
+            fp_context=review,
+            auth_secret_key=${{ secrets.AUTH_SECRET_KEY }},
             auth_client_id=${{ secrets.AUTH_CLIENT_ID }}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
@@ -77,4 +78,3 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
-
