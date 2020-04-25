@@ -11,10 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - id: get-branch-name
-        uses: ypicard/get-branch-name-github-action@v1
-      - id: get-branch-name-sanitized
-        name: Sanitize branch name
-        shell: bash
-        run: echo "::set-output name=branch::$(echo ${{ steps.get-branch-name.outputs.branch }} | sed 's/\//-/g')"
-      - run: echo ${{ steps.get-branch-name-sanitized.branch }}
+      - run: echo $CI $HOME $GITHUB_WORKFLOW $GITHUB_RUN_ID $GITHUB_RUN_NUMBER $GITHUB_ACTION $GITHUB_ACTIONS $GITHUB_ACTOR $GITHUB_REPOSITORY $GITHUB_EVENT_NAME $GITHUB_EVENT_PATH $GITHUB_WORKSPACE $GITHUB_SHA $GITHUB_REF $GITHUB_HEAD_REF $GITHUB_BASE_REF
