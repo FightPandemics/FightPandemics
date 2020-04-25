@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import { FeedContext } from "../../pages/Feed.js";
 import FilterTag from "../Tag/FilterTag";
 import LocationSearch from "../../components/Input/LocationSearch";
-import {
-  FilterAccordion,
-  FilterAccordionPanel,
-} from "../Accordion/FilterAccordion";
+import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
 export default () => {
   const feedContext = useContext(FeedContext);
