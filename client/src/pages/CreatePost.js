@@ -40,6 +40,7 @@ const errorMsg = {
   title: "Please include a title for your post.",
   body: "Please include a body for your post.",
   help: "Please select a type of help.",
+  tags: "Please add at least one tag.",
 };
 
 export default (props) => {
@@ -84,10 +85,10 @@ export default (props) => {
     }
   };
 
-  const handleErrors = () => {
+  const populateErrors = () => {
     const newErrors = [];
     for (let field in errorMsg) {
-      if (!errors.includes(field) && !data[field]) {
+      if (!errors.includes(field)) {
         newErrors.push(field);
       }
     }
@@ -95,12 +96,13 @@ export default (props) => {
   };
 
   const renderError = (field) => {
-    if (errors.includes(field)) return errorMsg[field];
+    if (errors.includes(field) && (!data[field] || !data[field].length))
+      return errorMsg[field];
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleErrors();
+    populateErrors();
   };
 
   return (
@@ -183,6 +185,7 @@ export default (props) => {
         <div className="tags">
           <AddTags addTag={addTag} filters={types} />
         </div>
+        <span className="error-box">{renderError("tags")}</span>
         <SubmitButton
           title="Post"
           handleClick={handleSubmit}
