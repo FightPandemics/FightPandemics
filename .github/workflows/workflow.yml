@@ -51,62 +51,25 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
         run: |
-          export BRANCH_NAME=${{ steps.get-branch-name-sanitized.outputs.branch }}
-          cat << EOF > main.tf
+          cat << EOF > backend.tf
           terraform {
             backend "s3" {
               bucket = "fp-review-terraform-state"
               region = "us-east-1"
-              key = "${BRANCH_NAME}.tfstate"
+              key = "${{ steps.get-branch-name-sanitized.outputs.branch }}.tfstate"
             }
           }
-          module "main" {
-            source = "github.com/FightPandemics/tf-fargate-task//module"
-            image_tag = "${BRANCH_NAME}"
-            fp_context = "review"
-            subdomain = "${BRANCH_NAME}"
-            backend_env_variables = [
-              {
-                name = "PORT"
-                value = "8000"
-              },
-              {
-                name = "MONGO_URI"
-                value = "localhost:27017"
-              },
-              {
-                name = "GEO_SERVICE_URL"
-                value = "localhost:5000"
-              },
-              {
-                name = "AUTH_STATE"
-                value = "fight-pandemics"
-              },
-              {
-                name = "AUTH_APP_URL"
-                value = "http://localhost:8000"
-              },
-              {
-                name = "AUTH_SECRET_KEY"
-                value = "${AUTH_SECRET_KEY}"
-              },
-              {
-                name = "AUTH_DOMAIN"
-                value = "fightingpandemics.eu.auth0.com"
-              },
-              {
-                name = "AUTH_CLIENT_ID"
-                value = "${AUTH_CLIENT_ID}"
-              }
-            ]
-          }
           EOF
-      - run: cat main.tf
+      - run: cat backend.tf
       - uses: kciter/terraform-apply-for-aws-action@v3
         with:
           access_key_id: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
+          variables: >
+            branch=${{ steps.get-branch-name-sanitized.outputs.branch }},
+            fp_context=review,auth_secret_key=${{ secrets.AUTH_SECRET_KEY }},
+            auth_client_id=${{ secrets.AUTH_CLIENT_ID }}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name-sanitized.outputs.branch }} --force-new-deployment
