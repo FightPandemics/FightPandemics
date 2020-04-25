@@ -37,6 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_images
     steps:
+      - uses: actions/checkout@v2
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
