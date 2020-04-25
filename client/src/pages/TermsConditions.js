@@ -16,19 +16,16 @@ const TextContainer = styled.div`
   max-width: 60rem;
 `;
 
-const AList = styled.ol`
-  type: a;
+const Paragraph = styled.div`
+  margin: 1rem 0;
 `;
 
-const RomanList = styled.ol`
-  type: I;
+const ListNoIndent = styled.ol`
+  padding: 0;
+  margin-left: 2.5rem;
 `;
 
-const IList = styled.ol`
-  type: i;
-`;
-
-const TermsLink = styled(Link)`
+const TermsLink = styled.a`
   color: ${colors.primary};
 `;
 
@@ -37,20 +34,20 @@ export const TermsConditions = () => {
     <TermsContainer>
       <TextContainer>
         <h2 className="text-primary display-6">Terms & Conditions</h2>
-        <p>
+        <Paragraph>
           Welcome to Fight Pandemics. We provide a platform where people around
           the world can join to look for help, or aid others in times of need.
           Our users create profiles in our platform in order to interact and
           raise awareness in the community.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           Users of this website may open an account as a:
-          <AList>
+          <ol type="a">
             <li>Physical person</li>
             <li>Legal representative of a corporation</li>
-          </AList>
-        </p>
-        <p>
+          </ol>
+        </Paragraph>
+        <Paragraph>
           By using Fight Pandemics, including by simply viewing content on the
           Site, you are agreeing that you, and each person you allow to access
           Fight Pandemics through your account, will abide by the terms of this
@@ -60,15 +57,15 @@ export const TermsConditions = () => {
           use of the services, websites, and applications offered by Fight
           Pandemics (the “Services”). Your access to and use of the Services are
           conditioned on your acceptance of and compliance with this Agreement.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The Site is not directed to any person in any jurisdiction where (by
           reason of that person’s nationality, residence or otherwise) the
           publication or availability of the Site is prohibited. Persons in
           respect of whom such prohibitions apply must not access the Site. For
           more information, see Section XI.a (Availability of Services).
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           Capitalized terms used herein are defined in Section XII (Definitions)
           of this Agreement. IMPORTANT NOTICE REGARDING ARBITRATION: WHEN YOU
           AGREE TO THESE TERMS YOU ARE AGREEING (WITH LIMITED EXCEPTION) TO
@@ -76,37 +73,67 @@ export const TermsConditions = () => {
           INDIVIDUAL ARBITRATION RATHER THAN IN COURT. PLEASE REVIEW CAREFULLY
           SECTION XI (ARBITRATION) BELOW FOR DETAILS REGARDING ARBITRATION
           [(INCLUDING THE PROCEDURE TO OPT OUT OF ARBITRATION)].
-        </p>
-        <h4 className="text-primary display-6">Table of Contents</h4>
-        <RomanList>
-          <li>User Obligations</li>
-          <li>Privacy And Protection Of Personal Information</li>
-          <li>Company Services And License</li>
-          <li>Reservation Of The Company's Rights</li>
-          <li>Limits On The Company's Obligations</li>
-          <li>Copyright Policy</li>
-          <li>Term And Termination</li>
-          <li>Disclaimers; Limitations; Waivers Of Liability</li>
-          <li>Disputes With Others</li>
-          <li>Arbitration</li>
-          <li>Miscellaneous</li>
-          <li>Definitions</li>
-        </RomanList>
-        <h4 className="text-primary display-6">General Security Principles</h4>
-        <RomanList>
+        </Paragraph>
+        <h3 className="text-primary display-6">Table of Contents</h3>
+        <ol type="I">
           <li>
-            User Obligations
-            <AList>
+            <a href="#user-obligations">User Obligations</a>
+          </li>
+          <li>
+            <a href="#privacy-protection">
+              Privacy And Protection Of Personal Information
+            </a>
+          </li>
+          <li>
+            <a href="#company-services">Company Services And License</a>
+          </li>
+          <li>
+            <a href="#company-rights">Reservation Of The Company's Rights</a>
+          </li>
+          <li>
+            <a href="#company-obligation">
+              Limits On The Company's Obligations
+            </a>
+          </li>
+          <li>
+            <a href="#copyright-policy">Copyright Policy</a>
+          </li>
+          <li>
+            <a href="#term-termination">Term And Termination</a>
+          </li>
+          <li>
+            <a href="#liability">
+              Disclaimers; Limitations; Waivers Of Liability
+            </a>
+          </li>
+          <li>
+            <a href="#disputes">Disputes With Others</a>
+          </li>
+          <li>
+            <a href="#arbitration">Arbitration</a>
+          </li>
+          <li>
+            <a href="#misc">Miscellaneous</a>
+          </li>
+          <li>
+            <a href="#definitions">Definitions</a>
+          </li>
+        </ol>
+        <h3 className="text-primary display-6">GENERAL SECURITY PRINCIPLES</h3>
+        <ListNoIndent type="I">
+          <li id="user-obligations">
+            USER OBLIGATIONS
+            <ol type="a">
               <li>
                 <strong>To Act Responsibly.</strong>
                 You are promising to act responsibly – which means:
-                <IList>
+                <ol type="i">
                   <li>
                     You are making the following Promises:
                     <ol>
                       <li>
                         <i>Requirements to Use the Services.</i>
-                        <AList>
+                        <ol type="a">
                           <li>
                             That you have the right, authority, and capacity to
                             enter into this Agreement on your own behalf and on
@@ -148,11 +175,11 @@ export const TermsConditions = () => {
                             manner in all your interactions with Fight Pandemics
                             and with any other Fight Pandemics user.
                           </li>
-                        </AList>
+                        </ol>
                       </li>
                       <li>
                         <i>Requirements to Use the Services.</i>
-                        <AList>
+                        <ol type="a">
                           <li>
                             That you will only provide Fight Pandemics with
                             Content that you have a right to provide to Fight
@@ -204,7 +231,7 @@ export const TermsConditions = () => {
                             connection with the display of any Content or other
                             information from the Services.
                           </li>
-                        </AList>
+                        </ol>
                       </li>
                     </ol>
                   </li>
@@ -267,14 +294,14 @@ export const TermsConditions = () => {
                       </li>
                     </ol>
                   </li>
-                </IList>
+                </ol>
               </li>
               <li>
                 <strong>Indemnify Fight Pandemics and Related Parties.</strong>
                 You are promising to hold the Company harmless against any
                 damage that may happen to us as a result of your use of Fight
                 Pandemics.
-                <IList>
+                <ol type="i">
                   <li>
                     <i>Indemnity.</i> You agree to indemnify and hold the
                     Company and any Company Person harmless (including against
@@ -316,7 +343,7 @@ export const TermsConditions = () => {
                     emails or other communications such individuals make in that
                     capacity.
                   </li>
-                </IList>
+                </ol>
               </li>
               <li>
                 <strong>Confidentiality.</strong>
@@ -332,7 +359,7 @@ export const TermsConditions = () => {
               </li>
               <li>
                 <strong>Other User Obligations.</strong>
-                <IList>
+                <ol type="i">
                   <li>
                     You promise to comply with the terms of the license set
                     forth in Section III (Company Services and License) of this
@@ -401,13 +428,13 @@ export const TermsConditions = () => {
                       </li>
                     </ol>
                   </li>
-                </IList>
+                </ol>
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="privacy-protection">
             PRIVACY AND PROTECTION OF PERSONAL INFORMATION
-            <AList>
+            <ol type="a">
               <li>
                 <strong>Privacy & Cookies Policy.</strong>
                 Fight Pandemics values your privacy. Please review our Privacy
@@ -453,11 +480,11 @@ export const TermsConditions = () => {
                 including, without limitation, the Standard Contractual Clauses
                 and their Appendices.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="company-services">
             COMPANY SERVICES AND LICENSE
-            <AList>
+            <ol type="a">
               <li>
                 <strong>License to Use the Service.</strong>
                 All right, title, and interest in and to the Services (excluding
@@ -475,7 +502,7 @@ export const TermsConditions = () => {
                 your reasonable internal business purposes in accordance with
                 the Agreement and any other guidelines and requirements that we
                 may implement from time-to-time], provided that you:
-                <IList>
+                <ol type="i">
                   <li>
                     do not use the license to engage in any commercial activity
                   </li>
@@ -494,7 +521,7 @@ export const TermsConditions = () => {
                     make a reasonable attempt to delete Content that has been
                     deleted on Fight Pandemics.
                   </li>
-                </IList>
+                </ol>
               </li>
               <li>
                 <strong>No Claim to Any Rights in Your Information.</strong>
@@ -517,11 +544,11 @@ export const TermsConditions = () => {
                 hacker attack that will allow unauthorized viewing of material
                 or unsolicited contacts to occur.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="company-rights">
             RESERVATION OF THE COMPANY'S RIGHTS
-            <AList>
+            <ol type="a">
               <li>
                 <strong>Right to Control Content.</strong>
                 Fight Pandemics may, but is not required to, monitor or control
@@ -600,11 +627,11 @@ export const TermsConditions = () => {
                 sublicensable basis. For more information, see our Privacy &
                 Cookies Policy.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="company-obligations">
             LIMITS ON THE COMPANY'S OBLIGATIONS
-            <AList>
+            <ol type="a">
               <li>
                 <strong>Introductions.</strong>
                 We are not obligated to introduce you to any other User of the
@@ -673,11 +700,11 @@ export const TermsConditions = () => {
                 illegality or any error, inaccuracy or problem in an
                 advertiser’s or sponsor’s Content.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="copyright-policy">
             COPYRIGHT POLICY
-            <AList>
+            <ol type="a">
               <li>
                 Fight Pandemics respects the intellectual property rights of
                 others and expects users of the Services to do the same. We will
@@ -742,11 +769,11 @@ export const TermsConditions = () => {
                 also terminate a user’s account if the user is determined to be
                 a repeat infringer.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="term-termination">
             TERM AND TERMINATION
-            <AList>
+            <ol type="a">
               <li>
                 Unless terminated by the Company, this Agreement will remain in
                 full force and effect while you use any of the Services. Subject
@@ -765,11 +792,11 @@ export const TermsConditions = () => {
                 their nature are designed to survive termination shall survive
                 any termination or expiration of this Agreement.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="liability">
             DISCLAIMERS; LIMITATIONS; WAIVERS OF LIABILITY
-            <AList>
+            <ol type="a">
               <li>
                 YOU EXPRESSLY AGREE THAT ACCESS TO AND USE OF THE SERVICES IS AT
                 YOUR SOLE RISK AND IS PROVIDED ON AN “AS IS” BASIS WITHOUT
@@ -856,11 +883,11 @@ export const TermsConditions = () => {
                 invalid, but all remaining provisions shall be in full force and
                 effect.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="disputes">
             DISPUTES WITH OTHERS
-            <AList>
+            <ol type="a">
               <li>
                 We reserve the right, but have no obligation, to monitor and/or
                 manage disputes between you and other users of the Services. If
@@ -870,11 +897,11 @@ export const TermsConditions = () => {
                 known and unknown, arising out of, or in any way connected with,
                 such a dispute.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="arbitration">
             ARBITRATION
-            <AList>
+            <ol type="a">
               <li>
                 <strong>Informal Negotiations.</strong>
                 To expedite resolution and control the cost of any dispute,
@@ -990,14 +1017,14 @@ export const TermsConditions = () => {
                 Section X (Arbitration) as of the date you first accepted the
                 Agreement (or accepted any subsequent changes to the Agreement).
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="misc">
             MISCELLANEOUS
-            <AList>
+            <ol type="a">
               <li>
                 Availability of Services.
-                <IList>
+                <ol type="i">
                   <li>
                     The Company operates and controls the Services from its
                     offices in the United States. The Company makes no
@@ -1029,7 +1056,7 @@ export const TermsConditions = () => {
                     the United Nations Convention on Contracts for the
                     International Sale of Goods.
                   </li>
-                </IList>
+                </ol>
               </li>
               <li>
                 <strong>Injunctive Relief.</strong>
@@ -1094,7 +1121,7 @@ export const TermsConditions = () => {
               </li>
               <li>
                 <strong>Waiver and Severability.</strong>
-                <IList>
+                <ol type="i">
                   <li>
                     The failure of the Company to require or enforce strict
                     performance by you of any provision of this Agreement or to
@@ -1127,7 +1154,7 @@ export const TermsConditions = () => {
                     jurisdiction within Delaware, and you and the Company agree
                     to submit to the personal jurisdiction of that court.
                   </li>
-                </IList>
+                </ol>
               </li>
               <li>
                 <strong>
@@ -1191,11 +1218,11 @@ export const TermsConditions = () => {
                 accordance with such provisions, any use of the Services by the
                 Government shall be governed solely by this Agreement.
               </li>
-            </AList>
+            </ol>
           </li>
-          <li>
+          <li id="definitions">
             DEFINITIONS
-            <AList>
+            <ol type="a">
               <li>
                 "Community Rules": Participants in the Fight Pandemics community
                 will not, in connection with the Services: defame, libel,
@@ -1263,9 +1290,9 @@ export const TermsConditions = () => {
                 Services. You retain ownership of all Content you submit, post,
                 display or otherwise make available on the Services.
               </li>
-            </AList>
+            </ol>
           </li>
-        </RomanList>
+        </ListNoIndent>
         <p>
           <i>
             The Company is an entity offering the transmission, routing or
@@ -1276,9 +1303,9 @@ export const TermsConditions = () => {
             on a system or network at the direction of a user, and referral or
             linkage of users to an online location using information location
             tools, each through the Site located at{" "}
-            <a href="https://www.fightpandemics.com">
+            <TermsLink href="https://www.fightpandemics.com">
               https://www.fightpandemics.com
-            </a>{" "}
+            </TermsLink>{" "}
             and any linked pages or applications owned and operated by the
             Company.
           </i>
