@@ -1,4 +1,4 @@
-name: fight-pandemics
+name: staging
 
 on:
   push:
@@ -54,6 +54,7 @@ jobs:
           }
           EOF
       - run: cat backend.tf
+      - run: cat main.tf
       - uses: kciter/terraform-apply-for-aws-action@v3
         with:
           access_key_id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
