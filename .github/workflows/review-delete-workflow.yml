@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo $CI $HOME $GITHUB_WORKFLOW $GITHUB_RUN_ID $GITHUB_RUN_NUMBER $GITHUB_ACTION $GITHUB_ACTIONS $GITHUB_ACTOR $GITHUB_REPOSITORY $GITHUB_EVENT_NAME $GITHUB_EVENT_PATH $GITHUB_WORKSPACE $GITHUB_SHA $GITHUB_REF $GITHUB_HEAD_REF $GITHUB_BASE_REF
+      - run: echo $(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH") # source branch of PR merge
