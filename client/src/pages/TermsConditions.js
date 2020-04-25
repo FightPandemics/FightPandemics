@@ -22,7 +22,6 @@ const Paragraph = styled.div`
 
 const ListNoIndent = styled.ol`
   padding: 0;
-  margin-left: 2.5rem;
 `;
 
 const TermsLink = styled.a`
@@ -91,7 +90,7 @@ export const TermsConditions = () => {
             <a href="#company-rights">Reservation Of The Company's Rights</a>
           </li>
           <li>
-            <a href="#company-obligation">
+            <a href="#company-obligations">
               Limits On The Company's Obligations
             </a>
           </li>
@@ -120,7 +119,7 @@ export const TermsConditions = () => {
           </li>
         </ol>
         <h3 className="text-primary display-6">GENERAL SECURITY PRINCIPLES</h3>
-        <ListNoIndent type="I">
+        <ol type="I">
           <li id="user-obligations">
             USER OBLIGATIONS
             <ol type="a">
@@ -722,24 +721,26 @@ export const TermsConditions = () => {
                 if you believe that any material on the Services violates this
                 Agreement or your intellectual property rights, please notify
                 the Company as soon as possible by sending an email to{" "}
-                <span>legal@fightpandemics</span>.com, or by mailing a letter to
-                the corporate address of Fight Pandemics (listed below)
-                containing the following information in accordance with the
-                DMCA: (i) identification of the material that is claimed to be
-                infringing or to be the subject of infringing activity and that
-                is to be removed or access to which is to be disabled, and
-                information reasonably sufficient to permit us to locate the
-                material; (ii) identification of the copyrighted work claimed to
-                have been infringed; (iii) your contact information, including
-                your address, telephone number, and an email address; (iv) a
-                statement by you that you have a good faith belief that use of
-                the material in the manner complained of is not authorized by
-                the copyright owner, its agent or the law; (v) a statement that
-                the information in the notification is accurate, and, under
-                penalty of perjury, that you are authorized to act on behalf of
-                the copyright owner; and (vi) a physical or electronic signature
-                of the copyright owner or a person authorized to act on their
-                behalf.
+                <TermsLink href="mailto:legal@fightpandemics">
+                  legal@fightpandemics.com
+                </TermsLink>
+                , or by mailing a letter to the corporate address of Fight
+                Pandemics (listed below) containing the following information in
+                accordance with the DMCA: (i) identification of the material
+                that is claimed to be infringing or to be the subject of
+                infringing activity and that is to be removed or access to which
+                is to be disabled, and information reasonably sufficient to
+                permit us to locate the material; (ii) identification of the
+                copyrighted work claimed to have been infringed; (iii) your
+                contact information, including your address, telephone number,
+                and an email address; (iv) a statement by you that you have a
+                good faith belief that use of the material in the manner
+                complained of is not authorized by the copyright owner, its
+                agent or the law; (v) a statement that the information in the
+                notification is accurate, and, under penalty of perjury, that
+                you are authorized to act on behalf of the copyright owner; and
+                (vi) a physical or electronic signature of the copyright owner
+                or a person authorized to act on their behalf.
               </li>
               <li>
                 Our corporate address for notice of alleged copyright
@@ -752,15 +753,23 @@ export const TermsConditions = () => {
                 </i>{" "}
                 <br />
                 <i>Dover, Delaware</i> <br />
-                <i>Email: legal@fightpandemics.com</i>
+                <i>
+                  Email:{" "}
+                  <TermsLink href="mailto:legal@fightpandemics.com">
+                    legal@fightpandemics.com
+                  </TermsLink>
+                </i>
               </li>
               <li>
                 Please note that in addition to being forwarded to the person
                 who provided the allegedly illegal content, we may send a copy
                 of your notice (with your personal information removed) to{" "}
-                <span>Lumen Database</span> for publication and/or annotation. A
-                link to your published notice will be displayed on Fight
-                Pandemics in place of the removed Content.
+                <TermsLink href="https://lumendatabase.org/">
+                  Lumen Database
+                </TermsLink>{" "}
+                for publication and/or annotation. A link to your published
+                notice will be displayed on Fight Pandemics in place of the
+                removed Content.
               </li>
               <li>
                 We reserve the right to remove Content alleged to be infringing
@@ -912,12 +921,15 @@ export const TermsConditions = () => {
                 below) informally for at least thirty (30) days before
                 initiating any arbitration. Such informal negotiations commence
                 upon written notice from one person to the other. You will send
-                your notice to <span>legal@fightpandemics.com</span>, ATTENTION:
-                LEGAL DEPARTMENT. The Company will send its notice to your
-                address as set forth in the books and records of the Company, or
-                if no such address has been provided, by email to the email
-                address provided by you in connection with your use of the
-                Services.
+                your notice to{" "}
+                <TermsLink href="mailto:legal@fightpandemics">
+                  legal@fightpandemics.com
+                </TermsLink>
+                , ATTENTION: LEGAL DEPARTMENT. The Company will send its notice
+                to your address as set forth in the books and records of the
+                Company, or if no such address has been provided, by email to
+                the email address provided by you in connection with your use of
+                the Services.
               </li>
               <li>
                 <strong>Binding Arbitration at Option of Either Party.</strong>
@@ -938,18 +950,18 @@ export const TermsConditions = () => {
                 Association (“AAA”) and, where appropriate, the AAA’s
                 Supplementary Procedures for Consumer Related Disputes (“AAA
                 Consumer Rules”), both of which are available at the{" "}
-                <TermsLink href="#">AAA website</TermsLink>. The determination
-                of whether a Dispute is subject to arbitration shall be governed
-                by the Federal Arbitration Act. The parties agree that the
-                arbitrator shall have exclusive authority to decide all issues
-                relating to the interpretation, applicability, enforceability
-                and scope of this arbitration agreement. Your arbitration fees
-                and your share of arbitrator compensation shall be governed by
-                the AAA Rules and, where appropriate, limited by the AAA
-                Consumer Rules. The arbitration may be conducted, at the option
-                of the claimant, either in person or by video conference. The
-                arbitrator will make a decision in writing, but need not provide
-                a statement of reasons unless requested by a party. The
+                <TermsLink href="https://www.adr.org/">AAA website</TermsLink>.
+                The determination of whether a Dispute is subject to arbitration
+                shall be governed by the Federal Arbitration Act. The parties
+                agree that the arbitrator shall have exclusive authority to
+                decide all issues relating to the interpretation, applicability,
+                enforceability and scope of this arbitration agreement. Your
+                arbitration fees and your share of arbitrator compensation shall
+                be governed by the AAA Rules and, where appropriate, limited by
+                the AAA Consumer Rules. The arbitration may be conducted, at the
+                option of the claimant, either in person or by video conference.
+                The arbitrator will make a decision in writing, but need not
+                provide a statement of reasons unless requested by a party. The
                 arbitrator must follow applicable law, and any award may be
                 challenged within a reasonable period of time (not to exceed 30
                 days) if the arbitrator fails to do so. Except as otherwise
@@ -1008,14 +1020,17 @@ export const TermsConditions = () => {
                 the Agreement (or accepted any subsequent changes to the
                 Agreement), you may reject any such change by sending us written
                 notice (including by electronic mail to{" "}
-                <span>legal@fightpandemics.com</span>) within 30 days of the
-                date such change became effective, as indicated in the “Last
-                Updated” date below or in the date of Company’s email to you
-                notifying you of such change (whichever is earlier. By rejecting
-                any change, you are agreeing that you will arbitrate any Dispute
-                between you and Company in accordance with the terms of this
-                Section X (Arbitration) as of the date you first accepted the
-                Agreement (or accepted any subsequent changes to the Agreement).
+                <TermsLink href="mailto:legal@fightpandemics">
+                  legal@fightpandemics.com
+                </TermsLink>
+                ) within 30 days of the date such change became effective, as
+                indicated in the “Last Updated” date below or in the date of
+                Company’s email to you notifying you of such change (whichever
+                is earlier. By rejecting any change, you are agreeing that you
+                will arbitrate any Dispute between you and Company in accordance
+                with the terms of this Section X (Arbitration) as of the date
+                you first accepted the Agreement (or accepted any subsequent
+                changes to the Agreement).
               </li>
             </ol>
           </li>
@@ -1292,7 +1307,7 @@ export const TermsConditions = () => {
               </li>
             </ol>
           </li>
-        </ListNoIndent>
+        </ol>
         <p>
           <i>
             The Company is an entity offering the transmission, routing or
