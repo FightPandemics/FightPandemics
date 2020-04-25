@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import { Drawer, List, Button } from "antd-mobile";
-import { useAuth0 } from "~/react-auth0-spa";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "~/components/Header";
+import Footnote from "~/components/Footnote";
 import Main from "./Main";
 import { theme } from "../../constants/theme";
 
@@ -102,7 +102,6 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 export default (props) => {
-  const { isAuthenticated } = useAuth0();
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -114,7 +113,7 @@ export default (props) => {
   const drawerMenu = () => (
     <>
       <NavList>
-        {isAuthenticated ? (
+        {props.isAuthenticated ? (
           <>
             <NavItem>
               <Link to="/profile">Profile</Link>
@@ -122,7 +121,7 @@ export default (props) => {
           </>
         ) : (
           <>
-            <NavItem history={history} link="/auth/signup">
+            <NavItem history={history} link="/auth/login">
               Login / Register
             </NavItem>
           </>
@@ -156,6 +155,7 @@ export default (props) => {
       <Main>
         <props.component {...props} />
       </Main>
+      {/* <Footnote /> */}
     </Drawer>
   );
 };

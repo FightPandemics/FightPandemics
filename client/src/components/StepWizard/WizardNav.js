@@ -1,8 +1,8 @@
 import { Button } from "grommet";
-import { FormNextLink, FormPreviousLink } from "grommet-icons";
 import React from "react";
 import styled from "styled-components";
-import { PRIMARY } from "../../constants/colors";
+import NextArrow from "../../components/Icon/next-arrow";
+import BackArrow from "../../components/Icon/back-arrow";
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -32,38 +32,24 @@ const PrevButton = styled(Button)`
   border-color: transparent;
 `;
 
-const CircleButton = styled(Button)`
-  justify-self: flex-end;
-  background-color: ${PRIMARY};
-  border-radius: 24px;
-`;
-
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
       <PrevButton
         plain
         onClick={previousStep}
-        icon={<FormPreviousLink />}
+        icon={<BackArrow />}
         a11yTitle={`Navigate to step ${currentStep - 1}`}
       />
     ) : (
       <PrevButton
         plain
         href="/"
-        icon={<FormPreviousLink />}
+        icon={<BackArrow />}
         a11yTitle="Navigate to the homepage"
       />
     )}
-    {currentStep < totalSteps && (
-      <CircleButton
-        primary
-        color="primary"
-        onClick={nextStep}
-        a11yTitle={`Navigate to step ${currentStep + 1}`}
-        icon={<FormNextLink color="#fff" />}
-      />
-    )}
+    {currentStep < totalSteps && <NextArrow onClick={nextStep} />}
   </StyledWizardNav>
 );
 

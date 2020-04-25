@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar, Icon } from "antd-mobile";
+import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 import { Menu as MenuIcon } from "@material-ui/icons";
 // import { Menu as MenuIcon } from "grommet-icons";
@@ -7,7 +7,6 @@ import styled from "styled-components";
 
 import logo from "../assets/logo.svg";
 import Logo from "./Logo";
-import { theme } from "../constants/theme";
 
 const BrandLink = styled(Link)`
   display: inline-flex;
