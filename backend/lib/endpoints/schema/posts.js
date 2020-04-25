@@ -1,5 +1,22 @@
 const S = require("fluent-schema");
 
+const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
+const POST_OBJECTIVES = ["request", "offer"];
+const POST_TYPES = [
+  "Business",
+  "Education",
+  "Entertainment",
+  "Funding",
+  "Groceries/Food",
+  "Information",
+  "Legal",
+  "Medical Supplies",
+  "R&D",
+  "Others",
+  "Wellbeing/Mental",
+];
+const VISIBILITY_OPTIONS = ["city", "state", "country", "worldwide"];
+
 const getPostsSchema = {
   querystring: S.object()
     .prop("authorId", S.string())
@@ -9,17 +26,25 @@ const getPostsSchema = {
 
 const createPostSchema = {
   body: S.object()
+    .prop("content", S.string().required())
+    .prop("expiration", S.string().enum(EXPIRATION_OPTIONS))
+    .prop(
+      "externalLinks",
+      S.object()
+        .prop("appStore", S.string().format("url"))
+        .prop("email", S.string().format("email"))
+        .prop("playStore", S.string().format("url"))
+        .prop("website", S.string().format("url")),
+    )
+    .prop("language", S.string())
+    .prop("likes", S.array().items(S.String()).default([]).required())
+    .prop("objective", S.string().enum(POST_OBJECTIVES).required())
     .prop("title", S.string().required())
-    .prop("description", S.string().required())
-    .prop("type", S.array().maxItems(10).items(S.string()).required())
-    .prop("shareWith", S.array().maxItems(10).items(S.string()))
-    .prop("needs", S.array().maxItems(10).items(S.string()).required())
-    .prop("tags", S.array().items(S.string()).required())
-    .prop("language", S.string().required())
-    .prop("website", S.string())
-    .prop("iosUrl", S.string())
-    .prop("androidUrl", S.string())
-    .prop("media", S.string()),
+    .prop(
+      "types",
+      S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
+    )
+    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {
