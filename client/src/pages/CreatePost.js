@@ -25,7 +25,7 @@ const initialState = {
     options: [],
     selected: "",
   },
-  data: {
+  formData: {
     title: "",
     body: "",
     tags: [],
@@ -45,7 +45,7 @@ const errorMsg = {
 
 export default (props) => {
   const [state, setState] = useState(initialState.state);
-  const [data, setData] = useState(initialState.data);
+  const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   const { modal, selected, options } = state;
 
@@ -67,21 +67,21 @@ export default (props) => {
     });
   };
 
-  const handleData = (field) => (e) => {
-    setData({ ...data, [field]: e.target.value });
-    if (errors.includes(field) && data[field]) {
+  const handleFormData = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+    if (errors.includes(field) && formData[field]) {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
     }
   };
 
   const addTag = (tag) => (e) => {
-    const hasTag = data.tags.includes(tag);
+    const hasTag = formData.tags.includes(tag);
     if (hasTag) {
-      const tags = data.tags.filter((t) => t !== tag);
-      setData({ ...data, tags });
+      const tags = formData.tags.filter((t) => t !== tag);
+      setFormData({ ...formData, tags });
     } else {
-      setData({ ...data, tags: [...data.tags, tag] });
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
 
@@ -96,7 +96,7 @@ export default (props) => {
   };
 
   const renderError = (field) => {
-    if (errors.includes(field) && (!data[field] || !data[field].length))
+    if (errors.includes(field) && (!formData[field] || !formData[field].length))
       return errorMsg[field];
   };
 
@@ -124,10 +124,10 @@ export default (props) => {
               <RadioGroup
                 flex={true}
                 padding="1.3rem 0"
-                onChange={handleData(selected)}
+                onChange={handleFormData(selected)}
                 options={options}
-                value={data[selected]}
-                defaultValue={data[selected]}
+                value={formData[selected]}
+                defaultValue={formData[selected]}
               />
             }
             onClose={closeModal}
@@ -137,14 +137,14 @@ export default (props) => {
           <div className="buttons">
             <DownArrowButton
               handleClick={showModal(shareWith)}
-              label={data.shareWith}
+              label={formData.shareWith}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
             />
             <DownArrowButton
               handleClick={showModal(expires)}
-              label={data.expires}
+              label={formData.expires}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
@@ -152,9 +152,9 @@ export default (props) => {
           </div>
           <div className="inline">
             <RadioGroup
-              onChange={handleData("help")}
+              onChange={handleFormData("help")}
               options={helpTypes.options}
-              value={data.help}
+              value={formData.help}
               padding="0"
             />
             <span className="error-box">{renderError("help")}</span>
@@ -164,8 +164,8 @@ export default (props) => {
         <div className="post-content">
           <label>
             <StyledInput
-              onChange={handleData("title")}
-              value={data.title}
+              onChange={handleFormData("title")}
+              value={formData.title}
               placeholder="Title"
               className="title"
             />
@@ -173,8 +173,8 @@ export default (props) => {
           <span className="error-box">{renderError("title")}</span>
           <label>
             <StyledTextArea
-              onChange={handleData("body")}
-              value={data.body}
+              onChange={handleFormData("body")}
+              value={formData.body}
               placeholder="Write a post."
               rows={12}
             />
