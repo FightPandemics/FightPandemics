@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 import { theme } from "../constants/theme";
 const { colors } = theme;
@@ -1308,7 +1307,7 @@ export const TermsConditions = () => {
             </ol>
           </li>
         </ol>
-        <p>
+        <Paragraph>
           <i>
             The Company is an entity offering the transmission, routing or
             providing of connections for digital online communications, between
@@ -1324,20 +1323,20 @@ export const TermsConditions = () => {
             and any linked pages or applications owned and operated by the
             Company.
           </i>
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           <i>
             The Services are operated and provided by Fightpandemics, Inc. 9 E
             Loockerman Street Suite 311, Dover, Delaware (19901) If you have
             questions about this Agreement, please contact us.
           </i>
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           <i>
             Last updated: April 23rd, 2020 · Fight Pandemics is a trademark of
             Fightpandemics, Inc.
           </i>
-        </p>
+        </Paragraph>
       </TextContainer>
     </TermsContainer>
   );
