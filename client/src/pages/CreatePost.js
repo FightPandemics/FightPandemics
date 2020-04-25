@@ -165,6 +165,7 @@ export default (props) => {
               onChange={handleData("title")}
               value={data.title}
               placeholder="Title"
+              className="title"
             />
           </label>
           <span className="error-box">{renderError("title")}</span>
