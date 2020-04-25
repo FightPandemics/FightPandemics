@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import filterOptions from "../assets/data/filterOptions";
 import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
@@ -27,7 +28,7 @@ const initialState = {
   },
   formData: {
     title: "",
-    body: "",
+    description: "",
     tags: [],
     shareWith: shareWith.default.value,
     expires: expires.default.value,
@@ -38,7 +39,7 @@ const initialState = {
 
 const errorMsg = {
   title: "Please include a title for your post.",
-  body: "Please include a body for your post.",
+  description: "Please include a description for your post.",
   help: "Please select a type of help.",
   tags: "Please add at least one tag.",
 };
@@ -100,9 +101,17 @@ export default (props) => {
       return errorMsg[field];
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     populateErrors();
+    if (!errors.length) {
+      // todo: finish integrating api
+      try {
+        const req = await axios.post("/api/posts", formData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -173,13 +182,13 @@ export default (props) => {
           <span className="error-box">{renderError("title")}</span>
           <label>
             <StyledTextArea
-              onChange={handleFormData("body")}
-              value={formData.body}
+              onChange={handleFormData("description")}
+              value={formData.description}
               placeholder="Write a post."
               rows={12}
             />
           </label>
-          <span className="error-box">{renderError("body")}</span>
+          <span className="error-box">{renderError("description")}</span>
         </div>
         <HorizontalLine />
         <div className="tags">
