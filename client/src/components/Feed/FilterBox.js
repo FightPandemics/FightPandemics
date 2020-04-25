@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal, List } from "antd-mobile";
-import CustomList from "../../components/List/CustomList";
 import CustomButton from "../../components/Button/CustomButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
@@ -40,29 +39,33 @@ export default () => {
         animationType="slide-up"
       >
         <FilterAccordion />
-        <CustomList center="true">
-          <List.Item>
-            <CustomButton
-              // for some reason react wants boolean values for styled components
-              inline="true"
-              roundborder="true"
-              large="true"
-              whitebg="true"
-              onClick={handleQuit}
-            >
-              Quit filters
-            </CustomButton>
-            <CustomButton
-              inline="true"
-              roundborder="true"
-              large="true"
-              primary="true"
-              onClick={handleFilterModal(null)}
-            >
-              Apply filters
-            </CustomButton>
-          </List.Item>
-        </CustomList>
+        <div
+          className="confirm-buttons"
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            padding: "2rem 0",
+          }}
+        >
+          <CustomButton
+            inline="true"
+            roundborder="true"
+            large="true"
+            whitebg="true"
+            onClick={handleQuit}
+          >
+            Quit filters
+          </CustomButton>
+          <CustomButton
+            inline="true"
+            roundborder="true"
+            large="true"
+            primary="true"
+            onClick={handleFilterModal(null)}
+          >
+            Apply filters
+          </CustomButton>
+        </div>
       </Modal>
     </FilterBoxWrapper>
   );

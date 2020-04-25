@@ -16,11 +16,15 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
+const StyledIntro = styled.div`
+  margin-top: 4rem;
+`;
+
 const StyledWelcome = styled(Heading)`
-  font-family: "Poppins", sans-serif;
+  font-family: ${theme.typography.font.family.display}, sans-serif;
+  font-size: ${theme.typography.size.large};
   font-style: normal;
   font-weight: 300;
-  font-size: ${theme.typography.size.large};
   line-height: 3rem;
   margin: 2.5rem auto 0;
   text-align: center;
@@ -29,12 +33,15 @@ const StyledWelcome = styled(Heading)`
 const StyledStrapline = styled(StyledWelcome)`
   font-weight: bold;
   margin: 0 auto;
+  margin-bottom: 1.5rem;
 `;
 
 const StyledP = styled.p`
   font-family: ${theme.typography.font.family.display}, sans-serif;
-  font-size: ${theme.typography.size.medium};
+  font-size: ${theme.typography.size.small};
+  color: #000;
   line-height: 2.1rem;
+  letter-spacing: 0.1px;
   margin: 0;
 `;
 
@@ -46,14 +53,13 @@ export const Home = (props) => {
   console.log("render home", { props });
   return (
     <div className="text-center">
-      <StyledWelcome level={4} size="xlarge">
-        Welcome to FightPandemics
-      </StyledWelcome>
-      <StyledStrapline level={2} margin="none">
-        Help us prevent the spread of COVID-19
-      </StyledStrapline>
-      <StyledP>Pandemics are bound to continue to happen.</StyledP>
-      <StyledP>We help you be prepared to stop them.</StyledP>
+      <StyledIntro>
+        <StyledStrapline level={2} margin="none">
+          A place to give and get help
+        </StyledStrapline>
+        <StyledP>Pandemics will continue to happen.</StyledP>
+        <StyledP>We help communities prepare and respond.</StyledP>
+      </StyledIntro>
       <OnboardingContainer style={{ display: "flex", flexWrap: "wrap" }}>
         <FlexChild>
           <ImageButton
@@ -76,10 +82,17 @@ export const Home = (props) => {
           </ImageButton>
         </FlexChild>
       </OnboardingContainer>
-      <p>
-        <Link to="/AirTableCOVID">
-          {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
-          Skip
+      <p style={{ marginTop: "2rem" }}>
+        <Link
+          style={{
+            color: theme.colors.royalBlue,
+            fontSize: theme.typography.size.large,
+            fontFamily: theme.typography.font.family.display,
+            fontWeight: "500",
+          }}
+          to="/feed"
+        >
+          View Community Postings
         </Link>
       </p>
       <p>
