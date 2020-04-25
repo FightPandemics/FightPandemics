@@ -1,0 +1,20 @@
+name: review-delete
+
+on:
+  pull_request:
+    types: [closed]
+    branches-ignore:
+      - 'master'
+
+jobs:
+  destroy_review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - id: get-branch-name-sanitized
+        name: Sanitize branch name
+        shell: bash
+        run: echo "::set-output name=branch::$(echo ${{ steps.get-branch-name.outputs.branch }} | sed 's/\//-/g')"
+      - run: echo ${{ steps.get-branch-name-sanitized.branch }}
