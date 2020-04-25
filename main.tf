@@ -1,13 +1,13 @@
-variable "branch" {}
+variable "env_name" {}
 variable "fp_context" {}
 variable "auth_secret_key" {}
 variable "auth_client_id" {}
 
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
-  image_tag  = var.branch
+  image_tag  = var.env_name
   fp_context = var.fp_context
-  subdomain  = var.branch
+  subdomain  = var.env_name
   backend_env_variables = [
     {
       name  = "PORT"
