@@ -1,8 +1,17 @@
-variable "env_name" {}
-variable "fp_context" {}
-variable "auth_secret_key" {}
-variable "auth_client_id" {}
+variable "env_name" {
+  type = string
+}
+variable "fp_context" {
+  type = string
+}
+variable "auth_secret_key" {
+  type = string
+}
+variable "auth_client_id" {
+  type = string
+}
 variable "mongo_uri" {
+  type = string
   default = "localhost:27017"
 }
 
