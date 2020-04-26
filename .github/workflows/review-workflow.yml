@@ -2,8 +2,8 @@ name: review
 
 on:
   push:
-    branches-ignore:
-      - 'master'
+    branches:
+      - feature/**
 
 jobs:
   build_images:
