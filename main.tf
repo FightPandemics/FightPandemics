@@ -35,7 +35,7 @@ module "main" {
     },
     {
       name  = "AUTH_DOMAIN"
-      value = "fightingpandemics.eu.auth0.com"
+      value = "fightpandemics.eu.auth0.com"
     },
     {
       name  = "AUTH_CLIENT_ID"
