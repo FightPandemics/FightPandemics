@@ -6,11 +6,14 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
+import { ReactComponent as FeedbackIcon } from "assets/icons/mail.svg";
 import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+
 import { theme, mq } from "../constants/theme";
 import { Menu, Dropdown } from "antd";
+
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -49,6 +52,13 @@ const NavLinks = styled.div`
   align-self: flex-end;
   padding-top: 1rem;
   white-space: nowrap;
+  padding-top: 2rem;
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
   ul {
     list-style-type: none;
     display: flex;
@@ -71,6 +81,7 @@ const NavLinks = styled.div`
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
+      padding: 0 1rem;
       a:not(.registerLink) {
         color: ${colors.darkerGray};
         text-decoration: none;
@@ -99,7 +110,13 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
+export default ({
+  authLoading,
+  onMenuClick,
+  isAuthenticated,
+  user,
+  onFeedbackIconClick,
+}) => {
   const menu = (
     <Menu>
       <Menu.Item>
@@ -167,6 +184,11 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
             <Link to="/feed">
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
             </Link>
+            <li>
+              <button onClick={onFeedbackIconClick}>
+                <FeedbackIcon />
+              </button>
+            </li>
           </>
         )}
       </>

@@ -1,19 +1,40 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Typography } from "antd";
-
-import React, { useState } from "react";
+import { Alert, Typography } from "antd";
+import axios from "axios";
+import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Header from "components/Header";
-import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
+import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
+import Footnote from "components/Footnote";
+import Header from "components/Header";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
+import RadioGroup from "components/Feedback/RadioGroup";
+import RadioModal from "components/Feedback/RadioModal";
+import RatingModal from "components/Feedback/RatingModal";
+import FormInput from "components/Input/FormInput";
+import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
+import ThanksModal from "components/Feedback/ThanksModal";
+import withLabel from "components/Input/with-label";
 import { theme } from "constants/theme";
+import {
+  TOGGLE_STATE,
+  SET_VALUE,
+  FEEDBACK_FORM_SUBMIT,
+  FEEDBACK_FORM_SUBMIT_ERROR,
+} from "hooks/actions/feedbackActions";
+import {
+  feedbackReducer,
+  feedbackFormReducer,
+  initialState,
+} from "hooks/reducers/feedbackReducers";
+import Logo from "components/Logo";
+import logo from "assets/logo.svg";
 
-const { royalBlue, tropicalBlue, white } = theme.colors;
+const { royalBlue, tropicalBlue, white, orangeRed } = theme.colors;
 
 const drawerStyles = {
   position: "relative",
@@ -73,10 +94,12 @@ const NavItem = styled(List.Item)`
       color: ${white};
       cursor: pointer;
       font-family: "Poppins", sans-serif;
-      font-size: 2.4rem;
-      font-weight: 600;
+      font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
+      font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
       line-height: 6rem;
       padding: 0;
+      margin: ${(props) =>
+        typeof props.margin != undefined ? props.margin : "inherit"};
     }
   }
 
@@ -116,7 +139,7 @@ const Space = styled.div`
   height: ${(props) => props.height ?? "1rem"};
 `;
 
-const CloseNav = styled(Button).attrs((props) => ({
+const CloseNav = styled(Button).attrs(() => ({
   inline: true,
   icon: "cross",
   size: "lg",
@@ -146,6 +169,13 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
+const ErrorAlert = styled(Alert)`
+  background-color: ${orangeRed};
+  .ant-alert-message {
+    color: ${white};
+  }
+`;
+
 const BriefLink = styled(Link)`
   font-size: 1.8rem;
   font-weight: normal;
@@ -167,6 +197,19 @@ const AvatarInitials = styled(Typography.Text)`
   font-style: normal;
 `;
 
+const TEXT_FEEDBACK = [
+  {
+    stateKey: "mostValuableFeature",
+    label: "Which features are the most valuable to you?",
+  },
+  {
+    stateKey: "whatWouldChange",
+    label:
+      "If you could change one thing about FightPandemics, what would it be?",
+  },
+  { stateKey: "generalFeedback", label: "Any other feedback for us?" },
+];
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
@@ -185,8 +228,217 @@ const NavigationLayout = (props) => {
   const displayFullName = (user) =>
     user ? `${user?.firstName} ${user?.lastName}` : "";
 
+  const [changeValue, setChangeValue] = useState(false);
+  const [feedbackState, feedbackDispatch] = useReducer(
+    feedbackReducer,
+    initialState.feedbackReducer,
+  );
+
+  const [feedbackFormState, feedbackFormDispatch] = useReducer(
+    feedbackFormReducer,
+    initialState.feedbackFormReducer,
+  );
+
+  const {
+    ratingModal,
+    textFeedbackModal,
+    radioModal,
+    thanksModal,
+    rating,
+    mostValuableFeature,
+    whatWouldChange,
+    generalFeedback,
+    age,
+    covidImpact,
+  } = feedbackState;
+
+  const dispatchAction = (type, key, value) => {
+    feedbackDispatch({ type, key, value });
+  };
+
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
+  };
+
+  const toggleModal = (modalName) => {
+    dispatchAction(TOGGLE_STATE, modalName);
+  };
+
+  const closeRatingModal = (ratingValue) => {
+    if (drawerOpened) {
+      toggleDrawer();
+    }
+    dispatchAction(SET_VALUE, "rating", ratingValue);
+    toggleModal("ratingModal");
+    toggleModal("textFeedbackModal");
+  };
+
+  const closeTextFeedbackModal = () => {
+    toggleModal("textFeedbackModal");
+    toggleModal("radioModal");
+  };
+
+  const closeRadioModal = () => {
+    submitFeedbackForm();
+    toggleModal("thanksModal");
+    toggleModal("radioModal");
+    if (feedbackFormState.error === "") {
+    }
+  };
+
+  const submitFeedbackForm = async () => {
+    feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
+    try {
+      await axios.post("/api/feedback", {
+        rating: rating,
+        age: age,
+        userId: 5,
+        covidImpact: covidImpact,
+        generalFeedback: generalFeedback,
+        mostValuableFeature: mostValuableFeature,
+        whatWouldChange: whatWouldChange,
+      });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      feedbackFormDispatch({
+        type: FEEDBACK_FORM_SUBMIT_ERROR,
+        error: `Could not submit feedback, reason: ${message}`,
+      });
+    }
+  };
+
+  const renderThanksModal = () => {
+    return (
+      <ThanksModal
+        onClose={() => dispatchAction(TOGGLE_STATE, "thanksModal")}
+        visible={thanksModal}
+        transparent
+      >
+        <h2 className="title">Thank you!</h2>
+        <p>
+          Your input means a lot and helps us help you and others during and
+          after the COVID-19 pandemic.
+        </p>
+        <Logo src={logo} alt="FightPandemics logo" />
+      </ThanksModal>
+    );
+  };
+
+  const renderRadioModal = () => {
+    const inputLabelsText = [
+      {
+        stateKey: "age",
+        label: "What is your age?",
+      },
+    ];
+
+    const radioButtonOptions = [
+      {
+        stateKey: "covidImpact",
+        value: "I go to work/school normally",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I am healthy but in a stay-at-home quarantine",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I have mild symptoms but haven't been tested",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I am diagnosed with Covid-19",
+      },
+    ];
+
+    const handleChange = (event) => {
+      setChangeValue(event.target.value);
+    };
+
+    const RadioGroupWithLabel = withLabel(() => (
+      <RadioGroup
+        onChange={handleChange}
+        options={radioButtonOptions}
+        value={changeValue}
+        padding="1rem 1rem"
+      />
+    ));
+    return (
+      <RadioModal
+        maskClosable={true}
+        closable={true}
+        visible={radioModal}
+        onClose={() => closeRadioModal()}
+        transparent
+      >
+        <h2 className="title">We are almost done!</h2>
+        {inputLabelsText.map((label, index) => (
+          <>
+            <FormInput
+              key={index}
+              label={label.label}
+              value={label.stateKey}
+              onChange={dispatchAction}
+            />
+            <RadioGroupWithLabel label="How has COVID-19 impacted you?" />
+          </>
+        ))}
+        <FeedbackSubmitButton
+          title="Submit Feedback"
+          onClick={closeRadioModal}
+        />
+      </RadioModal>
+    );
+  };
+
+  const renderTextFeedbackModal = () => {
+    return (
+      <TextFeedbackModal
+        maskClosable={true}
+        closable={true}
+        visible={textFeedbackModal}
+        onClose={closeTextFeedbackModal}
+        transparent
+      >
+        <h2 className="title">
+          Thank you for being an early user of FightPandemics!
+        </h2>
+        {TEXT_FEEDBACK.map(({ label, stateKey }) => (
+          <FormInput
+            key={stateKey}
+            inputTitle={label}
+            onChange={dispatchAction}
+          />
+        ))}
+        <FeedbackSubmitButton title="Next" onClick={closeTextFeedbackModal} />
+      </TextFeedbackModal>
+    );
+  };
+
+  const renderRatingModal = () => {
+    const ratingScale = ["1", "2", "3", "4", "5"];
+    return (
+      <RatingModal
+        maskClosable={true}
+        closable={false}
+        visible={ratingModal}
+        transparent
+      >
+        <h3 className="title">How well does FightPandemics meet your needs?</h3>
+        <div className="rectangle">
+          {ratingScale.map((rating, index) => (
+            <div key={index} onClick={() => closeRatingModal(rating)}>
+              {rating}
+            </div>
+          ))}
+        </div>
+        <div className="scale-text">
+          <div>Poorly</div>
+          <div className="spacer"></div>
+          <div>Very well</div>
+        </div>
+      </RatingModal>
+    );
   };
 
   const AuthenticatedMenu = () => (
@@ -247,6 +499,14 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/about-us">About Us</Link>
       </NavItem>
+      <NavItem
+        size={"small"}
+        margin={"8rem 0 0"}
+        onClick={() => dispatchAction(TOGGLE_STATE, "ratingModal")}
+      >
+        Feedback
+      </NavItem>
+      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
     </>
   );
 
@@ -284,12 +544,26 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
+            onFeedbackIconClick={() =>
+              dispatchAction(TOGGLE_STATE, "ratingModal")
+            }
           />
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
           <Main>
             <props.component {...props} />
+            {renderRatingModal()}
+            {renderTextFeedbackModal()}
+            {renderRadioModal()}
+            {renderThanksModal()}
+            {feedbackFormState.error && (
+              <ErrorAlert
+                message={feedbackFormState.error}
+                type="error"
+                closable={true}
+              />
+            )}
           </Main>
           <Footnote />
           <CookieAlert />
