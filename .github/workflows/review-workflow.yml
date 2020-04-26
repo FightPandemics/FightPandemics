@@ -62,16 +62,28 @@ jobs:
           EOF
       - run: cat backend.tf
       - run: cat main.tf
-      - uses: kciter/terraform-apply-for-aws-action@v3
+      - name: 'Terraform Init'
+        uses: hashicorp/terraform-github-actions@master
         with:
-          access_key_id: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
-          secret_access_key: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
-          region: us-east-1
-          variables: >
-            env_name=${{ steps.get-branch-name-sanitized.outputs.branch }},
-            fp_context=review,
-            auth_secret_key=${{ secrets.AUTH_SECRET_KEY }},
-            auth_client_id=${{ secrets.AUTH_CLIENT_ID }}
+          tf_actions_version: latest
+          tf_actions_subcommand: 'init'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+      - name: 'Terraform Apply'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: latest
+          tf_actions_subcommand: 'apply'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          TF_VAR_env_name: ${{ steps.get-branch-name-sanitized.outputs.branch }}
+          TF_VAR_fp_context: review
+          TF_VAR_auth_secret_key: ${{ secrets.AUTH_SECRET_KEY }}
+          TF_VAR_auth_client_id: ${{ secrets.AUTH_CLIENT_ID }}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name-sanitized.outputs.branch }} --force-new-deployment
