@@ -31,6 +31,8 @@ const authPlugin = async (app) => {
   app.decorate("authenticate", async (req, reply) => {
     try {
       await req.jwtVerify();
+      // user.sub from Auth0 JWT corresponds to User._id in our db
+      req.userId = req.user.sub;
     } catch (err) {
       reply.send(err);
     }

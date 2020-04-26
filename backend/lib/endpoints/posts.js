@@ -58,8 +58,11 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createPostSchema },
     async (req) => {
-      req.body.authorId = req.user.sub;
-      return new Post(req.body).save();
+      const postData = {
+        ...req.body,
+        authorId: req.userId,
+      };
+      return new Post(postData).save();
     },
   );
 
@@ -108,7 +111,7 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: deletePostSchema },
     async (req) => {
       const { postId } = req.params;
-      const authorId = req.user.sub;
+      const authorId = req.userId;
       const deletedPost = await Post.findByIdAndRemove({
         _id: postId,
         authorId,
@@ -132,7 +135,7 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: updatePostSchema },
     async (req, reply) => {
       const { postId } = req.params;
-      const authorId = req.user.sub;
+      const authorId = req.userId;
       const post = await Post.findOne({
         __id: postId,
         authorId,
@@ -153,10 +156,10 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
-      const { body, params, user } = req;
+      const { body, params, userId } = req;
       const { parentId } = body;
       const { postId } = params;
-      const authorId = user.sub;
+      const authorId = userId;
       if (parentId) {
         const parentPost = await Post.findById(parentId);
         if (!parentPost || parentPost.postId !== postId) {
@@ -176,11 +179,11 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const { body, params, user } = req;
+      const { body, params, userId } = req;
       const { comment } = body;
       const { commentId, postId } = params;
       const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, authorId: user.sub, postId },
+        { _id: commentId, authorId: userId, postId },
         { comment },
         { new: true },
       );
@@ -195,11 +198,11 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { params, user } = req;
+      const { params, userId } = req;
       const { commentId, postId } = params;
       const { ok, deletedCount } = await Comment.deleteMany({
         $or: [
-          { _id: commentId, authorId: user.sub, postId },
+          { _id: commentId, authorId: userId, postId },
           { parentId: commentId, postId },
         ],
       });
@@ -214,8 +217,10 @@ async function routes(app) {
     "/:postId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
-      const { postId, user } = req.params;
-      const userId = user.sub;
+      const { postId, userId } = req.params;
+      if (userId !== req.userId) {
+        return new httpErrors.Forbidden();
+      }
       const updatedPost = await Post.findOneAndUpdate(
         { _id: postId, likes: { $ne: userId } },
         { $inc: { likesCount: 1 }, $push: { likes: userId } },
@@ -236,8 +241,10 @@ async function routes(app) {
     "/:postId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
-      const { postId, user } = req.params;
-      const userId = user.sub;
+      const { postId, userId } = req.params;
+      if (userId !== req.userId) {
+        return new httpErrors.Forbidden();
+      }
       const updatedPost = await Post.findOneAndUpdate(
         { _id: postId, likes: userId },
         { $inc: { likesCount: -1 }, $pull: { likes: userId } },
@@ -258,8 +265,10 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, user } = req.params;
-      const userId = user.sub;
+      const { commentId, postId, userId } = req.params;
+      if (userId !== req.userId) {
+        return new httpErrors.Forbidden();
+      }
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: { $ne: userId }, postId },
         { $inc: { likesCount: 1 }, $push: { likes: userId } },
@@ -280,8 +289,10 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, user } = req.params;
-      const userId = user.sub;
+      const {
+        params: { commentId, postId },
+        userId,
+      } = req;
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: userId, postId },
         { $inc: { likesCount: -1 }, $pull: { likes: userId } },
