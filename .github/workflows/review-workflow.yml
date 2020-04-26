@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - feature/**
+    paths:
+      - backend/**
+      - client/**
+      - geo-service/**
 
 jobs:
   build_images:

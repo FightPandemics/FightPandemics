@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - backend/**
+      - client/**
+      - geo-service/**
 
 jobs:
   build_images:
