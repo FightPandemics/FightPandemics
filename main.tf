@@ -2,6 +2,9 @@ variable "env_name" {}
 variable "fp_context" {}
 variable "auth_secret_key" {}
 variable "auth_client_id" {}
+variable "mongo_uri" {
+  default = "localhost:27017"
+}
 
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
@@ -15,7 +18,7 @@ module "main" {
     },
     {
       name  = "MONGO_URI"
-      value = "localhost:27017"
+      value = var.mongo_uri
     },
     {
       name  = "GEO_SERVICE_URL"
