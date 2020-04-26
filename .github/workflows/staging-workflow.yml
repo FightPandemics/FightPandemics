@@ -8,6 +8,7 @@ on:
       - backend/**
       - client/**
       - geo-service/**
+      - main.tf
 
 jobs:
   build_images:
