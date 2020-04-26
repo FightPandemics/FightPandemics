@@ -91,19 +91,11 @@ additional properties not defined in the schema are passed in through the reques
 
 ### Review branches
 
-Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS.
-You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the
-build successfully completes, you can access your built app at `<branch_name>.fightpandemics.xyz`, where `<branch_name>`
-is the *sanitized* branch name of your feature branch (i.e. if the branch name has a `/` in it, it will be converted to
-a `-`, e.g. `feature/hot-potato` will be converted to `feature-hot-potato`). Note that it may take a few minutes for the
-app to be accessible, or for changes to be reflected, since it takes time for AWS to spin up the Docker containers.
+Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS. Note that in order for a build to run, the branch name must have the `feature/` prefix. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can access your built app at `<branch_name>.fightpandemics.xyz`, where `<branch_name>` is the *sanitized* branch name of your feature branch (i.e. if the branch name has a `/` in it, it will be converted to a `-`, e.g. `feature/hot-potato` will be converted to `feature-hot-potato`). Note that it may take a few minutes for the app to be accessible, or for changes to be reflected, since it takes time for AWS to spin up the Docker containers.
 
 ### Staging
 
-When a pull request is merged to master, it will automatically be deployed to the staging environment. You can view the
-build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully
-completes, wait a few minutes for the changes to be reflected, and then access the staging app at
-http://staging.fightpandemics.work.
+When a pull request is merged to master, it will automatically be deployed to the staging environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the staging app at http://staging.fightpandemics.work.
 
 ### Production
 
