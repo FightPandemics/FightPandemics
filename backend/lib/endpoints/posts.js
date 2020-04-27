@@ -102,10 +102,18 @@ async function routes(app) {
   });
 
   app.get("/filters", { schema: getPostByFiltersSchema }, async (req) => {
-    const { helpType, needs } = req.query;
+    const { helpType, needs, fromWhom } = req.query;
     // todo: setup pagination to lazy load 10 posts
     // sort posts based on nearest location
-    return Post.aggregate([{ $match: { helpType, needs: { $in: needs } } }]);
+    return Post.aggregate([
+      {
+        $match: {
+          helpType,
+          needs: { $in: needs },
+          fromWhom: { $in: fromWhom },
+        },
+      },
+    ]);
   });
 
   app.delete(
