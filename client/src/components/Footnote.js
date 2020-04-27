@@ -7,6 +7,9 @@ import styled from "styled-components";
 const { colors } = theme;
 
 const StyledFooter = styled.footer`
+@media screen and (max-width: 375px) {
+  display: none;
+}
   position: absolute;
   left: 0;
   bottom: 0;
