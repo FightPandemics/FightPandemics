@@ -105,13 +105,13 @@ async function routes(app) {
   app.get("/filters", { schema: getPostByFiltersSchema }, async (req) => {
     const { helpType, needs } = req.query;
     const aggregates = [];
-    const matchNeeds = needs.map((need) => {
-      needs: need;
-    });
-    aggregates.push({ $unwind: "$needs" }, { $match: { $or: matchNeeds } });
+
+    aggregates.push(
+      { $match: { helpType } },
+      { $match: { needs: { $in: needs } } },
+    );
 
     return Post.aggregate(aggregates);
-    // return Post.find({ helpType });
   });
 
   app.delete(
