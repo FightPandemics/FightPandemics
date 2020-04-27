@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-const CommentSchema = require("./Comment");
+const CommentSchema = require("../Comment");
 
 const PostSchema = new Schema(
   {

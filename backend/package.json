@@ -31,6 +31,7 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "datejs": "1.0.0-rc3",
     "dotenv": "^8.2.0",
     "fastify": "^2.13.0",
     "fastify-authz-jwks": "^1.0.11",

@@ -23,10 +23,8 @@ const UserSchema = new Schema({
     required: false,
     type: String,
   },
-  location: {
-    ref: "Location",
-    type: Schema.Types.ObjectId,
-  },
+  location: Object,
+  type: String,
 });
 
 module.exports = UserSchema;
