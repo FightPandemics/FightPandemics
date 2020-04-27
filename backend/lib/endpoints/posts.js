@@ -58,11 +58,10 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createPostSchema },
     async (req) => {
-      const postData = {
+      return new Post({
         ...req.body,
         authorId: req.userId,
-      };
-      return new Post(postData).save();
+      }).save();
     },
   );
 
@@ -110,42 +109,48 @@ async function routes(app) {
     "/:postId",
     { preValidation: [app.authenticate], schema: deletePostSchema },
     async (req) => {
-      const { postId } = req.params;
-      const authorId = req.userId;
-      const deletedPost = await Post.findByIdAndRemove({
+      const { params, userId } = req;
+      const postId = mongoose.Types.ObjectId(params.postId);
+      const { deletedCount, ok: deletePostOk } = await Post.deleteOne({
         _id: postId,
-        authorId,
+        authorId: userId,
       });
-      if (!deletedPost) {
+      if (deletePostOk !== 1) {
+        return new httpErrors.InternalServerError();
+      }
+      if (deletedCount !== 1) {
         return new httpErrors.BadRequest();
       }
       const {
         deletedCount: deletedCommentsCount,
-        ok,
+        ok: deleteCommentsOk,
       } = await Comment.deleteMany({ postId });
-      if (ok !== 1) {
+      if (deleteCommentsOk !== 1) {
         app.log.error("failed removing comments for deleted post", { postId });
       }
-      return { deletedCommentsCount, deletedPost, success: true };
+      return { deletedCommentsCount, deletedCount, success: true };
     },
   );
 
   app.patch(
     "/:postId",
     { preValidation: [app.authenticate], schema: updatePostSchema },
-    async (req, reply) => {
-      const { postId } = req.params;
-      const authorId = req.userId;
-      const post = await Post.findOne({
-        __id: postId,
-        authorId,
-      });
+    async (req) => {
+      const {
+        body,
+        params: { postId },
+        userId,
+      } = req;
+      const post = await Post.findById(postId);
       if (post === null) {
-        return reply.send(new httpErrors.NotFound());
+        return new httpErrors.NotFound();
       }
-      Object.keys(req.body).forEach((key) => {
-        if (post[key] && post[key] !== req.body[key]) {
-          post[key] = req.body[key];
+      if (post.authorId !== userId) {
+        return new httpErrors.Forbidden();
+      }
+      Object.keys(body).forEach((key) => {
+        if (post[key] && post[key] !== body[key]) {
+          post[key] = body[key];
         }
       });
       return post.save();

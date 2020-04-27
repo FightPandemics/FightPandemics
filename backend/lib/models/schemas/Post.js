@@ -6,9 +6,9 @@ const PostSchema = new Schema(
   {
     androidUrl: String,
     authorId: {
-      ref: "users",
+      ref: "User",
       required: true,
-      type: Schema.Types.ObjectId,
+      type: String,
     },
     comments: {
       type: [CommentSchema],
@@ -23,7 +23,7 @@ const PostSchema = new Schema(
     iosUrl: String,
     language: [String],
     likes: {
-      type: [Schema.Types.ObjectId],
+      type: [String],
     },
     likesCount: {
       type: Number,
