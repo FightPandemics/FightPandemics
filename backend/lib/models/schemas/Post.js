@@ -20,6 +20,11 @@ const PostSchema = new Schema(
       required: true,
       type: String,
     },
+    fromWhom: {
+      type: [String],
+      // required: true,
+    },
+    helpType: String,
     iosUrl: String,
     language: [String],
     likes: {
@@ -28,14 +33,9 @@ const PostSchema = new Schema(
     likesCount: {
       type: Number,
     },
-    looking: {
-      type: [String],
-      // required: true,
-    },
     media: String,
     needs: {
       type: [String],
-      // required: true,
     },
     postEmail: String,
     shareWith: {
@@ -46,14 +46,9 @@ const PostSchema = new Schema(
       type: Boolean,
       // required: true,
     },
-    tags: [String],
     title: {
       required: true,
       type: String,
-    },
-    type: {
-      type: [String],
-      // required: true,
     },
     website: String,
   },

@@ -11,15 +11,8 @@ const createPostSchema = {
   body: S.object()
     .prop("title", S.string().required())
     .prop("description", S.string().required())
-    .prop("type", S.array().maxItems(10).items(S.string()).required())
-    .prop("shareWith", S.array().maxItems(10).items(S.string()))
-    .prop("needs", S.array().maxItems(10).items(S.string()).required())
-    .prop("tags", S.array().items(S.string()).required())
-    .prop("language", S.string().required())
-    .prop("website", S.string())
-    .prop("iosUrl", S.string())
-    .prop("androidUrl", S.string())
-    .prop("media", S.string()),
+    .prop("helpType", S.string())
+    .prop("needs", S.array().maxItems(10).items(S.string()).required()),
 };
 
 const getPostByIdSchema = {
@@ -31,17 +24,10 @@ const getPostByIdSchema = {
 
 const updatePostSchema = {
   body: S.object()
-    .prop("title", S.string())
-    .prop("description", S.string())
-    .prop("type", S.array().maxItems(10).items(S.string()))
-    .prop("shareWith", S.array().maxItems(10).items(S.string()))
-    .prop("needs", S.array().maxItems(10).items(S.string()))
-    .prop("tags", S.array().items(S.string()))
-    .prop("language", S.string())
-    .prop("website", S.string())
-    .prop("iosUrl", S.string())
-    .prop("androidUrl", S.string())
-    .prop("media", S.string()),
+    .prop("title", S.string().required())
+    .prop("description", S.string().required())
+    .prop("helpType", S.string())
+    .prop("needs", S.array().maxItems(10).items(S.string()).required()),
   params: S.object().prop("postId", S.string().required()),
 };
 

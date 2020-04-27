@@ -16,7 +16,7 @@ export default {
       "Others",
     ],
   },
-  type: {
+  needs: {
     label: "Type",
     className: "filter-3",
     options: [
@@ -34,7 +34,7 @@ export default {
       "Other",
     ],
   },
-  lookingFor: {
+  helpType: {
     label: "Need or give help",
     className: "filter-4",
     options: ["Need Help", "Give Help"],
