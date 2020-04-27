@@ -9,7 +9,7 @@ async function routes(app) {
   const User = app.mongo.model("User");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const result = await User.findById(req.user.sub);
+    const result = await User.findById(req.userId);
     if (result === null) {
       return new httpErrors.NotFound();
     }

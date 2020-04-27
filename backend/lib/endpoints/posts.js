@@ -2,6 +2,7 @@ const httpErrors = require("http-errors");
 const mongoose = require("mongoose");
 
 const {
+  addCommentSchema,
   getPostsSchema,
   getPostByIdSchema,
   createPostSchema,
@@ -11,7 +12,6 @@ const {
   likeUnlikePostSchema,
   updateCommentSchema,
   updatePostSchema,
-  addCommentSchema,
 } = require("./schema/posts");
 
 /*
@@ -164,19 +164,17 @@ async function routes(app) {
       const { body, params, userId } = req;
       const { parentId } = body;
       const { postId } = params;
-      const authorId = userId;
       if (parentId) {
         const parentPost = await Post.findById(parentId);
         if (!parentPost || parentPost.postId !== postId) {
           return new httpErrors.BadRequest();
         }
       }
-      const commentProps = {
+      return new Comment({
         ...body,
-        authorId,
+        authorId: userId,
         postId,
-      };
-      return new Comment(commentProps).save();
+      }).save();
     },
   );
 
