@@ -57,10 +57,11 @@ async function routes(app) {
 
   app.post(
     "/",
-    { preValidation: [app.authenticate], schema: createPostSchema },
+    { schema: createPostSchema },
+    // { preValidation: [app.authenticate], schema: createPostSchema },
     async (req) => {
       // todo add logged in user from jwt
-      req.body.authorId = ""; // req.user.id;
+      // req.body.authorId = ""; // req.user.id;
       return new Post(req.body).save();
     },
   );

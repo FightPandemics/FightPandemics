@@ -7,7 +7,7 @@ const PostSchema = new Schema(
     androidUrl: String,
     authorId: {
       ref: "users",
-      required: true,
+      // required: true,
       type: Schema.Types.ObjectId,
     },
     comments: {
