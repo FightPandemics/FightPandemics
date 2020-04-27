@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "../components/Picture/ProfilePic";
 import LinkedinIcon from "../components/Icon/Linkedin-blue";
@@ -8,10 +8,12 @@ import Edit from "../components/Icon/edit";
 import Title from "../components/Title/Title";
 import styled from "styled-components";
 import { getInitials } from "../utils/userInfo";
+import { Link } from "react-router-dom";
 import fakePosts from "../assets/data/fakePosts"; // feed
 import Posts from "../components/Feed/Posts"; // feed
 import CreatPostIcon from "../components/Icon/create-post"; // feed
 import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
+import ButtonModal from "../components/Feed/ButtonModal"; // feed
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
@@ -97,6 +99,7 @@ export const Profile = (props) => {
   const needHelp = true;
   const Item = Popover.Item;
 
+  const [modal, setModal] = useState(false);
   const popover = (props) => {
     return (
       <Popover
@@ -134,7 +137,27 @@ export const Profile = (props) => {
         <div style={{ margin: "0 2.5rem" }}>
           <FeedWrapper>
             <Posts filteredPosts={fakePosts} />
-            <CreatPostIcon className="create-post" />
+            <CreatPostIcon
+              className="create-post"
+              onClick={() => setModal(!modal)}
+            />
+            <ButtonModal
+              onClose={() => setModal(false)}
+              maskClosable={true}
+              closable={false}
+              visible={modal}
+              transparent
+            >
+              <h2 className="title">Continue Posting As</h2>
+              <div className="links">
+                <button className="primary">
+                  <Link to="/create-post">Individual</Link>
+                </button>
+                <button className="outline">
+                  <Link to="/create-post">Organization</Link>
+                </button>
+              </div>
+            </ButtonModal>
           </FeedWrapper>
         </div>
       </>
