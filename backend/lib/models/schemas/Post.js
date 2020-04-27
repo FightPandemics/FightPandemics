@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, Types } = require("mongoose");
 
 const CommentSchema = require("./Comment");
 
@@ -8,7 +8,7 @@ const PostSchema = new Schema(
     authorId: {
       ref: "User",
       required: true,
-      type: String,
+      type: Schema.Types.ObjectId,
     },
     comments: {
       type: [CommentSchema],
@@ -23,7 +23,7 @@ const PostSchema = new Schema(
     iosUrl: String,
     language: [String],
     likes: {
-      type: [String],
+      type: [Types.ObjectId],
     },
     likesCount: {
       type: Number,

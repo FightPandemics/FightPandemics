@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, Types } = require("mongoose");
 
 const OrganizationSchema = new Schema({
   address: {
@@ -46,7 +46,7 @@ const OrganizationSchema = new Schema({
   ownerId: {
     ref: "User",
     required: true,
-    type: String,
+    type: Types.ObjectId,
   },
   twitterUrl: {
     type: String,

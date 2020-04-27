@@ -25,14 +25,15 @@ async function routes(app) {
     "/:userId",
     { preValidation: [app.authenticate], schema: getUserByIdSchema },
     async (req) => {
-      const result = await User.findById(req.params.userId);
-      if (result === null) {
+      const user = await User.findById(req.params.userId);
+      if (user === null) {
         return new httpErrors.NotFound();
       }
+      const { firstName, lastName, _id: id } = user;
       return {
-        firstName: result.firstName,
-        id: result._id,
-        lastName: result.firstName,
+        firstName,
+        id,
+        lastName,
       };
     },
   );

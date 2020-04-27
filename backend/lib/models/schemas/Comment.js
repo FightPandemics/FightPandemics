@@ -5,14 +5,14 @@ const CommentSchema = new Schema(
     authorId: {
       ref: "User",
       required: true,
-      type: String,
+      type: Schema.Types.ObjectId,
     },
     comment: {
       required: true,
       type: String,
     },
     likes: {
-      type: [String],
+      type: [Schema.Types.ObjectId],
     },
     likesCount: {
       type: Number,

@@ -1,6 +1,7 @@
 const fp = require("fastify-plugin");
 const fastifyJwt = require("fastify-jwt");
 const fastifySecretProvider = require("fastify-authz-jwks");
+const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 
 const {
@@ -14,6 +15,11 @@ const cache = new NodeCache({
   stdTTL: ttlSeconds,
   useClones: false,
 });
+
+// user.sub from Auth0 JWT corresponds to User._id in our db + identity provider prefix
+const getMongoUserIdfromAuth0Id = (jwtSubClaim) => {
+  return mongoose.Types.ObjectId(jwtSubClaim.split("|")[1]);
+};
 
 const authPlugin = async (app) => {
   app.register(fastifyJwt, {
@@ -31,8 +37,7 @@ const authPlugin = async (app) => {
   app.decorate("authenticate", async (req, reply) => {
     try {
       await req.jwtVerify();
-      // user.sub from Auth0 JWT corresponds to User._id in our db
-      req.userId = req.user.sub;
+      req.userId = getMongoUserIdfromAuth0Id(req.user.sub);
     } catch (err) {
       reply.send(err);
     }

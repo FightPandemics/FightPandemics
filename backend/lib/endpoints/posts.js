@@ -145,7 +145,7 @@ async function routes(app) {
       if (post === null) {
         return new httpErrors.NotFound();
       }
-      if (post.authorId !== userId) {
+      if (!post.authorId.equals(userId)) {
         return new httpErrors.Forbidden();
       }
       Object.keys(body).forEach((key) => {
@@ -221,7 +221,7 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
       const { postId, userId } = req.params;
-      if (userId !== req.userId) {
+      if (!req.userId.equals(userId)) {
         return new httpErrors.Forbidden();
       }
       const updatedPost = await Post.findOneAndUpdate(
@@ -245,7 +245,7 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
     async (req) => {
       const { postId, userId } = req.params;
-      if (userId !== req.userId) {
+      if (!req.userId.equals(userId)) {
         return new httpErrors.Forbidden();
       }
       const updatedPost = await Post.findOneAndUpdate(
