@@ -57,11 +57,10 @@ async function routes(app) {
 
   app.post(
     "/",
-    { schema: createPostSchema },
-    // { preValidation: [app.authenticate], schema: createPostSchema },
+    { preValidation: [app.authenticate], schema: createPostSchema },
     async (req) => {
       // todo add logged in user from jwt
-      // req.body.authorId = ""; // req.user.id;
+      req.body.authorId = ""; // req.user.id;
       return new Post(req.body).save();
     },
   );
@@ -110,7 +109,8 @@ async function routes(app) {
       { $match: { helpType } },
       { $match: { needs: { $in: needs } } },
     );
-
+    // todo: setup pagination to lazy load 10 posts
+    // sort posts based on nearest location
     return Post.aggregate(aggregates);
   });
 
