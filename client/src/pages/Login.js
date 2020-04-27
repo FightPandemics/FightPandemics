@@ -1,12 +1,15 @@
 import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { validateEmail } from "../utils/common.js";
 import { PASSWORD_MIN_LENGTH } from "../config";
-import { loginWithEmail, signup } from "../actions/authActions";
+import {
+  authWithSocialProvider,
+  loginWithEmail,
+  signup,
+} from "../actions/authActions";
 import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
@@ -16,6 +19,8 @@ import {
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
+import { validateEmail } from "../utils/common.js";
+import { useQuery } from "../utils/hooks.js";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -63,9 +68,16 @@ const SocialButton = styled(Button).attrs((props) => ({
 
 export default ({ isLoginForm }) => {
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const queryParams = useQuery();
+  const code = queryParams.get("code");
+  const state = queryParams.get("state");
+  useEffect(() => {
+    if (code && state) {
+      dispatch(authWithSocialProvider({ code, state }));
+    }
+  }, [code, state]);
 
   const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -101,7 +113,9 @@ export default ({ isLoginForm }) => {
     dispatch(signup({ email, password }));
   };
 
-  const loginWithConnection = (connection) => {};
+  const handleSocialLogin = (provider) => {
+    window.location.href = `/api/auth/oauth/${provider}`;
+  };
 
   return (
     <div className="text-center">
@@ -160,28 +174,28 @@ export default ({ isLoginForm }) => {
         <SocialButton
           style={StyleSocialIcon}
           icon={<FacebookIcon />}
-          onClick={() => loginWithConnection("fb")}
+          onClick={() => handleSocialLogin("facebook")}
         >
           Facebook
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<GmailIcon />}
-          onClick={() => loginWithConnection("gmail")}
+          onClick={() => handleSocialLogin("google")}
         >
           Gmail
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<TwitterIcon />}
-          onClick={() => loginWithConnection("twitter")}
+          onClick={() => handleSocialLogin("twitter")}
         >
           Twitter
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<LinkedinIcon />}
-          onClick={() => loginWithConnection("linkedin")}
+          onClick={() => handleSocialLogin("linkedin")}
         >
           Linkedin
         </SocialButton>

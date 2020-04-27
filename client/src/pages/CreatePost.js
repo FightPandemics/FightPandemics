@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import filterOptions from "../assets/data/filterOptions";
 import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
@@ -25,9 +26,9 @@ const initialState = {
     options: [],
     selected: "",
   },
-  data: {
+  formData: {
     title: "",
-    body: "",
+    description: "",
     tags: [],
     shareWith: shareWith.default.value,
     expires: expires.default.value,
@@ -38,13 +39,14 @@ const initialState = {
 
 const errorMsg = {
   title: "Please include a title for your post.",
-  body: "Please include a body for your post.",
+  description: "Please include a description for your post.",
   help: "Please select a type of help.",
+  tags: "Please add at least one tag.",
 };
 
 export default (props) => {
   const [state, setState] = useState(initialState.state);
-  const [data, setData] = useState(initialState.data);
+  const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   const { modal, selected, options } = state;
 
@@ -66,28 +68,28 @@ export default (props) => {
     });
   };
 
-  const handleData = (field) => (e) => {
-    setData({ ...data, [field]: e.target.value });
-    if (errors.includes(field) && data[field]) {
+  const handleFormData = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+    if (errors.includes(field) && formData[field]) {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
     }
   };
 
   const addTag = (tag) => (e) => {
-    const hasTag = data.tags.includes(tag);
+    const hasTag = formData.tags.includes(tag);
     if (hasTag) {
-      const tags = data.tags.filter((t) => t !== tag);
-      setData({ ...data, tags });
+      const tags = formData.tags.filter((t) => t !== tag);
+      setFormData({ ...formData, tags });
     } else {
-      setData({ ...data, tags: [...data.tags, tag] });
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
 
-  const handleErrors = () => {
+  const populateErrors = () => {
     const newErrors = [];
     for (let field in errorMsg) {
-      if (!errors.includes(field) && !data[field]) {
+      if (!errors.includes(field)) {
         newErrors.push(field);
       }
     }
@@ -95,12 +97,21 @@ export default (props) => {
   };
 
   const renderError = (field) => {
-    if (errors.includes(field)) return errorMsg[field];
+    if (errors.includes(field) && (!formData[field] || !formData[field].length))
+      return errorMsg[field];
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleErrors();
+    populateErrors();
+    if (!errors.length) {
+      // todo: finish integrating api
+      try {
+        const req = await axios.post("/api/posts", formData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -122,10 +133,10 @@ export default (props) => {
               <RadioGroup
                 flex={true}
                 padding="1.3rem 0"
-                onChange={handleData(selected)}
+                onChange={handleFormData(selected)}
                 options={options}
-                value={data[selected]}
-                defaultValue={data[selected]}
+                value={formData[selected]}
+                defaultValue={formData[selected]}
               />
             }
             onClose={closeModal}
@@ -135,14 +146,14 @@ export default (props) => {
           <div className="buttons">
             <DownArrowButton
               handleClick={showModal(shareWith)}
-              label={data.shareWith}
+              label={formData.shareWith}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
             />
             <DownArrowButton
               handleClick={showModal(expires)}
-              label={data.expires}
+              label={formData.expires}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
@@ -150,9 +161,9 @@ export default (props) => {
           </div>
           <div className="inline">
             <RadioGroup
-              onChange={handleData("help")}
+              onChange={handleFormData("help")}
               options={helpTypes.options}
-              value={data.help}
+              value={formData.help}
               padding="0"
             />
             <span className="error-box">{renderError("help")}</span>
@@ -162,26 +173,28 @@ export default (props) => {
         <div className="post-content">
           <label>
             <StyledInput
-              onChange={handleData("title")}
-              value={data.title}
+              onChange={handleFormData("title")}
+              value={formData.title}
               placeholder="Title"
+              className="title"
             />
           </label>
           <span className="error-box">{renderError("title")}</span>
           <label>
             <StyledTextArea
-              onChange={handleData("body")}
-              value={data.body}
+              onChange={handleFormData("description")}
+              value={formData.description}
               placeholder="Write a post."
               rows={12}
             />
           </label>
-          <span className="error-box">{renderError("body")}</span>
+          <span className="error-box">{renderError("description")}</span>
         </div>
         <HorizontalLine />
         <div className="tags">
           <AddTags addTag={addTag} filters={types} />
         </div>
+        <span className="error-box">{renderError("tags")}</span>
         <SubmitButton
           title="Post"
           handleClick={handleSubmit}

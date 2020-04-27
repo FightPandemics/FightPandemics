@@ -16,7 +16,6 @@ export default styled(Button)`
   line-height: normal;
   height: 100%;
   cursor: pointer;
-  margin-right: 25px;
   font-family: "Poppins";
 
   &:hover {
