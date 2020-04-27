@@ -24,7 +24,10 @@ const PostSchema = new Schema(
       type: [String],
       // required: true,
     },
-    helpType: String,
+    helpType: {
+      type: String,
+      required: true,
+    },
     iosUrl: String,
     language: [String],
     likes: {
@@ -36,6 +39,7 @@ const PostSchema = new Schema(
     media: String,
     needs: {
       type: [String],
+      required: true,
     },
     postEmail: String,
     shareWith: {

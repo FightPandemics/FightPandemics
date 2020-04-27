@@ -107,7 +107,11 @@ async function routes(app) {
 
   app.get("/filters", { schema: getPostByFiltersSchema }, async (req) => {
     const { helpType, needs } = req.query;
-    
+    const aggregates = [];
+
+    aggregates.push({ $unwind: "$needs" });
+
+    return Post.aggregate(aggregates);
   });
 
   app.delete(

@@ -11,7 +11,7 @@ const createPostSchema = {
   body: S.object()
     .prop("title", S.string().required())
     .prop("description", S.string().required())
-    .prop("helpType", S.string())
+    .prop("helpType", S.string().required())
     .prop("needs", S.array().maxItems(10).items(S.string()).required()),
 };
 
@@ -25,15 +25,15 @@ const getPostByIdSchema = {
 const getPostByFiltersSchema = {
   querystring: S.object()
     .prop("helpType", S.string())
-    .prop("needs", S.array().maxItems(12).items(S.string()).required()),
+    .prop("needs", S.array().maxItems(12).items(S.string())),
 };
 
 const updatePostSchema = {
   body: S.object()
-    .prop("title", S.string().required())
-    .prop("description", S.string().required())
+    .prop("title", S.string())
+    .prop("description", S.string())
     .prop("helpType", S.string())
-    .prop("needs", S.array().maxItems(10).items(S.string()).required()),
+    .prop("needs", S.array().maxItems(10).items(S.string())),
   params: S.object().prop("postId", S.string().required()),
 };
 
