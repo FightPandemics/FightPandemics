@@ -22,6 +22,12 @@ const getPostByIdSchema = {
     .prop("limit", S.integer()),
 };
 
+const getPostByFiltersSchema = {
+  querystring: S.object()
+    .prop("helpType", S.string())
+    .prop("needs", S.array().maxItems(12).items(S.string()).required()),
+};
+
 const updatePostSchema = {
   body: S.object()
     .prop("title", S.string().required())

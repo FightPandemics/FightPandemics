@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const {
   getPostsSchema,
   getPostByIdSchema,
+  getPostByFiltersSchema,
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
@@ -103,6 +104,11 @@ async function routes(app) {
       return post;
     },
   );
+
+  app.get("/filters", { schema: getPostByFiltersSchema }, async (req) => {
+    const { helpType, needs } = req.query;
+    
+  });
 
   app.delete(
     "/:postId",
