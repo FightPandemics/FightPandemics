@@ -1,3 +1,5 @@
+![staging](https://github.com/FightPandemics/FightPandemics/workflows/staging/badge.svg)
+
 #  FightPandemics.com Overview
 
 Currently, there is no easy way to match all that are in need with those that are providing help, at the same time is difficult to find all the information at the local and global level of the different initiatives, projects, researchers, donors, investors, FREE or discounted tools for builders, the grants available and other relevant information. That's why Fight Pandemics was born.
