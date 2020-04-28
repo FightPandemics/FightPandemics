@@ -9,5 +9,13 @@
     "global-require": "off",
     "no-underscore-dangle": "off",
     "sort-keys": ["error", "asc"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["lib/models/schemas/**/*.js"],
+      "rules": {
+        "sort-keys": "off"
+      }
+    }
+  ]
 }

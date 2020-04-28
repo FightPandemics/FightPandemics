@@ -1,6 +1,8 @@
 const { readdirSync, statSync } = require("fs");
 const { join } = require("path");
 
+require("./schemas/v2/user");
+
 const PATH_TO_SCHEMAS = join(__dirname, "schemas");
 
 module.exports = function registerModels(mongoConnection) {
