@@ -27,33 +27,50 @@ async function routes(app) {
   // /posts
 
   app.get("/", { schema: getPostsSchema }, async (req) => {
-    // todo: add limit, skip, visibility filter, needs, tags ...
-    // const { authorId } = req.params;
-    // const aggregates = authorId ? [{ $match: { authorId } }] : [];
-    // aggregates.push(
-    //   {
-    //     $lookup: {
-    //       as: "comments",
-    //       foreignField: "postId",
-    //       from: "comments",
-    //       localField: "_id",
-    //     },
-    //   },
-    //   {
-    //     $project: {
-    //       _id: true,
-    //       commentsCount: {
-    //         $size: "$comments",
-    //       },
-    //       description: true,
-    //       likesCount: true,
-    //       shareWith: true,
-    //       tags: true,
-    //       title: true,
-    //     },
-    //   },
-    // );
-    return [];
+    // TODO: get userId from jwt
+    // userId = ?
+    // user = User.findById(userId);
+    var user = await User.findById("5ea6900c0e0419d4cb123611");
+    console.log(user);
+
+    // TODO: add filters
+    // TODO: add pagination
+    return await Post.aggregate([
+      {
+        $geoNear: {
+          distanceField: "distance",
+          key: "author.location.coords",
+          near: {
+            $geometry: { type: "Point", coordinates: user.location.coords },
+          },
+          // query: { << add filters here >> }
+        },
+      },
+      {
+        $lookup: {
+          as: "comments",
+          foreignField: "postId",
+          from: "comments",
+          localField: "_id",
+        },
+      },
+      {
+        $project: {
+          _id: true,
+          authorName: "author.authorName",
+          authorType: "author.authorType",
+          commentsCount: {
+            $size: "$comments",
+          },
+          content: true,
+          distance: true,
+          likesCount: {
+            $size: "$likes",
+          },
+          title: true,
+        },
+      },
+    ]);
   });
 
   app.post(
