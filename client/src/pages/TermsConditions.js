@@ -19,9 +19,9 @@ const Paragraph = styled.div`
   margin: 1rem 0;
 `;
 
-const ListNoIndent = styled.ol`
-  padding: 0;
-`;
+// const ListNoIndent = styled.ol`
+//   padding: 0;
+// `;
 
 const TermsLink = styled.a`
   color: ${colors.primary};

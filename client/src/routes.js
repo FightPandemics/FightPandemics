@@ -6,6 +6,7 @@ import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import { TermsConditions } from "./pages/TermsConditions";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -87,6 +88,10 @@ const routes = [
   {
     path: "/terms-conditions",
     component: TermsConditions,
+  },
+  {
+    path: "/privacy-policy",
+    component: PrivacyPolicy,
   },
 ];
 
