@@ -78,7 +78,7 @@ async function routes(app) {
       // preValidation: [app.authenticate],
       schema: createPostSchema,
     },
-    async (req, rep) => {
+    async (req, reply) => {
       // TODO: get userId from jwt
       // userId = ?
       // user = User.findById(userId);
@@ -136,54 +136,70 @@ async function routes(app) {
 
       var post = new Post(postProps);
       if (post.save()) {
-        rep.code(201);
+        reply.code(201);
         return post;
       } else {
-        rep.code(400);
-        return post;
+        return reply.send(new httpErrors.BadRequest());
       }
     },
   );
 
   // // /posts/postId
 
-  // app.get(
-  //   "/:postId",
-  //   { preValidation: [app.authenticate], schema: getPostByIdSchema },
-  //   async (req, reply) => {
-  //     const { postId } = req.params;
-  //     const post = await Post.findById(postId);
-  //     if (post === null) {
-  //       return reply.send(new httpErrors.NotFound());
-  //     }
-  //     post.comments = await Comment.aggregate([
-  //       {
-  //         $match: {
-  //           parentId: null,
-  //           postId: mongoose.Types.ObjectId(postId),
-  //         },
-  //       },
-  //       {
-  //         $lookup: {
-  //           as: "children",
-  //           foreignField: "parentId",
-  //           from: "comments",
-  //           localField: "_id",
-  //         },
-  //       },
-  //       {
-  //         $addFields: {
-  //           childCount: {
-  //             $size: "$children",
-  //           },
-  //         },
-  //       },
-  //     ]);
-  //     // todo: find a better way to return this from the comments aggregate
-  //     post.commentsCount = await Comment.find({ postId }).count();
-  //     return post;
-  //   },
-  // );
+  app.get(
+    "/:postId",
+    {
+      // preValidation: [app.authenticate],
+      schema: getPostByIdSchema,
+    },
+    async (req, reply) => {
+      // TODO: add pagination
+      const { postId } = req.params;
+      const post = await Post.findById(postId);
+      if (post === null) {
+        return reply.send(new httpErrors.NotFound());
+      }
+      var commentQuery = await Comment.aggregate([
+        {
+          $match: {
+            parentId: null,
+            postId: mongoose.Types.ObjectId(postId),
+          },
+        },
+        {
+          $lookup: {
+            as: "children",
+            foreignField: "parentId",
+            from: "comments",
+            localField: "_id",
+          },
+        },
+        {
+          $addFields: {
+            childCount: {
+              $size: { $ifNull: ["$children", []] },
+            },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            comments: { $push: "$$ROOT" },
+            numComments: { $sum: { $add: ["$childCount", 1] } },
+          },
+        },
+      ]);
+
+      commentQuery = commentQuery[0];
+      if (commentQuery == null) commentQuery = { comments: [], numComments: 0 };
+
+      return {
+        commentCount: commentQuery.numComments,
+        comments: commentQuery.comments,
+        post: post,
+      };
+    },
+  );
 
   // app.delete(
   //   "/:postId",

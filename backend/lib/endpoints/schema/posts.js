@@ -55,10 +55,7 @@ const createPostSchema = {
 };
 
 const getPostByIdSchema = {
-  querystring: S.object()
-    .prop("authorId", S.string())
-    .prop("skip", S.integer())
-    .prop("limit", S.integer()),
+  querystring: S.object().prop("skip", S.integer()).prop("limit", S.integer()),
 };
 
 const updatePostSchema = {
