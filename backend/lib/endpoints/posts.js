@@ -88,7 +88,7 @@ async function routes(app) {
 
       // Creates embedded author document
       var author = {
-        authorId: user._id,
+        authorId: user.id,
         authorName: user.firstName + " " + user.lastName,
         authorType: user.type,
         location: user.location,
@@ -201,26 +201,39 @@ async function routes(app) {
     },
   );
 
-  // app.delete(
-  //   "/:postId",
-  //   { preValidation: [app.authenticate], schema: deletePostSchema },
-  //   async (req) => {
-  //     const { postId } = req.params;
-  //     // todo: make sure user can only delete their own posts
-  //     const deletedPost = await Post.findByIdAndRemove(postId);
-  //     if (!deletedPost) {
-  //       return new httpErrors.BadRequest();
-  //     }
-  //     const {
-  //       deletedCount: deletedCommentsCount,
-  //       ok,
-  //     } = await Comment.deleteMany({ postId });
-  //     if (ok !== 1) {
-  //       app.log.error("failed removing comments for deleted post", { postId });
-  //     }
-  //     return { deletedCommentsCount, deletedPost, success: true };
-  //   },
-  // );
+  app.delete(
+    "/:postId",
+    {
+      // preValidation: [app.authenticate],
+      schema: deletePostSchema,
+    },
+    async (req) => {
+      const { postId } = req.params;
+      // TODO: get userId from jwt
+      // userId = ?
+      // user = User.findById(userId);
+      var user = await User.findById("5ea6900c0e0419d4cb123611");
+      if (user === null) return new httpErrors.Unauthorized();
+
+      var deletedPost = await Post.findById(postId);
+      if (!deletedPost) {
+        return new httpErrors.NotFound();
+      } else if (deletedPost.author.authorId != user.id) {
+        return new httpErrors.Forbidden();
+      } else {
+        deletedPost = await deletedPost.delete();
+      }
+
+      const {
+        deletedCount: deletedCommentsCount,
+        ok,
+      } = await Comment.deleteMany({ postId });
+      if (ok !== 1) {
+        app.log.error("failed removing comments for deleted post", { postId });
+      }
+      return { deletedCommentsCount, deletedPost, success: true };
+    },
+  );
 
   // app.patch(
   //   "/:postId",
