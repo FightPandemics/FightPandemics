@@ -1,32 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 
-import { theme } from "../constants/theme";
-const { colors } = theme;
-
-const PolicyContainer = styled.div`
-  margin: 3rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const TextContainer = styled.div`
-  max-width: 60rem;
-`;
-
-const ListNoIndent = styled.ol`
-  padding: 0;
-  margin: 1.6rem;
-`;
-
-const TermsLink = styled.a`
-  color: ${colors.primary};
-`;
-
-const Date = styled.div`
-  text-align: right;
-`;
+import {
+  PolicyContainer,
+  TextContainer,
+} from "../components/PolicyPages/PolicyContainer";
+import { ListNoIndent } from "../components/PolicyPages/ListStyles";
+import { TermsLink } from "../components/PolicyPages/TermsLink";
+import { Date } from "../components/PolicyPages/Date";
 
 export const CookiesPolicy = () => {
   return (

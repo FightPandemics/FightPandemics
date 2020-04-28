@@ -1,63 +1,21 @@
 import React from "react";
-import styled from "styled-components";
 
-import { theme } from "../constants/theme";
-const { colors } = theme;
-
-const PolicyContainer = styled.div`
-  margin: 3rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const TextContainer = styled.div`
-  max-width: 60rem;
-`;
-
-const Paragraph = styled.div`
-  margin: 1rem 0;
-`;
-
-const ListNoIndent = styled.ol`
-  padding: 0;
-  margin: 1.5rem;
-`;
-
-const TermsLink = styled.a`
-  color: ${colors.primary};
-`;
-
-const Date = styled.div`
-  text-align: right;
-`;
-
-const DataTableHead = styled.thead`
-  background-color: ${colors.lightGray};
-  border-bottom: 1px solid ${colors.darkGray};
-`;
-
-const TrLine = styled.tr`
-  border-bottom: 1px solid ${colors.darkGray};
-`;
-
-const ThLeft = styled.th`
-  border-right: 1px solid ${colors.darkGray};
-  padding: 0.5rem;
-`;
-
-const ThRight = styled.th`
-  padding: 0.5rem;
-`;
-
-const TdLeft = styled.td`
-  border-right: 1px solid ${colors.darkGray};
-  padding: 0.5rem;
-`;
-
-const TdRight = styled.td`
-  padding: 0.5rem;
-`;
+import {
+  PolicyContainer,
+  TextContainer,
+  Paragraph,
+} from "../components/PolicyPages/PolicyContainer";
+import { ListNoIndent } from "../components/PolicyPages/ListStyles";
+import { TermsLink } from "../components/PolicyPages/TermsLink";
+import { Date } from "../components/PolicyPages/Date";
+import {
+  DataTableHead,
+  TrLine,
+  ThLeft,
+  ThRight,
+  TdLeft,
+  TdRight,
+} from "../components/PolicyPages/TableStyles";
 
 export const PrivacyPolicy = () => {
   return (

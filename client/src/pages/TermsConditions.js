@@ -1,35 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 
-import { theme } from "../constants/theme";
-const { colors } = theme;
-
-const TermsContainer = styled.div`
-  margin: 3rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const TextContainer = styled.div`
-  max-width: 60rem;
-`;
-
-const Paragraph = styled.div`
-  margin: 1rem 0;
-`;
-
-// const ListNoIndent = styled.ol`
-//   padding: 0;
-// `;
-
-const TermsLink = styled.a`
-  color: ${colors.primary};
-`;
+import {
+  PolicyContainer,
+  TextContainer,
+  Paragraph,
+} from "../components/PolicyPages/PolicyContainer";
+import { TermsLink } from "../components/PolicyPages/TermsLink";
 
 export const TermsConditions = () => {
   return (
-    <TermsContainer>
+    <PolicyContainer>
       <TextContainer>
         <h2 className="text-primary display-6">Terms & Conditions</h2>
         <Paragraph>
@@ -1338,6 +1318,6 @@ export const TermsConditions = () => {
           </i>
         </Paragraph>
       </TextContainer>
-    </TermsContainer>
+    </PolicyContainer>
   );
 };
