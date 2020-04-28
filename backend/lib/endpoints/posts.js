@@ -28,7 +28,18 @@ async function routes(app) {
     // todo: add limit, skip, visibility filter, needs, tags ...
     const { authorId } = req.params;
     const { helpType, needs, fromWhom } = req.query;
-    const aggregates = authorId ? [{ $match: { authorId } }] : [];
+    const aggregates = authorId
+      ? [
+          {
+            $match: {
+              authorId,
+              helpType,
+              needs: { $in: needs },
+              fromWhom: { $in: fromWhom },
+            },
+          },
+        ]
+      : [];
     aggregates.push(
       {
         $lookup: {
@@ -52,15 +63,6 @@ async function routes(app) {
         },
       },
     );
-    // return Post.aggregate([
-    //   {
-    //     $match: {
-    //       helpType,
-    //       needs: { $in: needs },
-    //       fromWhom: { $in: fromWhom },
-    //     },
-    //   },
-    // ]);
     return Post.aggregate(aggregates);
   });
 
