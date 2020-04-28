@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const {
   getPostsSchema,
   getPostByIdSchema,
-  getPostByFiltersSchema,
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
@@ -28,6 +27,7 @@ async function routes(app) {
   app.get("/", { schema: getPostsSchema }, async (req) => {
     // todo: add limit, skip, visibility filter, needs, tags ...
     const { authorId } = req.params;
+    const { helpType, needs, fromWhom } = req.query;
     const aggregates = authorId ? [{ $match: { authorId } }] : [];
     aggregates.push(
       {
@@ -52,6 +52,15 @@ async function routes(app) {
         },
       },
     );
+    // return Post.aggregate([
+    //   {
+    //     $match: {
+    //       helpType,
+    //       needs: { $in: needs },
+    //       fromWhom: { $in: fromWhom },
+    //     },
+    //   },
+    // ]);
     return Post.aggregate(aggregates);
   });
 
@@ -99,21 +108,6 @@ async function routes(app) {
     // todo: find a better way to return this from the comments aggregate
     post.commentsCount = await Comment.find({ postId }).count();
     return post;
-  });
-
-  app.get("/filters", { schema: getPostByFiltersSchema }, async (req) => {
-    const { helpType, needs, fromWhom } = req.query;
-    // todo: setup pagination to lazy load 10 posts
-    // sort posts based on nearest location
-    return Post.aggregate([
-      {
-        $match: {
-          helpType,
-          needs: { $in: needs },
-          fromWhom: { $in: fromWhom },
-        },
-      },
-    ]);
   });
 
   app.delete(

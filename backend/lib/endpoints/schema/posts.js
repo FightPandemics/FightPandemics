@@ -4,7 +4,9 @@ const getPostsSchema = {
   querystring: S.object()
     .prop("authorId", S.string())
     .prop("skip", S.integer())
-    .prop("limit", S.integer()),
+    .prop("limit", S.integer())
+    .prop("helpType", S.string())
+    .prop("needs", S.array().maxItems(12).items(S.string())),
 };
 
 const createPostSchema = {
@@ -20,12 +22,6 @@ const getPostByIdSchema = {
     .prop("authorId", S.string())
     .prop("skip", S.integer())
     .prop("limit", S.integer()),
-};
-
-const getPostByFiltersSchema = {
-  querystring: S.object()
-    .prop("helpType", S.string())
-    .prop("needs", S.array().maxItems(12).items(S.string())),
 };
 
 const updatePostSchema = {
