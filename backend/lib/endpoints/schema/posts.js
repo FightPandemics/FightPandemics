@@ -1,27 +1,39 @@
 const S = require("fluent-schema");
 
+const { join } = require("path");
+const PATH_TO_SCHEMAS = join(__dirname, "../../models/schemas/v2");
+const { schema: postSchema } = require(join(PATH_TO_SCHEMAS, "post"));
+const { schema: orgSchema } = require(join(PATH_TO_SCHEMAS, "individualUser"));
+const { schema: userSchema } = require(join(
+  PATH_TO_SCHEMAS,
+  "organizationUser",
+));
+
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
-const POST_OBJECTIVES = ["request", "offer"];
-const POST_TYPES = [
-  "Business",
-  "Education",
-  "Entertainment",
-  "Funding",
-  "Groceries/Food",
-  "Information",
-  "Legal",
-  "Medical Supplies",
-  "R&D",
-  "Others",
-  "Wellbeing/Mental",
-];
-const VISIBILITY_OPTIONS = ["city", "state", "country", "worldwide"];
+const POST_OBJECTIVES = postSchema.tree.objective.enum;
+const POST_TYPES = postSchema.tree.types.enum;
+const USER_TYPES = [].concat(
+  userSchema.tree.type.enum,
+  orgSchema.tree.type.enum,
+);
+const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
 
 const getPostsSchema = {
   querystring: S.object()
     .prop("authorId", S.string())
-    .prop("skip", S.integer())
-    .prop("limit", S.integer()),
+    .prop(
+      "filter",
+      S.object()
+        .prop(
+          "author.location.coords",
+          S.array().items(S.number()).minItems(2).maxItems(2),
+        )
+        .prop("author.userType", S.string().enum(USER_TYPES))
+        .prop("types", S.array().items(S.string().enum(POST_TYPES)))
+        .prop("objective", S.string().enum(POST_OBJECTIVES)),
+    )
+    .prop("limit", S.integer())
+    .prop("skip", S.integer()),
 };
 
 const createPostSchema = {

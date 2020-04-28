@@ -4,9 +4,9 @@ const { join } = require("path");
 const PATH_TO_SCHEMAS = join(__dirname, "schemas");
 
 module.exports = function registerModels(mongoConnection) {
+  require("./schemas/v2/post");
   readdirSync(PATH_TO_SCHEMAS).forEach((fileName) => {
     const filePath = join(PATH_TO_SCHEMAS, fileName);
-    require("./schemas/v2/post");
 
     if (statSync(filePath).isDirectory()) return;
 

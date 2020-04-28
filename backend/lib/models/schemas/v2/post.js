@@ -155,5 +155,5 @@ postSchema.index({ likes: 1 });
 // -- Model
 const Post = model("Post", postSchema);
 
-exports = postSchema;
-// exports.model = Post;
+exports.model = Post;
+exports.schema = postSchema;

@@ -31,7 +31,6 @@ async function routes(app) {
     // userId = ?
     // user = User.findById(userId);
     var user = await User.findById("5ea6900c0e0419d4cb123611");
-    console.log(user);
 
     // TODO: add filters
     // TODO: add pagination
