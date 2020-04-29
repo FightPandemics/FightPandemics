@@ -6,7 +6,7 @@ const { display } = theme.typography.font.family;
 export const FilterAccordion = styled(Accordion)`
   font-family: ${display};
   &.am-accordion {
-    padding: 2rem 0;
+    padding-top: 2rem;
     &:before {
       content: normal !important;
     }
@@ -14,9 +14,9 @@ export const FilterAccordion = styled(Accordion)`
 `;
 
 export const FilterAccordionPanel = styled(Accordion.Panel)`
-  text-align: center;
   cursor: pointer;
   margin: 1.2rem;
+
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
@@ -45,7 +45,31 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       }
     }
   }
+
   .am-accordion-content-box {
-    padding: 0.8rem 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+
+  &.filter-2,
+  &.filter-3 {
+    .am-accordion-content-box {
+      text-align: left;
+    }
+  }
+
+  &.filter-3 {
+    .am-accordion-content-box {
+      padding-right: 2.1rem;
+    }
+  }
+
+  &.filter-4 {
+    .am-accordion-content-box {
+      display: flex;
+      justify-content: space-around;
+      .am-tag {
+        padding: 0 4.2rem;
+      }
+    }
   }
 `;

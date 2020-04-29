@@ -56,11 +56,13 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     container_name: client
+    environment:
+      BACKEND_SERVICE_URL: http://backend-service:8000
     ports:
       - "3000:3000"
     volumes:
       - ./client:/app
-      - /app/node_modules
+      - /app/node_modules/
     working_dir: /app
     stdin_open: true
     tty: true

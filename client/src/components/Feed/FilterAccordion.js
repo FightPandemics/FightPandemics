@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import { FeedContext } from "../../pages/Feed.js";
 import FilterTag from "../Tag/FilterTag";
 import LocationSearch from "../../components/Input/LocationSearch";
-import {
-  FilterAccordion,
-  FilterAccordionPanel,
-} from "../Accordion/FilterAccordion";
+import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
 export default () => {
   const feedContext = useContext(FeedContext);
@@ -15,13 +12,21 @@ export default () => {
     return filters.map((filter, idx) => {
       if (filter.label === "Location") {
         return (
-          <FilterAccordionPanel header="Location" key={idx}>
+          <FilterAccordionPanel
+            header={filter.label}
+            className={filter.className}
+            key={idx}
+          >
             <LocationSearch />
           </FilterAccordionPanel>
         );
       } else {
         return (
-          <FilterAccordionPanel header={filter.label} key={idx}>
+          <FilterAccordionPanel
+            header={filter.label}
+            className={filter.className}
+            key={idx}
+          >
             {Object.values(filter.options).map((option, idx) => (
               <FilterTag
                 key={idx}

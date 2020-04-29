@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { useAuth0 } from "./react-auth0-spa";
-import { RouteWithSubRoutes } from "./templates/RouteWithSubRoutes";
-import { routes } from "./routes";
+import { initAuth } from "./actions/authActions";
+import routes from "./routes";
+import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 
-function App() {
-  const { loading } = useAuth0();
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  console.log({ loading });
+function App(props) {
+  useEffect(() => {
+    props.initAuth();
+  }, []);
+
   return (
     <Router history={history}>
       <Switch>
@@ -23,4 +23,9 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = {
+  initAuth: initAuth,
+};
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
