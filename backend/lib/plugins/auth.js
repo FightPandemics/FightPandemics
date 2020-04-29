@@ -9,17 +9,13 @@ const {
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
+const MONGO_ID_KEY = `${auth.appUrl}/mongo_id`;
 const ttlSeconds = 86400;
 const cache = new NodeCache({
   checkperiod: ttlSeconds * 0.2,
   stdTTL: ttlSeconds,
   useClones: false,
 });
-
-// user.sub from Auth0 JWT corresponds to User._id in our db + identity provider prefix
-const getMongoUserIdfromAuth0Id = (jwtSubClaim) => {
-  return mongoose.Types.ObjectId(jwtSubClaim.split("|")[1]);
-};
 
 const authPlugin = async (app) => {
   app.register(fastifyJwt, {
@@ -37,7 +33,8 @@ const authPlugin = async (app) => {
   app.decorate("authenticate", async (req, reply) => {
     try {
       await req.jwtVerify();
-      req.userId = getMongoUserIdfromAuth0Id(req.user.sub);
+      const { user } = req;
+      req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
     } catch (err) {
       reply.send(err);
     }

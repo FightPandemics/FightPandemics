@@ -1,6 +1,5 @@
 const axios = require("axios");
 const httpErrors = require("http-errors");
-const mongoose = require("mongoose");
 const qs = require("querystring");
 const { config } = require("../../config");
 
@@ -63,13 +62,9 @@ const authenticate = async (grantType, payload = {}) => {
 
 const createUser = async (token, payload) => {
   try {
-    const data = {
-      ...payload,
-      user_id: new mongoose.Types.ObjectId(),
-    };
     const res = await axios.post(
       `${AUTH_DOMAIN}/api/v2/users`,
-      data,
+      payload,
       getAuthHeaders(token),
     );
     return res.data;
