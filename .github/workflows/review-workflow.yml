@@ -103,3 +103,5 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+      - name: 'Deployment URL'
+        run: echo https://${{ steps.get-branch-name-sanitized.outputs.branch }}.fightpandemics.xyz
