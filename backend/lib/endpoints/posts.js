@@ -14,6 +14,8 @@ const {
   addCommentSchema,
 } = require("./schema/posts");
 
+
+const DEFAULT_LIMIT = 10;
 /*
  * /api/posts
  */
@@ -26,8 +28,15 @@ async function routes(app) {
 
   app.get("/", { schema: getPostsSchema }, async (req) => {
     // todo: add limit, skip, visibility filter, needs, tags ...
-    const { authorId } = req.params;
+    const { authorId, limit, skip } = req.query;
     const aggregates = authorId ? [{ $match: { authorId } }] : [];
+
+    const skipNum = skip || 0;
+    const limitNum = limit || DEFAULT_LIMIT;
+    // Total number of items Mongo will consider, but then will skip the
+    // first "skip" items before returning a result
+    const totalLimit = skipNum + limitNum;
+
     aggregates.push(
       {
         $lookup: {
@@ -36,6 +45,12 @@ async function routes(app) {
           from: "comments",
           localField: "_id",
         },
+      },
+      {
+        $limit: totalLimit,
+      },
+      {
+        $skip: skip || 0,
       },
       {
         $project: {

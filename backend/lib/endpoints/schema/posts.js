@@ -3,7 +3,9 @@ const S = require("fluent-schema");
 const getPostsSchema = {
   querystring: S.object()
     .prop("authorId", S.string())
+    // Number of items to skip
     .prop("skip", S.integer())
+    // Number of items to return
     .prop("limit", S.integer()),
 };
 
