@@ -6,18 +6,30 @@ const { colors } = theme;
 
 const CookieContainer = styled.div`
   alignitems: center;
-  background: ${colors.selago};
+  background: ${colors.darkerGray};
+  color: ${colors.selago};
   display: flex;
-  flex-direction: column;
   font-family: Poppins;
-  font-size: 1.1rem;
-  height: 8rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  text-align: left;
+`;
+
+const CookieLink = styled.a`
+  color: ${colors.selago};
+  text-decoration: underline;
+`;
+
+const CloseBtn = styled.button`
+  align-self: start;
+  font-size: 2rem;
+  font-weight: bold;
 `;
 
 export default () => {
@@ -39,10 +51,16 @@ export default () => {
   return (
     <CookieContainer style={{ display: active ? "" : "none" }}>
       <div>
-        We use cookies. By continuing to browse this site you are agreeing to
-        our use of cookies. <a href="/cookies-policy">Read more.</a>
+        This site uses cookies to deliver our service and to show you relevant
+        information. By using our site, you acknowledge that you have read and
+        understand our{" "}
+        <CookieLink href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
+        <CookieLink href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
+        <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
+        Your use of FightPandemics' Products is subject to these policies and
+        terms.
       </div>
-      <button onClick={hideMessage}>Okay</button>
+      <CloseBtn onClick={hideMessage}>x</CloseBtn>
     </CookieContainer>
   );
 };
