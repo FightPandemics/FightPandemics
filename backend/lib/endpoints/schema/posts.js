@@ -12,20 +12,17 @@ const { schema: userSchema } = require(join(
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
 const POST_OBJECTIVES = postSchema.tree.objective.enum;
 const POST_TYPES = postSchema.tree.types.enum;
-const USER_TYPES = [].concat(
-  userSchema.tree.type.enum,
-  orgSchema.tree.type.enum,
-);
+const USER_TYPES = [userSchema.tree.type.enum, orgSchema.tree.type.enum];
 const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
 
 const getPostsSchema = {
   querystring: S.object()
-    .prop("authorId", S.string())
+    .prop("id", S.string())
     .prop(
       "filter",
       S.object()
         .prop(
-          "author.location.coords",
+          "author.location.coordinates",
           S.array().items(S.number()).minItems(2).maxItems(2),
         )
         .prop("author.userType", S.string().enum(USER_TYPES))
@@ -54,7 +51,7 @@ const createPostSchema = {
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
-    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required())
+    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {

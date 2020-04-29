@@ -30,7 +30,7 @@ async function routes(app) {
     // TODO: get userId from jwt
     // userId = ?
     // user = User.findById(userId);
-    var user = await User.findById("5ea6900c0e0419d4cb123611");
+    const user = await User.findById("5ea6900c0e0419d4cb123611");
 
     // TODO: add filters
     // TODO: add pagination
@@ -39,9 +39,12 @@ async function routes(app) {
       {
         $geoNear: {
           distanceField: "distance",
-          key: "author.location.coords",
+          key: "author.location.coordinates",
           near: {
-            $geometry: { type: "Point", coordinates: user.location.coords },
+            $geometry: {
+              type: "Point",
+              coordinates: user.location.coordinates,
+            },
           },
           // query: { << add filters here >> }
         },
@@ -57,8 +60,8 @@ async function routes(app) {
       {
         $project: {
           _id: true,
-          authorName: "author.authorName",
-          authorType: "author.authorType",
+          name: "author.name",
+          type: "author.type",
           commentsCount: {
             $size: "$comments",
           },
@@ -84,15 +87,14 @@ async function routes(app) {
       // userId = ?
       // user = User.findById(userId);
       user = await User.findById("5ea6900c0e0419d4cb123611");
-      if (user === null) return new httpErrors.Unauthorized();
 
-      var postProps = req.body;
+      let postProps = req.body;
 
       // Creates embedded author document
       postProps.author = {
-        authorId: user.id,
-        authorName: user.firstName + " " + user.lastName,
-        authorType: user.type,
+        id: user.id,
+        name: user.firstName + " " + user.lastName,
+        type: user.type,
         location: user.location,
       };
 
@@ -102,17 +104,17 @@ async function routes(app) {
       // Initial empty likes array
       postProps.likes = [];
 
-      var post = new Post(postProps);
-      if (post.save()) {
+      const post = new Post(postProps).save();
+      if (post) {
         reply.code(201);
         return post;
       } else {
-        return reply.send(new httpErrors.BadRequest());
+        return new httpErrors.BadRequest();
       }
     },
   );
 
-  // // /posts/postId
+  // /posts/postId
 
   app.get(
     "/:postId",
@@ -125,9 +127,9 @@ async function routes(app) {
       const { postId } = req.params;
       const post = await Post.findById(postId);
       if (post === null) {
-        return reply.send(new httpErrors.NotFound());
+        return new httpErrors.NotFound();
       }
-      var commentQuery = await Comment.aggregate([
+      const commentQuery = await Comment.aggregate([
         {
           $match: {
             parentId: null,
@@ -158,12 +160,12 @@ async function routes(app) {
         },
       ]);
 
-      commentQuery = commentQuery[0];
-      if (commentQuery == null) commentQuery = { comments: [], numComments: 0 };
+      if (commentQuery[0] == null)
+        commentQuery[0] = { comments: [], numComments: 0 };
 
       return {
-        commentCount: commentQuery.numComments,
-        comments: commentQuery.comments,
+        commentCount: commentQuery[0].numComments,
+        comments: commentQuery[0].comments,
         post: post,
       };
     },
@@ -180,13 +182,12 @@ async function routes(app) {
       // TODO: get userId from jwt
       // userId = ?
       // user = User.findById(userId);
-      var user = await User.findById("5ea6900c0e0419d4cb123611");
-      if (user === null) return new httpErrors.Unauthorized();
+      const user = await User.findById("5ea6900c0e0419d4cb123611");
 
-      var deletedPost = await Post.findById(postId);
+      let deletedPost = await Post.findById(postId);
       if (!deletedPost) {
         return new httpErrors.NotFound();
-      } else if (deletedPost.author.authorId != user.id) {
+      } else if (deletedPost.author.id != user.id) {
         return new httpErrors.Forbidden();
       } else {
         deletedPost = await deletedPost.delete();
@@ -213,14 +214,12 @@ async function routes(app) {
       // TODO: get userId from jwt
       // userId = ?
       // user = User.findById(userId);
-      var user = await User.findById("5ea6900c0e0419d4cb123611");
-      if (user === null) return new httpErrors.Unauthorized();
+      const user = await User.findById("5ea6900c0e0419d4cb123611");
 
       const post = await Post.findById(req.params.postId);
       if (!post) return new httpErrors.NotFound();
-      else if (post.author.authorId != user.id)
-        return new httpErrors.Forbidden();
-      var body = req.body;
+      else if (post.author.id != user.id) return new httpErrors.Forbidden();
+      let body = req.body;
 
       // ExpireAt needs to calculate the date
       if ("expireAt" in body)
@@ -240,8 +239,7 @@ async function routes(app) {
       // TODO: get userId from jwt
       // userId = ?
       // user = User.findById(userId);
-      var user = await User.findById("5ea6900c0e0419d4cb123611");
-      if (user === null) return new httpErrors.Unauthorized();
+      const user = await User.findById("5ea6900c0e0419d4cb123611");
 
       const { postId, userId } = req.params;
       if (postId === null || userId === null)
@@ -272,10 +270,9 @@ async function routes(app) {
       // TODO: get userId from jwt
       // userId = ?
       // user = User.findById(userId);
-      var user = await User.findById("5ea6900c0e0419d4cb123611");
+      const user = await User.findById("5ea6900c0e0419d4cb123611");
       if (postId === null || userId === null)
         return new httpErrors.BadRequest();
-      if (user === null) return new httpErrors.Unauthorized();
 
       const { postId, userId } = req.params;
 
@@ -310,7 +307,7 @@ async function routes(app) {
       }
       const commentProps = {
         ...body,
-        authorId: "", // req.user.id
+        id: "", // req.user.id
         postId,
       };
       return new Comment(commentProps).save();
@@ -327,7 +324,7 @@ async function routes(app) {
       // todo: get user id from JWT
       //  check if user is authorized to edit comment (only your own comment, visibility can change?)
       const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, authorId: user.id, postId },
+        { _id: commentId, id: user.id, postId },
         { comment },
         { new: true },
       );
@@ -349,7 +346,7 @@ async function routes(app) {
       //  + also delete all sub comments?
       const { ok, deletedCount } = await Comment.deleteMany({
         $or: [
-          { _id: commentId, authorId: user.id, postId },
+          { _id: commentId, id: user.id, postId },
           { parentId: commentId, postId },
         ],
       });
