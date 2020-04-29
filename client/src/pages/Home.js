@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Heading } from "grommet";
 
 import ImageButton from "../components/Button/ImageButton";
+import CookieAlert from "../components/CookieAlert";
 import { theme } from "../constants/theme";
 
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
@@ -95,6 +96,7 @@ export const Home = (props) => {
           View Community Postings
         </Link>
       </p>
+      <CookieAlert />
     </div>
   );
 };
