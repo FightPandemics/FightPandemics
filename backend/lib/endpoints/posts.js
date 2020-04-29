@@ -34,6 +34,7 @@ async function routes(app) {
 
     // TODO: add filters
     // TODO: add pagination
+    // TODO: add limitation of post content if user is not logged
     return await Post.aggregate([
       {
         $geoNear: {
@@ -75,7 +76,7 @@ async function routes(app) {
   app.post(
     "/",
     {
-      // preValidation: [app.authenticate],
+      preValidation: [app.authenticate],
       schema: createPostSchema,
     },
     async (req, reply) => {
@@ -182,7 +183,7 @@ async function routes(app) {
   app.delete(
     "/:postId",
     {
-      // preValidation: [app.authenticate],
+      preValidation: [app.authenticate],
       schema: deletePostSchema,
     },
     async (req) => {
@@ -216,7 +217,7 @@ async function routes(app) {
   app.patch(
     "/:postId",
     {
-      // preValidation: [app.authenticate],
+      preValidation: [app.authenticate],
       schema: updatePostSchema,
     },
     async (req, reply) => {
@@ -251,164 +252,181 @@ async function routes(app) {
     },
   );
 
-  // app.post(
-  //   "/:postId/comments",
-  //   { preValidation: [app.authenticate], schema: addCommentSchema },
-  //   async (req) => {
-  //     const { body, params } = req;
-  //     const { parentId } = body;
-  //     const { postId } = params;
-  //     // todo: get user id from JWT
-  //     //  check if user is authorized to comment (depending on visibility for that post)
-  //     if (parentId) {
-  //       const parentPost = await Post.findById(parentId);
-  //       if (!parentPost || parentPost.postId !== postId) {
-  //         return new httpErrors.BadRequest();
-  //       }
-  //     }
-  //     const commentProps = {
-  //       ...body,
-  //       authorId: "", // req.user.id
-  //       postId,
-  //     };
-  //     return new Comment(commentProps).save();
-  //   },
-  // );
+  app.put(
+    "/:postId/likes/:userId",
+    {
+      preValidation: [app.authenticate],
+      schema: likeUnlikePostSchema,
+    },
+    async (req) => {
+      // TODO: get userId from jwt
+      // userId = ?
+      // user = User.findById(userId);
+      var user = await User.findById("5ea6900c0e0419d4cb123611");
+      if (user === null) return new httpErrors.Unauthorized();
 
-  // app.put(
-  //   "/:postId/comments/:commentId",
-  //   { preValidation: [app.authenticate], schema: updateCommentSchema },
-  //   async (req) => {
-  //     const { body, params, user } = req;
-  //     const { comment } = body;
-  //     const { commentId, postId } = params;
-  //     // todo: get user id from JWT
-  //     //  check if user is authorized to edit comment (only your own comment, visibility can change?)
-  //     const updatedComment = await Comment.findOneAndUpdate(
-  //       { _id: commentId, authorId: user.id, postId },
-  //       { comment },
-  //       { new: true },
-  //     );
-  //     if (!updatedComment) {
-  //       return new httpErrors.BadRequest();
-  //     }
-  //     return updatedComment;
-  //   },
-  // );
+      const { postId, userId } = req.params;
+      if (postId === null || userId === null)
+        return new httpErrors.BadRequest();
+      if (userId != user.id) return httpErrors.Forbidden();
 
-  // app.delete(
-  //   "/:postId/comments/:commentId",
-  //   { preValidation: [app.authenticate], schema: deleteCommentSchema },
-  //   async (req) => {
-  //     const { params, user } = req;
-  //     const { commentId, postId } = params;
-  //     // todo: get user id from JWT
-  //     //  check if user is authorized to delete their own comment (visibility can change?)
-  //     //  + also delete all sub comments?
-  //     const { ok, deletedCount } = await Comment.deleteMany({
-  //       $or: [
-  //         { _id: commentId, authorId: user.id, postId },
-  //         { parentId: commentId, postId },
-  //       ],
-  //     });
-  //     if (ok !== 1 || deletedCount < 1) {
-  //       return new httpErrors.BadRequest();
-  //     }
-  //     return { deletedCount, success: true };
-  //   },
-  // );
+      const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId },
+        { $addToSet: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedPost) return new httpErrors.NotFound();
 
-  // app.put(
-  //   "/:postId/likes/:userId",
-  //   { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
-  //   async (req) => {
-  //     const { postId, userId } = req.params;
-  //     // todo: get user id from JWT
-  //     //  check if userId is the same as param, and if authorized to like (based on visibility)
-  //     const updatedPost = await Post.findOneAndUpdate(
-  //       { _id: postId, likes: { $ne: userId } },
-  //       { $inc: { likesCount: 1 }, $push: { likes: userId } },
-  //       { new: true },
-  //     );
-  //     if (!updatedPost) {
-  //       return new httpErrors.BadRequest();
-  //     }
+      return {
+        likes: updatedPost.likes,
+        likesCount: updatedPost.likes.length,
+      };
+    },
+  );
 
-  //     return {
-  //       likes: updatedPost.likes,
-  //       likesCount: updatedPost.likesCount,
-  //     };
-  //   },
-  // );
+  app.delete(
+    "/:postId/likes/:userId",
+    {
+      preValidation: [app.authenticate],
+      schema: likeUnlikePostSchema,
+    },
+    async (req) => {
+      // TODO: get userId from jwt
+      // userId = ?
+      // user = User.findById(userId);
+      var user = await User.findById("5ea6900c0e0419d4cb123611");
+      if (postId === null || userId === null)
+        return new httpErrors.BadRequest();
+      if (user === null) return new httpErrors.Unauthorized();
 
-  // app.delete(
-  //   "/:postId/likes/:userId",
-  //   { preValidation: [app.authenticate], schema: likeUnlikePostSchema },
-  //   async (req) => {
-  //     const { postId, userId } = req.params;
-  //     // todo: get user id from JWT
-  //     //  check if userId is the same as param, and if authorized to like (based on visibility)
-  //     const updatedPost = await Post.findOneAndUpdate(
-  //       { _id: postId, likes: userId },
-  //       { $inc: { likesCount: -1 }, $pull: { likes: userId } },
-  //       { new: true },
-  //     );
-  //     if (!updatedPost) {
-  //       return new httpErrors.BadRequest();
-  //     }
+      const { postId, userId } = req.params;
 
-  //     return {
-  //       likes: updatedPost.likes,
-  //       likesCount: updatedPost.likesCount,
-  //     };
-  //   },
-  // );
+      const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId },
+        { $pull: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedPost) return new httpErrors.NotFound();
 
-  // app.put(
-  //   "/:postId/comments/:commentId/likes/:userId",
-  //   { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
-  //   async (req) => {
-  //     const { commentId, postId, userId } = req.params;
-  //     // todo: get user id from JWT
-  //     //  check if userId is the same as param, and if authorized to like (based on visibility)
-  //     const updatedComment = await Comment.findOneAndUpdate(
-  //       { _id: commentId, likes: { $ne: userId }, postId },
-  //       { $inc: { likesCount: 1 }, $push: { likes: userId } },
-  //       { new: true },
-  //     );
-  //     if (!updatedComment) {
-  //       return new httpErrors.BadRequest();
-  //     }
+      return {
+        likes: updatedPost.likes,
+        likesCount: updatedPost.likes.length,
+      };
+    },
+  );
 
-  //     return {
-  //       likes: updatedComment.likes,
-  //       likesCount: updatedComment.likesCount,
-  //     };
-  //   },
-  // );
+  app.post(
+    "/:postId/comments",
+    { preValidation: [app.authenticate], schema: addCommentSchema },
+    async (req) => {
+      const { body, params } = req;
+      const { parentId } = body;
+      const { postId } = params;
+      // todo: get user id from JWT
+      //  check if user is authorized to comment (depending on visibility for that post)
+      if (parentId) {
+        const parentPost = await Post.findById(parentId);
+        if (!parentPost || parentPost.postId !== postId) {
+          return new httpErrors.BadRequest();
+        }
+      }
+      const commentProps = {
+        ...body,
+        authorId: "", // req.user.id
+        postId,
+      };
+      return new Comment(commentProps).save();
+    },
+  );
 
-  // app.delete(
-  //   "/:postId/comments/:commentId/likes/:userId",
-  //   { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
-  //   async (req) => {
-  //     const { commentId, postId, userId } = req.params;
-  //     // todo: get user id from JWT
-  //     //  check if userId is the same as param, and if authorized to like (based on visibility)
-  //     const updatedComment = await Comment.findOneAndUpdate(
-  //       { _id: commentId, likes: userId, postId },
-  //       { $inc: { likesCount: -1 }, $pull: { likes: userId } },
-  //       { new: true },
-  //     );
-  //     if (!updatedComment) {
-  //       return new httpErrors.BadRequest();
-  //     }
+  app.put(
+    "/:postId/comments/:commentId",
+    { preValidation: [app.authenticate], schema: updateCommentSchema },
+    async (req) => {
+      const { body, params, user } = req;
+      const { comment } = body;
+      const { commentId, postId } = params;
+      // todo: get user id from JWT
+      //  check if user is authorized to edit comment (only your own comment, visibility can change?)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, authorId: user.id, postId },
+        { comment },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+      return updatedComment;
+    },
+  );
 
-  //     return {
-  //       likes: updatedComment.likes,
-  //       likesCount: updatedComment.likesCount,
-  //     };
-  //   },
-  // );
+  app.delete(
+    "/:postId/comments/:commentId",
+    { preValidation: [app.authenticate], schema: deleteCommentSchema },
+    async (req) => {
+      const { params, user } = req;
+      const { commentId, postId } = params;
+      // todo: get user id from JWT
+      //  check if user is authorized to delete their own comment (visibility can change?)
+      //  + also delete all sub comments?
+      const { ok, deletedCount } = await Comment.deleteMany({
+        $or: [
+          { _id: commentId, authorId: user.id, postId },
+          { parentId: commentId, postId },
+        ],
+      });
+      if (ok !== 1 || deletedCount < 1) {
+        return new httpErrors.BadRequest();
+      }
+      return { deletedCount, success: true };
+    },
+  );
+
+  app.put(
+    "/:postId/comments/:commentId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    async (req) => {
+      const { commentId, postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, likes: { $ne: userId }, postId },
+        { $inc: { likesCount: 1 }, $push: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedComment.likes,
+        likesCount: updatedComment.likesCount,
+      };
+    },
+  );
+
+  app.delete(
+    "/:postId/comments/:commentId/likes/:userId",
+    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    async (req) => {
+      const { commentId, postId, userId } = req.params;
+      // todo: get user id from JWT
+      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, likes: userId, postId },
+        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
+        { new: true },
+      );
+      if (!updatedComment) {
+        return new httpErrors.BadRequest();
+      }
+
+      return {
+        likes: updatedComment.likes,
+        likesCount: updatedComment.likesCount,
+      };
+    },
+  );
 }
 
 module.exports = routes;
