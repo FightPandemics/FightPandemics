@@ -1,7 +1,7 @@
 import React from "react";
 import TextArea from "./TextArea";
 
-export default ({ placeholder, value, onChange, onPressEnter }) => {
+const AutoSize = ({ placeholder, value, onChange, onPressEnter }) => {
   return (
     <TextArea
       autoSize
@@ -12,3 +12,5 @@ export default ({ placeholder, value, onChange, onPressEnter }) => {
     />
   );
 };
+
+export default AutoSize;

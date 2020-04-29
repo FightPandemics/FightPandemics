@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const Label = styled.label`
+const StyledLabel = styled.label`
   color: #425af2;
 `;
 
-export default (Component) => ({ label, style }) => (
-  <Label>
+const Label = (Component) => ({ label, style }) => (
+  <StyledLabel>
     <p style={style}>{label}</p>
     <Component />
-  </Label>
+  </StyledLabel>
 );
+
+export default Label;

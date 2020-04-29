@@ -3,7 +3,7 @@ import React from "react";
 import withLabel from "./with-label";
 import Input from "./BaseInput";
 
-export default ({
+const TextInput = ({
   label,
   type,
   placeholder,
@@ -21,5 +21,14 @@ export default ({
       {...props}
     />
   ));
-  return <TextField label={label} style={labelStyle} value={value} onChange={onChange}/>;
+  return (
+    <TextField
+      label={label}
+      style={labelStyle}
+      value={value}
+      onChange={onChange}
+    />
+  );
 };
+
+export default TextInput;

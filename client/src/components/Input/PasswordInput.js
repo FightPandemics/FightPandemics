@@ -22,8 +22,7 @@ const StyleEye = {
   opacity: 0.5,
 };
 
-const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
-
+const PwInput = ({ inputStyle, placeholder, ...props }) => {
   const [isVisible, setVisible] = useState(false);
   const passwordRef = useRef();
   const EyeIcon = isVisible ? VisibilityIcon : VisibilityOffIcon;
@@ -43,11 +42,9 @@ const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
 
 export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
   const PasswordField = withLabel(() => (
-    <PasswordInput
-      inputStyle={inputStyle}
-      placeholder={placeholder}
-      {...props}
-    />
+    <PwInput inputStyle={inputStyle} placeholder={placeholder} {...props} />
   ));
   return <PasswordField label={label} style={labelStyle} />;
 };
+
+export default PasswordInput;

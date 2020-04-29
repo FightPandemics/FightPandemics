@@ -9,7 +9,7 @@ const { tablet } = mq;
   inline, primary, large, whitebg, roundborder, textOnly, width
 */
 
-export default styled(Button)`
+const CustomButton = styled(Button)`
   display: ${(props) => (props.inline ? "inline-block" : "initial")};
   background-color: ${colors.selago};
   color: #fff;
@@ -106,3 +106,5 @@ export default styled(Button)`
         width: ${props.width};
       `};
 `;
+
+export default CustomButton;

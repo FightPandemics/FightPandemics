@@ -12,7 +12,7 @@ const StyledSearchBar = styled(SearchBar)`
   }
 `;
 
-export default () => {
+const LocationSearch = () => {
   const feedContext = useContext(FeedContext);
   const { location, handleLocation } = feedContext;
   return (
@@ -35,3 +35,5 @@ export default () => {
     </div>
   );
 };
+
+export default LocationSearch;
