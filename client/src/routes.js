@@ -5,9 +5,9 @@ import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
-import Profile from "./pages/Profile";
-import EditProfile from "./pages/EditProfile";
-import EditAccount from "./pages/EditAccount";
+import { TermsConditions } from "./pages/TermsConditions";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { CookiesPolicy } from "./pages/CookiesPolicy";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -97,6 +97,18 @@ const routes = [
   {
     path: "/create-post",
     component: CreatePost,
+  },
+  {
+    path: "/terms-conditions",
+    component: TermsConditions,
+  },
+  {
+    path: "/privacy-policy",
+    component: PrivacyPolicy,
+  },
+  {
+    path: "/cookies-policy",
+    component: CookiesPolicy,
   },
 ];
 

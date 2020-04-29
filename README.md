@@ -1,3 +1,5 @@
+![staging](https://github.com/FightPandemics/FightPandemics/workflows/staging/badge.svg)
+
 #  FightPandemics.com Overview
 
 Currently, there is no easy way to match all that are in need with those that are providing help, at the same time is difficult to find all the information at the local and global level of the different initiatives, projects, researchers, donors, investors, FREE or discounted tools for builders, the grants available and other relevant information. That's why Fight Pandemics was born.
@@ -91,7 +93,11 @@ additional properties not defined in the schema are passed in through the reques
 
 ### Review branches
 
-Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS. Note that in order for a build to run, the branch name must have the `feature/` prefix. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can access your built app at `<branch_name>.fightpandemics.xyz`, where `<branch_name>` is the *sanitized* branch name of your feature branch (i.e. if the branch name has a `/` in it, it will be converted to a `-`, e.g. `feature/hot-potato` will be converted to `feature-hot-potato`). Note that it may take a few minutes for the app to be accessible, or for changes to be reflected, since it takes time for AWS to spin up the Docker containers.
+Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS. Note that in order for a build to run, the branch name must have the `feature/` prefix. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
+
+![Deployment URL](images/deployment_url.png?raw=true)
+
+Note that it may take a few minutes for the app to be accessible, or for changes to be reflected, since it takes time for AWS to spin up the Docker containers.
 
 ### Staging
 
