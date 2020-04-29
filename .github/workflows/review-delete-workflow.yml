@@ -3,8 +3,6 @@ name: review-delete
 on:
   pull_request:
     types: [closed]
-    branches-ignore:
-      - 'master'
 
 jobs:
   destroy_review:
