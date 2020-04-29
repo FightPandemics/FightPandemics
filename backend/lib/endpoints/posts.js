@@ -235,23 +235,43 @@ async function routes(app) {
     },
   );
 
-  // app.patch(
-  //   "/:postId",
-  //   { preValidation: [app.authenticate], schema: updatePostSchema },
-  //   async (req, reply) => {
-  //     // todo: make sure user can only update their own post
-  //     const post = await Post.findById(req.params.postId);
-  //     if (post === null) {
-  //       return reply.send(new httpErrors.NotFound());
-  //     }
-  //     Object.keys(req.body).forEach((key) => {
-  //       if (post[key] && post[key] !== req.body[key]) {
-  //         post[key] = req.body[key];
-  //       }
-  //     });
-  //     return post.save();
-  //   },
-  // );
+  app.patch(
+    "/:postId",
+    {
+      // preValidation: [app.authenticate],
+      schema: updatePostSchema,
+    },
+    async (req, reply) => {
+      // TODO: get userId from jwt
+      // userId = ?
+      // user = User.findById(userId);
+      var user = await User.findById("5ea6900c0e0419d4cb123611");
+      if (user === null) return new httpErrors.Unauthorized();
+
+      const post = await Post.findById(req.params.postId);
+      if (!post) return new httpErrors.NotFound();
+      else if (post.author.authorId != user.id)
+        return new httpErrors.Forbidden();
+      var body = req.body;
+
+      // ExpireAt needs to calculate the date
+      if ("expireAt" in body) {
+        switch (body.expireAt) {
+          case "day":
+            body.expireAt = (1).days().fromNow();
+            break;
+          case "week":
+            body.expireAt = (7).days().fromNow();
+            break;
+          case "month":
+            body.expireAt = (1).months().fromNow();
+            break;
+        }
+      }
+
+      return Object.assign(post, body).save();
+    },
+  );
 
   // app.post(
   //   "/:postId/comments",
