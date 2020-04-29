@@ -45,6 +45,7 @@ const OrganizationSchema = new Schema({
   },
   ownerId: {
     ref: "User",
+    required: true,
     type: Schema.Types.ObjectId,
   },
   twitterUrl: {

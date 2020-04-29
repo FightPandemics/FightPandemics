@@ -14,11 +14,11 @@ module.exports = function createApp(config) {
     logger: true,
   });
   const ajv = new Ajv({
+    allErrors: true,
+    coerceTypes: true,
+    nullable: true,
     removeAdditional: false,
     useDefaults: true,
-    coerceTypes: true,
-    allErrors: true,
-    nullable: true,
   });
   app.setSchemaCompiler((schema) => {
     return ajv.compile(schema);
