@@ -10,8 +10,8 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
-import { ResultsPage } from "./ResultsPage.js";
-import { Under18 } from "./CovidScreening/Under18";
+import ResultsPage from "./ResultsPage.js";
+import Under18 from "./CovidScreening/Under18";
 
 const INITIAL_STATE = {};
 
@@ -318,7 +318,7 @@ const Step8 = (props) => {
   );
 };
 
-export const SymptomsCheck = () => {
+const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     setState({ ...state, [key]: value });
@@ -662,3 +662,5 @@ export const SymptomsCheck = () => {
     </WizardContainer>
   );
 };
+
+export default SymptomsCheck;

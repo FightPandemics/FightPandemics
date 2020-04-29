@@ -49,7 +49,7 @@ const OnboardingContainer = styled.div`
   margin-top: 4rem;
 `;
 
-export const Home = (props) => {
+const Home = (props) => {
   console.log("render home", { props });
   return (
     <div className="text-center">
@@ -98,3 +98,5 @@ export const Home = (props) => {
     </div>
   );
 };
+
+export default Home;

@@ -15,7 +15,7 @@ const TextContainer = styled.div`
   text-align: center;
 `;
 
-export const About = () => {
+const About = () => {
   return (
     <AboutContainer>
       <TextContainer>
@@ -107,3 +107,5 @@ export const About = () => {
     </AboutContainer>
   );
 };
+
+export default About;
