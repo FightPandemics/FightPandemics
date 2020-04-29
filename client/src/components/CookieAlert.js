@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import CloseX from "../components/Icon/close-button";
 import { theme } from "../constants/theme";
 
 const { colors } = theme;
@@ -26,10 +27,8 @@ const CookieLink = styled.a`
   text-decoration: underline;
 `;
 
-const CloseBtn = styled.button`
+const CloseButton = styled.button`
   align-self: start;
-  font-size: 2rem;
-  font-weight: bold;
 `;
 
 export default () => {
@@ -60,7 +59,9 @@ export default () => {
         Your use of FightPandemics' Products is subject to these policies and
         terms.
       </div>
-      <CloseBtn onClick={hideMessage}>x</CloseBtn>
+      <CloseButton onClick={hideMessage}>
+        <CloseX />
+      </CloseButton>
     </CookieContainer>
   );
 };
