@@ -1,39 +1,38 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { connect } from "react-redux";
 import Checkbox from "../components/Input/Checkbox";
 import SubmitButton from "../components/Button/SubmitButton";
 import styled from "styled-components";
 import FormInput from "../components/Input/FormInput";
 import Title from "../components/Title/Title";
 import UnderLineDescription from "../components/Input/UnderlineDescription";
-const Label = styled.label` 
+
+const Label = styled.label`
   color: ${(props) => props.inputColor || "#425AF2"};
   padding-left: ${(props) => props.paddingLeft || ""};
   margin-top: ${(props) => props.marginTop || "1.5rem"};
   font-size: ${(props) => props.size || ""};
   font-weight: ${(props) => props.weight || ""};
-};
 `;
 
-export default function EditAccount(props) {
+function EditAccount(props) {
   // dummy data props,context, redux etc
-  const firstName = "Cees";
-  const lastName = "Wang";
-  const email = "test@Gmail.com";
-  const country = "United States of America";
-  const neighborhood = "NYC, NY";
-  const neighborhoodDescription =
-    "If you do not know your neighborhood, type in zip code or address to find it";
-  const shareInfoStatus = true;
-  const volunteerStatus = false;
-  const donateStatus = true;
-  const medicalHelpStatus = false;
-  const otherHelpStatus = true;
-  const medicalHelpDescription = "I have symptoms of COVID-19";
-  const otherHelpDescription =
-    "I need assistance getting groceries, medicine, etc.";
-  const traveling = true;
-  const displayNeighborhood = false;
+
+  const {
+    firstName,
+    lastName,
+    email,
+    country,
+    neighborhood,
+    shareInfoStatus,
+    volunteerStatus,
+    donateStatus,
+    medicalHelpStatus,
+    otherHelpStatus,
+    traveling,
+    displayNeighborhood,
+  } = props.user;
   const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -46,7 +45,11 @@ export default function EditAccount(props) {
     "E mail": ["email", email],
     "* Name": ["name", firstName + " " + lastName],
     "* Country": ["country", country],
-    "* Neighborhood": ["neighborhood", neighborhood, neighborhoodDescription],
+    "* Neighborhood": [
+      "neighborhood",
+      neighborhood,
+      "If you do not know your neighborhood, type in zip code or address to find it",
+    ],
   };
 
   const helpSection = {
@@ -56,8 +59,16 @@ export default function EditAccount(props) {
   };
 
   const needHelpSection = {
-    "Medical Help": ["medicalHelp", medicalHelpStatus, medicalHelpDescription],
-    "Other Help": ["otherHelp", otherHelpStatus, otherHelpDescription],
+    "Medical Help": [
+      "medicalHelp",
+      medicalHelpStatus,
+      "I have symptoms of COVID-19",
+    ],
+    "Other Help": [
+      "otherHelp",
+      otherHelpStatus,
+      "I need assistance getting groceries, medicine, etc.",
+    ],
   };
 
   const renderHelp = () => {
@@ -224,3 +235,11 @@ export default function EditAccount(props) {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditAccount);

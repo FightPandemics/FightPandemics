@@ -1,21 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import FormInput from "../components/Input/FormInput";
 import ProfilePic from "../components/Picture/ProfilePic";
 import SubmitButton from "../components/Button/SubmitButton";
 import Title from "../components/Title/Title";
 // dummy data props,context, redux etc
-const firstName = "Cees";
-const lastName = "Wang";
+
 const selfIntroduction =
   "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
 const editProfile = true;
-const facebookURL = "http://facebook.com";
-const twitterURL = "http://twitter.com";
-const githubURL = "http://github.com";
-const linkedinURL = "http://linkedin.com";
-const personalURL = "http://personal.com";
 
 const ChangePicButton = styled.div`
   color: #425af2;
@@ -28,8 +23,18 @@ function getInitials(firstName, lastName) {
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
 }
 
-export default function EditProfile(props) {
+function EditProfile(props) {
   // dummy data props,context, redux etc
+  const {
+    firstName,
+    lastName,
+    facebookURL,
+    twitterURL,
+    githubURL,
+    linkedinURL,
+    personalURL,
+    about,
+  } = props.user;
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
@@ -76,8 +81,8 @@ export default function EditProfile(props) {
       <form style={{ display: "flex", flexDirection: "column" }}>
         <FormInput
           inputTitle="Self-introduction"
-          name="selfIntroduction"
-          defaultValue={selfIntroduction}
+          name="about"
+          defaultValue={about}
           reference={register({ maxLength: 160 })}
         />
         {renderFormInputs()}
@@ -92,3 +97,11 @@ export default function EditProfile(props) {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditProfile);

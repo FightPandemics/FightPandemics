@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "../components/Picture/ProfilePic";
 import LinkedinIcon from "../components/Icon/Linkedin-blue";
@@ -89,13 +90,8 @@ const PlaceholderIcon = styled.div`
 `;
 
 const SectionContainer = styled.div``;
-export const Profile = (props) => {
-  // dummy data props,context, redux etc
-  const firstName = "Cees";
-  const lastName = "Wang";
-  const about = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
-  const email = "ceeswang@Test.com";
-  const location = "NY, USA";
+const Profile = (props) => {
+  const { firstName, lastName, about, email, location } = props.user;
   const needHelp = true;
   const Item = Popover.Item;
 
@@ -238,3 +234,11 @@ const iconStyle = {
   marginRight: "1rem",
   marginBottom: "1rem",
 };
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);

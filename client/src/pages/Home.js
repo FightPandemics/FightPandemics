@@ -95,12 +95,6 @@ export const Home = (props) => {
           View Community Postings
         </Link>
       </p>
-      <p>
-        <Link to="/profile">
-          {/* Profile link for viewing purposes */}
-          Profile
-        </Link>
-      </p>
     </div>
   );
 };
