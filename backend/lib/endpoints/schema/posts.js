@@ -38,20 +38,23 @@ const getPostsSchema = {
 
 const createPostSchema = {
   body: S.object()
-    .prop("appStore", S.string().format("url"))
     .prop("content", S.string().required())
-    .prop("email", S.string().format("email"))
-    .prop("expiration", S.string().enum(EXPIRATION_OPTIONS).required())
+    .prop("expireAt", S.string().enum(EXPIRATION_OPTIONS).required())
+    .prop(
+      "externalLinks",
+      S.object()
+        .prop("appStore", S.string().format("url"))
+        .prop("email", S.string().format("email"))
+        .prop("playStore", S.string().format("url"))
+        .prop("website", S.string().format("url")),
+    )
     .prop("language", S.array().items(S.string()))
-    .prop("objective", S.string().enum(POST_OBJECTIVES).required())
-    .prop("playStore", S.string().format("url"))
     .prop("title", S.string().required())
     .prop(
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required())
-    .prop("website", S.string().format("url")),
 };
 
 const getPostByIdSchema = {

@@ -83,56 +83,34 @@ async function routes(app) {
       // userId = ?
       // user = User.findById(userId);
       user = await User.findById("5ea6900c0e0419d4cb123611");
+      if (user === null) return new httpErrors.Unauthorized();
 
-      var body = req.body;
+      var postProps = req.body;
 
       // Creates embedded author document
-      var author = {
+      postProps.author = {
         authorId: user.id,
         authorName: user.firstName + " " + user.lastName,
         authorType: user.type,
         location: user.location,
       };
 
-      // ExpireAt
+      // ExpireAt needs to calculate the date
       var expireAt = null;
-      switch (body.expiration) {
+      switch (postProps.expireAt) {
         case "day":
-          expireAt = (1).days().fromNow();
+          postProps.expireAt = (1).days().fromNow();
           break;
         case "week":
-          expireAt = (7).days().fromNow();
+          postProps.expireAt = (7).days().fromNow();
           break;
         case "month":
-          expireAt = (1).months().fromNow();
+          postProps.expireAt = (1).months().fromNow();
           break;
       }
 
-      // External Links
-      var externalLinks = {};
-      if (body.hasOwnProperty("appStore"))
-        externalLinks.appStore = body.appStore;
-      if (body.hasOwnProperty("email")) externalLinks.email = body.email;
-      if (body.hasOwnProperty("playStore"))
-        externalLinks.playStore = body.playStore;
-      if (body.hasOwnProperty("website")) externalLinks.website = body.website;
-      // Likes
-      var likes = [];
-
-      // Join
-      var postProps = {
-        author,
-        content: body.content,
-        language: body.language,
-        likes,
-        expireAt,
-        objective: body.objective,
-        title: body.title,
-        types: body.types,
-        visibility: body.visibility,
-      };
-      if (expireAt != null) postProps.expireAt = expireAt;
-      if (externalLinks != {}) postProps.externalLinks = externalLinks;
+      // Initial empty likes array
+      postProps.likes = [];
 
       var post = new Post(postProps);
       if (post.save()) {
