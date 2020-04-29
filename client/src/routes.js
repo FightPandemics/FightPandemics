@@ -4,15 +4,17 @@ import { OfferHelp } from "./pages/OfferHelp";
 import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
 import { AirTableCOVID } from "./pages/AirTableCOVID";
-import FindHelp from "./pages/find-help/FindHelp";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
+import { TermsConditions } from "./pages/TermsConditions";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { CookiesPolicy } from "./pages/CookiesPolicy";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
+import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 
-
-export const routes = [
+const routes = [
   {
     path: "/",
     component: Home,
@@ -24,6 +26,7 @@ export const routes = [
     layout: "logo",
     props: {
       isLoginForm: true,
+      notLoggedInOnly: true,
     },
   },
   {
@@ -32,6 +35,15 @@ export const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
+      notLoggedInOnly: true,
+    },
+  },
+  {
+    path: "/auth/verify-email",
+    component: VerifyEmail,
+    layout: "logo",
+    props: {
+      loggedInOnly: true,
     },
   },
   {
@@ -60,7 +72,7 @@ export const routes = [
   },
   {
     path: "/find-help",
-    component: FindHelp,
+    component: Feed,
   },
   {
     path: "/symptoms-check",
@@ -74,4 +86,18 @@ export const routes = [
     path: "/create-post",
     component: CreatePost,
   },
+  {
+    path: "/terms-conditions",
+    component: TermsConditions,
+  },
+  {
+    path: "/privacy-policy",
+    component: PrivacyPolicy,
+  },
+  {
+    path: "/cookies-policy",
+    component: CookiesPolicy,
+  },
 ];
+
+export default routes;

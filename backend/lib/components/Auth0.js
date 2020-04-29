@@ -1,4 +1,5 @@
 const axios = require("axios");
+const httpErrors = require("http-errors");
 const qs = require("querystring");
 const { config } = require("../../config");
 
@@ -6,24 +7,38 @@ const {
   auth: { domain: AUTH_DOMAIN },
 } = config;
 
-const errorHandler = (err) => {
+const getAuthHeaders = (token) => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
+// todo: check improving the error handling here, could also check & handle or pass the response message e.g.
+/*
+    data: {
+      error: 'invalid_grant',
+      error_description: 'Wrong email or password.'
+    }
+ */
+const wrapError = (err) => {
   const {
     response: { data, status },
   } = err;
-  const { error, message } = data;
+  const { message } = data;
   const statusCode = status || data.statusCode;
-  // eslint-disable-next-line no-throw-literal
-  throw { error, message, statusCode };
+  throw httpErrors(statusCode, message);
 };
 
-const buildOauthUrl = (provider) => {
+const buildOauthUrl = (connection, redirectTo) => {
   const qParams = qs.stringify({
     audience: `${AUTH_DOMAIN}/api/v2/`,
     client_id: config.auth.clientId,
-    connection: provider.name,
-    redirect_uri: `${config.auth.appUrl}/login/callback`,
+    connection,
+    redirect_uri: redirectTo,
     response_type: "code",
-    scope: provider.scope,
+    scope: "openid profile email",
     state: config.auth.state,
   });
   return `${AUTH_DOMAIN}/authorize?${qParams}`;
@@ -37,31 +52,37 @@ const authenticate = async (grantType, payload = {}) => {
     grant_type: grantType,
     ...payload,
   };
-
-  return axios
-    .post(`${AUTH_DOMAIN}/oauth/token`, body)
-    .then(({ data }) => data.access_token)
-    .catch(errorHandler);
+  try {
+    const res = await axios.post(`${AUTH_DOMAIN}/oauth/token`, body);
+    return res.data.access_token;
+  } catch (err) {
+    return wrapError(err);
+  }
 };
 
 const createUser = async (token, payload) => {
-  return axios
-    .post(`${AUTH_DOMAIN}/api/v2/users`, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(({ data }) => data)
-    .catch(errorHandler);
+  try {
+    const res = await axios.post(
+      `${AUTH_DOMAIN}/api/v2/users`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
 };
 
-const getUser = async (authorization) => {
-  return axios
-    .get(`${AUTH_DOMAIN}/userinfo`, {
-      headers: { Authorization: authorization },
-    })
-    .then(({ data }) => data)
-    .catch(errorHandler);
+const getUser = async (token) => {
+  try {
+    const res = await axios.get(
+      `${AUTH_DOMAIN}/userinfo`,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
 };
 
 module.exports = {

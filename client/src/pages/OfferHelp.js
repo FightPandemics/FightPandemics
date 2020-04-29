@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-import styled from "styled-components";
 
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
-  AnswerButton,
   StyledWizard,
   WizardContainer,
   WizardStep,
@@ -18,22 +16,20 @@ import {
   WizardFormGroup,
   getAnswersMap,
   getCheckedAnswers,
+  WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "../components/StepWizard";
 import { IconButton, SubmitButton, CustomButton } from "../components/Button";
 import { ShareMyLocationIcon } from "../components/Icon";
-
-import { theme } from "../constants/theme";
-const { button } = theme;
 
 const INITIAL_STATE = {
   answers: [],
 };
 
 const STEP_1_ANSWERS = [
-  "As a volunteer",
-  "As a Doctor / Investor",
-  "As a Organisation",
+  "As a Volunteer",
+  "As a Donor/Investor",
+  "As a Organization",
 ];
 const STEP_1_STATE = {
   answers: getAnswersMap(STEP_1_ANSWERS),
@@ -50,37 +46,39 @@ const Step1 = (props) => {
     updateState({ ...state, answers: updatedAnswers });
     props.update("helpTypeOffered", checkedAnswers);
   };
-  const toggleNone = () => {
-    const newNone = !none;
-    updateState({ ...state, none: newNone });
-    props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
-  };
+  // const toggleNone = () => {
+  //   const newNone = !none;
+  //   updateState({ ...state, none: newNone });
+  //   props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
+  // };
 
-  const onSelectAnswer = (answer) => {
-    console.log(answer);
+  // const onSelectAnswer = (answer) => {
+  //   console.log(answer);
 
-    props.update("helpTypeOffered", answer);
-    console.log(props);
+  //   props.update("helpTypeOffered", answer);
+  //   console.log(props);
 
-    // props.nextStep();
-  };
+  //   // props.nextStep();
+  // };
 
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>How do you want to contribute?</StepTitle>
       <WizardFormWrapper>
-        {Object.entries(answers).map(([answer, checked], i) => (
-          <WizardCheckboxItem
-            key={i}
-            onChange={() => toggleAnswer(answer)}
-            checked={!none && checked}
-          >
-            {answer}
-          </WizardCheckboxItem>
-        ))}
+        <WizardCheckboxWrapper>
+          {Object.entries(answers).map(([answer, checked], i) => (
+            <WizardCheckboxItem
+              key={i}
+              onChange={() => toggleAnswer(answer)}
+              checked={!none && checked}
+            >
+              {answer}
+            </WizardCheckboxItem>
+          ))}
+        </WizardCheckboxWrapper>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -108,17 +106,17 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
-      <p>So we can show postings near you.</p>
+      <p>We want to show you the most relevant results</p>
       <WizardFormWrapper>
         <WizardFormGroup>
           <StyledTextInput
             type="text"
             name="manualLocation"
             label="Location search"
-            placeholder="Enter address, Zip Code or City"
+            placeholder="Enter Address, Zip Code or City"
             onChange={manualLocation}
             value={locationSearch}
           />
@@ -154,7 +152,7 @@ const Step3 = (props) => {
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
       <WizardFormWrapper>

@@ -1,23 +1,26 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Button, Flex, WhiteSpace } from "antd-mobile";
-import { Link } from "react-router-dom";
-import { validateEmail } from '../utils/common.js';
-import { PASSWORD_MIN_LENGTH } from '../config';
-import { loginWithEmail, signup } from '../actions/authActions';
+import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import PasswordInput from "~/components/Input/PasswordInput";
-import { Toast } from 'antd-mobile';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+import { PASSWORD_MIN_LENGTH } from "../config";
+import {
+  authWithSocialProvider,
+  loginWithEmail,
+  signup,
+} from "../actions/authActions";
+import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-
 import {
   FacebookIcon,
   TwitterIcon,
   GmailIcon,
   LinkedinIcon,
 } from "../components/Icon";
-import SubmitButton from "~/components/Button/SubmitButton";
+import { validateEmail } from "../utils/common.js";
+import { useQuery } from "../utils/hooks.js";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -64,54 +67,62 @@ const SocialButton = styled(Button).attrs((props) => ({
 `;
 
 export default ({ isLoginForm }) => {
-  
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const queryParams = useQuery();
+  const code = queryParams.get("code");
+  const state = queryParams.get("state");
+  useEffect(() => {
+    if (code && state) {
+      dispatch(authWithSocialProvider({ code, state }));
+    }
+  }, [code, state]);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleInputChangeEmail = e => {
+  const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
-  const handleInputChangePassword = e => {
+  const handleInputChangePassword = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   const handleLoginWithEmail = (evt) => {
     evt.preventDefault();
-    if (!validateEmail (email)) {
-      Toast.fail('Invalid email address!', 3);
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 3);
       return;
     }
     if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail('Password must be at least 6 characters', 3);
+      Toast.fail("Password must be at least 6 characters", 3);
       return;
     }
     dispatch(loginWithEmail({ email, password }));
-  }
+  };
 
   const handleSignup = (evt) => {
     evt.preventDefault();
-    if (!validateEmail (email)) {
-      Toast.fail('Invalid email address!', 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail('Password must be at least 6 characters', 3);
-      return;
-    }
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (!validateEmail(email)) {
+      "Invalid email address!"
+    }*/
+    // todo: add inline validation (disable button / indicate error on form)
+    /*if (password.length < PASSWORD_MIN_LENGTH) {
+      "Password must be at least 6 characters"
+    }*/
     dispatch(signup({ email, password }));
-  }  
+  };
 
-  const loginWithConnection = (connection) => {};
+  const handleSocialLogin = (provider) => {
+    window.location.href = `/api/auth/oauth/${provider}`;
+  };
 
   return (
     <div className="text-center">
       <h1>Welcome</h1>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <Label style={StyleLabel} label="E-mail"/>
+          <Label style={StyleLabel} label="E-mail" />
           <Input
             type="email"
             required
@@ -119,10 +130,10 @@ export default ({ isLoginForm }) => {
             value={email}
             onChange={handleInputChangeEmail}
             style={StyleInput}
-          />                    
+          />
         </InputWrapper>
-        <InputWrapper>   
-          <Label style={StyleLabel} label="Password"/>
+        <InputWrapper>
+          <Label style={StyleLabel} label="Password" />
           <Input
             type="password"
             required
@@ -136,7 +147,7 @@ export default ({ isLoginForm }) => {
         <WhiteSpace />
         <SubmitButton
           title={isLoginForm ? "Login" : "Sign Up"}
-          onClick={isLoginForm? handleLoginWithEmail: handleSignup}
+          onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
         />
       </form>
       <WhiteSpace />
@@ -163,28 +174,28 @@ export default ({ isLoginForm }) => {
         <SocialButton
           style={StyleSocialIcon}
           icon={<FacebookIcon />}
-          onClick={() => loginWithConnection("fb")}
+          onClick={() => handleSocialLogin("facebook")}
         >
           Facebook
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<GmailIcon />}
-          onClick={() => loginWithConnection("gmail")}
+          onClick={() => handleSocialLogin("google")}
         >
           Gmail
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<TwitterIcon />}
-          onClick={() => loginWithConnection("twitter")}
+          onClick={() => handleSocialLogin("twitter")}
         >
           Twitter
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
           icon={<LinkedinIcon />}
-          onClick={() => loginWithConnection("linkedin")}
+          onClick={() => handleSocialLogin("linkedin")}
         >
           Linkedin
         </SocialButton>
@@ -192,5 +203,3 @@ export default ({ isLoginForm }) => {
     </div>
   );
 };
-
-//export default LoginOrSignup;

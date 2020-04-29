@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
 import SubmitButton from "../components/Button/SubmitButton";
-import TextInput from "../components/Input/TextInput";
-import Title from "../components/Typography/Title";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
   AnswerButton,
@@ -31,11 +29,11 @@ const Step1 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What type of help do you need?</StepTitle>
       <AnswerButton onSelect={() => onSelectAnswer("medical")}>
-        <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
+        <strong>Medical:</strong> I have symptoms of COVID-19.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
         <strong>Other Help:</strong> I need assistance getting
@@ -63,7 +61,7 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
       <AnswerButton onSelect={selectLocationDetection}>
@@ -85,7 +83,7 @@ const Step3 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
       <WizardFormWrapper>
@@ -94,7 +92,7 @@ const Step3 = (props) => {
             type="email"
             name="userEmail"
             label="Email"
-            placeholder="Type your email"
+            placeholder="Email"
             onChange={onChange}
             value={email && email}
           />

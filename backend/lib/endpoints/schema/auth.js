@@ -1,26 +1,37 @@
-// todo: add auth schema's
+const S = require("fluent-schema");
 
-// {
-//   connection: "Username-Password-Authentication",
-//   email: "john.doe@gmail.com",
-//   password: "Password123!",
-//   user_metadata: {
-//     name: "John",
-//     surname: "Doe",
-//   },
-//   email_verified: false,
-//   verify_email: false,
-//   app_metadata: {},
-// };
+const loginSchema = {
+  body: S.object()
+    .additionalProperties(false)
+    .prop("email", S.string().required())
+    .prop("password", S.string().required()),
+};
 
-// const signUpSchema = Joi.object().keys({
-//   connection: Joi.string().required(),
-//   email: Joi.string().email().required(),
-//   password: Joi.string().required(),
-//   user_metadata: Joi.object().keys({
-//     name: Joi.string(),
-//     surname: Joi.string(),
-//   }),
-//   email_verified: Joi.boolean(),
-//   verify_email: Joi.boolean(),
-// });
+// todo: add password confirmation as required field
+const signupSchema = {
+  body: S.object()
+    .additionalProperties(false)
+    .prop("email", S.string().required())
+    .prop("password", S.string().required()),
+};
+
+const oAuthSchema = {
+  body: S.object()
+    .additionalProperties(false)
+    .prop("code", S.string().required())
+    .prop("state", S.string().required()),
+};
+
+const oAuthProviderSchema = {
+  params: S.object().prop(
+    "provider",
+    S.enum(["google", "facebook", "linkedin", "twitter"]).required(),
+  ),
+};
+
+module.exports = {
+  loginSchema,
+  oAuthProviderSchema,
+  oAuthSchema,
+  signupSchema,
+};
