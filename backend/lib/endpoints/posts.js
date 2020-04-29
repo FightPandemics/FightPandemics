@@ -1,6 +1,6 @@
 const httpErrors = require("http-errors");
 const mongoose = require("mongoose");
-require("datejs");
+const moment = require("moment");
 
 const {
   getPostsSchema,
@@ -97,18 +97,7 @@ async function routes(app) {
       };
 
       // ExpireAt needs to calculate the date
-      var expireAt = null;
-      switch (postProps.expireAt) {
-        case "day":
-          postProps.expireAt = (1).days().fromNow();
-          break;
-        case "week":
-          postProps.expireAt = (7).days().fromNow();
-          break;
-        case "month":
-          postProps.expireAt = (1).months().fromNow();
-          break;
-      }
+      postProps.expireAt = moment().add(1, postProps.expireAt + "s");
 
       // Initial empty likes array
       postProps.likes = [];
@@ -128,7 +117,7 @@ async function routes(app) {
   app.get(
     "/:postId",
     {
-      // preValidation: [app.authenticate],
+      preValidation: [app.authenticate],
       schema: getPostByIdSchema,
     },
     async (req, reply) => {
@@ -234,19 +223,8 @@ async function routes(app) {
       var body = req.body;
 
       // ExpireAt needs to calculate the date
-      if ("expireAt" in body) {
-        switch (body.expireAt) {
-          case "day":
-            body.expireAt = (1).days().fromNow();
-            break;
-          case "week":
-            body.expireAt = (7).days().fromNow();
-            break;
-          case "month":
-            body.expireAt = (1).months().fromNow();
-            break;
-        }
-      }
+      if ("expireAt" in body)
+        body.expireAt = moment().add(1, body.expireAt + "s");
 
       return Object.assign(post, body).save();
     },
