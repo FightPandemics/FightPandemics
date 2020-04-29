@@ -3,8 +3,6 @@ name: review-delete
 on:
   pull_request:
     types: [closed]
-    branches-ignore:
-      - 'master'
 
 jobs:
   destroy_review:
@@ -14,7 +12,7 @@ jobs:
       - id: get-branch-name-sanitized
         name: Sanitize branch name
         shell: bash
-        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | sed 's/\//-/g')"
+        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | tr -cd '[a-zA-Z0-9]_-')"
       - env:
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
