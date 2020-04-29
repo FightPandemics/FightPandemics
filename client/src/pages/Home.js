@@ -22,9 +22,13 @@ const StyledIntro = styled.div`
   @media only screen and (min-width: 600px) {  
     background-color: ${theme.colors.royalBlue};
     border-radius: 1rem;
-    padding-left: 8rem;
-    padding-top: 16rem; 
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
+    height:100%;
+    margin: 0;
+    padding: 12rem 0;
   }
 `;
 
@@ -44,11 +48,13 @@ const StyledWelcome = styled(Heading)`
   text-align: center;
 
   @media only screen and (min-width: 600px) {  
-    font-size: ${theme.typography.heading.one};
+    font-size: 2.8vw;
     text-align: left;
+    margin: 0 0 7rem 0;
   }
 `;
 
+// Used view unit due to responsive functionality
 const StyledStrapline = styled(StyledWelcome)`
   font-weight: bold;
   margin: 0 auto;
@@ -56,14 +62,19 @@ const StyledStrapline = styled(StyledWelcome)`
 
   @media only screen and (min-width: 600px){
     color: white;
-    line-height: 5rem;
+    line-height: 4vw;
+    width: 90%;
+    text-align: left;
   }
 
 `;
 
+
+// Used view unit due to responsive functionality
 const IntroText = styled.div`
 @media only screen and (min-width: 600px){
-  width: 70%;
+  width: 38vw;
+  padding: 12vh 7vw;
 }
 `;
 
@@ -76,7 +87,8 @@ const StyledP = styled.p`
   margin: 0;
   
   @media only screen and (min-width: 600px){
-    font-size: ${theme.typography.size.large};
+    //theme.typography.heading.one is not enough size
+    font-size: 1vw;
     text-align: left;
     color: white;
   }
@@ -89,7 +101,7 @@ const OnboardingContainer = styled.div`
     display: "flex";
     flexWrap: "wrap";
     width: 100%;
-    justify-content: center;
+    margin: auto 0;
   }
 `;
 
