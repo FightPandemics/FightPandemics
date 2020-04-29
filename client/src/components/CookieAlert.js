@@ -32,10 +32,10 @@ const CloseButton = styled.button`
 `;
 
 export default () => {
-  const [active, setActive] = useState();
+  const [active, setActive] = useState(false);
 
   const hideMessage = (event) => {
-    active ? setActive(false) : setActive(true);
+    setActive(false);
     localStorage.setItem("cookieMessage", "true");
   };
 
