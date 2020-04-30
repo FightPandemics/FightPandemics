@@ -1,14 +1,15 @@
 const S = require("fluent-schema");
+const { strictSchema } = require("./utils");
 
 const getPostsSchema = {
-  querystring: S.object()
+  querystring: strictSchema()
     .prop("authorId", S.string())
     .prop("skip", S.integer())
     .prop("limit", S.integer()),
 };
 
 const createPostSchema = {
-  body: S.object()
+  body: strictSchema()
     .prop("title", S.string().required())
     .prop("description", S.string().required())
     .prop("type", S.array().maxItems(10).items(S.string()).required())
@@ -23,14 +24,14 @@ const createPostSchema = {
 };
 
 const getPostByIdSchema = {
-  querystring: S.object()
+  querystring: strictSchema()
     .prop("authorId", S.string())
     .prop("skip", S.integer())
     .prop("limit", S.integer()),
 };
 
 const updatePostSchema = {
-  body: S.object()
+  body: strictSchema()
     .prop("title", S.string())
     .prop("description", S.string())
     .prop("type", S.array().maxItems(10).items(S.string()))
@@ -42,38 +43,38 @@ const updatePostSchema = {
     .prop("iosUrl", S.string())
     .prop("androidUrl", S.string())
     .prop("media", S.string()),
-  params: S.object().prop("postId", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const likeUnlikePostSchema = {
-  params: S.object().prop("postId", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const likeUnlikeCommentSchema = {
-  params: S.object()
+  params: strictSchema()
     .prop("postId", S.string().required())
     .prop("commentId", S.string().required())
     .prop("userId", S.string().required()),
 };
 
 const deletePostSchema = {
-  params: S.object().prop("postId", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const addCommentSchema = {
-  body: S.object().prop("comment", S.string().required()),
-  params: S.object().prop("postId", S.string().required()),
+  body: strictSchema().prop("comment", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const deleteCommentSchema = {
-  params: S.object()
+  params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
 
 const updateCommentSchema = {
-  body: S.object().prop("comment", S.string().required()),
-  params: S.object()
+  body: strictSchema().prop("comment", S.string().required()),
+  params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
