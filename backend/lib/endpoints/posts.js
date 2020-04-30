@@ -27,15 +27,9 @@ async function routes(app) {
   // /posts
 
   app.get("/", { schema: getPostsSchema }, async (req) => {
-    // todo: add limit, skip, visibility filter, needs, tags ...
+    // todo: add visibility filter, needs, tags ...
     const { authorId, limit, skip } = req.query;
     const aggregates = authorId ? [{ $match: { authorId } }] : [];
-
-    const skipNum = skip || 0;
-    const limitNum = limit || DEFAULT_LIMIT;
-    // Total number of items Mongo will consider, but then will skip the
-    // first "skip" items before returning a result
-    const totalLimit = skipNum + limitNum;
 
     aggregates.push(
       {
@@ -47,10 +41,10 @@ async function routes(app) {
         },
       },
       {
-        $limit: totalLimit,
+        $skip: skip || 0,
       },
       {
-        $skip: skip || 0,
+        $limit: limit || DEFAULT_LIMIT,
       },
       {
         $project: {
