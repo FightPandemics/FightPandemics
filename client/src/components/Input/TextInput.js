@@ -21,5 +21,12 @@ export default ({
       {...props}
     />
   ));
-  return <TextField label={label} style={labelStyle} value={value} onChange={onChange}/>;
+  return (
+    <TextField
+      label={label}
+      style={labelStyle}
+      value={value}
+      onChange={onChange}
+    />
+  );
 };
