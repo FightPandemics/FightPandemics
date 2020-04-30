@@ -1,3 +1,5 @@
+// todo: fix this by avoiding to import if possible
+// eslint-disable-next-line import/no-extraneous-dependencies
 const Ajv = require("ajv");
 const cors = require("cors");
 const fastify = require("fastify");
@@ -24,11 +26,12 @@ module.exports = function createApp(config) {
     return ajv.compile(schema);
   });
 
-  app.register(require("./plugins/mongoose-connector"), config.mongo);
-  app.register(require("./plugins/auth"), config.auth);
+  app.register(require("fastify-sensible"));
   app.register(require("fastify-oas"), {
     exposeRoute: true,
   });
+  app.register(require("./plugins/mongoose-connector"), config.mongo);
+  app.register(require("./plugins/auth"), config.auth);
   app.use(cors());
 
   app.get("/api/version", version);

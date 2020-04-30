@@ -1,5 +1,3 @@
-const httpErrors = require("http-errors");
-
 const Auth0 = require("../components/Auth0");
 const {
   loginSchema,
@@ -17,7 +15,7 @@ async function routes(app) {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== config.auth.state) {
-        return new httpErrors.Unauthorized("Invalid state");
+        throw app.httpErrors.unauthorized("Invalid state");
       }
       const token = await Auth0.authenticate("authorization_code", {
         code,
@@ -31,7 +29,7 @@ async function routes(app) {
       return { emailVerified, token };
     } catch (err) {
       req.log.error("OAuth error", err);
-      return new httpErrors.InternalServerError();
+      throw app.httpErrors.internalServerError();
     }
   });
 
@@ -65,10 +63,10 @@ async function routes(app) {
         req.log.info(`User created successfully email=${email}`);
       } catch (err) {
         if (err.statusCode === 409) {
-          return new httpErrors.Conflict("User already exists");
+          throw app.httpErrors.conflict("User already exists");
         }
         req.log.error("Error creating user", { err });
-        return new httpErrors.InternalServerError();
+        throw app.httpErrors.internalServerError();
       }
       const accessToken = await Auth0.authenticate("password", {
         password,
@@ -92,10 +90,10 @@ async function routes(app) {
       return { emailVerified, token };
     } catch (err) {
       if (err.statusCode === 403) {
-        return new httpErrors.Unauthorized("Wrong email or password.");
+        throw app.httpErrors.unauthorized("Wrong email or password.");
       }
       req.log.error("Error logging in", { err });
-      return new httpErrors.InternalServerError();
+      throw app.httpErrors.internalServerError();
     }
   });
 }
