@@ -57,7 +57,7 @@ while developing. This is a living document, so feel free to add any notes that 
 
 ### Development Workflow
 * Please be sure to often merge or rebase the latest from the master branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind master.
-* Pull requests with many significant changes can take longer for reviewers to review, as well as making it diffciult for contributors to maintain and make revisions. If possible, try to keep changes small so that it's faster for reviewers to review and easier for contributors to make revisions. 
+* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you forsee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
 
 ### Backend
 
