@@ -8,8 +8,6 @@ import SubmitButton from "../components/Button/SubmitButton";
 import Title from "../components/Title/Title";
 // dummy data props,context, redux etc
 
-const selfIntroduction =
-  "Lorem ipsum dolor sit amet, consectetuer adipiscing elit";
 const editProfile = true;
 
 const ChangePicButton = styled.div`

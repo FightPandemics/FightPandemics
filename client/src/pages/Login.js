@@ -77,7 +77,7 @@ const Login = ({ isLoginForm }) => {
     if (code && state) {
       dispatch(authWithSocialProvider({ code, state }));
     }
-  }, [code, state]);
+  }, [code, state, dispatch]);
 
   const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
