@@ -10,7 +10,7 @@ import history from "./utils/history";
 const App = (props) => {
   useEffect(() => {
     props.initAuth();
-  }, []);
+  }, [props]);
 
   return (
     <Router history={history}>

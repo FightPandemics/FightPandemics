@@ -37,17 +37,16 @@ const StyledWelcome = styled.h2`
   text-align: center;
 `;
 
-const StyledStrapline = styled(StyledWelcome)`
-  font-weight: bold;
-  margin: 0 auto;
-`;
+// const StyledStrapline = styled(StyledWelcome)`
+//   font-weight: bold;
+//   margin: 0 auto;
+// `;
 
 const OnboardingContainer = styled.div`
   margin-top: 4rem;
 `;
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
-console.log({ needHelpAnswers });
 
 const getGeoLocation = () => needHelpAnswers?.location;
 

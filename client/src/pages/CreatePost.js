@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import filterOptions from "../assets/data/filterOptions";
 import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
@@ -107,7 +107,7 @@ const CreatePost = (props) => {
     if (!errors.length) {
       // todo: finish integrating api
       try {
-        const req = await axios.post("/api/posts", formData);
+        // const req = await axios.post("/api/posts", formData);
       } catch (error) {
         console.log(error);
       }

@@ -186,6 +186,7 @@ const Profile = (props) => {
                 width: "35%",
               }}
               src={needHelp ? needHelpInactive : offerHelpInactive}
+              alt="help-type-icon"
             />
             <Title
               title={needHelp ? "I need help" : "I want to help"}

@@ -1,7 +1,8 @@
 const S = require("fluent-schema");
+const { strictSchema } = require("./utils");
 
 const getCountrySchema = {
-  querystring: S.object()
+  querystring: strictSchema()
     .prop("latitude", S.number().minimum(0).maximum(90).required())
     .prop("longitude", S.number().minimum(-180).maximum(180).required()),
 };
