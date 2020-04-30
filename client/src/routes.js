@@ -8,6 +8,9 @@ import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiesPolicy from "./pages/CookiesPolicy";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
+import EditAccount from "./pages/EditAccount";
 import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -81,6 +84,18 @@ const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/profile",
+    component: Profile,
+  },
+  {
+    path: "/edit-profile",
+    component: EditProfile,
+  },
+  {
+    path: "/edit-account",
+    component: EditAccount,
   },
   {
     path: "/create-post",

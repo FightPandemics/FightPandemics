@@ -71,9 +71,9 @@ async function routes(app) {
         return new httpErrors.InternalServerError();
       }
       const accessToken = await Auth0.authenticate("password", {
-        password: req.body.password,
+        password,
         scope: "openid",
-        username: req.body.email,
+        username: email,
       });
       return { emailVerified: false, token: accessToken };
     },

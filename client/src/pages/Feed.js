@@ -7,14 +7,14 @@ import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
 import CreatPostIcon from "../components/Icon/create-post";
-import { optionsReducer, feedReducer } from "../reducers/feedReducers";
+import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-} from "../actions/feedActions";
+} from "../hooks/actions/feedActions";
 
 export const FeedContext = React.createContext();
 

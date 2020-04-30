@@ -10,21 +10,6 @@ import {
 } from "./colors";
 
 const theme = {
-  global: {
-    font: {
-      family: "Work Sans",
-    },
-    focus: {
-      border: {
-        color: PRIMARY,
-      },
-    },
-    colors: {
-      primary: PRIMARY,
-      royalBlue: ROYAL_BLUE,
-      darkGray: "#282828",
-    },
-  },
   typography: {
     font: {
       family: {
@@ -34,7 +19,7 @@ const theme = {
       },
     },
     size: {
-      // xxsmall: "1rem",
+      xxsmall: "1rem",
       xsmall: "1.1rem",
       small: "1.2rem",
       medium: "1.4rem",
@@ -126,6 +111,7 @@ const theme = {
     },
   },
 };
+
 const mq = {
   phone: {
     narrow: {

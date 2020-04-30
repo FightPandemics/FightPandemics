@@ -55,6 +55,10 @@ Be sure to also commit any changes to the `package-lock.json` so that dependenci
 We are noting any special considerations and handling done in the code so that developers are aware of these caveats
 while developing. This is a living document, so feel free to add any notes that you feel are worth mentioning here.
 
+### Development Workflow
+* Please be sure to often merge or rebase the latest from the master branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind master.
+* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you forsee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
+
 ### Backend
 
 * Set `.additionalProperties(false)` for each schema defined with FluentSchema, to return a 400 bad request error if any
