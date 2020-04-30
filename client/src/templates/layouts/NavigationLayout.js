@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import Header from "~/components/Header";
 import Footnote from "~/components/Footnote";
+import CookieAlert from "~/components/CookieAlert";
 import Main from "./Main";
 import { theme } from "../../constants/theme";
 
@@ -156,6 +157,7 @@ export default (props) => {
         <props.component {...props} />
       </Main>
       {/* <Footnote /> */}
+      <CookieAlert />
     </Drawer>
   );
 };
