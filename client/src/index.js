@@ -11,9 +11,10 @@ import "typeface-poppins";
 import App from "./App";
 import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
-import rootReducer from "./reducers";
+import rootReducer from "./reducers/rootReducer";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+console.log("redux state: ", store.getState());
 
 ReactDOM.render(
   <Provider store={store}>

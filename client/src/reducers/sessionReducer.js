@@ -32,7 +32,7 @@ const initialState = {
   },
 };
 
-const rootReducer = (state = initialState, action) => {
+function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_LOGIN:
     case AUTH_SIGNUP:
@@ -56,6 +56,6 @@ const rootReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
 
-export default rootReducer;
+export default sessionReducer;
