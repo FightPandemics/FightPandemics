@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import Feed from "../pages/Feed";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ session }) => {
   return {
-    user: state.user,
+    user: session.user,
+    isAuthenticated: session.isAuthenticated,
   };
 };
 
