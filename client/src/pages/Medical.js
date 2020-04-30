@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Heading } from "grommet";
 
 import ImageButton from "../components/Button/ImageButton";
 import { theme } from "../constants/theme";
@@ -28,7 +27,7 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledWelcome = styled(Heading)`
+const StyledWelcome = styled.h2`
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 300;
