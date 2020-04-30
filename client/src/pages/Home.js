@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Heading } from "grommet";
 
 import ImageButton from "../components/Button/ImageButton";
 import { theme } from "../constants/theme";
@@ -38,7 +37,7 @@ const MainContainer = styled.div`
   }
 `;
 
-const StyledWelcome = styled(Heading)`
+const StyledWelcome = styled.h2`
   font-family: ${theme.typography.font.family.display}, sans-serif;
   font-size: ${theme.typography.size.large};
   font-style: normal;
