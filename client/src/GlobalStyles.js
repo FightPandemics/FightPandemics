@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
 import { WHITE } from "./constants/colors";
-import { theme } from "./constants/theme";
 
 const globalStyles = createGlobalStyle`
 html {
