@@ -47,7 +47,6 @@ const OnboardingContainer = styled.div`
 `;
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
-console.log({ needHelpAnswers });
 
 const getGeoLocation = () => needHelpAnswers?.location;
 
