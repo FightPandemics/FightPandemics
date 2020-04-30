@@ -98,8 +98,8 @@ const OnboardingContainer = styled.div`
   margin-top: 4rem;
 
   @media only screen and (min-width: 600px){
-    display: "flex";
-    flexWrap: "wrap";
+    display: flex;
+    flexWrap: wrapgit ;
     width: 100%;
     margin: auto 0;
   }
