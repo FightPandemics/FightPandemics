@@ -33,18 +33,18 @@ async function routes(app) {
 
     aggregates.push(
       {
+        $skip: skip || 0,
+      },
+      {
+        $limit: limit || DEFAULT_LIMIT,
+      },
+      {
         $lookup: {
           as: "comments",
           foreignField: "postId",
           from: "comments",
           localField: "_id",
         },
-      },
-      {
-        $skip: skip || 0,
-      },
-      {
-        $limit: limit || DEFAULT_LIMIT,
       },
       {
         $project: {
