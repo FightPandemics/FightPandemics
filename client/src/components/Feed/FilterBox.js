@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Modal, List } from "antd-mobile";
+import { Modal } from "antd-mobile";
 import CustomButton from "../../components/Button/CustomButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
