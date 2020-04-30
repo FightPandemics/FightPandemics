@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import ImageButton from "../components/Button/ImageButton";
-import { theme } from "../constants/theme";
+import { theme, mq } from "../constants/theme";
 
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 const needHelpActive = require("../assets/thermometer-selected.svg");
@@ -16,50 +16,145 @@ const FlexChild = styled.div`
 `;
 
 const StyledIntro = styled.div`
-  margin-top: 4rem;
+  
+    
+  @media screen and ${mq.phone.narrow.max} {  
+    margin-top: 4rem;
+  }
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}){  
+    background-color: ${theme.colors.royalBlue};
+    border-radius: 1rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height:100%;
+    padding: 16rem 7rem 16rem 5rem;
+  }
+
+  @media only screen and ${mq.desktop.medium.minWidth} {  
+    padding: 20rem 7rem 20rem 5rem;
+  }
+`;
+
+const MainContainer = styled.div`
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media only screen and ${mq.phone.narrow.max}{
+    display: block;
+  }
 `;
 
 const StyledWelcome = styled.h2`
-  font-family: ${theme.typography.font.family.display}, sans-serif;
-  font-size: ${theme.typography.size.large};
-  font-style: normal;
-  font-weight: 300;
-  line-height: 3rem;
-  margin: 2.5rem auto 0;
-  text-align: center;
+    font-size: ${theme.typography.heading.three};
+    text-align: left;
+    margin: 0 0 7rem 0;
+    font-family: ${theme.typography.font.family.display}, sans-serif;
+    font-style: normal;
+   
+  @media only screen and ${mq.phone.narrow.max}{  
+    font-size: ${theme.typography.size.large};
+    font-weight: 300;
+    margin: 2.5rem auto 0;
+    text-align: center;
+  }
+
+  @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {  
+    font-size: ${theme.typography.heading.one};
+  }
+
+  @media only screen and (min-width: ${mq.desktop.small.minWidth}){  
+    font-size: 5rem;
+  }
+
+  @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {  
+    font-size: 6rem;
+  }
 `;
 
+
 const StyledStrapline = styled(StyledWelcome)`
-  font-weight: bold;
-  margin: 0 auto;
-  margin-bottom: 1.5rem;
+    color: white;
+    line-height: 7rem;
+    width: 90%;
+    text-align: left;
+
+  @media only screen and ${mq.phone.narrow.max}{
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+
+`;
+
+const IntroText = styled.div`
+@media only screen and (min-width: ${mq.desktop.small.minWidth}){
+  width: 90%;
+}
 `;
 
 const StyledP = styled.p`
-  font-family: ${theme.typography.font.family.display}, sans-serif;
-  font-size: ${theme.typography.size.small};
-  color: #000;
-  line-height: 2.1rem;
-  letter-spacing: 0.1px;
-  margin: 0;
+  font-size: ${theme.typography.size.xsmall};
+    text-align: left;
+    color: white;
+
+  @media only screen and ${mq.phone.narrow.max}{
+    font-family: ${theme.typography.font.family.display}, sans-serif;
+    font-size: ${theme.typography.size.small};
+    text-align: center;
+    color: #000;
+    line-height: 4rem;
+    letter-spacing: 0rem;
+    margin: 0;
+  }
+
+  @media only screen and (min-width: ${mq.tablet.wide.minWidth}){
+    font-size: ${theme.typography.size.large};
+  }
+
+  
+  @media only screen and (min-width: ${mq.desktop.small.minWidth}) {  
+    font-size: ${theme.typography.size.xlarge};
+  }
+
+  @media only screen and (min-width: ${mq.desktop.medium.minWidth}){
+    font-size: ${theme.typography.size.xxlarge};
+  }
 `;
 
 const OnboardingContainer = styled.div`
-  margin-top: 4rem;
+  
+    // display: flex;
+    // flexWrap: wrapgit ;
+    width: 100%;
+    margin: auto 0;
+
+  @media only screen and ${mq.phone.narrow.max}{
+   margin-top: 4rem;
+  }
 `;
 
 export const Home = (props) => {
   console.log("render home", { props });
   return (
-    <div className="text-center">
+    <MainContainer className="text-center">
+
       <StyledIntro>
-        <StyledStrapline level={2} margin="none">
-          A place to give and get help
-        </StyledStrapline>
-        <StyledP>Pandemics will continue to happen.</StyledP>
-        <StyledP>We help communities prepare and respond.</StyledP>
+        <IntroText>
+          <StyledStrapline level={2} margin="none">
+            A place to give and get help
+          </StyledStrapline>
+          <StyledP>Pandemics will continue to happen.</StyledP>
+          <StyledP>We help communities prepare and respond.</StyledP>
+        </IntroText>
       </StyledIntro>
-      <OnboardingContainer style={{ display: "flex", flexWrap: "wrap" }}>
+
+      <>
+      <OnboardingContainer>
         <FlexChild>
           <ImageButton
             type="ghost"
@@ -80,20 +175,20 @@ export const Home = (props) => {
             Give Help
           </ImageButton>
         </FlexChild>
+      
+          <Link
+            style={{
+              color: theme.colors.royalBlue,
+              fontSize: theme.typography.size.large,
+              fontFamily: theme.typography.font.family.display,
+              fontWeight: "500",
+            }}
+            to="/feed"
+          >
+            View Community Postings
+          </Link>
       </OnboardingContainer>
-      <p style={{ marginTop: "2rem" }}>
-        <Link
-          style={{
-            color: theme.colors.royalBlue,
-            fontSize: theme.typography.size.large,
-            fontFamily: theme.typography.font.family.display,
-            fontWeight: "500",
-          }}
-          to="/feed"
-        >
-          View Community Postings
-        </Link>
-      </p>
-    </div>
+      </>
+    </MainContainer>
   );
 };
