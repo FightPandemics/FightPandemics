@@ -34,7 +34,7 @@ const theme = {
       },
     },
     size: {
-      // xxsmall: "1rem",
+      xxsmall: "1rem",
       xsmall: "1.1rem",
       small: "1.2rem",
       medium: "1.4rem",

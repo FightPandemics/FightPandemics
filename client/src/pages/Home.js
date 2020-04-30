@@ -27,14 +27,18 @@ const StyledIntro = styled.div`
     justify-content: space-around;
     width: 100%;
     height:100%;
-    margin: 0;
-    padding: 12rem 0;
+    padding: 16rem 7rem 16rem 5rem;
+  }
+
+  @media only screen and (min-width: 1440px) {  
+    padding: 20rem 7rem 20rem 5rem;
   }
 `;
 
 const MainContainer = styled.div`
   @media only screen and (min-width: 600px){
     display:flex
+    
   }
 `;
 
@@ -43,18 +47,29 @@ const StyledWelcome = styled(Heading)`
   font-size: ${theme.typography.size.large};
   font-style: normal;
   font-weight: 300;
-  line-height: 3rem;
   margin: 2.5rem auto 0;
   text-align: center;
 
   @media only screen and (min-width: 600px) {  
-    font-size: 2.8vw;
+    font-size: ${theme.typography.heading.three};
     text-align: left;
     margin: 0 0 7rem 0;
   }
+
+  @media only screen and (min-width: 1024px) {  
+    font-size: ${theme.typography.heading.one};
+  }
+
+  @media only screen and (min-width: 1280px) {  
+    font-size: 5rem;
+  }
+
+  @media only screen and (min-width: 1440px) {  
+    font-size: 6rem;
+  }
 `;
 
-// Used view unit due to responsive functionality
+
 const StyledStrapline = styled(StyledWelcome)`
   font-weight: bold;
   margin: 0 auto;
@@ -62,19 +77,16 @@ const StyledStrapline = styled(StyledWelcome)`
 
   @media only screen and (min-width: 600px){
     color: white;
-    line-height: 4vw;
+    line-height: 7rem;
     width: 90%;
     text-align: left;
   }
 
 `;
 
-
-// Used view unit due to responsive functionality
 const IntroText = styled.div`
 @media only screen and (min-width: 600px){
-  width: 38vw;
-  padding: 12vh 7vw;
+  width: 90%;
 }
 `;
 
@@ -82,15 +94,27 @@ const StyledP = styled.p`
   font-family: ${theme.typography.font.family.display}, sans-serif;
   font-size: ${theme.typography.size.small};
   color: #000;
-  line-height: 2.1rem;
-  letter-spacing: 0.1px;
+  line-height: 4rem;
+  letter-spacing: 0rem;
   margin: 0;
   
   @media only screen and (min-width: 600px){
-    //theme.typography.heading.one is not enough size
-    font-size: 1vw;
+    font-size: ${theme.typography.size.xsmall};
     text-align: left;
     color: white;
+  }
+
+  @media only screen and (min-width: 1024px){
+    font-size: ${theme.typography.size.medium};
+  }
+
+  
+  @media only screen and (min-width: 1280px) {  
+    font-size: ${theme.typography.size.xlarge};
+  }
+
+  @media only screen and (min-width: 1440px){
+    font-size: ${theme.typography.size.xxlarge};
   }
 `;
 
@@ -98,8 +122,8 @@ const OnboardingContainer = styled.div`
   margin-top: 4rem;
 
   @media only screen and (min-width: 600px){
-    display: flex;
-    flexWrap: wrapgit ;
+    // display: flex;
+    // flexWrap: wrapgit ;
     width: 100%;
     margin: auto 0;
   }
