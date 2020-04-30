@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-import DownArrow from "~/assets/icons/down-arrow.svg";
+import DownArrowIcon from "~/assets/icons/down-arrow.svg";
 import SvgIcon from "./SvgIcon";
 
-export default styled(SvgIcon).attrs((props) => ({
-  src: DownArrow,
+const DownArrow = styled(SvgIcon).attrs((props) => ({
+  src: DownArrowIcon,
 }))``;
+
+export default DownArrow;

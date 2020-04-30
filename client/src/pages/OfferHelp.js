@@ -180,7 +180,7 @@ const Step3 = (props) => {
   );
 };
 
-export const OfferHelp = withRouter((props) => {
+const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     const { answers } = state;
@@ -203,3 +203,5 @@ export const OfferHelp = withRouter((props) => {
     </WizardContainer>
   );
 });
+
+export default OfferHelp;

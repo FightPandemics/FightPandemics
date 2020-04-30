@@ -102,7 +102,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
-export default (props) => {
+const NavigationLayout = (props) => {
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -161,3 +161,5 @@ export default (props) => {
     </Drawer>
   );
 };
+
+export default NavigationLayout;

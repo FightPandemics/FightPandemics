@@ -3,7 +3,7 @@ import React from "react";
 import withLabel from "./with-label";
 import Input from "./BaseInput";
 
-export default ({
+const TextInput = ({
   label,
   type,
   placeholder,
@@ -30,3 +30,5 @@ export default ({
     />
   );
 };
+
+export default TextInput;

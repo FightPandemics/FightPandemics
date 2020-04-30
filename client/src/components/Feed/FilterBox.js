@@ -12,7 +12,7 @@ const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
 `;
 
-export default () => {
+const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
@@ -70,3 +70,5 @@ export default () => {
     </FilterBoxWrapper>
   );
 };
+
+export default FilterBox;

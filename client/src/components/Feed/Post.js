@@ -7,7 +7,7 @@ import FilterTag from "../../components/Tag/FilterTag";
 import StatusIcon from "../Icon/status-indicator";
 import AutoSize from "../../components/Input/AutoSize";
 
-export default ({ post }) => {
+const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
   // mock API to test functionality
@@ -129,3 +129,5 @@ export default ({ post }) => {
     </PostCard>
   );
 };
+
+export default Post;
