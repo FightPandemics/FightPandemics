@@ -41,6 +41,7 @@ services:
       GEO_SERVICE_URL: geo-service:5000
     ports:
       - "8000:8000"
+      - "9229:9229"
     volumes:
       - ./backend:/app
       - /app/node_modules/
