@@ -61,14 +61,19 @@ while developing. This is a living document, so feel free to add any notes that 
 
 ### Backend
 
-* Set `.additionalProperties(false)` for each schema defined with FluentSchema, to return a 400 bad request error if any
-additional properties not defined in the schema are passed in through the request.
-    * We are using [FluentSchema](https://github.com/fastify/fluent-schema) to validate backend requests. This is the
-    default validator for Fastify, our backend framework. FluentSchema uses ajv under the hood, and compiles to the
-    more standard JSON Schema.
+* API requests are validated using [Ajv](https://github.com/epoberezkin/ajv) and JSON schema's are defined with [FluentSchema](https://github.com/fastify/fluent-schema)
+    * By default, the schema's allow additional properties unless explicitly set that additional properties are not allowed.
+        There's a utility function `strictSchema()` in `lib/endpoints/schemas/utils.js` that can be used to initialize all schema's.
     * Rather than silently suppress additional properties, as is the default behavior for Fastify's ajv configuration,
-    we are instead returning a 400 bad request error if additional properties are passed in. This makes it easier to
-    debug issues due to a misspelled property name.
+        we are instead returning a 400 bad request error if additional properties are passed in. This makes it easier to
+        debug issues due to a misspelled property name.
+    * Read more about validation in Fastify in the docs https://www.fastify.io/docs/v2.2.x/Validation-and-Serialization/#validation
+* Endpoint handlers should use async functions, and return values or throw httpErrors.
+    * This is using some sensible defaults provided by https://github.com/fastify/fastify-sensible
+    * If an error is thrown, a generic error handler returns a 500 Internal Server Error response and logs the error details, 
+        without returning all error details in the response.
+    * Some more useful tools are provided by fastify-sensible such as built-in `fastify.httpErrors` and `fastify.to()` to [wrap async-await](https://github.com/scopsy/await-to-js)
+    * Read more in the Fastify documentation about using asyc/await with fastify https://www.fastify.io/docs/latest/Routes/#async-await
 
 ### Frontend
 * We have the beginnings of a theme. The file can be found here: `src/constants/theme.js` which has sections for typography, colors, buttons styles and media queries.
