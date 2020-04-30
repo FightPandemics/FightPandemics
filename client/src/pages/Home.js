@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Heading } from "grommet";
 
 import ImageButton from "../components/Button/ImageButton";
 import { theme, mq } from "../constants/theme";
@@ -48,7 +47,7 @@ const MainContainer = styled.div`
   }
 `;
 
-const StyledWelcome = styled(Heading)`
+const StyledWelcome = styled.h2`
     font-size: ${theme.typography.heading.three};
     text-align: left;
     margin: 0 0 7rem 0;

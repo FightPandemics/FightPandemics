@@ -8,8 +8,8 @@ import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
 // import "typeface-work-sans";
 
-import "./index.scss";
 import App from "./App";
+import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./reducers";
 
@@ -17,6 +17,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
+    <GlobalStyles />
     <App />
   </Provider>,
   document.getElementById("root"),

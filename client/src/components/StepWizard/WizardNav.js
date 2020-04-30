@@ -1,8 +1,7 @@
-import { Button } from "grommet";
 import React from "react";
 import styled from "styled-components";
-import NextArrow from "../../components/Icon/next-arrow";
-import BackArrow from "../../components/Icon/back-arrow";
+import NextArrow from "../Icon/next-arrow";
+import BackArrow from "../Icon/back-arrow";
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -24,32 +23,28 @@ const StyledWizardNav = styled.div`
   }
 `;
 
-const PrevButton = styled(Button)`
-  display: inline-flex;
-  align-items: center;
-  box-shadow: unset;
-  outline-color: transparent;
-  border-color: transparent;
+const PrevButton = styled(BackArrow)`
+  cursor: pointer;
+`;
+
+const NextButton = styled(NextArrow)`
+  cursor: pointer;
 `;
 
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
       <PrevButton
-        plain
         onClick={previousStep}
-        icon={<BackArrow />}
         a11yTitle={`Navigate to step ${currentStep - 1}`}
       />
     ) : (
       <PrevButton
-        plain
         href="/"
-        icon={<BackArrow />}
         a11yTitle="Navigate to the homepage"
       />
     )}
-    {currentStep < totalSteps && <NextArrow onClick={nextStep} />}
+    {currentStep < totalSteps && <NextButton onClick={nextStep} />}
   </StyledWizardNav>
 );
 

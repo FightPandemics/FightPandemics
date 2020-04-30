@@ -9,6 +9,7 @@ on:
       - client/**
       - geo-service/**
       - main.tf
+      - .github/workflows/**
 
 jobs:
   build_images:
