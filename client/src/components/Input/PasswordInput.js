@@ -40,7 +40,13 @@ const PwInput = ({ inputStyle, placeholder, ...props }) => {
   );
 };
 
-export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
+const PasswordInput = ({
+  label,
+  placeholder,
+  labelStyle,
+  inputStyle,
+  ...props
+}) => {
   const PasswordField = withLabel(() => (
     <PwInput inputStyle={inputStyle} placeholder={placeholder} {...props} />
   ));
