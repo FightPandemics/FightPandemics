@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon -L server.js",
+    "dev": "nodemon --inspect=0.0.0.0:9229 -L server.js",
     "test": "jest",
     "lint": "eslint . --fix",
     "install-docker": "docker-compose run backend-service npm install"
