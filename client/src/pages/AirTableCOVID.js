@@ -7,7 +7,7 @@ import SubmitButton from "../components/Button/SubmitButton";
 
 // LatamBadgers!
 
-export class AirTableCOVID extends Component {
+class AirTableCOVID extends Component {
   state = {
     covid: "",
   };

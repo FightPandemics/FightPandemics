@@ -1,9 +1,9 @@
 import React from "react";
 
 import { AnswerButton } from "../components/StepWizard";
-import { GenericMessage } from "./CovidScreening/GenericMessage";
+import GenericMessage from "./CovidScreening/GenericMessage";
 
-export const ResultsPage = (props) => {
+const ResultsPage = (props) => {
   return (
     <>
       <h2>Practice Social Distancing</h2>
@@ -19,3 +19,5 @@ export const ResultsPage = (props) => {
     </>
   );
 };
+
+export default ResultsPage;

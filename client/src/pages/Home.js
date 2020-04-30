@@ -138,7 +138,7 @@ const OnboardingContainer = styled.div`
   }
 `;
 
-export const Home = (props) => {
+const Home = (props) => {
   console.log("render home", { props });
   return (
     <MainContainer className="text-center">
@@ -192,3 +192,5 @@ export const Home = (props) => {
     </MainContainer>
   );
 };
+
+export default Home;

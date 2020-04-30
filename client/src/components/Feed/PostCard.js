@@ -7,7 +7,7 @@ const { royalBlue, darkGray } = colors;
 const { display } = typography.font.family;
 const { xsmall, medium, large, xxlarge } = typography.size;
 
-export default styled(Card)`
+const PostCard = styled(Card)`
   margin-bottom: 4rem;
   border: unset !important;
   &.am-card,
@@ -84,3 +84,5 @@ export default styled(Card)`
     }
   }
 `;
+
+export default PostCard;

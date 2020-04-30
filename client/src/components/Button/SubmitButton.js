@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { theme } from "../../constants/theme";
 
-export default ({ title, handleClick, ...props }) => {
+const SubmitButton = ({ title, handleClick, ...props }) => {
   const StyledButton = styled(Button).attrs((props) => {
     return {
       type: "primary",
@@ -22,3 +22,5 @@ export default ({ title, handleClick, ...props }) => {
     </StyledButton>
   );
 };
+
+export default SubmitButton;

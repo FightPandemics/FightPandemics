@@ -25,7 +25,7 @@ const initialState = {
   location: "",
 };
 
-export default () => {
+const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const { filterModal, createPostModal, activePanel, location } = feedState;
@@ -115,3 +115,5 @@ export default () => {
     </FeedContext.Provider>
   );
 };
+
+export default Feed;

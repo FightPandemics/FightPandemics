@@ -6,7 +6,7 @@ import logo from "~/assets/logo.svg";
 import Logo from "~/components/Logo";
 import Main from "./Main";
 
-export default (props) => {
+const LogoLayout = (props) => {
   return (
     <>
       <div className="header" style={{ marginTop: 8 }}>
@@ -22,3 +22,5 @@ export default (props) => {
     </>
   );
 };
+
+export default LogoLayout;

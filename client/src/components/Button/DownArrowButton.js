@@ -48,7 +48,7 @@ const Option = styled(Button).attrs((props) => {
   }
 `;
 
-export default ({ label, handleClick, ...props }) => {
+const DownArrowButton = ({ label, handleClick, ...props }) => {
   return (
     <Option {...props} onClick={handleClick}>
       {label}
@@ -56,3 +56,5 @@ export default ({ label, handleClick, ...props }) => {
     </Option>
   );
 };
+
+export default DownArrowButton;

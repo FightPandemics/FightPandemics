@@ -7,7 +7,7 @@ import ShareIcon from "../Icon/share";
 import ShareGrayIcon from "../Icon/share-gray";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-export default ({
+const PostSocial = ({
   url,
   liked,
   shared,
@@ -66,3 +66,5 @@ export default ({
     </div>
   );
 };
+
+export default PostSocial;

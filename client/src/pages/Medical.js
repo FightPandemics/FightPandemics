@@ -51,7 +51,7 @@ console.log({ needHelpAnswers });
 
 const getGeoLocation = () => needHelpAnswers?.location;
 
-export const Medical = (props) => {
+const Medical = (props) => {
   const [state, setState] = useState(INITIAL_STATE);
   //   console.log("render medical page", { props });
 
@@ -136,3 +136,5 @@ export const Medical = (props) => {
     </div>
   );
 };
+
+export default Medical;

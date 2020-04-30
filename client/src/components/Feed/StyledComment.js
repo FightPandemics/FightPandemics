@@ -7,7 +7,7 @@ const { darkGray, lighterGray } = colors;
 const { display } = typography.font.family;
 const { xsmall, medium } = typography.size;
 
-export default styled(Comment)`
+const StyledComment = styled(Comment)`
   &.ant-comment {
     font-family: ${display};
     .ant-comment-inner {
@@ -89,3 +89,5 @@ export default styled(Comment)`
     }
   }
 `;
+
+export default StyledComment;

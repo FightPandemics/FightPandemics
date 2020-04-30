@@ -7,7 +7,7 @@ import routes from "./routes";
 import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 
-function App(props) {
+const App = (props) => {
   useEffect(() => {
     props.initAuth();
   }, []);
@@ -21,7 +21,7 @@ function App(props) {
       </Switch>
     </Router>
   );
-}
+};
 
 const mapDispatchToProps = {
   initAuth: initAuth,

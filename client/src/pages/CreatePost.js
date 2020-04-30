@@ -44,7 +44,7 @@ const errorMsg = {
   tags: "Please add at least one tag.",
 };
 
-export default (props) => {
+const CreatePost = (props) => {
   const [state, setState] = useState(initialState.state);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
@@ -204,3 +204,5 @@ export default (props) => {
     </CreatePostWrapper>
   );
 };
+
+export default CreatePost;

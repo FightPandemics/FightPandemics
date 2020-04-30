@@ -4,7 +4,7 @@ import { theme } from "../../constants/theme";
 
 const { royalBlue } = theme.colors;
 
-export default styled(Modal)`
+const ButtonModal = styled(Modal)`
   font-family: ${theme.typography.font.family.display};
   .title {
     font-weight: bold;
@@ -51,3 +51,5 @@ export default styled(Modal)`
     }
   }
 `;
+
+export default ButtonModal;

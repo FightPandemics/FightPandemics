@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { InputItem } from "antd-mobile";
 import { theme } from "../../constants/theme";
 
-export default styled(InputItem)`
+const StyledTextInput = styled(InputItem)`
   width: 100%;
 
   &.am-list-item {
@@ -25,3 +25,5 @@ export default styled(InputItem)`
     }
   }
 `;
+
+export default StyledTextInput;

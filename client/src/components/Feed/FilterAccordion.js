@@ -4,7 +4,7 @@ import FilterTag from "../Tag/FilterTag";
 import LocationSearch from "../../components/Input/LocationSearch";
 import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
-export default () => {
+const FilterAccord = () => {
   const feedContext = useContext(FeedContext);
   const { filters, activePanel, handleOption, selectedOptions } = feedContext;
 
@@ -54,3 +54,5 @@ export default () => {
     </FilterAccordion>
   );
 };
+
+export default FilterAccord;
