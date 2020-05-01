@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Badge } from "antd";
 import { Card } from "antd-mobile";
@@ -7,32 +7,32 @@ import SubmitButton from "../components/Button/SubmitButton";
 
 // LatamBadgers!
 
-export class AirTableCOVID extends Component {
-  state = {
-    covid: "",
-  };
+export const AirTableCOVID = (props) => {
+  const [covid, setCovid] = useState("");
 
-  getCovidData = () => {
+  const getCovidData = () => {
     axios
       .get(
-        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=keyq3sfh3IOH4qf2g`,
+        `https://api.airtable.com/v0/appx4wP2PAcscbpFz/Projects%20and%20Initiatives?api_key=${process.env.REACT_APP_AIRTABLE_API_KEY}`,
       )
       .then((res) => {
-        this.setState({ covid: res.data.records });
+        const { records } = res.data;
+        setCovid(records);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  componentDidMount() {
-    this.getCovidData();
-  }
+  useEffect(() => {
+    console.log("effect");
+    getCovidData();
+  }, []);
 
-  render() {
-    const { covid } = this.state;
-    if (typeof covid === "object") {
-      const listCovid = covid.map((e, index) => (
+  /*if at any time insertions are going to be made in data.records, it must be used another way 
+to create unique keys instead of map index */
+  return typeof covid === "object"
+    ? covid.map((e, index) => (
         <Card key={"card-" + index} style={{ marginTop: "16px" }}>
           <h5>{e.fields["Post Title"]}</h5>
           <div>
@@ -68,12 +68,6 @@ export class AirTableCOVID extends Component {
             )}
           </div>
         </Card>
-      ));
-      return <>{listCovid}</>;
-    } else {
-      return <></>;
-    }
-  }
-}
-
-export default AirTableCOVID;
+      ))
+    : "";
+};
