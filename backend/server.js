@@ -1,9 +1,8 @@
 require("dotenv").config();
 
 const createServer = require("./lib");
-const { config, validateConfig } = require("./config");
+const { config } = require("./config");
 
-validateConfig(config);
 const server = createServer(config);
 
 server.ready(async () => {
