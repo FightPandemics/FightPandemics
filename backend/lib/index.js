@@ -10,6 +10,7 @@ const organizations = require("./endpoints/organizations");
 const posts = require("./endpoints/posts");
 const users = require("./endpoints/users");
 const version = require("./endpoints/version");
+const feedback = require("./endpoints/feedback");
 
 module.exports = function createApp(config) {
   const app = fastify({
@@ -40,6 +41,7 @@ module.exports = function createApp(config) {
   app.register(organizations, { prefix: "api/organizations" });
   app.register(posts, { prefix: "/api/posts" });
   app.register(users, { prefix: "/api/users" });
+  app.register(feedback, { prefix: "/api/feedback" });
 
   return app;
 };
