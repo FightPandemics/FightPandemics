@@ -1,8 +1,7 @@
 const { Schema } = require("mongoose");
-const { locationSchema } = require("./Location");
 
 // Feedback Schema
-const FeedbackSchema = new Schema(
+const feedbackSchema = new Schema(
   {
     age: {
       get: (v) => Math.round(v),
@@ -15,9 +14,7 @@ const FeedbackSchema = new Schema(
       required: true,
       type: String,
     },
-    location: {
-      type: [locationSchema],
-    },
+    location: Object(),
     mostValuableFeature: String,
     rating: {
       get: (v) => Math.round(v),
@@ -28,7 +25,7 @@ const FeedbackSchema = new Schema(
       type: Number,
     },
     userId: {
-      ref: "User",
+      ref: "IndividualUser",
       type: Schema.Types.ObjectId,
     },
     whatWouldChange: String,
@@ -36,4 +33,4 @@ const FeedbackSchema = new Schema(
   { collection: "feedbacks", timestamps: true },
 );
 
-module.exports = FeedbackSchema;
+module.exports = feedbackSchema;
