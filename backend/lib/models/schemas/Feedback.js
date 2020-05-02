@@ -25,7 +25,7 @@ const feedbackSchema = new Schema(
       type: Number,
     },
     userId: {
-      ref: "IndividualUser",
+      ref: "User",
       type: Schema.Types.ObjectId,
     },
     whatWouldChange: String,
