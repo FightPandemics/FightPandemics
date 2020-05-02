@@ -67,43 +67,39 @@ async function routes(app) {
 
   // /posts/postId
 
-  app.get(
-    "/:postId",
-    { preValidation: [app.authenticate], schema: getPostByIdSchema },
-    async (req, reply) => {
-      const { postId } = req.params;
-      const post = await Post.findById(postId);
-      if (post === null) {
-        return reply.send(new httpErrors.NotFound());
-      }
-      post.comments = await Comment.aggregate([
-        {
-          $match: {
-            parentId: null,
-            postId: mongoose.Types.ObjectId(postId),
+  app.get("/:postId", { schema: getPostByIdSchema }, async (req, reply) => {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (post === null) {
+      return reply.send(new httpErrors.NotFound());
+    }
+    post.comments = await Comment.aggregate([
+      {
+        $match: {
+          parentId: null,
+          postId: mongoose.Types.ObjectId(postId),
+        },
+      },
+      {
+        $lookup: {
+          as: "children",
+          foreignField: "parentId",
+          from: "comments",
+          localField: "_id",
+        },
+      },
+      {
+        $addFields: {
+          childCount: {
+            $size: "$children",
           },
         },
-        {
-          $lookup: {
-            as: "children",
-            foreignField: "parentId",
-            from: "comments",
-            localField: "_id",
-          },
-        },
-        {
-          $addFields: {
-            childCount: {
-              $size: "$children",
-            },
-          },
-        },
-      ]);
-      // todo: find a better way to return this from the comments aggregate
-      post.commentsCount = await Comment.find({ postId }).count();
-      return post;
-    },
-  );
+      },
+    ]);
+    // todo: find a better way to return this from the comments aggregate
+    post.commentsCount = await Comment.find({ postId }).count();
+    return post;
+  });
 
   app.delete(
     "/:postId",
