@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
@@ -33,74 +33,65 @@ const Cards = styled.div`
   margin: 10px;
 `;
 
-const map = {
-  googleMap: null,
-  marker: null,
-  place: null,
-};
-
-const NrMap = () => {
-  const [coordinates, setCoordinates] = useState({
-    latitude: 52.520008,
-    longitude: 13.404954,
-  });
-  const [rec, setRec] = useState([]);
-  const [plcDtl, setPlcDtl] = useState([]);
-
-  const googleMapRef = useRef();
-
-  useEffect(() => {
+class NrMap extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitude: 52.520008,
+      longitude: 13.404954,
+      rec: [],
+      plcDtl: [],
+    };
+    this.googleMapRef = React.createRef();
+  }
+  componentDidMount() {
     const googleMapScript = document.createElement("script");
     googleMapScript.src = url;
+
     window.document.body.appendChild(googleMapScript);
 
     googleMapScript.addEventListener("load", () => {
-      map.googleMap = createGoogleMap();
-      map.marker = createMarker();
-      map.place = places();
+      console.log(this);
+      this.googleMap = this.createGoogleMap();
+      this.marker = this.createMarker();
+      this.place = this.places();
+      console.log(this.googleMap);
+      console.log(this.props);
     });
-
-    getMyLocation();
-  }, []);
-
-  const createGoogleMap = () =>
-    new window.google.maps.Map(googleMapRef.current, {
+    this.getMyLocation();
+  }
+  createGoogleMap = () =>
+    new window.google.maps.Map(this.googleMapRef.current, {
       zoom: 13,
       center: {
-        lat: coordinates.latitude,
-        lng: coordinates.longitude,
+        lat: this.state.latitude,
+        lng: this.state.longitude,
       },
       disableDefaultUI: true,
     });
-
-  const places = () => {
-    new window.google.maps.places.PlacesService(map.googleMap).nearbySearch(
+  places = () => {
+    new window.google.maps.places.PlacesService(this.googleMap).nearbySearch(
       {
         location: {
-          lat: coordinates.latitude,
-          lng: coordinates.longitude,
+          lat: this.state.latitude,
+          lng: this.state.longitude,
         },
         radius: 3000,
         type: ["hospital"],
       },
       (results, status) => {
         if (status !== "OK") return;
-        setRec(results);
+        this.setState({ rec: results }, () => {
+          console.log(this.state.rec.place_id);
+          this.createMarker();
+          this.placeDetails();
+        });
       },
     );
   };
 
-  useEffect(() => {
-    if (rec && rec.length > 0) {
-      createMarker();
-      placeDetails();
-    }
-  }, [rec]);
-
-  const placeDetails = () => {
-    const hospitals = [];
-
-    rec.map((place) => {
+  placeDetails = () => {
+    this.state.rec.map((place) => {
       let request = {
         placeId: place.place_id,
         fields: [
@@ -112,20 +103,20 @@ const NrMap = () => {
           "icon",
         ],
       };
-      new window.google.maps.places.PlacesService(map.googleMap).getDetails(
+      new window.google.maps.places.PlacesService(this.googleMap).getDetails(
         request,
         (req, status) => {
           if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-            hospitals.push(req);
+            this.setState((prevState) => ({
+              plcDtl: [...prevState.plcDtl, req],
+            }));
           }
         },
       );
     });
-
-    setPlcDtl(hospitals);
   };
 
-  const createMarker = () => {
+  createMarker = () => {
     let image = {
       url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
       size: new window.google.maps.Size(71, 71),
@@ -133,7 +124,7 @@ const NrMap = () => {
       anchor: new window.google.maps.Point(17, 34),
       scaledSize: new window.google.maps.Size(25, 25),
     };
-    rec.map((e) => {
+    this.state.rec.map((e) => {
       new window.google.maps.Marker({
         position: {
           lat: e.geometry.location.lat(),
@@ -141,42 +132,52 @@ const NrMap = () => {
         },
         icon: image,
         animation: window.google.maps.Animation.DROP,
-        map: map.googleMap,
+        map: this.googleMap,
       });
     });
     new window.google.maps.Marker({
-      position: { lat: coordinates.latitude, lng: coordinates.longitude },
-      map: map.googleMap,
+      position: { lat: this.state.latitude, lng: this.state.longitude },
+      map: this.googleMap,
     });
   };
 
-  const getMyLocation = () => {
+  getMyLocation() {
     const location = window.navigator && window.navigator.geolocation;
 
     if (location) {
-      location.getCurrentPosition((position) => {
-        setCoordinates({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
+      location.getCurrentPosition(
+        (position) => {
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          this.setState({
+            latitude: "err-latitude",
+            longitude: "err-longitude",
+          });
+        },
+      );
     }
-  };
-
-  return (
-    <Wrapper>
-      <Nested>
-        {plcDtl.map((place) => (
-          <Cards key={`card-${place.name}`}>
-            <h3>{place.name}</h3>
-            <p>{place.formatted_address}</p>
-            <PhoneNo>{place.formatted_phone_number}</PhoneNo>
-          </Cards>
-        ))}
-      </Nested>
-      <MapStyle id="google-map" ref={googleMapRef} />
-    </Wrapper>
-  );
-};
+  }
+  render() {
+    const list = this.state.plcDtl.map((place) => {
+      return (
+        <Cards>
+          <h3>{place.name}</h3>
+          <p>{place.formatted_address}</p>
+          <PhoneNo>{place.formatted_phone_number}</PhoneNo>
+        </Cards>
+      );
+    });
+    return (
+      <Wrapper>
+        <Nested>{list}</Nested>
+        <MapStyle id="google-map" ref={this.googleMapRef} />
+      </Wrapper>
+    );
+  }
+}
 
 export default NrMap;
