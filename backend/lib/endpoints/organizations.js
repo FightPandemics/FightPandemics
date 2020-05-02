@@ -32,28 +32,18 @@ async function routes(app) {
     },
   );
 
-  app.get(
-    "/",
-    {
-      preValidation: [app.authenticate],
-      schema: getOrganizationsSchema,
-    },
-    async (req) => {
-      const { ownerId } = req.params;
-      const filter = ownerId ? { ownerId } : {};
-      const sortedOrganizations = await Organization.find(filter).sort({
-        name: 1,
-      });
-      return sortedOrganizations;
-    },
-  );
+  app.get("/", { schema: getOrganizationsSchema }, async (req) => {
+    const { ownerId } = req.params;
+    const filter = ownerId ? { ownerId } : {};
+    const sortedOrganizations = await Organization.find(filter).sort({
+      name: 1,
+    });
+    return sortedOrganizations;
+  });
 
   app.get(
     "/:organizationId",
-    {
-      preValidation: [app.authenticate],
-      schema: getOrganizationSchema,
-    },
+    { schema: getOrganizationSchema },
     async (req) => {
       const result = await Organization.findById(req.params.organizationId);
       if (result === null) {
