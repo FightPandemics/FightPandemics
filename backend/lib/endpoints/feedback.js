@@ -26,10 +26,16 @@ async function routes(app) {
         );
       }
     }
-    return new Feedback({
-      ...req.body,
-      ipAddress: ip,
-    }).save();
+
+    if (userId || ip !== "undefined") {
+      return new Feedback({
+        ...req.body,
+        ipAddress: ip,
+      }).save();
+    }
+    return new httpErrors.InternalServerError(
+      "Authenticated user or ip required to save feedback",
+    );
   });
 }
 
