@@ -4,6 +4,7 @@ const { Schema, model, ObjectId } = require("mongoose");
 // -- Schema
 const postSchema = new Schema(
   {
+    airtableId: String,
     author: Object,
     content: {
       required: true,

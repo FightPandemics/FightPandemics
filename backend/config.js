@@ -14,10 +14,16 @@ const configData = envSchema({
     .prop("NODE_ENV", S.string().required())
     .prop("GEO_SERVICE_URL", S.string().required())
     .prop("MONGO_URI", S.string().required())
+    .prop("AIRTABLE_API_KEY", S.string().required())
+    .prop("AIRTABLE_BASE_ID", S.string().required())
     .prop("PORT", S.number().default(8000).required()),
 });
 
 const config = {
+  airtable: {
+    apiKey: configData.AIRTABLE_API_KEY,
+    baseId: configData.AIRTABLE_BASE_ID,
+  },
   auth: {
     appUrl: configData.AUTH_APP_URL,
     clientId: configData.AUTH_CLIENT_ID,
