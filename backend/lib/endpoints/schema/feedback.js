@@ -10,6 +10,10 @@ const createFeedbackSchema = {
     .prop("rating", S.integer().required())
     .prop("userId", S.string())
     .prop("whatWouldChange", S.string()),
+  connection: strictSchema().prop(
+    "remoteAddress",
+    S.string().format("ipv4").format("ipv6").required(),
+  ),
 };
 
 module.exports = {
