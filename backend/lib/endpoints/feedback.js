@@ -8,7 +8,7 @@ async function routes(app) {
 
   app.post("/", { schema: createFeedbackSchema }, async (req, reply) => {
     const { userId } = req.body;
-    let ip = "undefined";
+
     if (userId) {
       const userFeedback = await Feedback.find({ userId });
       if (userFeedback[0]) {
@@ -16,28 +16,14 @@ async function routes(app) {
       }
     }
 
-    if (req.ip !== null && typeof req.ip !== "undefined") {
-      ip = req.ip;
-      const feedbackFromIp = await Feedback.find({ ipAddress: ip });
-      if (feedbackFromIp[0]) {
-        reply.conflict("Feedback already submitted with this IP address");
-      }
-    }
-
-    if (userId || ip !== "undefined") {
-      return new Feedback({
-        ...req.body,
-        ipAddress: ip,
-      })
-        .save()
-        .then(() => {
-          reply.code(201).send({ success: true });
-        });
-    }
-
-    return reply.internalServerError(
-      "Authenticated user or ip required to save feedback",
-    );
+    return new Feedback({
+      ...req.body,
+      ipAddress: req.ip,
+    })
+      .save()
+      .then(() => {
+        reply.code(201).send({ success: true });
+      });
   });
 }
 
