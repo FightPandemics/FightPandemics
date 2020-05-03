@@ -10,20 +10,22 @@ async function routes(app) {
     const { userId } = req.body;
 
     if (userId) {
-      const userFeedback = await Feedback.find({ userId });
-      if (userFeedback[0]) {
-        reply.conflict("User already submitted feedback");
+      const [err, userFeedback] = await app.to(Feedback.find({ userId }));
+      if (userFeedback[0] || err) {
+        throw app.httpErrors.internalServerError();
       }
     }
 
-    return new Feedback({
-      ...req.body,
-      ipAddress: req.ip,
-    })
-      .save()
-      .then(() => {
-        reply.code(201).send({ success: true });
-      });
+    const [err] = await app.to(
+      new Feedback({
+        ...req.body,
+        ipAddress: req.ip,
+      }).save(),
+    );
+
+    if (err) throw app.httpErrors.internalServerError();
+
+    return reply.code(201).send({ success: true });
   });
 }
 
