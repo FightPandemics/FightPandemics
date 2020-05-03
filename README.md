@@ -27,6 +27,8 @@ Follow the inital project setup for non-engineers described in [Notion](https://
 
 There are two ways to set up the app: Docker or Local Setup. It is strongly recommended to use the Docker Setup, but if you are unable to install Docker, you have the option of setting up the app locally.
 
+If, at any point, you are having trouble setting up the app, please do not hesitate to ask us for assistance in the `#engineering` Slack channel! In order to speed up assistance, please mention the method that you are using to set up the app, as well as the operating system that you are using.
+
 ### Docker Setup
 
 1. Follow the steps for your OS to install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). Note that depending on the Docker install, Docker Compose may already be included, so it would not be necessary to install Docker Compose separately.
