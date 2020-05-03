@@ -3,6 +3,8 @@ services:
   mongo:
     image: mongo
     container_name: mongo
+    environment:
+      MONGO_INITDB_DATABASE: fightpandemics
     restart: always
     networks:
       - fp_network
@@ -37,7 +39,7 @@ services:
     container_name: backend-service
     restart: always
     environment:
-      MONGO_URI: mongo
+      MONGO_URI: mongo/fightpandemics
       GEO_SERVICE_URL: geo-service:5000
     ports:
       - "8000:8000"
