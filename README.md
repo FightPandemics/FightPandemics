@@ -37,12 +37,12 @@ There are two ways to set up the app: Docker or Local Setup. It is strongly reco
 
 ### Local Setup
 
-If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality make not work. For example, if only the client is running, none of the calls to the backend or geo-service service will work. If only the backend is running, none of the calls to the geo-service will work.
+If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend or geo-service service will work. If only the backend is running, none of the calls to the geo-service will work.
 
 #### Client
 
 1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
-1. Using nvm, install Node 12.16.2: `nvm install 12.6.2`.
+1. Using nvm, install Node 12.16.2: `nvm install 12.16.2`.
 1. Enter the `client` directory and run `npm install`.
 1. Copy the `.env.example` in the `client` directory to `.env`.
 1. Replace `TODO` entries in the `.env` with correct values (this is not needed to run the project in a responding but non-functional state). Consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b) for AIRTABLE variable values.
@@ -51,7 +51,7 @@ If, for some reason, you are unable to use Docker, you can still set up the app 
 
 #### Backend
 
-1. If not already installed, install nvm and Node 12.6.2 (see steps 1 and 2 in the Client section above).
+1. If not already installed, install nvm and Node 12.16.2 (see steps 1 and 2 in the Client section above).
 1. Enter the `backend` directory and run `npm install`.
 1. Copy the `.env.example_local` in the `backend` directory to `.env`.
 1. Replace `TODO` entries in the `.env` with correct values (this is not needed to run the project in a responding but non-functional state). Ask in the `#engineering` Slack channel for AUTH variable values.
