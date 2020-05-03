@@ -29,6 +29,7 @@ There are two ways to set up the app: Docker or Local Setup. It is strongly reco
 
 ### Docker Setup
 
+1. Follow the steps for your OS to install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/). Note that depending on the Docker install, Docker Compose may already be included, so it would not be necessary to install Docker Compose separately.
 1. Copy `client/.env.example` to `client/.env`
 1. Copy `backend/.env.example_docker` to `backend/.env`
 1. Replace `TODO` entries in both files with correct values (this is not needed to run the project in a responding but non-functional state). Consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b) and ask in `#engineering` Slack channel for AUTH variable values.
