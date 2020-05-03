@@ -45,22 +45,12 @@ const NrMap = () => {
     longitude: 13.404954,
   });
   const [rec, setRec] = useState([]);
-  const [plcDtl, setPlcDtl] = useState([]);
+  const [plcDtl, setPlcDtl] = useState(() => []);
 
   const googleMapRef = useRef();
 
   //1
   useLayoutEffect(() => {
-    console.log(
-      "useLayoutEffect start",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
     const googleMapScript = document.createElement("script");
     googleMapScript.src = url;
     window.document.body.appendChild(googleMapScript);
@@ -82,16 +72,6 @@ const NrMap = () => {
 
   //2
   const createGoogleMap = () => {
-    console.log(
-      "createGoogleMap ini",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
     return new window.google.maps.Map(googleMapRef.current, {
       zoom: 13,
       center: {
@@ -104,17 +84,6 @@ const NrMap = () => {
 
   //3
   const places = () => {
-    console.log(
-      "places ini",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
-
     new window.google.maps.places.PlacesService(map.googleMap).nearbySearch(
       {
         location: {
@@ -129,54 +98,18 @@ const NrMap = () => {
         setRec(results);
       },
     );
-
-    console.log(
-      "places end",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
   };
 
+  //4
   useEffect(() => {
-    console.log(
-      "placeDetails useEffect",
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-    );
     if (rec && rec.length > 0) {
       placeDetails();
-    }
-  }, [rec]);
-
-  useEffect(() => {
-    console.log(
-      "createMarker useEffect",
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-    );
-    if (rec && rec.length > 0) {
       createMarker();
     }
   }, [rec]);
 
+  //5
   const placeDetails = () => {
-    console.log(
-      "placeDetails ini",
-
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-    );
     const hospitals = [];
 
     rec.map((place) => {
@@ -191,31 +124,22 @@ const NrMap = () => {
           "icon",
         ],
       };
+
       new window.google.maps.places.PlacesService(map.googleMap).getDetails(
         request,
         (req, status) => {
-          console.log(status);
           if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-            hospitals.push(req);
+            setPlcDtl((prevState) => {
+              return [...prevState, req];
+            });
           }
         },
       );
     });
-    console.log("hospitals", hospitals);
-    setPlcDtl(hospitals);
   };
 
+  //5
   const createMarker = () => {
-    console.log(
-      "createMarker ini",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
     let image = {
       url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
       size: new window.google.maps.Size(71, 71),
@@ -238,17 +162,6 @@ const NrMap = () => {
       position: { lat: coordinates.latitude, lng: coordinates.longitude },
       map: map.googleMap,
     });
-
-    console.log(
-      "createMarker end",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
   };
 
   const getMyLocation = () => {
@@ -262,17 +175,20 @@ const NrMap = () => {
         });
       });
     }
-    console.log(
-      "getMyLocation end",
-      coordinates,
-      rec,
-      plcDtl,
-      googleMapRef,
-      map.googleMap,
-      map.marker,
-      map.place,
-    );
   };
+
+  // const displayList = () => {
+  //   return plcDtl.map((place) => {
+  //     console.log("cards rerendered");
+  //     return (
+  //       <Cards key={`card-${place.name}`}>
+  //         <h3>{place.name}</h3>
+  //         <p>{place.formatted_address}</p>
+  //         <PhoneNo>{place.formatted_phone_number}</PhoneNo>
+  //       </Cards>
+  //     );
+  //   })
+  // }
 
   return (
     <Wrapper>
