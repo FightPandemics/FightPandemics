@@ -1,5 +1,5 @@
 const { readdirSync, statSync } = require("fs");
-const { join } = require("path");
+const { join, basename } = require("path");
 
 require("./schemas/v2/user");
 
@@ -12,7 +12,7 @@ module.exports = function registerModels(mongoConnection) {
     if (statSync(filePath).isDirectory()) return;
 
     const schema = require(filePath); // eslint-disable-line import/no-dynamic-require
-    const modelName = fileName.replace(".js", "");
+    const modelName = basename(fileName, ".js");
     mongoConnection.model(modelName, schema);
   });
 };
