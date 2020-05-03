@@ -40,6 +40,10 @@ There are two ways to set up the app: Docker or Local Setup. It is strongly reco
 
 If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend or geo-service service will work. If only the backend is running, none of the calls to the geo-service will work.
 
+#### MongoDB
+
+Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
+
 #### Client
 
 1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
@@ -52,6 +56,7 @@ If, for some reason, you are unable to use Docker, you can still set up the app 
 
 #### Backend
 
+1. If not already installed, [install MongoDB](https://docs.mongodb.com/manual/installation/).
 1. If not already installed, install nvm and Node 12.16.2 (see steps 1 and 2 in the Client section above).
 1. Enter the `backend` directory and run `npm install`.
 1. Copy the `.env.example_local` in the `backend` directory to `.env`.
@@ -68,14 +73,6 @@ If, for some reason, you are unable to use Docker, you can still set up the app 
 1. Run `pip install -r requirements.txt` to install dependencies.
 1. Start the geo-service by running `python app.py`
 1. The geo-service can be accessed at `localhost:5000` using cURL, Postman, or a similar API testing tool.
-
-#### MongoDB
-
-1. Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
-1. Ensure the MongoDB server is running, and then start the mongo shell by running `mongo`.
-1. Create the `fightpandemics` database: `use fightpandemics`.
-1. Verify the database was created: `show dbs`
-1. Exit the mongo shell.
 
 ### Contributing
 
