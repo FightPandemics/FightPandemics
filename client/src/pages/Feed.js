@@ -6,7 +6,6 @@ import fakePosts from "../assets/data/fakePosts";
 import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";
-import CreatPostIcon from "../components/Icon/create-post";
 import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
 import {
   ADD_OPTION,
@@ -15,6 +14,10 @@ import {
   TOGGLE_STATE,
   SET_VALUE,
 } from "../hooks/actions/feedActions";
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import creatPost from "~/assets/icons/create-post.svg";
 
 export const FeedContext = React.createContext();
 
@@ -109,7 +112,11 @@ const Feed = () => {
       <FeedWrapper>
         <FilterBox />
         <Posts filteredPosts={fakePosts} />
-        <CreatPostIcon onClick={handleCreatePost} className="create-post" />
+        <SvgIcon
+          src={creatPost}
+          onClick={handleCreatePost}
+          className="create-post"
+        />
         {renderCreatePostModal()}
       </FeedWrapper>
     </FeedContext.Provider>
