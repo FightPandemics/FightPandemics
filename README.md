@@ -68,11 +68,19 @@ If, for some reason, you are unable to use Docker, you can still set up the app 
 1. Start the geo-service by running `python app.py`
 1. The geo-service can be accessed at `localhost:5000` using cURL, Postman, or a similar API testing tool.
 
-#### Contributing
+#### MongoDB
+
+1. Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
+1. Ensure the MongoDB server is running, and then start the mongo shell by running `mongo`.
+1. Create the `fightpandemics` database: `use fightpandemics`.
+1. Verify the database was created: `show dbs`
+1. Exit the mongo shell.
+
+### Contributing
 
 Check the projects tab of the original repository for available tickets.
 
-#### API Documentation
+### API Documentation
 
 To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
 
