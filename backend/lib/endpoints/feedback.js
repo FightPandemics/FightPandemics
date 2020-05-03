@@ -25,7 +25,11 @@ async function routes(app) {
 
     if (err) throw app.httpErrors.internalServerError();
 
-    return reply.code(201).send({ success: true });
+    setImmediate(() => {
+      reply.code(201).send({ success: true });
+    });
+
+    return reply;
   });
 }
 
