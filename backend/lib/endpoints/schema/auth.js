@@ -11,7 +11,8 @@ const loginSchema = {
 const signupSchema = {
   body: strictSchema()
     .prop("email", S.string().required())
-    .prop("password", S.string().required()),
+    .prop("password", S.string().required())
+    .prop("confirmPassword", S.string().required()),
 };
 
 const oAuthSchema = {
