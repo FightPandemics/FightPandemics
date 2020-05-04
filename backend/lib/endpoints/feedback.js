@@ -10,9 +10,9 @@ async function routes(app) {
     const { userId } = req.body;
 
     if (userId) {
-      const [err, userFeedback] = await app.to(Feedback.find({ userId }));
-      if (userFeedback[0] || err) {
-        throw app.httpErrors.internalServerError();
+      const [userFeedback] = await app.to(Feedback.findOne({ userId }));
+      if (userFeedback) {
+        throw app.httpErrors.conflict("Feedback already submitted");
       }
     }
 
