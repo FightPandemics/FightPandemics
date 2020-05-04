@@ -25,15 +25,12 @@ export const AirTableCOVID = (props) => {
   };
 
   useEffect(() => {
-    console.log("effect");
     getCovidData();
   }, []);
 
-  /*if at any time insertions are going to be made in data.records, it must be used another way 
-to create unique keys instead of map index */
   return typeof covid === "object"
-    ? covid.map((e, index) => (
-        <Card key={"card-" + index} style={{ marginTop: "16px" }}>
+    ? covid.map((e) => (
+        <Card key={"card-" + e.id} style={{ marginTop: "16px" }}>
           <h5>{e.fields["Post Title"]}</h5>
           <div>
             <footer className="blockquote-footer">
@@ -42,9 +39,7 @@ to create unique keys instead of map index */
             <h3>
               {e.fields["Tags Original"]
                 ? e.fields["Tags Original"].map((sub, i) => (
-                    <React.Fragment key={"badge-" + index + "-" + i}>
-                      <Badge>{sub}</Badge>{" "}
-                    </React.Fragment>
+                    <Badge key={"badge-" + e.id + "-" + i}>{sub}</Badge>
                   ))
                 : ""}
             </h3>
