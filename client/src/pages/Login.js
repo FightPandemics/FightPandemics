@@ -41,13 +41,11 @@ const InputWrapper = styled.div`
 
 const StyleInput = {
   fontFamily: "${typography.font.family.button}",
-  fontStyle: "normal",
-  fontWeight: "normal",
   fontSize: "1.8rem",
   lineHeight: "2.5rem",
-  height: "6rem",
+  paddingBottom: "0.8rem",
   width: "100%",
-  borderBottom: "1px solid #5970EC",
+  borderBottom: "2px solid #5970EC",
 };
 
 const StyleLabel = {
@@ -189,13 +187,12 @@ const Login = ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
-        <WhiteSpace />
-        <WhiteSpace />
         <SubmitButton
           title={isLoginForm ? "Sign In" : "Sign Up"}
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
         />
       </form>
+      <WhiteSpace />
       <WhiteSpace />
       {isLoginForm ? (
         <>
