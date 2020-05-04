@@ -51,7 +51,12 @@ async function routes(app) {
     { preHandler: [app.getServerToken], schema: signupSchema },
     async (req) => {
       const { body, token } = req;
-      const { email, password } = body;
+      const { email, password, confirmPassword } = body;
+      if (password !== confirmPassword) {
+        throw app.httpErrors.badRequest(
+          "Password should be entered twice exactly the same",
+        );
+      }
       const payload = {
         connection: "Username-Password-Authentication",
         email,
