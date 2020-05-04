@@ -23,13 +23,13 @@ async function routes(app) {
       }).save(),
     );
 
-    if (err) throw app.httpErrors.internalServerError();
+    if (err) {
+      req.log.error("Failed submitting feedback", { err });
+      throw app.httpErrors.internalServerError();
+    }
 
-    setImmediate(() => {
-      reply.code(201).send({ success: true });
-    });
-
-    return reply;
+    reply.code(201);
+    return { success: true };
   });
 }
 
