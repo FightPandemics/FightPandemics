@@ -75,6 +75,7 @@ const theme = {
     },
     submit: {
       backgroundColor: ROYAL_BLUE,
+      borderColor: ROYAL_BLUE,
       borderRadius: "4.6rem",
       color: "#fff",
       fontFamily: "Poppins",

@@ -20,10 +20,10 @@ import {
 } from "../components/Icon";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
 
 import { theme } from "../constants/theme";
 const { colors } = theme;
+const { typography } = theme;
 
 const Title = styled.h1`
   align-items: center;
@@ -40,10 +40,22 @@ const InputWrapper = styled.div`
 `;
 
 const StyleInput = {
+  fontFamily: "${typography.font.family.button}",
+  fontStyle: "normal",
+  fontWeight: "normal",
+  fontSize: "1.8rem",
+  lineHeight: "2.5rem",
+  height: "6rem",
   width: "100%",
+  borderBottom: "1px solid #5970EC",
 };
 
 const StyleLabel = {
+  fontFamily: "${typography.font.family.button}",
+  fontStyle: "normal",
+  fontWeight: "500",
+  fontSize: "1.6rem",
+  lineHeight: "1.9rem",
   textAlign: "left",
 };
 
@@ -74,7 +86,7 @@ const FlexBox = styled(Flex).attrs((props) => ({
 
 const SocialButton = styled(Button)`
   border: 1px solid ${colors.lightGray};
-  border-radius: 0.8rem;
+  border-radius: unset;
   display: flex;
   height: 4.8rem;
   margin: 0.5rem;
@@ -83,9 +95,19 @@ const SocialButton = styled(Button)`
 `;
 
 const ButtonText = styled.span`
-  font-family: "Poppins";
+  font-family: ${typography.font.family.display};
   font-size: 1.4rem;
   color: ${colors.darkGray};
+`;
+
+const AuthLink = styled.a`
+  font-family: ${typography.font.family.display};
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+  text-align: center;
+  color: ${colors.royalBlue};
 `;
 
 const Login = ({ isLoginForm }) => {
@@ -144,9 +166,10 @@ const Login = ({ isLoginForm }) => {
       <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <Label style={StyleLabel} label="E-mail" />
+          <Label for="email" style={StyleLabel} label="E-mail" />
           <Input
             type="email"
+            name="email"
             required
             placeholder="Enter email address"
             value={email}
@@ -155,9 +178,10 @@ const Login = ({ isLoginForm }) => {
           />
         </InputWrapper>
         <InputWrapper>
-          <Label style={StyleLabel} label="Password" />
+          <Label for="password" style={StyleLabel} label="Password" />
           <Input
             type="password"
+            name="password"
             required
             placeholder="Enter password"
             value={password}
@@ -176,19 +200,19 @@ const Login = ({ isLoginForm }) => {
       {isLoginForm ? (
         <>
           <p>
-            <TermsLink href="/auth/forgot-password">Forgot password?</TermsLink>
+            <AuthLink href="/auth/forgot-password">Forgot password?</AuthLink>
           </p>
           <p>
-            <TermsLink href="/auth/signup">
+            <AuthLink href="/auth/signup">
               Don't have an account? <u>Sign Up</u>
-            </TermsLink>
+            </AuthLink>
           </p>
         </>
       ) : (
         <p>
-          <TermsLink href="/auth/login">
+          <AuthLink href="/auth/login">
             Already have an account? <u>Sign In</u>
-          </TermsLink>
+          </AuthLink>
         </p>
       )}
       <WhiteSpace />
