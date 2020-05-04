@@ -47,7 +47,7 @@ const NrMap = () => {
   // rec-> list of hospitals according to nearbySearch
   const [rec, setRec] = useState([]);
   // plcDtl-> list of hospitals with requested details
-  const [plcDtl, setPlcDtl] = useState(() => []);
+  const [plcDtl, setPlcDtl] = useState([]);
 
   const googleMapRef = useRef();
 
@@ -95,14 +95,14 @@ const NrMap = () => {
 
   useEffect(() => {
     if (rec && rec.length > 0) {
-      placeDetails();
       createMarker();
+      placeDetails();
     }
   }, [rec]);
 
   const placeDetails = () => {
     rec.map((place) => {
-      let request = {
+      const request = {
         placeId: place.place_id,
         fields: [
           "name",
@@ -117,9 +117,9 @@ const NrMap = () => {
       new window.google.maps.places.PlacesService(map.googleMap).getDetails(
         request,
         (req, status) => {
-          if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-            setPlcDtl((prevState) => {
-              return [...prevState, req];
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            setPlcDtl((plcDtl) => {
+              return [...plcDtl, req];
             });
           }
         },
@@ -128,7 +128,7 @@ const NrMap = () => {
   };
 
   const createMarker = () => {
-    let image = {
+    const image = {
       url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
       size: new window.google.maps.Size(71, 71),
       origin: new window.google.maps.Point(0, 0),
