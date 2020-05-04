@@ -101,8 +101,6 @@ const NrMap = () => {
   }, [rec]);
 
   const placeDetails = () => {
-    console.log("placeDetails");
-
     rec.map((place) => {
       let request = {
         placeId: place.place_id,
@@ -155,8 +153,6 @@ const NrMap = () => {
   };
 
   const getMyLocation = () => {
-    console.log("getMyLocation");
-
     const location = window.navigator && window.navigator.geolocation;
 
     if (location) {
