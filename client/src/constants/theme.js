@@ -73,6 +73,14 @@ const theme = {
       borderRadius: "18px",
       fontWeight: "bold",
     },
+    submit: {
+      backgroundColor: ROYAL_BLUE,
+      borderRadius: "4.6rem",
+      color: "#fff",
+      fontFamily: "Poppins",
+      fontSize: "1.8rem",
+      fontWeight: "bold",
+    },
     iconAndText: {
       color: DARK_GRAY,
       backgroundColor: "transparent",
