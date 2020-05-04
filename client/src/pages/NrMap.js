@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
@@ -44,13 +44,14 @@ const NrMap = () => {
     latitude: 52.520008,
     longitude: 13.404954,
   });
+  // rec-> list of hospitals according to nearbySearch
   const [rec, setRec] = useState([]);
+  // plcDtl-> list of hospitals with requested details
   const [plcDtl, setPlcDtl] = useState(() => []);
 
   const googleMapRef = useRef();
 
-  //1
-  useLayoutEffect(() => {
+  useEffect(() => {
     const googleMapScript = document.createElement("script");
     googleMapScript.src = url;
     window.document.body.appendChild(googleMapScript);
@@ -62,15 +63,8 @@ const NrMap = () => {
     });
 
     getMyLocation();
-
-    return googleMapScript.removeEventListener("load", () => {
-      map.googleMap = null;
-      map.marker = null;
-      map.place = null;
-    });
   }, []);
 
-  //2
   const createGoogleMap = () => {
     return new window.google.maps.Map(googleMapRef.current, {
       zoom: 13,
@@ -82,7 +76,6 @@ const NrMap = () => {
     });
   };
 
-  //3
   const places = () => {
     new window.google.maps.places.PlacesService(map.googleMap).nearbySearch(
       {
@@ -100,7 +93,6 @@ const NrMap = () => {
     );
   };
 
-  //4
   useEffect(() => {
     if (rec && rec.length > 0) {
       placeDetails();
@@ -108,9 +100,8 @@ const NrMap = () => {
     }
   }, [rec]);
 
-  //5
   const placeDetails = () => {
-    const hospitals = [];
+    console.log("placeDetails");
 
     rec.map((place) => {
       let request = {
@@ -138,7 +129,6 @@ const NrMap = () => {
     });
   };
 
-  //5
   const createMarker = () => {
     let image = {
       url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
@@ -165,6 +155,8 @@ const NrMap = () => {
   };
 
   const getMyLocation = () => {
+    console.log("getMyLocation");
+
     const location = window.navigator && window.navigator.geolocation;
 
     if (location) {
@@ -177,24 +169,10 @@ const NrMap = () => {
     }
   };
 
-  // const displayList = () => {
-  //   return plcDtl.map((place) => {
-  //     console.log("cards rerendered");
-  //     return (
-  //       <Cards key={`card-${place.name}`}>
-  //         <h3>{place.name}</h3>
-  //         <p>{place.formatted_address}</p>
-  //         <PhoneNo>{place.formatted_phone_number}</PhoneNo>
-  //       </Cards>
-  //     );
-  //   })
-  // }
-
   return (
     <Wrapper>
       <Nested>
         {plcDtl.map((place) => {
-          console.log("cards rerendered");
           return (
             <Cards key={`card-${place.name}`}>
               <h3>{place.name}</h3>
