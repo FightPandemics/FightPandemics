@@ -13,14 +13,15 @@ import {
 import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  GmailIcon,
-  LinkedinIcon,
-} from "../components/Icon";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import twitter from "~/assets/icons/social-twitter.svg";
+import facebook from "~/assets/icons/social-facebook.svg";
+import gmail from "~/assets/icons/social-google.svg";
+import linkedin from "~/assets/icons/social-linkedin.svg";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -173,28 +174,28 @@ const Login = ({ isLoginForm }) => {
       <FlexBox>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<FacebookIcon />}
+          icon={<SvgIcon src={facebook} />}
           onClick={() => handleSocialLogin("facebook")}
         >
           Facebook
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<GmailIcon />}
+          icon={<SvgIcon src={gmail} />}
           onClick={() => handleSocialLogin("google")}
         >
           Gmail
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<TwitterIcon />}
+          icon={<SvgIcon src={twitter} />}
           onClick={() => handleSocialLogin("twitter")}
         >
           Twitter
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<LinkedinIcon />}
+          icon={<SvgIcon src={linkedin} />}
           onClick={() => handleSocialLogin("linkedin")}
         >
           Linkedin

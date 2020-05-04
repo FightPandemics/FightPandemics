@@ -6,7 +6,6 @@ import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
-import HorizontalLine from "../components/Icon/horizontal-line";
 import AddTags from "../components/Tag/AddTags";
 import SubmitButton from "../components/Button/SubmitButton";
 import { theme } from "../constants/theme";
@@ -16,6 +15,10 @@ import {
   StyledInput,
   StyledTextArea,
 } from "../components/CreatePost/StyledCreatePost";
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import horizontalLine from "~/assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
@@ -169,7 +172,7 @@ const CreatePost = (props) => {
             <span className="error-box">{renderError("help")}</span>
           </div>
         </div>
-        <HorizontalLine />
+        <SvgIcon src={horizontalLine} />
         <div className="post-content">
           <label>
             <StyledInput
@@ -190,7 +193,7 @@ const CreatePost = (props) => {
           </label>
           <span className="error-box">{renderError("description")}</span>
         </div>
-        <HorizontalLine />
+        <SvgIcon src={horizontalLine} />
         <div className="tags">
           <AddTags addTag={addTag} filters={types} />
         </div>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import CloseX from "../components/Icon/close-button";
 import { theme } from "../constants/theme";
+
+// ICONS
+import SvgIcon from "./Icon/SvgIcon";
+import closeX from "~/assets/icons/close-btn.svg";
 
 const { colors } = theme;
 
@@ -60,7 +63,7 @@ export default () => {
         terms.
       </div>
       <CloseButton onClick={hideMessage}>
-        <CloseX />
+        <SvgIcon src={closeX} />
       </CloseButton>
     </CookieContainer>
   );
