@@ -1,11 +1,14 @@
 import React from "react";
-import HeartIcon from "../Icon/heart";
-import HeartGrayIcon from "../Icon/heart-gray";
-import CommentIcon from "../Icon/comment";
-import CommentGrayIcon from "../Icon/comment-gray";
-import ShareIcon from "../Icon/share";
-import ShareGrayIcon from "../Icon/share-gray";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+
+// ICONS
+import SvgIcon from "../Icon/SvgIcon";
+import heart from "~/assets/icons/heart.svg";
+import heartGray from "~/assets/icons/heart-gray.svg";
+import comment from "~/assets/icons/comment.svg";
+import commentGray from "~/assets/icons/comment-gray.svg";
+import share from "~/assets/icons/share.svg";
+import shareGray from "~/assets/icons/share-gray.svg";
 
 const PostSocial = ({
   url,
@@ -21,25 +24,25 @@ const PostSocial = ({
 }) => {
   const renderLikeIcon = () => {
     return liked ? (
-      <HeartGrayIcon className="social-icon-svg" />
+      <SvgIcon src={heartGray} className="social-icon-svg" />
     ) : (
-      <HeartIcon className="social-icon-svg" />
+      <SvgIcon src={heart} className="social-icon-svg" />
     );
   };
 
   const renderCommentIcon = () => {
     return showComments ? (
-      <CommentGrayIcon className="social-icon-svg" />
+      <SvgIcon src={commentGray} className="social-icon-svg" />
     ) : (
-      <CommentIcon className="social-icon-svg" />
+      <SvgIcon src={comment} className="social-icon-svg" />
     );
   };
 
   const renderShareIcon = () => {
     return shared ? (
-      <ShareGrayIcon className="social-icon-svg" />
+      <SvgIcon src={shareGray} className="social-icon-svg" />
     ) : (
-      <ShareIcon className="social-icon-svg" />
+      <SvgIcon src={share} className="social-icon-svg" />
     );
   };
 

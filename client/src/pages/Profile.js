@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "../components/Picture/ProfilePic";
-import LinkedinIcon from "../components/Icon/Linkedin-blue";
-import TwitterIcon from "../components/Icon/Twitter-blue";
-import Menu from "../components/Icon/menu";
-import Edit from "../components/Icon/edit";
 import Title from "../components/Title/Title";
 import styled from "styled-components";
 import { getInitials } from "../utils/userInfo";
 import { Link } from "react-router-dom";
 import fakePosts from "../assets/data/fakePosts"; // feed
 import Posts from "../components/Feed/Posts"; // feed
-import CreatPostIcon from "../components/Icon/create-post"; // feed
 import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
 import ButtonModal from "../components/Feed/ButtonModal"; // feed
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import menu from "~/assets/icons/menu.svg";
+import edit from "~/assets/icons/edit.svg";
+import createPost from "~/assets/icons/create-post.svg"; // feed
+import linkedinBlue from "~/assets/icons/social-linkedin-blue.svg";
+import twitterBlue from "~/assets/icons/social-twitter-blue.svg";
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 
@@ -31,13 +34,13 @@ const SectionHeader = (props) => (
     {...props}
   />
 );
-const EditIcon = styled(Edit)`
+const EditIcon = styled(SvgIcon)`
   color: #425af2;
   align-self: flex-end;
   margin-right: 2rem;
   margin-top: 2rem;
 `;
-const MenuIcon = styled(Menu)`
+const MenuIcon = styled(SvgIcon)`
   color: #ffffff;
   margin-right: 2rem;
   margin-top: 3rem;
@@ -122,7 +125,7 @@ const Profile = (props) => {
             : props.history.push("/edit-profile")
         }
       >
-        <EditIcon />
+        <EditIcon src={edit} />
       </Popover>
     );
   };
@@ -133,7 +136,8 @@ const Profile = (props) => {
         <div style={{ margin: "0 2.5rem" }}>
           <FeedWrapper>
             <Posts filteredPosts={fakePosts} />
-            <CreatPostIcon
+            <SvgIcon
+              src={createPost}
               className="create-post"
               onClick={() => setModal(!modal)}
             />
@@ -163,7 +167,7 @@ const Profile = (props) => {
   return (
     <ProfileLayout>
       <BackgroundHeader>
-        <MenuIcon />
+        <MenuIcon src={menu} />
       </BackgroundHeader>
       <div style={userInfoStyle}>
         {popover(props)}
@@ -194,8 +198,8 @@ const Profile = (props) => {
             />
           </HelpContainer>
           <PlaceholderIcon />
-          <LinkedinIcon style={iconStyle} />
-          <TwitterIcon style={iconStyle} />
+          <SvgIcon src={linkedinBlue} style={iconStyle} />
+          <SvgIcon src={twitterBlue} style={iconStyle} />
         </IconsContainer>
       </div>
       <WhiteSpace />
