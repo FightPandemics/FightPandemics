@@ -12,7 +12,7 @@ const LargeButton = styled(BaseButton)`
       ${theme.button.primary}
 
       &:hover, &:active, &:focus {
-        ${theme.button.outline}
+        ${theme.button.secondary}
       }
     `}
 
@@ -27,9 +27,19 @@ const LargeButton = styled(BaseButton)`
     `}
 
   ${(props) =>
-    props.outline &&
+    props.secondary &&
     css`
-      ${theme.button.outline}
+      ${theme.button.secondary}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
+      }
+    `}
+
+  ${(props) =>
+    props.tertiary &&
+    css`
+      ${theme.button.tertiary}
 
       &:hover, &:active, &:focus {
         ${theme.button.primary}

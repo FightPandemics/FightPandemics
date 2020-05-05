@@ -83,10 +83,16 @@ const theme = {
       backgroundColor: SELAGO,
       color: ROYAL_BLUE,
     },
-    outline: {
+    secondary: {
       backgroundColor: "#fff",
       color: ROYAL_BLUE,
       border: `0.2rem solid ${ROYAL_BLUE} !important`,
+    },
+    tertiary: {
+      fontSize: "1.6rem",
+      fontWeight: "500",
+      textAlign: "center",
+      color: ROYAL_BLUE,
     },
     iconAndText: {
       color: DARK_GRAY,
