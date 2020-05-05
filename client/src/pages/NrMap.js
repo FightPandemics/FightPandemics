@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
+const default_latitude = 52.520008;
+const default_longitude = 13.404954;
 
 const PhoneNo = styled.p`
   color: #425af2;
@@ -35,8 +37,8 @@ const Cards = styled.div`
 
 const NrMap = () => {
   const [coordinates, setCoordinates] = useState({
-    latitude: 52.520008,
-    longitude: 13.404954,
+    latitude: default_latitude,
+    longitude: default_longitude,
   });
   const [hospitals, setHospitals] = useState([]);
   const [detailedHospitals, setDetailedHospitals] = useState([]);
