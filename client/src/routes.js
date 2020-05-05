@@ -3,7 +3,6 @@ import { NeedHelp } from "./pages/NeedHelp";
 import { OfferHelp } from "./pages/OfferHelp";
 import { About } from "./pages/About";
 import { Medical } from "./pages/Medical";
-import { AirTableCOVID } from "./pages/AirTableCOVID";
 import { SymptomsCheck } from "./pages/SymptomsCheck";
 import { TermsConditions } from "./pages/TermsConditions";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
@@ -65,10 +64,6 @@ const routes = [
   {
     path: "/nearest-hospital",
     component: NearestHospital,
-  },
-  {
-    path: "/AirTableCOVID",
-    component: AirTableCOVID,
   },
   {
     path: "/find-help",
