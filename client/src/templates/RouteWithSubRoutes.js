@@ -58,9 +58,9 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ emailVerified, isAuthenticated }) => ({
-  emailVerified,
-  isAuthenticated,
+const mapStateToProps = ({ session }) => ({
+  emailVerified: session.emailVerified,
+  isAuthenticated: session.isAuthenticated,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

@@ -4,16 +4,16 @@ const { schema: locationSchema } = require("./location");
 
 // -- Schema
 const authorSchema = new Schema({
-  authorId: {
+  id: {
     ref: "User",
     required: true,
     type: ObjectId,
   },
-  authorName: {
+  name: {
     required: true,
     type: String,
   },
-  authorType: {
+  type: {
     enum: [
       "Company",
       "Community",

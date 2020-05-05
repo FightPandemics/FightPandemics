@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 
 const {
+  addCommentSchema,
   getPostsSchema,
   getPostByIdSchema,
   createPostSchema,
@@ -12,7 +13,6 @@ const {
   likeUnlikePostSchema,
   updateCommentSchema,
   updatePostSchema,
-  addCommentSchema,
 } = require("./schema/posts");
 
 /*
@@ -26,55 +26,72 @@ async function routes(app) {
 
   // /posts
 
-  app.get("/", { schema: getPostsSchema }, async (req) => {
-    // TODO: get userId from jwt
-    // userId = ?
-    // user = User.findById(userId);
-    const user = await User.findById("5ea6900c0e0419d4cb123611");
+  app.get(
+    "/",
+    {
+      preValidation: [app.authenticate],
+      schema: getPostsSchema,
+    },
+    async (req) => {
+      // const { userId } = req.body;
+      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        throw app.httpErrors.notFound();
+      }
 
-    // TODO: add filters
-    // TODO: add pagination
-    // TODO: add limitation of post content if user is not logged
-    return await Post.aggregate([
-      {
-        $geoNear: {
-          distanceField: "distance",
-          key: "author.location.coordinates",
-          near: {
-            $geometry: {
-              type: "Point",
-              coordinates: user.location.coordinates,
+      // TODO: add filters
+      // TODO: add limitation of post content if user is not logged
+      const [postsErr, posts] = await app.to(
+        Post.aggregate([
+          {
+            $geoNear: {
+              distanceField: "distance",
+              key: "author.location.coordinates",
+              near: {
+                $geometry: {
+                  coordinates: user.location.coordinates,
+                  type: "Point",
+                },
+              },
+              // query: { << add filters here >> }
             },
           },
-          // query: { << add filters here >> }
-        },
-      },
-      {
-        $lookup: {
-          as: "comments",
-          foreignField: "postId",
-          from: "comments",
-          localField: "_id",
-        },
-      },
-      {
-        $project: {
-          _id: true,
-          name: "author.name",
-          type: "author.type",
-          commentsCount: {
-            $size: "$comments",
+          {
+            $lookup: {
+              as: "comments",
+              foreignField: "postId",
+              from: "comments",
+              localField: "_id",
+            },
           },
-          content: true,
-          distance: true,
-          likesCount: {
-            $size: "$likes",
+          {
+            $project: {
+              _id: true,
+              commentsCount: {
+                $size: "$comments",
+              },
+              content: true,
+              distance: true,
+              likesCount: {
+                $size: "$likes",
+              },
+              name: "author.name",
+              title: true,
+              type: "author.type",
+            },
           },
-          title: true,
-        },
-      },
-    ]);
-  });
+        ]),
+      );
+
+      if (postsErr) {
+        req.log.error("Failed requesting posts", { postsErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      return posts;
+    },
+  );
 
   app.post(
     "/",
@@ -83,34 +100,38 @@ async function routes(app) {
       schema: createPostSchema,
     },
     async (req, reply) => {
-      // TODO: get userId from jwt
-      // userId = ?
-      // user = User.findById(userId);
-      user = await User.findById("5ea6900c0e0419d4cb123611");
+      // const { userId } = req.body;
+      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        throw app.httpErrors.notFound();
+      }
 
-      let postProps = req.body;
+      const { body: postProps } = req;
 
       // Creates embedded author document
       postProps.author = {
         id: user.id,
-        name: user.firstName + " " + user.lastName,
-        type: user.type,
         location: user.location,
+        name: `${user.firstName} ${user.lastName}`,
+        type: user.type,
       };
 
       // ExpireAt needs to calculate the date
-      postProps.expireAt = moment().add(1, postProps.expireAt + "s");
+      postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
 
       // Initial empty likes array
       postProps.likes = [];
 
-      const post = new Post(postProps).save();
-      if (post) {
-        reply.code(201);
-        return post;
-      } else {
-        return new httpErrors.BadRequest();
+      const [err, post] = await app.to(new Post(postProps).save());
+
+      if (err) {
+        req.log.error("Failed creating post", { err });
+        throw app.httpErrors.internalServerError();
       }
+
+      reply.code(201);
+      return post;
     },
   );
 
@@ -122,51 +143,57 @@ async function routes(app) {
       preValidation: [app.authenticate],
       schema: getPostByIdSchema,
     },
-    async (req, reply) => {
-      // TODO: add pagination
+    async (req) => {
       const { postId } = req.params;
-      const post = await Post.findById(postId);
-      if (post === null) {
-        return new httpErrors.NotFound();
+      const [postErr, post] = await app.to(Post.findById(postId));
+      if (postErr) {
+        throw app.httpErrors.notFound();
       }
-      const commentQuery = await Comment.aggregate([
-        {
-          $match: {
-            parentId: null,
-            postId: mongoose.Types.ObjectId(postId),
-          },
-        },
-        {
-          $lookup: {
-            as: "children",
-            foreignField: "parentId",
-            from: "comments",
-            localField: "_id",
-          },
-        },
-        {
-          $addFields: {
-            childCount: {
-              $size: { $ifNull: ["$children", []] },
+
+      // TODO: add pagination
+      const [commentErr, commentQuery] = await app.to(
+        Comment.aggregate([
+          {
+            $match: {
+              parentId: null,
+              postId: mongoose.Types.ObjectId(postId),
             },
           },
-        },
-        {
-          $group: {
-            _id: null,
-            comments: { $push: "$$ROOT" },
-            numComments: { $sum: { $add: ["$childCount", 1] } },
+          {
+            $lookup: {
+              as: "children",
+              foreignField: "parentId",
+              from: "comments",
+              localField: "_id",
+            },
           },
-        },
-      ]);
+          {
+            $addFields: {
+              childCount: {
+                $size: { $ifNull: ["$children", []] },
+              },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              comments: { $push: "$$ROOT" },
+              numComments: { $sum: { $add: ["$childCount", 1] } },
+            },
+          },
+        ]),
+      );
+      if (commentErr) {
+        req.log.error("Failed retrieving comments", { commentErr });
+        throw app.httpErrors.internalServerError();
+      }
 
-      if (commentQuery[0] == null)
-        commentQuery[0] = { comments: [], numComments: 0 };
+      const { comments = [], numComments = 0 } = commentQuery;
 
       return {
-        commentCount: commentQuery[0].numComments,
-        comments: commentQuery[0].comments,
-        post: post,
+        comments,
+        numComments,
+        post,
       };
     },
   );
@@ -178,29 +205,32 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { postId } = req.params;
-      // TODO: get userId from jwt
-      // userId = ?
-      // user = User.findById(userId);
-      const user = await User.findById("5ea6900c0e0419d4cb123611");
+      // const { userId } = req.body;
+      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
 
-      let deletedPost = await Post.findById(postId);
-      if (!deletedPost) {
-        return new httpErrors.NotFound();
-      } else if (deletedPost.author.id != user.id) {
-        return new httpErrors.Forbidden();
-      } else {
-        deletedPost = await deletedPost.delete();
+      const { postId } = req.params;
+      const [findErr, post] = await app.to(Post.findById(postId));
+      if (findErr) {
+        throw app.httpErrors.notFound();
+      } else if (post.author.id !== userId) {
+        throw app.httpErrors.forbidden();
+      }
+
+      const [deletePostErr, deletedCount] = await app.to(post.delete());
+      if (deletePostErr) {
+        req.log.error("Failed deleting post", { deletePostErr });
+        throw app.httpErrors.internalServerError();
       }
 
       const {
-        deletedCount: deletedCommentsCount,
-        ok,
+        deletedCommentsCount,
+        ok: deleteCommentsOk,
       } = await Comment.deleteMany({ postId });
-      if (ok !== 1) {
+      if (deleteCommentsOk !== 1) {
         app.log.error("failed removing comments for deleted post", { postId });
       }
-      return { deletedCommentsCount, deletedPost, success: true };
+
+      return { deletedCommentsCount, deletedCount, success: true };
     },
   );
 
@@ -210,22 +240,33 @@ async function routes(app) {
       preValidation: [app.authenticate],
       schema: updatePostSchema,
     },
-    async (req, reply) => {
-      // TODO: get userId from jwt
-      // userId = ?
-      // user = User.findById(userId);
-      const user = await User.findById("5ea6900c0e0419d4cb123611");
+    async (req) => {
+      // const { userId } = req.body;
+      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
 
-      const post = await Post.findById(req.params.postId);
-      if (!post) return new httpErrors.NotFound();
-      else if (post.author.id != user.id) return new httpErrors.Forbidden();
-      let body = req.body;
+      const [err, post] = await app.to(Post.findById(req.params.postId));
+      if (err) {
+        throw app.httpErrors.notFound();
+      } else if (post.author.id !== userId) {
+        throw app.httpErrors.forbidden();
+      }
+      const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if ("expireAt" in body)
-        body.expireAt = moment().add(1, body.expireAt + "s");
+      if (body.hasOwnProperty("expireAt")) {
+        body.expireAt = moment().add(1, `${body.expireAt}s`);
+      }
 
-      return Object.assign(post, body).save();
+      const [updateErr, updatedPost] = await app.to(
+        post.overwrite(body).save(),
+      );
+
+      if (updateErr) {
+        req.log.error("Failed updating post", { updateErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      return updatedPost;
     },
   );
 
@@ -236,22 +277,18 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      // TODO: get userId from jwt
-      // userId = ?
-      // user = User.findById(userId);
-      const user = await User.findById("5ea6900c0e0419d4cb123611");
-
       const { postId, userId } = req.params;
-      if (postId === null || userId === null)
-        return new httpErrors.BadRequest();
-      if (userId != user.id) return httpErrors.Forbidden();
 
-      const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId },
-        { $addToSet: { likes: userId } },
-        { new: true },
+      const [updateErr, updatedPost] = await app.to(
+        Post.findOneAndUpdate(
+          { _id: postId },
+          { $addToSet: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedPost) return new httpErrors.NotFound();
+      if (updateErr) {
+        throw app.httpErrors.notFound();
+      }
 
       return {
         likes: updatedPost.likes,
@@ -267,21 +304,18 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      // TODO: get userId from jwt
-      // userId = ?
-      // user = User.findById(userId);
-      const user = await User.findById("5ea6900c0e0419d4cb123611");
-      if (postId === null || userId === null)
-        return new httpErrors.BadRequest();
-
       const { postId, userId } = req.params;
 
-      const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId },
-        { $pull: { likes: userId } },
-        { new: true },
+      const [updateErr, updatedPost] = await app.to(
+        Post.findOneAndUpdate(
+          { _id: postId },
+          { $pull: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedPost) return new httpErrors.NotFound();
+      if (updateErr) {
+        throw app.httpErrors.notFound();
+      }
 
       return {
         likes: updatedPost.likes,
@@ -294,23 +328,20 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: addCommentSchema },
     async (req) => {
-      const { body, params } = req;
+      const { body, params, userId } = req;
       const { parentId } = body;
       const { postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to comment (depending on visibility for that post)
       if (parentId) {
         const parentPost = await Post.findById(parentId);
         if (!parentPost || parentPost.postId !== postId) {
           return new httpErrors.BadRequest();
         }
       }
-      const commentProps = {
+      return new Comment({
         ...body,
-        id: "", // req.user.id
+        authorId: userId,
         postId,
-      };
-      return new Comment(commentProps).save();
+      }).save();
     },
   );
 
@@ -318,13 +349,11 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const { body, params, user } = req;
+      const { body, params, userId } = req;
       const { comment } = body;
       const { commentId, postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to edit comment (only your own comment, visibility can change?)
       const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, id: user.id, postId },
+        { _id: commentId, authorId: userId, postId },
         { comment },
         { new: true },
       );
@@ -339,14 +368,11 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { params, user } = req;
+      const { params, userId } = req;
       const { commentId, postId } = params;
-      // todo: get user id from JWT
-      //  check if user is authorized to delete their own comment (visibility can change?)
-      //  + also delete all sub comments?
       const { ok, deletedCount } = await Comment.deleteMany({
         $or: [
-          { _id: commentId, id: user.id, postId },
+          { _id: commentId, authorId: userId, postId },
           { parentId: commentId, postId },
         ],
       });
@@ -362,8 +388,9 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
       const { commentId, postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      if (userId !== req.userId) {
+        return new httpErrors.Forbidden();
+      }
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: { $ne: userId }, postId },
         { $inc: { likesCount: 1 }, $push: { likes: userId } },
@@ -384,9 +411,10 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, userId } = req.params;
-      // todo: get user id from JWT
-      //  check if userId is the same as param, and if authorized to like (based on visibility)
+      const {
+        params: { commentId, postId },
+        userId,
+      } = req;
       const updatedComment = await Comment.findOneAndUpdate(
         { _id: commentId, likes: userId, postId },
         { $inc: { likesCount: -1 }, $pull: { likes: userId } },

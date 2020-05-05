@@ -20,7 +20,10 @@ import {
   WizardCheckboxItem,
 } from "../components/StepWizard";
 import { IconButton, SubmitButton, CustomButton } from "../components/Button";
-import { ShareMyLocationIcon } from "../components/Icon";
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import shareMyLocation from "~/assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],
@@ -122,7 +125,7 @@ const Step2 = (props) => {
           />
         </WizardFormGroup>
         <IconButton
-          icon={<ShareMyLocationIcon />}
+          icon={<SvgIcon src={shareMyLocation} />}
           title="Share my location"
           onSelect={selectLocationDetection}
         />
@@ -180,7 +183,7 @@ const Step3 = (props) => {
   );
 };
 
-export const OfferHelp = withRouter((props) => {
+const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     const { answers } = state;
@@ -203,3 +206,5 @@ export const OfferHelp = withRouter((props) => {
     </WizardContainer>
   );
 });
+
+export default OfferHelp;

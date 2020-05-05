@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Modal, List } from "antd-mobile";
+import { Modal } from "antd-mobile";
 import CustomButton from "../../components/Button/CustomButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
@@ -12,7 +12,7 @@ const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
 `;
 
-export default () => {
+const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
@@ -70,3 +70,5 @@ export default () => {
     </FilterBoxWrapper>
   );
 };
+
+export default FilterBox;

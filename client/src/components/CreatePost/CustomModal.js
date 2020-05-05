@@ -30,7 +30,7 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-export default ({ title, content, onClose, visible, closable }) => {
+const CustomModal = ({ title, content, onClose, visible, closable }) => {
   return (
     <StyledModal
       popup
@@ -46,3 +46,5 @@ export default ({ title, content, onClose, visible, closable }) => {
     </StyledModal>
   );
 };
+
+export default CustomModal;

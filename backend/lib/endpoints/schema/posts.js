@@ -1,4 +1,5 @@
 const S = require("fluent-schema");
+const { strictSchema } = require("./utils");
 
 const { join } = require("path");
 const PATH_TO_SCHEMAS = join(__dirname, "../../models/schemas/v2");
@@ -16,25 +17,26 @@ const USER_TYPES = [userSchema.tree.type.enum, orgSchema.tree.type.enum];
 const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
 
 const getPostsSchema = {
-  querystring: S.object()
+  querystring: strictSchema()
     .prop("id", S.string())
     .prop(
       "filter",
-      S.object()
+      strictSchema()
         .prop(
           "author.location.coordinates",
           S.array().items(S.number()).minItems(2).maxItems(2),
         )
-        .prop("author.userType", S.string().enum(USER_TYPES))
+        .prop("author.type", S.string().enum(USER_TYPES))
         .prop("types", S.array().items(S.string().enum(POST_TYPES)))
         .prop("objective", S.string().enum(POST_OBJECTIVES)),
     )
     .prop("limit", S.integer())
-    .prop("skip", S.integer()),
+    .prop("skip", S.integer())
+    .prop("userId", S.string()),
 };
 
 const createPostSchema = {
-  body: S.object()
+  body: strictSchema()
     .prop("content", S.string().required())
     .prop("expireAt", S.string().enum(EXPIRATION_OPTIONS).required())
     .prop(
@@ -51,15 +53,19 @@ const createPostSchema = {
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
+    .prop("userId", S.string().required())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {
-  querystring: S.object().prop("skip", S.integer()).prop("limit", S.integer()),
+  querystring: S.object()
+    .prop("skip", S.integer())
+    .prop("limit", S.integer())
+    .prop("userId", S.string().required()),
 };
 
 const updatePostSchema = {
-  body: S.object()
+  body: strictSchema()
     .prop("content", S.string())
     .prop("expireAt", S.string().enum(EXPIRATION_OPTIONS))
     .prop(
@@ -74,39 +80,42 @@ const updatePostSchema = {
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("title", S.string())
     .prop("types", S.array().minItems(1).items(S.string().enum(POST_TYPES)))
+    .prop("userId", S.string().required())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS)),
   params: S.object().prop("postId", S.string()),
 };
 
 const likeUnlikePostSchema = {
-  params: S.object().prop("postId", S.string().required()),
+  params: strictSchema()
+    .prop("postId", S.string().required())
+    .prop("userId", S.string().required()),
 };
 
 const likeUnlikeCommentSchema = {
-  params: S.object()
+  params: strictSchema()
     .prop("postId", S.string().required())
     .prop("commentId", S.string().required())
     .prop("userId", S.string().required()),
 };
 
 const deletePostSchema = {
-  params: S.object().prop("postId", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const addCommentSchema = {
-  body: S.object().prop("comment", S.string().required()),
-  params: S.object().prop("postId", S.string().required()),
+  body: strictSchema().prop("comment", S.string().required()),
+  params: strictSchema().prop("postId", S.string().required()),
 };
 
 const deleteCommentSchema = {
-  params: S.object()
+  params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
 
 const updateCommentSchema = {
-  body: S.object().prop("comment", S.string().required()),
-  params: S.object()
+  body: strictSchema().prop("comment", S.string().required()),
+  params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };

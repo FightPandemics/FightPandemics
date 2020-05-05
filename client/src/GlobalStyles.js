@@ -1,14 +1,15 @@
-// Import Theme Style
-@import "./styles/theme.scss";
+import { createGlobalStyle } from "styled-components";
+import { WHITE } from "./constants/colors";
 
+const globalStyles = createGlobalStyle`
 html {
   font-size: 62.5%;
 }
 
 body {
   margin: 0;
-  background: $body-bg;
-  font-family: "Work Sans", sans-serif;
+  background-color: ${WHITE};
+  font-family: "Poppins", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,3 +56,6 @@ code {
 .btn-light {
   border: 1px solid #ddd;
 }
+`;
+
+export default globalStyles;

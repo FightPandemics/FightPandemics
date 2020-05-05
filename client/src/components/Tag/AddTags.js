@@ -28,7 +28,7 @@ const AddTagsWrapper = styled.div`
   }
 `;
 
-export default ({ filters, addTag }) => {
+const AddTags = ({ filters, addTag }) => {
   return (
     <AddTagsWrapper>
       <p>Add tags to make your post more visible</p>
@@ -38,3 +38,5 @@ export default ({ filters, addTag }) => {
     </AddTagsWrapper>
   );
 };
+
+export default AddTags;

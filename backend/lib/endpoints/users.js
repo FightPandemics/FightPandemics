@@ -1,5 +1,3 @@
-const httpErrors = require("http-errors");
-
 const { getUserByIdSchema } = require("./schema/users");
 
 /*
@@ -8,11 +6,10 @@ const { getUserByIdSchema } = require("./schema/users");
 async function routes(app) {
   const User = app.mongo.model("User");
 
-  app.get("/current", { preValidation: [app.authenticate] }, async () => {
-    // todo: get current user from JWT
-    const result = await User.findById("");
+  app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
+    const result = await User.findById(req.userId);
     if (result === null) {
-      return new httpErrors.NotFound();
+      throw app.httpErrors.notFound();
     }
     return {
       email: result.email,
@@ -26,14 +23,15 @@ async function routes(app) {
     "/:userId",
     { preValidation: [app.authenticate], schema: getUserByIdSchema },
     async (req) => {
-      const result = await User.findById(req.params.userId);
-      if (result === null) {
-        return new httpErrors.NotFound();
+      const user = await User.findById(req.params.userId);
+      if (user === null) {
+        throw app.httpErrors.notFound();
       }
+      const { firstName, lastName, _id: id } = user;
       return {
-        firstName: result.firstName,
-        id: result._id,
-        lastName: result.firstName,
+        firstName,
+        id,
+        lastName,
       };
     },
   );

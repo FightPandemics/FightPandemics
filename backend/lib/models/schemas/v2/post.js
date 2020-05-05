@@ -28,6 +28,7 @@ const postSchema = new Schema(
     objective: {
       enum: ["request", "offer"],
       lowercase: true,
+      required: true,
       trim: true,
       type: String,
     },
@@ -66,7 +67,7 @@ const postSchema = new Schema(
 // -- Indexes
 /* eslint-disable */
 // Indexes for filtered feed
-postSchema.index({ "author.location.coords": "2dsphere" });
+postSchema.index({ "author.location.coordinates": "2dsphere" });
 postSchema.index({
   // Expiration Filter
   expireAt: -1,
@@ -76,11 +77,13 @@ postSchema.index({
   "location.city": 1,
   "location.neighborhood": 1,
   // Author type filter
-  "author.authorType": 1,
+  "author.type": 1,
   // Post type filter
   types: 1,
   // Objective filter
   objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
   // Simple most recent sorting
   createdAt: -1,
 });
@@ -92,11 +95,13 @@ postSchema.index({
   "location.state": 1,
   "location.city": 1,
   // Author type filter
-  "author.authorType": 1,
+  "author.type": 1,
   // Post type filter
   types: 1,
   // Objective filter
   objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
   // Simple most recent sorting
   createdAt: -1,
 });
@@ -107,11 +112,13 @@ postSchema.index({
   "location.country": 1,
   "location.state": 1,
   // Author type filter
-  "author.authorType": 1,
+  "author.type": 1,
   // Post type filter
   types: 1,
   // Objective filter
   objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
   // Simple most recent sorting
   createdAt: -1,
 });
@@ -121,11 +128,13 @@ postSchema.index({
   // Location filter
   "location.country": 1,
   // Author type filter
-  "author.authorType": 1,
+  "author.type": 1,
   // Post type filter
   types: 1,
   // Objective filter
   objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
   // Simple most recent sorting
   createdAt: -1,
 });
@@ -134,17 +143,19 @@ postSchema.index({
   expireAt: -1,
   // No Location filter
   // Author type filter
-  "author.authorType": 1,
+  "author.type": 1,
   // Post type filter
   types: 1,
   // Objective filter
   objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
   // Simple most recent sorting
   createdAt: -1,
 });
 
 // Index for author's foreign key for lookup performance
-postSchema.index({ "author.authorId": 1, createdAt: -1 });
+postSchema.index({ "author.id": 1, createdAt: -1 });
 
 // Index for like's foreign key for lookup performance
 postSchema.index({ likes: 1 });
