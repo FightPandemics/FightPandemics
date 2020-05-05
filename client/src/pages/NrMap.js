@@ -47,7 +47,7 @@ const NrMap = () => {
   // rec-> list of hospitals according to nearbySearch
   const [rec, setRec] = useState([]);
   // plcDtl-> list of hospitals with requested details
-  const [plcDtl, setPlcDtl] = useState([]);
+  const [detailedHospitals, setDetailedHospitals] = useState([]);
 
   const googleMapRef = useRef();
 
@@ -118,8 +118,8 @@ const NrMap = () => {
         request,
         (req, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            setPlcDtl((plcDtl) => {
-              return [...plcDtl, req];
+            setDetailedHospitals((detailedHospitals) => {
+              return [...detailedHospitals, req];
             });
           }
         },
@@ -176,7 +176,7 @@ const NrMap = () => {
   return (
     <Wrapper>
       <Nested>
-        {plcDtl.map((place) => {
+        {detailedHospitals.map((place) => {
           return (
             <Cards key={`card-${place.name}`}>
               <h3>{place.name}</h3>
