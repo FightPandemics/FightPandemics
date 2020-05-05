@@ -6,7 +6,7 @@ import Title from "../components/Title/Title";
 import styled from "styled-components";
 import { getInitials } from "../utils/userInfo";
 import { Link } from "react-router-dom";
-import fakePosts from "../assets/data/fakePosts"; // feed
+import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "../components/Feed/Posts"; // feed
 import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
 import ButtonModal from "../components/Feed/ButtonModal"; // feed
@@ -18,8 +18,8 @@ import edit from "~/assets/icons/edit.svg";
 import createPost from "~/assets/icons/create-post.svg"; // feed
 import linkedinBlue from "~/assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "~/assets/icons/social-twitter-blue.svg";
-const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
-const needHelpInactive = require("../assets/thermometer-unselected.svg");
+const offerHelpInactive = require("assets/help-gesture-unselected.svg");
+const needHelpInactive = require("assets/thermometer-unselected.svg");
 
 const SectionHeader = (props) => (
   <Title

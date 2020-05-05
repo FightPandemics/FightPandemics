@@ -1,8 +1,8 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import ButtonModal from "../components/Feed/ButtonModal";
-import filterOptions from "../assets/data/filterOptions";
-import fakePosts from "../assets/data/fakePosts";
+import filterOptions from "assets/data/filterOptions";
+import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "../components/Feed/FeedWrapper";
 import FilterBox from "../components/Feed/FilterBox";
 import Posts from "../components/Feed/Posts";

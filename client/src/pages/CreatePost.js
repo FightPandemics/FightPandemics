@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
+import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";

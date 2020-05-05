@@ -10,7 +10,7 @@ import { getLocalStorageJson } from "../utils/local-storage";
 
 const nearestHospitalUnselected = require("../../src/assets/medical-page-images/nearest-hospital-unselected.png");
 const nearestHospitalSelected = require("../../src/assets/medical-page-images/nearest-hospital-selected.png");
-// const symptomsCheckInActive = require("../assets/covid19-symptoms-active.png");
+// const symptomsCheckInActive = require("assets/covid19-symptoms-active.png");
 const symptomsCheckSelected = require("../../src/assets/medical-page-images/covid19-symptoms-selected.svg");
 const findHelpUnselected = require("../../src/assets/medical-page-images/find-help-selected.svg");
 const findHelpSelected = require("../../src/assets/medical-page-images/find-help-unselected.svg");
