@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { SearchBar, WhiteSpace } from "antd-mobile";
-import ShareLocationIcon from "../Icon/share-my-location";
 import { FeedContext } from "../../pages/Feed.js";
+
+// ICONS
+import SvgIcon from "../Icon/SvgIcon";
+import shareLocation from "~/assets/icons/share-my-location.svg";
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
@@ -28,7 +31,7 @@ const LocationSearch = () => {
       <WhiteSpace size="lg" />
       <WhiteSpace />
       <div>
-        <ShareLocationIcon style={{ marginRight: "1rem" }} />
+        <SvgIcon src={shareLocation} style={{ marginRight: "1rem" }} />
         Share My Location
       </div>
       <WhiteSpace />

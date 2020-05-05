@@ -12,14 +12,15 @@ import {
 import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  GmailIcon,
-  LinkedinIcon,
-} from "../components/Icon";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import twitter from "~/assets/icons/social-twitter.svg";
+import facebook from "~/assets/icons/social-facebook.svg";
+import gmail from "~/assets/icons/social-google.svg";
+import linkedin from "~/assets/icons/social-linkedin.svg";
 
 import { theme } from "../constants/theme";
 const { colors } = theme;
@@ -77,7 +78,7 @@ const SectionDiv = styled.div`
   }
 `;
 
-const FlexBox = styled(Flex).attrs((props) => ({
+const FlexBox = styled(Flex).attrs(props => ({
   wrap: "wrap",
   justify: "center",
 }))``;
@@ -112,6 +113,7 @@ const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -121,15 +123,19 @@ const Login = ({ isLoginForm }) => {
     }
   }, [code, state, dispatch]);
 
-  const handleInputChangeEmail = (e) => {
+  const handleInputChangeEmail = e => {
     setEmail(e.target.value);
   };
 
-  const handleInputChangePassword = (e) => {
+  const handleInputChangePassword = e => {
     setPassword(e.target.value);
   };
 
-  const handleLoginWithEmail = (evt) => {
+  const handleInputChangeConfirmPassword = e => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleLoginWithEmail = evt => {
     evt.preventDefault();
     if (!validateEmail(email)) {
       Toast.fail("Invalid email address!", 3);
@@ -142,7 +148,7 @@ const Login = ({ isLoginForm }) => {
     dispatch(loginWithEmail({ email, password }));
   };
 
-  const handleSignup = (evt) => {
+  const handleSignup = evt => {
     evt.preventDefault();
     // todo: add inline validation (disable button / indicate error on form)
     /*if (!validateEmail(email)) {
@@ -152,10 +158,11 @@ const Login = ({ isLoginForm }) => {
     /*if (password.length < PASSWORD_MIN_LENGTH) {
       "Password must be at least 6 characters"
     }*/
-    dispatch(signup({ email, password }));
+    // todo: check if passwords are the same (dissable button / indicate error on form)
+    dispatch(signup({ email, password, confirmPassword }));
   };
 
-  const handleSocialLogin = (provider) => {
+  const handleSocialLogin = provider => {
     window.location.href = `/api/auth/oauth/${provider}`;
   };
 
@@ -220,28 +227,28 @@ const Login = ({ isLoginForm }) => {
       <FlexBox>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<FacebookIcon />}
+          icon={<SvgIcon src={facebook} />}
           onClick={() => handleSocialLogin("facebook")}
         >
           <ButtonText>Facebook</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<GmailIcon />}
+          icon={<SvgIcon src={gmail} />}
           onClick={() => handleSocialLogin("google")}
         >
           <ButtonText>Gmail</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<TwitterIcon />}
+          icon={<SvgIcon src={twitter} />}
           onClick={() => handleSocialLogin("twitter")}
         >
           <ButtonText>Twitter</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<LinkedinIcon />}
+          icon={<SvgIcon src={linkedin} />}
           onClick={() => handleSocialLogin("linkedin")}
         >
           <ButtonText>Linkedin</ButtonText>
