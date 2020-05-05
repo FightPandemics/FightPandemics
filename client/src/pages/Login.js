@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { PASSWORD_MIN_LENGTH } from "../config";
+import { PASSWORD_MIN_LENGTH } from "config";
 import {
   authWithSocialProvider,
   loginWithEmail,
