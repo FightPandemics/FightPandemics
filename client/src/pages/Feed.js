@@ -6,14 +6,14 @@ import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
+import { optionsReducer, feedReducer } from "hooks/reducers/feedReducers";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-} from "../hooks/actions/feedActions";
+} from "hooks/actions/feedActions";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
