@@ -1,110 +1,51 @@
 import styled, { css } from "styled-components";
-import { Button } from "antd-mobile";
+import BaseButton from "./BaseButton";
+import { theme } from "~/constants/theme";
 
-import { theme, mq } from "../../constants/theme";
-const { colors } = theme;
-const { tablet } = mq;
-/*
-  Props accepted:
-  inline, primary, large, whitebg, roundborder, textOnly, width
-*/
-
-const CustomButton = styled(Button)`
-  display: ${(props) => (props.inline ? "inline-block" : "initial")};
-  background-color: ${colors.selago};
-  color: #fff;
-  line-height: normal;
-  height: 100%;
-  cursor: pointer;
-  font-family: "Poppins";
-
-  &:hover {
-    border: 1px solid ${colors.royalBlue} !important;
-  }
+const CustomButton = styled(BaseButton).attrs(({ inline, size }) => {
+  return { inline, size };
+})`
+  ${theme.button.regular}
 
   ${(props) =>
     props.primary &&
     css`
-      background-color: ${colors.royalBlue};
-      color: #fff;
-      &.am-button {
-        &:before {
-          border: 2px solid ${colors.royalBlue} !important;
-        }
-      }
-      &:hover,
-      &:active,
-      &.am-button-active {
-        background-color: #fff;
-        color: ${colors.royalBlue};
+      ${theme.button.primary}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.secondary}
       }
     `}
 
   ${(props) =>
-    props.large &&
+    props.primaryLight &&
     css`
-      padding: 10px 35px;
-      font-size: 15px;
-      &.am-button {
-        &:before {
-          border-radius: 45px !important;
-        }
+      ${theme.button.primaryLight}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
       }
     `}
 
   ${(props) =>
-    props.roundborder &&
+    props.secondary &&
     css`
-      border-radius: 45px;
-    `}
+      ${theme.button.secondary}
 
-  ${(props) =>
-    props.whitebg &&
-    css`
-      background-color: #fff;
-      color: ${colors.royalBlue};
-      &.am-button {
-        &:before {
-          border: 2px solid ${colors.royalBlue} !important;
-        }
-      }
-      &:hover,
-      &:active,
-      &.am-button-active {
-        background-color: ${colors.royalBlue};
-        color: #fff;
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
       }
     `}
 
   ${(props) =>
-    props.textOnly &&
+    props.tertiary &&
     css`
-      display: ${(props) => (props.display ? props.display : "initial")};
-      background-color: transparent;
-      color: ${colors.royalBlue};
-      margin-right: 0;
-      height: auto;
-      text-overflow: unset;
-      &.am-button {
-        &:before {
-          display: none;
+      ${theme.button.tertiary}
 
-          @media screen and (min-width: ${tablet.narrow.minWidth}) {
-            display: none !important;
-          }
-        }
-
-        span {
-          white-space: normal;
-        }
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
       }
     `}
-
-    ${(props) =>
-      props.width &&
-      css`
-        width: ${props.width};
-      `};
 `;
 
 export default CustomButton;

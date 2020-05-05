@@ -7,7 +7,7 @@ import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import AddTags from "../components/Tag/AddTags";
-import MobileButton from "../components/Button/MobileButton";
+import CustomButton from "../components/Button/CustomButton";
 import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
@@ -198,13 +198,13 @@ const CreatePost = (props) => {
           <AddTags addTag={addTag} filters={types} />
         </div>
         <span className="error-box">{renderError("tags")}</span>
-        <MobileButton
+        <CustomButton
           primary="true"
           onClick={handleSubmit}
           className="submit-btn"
         >
           Post
-        </MobileButton>
+        </CustomButton>
       </StyledForm>
     </CreatePostWrapper>
   );

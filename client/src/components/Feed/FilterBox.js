@@ -48,18 +48,16 @@ const FilterBox = () => {
           }}
         >
           <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
-            whitebg="true"
+            inline
+            size="small"
+            secondary="true"
             onClick={handleQuit}
           >
             Quit filters
           </CustomButton>
           <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
+            inline
+            size="small"
             primary="true"
             onClick={handleFilterModal(null)}
           >

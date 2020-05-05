@@ -73,9 +73,6 @@ const theme = {
       fontWeight: "bold",
       borderRadius: "4.6rem",
     },
-    inlineBlock: {
-      padding: "0 7rem",
-    },
     primary: {
       backgroundColor: ROYAL_BLUE,
       color: "#fff",
@@ -87,7 +84,7 @@ const theme = {
     secondary: {
       backgroundColor: "#fff",
       color: ROYAL_BLUE,
-      border: `0.2rem solid ${ROYAL_BLUE} !important`,
+      border: `0.1rem solid ${ROYAL_BLUE} !important`,
     },
     tertiary: {
       fontSize: "1.6rem",
