@@ -193,10 +193,13 @@ const Login = ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
+
         <SubmitButton
-          title={isLoginForm ? "Sign In" : "Sign Up"}
+          primary="true"
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
-        />
+        >
+          {isLoginForm ? "Sign In" : "Sign Up"}
+        </SubmitButton>
       </form>
       <WhiteSpace />
       <WhiteSpace />

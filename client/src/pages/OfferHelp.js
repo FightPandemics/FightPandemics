@@ -165,7 +165,9 @@ const Step3 = (props) => {
           />
         </WizardFormGroup>
         <WizardButtonGroup>
-          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SubmitButton primary="true" onClick={onSubmit}>
+            Submit
+          </SubmitButton>
           <SkipLink>
             <Link to="/AirTableCOVID">
               {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}

@@ -2,6 +2,8 @@ import styled, { css } from "styled-components";
 import BaseButton from "./BaseButton";
 import { theme } from "../../constants/theme";
 
+// props: inline, primary, primaryLight, secondary, tertiary
+
 const SubmitButton = styled(BaseButton).attrs(({ inline }) => {
   return { inline };
 })`

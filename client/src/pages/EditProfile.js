@@ -85,7 +85,7 @@ function EditProfile(props) {
         />
         {renderFormInputs()}
         <SubmitButton
-          title={"Save Changes"}
+          primary="true"
           style={{ marginTop: "1rem", marginBottom: "3rem" }}
           onClick={handleSubmit(onSubmit)}
         >
