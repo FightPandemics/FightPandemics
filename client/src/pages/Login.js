@@ -66,7 +66,6 @@ const StyleSocialIcon = {
 const SectionDiv = styled.div`
   text-transform: uppercase;
   color: ${colors.lightGray};
-
   &:before,
   &:after {
     display: inline-block;
