@@ -1,41 +1,10 @@
-import {
-  AUTH_LOGIN,
-  AUTH_LOGOUT,
-  AUTH_SIGNUP,
-  SET_USER,
-} from "../constants/action-types";
+import { combineReducers } from "redux";
+import session from "./sessionReducer";
+import user from "./userReducer";
 
-const initialState = {
-  accessToken: null,
-  isAuthenticated: false,
-  emailVerified: false,
-  user: null,
-};
-
-function rootReducer(state = initialState, action) {
-  switch (action.type) {
-    case AUTH_LOGIN:
-    case AUTH_SIGNUP:
-      return {
-        ...state,
-        accessToken: action.payload.token,
-        emailVerified: action.payload.emailVerified,
-        isAuthenticated: true,
-      };
-    case AUTH_LOGOUT:
-      return {
-        ...state,
-        accessToken: null,
-        isAuthenticated: false,
-      };
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
-}
+const rootReducer = combineReducers({
+  session,
+  user,
+});
 
 export default rootReducer;

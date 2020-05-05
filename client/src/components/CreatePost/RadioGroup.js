@@ -33,7 +33,14 @@ const StyledRadioGroup = styled(Radio.Group)`
   }
 `;
 
-export default ({ options, onChange, value, defaultValue, flex, padding }) => {
+const RadioGroup = ({
+  options,
+  onChange,
+  value,
+  defaultValue,
+  flex,
+  padding,
+}) => {
   return (
     <StyledRadioGroup
       size="large"
@@ -51,3 +58,5 @@ export default ({ options, onChange, value, defaultValue, flex, padding }) => {
     </StyledRadioGroup>
   );
 };
+
+export default RadioGroup;

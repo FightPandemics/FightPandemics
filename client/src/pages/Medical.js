@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Heading } from "grommet";
 
 import ImageButton from "../components/Button/ImageButton";
 import { theme } from "../constants/theme";
@@ -28,7 +27,7 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledWelcome = styled(Heading)`
+const StyledWelcome = styled.h2`
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 300;
@@ -38,23 +37,22 @@ const StyledWelcome = styled(Heading)`
   text-align: center;
 `;
 
-const StyledStrapline = styled(StyledWelcome)`
-  font-weight: bold;
-  margin: 0 auto;
-`;
+// const StyledStrapline = styled(StyledWelcome)`
+//   font-weight: bold;
+//   margin: 0 auto;
+// `;
 
 const OnboardingContainer = styled.div`
   margin-top: 4rem;
 `;
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
-console.log({ needHelpAnswers });
 
 const getGeoLocation = () => needHelpAnswers?.location;
 
-export const Medical = (props) => {
+const Medical = (props) => {
   const [state, setState] = useState(INITIAL_STATE);
-//   console.log("render medical page", { props });
+  //   console.log("render medical page", { props });
 
   const fetchNumber = (countryName) => {
     getAirtableRecord(countryName, "Country").then((record) => {
@@ -127,7 +125,6 @@ export const Medical = (props) => {
           <ImageButton
             type="ghost"
             inactiveImg={findHelpSelected}
-
             activeImg={findHelpUnselected}
             onClick={() => props.history.push("/find-help")}
           >
@@ -138,3 +135,5 @@ export const Medical = (props) => {
     </div>
   );
 };
+
+export default Medical;

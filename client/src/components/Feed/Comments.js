@@ -7,7 +7,7 @@ const CommentsWrapper = styled.div`
   margin: 2rem 0;
 `;
 
-export default ({ comments }) => {
+const Comments = ({ comments }) => {
   return (
     <CommentsWrapper>
       {comments.map((comment) => (
@@ -16,3 +16,5 @@ export default ({ comments }) => {
     </CommentsWrapper>
   );
 };
+
+export default Comments;

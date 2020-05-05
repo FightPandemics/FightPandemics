@@ -4,10 +4,13 @@ import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
-import StatusIcon from "../Icon/status-indicator";
 import AutoSize from "../../components/Input/AutoSize";
 
-export default ({ post }) => {
+// ICONS
+import SvgIcon from "../Icon/SvgIcon";
+import statusIndicator from "~/assets/icons/status-indicator.svg";
+
+const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
   // mock API to test functionality
@@ -39,7 +42,7 @@ export default ({ post }) => {
       thumb={post.photoUrl}
       extra={
         <span>
-          <StatusIcon className="status-icon" />
+          <SvgIcon src={statusIndicator} className="status-icon" />
           {post.location}
         </span>
       }
@@ -129,3 +132,5 @@ export default ({ post }) => {
     </PostCard>
   );
 };
+
+export default Post;

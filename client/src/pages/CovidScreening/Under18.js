@@ -1,5 +1,6 @@
 import React from "react";
-export const Under18 = () => {
+
+const Under18 = () => {
   return (
     <div>
       This is intended for only people who are 18 years and above
@@ -7,3 +8,5 @@ export const Under18 = () => {
     </div>
   );
 };
+
+export default Under18;

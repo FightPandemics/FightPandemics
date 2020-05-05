@@ -102,7 +102,7 @@ class NrMap extends Component {
       new window.google.maps.places.PlacesService(this.googleMap).getDetails(
         request,
         (req, status) => {
-          if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
             this.setState((prevState) => ({
               plcDtl: [...prevState.plcDtl, req],
             }));

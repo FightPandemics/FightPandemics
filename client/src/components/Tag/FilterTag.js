@@ -6,7 +6,7 @@ import { theme } from "../../constants/theme";
 const { royalBlue } = theme.colors;
 const { xsmall } = theme.typography.size;
 
-const FilterTag = styled(Tag)`
+const StyledFilterTag = styled(Tag)`
   &.am-tag-disabled {
     background-color: unset;
     padding: 0 0.8rem;
@@ -34,10 +34,12 @@ const FilterTag = styled(Tag)`
   }
 `;
 
-export default ({ label, selected, disabled, handleClick }) => {
+const FilterTag = ({ label, selected, disabled, handleClick }) => {
   return (
-    <FilterTag disabled={disabled} selected={selected}>
+    <StyledFilterTag disabled={disabled} selected={selected}>
       <div onClick={handleClick}>{label}</div>
-    </FilterTag>
+    </StyledFilterTag>
   );
 };
+
+export default FilterTag;

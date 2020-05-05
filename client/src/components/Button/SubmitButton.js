@@ -4,17 +4,13 @@ import styled from "styled-components";
 
 import { theme } from "../../constants/theme";
 
-export default ({ title, handleClick, ...props }) => {
+const SubmitButton = ({ title, handleClick, ...props }) => {
   const StyledButton = styled(Button).attrs((props) => {
     return {
       type: "primary",
     };
   })`
-    ${theme.button}
-    ${props.type && props.type === "primary"
-      ? theme.button.primary
-      : ""}
-    border-radius: 4.6rem;
+    ${theme.button.submit}
   `;
   return (
     <StyledButton onClick={handleClick} {...props}>
@@ -22,3 +18,5 @@ export default ({ title, handleClick, ...props }) => {
     </StyledButton>
   );
 };
+
+export default SubmitButton;
