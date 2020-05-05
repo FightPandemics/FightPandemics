@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-
 import SubmitButton from "./SubmitButton";
 import { theme, mq } from "../../constants/theme";
 const { button, colors } = theme;
