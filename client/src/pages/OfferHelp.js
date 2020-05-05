@@ -130,12 +130,7 @@ const Step2 = (props) => {
           onSelect={selectLocationDetection}
         />
         <SkipLink>
-          <CustomButton
-            textOnly
-            width="50%"
-            display="inline-flex"
-            onSelect={rejectLocationDetection}
-          >
+          <CustomButton secondary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
           </CustomButton>
         </SkipLink>

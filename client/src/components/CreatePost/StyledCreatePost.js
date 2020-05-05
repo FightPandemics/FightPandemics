@@ -34,8 +34,6 @@ export const CreatePostWrapper = styled.div`
     color: red;
   }
   .submit-btn {
-    font-family: ${display};
-    background-color: ${royalBlue};
     margin-bottom: 3rem;
   }
 `;
