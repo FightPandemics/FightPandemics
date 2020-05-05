@@ -17,7 +17,7 @@ import {
   TdRight,
 } from "../components/PolicyPages/TableStyles";
 
-export const PrivacyPolicy = () => {
+const PrivacyPolicy = () => {
   return (
     <PolicyContainer>
       <TextContainer>
@@ -500,3 +500,5 @@ export const PrivacyPolicy = () => {
     </PolicyContainer>
   );
 };
+
+export default PrivacyPolicy;

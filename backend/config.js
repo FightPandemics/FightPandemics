@@ -1,38 +1,45 @@
-const assert = require("assert");
+const envSchema = require("env-schema");
+const S = require("fluent-schema");
+
 const { name } = require("./package.json");
+
+const configData = envSchema({
+  data: process.env,
+  schema: S.object()
+    .prop("AUTH_APP_URL", S.string())
+    .prop("AUTH_CLIENT_ID", S.string().required())
+    .prop("AUTH_DOMAIN", S.string().required())
+    .prop("AUTH_SECRET_KEY", S.string().required())
+    .prop("AUTH_STATE", S.string().required())
+    .prop("NODE_ENV", S.string().required())
+    .prop("GEO_SERVICE_URL", S.string().required())
+    .prop("MONGO_URI", S.string().required())
+    .prop("PORT", S.number().default(8000).required()),
+});
 
 const config = {
   auth: {
-    appUrl: process.env.AUTH_APP_URL,
-    clientId: process.env.AUTH_CLIENT_ID,
-    domain: `https://${process.env.AUTH_DOMAIN}`,
-    secretKey: process.env.AUTH_SECRET_KEY,
-    state: process.env.AUTH_STATE,
+    appUrl: configData.AUTH_APP_URL,
+    clientId: configData.AUTH_CLIENT_ID,
+    domain: `https://${configData.AUTH_DOMAIN}`,
+    secretKey: configData.AUTH_SECRET_KEY,
+    state: configData.AUTH_STATE,
   },
+  env: configData.NODE_ENV,
   geoService: {
-    host: `http://${process.env.GEO_SERVICE_URL}`,
+    host: `http://${configData.GEO_SERVICE_URL}`,
   },
   mongo: {
     params: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
-    uri: `mongodb://${process.env.MONGO_URI}`,
+    uri: `mongodb://${configData.MONGO_URI}`,
   },
   name,
   server: {
-    port: process.env.PORT || 8000,
+    port: configData.PORT,
   },
 };
 
-const validateConfig = () => {
-  assert.ok(config.server.port, "Ensure PORT env is provided");
-  assert.ok(config.mongo.uri, "Ensure MONGO_URI env is provided");
-  assert.ok(config.geoService.host, "Ensure GEO_SERVICE_URL env is provided.");
-  assert.ok(config.auth.domain, "Ensure AUTH_DOMAIN env is provided.");
-  assert.ok(config.auth.clientId, "Ensure AUTH_CLIENT_ID env is provided.");
-  assert.ok(config.auth.secretKey, "Ensure AUTH_SECRET_KEY env is provided.");
-  assert.ok(config.auth.state, "Ensure AUTH_STATE env is provided.");
-};
-
-module.exports = { config, validateConfig };
+module.exports = { config };

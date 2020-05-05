@@ -5,28 +5,19 @@
   "dependencies": {
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "airtable": "^0.8.1",
     "antd": "^4.1.1",
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
-    "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
-    "dotenv": "^8.2.0",
-    "grommet": "^2.12.0",
     "grommet-icons": "^4.4.0",
-    "http-proxy-middleware": "^1.0.3",
-    "husky": "^4.2.3",
     "jwt-decode": "^2.2.0",
-    "lint-staged": "^10.1.1",
     "moment": "^2.24.0",
     "polished": "^3.5.1",
-    "prettier": "^2.0.2",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^5.6.0",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
     "react-redux": "^7.2.0",
@@ -38,7 +29,8 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.1",
     "typeface-poppins": "^0.0.72",
-    "typeface-work-sans": "^0.0.72"
+    "typeface-work-sans": "^0.0.72",
+    "snyk": "^1.316.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -46,7 +38,9 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "postinstall": "npm rebuild node-sass",
-    "install-docker": "docker-compose run client npm install"
+    "install-docker": "docker-compose run client npm install",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,7 +58,14 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
+    "@testing-library/user-event": "^10.1.0",
+    "dotenv": "^8.2.0",
+    "http-proxy-middleware": "^1.0.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.0",
+    "prettier": "^2.0.5",
     "react-app-rewired": "^2.1.5"
   },
   "husky": {
@@ -76,5 +77,6 @@
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "snyk": true
 }

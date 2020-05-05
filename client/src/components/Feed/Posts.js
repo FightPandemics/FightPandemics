@@ -1,7 +1,7 @@
 import React from "react";
 import Post from "./Post";
 
-export default ({ filteredPosts }) => {
+const Posts = ({ filteredPosts }) => {
   return (
     <div className="feed-posts">
       {filteredPosts.map((post) => (
@@ -10,3 +10,5 @@ export default ({ filteredPosts }) => {
     </div>
   );
 };
+
+export default Posts;

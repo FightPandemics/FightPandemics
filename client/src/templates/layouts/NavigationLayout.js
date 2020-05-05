@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "~/components/Header";
-import Footnote from "~/components/Footnote";
+import CookieAlert from "~/components/CookieAlert";
 import Main from "./Main";
 import { theme } from "../../constants/theme";
 
@@ -101,7 +101,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
-export default (props) => {
+const NavigationLayout = (props) => {
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -156,6 +156,9 @@ export default (props) => {
         <props.component {...props} />
       </Main>
       {/* <Footnote /> */}
+      <CookieAlert />
     </Drawer>
   );
 };
+
+export default NavigationLayout;

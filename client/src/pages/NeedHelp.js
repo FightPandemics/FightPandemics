@@ -105,7 +105,7 @@ const Step3 = (props) => {
   );
 };
 
-export const NeedHelp = withRouter((props) => {
+const NeedHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     const { answers } = state;
@@ -128,3 +128,5 @@ export const NeedHelp = withRouter((props) => {
     </WizardContainer>
   );
 });
+
+export default NeedHelp;

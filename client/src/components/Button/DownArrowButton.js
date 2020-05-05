@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "antd-mobile";
-import DownArrow from "../Icon/down-arrow";
 import { theme } from "../../constants/theme";
+
+// ICONS
+import SvgIcon from "../Icon/SvgIcon";
+import downArrow from "~/assets/icons/down-arrow.svg";
+
 const { colors, typography } = theme;
 const { display } = typography.font.family;
 
@@ -48,11 +52,13 @@ const Option = styled(Button).attrs((props) => {
   }
 `;
 
-export default ({ label, handleClick, ...props }) => {
+const DownArrowButton = ({ label, handleClick, ...props }) => {
   return (
     <Option {...props} onClick={handleClick}>
       {label}
-      <DownArrow />
+      <SvgIcon src={downArrow} />
     </Option>
   );
 };
+
+export default DownArrowButton;

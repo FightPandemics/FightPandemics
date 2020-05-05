@@ -1,7 +1,7 @@
 import { Button } from "antd-mobile";
 import styled from "styled-components";
 
-export default styled(Button)`
+const FeedbackButton = styled(Button)`
   border: 0.2rem solid #425af2 !important;
   border-radius: 0.8rem;
   cursor: pointer;
@@ -13,3 +13,5 @@ export default styled(Button)`
     color: #fff;
   }
 `;
+
+export default FeedbackButton;

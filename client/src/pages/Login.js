@@ -1,7 +1,6 @@
 import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { PASSWORD_MIN_LENGTH } from "../config";
@@ -13,24 +12,49 @@ import {
 import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  GmailIcon,
-  LinkedinIcon,
-} from "../components/Icon";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
 
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import twitter from "~/assets/icons/social-twitter.svg";
+import facebook from "~/assets/icons/social-facebook.svg";
+import gmail from "~/assets/icons/social-google.svg";
+import linkedin from "~/assets/icons/social-linkedin.svg";
+
+import { theme } from "../constants/theme";
+const { colors } = theme;
+const { typography } = theme;
+
+const Title = styled.h1`
+  align-items: center;
+  display: flex;
+  font-size: 2.2rem;
+  font-weight: bold;
+  height: 5rem;
+  justify-content: center;
+`;
+
 const InputWrapper = styled.div`
+  margin: 2.2rem auto;
   width: 100%;
 `;
 
 const StyleInput = {
+  fontFamily: "${typography.font.family.button}",
+  fontSize: "1.8rem",
+  lineHeight: "2.5rem",
+  paddingBottom: "0.8rem",
   width: "100%",
+  borderBottom: "2px solid #5970EC",
 };
 
 const StyleLabel = {
+  fontFamily: "${typography.font.family.button}",
+  fontStyle: "normal",
+  fontWeight: "500",
+  fontSize: "1.6rem",
+  lineHeight: "1.9rem",
   textAlign: "left",
 };
 
@@ -41,13 +65,13 @@ const StyleSocialIcon = {
 
 const SectionDiv = styled.div`
   text-transform: uppercase;
-  color: #d7d7d7;
+  color: ${colors.lightGray};
 
   &:before,
   &:after {
     display: inline-block;
     content: "";
-    border-top: 0.1rem solid #d7d7d7;
+    border-top: 0.1rem solid ${colors.lightGray};
     width: 3rem;
     margin: 0 0.5rem;
     transform: translateY(-0.3rem);
@@ -59,17 +83,37 @@ const FlexBox = styled(Flex).attrs((props) => ({
   justify: "center",
 }))``;
 
-const SocialButton = styled(Button).attrs((props) => ({
-  inline: true,
-}))`
-  width: 150px;
+const SocialButton = styled(Button)`
+  border: 1px solid ${colors.lightGray};
+  border-radius: unset;
+  display: flex;
+  height: 4.8rem;
   margin: 0.5rem;
+  padding: 2.5rem;
+  width: 13.6rem;
 `;
 
-export default ({ isLoginForm }) => {
+const ButtonText = styled.span`
+  font-family: ${typography.font.family.display};
+  font-size: 1.4rem;
+  color: ${colors.darkGray};
+`;
+
+const AuthLink = styled.a`
+  font-family: ${typography.font.family.display};
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+  text-align: center;
+  color: ${colors.royalBlue};
+`;
+
+const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -77,7 +121,7 @@ export default ({ isLoginForm }) => {
     if (code && state) {
       dispatch(authWithSocialProvider({ code, state }));
     }
-  }, [code, state]);
+  }, [code, state, dispatch]);
 
   const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -85,6 +129,10 @@ export default ({ isLoginForm }) => {
 
   const handleInputChangePassword = (e) => {
     setPassword(e.target.value);
+  };
+
+  const handleInputChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   const handleLoginWithEmail = (evt) => {
@@ -110,7 +158,8 @@ export default ({ isLoginForm }) => {
     /*if (password.length < PASSWORD_MIN_LENGTH) {
       "Password must be at least 6 characters"
     }*/
-    dispatch(signup({ email, password }));
+    // todo: check if passwords are the same (dissable button / indicate error on form)
+    dispatch(signup({ email, password, confirmPassword }));
   };
 
   const handleSocialLogin = (provider) => {
@@ -119,12 +168,13 @@ export default ({ isLoginForm }) => {
 
   return (
     <div className="text-center">
-      <h1>Welcome</h1>
+      <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
       <form id="login-password" method="POST">
         <InputWrapper>
-          <Label style={StyleLabel} label="E-mail" />
+          <Label for="email" style={StyleLabel} label="E-mail" />
           <Input
             type="email"
+            name="email"
             required
             placeholder="Enter email address"
             value={email}
@@ -133,9 +183,10 @@ export default ({ isLoginForm }) => {
           />
         </InputWrapper>
         <InputWrapper>
-          <Label style={StyleLabel} label="Password" />
+          <Label for="password" style={StyleLabel} label="Password" />
           <Input
             type="password"
+            name="password"
             required
             placeholder="Enter password"
             value={password}
@@ -143,26 +194,29 @@ export default ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
-        <WhiteSpace />
-        <WhiteSpace />
         <SubmitButton
-          title={isLoginForm ? "Login" : "Sign Up"}
+          title={isLoginForm ? "Sign In" : "Sign Up"}
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
         />
       </form>
       <WhiteSpace />
+      <WhiteSpace />
       {isLoginForm ? (
         <>
           <p>
-            <Link to="/auth/forgot-password">Forgot password?</Link>
+            <AuthLink href="/auth/forgot-password">Forgot password?</AuthLink>
           </p>
           <p>
-            <Link to="/auth/signup">Don't have an account? Sign up!</Link>
+            <AuthLink href="/auth/signup">
+              Don't have an account? <u>Sign Up</u>
+            </AuthLink>
           </p>
         </>
       ) : (
         <p>
-          <Link to="/auth/login">Already have an account? Sign in!</Link>
+          <AuthLink href="/auth/login">
+            Already have an account? <u>Sign In</u>
+          </AuthLink>
         </p>
       )}
       <WhiteSpace />
@@ -173,33 +227,35 @@ export default ({ isLoginForm }) => {
       <FlexBox>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<FacebookIcon />}
+          icon={<SvgIcon src={facebook} />}
           onClick={() => handleSocialLogin("facebook")}
         >
-          Facebook
+          <ButtonText>Facebook</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<GmailIcon />}
+          icon={<SvgIcon src={gmail} />}
           onClick={() => handleSocialLogin("google")}
         >
-          Gmail
+          <ButtonText>Gmail</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<TwitterIcon />}
+          icon={<SvgIcon src={twitter} />}
           onClick={() => handleSocialLogin("twitter")}
         >
-          Twitter
+          <ButtonText>Twitter</ButtonText>
         </SocialButton>
         <SocialButton
           style={StyleSocialIcon}
-          icon={<LinkedinIcon />}
+          icon={<SvgIcon src={linkedin} />}
           onClick={() => handleSocialLogin("linkedin")}
         >
-          Linkedin
+          <ButtonText>Linkedin</ButtonText>
         </SocialButton>
       </FlexBox>
     </div>
   );
 };
+
+export default Login;
