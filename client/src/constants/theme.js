@@ -67,11 +67,26 @@ const theme = {
     padding: {
       vertical: "1rem",
     },
-    primary: {
-      color: "#fff",
-      backgroundColor: PRIMARY,
-      borderRadius: "18px",
+    boldedText: {
+      fontFamily: "Poppins",
       fontWeight: "bold",
+    },
+    large: {
+      borderRadius: "4.6rem",
+      fontSize: "1.8rem",
+    },
+    primary: {
+      backgroundColor: ROYAL_BLUE,
+      color: "#fff",
+    },
+    primaryLight: {
+      backgroundColor: SELAGO,
+      color: ROYAL_BLUE,
+    },
+    outline: {
+      backgroundColor: "#fff",
+      color: ROYAL_BLUE,
+      border: `0.2rem solid ${ROYAL_BLUE} !important`,
     },
     iconAndText: {
       color: DARK_GRAY,
