@@ -17,7 +17,7 @@ const SubmitButton = ({ title, handleClick, ...props }) => {
     border-radius: 4.6rem;
   `;
   return (
-    <StyledButton onClick={handleClick} {...props}>
+    <StyledButton inline onClick={handleClick} {...props}>
       {title}
     </StyledButton>
   );

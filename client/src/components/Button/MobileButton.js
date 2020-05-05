@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 import BaseButton from "./BaseButton";
 import { theme } from "~/constants/theme";
 
-const LargeButton = styled(BaseButton)`
-  ${theme.button.large}
-  ${theme.button.boldedText}
+const MobileButton = styled(BaseButton).attrs(({ inline }) => {
+  return { inline };
+})`
+  ${theme.button.regular}
 
   ${(props) =>
     props.primary &&
@@ -47,4 +48,4 @@ const LargeButton = styled(BaseButton)`
     `}
 `;
 
-export default LargeButton;
+export default MobileButton;

@@ -67,13 +67,14 @@ const theme = {
     padding: {
       vertical: "1rem",
     },
-    boldedText: {
+    regular: {
       fontFamily: "Poppins",
-      fontWeight: "bold",
-    },
-    large: {
-      borderRadius: "4.6rem",
       fontSize: "1.8rem",
+      fontWeight: "bold",
+      borderRadius: "4.6rem",
+    },
+    inlineBlock: {
+      padding: "0 7rem",
     },
     primary: {
       backgroundColor: ROYAL_BLUE,
