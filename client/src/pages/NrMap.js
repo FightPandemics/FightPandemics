@@ -156,12 +156,20 @@ const NrMap = () => {
     const location = window.navigator && window.navigator.geolocation;
 
     if (location) {
-      location.getCurrentPosition((position) => {
-        setCoordinates({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
+      location.getCurrentPosition(
+        (position) => {
+          setCoordinates({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          setCoordinates({
+            latitude: "err-latitude",
+            longitude: "err-longitude",
+          });
+        },
+      );
     }
   };
 
