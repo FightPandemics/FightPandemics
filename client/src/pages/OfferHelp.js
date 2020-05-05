@@ -191,7 +191,7 @@ const OfferHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/medical",
+        pathname: "/Feed",
       });
     }
   };
