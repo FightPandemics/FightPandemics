@@ -10,18 +10,30 @@ const LargeButton = styled(Button)`
     props.primary &&
     css`
       ${theme.button.primary}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.outline}
+      }
     `}
 
   ${(props) =>
     props.primaryLight &&
     css`
       ${theme.button.primaryLight}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
+      }
     `}
 
   ${(props) =>
     props.outline &&
     css`
       ${theme.button.outline}
+
+      &:hover, &:active, &:focus {
+        ${theme.button.primary}
+      }
     `}
 `;
 
