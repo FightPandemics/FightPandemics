@@ -33,23 +33,16 @@ const Cards = styled.div`
   margin: 10px;
 `;
 
-const map = {
-  googleMap: null,
-  marker: null,
-  place: null,
-};
-
 const NrMap = () => {
   const [coordinates, setCoordinates] = useState({
     latitude: 52.520008,
     longitude: 13.404954,
   });
-  // hospitals-> list of hospitals according to nearbySearch
   const [hospitals, setHospitals] = useState([]);
-  // plcDtl-> list of hospitals with requested details
   const [detailedHospitals, setDetailedHospitals] = useState([]);
 
   const googleMapRef = useRef();
+  const googleMap = useRef();
 
   useEffect(() => {
     const googleMapScript = document.createElement("script");
@@ -57,9 +50,9 @@ const NrMap = () => {
     window.document.body.appendChild(googleMapScript);
 
     googleMapScript.addEventListener("load", () => {
-      map.googleMap = createGoogleMap();
-      map.marker = createMarker();
-      map.place = places();
+      googleMap.current = createGoogleMap();
+      createMarker();
+      places();
     });
 
     getMyLocation();
@@ -77,7 +70,7 @@ const NrMap = () => {
   };
 
   const places = () => {
-    new window.google.maps.places.PlacesService(map.googleMap).nearbySearch(
+    new window.google.maps.places.PlacesService(googleMap.current).nearbySearch(
       {
         location: {
           lat: coordinates.latitude,
@@ -114,7 +107,7 @@ const NrMap = () => {
         ],
       };
 
-      new window.google.maps.places.PlacesService(map.googleMap).getDetails(
+      new window.google.maps.places.PlacesService(googleMap.current).getDetails(
         request,
         (req, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -143,12 +136,12 @@ const NrMap = () => {
         },
         icon: image,
         animation: window.google.maps.Animation.DROP,
-        map: map.googleMap,
+        map: googleMap.current,
       });
     });
     new window.google.maps.Marker({
       position: { lat: coordinates.latitude, lng: coordinates.longitude },
-      map: map.googleMap,
+      map: googleMap.current,
     });
   };
 
