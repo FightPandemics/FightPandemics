@@ -44,8 +44,8 @@ const NrMap = () => {
     latitude: 52.520008,
     longitude: 13.404954,
   });
-  // rec-> list of hospitals according to nearbySearch
-  const [rec, setRec] = useState([]);
+  // hospitals-> list of hospitals according to nearbySearch
+  const [hospitals, setHospitals] = useState([]);
   // plcDtl-> list of hospitals with requested details
   const [detailedHospitals, setDetailedHospitals] = useState([]);
 
@@ -88,20 +88,20 @@ const NrMap = () => {
       },
       (results, status) => {
         if (status !== "OK") return;
-        setRec(results);
+        setHospitals(results);
       },
     );
   };
 
   useEffect(() => {
-    if (rec && rec.length > 0) {
+    if (hospitals && hospitals.length > 0) {
       createMarker();
       placeDetails();
     }
-  }, [rec]);
+  }, [hospitals]);
 
   const placeDetails = () => {
-    rec.map((place) => {
+    hospitals.map((place) => {
       const request = {
         placeId: place.place_id,
         fields: [
@@ -135,7 +135,7 @@ const NrMap = () => {
       anchor: new window.google.maps.Point(17, 34),
       scaledSize: new window.google.maps.Size(25, 25),
     };
-    rec.map((e) => {
+    hospitals.map((e) => {
       new window.google.maps.Marker({
         position: {
           lat: e.geometry.location.lat(),
