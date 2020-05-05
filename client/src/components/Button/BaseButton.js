@@ -7,6 +7,10 @@ const BaseButton = styled(Button)`
     border: none;
   }
 
+  &.am-button-inline {
+    ${theme.button.inlineBlock}
+  }
+
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
     &.am-button::before {
       content: unset !important;

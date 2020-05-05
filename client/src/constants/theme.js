@@ -92,6 +92,9 @@ const theme = {
       textAlign: "center",
       color: ROYAL_BLUE,
     },
+    inlineBlock: {
+      padding: "0 3rem",
+    },
     iconAndText: {
       color: DARK_GRAY,
       backgroundColor: "transparent",

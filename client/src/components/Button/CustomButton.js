@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import BaseButton from "./BaseButton";
 import { theme } from "~/constants/theme";
 
-const CustomButton = styled(BaseButton).attrs(({ inline, size }) => {
-  return { inline, size };
+const CustomButton = styled(BaseButton).attrs(({ inline }) => {
+  return { inline };
 })`
   ${theme.button.regular}
 
