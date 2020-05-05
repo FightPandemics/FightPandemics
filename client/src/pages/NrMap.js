@@ -109,6 +109,7 @@ class NrMap extends Component {
           }
         },
       );
+      return request;
     });
   };
 
@@ -121,7 +122,7 @@ class NrMap extends Component {
       scaledSize: new window.google.maps.Size(25, 25),
     };
     this.state.rec.map((e) => {
-      new window.google.maps.Marker({
+      return new window.google.maps.Marker({
         position: {
           lat: e.geometry.location.lat(),
           lng: e.geometry.location.lng(),
