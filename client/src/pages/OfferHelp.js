@@ -19,7 +19,7 @@ import {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "../components/StepWizard";
-import { IconButton, SubmitButton, CustomButton } from "../components/Button";
+import { IconButton, SubmitButton } from "../components/Button";
 
 // ICONS
 import SvgIcon from "../components/Icon/SvgIcon";
@@ -125,14 +125,16 @@ const Step2 = (props) => {
           />
         </WizardFormGroup>
         <IconButton
+          tertiary="true"
           icon={<SvgIcon src={shareMyLocation} />}
-          title="Share my location"
           onSelect={selectLocationDetection}
-        />
+        >
+          Share my location
+        </IconButton>
         <SkipLink>
-          <CustomButton secondary="true" onSelect={rejectLocationDetection}>
+          <SubmitButton tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
-          </CustomButton>
+          </SubmitButton>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -165,7 +167,9 @@ const Step3 = (props) => {
           />
         </WizardFormGroup>
         <WizardButtonGroup>
-          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SubmitButton primary="true" onClick={onSubmit}>
+            Submit
+          </SubmitButton>
           <SkipLink>
             <Link to="/AirTableCOVID">
               {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}

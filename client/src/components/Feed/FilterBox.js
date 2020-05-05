@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
-import CustomButton from "../../components/Button/CustomButton";
+import SubmitButton from "../../components/Button/SubmitButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
 import FilterAccordion from "./FilterAccordion";
@@ -47,12 +47,12 @@ const FilterBox = () => {
             padding: "2rem 0",
           }}
         >
-          <CustomButton inline secondary="true" onClick={handleQuit}>
+          <SubmitButton inline secondary="true" onClick={handleQuit}>
             Quit filters
-          </CustomButton>
-          <CustomButton inline primary="true" onClick={handleFilterModal(null)}>
+          </SubmitButton>
+          <SubmitButton inline primary="true" onClick={handleFilterModal(null)}>
             Apply filters
-          </CustomButton>
+          </SubmitButton>
         </div>
       </Modal>
     </FilterBoxWrapper>

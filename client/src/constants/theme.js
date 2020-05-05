@@ -95,15 +95,6 @@ const theme = {
     inlineBlock: {
       padding: "0 3rem",
     },
-    submit: {
-      backgroundColor: ROYAL_BLUE,
-      border: "unset",
-      borderRadius: "4.6rem",
-      color: "#fff",
-      fontFamily: "Poppins",
-      fontSize: "1.8rem",
-      fontWeight: "bold",
-    },
     iconAndText: {
       color: DARK_GRAY,
       backgroundColor: "transparent",
