@@ -47,7 +47,6 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       <Link to={"/"}>
         <PrevButton
           src={backArrow}
-          // href="/"
           a11yTitle="Navigate to the homepage"
         />
       </Link>
