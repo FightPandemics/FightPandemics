@@ -67,11 +67,33 @@ const theme = {
     padding: {
       vertical: "1rem",
     },
-    primary: {
-      color: "#fff",
-      backgroundColor: PRIMARY,
-      borderRadius: "18px",
+    regular: {
+      fontFamily: "Poppins",
+      fontSize: "1.8rem",
       fontWeight: "bold",
+      borderRadius: "4.6rem",
+    },
+    primary: {
+      backgroundColor: ROYAL_BLUE,
+      color: "#fff",
+    },
+    primaryLight: {
+      backgroundColor: SELAGO,
+      color: ROYAL_BLUE,
+    },
+    secondary: {
+      backgroundColor: "#fff",
+      color: ROYAL_BLUE,
+      border: `0.1rem solid ${ROYAL_BLUE} !important`,
+    },
+    tertiary: {
+      fontSize: "1.6rem",
+      fontWeight: "500",
+      textAlign: "center",
+      color: ROYAL_BLUE,
+    },
+    inlineBlock: {
+      padding: "0 3rem",
     },
     submit: {
       backgroundColor: ROYAL_BLUE,

@@ -47,22 +47,10 @@ const FilterBox = () => {
             padding: "2rem 0",
           }}
         >
-          <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
-            whitebg="true"
-            onClick={handleQuit}
-          >
+          <CustomButton inline secondary="true" onClick={handleQuit}>
             Quit filters
           </CustomButton>
-          <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
-            primary="true"
-            onClick={handleFilterModal(null)}
-          >
+          <CustomButton inline primary="true" onClick={handleFilterModal(null)}>
             Apply filters
           </CustomButton>
         </div>

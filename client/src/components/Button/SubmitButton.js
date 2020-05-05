@@ -13,7 +13,7 @@ const SubmitButton = ({ title, handleClick, ...props }) => {
     ${theme.button.submit}
   `;
   return (
-    <StyledButton onClick={handleClick} {...props}>
+    <StyledButton inline onClick={handleClick} {...props}>
       {title}
     </StyledButton>
   );
