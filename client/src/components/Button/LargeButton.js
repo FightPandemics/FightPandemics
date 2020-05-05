@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { Button } from "antd-mobile";
-import { theme } from "../../constants/theme";
+import BaseButton from "./BaseButton";
+import { theme } from "~/constants/theme";
 
-const LargeButton = styled(Button)`
+const LargeButton = styled(BaseButton)`
   ${theme.button.large}
   ${theme.button.boldedText}
 
