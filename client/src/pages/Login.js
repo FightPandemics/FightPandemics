@@ -8,7 +8,7 @@ import {
   authWithSocialProvider,
   loginWithEmail,
   signup,
-} from "../actions/authActions";
+} from "actions/authActions";
 import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
