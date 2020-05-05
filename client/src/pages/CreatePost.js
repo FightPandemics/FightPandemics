@@ -5,7 +5,7 @@ import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
-import DownArrowButton from "../components/Button/DownArrowButton";
+import SelectWithIconButton from "../components/Button/SelectWithIconButton";
 import AddTags from "../components/Tag/AddTags";
 import SubmitButton from "../components/Button/SubmitButton";
 import { theme } from "../constants/theme";
@@ -147,14 +147,14 @@ const CreatePost = (props) => {
             closable={false}
           />
           <div className="buttons">
-            <DownArrowButton
+            <SelectWithIconButton
               handleClick={showModal(shareWith)}
               label={formData.shareWith}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
             />
-            <DownArrowButton
+            <SelectWithIconButton
               handleClick={showModal(expires)}
               label={formData.expires}
               color={theme.colors.royalBlue}

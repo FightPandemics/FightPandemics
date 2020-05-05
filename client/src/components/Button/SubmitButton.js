@@ -1,51 +1,52 @@
 import styled, { css } from "styled-components";
 import BaseButton from "./BaseButton";
 import { theme } from "../../constants/theme";
+const { button } = theme;
 
 // props: inline, primary, primaryLight, secondary, tertiary
 
-const SubmitButton = styled(BaseButton).attrs(({ inline }) => {
-  return { inline };
+const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
+  return { size, inline };
 })`
-  ${theme.button.regular}
+  ${button.regular}
 
   ${(props) =>
     props.primary &&
     css`
-      ${theme.button.primary}
+      ${button.primary}
 
       &:hover, &:active, &:focus {
-        ${theme.button.secondary}
+        ${button.secondary}
       }
     `}
 
   ${(props) =>
     props.primaryLight &&
     css`
-      ${theme.button.primaryLight}
+      ${button.primaryLight}
 
       &:hover, &:active, &:focus {
-        ${theme.button.primary}
+        ${button.primary}
       }
     `}
 
   ${(props) =>
     props.secondary &&
     css`
-      ${theme.button.secondary}
+      ${button.secondary}
 
       &:hover, &:active, &:focus {
-        ${theme.button.primary}
+        ${button.primary}
       }
     `}
 
   ${(props) =>
     props.tertiary &&
     css`
-      ${theme.button.tertiary}
+      ${button.tertiary}
 
       &:hover, &:active, &:focus {
-        ${theme.button.primary}
+        ${button.primary}
       }
     `}
 `;

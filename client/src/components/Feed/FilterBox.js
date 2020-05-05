@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { Modal } from "antd-mobile";
 import SubmitButton from "../../components/Button/SubmitButton";
 import CustomH1 from "../Typography/Title/CustomH1";
-import DownArrowButton from "../Button/DownArrowButton";
+import SelectWithIconButton from "../Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
-import { ROYAL_BLUE, SELAGO, DARK_GRAY } from "../../constants/colors";
+import { DARK_GRAY } from "../../constants/colors";
+import SvgIcon from "../Icon/SvgIcon";
+import downArrow from "~/assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -17,13 +19,17 @@ const FilterBox = () => {
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
-      <DownArrowButton
+      <SelectWithIconButton
         key={idx}
-        label={filter.label}
-        handleClick={handleFilterModal(idx)}
-        color={ROYAL_BLUE}
-        bgcolor={SELAGO}
-      />
+        inline
+        primaryLight="true"
+        rightIcon="true"
+        size="small"
+        icon={<SvgIcon src={downArrow} />}
+        onClick={handleFilterModal(idx)}
+      >
+        {filter.label}
+      </SelectWithIconButton>
     ));
   };
   return (
