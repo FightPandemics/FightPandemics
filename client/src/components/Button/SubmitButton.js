@@ -10,11 +10,7 @@ const SubmitButton = ({ title, handleClick, ...props }) => {
       type: "primary",
     };
   })`
-    ${theme.button}
-    ${props.type && props.type === "primary"
-      ? theme.button.primary
-      : ""}
-    border-radius: 4.6rem;
+    ${theme.button.submit}
   `;
   return (
     <StyledButton onClick={handleClick} {...props}>
