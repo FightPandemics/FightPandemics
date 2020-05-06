@@ -4,6 +4,7 @@ import SvgIcon from "../Icon/SvgIcon";
 import backArrow from "~/assets/icons/back-arrow.svg";
 import nextArrow from "~/assets/icons/next-arrow.svg";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 // ICONS
 
@@ -50,7 +51,6 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       <Link to={"/"}>
         <PrevButton
           src={backArrow}
-          // href="/"
           a11yTitle="Navigate to the homepage"
         />
       </Link>
