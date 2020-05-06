@@ -86,11 +86,6 @@ const theme = {
       color: ROYAL_BLUE,
       border: `0.1rem solid ${ROYAL_BLUE} !important`,
     },
-    selectButton: {
-      borderRadius: "0.6rem",
-      fontWeight: "600",
-      fontSize: "1.4rem",
-    },
     tertiary: {
       fontSize: "1.6rem",
       fontWeight: "500",

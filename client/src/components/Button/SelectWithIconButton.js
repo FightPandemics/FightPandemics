@@ -4,12 +4,32 @@ import { theme } from "../../constants/theme";
 
 const { button } = theme;
 
-const SelectWithIconButton = styled(SubmitButton).attrs(({ icon }) => {
-  return { icon };
+const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
+  return { icon, inline: "true" };
 })`
-  ${button.selectButton}
+  border-radius: 0.6rem;
+  font-weight: 600;
+  font-size: 1.4rem;
   margin: 0.5rem;
   padding: 2rem !important;
+
+  ${(props) =>
+    props.long &&
+    css`
+      padding: 1.5rem 1rem !important;
+      font-weight: normal;
+      font-size: 1.2rem;
+      margin: 0;
+
+      span {
+        margin-right: 2rem;
+      }
+
+      .am-icon-xxs {
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    `}
 
   ${(props) =>
     props.rightIcon &&

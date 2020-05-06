@@ -18,6 +18,7 @@ import {
 
 // ICONS
 import SvgIcon from "../components/Icon/SvgIcon";
+import downArrow from "~/assets/icons/down-arrow.svg";
 import horizontalLine from "~/assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
@@ -148,19 +149,27 @@ const CreatePost = (props) => {
           />
           <div className="buttons">
             <SelectWithIconButton
-              handleClick={showModal(shareWith)}
-              label={formData.shareWith}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
               long="true"
-            />
+              size="small"
+              rightIcon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(shareWith)}
+              long="true"
+            >
+              {formData.shareWith}
+            </SelectWithIconButton>
             <SelectWithIconButton
-              handleClick={showModal(expires)}
-              label={formData.expires}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
               long="true"
-            />
+              size="small"
+              rightIcon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(expires)}
+              long="true"
+            >
+              {formData.expires}
+            </SelectWithIconButton>
           </div>
           <div className="inline">
             <RadioGroup

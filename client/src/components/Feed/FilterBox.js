@@ -21,7 +21,6 @@ const FilterBox = () => {
     return filters.map((filter, idx) => (
       <SelectWithIconButton
         key={idx}
-        inline
         primaryLight="true"
         rightIcon="true"
         size="small"
