@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import FilterTag from "./FilterTag";
-import { DARK_GRAY, ROYAL_BLUE } from "../../constants/colors";
 
 const AddTagsWrapper = styled.div`
   margin-top: 1.5rem;
