@@ -1,12 +1,12 @@
-import React from "react";
-
 import {
   PolicyContainer,
   TextContainer,
 } from "../components/PolicyPages/PolicyContainer";
-import { ListNoIndent } from "../components/PolicyPages/ListStyles";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
+
 import { Date } from "../components/PolicyPages/Date";
+import { ListNoIndent } from "../components/PolicyPages/ListStyles";
+import React from "react";
+import { TermsLink } from "../components/PolicyPages/TermsLink";
 
 const CookiesPolicy = () => {
   return (

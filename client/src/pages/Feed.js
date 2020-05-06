@@ -1,23 +1,26 @@
-import React, { useReducer } from "react";
-import { Link } from "react-router-dom";
-import ButtonModal from "../components/Feed/ButtonModal";
-import filterOptions from "../assets/data/filterOptions";
-import fakePosts from "../assets/data/fakePosts";
-import FeedWrapper from "../components/Feed/FeedWrapper";
-import FilterBox from "../components/Feed/FilterBox";
-import Posts from "../components/Feed/Posts";
-import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
 import {
   ADD_OPTION,
-  REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
-  TOGGLE_STATE,
+  REMOVE_OPTION,
   SET_VALUE,
+  TOGGLE_STATE,
 } from "../hooks/actions/feedActions";
+import React, { useReducer } from "react";
+import { feedReducer, optionsReducer } from "../hooks/reducers/feedReducers";
 
-// ICONS
+import ButtonModal from "../components/Feed/ButtonModal";
+import FeedWrapper from "../components/Feed/FeedWrapper";
+import FilterBox from "../components/Feed/FilterBox";
+import { Link } from "react-router-dom";
+import Posts from "../components/Feed/Posts";
 import SvgIcon from "../components/Icon/SvgIcon";
 import creatPost from "~/assets/icons/create-post.svg";
+import fakePosts from "../assets/data/fakePosts";
+import filterOptions from "../assets/data/filterOptions";
+
+// ICONS
+
+
 
 export const FeedContext = React.createContext();
 

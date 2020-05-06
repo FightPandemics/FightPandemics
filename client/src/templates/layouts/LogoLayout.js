@@ -1,10 +1,9 @@
-import React from "react";
-import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
-
-import logo from "~/assets/logo.svg";
 import Logo from "~/components/Logo";
 import Main from "./Main";
+import { NavBar } from "antd-mobile";
+import React from "react";
+import logo from "~/assets/logo.svg";
 
 const LogoLayout = (props) => {
   return (

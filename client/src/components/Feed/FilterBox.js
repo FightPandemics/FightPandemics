@@ -1,12 +1,13 @@
+import { DARK_GRAY, ROYAL_BLUE, SELAGO } from "../../constants/colors";
 import React, { useContext } from "react";
-import styled from "styled-components";
-import { Modal } from "antd-mobile";
+
 import CustomButton from "../../components/Button/CustomButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import DownArrowButton from "../Button/DownArrowButton";
-import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "../../pages/Feed";
-import { ROYAL_BLUE, SELAGO, DARK_GRAY } from "../../constants/colors";
+import FilterAccordion from "./FilterAccordion";
+import { Modal } from "antd-mobile";
+import styled from "styled-components";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;

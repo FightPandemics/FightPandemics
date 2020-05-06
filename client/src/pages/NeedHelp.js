@@ -1,21 +1,21 @@
+import {
+  AnswerButton,
+  StepTitle,
+  StyledTextInput,
+  StyledWizard,
+  WizardButtonGroup,
+  WizardContainer,
+  WizardFormGroup,
+  WizardFormWrapper,
+  WizardNav,
+  WizardProgress,
+  WizardStep,
+} from "../components/StepWizard";
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 
 import SubmitButton from "../components/Button/SubmitButton";
 import { asyncGetGeoLocation } from "../utils/geolocation";
-import {
-  AnswerButton,
-  StyledWizard,
-  WizardContainer,
-  WizardStep,
-  WizardNav,
-  WizardButtonGroup,
-  StepTitle,
-  StyledTextInput,
-  WizardProgress,
-  WizardFormWrapper,
-  WizardFormGroup,
-} from "../components/StepWizard";
+import { withRouter } from "react-router-dom";
 
 const INITIAL_STATE = {
   answers: [],

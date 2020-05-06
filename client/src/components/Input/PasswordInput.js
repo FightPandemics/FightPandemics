@@ -1,13 +1,12 @@
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
-
-import withLabel from "./with-label";
-import BaseInput from "./BaseInput";
-
 import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
 } from "@material-ui/icons";
+
+import BaseInput from "./BaseInput";
+import styled from "styled-components";
+import withLabel from "./with-label";
 
 const Input = styled(BaseInput).attrs((props) => ({
   type: props.isVisible ? "text" : "password",

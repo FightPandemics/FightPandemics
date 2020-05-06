@@ -1,6 +1,6 @@
 import styled from "styled-components";
-
 import { theme } from "../../constants/theme";
+
 const { font } = theme.typography;
 
 const WizardStep = styled.div`

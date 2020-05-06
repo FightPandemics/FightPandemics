@@ -1,14 +1,17 @@
+import { Card, Modal, WhiteSpace } from "antd-mobile";
 import React, { useState } from "react";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
-import PostCard from "./PostCard";
-import PostSocial from "./PostSocial";
+
+import AutoSize from "../../components/Input/AutoSize";
 import Comments from "./Comments";
 import FilterTag from "../../components/Tag/FilterTag";
-import AutoSize from "../../components/Input/AutoSize";
-
-// ICONS
+import PostCard from "./PostCard";
+import PostSocial from "./PostSocial";
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "~/assets/icons/status-indicator.svg";
+
+// ICONS
+
+
 
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);

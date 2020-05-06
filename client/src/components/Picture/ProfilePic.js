@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ noPic, initials }) => {
+export default ({ initials , noPic}) => {
   return (
     <>{noPic ? <div style={initialsStyle}>{initials}</div> : <div></div>}</>
   );

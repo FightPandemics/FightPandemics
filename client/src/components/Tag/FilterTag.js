@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Tag } from "antd-mobile";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 const { royalBlue } = theme.colors;

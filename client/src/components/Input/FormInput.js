@@ -1,10 +1,7 @@
 import React from "react";
+
 export default ({
-  inputTitle,
-  name,
-  defaultValue,
-  reference,
-  error,
+  defaultValue, error, inputTitle, name, reference,
   ...props
 }) => {
   const inputFieldStyle = {

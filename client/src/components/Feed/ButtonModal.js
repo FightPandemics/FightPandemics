@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Modal } from "antd-mobile";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 const { royalBlue } = theme.colors;

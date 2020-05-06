@@ -1,8 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { theme } from "../constants/theme";
-
+import React from "react";
 import styled from "styled-components";
+import { theme } from "../constants/theme";
 
 const { colors } = theme;
 

@@ -1,6 +1,6 @@
+import NestedComments from "./NestedComments";
 import React from "react";
 import styled from "styled-components";
-import NestedComments from "./NestedComments";
 
 const CommentsWrapper = styled.div`
   padding-right: 1.5rem;

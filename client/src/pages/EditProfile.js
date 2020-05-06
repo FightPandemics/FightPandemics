@@ -1,11 +1,12 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { connect } from "react-redux";
-import styled from "styled-components";
 import FormInput from "../components/Input/FormInput";
 import ProfilePic from "../components/Picture/ProfilePic";
+import React from "react";
 import SubmitButton from "../components/Button/SubmitButton";
 import Title from "../components/Title/Title";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+
 // dummy data props,context, redux etc
 
 const editProfile = true;

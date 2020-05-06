@@ -1,7 +1,6 @@
-import React from "react";
-
-import withLabel from "./with-label";
 import Input from "./BaseInput";
+import React from "react";
+import withLabel from "./with-label";
 
 const TextInput = ({
   label,

@@ -1,24 +1,38 @@
-import React, { useState } from "react";
-// import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import DownArrowButton from "../components/Button/DownArrowButton";
-import AddTags from "../components/Tag/AddTags";
-import CustomButton from "../components/Button/CustomButton";
-import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
 } from "../components/CreatePost/StyledCreatePost";
+import React, { useState } from "react";
+
+import AddTags from "../components/Tag/AddTags";
+import CustomButton from "../components/Button/CustomButton";
+import CustomH1 from "../components/Typography/Title/CustomH1";
+import CustomModal from "../components/CreatePost/CustomModal";
+import DownArrowButton from "../components/Button/DownArrowButton";
+import RadioGroup from "../components/CreatePost/RadioGroup";
+import SvgIcon from "../components/Icon/SvgIcon";
+import createPostSettings from "../assets//data/createPostSettings";
+import filterOptions from "../assets/data/filterOptions";
+import horizontalLine from "~/assets/icons/horizontal-line.svg";
+import { theme } from "../constants/theme";
+
+// import axios from "axios";
+
+
+
+
+
+
+
+
+
+
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import horizontalLine from "~/assets/icons/horizontal-line.svg";
+
+
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;

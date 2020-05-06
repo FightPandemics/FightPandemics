@@ -1,5 +1,5 @@
-import { connect } from "react-redux";
 import Feed from "../pages/Feed";
+import { connect } from "react-redux";
 
 const mapStateToProps = ({ session }) => {
   return {

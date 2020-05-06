@@ -1,8 +1,8 @@
-import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import LogoLayout from "./layouts/LogoLayout";
 import NavigationLayout from "./layouts/NavigationLayout";
+import React from "react";
 import { connect } from "react-redux";
 
 const HOME = "/";

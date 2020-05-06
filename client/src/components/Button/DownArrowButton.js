@@ -1,11 +1,13 @@
-import React from "react";
-import styled from "styled-components";
 import { Button } from "antd-mobile";
+import React from "react";
+import SvgIcon from "../Icon/SvgIcon";
+import downArrow from "~/assets/icons/down-arrow.svg";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 // ICONS
-import SvgIcon from "../Icon/SvgIcon";
-import downArrow from "~/assets/icons/down-arrow.svg";
+
+
 
 const { colors, typography } = theme;
 const { display } = typography.font.family;

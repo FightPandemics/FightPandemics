@@ -1,21 +1,21 @@
-import React from "react";
-
-import {
-  PolicyContainer,
-  TextContainer,
-  Paragraph,
-} from "../components/PolicyPages/PolicyContainer";
-import { ListNoIndent } from "../components/PolicyPages/ListStyles";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
-import { Date } from "../components/PolicyPages/Date";
 import {
   DataTableHead,
-  TrLine,
-  ThLeft,
-  ThRight,
   TdLeft,
   TdRight,
+  ThLeft,
+  ThRight,
+  TrLine,
 } from "../components/PolicyPages/TableStyles";
+import {
+  Paragraph,
+  PolicyContainer,
+  TextContainer,
+} from "../components/PolicyPages/PolicyContainer";
+
+import { Date } from "../components/PolicyPages/Date";
+import { ListNoIndent } from "../components/PolicyPages/ListStyles";
+import React from "react";
+import { TermsLink } from "../components/PolicyPages/TermsLink";
 
 const PrivacyPolicy = () => {
   return (

@@ -1,6 +1,6 @@
+import React from "react";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
-import React from "react";
 
 const { typography } = theme;
 

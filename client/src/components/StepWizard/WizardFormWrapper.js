@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { mq } from "../../constants/theme";
+import styled from "styled-components";
 
 const WizardFormWrapper = styled.div`
   display: flex;

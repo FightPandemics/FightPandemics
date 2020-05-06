@@ -1,6 +1,7 @@
-import styled from "styled-components";
 import { Checkbox } from "antd-mobile";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
+
 const CheckboxItem = Checkbox.CheckboxItem;
 
 export const WizardCheckboxWrapper = styled.div`

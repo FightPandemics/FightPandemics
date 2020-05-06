@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Comment } from "antd";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 const { colors, typography } = theme;

@@ -1,5 +1,5 @@
-import React from "react";
 import NrMap from "./NrMap.js";
+import React from "react";
 
 const NearestHospital = () => {
   return (

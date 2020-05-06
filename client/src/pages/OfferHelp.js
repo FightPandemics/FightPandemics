@@ -1,29 +1,31 @@
+import { CustomButton, IconButton, SubmitButton } from "../components/Button";
+import { Link, withRouter } from "react-router-dom";
 import React, { useState } from "react";
-import { withRouter, Link } from "react-router-dom";
-
-import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
-  StyledWizard,
-  WizardContainer,
-  WizardStep,
-  WizardNav,
-  WizardButtonGroup,
-  StepTitle,
   SkipLink,
+  StepTitle,
   StyledTextInput,
-  WizardProgress,
-  WizardFormWrapper,
+  StyledWizard,
+  WizardButtonGroup,
+  WizardCheckboxItem,
+  WizardCheckboxWrapper,
+  WizardContainer,
   WizardFormGroup,
+  WizardFormWrapper,
+  WizardNav,
+  WizardProgress,
+  WizardStep,
   getAnswersMap,
   getCheckedAnswers,
-  WizardCheckboxWrapper,
-  WizardCheckboxItem,
 } from "../components/StepWizard";
-import { IconButton, SubmitButton, CustomButton } from "../components/Button";
+
+import SvgIcon from "../components/Icon/SvgIcon";
+import { asyncGetGeoLocation } from "../utils/geolocation";
+import shareMyLocation from "~/assets/icons/share-my-location.svg";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import shareMyLocation from "~/assets/icons/share-my-location.svg";
+
+
 
 const INITIAL_STATE = {
   answers: [],

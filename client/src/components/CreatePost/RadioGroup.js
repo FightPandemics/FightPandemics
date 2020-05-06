@@ -1,7 +1,8 @@
-import React from "react";
 import { Radio } from "antd";
+import React from "react";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
+
 const { darkGray } = theme.colors;
 const { medium } = theme.typography.size;
 const { display } = theme.typography.font.family;

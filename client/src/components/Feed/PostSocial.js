@@ -1,14 +1,21 @@
-import React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
-// ICONS
+import React from "react";
 import SvgIcon from "../Icon/SvgIcon";
-import heart from "~/assets/icons/heart.svg";
-import heartGray from "~/assets/icons/heart-gray.svg";
 import comment from "~/assets/icons/comment.svg";
 import commentGray from "~/assets/icons/comment-gray.svg";
+import heart from "~/assets/icons/heart.svg";
+import heartGray from "~/assets/icons/heart-gray.svg";
 import share from "~/assets/icons/share.svg";
 import shareGray from "~/assets/icons/share-gray.svg";
+
+// ICONS
+
+
+
+
+
+
+
 
 const PostSocial = ({
   url,

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
+
 const { display } = theme.typography.font.family;
+
 
 const FeedWrapper = styled.div`
   font-family: ${display};

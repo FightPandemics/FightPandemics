@@ -1,8 +1,8 @@
-import React from "react";
 import { Modal } from "antd-mobile";
+import React from "react";
 import styled from "styled-components";
-
 import { theme } from "../../constants/theme.js";
+
 const { xxlarge } = theme.typography.size;
 const { display } = theme.typography.font.family;
 

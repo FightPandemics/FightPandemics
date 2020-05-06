@@ -1,23 +1,30 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
-import ProfilePic from "../components/Picture/ProfilePic";
-import Title from "../components/Title/Title";
-import styled from "styled-components";
-import { getInitials } from "../utils/userInfo";
-import { Link } from "react-router-dom";
-import fakePosts from "../assets/data/fakePosts"; // feed
-import Posts from "../components/Feed/Posts"; // feed
-import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
+import React, { useState } from "react";
+
 import ButtonModal from "../components/Feed/ButtonModal"; // feed
+import FeedWrapper from "../components/Feed/FeedWrapper"; //feed
+import { Link } from "react-router-dom";
+import Posts from "../components/Feed/Posts"; // feed
+import ProfilePic from "../components/Picture/ProfilePic";
+import SvgIcon from "../components/Icon/SvgIcon";
+import Title from "../components/Title/Title";
+import { connect } from "react-redux";
+import createPost from "~/assets/icons/create-post.svg"; // feed
+import edit from "~/assets/icons/edit.svg";
+import fakePosts from "../assets/data/fakePosts"; // feed
+import { getInitials } from "../utils/userInfo";
+import linkedinBlue from "~/assets/icons/social-linkedin-blue.svg";
+import menu from "~/assets/icons/menu.svg";
+import styled from "styled-components";
+import twitterBlue from "~/assets/icons/social-twitter-blue.svg";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import menu from "~/assets/icons/menu.svg";
-import edit from "~/assets/icons/edit.svg";
-import createPost from "~/assets/icons/create-post.svg"; // feed
-import linkedinBlue from "~/assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "~/assets/icons/social-twitter-blue.svg";
+
+
+
+
+
+
 const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 

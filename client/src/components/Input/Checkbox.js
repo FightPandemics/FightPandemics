@@ -1,5 +1,6 @@
 import { Checkbox } from "antd";
 import styled from "styled-components";
+
 const StyledCheckbox = styled(Checkbox)`
   .ant-checkbox-inner {
     border-color: #646464;

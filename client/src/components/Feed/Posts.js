@@ -1,5 +1,5 @@
-import React from "react";
 import Post from "./Post";
+import React from "react";
 
 const Posts = ({ filteredPosts }) => {
   return (

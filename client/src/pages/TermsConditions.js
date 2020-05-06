@@ -1,10 +1,10 @@
-import React from "react";
-
 import {
+  Paragraph,
   PolicyContainer,
   TextContainer,
-  Paragraph,
 } from "../components/PolicyPages/PolicyContainer";
+
+import React from "react";
 import { TermsLink } from "../components/PolicyPages/TermsLink";
 
 const TermsConditions = () => {

@@ -1,9 +1,9 @@
 import {
   ADD_OPTION,
-  REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
-  TOGGLE_STATE,
+  REMOVE_OPTION,
   SET_VALUE,
+  TOGGLE_STATE,
 } from "../actions/feedActions";
 
 export const feedReducer = (oldState, action) => {

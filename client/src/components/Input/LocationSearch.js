@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
 import { SearchBar, WhiteSpace } from "antd-mobile";
-import { FeedContext } from "../../pages/Feed.js";
 
-// ICONS
+import { FeedContext } from "../../pages/Feed.js";
 import SvgIcon from "../Icon/SvgIcon";
 import shareLocation from "~/assets/icons/share-my-location.svg";
+import styled from "styled-components";
+
+// ICONS
+
+
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {

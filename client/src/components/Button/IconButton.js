@@ -1,8 +1,9 @@
+import { mq, theme } from "../../constants/theme";
+
 import React from "react";
+import SubmitButton from "./SubmitButton";
 import styled from "styled-components";
 
-import SubmitButton from "./SubmitButton";
-import { theme, mq } from "../../constants/theme";
 const { button, colors } = theme;
 
 const IconBtn = styled(SubmitButton).attrs()`

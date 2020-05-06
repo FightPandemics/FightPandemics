@@ -1,11 +1,14 @@
-import React from "react";
-import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import React from "react";
+import SvgIcon from "../Icon/SvgIcon";
+import backArrow from "~/assets/icons/back-arrow.svg";
+import nextArrow from "~/assets/icons/next-arrow.svg";
+import styled from "styled-components";
 
 // ICONS
-import SvgIcon from "../Icon/SvgIcon";
-import nextArrow from "~/assets/icons/next-arrow.svg";
-import backArrow from "~/assets/icons/back-arrow.svg";
+
+
+
 
 const StyledWizardNav = styled.div`
   display: flex;

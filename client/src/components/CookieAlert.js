@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+import SvgIcon from "./Icon/SvgIcon";
+import closeX from "~/assets/icons/close-btn.svg";
 import styled from "styled-components";
 import { theme } from "../constants/theme";
 
 // ICONS
-import SvgIcon from "./Icon/SvgIcon";
-import closeX from "~/assets/icons/close-btn.svg";
+
+
 
 const { colors } = theme;
 

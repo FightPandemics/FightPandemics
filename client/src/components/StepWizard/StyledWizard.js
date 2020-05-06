@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import StepWizard from "react-step-wizard";
+import styled from "styled-components";
 
 const StyledWizard = styled(StepWizard)`
   display: flex;

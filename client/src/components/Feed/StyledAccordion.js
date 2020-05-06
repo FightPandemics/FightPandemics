@@ -1,6 +1,7 @@
-import styled from "styled-components";
 import { Accordion } from "antd-mobile";
+import styled from "styled-components";
 import { theme } from "../../constants/theme";
+
 const { display } = theme.typography.font.family;
 
 export const FilterAccordion = styled(Accordion)`

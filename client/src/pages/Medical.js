@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 
 import ImageButton from "../components/Button/ImageButton";
-import { theme } from "../constants/theme";
-
+import axios from "axios";
 import { getAirtableRecord } from "../utils/airtable";
 import { getLocalStorageJson } from "../utils/local-storage";
+import styled from "styled-components";
+import { theme } from "../constants/theme";
 
 const nearestHospitalUnselected = require("../../src/assets/medical-page-images/nearest-hospital-unselected.png");
 const nearestHospitalSelected = require("../../src/assets/medical-page-images/nearest-hospital-selected.png");

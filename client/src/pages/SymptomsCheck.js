@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-
 import {
   AnswerButton,
   AnswerCheckbox,
-  getAnswersMap,
-  getCheckedAnswers,
   StyledWizard,
   WizardContainer,
-  WizardStep,
   WizardNav,
+  WizardStep,
+  getAnswersMap,
+  getCheckedAnswers,
 } from "../components/StepWizard";
+import React, { useState } from "react";
+
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 
