@@ -19,7 +19,9 @@ const AddTags = ({ filters, addTag }) => {
     <AddTagsWrapper>
       <p>Add tags to make your post more visible</p>
       {filters.map((filter, idx) => (
-        <FilterTag handleClick={addTag(filter)} label={filter} key={idx} />
+        <FilterTag onClick={addTag(filter)} label={filter} key={idx}>
+          {filter}
+        </FilterTag>
       ))}
     </AddTagsWrapper>
   );

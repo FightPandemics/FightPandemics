@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Tag } from "antd-mobile";
 import { theme } from "../../constants/theme";
