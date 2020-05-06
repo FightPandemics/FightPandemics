@@ -37,154 +37,154 @@ const Cards = styled.div`
 `;
 
 const NrMap = () => {
-  const [coordinates, setCoordinates] = useState({
-    latitude: default_latitude,
-    longitude: default_longitude,
-  });
-  const [hospitals, setHospitals] = useState([]);
-  const [detailedHospitals, setDetailedHospitals] = useState([]);
-
-  const googleMapRef = useRef();
-  const googleMap = useRef();
-
-  useEffect(() => {
-    const googleMapScript = document.createElement("script");
-    googleMapScript.src = url;
-    window.document.body.appendChild(googleMapScript);
-
-    googleMapScript.addEventListener("load", () => {
-      googleMap.current = createGoogleMap();
-      createMarker();
-      places();
+    const [coordinates, setCoordinates] = useState({
+        latitude: default_latitude,
+        longitude: default_longitude,
     });
+    const [hospitals, setHospitals] = useState([]);
+    const [detailedHospitals, setDetailedHospitals] = useState([]);
 
-    getMyLocation();
-  }, []);
+    const googleMapRef = useRef();
+    const googleMap = useRef();
 
-  const createGoogleMap = () => {
-    return new window.google.maps.Map(googleMapRef.current, {
-      zoom: 13,
-      center: {
-        lat: coordinates.latitude,
-        lng: coordinates.longitude,
-      },
-      disableDefaultUI: true,
-    });
-  };
+    useEffect(() => {
+        const googleMapScript = document.createElement("script");
+        googleMapScript.src = url;
+        window.document.body.appendChild(googleMapScript);
 
-  const places = () => {
-    new window.google.maps.places.PlacesService(googleMap.current).nearbySearch(
-      {
-        location: {
-          lat: coordinates.latitude,
-          lng: coordinates.longitude,
-        },
-        radius: 3000,
-        type: ["hospital"],
-      },
-      (results, status) => {
-        if (status !== "OK") return;
-        setHospitals(results);
-      },
-    );
-  };
+        googleMapScript.addEventListener("load", () => {
+            googleMap.current = createGoogleMap();
+            createMarker();
+            places();
+        });
 
-  useEffect(() => {
-    if (hospitals && hospitals.length > 0) {
-      createMarker();
-      placeDetails();
-    }
-  }, [hospitals]);
+        getMyLocation();
+    }, []);
 
-  const placeDetails = () => {
-    hospitals.map((place) => {
-      const request = {
-        placeId: place.place_id,
-        fields: [
-          "name",
-          "formatted_address",
-          "formatted_phone_number",
-          "opening_hours",
-          "geometry",
-          "icon",
-        ],
-      };
-
-      new window.google.maps.places.PlacesService(googleMap.current).getDetails(
-        request,
-        (req, status) => {
-          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            setDetailedHospitals((detailedHospitals) => {
-              return [...detailedHospitals, req];
-            });
-          }
-        },
-      );
-    });
-  };
-
-  const createMarker = () => {
-    const image = {
-      url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
-      size: new window.google.maps.Size(71, 71),
-      origin: new window.google.maps.Point(0, 0),
-      anchor: new window.google.maps.Point(17, 34),
-      scaledSize: new window.google.maps.Size(25, 25),
+    const createGoogleMap = () => {
+        return new window.google.maps.Map(googleMapRef.current, {
+            zoom: 13,
+            center: {
+                lat: coordinates.latitude,
+                lng: coordinates.longitude,
+            },
+            disableDefaultUI: true,
+        });
     };
-    hospitals.map((e) => {
-      new window.google.maps.Marker({
-        position: {
-          lat: e.geometry.location.lat(),
-          lng: e.geometry.location.lng(),
-        },
-        icon: image,
-        animation: window.google.maps.Animation.DROP,
-        map: googleMap.current,
-      });
-    });
-    new window.google.maps.Marker({
-      position: { lat: coordinates.latitude, lng: coordinates.longitude },
-      map: googleMap.current,
-    });
-  };
 
-  const getMyLocation = () => {
-    const location = window.navigator && window.navigator.geolocation;
+    const places = () => {
+        new window.google.maps.places.PlacesService(googleMap.current).nearbySearch(
+            {
+                location: {
+                    lat: coordinates.latitude,
+                    lng: coordinates.longitude,
+                },
+                radius: 3000,
+                type: ["hospital"],
+            },
+            (results, status) => {
+                if (status !== "OK") return;
+                setHospitals(results);
+            },
+        );
+    };
 
-    if (location) {
-      location.getCurrentPosition(
-        (position) => {
-          setCoordinates({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          setCoordinates({
-            latitude: "err-latitude",
-            longitude: "err-longitude",
-          });
-        },
-      );
-    }
-  };
+    useEffect(() => {
+        if (hospitals && hospitals.length > 0) {
+            createMarker();
+            placeDetails();
+        }
+    }, [hospitals]);
 
-  return (
-    <Wrapper>
-      <Nested>
-        {detailedHospitals.map((place) => {
-          return (
-            <Cards key={`card-${place.name}`}>
-              <h3>{place.name}</h3>
-              <p>{place.formatted_address}</p>
-              <PhoneNo>{place.formatted_phone_number}</PhoneNo>
-            </Cards>
-          );
-        })}
-      </Nested>
-      <MapStyle id="google-map" ref={googleMapRef} />
-    </Wrapper>
-  );
+    const placeDetails = () => {
+        hospitals.map((place) => {
+            const request = {
+                placeId: place.place_id,
+                fields: [
+                    "name",
+                    "formatted_address",
+                    "formatted_phone_number",
+                    "opening_hours",
+                    "geometry",
+                    "icon",
+                ],
+            };
+
+            new window.google.maps.places.PlacesService(googleMap.current).getDetails(
+                request,
+                (req, status) => {
+                    if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                        setDetailedHospitals((detailedHospitals) => {
+                            return [...detailedHospitals, req];
+                        });
+                    }
+                },
+            );
+        });
+    };
+
+    const createMarker = () => {
+        const image = {
+            url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
+            size: new window.google.maps.Size(71, 71),
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(17, 34),
+            scaledSize: new window.google.maps.Size(25, 25),
+        };
+        hospitals.map((e) => {
+            new window.google.maps.Marker({
+                position: {
+                    lat: e.geometry.location.lat(),
+                    lng: e.geometry.location.lng(),
+                },
+                icon: image,
+                animation: window.google.maps.Animation.DROP,
+                map: googleMap.current,
+            });
+        });
+        new window.google.maps.Marker({
+            position: { lat: coordinates.latitude, lng: coordinates.longitude },
+            map: googleMap.current,
+        });
+    };
+
+    const getMyLocation = () => {
+        const location = window.navigator && window.navigator.geolocation;
+
+        if (location) {
+            location.getCurrentPosition(
+                (position) => {
+                    setCoordinates({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    });
+                },
+                (error) => {
+                    setCoordinates({
+                        latitude: "err-latitude",
+                        longitude: "err-longitude",
+                    });
+                },
+            );
+        }
+    };
+
+    return (
+        <Wrapper>
+            <Nested>
+                {detailedHospitals.map((place) => {
+                    return (
+                        <Cards key={`card-${place.name}`}>
+                            <h3>{place.name}</h3>
+                            <p>{place.formatted_address}</p>
+                            <PhoneNo>{place.formatted_phone_number}</PhoneNo>
+                        </Cards>
+                    );
+                })}
+            </Nested>
+            <MapStyle id="google-map" ref={googleMapRef} />
+        </Wrapper>
+    );
 };
 
 export default NrMap;

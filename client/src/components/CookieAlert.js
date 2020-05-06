@@ -38,36 +38,36 @@ const CloseButton = styled.button`
 `;
 
 export default () => {
-  const [active, setActive] = useState(false);
+    const [active, setActive] = useState(false);
 
-  const hideMessage = (event) => {
-    setActive(false);
-    localStorage.setItem("cookieMessage", "true");
-  };
+    const hideMessage = (event) => {
+        setActive(false);
+        localStorage.setItem("cookieMessage", "true");
+    };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (!localStorage.getItem("cookieMessage")) {
-        setActive(true);
-      }
-    }, 1000);
-  });
+    useEffect(() => {
+        setTimeout(() => {
+            if (!localStorage.getItem("cookieMessage")) {
+                setActive(true);
+            }
+        }, 1000);
+    });
 
-  return (
-    <CookieContainer style={{ display: active ? "" : "none" }}>
-      <div>
+    return (
+        <CookieContainer style={{ display: active ? "" : "none" }}>
+            <div>
         This site uses cookies to deliver our service and to show you relevant
         information. By using our site, you acknowledge that you have read and
         understand our{" "}
-        <CookieLink href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
-        <CookieLink href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
-        <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
+                <CookieLink href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
+                <CookieLink href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
+                <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
         Your use of FightPandemics' Products is subject to these policies and
         terms.
-      </div>
-      <CloseButton onClick={hideMessage}>
-        <SvgIcon src={closeX} />
-      </CloseButton>
-    </CookieContainer>
-  );
+            </div>
+            <CloseButton onClick={hideMessage}>
+                <SvgIcon src={closeX} />
+            </CloseButton>
+        </CookieContainer>
+    );
 };

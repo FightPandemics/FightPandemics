@@ -16,16 +16,16 @@ const AddTagsWrapper = styled.div`
 `;
 
 const AddTags = ({ filters, addTag }) => {
-  return (
-    <AddTagsWrapper>
-      <p>Add tags to make your post more visible</p>
-      {filters.map((filter, idx) => (
-        <FilterTag onClick={addTag(filter)} label={filter} key={idx}>
-          {filter}
-        </FilterTag>
-      ))}
-    </AddTagsWrapper>
-  );
+    return (
+        <AddTagsWrapper>
+            <p>Add tags to make your post more visible</p>
+            {filters.map((filter, idx) => (
+                <FilterTag onClick={addTag(filter)} label={filter} key={idx}>
+                    {filter}
+                </FilterTag>
+            ))}
+        </AddTagsWrapper>
+    );
 };
 
 export default AddTags;

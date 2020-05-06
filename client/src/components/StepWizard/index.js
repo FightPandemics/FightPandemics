@@ -14,6 +14,6 @@ export { default as WizardFormWrapper } from "./WizardFormWrapper";
 export { default as WizardFormGroup } from "./WizardFormGroup";
 // export { default as WizardCheckboxItem } from "./WizardCheckboxItem";
 export {
-  WizardCheckboxWrapper,
-  WizardCheckboxItem,
+    WizardCheckboxWrapper,
+    WizardCheckboxItem,
 } from "./WizardCheckboxItem";

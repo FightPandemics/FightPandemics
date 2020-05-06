@@ -8,13 +8,13 @@ const CommentsWrapper = styled.div`
 `;
 
 const Comments = ({ comments }) => {
-  return (
-    <CommentsWrapper>
-      {comments.map((comment) => (
-        <NestedComments comment={comment} key={comment._id} />
-      ))}
-    </CommentsWrapper>
-  );
+    return (
+        <CommentsWrapper>
+            {comments.map((comment) => (
+                <NestedComments comment={comment} key={comment._id} />
+            ))}
+        </CommentsWrapper>
+    );
 };
 
 export default Comments;

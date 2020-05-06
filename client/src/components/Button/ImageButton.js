@@ -25,10 +25,10 @@ const FlexDiv = styled.div`
 `;
 
 const NestedImage = styled.img.attrs((props) => {
-  return {
-    src: props.src,
-    alt: props.alt,
-  };
+    return {
+        src: props.src,
+        alt: props.alt,
+    };
 })`
   width: ${DEFAULT_WIDTH}rem;
   height: ${DEFAULT_HEIGHT}rem;
@@ -36,37 +36,37 @@ const NestedImage = styled.img.attrs((props) => {
 `;
 
 const ImageButton = ({
-  inactiveImg,
-  activeImg,
-  height = DEFAULT_HEIGHT,
-  width = DEFAULT_WIDTH,
-  children,
-  ...props
+    inactiveImg,
+    activeImg,
+    height = DEFAULT_HEIGHT,
+    width = DEFAULT_WIDTH,
+    children,
+    ...props
 }) => {
-  const [src, toggleSrc] = useState(inactiveImg);
-  return (
-    <FeedbackButton
-      onMouseEnter={() => toggleSrc(activeImg)}
-      onMouseLeave={() => toggleSrc(inactiveImg)}
-      style={{ height: "unset" }}
-      inline
-      {...props}
-    >
-      <FlexDiv>
-        <NestedImage
-          src={src}
-          alt={
-            typeof children === "string" || children instanceof String
-              ? children
-              : ""
-          }
-          height={height}
-          width={width}
-        />
-        {children}
-      </FlexDiv>
-    </FeedbackButton>
-  );
+    const [src, toggleSrc] = useState(inactiveImg);
+    return (
+        <FeedbackButton
+            onMouseEnter={() => toggleSrc(activeImg)}
+            onMouseLeave={() => toggleSrc(inactiveImg)}
+            style={{ height: "unset" }}
+            inline
+            {...props}
+        >
+            <FlexDiv>
+                <NestedImage
+                    src={src}
+                    alt={
+                        typeof children === "string" || children instanceof String
+                            ? children
+                            : ""
+                    }
+                    height={height}
+                    width={width}
+                />
+                {children}
+            </FlexDiv>
+        </FeedbackButton>
+    );
 };
 
 export default ImageButton;

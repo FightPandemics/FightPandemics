@@ -34,29 +34,29 @@ const StyledRadioGroup = styled(Radio.Group)`
 `;
 
 const RadioGroup = ({
-  options,
-  onChange,
-  value,
-  defaultValue,
-  flex,
-  padding,
+    options,
+    onChange,
+    value,
+    defaultValue,
+    flex,
+    padding,
 }) => {
-  return (
-    <StyledRadioGroup
-      size="large"
-      flex={flex}
-      padding={padding}
-      onChange={onChange}
-      value={value}
-      defaultValue={defaultValue}
-    >
-      {options.map((option, idx) => (
-        <Radio value={option.value} key={idx}>
-          {option.text}
-        </Radio>
-      ))}
-    </StyledRadioGroup>
-  );
+    return (
+        <StyledRadioGroup
+            size="large"
+            flex={flex}
+            padding={padding}
+            onChange={onChange}
+            value={value}
+            defaultValue={defaultValue}
+        >
+            {options.map((option, idx) => (
+                <Radio value={option.value} key={idx}>
+                    {option.text}
+                </Radio>
+            ))}
+        </StyledRadioGroup>
+    );
 };
 
 export default RadioGroup;

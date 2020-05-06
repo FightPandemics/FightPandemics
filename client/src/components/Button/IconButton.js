@@ -7,9 +7,9 @@ import styled from "styled-components";
 const { button, colors } = theme;
 
 const IconButton = styled(SubmitButton).attrs((props) => {
-  return {
-    icon: props.icon,
-  };
+    return {
+        icon: props.icon,
+    };
 })`
   ${button.iconAndText}
 

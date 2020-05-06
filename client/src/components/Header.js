@@ -23,23 +23,23 @@ const MenuToggle = styled(MenuIcon)`
 `;
 
 export default ({ onMenuClick, ...props }) => {
-  return (
-    <div className="header" {...props}>
-      <NavBar
-        mode="light"
-        leftContent={
-          <BrandLink to="/">
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </BrandLink>
-        }
-        rightContent={
-          <MenuToggle
-            style={{ fontSize: 24 }}
-            color="primary"
-            onClick={onMenuClick}
-          />
-        }
-      />
-    </div>
-  );
+    return (
+        <div className="header" {...props}>
+            <NavBar
+                mode="light"
+                leftContent={
+                    <BrandLink to="/">
+                        <Logo src={logo} alt="Fight Pandemics logo" />
+                    </BrandLink>
+                }
+                rightContent={
+                    <MenuToggle
+                        style={{ fontSize: 24 }}
+                        color="primary"
+                        onClick={onMenuClick}
+                    />
+                }
+            />
+        </div>
+    );
 };

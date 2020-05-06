@@ -17,97 +17,97 @@ import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 
 const routes = [
-  {
-    path: "/",
-    component: Home,
-    exact: true,
-  },
-  {
-    path: "/auth/login",
-    component: Login,
-    layout: "logo",
-    props: {
-      isLoginForm: true,
-      notLoggedInOnly: true,
+    {
+        path: "/",
+        component: Home,
+        exact: true,
     },
-  },
-  {
-    path: "/auth/signup",
-    component: Login,
-    layout: "logo",
-    props: {
-      isLoginForm: false,
-      notLoggedInOnly: true,
+    {
+        path: "/auth/login",
+        component: Login,
+        layout: "logo",
+        props: {
+            isLoginForm: true,
+            notLoggedInOnly: true,
+        },
     },
-  },
-  {
-    path: "/auth/verify-email",
-    component: VerifyEmail,
-    layout: "logo",
-    props: {
-      loggedInOnly: true,
+    {
+        path: "/auth/signup",
+        component: Login,
+        layout: "logo",
+        props: {
+            isLoginForm: false,
+            notLoggedInOnly: true,
+        },
     },
-  },
-  {
-    path: "/need-help",
-    component: NeedHelp,
-  },
-  {
-    path: "/offer-help",
-    component: OfferHelp,
-  },
-  {
-    path: "/about",
-    component: About,
-  },
-  {
-    path: "/medical",
-    component: Medical,
-  },
-  {
-    path: "/nearest-hospital",
-    component: NearestHospital,
-  },
-  {
-    path: "/find-help",
-    component: Feed,
-  },
-  {
-    path: "/symptoms-check",
-    component: SymptomsCheck,
-  },
-  {
-    path: "/feed",
-    component: Feed,
-  },
-  {
-    path: "/profile",
-    component: Profile,
-  },
-  {
-    path: "/edit-profile",
-    component: EditProfile,
-  },
-  {
-    path: "/edit-account",
-    component: EditAccount,
-  },
-  {
-    path: "/create-post",
-    component: CreatePost,
-  },
-  {
-    path: "/terms-conditions",
-    component: TermsConditions,
-  },
-  {
-    path: "/privacy-policy",
-    component: PrivacyPolicy,
-  },
-  {
-    path: "/cookies-policy",
-    component: CookiesPolicy,
-  },
+    {
+        path: "/auth/verify-email",
+        component: VerifyEmail,
+        layout: "logo",
+        props: {
+            loggedInOnly: true,
+        },
+    },
+    {
+        path: "/need-help",
+        component: NeedHelp,
+    },
+    {
+        path: "/offer-help",
+        component: OfferHelp,
+    },
+    {
+        path: "/about",
+        component: About,
+    },
+    {
+        path: "/medical",
+        component: Medical,
+    },
+    {
+        path: "/nearest-hospital",
+        component: NearestHospital,
+    },
+    {
+        path: "/find-help",
+        component: Feed,
+    },
+    {
+        path: "/symptoms-check",
+        component: SymptomsCheck,
+    },
+    {
+        path: "/feed",
+        component: Feed,
+    },
+    {
+        path: "/profile",
+        component: Profile,
+    },
+    {
+        path: "/edit-profile",
+        component: EditProfile,
+    },
+    {
+        path: "/edit-account",
+        component: EditAccount,
+    },
+    {
+        path: "/create-post",
+        component: CreatePost,
+    },
+    {
+        path: "/terms-conditions",
+        component: TermsConditions,
+    },
+    {
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
+    },
+    {
+        path: "/cookies-policy",
+        component: CookiesPolicy,
+    },
 ];
 
 export default routes;

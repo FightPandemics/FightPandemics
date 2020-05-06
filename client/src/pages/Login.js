@@ -1,9 +1,9 @@
 import { Button, Flex, Toast, WhiteSpace } from "antd-mobile";
 import React, { useEffect, useState } from "react";
 import {
-  authWithSocialProvider,
-  loginWithEmail,
-  signup,
+    authWithSocialProvider,
+    loginWithEmail,
+    signup,
 } from "../actions/authActions";
 
 import Input from "~/components/Input/BaseInput";
@@ -41,26 +41,26 @@ const InputWrapper = styled.div`
 `;
 
 const StyleInput = {
-  fontFamily: "${typography.font.family.button}",
-  fontSize: "1.8rem",
-  lineHeight: "2.5rem",
-  paddingBottom: "0.8rem",
-  width: "100%",
-  borderBottom: "2px solid #5970EC",
+    fontFamily: "${typography.font.family.button}",
+    fontSize: "1.8rem",
+    lineHeight: "2.5rem",
+    paddingBottom: "0.8rem",
+    width: "100%",
+    borderBottom: "2px solid #5970EC",
 };
 
 const StyleLabel = {
-  fontFamily: "${typography.font.family.button}",
-  fontStyle: "normal",
-  fontWeight: "500",
-  fontSize: "1.6rem",
-  lineHeight: "1.9rem",
-  textAlign: "left",
+    fontFamily: "${typography.font.family.button}",
+    fontStyle: "normal",
+    fontWeight: "500",
+    fontSize: "1.6rem",
+    lineHeight: "1.9rem",
+    textAlign: "left",
 };
 
 const StyleSocialIcon = {
-  justifyContent: "unset",
-  cursor: "pointer",
+    justifyContent: "unset",
+    cursor: "pointer",
 };
 
 const SectionDiv = styled.div`
@@ -78,8 +78,8 @@ const SectionDiv = styled.div`
 `;
 
 const FlexBox = styled(Flex).attrs((props) => ({
-  wrap: "wrap",
-  justify: "center",
+    wrap: "wrap",
+    justify: "center",
 }))``;
 
 const SocialButton = styled(Button)`
@@ -109,168 +109,168 @@ const AuthLink = styled.a`
 `;
 
 const Login = ({ isLoginForm }) => {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const queryParams = useQuery();
-  const code = queryParams.get("code");
-  const state = queryParams.get("state");
-  useEffect(() => {
-    if (code && state) {
-      dispatch(authWithSocialProvider({ code, state }));
-    }
-  }, [code, state, dispatch]);
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const queryParams = useQuery();
+    const code = queryParams.get("code");
+    const state = queryParams.get("state");
+    useEffect(() => {
+        if (code && state) {
+            dispatch(authWithSocialProvider({ code, state }));
+        }
+    }, [code, state, dispatch]);
 
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+    const handleInputChangeEmail = (e) => {
+        setEmail(e.target.value);
+    };
 
-  const handleInputChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+    const handleInputChangePassword = (e) => {
+        setPassword(e.target.value);
+    };
 
-  const handleInputChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
+    const handleInputChangeConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value);
+    };
 
-  const handleLoginWithEmail = (evt) => {
-    evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
-    dispatch(loginWithEmail({ email, password }));
-  };
+    const handleLoginWithEmail = (evt) => {
+        evt.preventDefault();
+        if (!validateEmail(email)) {
+            Toast.fail("Invalid email address!", 3);
+            return;
+        }
+        if (password.length < PASSWORD_MIN_LENGTH) {
+            Toast.fail("Password must be at least 6 characters", 3);
+            return;
+        }
+        dispatch(loginWithEmail({ email, password }));
+    };
 
-  const handleSignup = (evt) => {
-    evt.preventDefault();
-    // todo: add inline validation (disable button / indicate error on form)
-    /*if (!validateEmail(email)) {
+    const handleSignup = (evt) => {
+        evt.preventDefault();
+        // todo: add inline validation (disable button / indicate error on form)
+        /*if (!validateEmail(email)) {
       "Invalid email address!"
     }*/
-    // todo: add inline validation (disable button / indicate error on form)
-    /*if (password.length < PASSWORD_MIN_LENGTH) {
+        // todo: add inline validation (disable button / indicate error on form)
+        /*if (password.length < PASSWORD_MIN_LENGTH) {
       "Password must be at least 6 characters"
     }*/
-    // todo: check if passwords are the same (dissable button / indicate error on form)
-    dispatch(signup({ email, password, confirmPassword }));
-  };
+        // todo: check if passwords are the same (dissable button / indicate error on form)
+        dispatch(signup({ email, password, confirmPassword }));
+    };
 
-  const handleSocialLogin = (provider) => {
-    window.location.href = `/api/auth/oauth/${provider}`;
-  };
+    const handleSocialLogin = (provider) => {
+        window.location.href = `/api/auth/oauth/${provider}`;
+    };
 
-  return (
-    <div className="text-center">
-      <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
-      <form id="login-password" method="POST">
-        <InputWrapper>
-          <Label for="email" style={StyleLabel} label="E-mail" />
-          <Input
-            type="email"
-            name="email"
-            required
-            placeholder="Enter email address"
-            value={email}
-            onChange={handleInputChangeEmail}
-            style={StyleInput}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Label for="password" style={StyleLabel} label="Password" />
-          <Input
-            type="password"
-            name="password"
-            required
-            placeholder="Enter password"
-            value={password}
-            onChange={handleInputChangePassword}
-            style={StyleInput}
-          />
-        </InputWrapper>
-        {!isLoginForm && (
-          <InputWrapper>
-            <Label style={StyleLabel} label="Confirm password" />
-            <Input
-              type="password"
-              required
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={handleInputChangeConfirmPassword}
-              style={StyleInput}
-            />
-          </InputWrapper>
-        )}
+    return (
+        <div className="text-center">
+            <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
+            <form id="login-password" method="POST">
+                <InputWrapper>
+                    <Label for="email" style={StyleLabel} label="E-mail" />
+                    <Input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="Enter email address"
+                        value={email}
+                        onChange={handleInputChangeEmail}
+                        style={StyleInput}
+                    />
+                </InputWrapper>
+                <InputWrapper>
+                    <Label for="password" style={StyleLabel} label="Password" />
+                    <Input
+                        type="password"
+                        name="password"
+                        required
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={handleInputChangePassword}
+                        style={StyleInput}
+                    />
+                </InputWrapper>
+                {!isLoginForm && (
+                    <InputWrapper>
+                        <Label style={StyleLabel} label="Confirm password" />
+                        <Input
+                            type="password"
+                            required
+                            placeholder="Confirm password"
+                            value={confirmPassword}
+                            onChange={handleInputChangeConfirmPassword}
+                            style={StyleInput}
+                        />
+                    </InputWrapper>
+                )}
 
-        <SubmitButton
-          primary="true"
-          onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
-        >
-          {isLoginForm ? "Sign In" : "Sign Up"}
-        </SubmitButton>
-      </form>
-      <WhiteSpace />
-      <WhiteSpace />
-      {isLoginForm ? (
-        <>
-          <p>
-            <AuthLink href="/auth/forgot-password">Forgot password?</AuthLink>
-          </p>
-          <p>
-            <AuthLink href="/auth/signup">
+                <SubmitButton
+                    primary="true"
+                    onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
+                >
+                    {isLoginForm ? "Sign In" : "Sign Up"}
+                </SubmitButton>
+            </form>
+            <WhiteSpace />
+            <WhiteSpace />
+            {isLoginForm ? (
+                <>
+                    <p>
+                        <AuthLink href="/auth/forgot-password">Forgot password?</AuthLink>
+                    </p>
+                    <p>
+                        <AuthLink href="/auth/signup">
               Don't have an account? <u>Sign Up</u>
-            </AuthLink>
-          </p>
-        </>
-      ) : (
-        <p>
-          <AuthLink href="/auth/login">
+                        </AuthLink>
+                    </p>
+                </>
+            ) : (
+                <p>
+                    <AuthLink href="/auth/login">
             Already have an account? <u>Sign In</u>
-          </AuthLink>
-        </p>
-      )}
-      <WhiteSpace />
-      <SectionDiv>
-        {isLoginForm ? "Or Log in with" : "Or Sign up with"}
-      </SectionDiv>
-      <WhiteSpace />
-      <FlexBox>
-        <SocialButton
-          style={StyleSocialIcon}
-          icon={<SvgIcon src={facebook} />}
-          onClick={() => handleSocialLogin("facebook")}
-        >
-          <ButtonText>Facebook</ButtonText>
-        </SocialButton>
-        <SocialButton
-          style={StyleSocialIcon}
-          icon={<SvgIcon src={gmail} />}
-          onClick={() => handleSocialLogin("google")}
-        >
-          <ButtonText>Gmail</ButtonText>
-        </SocialButton>
-        <SocialButton
-          style={StyleSocialIcon}
-          icon={<SvgIcon src={twitter} />}
-          onClick={() => handleSocialLogin("twitter")}
-        >
-          <ButtonText>Twitter</ButtonText>
-        </SocialButton>
-        <SocialButton
-          style={StyleSocialIcon}
-          icon={<SvgIcon src={linkedin} />}
-          onClick={() => handleSocialLogin("linkedin")}
-        >
-          <ButtonText>Linkedin</ButtonText>
-        </SocialButton>
-      </FlexBox>
-    </div>
-  );
+                    </AuthLink>
+                </p>
+            )}
+            <WhiteSpace />
+            <SectionDiv>
+                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+            </SectionDiv>
+            <WhiteSpace />
+            <FlexBox>
+                <SocialButton
+                    style={StyleSocialIcon}
+                    icon={<SvgIcon src={facebook} />}
+                    onClick={() => handleSocialLogin("facebook")}
+                >
+                    <ButtonText>Facebook</ButtonText>
+                </SocialButton>
+                <SocialButton
+                    style={StyleSocialIcon}
+                    icon={<SvgIcon src={gmail} />}
+                    onClick={() => handleSocialLogin("google")}
+                >
+                    <ButtonText>Gmail</ButtonText>
+                </SocialButton>
+                <SocialButton
+                    style={StyleSocialIcon}
+                    icon={<SvgIcon src={twitter} />}
+                    onClick={() => handleSocialLogin("twitter")}
+                >
+                    <ButtonText>Twitter</ButtonText>
+                </SocialButton>
+                <SocialButton
+                    style={StyleSocialIcon}
+                    icon={<SvgIcon src={linkedin} />}
+                    onClick={() => handleSocialLogin("linkedin")}
+                >
+                    <ButtonText>Linkedin</ButtonText>
+                </SocialButton>
+            </FlexBox>
+        </div>
+    );
 };
 
 export default Login;

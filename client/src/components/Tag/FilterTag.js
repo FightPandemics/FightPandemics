@@ -6,7 +6,7 @@ const { button } = theme;
 const { xsmall } = theme.typography.size;
 
 const FilterTag = styled(Tag).attrs(({ selected, disabled }) => {
-  return { selected, disabled };
+    return { selected, disabled };
 })`
   &.am-tag-normal,
   &.am-tag-active,

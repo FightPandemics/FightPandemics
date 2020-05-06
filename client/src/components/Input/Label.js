@@ -6,9 +6,9 @@ const StyledLabel = styled.label`
 `;
 
 const Label = ({ label, style }) => (
-  <StyledLabel>
-    <p style={style}>{label}</p>
-  </StyledLabel>
+    <StyledLabel>
+        <p style={style}>{label}</p>
+    </StyledLabel>
 );
 
 export default Label;

@@ -4,7 +4,7 @@ import SubmitButton from "./SubmitButton";
 // props: icon, long, righticon
 
 const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
-  return { icon, inline: "true" };
+    return { icon, inline: "true" };
 })`
   border-radius: 0.6rem;
   font-weight: 600;
@@ -13,7 +13,7 @@ const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
   padding: 2rem !important;
 
   ${(props) =>
-    props.long &&
+        props.long &&
     css`
       padding: 1.5rem 1rem !important;
       font-weight: normal;
@@ -31,7 +31,7 @@ const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
     `}
 
   ${(props) =>
-    props.righticon &&
+        props.righticon &&
     css`
       &.am-button > .am-button-icon {
         margin-right: unset;

@@ -27,7 +27,7 @@ const AnswerStyles = styled.div`
 `;
 
 const AnswerButton = ({ children, onSelect }) => {
-  return <AnswerStyles onClick={onSelect}>{children}</AnswerStyles>;
+    return <AnswerStyles onClick={onSelect}>{children}</AnswerStyles>;
 };
 
 export default AnswerButton;

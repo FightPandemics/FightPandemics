@@ -31,20 +31,20 @@ const StyledModal = styled(Modal)`
 `;
 
 const CustomModal = ({ title, content, onClose, visible, closable }) => {
-  return (
-    <StyledModal
-      popup
-      title={title}
-      onClose={onClose}
-      visible={visible}
-      closable={closable}
-      maskClosable={true}
-      transparent
-      animationType="slide-up"
-    >
-      {content}
-    </StyledModal>
-  );
+    return (
+        <StyledModal
+            popup
+            title={title}
+            onClose={onClose}
+            visible={visible}
+            closable={closable}
+            maskClosable={true}
+            transparent
+            animationType="slide-up"
+        >
+            {content}
+        </StyledModal>
+    );
 };
 
 export default CustomModal;

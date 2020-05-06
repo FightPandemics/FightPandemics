@@ -25,12 +25,12 @@ const AnswerStyles = styled.div`
 `;
 
 const AnswerCheckbox = ({ text, checked, onSelect }) => {
-  return (
-    <AnswerStyles onClick={onSelect} className={checked && "selected"}>
-      <span className="text">{text}</span>
-      <Checkbox checked={checked} />
-    </AnswerStyles>
-  );
+    return (
+        <AnswerStyles onClick={onSelect} className={checked && "selected"}>
+            <span className="text">{text}</span>
+            <Checkbox checked={checked} />
+        </AnswerStyles>
+    );
 };
 
 export default AnswerCheckbox;

@@ -9,13 +9,13 @@ import styled from "styled-components";
 import { theme } from "../../constants/theme";
 
 const drawerStyles = {
-  position: "relative",
-  overflow: "hidden",
-  WebkitOverflowScrolling: "touch",
+    position: "relative",
+    overflow: "hidden",
+    WebkitOverflowScrolling: "touch",
 };
 
 const sidebarStyle = {
-  background: `${theme.colors.royalBlue}`,
+    background: `${theme.colors.royalBlue}`,
 };
 
 const NavList = styled(List)`
@@ -46,7 +46,7 @@ const NavList = styled(List)`
 `;
 
 const NavItem = styled(List.Item).attrs((props) => ({
-  onClick: props.onClick || (() => props.history.push(props.link)),
+    onClick: props.onClick || (() => props.history.push(props.link)),
 }))`
   background: unset;
   padding-left: 24px;
@@ -72,9 +72,9 @@ const NavItem = styled(List.Item).attrs((props) => ({
 `;
 
 const CloseNav = styled(Button).attrs((props) => ({
-  inline: true,
-  icon: "cross",
-  size: "lg",
+    inline: true,
+    icon: "cross",
+    size: "lg",
 }))`
   background: unset;
   border-width: 0 !important;
@@ -102,63 +102,63 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 const NavigationLayout = (props) => {
-  const history = useHistory();
+    const history = useHistory();
 
-  const [drawerOpened, setDrawerOpened] = useState(false);
+    const [drawerOpened, setDrawerOpened] = useState(false);
 
-  const toggleDrawer = () => {
-    setDrawerOpened(!drawerOpened);
-  };
+    const toggleDrawer = () => {
+        setDrawerOpened(!drawerOpened);
+    };
 
-  const drawerMenu = () => (
-    <>
-      <NavList>
-        {props.isAuthenticated ? (
-          <>
-            <NavItem>
-              <Link to="/profile">Profile</Link>
-            </NavItem>
-          </>
-        ) : (
-          <>
-            <NavItem history={history} link="/auth/login">
+    const drawerMenu = () => (
+        <>
+            <NavList>
+                {props.isAuthenticated ? (
+                    <>
+                        <NavItem>
+                            <Link to="/profile">Profile</Link>
+                        </NavItem>
+                    </>
+                ) : (
+                    <>
+                        <NavItem history={history} link="/auth/login">
               Login / Register
-            </NavItem>
-          </>
-        )}
-        <NavItem history={history} link="/about">
+                        </NavItem>
+                    </>
+                )}
+                <NavItem history={history} link="/about">
           About Us
-        </NavItem>
-        <NavItem history={history} link="/privacy">
+                </NavItem>
+                <NavItem history={history} link="/privacy">
           Data Privacy
-        </NavItem>
-      </NavList>
-      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
-    </>
-  );
+                </NavItem>
+            </NavList>
+            {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+        </>
+    );
 
-  return (
-    <Drawer
-      style={{
-        minHeight: document.documentElement.clientHeight,
-        ...drawerStyles,
-      }}
-      enableDragHandle
-      open={drawerOpened}
-      onOpenChange={toggleDrawer}
-      position="right"
-      sidebar={drawerMenu()}
-      sidebarStyle={sidebarStyle}
-      className="app-drawer"
-    >
-      <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-      <Main>
-        <props.component {...props} />
-      </Main>
-      {/* <Footnote /> */}
-      <CookieAlert />
-    </Drawer>
-  );
+    return (
+        <Drawer
+            style={{
+                minHeight: document.documentElement.clientHeight,
+                ...drawerStyles,
+            }}
+            enableDragHandle
+            open={drawerOpened}
+            onOpenChange={toggleDrawer}
+            position="right"
+            sidebar={drawerMenu()}
+            sidebarStyle={sidebarStyle}
+            className="app-drawer"
+        >
+            <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
+            <Main>
+                <props.component {...props} />
+            </Main>
+            {/* <Footnote /> */}
+            <CookieAlert />
+        </Drawer>
+    );
 };
 
 export default NavigationLayout;

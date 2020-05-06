@@ -6,20 +6,20 @@ import React from "react";
 import logo from "~/assets/logo.svg";
 
 const LogoLayout = (props) => {
-  return (
-    <>
-      <div className="header" style={{ marginTop: 8 }}>
-        <NavBar mode="light">
-          <Link to="/">
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </Link>
-        </NavBar>
-      </div>
-      <Main>
-        <props.component {...props} />
-      </Main>
-    </>
-  );
+    return (
+        <>
+            <div className="header" style={{ marginTop: 8 }}>
+                <NavBar mode="light">
+                    <Link to="/">
+                        <Logo src={logo} alt="Fight Pandemics logo" />
+                    </Link>
+                </NavBar>
+            </div>
+            <Main>
+                <props.component {...props} />
+            </Main>
+        </>
+    );
 };
 
 export default LogoLayout;

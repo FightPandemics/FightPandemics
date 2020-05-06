@@ -8,23 +8,23 @@ import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 
 const App = (props) => {
-  useEffect(() => {
-    props.initAuth();
-  }, [props]);
+    useEffect(() => {
+        props.initAuth();
+    }, [props]);
 
-  return (
-    <Router history={history}>
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-      </Switch>
-    </Router>
-  );
+    return (
+        <Router history={history}>
+            <Switch>
+                {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={i} {...route} />
+                ))}
+            </Switch>
+        </Router>
+    );
 };
 
 const mapDispatchToProps = {
-  initAuth: initAuth,
+    initAuth: initAuth,
 };
 const mapStateToProps = () => ({});
 

@@ -6,10 +6,10 @@ const StyledLabel = styled.label`
 `;
 
 const Label = (Component) => ({ label, style }) => (
-  <StyledLabel>
-    <p style={style}>{label}</p>
-    <Component />
-  </StyledLabel>
+    <StyledLabel>
+        <p style={style}>{label}</p>
+        <Component />
+    </StyledLabel>
 );
 
 export default Label;

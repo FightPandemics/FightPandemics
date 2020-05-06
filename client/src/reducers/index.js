@@ -3,8 +3,8 @@ import session from "./sessionReducer";
 import user from "./userReducer";
 
 const rootReducer = combineReducers({
-  session,
-  user,
+    session,
+    user,
 });
 
 export default rootReducer;

@@ -37,17 +37,17 @@ const FooterLink = styled(Link)`
 `;
 
 export default () => {
-  const currentYear = new Date().getFullYear();
-  return (
-    <StyledFooter>
-      <Copyright>
+    const currentYear = new Date().getFullYear();
+    return (
+        <StyledFooter>
+            <Copyright>
         Copyright {currentYear} FightPandemics. All rights reserved.
-      </Copyright>
-      <Policies>
-        <FooterLink href="/terms-conditions">Terms & Conditions</FooterLink> |{" "}
-        <FooterLink href="/privacy-policy">Privacy Policy</FooterLink> |{" "}
-        <FooterLink href="/cookies-policy">Cookies Policy</FooterLink>
-      </Policies>
-    </StyledFooter>
-  );
+            </Copyright>
+            <Policies>
+                <FooterLink href="/terms-conditions">Terms & Conditions</FooterLink> |{" "}
+                <FooterLink href="/privacy-policy">Privacy Policy</FooterLink> |{" "}
+                <FooterLink href="/cookies-policy">Cookies Policy</FooterLink>
+            </Policies>
+        </StyledFooter>
+    );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import "antd/dist/antd.css";
 import "antd-mobile/dist/antd-mobile.css";
@@ -16,11 +16,11 @@ import rootReducer from "./reducers";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <GlobalStyles />
-    <App />
-  </Provider>,
-  document.getElementById("root"),
+    <Provider store={store}>
+        <GlobalStyles />
+        <App />
+    </Provider>,
+    document.getElementById("root"),
 );
 
 serviceWorker.unregister();

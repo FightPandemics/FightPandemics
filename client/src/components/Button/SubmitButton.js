@@ -8,12 +8,12 @@ const { button } = theme;
 // props: inline, primary, primarylight, secondary, tertiary
 
 const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
-  return { size, inline };
+    return { size, inline };
 })`
   ${button.regular}
 
   ${(props) =>
-    props.primary &&
+        props.primary &&
     css`
       ${button.primary}
 
@@ -23,7 +23,7 @@ const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
     `}
 
   ${(props) =>
-    props.primarylight &&
+        props.primarylight &&
     css`
       ${button.primarylight}
 
@@ -33,7 +33,7 @@ const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
     `}
 
   ${(props) =>
-    props.secondary &&
+        props.secondary &&
     css`
       ${button.secondary}
 
@@ -43,7 +43,7 @@ const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
     `}
 
   ${(props) =>
-    props.tertiary &&
+        props.tertiary &&
     css`
       ${button.tertiary}
 

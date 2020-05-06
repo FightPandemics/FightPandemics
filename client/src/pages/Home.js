@@ -133,56 +133,56 @@ const OnboardingContainer = styled.div`
 `;
 
 const Home = (props) => {
-  return (
-    <MainContainer className="text-center">
-      <StyledIntro>
-        <IntroText>
-          <StyledStrapline level={2} margin="none">
+    return (
+        <MainContainer className="text-center">
+            <StyledIntro>
+                <IntroText>
+                    <StyledStrapline level={2} margin="none">
             A place to give and get help
-          </StyledStrapline>
-          <StyledP>Pandemics will continue to happen.</StyledP>
-          <StyledP>We help communities prepare and respond.</StyledP>
-        </IntroText>
-      </StyledIntro>
+                    </StyledStrapline>
+                    <StyledP>Pandemics will continue to happen.</StyledP>
+                    <StyledP>We help communities prepare and respond.</StyledP>
+                </IntroText>
+            </StyledIntro>
 
-      <>
-        <OnboardingContainer>
-          <FlexChild>
-            <ImageButton
-              type="ghost"
-              inactiveImg={needHelpInactive}
-              activeImg={needHelpActive}
-              onClick={() => props.history.push("/need-help")}
-            >
+            <>
+                <OnboardingContainer>
+                    <FlexChild>
+                        <ImageButton
+                            type="ghost"
+                            inactiveImg={needHelpInactive}
+                            activeImg={needHelpActive}
+                            onClick={() => props.history.push("/need-help")}
+                        >
               Need Help
-            </ImageButton>
-          </FlexChild>
-          <FlexChild>
-            <ImageButton
-              type="ghost"
-              inactiveImg={offerHelpInactive}
-              activeImg={offerHelpActive}
-              onClick={() => props.history.push("/offer-help")}
-            >
+                        </ImageButton>
+                    </FlexChild>
+                    <FlexChild>
+                        <ImageButton
+                            type="ghost"
+                            inactiveImg={offerHelpInactive}
+                            activeImg={offerHelpActive}
+                            onClick={() => props.history.push("/offer-help")}
+                        >
               Give Help
-            </ImageButton>
-          </FlexChild>
+                        </ImageButton>
+                    </FlexChild>
 
-          <Link
-            style={{
-              color: theme.colors.royalBlue,
-              fontSize: theme.typography.size.large,
-              fontFamily: theme.typography.font.family.display,
-              fontWeight: "500",
-            }}
-            to="/feed"
-          >
+                    <Link
+                        style={{
+                            color: theme.colors.royalBlue,
+                            fontSize: theme.typography.size.large,
+                            fontFamily: theme.typography.font.family.display,
+                            fontWeight: "500",
+                        }}
+                        to="/feed"
+                    >
             View Community Postings
-          </Link>
-        </OnboardingContainer>
-      </>
-    </MainContainer>
-  );
+                    </Link>
+                </OnboardingContainer>
+            </>
+        </MainContainer>
+    );
 };
 
 export default Home;

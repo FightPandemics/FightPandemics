@@ -19,27 +19,27 @@ const StyledSearchBar = styled(SearchBar)`
 `;
 
 const LocationSearch = () => {
-  const feedContext = useContext(FeedContext);
-  const { location, handleLocation } = feedContext;
-  return (
-    <div className="location-search">
-      <WhiteSpace />
-      <StyledSearchBar
-        cancelText="Cancel"
-        placeholder="Zip code, neighborhood, or city"
-        maxLength={100}
-        value={location}
-        onChange={handleLocation}
-      />
-      <WhiteSpace size="lg" />
-      <WhiteSpace />
-      <div>
-        <SvgIcon src={shareLocation} style={{ marginRight: "1rem" }} />
+    const feedContext = useContext(FeedContext);
+    const { location, handleLocation } = feedContext;
+    return (
+        <div className="location-search">
+            <WhiteSpace />
+            <StyledSearchBar
+                cancelText="Cancel"
+                placeholder="Zip code, neighborhood, or city"
+                maxLength={100}
+                value={location}
+                onChange={handleLocation}
+            />
+            <WhiteSpace size="lg" />
+            <WhiteSpace />
+            <div>
+                <SvgIcon src={shareLocation} style={{ marginRight: "1rem" }} />
         Share My Location
-      </div>
-      <WhiteSpace />
-    </div>
-  );
+            </div>
+            <WhiteSpace />
+        </div>
+    );
 };
 
 export default LocationSearch;

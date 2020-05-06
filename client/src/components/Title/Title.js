@@ -8,5 +8,5 @@ const Title = styled.div`
 `;
 
 export default ({ title, ...props }) => {
-  return <Title {...props}>{title}</Title>;
+    return <Title {...props}>{title}</Title>;
 };
