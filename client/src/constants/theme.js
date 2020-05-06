@@ -77,7 +77,7 @@ const theme = {
       backgroundColor: ROYAL_BLUE,
       color: "#fff",
     },
-    primaryLight: {
+    primarylight: {
       backgroundColor: SELAGO,
       color: ROYAL_BLUE,
     },
