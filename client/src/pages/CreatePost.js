@@ -8,7 +8,6 @@ import CustomH1 from "components/Typography/Title/CustomH1";
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import AddTags from "components/Tag/AddTags";
 import SubmitButton from "components/Button/SubmitButton";
-import { theme } from "constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
