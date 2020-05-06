@@ -52,10 +52,20 @@ const FilterBox = () => {
             padding: "2rem 0",
           }}
         >
-          <SubmitButton inline secondary="true" onClick={handleQuit}>
+          <SubmitButton
+            inline
+            secondary="true"
+            onClick={handleQuit}
+            style={{ fontWeight: "normal" }}
+          >
             Quit filters
           </SubmitButton>
-          <SubmitButton inline primary="true" onClick={handleFilterModal(null)}>
+          <SubmitButton
+            inline
+            primary="true"
+            onClick={handleFilterModal(null)}
+            style={{ fontWeight: "normal" }}
+          >
             Apply filters
           </SubmitButton>
         </div>
