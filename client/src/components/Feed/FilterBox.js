@@ -21,8 +21,8 @@ const FilterBox = () => {
     return filters.map((filter, idx) => (
       <SelectWithIconButton
         key={idx}
-        primaryLight="true"
-        rightIcon="true"
+        primarylight="true"
+        righticon="true"
         size="small"
         icon={<SvgIcon src={downArrow} />}
         onClick={handleFilterModal(idx)}

@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 import SubmitButton from "./SubmitButton";
-import { theme } from "../../constants/theme";
 
-const { button } = theme;
+// props: icon, long, righticon
 
 const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
   return { icon, inline: "true" };
@@ -32,7 +31,7 @@ const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
     `}
 
   ${(props) =>
-    props.rightIcon &&
+    props.righticon &&
     css`
       &.am-button > .am-button-icon {
         margin-right: unset;

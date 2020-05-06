@@ -8,7 +8,6 @@ import CustomH1 from "../components/Typography/Title/CustomH1";
 import SelectWithIconButton from "../components/Button/SelectWithIconButton";
 import AddTags from "../components/Tag/AddTags";
 import SubmitButton from "../components/Button/SubmitButton";
-import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
@@ -151,22 +150,20 @@ const CreatePost = (props) => {
             <SelectWithIconButton
               long="true"
               size="small"
-              rightIcon="true"
+              righticon="true"
               secondary="true"
               icon={<SvgIcon src={downArrow} />}
               onClick={showModal(shareWith)}
-              long="true"
             >
               {formData.shareWith}
             </SelectWithIconButton>
             <SelectWithIconButton
               long="true"
               size="small"
-              rightIcon="true"
+              righticon="true"
               secondary="true"
               icon={<SvgIcon src={downArrow} />}
               onClick={showModal(expires)}
-              long="true"
             >
               {formData.expires}
             </SelectWithIconButton>

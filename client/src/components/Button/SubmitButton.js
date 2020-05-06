@@ -3,7 +3,7 @@ import BaseButton from "./BaseButton";
 import { theme } from "../../constants/theme";
 const { button } = theme;
 
-// props: inline, primary, primaryLight, secondary, tertiary
+// props: inline, primary, primarylight, secondary, tertiary
 
 const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
@@ -21,9 +21,9 @@ const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
     `}
 
   ${(props) =>
-    props.primaryLight &&
+    props.primarylight &&
     css`
-      ${button.primaryLight}
+      ${button.primarylight}
 
       &:hover, &:active, &:focus {
         ${button.primary}
