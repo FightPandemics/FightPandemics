@@ -193,7 +193,21 @@ const Login = ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
+        {!isLoginForm && (
+        <InputWrapper>
 
+        <Label style={StyleLabel} label="Confirm password" />
+          <Input
+          type="password"
+          required
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChange={handleInputChangeConfirmPassword}
+          style={StyleInput}
+          />
+          </InputWrapper>
+        )}
+        
         <SubmitButton
           primary="true"
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
