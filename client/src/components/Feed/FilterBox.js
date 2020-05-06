@@ -8,7 +8,7 @@ import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
 import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "../Icon/SvgIcon";
-import downArrow from "~/assets/icons/down-arrow.svg";
+import downArrow from "assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
