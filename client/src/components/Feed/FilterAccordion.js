@@ -31,13 +31,14 @@ const FilterAccord = () => {
             {Object.values(filter.options).map((option, idx) => (
               <FilterTag
                 key={idx}
-                label={option}
-                handleClick={handleOption(filter.label, option)}
+                onClick={handleOption(filter.label, option)}
                 selected={
                   selectedOptions[filter.label] &&
                   selectedOptions[filter.label].includes(option)
                 }
-              />
+              >
+                {option}
+              </FilterTag>
             ))}
           </FilterAccordionPanel>
         );

@@ -1,4 +1,4 @@
-import { CustomButton, IconButton, SubmitButton } from "../components/Button";
+import { IconButton, SubmitButton } from "../components/Button";
 import { Link, withRouter } from "react-router-dom";
 import React, { useState } from "react";
 import {
@@ -22,10 +22,6 @@ import {
 import SvgIcon from "../components/Icon/SvgIcon";
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import shareMyLocation from "~/assets/icons/share-my-location.svg";
-
-// ICONS
-
-
 
 const INITIAL_STATE = {
   answers: [],
@@ -127,14 +123,16 @@ const Step2 = (props) => {
           />
         </WizardFormGroup>
         <IconButton
+          tertiary="true"
           icon={<SvgIcon src={shareMyLocation} />}
-          title="Share my location"
           onSelect={selectLocationDetection}
-        />
+        >
+          Share my location
+        </IconButton>
         <SkipLink>
-          <CustomButton secondary="true" onSelect={rejectLocationDetection}>
+          <SubmitButton tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
-          </CustomButton>
+          </SubmitButton>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -167,7 +165,9 @@ const Step3 = (props) => {
           />
         </WizardFormGroup>
         <WizardButtonGroup>
-          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SubmitButton primary="true" onClick={onSubmit}>
+            Submit
+          </SubmitButton>
           <SkipLink>
             <Link to="/AirTableCOVID">
               {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
@@ -189,7 +189,7 @@ const OfferHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/medical",
+        pathname: "/feed",
       });
     }
   };

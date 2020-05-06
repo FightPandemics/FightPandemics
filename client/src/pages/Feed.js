@@ -20,8 +20,6 @@ import filterOptions from "../assets/data/filterOptions";
 
 // ICONS
 
-
-
 export const FeedContext = React.createContext();
 
 const initialState = {
@@ -86,12 +84,13 @@ const Feed = () => {
       >
         <h2 className="title">Continue Posting As</h2>
         <div className="links">
-          <button className="primary">
-            <Link to="/create-post">Individual</Link>
-          </button>
-          <button className="outline">
-            <Link to="/create-post">Organization</Link>
-          </button>
+          <Link className="primary" to="/create-post">
+            Individual
+          </Link>
+
+          <Link className="outline" to="/create-post">
+            Organization
+          </Link>
         </div>
       </ButtonModal>
     );

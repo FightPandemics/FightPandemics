@@ -205,7 +205,7 @@ function EditAccount(props) {
         <Label>I need</Label>
         {renderNeedHelp()}
         <SubmitButton
-          title={"Save Changes"}
+          primary="true"
           style={{ marginTop: "1rem", marginBottom: "1rem" }}
           onClick={handleSubmit(onSubmit)}
         >

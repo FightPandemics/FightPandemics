@@ -1,13 +1,15 @@
 import { DARK_GRAY, ROYAL_BLUE, SELAGO } from "../../constants/colors";
 import React, { useContext } from "react";
 
-import CustomButton from "../../components/Button/CustomButton";
 import CustomH1 from "../Typography/Title/CustomH1";
-import DownArrowButton from "../Button/DownArrowButton";
+import downArrow from "~/assets/icons/down-arrow.svg";
 import { FeedContext } from "../../pages/Feed";
 import FilterAccordion from "./FilterAccordion";
 import { Modal } from "antd-mobile";
 import styled from "styled-components";
+import SelectWithIconButton from "../Button/SelectWithIconButton";
+import SubmitButton from "../Button/SubmitButton";
+import SvgIcon from "../Icon/SvgIcon";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -18,13 +20,16 @@ const FilterBox = () => {
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
-      <DownArrowButton
+      <SelectWithIconButton
         key={idx}
-        label={filter.label}
-        handleClick={handleFilterModal(idx)}
-        color={ROYAL_BLUE}
-        bgcolor={SELAGO}
-      />
+        primarylight="true"
+        righticon="true"
+        size="small"
+        icon={<SvgIcon src={downArrow} />}
+        onClick={handleFilterModal(idx)}
+      >
+        {filter.label}
+      </SelectWithIconButton>
     ));
   };
   return (
@@ -48,12 +53,22 @@ const FilterBox = () => {
             padding: "2rem 0",
           }}
         >
-          <CustomButton inline secondary="true" onClick={handleQuit}>
+          <SubmitButton
+            inline
+            secondary="true"
+            onClick={handleQuit}
+            style={{ fontWeight: "normal" }}
+          >
             Quit filters
-          </CustomButton>
-          <CustomButton inline primary="true" onClick={handleFilterModal(null)}>
+          </SubmitButton>
+          <SubmitButton
+            inline
+            primary="true"
+            onClick={handleFilterModal(null)}
+            style={{ fontWeight: "normal" }}
+          >
             Apply filters
-          </CustomButton>
+          </SubmitButton>
         </div>
       </Modal>
     </FilterBoxWrapper>

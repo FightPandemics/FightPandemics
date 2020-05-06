@@ -2,13 +2,12 @@ import { Radio } from "antd";
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
-
-const { darkGray } = theme.colors;
 const { medium } = theme.typography.size;
 const { display } = theme.typography.font.family;
 
 const StyledRadioGroup = styled(Radio.Group)`
   width: 100%;
+  margin-top: 0.5rem;
   .ant-radio-wrapper {
     display: ${(props) => (props.flex ? "flex" : "inline-block")};
     align-items: center;
@@ -19,7 +18,7 @@ const StyledRadioGroup = styled(Radio.Group)`
     span.ant-radio + * {
       font-family: ${display};
       font-size: ${medium};
-      color: ${darkGray};
+      color: black;
       letter-spacing: 0;
     }
     .ant-radio-inner {

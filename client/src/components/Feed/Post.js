@@ -11,8 +11,6 @@ import statusIndicator from "~/assets/icons/status-indicator.svg";
 
 // ICONS
 
-
-
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -62,7 +60,9 @@ const Post = ({ post }) => {
   const renderTags = (
     <Card.Body>
       {post.tags.map((tag, idx) => (
-        <FilterTag label={tag} selected={false} disabled={true} key={idx} />
+        <FilterTag key={idx} disabled={true} selected={false}>
+          {tag}
+        </FilterTag>
       ))}
     </Card.Body>
   );

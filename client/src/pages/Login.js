@@ -23,12 +23,6 @@ import { validateEmail } from "../utils/common.js";
 
 // ICONS
 
-
-
-
-
-
-
 const { colors } = theme;
 const { typography } = theme;
 
@@ -199,10 +193,26 @@ const Login = ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
+        {!isLoginForm && (
+          <InputWrapper>
+            <Label style={StyleLabel} label="Confirm password" />
+            <Input
+              type="password"
+              required
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={handleInputChangeConfirmPassword}
+              style={StyleInput}
+            />
+          </InputWrapper>
+        )}
+
         <SubmitButton
-          title={isLoginForm ? "Sign In" : "Sign Up"}
+          primary="true"
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
-        />
+        >
+          {isLoginForm ? "Sign In" : "Sign Up"}
+        </SubmitButton>
       </form>
       <WhiteSpace />
       <WhiteSpace />
