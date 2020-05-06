@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Avatar } from "antd";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { ROYAL_BLUE } from "constants/colors";
 import StyledComment from "./StyledComment";
-import AutoSize from "../../components/Input/AutoSize";
+import AutoSize from "components/Input/AutoSize";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 const { colors } = theme;
 
 export const DataTableHead = styled.thead`

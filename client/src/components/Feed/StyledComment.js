@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Comment } from "antd";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const { darkGray, lighterGray } = colors;

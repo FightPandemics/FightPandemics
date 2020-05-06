@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { mq } from "../../constants/theme";
+import { mq } from "constants/theme";
 
 const { tablet, desktop } = mq;
 

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { SearchBar, WhiteSpace } from "antd-mobile";
-import { FeedContext } from "../../pages/Feed.js";
+import { FeedContext } from "pages/Feed.js";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
