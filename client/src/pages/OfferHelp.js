@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-
+import {Toast } from "antd-mobile"; //263
+import { validateEmail } from "../utils/common.js"; //263
 import { asyncGetGeoLocation } from "../utils/geolocation";
 import {
   StyledWizard,
@@ -143,12 +144,20 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
+  const handleLoginWithEmail = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 1.50);
+      return;
+    }
+    props.update("email", email);
+  }
   const onChange = (evt) => {
     setEmail(evt);
   };
-  const onSubmit = () => {
-    props.update("email", email);
-  };
+  // const onSubmit = () => {
+  //   props.update("email", email); 
+  // };
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
@@ -167,7 +176,9 @@ const Step3 = (props) => {
           />
         </WizardFormGroup>
         <WizardButtonGroup>
-          <SubmitButton primary="true" onClick={onSubmit}>
+          <SubmitButton
+           primary="true" 
+           onClick={handleLoginWithEmail}>
             Submit
           </SubmitButton>
           <SkipLink>
