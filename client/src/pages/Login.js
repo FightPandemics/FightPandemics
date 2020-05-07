@@ -66,7 +66,6 @@ const StyleSocialIcon = {
 const SectionDiv = styled.div`
   text-transform: uppercase;
   color: ${colors.lightGray};
-
   &:before,
   &:after {
     display: inline-block;
@@ -78,7 +77,7 @@ const SectionDiv = styled.div`
   }
 `;
 
-const FlexBox = styled(Flex).attrs(props => ({
+const FlexBox = styled(Flex).attrs((props) => ({
   wrap: "wrap",
   justify: "center",
 }))``;
@@ -123,19 +122,19 @@ const Login = ({ isLoginForm }) => {
     }
   }, [code, state, dispatch]);
 
-  const handleInputChangeEmail = e => {
+  const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleInputChangePassword = e => {
+  const handleInputChangePassword = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleInputChangeConfirmPassword = e => {
+  const handleInputChangeConfirmPassword = (e) => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleLoginWithEmail = evt => {
+  const handleLoginWithEmail = (evt) => {
     evt.preventDefault();
     if (!validateEmail(email)) {
       Toast.fail("Invalid email address!", 3);
@@ -148,7 +147,7 @@ const Login = ({ isLoginForm }) => {
     dispatch(loginWithEmail({ email, password }));
   };
 
-  const handleSignup = evt => {
+  const handleSignup = (evt) => {
     evt.preventDefault();
     // todo: add inline validation (disable button / indicate error on form)
     /*if (!validateEmail(email)) {
@@ -162,7 +161,7 @@ const Login = ({ isLoginForm }) => {
     dispatch(signup({ email, password, confirmPassword }));
   };
 
-  const handleSocialLogin = provider => {
+  const handleSocialLogin = (provider) => {
     window.location.href = `/api/auth/oauth/${provider}`;
   };
 
@@ -194,10 +193,27 @@ const Login = ({ isLoginForm }) => {
             style={StyleInput}
           />
         </InputWrapper>
+        {!isLoginForm && (
+        <InputWrapper>
+
+        <Label style={StyleLabel} label="Confirm password" />
+          <Input
+          type="password"
+          required
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChange={handleInputChangeConfirmPassword}
+          style={StyleInput}
+          />
+          </InputWrapper>
+        )}
+        
         <SubmitButton
-          title={isLoginForm ? "Sign In" : "Sign Up"}
+          primary="true"
           onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
-        />
+        >
+          {isLoginForm ? "Sign In" : "Sign Up"}
+        </SubmitButton>
       </form>
       <WhiteSpace />
       <WhiteSpace />

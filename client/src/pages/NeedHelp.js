@@ -99,7 +99,9 @@ const Step3 = (props) => {
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
-        <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+        <SubmitButton primary="true" onClick={onSubmit}>
+          Submit
+        </SubmitButton>
       </WizardButtonGroup>
     </WizardStep>
   );

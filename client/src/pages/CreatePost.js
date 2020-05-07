@@ -5,10 +5,9 @@ import createPostSettings from "../assets//data/createPostSettings";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import CustomH1 from "../components/Typography/Title/CustomH1";
-import DownArrowButton from "../components/Button/DownArrowButton";
+import SelectWithIconButton from "../components/Button/SelectWithIconButton";
 import AddTags from "../components/Tag/AddTags";
 import SubmitButton from "../components/Button/SubmitButton";
-import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
@@ -18,6 +17,7 @@ import {
 
 // ICONS
 import SvgIcon from "../components/Icon/SvgIcon";
+import downArrow from "~/assets/icons/down-arrow.svg";
 import horizontalLine from "~/assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
@@ -147,20 +147,26 @@ const CreatePost = (props) => {
             closable={false}
           />
           <div className="buttons">
-            <DownArrowButton
-              handleClick={showModal(shareWith)}
-              label={formData.shareWith}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
+            <SelectWithIconButton
               long="true"
-            />
-            <DownArrowButton
-              handleClick={showModal(expires)}
-              label={formData.expires}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
+              size="small"
+              righticon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(shareWith)}
+            >
+              {formData.shareWith}
+            </SelectWithIconButton>
+            <SelectWithIconButton
               long="true"
-            />
+              size="small"
+              righticon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(expires)}
+            >
+              {formData.expires}
+            </SelectWithIconButton>
           </div>
           <div className="inline">
             <RadioGroup
@@ -199,10 +205,12 @@ const CreatePost = (props) => {
         </div>
         <span className="error-box">{renderError("tags")}</span>
         <SubmitButton
-          title="Post"
-          handleClick={handleSubmit}
+          primary="true"
+          onClick={handleSubmit}
           className="submit-btn"
-        />
+        >
+          Post
+        </SubmitButton>
       </StyledForm>
     </CreatePostWrapper>
   );

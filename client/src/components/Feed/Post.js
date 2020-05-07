@@ -59,7 +59,9 @@ const Post = ({ post }) => {
   const renderTags = (
     <Card.Body>
       {post.tags.map((tag, idx) => (
-        <FilterTag label={tag} selected={false} disabled={true} key={idx} />
+        <FilterTag key={idx} disabled={true} selected={false}>
+          {tag}
+        </FilterTag>
       ))}
     </Card.Body>
   );
