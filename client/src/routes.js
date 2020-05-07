@@ -15,7 +15,7 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
-import CreateProfile from "./pages/CreateProfile";
+import CreateUserProfile from "./pages/CreateUserProfile";
 
 const routes = [
   {
@@ -99,7 +99,7 @@ const routes = [
   },
   {
     path: "/create-profile",
-    component: CreateProfile,
+    component: CreateUserProfile,
   },
   {
     path: "/terms-conditions",
