@@ -50,7 +50,6 @@ const PasswordVisibility = styled.img`
 `;
 
 const StyleInput = {
-  fontFamily: "${typography.font.family.button}",
   fontSize: "1.8rem",
   lineHeight: "2.5rem",
   paddingBottom: "0.8rem",
@@ -60,7 +59,6 @@ const StyleInput = {
 };
 
 const StyleLabel = {
-  fontFamily: "${typography.font.family.button}",
   fontStyle: "normal",
   fontWeight: "500",
   fontSize: "1.6rem",

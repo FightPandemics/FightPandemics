@@ -6,7 +6,7 @@ import styled from "styled-components";
 import logo from "~/assets/logo.svg";
 import Logo from "~/components/Logo";
 
-import { theme, mq } from "../../constants/theme";
+import { mq } from "../../constants/theme";
 
 
 const NavbarStyles = {
