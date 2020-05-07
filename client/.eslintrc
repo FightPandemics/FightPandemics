@@ -1,0 +1,7 @@
+{
+  "extends": ["react-app"],
+  "plugins": ["import"],
+  "rules": {
+    "import/prefer-default-export": 1
+  }
+}
