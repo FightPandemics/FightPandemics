@@ -11,4 +11,6 @@ RUN addgroup --system app && adduser --system --ingroup app app
 
 COPY --chown=app:app . /app
 
+USER app
+
 CMD ["gunicorn", "--workers=2", "--threads=4", "--worker-class=gthread", "--worker-tmp-dir=/dev/shm", "--bind=0.0.0.0:5000", "app:app"]
