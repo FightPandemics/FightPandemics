@@ -9,11 +9,12 @@ import {
   loginWithEmail,
   signup,
 } from "../actions/authActions";
-import CustomButton from "~/components/Button/SubmitButton";
+import SubmitButton from "~/components/Button/SubmitButton";
 import Label from "~/components/Input/Label";
 import Input from "~/components/Input/BaseInput";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
+import { theme, mq } from "../constants/theme";
 
 // ICONS
 import SvgIcon from "../components/Icon/SvgIcon";
@@ -24,7 +25,6 @@ import linkedin from "~/assets/icons/social-linkedin.svg";
 import socialmedia from "~/assets/social-media.svg";
 import socialmedia2 from "~/assets/social-media2.svg";
 import eye from "~/assets/icons/eye.svg";
-import { theme } from "../constants/theme";
 const { colors } = theme;
 const { typography } = theme;
 
@@ -35,12 +35,6 @@ const Title = styled.h1`
   font-weight: bold;
   height: 5rem;
   justify-content: center;
-`;
-
-const SubmitButton = styled(CustomButton)`
-  color: #fff;
-  background-color: #425AF2;
-  font-weight: 300;
 `;
 
 const InputWrapper = styled.div`
@@ -129,6 +123,9 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   background-color: #FBFBFD;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding-top: 6vh;
+  }
 `;
 
 const LoginLeftContainer = styled.div`
@@ -136,6 +133,13 @@ const LoginLeftContainer = styled.div`
   background-color: #F3F4FE;
   height: 100vh;
   position: relative;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
+  }
+
+  @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
+    flex-basis: 30%;
+  }
 `;
 
 const LoginRightContainer = styled.div`
@@ -149,11 +153,19 @@ const SocialImageContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 80%;
   margin: 0 auto;
+  @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
+    .SocialImageSVG {
+      width: 100%;
+    }
+  }
 `;
 
 const FormContainer = styled.div`
   width: 50%;
   margin: 0 auto;
+  @media screen and ${mq.phone.narrow.max} {
+    width: 90%;
+  }
 `;
 
 const Login = ({ isLoginForm }) => {
@@ -243,6 +255,7 @@ const Login = ({ isLoginForm }) => {
        <LoginLeftContainer>
            <SocialImageContainer>
                <img
+                  className="SocialImageSVG"
                   src={isLoginForm ? socialmedia : socialmedia2}
                   alt=""
                   />
@@ -295,6 +308,7 @@ const Login = ({ isLoginForm }) => {
                     <PasswordVisibility onClick={toggleConfirmPasswordVisibility} src={eye} alt="" />
                   </InputWrapper> ) }
                   <SubmitButton
+                    primary="true"
                     onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
                   >{isLoginForm ? "Sign In" : "Sign Up"}</SubmitButton>
                 </form>
