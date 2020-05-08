@@ -92,7 +92,6 @@ async function routes(app) {
           };
       /* eslint-enable sort-keys */
 
-      // TODO: add limitation of post content if user is not logged
       const [postsErr, posts] = await app.to(
         Post.aggregate([
           {
@@ -136,6 +135,7 @@ async function routes(app) {
               visibility: true,
             },
           },
+          // TODO: paginate
         ]),
       );
 
@@ -308,7 +308,7 @@ async function routes(app) {
       }
 
       const [updateErr, updatedPost] = await app.to(
-        post.overwrite(body).save(),
+        Object.assign(post, body).save(),
       );
 
       if (updateErr) {
