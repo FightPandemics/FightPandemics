@@ -5,7 +5,7 @@ const { schema: authorSchema } = require("./author");
 // -- Schema
 const postSchema = new Schema(
   {
-    author: authorSchema,
+    author: Object,
     content: {
       required: true,
       trim: true,
@@ -55,7 +55,7 @@ const postSchema = new Schema(
       type: [String],
     },
     visibility: {
-      enum: ["country", "state", "worldwide", "zipcode"],
+      enum: ["city", "country", "state", "worldwide"],
       lowercase: true,
       trim: true,
       type: String,

@@ -25,6 +25,7 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
+  const UNLOGGED_POST_SIZE = 100;
 
   app.get(
     "/",
@@ -33,14 +34,64 @@ async function routes(app) {
       schema: getPostsSchema,
     },
     async (req) => {
-      // const { userId } = req.body;
-      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
+      const { userId } = req.query;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
       }
 
-      // TODO: add filters
+      // Base filters - expiration and visibility
+      /* eslint-disable sort-keys */
+      const filters = [
+        { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
+        {
+          $or: [
+            { visibility: "worldwide" },
+            {
+              visibility: "country",
+              "author.location.country": user.location.country,
+            },
+            {
+              visibility: "state",
+              "author.location.country": user.location.country,
+              "author.location.state": user.location.state,
+            },
+            {
+              visibility: "city",
+              "author.location.country": user.location.country,
+              "author.location.state": user.location.state,
+              "author.location.city": user.location.city,
+            },
+          ],
+        },
+      ];
+      /* eslint-enable sort-keys */
+
+      // Additional filters
+      const { paramFilters } = req.params;
+      if (paramFilters) {
+        // TODO: additional filters
+      }
+
+      // Unlogged user limitation for post content size
+      // TODO: how to check for logged/unlogged user?
+      /* eslint-disable sort-keys */
+      const contentProjection = user
+        ? "$content"
+        : {
+            $cond: {
+              if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
+              then: {
+                $concat: [
+                  { $substr: ["$content", 0, UNLOGGED_POST_SIZE] },
+                  "...",
+                ],
+              },
+              else: "$content",
+            },
+          };
+      /* eslint-enable sort-keys */
+
       // TODO: add limitation of post content if user is not logged
       const [postsErr, posts] = await app.to(
         Post.aggregate([
@@ -54,7 +105,7 @@ async function routes(app) {
                   type: "Point",
                 },
               },
-              // query: { << add filters here >> }
+              query: { $and: filters },
             },
           },
           {
@@ -68,17 +119,21 @@ async function routes(app) {
           {
             $project: {
               _id: true,
+              authorName: "$author.name",
+              authorType: "$author.type",
               commentsCount: {
                 $size: "$comments",
               },
-              content: true,
+              content: contentProjection,
               distance: true,
+              expireAt: true,
               likesCount: {
                 $size: "$likes",
               },
-              name: "author.name",
+              location: "$author.location",
               title: true,
-              type: "author.type",
+              types: true,
+              visibility: true,
             },
           },
         ]),
@@ -100,8 +155,7 @@ async function routes(app) {
       schema: createPostSchema,
     },
     async (req, reply) => {
-      // const { userId } = req.body;
-      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
+      const { userId } = req.body;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
@@ -205,9 +259,7 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      // const { userId } = req.body;
-      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
-
+      const { userId } = req.body;
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       if (findErr) {
@@ -241,9 +293,7 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      // const { userId } = req.body;
-      const userId = mongoose.Types.ObjectId("5ea6900c0e0419d4cb123611");
-
+      const { userId } = req.body;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         throw app.httpErrors.notFound();

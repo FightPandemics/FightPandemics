@@ -18,7 +18,6 @@ const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
 
 const getPostsSchema = {
   querystring: strictSchema()
-    .prop("id", S.string())
     .prop(
       "filter",
       strictSchema()
@@ -48,12 +47,13 @@ const createPostSchema = {
         .prop("website", S.string().format("url")),
     )
     .prop("language", S.array().items(S.string()))
+    .prop("objective", S.string().enum(POST_OBJECTIVES).required().required())
     .prop("title", S.string().required())
     .prop(
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
-    .prop("userId", S.string().required())
+    .prop("userId", S.string())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
