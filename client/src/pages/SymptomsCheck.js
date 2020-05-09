@@ -23,24 +23,27 @@ const Welcome = (props) => {
 
   return (
     <WizardStep>
-      <h6 className="text-primary">Before you start</h6>
-      <h5 className="mb-5">
-        Stop or call your local emergency number 911 if you or anyone else have
-        any of these symptoms
-      </h5>
-      <ol>
-        <li>Constant chest pain or pressure</li>
-        <li>Extreme difficulty breathing</li>
-        <li>Severe, constant dizziness or lightheadedness</li>
-        <li>Slurred speech</li>
-        <li>Difficulty waking up </li>
-      </ol>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
-        <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
-        <strong>Medical:</strong> I do not have symptoms.
-      </AnswerButton>
+      <h4 className="sub-title">Is this an emergency?</h4>
+      <h2 className="title">
+        Stop and call your local emergency number if you have any of these
+        symptoms
+      </h2>
+      <div className="content-wrapper">
+        <ul className="content">
+          <li>Severe, constant chest pain or pressure</li>
+          <li>Extreme difficulty breathing</li>
+          <li>Severe, constant light headedness</li>
+          <li>Serious disorientation or unresponsiveness</li>
+        </ul>
+      </div>
+      <div className="answer-buttons-wrapper">
+        <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+          Yes, I am experiencing at least one of these symptoms
+        </AnswerButton>
+        <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+          No, I do not have any of these symptoms
+        </AnswerButton>
+      </div>
     </WizardStep>
   );
 };
