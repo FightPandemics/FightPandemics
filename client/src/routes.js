@@ -14,6 +14,7 @@ import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
+import ConfirmedCases from "./pages/ConfirmedCases";
 import CreatePost from "./pages/CreatePost";
 
 const routes = [
@@ -67,6 +68,10 @@ const routes = [
   {
     path: "/nearest-hospital",
     component: NearestHospital,
+  },
+  {
+    path: "/confirmed-cases",
+    component: ConfirmedCases,
   },
   {
     path: "/find-help",
