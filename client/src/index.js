@@ -7,6 +7,8 @@ import "antd/dist/antd.css";
 import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
 // import "typeface-work-sans";
+// import i18n (needs to be bundled ;))
+import "./i18n";
 
 import App from "./App";
 import GlobalStyles from "./GlobalStyles";

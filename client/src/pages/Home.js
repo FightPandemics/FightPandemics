@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import ImageButton from "../components/Button/ImageButton";
 import { theme, mq } from "../constants/theme";
+import { useTranslation, withTranslation } from "react-i18next";
 
 const needHelpInactive = require("../assets/thermometer-unselected.svg");
 const needHelpActive = require("../assets/thermometer-selected.svg");
@@ -133,15 +134,17 @@ const OnboardingContainer = styled.div`
 `;
 
 const Home = (props) => {
+  const { t } = useTranslation();
+
   return (
     <MainContainer className="text-center">
       <StyledIntro>
         <IntroText>
           <StyledStrapline level={2} margin="none">
-            A place to give and get help
+            {t("home intro 1")}
           </StyledStrapline>
-          <StyledP>Pandemics will continue to happen.</StyledP>
-          <StyledP>We help communities prepare and respond.</StyledP>
+          <StyledP>{t("home intro 2")}</StyledP>
+          <StyledP>{t("home intro 3")}</StyledP>
         </IntroText>
       </StyledIntro>
 
@@ -154,7 +157,7 @@ const Home = (props) => {
               activeImg={needHelpActive}
               onClick={() => props.history.push("/need-help")}
             >
-              Need Help
+              {t("need help")}
             </ImageButton>
           </FlexChild>
           <FlexChild>
@@ -164,7 +167,7 @@ const Home = (props) => {
               activeImg={offerHelpActive}
               onClick={() => props.history.push("/offer-help")}
             >
-              Give Help
+              {t("give help")}
             </ImageButton>
           </FlexChild>
 
@@ -185,4 +188,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default withTranslation()(Home);
