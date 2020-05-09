@@ -35,7 +35,6 @@ i18n
           "home intro 3": "Aiutiamo le comunità a prepararsi e rispondere.",
           "need help": "Ho bisogno di aiuto",
           "give help": "Dare aiuto",
-          itailian: "italiana",
         },
       },
       jp: {
@@ -45,7 +44,6 @@ i18n
           "home intro 3": "コミュニティの準備と対応を支援します。",
           "need help": "助けが必要",
           "give help": "助けを与える",
-          japanese: "日本",
         },
       },
       zh_tw: {
@@ -55,7 +53,6 @@ i18n
           "home intro 3": "我們幫助社區做好準備並做出回應。",
           "need help": "需要幫助",
           "give help": "提供幫助",
-          chinese: "中文",
         },
       },
       zh_cn: {
@@ -65,7 +62,6 @@ i18n
           "home intro 3": "我们帮助社区做好准备并做出回应。",
           "need help": "需要帮忙",
           "give help": "提供帮助",
-          chinese: "中文",
         },
       },
     },
