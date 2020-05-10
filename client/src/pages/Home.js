@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
-import { theme, mq } from "../constants/theme";
+import { theme, mq } from "constants/theme";
 
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const needHelpActive = require("assets/thermometer-selected.svg");

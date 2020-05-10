@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 // import axios from "axios";
 import filterOptions from "assets/data/filterOptions";
-import createPostSettings from "assets//data/createPostSettings";
+import createPostSettings from "assets/data/createPostSettings";
 import CustomModal from "components/CreatePost/CustomModal";
 import RadioGroup from "components/CreatePost/RadioGroup";
 import CustomH1 from "components/Typography/Title/CustomH1";
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import AddTags from "components/Tag/AddTags";
-import CustomButton from "components/Button/CustomButton";
-import { theme } from "../constants/theme";
+import SubmitButton from "components/Button/SubmitButton";
+import { theme } from "constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,

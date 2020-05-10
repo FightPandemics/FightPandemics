@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
-import { theme } from "../constants/theme";
+import { theme } from "constants/theme";
 
 import { getAirtableRecord } from "../utils/airtable";
 import { getLocalStorageJson } from "../utils/local-storage";

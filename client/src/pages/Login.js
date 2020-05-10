@@ -9,22 +9,22 @@ import {
   loginWithEmail,
   signup,
 } from "actions/authActions";
-import SubmitButton from "~/components/Button/SubmitButton";
-import Label from "~/components/Input/Label";
-import Input from "~/components/Input/BaseInput";
+import SubmitButton from "components/Button/SubmitButton";
+import Label from "components/Input/Label";
+import Input from "components/Input/BaseInput";
 import { validateEmail } from "../utils/common.js";
 import { useQuery } from "../utils/hooks.js";
 import { theme, mq } from "../constants/theme";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import twitter from "~/assets/icons/social-twitter.svg";
-import facebook from "~/assets/icons/social-facebook.svg";
-import gmail from "~/assets/icons/social-google.svg";
-import linkedin from "~/assets/icons/social-linkedin.svg";
-import socialmedia from "~/assets/social-media.svg";
-import socialmedia2 from "~/assets/social-media2.svg";
-import eye from "~/assets/icons/eye.svg";
+import twitter from "assets/icons/social-twitter.svg";
+import facebook from "assets/icons/social-facebook.svg";
+import gmail from "assets/icons/social-google.svg";
+import linkedin from "assets/icons/social-linkedin.svg";
+import socialmedia from "assets/social-media.svg";
+import socialmedia2 from "assets/social-media2.svg";
+import eye from "assets/icons/eye.svg";
 const { colors } = theme;
 const { typography } = theme;
 

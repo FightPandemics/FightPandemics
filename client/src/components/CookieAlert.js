@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { theme } from "../constants/theme";
+import { theme } from "constants/theme";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
