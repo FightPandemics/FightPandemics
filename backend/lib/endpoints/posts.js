@@ -25,7 +25,7 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
-  const UNLOGGED_POST_SIZE = 100;
+  const UNLOGGED_POST_SIZE = 120;
 
   app.get(
     "/",
