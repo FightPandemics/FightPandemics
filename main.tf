@@ -52,6 +52,10 @@ module "main" {
     {
       name  = "AUTH_CLIENT_ID"
       value = var.auth_client_id
-    }
+    },
+    {
+      name  = "NODE_ENV"
+      value = var.env_name
+    },
   ]
 }
