@@ -23,7 +23,7 @@ import { IconButton, SubmitButton } from "../components/Button";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import shareMyLocation from "~/assets/icons/share-my-location.svg";
+import shareMyLocation from "assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],

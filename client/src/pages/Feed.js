@@ -17,7 +17,7 @@ import {
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import creatPost from "~/assets/icons/create-post.svg";
+import creatPost from "assets/icons/create-post.svg";
 
 export const FeedContext = React.createContext();
 

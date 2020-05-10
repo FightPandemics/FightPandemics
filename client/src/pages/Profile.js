@@ -13,11 +13,11 @@ import ButtonModal from "components/Feed/ButtonModal"; // feed
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import menu from "~/assets/icons/menu.svg";
-import edit from "~/assets/icons/edit.svg";
-import createPost from "~/assets/icons/create-post.svg"; // feed
-import linkedinBlue from "~/assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "~/assets/icons/social-twitter-blue.svg";
+import menu from "assets/icons/menu.svg";
+import edit from "assets/icons/edit.svg";
+import createPost from "assets/icons/create-post.svg"; // feed
+import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
+import twitterBlue from "assets/icons/social-twitter-blue.svg";
 const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 

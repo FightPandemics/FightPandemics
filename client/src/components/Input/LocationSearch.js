@@ -5,7 +5,7 @@ import { FeedContext } from "pages/Feed.js";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import shareLocation from "~/assets/icons/share-my-location.svg";
+import shareLocation from "assets/icons/share-my-location.svg";
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {

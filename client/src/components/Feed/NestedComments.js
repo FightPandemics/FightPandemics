@@ -6,7 +6,7 @@ import AutoSize from "components/Input/AutoSize";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import heartSmall from "~/assets/icons/heart-small.svg";
+import heartSmall from "assets/icons/heart-small.svg";
 
 const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 

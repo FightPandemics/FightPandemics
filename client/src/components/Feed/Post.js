@@ -8,7 +8,7 @@ import AutoSize from "components/Input/AutoSize";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import statusIndicator from "~/assets/icons/status-indicator.svg";
+import statusIndicator from "assets/icons/status-indicator.svg";
 
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
