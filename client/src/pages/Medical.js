@@ -5,8 +5,8 @@ import styled from "styled-components";
 import ImageButton from "components/Button/ImageButton";
 import { theme } from "constants/theme";
 
-import { getAirtableRecord } from "../utils/airtable";
-import { getLocalStorageJson } from "../utils/local-storage";
+import { getAirtableRecord } from "utils/airtable";
+import { getLocalStorageJson } from "utils/local-storage";
 
 const nearestHospitalUnselected = require("../../src/assets/medical-page-images/nearest-hospital-unselected.png");
 const nearestHospitalSelected = require("../../src/assets/medical-page-images/nearest-hospital-selected.png");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
   WizardContainer,

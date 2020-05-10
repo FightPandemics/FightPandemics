@@ -4,7 +4,7 @@ import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "components/Picture/ProfilePic";
 import Title from "components/Title/Title";
 import styled from "styled-components";
-import { getInitials } from "../utils/userInfo";
+import { getInitials } from "utils/userInfo";
 import { Link } from "react-router-dom";
 import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed

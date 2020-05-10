@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
 import SubmitButton from "components/Button/SubmitButton";
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   AnswerButton,
   StyledWizard,
