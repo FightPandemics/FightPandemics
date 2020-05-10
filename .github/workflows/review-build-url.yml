@@ -1,0 +1,22 @@
+name: Post Review Build URL to PR
+on: pull_request
+jobs:
+  example:
+    name: sample comment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: get-branch-name
+        uses: ypicard/get-branch-name-github-action@v1
+      - id: get-branch-name-sanitized
+        name: Sanitize branch name
+        shell: bash
+        run: echo "::set-output name=branch::$(echo ${{ steps.get-branch-name.outputs.branch }} | tr -cd '[a-zA-Z0-9]_-')"
+      - name: Post Review Build URL
+        if: ${{ steps.get-branch-name.outputs.branch == feature* }}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "Build URL: https://${{ steps.get-branch-name-sanitized.outputs.branch }}.fightpandemics.xyz"
+          check_for_duplicate_msg: true
