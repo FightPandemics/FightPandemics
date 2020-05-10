@@ -18,7 +18,7 @@ Please check our notion to get a better understanding of the problem that we are
 
 ## Getting Started as a Non-Technical Contributor
 
-Follow the inital project setup for non-engineers described in [Notion](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
+Follow the initial project setup for non-engineers described in [Notion](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 
 ## Getting Started as a Developer
 
@@ -105,7 +105,7 @@ while developing. This is a living document, so feel free to add any notes that 
 
 ### Development Workflow
 * Please be sure to often merge or rebase the latest from the master branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind master.
-* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you forsee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
+* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you foresee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
 
 ### Backend
 
