@@ -16,10 +16,6 @@ Please check our notion to get a better understanding of the problem that we are
 - **DevOps**
     - Docker
 
-## Getting Started as a Non-Technical Contributor
-
-Follow the initial project setup for non-engineers described in [Notion](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
-
 ## Getting Started as a Developer
 
 1. If you want to contribute, fork this repository
