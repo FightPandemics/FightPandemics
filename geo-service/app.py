@@ -19,6 +19,9 @@ def hello():
     except:
         return jsonify(error="Error getting the location details", result="failed"), 500
 
+@app.route('/healthz')
+def healthz():
+    return "OK", 200
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True

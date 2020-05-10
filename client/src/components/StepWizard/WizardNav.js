@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -43,11 +44,12 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
         a11yTitle={`Navigate to step ${currentStep - 1}`}
       />
     ) : (
-      <PrevButton
-        src={backArrow}
-        href="/"
-        a11yTitle="Navigate to the homepage"
-      />
+      <Link to={"/"}>
+        <PrevButton
+          src={backArrow}
+          a11yTitle="Navigate to the homepage"
+        />
+      </Link>
     )}
     {currentStep < totalSteps && (
       <NextButton src={nextArrow} onClick={nextStep} />

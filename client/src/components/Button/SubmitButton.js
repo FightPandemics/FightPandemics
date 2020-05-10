@@ -1,22 +1,54 @@
-import React from "react";
-import { Button } from "antd-mobile";
-import styled from "styled-components";
-
+import styled, { css } from "styled-components";
+import BaseButton from "./BaseButton";
 import { theme } from "../../constants/theme";
+const { button } = theme;
 
-const SubmitButton = ({ title, handleClick, ...props }) => {
-  const StyledButton = styled(Button).attrs((props) => {
-    return {
-      type: "primary",
-    };
-  })`
-    ${theme.button.submit}
-  `;
-  return (
-    <StyledButton onClick={handleClick} {...props}>
-      {title}
-    </StyledButton>
-  );
-};
+// props: inline, primary, primarylight, secondary, tertiary
+
+const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
+  return { size, inline };
+})`
+  ${button.regular}
+
+  ${(props) =>
+    props.primary &&
+    css`
+      ${button.primary}
+
+      &:hover, &:active, &:focus {
+        ${button.secondary}
+      }
+    `}
+
+  ${(props) =>
+    props.primarylight &&
+    css`
+      ${button.primarylight}
+
+      &:hover, &:active, &:focus {
+        ${button.primary}
+      }
+    `}
+
+  ${(props) =>
+    props.secondary &&
+    css`
+      ${button.secondary}
+
+      &:hover, &:active, &:focus {
+        ${button.primary}
+      }
+    `}
+
+  ${(props) =>
+    props.tertiary &&
+    css`
+      ${button.tertiary}
+
+      &:hover, &:active, &:focus {
+        ${button.primary}
+      }
+    `}
+`;
 
 export default SubmitButton;
