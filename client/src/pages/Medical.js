@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import ImageButton from "../components/Button/ImageButton";
+import ImageButton from "components/Button/ImageButton";
 import { theme } from "../constants/theme";
 
 import { getAirtableRecord } from "../utils/airtable";

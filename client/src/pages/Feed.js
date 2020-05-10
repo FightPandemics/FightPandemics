@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
-import ButtonModal from "../components/Feed/ButtonModal";
+import ButtonModal from "components/Feed/ButtonModal";
 import filterOptions from "assets/data/filterOptions";
 import fakePosts from "assets/data/fakePosts";
-import FeedWrapper from "../components/Feed/FeedWrapper";
-import FilterBox from "../components/Feed/FilterBox";
-import Posts from "../components/Feed/Posts";
+import FeedWrapper from "components/Feed/FeedWrapper";
+import FilterBox from "components/Feed/FilterBox";
+import Posts from "components/Feed/Posts";
 import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
 import {
   ADD_OPTION,
@@ -16,7 +16,7 @@ import {
 } from "../hooks/actions/feedActions";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
+import SvgIcon from "components/Icon/SvgIcon";
 import creatPost from "~/assets/icons/create-post.svg";
 
 export const FeedContext = React.createContext();

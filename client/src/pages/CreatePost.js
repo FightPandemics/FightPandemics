@@ -2,21 +2,22 @@ import React, { useState } from "react";
 // import axios from "axios";
 import filterOptions from "assets/data/filterOptions";
 import createPostSettings from "assets//data/createPostSettings";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import SelectWithIconButton from "../components/Button/SelectWithIconButton";
-import AddTags from "../components/Tag/AddTags";
-import SubmitButton from "../components/Button/SubmitButton";
+import CustomModal from "components/CreatePost/CustomModal";
+import RadioGroup from "components/CreatePost/RadioGroup";
+import CustomH1 from "components/Typography/Title/CustomH1";
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
+import AddTags from "components/Tag/AddTags";
+import CustomButton from "components/Button/CustomButton";
+import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
-} from "../components/CreatePost/StyledCreatePost";
+} from "components/CreatePost/StyledCreatePost";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
+import SvgIcon from "components/Icon/SvgIcon";
 import downArrow from "~/assets/icons/down-arrow.svg";
 import horizontalLine from "~/assets/icons/horizontal-line.svg";
 

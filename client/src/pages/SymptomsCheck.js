@@ -9,7 +9,7 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
-} from "../components/StepWizard";
+} from "components/StepWizard";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 

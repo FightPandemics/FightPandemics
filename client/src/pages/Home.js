@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import ImageButton from "../components/Button/ImageButton";
+import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "../constants/theme";
 
 const needHelpInactive = require("assets/thermometer-unselected.svg");
