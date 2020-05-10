@@ -13,7 +13,53 @@ import {
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 
+import styled from "styled-components";
+import { theme, mq } from "../constants/theme";
+
 const INITIAL_STATE = {};
+
+const { typography } = theme;
+
+const SCAnswerButton = styled(AnswerButton)`
+  display: block;
+  background-color: #fff;
+  color: #000;
+  font-family: ${typography.font.family.display}, sans-serif;
+  font-size: ${typography.size.large};
+  border: 0.1rem solid ${theme.colors.royalBlue};
+  border-radius: 0.8rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: ${(props) => props.width?.mb ?? "inherit"};
+  padding: ${(props) => props.padding?.mb ?? "2rem 3rem"};
+  margin: ${(props) => props.margin?.mb ?? "1.5rem 0"};
+  &:hover {
+    background-color: ${theme.colors.royalBlue};
+    color: #fff;
+  }
+
+  strong {
+    display: block;
+  }
+
+  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
+    font-size: 2.2rem;
+    width: ${(props) => props.width?.dkt ?? "55.6rem"};
+    padding: ${(props) => props.padding?.dkt ?? "3.2rem 4.3rem"};
+    margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
+  }
+`;
+
+const SCTitle = styled.h2`
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin: 1rem 0 0 0;
+
+  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
+    text-align: center;
+    font-size: 3.6rem;
+  }
+`;
 
 const Welcome = (props) => {
   const onSelectAnswer = (answer) => {
@@ -24,10 +70,10 @@ const Welcome = (props) => {
   return (
     <WizardStep>
       <h4 className="sub-title">Is this an emergency?</h4>
-      <h2 className="title">
+      <SCTitle>
         Stop and call your local emergency number if you have any of these
         symptoms
-      </h2>
+      </SCTitle>
       <div className="content-wrapper">
         <ul className="content">
           <li>Severe, constant chest pain or pressure</li>
@@ -37,12 +83,12 @@ const Welcome = (props) => {
         </ul>
       </div>
       <div className="answer-buttons-wrapper">
-        <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+        <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
           Yes, I am experiencing at least one of these symptoms
-        </AnswerButton>
-        <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+        </SCAnswerButton>
+        <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
           No, I do not have any of these symptoms
-        </AnswerButton>
+        </SCAnswerButton>
       </div>
     </WizardStep>
   );
@@ -59,14 +105,16 @@ const Step1 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
-      <h2 className="mb-5">How old are you?</h2>
-      <AnswerButton onSelect={() => onSelectAnswer("under 18")}>
+      <SCTitle>How old are you?</SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("under 18")}>
         under 18
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("18-64")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("18-64")}>
         18-64
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("65+")}>65+</AnswerButton>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("65+")}>
+        65+
+      </SCAnswerButton>
     </WizardStep>
   );
 };
