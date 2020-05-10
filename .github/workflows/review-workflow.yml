@@ -105,3 +105,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
       - name: 'Deployment URL'
         run: echo https://${{ steps.get-branch-name-sanitized.outputs.branch }}.fightpandemics.xyz
+      - name: Post Review Build URL
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "Build URL: https://${{ steps.get-branch-name-sanitized.outputs.branch }}.fightpandemics.xyz"
+          check_for_duplicate_msg: true
