@@ -9,14 +9,6 @@ const Main = styled.main`
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     margin: 0;
   }
-
-  @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
-    margin: 0;
-  }
-
-  @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
-    margin: 0;
-  }
 `;
 
 export default Main;

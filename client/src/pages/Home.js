@@ -21,8 +21,8 @@ const StyledIntro = styled.div`
   }
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    background-color: ${theme.colors.royalBlue};
-    border-radius: 1rem;
+    background: linear-gradient(337.81deg, #425af2 3.41%, #677cf2 98.66%);
+    border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -62,10 +62,13 @@ const StyledWelcome = styled.h2`
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     font-size: ${theme.typography.heading.one};
+    font-weight: bold;
+    margin: 1.5rem 0;
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
     font-size: 5rem;
+    margin: 2.5rem 0;
   }
 
   @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
@@ -81,10 +84,7 @@ const StyledStrapline = styled(StyledWelcome)`
 
   @media only screen and ${mq.phone.narrow.max} {
     text-align: center;
-    color: black;
-    font-weight: bold;
-    margin: 0 auto;
-    margin-bottom: 1.5rem;
+    color: ${theme.colors.darkerGray};
   }
 `;
 
@@ -103,18 +103,21 @@ const StyledP = styled.p`
     font-family: ${theme.typography.font.family.display}, sans-serif;
     font-size: ${theme.typography.size.small};
     text-align: center;
-    color: #000;
-    line-height: 4rem;
-    letter-spacing: 0rem;
+    color: ${theme.colors.darkerGray};
+    letter-spacing: 0.01rem;
     margin: 0;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     font-size: ${theme.typography.size.large};
+    line-height: 2rem;
+    margin: 0.5rem 0;
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
     font-size: ${theme.typography.size.xlarge};
+    line-height: 2.5rem;
+    margin: 1rem 0;
   }
 
   @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
@@ -138,6 +141,7 @@ const Home = (props) => {
     <MainContainer className="text-center">
       <StyledIntro>
         <IntroText>
+          <StyledP>FightPandemics</StyledP>
           <StyledStrapline level={2} margin="none">
             A place to give and get help
           </StyledStrapline>
