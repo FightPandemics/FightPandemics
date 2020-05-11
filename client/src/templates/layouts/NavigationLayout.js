@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "components/Header";
+import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import { theme } from "constants/theme";
@@ -155,7 +156,7 @@ const NavigationLayout = (props) => {
       <Main>
         <props.component {...props} />
       </Main>
-      {/* <Footnote /> */}
+      <Footnote />
       <CookieAlert />
     </Drawer>
   );

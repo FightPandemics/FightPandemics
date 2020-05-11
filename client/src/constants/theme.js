@@ -1,4 +1,5 @@
 import {
+  WHITE,
   PRIMARY,
   ROYAL_BLUE,
   DARK_GRAY,
@@ -47,6 +48,7 @@ const theme = {
     },
   },
   colors: {
+    white: WHITE,
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
     selago: SELAGO,
