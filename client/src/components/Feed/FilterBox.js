@@ -32,7 +32,7 @@ const FilterBox = () => {
     ));
   };
   return (
-    <FilterBoxWrapper>
+    <FilterBoxWrapper className="filter-box">
       <CustomH1 color={DARK_GRAY} fontsize={"1.4rem"} fontweight={"normal"}>
         Filter by
       </CustomH1>

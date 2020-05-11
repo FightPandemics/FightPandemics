@@ -50,8 +50,8 @@ const Post = ({ post }) => {
   );
 
   const renderContent = (
-    <Card.Body>
-      <h1>{post.title}</h1>
+    <Card.Body className="content-wrapper">
+      <h2>{post.title}</h2>
       <p className="post-description">{post.description}</p>
     </Card.Body>
   );
@@ -67,13 +67,14 @@ const Post = ({ post }) => {
   );
 
   const renderViewMore = (
-    <Card.Body>
+    <Card.Body className="view-more-wrapper">
       <span className="view-more">View More</span>
     </Card.Body>
   );
 
   const renderComments = (
-    <Card.Body>
+    <Card.Body
+      className={ `comments-wrapper ${showComments ? 'show-comments' : ''}` }>
       <AutoSize
         placeholder={"Write a comment..."}
         onPressEnter={handleComment}

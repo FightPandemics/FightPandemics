@@ -8,7 +8,7 @@ const FilterAccord = () => {
   const feedContext = useContext(FeedContext);
   const { filters, activePanel, handleOption, selectedOptions } = feedContext;
 
-  const renderPanels = (filters) => {
+  const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "Location") {
         return (
@@ -30,7 +30,7 @@ const FilterAccord = () => {
             {Object.values(filter.options).map((option, idx) => (
               <FilterTag
                 key={idx}
-                onClick={handleOption(filter.label, option)}
+                onChange={handleOption(filter.label, option)}
                 selected={
                   selectedOptions[filter.label] &&
                   selectedOptions[filter.label].includes(option)
@@ -51,7 +51,7 @@ const FilterAccord = () => {
       defaultActiveKey={activePanel}
       className="my-accordion"
     >
-      {renderPanels(filters)}
+      {renderPanels()}
     </FilterAccordion>
   );
 };
