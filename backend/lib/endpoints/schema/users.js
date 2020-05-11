@@ -1,23 +1,22 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
+const createUserSchema = {
+  body: strictSchema()
+    .prop("name", S.string().required())
+    .prop("country", S.string().required())
+    .prop("country", S.string().required())
+    .prop("neighborhood", S.string())
+    .prop("address", S.string())
+    .prop("wants", S.array().maxItems(3).items(S.string()))
+    .prop("needs", S.array().maxItems(3).items(S.string())),
+};
+
 const getUserByIdSchema = {
   params: strictSchema().prop("userId", S.string().required()),
 };
 
-const createProfileSchema = {
-  body: S.object()
-    .additionalProperties(false)
-    .prop("firstName", S.string().required())
-    .prop("lastName", S.string().required())
-    .prop("email", S.string().required())
-    .prop("name", S.string().required())
-    .prop("country", S.string().required())
-    .prop("neighborhood", S.string().required()),
-};
-
-
 module.exports = {
+  createUserSchema,
   getUserByIdSchema,
-  createProfileSchema,
 };

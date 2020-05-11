@@ -7,30 +7,22 @@ const UserSchema = new Schema(
       required: true,
       type: Schema.Types.ObjectId,
     },
-    accessToken: {
-      required: false,
-      type: String,
-    },
-    dateJoined: {
-      default: Date.now,
-      type: Date,
-    },
-    email: {
-      required: true,
-      type: String,
-      unique: true,
-    },
-    firstName: {
-      required: true,
-      type: String,
-    },
-    lastName: {
-      required: false,
+    address: {
       type: String,
     },
     location: {
       ref: "Location",
       type: Schema.Types.ObjectId,
+    },
+    name: {
+      required: true,
+      type: String,
+    },
+    needs: {
+      type: Array,
+    },
+    wants: {
+      type: Array,
     },
   },
   {
