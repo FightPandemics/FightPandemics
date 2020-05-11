@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
   WizardContainer,
@@ -18,12 +18,12 @@ import {
   getCheckedAnswers,
   WizardCheckboxWrapper,
   WizardCheckboxItem,
-} from "../components/StepWizard";
+} from "components/StepWizard";
 import { IconButton, SubmitButton } from "../components/Button";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import shareMyLocation from "~/assets/icons/share-my-location.svg";
+import SvgIcon from "components/Icon/SvgIcon";
+import shareMyLocation from "assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],

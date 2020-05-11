@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const StepTitle = styled.h2`
   flex: 0;

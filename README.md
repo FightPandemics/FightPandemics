@@ -16,10 +16,6 @@ Please check our notion to get a better understanding of the problem that we are
 - **DevOps**
     - Docker
 
-## Getting Started as a Non-Technical Contributor
-
-Follow the inital project setup for non-engineers described in [Notion](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
-
 ## Getting Started as a Developer
 
 1. If you want to contribute, fork this repository
@@ -105,7 +101,7 @@ while developing. This is a living document, so feel free to add any notes that 
 
 ### Development Workflow
 * Please be sure to often merge or rebase the latest from the master branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind master.
-* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you forsee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
+* If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you foresee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
 
 ### Backend
 
@@ -134,6 +130,7 @@ while developing. This is a living document, so feel free to add any notes that 
     * Select an icon or component -> right click -> Copy/Paste -> Copy as CSS/SVG
     * You can also get exact CSS values on the top right of Figma
     * After you are done with your screen, lock it again!!
+* Use absolute imports. We have a resolved path of `client/src`. For example, import like this: `import Button from "components/Button"`, rather than `import Button from "../../components/Button`.
 * For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
     ```
         import styled from "styled-components";

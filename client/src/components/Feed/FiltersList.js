@@ -6,14 +6,14 @@ import styled from "styled-components";
 import { Button } from "antd-mobile";
 
 // Svg
-import { ReactComponent as CloseIcon } from "~/assets/icons/close-btn.svg";
+import { ReactComponent as CloseIcon } from "assets/icons/close-btn.svg";
 
 // Local
-import { FeedContext } from "../../pages/Feed.js";
+import { FeedContext } from "pages/Feed.js";
 
 // Constants
-import { theme } from "../../constants/theme";
-import { ROYAL_BLUE, WHITE } from "../../constants/colors";
+import { theme } from "constants/theme";
+import { ROYAL_BLUE, WHITE } from "constants/colors";
 
 const TagButton = styled(Button)`
   align-items: center;

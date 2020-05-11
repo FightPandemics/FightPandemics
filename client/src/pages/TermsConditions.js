@@ -4,8 +4,8 @@ import {
   PolicyContainer,
   TextContainer,
   Paragraph,
-} from "../components/PolicyPages/PolicyContainer";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
+} from "components/PolicyPages/PolicyContainer";
+import { TermsLink } from "components/PolicyPages/TermsLink";
 
 const TermsConditions = () => {
   return (

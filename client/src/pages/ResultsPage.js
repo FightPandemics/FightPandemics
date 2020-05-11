@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AnswerButton } from "../components/StepWizard";
+import { AnswerButton } from "components/StepWizard";
 import GenericMessage from "./CovidScreening/GenericMessage";
 
 const ResultsPage = (props) => {

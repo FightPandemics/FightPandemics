@@ -6,31 +6,31 @@ import styled from "styled-components";
 import { Layout, Menu } from 'antd';
 
 // Local
-import ButtonModal from "../components/Feed/ButtonModal";
-import filterOptions from "../assets/data/filterOptions";
-import fakePosts from "../assets/data/fakePosts";
-import FeedWrapper from "../components/Feed/FeedWrapper";
-import FilterBox from "../components/Feed/FilterBox";
-import FiltersSidebar from "../components/Feed/FiltersSidebar";
-import FiltersList from "../components/Feed/FiltersList";
-import Posts from "../components/Feed/Posts";
-import { optionsReducer, feedReducer } from "../hooks/reducers/feedReducers";
+import ButtonModal from "components/Feed/ButtonModal";
+import filterOptions from "assets/data/filterOptions";
+import fakePosts from "assets/data/fakePosts";
+import FeedWrapper from "components/Feed/FeedWrapper";
+import FilterBox from "components/Feed/FilterBox";
+import FiltersSidebar from "components/Feed/FiltersSidebar";
+import FiltersList from "components/Feed/FiltersList";
+import Posts from "components/Feed/Posts";
+import { optionsReducer, feedReducer } from "hooks/reducers/feedReducers";
 
 // Constants
-import { theme, mq } from "../constants/theme";
-import { ROYAL_BLUE, WHITE } from "../constants/colors";
+import { theme, mq } from "constants/theme";
+import { ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-} from "../hooks/actions/feedActions";
+} from "hooks/actions/feedActions";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import creatPost from "~/assets/icons/create-post.svg";
-import { ReactComponent as FiltersIcon } from "~/assets/icons/filters.svg";
+import SvgIcon from "components/Icon/SvgIcon";
+import creatPost from "assets/icons/create-post.svg";
+import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 export const FeedContext = React.createContext();
 
@@ -76,6 +76,8 @@ const FiltersWrapper = styled.div`
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     font-weight: bold;
+    margin-bottom: 10px;
+    padding: 0;
 
     span {
       align-items: center;

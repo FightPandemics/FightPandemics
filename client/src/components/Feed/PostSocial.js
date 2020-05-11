@@ -3,12 +3,12 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import heart from "~/assets/icons/heart.svg";
-import heartGray from "~/assets/icons/heart-gray.svg";
-import comment from "~/assets/icons/comment.svg";
-import commentGray from "~/assets/icons/comment-gray.svg";
-import share from "~/assets/icons/share.svg";
-import shareGray from "~/assets/icons/share-gray.svg";
+import heart from "assets/icons/heart.svg";
+import heartGray from "assets/icons/heart-gray.svg";
+import comment from "assets/icons/comment.svg";
+import commentGray from "assets/icons/comment-gray.svg";
+import share from "assets/icons/share.svg";
+import shareGray from "assets/icons/share-gray.svg";
 
 const PostSocial = ({
   url,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import SubmitButton from "../components/Button/SubmitButton";
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import SubmitButton from "components/Button/SubmitButton";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   AnswerButton,
   StyledWizard,
@@ -15,7 +15,7 @@ import {
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
-} from "../components/StepWizard";
+} from "components/StepWizard";
 
 const INITIAL_STATE = {
   answers: [],

@@ -8,15 +8,15 @@ import { Button } from "antd-mobile";
 
 // Local
 import FilterAccordion from "./FilterAccordion";
-import SubmitButton from "../../components/Button/SubmitButton";
-import { FeedContext } from "../../pages/Feed";
+import SubmitButton from "components/Button/SubmitButton";
+import { FeedContext } from "pages/Feed";
 
 // Constants
-import { theme } from "../../constants/theme";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { theme } from "constants/theme";
+import { ROYAL_BLUE } from "constants/colors";
 
 // Icons
-import { ReactComponent as BackIcon } from "../../assets/icons/back.svg";
+import { ReactComponent as BackIcon } from "assets/icons/back.svg";
 
 const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
