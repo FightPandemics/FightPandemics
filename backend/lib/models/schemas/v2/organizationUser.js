@@ -1,32 +1,24 @@
-// -- Imports
 const { Schema } = require("mongoose");
 const { model: User } = require("./user");
-const { model: Post } = require("./post");
-const { model: Comment } = require("./comment");
+const {
+  updateAuthorName: updatePostAuthorName,
+  updateAuthorType: updatePostAuthorType,
+} = require("./post");
+const {
+  updateAuthorName: updateCommentAuthorName,
+  updateAuthorType: updateCommentAuthorType,
+} = require("./comment");
 
-// -- Schema
 function updateAuthorNameReferences(name) {
-  Post.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": name } },
-  );
-  Comment.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": name } },
-  );
+  updatePostAuthorName(this._id, name);
+  updateCommentAuthorName(this._id, name);
 
   return name;
 }
 
 function updateAuthorTypeReferences(type) {
-  Post.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorType": type } },
-  );
-  Comment.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorType": type } },
-  );
+  updatePostAuthorType(this._id, type);
+  updateCommentAuthorType(this._id, type);
 
   return type;
 }
@@ -79,9 +71,6 @@ const organizationSchema = new Schema(
   { collection: "users" },
 );
 
-// -- Indexes
-
-// -- Model
 const OrganizationUser = User.discriminator(
   "OrganizationUser",
   organizationSchema,

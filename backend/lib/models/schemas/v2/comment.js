@@ -52,5 +52,23 @@ commentSchema.index({ likes: 1 });
 // -- Model
 const Comment = model("Comment", commentSchema);
 
-exports.schema = commentSchema;
-exports.model = Comment;
+function updateAuthorName(authorID, newAuthorName) {
+  return Comment.where(
+    { "author.authorId": authorID },
+    { $set: { "author.authorName": newAuthorName } },
+  );
+}
+
+function updateAuthorType(authorID, newAuthorType) {
+  return Comment.where(
+    { "author.authorId": authorID },
+    { $set: { "author.authorType": newAuthorType } },
+  );
+}
+
+module.exports = {
+  schema: commentSchema,
+  model: Comment,
+  updateAuthorName,
+  updateAuthorType,
+};

@@ -1,31 +1,20 @@
-// -- Imports
 const { Schema } = require("mongoose");
 const { model: User } = require("./user");
-const { model: Post } = require("./post");
-const { model: Comment } = require("./comment");
+const { updateAuthorName: updatePostAuthorName } = require("./post");
+const { updateAuthorName: updateCommentAuthorName } = require("./comment");
 
-// -- Schema
-function updateAuthorFirstNameReferences(firstName) {
-  Post.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": `${firstName} ${this.lastName}` } },
-  );
-  Comment.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": `${firstName} ${this.lastName}` } },
-  );
+function updateAuthorFirstName(firstName) {
+  this.firstName = firstName;
+
+  this.updateAuthorNameReferences();
 
   return firstName;
 }
-function updateAuthorLastNameReferences(lastName) {
-  Post.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": `${this.firstName} ${lastName}` } },
-  );
-  Comment.where(
-    { "author.authorId": this._id },
-    { $set: { "author.authorName": `${this.firstName} ${lastName}` } },
-  );
+
+function updateAuthorLastName(lastName) {
+  this.lastName = lastName;
+
+  this.updateAuthorNameReferences();
 
   return lastName;
 }
@@ -34,11 +23,11 @@ const individualUserSchema = new Schema(
   {
     firstName: {
       required: true,
-      set: updateAuthorFirstNameReferences,
+      set: updateAuthorFirstName,
       type: String,
     },
     lastName: {
-      set: updateAuthorLastNameReferences,
+      set: updateAuthorLastName,
       type: String,
     },
     needs: {
@@ -67,15 +56,15 @@ const individualUserSchema = new Schema(
   { collection: "users" },
 );
 
-// -- Methods
-
-individualUserSchema.virtual("fullName").get(function getFullName() {
+individualUserSchema.virtual("name").get(function getFullName() {
   return `${this.firstName} ${this.lastName}`;
 });
 
-// -- Indexes
+individualUserSchema.methods.updateAuthorNameReferences = function () {
+  updatePostAuthorName(this._id, this.name);
+  updateCommentAuthorName(this._id, this.name);
+};
 
-// -- Model
 const IndividualUser = User.discriminator(
   "IndividualUser",
   individualUserSchema,
