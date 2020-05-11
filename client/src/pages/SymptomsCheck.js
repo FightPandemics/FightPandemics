@@ -17,6 +17,8 @@ import {
   SCButtonContent,
   SCSubtitle,
   SCTitle,
+  SCWizardStep,
+  SCStyledWizard
 } from "../components/SymptomsCheck/SymptomsCheckStyles";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
@@ -30,14 +32,14 @@ const Welcome = (props) => {
   };
 
   return (
-    <WizardStep>
+    <SCWizardStep>
       <SCSubtitle>Is this an emergency?</SCSubtitle>
       <SCTitle>
         Stop and call your local emergency number if you have any of these
         symptoms
       </SCTitle>
       <SCContentContainer>
-        <ul className="content">
+        <ul>
           <li>Severe, constant chest pain or pressure</li>
           <li>Extreme difficulty breathing</li>
           <li>Severe, constant light headedness</li>
@@ -56,7 +58,7 @@ const Welcome = (props) => {
           </SCButtonContent>
         </SCAnswerButton>
       </SCButtonsContainer>
-    </WizardStep>
+    </SCWizardStep>
   );
 };
 
@@ -67,21 +69,23 @@ const Step1 = (props) => {
   };
 
   return (
-    <WizardStep>
-      <h5 className="text-primary">
+    <SCWizardStep>
+      <SCSubtitle fontSize={{mb:'1.4rem', dkt:'1.8rem'}}>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <SCTitle>How old are you?</SCTitle>
-      <SCAnswerButton onSelect={() => onSelectAnswer("under 18")}>
+      </SCSubtitle>
+      <SCTitle fontSize={{mb:'2.6rem', dkt:'1.8rem'}}>How old are you?</SCTitle>
+      <SCButtonsContainer>
+      <SCAnswerButton onSelect={() => onSelectAnswer("under 18")} height={{mb:'5rem', dkt:'8.5rem'}}>
         <SCButtonContent>under 18</SCButtonContent>
       </SCAnswerButton>
-      <SCAnswerButton onSelect={() => onSelectAnswer("18-64")}>
+      <SCAnswerButton onSelect={() => onSelectAnswer("18-64")} height={{mb:'5rem', dkt:'8.5rem'}}>
         <SCButtonContent>18-64</SCButtonContent>
       </SCAnswerButton>
-      <SCAnswerButton onSelect={() => onSelectAnswer("65+")}>
-      <SCButtonContent>165+</SCButtonContent>
+      <SCAnswerButton onSelect={() => onSelectAnswer("65+")} height={{mb:'5rem', dkt:'8.5rem'}}>
+      <SCButtonContent>65+</SCButtonContent>
       </SCAnswerButton>
-    </WizardStep>
+      </SCButtonsContainer>
+    </SCWizardStep>
   );
 };
 
@@ -120,7 +124,7 @@ const Step2 = (props) => {
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
-        Do you have any of these symptoms? Please, select all that apply:
+      Are you experiencing any of these symptoms? 
       </h2>
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
@@ -664,7 +668,7 @@ const SymptomsCheck = () => {
 
   return (
     <SCWizardContainer>
-      <StyledWizard isHashEnabled nav={<WizardNav />}>
+      <SCStyledWizard isHashEnabled nav={<WizardNav />}>
         <Welcome update={updateAnswers} />
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />
@@ -675,7 +679,7 @@ const SymptomsCheck = () => {
         <Step7 hashKey={"Step7"} update={updateAnswers} />
         <Step8 hashKey={"Step8"} update={updateAnswers} />
         <ResultsPage val={state} msg={displayMessage} />
-      </StyledWizard>
+      </SCStyledWizard>
     </SCWizardContainer>
   );
 };
