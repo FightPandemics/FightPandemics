@@ -19,7 +19,6 @@ const StyledFooter = styled.footer`
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
-  margin-top: 3rem;
 `;
 
 const Copyright = styled.div`

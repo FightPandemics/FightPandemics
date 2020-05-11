@@ -27,12 +27,13 @@ const StyledIntro = styled.div`
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
-    height: 100%;
     padding: 16rem 7rem 16rem 5rem;
+    min-height: calc(100vh - 124px);
   }
 
   @media only screen and ${mq.desktop.medium.minWidth} {
     padding: 20rem 7rem 20rem 5rem;
+    height: 100vh;
   }
 `;
 
