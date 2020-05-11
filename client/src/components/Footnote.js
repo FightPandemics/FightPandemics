@@ -42,7 +42,7 @@ const Policies = styled.div`
 
 const FooterLink = styled(Link)`
   color: ${colors.darkGray};
-  margin: 0 0.5rem;
+  margin: 0 1rem;
   text-decoration-line: underline;
 `;
 
