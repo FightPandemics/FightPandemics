@@ -21,7 +21,7 @@ const StyledIntro = styled.div`
   }
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    background: linear-gradient(337.81deg, #425af2 3.41%, #677cf2 98.66%);
+    background: ${theme.backgrounds.primary};
     border-radius: 0.3rem;
     display: flex;
     flex-direction: column;

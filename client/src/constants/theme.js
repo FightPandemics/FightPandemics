@@ -46,6 +46,9 @@ const theme = {
       },
     },
   },
+  backgrounds: {
+    primary: "linear-gradient(337.81deg, #425af2 3.41%, #677cf2 98.66%)",
+  },
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
