@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import { WHITE } from "./constants/colors";
 
 const globalStyles = createGlobalStyle`
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -19,9 +23,16 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .text-center {
   text-align: center !important;
 }
+
+
 
 .app-drawer .am-drawer-sidebar {
   background-color: $white;

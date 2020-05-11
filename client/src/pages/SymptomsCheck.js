@@ -73,13 +73,13 @@ const Step1 = (props) => {
       </h5>
       <SCTitle>How old are you?</SCTitle>
       <SCAnswerButton onSelect={() => onSelectAnswer("under 18")}>
-        under 18
+        <SCButtonContent>under 18</SCButtonContent>
       </SCAnswerButton>
       <SCAnswerButton onSelect={() => onSelectAnswer("18-64")}>
-        18-64
+        <SCButtonContent>18-64</SCButtonContent>
       </SCAnswerButton>
       <SCAnswerButton onSelect={() => onSelectAnswer("65+")}>
-        65+
+      <SCButtonContent>165+</SCButtonContent>
       </SCAnswerButton>
     </WizardStep>
   );
