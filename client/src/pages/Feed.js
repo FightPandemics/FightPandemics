@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,7 +14,7 @@ import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer } from "hooks/reducers/feedReducers";
+import { optionsReducer, feedReducer, postsReducer } from "hooks/reducers/feedReducers";
 
 // Constants
 import { theme, mq } from "constants/theme";
@@ -25,6 +25,7 @@ import {
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
+  SET_POSTS,
 } from "hooks/actions/feedActions";
 
 // ICONS
@@ -44,10 +45,12 @@ const HELP_TYPE = {
 };
 
 const initialState = {
+  selectedType: '',
+  showFilters: false,
   filterModal: false,
   createPostModal: false,
   activePanel: null,
-  location: "",
+  location: '',
 };
 
 const SiderWrapper = styled(Sider)`
@@ -179,11 +182,9 @@ const HeaderWrapper = styled.div`
 const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const { filterModal, createPostModal, activePanel, location } = feedState;
+  const [posts, postsDispatch] = useReducer(postsReducer, {posts: fakePosts});
+  const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
   const filters = Object.values(filterOptions);
-  const [selectedType, setSelectedType] = useState(HELP_TYPE.ALL);
-  const [posts, setPosts] = useState(fakePosts);
-  const [showFilters, setShowFilters] = useState(false);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -203,9 +204,11 @@ const Feed = () => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
+
     if (showFilters) {
-      setShowFilters(false);
+      dispatchAction(TOGGLE_STATE, "showFilters");
     }
+
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
@@ -232,24 +235,24 @@ const Feed = () => {
     const value = HELP_TYPE[e.key]; // e.target.innerHTML;
 
     if (selectedType !== value) {
-      setSelectedType(value);
+      dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        setPosts(fakePosts);
+        postsDispatch({ type: SET_POSTS, posts: fakePosts });
       } else {
-        const posts = fakePosts.filter((item) => item.type === value);
+        const filtered = fakePosts.filter((item) => item.type === value);
 
-        setPosts(posts);
+        postsDispatch({ type: SET_POSTS, posts: filtered });
       }
     }
   }
 
   const handleShowFilters = (e) => {
-    setShowFilters(true);
+    dispatchAction(TOGGLE_STATE, "showFilters");
   }
 
   const handleOnClose = () => {
-    setShowFilters(false);
+    dispatchAction(TOGGLE_STATE, "showFilters");
   }
 
   const renderCreatePostModal = () => {
@@ -334,7 +337,7 @@ const Feed = () => {
               </button>
             </HeaderWrapper>
             <FilterBox />
-            <Posts filteredPosts={posts} />
+            <Posts filteredPosts={ posts.posts } />
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // Antd 
 import { Drawer } from 'antd';
-import { Button } from "antd-mobile";
 
 // Local
 import FilterAccordion from "./FilterAccordion";

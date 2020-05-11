@@ -9,6 +9,7 @@ import AutoSize from "components/Input/AutoSize";
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
+import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
@@ -86,7 +87,7 @@ const Post = ({ post }) => {
   );
 
   const renderSocialIcons = (
-    <Card.Body>
+    <Card.Body className="content-wrapper">
       <PostSocial
         url={post.url}
         liked={liked}
@@ -123,7 +124,10 @@ const Post = ({ post }) => {
 
   return (
     <PostCard>
-      {renderHeader}
+      <div className="card-header">
+        {renderHeader}
+        <div className="card-submenu"><SubMenuIcon /></div>
+      </div>
       <WhiteSpace size="md" />
       {renderTags}
       <WhiteSpace />

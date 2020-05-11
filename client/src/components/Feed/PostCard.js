@@ -1,6 +1,10 @@
+// Core
 import { Card } from "antd-mobile";
 import styled from "styled-components";
+
+// Constants
 import { theme, mq } from "constants/theme";
+import { DARK_GRAY } from "constants/colors";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
@@ -27,12 +31,38 @@ const PostCard = styled(Card)`
       padding: 2rem 2.4rem;
     }
 
+    body .feed-posts & {
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        border: 0.04rem solid rgba(0, 0, 0, 0.5);
+      }
+    }
+
     &::before {
       content: normal !important;
     }
 
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      .card-submenu {
+        display: none;
+
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          display: block;
+        }
+      }
+
+      svg {
+        circle {
+          fill: ${DARK_GRAY};
+        }
+      }
+    }
+
     .am-card-header {
       display: block;
+      flex: 1 1 auto;
       padding: 0;
 
       .am-card-header-content {
