@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const WizardFormGroup = styled.div`
   display: flex;

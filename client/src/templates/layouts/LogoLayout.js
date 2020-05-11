@@ -3,20 +3,19 @@ import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import logo from "~/assets/logo.svg";
-import Logo from "~/components/Logo";
+import logo from "assets/logo.svg";
+import Logo from "components/Logo";
 
-import { mq } from "../../constants/theme";
-
+import { mq } from "constants/theme";
 
 const NavbarStyles = {
-  position: 'absolute',
+  position: "absolute",
   top: "0",
   left: "0",
   zIndex: "10",
   width: "100%",
-  backgroundColor: "transparent"
-}
+  backgroundColor: "transparent",
+};
 
 const LogoContainer = styled.div`
   position: absolute;
@@ -25,10 +24,9 @@ const LogoContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     left: 48%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 `;
-
 
 const LogoLayout = (props) => {
   return (

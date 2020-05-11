@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import styled from "styled-components";
-import { LIGHTER_GRAY } from "../../constants/colors";
+import { LIGHTER_GRAY } from "constants/colors";
 
 const TextArea = styled(Input.TextArea)`
   background-color: ${LIGHTER_GRAY};

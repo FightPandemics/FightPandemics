@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "~/components/Header";
-import CookieAlert from "~/components/CookieAlert";
+import Header from "components/Header";
+import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const drawerStyles = {
   position: "relative",

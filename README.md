@@ -130,6 +130,7 @@ while developing. This is a living document, so feel free to add any notes that 
     * Select an icon or component -> right click -> Copy/Paste -> Copy as CSS/SVG
     * You can also get exact CSS values on the top right of Figma
     * After you are done with your screen, lock it again!!
+* Use absolute imports. We have a resolved path of `client/src`. For example, import like this: `import Button from "components/Button"`, rather than `import Button from "../../components/Button`.
 * For most components, we can use components from Ant Design and override styling where needed. Please refrain from reinventing the wheel.
     ```
         import styled from "styled-components";

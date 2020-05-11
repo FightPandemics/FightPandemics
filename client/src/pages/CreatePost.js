@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 // import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import SelectWithIconButton from "../components/Button/SelectWithIconButton";
-import AddTags from "../components/Tag/AddTags";
-import SubmitButton from "../components/Button/SubmitButton";
+import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets/data/createPostSettings";
+import CustomModal from "components/CreatePost/CustomModal";
+import RadioGroup from "components/CreatePost/RadioGroup";
+import CustomH1 from "components/Typography/Title/CustomH1";
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
+import AddTags from "components/Tag/AddTags";
+import SubmitButton from "components/Button/SubmitButton";
 import {
   CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
-} from "../components/CreatePost/StyledCreatePost";
+} from "components/CreatePost/StyledCreatePost";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import downArrow from "~/assets/icons/down-arrow.svg";
-import horizontalLine from "~/assets/icons/horizontal-line.svg";
+import SvgIcon from "components/Icon/SvgIcon";
+import downArrow from "assets/icons/down-arrow.svg";
+import horizontalLine from "assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
