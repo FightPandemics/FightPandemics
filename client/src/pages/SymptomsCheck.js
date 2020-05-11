@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   AnswerButton,
   AnswerCheckbox,
@@ -10,56 +9,19 @@ import {
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
+import {
+  SCWizardContainer,
+  SCContentContainer,
+  SCButtonsContainer,
+  SCAnswerButton,
+  SCButtonContent,
+  SCSubtitle,
+  SCTitle,
+} from "../components/SymptomsCheck/SymptomsCheckStyles";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 
-import styled from "styled-components";
-import { theme, mq } from "../constants/theme";
-
 const INITIAL_STATE = {};
-
-const { typography } = theme;
-
-const SCAnswerButton = styled(AnswerButton)`
-  display: block;
-  background-color: #fff;
-  color: #000;
-  font-family: ${typography.font.family.display}, sans-serif;
-  font-size: ${typography.size.large};
-  border: 0.1rem solid ${theme.colors.royalBlue};
-  border-radius: 0.8rem;
-  box-sizing: border-box;
-  cursor: pointer;
-  width: ${(props) => props.width?.mb ?? "inherit"};
-  padding: ${(props) => props.padding?.mb ?? "2rem 3rem"};
-  margin: ${(props) => props.margin?.mb ?? "1.5rem 0"};
-  &:hover {
-    background-color: ${theme.colors.royalBlue};
-    color: #fff;
-  }
-
-  strong {
-    display: block;
-  }
-
-  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
-    font-size: 2.2rem;
-    width: ${(props) => props.width?.dkt ?? "55.6rem"};
-    padding: ${(props) => props.padding?.dkt ?? "3.2rem 4.3rem"};
-    margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
-  }
-`;
-
-const SCTitle = styled.h2`
-  font-weight: bold;
-  font-size: 1.6rem;
-  margin: 1rem 0 0 0;
-
-  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
-    text-align: center;
-    font-size: 3.6rem;
-  }
-`;
 
 const Welcome = (props) => {
   const onSelectAnswer = (answer) => {
@@ -69,27 +31,31 @@ const Welcome = (props) => {
 
   return (
     <WizardStep>
-      <h4 className="sub-title">Is this an emergency?</h4>
+      <SCSubtitle>Is this an emergency?</SCSubtitle>
       <SCTitle>
         Stop and call your local emergency number if you have any of these
         symptoms
       </SCTitle>
-      <div className="content-wrapper">
+      <SCContentContainer>
         <ul className="content">
           <li>Severe, constant chest pain or pressure</li>
           <li>Extreme difficulty breathing</li>
           <li>Severe, constant light headedness</li>
           <li>Serious disorientation or unresponsiveness</li>
         </ul>
-      </div>
-      <div className="answer-buttons-wrapper">
+      </SCContentContainer>
+      <SCButtonsContainer>
         <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
-          Yes, I am experiencing at least one of these symptoms
+          <SCButtonContent>
+            Yes, I am experiencing at least one of these symptoms
+          </SCButtonContent>
         </SCAnswerButton>
         <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
-          No, I do not have any of these symptoms
+          <SCButtonContent>
+            No, I do not have any of these symptoms
+          </SCButtonContent>
         </SCAnswerButton>
-      </div>
+      </SCButtonsContainer>
     </WizardStep>
   );
 };
@@ -697,7 +663,7 @@ const SymptomsCheck = () => {
   }
 
   return (
-    <WizardContainer className="mx-auto">
+    <SCWizardContainer>
       <StyledWizard isHashEnabled nav={<WizardNav />}>
         <Welcome update={updateAnswers} />
         <Step1 hashKey={"Step1"} update={updateAnswers} />
@@ -710,7 +676,7 @@ const SymptomsCheck = () => {
         <Step8 hashKey={"Step8"} update={updateAnswers} />
         <ResultsPage val={state} msg={displayMessage} />
       </StyledWizard>
-    </WizardContainer>
+    </SCWizardContainer>
   );
 };
 
