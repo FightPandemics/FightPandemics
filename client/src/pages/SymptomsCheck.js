@@ -35,10 +35,10 @@ const Welcome = (props) => {
         <li>Slurred speech</li>
         <li>Difficulty waking up </li>
       </ol>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Yes")}>
         <strong>Medical:</strong> I believe I might have symptoms of COVID-19.
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Yes")}>
         <strong>Medical:</strong> I do not have symptoms.
       </AnswerButton>
     </WizardStep>
@@ -193,8 +193,8 @@ const Step4 = (props) => {
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>Yes</AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>No</AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("Yes")}>Yes</AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer("No")}>No</AnswerButton>
     </div>
   );
 };
@@ -214,13 +214,13 @@ const Step5 = (props) => {
         If so, have you traveled to an area severely affected by the COVID-19
         outbreak?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("live")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Live")}>
         I live in an area severely affected by the COVID-19 outbreak
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("visited")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Visited")}>
         I have visited an area severely affected by the COVID-19 outbreak
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("none")}>
+      <AnswerButton onSelect={() => onSelectAnswer("None")}>
         None of these apply
       </AnswerButton>
     </div>
@@ -243,19 +243,19 @@ const Step6 = (props) => {
         known to have COVID-19 during the last 2 weeks? Please, select all that
         apply.
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("live with")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Live with")}>
         I live with someone who has COVID-19
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("close contact")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Close contact")}>
         I had close contact with someone with COVID-19 (10 minutes or more spent
         together within 6 feet from each other or were exposed to their sneeze
         or cough)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("near someone 6ft")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Near someone 6ft")}>
         I was near someone with COVID-19 (at least 6-feet away and not exposed
         to their cough or sneeze)
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no exposure")}>
+      <AnswerButton onSelect={() => onSelectAnswer("No exposure")}>
         No exposure
       </AnswerButton>
     </div>
@@ -277,10 +277,10 @@ const Step7 = (props) => {
         Do you live in a care facility? This includes nursing homes or assisted
         living facilities.
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("currently living")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Currently living")}>
         I live in a long-term care facility
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+      <AnswerButton onSelect={() => onSelectAnswer("No")}>
         No, I dont live in a long-term care facility.
       </AnswerButton>
     </div>
@@ -303,15 +303,15 @@ const Step8 = (props) => {
         room, other medical setting, or long-term care facility.Select all that
         apply.
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("worked")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Worked")}>
         I have worked in a hospital, or other care facility in the past 14 days.
         This includes volunteering.
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("plan to work")}>
+      <AnswerButton onSelect={() => onSelectAnswer("Plan to work")}>
         I plan to work in hospital, or other care facility in the next 14 days.
         This includes volunteering
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+      <AnswerButton onSelect={() => onSelectAnswer("No")}>
         No, I dont work or plan to work in a care facility.
       </AnswerButton>
     </div>
@@ -343,24 +343,24 @@ const SymptomsCheck = () => {
   //message 1
   let condition1 =
     age === "18-64" &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
     conditions !== undefined &&
     conditions.length === 0 &&
     symptoms !== undefined &&
     symptoms.length >= 0 &&
-    careFacility === "no" &&
-    medicalFacility === "no";
+    careFacility === "No" &&
+    medicalFacility === "No";
 
   let condition2 =
     age === "18-64" &&
-    traveledLast14Days === "no" &&
-    exposureLast14Days === "no exposure" &&
-    exposureAreaLast2Weeks === "none" &&
+    traveledLast14Days === "No" &&
+    exposureLast14Days === "No exposure" &&
+    exposureAreaLast2Weeks === "None" &&
     careFacility === "no" &&
     medicalFacility === "no" &&
     conditions !== undefined &&
@@ -370,11 +370,11 @@ const SymptomsCheck = () => {
 
   let condition3 =
     age === "65+" &&
-    traveledLast14Days === "no" &&
-    exposureLast14Days === "no exposure" &&
-    exposureAreaLast2Weeks === "none" &&
-    careFacility === "no" &&
-    medicalFacility === "no" &&
+    traveledLast14Days === "No" &&
+    exposureLast14Days === "No exposure" &&
+    exposureAreaLast2Weeks === "None" &&
+    careFacility === "No" &&
+    medicalFacility === "No" &&
     conditions !== undefined &&
     conditions.length === 0 &&
     symptoms !== undefined &&
@@ -408,14 +408,14 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length >= 0 &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    careFacility === "no" &&
-    (medicalFacility === "worked" || medicalFacility === "plan to work");
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    careFacility === "No" &&
+    (medicalFacility === "Worked" || medicalFacility === "Plan to work");
 
   let condition6 =
     (age === "18-64" || age === "65+") &&
@@ -423,27 +423,27 @@ const SymptomsCheck = () => {
     symptoms.length >= 0 &&
     conditions !== undefined &&
     conditions.length >= 0 &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    careFacility === "no" &&
-    medicalFacility === "no";
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    careFacility === "No" &&
+    medicalFacility === "No";
 
   let condition7 =
     age === "65+" &&
     symptoms !== undefined &&
     symptoms.length >= 0 &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    careFacility === "no" &&
-    medicalFacility === "no";
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    careFacility === "No" &&
+    medicalFacility === "No";
 
   let condition8 =
     (age === "18-64" || age === "65+") &&
@@ -451,10 +451,10 @@ const SymptomsCheck = () => {
     symptoms.length >= 0 &&
     conditions !== undefined &&
     conditions.length >= 0 &&
-    traveledLast14Days === "no" &&
-    exposureLast14Days === "no exposure" &&
-    exposureAreaLast2Weeks === "none" &&
-    careFacility === "no";
+    traveledLast14Days === "No" &&
+    exposureLast14Days === "No exposure" &&
+    exposureAreaLast2Weeks === "None" &&
+    careFacility === "No";
 
   if (condition5 || condition6 || condition7 || condition8) {
     displayMessage.push(
@@ -468,7 +468,7 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length >= 0 &&
-    (medicalFacility === "plan to work" || medicalFacility === "worked");
+    (medicalFacility === "Plan to work" || medicalFacility === "Worked");
 
   if (condition9) {
     displayMessage.push(
@@ -482,7 +482,7 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length >= 0 &&
-    careFacility === "yes";
+    careFacility === "Yes";
   if (condition10) {
     displayMessage.push(
       "Call your Doctor or Care Team",
@@ -507,13 +507,13 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length === 0 &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    medicalFacility === "no";
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    medicalFacility === "No";
 
   if (condition11) {
     displayMessage.push(
@@ -528,16 +528,16 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length === 0 &&
-    traveledLast14Days === "no" &&
-    exposureLast14Days === "no exposure" &&
-    exposureAreaLast2Weeks === "none" &&
-    medicalFacility === "no";
+    traveledLast14Days === "No" &&
+    exposureLast14Days === "No exposure" &&
+    exposureAreaLast2Weeks === "None" &&
+    medicalFacility === "No";
 
   let condition13 =
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length === 0 &&
-    (medicalFacility === "plan to work" || medicalFacility === "worked");
+    (medicalFacility === "Plan to work" || medicalFacility === "Worked");
 
   if (condition12 || condition13) {
     displayMessage.push(
@@ -553,26 +553,26 @@ const SymptomsCheck = () => {
     symptoms.length === 0 &&
     conditions !== undefined &&
     conditions.length >= 0 &&
-    (traveledLast14Days === "yes" ||
-      exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    medicalFacility === "no";
+    (traveledLast14Days === "Yes" ||
+      exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    medicalFacility === "No";
 
   let condition15 =
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length === 0 &&
-    traveledLast14Days === "yes" &&
-    (exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    careFacility === "no" &&
-    medicalFacility === "no";
+    traveledLast14Days === "Yes" &&
+    (exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    careFacility === "No" &&
+    medicalFacility === "No";
 
   if (condition14 || condition15) {
     displayMessage.push(
@@ -599,10 +599,10 @@ const SymptomsCheck = () => {
     symptoms.length === 0 &&
     conditions !== undefined &&
     conditions.length >= 0 &&
-    traveledLast14Days === "no" &&
-    exposureLast14Days === "no exposure" &&
-    exposureAreaLast2Weeks === "none" &&
-    medicalFacility === "no";
+    traveledLast14Days === "No" &&
+    exposureLast14Days === "No exposure" &&
+    exposureAreaLast2Weeks === "None" &&
+    medicalFacility === "No";
 
   if (condition16) {
     displayMessage.push(
@@ -616,14 +616,14 @@ const SymptomsCheck = () => {
     (age === "18-64" || age === "65+") &&
     symptoms !== undefined &&
     symptoms.length === 0 &&
-    traveledLast14Days === "yes" &&
-    (exposureLast14Days === "live with" ||
-      exposureLast14Days === "near someone 6ft" ||
-      exposureLast14Days === "close contact" ||
-      exposureAreaLast2Weeks === "live" ||
-      exposureAreaLast2Weeks === "visited") &&
-    careFacility === "no" &&
-    medicalFacility === "no";
+    traveledLast14Days === "Yes" &&
+    (exposureLast14Days === "Live with" ||
+      exposureLast14Days === "Near someone 6ft" ||
+      exposureLast14Days === "Close contact" ||
+      exposureAreaLast2Weeks === "Live" ||
+      exposureAreaLast2Weeks === "Visited") &&
+    careFacility === "No" &&
+    medicalFacility === "No";
 
   if (condition17) {
     displayMessage.push(
