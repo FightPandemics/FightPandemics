@@ -1,4 +1,6 @@
-const { getUserByIdSchema, createProfileSchema } = require("./schema/users");
+const Auth0 = require("../components/Auth0");
+const { getBearerToken } = require("../utils");
+const { getUserByIdSchema, createUserSchema } = require("./schema/users");
 
 /*
  * /api/users
@@ -37,15 +39,21 @@ async function routes(app) {
   );
 
   app.post(
-    "/:userId",
-    { preValidation: [app.authenticate], schema: createProfileSchema },
-    async (req, reply) => {
-      try {
-        return new User(req.body).save();
-      } catch (err) {
-        return reply.code(err.statusCode).send(err);
+    "/",
+    { preValidation: [app.authenticate], schema: createUserSchema },
+    async (req) => {
+      const user = await Auth0.getUser(getBearerToken(req));
+      const { email_verified: emailVerified } = user;
+      if (!emailVerified) {
+        throw app.httpErrors.forbidden("Email address not verified");
       }
-    });
+      const userData = {
+        ...req.body,
+        _id: req.userId,
+      };
+      return new User(userData).save();
+    },
+  );
 }
 
 module.exports = routes;
