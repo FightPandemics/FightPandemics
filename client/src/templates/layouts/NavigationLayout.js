@@ -151,8 +151,8 @@ const NavigationLayout = (props) => {
       sidebarStyle={sidebarStyle}
       className="app-drawer"
     >
-      <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-      <Main>
+      <Header onMenuClick={toggleDrawer} style={{ backgroundColor: '#fff', paddingTop: 8, position: 'fixed', zIndex: 1, width: '100%' }} />
+      <Main  style={{ marginTop: 50 }}>
         <props.component {...props} />
       </Main>
       {/* <Footnote /> */}

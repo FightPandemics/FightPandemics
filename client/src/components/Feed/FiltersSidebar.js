@@ -23,7 +23,7 @@ const DrawerWrapper = styled(Drawer)`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px;
+    padding: 2rem;
 
     button {
       border: none;
@@ -55,9 +55,17 @@ const DrawerWrapper = styled(Drawer)`
         padding: 0;
 
         i {
-          height: 14px;
-          width: 14px;
+          height: 1.4rem;
+          width: 1.4rem;
         }
+      }
+
+      .am-accordion-content-box {
+        padding: 0;
+      }
+
+      .am-tag-normal {
+        padding: 0 0.7rem;
       }
 
       .location-search {
@@ -68,15 +76,14 @@ const DrawerWrapper = styled(Drawer)`
 
   .am-button {
     font-size: ${theme.typography.size.large};
-    padding: 0;
+    padding: 0 1rem;
 
     &.close-button {
-      border: none;
-      color: ${ROYAL_BLUE};
+      flex: 0 0 auto;
     }
 
     &.ok-button {
-      flex: 0 0 140px;
+      flex: 0 0 13rem;
     }
   }
 `;
@@ -107,19 +114,19 @@ const FiltersSidebar = () => {
         className="confirm-buttons"
         style={{
           display: "flex",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
           padding: "2rem 0",
         }}
       >
-        <Button
+        <SubmitButton
           className="close-button"
           inline
-          secondary="true"
+          tertiary="true"
           onClick={handleQuit}
           style={{ fontWeight: "normal" }}
         >
           Quit filters
-        </Button>
+        </SubmitButton>
         <SubmitButton
           className="ok-button"
           inline

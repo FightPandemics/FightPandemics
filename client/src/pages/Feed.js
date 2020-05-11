@@ -18,7 +18,7 @@ import { optionsReducer, feedReducer } from "hooks/reducers/feedReducers";
 
 // Constants
 import { theme, mq } from "constants/theme";
-import { ROYAL_BLUE, WHITE } from "constants/colors";
+import { BLACK, DARKER_GRAY, ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -52,9 +52,9 @@ const initialState = {
 
 const SiderWrapper = styled(Sider)`
   background-color: ${WHITE};
-  height: calc(100vh - 60px);
+  height: calc(100vh - 6rem);
   overflow-x: hidden;
-  padding-top: 33px;
+  padding-top: 3.3rem;
   position: fixed;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -63,37 +63,38 @@ const SiderWrapper = styled(Sider)`
 `;
 
 const FiltersWrapper = styled.div`
-  border-top: 0.5px solid rgba(0, 0, 0, 0.5);
-  margin: 0 20px;
-  padding-top: 20px;
+  border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
+  margin: 0 2rem;
+  padding-top: 2rem;
 
   button {
     align-items: center;
     background-color: transparent;
     border: none;
+    color: ${BLACK};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     padding: 0;
 
     span {
       align-items: center;
-      border: 1px solid ${ROYAL_BLUE};
+      border: 0.1rem solid ${ROYAL_BLUE};
       border-radius: 50%;
       color: ${ROYAL_BLUE};
       display: flex;
-      height: 42px;
+      height: 4.2rem;
       justify-content: center;
-      margin-right: 10px;
-      width: 42px;
+      margin-right: 1rem;
+      width: 4.2rem;
 
       svg {
         fill: ${ROYAL_BLUE};
-        height: 20px;
-        width: 20px;
+        height: 2rem;
+        width: 2rem;
       }
     }
   }
@@ -102,13 +103,18 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
-      border-left: 5px solid ${WHITE};
+      border-left: 0.5rem solid ${WHITE};
+      color: ${DARKER_GRAY};
       font-size: ${theme.typography.size.large};
+
+      &:hover {
+        color: ${ROYAL_BLUE};
+      }
     }
 
     .ant-menu-item-selected {
       background-color: transparent;
-      border-left: 5px solid ${ROYAL_BLUE};
+      border-left: 0.5rem solid ${ROYAL_BLUE};
       color: ${ROYAL_BLUE};
       font-weight: bold;
     }
@@ -121,6 +127,8 @@ const LayoutWrapper = styled(Layout)`
   }
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    background-color: #f2f2f2;
+
     .create-post,
     .filter-box {
       display: none;
@@ -132,7 +140,7 @@ const ContentWrapper = styled(Content)`
   margin: 0;
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: 33px 85px 33px calc(290px + 85px);
+    margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
   }
 `;
 
@@ -149,6 +157,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
+    color: ${BLACK};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -156,8 +165,8 @@ const HeaderWrapper = styled.div`
     padding: 0;
 
     img {
-      margin-left: 12px;
-      max-height: 42px;
+      margin-left: 1.2rem;
+      max-height: 4.2rem;
     }
   }
 
@@ -266,7 +275,6 @@ const Feed = () => {
     );
   };
 
-  console.log({ filters, selectedOptions });
   return (
     <FeedContext.Provider
       value={{

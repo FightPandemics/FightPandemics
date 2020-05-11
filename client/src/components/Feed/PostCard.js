@@ -22,9 +22,9 @@ const PostCard = styled(Card)`
     }
 
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      border: 0.4px solid rgba(0, 0, 0, 0.5);
-      border-radius: 2px;
-      padding: 20px 24px;
+      border: 0.04rem solid rgba(0, 0, 0, 0.5);
+      border-radius: 0.2rem;
+      padding: 2rem 2.4rem;
     }
 
     &::before {
@@ -65,6 +65,10 @@ const PostCard = styled(Card)`
       padding: 0;
       color: black;
 
+      &::before {
+        content: none;
+      }
+
       h2 {
         font-weight: bold;
         line-height: 2.7rem;
@@ -78,14 +82,16 @@ const PostCard = styled(Card)`
       }
 
       &.content-wrapper {
-        padding: 0 34px;
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          padding: 0 3.4rem;
+        }
       }
 
       &.view-more-wrapper {
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
-          margin-bottom: 13px;
-          padding: 0 34px;
+          border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
+          margin-bottom: 1.3rem;
+          padding: 0 3.4rem;
         }
       }
 

@@ -17,34 +17,34 @@ import { ROYAL_BLUE, WHITE } from "constants/colors";
 
 const TagButton = styled(Button)`
   align-items: center;
-  background-color: ${WHITE};
-  border: 0.1rem solid ${ROYAL_BLUE};
+  background-color: ${theme.button.secondary.backgroundColor};
+  border: ${theme.button.secondary.border};
   border-radius: 4rem;
-  color: ${ROYAL_BLUE};
+  color: ${theme.button.secondary.color};
   display: inline-flex;
   font-size: ${theme.typography.size.xsmall};
-  height: 25px;
+  height: 2.5rem;
   margin: 0.5rem 0.3rem;
   padding: 0 1rem;
   position: relative;
   text-align: center;
 
   svg {
-    height: 15px;
-    width: 15px;
-  }
+    height: 1.5rem;
+    width: 1.5rem;
 
-  path {
-    stroke: ${ROYAL_BLUE};
+    path {
+      stroke: ${theme.button.secondary.color};
+    }
   }
 
   &:hover {
-    background-color: ${ROYAL_BLUE};
-    color: ${WHITE};
+    background-color: ${theme.button.primary.backgroundColor};
+    color: ${theme.button.primary.color};
 
     svg {
       path {
-        stroke: ${WHITE};
+        stroke: ${theme.button.primary.color};
       }
     }
   }
