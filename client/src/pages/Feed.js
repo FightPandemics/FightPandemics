@@ -55,7 +55,7 @@ const initialState = {
 
 const SiderWrapper = styled(Sider)`
   background-color: ${WHITE};
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 5rem);
   overflow-x: hidden;
   padding-top: 3.3rem;
   position: fixed;

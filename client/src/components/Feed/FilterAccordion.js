@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FeedContext } from "pages/Feed.js";
-import FilterTag from "../Tag/FilterTag";
+import ButtonTag from "../Tag/ButtonTag";
 import LocationSearch from "components/Input/LocationSearch";
 import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
@@ -28,16 +28,18 @@ const FilterAccord = () => {
             key={idx}
           >
             {Object.values(filter.options).map((option, idx) => (
-              <FilterTag
+              <ButtonTag
                 key={idx}
-                onChange={handleOption(filter.label, option)}
-                selected={
-                  selectedOptions[filter.label] &&
-                  selectedOptions[filter.label].includes(option)
+                color="red"
+                onClick={handleOption(filter.label, option)}
+                className={
+                  "tag-selectable " +
+                  (selectedOptions[filter.label] &&
+                    selectedOptions[filter.label].includes(option) ? 'tag-selected' : '')
                 }
               >
                 {option}
-              </FilterTag>
+              </ButtonTag>
             ))}
           </FilterAccordionPanel>
         );

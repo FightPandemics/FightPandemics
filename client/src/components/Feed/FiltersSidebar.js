@@ -73,16 +73,18 @@ const DrawerWrapper = styled(Drawer)`
     }
   }
 
-  .am-button {
-    font-size: ${theme.typography.size.large};
-    padding: 0 1rem;
+  .confirm-buttons {
+    .am-button {
+      font-size: ${theme.typography.size.large};
+      padding: 0 1rem;
 
-    &.close-button {
-      flex: 0 0 auto;
-    }
+      &.close-button {
+        flex: 0 0 auto;
+      }
 
-    &.ok-button {
-      flex: 0 0 13rem;
+      &.ok-button {
+        flex: 0 0 13rem;
+      }
     }
   }
 `;
