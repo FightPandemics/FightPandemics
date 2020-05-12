@@ -32,5 +32,4 @@ const FeedbackSchema = new Schema(
   { collection: "feedbacks", timestamps: true },
 );
 
-module.exports.FeedbackSchema = FeedbackSchema;
-module.exports.FeedbackModel = model("Feedback", FeedbackSchema);
+module.exports = model("Feedback", FeedbackSchema);
