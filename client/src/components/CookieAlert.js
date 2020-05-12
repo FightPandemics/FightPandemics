@@ -35,7 +35,7 @@ const ClosePointer = styled.span`
 `;
 
 export default () => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
 
   const hideMessage = (event) => {
     setActive(false);
