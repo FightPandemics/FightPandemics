@@ -17,7 +17,7 @@ async function routes(app) {
       email: result.email,
       firstName: result.firstName,
       id: result._id,
-      lastName: result.firstName,
+      lastName: result.lastName,
     };
   });
 
