@@ -281,7 +281,7 @@ const Step7 = (props) => {
         I live in a long-term care facility
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I dont live in a long-term care facility.
+        No, I don't live in a long-term care facility.
       </AnswerButton>
     </div>
   );
@@ -312,7 +312,7 @@ const Step8 = (props) => {
         This includes volunteering
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I dont work or plan to work in a care facility.
+        No, I don't work or plan to work in a care facility.
       </AnswerButton>
     </div>
   );
@@ -387,7 +387,7 @@ const SymptomsCheck = () => {
   if (condition1 || condition2 || condition3 || condition4) {
     displayMessage.push(
       "No test needed at this time",
-      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionaire again.",
+      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionnaire again.",
     );
   }
 
@@ -399,7 +399,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Monitor Symptoms",
-      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your synptoms get worse contact your doctor's office",
+      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office",
     );
   }
 
@@ -473,7 +473,7 @@ const SymptomsCheck = () => {
   if (condition9) {
     displayMessage.push(
       "Call your Work Health Provider",
-      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of CoVID-19",
+      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19",
     );
   }
 
@@ -498,7 +498,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Isolate from others",
-      "You should try to stay away from others for atleast 7 days from when the symptoms first appeared. Your isolation can end if your symptons improve significantly and if you have had no fever for atleast 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
+      "You should try to stay away from others for at least 7 days from when the symptoms first appeared. Your isolation can end if your symptoms improve significantly and if you have had no fever for at least 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
     );
   }
 
