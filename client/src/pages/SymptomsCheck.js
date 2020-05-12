@@ -160,7 +160,7 @@ const Step3 = (props) => {
       </h5>
       <h2 className="mb-5">
         Do you have any of these pre-existing medical conditions? Please, select
-        all that apply?
+        all that apply.
       </h2>
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
@@ -281,7 +281,7 @@ const Step7 = (props) => {
         I live in a long-term care facility
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I don't live in a long-term care facility.
+        No, I don't live in a long-term care facility
       </AnswerButton>
     </div>
   );
@@ -300,19 +300,19 @@ const Step8 = (props) => {
       </h5>
       <h2 className="mb-5">
         Do you live in a medical facility? This includes a hospital, emergency
-        room, other medical setting, or long-term care facility.Select all that
+        room, other medical setting, or long-term care facility. Select all that
         apply.
       </h2>
       <AnswerButton onSelect={() => onSelectAnswer("worked")}>
-        I have worked in a hospital, or other care facility in the past 14 days.
+        I have worked in a hospital, or other care facility in the past 14 days
         This includes volunteering.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("plan to work")}>
-        I plan to work in hospital, or other care facility in the next 14 days.
-        This includes volunteering
+        I plan to work in hospital, or other care facility in the next 14 days
+        This includes volunteering.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I don't work or plan to work in a care facility.
+        No, I don't work or plan to work in a care facility
       </AnswerButton>
     </div>
   );
