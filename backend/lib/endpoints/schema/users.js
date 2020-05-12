@@ -5,6 +5,7 @@ const createUserSchema = {
   body: strictSchema()
     .prop("name", S.string().required())
     .prop("country", S.string().required())
+    .prop("city", S.string())
     .prop("neighborhood", S.string())
     .prop("address", S.string())
     .prop("wants", S.array().maxItems(3).items(S.string()))

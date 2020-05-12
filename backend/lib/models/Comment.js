@@ -48,5 +48,4 @@ CommentSchema.index({
   postId: 1,
 });
 
-module.exports.CommentSchema = CommentSchema;
-module.exports.CommentModel = model("Comment", CommentSchema);
+module.exports = model("Comment", CommentSchema);

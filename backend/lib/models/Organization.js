@@ -60,5 +60,4 @@ const OrganizationSchema = new Schema({
   },
 });
 
-module.exports.OrganizationSchema = OrganizationSchema;
-module.exports.OrganizationModel = model("Organization", OrganizationSchema);
+module.exports = model("Organization", OrganizationSchema);
