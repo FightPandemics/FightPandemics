@@ -3,18 +3,10 @@ import styled from "styled-components";
 
 import { SearchBar } from 'antd-mobile';
 import { NavLink } from "react-router-dom";
-
-import { theme, mq } from "../../constants/theme";
-const { colors } = theme;
-const { typography } = theme;
-const { xlarge } = typography.size;
-const { primary } = colors;
-
-
+import LocalEmergencyNo from './LocalEmergencyNo';
 
 
 const HospitalSidebar = props => {
-
 
 const SearchBarContainer = styled.div`
    padding: 5rem 0;
@@ -43,20 +35,6 @@ const NavBar = styled.div`
    }
 `;
 
-const EmergencyLine = styled.div`
-    border: 0.2px solid rgba(185, 185, 185, 0.5);
-    padding: 2rem;
-    padding-left: 4rem;
-    h4 {
-      font-weight: bold;
-    }
-    h3 {
-      font-weight: bold;
-      color: ${primary};
-      text-decoration: underline;
-      font-size: ${xlarge};
-    }
-`;
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
@@ -75,14 +53,18 @@ const ActiveLinkStyles = {
   paddingLeft: "2rem"
 }
 
-const [ searchValue, setSearchValue ] = useState('');
 
-const onSearchInputChange = (value) => {
-  setSearchValue(value);
-}
-const clearSearch = () => {
-  setSearchValue('');
-}
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearchInputChange = (value) => {
+    setSearchValue(value);
+    console.log(searchValue);
+
+  }
+  const clearSearch = () => {
+    setSearchValue('');
+  }
+
 
 
 return (
@@ -101,10 +83,7 @@ return (
            <li><NavLink activeStyle={ActiveLinkStyles} to="/confirmed-cases">Confirmed Cases</NavLink></li>
         </ul>
      </NavBar>
-     <EmergencyLine>
-        <h4>Local emergency number</h4>
-        <h3>911</h3>
-     </EmergencyLine>
+     <LocalEmergencyNo />
    </div>
 )
 

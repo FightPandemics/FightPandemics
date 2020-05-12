@@ -9,7 +9,7 @@ const checkSymptoms = props => {
       align-items: center;
       justify-content: space-between;
       background-color: #fff;
-      border: 0.4px solid rgba(156, 155, 155, 0.27);
+      border: 1px solid rgba(156, 155, 155, 0.27);
       box-sizing: border-box;
       border-radius: 2px;
       padding: 2rem;

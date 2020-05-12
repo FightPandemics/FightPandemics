@@ -6,12 +6,11 @@ import { Card, WhiteSpace } from 'antd-mobile';
 import { theme } from "../../constants/theme";
 
 const { colors, typography } = theme;
-const { royalBlue, lightGray, darkGray, selago, primary } = colors;
-const { display } = typography.font.family;
-const { xsmall, medium, large, xxlarge } = typography.size;
+const { primary } = colors;
+const { medium, large } = typography.size;
 
 const HospitalCard = props => {
-  const { hospitalName, hospitalAddress, openDate, contactNo, distance, isOpen, isActive } = props;
+  const { hospitalName, hospitalAddress, openDate, contactNo, distance, isOpen } = props;
 
 
   const HospitalCard = styled(Card)`

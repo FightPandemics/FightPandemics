@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import SubmitButton from "~/components/Button/SubmitButton";
 import Sidebar from "~/components/NearestHospital/HospitalSidebar";
 import CheckSymptomsBox from "~/components/NearestHospital/CheckSymptomsBox";
+import LocalEmergencyNo from "~/components/NearestHospital/LocalEmergencyNo";
 import { Tabs } from 'antd-mobile';
-import { NavLink } from 'react-router-dom';
-import { theme, mq } from "../../constants/theme";
-const { colors } = theme;
-const { primary } = colors;
+import { NavLink, withRouter } from 'react-router-dom';
+import { mq } from "../../constants/theme";
 
 
 const NearestHospitalLayout = props => {
+
+  const [ isMobile, setMediaQuery ] = useState(false);
+
+ useEffect(() => {
+   const mediaQuery = window.matchMedia('(max-width: 767px)');;
+   setMediaQuery(mediaQuery.matches);
+   const listenerFunc = (query) => {
+      setMediaQuery(query.currentTarget.matches);
+   };
+   window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
+
+  }, [])
 
 
   const NearestHospitalContainer = styled.div`
@@ -32,6 +42,9 @@ const NearestHospitalLayout = props => {
        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
          display: none;
        }
+       @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
+         padding-right: 1rem;
+       }
   `;
 
   const NearestHospitalContentBox = styled.div`
@@ -41,27 +54,44 @@ const NearestHospitalLayout = props => {
        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
          padding: 0;
        }
+
   `;
 
-  const ContentDesktop = styled.div`
-      display: block;
-      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        display: none;
-      }
-  `;
 
-const StyledTabs = styled(Tabs)`
-    display: none;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      display: block;
-    }
-`;
+  const ActiveLinkStyles = {
+    borderBottom: "1px solid #425af2",
+    width: "100%",
+    textAlign: "center"
+  }
 
   const navigation = [
-    { title: <NavLink to="/nearest-hospital">Health Facilities</NavLink> },
-    { title: <NavLink to="/confirmed-cases">Confirmed Cases</NavLink> }
+    { title: <NavLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">Health Facilities</NavLink> },
+    { title: <NavLink activeStyle={ActiveLinkStyles} to="/confirmed-cases">Confirmed Cases</NavLink> }
   ];
 
+const renderChildComponents = () => {
+  if(isMobile) {
+    return (
+      <div>
+       <LocalEmergencyNo />
+       <Tabs tabs={navigation}
+          initialPage={0}
+          tabBarUnderlineStyle={{ display: "none" }}
+          swipeable={false}
+        >
+        {props.children}
+        </Tabs>
+      </div>
+    )
+  } else {
+      return (
+        <div>
+          <CheckSymptomsBox />
+         {props.children}
+       </div>
+      )
+    }
+  }
 
 
   return (
@@ -72,15 +102,11 @@ const StyledTabs = styled(Tabs)`
        </NearestHospitalSideBar>
 
        <NearestHospitalContentBox>
-
-           <ContentDesktop>
-             <CheckSymptomsBox />
-             {props.children}
-           </ContentDesktop>
+          {renderChildComponents()}
        </NearestHospitalContentBox>
 
     </NearestHospitalContainer>
-  );
-};
+  )
+}
 
-export default NearestHospitalLayout;
+export default withRouter(NearestHospitalLayout);

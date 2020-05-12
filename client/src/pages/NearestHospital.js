@@ -24,7 +24,7 @@ const NearestHealthFacilities = props => {
          hospitalName: "United hospital",
          hospitalAddress: "9915 Saddle Dr Undefined San Fancisco , Washinton United State",
          openDate: "Open Mon - Fri 09:00 to 22:00",
-         contactNo: "(234) 712.191.531",
+         contactNo: "(234) 191.5131",
          distance: "4.3km",
          isOpen: false
        },
@@ -36,15 +36,6 @@ const NearestHealthFacilities = props => {
          contactNo: "(704) 555.0126",
          distance: "6km",
          isOpen: false
-       },
-       {
-         id: 4,
-         hospitalName: "United hospital",
-         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco , Washinton United State",
-         openDate: "Open Mon - Fri 06:00 to 22:00",
-         contactNo: "(704) 555.0126",
-         distance: "12km",
-         isOpen: true
        }
      ]
 
@@ -82,9 +73,6 @@ const NearestHealthFacilities = props => {
       div {
         align-self: flex-start;
         height: auto;
-      }
-      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        display: none;
       }
   `;
 
