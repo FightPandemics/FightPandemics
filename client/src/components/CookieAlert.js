@@ -30,7 +30,7 @@ const CookieLink = styled.a`
   text-decoration: underline;
 `;
 
-const ClosePointer = styled.div`
+const ClosePointer = styled.span`
   cursor: pointer;
 `;
 
