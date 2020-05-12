@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-
+import {Toast } from "antd-mobile";
+import { validateEmail } from "../utils/common.js";
 import SubmitButton from "components/Button/SubmitButton";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
@@ -72,14 +73,18 @@ const Step2 = (props) => {
       </AnswerButton>
     </WizardStep>
   );
-};
-
+}; 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const onChange = (evt) => setEmail(evt);
-  const onSubmit = () => {
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    if (!validateEmail(email)) {
+      Toast.fail("Invalid email address!", 2.0);
+      return;
+    }
     props.update("email", email);
-  };
+  }
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
