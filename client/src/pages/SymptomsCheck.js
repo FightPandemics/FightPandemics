@@ -399,7 +399,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Monitor Symptoms",
-      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office",
+      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office.",
     );
   }
 
@@ -459,7 +459,7 @@ const SymptomsCheck = () => {
   if (condition5 || condition6 || condition7 || condition8) {
     displayMessage.push(
       "Talk to someone about Testing",
-      "Your Answers Suggest you may need to get tested for COVID-19.You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
+      "Your answers suggest you may need to get tested for COVID-19. You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
     );
   }
 
@@ -473,7 +473,7 @@ const SymptomsCheck = () => {
   if (condition9) {
     displayMessage.push(
       "Call your Work Health Provider",
-      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19",
+      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19.",
     );
   }
 
