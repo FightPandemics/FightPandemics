@@ -30,12 +30,12 @@ const CookieLink = styled.a`
   text-decoration: underline;
 `;
 
-const CloseButton = styled.button`
-  align-self: start;
+const ClosePointer = styled.div`
+  cursor: pointer;
 `;
 
 export default () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   const hideMessage = (event) => {
     setActive(false);
@@ -62,9 +62,9 @@ export default () => {
         Your use of FightPandemics' Products is subject to these policies and
         terms.
       </div>
-      <CloseButton onClick={hideMessage}>
-        <SvgIcon src={closeX} />
-      </CloseButton>
+      <ClosePointer>
+        <SvgIcon src={closeX} onClick={hideMessage} />
+      </ClosePointer>
     </CookieContainer>
   );
 };
