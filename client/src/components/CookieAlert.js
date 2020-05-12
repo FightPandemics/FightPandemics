@@ -4,7 +4,8 @@ import { theme } from "../constants/theme";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
-import closeX from "~/assets/icons/close-btn.svg";
+//import closeX from "~/assets/icons/close-btn.svg";
+import closeX from "../assets/icons/close-btn.svg";
 
 const { colors } = theme;
 
@@ -25,17 +26,17 @@ const CookieContainer = styled.div`
   text-align: left;
 `;
 
+const ClosePointer = styled.span`
+  cursor: pointer;
+`;
+
 const CookieLink = styled.a`
   color: ${colors.selago};
   text-decoration: underline;
 `;
 
-const CloseButton = styled.button`
-  align-self: start;
-`;
-
 export default () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   const hideMessage = (event) => {
     setActive(false);
@@ -52,7 +53,7 @@ export default () => {
 
   return (
     <CookieContainer style={{ display: active ? "" : "none" }}>
-      <div>
+      <div style={{ marginRight: "1rem" }}>
         This site uses cookies to deliver our service and to show you relevant
         information. By using our site, you acknowledge that you have read and
         understand our{" "}
@@ -61,10 +62,10 @@ export default () => {
         <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
         Your use of FightPandemics' Products is subject to these policies and
         terms.
+        <ClosePointer>
+          <SvgIcon src={closeX} onClick={hideMessage} />
+        </ClosePointer>
       </div>
-      <CloseButton onClick={hideMessage}>
-        <SvgIcon src={closeX} />
-      </CloseButton>
     </CookieContainer>
   );
 };
