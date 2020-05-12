@@ -1,17 +1,13 @@
 import { Drawer, List, Button } from "antd-mobile";
-import React, { useState } from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import logo from "assets/logo.svg";
 
 import Header from "components/Header";
 import CookieAlert from "components/CookieAlert";
-import Logo from "components/Logo";
 import Main from "./Main";
-import { theme } from "constants/theme";
-
-const { colors, typography } = theme;
-const { medium, large } = typography.size;
+import DesktopNavbar from "components/Navigation/DesktopNavbar";
+import { theme, mq } from "constants/theme";
 
 const drawerStyles = {
   position: "relative",
@@ -142,152 +138,65 @@ const NavigationLayout = (props) => {
     </>
   );
 
-  const NavBar = styled.div`
-     height: 7rem;
-     background-color: #fff;
-     display: flex;
-     align-items: center;
-  `;
 
-  const HeaderContainer = styled.div`
-     margin-right: auto;
-     margin-left: 3rem;
-  `;
 
-  const NavLinks = styled.div`
-    align-self: flex-end;
-    transition: all 1s;
-     ul {
-       list-style-type: none;
-       display: flex;
-       margin-bottom: 0rem;
-       margin-right: 2rem;
+const [ isMobile, setMediaQuery ] = useState(false);
 
-       .registerBtn {
-         color: ${colors.royalBlue};
-         border: 1px solid ${colors.royalBlue};
-         border-radius: 2rem;
-         padding: 1rem 1.3rem;
-         .registerLink {
-            color: ${colors.primary}
-         }
-         .registerLink:hover {
-           padding: 0;
-           font-weight: 500;
-         }
-       }
+useEffect(() => {
+  const mediaQuery = window.matchMedia(mq.phone.wide.max);;
+  setMediaQuery(mediaQuery.matches);
+  const listenerFunc = (query) => {
+     setMediaQuery(query.currentTarget.matches);
+  };
+  window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
 
-       li {
-         padding: 1rem 1.3rem;
-         padding-bottom: 1.3rem;
-         font-size: ${large};
-         color: #282828;
-         a:not(.registerLink) {
-           color: #282828;
-           text-decoration: none;
-           padding: 0 .6rem .8rem .6rem;
-         }
-         a:hover:not(.registerLink)  {
-           font-weight: 600;
-           color: ${colors.royalBlue};
-           border-bottom: 3px solid ${colors.royalBlue};
-         }
+}, [])
 
-       }
-     }
-  `;
 
-  const NavLinkRegister = styled.li`
-    color: ${colors.royalBlue};
-    border: 1px solid ${colors.royalBlue};
-    border-radius: 2rem;
-    padding: .5rem 0 !important;
-    a {
-       text-decoration: none;
+
+  const renderNavigationBar = () => {
+    if(isMobile) {
+       return (
+         <Drawer
+           style={{
+             minHeight: document.documentElement.clientHeight,
+             ...drawerStyles,
+           }}
+           enableDragHandle
+           open={drawerOpened}
+           onOpenChange={toggleDrawer}
+           position="right"
+           sidebar={drawerMenu()}
+           sidebarStyle={sidebarStyle}
+           className="app-drawer"
+         >
+           <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
+           <Main>
+             <props.component {...props} />
+           </Main>
+           {/* <Footnote /> */}
+           <CookieAlert />
+         </Drawer>
+       )
+    } else {
+      return (
+       <div>
+         <DesktopNavbar isAuthenticated={props.isAuthenticated} />
+         <Main>
+           <props.component {...props} />
+         </Main>
+         <CookieAlert />
+        </div>
+      )
     }
-    a:hover {
-      padding: 0 !important;
-      font-weight: 300 !important;
-      borderBottom: none !important;
-    }
-  `;
 
-
-  const activeStyles = {
-    fontWeight: "600",
-    color: "#425AF2"
-  }
-
-
-  const renderDesktopNav = () => {
-    return (
-    <div>
-     <NavBar>
-          <HeaderContainer>
-               <Logo src={logo} alt="Fight Pandemics logo" />
-          </HeaderContainer>
-          <NavLinks>
-               <ul>
-                   <li><NavLink activeStyle={activeStyles} to="/feed">Feed</NavLink></li>
-                   <li><NavLink activeStyle={activeStyles} to="#">COVID-info</NavLink></li>
-                     {props.isAuthenticated ? (
-                       <>
-                       <li><NavLink activeStyle={activeStyles} to="/profile">Profile</NavLink></li>
-                       </>
-                     ) : (
-                       <>
-                       <li><NavLink activeStyle={activeStyles} to="/auth/login">Login</NavLink></li>
-                       <li className="registerBtn">
-                          <NavLink className="registerLink" to="/auth/login">Register</NavLink>
-                       </li>
-                       </>
-                     )}
-               </ul>
-          </NavLinks>
-       </NavBar>
-       <Main>
-         <props.component {...props} />
-       </Main>
-      </div>
-    )
   }
 
   return (
     <>
-     {renderDesktopNav()}
+     {renderNavigationBar()}
      </>
   );
 };
 
 export default NavigationLayout;
-
-// const NavLinkRegister = styled.li`
-//   color: ${colors.royalBlue};
-//   border: 1px solid ${colors.royalBlue};
-//   border-radius: 2rem;
-//   padding: .5rem 1.3rem !important;
-//   a {
-//     padding: 0 !important;
-//   }
-// `;
-
-// <Drawer
-//   style={{
-//     minHeight: document.documentElement.clientHeight,
-//     ...drawerStyles,
-//   }}
-//   enableDragHandle
-//   open={drawerOpened}
-//   onOpenChange={toggleDrawer}
-//   position="right"
-//   sidebar={drawerMenu()}
-//   sidebarStyle={sidebarStyle}
-//   className="app-drawer"
-// >
-//   <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-//   <Main>
-//     <props.component {...props} />
-//   </Main>
-//   {/* <Footnote /> */}
-//   <CookieAlert />
-// </Drawer>
