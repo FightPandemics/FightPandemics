@@ -33,16 +33,14 @@
     "typeface-work-sans": "^0.0.72"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint src",
     "install-docker": "docker-compose run client npm install",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -64,7 +62,7 @@
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.0.5"
   },
   "husky": {
     "hooks": {
@@ -73,6 +71,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
       "prettier --write"
     ]
   },
