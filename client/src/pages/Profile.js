@@ -4,6 +4,8 @@ import { Popover, WhiteSpace } from "antd-mobile";
 
 import ProfilePic from "components/Picture/ProfilePic";
 import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+import { theme } from "constants/theme";
 
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
@@ -12,6 +14,7 @@ import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
 import ButtonModal from "components/Feed/ButtonModal"; // feed
+import { DARK_GRAY } from "constants/colors";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -171,10 +174,16 @@ const Profile = (props) => {
       <div style={userInfoStyle}>
         {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <Heading level={4} className="h4">{`${
-          firstName + " " + lastName
-        }`}</Heading>
-        {email}
+        <TextLabel weight="500" block={true} size={theme.typography.size.large}>
+          {firstName} {lastName}
+        </TextLabel>
+        <TextLabel
+          block={true}
+          color={DARK_GRAY}
+          size={theme.typography.size.medium}
+        >
+          {email}
+        </TextLabel>
         {location}
         <IconsContainer>
           <HelpContainer>

@@ -4,7 +4,8 @@ import filterOptions from "assets/data/filterOptions";
 import createPostSettings from "assets/data/createPostSettings";
 import CustomModal from "components/CreatePost/CustomModal";
 import RadioGroup from "components/CreatePost/RadioGroup";
-import CustomH1 from "components/Typography/Title/CustomH1";
+import Heading from "components/Typography/Heading";
+
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import AddTags from "components/Tag/AddTags";
 import SubmitButton from "components/Button/SubmitButton";
@@ -119,14 +120,9 @@ const CreatePost = (props) => {
 
   return (
     <CreatePostWrapper>
-      <CustomH1
-        className="title"
-        fontsize="2.2rem"
-        fontweight="700"
-        color="black"
-      >
+      <Heading className="h4" level={4}>
         Create a Post
-      </CustomH1>
+      </Heading>
       <StyledForm onSubmit={handleSubmit}>
         <div className="settings">
           <CustomModal
