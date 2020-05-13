@@ -69,6 +69,7 @@ const StyledComment = styled(Comment)`
                   padding-right: 0;
                   margin-right: 12px;
                 }
+
                 input {
                   background-color: ${lighterGray};
                   color: black;
@@ -76,6 +77,10 @@ const StyledComment = styled(Comment)`
                   border-radius: 4rem;
                   padding: 1.4rem;
                   width: 100%;
+                }
+
+                textarea {
+                  width: calc(100% - 50px);
                 }
               }
             }
