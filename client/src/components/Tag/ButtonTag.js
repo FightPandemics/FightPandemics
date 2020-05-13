@@ -23,6 +23,10 @@ const ButtonWrapper = styled(Button)`
   position: relative;
   text-align: center;
 
+  .am-modal .am-accordion &::before {
+    content: none;
+  }
+
   &.tag-closable {
     svg {
         display: block;
