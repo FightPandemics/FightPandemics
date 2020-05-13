@@ -7,11 +7,11 @@ import { theme, mq } from "../../constants/theme";
 
 const { colors } = theme;
 const { typography } = theme;
-const { xlarge } = typography.size;
+const { xxlarge } = typography.size;
 const { royalBlue } = colors;
 
 
-const LocalEmergencyNo = props => {
+const LocalEmergencyNumber = props => {
 
 
   const EmergencyLine = styled(NoticeBar)`
@@ -42,8 +42,9 @@ const LocalEmergencyNo = props => {
           h3 {
             font-weight: bold;
             color: ${royalBlue};
-            text-decoration: underline;
-            font-size: ${xlarge};
+            border-bottom: 2px solid ${royalBlue};
+            display: inline;
+            font-size: ${xxlarge};
           }
 
         }
@@ -65,4 +66,4 @@ const LocalEmergencyNo = props => {
 }
 
 
-export default LocalEmergencyNo;
+export default LocalEmergencyNumber;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { SearchBar } from 'antd-mobile';
 import { NavLink } from "react-router-dom";
-import LocalEmergencyNo from './LocalEmergencyNo';
+import LocalEmergencyNumber from './LocalEmergencyNumber';
 
 
 const HospitalSidebar = props => {
@@ -15,6 +15,7 @@ const SearchBarContainer = styled.div`
 const NavBar = styled.div`
    border-top: 0.2px solid rgba(0, 0, 0, 0.5);
    border-bottom: 0.2px solid rgba(0, 0, 0, 0.5);
+   color: #282828;
    ul {
      list-style-type: none;
      padding: 1rem 0;
@@ -50,7 +51,7 @@ const StyledSearchBar = styled(SearchBar)`
 const ActiveLinkStyles = {
   fontWeight: "bold",
   borderLeft: "4px solid #425af2",
-  paddingLeft: "2rem"
+  padding: ".4rem 2rem"
 }
 
 
@@ -83,7 +84,7 @@ return (
            <li><NavLink activeStyle={ActiveLinkStyles} to="/confirmed-cases">Confirmed Cases</NavLink></li>
         </ul>
      </NavBar>
-     <LocalEmergencyNo />
+     <LocalEmergencyNumber />
    </div>
 )
 

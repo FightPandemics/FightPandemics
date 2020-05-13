@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import Sidebar from "~/components/NearestHospital/HospitalSidebar";
-import CheckSymptomsBox from "~/components/NearestHospital/CheckSymptomsBox";
-import LocalEmergencyNo from "~/components/NearestHospital/LocalEmergencyNo";
+import Sidebar from "../../components/NearestHospital/HospitalSidebar";
+import CheckSymptomsBox from "../../components/NearestHospital/CheckSymptomsBox";
+import LocalEmergencyNumber from "../../components/NearestHospital/LocalEmergencyNumber";
 import { Tabs } from 'antd-mobile';
 import { NavLink, withRouter } from 'react-router-dom';
 import { mq } from "../../constants/theme";
@@ -73,7 +73,7 @@ const renderChildComponents = () => {
   if(isMobile) {
     return (
       <div>
-       <LocalEmergencyNo />
+       <LocalEmergencyNumber />
        <Tabs tabs={navigation}
           initialPage={0}
           tabBarUnderlineStyle={{ display: "none" }}

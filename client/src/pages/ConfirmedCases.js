@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { SearchBar } from 'antd-mobile';
 
-import NearestHospitalLayout from "~/templates/layouts/NearestHospitalLayout";
+import NearestHospitalLayout from "../templates/layouts/NearestHospitalLayout";
 import { mq } from "../constants/theme";
 
 

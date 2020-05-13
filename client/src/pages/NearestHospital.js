@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { mq } from '../constants/theme';
 
 import NrMap from "./NrMap";
-import HospitalCard from "~/components/NearestHospital/HospitalCard";
-import NearestHospitalLayout from "~/templates/layouts/NearestHospitalLayout";
+import DescriptionCard from "../components/Card/DescriptionCard";
+import NearestHospitalLayout from "../templates/layouts/NearestHospitalLayout";
 
 const NearestHealthFacilities = props => {
 
@@ -83,7 +83,7 @@ const NearestHealthFacilities = props => {
              <h2>Your nearest health facilities</h2>
 
              {HealthFacilitiesData.map(data => (
-               <HospitalCard
+               <DescriptionCard
                  key={data.id}
                  hospitalName={data.hospitalName}
                  hospitalAddress={data.hospitalAddress}

@@ -7,6 +7,10 @@ import {
   LIGHT_GRAY,
   LIGHTER_GRAY,
   SELAGO,
+  ORANGE_RED,
+  MINT_GREEN,
+  BLACK,
+  WHITE
 } from "./colors";
 
 const theme = {
@@ -55,6 +59,10 @@ const theme = {
     mediumGray: MEDIUM_GRAY,
     lightGray: LIGHT_GRAY,
     lighterGray: LIGHTER_GRAY,
+    orangeRed: ORANGE_RED,
+    mintGreen: MINT_GREEN,
+    black: BLACK,
+    white: WHITE
   },
   button: {
     fontFamily: "DM Sans",
