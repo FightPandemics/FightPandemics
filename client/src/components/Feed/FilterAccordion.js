@@ -30,7 +30,6 @@ const FilterAccord = () => {
             {Object.values(filter.options).map((option, idx) => (
               <ButtonTag
                 key={idx}
-                color="red"
                 onClick={handleOption(filter.label, option)}
                 className={
                   "tag-selectable " +
