@@ -9,7 +9,7 @@ import { Button } from "antd-mobile";
 import { ReactComponent as CloseIcon } from "assets/icons/close-btn.svg";
 
 // Constants
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const ButtonWrapper = styled(Button)`
   ${theme.button.secondary}
@@ -48,13 +48,24 @@ const ButtonWrapper = styled(Button)`
     }
   }
 
-  &.tag-selected,
-  &:hover {
+  &.tag-selected {
     ${theme.button.primary}
 
     svg {
       path {
         stroke: ${theme.button.primary.color};
+      }
+    }
+  }
+
+  &:hover {
+    @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+      ${theme.button.primary}
+
+      svg {
+        path {
+          stroke: ${theme.button.primary.color};
+        }
       }
     }
   }

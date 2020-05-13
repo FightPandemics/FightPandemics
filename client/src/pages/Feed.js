@@ -130,7 +130,8 @@ const LayoutWrapper = styled(Layout)`
   }
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: #f2f2f2;
+    background-color: #fbfbfd;
+    min-height: calc(100vh - 5rem);
 
     .create-post,
     .filter-box {

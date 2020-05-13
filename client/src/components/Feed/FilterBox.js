@@ -14,6 +14,12 @@ const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
 `;
 
+const ModalWrapper = styled(Modal)`
+  .filter-4 .am-button {
+    padding: 0 4.2rem;
+  }
+`;
+
 const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
@@ -37,7 +43,7 @@ const FilterBox = () => {
         Filter by
       </CustomH1>
       {renderFilterOptions(filters)}
-      <Modal
+      <ModalWrapper
         popup
         visible={filterModal}
         onClose={handleFilterModal(null)}
@@ -69,7 +75,7 @@ const FilterBox = () => {
             Apply filters
           </SubmitButton>
         </div>
-      </Modal>
+      </ModalWrapper>
     </FilterBoxWrapper>
   );
 };

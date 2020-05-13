@@ -26,14 +26,14 @@ const PostCard = styled(Card)`
     }
 
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      border: 0.04rem solid rgba(0, 0, 0, 0.5);
+      border: 0.05rem solid rgba(0, 0, 0, 0.5);
       border-radius: 0.2rem;
       padding: 2rem 2.4rem;
     }
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        border: 0.04rem solid rgba(0, 0, 0, 0.5);
+        border: 0.05rem solid rgba(0, 0, 0, 0.5);
       }
     }
 
