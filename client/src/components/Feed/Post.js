@@ -5,6 +5,7 @@ import PostSocial from "./PostSocial";
 import Comments from "./Comments";
 import FilterTag from "components/Tag/FilterTag";
 import AutoSize from "components/Input/AutoSize";
+import Heading from "components/Typography/Heading";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -51,7 +52,9 @@ const Post = ({ post }) => {
 
   const renderContent = (
     <Card.Body>
-      <h1>{post.title}</h1>
+      <Heading level={4} className="h4">
+        {post.title}
+      </Heading>
       <p className="post-description">{post.description}</p>
     </Card.Body>
   );
@@ -116,7 +119,9 @@ const Post = ({ post }) => {
       visible={copied}
       transparent
     >
-      <h1 style={{ color: "black" }}>Link Copied!</h1>
+      <Heading level={4} className="h4">
+        Link Copied!
+      </Heading>
     </Modal>
   );
 
