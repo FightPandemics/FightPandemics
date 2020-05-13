@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { Checkbox } from "antd-mobile";
 
-import { PRIMARY } from "../../constants/colors";
+import { PRIMARY } from "constants/colors";
 
 const AnswerStyles = styled.div`
   align-items: center;

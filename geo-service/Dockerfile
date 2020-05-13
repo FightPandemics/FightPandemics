@@ -4,9 +4,13 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /app
-
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "app.py"]
+RUN addgroup --system app && adduser --system --ingroup app app
+
+COPY --chown=app:app . /app
+
+USER app
+
+CMD ["gunicorn", "--workers=2", "--threads=4", "--worker-class=gthread", "--worker-tmp-dir=/dev/shm", "--bind=0.0.0.0:5000", "app:app"]

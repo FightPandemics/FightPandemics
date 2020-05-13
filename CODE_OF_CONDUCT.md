@@ -33,4 +33,4 @@ Unacceptable behavior from any volunteer or community member will not be tolerat
 If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify @ManuAlzuru via slack or (manuel@fightpandemics.com) and/or the FightPandemics team leads with a concise description of your grievance.
 
 ## 6. Scope
-We expect all volunteers and community participants to abide by this Code of Conduct in all community channels, calls, events and in-person–as well as in all one-on-one communications pertaining to FightPandemics..
+We expect all volunteers and community participants to abide by this Code of Conduct in all community channels, calls, events and in-person–as well as in all one-on-one communications pertaining to FightPandemics.

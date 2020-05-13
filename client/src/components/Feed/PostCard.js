@@ -1,6 +1,6 @@
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;

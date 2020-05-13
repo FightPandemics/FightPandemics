@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InputItem } from "antd-mobile";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const StyledTextInput = styled(InputItem)`
   width: 100%;

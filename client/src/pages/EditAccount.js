@@ -1,12 +1,12 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
-import Checkbox from "../components/Input/Checkbox";
-import SubmitButton from "../components/Button/SubmitButton";
+import Checkbox from "components/Input/Checkbox";
+import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
-import FormInput from "../components/Input/FormInput";
-import Title from "../components/Title/Title";
-import UnderLineDescription from "../components/Input/UnderlineDescription";
+import FormInput from "components/Input/FormInput";
+import Title from "components/Title/Title";
+import UnderLineDescription from "components/Input/UnderlineDescription";
 
 const Label = styled.label`
   color: ${(props) => props.inputColor || "#425AF2"};

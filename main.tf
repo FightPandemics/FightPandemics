@@ -10,9 +10,17 @@ variable "auth_secret_key" {
 variable "auth_client_id" {
   type = string
 }
-variable "mongo_uri" {
-  type = string
-  default = "localhost:27017"
+
+data "aws_ssm_parameter" "db_host" {
+  name = "/fp/database/host"
+}
+
+data "aws_ssm_parameter" "db_user" {
+  name = "/fp/database/user"
+}
+
+data "aws_ssm_parameter" "db_password" {
+  name = "/fp/database/password"
 }
 
 module "main" {
@@ -27,7 +35,7 @@ module "main" {
     },
     {
       name  = "MONGO_URI"
-      value = var.mongo_uri
+      value = "mongodb+srv://${data.aws_ssm_parameter.db_user.value}:${data.aws_ssm_parameter.db_password.value}@${data.aws_ssm_parameter.db_host.value}/fightpandemics?retryWrites=true&w=majority"
     },
     {
       name  = "GEO_SERVICE_URL"
@@ -52,6 +60,10 @@ module "main" {
     {
       name  = "AUTH_CLIENT_ID"
       value = var.auth_client_id
-    }
+    },
+    {
+      name  = "NODE_ENV"
+      value = var.env_name
+    },
   ]
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import styled from "styled-components";
 
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { typography } = theme;
 

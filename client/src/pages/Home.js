@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import ImageButton from "../components/Button/ImageButton";
-import { theme, mq } from "../constants/theme";
+import ImageButton from "components/Button/ImageButton";
+import { theme, mq } from "constants/theme";
 
-const needHelpInactive = require("../assets/thermometer-unselected.svg");
-const needHelpActive = require("../assets/thermometer-selected.svg");
-const offerHelpInactive = require("../assets/help-gesture-unselected.svg");
-const offerHelpActive = require("../assets/help-gesture-selected.svg");
+const needHelpInactive = require("assets/thermometer-unselected.svg");
+const needHelpActive = require("assets/thermometer-selected.svg");
+const offerHelpInactive = require("assets/help-gesture-unselected.svg");
+const offerHelpActive = require("assets/help-gesture-selected.svg");
 
 const FlexChild = styled.div`
   flex-grow: 1;

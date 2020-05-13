@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
-import SubmitButton from "../../components/Button/SubmitButton";
+import SubmitButton from "components/Button/SubmitButton";
 import CustomH1 from "../Typography/Title/CustomH1";
 import SelectWithIconButton from "../Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
-import { FeedContext } from "../../pages/Feed";
-import { DARK_GRAY } from "../../constants/colors";
+import { FeedContext } from "pages/Feed";
+import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "../Icon/SvgIcon";
-import downArrow from "~/assets/icons/down-arrow.svg";
+import downArrow from "assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
