@@ -180,7 +180,7 @@ useEffect(() => {
       return (
        <div>
          <DesktopNavbar isAuthenticated={props.isAuthenticated} />
-         <Main style={{ marginTop: 50 }}>
+         <Main style={{ marginTop: 70 }}>
            <props.component {...props} />
          </Main>
          <CookieAlert />
