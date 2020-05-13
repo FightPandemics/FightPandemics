@@ -17,6 +17,8 @@ const NavBar = styled.div`
    display: flex;
    height: 7rem;
    position: fixed;
+   top: 0;
+   width: 100%;
 `;
 
 const HeaderContainer = styled.div`
@@ -25,7 +27,7 @@ const HeaderContainer = styled.div`
 `;
 
 const NavLinks = styled.div`
-  align-self: flex-end;
+  align-self: center;
    ul {
      list-style-type: none;
      display: flex;
