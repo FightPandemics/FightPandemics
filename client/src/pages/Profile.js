@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
+
 import ProfilePic from "components/Picture/ProfilePic";
-import Title from "components/Title/Title";
+import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+import { theme } from "constants/theme";
+
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
 import { Link } from "react-router-dom";
@@ -10,6 +14,7 @@ import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
 import ButtonModal from "components/Feed/ButtonModal"; // feed
+import { DARK_GRAY } from "constants/colors";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -22,14 +27,11 @@ const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 
 const SectionHeader = (props) => (
-  <Title
+  <Heading
     style={{
       color: "#939393",
       fontWeight: "lighter",
       fontSize: "1.5rem",
-      textAlign: "left",
-      marginLeft: "2.5rem",
-      marginBottom: "1rem",
     }}
     {...props}
   />
@@ -129,7 +131,7 @@ const Profile = (props) => {
       </Popover>
     );
   };
-
+  //requires responsive implementation
   const renderMyActivities = () => {
     return (
       <>
@@ -172,15 +174,17 @@ const Profile = (props) => {
       <div style={userInfoStyle}>
         {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <Title
-          title={`${firstName + " " + lastName}`}
-          style={{ color: "#000000", fontSize: "1.5rem" }}
-        />
-        <Title title={email} style={{ color: "#77869E", fontSize: "1rem" }} />
-        <Title
-          title={location}
-          style={{ color: "#5A6FF4", fontSize: "1.5rem", marginBottom: "1rem" }}
-        />
+        <TextLabel weight="500" block={true} size={theme.typography.size.large}>
+          {firstName} {lastName}
+        </TextLabel>
+        <TextLabel
+          block={true}
+          color={DARK_GRAY}
+          size={theme.typography.size.medium}
+        >
+          {email}
+        </TextLabel>
+        {location}
         <IconsContainer>
           <HelpContainer>
             <img
@@ -192,10 +196,7 @@ const Profile = (props) => {
               src={needHelp ? needHelpInactive : offerHelpInactive}
               alt="help-type-icon"
             />
-            <Title
-              title={needHelp ? "I need help" : "I want to help"}
-              style={{ fontSize: "0.8rem" }}
-            />
+            {needHelp ? "I need help" : "I want to help"}
           </HelpContainer>
           <PlaceholderIcon />
           <SvgIcon src={linkedinBlue} style={iconStyle} />

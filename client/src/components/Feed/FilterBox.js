@@ -2,12 +2,14 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
 import SubmitButton from "components/Button/SubmitButton";
-import CustomH1 from "../Typography/Title/CustomH1";
-import SelectWithIconButton from "../Button/SelectWithIconButton";
+import TextLabel from "components/Typography/TextLabel";
+import { theme } from "constants/theme";
+
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
 import { DARK_GRAY } from "constants/colors";
-import SvgIcon from "../Icon/SvgIcon";
+import SvgIcon from "components/Icon/SvgIcon";
 import downArrow from "assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
@@ -39,9 +41,13 @@ const FilterBox = () => {
   };
   return (
     <FilterBoxWrapper className="filter-box">
-      <CustomH1 color={DARK_GRAY} fontsize={"1.4rem"} fontweight={"normal"}>
+      <TextLabel
+        block={true}
+        color={DARK_GRAY}
+        size={theme.typography.size.medium}
+      >
         Filter by
-      </CustomH1>
+      </TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper
         popup
