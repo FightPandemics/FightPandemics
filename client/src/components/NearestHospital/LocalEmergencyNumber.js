@@ -18,6 +18,7 @@ const LocalEmergencyNumber = props => {
        height: auto;
        background-color: #D1222C;
        color: #fff;
+       margin-top: 3rem;
        h4 {
          color: #fff;
          margin-bottom: 0;
@@ -27,7 +28,7 @@ const LocalEmergencyNumber = props => {
        }
       @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
 
-          border: 0.2px solid rgba(185, 185, 185, 0.5);
+          border: 0.4px solid rgba(185, 185, 185, 0.5);
           padding: 2rem;
           padding-left: 4rem;
           background-color: #fff;
@@ -42,9 +43,11 @@ const LocalEmergencyNumber = props => {
           h3 {
             font-weight: bold;
             color: ${royalBlue};
-            border-bottom: 2px solid ${royalBlue};
+            border-bottom: 1px solid ${royalBlue};
             display: inline;
             font-size: ${xxlarge};
+            border-radius: 2px;
+            padding: 0 .4rem;
           }
 
         }

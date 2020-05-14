@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
-import { mq } from '../constants/theme';
+import { theme, mq } from '../constants/theme';
+
+import SearchBar from "../components/Input/SearchBar";
+// import { SearchBar } from 'antd-mobile';
+
+// ICONS
+import SvgIcon from "../components/Icon/SvgIcon";
+import shareLocation from "../assets/icons/share-my-location.svg";
 
 import NrMap from "./NrMap";
 import DescriptionCard from "../components/Card/DescriptionCard";
 import NearestHospitalLayout from "../templates/layouts/NearestHospitalLayout";
 
-const NearestHealthFacilities = props => {
+const { colors, typography } = theme;
+const { xxlarge, xxxlarge } = typography.size;
 
 
    const HealthFacilitiesData = [
        {
          id: 1,
          hospitalName: "United hospital",
-         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco , Washinton United State",
+         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
          openDate: "Open Mon - Fri 09:00 to 22:00",
          contactNo: "(704) 555.0126",
          distance: "3km",
@@ -22,7 +30,7 @@ const NearestHealthFacilities = props => {
        {
          id: 2,
          hospitalName: "United hospital",
-         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco , Washinton United State",
+         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
          openDate: "Open Mon - Fri 09:00 to 22:00",
          contactNo: "(234) 191.5131",
          distance: "4.3km",
@@ -31,7 +39,7 @@ const NearestHealthFacilities = props => {
        {
          id: 3,
          hospitalName: "United hospital",
-         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco , Washinton United State",
+         hospitalAddress: "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
          openDate: "Open Mon - Fri 09:00 to 22:00",
          contactNo: "(704) 555.0126",
          distance: "6km",
@@ -49,7 +57,7 @@ const NearestHealthFacilities = props => {
       }
   `;
 
-  const NearestHealthFacilities = styled.div`
+  const HealthFacilities = styled.div`
       flex-basis: 55%;
       align-self: flex-start;
       padding-top: 2rem;
@@ -76,10 +84,78 @@ const NearestHealthFacilities = props => {
       }
   `;
 
+  const ShareLocationContainer = styled.div`
+      padding: 6rem;
+      border-radius: 2px;
+      margin-top: 4rem;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background-color: ${colors.white};
+      h1 {
+        font-size: ${xxlarge};
+        color: #282828;
+        text-align: center;
+        padding: 0 15rem;
+        font-weight: bold;
+      }
+  `;
+
+  const SearchBarContainer = styled.div`
+      margin: 0 19rem;
+  `;
+
+
+  const ShareLocation = styled.div`
+     padding: 1rem;
+     cursor: pointer;
+     color: ${colors.primary};
+     &:hover {
+       color: ${colors.primary}
+     }
+  `;
+
+  const shareIconStyles = {
+    margin: "0 auto",
+    color: "#425AF2",
+    width: "11px",
+    marginRight: ".8rem"
+  }
+
+const NearestHealthFacilities = props => {
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearchInputChange = (value) => {
+    setSearchValue(value);
+    console.log(searchValue);
+
+  }
+  const clearSearch = () => {
+    setSearchValue('');
+  }
+
+  const [userCoords, setCoords] = useState(null);
+
+  const userLocation = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position, error) => {
+        if(error) {
+          console.log(error);
+        }
+        console.log(position);
+        setCoords(position.coords)
+
+      });
+    } else {
+      alert("Browser not supported!")
+    }
+  }
+
+
   return (
     <NearestHospitalLayout>
+    {userCoords ? (
         <NearestLocationContainer>
-          <NearestHealthFacilities>
+          <HealthFacilities>
              <h2>Your nearest health facilities</h2>
 
              {HealthFacilitiesData.map(data => (
@@ -94,11 +170,30 @@ const NearestHealthFacilities = props => {
                />
              ))}
 
-          </NearestHealthFacilities>
+          </HealthFacilities>
             <MapContainer>
                <NrMap />
             </MapContainer>
         </NearestLocationContainer>
+    ) : (
+        <ShareLocationContainer>
+           <h1>Share your location<br /> if you want to
+           see your nearest health<br /> facilities</h1>
+           <SearchBarContainer>
+             <SearchBar
+               value={searchValue}
+               placeholder=""
+               onClear={clearSearch}
+               onChange={onSearchInputChange}
+              />
+              <ShareLocation onClick={userLocation}>
+                <SvgIcon src={shareLocation} style={shareIconStyles} />
+                Share My Location
+              </ShareLocation>
+            </SearchBarContainer>
+        </ShareLocationContainer>
+    )}
+
     </NearestHospitalLayout>
   )
 }

@@ -18,6 +18,8 @@ const { medium, large, xlarge } = typography.size;
 const HospitalCard = styled(Card)`
     border: 1px solid #ddd;
     transition: all .3s;
+    padding: 1rem;
+    border-radius: 2px;
     &:hover {
       background-color: #F3F4FE;
     }

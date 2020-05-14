@@ -5,9 +5,6 @@ import { SearchBar } from 'antd-mobile';
 import { NavLink } from "react-router-dom";
 import LocalEmergencyNumber from './LocalEmergencyNumber';
 
-
-const HospitalSidebar = props => {
-
 const SearchBarContainer = styled.div`
    padding: 5rem 0;
 `;
@@ -54,6 +51,8 @@ const ActiveLinkStyles = {
   padding: ".4rem 2rem"
 }
 
+
+const HospitalSidebar = props => {
 
   const [searchValue, setSearchValue] = useState('');
 
