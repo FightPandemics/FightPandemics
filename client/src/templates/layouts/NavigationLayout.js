@@ -138,9 +138,7 @@ const NavigationLayout = (props) => {
     </>
   );
 
-
-
-const [ isMobile, setMediaQuery ] = useState(false);
+  const [ isMobile, setMediaQuery ] = useState(false);
 
 useEffect(() => {
   const mediaQuery = window.matchMedia(mq.phone.wide.max);;
@@ -182,7 +180,7 @@ useEffect(() => {
       return (
        <div>
          <DesktopNavbar isAuthenticated={props.isAuthenticated} />
-         <Main>
+         <Main style={{ marginTop: 70 }}>
            <props.component {...props} />
          </Main>
          <CookieAlert />

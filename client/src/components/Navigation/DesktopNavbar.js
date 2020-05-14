@@ -12,10 +12,14 @@ const { large } = typography.size;
 
 
 const NavBar = styled.div`
-   height: 7rem;
+   align-items: center;
    background-color: #fff;
    display: flex;
-   align-items: center;
+   height: 7rem;
+   position: fixed;
+   top: 0;
+   width: 100%;
+   z-index: 1;
 `;
 
 const HeaderContainer = styled.div`
@@ -24,7 +28,7 @@ const HeaderContainer = styled.div`
 `;
 
 const NavLinks = styled.div`
-  align-self: flex-end;
+  align-self: center;
    ul {
      list-style-type: none;
      display: flex;
