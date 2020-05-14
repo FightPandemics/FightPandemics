@@ -26,8 +26,8 @@ import gmail from "assets/icons/social-google.svg";
 import linkedin from "assets/icons/social-linkedin.svg";
 import socialmedia from "assets/social-media.svg";
 import socialmedia2 from "assets/social-media2.svg";
-import eyeUnmask from "assets/icons/eye.svg";
-import eyeMask from "assets/icons/eye-unmask.svg";
+import eyeUnmask from "assets/icons/eye-unmask.svg";
+import eyeMask from "assets/icons/eye-mask.svg";
 
 const { colors } = theme;
 const { typography } = theme;
