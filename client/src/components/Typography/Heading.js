@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { Title } = Typography;
+const { heading } = theme.typography;
 
 // example usage: <Heading level={3} className="h3">{isLoginForm ? "Sign In" : "Sign Up"}</Heading>
 
@@ -10,26 +11,26 @@ const Heading = styled(Title)`
   &.ant-typography {
     font-weight: bold;
     color: ${(props) => props.color};
-    ${theme.typography.heading.font}
+    ${heading.font}
   }
 
   &.h1 {
-    font-size: ${theme.typography.heading.one};
+    font-size: ${heading.one};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: ${theme.typography.heading.three};
+      font-size: ${heading.three};
     }
   }
   &.h2 {
-    font-size: ${theme.typography.heading.two};
+    font-size: ${heading.two};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: ${theme.typography.heading.three};
+      font-size: ${heading.three};
     }
   }
   &.h3 {
-    font-size: ${theme.typography.heading.three};
+    font-size: ${heading.three};
   }
   &.h4 {
-    font-size: ${theme.typography.heading.four};
+    font-size: ${heading.four};
   }
 `;
 

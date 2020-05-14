@@ -174,15 +174,11 @@ const Profile = (props) => {
       <div style={userInfoStyle}>
         {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <TextLabel
-          weight="500"
-          block={"true"}
-          size={theme.typography.size.large}
-        >
+        <TextLabel weight="500" block="true" size={theme.typography.size.large}>
           {firstName} {lastName}
         </TextLabel>
         <TextLabel
-          block={"true"}
+          block="true"
           color={DARK_GRAY}
           size={theme.typography.size.medium}
         >
