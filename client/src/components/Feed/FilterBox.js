@@ -42,7 +42,7 @@ const FilterBox = () => {
   return (
     <FilterBoxWrapper className="filter-box">
       <TextLabel
-        block={true}
+        block="true"
         color={DARK_GRAY}
         size={theme.typography.size.medium}
       >
