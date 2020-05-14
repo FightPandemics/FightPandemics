@@ -55,6 +55,12 @@ const ButtonWrapper = styled(Button)`
   &.tag-selected {
     ${theme.button.primary}
 
+    &:hover {
+      span {
+        color: ${theme.button.primary.color};
+      }
+    }
+
     svg {
       path {
         stroke: ${theme.button.primary.color};
@@ -63,6 +69,12 @@ const ButtonWrapper = styled(Button)`
   }
 
   &:hover {
+    @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
+      span {
+        color: ${theme.button.secondary.color};
+      }
+    }
+
     @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
       ${theme.button.primary}
 
