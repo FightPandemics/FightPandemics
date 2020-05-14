@@ -14,22 +14,22 @@ const Heading = styled(Title)`
   }
 
   &.h1 {
-    font-size: 4.2rem;
+    font-size: ${theme.typography.heading.one};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: 2.6rem;
+      font-size: ${theme.typography.heading.three};
     }
   }
   &.h2 {
-    font-size: 3.2rem;
+    font-size: ${theme.typography.heading.two};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: 2.6rem;
+      font-size: ${theme.typography.heading.four};
     }
   }
   &.h3 {
-    font-size: 2.6rem;
+    font-size: ${theme.typography.heading.three};
   }
   &.h4 {
-    font-size: 2.2rem;
+    font-size: ${theme.typography.heading.four};
   }
 `;
 
