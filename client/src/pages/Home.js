@@ -20,7 +20,7 @@ const StyledIntro = styled.div`
     margin-top: 4rem;
   }
 
-  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: ${theme.colors.royalBlue};
     border-radius: 1rem;
     display: flex;
@@ -39,6 +39,7 @@ const StyledIntro = styled.div`
 const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-left: -2.5rem;
 
   @media only screen and ${mq.phone.narrow.max} {
     display: block;
@@ -54,9 +55,10 @@ const StyledWelcome = styled.h2`
 
   @media only screen and ${mq.phone.narrow.max} {
     font-size: ${theme.typography.size.large};
-    font-weight: 300;
-    margin: 2.5rem auto 0;
+    margin: 2.5rem auto 0 auto;
+    font-weight: bold;
     text-align: center;
+    color: black;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
@@ -77,13 +79,13 @@ const StyledStrapline = styled(StyledWelcome)`
   line-height: 7rem;
   width: 90%;
   text-align: left;
+  font-size: ${theme.typography.heading.four}
 
   @media only screen and ${mq.phone.narrow.max} {
+    font-size: ${theme.typography.size.xlarge}
     text-align: center;
-    color: black;
-    font-weight: bold;
-    margin: 0 auto;
-    margin-bottom: 1.5rem;
+    font-weight: bolder;
+    margin: 0 auto 1.5rem auto;
   }
 `;
 
@@ -103,7 +105,7 @@ const StyledP = styled.p`
     font-size: ${theme.typography.size.small};
     text-align: center;
     color: #000;
-    line-height: 4rem;
+    line-height: 2rem;
     letter-spacing: 0rem;
     margin: 0;
   }
