@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { AnswerButton } from "components/StepWizard";
 import GenericMessage from "./CovidScreening/GenericMessage";
@@ -15,7 +16,9 @@ const ResultsPage = (props) => {
           <p>{props.val[item]} </p>
         </div>
       ))}
-      <AnswerButton>Done</AnswerButton>
+      <Link to="/feed">
+        <AnswerButton>Done</AnswerButton>
+      </Link>
     </>
   );
 };

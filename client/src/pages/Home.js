@@ -17,7 +17,7 @@ const FlexChild = styled.div`
 
 const StyledIntro = styled.div`
   @media screen and ${mq.phone.narrow.max} {
-    margin-top: 4rem;
+    margin-top: 2.5rem 0 1.4rem;
   }
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
@@ -49,20 +49,18 @@ const MainContainer = styled.div`
 const StyledWelcome = styled.h2`
   font-size: ${theme.typography.heading.three};
   text-align: left;
-  margin: 0 0 7rem 0;
+  line-height: 6.4rem;
   font-family: ${theme.typography.font.family.display}, sans-serif;
-  font-style: normal;
+  font-weight: bold;
 
   @media only screen and ${mq.phone.narrow.max} {
     font-size: ${theme.typography.size.large};
-    font-weight: 300;
-    margin: 2.5rem auto 0;
+    margin: 0 auto;
     text-align: center;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     font-size: ${theme.typography.heading.one};
-    font-weight: bold;
     margin: 1.5rem 0;
   }
 
@@ -125,6 +123,14 @@ const StyledP = styled.p`
   }
 `;
 
+const StyledName = styled(StyledP)`
+  display: none;
+
+  @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    display: block;
+  }
+`;
+
 const OnboardingContainer = styled.div`
   // display: flex;
   // flexWrap: wrapgit ;
@@ -141,7 +147,7 @@ const Home = (props) => {
     <MainContainer className="text-center">
       <StyledIntro>
         <IntroText>
-          <StyledP>FightPandemics</StyledP>
+          <StyledName>FightPandemics</StyledName>
           <StyledStrapline level={2} margin="none">
             A place to give and get help
           </StyledStrapline>

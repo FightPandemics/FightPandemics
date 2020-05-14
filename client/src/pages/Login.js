@@ -14,6 +14,8 @@ import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
 import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
+import Heading from "components/Typography/Heading";
+
 import { theme, mq } from "constants/theme";
 
 // ICONS
@@ -27,15 +29,6 @@ import socialmedia2 from "assets/social-media2.svg";
 import eye from "assets/icons/eye.svg";
 const { colors } = theme;
 const { typography } = theme;
-
-const Title = styled.h1`
-  align-items: center;
-  display: flex;
-  font-size: 2.2rem;
-  font-weight: bold;
-  height: 5rem;
-  justify-content: center;
-`;
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -260,7 +253,9 @@ const Login = ({ isLoginForm }) => {
       <LoginRightContainer>
         <div className="text-center">
           <FormContainer>
-            <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
+            <Heading className="h4" level={4}>
+              {isLoginForm ? "Sign In" : "Sign Up"}
+            </Heading>
             <form id="login-password" method="POST">
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />

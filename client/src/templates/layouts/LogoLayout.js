@@ -31,7 +31,10 @@ const LogoContainer = styled.div`
 const LogoLayout = (props) => {
   return (
     <>
-      <div className="header">
+      <div
+        className="header"
+        style={{ position: "fixed", zIndex: 1, width: "100%" }}
+      >
         <NavBar mode="light" style={NavbarStyles}>
           <LogoContainer>
             <Link to="/">

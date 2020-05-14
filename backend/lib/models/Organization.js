@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const OrganizationSchema = new Schema({
   address: {
@@ -60,4 +60,4 @@ const OrganizationSchema = new Schema({
   },
 });
 
-module.exports = OrganizationSchema;
+module.exports = model("Organization", OrganizationSchema);

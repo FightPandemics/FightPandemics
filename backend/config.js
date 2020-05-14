@@ -34,7 +34,9 @@ const config = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
-    uri: `mongodb://${configData.MONGO_URI}`,
+    uri: configData.MONGO_URI.startsWith('mongodb://') || configData.MONGO_URI.startsWith('mongodb+srv://') ?
+      configData.MONGO_URI :
+      `mongodb://${configData.MONGO_URI}`,
   },
   name,
   server: {
