@@ -14,7 +14,7 @@ const { Text } = Typography;
     
     usage: 
     <TextLabel
-        block={true}
+        block={"true"}
         color={DARK_GRAY}
         size={theme.typography.size.medium}
     >

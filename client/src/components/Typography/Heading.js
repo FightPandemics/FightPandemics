@@ -22,7 +22,7 @@ const Heading = styled(Title)`
   &.h2 {
     font-size: ${theme.typography.heading.two};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: ${theme.typography.heading.four};
+      font-size: ${theme.typography.heading.three};
     }
   }
   &.h3 {
