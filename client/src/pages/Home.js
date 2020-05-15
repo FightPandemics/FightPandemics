@@ -51,15 +51,14 @@ const MainContainer = styled.div`
   }
 `;
 
-const StyledWelcome = styled.h2`
-  font-size: ${theme.typography.heading.three};
+const StyledWelcome = styled.h1`
+
   text-align: left;
   margin: 0 0 7rem 0;
   font-family: ${theme.typography.font.family.display}, sans-serif;
   font-style: normal;
 
   @media only screen and ${mq.phone.wide.max} {
-    font-size: ${theme.typography.size.large};
     margin: 2.5rem auto 0 auto;
     font-weight: bold;
     text-align: center;
@@ -81,13 +80,12 @@ const StyledWelcome = styled.h2`
 
 const StyledStrapline = styled(StyledWelcome)`
   color: white;
-  line-height: 7rem;
   width: 90%;
   text-align: left;
-  font-size: ${theme.typography.heading.four}
+  font-size: ${theme.typography.heading.one}
 
   @media only screen and ${mq.phone.narrow.max} {
-    font-size: ${theme.typography.size.xlarge}
+    
     text-align: center;
     font-weight: bolder;
     margin: 0 auto 1.5rem auto;
