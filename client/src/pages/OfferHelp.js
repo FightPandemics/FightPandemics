@@ -86,10 +86,6 @@ const Step1 = (props) => {
   );
 };
 
-const StyledTextInputt = styled.div`
-  flex: 1;
-`;
-
 const Step2 = (props) => {
   const [locationSearch, setLocationSearch] = useState("");
 
