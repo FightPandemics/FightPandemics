@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
@@ -86,6 +85,10 @@ const Step1 = (props) => {
     </WizardStep>
   );
 };
+
+const StyledTextInputt = styled.div`
+  flex: 1;
+`;
 
 const Step2 = (props) => {
   const [locationSearch, setLocationSearch] = useState("");
