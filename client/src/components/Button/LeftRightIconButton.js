@@ -36,9 +36,6 @@ const LeftRightIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
   ${(props) =>
     props.disabled &&
     css`
-      &.am-button > .am-button-icon {
-        opacity: 0.6;
-      }
       &.am-button.am-button-disabled {
         color: ${() => {
           if (props.primary) {

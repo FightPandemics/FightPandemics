@@ -16,6 +16,10 @@ const BaseButton = styled(Button)`
       content: unset !important;
     }
   }
+
+  &.am-button.am-button-disabled > .am-button-icon {
+    opacity: 0.6;
+  }
 `;
 
 export default BaseButton;
