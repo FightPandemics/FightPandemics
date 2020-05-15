@@ -14,7 +14,6 @@ import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
-import ConfirmedCases from "./pages/ConfirmedCases";
 import CreatePost from "./pages/CreatePost";
 
 const routes = [
@@ -68,10 +67,10 @@ const routes = [
   {
     path: "/nearest-hospital",
     component: NearestHospital,
-  },
-  {
-    path: "/confirmed-cases",
-    component: ConfirmedCases,
+    props: {
+      mobileTabs: true,
+      tabIndex: 0
+    }
   },
   {
     path: "/find-help",
@@ -80,10 +79,18 @@ const routes = [
   {
     path: "/symptoms-check",
     component: SymptomsCheck,
+    props: {
+      mobileTabs: true,
+      tabIndex: 1
+    }
   },
   {
     path: "/feed",
     component: Feed,
+    props: {
+      mobileTabs: true,
+      tabIndex: 2
+    }
   },
   {
     path: "/profile",

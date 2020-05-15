@@ -37,6 +37,7 @@ const SymptomsLink = styled(NavLink)`
    text-decoration: none;
    text-align: center;
    border-radius: 5rem;
+   display: block;
    &:hover {
      /* transform: scale(2, 2); */
      color: ${white}

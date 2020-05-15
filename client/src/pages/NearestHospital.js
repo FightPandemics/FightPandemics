@@ -11,7 +11,7 @@ import shareLocation from "../assets/icons/share-my-location.svg";
 
 import NrMap from "./NrMap";
 import DescriptionCard from "../components/Card/DescriptionCard";
-import NearestHospitalLayout from "../templates/layouts/NearestHospitalLayout";
+import HealthFacilitiesLayout from "../templates/layouts/HealthFacilitiesLayout";
 
 const { colors, typography } = theme;
 const { xxlarge, xxxlarge } = typography.size;
@@ -94,13 +94,26 @@ const { xxlarge, xxxlarge } = typography.size;
         font-size: ${xxlarge};
         color: #282828;
         text-align: center;
-        padding: 0 15rem;
+        padding: 0 5rem;
         font-weight: bold;
+      }
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        padding: 0;
+        min-height: 100vh;
+        margin-top: 0;
+        padding-top: 4rem;
+        border: 0;
+        h1 {
+          padding: 0 2rem;
+        }
       }
   `;
 
   const SearchBarContainer = styled.div`
-      margin: 0 19rem;
+      margin: 0 9rem;
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        margin:0 2rem;
+      }
   `;
 
 
@@ -108,6 +121,9 @@ const { xxlarge, xxxlarge } = typography.size;
      padding: 1rem;
      cursor: pointer;
      color: ${colors.primary};
+     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+       text-align: center;
+     }
      &:hover {
        color: ${colors.primary}
      }
@@ -152,9 +168,10 @@ const NearestHealthFacilities = props => {
 
 
   return (
-    <NearestHospitalLayout>
+    <HealthFacilitiesLayout>
     {userCoords ? (
         <NearestLocationContainer>
+
           <HealthFacilities>
              <h2>Your nearest health facilities</h2>
 
@@ -177,8 +194,8 @@ const NearestHealthFacilities = props => {
         </NearestLocationContainer>
     ) : (
         <ShareLocationContainer>
-           <h1>Share your location<br /> if you want to
-           see your nearest health<br /> facilities</h1>
+           <h1>Share your location if you want to
+           see your nearest health facilities</h1>
            <SearchBarContainer>
              <SearchBar
                value={searchValue}
@@ -194,7 +211,7 @@ const NearestHealthFacilities = props => {
         </ShareLocationContainer>
     )}
 
-    </NearestHospitalLayout>
+    </HealthFacilitiesLayout>
   )
 }
 

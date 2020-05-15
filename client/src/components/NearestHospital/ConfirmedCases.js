@@ -3,8 +3,7 @@ import styled from "styled-components";
 
 import { SearchBar } from 'antd-mobile';
 
-import NearestHospitalLayout from "../templates/layouts/NearestHospitalLayout";
-import { mq } from "../constants/theme";
+import { mq } from "../../constants/theme";
 
 
 const NearestHealthFacilities = props => {
@@ -72,7 +71,6 @@ const NearestHealthFacilities = props => {
   }
 
   return (
-    <NearestHospitalLayout>
         <ConfirmedCasesContainer>
              <SearchBarContainer>
                <StyledSearchBar
@@ -97,7 +95,6 @@ const NearestHealthFacilities = props => {
                 </div>
              </ConfirmedCasesContent>
         </ConfirmedCasesContainer>
-    </NearestHospitalLayout>
   )
 }
 

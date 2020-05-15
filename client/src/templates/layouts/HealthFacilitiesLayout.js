@@ -2,26 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Sidebar from "../../components/NearestHospital/HospitalSidebar";
+import ConfirmedCases from "../../components/NearestHospital/ConfirmedCases";
 import CheckSymptomsBox from "../../components/NearestHospital/CheckSymptomsBox";
 import LocalEmergencyNumber from "../../components/NearestHospital/LocalEmergencyNumber";
-import { Tabs } from 'antd-mobile';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { mq } from "../../constants/theme";
 
-
-const NearestHospitalLayout = props => {
-
-  const [ isMobile, setMediaQuery ] = useState(false);
-
- useEffect(() => {
-   const mediaQuery = window.matchMedia('(max-width: 767px)');;
-   setMediaQuery(mediaQuery.matches);
-   const listenerFunc = (query) => {
-      setMediaQuery(query.currentTarget.matches);
-   };
-   window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
-
-  }, [])
 
 
   const NearestHospitalContainer = styled.div`
@@ -58,29 +44,26 @@ const NearestHospitalLayout = props => {
   `;
 
 
-  const ActiveLinkStyles = {
-    borderBottom: "1px solid #425af2",
-    width: "100%",
-    textAlign: "center"
-  }
+const NearestHospitalLayout = props => {
 
-  const navigation = [
-    { title: <NavLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">Health Facilities</NavLink> },
-    { title: <NavLink activeStyle={ActiveLinkStyles} to="/confirmed-cases">Confirmed Cases</NavLink> }
-  ];
+  const [ isMobile, setMediaQuery ] = useState(false);
+
+ useEffect(() => {
+   const mediaQuery = window.matchMedia('(max-width: 767px)');;
+   setMediaQuery(mediaQuery.matches);
+   const listenerFunc = (query) => {
+      setMediaQuery(query.currentTarget.matches);
+   };
+   window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
+
+  }, [])
+
 
 const renderChildComponents = () => {
   if(isMobile) {
     return (
       <div>
-       <LocalEmergencyNumber />
-       <Tabs tabs={navigation}
-          initialPage={0}
-          tabBarUnderlineStyle={{ display: "none" }}
-          swipeable={false}
-        >
-        {props.children}
-        </Tabs>
+         {props.children}
       </div>
     )
   } else {
