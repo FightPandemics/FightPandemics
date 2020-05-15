@@ -5,10 +5,12 @@ import PostSocial from "./PostSocial";
 import Comments from "./Comments";
 import FilterTag from "components/Tag/FilterTag";
 import AutoSize from "components/Input/AutoSize";
+import Heading from "components/Typography/Heading";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
+import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
@@ -50,8 +52,10 @@ const Post = ({ post }) => {
   );
 
   const renderContent = (
-    <Card.Body>
-      <h1>{post.title}</h1>
+    <Card.Body className="content-wrapper">
+      <Heading level={4} className="h4">
+        {post.title}
+      </Heading>
       <p className="post-description">{post.description}</p>
     </Card.Body>
   );
@@ -67,13 +71,14 @@ const Post = ({ post }) => {
   );
 
   const renderViewMore = (
-    <Card.Body>
+    <Card.Body className="view-more-wrapper">
       <span className="view-more">View More</span>
     </Card.Body>
   );
 
   const renderComments = (
-    <Card.Body>
+    <Card.Body
+      className={ `comments-wrapper ${showComments ? 'show-comments' : ''}` }>
       <AutoSize
         placeholder={"Write a comment..."}
         onPressEnter={handleComment}
@@ -85,7 +90,7 @@ const Post = ({ post }) => {
   );
 
   const renderSocialIcons = (
-    <Card.Body>
+    <Card.Body className="content-wrapper">
       <PostSocial
         url={post.url}
         liked={liked}
@@ -116,13 +121,18 @@ const Post = ({ post }) => {
       visible={copied}
       transparent
     >
-      <h1 style={{ color: "black" }}>Link Copied!</h1>
+      <Heading level={4} className="h4">
+        Link Copied!
+      </Heading>
     </Modal>
   );
 
   return (
     <PostCard>
-      {renderHeader}
+      <div className="card-header">
+        {renderHeader}
+        <div className="card-submenu"><SubMenuIcon /></div>
+      </div>
       <WhiteSpace size="md" />
       {renderTags}
       <WhiteSpace />

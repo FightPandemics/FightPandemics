@@ -50,19 +50,22 @@ const PostSocial = ({
     <div className="social-icons">
       <div className="social-icon" onClick={likePost}>
         {renderLikeIcon()}
-        <span>{numLikes}</span>
+        <span className="total-number">{numLikes}</span>
+        <span className="social-text">Like</span>
       </div>
       <span></span>
       <div className="social-icon" onClick={setShowComments}>
         {renderCommentIcon()}
-        <span>{numComments}</span>
+        <span className="total-number">{numComments}</span>
+        <span className="social-text">Comment</span>
       </div>
       <span></span>
       <div className="social-icon">
         <CopyToClipboard text={url} onCopy={onCopyLink}>
           <span>
             {renderShareIcon()}
-            <span>{numShares}</span>
+            <span className="total-number">{numShares}</span>
+            <span className="social-text">Share</span>
           </span>
         </CopyToClipboard>
       </div>

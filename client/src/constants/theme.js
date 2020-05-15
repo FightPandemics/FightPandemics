@@ -7,6 +7,7 @@ import {
   LIGHT_GRAY,
   LIGHTER_GRAY,
   SELAGO,
+  TROPICAL_BLUE,
 } from "./colors";
 
 const theme = {
@@ -49,6 +50,7 @@ const theme = {
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
+    tropicalBlue: TROPICAL_BLUE,
     selago: SELAGO,
     darkGray: DARK_GRAY,
     darkerGray: DARKER_GRAY,
