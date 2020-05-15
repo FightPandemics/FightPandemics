@@ -4,10 +4,10 @@ import styled from "styled-components";
 import withLabel from "./with-label";
 import BaseInput from "./BaseInput";
 
-import {
-  Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
-} from "@material-ui/icons";
+// ICONS
+import SvgIcon from "./Icon/SvgIcon";
+import VisibilityIcon from "assets/icons/eye-mask.svg";
+import VisibilityOffIcon from "assets/icons/eye-unmask.svg";
 
 const Input = styled(BaseInput).attrs((props) => ({
   type: props.isVisible ? "text" : "password",
@@ -35,7 +35,11 @@ const PwInput = ({ inputStyle, placeholder, ...props }) => {
         ref={passwordRef}
         {...props}
       />
-      <EyeIcon style={StyleEye} onClick={() => setVisible(!isVisible)} />
+      <SvgIcon
+        src={EyeIcon}
+        style={StyleEye}
+        onClick={() => setVisible(!isVisible)}
+      />
     </>
   );
 };
