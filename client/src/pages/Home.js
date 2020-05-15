@@ -15,7 +15,8 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledIntro = styled.div`
+const StyledIntro = styled.div` 
+
   @media screen and ${mq.phone.narrow.max} {
     margin-top: 4rem;
   }
@@ -37,9 +38,13 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-left: -2.5rem;
+  
+
+  @media only screen and ${mq.tablet.narrow.min} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: -2.5rem;
+  }
 
   @media only screen and ${mq.phone.narrow.max} {
     display: block;
@@ -53,7 +58,7 @@ const StyledWelcome = styled.h2`
   font-family: ${theme.typography.font.family.display}, sans-serif;
   font-style: normal;
 
-  @media only screen and ${mq.phone.narrow.max} {
+  @media only screen and ${mq.phone.wide.max} {
     font-size: ${theme.typography.size.large};
     margin: 2.5rem auto 0 auto;
     font-weight: bold;
@@ -100,7 +105,7 @@ const StyledP = styled.p`
   text-align: left;
   color: white;
 
-  @media only screen and ${mq.phone.narrow.max} {
+  @media only screen and ${mq.phone.wide.max} {
     font-family: ${theme.typography.font.family.display}, sans-serif;
     font-size: ${theme.typography.size.small};
     text-align: center;
