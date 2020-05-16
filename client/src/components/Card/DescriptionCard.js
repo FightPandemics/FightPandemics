@@ -8,12 +8,10 @@ import { theme } from "../../constants/theme";
 const { colors, typography } = theme;
 const {
   primary,
-  royalBlue,
   orangeRed,
-  mintGreen,
-  lightGray,
-  lighterGray } = colors;
-const { medium, large, xlarge } = typography.size;
+  mintGreen
+ } = colors;
+const { medium, large } = typography.size;
 
 const HospitalCard = styled(Card)`
     border: 1px solid #ddd;
@@ -31,7 +29,11 @@ const HospitalCard = styled(Card)`
       font-weight: bold;
       color: #282828;
       text-transform: uppercase;
+      flex-basis: 65%;
    }
+   .am-card-body::before {
+      display: none !important;
+    }
    .am-card-body {
      border-top: 0;
      color: rgba(0, 0, 0, 0.5);
@@ -45,6 +47,7 @@ const HospitalCard = styled(Card)`
    }
    .am-card-header-extra {
      margin-right: 0;
+     flex-basis: 30%;
      font-size: ${medium};
    }
    .am-card-footer-content {

@@ -7,8 +7,7 @@ import Header from "components/Header";
 import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
-import { theme, mq } from "constants/theme";
-const { colors } = theme;
+import { theme } from "constants/theme";
 
 const drawerStyles = {
   position: "relative",
@@ -105,7 +104,7 @@ const CloseNav = styled(Button).attrs((props) => ({
 
 
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex } = props;
+  const { mobiletabs, tabIndex, isAuthenticated } = props;
 
   const history = useHistory();
 
@@ -118,7 +117,7 @@ const NavigationLayout = (props) => {
   const drawerMenu = () => (
     <>
       <NavList>
-        {props.isAuthenticated ? (
+        {isAuthenticated ? (
           <>
             <NavItem>
               <Link to="/profile">Profile</Link>
@@ -158,7 +157,7 @@ const NavigationLayout = (props) => {
                sidebarStyle={sidebarStyle}
                className="app-drawer"
              >
-               <Header onMenuClick={toggleDrawer} />
+               <Header onMenuClick={toggleDrawer} isAuthenticated={isAuthenticated} />
                      {mobiletabs ? <MobileTabs tabIndex={tabIndex} childComponent={props.children} /> : null }
                      <Main>
                        <props.component {...props} />

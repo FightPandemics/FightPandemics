@@ -69,11 +69,6 @@ const NearestHospitalLayout = props => {
 
   }, [])
 
-  // const [ currentPage, setCurrentPage ] = useState("nearest-hospital");
-  //
-  // const getCurrentPage = (page) => {
-  //   setCurrentPage(page)
-  // }
   const [ page, setPage ] = useState("nearest-hospital");
   const setCurrentPage = (pageName) => {
     setPage(pageName);
@@ -83,7 +78,7 @@ const NearestHospitalLayout = props => {
     if(isMobile) {
       return (
         <div>
-           {props.children}
+           <HealthFacilities />
         </div>
       )
     } else {

@@ -54,7 +54,6 @@ const MobileTabs = props => {
     } else {
       sessionStorage.setItem("LocalEmergencyBox", "true");
     }
-    console.log(status)
   }, [])
 
   const removeNoticeBar = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import SubmitButton from "../Button/SubmitButton";
+
 import { NavLink } from "react-router-dom";
 
 import { theme } from "../../constants/theme";
@@ -21,7 +21,7 @@ const CheckSymptomsBox = styled.div`
     border-radius: 2px;
     padding: 2rem;
     p {
-      flex-basis: 50%;
+      flex-basis: 47%;
       margin-bottom: 0;
       span {
         font-weight: bold;
@@ -38,24 +38,24 @@ const SymptomsLink = styled(NavLink)`
    text-align: center;
    border-radius: 5rem;
    display: block;
+   transition: all .5s;
    &:hover {
-     /* transform: scale(2, 2); */
-     color: ${white}
+     color: ${white};
+     transform: scaleX(1.02);
    }
 `;
 
 
-const checkSymptoms = props => {
+const CheckSymptoms = props => {
 
 return (
   <CheckSymptomsBox>
      <p>Evaluate your health and receive instructions and recommendations about <span>COVID-19</span></p>
-     <div style={{ flexBasis: '40%', transition: 'all .3s' }}>
+     <div style={{ flexBasis: '46%' }}>
      <SymptomsLink to="/symptoms-check">Check Symptoms</SymptomsLink>
      </div>
   </CheckSymptomsBox>
 )
-
 }
 
-export default checkSymptoms;
+export default CheckSymptoms;

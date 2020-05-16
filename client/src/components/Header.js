@@ -14,6 +14,9 @@ const { large } = typography.size;
 
 const BrandLink = styled(Link)`
   display: inline-flex;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    padding-left: 4rem;
+  }
 `;
 
 const StyledNavBar = styled(NavBar)`
@@ -54,7 +57,7 @@ const NavLinks = styled.div`
      list-style-type: none;
      display: flex;
      margin-bottom: 0rem;
-     margin-right: 2rem;
+     margin-right: 5rem;
 
      .registerBtn {
        color: ${colors.royalBlue};
@@ -77,7 +80,7 @@ const NavLinks = styled.div`
        a:not(.registerLink) {
          color: #282828;
          text-decoration: none;
-         padding: 1.2rem 1rem;
+         padding: 1.2rem 1.4rem;
          transition: all .2s;
          border-bottom: 3px solid transparent;
        }

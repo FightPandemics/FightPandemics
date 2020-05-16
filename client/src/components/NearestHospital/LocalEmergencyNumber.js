@@ -7,7 +7,7 @@ import { theme, mq } from "../../constants/theme";
 
 const { colors } = theme;
 const { typography } = theme;
-const { xlarge, xxlarge } = typography.size;
+const { xlarge, xxlarge, medium } = typography.size;
 const { royalBlue } = colors;
 
 
@@ -54,6 +54,7 @@ const LocalEmergencyNumber = props => {
           h4 {
             font-weight: bold;
             color: #000;
+            font-size: ${medium}
           }
           h3 {
             font-weight: bold;

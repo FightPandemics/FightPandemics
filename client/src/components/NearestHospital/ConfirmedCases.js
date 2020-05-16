@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 
-import { SearchBar } from 'antd-mobile';
+import SearchInput from "../Input/SearchInput";
 
 import { theme, mq } from "../../constants/theme";
 const { typography, colors } = theme;
 const { mediumGray } = colors;
 const { large, xxxlarge } = typography.size;
 
-const NearestHealthFacilities = props => {
 
 
   const ConfirmedCasesContainer = styled.div`
       background-color: #fff;
       border: 0.2px solid rgba(185, 185, 185, 0.5);
-      padding: 3rem;
+      padding: 4rem 3rem;
       margin-top: 4rem;
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         border: 0;
@@ -34,7 +33,9 @@ const NearestHealthFacilities = props => {
       div {
         padding: 0 5rem;
         h2 {
-          font-weight: bold
+          font-weight: bold;
+          font-size: ${xxxlarge};
+          margin-bottom: 0;
         }
       }
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -44,7 +45,6 @@ const NearestHealthFacilities = props => {
           border-right: 0;
         }
         div {
-          line-height: 1;
           padding: 3rem 0 0 2rem;
           border-bottom: 1px solid ${mediumGray};
           h2 {
@@ -59,23 +59,15 @@ const NearestHealthFacilities = props => {
   `;
 
   const SearchBarContainer = styled.div`
-     width: 100%;
+     width: 40%;
      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
        display: none;
      }
   `
 
-  const StyledSearchBar = styled(SearchBar)`
-    &.am-search {
-      width: 40%;
-      background-color: #fff;
-      border: 0.1rem solid rgba(0, 0, 0, 0.5);
-      border-radius: 4rem;
-    }
-    .am-search-cancel-show {
-      display: none;
-     }
-  `;
+
+const NearestHealthFacilities = props => {
+
 
   const [ searchValue, setSearchValue ] = useState('');
 
@@ -89,7 +81,7 @@ const NearestHealthFacilities = props => {
   return (
         <ConfirmedCasesContainer>
              <SearchBarContainer>
-               <StyledSearchBar
+               <SearchInput
                  value={searchValue}
                  placeholder=""
                  onClear={clearSearch}

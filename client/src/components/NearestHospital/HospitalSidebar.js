@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 
-import { SearchBar } from 'antd-mobile';
-import { NavLink } from "react-router-dom";
+import SearchInput from "../Input/SearchInput";
 import LocalEmergencyNumber from './LocalEmergencyNumber';
 
 const SearchBarContainer = styled.div`
@@ -34,18 +33,6 @@ const NavBar = styled.div`
 `;
 
 
-const StyledSearchBar = styled(SearchBar)`
-  &.am-search {
-    background-color: #fff;
-    border: 0.1rem solid rgba(0, 0, 0, 0.5);
-    border-radius: 4rem;
-  }
-  .am-search-cancel-show {
-    display: none;
-   }
-`;
-
-
 const HospitalSidebar = props => {
 
   const [searchValue, setSearchValue] = useState('');
@@ -64,7 +51,7 @@ const HospitalSidebar = props => {
 return (
    <div>
      <SearchBarContainer>
-          <StyledSearchBar
+          <SearchInput
             value={searchValue}
             placeholder=""
             onClear={clearSearch}

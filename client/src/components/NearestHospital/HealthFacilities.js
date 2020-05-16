@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { theme, mq } from '../../constants/theme';
 
-import SearchBar from "../Input/SearchBar";
+import ConfirmedCases from "./ConfirmedCases";
+import SearchInput from "../Input/SearchInput";
 // import { SearchBar } from 'antd-mobile';
 
 // ICONS
@@ -12,7 +13,7 @@ import NrMap from "../../pages/NrMap";
 import DescriptionCard from "../Card/DescriptionCard";
 
 const { colors, typography } = theme;
-const { xxlarge, xxxlarge } = typography.size;
+const { xxlarge } = typography.size;
 
 
    const HealthFacilitiesData = [
@@ -51,6 +52,9 @@ const { xxlarge, xxxlarge } = typography.size;
       align-items: flex-start;
       justify-content: space-between;
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        display: block;
+      }
+      @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
         display: block;
       }
   `;
@@ -127,6 +131,13 @@ const { xxlarge, xxxlarge } = typography.size;
      }
   `;
 
+  const CasesContainer = styled.div`
+      display: none;
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        display: block;
+      }
+  `;
+
   const shareIconStyles = {
     margin: "0 auto",
     color: "#425AF2",
@@ -147,15 +158,15 @@ const NearestHealthFacilities = props => {
     setSearchValue('');
   }
 
-  const [userCoords, setCoords] = useState(null);
+  const [userCoords, setCoords] = useState(true);
 
   const userLocation = () => {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position, error) => {
         if(error) {
-          console.log(error);
+          // change error message
+          alert("Sorry we could not get your location. Your browser may not be compatible")
         }
-        console.log(position);
         setCoords(position.coords)
 
       });
@@ -169,6 +180,9 @@ const NearestHealthFacilities = props => {
     <div>
     {userCoords ? (
         <NearestLocationContainer>
+         <CasesContainer>
+          <ConfirmedCases />
+         </CasesContainer>
           <HealthFacilities>
              <h2>Your nearest health facilities</h2>
 
@@ -194,7 +208,7 @@ const NearestHealthFacilities = props => {
            <h1>Share your location if you want to
            see your nearest health facilities</h1>
            <SearchBarContainer>
-             <SearchBar
+             <SearchInput
                value={searchValue}
                placeholder="Enter Address, Zip Code, or City"
                onClear={clearSearch}
