@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Layout, Menu } from 'antd';
 
 // Local
-import ButtonModal from "components/Feed/ButtonModal";
+import PostAs from "components/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "components/Feed/FeedWrapper";
@@ -246,37 +246,14 @@ const Feed = () => {
         postsDispatch({ type: SET_POSTS, posts: filtered });
       }
     }
-  }
+  };
 
   const handleShowFilters = (e) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
-  }
+  };
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
-  }
-
-  const renderCreatePostModal = () => {
-    return (
-      <ButtonModal
-        onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
-        maskClosable={true}
-        closable={false}
-        visible={createPostModal}
-        transparent
-      >
-        <h2 className="title">Continue Posting As</h2>
-        <div className="links">
-          <Link className="primary" to="/create-post">
-            Individual
-          </Link>
-
-          <Link className="outline" to="/create-post">
-            Organization
-          </Link>
-        </div>
-      </ButtonModal>
-    );
   };
 
   return (
@@ -346,7 +323,11 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        {renderCreatePostModal()}
+        <PostAs
+          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+          visible={createPostModal}
+          maskClosable
+        />
       </FeedWrapper>
     </FeedContext.Provider>
   );
