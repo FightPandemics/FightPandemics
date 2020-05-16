@@ -80,6 +80,12 @@ Check the issues and projects tab of the original repository for available ticke
 
 Additionally please review the "Important Notes and Considerations" section in this README.
 
+### Time sensitive issues
+
+Due to the importance of what we are trying to accomplish and the fact that some features are critical for certain releases, sometimes issues need to be completed within a specfic timeframe. In order to ensure that this can happen, it is very important that you communicate your progress with the team in either the engineering or general standups. Please also try and push your code to GitHub every day that you work on an issue.
+
+In the event that there is an upcoming deadline for a particular feature, someone from the team may try and contact you to see what the current status is and if you possibly need help with the task. If we don't hear anything from you after 48 hours, another engineer might have to take over the issue and it will be re-assigned on GitHub. Therefore it is CRITICAL that you have your current code pushed to GitHub so that others can possibly use your work as a reference to ensure the issue gets completed as quickly as possible.
+
 ### API Documentation
 
 To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
