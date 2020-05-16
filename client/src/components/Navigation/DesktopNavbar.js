@@ -33,7 +33,6 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 2rem;
-
     .registerBtn {
       color: ${colors.royalBlue};
       border: 1px solid ${colors.royalBlue};
@@ -48,7 +47,6 @@ const NavLinks = styled.div`
         font-weight: 500;
       }
     }
-
     li {
       padding: 1rem 1.3rem;
       padding-bottom: 1.3rem;
