@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
   WizardContainer,
@@ -18,9 +17,12 @@ import {
   getCheckedAnswers,
   WizardCheckboxWrapper,
   WizardCheckboxItem,
-} from "../components/StepWizard";
-import { IconButton, SubmitButton, CustomButton } from "../components/Button";
-import { ShareMyLocationIcon } from "../components/Icon";
+} from "components/StepWizard";
+import { IconButton, SubmitButton } from "../components/Button";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import shareMyLocation from "assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],
@@ -122,19 +124,16 @@ const Step2 = (props) => {
           />
         </WizardFormGroup>
         <IconButton
-          icon={<ShareMyLocationIcon />}
-          title="Share my location"
+          tertiary="true"
+          icon={<SvgIcon src={shareMyLocation} />}
           onSelect={selectLocationDetection}
-        />
+        >
+          Share my location
+        </IconButton>
         <SkipLink>
-          <CustomButton
-            textOnly
-            width="50%"
-            display="inline-flex"
-            onSelect={rejectLocationDetection}
-          >
+          <SubmitButton tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
-          </CustomButton>
+          </SubmitButton>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -167,7 +166,9 @@ const Step3 = (props) => {
           />
         </WizardFormGroup>
         <WizardButtonGroup>
-          <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+          <SubmitButton primary="true" onClick={onSubmit}>
+            Submit
+          </SubmitButton>
           <SkipLink>
             <Link to="/AirTableCOVID">
               {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
@@ -180,7 +181,7 @@ const Step3 = (props) => {
   );
 };
 
-export const OfferHelp = withRouter((props) => {
+const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     const { answers } = state;
@@ -189,7 +190,7 @@ export const OfferHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/medical",
+        pathname: "/feed",
       });
     }
   };
@@ -203,3 +204,5 @@ export const OfferHelp = withRouter((props) => {
     </WizardContainer>
   );
 });
+
+export default OfferHelp;

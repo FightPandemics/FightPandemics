@@ -1,38 +1,55 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Modal, List } from "antd-mobile";
-import CustomButton from "../../components/Button/CustomButton";
-import CustomH1 from "../Typography/Title/CustomH1";
-import DownArrowButton from "../Button/DownArrowButton";
+import { Modal } from "antd-mobile";
+import SubmitButton from "components/Button/SubmitButton";
+import TextLabel from "components/Typography/TextLabel";
+import { theme } from "constants/theme";
+
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
-import { FeedContext } from "../../pages/Feed";
-import { ROYAL_BLUE, SELAGO, DARK_GRAY } from "../../constants/colors";
+import { FeedContext } from "pages/Feed";
+import { DARK_GRAY } from "constants/colors";
+import SvgIcon from "components/Icon/SvgIcon";
+import downArrow from "assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
 `;
 
-export default () => {
+const ModalWrapper = styled(Modal)`
+  .filter-4 .am-button {
+    padding: 0 4.2rem;
+  }
+`;
+
+const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
     return filters.map((filter, idx) => (
-      <DownArrowButton
+      <SelectWithIconButton
         key={idx}
-        label={filter.label}
-        handleClick={handleFilterModal(idx)}
-        color={ROYAL_BLUE}
-        bgcolor={SELAGO}
-      />
+        primarylight="true"
+        righticon="true"
+        size="small"
+        icon={<SvgIcon src={downArrow} />}
+        onClick={handleFilterModal(idx)}
+      >
+        {filter.label}
+      </SelectWithIconButton>
     ));
   };
   return (
-    <FilterBoxWrapper>
-      <CustomH1 color={DARK_GRAY} fontsize={"1.4rem"} fontweight={"normal"}>
+    <FilterBoxWrapper className="filter-box">
+      <TextLabel
+        block="true"
+        color={DARK_GRAY}
+        size={theme.typography.size.medium}
+      >
         Filter by
-      </CustomH1>
+      </TextLabel>
       {renderFilterOptions(filters)}
-      <Modal
+      <ModalWrapper
         popup
         visible={filterModal}
         onClose={handleFilterModal(null)}
@@ -47,26 +64,26 @@ export default () => {
             padding: "2rem 0",
           }}
         >
-          <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
-            whitebg="true"
+          <SubmitButton
+            inline
+            secondary="true"
             onClick={handleQuit}
+            style={{ fontWeight: "normal" }}
           >
             Quit filters
-          </CustomButton>
-          <CustomButton
-            inline="true"
-            roundborder="true"
-            large="true"
+          </SubmitButton>
+          <SubmitButton
+            inline
             primary="true"
             onClick={handleFilterModal(null)}
+            style={{ fontWeight: "normal" }}
           >
             Apply filters
-          </CustomButton>
+          </SubmitButton>
         </div>
-      </Modal>
+      </ModalWrapper>
     </FilterBoxWrapper>
   );
 };
+
+export default FilterBox;

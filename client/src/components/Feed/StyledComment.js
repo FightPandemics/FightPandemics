@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Comment } from "antd";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const { darkGray, lighterGray } = colors;
 const { display } = typography.font.family;
 const { xsmall, medium } = typography.size;
 
-export default styled(Comment)`
+const StyledComment = styled(Comment)`
   &.ant-comment {
     font-family: ${display};
     .ant-comment-inner {
@@ -69,13 +69,9 @@ export default styled(Comment)`
                   padding-right: 0;
                   margin-right: 12px;
                 }
-                input {
-                  background-color: ${lighterGray};
-                  color: black;
-                  border-bottom: unset;
-                  border-radius: 4rem;
-                  padding: 1.4rem;
-                  width: 100%;
+
+                textarea {
+                  width: calc(100% - 50px);
                 }
               }
             }
@@ -89,3 +85,5 @@ export default styled(Comment)`
     }
   }
 `;
+
+export default StyledComment;

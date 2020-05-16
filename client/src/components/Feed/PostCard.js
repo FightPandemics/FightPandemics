@@ -1,24 +1,68 @@
+// Core
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+
+// Constants
+import { theme, mq } from "constants/theme";
+import { DARK_GRAY } from "constants/colors";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
 const { display } = typography.font.family;
-const { xsmall, medium, large, xxlarge } = typography.size;
+const { xsmall, small, medium, large, xxlarge } = typography.size;
 
-export default styled(Card)`
+const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  border: unset !important;
-  &.am-card,
-  .am-card-body {
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    border: unset !important;
+  }
+
+  &.am-card {
     font-family: ${display};
-    border-top: unset;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border-top: unset;
+    }
+
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      border: 0.05rem solid rgba(0, 0, 0, 0.5);
+      border-radius: 0.2rem;
+      padding: 2rem 2.4rem;
+    }
+
+    body .feed-posts & {
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        border: 0.05rem solid rgba(0, 0, 0, 0.5);
+      }
+    }
+
     &::before {
       content: normal !important;
     }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      .card-submenu {
+        display: none;
+
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          display: block;
+        }
+      }
+
+      svg {
+        circle {
+          fill: ${DARK_GRAY};
+        }
+      }
+    }
+
     .am-card-header {
       display: block;
+      flex: 1 1 auto;
       padding: 0;
 
       .am-card-header-content {
@@ -33,20 +77,29 @@ export default styled(Card)`
           max-width: 100%;
         }
       }
+
       .am-card-header-extra {
         text-align: unset;
         font-size: ${xsmall};
         margin-left: 4.7rem;
         margin-top: -1.8rem;
+
         .status-icon {
           margin-right: 0.8rem;
         }
       }
     }
+
     .am-card-body {
+      border-top: unset;
       padding: 0;
       color: black;
-      h1 {
+
+      &::before {
+        content: none;
+      }
+
+      h2 {
         font-weight: bold;
         line-height: 2.7rem;
         font-size: ${xxlarge};
@@ -58,10 +111,29 @@ export default styled(Card)`
         line-height: 2rem;
       }
 
+      &.content-wrapper {
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          padding: 0 3.4rem;
+        }
+      }
+
+      &.view-more-wrapper {
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
+          margin-bottom: 1.3rem;
+          padding: 0 3.4rem;
+        }
+      }
+
       .view-more {
         font-size: ${large};
         font-weight: 500;
         color: ${royalBlue};
+
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          font-size: ${small};
+          font-weight: 600;
+        }
       }
 
       .social-icons {
@@ -73,14 +145,44 @@ export default styled(Card)`
         .social-icon {
           color: ${darkGray};
           cursor: pointer;
+
           .social-icon-svg {
             margin-right: 1rem;
           }
+
           span {
             font-size: ${medium};
+          }
+        }
+
+        .total-number {
+          display: inline;
+
+          @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+            display: none;
+          }
+        }
+
+        .social-text {
+          display: none;
+
+          @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+            display: inline;
+          }
+        }
+      }
+
+      &.comments-wrapper {
+        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          display: none;
+
+          &.show-comments {
+            display: block;
           }
         }
       }
     }
   }
 `;
+
+export default PostCard;

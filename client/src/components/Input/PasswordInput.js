@@ -4,10 +4,10 @@ import styled from "styled-components";
 import withLabel from "./with-label";
 import BaseInput from "./BaseInput";
 
-import {
-  Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
-} from "@material-ui/icons";
+// ICONS
+import SvgIcon from "./Icon/SvgIcon";
+import VisibilityIcon from "assets/icons/eye-mask.svg";
+import VisibilityOffIcon from "assets/icons/eye-unmask.svg";
 
 const Input = styled(BaseInput).attrs((props) => ({
   type: props.isVisible ? "text" : "password",
@@ -22,8 +22,7 @@ const StyleEye = {
   opacity: 0.5,
 };
 
-const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
-
+const PwInput = ({ inputStyle, placeholder, ...props }) => {
   const [isVisible, setVisible] = useState(false);
   const passwordRef = useRef();
   const EyeIcon = isVisible ? VisibilityIcon : VisibilityOffIcon;
@@ -36,18 +35,26 @@ const PasswordInput = ({ inputStyle, placeholder, ...props }) => {
         ref={passwordRef}
         {...props}
       />
-      <EyeIcon style={StyleEye} onClick={() => setVisible(!isVisible)} />
+      <SvgIcon
+        src={EyeIcon}
+        style={StyleEye}
+        onClick={() => setVisible(!isVisible)}
+      />
     </>
   );
 };
 
-export default ({ label, placeholder, labelStyle, inputStyle, ...props }) => {
+const PasswordInput = ({
+  label,
+  placeholder,
+  labelStyle,
+  inputStyle,
+  ...props
+}) => {
   const PasswordField = withLabel(() => (
-    <PasswordInput
-      inputStyle={inputStyle}
-      placeholder={placeholder}
-      {...props}
-    />
+    <PwInput inputStyle={inputStyle} placeholder={placeholder} {...props} />
   ));
   return <PasswordField label={label} style={labelStyle} />;
 };
+
+export default PasswordInput;

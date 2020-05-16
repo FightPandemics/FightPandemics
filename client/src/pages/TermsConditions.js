@@ -4,10 +4,10 @@ import {
   PolicyContainer,
   TextContainer,
   Paragraph,
-} from "../components/PolicyPages/PolicyContainer";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
+} from "components/PolicyPages/PolicyContainer";
+import { TermsLink } from "components/PolicyPages/TermsLink";
 
-export const TermsConditions = () => {
+const TermsConditions = () => {
   return (
     <PolicyContainer>
       <TextContainer>
@@ -1321,3 +1321,5 @@ export const TermsConditions = () => {
     </PolicyContainer>
   );
 };
+
+export default TermsConditions;

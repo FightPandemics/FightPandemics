@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Input } from "antd";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { display } = theme.typography.font.family;
 const { medium, xlarge } = theme.typography.size;
@@ -34,8 +34,6 @@ export const CreatePostWrapper = styled.div`
     color: red;
   }
   .submit-btn {
-    font-family: ${display};
-    background-color: ${royalBlue};
     margin-bottom: 3rem;
   }
 `;

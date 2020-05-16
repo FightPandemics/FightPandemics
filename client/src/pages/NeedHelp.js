@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-
-import SubmitButton from "../components/Button/SubmitButton";
-import { asyncGetGeoLocation } from "../utils/geolocation";
+import {Link} from "react-router-dom";
+import SubmitButton from "components/Button/SubmitButton";
+import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   AnswerButton,
   StyledWizard,
@@ -15,7 +15,7 @@ import {
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
-} from "../components/StepWizard";
+} from "components/StepWizard";
 
 const INITIAL_STATE = {
   answers: [],
@@ -99,13 +99,17 @@ const Step3 = (props) => {
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
-        <SubmitButton fill type="primary" title="Submit" onClick={onSubmit} />
+        <Link to="/feed">
+        <SubmitButton primary="true" onClick={onSubmit}>
+          Submit
+        </SubmitButton>
+        </Link>
       </WizardButtonGroup>
     </WizardStep>
   );
 };
 
-export const NeedHelp = withRouter((props) => {
+const NeedHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const updateAnswers = (key, value) => {
     const { answers } = state;
@@ -128,3 +132,5 @@ export const NeedHelp = withRouter((props) => {
     </WizardContainer>
   );
 });
+
+export default NeedHelp;

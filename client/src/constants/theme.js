@@ -7,24 +7,10 @@ import {
   LIGHT_GRAY,
   LIGHTER_GRAY,
   SELAGO,
+  TROPICAL_BLUE,
 } from "./colors";
 
 const theme = {
-  global: {
-    font: {
-      family: "Work Sans",
-    },
-    focus: {
-      border: {
-        color: PRIMARY,
-      },
-    },
-    colors: {
-      primary: PRIMARY,
-      royalBlue: ROYAL_BLUE,
-      darkGray: "#282828",
-    },
-  },
   typography: {
     font: {
       family: {
@@ -34,7 +20,7 @@ const theme = {
       },
     },
     size: {
-      // xxsmall: "1rem",
+      xxsmall: "1rem",
       xsmall: "1.1rem",
       small: "1.2rem",
       medium: "1.4rem",
@@ -64,6 +50,7 @@ const theme = {
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
+    tropicalBlue: TROPICAL_BLUE,
     selago: SELAGO,
     darkGray: DARK_GRAY,
     darkerGray: DARKER_GRAY,
@@ -82,11 +69,33 @@ const theme = {
     padding: {
       vertical: "1rem",
     },
-    primary: {
-      color: "#fff",
-      backgroundColor: PRIMARY,
-      borderRadius: "18px",
+    regular: {
+      fontFamily: "Poppins",
+      fontSize: "1.8rem",
       fontWeight: "bold",
+      borderRadius: "4.6rem",
+    },
+    primary: {
+      backgroundColor: ROYAL_BLUE,
+      color: "#fff",
+    },
+    primarylight: {
+      backgroundColor: SELAGO,
+      color: ROYAL_BLUE,
+    },
+    secondary: {
+      backgroundColor: "#fff",
+      color: ROYAL_BLUE,
+      border: `0.1rem solid ${ROYAL_BLUE} !important`,
+    },
+    tertiary: {
+      fontSize: "1.6rem",
+      fontWeight: "500",
+      textAlign: "center",
+      color: ROYAL_BLUE,
+    },
+    inlineBlock: {
+      padding: "0 3rem",
     },
     iconAndText: {
       color: DARK_GRAY,
@@ -126,6 +135,7 @@ const theme = {
     },
   },
 };
+
 const mq = {
   phone: {
     narrow: {

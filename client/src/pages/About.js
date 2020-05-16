@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Emoji from "../components/Emoji";
+import Emoji from "components/Emoji";
 
 const AboutContainer = styled.div`
   margin: 30px 0px;
@@ -15,7 +15,7 @@ const TextContainer = styled.div`
   text-align: center;
 `;
 
-export const About = () => {
+const About = () => {
   return (
     <AboutContainer>
       <TextContainer>
@@ -107,3 +107,5 @@ export const About = () => {
     </AboutContainer>
   );
 };
+
+export default About;

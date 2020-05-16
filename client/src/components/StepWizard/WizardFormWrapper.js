@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { mq } from "../../constants/theme";
+import { mq } from "constants/theme";
 
-export default styled.div`
+const WizardFormWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   flex: 1;
@@ -11,3 +11,5 @@ export default styled.div`
     margin: 0 5rem 2rem 0;
   }
 `;
+
+export default WizardFormWrapper;

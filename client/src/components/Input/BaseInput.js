@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default styled.input`
+const BaseInput = styled.input`
   border: unset;
   border-bottom: 1px solid #5970ec;
   transition: 150ms border;
@@ -11,3 +11,5 @@ export default styled.input`
     border-bottom: 2px solid #425af2;
   }
 `;
+
+export default BaseInput;

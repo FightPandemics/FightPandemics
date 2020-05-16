@@ -13,6 +13,7 @@ const VERIFY_EMAIL = "/auth/verify-email";
 // handle "sub"-routes by passing them in a `routes`
 // prop to the component it renders.
 export const RouteWithSubRoutes = (route) => {
+
   const { emailVerified, isAuthenticated, path, props = {} } = route;
   const { loggedInOnly, notLoggedInOnly } = props;
 
@@ -20,7 +21,7 @@ export const RouteWithSubRoutes = (route) => {
     <Route
       path={path}
       render={({ layout, location, ...rest }) => {
-        const Layout = layout === "logo" ? LogoLayout : NavigationLayout;
+        const Layout = route.layout === "logo" ? LogoLayout : NavigationLayout;
         let redirect;
         // todo: cover all different cases, ensure all the props in the routes config are set correctly
         //  maybe use LoggedIn, NotLoggedIn, Route components
@@ -58,9 +59,9 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ emailVerified, isAuthenticated }) => ({
-  emailVerified,
-  isAuthenticated,
+const mapStateToProps = ({ session }) => ({
+  emailVerified: session.emailVerified,
+  isAuthenticated: session.isAuthenticated,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

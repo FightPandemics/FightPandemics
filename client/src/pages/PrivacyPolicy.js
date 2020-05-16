@@ -4,10 +4,10 @@ import {
   PolicyContainer,
   TextContainer,
   Paragraph,
-} from "../components/PolicyPages/PolicyContainer";
-import { ListNoIndent } from "../components/PolicyPages/ListStyles";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
-import { Date } from "../components/PolicyPages/Date";
+} from "components/PolicyPages/PolicyContainer";
+import { ListNoIndent } from "components/PolicyPages/ListStyles";
+import { TermsLink } from "components/PolicyPages/TermsLink";
+import { Date } from "components/PolicyPages/Date";
 import {
   DataTableHead,
   TrLine,
@@ -15,9 +15,9 @@ import {
   ThRight,
   TdLeft,
   TdRight,
-} from "../components/PolicyPages/TableStyles";
+} from "components/PolicyPages/TableStyles";
 
-export const PrivacyPolicy = () => {
+const PrivacyPolicy = () => {
   return (
     <PolicyContainer>
       <TextContainer>
@@ -500,3 +500,5 @@ export const PrivacyPolicy = () => {
     </PolicyContainer>
   );
 };
+
+export default PrivacyPolicy;

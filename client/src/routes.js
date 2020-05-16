@@ -1,14 +1,16 @@
-import { Home } from "./pages/Home";
-import { NeedHelp } from "./pages/NeedHelp";
-import { OfferHelp } from "./pages/OfferHelp";
-import { About } from "./pages/About";
-import { Medical } from "./pages/Medical";
-import { AirTableCOVID } from "./pages/AirTableCOVID";
-import { SymptomsCheck } from "./pages/SymptomsCheck";
-import { TermsConditions } from "./pages/TermsConditions";
-import { PrivacyPolicy } from "./pages/PrivacyPolicy";
-import { CookiesPolicy } from "./pages/CookiesPolicy";
-import Feed from "./pages/Feed";
+import Home from "./pages/Home";
+import NeedHelp from "./pages/NeedHelp";
+import OfferHelp from "./pages/OfferHelp";
+import About from "./pages/About";
+import Medical from "./pages/Medical";
+import SymptomsCheck from "./pages/SymptomsCheck";
+import TermsConditions from "./pages/TermsConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiesPolicy from "./pages/CookiesPolicy";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
+import EditAccount from "./pages/EditAccount";
+import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
@@ -67,10 +69,6 @@ const routes = [
     component: NearestHospital,
   },
   {
-    path: "/AirTableCOVID",
-    component: AirTableCOVID,
-  },
-  {
     path: "/find-help",
     component: Feed,
   },
@@ -81,6 +79,18 @@ const routes = [
   {
     path: "/feed",
     component: Feed,
+  },
+  {
+    path: "/profile",
+    component: Profile,
+  },
+  {
+    path: "/edit-profile",
+    component: EditProfile,
+  },
+  {
+    path: "/edit-account",
+    component: EditAccount,
   },
   {
     path: "/create-post",

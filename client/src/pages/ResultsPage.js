@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import { AnswerButton } from "../components/StepWizard";
-import { GenericMessage } from "./CovidScreening/GenericMessage";
+import { AnswerButton } from "components/StepWizard";
+import GenericMessage from "./CovidScreening/GenericMessage";
 
-export const ResultsPage = (props) => {
+const ResultsPage = (props) => {
   return (
     <>
       <h2>Practice Social Distancing</h2>
@@ -15,7 +16,11 @@ export const ResultsPage = (props) => {
           <p>{props.val[item]} </p>
         </div>
       ))}
-      <AnswerButton>Done</AnswerButton>
+      <Link to="/feed">
+        <AnswerButton>Done</AnswerButton>
+      </Link>
     </>
   );
 };
+
+export default ResultsPage;

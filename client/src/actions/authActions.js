@@ -2,8 +2,8 @@ import axios from "axios";
 import { Toast } from "antd-mobile";
 
 import { GET_ERRORS } from "./types";
-import { AUTH_LOGIN, AUTH_SIGNUP, SET_USER } from "../constants/action-types";
-import { getAuthToken } from "../utils/auth-token";
+import { AUTH_LOGIN, AUTH_SIGNUP } from "constants/action-types";
+import { getAuthToken } from "utils/auth-token";
 
 // Note: for production apps, both localstorage & cookies contain risks to store user & auth data
 export const initAuth = () => {

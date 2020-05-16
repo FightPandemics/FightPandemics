@@ -9,3 +9,5 @@ export const LIGHT_GRAY = "#D7D7D7";
 export const MEDIUM_GRAY = "#C5C5C5";
 export const DARK_GRAY = "#939393";
 export const DARKER_GRAY = "#282828";
+export const WHITE = "#ffffff";
+export const BLACK = "#000000";

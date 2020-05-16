@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import DownArrowButton from "../components/Button/DownArrowButton";
-import HorizontalLine from "../components/Icon/horizontal-line";
-import AddTags from "../components/Tag/AddTags";
-import SubmitButton from "../components/Button/SubmitButton";
-import { theme } from "../constants/theme";
+// import axios from "axios";
+import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets/data/createPostSettings";
+import CustomModal from "components/CreatePost/CustomModal";
+import RadioGroup from "components/CreatePost/RadioGroup";
+import Heading from "components/Typography/Heading";
+
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
+import AddTags from "components/Tag/AddTags";
+import SubmitButton from "components/Button/SubmitButton";
 import {
   CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
-} from "../components/CreatePost/StyledCreatePost";
+} from "components/CreatePost/StyledCreatePost";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import downArrow from "assets/icons/down-arrow.svg";
+import horizontalLine from "assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
@@ -44,7 +48,7 @@ const errorMsg = {
   tags: "Please add at least one tag.",
 };
 
-export default (props) => {
+const CreatePost = (props) => {
   const [state, setState] = useState(initialState.state);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
@@ -107,7 +111,7 @@ export default (props) => {
     if (!errors.length) {
       // todo: finish integrating api
       try {
-        const req = await axios.post("/api/posts", formData);
+        // const req = await axios.post("/api/posts", formData);
       } catch (error) {
         console.log(error);
       }
@@ -116,14 +120,9 @@ export default (props) => {
 
   return (
     <CreatePostWrapper>
-      <CustomH1
-        className="title"
-        fontsize="2.2rem"
-        fontweight="700"
-        color="black"
-      >
+      <Heading className="h4" level={4}>
         Create a Post
-      </CustomH1>
+      </Heading>
       <StyledForm onSubmit={handleSubmit}>
         <div className="settings">
           <CustomModal
@@ -144,20 +143,26 @@ export default (props) => {
             closable={false}
           />
           <div className="buttons">
-            <DownArrowButton
-              handleClick={showModal(shareWith)}
-              label={formData.shareWith}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
+            <SelectWithIconButton
               long="true"
-            />
-            <DownArrowButton
-              handleClick={showModal(expires)}
-              label={formData.expires}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
+              size="small"
+              righticon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(shareWith)}
+            >
+              {formData.shareWith}
+            </SelectWithIconButton>
+            <SelectWithIconButton
               long="true"
-            />
+              size="small"
+              righticon="true"
+              secondary="true"
+              icon={<SvgIcon src={downArrow} />}
+              onClick={showModal(expires)}
+            >
+              {formData.expires}
+            </SelectWithIconButton>
           </div>
           <div className="inline">
             <RadioGroup
@@ -169,7 +174,7 @@ export default (props) => {
             <span className="error-box">{renderError("help")}</span>
           </div>
         </div>
-        <HorizontalLine />
+        <SvgIcon src={horizontalLine} />
         <div className="post-content">
           <label>
             <StyledInput
@@ -190,17 +195,21 @@ export default (props) => {
           </label>
           <span className="error-box">{renderError("description")}</span>
         </div>
-        <HorizontalLine />
+        <SvgIcon src={horizontalLine} />
         <div className="tags">
           <AddTags addTag={addTag} filters={types} />
         </div>
         <span className="error-box">{renderError("tags")}</span>
         <SubmitButton
-          title="Post"
-          handleClick={handleSubmit}
+          primary="true"
+          onClick={handleSubmit}
           className="submit-btn"
-        />
+        >
+          Post
+        </SubmitButton>
       </StyledForm>
     </CreatePostWrapper>
   );
 };
+
+export default CreatePost;

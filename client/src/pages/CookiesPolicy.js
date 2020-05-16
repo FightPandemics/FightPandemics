@@ -3,12 +3,12 @@ import React from "react";
 import {
   PolicyContainer,
   TextContainer,
-} from "../components/PolicyPages/PolicyContainer";
-import { ListNoIndent } from "../components/PolicyPages/ListStyles";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
-import { Date } from "../components/PolicyPages/Date";
+} from "components/PolicyPages/PolicyContainer";
+import { ListNoIndent } from "components/PolicyPages/ListStyles";
+import { TermsLink } from "components/PolicyPages/TermsLink";
+import { Date } from "components/PolicyPages/Date";
 
-export const CookiesPolicy = () => {
+const CookiesPolicy = () => {
   return (
     <PolicyContainer>
       <TextContainer>
@@ -175,3 +175,5 @@ export const CookiesPolicy = () => {
     </PolicyContainer>
   );
 };
+
+export default CookiesPolicy;

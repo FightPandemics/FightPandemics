@@ -1,8 +1,8 @@
 import { Input } from "antd";
 import styled from "styled-components";
-import { LIGHTER_GRAY } from "../../constants/colors";
+import { LIGHTER_GRAY } from "constants/colors";
 
-export default styled(Input.TextArea)`
+const TextArea = styled(Input.TextArea)`
   background-color: ${LIGHTER_GRAY};
   font-size: 1.4rem;
   color: black;
@@ -18,3 +18,5 @@ export default styled(Input.TextArea)`
     box-shadow: unset;
   }
 `;
+
+export default TextArea;

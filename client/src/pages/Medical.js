@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Heading } from "grommet";
 
-import ImageButton from "../components/Button/ImageButton";
-import { theme } from "../constants/theme";
+import ImageButton from "components/Button/ImageButton";
+import { theme } from "constants/theme";
 
-import { getAirtableRecord } from "../utils/airtable";
-import { getLocalStorageJson } from "../utils/local-storage";
+import { getAirtableRecord } from "utils/airtable";
+import { getLocalStorageJson } from "utils/local-storage";
 
-const nearestHospitalUnselected = require("../../src/assets/medical-page-images/nearest-hospital-unselected.png");
-const nearestHospitalSelected = require("../../src/assets/medical-page-images/nearest-hospital-selected.png");
-// const symptomsCheckInActive = require("../assets/covid19-symptoms-active.png");
-const symptomsCheckSelected = require("../../src/assets/medical-page-images/covid19-symptoms-selected.svg");
-const findHelpUnselected = require("../../src/assets/medical-page-images/find-help-selected.svg");
-const findHelpSelected = require("../../src/assets/medical-page-images/find-help-unselected.svg");
+const nearestHospitalUnselected = require("assets/medical-page-images/nearest-hospital-unselected.png");
+const nearestHospitalSelected = require("assets/medical-page-images/nearest-hospital-selected.png");
+// const symptomsCheckInActive = require("assets/covid19-symptoms-active.png");
+const symptomsCheckSelected = require("assets/medical-page-images/covid19-symptoms-selected.svg");
+const findHelpUnselected = require("assets/medical-page-images/find-help-selected.svg");
+const findHelpSelected = require("assets/medical-page-images/find-help-unselected.svg");
 
 const INITIAL_STATE = {
   emergencyNumber: "",
@@ -28,7 +27,7 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledWelcome = styled(Heading)`
+const StyledWelcome = styled.h2`
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 300;
@@ -38,23 +37,22 @@ const StyledWelcome = styled(Heading)`
   text-align: center;
 `;
 
-const StyledStrapline = styled(StyledWelcome)`
-  font-weight: bold;
-  margin: 0 auto;
-`;
+// const StyledStrapline = styled(StyledWelcome)`
+//   font-weight: bold;
+//   margin: 0 auto;
+// `;
 
 const OnboardingContainer = styled.div`
   margin-top: 4rem;
 `;
 
 const needHelpAnswers = getLocalStorageJson("needHelpAnswers") || [];
-console.log({ needHelpAnswers });
 
 const getGeoLocation = () => needHelpAnswers?.location;
 
-export const Medical = (props) => {
+const Medical = (props) => {
   const [state, setState] = useState(INITIAL_STATE);
-//   console.log("render medical page", { props });
+  //   console.log("render medical page", { props });
 
   const fetchNumber = (countryName) => {
     getAirtableRecord(countryName, "Country").then((record) => {
@@ -69,9 +67,15 @@ export const Medical = (props) => {
   };
 
   const fetchGeoData = () => {
-    const geolocation = getGeoLocation();
+    // Defaulting to San Francisco
+    // TODO fix geolocation
+    const defaultGeolocation = {
+      latitude: 37.733795,
+      longitude: -122.446747,
+    };
+    const geolocation = getGeoLocation() || defaultGeolocation;
     axios
-      .post("/api/geo/country", geolocation)
+      .get("/api/geo/country", { params: geolocation })
       .then((res) => {
         setState({ ...state, country: res.data });
         localStorage.setItem("country", JSON.stringify(res.data));
@@ -127,7 +131,6 @@ export const Medical = (props) => {
           <ImageButton
             type="ghost"
             inactiveImg={findHelpSelected}
-
             activeImg={findHelpUnselected}
             onClick={() => props.history.push("/find-help")}
           >
@@ -138,3 +141,5 @@ export const Medical = (props) => {
     </div>
   );
 };
+
+export default Medical;

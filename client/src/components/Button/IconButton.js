@@ -1,11 +1,13 @@
-import React from "react";
 import styled from "styled-components";
-
 import SubmitButton from "./SubmitButton";
-import { theme, mq } from "../../constants/theme";
+import { theme, mq } from "constants/theme";
 const { button, colors } = theme;
 
-const IconButton = styled(SubmitButton).attrs()`
+const IconButton = styled(SubmitButton).attrs((props) => {
+  return {
+    icon: props.icon,
+  };
+})`
   ${button.iconAndText}
 
   &::before {
@@ -22,8 +24,4 @@ const IconButton = styled(SubmitButton).attrs()`
   }
 `;
 
-export default (props) => {
-  const { icon, title } = props;
-
-  return <IconButton icon={icon} title={title} />;
-};
+export default IconButton;

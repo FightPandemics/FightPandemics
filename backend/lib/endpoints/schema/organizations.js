@@ -1,8 +1,8 @@
 const S = require("fluent-schema");
+const { strictSchema } = require("./utils");
 
 const createOrganizationSchema = {
-  body: S.object()
-    .additionalProperties(false)
+  body: strictSchema()
     .prop("email", S.string().required())
     .prop("global", S.boolean())
     .prop("industry", S.string().required())
@@ -13,20 +13,19 @@ const createOrganizationSchema = {
 };
 
 const getOrganizationSchema = {
-  params: S.object().prop("organizationId", S.string().required()),
+  params: strictSchema().prop("organizationId", S.string().required()),
 };
 
 // TODO: Maybe add search param in query string?
 const getOrganizationsSchema = {
-  querystring: S.object()
+  querystring: strictSchema()
     .prop("limit", S.integer())
     .prop("ownerId", S.string())
     .prop("skip", S.integer()),
 };
 
 const updateOrganizationSchema = {
-  body: S.object()
-    .additionalProperties(false)
+  body: strictSchema()
     .prop("address", S.string())
     .prop("androidUrl", S.string())
     .prop("description", S.string())
@@ -43,11 +42,11 @@ const updateOrganizationSchema = {
     .prop("twitterUrl", S.string())
     .prop("type", S.string())
     .prop("website", S.string()),
-  params: S.object().prop("organizationId", S.string().required()),
+  params: strictSchema().prop("organizationId", S.string().required()),
 };
 
 const deleteOrganizationSchema = {
-  params: S.object().prop("organizationId", S.string().required()),
+  params: strictSchema().prop("organizationId", S.string().required()),
 };
 
 module.exports = {

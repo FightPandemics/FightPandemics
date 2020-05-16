@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FeedbackButton from "./FeedbackButton";
 import styled from "styled-components";
 
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { typography } = theme;
 
@@ -35,7 +35,7 @@ const NestedImage = styled.img.attrs((props) => {
   margin: 0 auto 2rem;
 `;
 
-export default ({
+const ImageButton = ({
   inactiveImg,
   activeImg,
   height = DEFAULT_HEIGHT,
@@ -68,3 +68,5 @@ export default ({
     </FeedbackButton>
   );
 };
+
+export default ImageButton;

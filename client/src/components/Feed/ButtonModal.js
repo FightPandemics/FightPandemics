@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
+const { button } = theme;
 const { royalBlue } = theme.colors;
 
-export default styled(Modal)`
+const ButtonModal = styled(Modal)`
   font-family: ${theme.typography.font.family.display};
   .title {
     font-weight: bold;
@@ -12,7 +13,8 @@ export default styled(Modal)`
     margin-bottom: 2.5rem;
   }
 
-  button {
+  .primary,
+  .outline {
     display: block;
     width: 100%;
     display: block;
@@ -22,32 +24,28 @@ export default styled(Modal)`
     border-radius: 1rem;
     margin-bottom: 1.5rem;
     border: 0.1rem solid ${royalBlue};
-
-    a {
-      color: unset;
-    }
+    color: unset;
   }
 
   .primary {
-    background-color: ${royalBlue};
-    color: #fff;
+    ${button.primary}
 
     &:hover,
     &:active,
     &:focus {
-      background-color: #fff;
-      color: black;
+      ${button.secondary}
     }
   }
 
   .outline {
-    background-color: #fff;
-    color: black;
+    ${button.secondary}
+
     &:hover,
     &:active,
     &:focus {
-      background-color: ${royalBlue};
-      color: #fff;
+      ${button.primary}
     }
   }
 `;
+
+export default ButtonModal;

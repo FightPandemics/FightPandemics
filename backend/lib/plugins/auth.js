@@ -1,6 +1,7 @@
 const fp = require("fastify-plugin");
 const fastifyJwt = require("fastify-jwt");
 const fastifySecretProvider = require("fastify-authz-jwks");
+const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 
 const {
@@ -8,6 +9,7 @@ const {
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
+const MONGO_ID_KEY = `${auth.appUrl}/mongo_id`;
 const ttlSeconds = 86400;
 const cache = new NodeCache({
   checkperiod: ttlSeconds * 0.2,
@@ -31,6 +33,8 @@ const authPlugin = async (app) => {
   app.decorate("authenticate", async (req, reply) => {
     try {
       await req.jwtVerify();
+      const { user } = req;
+      req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
     } catch (err) {
       reply.send(err);
     }
