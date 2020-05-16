@@ -7,6 +7,8 @@ export default [
     numShares: 10,
     title: "Disinfecting clorax wipes needed",
     url: "www.test.com/0",
+    type: "Requesting help",
+    date: "April 9 at 8:00 pm",
     comments: [
       {
         _id: 0,
@@ -62,6 +64,8 @@ export default [
     numLikes: 12,
     numComments: 3,
     numShares: 10,
+    type: "Offering help",
+    date: "April 9 at 8:00 pm",
     comments: [
       {
         _id: 0,
@@ -102,6 +106,8 @@ export default [
     numComments: 2,
     numShares: 7,
     url: "www.test.com/2",
+    type: "Requesting help",
+    date: "April 9 at 8:00 pm",
     comments: [
       {
         _id: 0,

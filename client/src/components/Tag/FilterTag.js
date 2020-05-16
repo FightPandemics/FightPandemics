@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Tag } from "antd-mobile";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { button } = theme;
 const { xsmall } = theme.typography.size;

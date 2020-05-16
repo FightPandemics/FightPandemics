@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import nextArrow from "~/assets/icons/next-arrow.svg";
-import backArrow from "~/assets/icons/back-arrow.svg";
+import nextArrow from "assets/icons/next-arrow.svg";
+import backArrow from "assets/icons/back-arrow.svg";
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -45,10 +45,7 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       />
     ) : (
       <Link to={"/"}>
-        <PrevButton
-          src={backArrow}
-          a11yTitle="Navigate to the homepage"
-        />
+        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />
       </Link>
     )}
     {currentStep < totalSteps && (

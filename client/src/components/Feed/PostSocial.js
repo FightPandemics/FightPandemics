@@ -3,12 +3,12 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import heart from "~/assets/icons/heart.svg";
-import heartGray from "~/assets/icons/heart-gray.svg";
-import comment from "~/assets/icons/comment.svg";
-import commentGray from "~/assets/icons/comment-gray.svg";
-import share from "~/assets/icons/share.svg";
-import shareGray from "~/assets/icons/share-gray.svg";
+import heart from "assets/icons/heart.svg";
+import heartGray from "assets/icons/heart-gray.svg";
+import comment from "assets/icons/comment.svg";
+import commentGray from "assets/icons/comment-gray.svg";
+import share from "assets/icons/share.svg";
+import shareGray from "assets/icons/share-gray.svg";
 
 const PostSocial = ({
   url,
@@ -50,19 +50,22 @@ const PostSocial = ({
     <div className="social-icons">
       <div className="social-icon" onClick={likePost}>
         {renderLikeIcon()}
-        <span>{numLikes}</span>
+        <span className="total-number">{numLikes}</span>
+        <span className="social-text">Like</span>
       </div>
       <span></span>
       <div className="social-icon" onClick={setShowComments}>
         {renderCommentIcon()}
-        <span>{numComments}</span>
+        <span className="total-number">{numComments}</span>
+        <span className="social-text">Comment</span>
       </div>
       <span></span>
       <div className="social-icon">
         <CopyToClipboard text={url} onCopy={onCopyLink}>
           <span>
             {renderShareIcon()}
-            <span>{numShares}</span>
+            <span className="total-number">{numShares}</span>
+            <span className="social-text">Share</span>
           </span>
         </CopyToClipboard>
       </div>

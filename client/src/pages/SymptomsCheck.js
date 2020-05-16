@@ -18,7 +18,7 @@ import {
   SCSubtitle,
   SCTitle,
   SCWizardStep,
-  SCStyledWizard
+  SCStyledWizard,
 } from "../components/SymptomsCheck/SymptomsCheckStyles";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
@@ -70,20 +70,31 @@ const Step1 = (props) => {
 
   return (
     <SCWizardStep>
-      <SCSubtitle fontSize={{mb:'1.4rem', dkt:'1.8rem'}}>
+      <SCSubtitle fontSize={{ mb: "1.4rem", dkt: "1.8rem" }}>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </SCSubtitle>
-      <SCTitle fontSize={{mb:'2.6rem', dkt:'1.8rem'}}>How old are you?</SCTitle>
+      <SCTitle fontSize={{ mb: "2.6rem", dkt: "1.8rem" }}>
+        How old are you?
+      </SCTitle>
       <SCButtonsContainer>
-      <SCAnswerButton onSelect={() => onSelectAnswer("under 18")} height={{mb:'5rem', dkt:'8.5rem'}}>
-        <SCButtonContent>under 18</SCButtonContent>
-      </SCAnswerButton>
-      <SCAnswerButton onSelect={() => onSelectAnswer("18-64")} height={{mb:'5rem', dkt:'8.5rem'}}>
-        <SCButtonContent>18-64</SCButtonContent>
-      </SCAnswerButton>
-      <SCAnswerButton onSelect={() => onSelectAnswer("65+")} height={{mb:'5rem', dkt:'8.5rem'}}>
-      <SCButtonContent>65+</SCButtonContent>
-      </SCAnswerButton>
+        <SCAnswerButton
+          onSelect={() => onSelectAnswer("under 18")}
+          height={{ mb: "5rem", dkt: "8.5rem" }}
+        >
+          <SCButtonContent>under 18</SCButtonContent>
+        </SCAnswerButton>
+        <SCAnswerButton
+          onSelect={() => onSelectAnswer("18-64")}
+          height={{ mb: "5rem", dkt: "8.5rem" }}
+        >
+          <SCButtonContent>18-64</SCButtonContent>
+        </SCAnswerButton>
+        <SCAnswerButton
+          onSelect={() => onSelectAnswer("65+")}
+          height={{ mb: "5rem", dkt: "8.5rem" }}
+        >
+          <SCButtonContent>65+</SCButtonContent>
+        </SCAnswerButton>
       </SCButtonsContainer>
     </SCWizardStep>
   );
@@ -123,9 +134,7 @@ const Step2 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
-      <h2 className="mb-5">
-      Are you experiencing any of these symptoms? 
-      </h2>
+      <h2 className="mb-5">Are you experiencing any of these symptoms?</h2>
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
           key={i}
@@ -181,7 +190,7 @@ const Step3 = (props) => {
       </h5>
       <h2 className="mb-5">
         Do you have any of these pre-existing medical conditions? Please, select
-        all that apply?
+        all that apply.
       </h2>
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
@@ -292,7 +301,7 @@ const Step7 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Do you live in a care facility? This includes nursing homes or assisted
@@ -302,7 +311,7 @@ const Step7 = (props) => {
         I live in a long-term care facility
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I dont live in a long-term care facility.
+        No, I don't live in a long-term care facility
       </AnswerButton>
     </div>
   );
@@ -317,23 +326,23 @@ const Step8 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Do you live in a medical facility? This includes a hospital, emergency
-        room, other medical setting, or long-term care facility.Select all that
+        room, other medical setting, or long-term care facility. Select all that
         apply.
       </h2>
       <AnswerButton onSelect={() => onSelectAnswer("worked")}>
-        I have worked in a hospital, or other care facility in the past 14 days.
+        I have worked in a hospital, or other care facility in the past 14 days
         This includes volunteering.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("plan to work")}>
-        I plan to work in hospital, or other care facility in the next 14 days.
-        This includes volunteering
+        I plan to work in hospital, or other care facility in the next 14 days
+        This includes volunteering.
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
-        No, I dont work or plan to work in a care facility.
+        No, I don't work or plan to work in a care facility
       </AnswerButton>
     </div>
   );
@@ -408,7 +417,7 @@ const SymptomsCheck = () => {
   if (condition1 || condition2 || condition3 || condition4) {
     displayMessage.push(
       "No test needed at this time",
-      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionaire again.",
+      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionnaire again.",
     );
   }
 
@@ -420,7 +429,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Monitor Symptoms",
-      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your synptoms get worse contact your doctor's office",
+      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office.",
     );
   }
 
@@ -480,7 +489,7 @@ const SymptomsCheck = () => {
   if (condition5 || condition6 || condition7 || condition8) {
     displayMessage.push(
       "Talk to someone about Testing",
-      "Your Answers Suggest you may need to get tested for COVID-19.You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
+      "Your answers suggest you may need to get tested for COVID-19. You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
     );
   }
 
@@ -494,7 +503,7 @@ const SymptomsCheck = () => {
   if (condition9) {
     displayMessage.push(
       "Call your Work Health Provider",
-      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of CoVID-19",
+      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19.",
     );
   }
 
@@ -519,7 +528,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Isolate from others",
-      "You should try to stay away from others for atleast 7 days from when the symptoms first appeared. Your isolation can end if your symptons improve significantly and if you have had no fever for atleast 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
+      "You should try to stay away from others for at least 7 days from when the symptoms first appeared. Your isolation can end if your symptoms improve significantly and if you have had no fever for at least 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
     );
   }
 

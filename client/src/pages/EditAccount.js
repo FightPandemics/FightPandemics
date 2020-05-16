@@ -1,12 +1,12 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
-import Checkbox from "../components/Input/Checkbox";
-import SubmitButton from "../components/Button/SubmitButton";
+import Checkbox from "components/Input/Checkbox";
+import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
-import FormInput from "../components/Input/FormInput";
-import Title from "../components/Title/Title";
-import UnderLineDescription from "../components/Input/UnderlineDescription";
+import FormInput from "components/Input/FormInput";
+import Heading from "components/Typography/Heading";
+import UnderLineDescription from "components/Input/UnderlineDescription";
 
 const Label = styled.label`
   color: ${(props) => props.inputColor || "#425AF2"};
@@ -188,14 +188,17 @@ function EditAccount(props) {
 
   return (
     <>
-      <Title
-        title="Account Information"
+      <Heading
         style={{
-          marginBottom: "2rem",
+          marginBottom: "3rem",
           marginTop: "2rem",
-          fontWeight: "bolder",
+          textAlign: "center",
         }}
-      />
+        level={4}
+        className="h4"
+      >
+        Account Information
+      </Heading>
       <form style={{ display: "flex", flexDirection: "column" }}>
         {renderFormInputs()}
         {renderNeighborhoodCheckBoxes()}

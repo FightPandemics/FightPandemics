@@ -3,10 +3,10 @@ import React from "react";
 import {
   PolicyContainer,
   TextContainer,
-} from "../components/PolicyPages/PolicyContainer";
-import { ListNoIndent } from "../components/PolicyPages/ListStyles";
-import { TermsLink } from "../components/PolicyPages/TermsLink";
-import { Date } from "../components/PolicyPages/Date";
+} from "components/PolicyPages/PolicyContainer";
+import { ListNoIndent } from "components/PolicyPages/ListStyles";
+import { TermsLink } from "components/PolicyPages/TermsLink";
+import { Date } from "components/PolicyPages/Date";
 
 const CookiesPolicy = () => {
   return (

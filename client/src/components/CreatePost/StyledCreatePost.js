@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Input } from "antd";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { display } = theme.typography.font.family;
 const { medium, xlarge } = theme.typography.size;

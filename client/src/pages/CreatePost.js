@@ -1,24 +1,25 @@
 import React, { useState } from "react";
 // import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createPostSettings from "../assets//data/createPostSettings";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import SelectWithIconButton from "../components/Button/SelectWithIconButton";
-import AddTags from "../components/Tag/AddTags";
-import SubmitButton from "../components/Button/SubmitButton";
+import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets/data/createPostSettings";
+import CustomModal from "components/CreatePost/CustomModal";
+import RadioGroup from "components/CreatePost/RadioGroup";
+import Heading from "components/Typography/Heading";
+
+import SelectWithIconButton from "components/Button/SelectWithIconButton";
+import AddTags from "components/Tag/AddTags";
+import SubmitButton from "components/Button/SubmitButton";
 import {
   CreatePostWrapper,
   StyledForm,
   StyledInput,
   StyledTextArea,
-} from "../components/CreatePost/StyledCreatePost";
+} from "components/CreatePost/StyledCreatePost";
 
 // ICONS
-import SvgIcon from "../components/Icon/SvgIcon";
-import downArrow from "~/assets/icons/down-arrow.svg";
-import horizontalLine from "~/assets/icons/horizontal-line.svg";
+import SvgIcon from "components/Icon/SvgIcon";
+import downArrow from "assets/icons/down-arrow.svg";
+import horizontalLine from "assets/icons/horizontal-line.svg";
 
 const types = Object.values(filterOptions)[2].options;
 const { shareWith, expires, helpTypes } = createPostSettings;
@@ -119,14 +120,9 @@ const CreatePost = (props) => {
 
   return (
     <CreatePostWrapper>
-      <CustomH1
-        className="title"
-        fontsize="2.2rem"
-        fontweight="700"
-        color="black"
-      >
+      <Heading className="h4" level={4}>
         Create a Post
-      </CustomH1>
+      </Heading>
       <StyledForm onSubmit={handleSubmit}>
         <div className="settings">
           <CustomModal
