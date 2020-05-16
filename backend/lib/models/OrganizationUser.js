@@ -27,6 +27,7 @@ const organizationSchema = new Schema(
   {
     global: Boolean,
     industry: { required: true, type: String },
+    language: String,
     name: {
       required: true,
       set: updateAuthorNameReferences,
