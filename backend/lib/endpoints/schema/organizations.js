@@ -26,22 +26,25 @@ const getOrganizationsSchema = {
 
 const updateOrganizationSchema = {
   body: strictSchema()
-    .prop("address", S.string())
-    .prop("androidUrl", S.string())
-    .prop("description", S.string())
+    .prop("about", S.string())
     .prop("email", S.string())
     .prop("global", S.boolean())
     .prop("industry", S.string())
-    .prop("iosUrl", S.string())
     .prop("language", S.string())
-    .prop("linkedinUrl", S.string())
     .prop("location", S.string())
     .prop("name", S.string())
     .prop("needs", S.array().maxItems(10).items(S.string()))
     .prop("ownerId", S.string())
-    .prop("twitterUrl", S.string())
     .prop("type", S.string())
-    .prop("website", S.string()),
+    .prop(
+      "url",
+      S.object()
+        .prop("appStore", S.string().format("url"))
+        .prop("linkedin", S.string().format("url"))
+        .prop("playStore", S.string().format("url"))
+        .prop("twitter", S.string().format("url"))
+        .prop("website", S.string().format("url")),
+    ),
   params: strictSchema().prop("organizationId", S.string().required()),
 };
 

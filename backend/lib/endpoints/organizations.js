@@ -25,10 +25,7 @@ async function routes(app) {
       const result = await Organization.findByIdAndRemove(
         req.params.organizationId,
       );
-      if (result === null) {
-        return new httpErrors.NotFound();
-      }
-      return result;
+      return result ?? new httpErrors.NotFound();
     },
   );
 
@@ -46,10 +43,7 @@ async function routes(app) {
     { schema: getOrganizationSchema },
     async (req) => {
       const result = await Organization.findById(req.params.organizationId);
-      if (result === null) {
-        return new httpErrors.NotFound();
-      }
-      return result;
+      return result ?? new httpErrors.NotFound();
     },
   );
 
