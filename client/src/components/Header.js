@@ -1,9 +1,12 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
 import { Link, NavLink } from "react-router-dom";
-import { Menu as MenuIcon } from "@material-ui/icons";
 // import { Menu as MenuIcon } from "grommet-icons";
 import styled from "styled-components";
+
+// ICONS
+import SvgIcon from "./Icon/SvgIcon";
+import menu from "assets/icons/menu.svg";
 
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
@@ -31,7 +34,7 @@ const StyledNavBar = styled(NavBar)`
    }
 `;
 
-const MenuToggle = styled(MenuIcon)`
+const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
   display: none !important;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -112,8 +115,8 @@ export default ({ onMenuClick, ...props }) => {
         rightContent={
           <div>
             <MenuToggle
-              style={{ fontSize: 24 }}
-              color="primary"
+              src={menu}
+              style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
           <DesktopMenu>

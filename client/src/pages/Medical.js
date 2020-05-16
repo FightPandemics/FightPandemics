@@ -67,9 +67,15 @@ const Medical = (props) => {
   };
 
   const fetchGeoData = () => {
-    const geolocation = getGeoLocation();
+    // Defaulting to San Francisco
+    // TODO fix geolocation
+    const defaultGeolocation = {
+      latitude: 37.733795,
+      longitude: -122.446747,
+    };
+    const geolocation = getGeoLocation() || defaultGeolocation;
     axios
-      .post("/api/geo/country", geolocation)
+      .get("/api/geo/country", { params: geolocation })
       .then((res) => {
         setState({ ...state, country: res.data });
         localStorage.setItem("country", JSON.stringify(res.data));

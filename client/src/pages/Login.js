@@ -14,6 +14,8 @@ import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
 import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
+import Heading from "components/Typography/Heading";
+
 import { theme, mq } from "constants/theme";
 
 // ICONS
@@ -24,29 +26,16 @@ import gmail from "assets/icons/social-google.svg";
 import linkedin from "assets/icons/social-linkedin.svg";
 import socialmedia from "assets/social-media.svg";
 import socialmedia2 from "assets/social-media2.svg";
-import eye from "assets/icons/eye.svg";
+import eyeUnmask from "assets/icons/eye-unmask.svg";
+import eyeMask from "assets/icons/eye-mask.svg";
+
 const { colors } = theme;
 const { typography } = theme;
-
-const Title = styled.h1`
-  align-items: center;
-  display: flex;
-  font-size: 2.2rem;
-  font-weight: bold;
-  height: 5rem;
-  justify-content: center;
-`;
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
   width: 100%;
   position: relative;
-`;
-
-const PasswordVisibility = styled.img`
-  position: absolute;
-  bottom: 6px;
-  right: 5px;
 `;
 
 const StyleInput = {
@@ -165,11 +154,31 @@ const FormContainer = styled.div`
   }
 `;
 
+const VisibilityIconWrapper = styled.div`
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.5rem;
+  color: ${colors.tropicalBlue};
+`;
+
+const VisibilityButton = ({ onClick, type }) => {
+  return (
+    <VisibilityIconWrapper>
+      {
+        type === "text" ? (<SvgIcon src={eyeMask} onClick={onClick} />) :
+          (<SvgIcon src={eyeUnmask} onClick={onClick} />)
+      }
+    </VisibilityIconWrapper>
+  )
+};
+
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -228,21 +237,19 @@ const Login = ({ isLoginForm }) => {
     window.location.href = `/api/auth/oauth/${provider}`;
   };
 
-  const togglePasswordVisibility = (e) => {
-    let x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
+  const togglePasswordVisibility = () => {
+     if (passwordType === "password") {
+       setPasswordType("text");
+     } else {
+       setPasswordType("password");
+     }
   };
 
-  const toggleConfirmPasswordVisibility = (e) => {
-    let x = document.getElementById("confirmPassword");
-    if (x.type === "password") {
-      x.type = "text";
+  const toggleConfirmPasswordVisibility = () => {
+    if (confirmPasswordType === "password") {
+      setConfirmPasswordType("text");
     } else {
-      x.type = "password";
+      setConfirmPasswordType("password");
     }
   };
 
@@ -260,7 +267,9 @@ const Login = ({ isLoginForm }) => {
       <LoginRightContainer>
         <div className="text-center">
           <FormContainer>
-            <Title>{isLoginForm ? "Sign In" : "Sign Up"}</Title>
+            <Heading className="h4" level={4}>
+              {isLoginForm ? "Sign In" : "Sign Up"}
+            </Heading>
             <form id="login-password" method="POST">
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />
@@ -277,7 +286,7 @@ const Login = ({ isLoginForm }) => {
               <InputWrapper>
                 <Label for="password" style={StyleLabel} label="Password" />
                 <Input
-                  type="password"
+                  type={passwordType}
                   name="password"
                   id="password"
                   required
@@ -286,23 +295,14 @@ const Login = ({ isLoginForm }) => {
                   onChange={handleInputChangePassword}
                   style={StyleInput}
                 />
-                <PasswordVisibility
-                  onClick={togglePasswordVisibility}
-                  src={eye}
-                  alt=""
-                />
+                <VisibilityButton onClick={togglePasswordVisibility} type={passwordType} />
               </InputWrapper>
-              {isLoginForm ? (
-                ""
-              ) : (
+              {
+                !isLoginForm &&
                 <InputWrapper>
-                  <Label
-                    for="confirmPassword"
-                    style={StyleLabel}
-                    label="Confirm Password"
-                  />
+                  <Label for="confirmPassword" style={StyleLabel} label="Confirm Password" />
                   <Input
-                    type="password"
+                    type={confirmPasswordType}
                     name="confirmPassword"
                     id="confirmPassword"
                     required
@@ -311,13 +311,9 @@ const Login = ({ isLoginForm }) => {
                     value={confirmPassword}
                     style={StyleInput}
                   />
-                  <PasswordVisibility
-                    onClick={toggleConfirmPasswordVisibility}
-                    src={eye}
-                    alt=""
-                  />
+                  <VisibilityButton onClick={toggleConfirmPasswordVisibility} type={confirmPasswordType} />
                 </InputWrapper>
-              )}
+              }
               <SubmitButton
                 primary="true"
                 onClick={isLoginForm ? handleLoginWithEmail : handleSignup}

@@ -167,8 +167,7 @@ const NavigationLayout = (props) => {
                {/* <Footnote /> */}
              </Drawer>
           </div>
-       )
-
+        )
   }
 
   return (

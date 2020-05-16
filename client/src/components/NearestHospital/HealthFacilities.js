@@ -158,7 +158,7 @@ const NearestHealthFacilities = props => {
     setSearchValue('');
   }
 
-  const [userCoords, setCoords] = useState(true);
+  const [userCoords, setCoords] = useState(null);
 
   const userLocation = () => {
     if(navigator.geolocation) {

@@ -271,7 +271,7 @@ const Step7 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep -1 } / {props.totalSteps -1 }
       </h5>
       <h2 className="mb-5">
         Do you live in a care facility? This includes nursing homes or assisted
@@ -296,7 +296,7 @@ const Step8 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep} / {props.totalSteps}
+        Question {props.currentStep -1} / {props.totalSteps -1}
       </h5>
       <h2 className="mb-5">
         Do you live in a medical facility? This includes a hospital, emergency
