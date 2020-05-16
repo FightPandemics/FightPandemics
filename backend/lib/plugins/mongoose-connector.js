@@ -5,7 +5,8 @@ require("../models/Author");
 require("../models/Comment");
 require("../models/Feedback");
 require("../models/Location");
-require("../models/Organization");
+require("../models/IndividualUser");
+require("../models/OrganizationUser");
 require("../models/Post");
 require("../models/User");
 
