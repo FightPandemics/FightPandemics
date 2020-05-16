@@ -1,6 +1,6 @@
 const { model, Schema } = require("mongoose");
 
-const FeedbackSchema = new Schema(
+const feedbackSchema = new Schema(
   {
     age: {
       get: (v) => Math.round(v),

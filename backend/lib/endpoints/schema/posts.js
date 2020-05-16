@@ -1,8 +1,8 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
-const { schema: authorSchema } = require("../../models/author");
-const { schema: postSchema } = require("../../models/post");
+const { schema: authorSchema } = require("../../models/Author");
+const { schema: postSchema } = require("../../models/Post");
 
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
 const POST_OBJECTIVES = postSchema.tree.objective.enum;
