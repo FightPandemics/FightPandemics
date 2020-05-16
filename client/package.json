@@ -3,17 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.9",
-    "@material-ui/icons": "^4.9.1",
     "airtable": "^0.8.1",
-    "antd": "^4.1.1",
+    "antd": "^4.1.4",
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "grommet-icons": "^4.4.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
-    "polished": "^3.5.1",
+    "polished": "^3.5.2",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
@@ -33,17 +30,14 @@
     "typeface-work-sans": "^0.0.72"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npm rebuild node-sass",
+    "lint": "eslint src",
     "install-docker": "docker-compose run client npm install",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -65,8 +59,7 @@
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
-    "prettier": "^2.0.5",
-    "react-app-rewired": "^2.1.5"
+    "prettier": "^2.0.5"
   },
   "husky": {
     "hooks": {
@@ -75,6 +68,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
       "prettier --write"
     ]
   },

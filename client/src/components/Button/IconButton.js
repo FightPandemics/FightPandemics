@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SubmitButton from "./SubmitButton";
-import { theme, mq } from "../../constants/theme";
+import { theme, mq } from "constants/theme";
 const { button, colors } = theme;
 
 const IconButton = styled(SubmitButton).attrs((props) => {

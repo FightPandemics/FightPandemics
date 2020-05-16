@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 const { display } = theme.typography.font.family;
 
 const FeedWrapper = styled.div`
   font-family: ${display};
   width: 100%;
-  padding: 2rem 0;
   position: relative;
+
   .create-post {
     position: fixed;
     bottom: 5%;

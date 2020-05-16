@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { theme } from "../constants/theme";
+import { theme } from "constants/theme";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
-import closeX from "~/assets/icons/close-btn.svg";
+import closeX from "assets/icons/close-btn.svg";
 
 const { colors } = theme;
 
@@ -30,8 +30,8 @@ const CookieLink = styled.a`
   text-decoration: underline;
 `;
 
-const CloseButton = styled.button`
-  align-self: start;
+const ClosePointer = styled.span`
+  cursor: pointer;
 `;
 
 export default () => {
@@ -62,9 +62,9 @@ export default () => {
         Your use of FightPandemics' Products is subject to these policies and
         terms.
       </div>
-      <CloseButton onClick={hideMessage}>
-        <SvgIcon src={closeX} />
-      </CloseButton>
+      <ClosePointer>
+        <SvgIcon src={closeX} onClick={hideMessage} />
+      </ClosePointer>
     </CookieContainer>
   );
 };

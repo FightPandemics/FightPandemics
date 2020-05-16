@@ -1,12 +1,13 @@
 import { Drawer, List, Button } from "antd-mobile";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "~/components/Header";
-import CookieAlert from "~/components/CookieAlert";
+import Header from "components/Header";
+import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
-import { theme } from "../../constants/theme";
+import DesktopNavbar from "components/Navigation/DesktopNavbar";
+import { theme, mq } from "constants/theme";
 
 const drawerStyles = {
   position: "relative",
@@ -137,27 +138,62 @@ const NavigationLayout = (props) => {
     </>
   );
 
+  const [ isMobile, setMediaQuery ] = useState(false);
+
+useEffect(() => {
+  const mediaQuery = window.matchMedia(mq.phone.wide.max);;
+  setMediaQuery(mediaQuery.matches);
+  const listenerFunc = (query) => {
+     setMediaQuery(query.currentTarget.matches);
+  };
+  window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
+
+}, [])
+
+
+
+  const renderNavigationBar = () => {
+    if(isMobile) {
+       return (
+         <Drawer
+           style={{
+             minHeight: document.documentElement.clientHeight,
+             ...drawerStyles,
+           }}
+           enableDragHandle
+           open={drawerOpened}
+           onOpenChange={toggleDrawer}
+           position="right"
+           sidebar={drawerMenu()}
+           sidebarStyle={sidebarStyle}
+           className="app-drawer"
+         >
+           <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
+           <Main>
+             <props.component {...props} />
+           </Main>
+           {/* <Footnote /> */}
+           <CookieAlert />
+         </Drawer>
+       )
+    } else {
+      return (
+       <div>
+         <DesktopNavbar isAuthenticated={props.isAuthenticated} />
+         <Main style={{ marginTop: 70 }}>
+           <props.component {...props} />
+         </Main>
+         <CookieAlert />
+        </div>
+      )
+    }
+
+  }
+
   return (
-    <Drawer
-      style={{
-        minHeight: document.documentElement.clientHeight,
-        ...drawerStyles,
-      }}
-      enableDragHandle
-      open={drawerOpened}
-      onOpenChange={toggleDrawer}
-      position="right"
-      sidebar={drawerMenu()}
-      sidebarStyle={sidebarStyle}
-      className="app-drawer"
-    >
-      <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-      <Main>
-        <props.component {...props} />
-      </Main>
-      {/* <Footnote /> */}
-      <CookieAlert />
-    </Drawer>
+    <>
+     {renderNavigationBar()}
+     </>
   );
 };
 

@@ -1,12 +1,12 @@
 const fp = require("fastify-plugin");
 const mongoose = require("mongoose");
 
-require("../models/author");
+require("../models/Author");
 require("../models/Comment");
 require("../models/Feedback");
-require("../models/location");
+require("../models/Location");
 require("../models/Organization");
-require("../models/post");
+require("../models/Post");
 require("../models/User");
 
 async function dbConnector(app, config) {

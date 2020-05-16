@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Avatar } from "antd";
-import { ROYAL_BLUE } from "../../constants/colors";
+import { ROYAL_BLUE } from "constants/colors";
 import StyledComment from "./StyledComment";
-import AutoSize from "../../components/Input/AutoSize";
+import AutoSize from "components/Input/AutoSize";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
-import heartSmall from "~/assets/icons/heart-small.svg";
+import heartSmall from "assets/icons/heart-small.svg";
 
 const clickedTextStyle = { color: ROYAL_BLUE, fontWeight: "bold" };
 

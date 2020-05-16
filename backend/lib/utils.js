@@ -13,8 +13,12 @@ const dateToEpoch = (date) => Math.round(date.getTime() / 1000);
 // eslint-disable-next-line eqeqeq
 const bool = (env) => env == "true";
 
+const getBearerToken = (req) =>
+  req.headers.authorization.replace("Bearer ", "");
+
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
+  getBearerToken,
 };

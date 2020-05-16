@@ -42,7 +42,7 @@
     "fluent-schema": "^0.10.0",
     "http-errors": "^1.7.3",
     "moment": "2.24.0",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.10",
     "node-cache": "^5.1.0"
   },
   "devDependencies": {

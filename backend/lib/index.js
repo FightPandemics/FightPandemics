@@ -30,6 +30,7 @@ module.exports = function createApp(config) {
   app.register(require("fastify-sensible"));
   app.register(require("fastify-oas"), {
     exposeRoute: true,
+    routePrefix: "/api/documentation",
   });
   app.register(require("./plugins/mongoose-connector"), config.mongo);
   app.register(require("./plugins/auth"), config.auth);

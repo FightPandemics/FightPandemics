@@ -3,7 +3,7 @@ import {
   AUTH_LOGOUT,
   AUTH_SIGNUP,
   SET_USER,
-} from "../constants/action-types";
+} from "constants/action-types";
 
 const initialState = {
   accessToken: null,
