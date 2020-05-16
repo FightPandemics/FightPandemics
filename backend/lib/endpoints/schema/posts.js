@@ -1,19 +1,13 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
-const { join } = require("path");
-const PATH_TO_SCHEMAS = join(__dirname, "../../models/schemas/v2");
-const { schema: postSchema } = require(join(PATH_TO_SCHEMAS, "post"));
-const { schema: orgSchema } = require(join(PATH_TO_SCHEMAS, "individualUser"));
-const { schema: userSchema } = require(join(
-  PATH_TO_SCHEMAS,
-  "organizationUser",
-));
+const { schema: authorSchema } = require("../../models/author");
+const { schema: postSchema } = require("../../models/post");
 
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
 const POST_OBJECTIVES = postSchema.tree.objective.enum;
 const POST_TYPES = postSchema.tree.types.enum;
-const USER_TYPES = [userSchema.tree.type.enum, orgSchema.tree.type.enum];
+const USER_TYPES = authorSchema.tree.type.enum;
 const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
 
 const getPostsSchema = {
@@ -47,7 +41,7 @@ const createPostSchema = {
         .prop("website", S.string().format("url")),
     )
     .prop("language", S.array().items(S.string()))
-    .prop("objective", S.string().enum(POST_OBJECTIVES).required().required())
+    .prop("objective", S.string().enum(POST_OBJECTIVES).required())
     .prop("title", S.string().required())
     .prop(
       "types",

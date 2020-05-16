@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
 const CommentSchema = new Schema(
   {
@@ -48,4 +48,8 @@ CommentSchema.index({
   postId: 1,
 });
 
-module.exports = CommentSchema;
+// -- Model
+const Comment = model("Comment", CommentSchema);
+
+exports.model = Comment;
+exports.schema = CommentSchema;
