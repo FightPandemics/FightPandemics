@@ -30,7 +30,7 @@ const CheckSymptomsBox = styled.div`
 `;
 
 const SymptomsLink = styled(NavLink)`
-   padding: 1.5rem 8.5rem;
+   padding: 1.5rem 7.5rem;
    font-size: ${xlarge};
    background-color: ${royalBlue};
    color: ${white};

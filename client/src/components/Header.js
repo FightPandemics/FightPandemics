@@ -77,7 +77,7 @@ const NavLinks = styled.div`
        a:not(.registerLink) {
          color: #282828;
          text-decoration: none;
-         padding: 1rem;
+         padding: 1.2rem 1rem;
          transition: all .2s;
          border-bottom: 3px solid transparent;
        }

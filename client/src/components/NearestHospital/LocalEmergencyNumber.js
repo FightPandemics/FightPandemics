@@ -7,7 +7,7 @@ import { theme, mq } from "../../constants/theme";
 
 const { colors } = theme;
 const { typography } = theme;
-const { xxlarge } = typography.size;
+const { xlarge, xxlarge } = typography.size;
 const { royalBlue } = colors;
 
 
@@ -19,6 +19,20 @@ const LocalEmergencyNumber = props => {
        background-color: #D1222C;
        color: #fff;
        margin-top: 3rem;
+       position: relative;
+       box-shadow: 0px 4px 1rem rgba(0, 0, 0, 0.05);
+       border-radius: 0px 0px .4rem .4rem;
+       font-size: ${xlarge};
+       .am-notice-bar-content {
+         padding-left: 1rem 4rem;
+         font-weight: normal;
+       }
+       .am-notice-bar-operation {
+         display: block;
+         position: absolute;
+         top: .5rem;
+         right: .5rem;
+       }
        h4 {
          color: #fff;
          margin-bottom: 0;
@@ -28,11 +42,12 @@ const LocalEmergencyNumber = props => {
        }
       @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
 
-          border: 0.4px solid rgba(185, 185, 185, 0.5);
+          border: 1px solid rgba(185, 185, 185, 0.5);
           padding: 2rem;
           padding-left: 4rem;
           background-color: #fff;
           height: auto;
+          box-shadow: none;
           .am-notice-bar-operation {
             display: none;
           }
@@ -61,7 +76,7 @@ const LocalEmergencyNumber = props => {
 
 
   return (
-    <EmergencyLine mode="closable" icon={null}>
+    <EmergencyLine mode="closable" icon={null} {...props}>
        <h4>Local emergency number</h4>
        <h3>911</h3>
     </EmergencyLine>

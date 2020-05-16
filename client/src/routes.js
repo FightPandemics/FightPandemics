@@ -68,7 +68,7 @@ const routes = [
     path: "/nearest-hospital",
     component: NearestHospital,
     props: {
-      mobileTabs: true,
+      mobiletabs: true,
       tabIndex: 0
     }
   },
@@ -80,7 +80,7 @@ const routes = [
     path: "/symptoms-check",
     component: SymptomsCheck,
     props: {
-      mobileTabs: true,
+      mobiletabs: true,
       tabIndex: 1
     }
   },
@@ -88,7 +88,7 @@ const routes = [
     path: "/feed",
     component: Feed,
     props: {
-      mobileTabs: true,
+      mobiletabs: true,
       tabIndex: 2
     }
   },

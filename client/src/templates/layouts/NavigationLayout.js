@@ -105,7 +105,7 @@ const CloseNav = styled(Button).attrs((props) => ({
 
 
 const NavigationLayout = (props) => {
-  const { mobileTabs, tabIndex } = props;
+  const { mobiletabs, tabIndex } = props;
 
   const history = useHistory();
 
@@ -159,7 +159,7 @@ const NavigationLayout = (props) => {
                className="app-drawer"
              >
                <Header onMenuClick={toggleDrawer} />
-                     <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+                     {mobiletabs ? <MobileTabs tabIndex={tabIndex} childComponent={props.children} /> : null }
                      <Main>
                        <props.component {...props} />
                      </Main>

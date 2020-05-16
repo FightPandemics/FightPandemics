@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 import { SearchBar } from 'antd-mobile';
 
-import { mq } from "../../constants/theme";
-
+import { theme, mq } from "../../constants/theme";
+const { typography, colors } = theme;
+const { mediumGray } = colors;
+const { large, xxxlarge } = typography.size;
 
 const NearestHealthFacilities = props => {
 
@@ -14,6 +16,11 @@ const NearestHealthFacilities = props => {
       border: 0.2px solid rgba(185, 185, 185, 0.5);
       padding: 3rem;
       margin-top: 4rem;
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        border: 0;
+        padding: 0;
+        margin-top: 0;
+      }
   `;
 
   const ConfirmedCasesContent = styled.div`
@@ -22,7 +29,7 @@ const NearestHealthFacilities = props => {
       justify-content: space-around;
       margin-top: 6rem;
       div:not(:last-child) {
-        border-right: 1px solid #ccc;
+        border-right: .1rem solid #ccc;
       }
       div {
         padding: 0 5rem;
@@ -37,7 +44,16 @@ const NearestHealthFacilities = props => {
           border-right: 0;
         }
         div {
-          padding: 0 2rem;
+          line-height: 1;
+          padding: 3rem 0 0 2rem;
+          border-bottom: 1px solid ${mediumGray};
+          h2 {
+            font-size: ${xxxlarge};
+          }
+          p {
+            font-size: ${large};
+            margin-bottom: .5em;
+          }
         }
       }
   `;

@@ -45,12 +45,6 @@ const StyledSearchBar = styled(SearchBar)`
    }
 `;
 
-const ActiveLinkStyles = {
-  fontWeight: "bold",
-  borderLeft: "4px solid #425af2",
-  padding: ".4rem 2rem"
-}
-
 
 const HospitalSidebar = props => {
 
@@ -78,10 +72,7 @@ return (
            />
      </SearchBarContainer>
      <NavBar>
-        <ul>
-           <li><NavLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">Health Facilities</NavLink></li>
-           <li><NavLink activeStyle={ActiveLinkStyles} to="/confirmed-cases">Confirmed Cases</NavLink></li>
-        </ul>
+    {props.children}
      </NavBar>
      <LocalEmergencyNumber />
    </div>
