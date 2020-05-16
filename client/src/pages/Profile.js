@@ -5,7 +5,7 @@ import { Popover, WhiteSpace } from "antd-mobile";
 import ProfilePic from "components/Picture/ProfilePic";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
@@ -25,12 +25,12 @@ import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
-
+const { colors, typography } = theme;
 const SectionHeader = (props) => (
   <Heading
     style={{
       color: "#939393",
-      fontWeight: "lighter",
+      fontWeight: "bold",
       fontSize: "1.5rem",
     }}
     {...props}
@@ -54,7 +54,7 @@ const BackgroundHeader = styled.div`
   right: 0;
   background-color: #425af2;
   border-bottom-right-radius: 30px;
-  position: relative;import { Link } from "react-router-dom";
+  position: relative;
 `;
 const AboutDescription = styled.div`
   background-color: #ffffff;
@@ -62,7 +62,6 @@ const AboutDescription = styled.div`
   width: 100%;
   font-size: 1.2rem;
   color: #939393;
-  padding: 0 2.5rem;
 `;
 const ProfileLayout = styled.div`
   background-color: #f9f9f9;
@@ -90,11 +89,26 @@ const HelpContainer = styled.div`
   margin-left: 1rem;
   margin-bottom: 1rem;
 `;
+
+const UserInfoContainer = styled.div`
+  background-color: #ffffff;
+  margin-top: -13vh;
+  left: 0;
+  right: 0;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(#00000012 5px 0px 5px);
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+`;
 const PlaceholderIcon = styled.div`
   flex: 1;
 `;
 
-const SectionContainer = styled.div``;
 const Profile = (props) => {
   const { firstName, lastName, about, email, location } = props.user;
   const needHelp = true;
@@ -135,33 +149,31 @@ const Profile = (props) => {
   const renderMyActivities = () => {
     return (
       <>
-        <div style={{ margin: "0 2.5rem" }}>
-          <FeedWrapper>
-            <Posts filteredPosts={fakePosts} />
-            <SvgIcon
-              src={createPost}
-              className="create-post"
-              onClick={() => setModal(!modal)}
-            />
-            <ButtonModal
-              onClose={() => setModal(false)}
-              maskClosable={true}
-              closable={false}
-              visible={modal}
-              transparent
-            >
-              <h2 className="title">Continue Posting As</h2>
-              <div className="links">
-                <button className="primary">
-                  <Link to="/create-post">Individual</Link>
-                </button>
-                <button className="outline">
-                  <Link to="/create-post">Organization</Link>
-                </button>
-              </div>
-            </ButtonModal>
-          </FeedWrapper>
-        </div>
+        <FeedWrapper>
+          <Posts filteredPosts={fakePosts} />
+          <SvgIcon
+            src={createPost}
+            className="create-post"
+            onClick={() => setModal(!modal)}
+          />
+          <ButtonModal
+            onClose={() => setModal(false)}
+            maskClosable={true}
+            closable={false}
+            visible={modal}
+            transparent
+          >
+            <h2 className="title">Continue Posting As</h2>
+            <div className="links">
+              <button className="primary">
+                <Link to="/create-post">Individual</Link>
+              </button>
+              <button className="outline">
+                <Link to="/create-post">Organization</Link>
+              </button>
+            </div>
+          </ButtonModal>
+        </FeedWrapper>
       </>
     );
   };
@@ -171,7 +183,7 @@ const Profile = (props) => {
       <BackgroundHeader>
         <MenuIcon src={menu} />
       </BackgroundHeader>
-      <div style={userInfoStyle}>
+      <UserInfoContainer>
         {popover(props)}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
         <TextLabel weight="500" block="true" size={theme.typography.size.large}>
@@ -202,15 +214,17 @@ const Profile = (props) => {
           <SvgIcon src={linkedinBlue} style={iconStyle} />
           <SvgIcon src={twitterBlue} style={iconStyle} />
         </IconsContainer>
-      </div>
-      <WhiteSpace />
-      <SectionHeader title="About" />
-      <WhiteSpace />
-      <AboutDescription>{about}</AboutDescription>
-      <WhiteSpace />
-      <SectionHeader title="My Activity" marginTop="2rem" />
-      <SectionContainer>{renderMyActivities()}</SectionContainer>
+      </UserInfoContainer>
 
+      <WhiteSpace />
+      <div style={{ margin: "0 2.5rem" }}>
+        <SectionHeader title="About">About</SectionHeader>
+        <WhiteSpace />
+        <AboutDescription>{about}</AboutDescription>
+        <WhiteSpace />
+        <SectionHeader title="My Activity" marginTop="2rem" />
+        {renderMyActivities()}
+      </div>
       <WhiteSpace />
     </ProfileLayout>
   );
@@ -218,25 +232,9 @@ const Profile = (props) => {
 
 //styling
 
-const userInfoStyle = {
-  backgroundColor: "#FFFFFF",
-  marginTop: "-13vh",
-  left: "0",
-  right: "0",
-  marginLeft: "2.5rem",
-  marginRight: "2.5rem",
-  borderRadius: "10px",
-  position: "relative",
-  zIndex: "8",
-  filter: "drop-shadow(#00000012 5px 0px 5px)",
-  flexDirection: "column",
-  display: "flex",
-  alignItems: "center",
-};
-
 const iconStyle = {
   alignSelf: "flex-end",
-  width: "10%",
+  width: "3rem",
   marginRight: "1rem",
   marginBottom: "1rem",
 };
