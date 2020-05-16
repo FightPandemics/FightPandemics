@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-const FeedbackSchema = new Schema(
+const feedbackSchema = new Schema(
   {
     age: {
       get: (v) => Math.round(v),
@@ -32,4 +32,7 @@ const FeedbackSchema = new Schema(
   { collection: "feedbacks", timestamps: true },
 );
 
-module.exports = model("Feedback", FeedbackSchema);
+const Feedback = model("Feedback", feedbackSchema);
+
+exports.model = Feedback;
+exports.schema = feedbackSchema;

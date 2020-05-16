@@ -1,6 +1,7 @@
 const fp = require("fastify-plugin");
 const mongoose = require("mongoose");
 
+require("../models/Author");
 require("../models/Comment");
 require("../models/Feedback");
 require("../models/Location");

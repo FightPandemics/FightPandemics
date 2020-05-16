@@ -1,65 +1,169 @@
-const { model, Schema, Types } = require("mongoose");
+// -- Imports
+const { Schema, model, ObjectId } = require("mongoose");
+const { schema: authorSchema } = require("./Author");
 
-const { schema: CommentSchema } = require("./Comment");
-
-const PostSchema = new Schema(
+// -- Schema
+const postSchema = new Schema(
   {
-    androidUrl: String,
-    authorId: {
-      ref: "User",
+    author: Object,
+    content: {
       required: true,
-      type: Schema.Types.ObjectId,
-    },
-    comments: {
-      type: [CommentSchema],
-    },
-    commentsCount: {
-      type: Number,
-    },
-    description: {
-      required: true,
+      trim: true,
       type: String,
     },
-    iosUrl: String,
+    expireAt: Date,
+    externalLinks: {
+      appStore: String,
+      email: String,
+      playStore: String,
+      website: String,
+    },
     language: [String],
     likes: {
-      type: [Types.ObjectId],
+      // TODO: how to guarantee unique ids?
+      default: [],
+      ref: "User",
+      type: [ObjectId],
     },
-    likesCount: {
-      type: Number,
-    },
-    looking: {
-      type: [String],
-      // required: true,
-    },
-    media: String,
-    needs: {
-      type: [String],
-      // required: true,
-    },
-    postEmail: String,
-    shareWith: {
-      type: [String],
-      // required: true,
-    },
-    status: {
-      type: Boolean,
-      // required: true,
-    },
-    tags: [String],
-    title: {
+    objective: {
+      enum: ["request", "offer"],
+      lowercase: true,
       required: true,
+      trim: true,
       type: String,
     },
-    type: {
-      type: [String],
-      // required: true,
+    title: {
+      required: true,
+      trim: true,
+      type: String,
     },
-    website: String,
+    types: {
+      enum: [
+        "Business",
+        "Education",
+        "Entertainment",
+        "Funding",
+        "Groceries/Food",
+        "Information",
+        "Legal",
+        "Medical Supplies",
+        "R&D",
+        "Others",
+        "Wellbeing/Mental",
+      ],
+      trim: true,
+      type: [String],
+    },
+    visibility: {
+      enum: ["city", "country", "state", "worldwide"],
+      lowercase: true,
+      trim: true,
+      type: String,
+    },
   },
-  {
-    timestamps: true,
-  },
+  { collection: "posts", timestamps: true },
 );
 
-module.exports = model("Post", PostSchema);
+// -- Indexes
+/* eslint-disable */
+// Indexes for filtered feed
+postSchema.index({ "author.location.coordinates": "2dsphere" });
+postSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  "location.city": 1,
+  "location.neighborhood": 1,
+  // Author type filter
+  "author.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+postSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  "location.city": 1,
+  // Author type filter
+  "author.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+postSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  // Author type filter
+  "author.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+postSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  // Author type filter
+  "author.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+postSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // No Location filter
+  // Author type filter
+  "author.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "author.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+
+// Index for author's foreign key for lookup performance
+postSchema.index({ "author.id": 1, createdAt: -1 });
+
+// Index for like's foreign key for lookup performance
+postSchema.index({ likes: 1 });
+
+/* eslint-enable */
+
+// -- Model
+const Post = model("Post", postSchema);
+
+exports.model = Post;
+exports.schema = postSchema;
