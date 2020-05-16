@@ -1,7 +1,5 @@
-// -- Imports
 const { Schema, model } = require("mongoose");
 
-// - Schema
 const locationSchema = new Schema({
   address: {
     lowercase: true,
@@ -45,9 +43,7 @@ const locationSchema = new Schema({
   },
 });
 
-// -- Model
 const Location = model("Location", locationSchema);
 
-// -- Export
 exports.schema = locationSchema;
 exports.model = Location;

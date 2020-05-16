@@ -9,10 +9,6 @@ const UserSchema = new Schema(
     address: {
       type: String,
     },
-    location: {
-      ref: "Location",
-      type: Schema.Types.ObjectId,
-    },
     name: {
       required: true,
       type: String,

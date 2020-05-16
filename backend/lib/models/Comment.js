@@ -48,7 +48,6 @@ CommentSchema.index({
   postId: 1,
 });
 
-// -- Model
 const Comment = model("Comment", CommentSchema);
 
 exports.model = Comment;
