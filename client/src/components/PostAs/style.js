@@ -22,7 +22,7 @@ const Container = styled(Modal)`
     height: 5.8rem;
     border-radius: 1.0rem 1.0rem 0 0;
     
-    div {
+    .ant-modal-title {
       font-size: ${typography.size.xlarge};
       font-weight: bold; 
       line-height: 116.8%;
