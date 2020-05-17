@@ -9,10 +9,19 @@ require("../models/Organization");
 require("../models/Post");
 require("../models/User");
 
+async function syncIndexes(mongo) {
+  mongo.model("Comment").syncIndexes();
+  mongo.model("Feedback").syncIndexes();
+  mongo.model("Location").syncIndexes();
+  mongo.model("Organization").syncIndexes();
+  mongo.model("Post").syncIndexes();
+  mongo.model("User").syncIndexes();
+}
+
 async function dbConnector(app, config) {
   const connection = await mongoose.createConnection(config.uri, config.params);
-
-  app.decorate("mongo", connection);
+  app.decorate("mongo", connection);  
+  syncIndexes(app.mongo);
 }
 
 module.exports = fp(dbConnector);
