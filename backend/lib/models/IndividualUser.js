@@ -3,6 +3,8 @@ const { model: User } = require("./User");
 const { updateAuthorName: updatePostAuthorName } = require("./Post");
 const { updateAuthorName: updateCommentAuthorName } = require("./Comment");
 
+const INDIVIDUAL_USER_TYPES = ["individual"];
+
 function updateAuthorFirstName(firstName) {
   this.firstName = firstName;
 
@@ -40,7 +42,7 @@ const individualUserSchema = new Schema(
       volunteer: { default: false, required: true, type: Boolean },
     },
     type: {
-      enum: ["individual"],
+      enum: INDIVIDUAL_USER_TYPES,
       lowercase: true,
       required: true,
       type: String,
@@ -70,5 +72,8 @@ const IndividualUser = User.discriminator(
   individualUserSchema,
 );
 
-exports.schema = individualUserSchema;
-exports.model = IndividualUser;
+module.exports = {
+  model: IndividualUser,
+  schema: individualUserSchema,
+  INDIVIDUAL_USER_TYPES,
+};

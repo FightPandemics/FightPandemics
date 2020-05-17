@@ -6,7 +6,7 @@ const { getUserByIdSchema, createUserSchema } = require("./schema/users");
  * /api/users
  */
 async function routes(app) {
-  const User = app.mongo.model("User");
+  const User = app.mongo.model("IndividualUser");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const result = await User.findById(req.userId);
