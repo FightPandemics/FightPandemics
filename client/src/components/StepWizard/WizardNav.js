@@ -10,21 +10,43 @@ import backArrow from "assets/icons/back-arrow.svg";
 const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 0;
-  height: 7rem;
   margin-bottom: 1rem;
-  /* flex: 0; */
+  width: 100%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
-    flex: 1;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
-    /* min-height: 100%; */
+
     & > div {
       min-height: 100%;
     }
   }
+`;
+
+const ButtonWrapper = styled.div`
+  cursor: pointer;
+  color: black;
+  display: flex;
+  flex-flow: row no-wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50%;
+
+  p {
+    margin: 1rem;
+  }
+`;
+
+const NextButtonWrapper = styled(ButtonWrapper)`
+  background-color: #425af2;
+  width: 40%;
+  color: white;
+  border-radius 50px;
+  padding: 0 5px;
+  justify-content: center;
 `;
 
 const PrevButton = styled(SvgIcon)`
@@ -38,18 +60,23 @@ const NextButton = styled(SvgIcon)`
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <PrevButton
-        src={backArrow}
-        onClick={previousStep}
-        a11yTitle={`Navigate to step ${currentStep - 1}`}
-      />
+      <ButtonWrapper onClick={previousStep}>
+        <PrevButton
+          src={backArrow}
+          a11yTitle={`Navigate to step ${currentStep - 1}`}
+        />
+        <p>Back</p>
+      </ButtonWrapper>
     ) : (
       <Link to={"/"}>
-        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />
+        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" /> Back
       </Link>
     )}
     {currentStep < totalSteps && (
-      <NextButton src={nextArrow} onClick={nextStep} />
+      <NextButtonWrapper onClick={nextStep}>
+        <p>Next</p>
+        <NextButton src={nextArrow} />
+      </NextButtonWrapper>
     )}
   </StyledWizardNav>
 );

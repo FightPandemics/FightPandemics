@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
-
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
@@ -49,20 +48,6 @@ const Step1 = (props) => {
     updateState({ ...state, answers: updatedAnswers });
     props.update("helpTypeOffered", checkedAnswers);
   };
-  // const toggleNone = () => {
-  //   const newNone = !none;
-  //   updateState({ ...state, none: newNone });
-  //   props.update("helpTypeOffered", newNone ? [] : getCheckedAnswers(answers));
-  // };
-
-  // const onSelectAnswer = (answer) => {
-  //   console.log(answer);
-
-  //   props.update("helpTypeOffered", answer);
-  //   console.log(props);
-
-  //   // props.nextStep();
-  // };
 
   return (
     <WizardStep>
