@@ -38,13 +38,11 @@ userSchema.path("location", {
 
 // indices keys aren't meant to be sorted alphabetically. Please don't the keys
 // order unless you really intend to change indexing
-/* eslint-disable sort-keys */
 userSchema.index({
   type: 1,
   ownerId: 1,
   createdAt: -1,
 });
-/* eslint-enable */
 
 const User = model("User", userSchema);
 
