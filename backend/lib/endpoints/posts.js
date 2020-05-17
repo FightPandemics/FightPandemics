@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 
 const {
-  addCommentSchema,
+  createCommentSchema,
+  getCommentsSchema,
   getPostsSchema,
   getPostByIdSchema,
   createPostSchema,
@@ -374,42 +375,128 @@ async function routes(app) {
     },
   );
 
-  app.post(
+  // -- Comments
+  const COMMENT_PAGE_SIZE = 5;
+
+  app.get(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: addCommentSchema },
+    { preValidation: [app.authenticate], schema: getCommentsSchema },
     async (req) => {
-      const { body, params, userId } = req;
-      const { parentId } = body;
-      const { postId } = params;
-      if (parentId) {
-        const parentPost = await Post.findById(parentId);
-        if (!parentPost || parentPost.postId !== postId) {
-          return new httpErrors.BadRequest();
-        }
+      const { limit, skip } = req.query;
+      const { postId } = req.params;
+      if (!postId) {
+        throw app.httpErrors.badRequest();
       }
-      return new Comment({
-        ...body,
-        authorId: userId,
-        postId,
-      }).save();
+
+      const [commentErr, comments] = await app.to(
+        Comment.aggregate([
+          {
+            $match: {
+              parentId: null,
+              postId: mongoose.Types.ObjectId(postId),
+            },
+          },
+          {
+            $lookup: {
+              as: "children",
+              foreignField: "parentId",
+              from: "comments",
+              localField: "_id",
+            },
+          },
+          {
+            $addFields: {
+              childCount: {
+                $size: { $ifNull: ["$children", []] },
+              },
+            },
+          },
+          {
+            $skip: skip || 0,
+          },
+          {
+            $limit: limit || COMMENT_PAGE_SIZE,
+          },
+        ]),
+      );
+      if (commentErr) {
+        req.log.error("Failed retrieving comments", { commentErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      return comments;
     },
   );
 
-  app.put(
+  app.post(
+    "/:postId/comments",
+    { preValidation: [app.authenticate], schema: createCommentSchema },
+    async (req, reply) => {
+      const { parentId, userId } = req.body;
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        throw app.httpErrors.notFound();
+      }
+
+      const { postId } = req.params;
+      const { body: commentProps } = req;
+      if (!postId) {
+        throw app.httpErrors.badRequest();
+      }
+
+      // Assign postId and parent comment id (if present)
+      commentProps.postId = postId;
+      if (parentId) {
+        commentProps.parentId = parentId;
+      }
+
+      // Creates embedded author document
+      commentProps.author = {
+        id: user.id,
+        location: user.location,
+        name: user.name,
+        type: user.type,
+      };
+
+      // Initial empty likes array
+      commentProps.likes = [];
+
+      const [err, comment] = await app.to(new Comment(commentProps).save());
+
+      if (err) {
+        req.log.error("Failed creating comment", { err });
+        throw app.httpErrors.internalServerError();
+      }
+
+      reply.code(201);
+      return comment;
+    },
+  );
+
+  app.patch(
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const { body, params, userId } = req;
-      const { comment } = body;
-      const { commentId, postId } = params;
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, authorId: userId, postId },
-        { comment },
-        { new: true },
-      );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      const { content, userId } = req.body;
+      const { postId, commentId } = req.params;
+      if (!postId || !commentId) {
+        throw app.httpErrors.badRequest();
       }
+
+      const [err, comment] = await app.to(Comment.findById(commentId));
+      if (err) {
+        throw app.httpErrors.notFound();
+      } else if (comment.author.id !== userId) {
+        throw app.httpErrors.forbidden();
+      }
+
+      comment.content = content;
+      const [updateErr, updatedComment] = await app.to(comment.save());
+      if (updateErr) {
+        req.log.error("Failed updating comment", { updateErr });
+        throw app.httpErrors.internalServerError();
+      }
+
       return updatedComment;
     },
   );
@@ -418,18 +505,36 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { params, userId } = req;
-      const { commentId, postId } = params;
-      const { ok, deletedCount } = await Comment.deleteMany({
-        $or: [
-          { _id: commentId, authorId: userId, postId },
-          { parentId: commentId, postId },
-        ],
-      });
-      if (ok !== 1 || deletedCount < 1) {
-        return new httpErrors.BadRequest();
+      const { userId } = req.body;
+      const { commentId } = req.params;
+      const [findErr, comment] = await app.to(Comment.findById(commentId));
+      if (findErr) {
+        throw app.httpErrors.notFound();
+      } else if (comment.author.id !== userId) {
+        throw app.httpErrors.forbidden();
       }
-      return { deletedCount, success: true };
+
+      const [deleteCommentErr, deletedComment] = await app.to(comment.delete());
+      if (deleteCommentErr) {
+        req.log.error("Failed deleting comment", { deleteCommentErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      const {
+        deletedCount: deletedNestedCount,
+        ok: deleteNestedOk,
+      } = await Comment.deleteMany({ parentId: commentId });
+      if (deleteNestedOk !== 1) {
+        app.log.error("failed removing nested comments for deleted comment", {
+          commentId,
+        });
+      }
+
+      return {
+        deletedCount: deletedNestedCount + 1,
+        deletedComment,
+        success: true,
+      };
     },
   );
 
@@ -437,22 +542,21 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, userId } = req.params;
-      if (userId !== req.userId) {
-        return new httpErrors.Forbidden();
-      }
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, likes: { $ne: userId }, postId },
-        { $inc: { likesCount: 1 }, $push: { likes: userId } },
-        { new: true },
+      const { commentId, userId } = req.params;
+      const [updateErr, updatedComment] = await app.to(
+        Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $addToSet: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      if (updateErr) {
+        throw app.httpErrors.notFound();
       }
 
       return {
         likes: updatedComment.likes,
-        likesCount: updatedComment.likesCount,
+        likesCount: updatedComment.likes.length,
       };
     },
   );
@@ -461,22 +565,22 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const {
-        params: { commentId, postId },
-        userId,
-      } = req;
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, likes: userId, postId },
-        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
-        { new: true },
+      const { commentId, userId } = req.params;
+
+      const [updateErr, updatedComment] = await app.to(
+        Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $pull: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      if (updateErr) {
+        throw app.httpErrors.notFound();
       }
 
       return {
         likes: updatedComment.likes,
-        likesCount: updatedComment.likesCount,
+        likesCount: updatedComment.likes.length,
       };
     },
   );
