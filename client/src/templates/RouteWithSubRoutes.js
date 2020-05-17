@@ -15,7 +15,7 @@ const VERIFY_EMAIL = "/auth/verify-email";
 export const RouteWithSubRoutes = (route) => {
 
   const { emailVerified, isAuthenticated, path, props = {} } = route;
-  const { loggedInOnly, notLoggedInOnly } = props;
+  const { loggedInOnly, notLoggedInOnly, tabIndex, mobiletabs } = props;
 
   return (
     <Route
@@ -51,6 +51,8 @@ export const RouteWithSubRoutes = (route) => {
             {...route.props}
             component={route.component}
             routes={route.routes}
+            mobiletabs={mobiletabs}
+            tabIndex={tabIndex}
           />
         );
       }}
