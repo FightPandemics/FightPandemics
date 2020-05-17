@@ -26,7 +26,7 @@ jobs:
       - if: matrix.app == 'client'
         env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
         run: >
           echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
           echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
