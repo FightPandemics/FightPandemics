@@ -5,7 +5,7 @@ import styled from "styled-components";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import SubmitButton from "components/Button/SubmitButton";
-import Title from "components/Title/Title";
+import Heading from "components/Typography/Heading";
 // dummy data props,context, redux etc
 
 const editProfile = true;
@@ -66,12 +66,13 @@ function EditProfile(props) {
 
   return (
     <>
-      <Title
+      <Heading
         title={editProfile ? "Edit Profile" : "Complete Profile"}
+        level={4}
+        className="h4"
         style={{
           marginBottom: "3rem",
           marginTop: "2rem",
-          fontWeight: "bolder",
         }}
       />
       <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />

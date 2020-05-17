@@ -7,6 +7,7 @@ import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
+import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
 
 const drawerStyles = {
@@ -103,6 +104,8 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 const NavigationLayout = (props) => {
+  const { mobiletabs, tabIndex, isAuthenticated } = props;
+
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -114,7 +117,7 @@ const NavigationLayout = (props) => {
   const drawerMenu = () => (
     <>
       <NavList>
-        {props.isAuthenticated ? (
+        {isAuthenticated ? (
           <>
             <NavItem>
               <Link to="/profile">Profile</Link>
@@ -138,28 +141,40 @@ const NavigationLayout = (props) => {
     </>
   );
 
-  return (
-    <Drawer
-      style={{
-        minHeight: document.documentElement.clientHeight,
-        ...drawerStyles,
-      }}
-      enableDragHandle
-      open={drawerOpened}
-      onOpenChange={toggleDrawer}
-      position="right"
-      sidebar={drawerMenu()}
-      sidebarStyle={sidebarStyle}
-      className="app-drawer"
-    >
-      <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-      <Main>
-        <props.component {...props} />
-      </Main>
-      <Footnote />
-      <CookieAlert />
-    </Drawer>
-  );
+  const renderNavigationBar = () => {
+    return (
+      <div>
+        <Drawer
+          style={{
+            minHeight: document.documentElement.clientHeight,
+            ...drawerStyles,
+          }}
+          enableDragHandle
+          open={drawerOpened}
+          onOpenChange={toggleDrawer}
+          position="right"
+          sidebar={drawerMenu()}
+          sidebarStyle={sidebarStyle}
+          className="app-drawer"
+        >
+          <Header
+            onMenuClick={toggleDrawer}
+            isAuthenticated={isAuthenticated}
+          />
+          {mobiletabs ? (
+            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+          ) : null}
+          <Main>
+            <props.component {...props} />
+          </Main>
+          <Footnote />
+          <CookieAlert />
+        </Drawer>
+      </div>
+    );
+  };
+
+  return <>{renderNavigationBar()}</>;
 };
 
 export default NavigationLayout;

@@ -1,6 +1,5 @@
-const { Schema } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-// Feedback Schema
 const feedbackSchema = new Schema(
   {
     age: {
@@ -33,4 +32,7 @@ const feedbackSchema = new Schema(
   { collection: "feedbacks", timestamps: true },
 );
 
-module.exports = feedbackSchema;
+const Feedback = model("Feedback", feedbackSchema);
+
+exports.model = Feedback;
+exports.schema = feedbackSchema;

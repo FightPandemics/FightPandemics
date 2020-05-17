@@ -12,6 +12,9 @@ const FeedbackButton = styled(Button)`
     background-color: #425af2;
     color: #fff;
   }
+  &.am-button-ghost:before {
+    border: none !important;
+  }
 `;
 
 export default FeedbackButton;
