@@ -52,7 +52,9 @@ const Step2 = ({ active, setStep }) => {
       {
         organizations.map((item) => {
           return (
-            <Button key={item.id} >{item.title}</Button>
+            <Link to={{ pathname: "/create-post", state: { organization: item } }}>
+              <Button key={item.id} >{item.title}</Button>
+            </Link>
           )
         })
       }
