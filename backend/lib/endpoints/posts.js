@@ -1,4 +1,3 @@
-const httpErrors = require("http-errors");
 const mongoose = require("mongoose");
 const moment = require("moment");
 
@@ -531,8 +530,8 @@ async function routes(app) {
       }
 
       return {
-        deletedCount: deletedNestedCount + 1,
         deletedComment,
+        deletedCount: deletedNestedCount + 1,
         success: true,
       };
     },
