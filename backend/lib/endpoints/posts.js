@@ -35,7 +35,7 @@ async function routes(app) {
     async (req) => {
       const { userId } = req.query;
       let user, userErr;
-      if (userId != null) {
+      if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
           throw app.httpErrors.notFound();
