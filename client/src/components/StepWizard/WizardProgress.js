@@ -6,6 +6,7 @@ const WizardProgress = styled.h5`
   font-size: ${theme.typography.size.medium};
   font-weight: 300;
   margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export default WizardProgress;

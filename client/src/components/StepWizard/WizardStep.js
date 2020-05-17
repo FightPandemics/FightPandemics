@@ -7,6 +7,9 @@ const WizardStep = styled.div`
   min-height: 100%;
   display: flex;
   flex-flow: column wrap;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
 
   p {
     font-family: ${font.family.display};
