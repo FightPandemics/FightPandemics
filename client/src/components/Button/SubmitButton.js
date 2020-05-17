@@ -1,54 +1,26 @@
-import styled, { css } from "styled-components";
-import BaseButton from "./BaseButton";
-import { theme } from "constants/theme";
-const { button } = theme;
+import React from "react";
+import { Button } from "antd-mobile";
+import styled from "styled-components";
 
-// props: inline, primary, primarylight, secondary, tertiary
+import { theme } from "../../constants/theme";
 
-const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
-  return { size, inline };
-})`
-  ${button.regular}
-
-  ${(props) =>
-    props.primary &&
-    css`
-      ${button.primary}
-
-      &:hover, &:active, &:focus {
-        ${button.secondary}
-      }
-    `}
-
-  ${(props) =>
-    props.primarylight &&
-    css`
-      ${button.primarylight}
-
-      &:hover, &:active, &:focus {
-        ${button.primary}
-      }
-    `}
-
-  ${(props) =>
-    props.secondary &&
-    css`
-      ${button.secondary}
-
-      &:hover, &:active, &:focus {
-        ${button.primary}
-      }
-    `}
-
-  ${(props) =>
-    props.tertiary &&
-    css`
-      ${button.tertiary}
-
-      &:hover, &:active, &:focus {
-        ${button.primary}
-      }
-    `}
-`;
+const SubmitButton = ({ title, handleClick, ...props }) => {
+  const StyledButton = styled(Button).attrs((props) => {
+    return {
+      type: "primary",
+    };
+  })`
+    ${theme.button}
+    ${props.type && props.type === "primary"
+      ? theme.button.primary
+      : ""}
+   border-radius: 4.6rem;
+  `;
+  return (
+    <StyledButton onClick={handleClick} {...props}>
+      {title}
+    </StyledButton>
+  );
+};
 
 export default SubmitButton;
