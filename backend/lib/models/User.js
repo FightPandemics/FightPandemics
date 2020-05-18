@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     address: {
       type: String,
     },
+    location: Object,
     name: {
       required: true,
       type: String,
@@ -16,11 +17,10 @@ const UserSchema = new Schema(
     needs: {
       type: Array,
     },
+    type: String,
     wants: {
       type: Array,
     },
-    location: Object,
-    type: String,
   },
   {
     timestamps: true,

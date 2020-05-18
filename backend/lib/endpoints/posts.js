@@ -303,7 +303,7 @@ async function routes(app) {
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (body.hasOwnProperty("expireAt")) {
+      if ("expireAt" in body) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       }
 
