@@ -167,7 +167,7 @@ async function routes(app) {
       postProps.author = {
         id: user.id,
         location: user.location,
-        name: `${user.firstName} ${user.lastName}`,
+        name: user.name,
         type: user.type,
       };
 
@@ -242,7 +242,7 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
-      const { comments = [], numComments = 0 } = commentQuery;
+      const { comments = [], numComments = 0 } = commentQuery[0];
 
       return {
         comments,
@@ -303,7 +303,7 @@ async function routes(app) {
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (body.hasOwnProperty("expireAt")) {
+      if ("expireAt" in body) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       }
 

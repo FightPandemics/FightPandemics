@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from 'axios';
 
 // Antd
 import { Layout, Menu } from 'antd';
@@ -8,13 +9,12 @@ import { Layout, Menu } from 'antd';
 // Local
 import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
-import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer, postsReducer } from "hooks/reducers/feedReducers";
+import { optionsReducer, feedReducer, postsReducer, postsState } from "hooks/reducers/feedReducers";
 
 // Constants
 import { theme, mq } from "constants/theme";
@@ -26,6 +26,8 @@ import {
   TOGGLE_STATE,
   SET_VALUE,
   SET_POSTS,
+  FETCH_POSTS,
+  ERROR_POSTS,
 } from "hooks/actions/feedActions";
 
 // ICONS
@@ -183,7 +185,7 @@ const HeaderWrapper = styled.div`
 const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, {posts: fakePosts});
+  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
   const filters = Object.values(filterOptions);
 
@@ -233,15 +235,15 @@ const Feed = () => {
   };
 
   const handleChangeType = (e) => {
-    const value = HELP_TYPE[e.key]; // e.target.innerHTML;
+    const value = HELP_TYPE[e.key];
 
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts: fakePosts });
+        postsDispatch({ type: SET_POSTS, posts:  postsState.posts });
       } else {
-        const filtered = fakePosts.filter((item) => item.type === value);
+        const filtered = postsState.posts.filter((item) => item.type === value);
 
         postsDispatch({ type: SET_POSTS, posts: filtered });
       }
@@ -255,6 +257,20 @@ const Feed = () => {
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
+
+  useEffect(() => {
+    /* Add userId when user is logged */
+    const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
+
+    postsDispatch({ type: FETCH_POSTS });
+    axios.get(endpoint)
+      .then(response => {
+        postsDispatch({ type: SET_POSTS, posts: response.data });
+      })
+      .catch(error => {
+        postsDispatch({ type: ERROR_POSTS });
+      })
+  }, []);
 
   return (
     <FeedContext.Provider
@@ -315,6 +331,8 @@ const Feed = () => {
               </button>
             </HeaderWrapper>
             <FilterBox />
+            { posts.status === FETCH_POSTS && <div>Loading...</div> }
+            { posts.status === ERROR_POSTS && <div>Something went wrong ...</div> }
             <Posts filteredPosts={ posts.posts } />
             <SvgIcon
               src={creatPost}
