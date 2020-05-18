@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Layout, Menu } from 'antd';
 
 // Local
-import PostAs from "components/PostAs";
+import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "components/Feed/FeedWrapper";

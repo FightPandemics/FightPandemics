@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
 
-import PostAs from "components/PostAs";
+import PostAs from "components/PostAs/PostAs";
 import ProfilePic from "components/Picture/ProfilePic";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";

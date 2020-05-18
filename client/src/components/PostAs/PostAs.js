@@ -18,7 +18,7 @@ import {
   Button,
   BackButton,
   CreateOrgLink,
-} from "components/PostAs/style";
+} from "components/PostAs/StyledPostAs";
 import person from "assets/icons/person.svg";
 import organization from "assets/icons/organization.svg";
 import back from "assets/icons/back-arrow-gray.svg";
