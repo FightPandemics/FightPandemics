@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon, Checkbox, Modal } from "antd-mobile";
-import { mq, theme } from "../constants/theme";
+import { theme } from "../constants/theme";
 import styled from "styled-components";
 import {
   getAnswersMap,
@@ -15,7 +15,6 @@ import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
 
-const { tablet } = mq;
 const { typography } = theme;
 
 const INITIAL_STATE = {};
@@ -50,6 +49,7 @@ const ColoredButton = styled.div`
   text-align: center;
   font-weight: bold;
   margin: 2.2rem 0 .7rem;
+  cursor: pointer;
 `;
 
 const TransparentButton = styled.div`
@@ -60,6 +60,7 @@ const TransparentButton = styled.div`
   padding: 1.5rem;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const ModalStyle = styled(Modal)`
@@ -101,24 +102,19 @@ const ModalStyle = styled(Modal)`
     & > div {
       width: 100%;
     }
-    & button.close {
-      position: relative;
+    & .close {
       display: flex;
       justify-content: flex-end;
-      width: 100%;
-      padding: 0;
+      & button {
+        position: relative;
+        padding: 0;
+        border: none;
+        background: transparent;
+      }
     }
     & img {
       height: 4.42rem;
       margin: 1.6rem auto 2.88rem;
-    }
-
-    @media screen and (min-width: ${tablet.narrow.minWidth}) {
-      position: relative;
-      margin: 0 auto;
-      height: auto;
-      max-width: 375px;
-      background: transparent;
     }
   }
 `;
@@ -590,9 +586,12 @@ const SymptomsCheck = () => {
   if (state.age === "Under 18") {
     return (
       <ModalStyle visible={true}>
-        <button className="close">
-          <Icon type="cross" size="lg" />
-        </button>
+        <div className="close">
+          <button onClick={() => updateAnswers("age", null)}>
+            <Icon type="cross" size="lg" />
+          </button>
+        </div>
+        <img className="warning-icon" src={Disclaimer} />
         <Under18 />
         <Link to="/feed">
           <ColoredButton>Done</ColoredButton>
@@ -936,9 +935,11 @@ const SymptomsCheck = () => {
         For Someone Else
       </TransparentButton>
       <ModalStyle visible={state.confirmedStart}>
-        <button className="close" onClick={() => setState({})}>
-          <Icon type="cross" size="lg" />
-        </button>
+        <div className="close">
+          <button onClick={() => setState({})}>
+            <Icon type="cross" size="lg" />
+          </button>
+        </div>
         <StyledWizard isHashEnabled nav={<WizardNav />}>
           <Welcome update={updateAnswers} />
           <Step1 hashKey={"Step1"} update={updateAnswers} />
@@ -953,9 +954,11 @@ const SymptomsCheck = () => {
         </StyledWizard>
       </ModalStyle>
       <ModalStyle visible={state.forWho && !state.confirmedStart}>
-        <button className="close" onClick={() => setState({})}>
-          <Icon type="cross" size="lg" />
-        </button>
+        <div className="close">
+          <button onClick={() => setState({})}>
+            <Icon type="cross" size="lg" />
+          </button>
+        </div>
         <img className="warning-icon" src={Disclaimer} />
         <h2>We are not a provider of healthcare services</h2>
         <h6>
