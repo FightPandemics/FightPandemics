@@ -1,15 +1,13 @@
-### PR Checklist:
+### What does this pull request aim to achieve, and why?
 
-Hey there! It's great to have you here. Here's a quick checklist to help you make a shiny PR:
+*Please be consise and link any exisiting issue(s) related to this pull request:*
 
-* [ ] Have you checked out the guidelines in our [Contributing](https://github.com/FightPandemics/FightPandemics/blob/master/CONTRIBUTING.md) document?
-* [ ] Have you looked if there might be other open [Pull Requests](https://github.com/FightPandemics/FightPandemics/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc) for the same update/change?
+### Before opening this pull pequest:
 
-### Quick Description of the PR
+*Please do NOT open this PR if you have not done the following:*
 
-What does it aim to achieve, and why?
-
-### An Overview of the Changes
-
-* A few notes on your commits.
-* To help understand them.
+- [ ] I have rebased/merged with the latest master.
+- [ ] I have resolved ALL merge conflicts.
+- [ ] I have resolved ALL console warnings and errors.
+- [ ] I have read the latest README and understand the development workflow.
+- [ ] I have linked this PR to the appropiate issue(s) and added a project status at the right hand side of this PR.
