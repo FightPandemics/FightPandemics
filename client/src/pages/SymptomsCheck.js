@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState} from "react";
 import {
   AnswerButton,
   AnswerCheckbox,
@@ -44,7 +43,6 @@ const Welcome = (props) => {
     </WizardStep>
   );
 };
-
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
@@ -54,7 +52,7 @@ const Step1 = (props) => {
   return (
     <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">How old are you?</h2>
       <AnswerButton onSelect={() => onSelectAnswer("under 18")}>
@@ -100,7 +98,7 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">
         Do you have any of these symptoms? Please, select all that apply:
@@ -156,7 +154,7 @@ const Step3 = (props) => {
   return (
     <WizardStep>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">
         Do you have any of these pre-existing medical conditions? Please, select
@@ -167,7 +165,7 @@ const Step3 = (props) => {
           key={i}
           text={answer}
           onSelect={() => toggleAnswer(answer)}
-          checked={checked}
+          checked={!none && checked}
         />
       ))}
       <AnswerCheckbox
@@ -188,7 +186,7 @@ const Step4 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
@@ -208,7 +206,7 @@ const Step5 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">
         If so, have you traveled to an area severely affected by the COVID-19
@@ -236,7 +234,7 @@ const Step6 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep - 1} / {props.totalSteps - 2}
       </h5>
       <h2 className="mb-5">
         Accordingly to what you know, have you been exposed to others who are
@@ -271,7 +269,7 @@ const Step7 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep -1 } / {props.totalSteps -1 }
+        Question {props.currentStep -1 } / {props.totalSteps - 2 }
       </h5>
       <h2 className="mb-5">
         Do you live in a care facility? This includes nursing homes or assisted
@@ -296,7 +294,7 @@ const Step8 = (props) => {
   return (
     <div>
       <h5 className="text-primary">
-        Question {props.currentStep -1} / {props.totalSteps -1}
+        Question {props.currentStep -1} / {props.totalSteps -2}
       </h5>
       <h2 className="mb-5">
         Do you live in a medical facility? This includes a hospital, emergency
