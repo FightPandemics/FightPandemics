@@ -1,5 +1,6 @@
 import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -175,63 +176,25 @@ const VisibilityButton = ({ onClick, type }) => {
 
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit, errors } = useForm();
   const [passwordType, setPasswordType] = useState("password");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
+
   useEffect(() => {
     if (code && state) {
       dispatch(authWithSocialProvider({ code, state }));
     }
   }, [code, state, dispatch]);
 
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const onLoginWithEmail = (formData) => {
+    dispatch(loginWithEmail(formData));
   };
 
-  const handleInputChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleInputChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handleLoginWithEmail = (evt) => {
-    evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
-    dispatch(loginWithEmail({ email, password }));
-  };
-
-  const handleSignup = (evt) => {
-    evt.preventDefault();
-    // todo: add inline validation (disable button / indicate error on form)
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    // todo: add inline validation (disable button / indicate error on form)
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
-    // todo: check if passwords are the same (dissable button / indicate error on form)
-    if (password !== confirmPassword) {
-      Toast.fail("Password and confirm password do not match!", 3);
-      return;
-    }
-    dispatch(signup({ email, password, confirmPassword }));
+  const onSignup = (formData) => {
+    dispatch(signup(formData));
   };
 
   const handleSocialLogin = (provider) => {
@@ -271,7 +234,7 @@ const Login = ({ isLoginForm }) => {
             <Heading className="h4" level={4}>
               {isLoginForm ? "Sign In" : "Sign Up"}
             </Heading>
-            <form id="login-password" method="POST">
+            <form id="login-password">
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />
                 <Input
@@ -279,8 +242,7 @@ const Login = ({ isLoginForm }) => {
                   name="email"
                   required
                   placeholder="Enter email address"
-                  value={email}
-                  onChange={handleInputChangeEmail}
+                  ref={register}
                   style={StyleInput}
                 />
               </InputWrapper>
@@ -292,8 +254,7 @@ const Login = ({ isLoginForm }) => {
                   id="password"
                   required
                   placeholder="Enter password"
-                  value={password}
-                  onChange={handleInputChangePassword}
+                  ref={register}
                   style={StyleInput}
                 />
                 <VisibilityButton
@@ -314,8 +275,7 @@ const Login = ({ isLoginForm }) => {
                     id="confirmPassword"
                     required
                     placeholder="Confirm password"
-                    onChange={handleInputChangeConfirmPassword}
-                    value={confirmPassword}
+                    ref={register}
                     style={StyleInput}
                   />
                   <VisibilityButton
@@ -326,7 +286,7 @@ const Login = ({ isLoginForm }) => {
               )}
               <SubmitButton
                 primary="true"
-                onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
+                onClick={isLoginForm ? handleSubmit(onLoginWithEmail) : handleSubmit(onSignup)}
               >
                 {isLoginForm ? "Sign In" : "Sign Up"}
               </SubmitButton>
