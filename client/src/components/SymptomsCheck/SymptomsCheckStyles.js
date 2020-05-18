@@ -132,11 +132,15 @@ export const SCButtonsContainer = styled.div`
   }
 `;
 
-export const SCButtonContent = styled.div`
+export const SCButtonContent = styled.span`
   width: inherit;
   margin: 0 3.2rem;
   font-weight: regular;
   font-size: 1.6rem;
+
+  strong {
+    display: inline-block;
+  }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
     width: 55.6rem;
@@ -177,10 +181,6 @@ export const SCAnswerButton = styled(({ children, ...props }) => (
   &:hover {
     background-color: ${theme.colors.royalBlue};
     color: #fff;
-  }
-
-  strong {
-    display: block;
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {

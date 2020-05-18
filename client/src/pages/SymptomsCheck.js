@@ -153,14 +153,16 @@ const Step2 = (props) => {
 };
 
 const STEP_3_ANSWERS = [
-  "Diseases or conditions that make it hard to cough",
+  "Moderate to severe asthma or chronic lung disease",
+  "Cancer treatment or medicines causing immune suppression",
+  "Inherited immune system definicies or HIV",
+  "Serious heart conditions, such as heart failure or prior heart attack",
+  "Diabetes with complications",
   "Kidney failure that needs dialysis",
   "Cirrhosis of the liver",
-  "Asthma or chronic lung disease",
-  "Diabetes with complications",
+  "Diseases or conditions that make it harder to cough",
   "Extreme obesity",
-  "Weakened immune system",
-  "Congestive heart failure",
+  "Pregnancy",
 ];
 
 const STEP_3_STATE = {
@@ -188,10 +190,8 @@ const Step3 = (props) => {
       <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </SCSubtitle>
-      <SCTitle>
-        Do you have any of these pre-existing medical conditions? Please, select
-        all that apply.
-      </SCTitle>
+      <SCTitle>Do any of these apply to you?</SCTitle>
+      <SCInstructions>Multiple options can be selected</SCInstructions>
       <SCButtonsContainer>
         {Object.entries(answers).map(([answer, checked], i) => (
           <SCAnswerCheckbox
@@ -222,15 +222,13 @@ const Step4 = (props) => {
       <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </SCSubtitle>
-      <SCTitle>
-        Have you traveled internationally during the last 2 weeks?
-      </SCTitle>
+      <SCTitle>Have you traveled internationally in the last 14 days?</SCTitle>
       <SCButtonsContainer>
         <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
-          Yes
+          I have travelled internationally{" "}
         </SCAnswerButton>
         <SCAnswerButton onSelect={() => onSelectAnswer("no")}>
-          No
+          I have <strong>not</strong> travelled internationally
         </SCAnswerButton>
       </SCButtonsContainer>
     </SCWizardStep>

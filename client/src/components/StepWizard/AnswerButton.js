@@ -30,9 +30,9 @@ const StyledAnswerButton = styled.div`
 
 const AnswerButton = ({ children, onSelect, ...props }) => {
   return (
-    <AnswerStyles onClick={onSelect} {...props}>
+    <StyledAnswerButton onClick={onSelect} {...props}>
       {children}
-    </AnswerStyles>
+    </StyledAnswerButton>
   );
 };
 
