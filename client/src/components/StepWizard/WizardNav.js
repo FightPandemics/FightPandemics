@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { mq } from "../../constants/theme";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -47,10 +48,28 @@ const NextButtonWrapper = styled(ButtonWrapper)`
   border-radius 50px;
   padding: 0 5px;
   justify-content: center;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 6.8rem;
+    height: 6.8rem;
+    p {
+      display: none;
+    }
+    img {
+      height: 1.7rem !important;
+      margin: 0 !important;
+    }
+  }
 `;
 
 const PrevButton = styled(SvgIcon)`
   cursor: pointer;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: 1.7rem !important;
+    margin: 2.55rem 0 !important;
+    & + p {
+      display: none;
+    }
+  }
 `;
 
 const NextButton = styled(SvgIcon)`
@@ -69,7 +88,8 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       </ButtonWrapper>
     ) : (
       <Link to={"/"}>
-        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" /> Back
+        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />
+        <p>Back</p>
       </Link>
     )}
     {currentStep < totalSteps && (
