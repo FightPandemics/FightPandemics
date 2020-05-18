@@ -157,18 +157,6 @@ const CreateOrgProfile = (props) => {
     e.preventDefault();
     populateErrors();
     if (!errors.length) {
-      console.log(name);
-      console.log(email);
-      console.log(location);
-      console.log(global);
-      console.log(formData);
-      console.log(volunteer);
-      console.log(staff);
-      console.log(investors);
-      console.log(donations);
-      console.log(other);
-      console.log(privacy);
-      console.log(conditions);
       // todo: finish integrating api
       try {
         // const req = await axios.post("/api/posts", formData);
