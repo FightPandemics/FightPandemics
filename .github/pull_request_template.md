@@ -2,7 +2,7 @@
 
 _Please be concise and link any related issue(s):_
 
-### Before submitting this pull pequest:
+### Before submitting this pull request:
 
 _Please do **NOT** submit this PR if you have not done the following:_
 
