@@ -4,12 +4,6 @@ variable "env_name" {
 variable "fp_context" {
   type = string
 }
-variable "auth_secret_key" {
-  type = string
-}
-variable "auth_client_id" {
-  type = string
-}
 
 data "aws_ssm_parameter" "db_host" {
   name = "/fp/database/host"
@@ -21,6 +15,18 @@ data "aws_ssm_parameter" "db_user" {
 
 data "aws_ssm_parameter" "db_password" {
   name = "/fp/database/password"
+}
+
+data "aws_ssm_parameter" "auth_domain" {
+  name = "/fp/auth/domain"
+}
+
+data "aws_ssm_parameter" "auth_client_id" {
+  name = "/fp/auth/client_id"
+}
+
+data "aws_ssm_parameter" "auth_client_secret" {
+  name = "/fp/auth/client_secret"
 }
 
 module "main" {
@@ -51,15 +57,15 @@ module "main" {
     },
     {
       name  = "AUTH_SECRET_KEY"
-      value = var.auth_secret_key
+      value = data.aws_ssm_parameter.auth_client_secret.value
     },
     {
       name  = "AUTH_DOMAIN"
-      value = "fightpandemics.eu.auth0.com"
+      value = data.aws_ssm_parameter.auth_domain.value
     },
     {
       name  = "AUTH_CLIENT_ID"
-      value = var.auth_client_id
+      value = data.aws_ssm_parameter.auth_client_id.value
     },
     {
       name  = "NODE_ENV"
