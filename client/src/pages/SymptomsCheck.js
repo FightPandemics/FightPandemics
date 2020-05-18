@@ -9,6 +9,7 @@ import {
   // WizardContainer,
   WizardStep,
   WizardNav,
+  WizardProgress,
 } from "../components/StepWizard";
 import {
   SCWizardContainer,
@@ -50,14 +51,10 @@ const Welcome = (props) => {
       </SCContentContainer>
       <SCButtonsContainer>
         <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
-          <SCButtonContent>
-            Yes, I am experiencing at least one of these symptoms
-          </SCButtonContent>
+          Yes, I am experiencing at least one of these symptoms
         </SCAnswerButton>
         <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
-          <SCButtonContent>
-            No, I do not have any of these symptoms
-          </SCButtonContent>
+          No, I do not have any of these symptoms
         </SCAnswerButton>
       </SCButtonsContainer>
     </SCWizardStep>
@@ -85,19 +82,19 @@ const Step1 = (props) => {
           onSelect={() => onSelectAnswer("under 18")}
           height={{ mb: "5rem", dkt: "8.5rem" }}
         >
-          <SCButtonContent>under 18</SCButtonContent>
+          under 18
         </SCAnswerButton>
         <SCAnswerButton
           onSelect={() => onSelectAnswer("18-64")}
           height={{ mb: "5rem", dkt: "8.5rem" }}
         >
-          <SCButtonContent>18-64</SCButtonContent>
+          18-64
         </SCAnswerButton>
         <SCAnswerButton
           onSelect={() => onSelectAnswer("65+")}
           height={{ mb: "5rem", dkt: "8.5rem" }}
         >
-          <SCButtonContent>65+</SCButtonContent>
+          65+
         </SCAnswerButton>
       </SCButtonsContainer>
     </SCWizardStep>
@@ -135,25 +132,23 @@ const Step2 = (props) => {
 
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
+      </SCSubtitle>
       <SCTitle>Are you experiencing any of these symptoms?</SCTitle>
-      <SCButtonsContainer>
-        {Object.entries(answers).map(([answer, checked], i) => (
-          <SCAnswerCheckbox
-            key={i}
-            text={answer}
-            onSelect={() => toggleAnswer(answer)}
-            checked={!none && checked}
-          />
-        ))}
+      {Object.entries(answers).map(([answer, checked], i) => (
         <SCAnswerCheckbox
-          text={"None of these"}
-          onSelect={toggleNone}
-          checked={none}
+          key={i}
+          text={answer}
+          onSelect={() => toggleAnswer(answer)}
+          checked={!none && checked}
         />
-      </SCButtonsContainer>
+      ))}
+      <SCAnswerCheckbox
+        text={"None of these"}
+        onSelect={toggleNone}
+        checked={none}
+      />
     </WizardStep>
   );
 };
@@ -191,23 +186,23 @@ const Step3 = (props) => {
 
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         Do you have any of these pre-existing medical conditions? Please, select
         all that apply.
-      </h2>
+      </SCTitle>
       <SCButtonsContainer>
         {Object.entries(answers).map(([answer, checked], i) => (
-          <AnswerCheckbox
+          <SCAnswerCheckbox
             key={i}
             text={answer}
             onSelect={() => toggleAnswer(answer)}
             checked={checked}
           />
         ))}
-        <AnswerCheckbox
+        <SCAnswerCheckbox
           text={"None of these"}
           onSelect={toggleNone}
           checked={none}
@@ -225,16 +220,16 @@ const Step4 = (props) => {
 
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         Have you traveled internationally during the last 2 weeks?
-      </h2>
-      <SCButtonsContainer>
-        <AnswerButton onSelect={() => onSelectAnswer("yes")}>Yes</AnswerButton>
-        <AnswerButton onSelect={() => onSelectAnswer("no")}>No</AnswerButton>
-      </SCButtonsContainer>
+      </SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("yes")}>
+        Yes
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("no")}>No</SCAnswerButton>
     </WizardStep>
   );
 };
@@ -247,22 +242,22 @@ const Step5 = (props) => {
 
   return (
     <WizardStep>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         If so, have you traveled to an area severely affected by the COVID-19
         outbreak?
-      </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("live")}>
+      </SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("live")}>
         I live in an area severely affected by the COVID-19 outbreak
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("visited")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("visited")}>
         I have visited an area severely affected by the COVID-19 outbreak
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("none")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("none")}>
         None of these apply
-      </AnswerButton>
+      </SCAnswerButton>
     </WizardStep>
   );
 };
@@ -275,29 +270,29 @@ const Step6 = (props) => {
 
   return (
     <div>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         Accordingly to what you know, have you been exposed to others who are
         known to have COVID-19 during the last 2 weeks? Please, select all that
         apply.
-      </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("live with")}>
+      </SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("live with")}>
         I live with someone who has COVID-19
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("close contact")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("close contact")}>
         I had close contact with someone with COVID-19 (10 minutes or more spent
         together within 6 feet from each other or were exposed to their sneeze
         or cough)
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("near someone 6ft")}>
-        I was near someone with COVID-19 (at least 6-feet away and not exposed
-        to their cough or sneeze)
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no exposure")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("near someone 6ft")}>
+        SCButtonContentI was near someone with COVID-19 (at least 6-feet away
+        and not exposed to their cough or sneeze)
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("no exposure")}>
         No exposure
-      </AnswerButton>
+      </SCAnswerButton>
     </div>
   );
 };
@@ -310,19 +305,19 @@ const Step7 = (props) => {
 
   return (
     <div>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         Do you live in a care facility? This includes nursing homes or assisted
         living facilities.
-      </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("currently living")}>
+      </SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("currently living")}>
         I live in a long-term care facility
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("no")}>
         No, I don't live in a long-term care facility
-      </AnswerButton>
+      </SCAnswerButton>
     </div>
   );
 };
@@ -335,25 +330,25 @@ const Step8 = (props) => {
 
   return (
     <div>
-      <h5 className="text-primary">
+      <SCSubtitle>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
-      </h5>
-      <h2 className="mb-5">
+      </SCSubtitle>
+      <SCTitle>
         Do you live in a medical facility? This includes a hospital, emergency
         room, other medical setting, or long-term care facility. Select all that
         apply.
-      </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("worked")}>
+      </SCTitle>
+      <SCAnswerButton onSelect={() => onSelectAnswer("worked")}>
         I have worked in a hospital, or other care facility in the past 14 days
         This includes volunteering.
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("plan to work")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("plan to work")}>
         I plan to work in hospital, or other care facility in the next 14 days
         This includes volunteering.
-      </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>
+      </SCAnswerButton>
+      <SCAnswerButton onSelect={() => onSelectAnswer("no")}>
         No, I don't work or plan to work in a care facility
-      </AnswerButton>
+      </SCAnswerButton>
     </div>
   );
 };

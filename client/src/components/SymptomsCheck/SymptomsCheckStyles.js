@@ -1,3 +1,5 @@
+import React from "react";
+
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import {
@@ -109,39 +111,6 @@ export const SCButtonsContainer = styled.div`
   margin: 2.5rem 0;
   @media screen and (min-width: ${desktopBreakpoint}) {
     margin: 4rem auto 0 auto;
-    width: ${STEP_BUTTON_WIDTH};
-  }
-`;
-
-export const SCAnswerButton = styled(AnswerButton)`
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  color: #000;
-  font-family: ${typography.font.family.display}, sans-serif;
-  font-size: ${typography.size.large};
-  border: 0.1rem solid ${theme.colors.royalBlue};
-  border-radius: 0.8rem;
-  box-sizing: border-box;
-  cursor: pointer;
-  width: 100%;
-  margin: ${(props) => props.margin?.mb ?? "1.5rem 0"};
-  height: ${(props) => props.height?.mb ?? "8rem"};
-  padding: 0;
-  &:hover {
-    background-color: ${theme.colors.royalBlue};
-    color: #fff;
-  }
-
-  strong {
-    display: block;
-  }
-
-  @media screen and (min-width: ${desktopBreakpoint}) {
-    height: ${(props) => props.height?.dkt ?? "8.5rem"};
-    font-size: 2.2rem;
-    padding: 0;
-    margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
   }
 `;
 
@@ -160,6 +129,43 @@ export const SCButtonContent = styled.div`
 
 export const SCAnswerCheckbox = styled(AnswerCheckbox)`
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: '${STEP_BUTTON_WIDTH}';
+    width: ${STEP_BUTTON_WIDTH};
+  }
+`;
+
+export const SCAnswerButton = styled(({ children, ...props }) => (
+  <AnswerButton {...props}>
+    <SCButtonContent>{children}</SCButtonContent>
+  </AnswerButton>
+))`
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  color: #000;
+  font-family: ${typography.font.family.display}, sans-serif;
+  font-size: ${typography.size.large};
+  border: 0.1rem solid ${theme.colors.royalBlue};
+  border-radius: 0.8rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+  margin: 1.5rem 0;
+  height: 8rem;
+  padding: 0;
+  &:hover {
+    background-color: ${theme.colors.royalBlue};
+    color: #fff;
+  }
+
+  strong {
+    display: block;
+  }
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    min-height: 8.5rem;
+    font-size: 2.2rem;
+    padding: 0;
+    margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
+    width: ${STEP_BUTTON_WIDTH};
   }
 `;
