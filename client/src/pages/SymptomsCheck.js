@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import {
   AnswerButton,
   AnswerCheckbox,
   getAnswersMap,
   getCheckedAnswers,
-  StyledWizard,
-  WizardContainer,
+  // StyledWizard,
+  // WizardContainer,
   WizardStep,
   WizardNav,
 } from "../components/StepWizard";
@@ -19,6 +20,7 @@ import {
   SCTitle,
   SCWizardStep,
   SCStyledWizard,
+  SCAnswerCheckbox,
 } from "../components/SymptomsCheck/SymptomsCheckStyles";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
@@ -62,6 +64,10 @@ const Welcome = (props) => {
   );
 };
 
+export const SCWelcome = styled(Welcome)`
+  width: 100%;
+`;
+
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
@@ -73,9 +79,7 @@ const Step1 = (props) => {
       <SCSubtitle fontSize={{ mb: "1.4rem", dkt: "1.8rem" }}>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </SCSubtitle>
-      <SCTitle fontSize={{ mb: "2.6rem", dkt: "1.8rem" }}>
-        How old are you?
-      </SCTitle>
+      <SCTitle>How old are you?</SCTitle>
       <SCButtonsContainer>
         <SCAnswerButton
           onSelect={() => onSelectAnswer("under 18")}
@@ -134,20 +138,22 @@ const Step2 = (props) => {
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
-      <h2 className="mb-5">Are you experiencing any of these symptoms?</h2>
-      {Object.entries(answers).map(([answer, checked], i) => (
-        <AnswerCheckbox
-          key={i}
-          text={answer}
-          onSelect={() => toggleAnswer(answer)}
-          checked={!none && checked}
+      <SCTitle>Are you experiencing any of these symptoms?</SCTitle>
+      <SCButtonsContainer>
+        {Object.entries(answers).map(([answer, checked], i) => (
+          <SCAnswerCheckbox
+            key={i}
+            text={answer}
+            onSelect={() => toggleAnswer(answer)}
+            checked={!none && checked}
+          />
+        ))}
+        <SCAnswerCheckbox
+          text={"None of these"}
+          onSelect={toggleNone}
+          checked={none}
         />
-      ))}
-      <AnswerCheckbox
-        text={"None of these"}
-        onSelect={toggleNone}
-        checked={none}
-      />
+      </SCButtonsContainer>
     </WizardStep>
   );
 };
@@ -192,19 +198,21 @@ const Step3 = (props) => {
         Do you have any of these pre-existing medical conditions? Please, select
         all that apply.
       </h2>
-      {Object.entries(answers).map(([answer, checked], i) => (
+      <SCButtonsContainer>
+        {Object.entries(answers).map(([answer, checked], i) => (
+          <AnswerCheckbox
+            key={i}
+            text={answer}
+            onSelect={() => toggleAnswer(answer)}
+            checked={checked}
+          />
+        ))}
         <AnswerCheckbox
-          key={i}
-          text={answer}
-          onSelect={() => toggleAnswer(answer)}
-          checked={checked}
+          text={"None of these"}
+          onSelect={toggleNone}
+          checked={none}
         />
-      ))}
-      <AnswerCheckbox
-        text={"None of these"}
-        onSelect={toggleNone}
-        checked={none}
-      />
+      </SCButtonsContainer>
     </WizardStep>
   );
 };
@@ -216,16 +224,18 @@ const Step4 = (props) => {
   };
 
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <h2 className="mb-5">
         Have you traveled internationally during the last 2 weeks?
       </h2>
-      <AnswerButton onSelect={() => onSelectAnswer("yes")}>Yes</AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("no")}>No</AnswerButton>
-    </div>
+      <SCButtonsContainer>
+        <AnswerButton onSelect={() => onSelectAnswer("yes")}>Yes</AnswerButton>
+        <AnswerButton onSelect={() => onSelectAnswer("no")}>No</AnswerButton>
+      </SCButtonsContainer>
+    </WizardStep>
   );
 };
 
@@ -236,7 +246,7 @@ const Step5 = (props) => {
   };
 
   return (
-    <div>
+    <WizardStep>
       <h5 className="text-primary">
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -253,7 +263,7 @@ const Step5 = (props) => {
       <AnswerButton onSelect={() => onSelectAnswer("none")}>
         None of these apply
       </AnswerButton>
-    </div>
+    </WizardStep>
   );
 };
 
@@ -678,7 +688,7 @@ const SymptomsCheck = () => {
   return (
     <SCWizardContainer>
       <SCStyledWizard isHashEnabled nav={<WizardNav />}>
-        <Welcome update={updateAnswers} />
+        <SCWelcome update={updateAnswers} />
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />
         <Step3 hashKey={"Step3"} update={updateAnswers} />
@@ -694,3 +704,5 @@ const SymptomsCheck = () => {
 };
 
 export default SymptomsCheck;
+
+export { Welcome };

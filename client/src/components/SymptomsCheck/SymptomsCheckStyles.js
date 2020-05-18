@@ -2,36 +2,33 @@ import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import {
   AnswerButton,
-  //   AnswerCheckbox,
+  AnswerCheckbox,
   //   getAnswersMap,
   //   getCheckedAnswers,
   StyledWizard,
   WizardContainer,
-    WizardStep,
+  WizardStep,
   //   WizardNav,
 } from "../StepWizard";
 
 const { typography } = theme;
 
+const desktopBreakpoint = mq.tablet.narrow.minWidth;
+const STEP_BUTTON_WIDTH = "55.6rem";
+
 export const SCStyledWizard = styled(StyledWizard)`
-  display: flex;
-  flex-direction: column-reverse;
-  align-self: flex-start;
-  width: 100%;
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
 `;
 
 export const SCWizardContainer = styled(WizardContainer)`
-  font-family: ${theme.typography.font.family.display};
-  display: flex;
   margin: 4rem 0 0 0;
-  width: 100%;
-  justify-content: center;
 
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: flex;
-    justify-content: center;
+  @media screen and (min-width: ${desktopBreakpoint}) {
     margin: 10rem auto;
-    max-width: 850px;
   }
 `;
 
@@ -39,28 +36,26 @@ export const SCWizardStep = styled(WizardStep)`
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-`;
 
-export const SCTitle = styled.h2`
-  font-weight: bold;
-  font-size: ${(props) => props.fontSize?.mb ?? "1.6rem"};
-  margin: 1rem 0 0 0;
-
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    text-align: center;
-    font-size: ${(props) => props.fontSize?.mb ?? "3.6rem"};
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    display: flex;
+    justify-content: center;
+    width: ${({ width }) => width?.dkt ?? "100%"};
+    margin: 0 auto 0 auto;
   }
 `;
 
-export const SCSubtitle = styled.h4`
-  font-weight: 300;
-  font-size: ${(props) => props.fontSize?.mb ?? "1.4rem"};
-  margin: 0;
+export const SCTitle = styled.h2`
+  align-self: flex-start;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin: 1rem 0 0 0;
 
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    align-self: center;
     text-align: center;
-    font-size: ${(props) => props.fontSize?.dkt ?? "1.8rem"};
+    font-size: 3.6rem;
+    width: 91.4rem;
   }
 `;
 
@@ -93,10 +88,28 @@ export const SCContentContainer = styled.div`
   }
 `;
 
+export const SCSubtitle = styled.h4`
+  font-weight: 300;
+  font-size: ${(props) => props.fontSize?.mb ?? "1.4rem"};
+  margin: 0;
+  width: 100%;
+  text-align: left;
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    text-align: center;
+    font-size: ${(props) => props.fontSize?.dkt ?? "1.8rem"};
+  }
+`;
+
 export const SCButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin: 2.5rem 0;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+  @media screen and (min-width: ${desktopBreakpoint}) {
     margin: 4rem auto 0 auto;
+    width: ${STEP_BUTTON_WIDTH};
   }
 `;
 
@@ -111,7 +124,7 @@ export const SCAnswerButton = styled(AnswerButton)`
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
-  width: ${(props) => props.width?.mb ?? "100%"};
+  width: 100%;
   margin: ${(props) => props.margin?.mb ?? "1.5rem 0"};
   height: ${(props) => props.height?.mb ?? "8rem"};
   padding: 0;
@@ -124,24 +137,29 @@ export const SCAnswerButton = styled(AnswerButton)`
     display: block;
   }
 
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+  @media screen and (min-width: ${desktopBreakpoint}) {
     height: ${(props) => props.height?.dkt ?? "8.5rem"};
     font-size: 2.2rem;
     padding: 0;
-    width: ${(props) => props.width?.dkt ?? "55.6rem"};
     margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
   }
 `;
 
 export const SCButtonContent = styled.div`
-  width: ${(props) => props.width?.dkt ?? "inherit"};
-  margin: ${(props) => props.margin?.dkt ?? "0 3.2rem"};
+  width: inherit;
+  margin: 0 3.2rem;
   font-weight: regular;
   font-size: 1.6rem;
 
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: ${(props) => props.width?.dkt ?? "55.6rem"};
-    margin: ${(props) => props.margin?.dkt ?? "0 4.3rem"};
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    width: 55.6rem;
+    margin: 0 4.3rem;
     font-size: 2.2rem;
+  }
+`;
+
+export const SCAnswerCheckbox = styled(AnswerCheckbox)`
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    width: '${STEP_BUTTON_WIDTH}';
   }
 `;
