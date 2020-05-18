@@ -9,6 +9,7 @@ const authorSchema = new Schema({
     required: true,
     type: ObjectId,
   },
+  location: locationSchema,
   name: {
     required: true,
     type: String,
@@ -30,7 +31,6 @@ const authorSchema = new Schema({
     trim: true,
     type: String,
   },
-  location: locationSchema,
 });
 
 // -- Model
