@@ -5,7 +5,6 @@ import createPostSettings from "assets/data/createPostSettings";
 import CustomModal from "components/CreatePost/CustomModal";
 import RadioGroup from "components/CreatePost/RadioGroup";
 import Heading from "components/Typography/Heading";
-
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import AddTags from "components/Tag/AddTags";
 import SubmitButton from "components/Button/SubmitButton";

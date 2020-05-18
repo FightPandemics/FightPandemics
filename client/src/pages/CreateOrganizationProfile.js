@@ -304,10 +304,12 @@ const CreateOrgProfile = (props) => {
           <WhiteSpace />
         </div>
         <SubmitButton
-          title="Create Profile"
+          primary="true"
           onClick={handleSubmit}
           className="submit-btn"
-        />
+        >
+          Create Profile
+        </SubmitButton>
         <InputWrapper>
           <Label style={StyleLabel} label="" />
           <StyledCheckbox
