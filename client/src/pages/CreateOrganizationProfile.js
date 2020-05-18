@@ -7,7 +7,7 @@ import createOrganizationProfile from "../assets//data/createOrganizationProfile
 import styled from "styled-components";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
-import CustomH1 from "../components/Typography/Title/CustomH1";
+import Heading from "components/Typography/Heading";
 import DownArrowButton from "../components/Button/DownArrowButton";
 import Input from "../components/Input/BaseInput";
 import SubmitButton from "../components/Button/SubmitButton";
@@ -180,14 +180,9 @@ const CreateOrgProfile = (props) => {
 
   return (
     <CreatePostWrapper>
-      <CustomH1
-        className="title"
-        fontsize="2.2rem"
-        fontweight="700"
-        color="black"
-      >
+      <Heading className="h4" level={4}>
         Create Organization Profile
-      </CustomH1>
+      </Heading>
       <StyledForm onSubmit={handleSubmit}>
         <InputWrapper>
           <Label style={StyleLabel} label="Organization Name" />
