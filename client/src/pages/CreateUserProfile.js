@@ -1,29 +1,33 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
-import React from "react";
-import styled, { css } from "styled-components";
-import TextInput from "../components/Input/TextInput";
-import Checkbox from "../components/Input/Checkbox";
-import Label from "../components/Input/Label";
-import UnderlineDescription from "../components/Input/UnderlineDescription";
-import CustomH1 from "../components/Typography/Title/CustomH1";
-import Title from "../components/Typography/Title";
-import SubmitButton from "../components/Button/SubmitButton";
-import { theme, mq } from "../constants/theme";
+import React, {useEffect} from "react";
+import styled from "styled-components";
+import TextInput from "components/Input/TextInput";
+import Checkbox from "components/Input/Checkbox";
+import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+import SubmitButton from "components/Button/SubmitButton";
+import { theme, mq } from "constants/theme";
 
-import PersonalDataImage from "../assets/create-profile-images/personal_data.svg";
+import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
+import Marker from "assets/create-profile-images/location-marker.svg";
 
 require('typeface-dm-sans');
 require('typeface-work-sans');
 
 const Container = styled.div`
     display: flex;
+    position: relative;
+    width: 100%;
     .form-container {
+        background-color: #fbfbfd;
         width: 100%;
         @media only screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+            margin-left: 50%;
             width: 50%;
         }
         @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
+            margin-left: 40%;
             width: 60%;
         }
     }
@@ -33,9 +37,13 @@ const Container = styled.div`
             display: none;
         }
         @media only screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+            height: 100VH;
+            position: fixed;
             width: 50%;
         }
         @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
+            height: 100VH;
+            position: fixed;
             width: 40%;
         }
         img {
@@ -66,26 +74,36 @@ const ProfileFormGroup = styled.form`
 
 const CheckboxContainer = styled.div`
     --mt: ${theme.typography.size.xxsmall};
+    --xsmall: ${theme.typography.size.xsmall};
+
     display: flex;
-    align-items: center;
+    align-items: ${props => (props.label && props.description) ? 'start' : 'center' };
     margin: var(--mt) 0 0 0;
     p {
         color: ${theme.colors.darkerGray};
         font-weight: normal;
     }
-    p, div {
-        margin-left: ${theme.typography.size.xsmall};      
-    } 
+    .ant-checkbox-wrapper {
+        margin-right: ${theme.typography.size.large};
+    }
+    span {
+        color: #646464;
+        font-size: var(--xsmall);
+        font-family: ${props => props.font};
+    }
 `
 
-const CheckboxGroup = ({children, description, label}) => {
+const CheckboxGroup = ({children, description, font, label}) => {
     return (
-    <CheckboxContainer>
-        <Checkbox/>
-        <div>
-            {children ?? <Label label={label}/>} 
-            <UnderlineDescription>{description}</UnderlineDescription>
-        </div>
+    <CheckboxContainer font={font} label={label} description={description}>
+        <Checkbox 
+        color={theme.colors.royalBlue} 
+        size={theme.typography.size.xxlarge}
+        />
+        <Flex direction="column" align="start">
+            {children ?? <TextLabel color={theme.colors.black} size={theme.typography.size.large}>{label}</TextLabel>} 
+            <span>{description}</span>
+        </Flex>
     </CheckboxContainer>
     )
 };
@@ -133,25 +151,54 @@ const DropdownMenu = ({children}) => {
 const InputGroup = styled.div`
     --py: ${theme.typography.size.xxsmall};
     --my: ${theme.typography.size.xxxlarge};
-    
+
+    color: ${theme.colors.royalBlue};
     margin: var(--my) 0 var(--my) 0;
 
-    h3 {
-        color: ${theme.colors.primary};
-        font-weight: bold;
-    }
     input {
+        background-color: transparent;
         color: ${theme.colors.darkerGray};
         font-size: ${theme.typography.size.xlarge};
-        width: 100%;
-        margin-bottom: var(--my);
+        margin-bottom: 3.4rem;
         padding: var(--py) 0 var(--py) 0;
-
+        width: 100%;
     }
+
     label {
         font-family: ${theme.typography.font.family.button};
         font-size: ${theme.typography.size.large};
         font-weight: 500;
+    }
+
+    .address {
+        input {
+            margin-bottom: 0;
+        }
+        label > p:before {
+            content: ' ';
+            background-image: url(${Marker});
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: inline-block;
+            margin-right: ${theme.typography.size.xxsmall};
+            height: ${theme.typography.size.xlarge};
+            width: ${theme.typography.size.xlarge};
+        }
+
+        label:after {
+            content: 'Enter address, zip code, or city';
+            color: #209d7f;
+            font-size: ${theme.typography.size.xsmall};
+            font-family: ${theme.typography.font.family.body};
+            margin-top: ${theme.typography.size.xsmall};
+        }
+    }
+
+    .underline {
+        color: #209d7f;
+        font-size: ${theme.typography.size.xsmall};
+        font-family: ${theme.typography.font.family.body};
+        margin-top: ${theme.typography.size.xsmall};     
     }
 `
 
@@ -165,7 +212,21 @@ const UnderlineLink = styled.p`
     font-size: ${theme.typography.size.small};
 `;
 
+const Submit = styled(SubmitButton)`
+    font-weight: 500;
+`
 const CreateProfile = () => {
+useEffect(() => {
+    let header = document.querySelector('.header');
+    let headerNav = document.querySelector('.am-navbar-right');
+    let main = document.getElementsByTagName('main')[0];
+    header.style.position = 'fixed';
+    header.style.zIndex = 999;
+    headerNav.style.display = 'none';
+    document.querySelector('.am-navbar-light').style.backgroundColor = 'transparent';
+    main.style.marginLeft = '0px';
+    main.style.marginRight = '0px';
+}, [])
 return <Container>
     <Flex className="image-container" direction="column">
         <img src={PersonalDataImage} alt="two people standing next to a list of personal items" />
@@ -173,26 +234,29 @@ return <Container>
     <Flex className="form-container" direction="column">
         <WhiteSpace size="xl"/>
         <ProfileFormGroup>
-            <CustomH1 color={theme.colors.darkerGray} fontweight="bold">Create your Profile</CustomH1>
+            <Heading level="1" className="h2" color={theme.colors.darkerGray} fontweight="bold">Create your Profile</Heading>
             <InputGroup>
                 <TextInput label="E-mail" />
-                <TextInput label="Name" />
-                <DropdownMenu>
-                    <div id="dropdown-anchor" style={{'position': 'relative'}}>
-                        <TextInput label="Address"/>
-                    </div>
-                </DropdownMenu>
+                <TextInput label="First name" />
+                <TextInput label="Last name" />
+                <div className="address">
+                    <DropdownMenu>
+                        <div id="dropdown-anchor" style={{'position': 'relative'}}>
+                            <TextInput label="Address"/>
+                        </div>
+                    </DropdownMenu>
+                </div>
             </InputGroup>
-            <CheckboxGroup description="I am traveling" />
-            <CheckboxGroup description="Don't show my address" />
+            <CheckboxGroup font={theme.typography.font.family.body} description="I am traveling" />
+            <CheckboxGroup font={theme.typography.font.family.body} description="Don't show my address" />
             <InputGroup>
-                <Title>I want to</Title>
+                <TextLabel color={theme.colors.royalBlue} size={theme.typography.size.large} weight={500}>I want to</TextLabel>
                 <CheckboxGroup label="Volunteer" />
                 <CheckboxGroup label="Donate" />
                 <CheckboxGroup label="Share Information" />
             </InputGroup>
             <InputGroup>
-                <Title>I need</Title>
+                <TextLabel color={theme.colors.royalBlue} size={theme.typography.size.large} weight={500}>I need</TextLabel>
                 <CheckboxGroup 
                 label="Medical Help" 
                 description="I have symptoms of COVID-19"/>
@@ -201,13 +265,13 @@ return <Container>
                 description="I need assitance getting groceries, medicine, etc." />
             </InputGroup>
             <InputGroup>
-                <SubmitButton primary="true">Create Profile</SubmitButton>
+                <Submit primary="true">Create Profile</Submit>
                 <CheckboxGroup>
-                    <UnderlineLink>By signing up, I agree to the <a href="#">Terms and Conditions</a>
+                    <UnderlineLink>By signing up, I agree to the <a href="/privacy-policy">Privacy Policy</a>
                     </UnderlineLink>
                 </CheckboxGroup>
                 <CheckboxGroup>
-                    <UnderlineLink>By signing up, I agree to the <a href="#">Privacy Policy</a>
+                    <UnderlineLink>By signing up, I agree to the <a href="/terms-conditions">Terms and Conditions</a>
                     </UnderlineLink>
                 </CheckboxGroup>
             </InputGroup>
