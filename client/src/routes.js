@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import About from "./pages/About";
+import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -61,6 +62,10 @@ const routes = [
     component: About,
   },
   {
+    path: "/CreateOrganizationProfile",
+    component: CreateOrganizationProfile,
+  },
+  {
     path: "/medical",
     component: Medical,
   },
@@ -69,8 +74,8 @@ const routes = [
     component: NearestHospital,
     props: {
       mobiletabs: true,
-      tabIndex: 0
-    }
+      tabIndex: 0,
+    },
   },
   {
     path: "/find-help",
@@ -81,16 +86,16 @@ const routes = [
     component: SymptomsCheck,
     props: {
       mobiletabs: true,
-      tabIndex: 1
-    }
+      tabIndex: 1,
+    },
   },
   {
     path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
-      tabIndex: 2
-    }
+      tabIndex: 2,
+    },
   },
   {
     path: "/profile",
