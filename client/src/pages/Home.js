@@ -17,7 +17,7 @@ const FlexChild = styled.div`
 
 const StyledIntro = styled.div` 
 
-  @media screen and ${mq.phone.narrow.max} {
+  @media screen and ${mq.phone.wide.max} {
     margin-top: 4rem;
   }
 
@@ -46,7 +46,7 @@ const MainContainer = styled.div`
     margin-left: -2.5rem;
   }
 
-  @media only screen and ${mq.phone.narrow.max} {
+  @media only screen and ${mq.phone.wide.max} {
     display: block;
   }
 `;
@@ -59,7 +59,7 @@ const StyledWelcome = styled.h1`
   font-style: normal;
 
   @media only screen and ${mq.phone.wide.max} {
-    font-size: ${theme.typography.size.large};
+    font-size: ${theme.typography.size.xlarge};
     margin: 2.5rem auto;
     font-weight: bold;
     text-align: center;
@@ -106,12 +106,12 @@ const StyledP = styled.p`
 
   @media only screen and ${mq.phone.wide.max} {
     font-family: ${theme.typography.font.family.display}, sans-serif;
-    font-size: ${theme.typography.size.small};
+    font-size: ${theme.typography.size.medium};
     text-align: center;
     color: #000;
     line-height: 2rem;
     letter-spacing: 0rem;
-    margin: 0;
+    margin: 1rem 0;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
@@ -133,9 +133,17 @@ const OnboardingContainer = styled.div`
   width: 100%;
   margin: auto 0;
 
-  @media only screen and ${mq.phone.narrow.max} {
-    margin-top: 4rem;
+  @media only screen and ${mq.phone.wide.max} {
+    margin-top: 6rem;
   }
+`;
+
+const StyleLink = styled.p `
+  color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.large};
+  font-family: ${theme.typography.font.family.display};
+  font-weight: 500;
+  margin-top: 4rem;
 `;
 
 const Home = (props) => {
@@ -174,16 +182,8 @@ const Home = (props) => {
             </ImageButton>
           </FlexChild>
 
-          <Link
-            style={{
-              color: theme.colors.royalBlue,
-              fontSize: theme.typography.size.large,
-              fontFamily: theme.typography.font.family.display,
-              fontWeight: "500",
-            }}
-            to="/feed"
-          >
-            View Community Postings
+          <Link to="/feed">
+            <StyleLink>View Community Postings</StyleLink>
           </Link>
         </OnboardingContainer>
       </>
