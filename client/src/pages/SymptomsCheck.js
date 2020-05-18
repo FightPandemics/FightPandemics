@@ -13,6 +13,7 @@ import {
 import Heading from "components/Typography/Heading";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
+import Disclaimer from "assets/icons/disclaimer.svg";
 
 const { tablet } = mq;
 const { typography } = theme;
@@ -77,8 +78,6 @@ const ModalStyle = styled(Modal)`
     z-index: 1;
     & img.warning-icon {
       height: 4.41rem;
-      width: 4.95rem;
-      background: #425af2;
     }
     & > a {
       width: 100%;
@@ -957,7 +956,7 @@ const SymptomsCheck = () => {
         <button className="close" onClick={() => setState({})}>
           <Icon type="cross" size="lg" />
         </button>
-        <img className="warning-icon" src="" />
+        <img className="warning-icon" src={Disclaimer} />
         <h2>We are not a provider of healthcare services</h2>
         <h6>
           This service is provided in good faith for those who are otherwise
