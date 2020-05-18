@@ -35,9 +35,9 @@ export const SCWizardContainer = styled(WizardContainer)`
 `;
 
 export const SCWizardStep = styled(WizardStep)`
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0 auto -2rem auto;
 
   @media screen and (min-width: ${desktopBreakpoint}) {
     display: flex;
@@ -50,7 +50,7 @@ export const SCWizardStep = styled(WizardStep)`
 export const SCTitle = styled.h2`
   align-self: flex-start;
   font-weight: bold;
-  font-size: 1.6rem;
+  font-size: 2.6rem;
   margin: 1rem 0 0 0;
 
   @media screen and (min-width: ${desktopBreakpoint}) {
@@ -61,9 +61,13 @@ export const SCTitle = styled.h2`
   }
 `;
 
-export const SCContentContainer = styled.div`
+export const SCWelcomeTitle = styled(SCTitle)`
+  font-size: 1.6rem;
+`;
+
+export const SCInstructions = styled.div`
   width: 100%;
-  margin: 3rem 0 0 0;
+  margin: 1rem 0 1rem 0;
   font-weight: 400;
   font-size: 1.4rem;
 
@@ -85,8 +89,22 @@ export const SCContentContainer = styled.div`
     display: flex;
     justify-content: center;
     font-weight: regular;
-    max-width: 65rem;
+    font-size: 1.8rem;
+    margin: 3rem 0 3rem 0;
+  }
+`;
+
+export const SCWelcomeInstructions = styled(SCInstructions)`
+  font-size: 1.4rem;
+  margin: 2rem 0 0 0;
+  font-weight: 500;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    justify-content: flex-start;
+    max-width: 60rem;
     font-size: 2.2rem;
+    font-weight: 500;
+    margin: 3rem 0 3rem 0;
   }
 `;
 
@@ -110,7 +128,7 @@ export const SCButtonsContainer = styled.div`
   width: 100%;
   margin: 2.5rem 0;
   @media screen and (min-width: ${desktopBreakpoint}) {
-    margin: 4rem auto 0 auto;
+    margin: 4rem auto 2rem auto;
   }
 `;
 
@@ -128,7 +146,10 @@ export const SCButtonContent = styled.div`
 `;
 
 export const SCAnswerCheckbox = styled(AnswerCheckbox)`
+  margin: 0 0 2rem 0;
+
   @media screen and (min-width: ${desktopBreakpoint}) {
+    margin: 0 0 1.7rem 0;
     width: ${STEP_BUTTON_WIDTH};
   }
 `;
@@ -143,15 +164,16 @@ export const SCAnswerButton = styled(({ children, ...props }) => (
   background-color: #fff;
   color: #000;
   font-family: ${typography.font.family.display}, sans-serif;
-  font-size: ${typography.size.large};
+  font-size: 1.6rem;
   border: 0.1rem solid ${theme.colors.royalBlue};
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
   width: 100%;
-  margin: 1.5rem 0;
-  height: 8rem;
-  padding: 0;
+  margin: 0;
+  min-height: 5rem;
+  margin: 0 0 2rem 0;
+  padding: 1.3rem 0;
   &:hover {
     background-color: ${theme.colors.royalBlue};
     color: #fff;
@@ -165,7 +187,7 @@ export const SCAnswerButton = styled(({ children, ...props }) => (
     min-height: 8.5rem;
     font-size: 2.2rem;
     padding: 0;
-    margin: ${(props) => props.margin?.dkt ?? "1.5rem 0"};
+    margin: 0 0 1.7rem 0;
     width: ${STEP_BUTTON_WIDTH};
   }
 `;
