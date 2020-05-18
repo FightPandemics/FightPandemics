@@ -59,7 +59,8 @@ const StyledWelcome = styled.h1`
   font-style: normal;
 
   @media only screen and ${mq.phone.wide.max} {
-    margin: 2.5rem auto 0 auto;
+    font-size: ${theme.typography.size.large};
+    margin: 2.5rem auto;
     font-weight: bold;
     text-align: center;
     color: black;
