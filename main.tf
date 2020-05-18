@@ -1,6 +1,7 @@
 variable "env_name" {
   type = string
 }
+
 variable "fp_context" {
   type = string
 }
