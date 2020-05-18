@@ -2,7 +2,7 @@ const initialState = {
   firstName: "Dummy",
   lastName: "Data",
   email: "DummyData@Gmail.com",
-  country: "United States of America",
+  country: "USA",
   neighborhood: "DummyCity, NY",
   shareInfoStatus: false,
   volunteerStatus: false,

@@ -55,6 +55,10 @@ const BackgroundHeader = styled.div`
   background-color: #425af2;
   border-bottom-right-radius: 30px;
   position: relative;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
 `;
 const AboutDescription = styled.div`
   background-color: #ffffff;
@@ -76,6 +80,7 @@ const IconsContainer = styled.div`
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 const HelpContainer = styled.div`
   align-self: left;
@@ -88,29 +93,51 @@ const HelpContainer = styled.div`
   align-items: center;
   margin-left: 1rem;
   margin-bottom: 1rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    border: transparent;
+  }
 `;
 
 const UserInfoContainer = styled.div`
   background-color: #ffffff;
   margin-top: -13vh;
-  left: 0;
-  right: 0;
   margin-left: 2.5rem;
   margin-right: 2.5rem;
   border-radius: 10px;
-  position: relative;
   z-index: 1;
   filter: drop-shadow(#00000012 5px 0px 5px);
   flex-direction: column;
   display: flex;
   align-items: center;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    z-index: 0;
+    margin-top: 0;
+    border-radius: 0;
+    background-color: transparent;
+    align-items: initial;
+    flex-direction: row;
+  }
 `;
 const PlaceholderIcon = styled.div`
   flex: 1;
 `;
 
+const HelpImage = styled.img`
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  width: 35%;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+const UserInfoDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Profile = (props) => {
-  const { firstName, lastName, about, email, location } = props.user;
+  const { firstName, lastName, about, neighborhood, country } = props.user;
   const needHelp = true;
   const Item = Popover.Item;
 
@@ -177,43 +204,42 @@ const Profile = (props) => {
       </>
     );
   };
-
   return (
     <ProfileLayout>
       <BackgroundHeader>
         <MenuIcon src={menu} />
       </BackgroundHeader>
       <UserInfoContainer>
-        {popover(props)}
+        {/* {popover(props)} */}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-        <TextLabel weight="500" block="true" size={theme.typography.size.large}>
-          {firstName} {lastName}
-        </TextLabel>
-        <TextLabel
-          block="true"
-          color={DARK_GRAY}
-          size={theme.typography.size.medium}
-        >
-          {email}
-        </TextLabel>
-        {location}
-        <IconsContainer>
-          <HelpContainer>
-            <img
-              style={{
-                marginTop: "1rem",
-                marginBottom: "0.5rem",
-                width: "35%",
-              }}
-              src={needHelp ? needHelpInactive : offerHelpInactive}
-              alt="help-type-icon"
-            />
-            {needHelp ? "I need help" : "I want to help"}
-          </HelpContainer>
-          <PlaceholderIcon />
-          <SvgIcon src={linkedinBlue} style={iconStyle} />
-          <SvgIcon src={twitterBlue} style={iconStyle} />
-        </IconsContainer>
+        <UserInfoDesktop>
+          <TextLabel
+            weight="500"
+            block="true"
+            size={theme.typography.size.large}
+          >
+            {firstName} {lastName}
+          </TextLabel>
+          <TextLabel
+            block="true"
+            color={DARK_GRAY}
+            size={theme.typography.size.medium}
+          >
+            {neighborhood}, {country}
+          </TextLabel>
+          <IconsContainer>
+            <HelpContainer>
+              <HelpImage
+                src={needHelp ? needHelpInactive : offerHelpInactive}
+                alt="help-type-icon"
+              />
+              {needHelp ? "I need help" : "I want to help"}
+            </HelpContainer>
+            <PlaceholderIcon />
+            <SvgIcon src={linkedinBlue} style={iconStyle} />
+            <SvgIcon src={twitterBlue} style={iconStyle} />
+          </IconsContainer>
+        </UserInfoDesktop>
       </UserInfoContainer>
 
       <WhiteSpace />
