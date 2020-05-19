@@ -1,7 +1,5 @@
 const { Schema, model } = require("mongoose");
 const { schema: locationSchema } = require("./Location");
-const { model: Post } = require("./Post");
-const { model: Comment } = require("./Comment");
 const { isValidEmail } = require("../utils");
 
 const userSchema = new Schema(
@@ -18,23 +16,6 @@ const userSchema = new Schema(
   },
   { collection: "users", timestamps: true },
 );
-
-function updateAuthorLocationReference(location) {
-  Post.where(
-    { "author.authorId": this._id },
-    { $set: { "author.location": location } },
-  );
-  Comment.where(
-    { "author.authorId": this._id },
-    { $set: { "author.location": location } },
-  );
-
-  return location;
-}
-
-userSchema.path("location", {
-  set: updateAuthorLocationReference,
-});
 
 // indices keys aren't meant to be sorted alphabetically. Please don't the keys
 // order unless you really intend to change indexing
