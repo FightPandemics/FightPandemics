@@ -161,5 +161,23 @@ postSchema.index({ likes: 1 });
 // -- Model
 const Post = model("Post", postSchema);
 
-exports.model = Post;
-exports.schema = postSchema;
+function updateAuthorName(authorID, newAuthorName) {
+  return Post.where(
+    { "author.authorId": authorID },
+    { $set: { "author.authorName": newAuthorName } },
+  );
+}
+
+function updateAuthorType(authorID, newAuthorType) {
+  return Post.where(
+    { "author.authorId": authorID },
+    { $set: { "author.authorType": newAuthorType } },
+  );
+}
+
+module.exports = {
+  model: Post,
+  schema: postSchema,
+  updateAuthorName,
+  updateAuthorType,
+};
