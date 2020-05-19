@@ -127,7 +127,10 @@ const { xxlarge } = typography.size;
        text-align: center;
      }
      &:hover {
-       color: ${colors.primary}
+       color: ${colors.royalBlue}
+     }
+     &:active {
+       color: ${colors.royalBlue}
      }
   `;
 
@@ -151,8 +154,6 @@ const NearestHealthFacilities = props => {
 
   const onSearchInputChange = (value) => {
     setSearchValue(value);
-    console.log(searchValue);
-
   }
   const clearSearch = () => {
     setSearchValue('');
@@ -167,8 +168,6 @@ const NearestHealthFacilities = props => {
 
         const errorCallback_highAccuracy = error => {
             if (error.code === error.TIMEOUT) {
-              // Attempt to get GPS loc timed out after 5 seconds,
-              // try low accuracy location
               navigator.geolocation.getCurrentPosition(
                  successCallback,
                  errorCallback_lowAccuracy,
@@ -185,7 +184,7 @@ const NearestHealthFacilities = props => {
               else if (error.code === 2) {
                   errorMsg = "POSITION_UNAVAILABLE.";
                 }
-              let msg = `${errorMsg} We could not get your location. Check browser settings`;
+              let msg = `${errorMsg} We could not get your location`;
               alert(msg);
         }
 
@@ -199,8 +198,8 @@ const NearestHealthFacilities = props => {
             errorMsg = "POSITION_UNAVAILABLE.";
           }
         else if (error.code === 3)
-          errorMsg = "TIMEOUT";
-        let msg = `${errorMsg} We could not get your location. Check browser settings`;
+          errorMsg = "TIMEOUT.";
+        let msg = `${errorMsg} We could not get your location`;
         alert(msg);
       }
 
