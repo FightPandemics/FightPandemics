@@ -38,6 +38,10 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+`;
+
 const StyleInput = {
   fontSize: "1.8rem",
   lineHeight: "2.5rem",
@@ -200,36 +204,86 @@ const Login = ({ isLoginForm }) => {
     setConfirmPassword(e.target.value);
   };
 
+  const handleErrorMessage = (type) => {
+    if(type === "email"){
+      const email = document.getElementById("emailID");
+      const errorMessage = document.getElementById("email-error");
+      errorMessage.innerText = "Invalid email address!";
+      email.style.color = "red";
+      return;
+    } else if(type === "password") {
+      const password = document.getElementById("password");
+      const errorMessage = document.getElementById("password-error");
+      errorMessage.innerText = "Password must be at least 6 characters";
+      password.style.color = "red";
+    } else {
+      const confirmPassword = document.getElementById("confirmPassword");
+      const errorMessage = document.getElementById("confirm-password-error");
+      errorMessage.innerText = "Password and confirm password do not match!";
+      confirmPassword.style.color = "red";
+    }
+  }
+
+  const removeErrorMessage = (type) => {
+    if(type === "email"){
+      const errorMessage = document.getElementById("email-error");
+      errorMessage.innerText = "";
+      return;
+    } else if(type === "password") {
+      const password = document.getElementById("password");
+      const errorMessage = document.getElementById("password-error");
+      errorMessage.innerText = "";
+      password.style.color = "black";
+    } else {
+      const confirmPassword = document.getElementById("confirmPassword");
+      const errorMessage = document.getElementById("confirm-password-error");
+      errorMessage.innerText = "";
+      confirmPassword.style.color = "black";
+    }
+  }
+
   const handleLoginWithEmail = (evt) => {
     evt.preventDefault();
     if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
+     handleErrorMessage("email");
+      // Toast.fail("Invalid email address!", 3);
       return;
     }
+    removeErrorMessage("email");
     if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
+      handleErrorMessage("password");
+      // Toast.fail("Password must be at least 6 characters", 3);
       return;
     }
+    removeErrorMessage("password")
     dispatch(loginWithEmail({ email, password }));
   };
+
+ 
 
   const handleSignup = (evt) => {
     evt.preventDefault();
     // todo: add inline validation (disable button / indicate error on form)
     if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
+      handleErrorMessage("email");
+      // Toast.fail("Invalid email address!", 3);
       return;
     }
+    removeErrorMessage("email");
     // todo: add inline validation (disable button / indicate error on form)
     if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
+      handleErrorMessage("password");
+      // Toast.fail("Password must be at least 6 characters", 3);
       return;
     }
+    removeErrorMessage("password");
     // todo: check if passwords are the same (dissable button / indicate error on form)
     if (password !== confirmPassword) {
-      Toast.fail("Password and confirm password do not match!", 3);
+     handleErrorMessage("confirmPassword");
+      // Toast.fail("Password and confirm password do not match!", 3);
       return;
     }
+    removeErrorMessage("confirmPasword")
     dispatch(signup({ email, password, confirmPassword }));
   };
 
@@ -274,6 +328,7 @@ const Login = ({ isLoginForm }) => {
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />
                 <Input
+                  id="emailID"
                   type="email"
                   name="email"
                   required
@@ -283,6 +338,7 @@ const Login = ({ isLoginForm }) => {
                   style={StyleInput}
                 />
               </InputWrapper>
+              <ErrorMessage id="email-error"></ErrorMessage>
               <InputWrapper>
                 <Label for="password" style={StyleLabel} label="Password" />
                 <Input
@@ -297,8 +353,10 @@ const Login = ({ isLoginForm }) => {
                 />
                 <VisibilityButton onClick={togglePasswordVisibility} type={passwordType} />
               </InputWrapper>
+              <ErrorMessage id="password-error"></ErrorMessage>
               {
                 !isLoginForm &&
+                <>
                 <InputWrapper>
                   <Label for="confirmPassword" style={StyleLabel} label="Confirm Password" />
                   <Input
@@ -313,6 +371,8 @@ const Login = ({ isLoginForm }) => {
                   />
                   <VisibilityButton onClick={toggleConfirmPasswordVisibility} type={confirmPasswordType} />
                 </InputWrapper>
+                <ErrorMessage id="confirm-password-error"></ErrorMessage>
+                </>
               }
               <SubmitButton
                 primary="true"
