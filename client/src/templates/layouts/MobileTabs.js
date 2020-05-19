@@ -8,7 +8,7 @@ import { theme, mq } from "../../constants/theme";
 const { colors } = theme;
 
 const CustomLink = styled(NavLink)`
-  color: #939393;
+  color: ${colors.darkGray};
   text-decoration: none;
   font-size: 1.4rem;
   line-height: normal;
@@ -19,7 +19,7 @@ const CustomLink = styled(NavLink)`
 `;
 
 const ActiveLinkStyles = {
-  color: "#282828",
+  color: colors.darkerGray,
   fontWeight: "bold",
 };
 

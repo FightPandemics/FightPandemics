@@ -8,7 +8,7 @@ const ColoredMessageStyle = styled.div`
   margin: 3.3rem 0 2.9rem;
   padding: 1.8rem 2.9rem 2rem 1.8rem;
   border-radius: 0.5rem;
-  color: #fff;
+  color: ${colors.white};
   background: ${(props) => props.color};
 `;
 
@@ -41,7 +41,7 @@ const GenericMessageStyle = styled.ol`
       width: 2.4rem;
       height: 2.4rem;
       content: counter(li);
-      color: #fff;
+      color: ${colors.white};
       background: ${colors.royalBlue};
       border-radius: 50%;
       text-align: center;
@@ -51,12 +51,12 @@ const GenericMessageStyle = styled.ol`
         font-family: ${typography.heading.font};
         font-weight: 500;
         font-size: 1.8rem;
-        color: #282828;
+        color: ${colors.darkGray};
       }
       & h6 {
         font-family: ${typography.heading.font};
         font-weight: 500;
-        color: #939393;
+        color: ${colors.darkGray};
         margin: 0.9rem 0 0 !important;
       }
     }
@@ -69,7 +69,7 @@ const GenericResponseStyle = styled.ul`
   & li {
     font-size: 1.6rem;
     line-height: 2.4rem;
-    color: #282828;
+    color: ${colors.darkGray};
   }
 `;
 

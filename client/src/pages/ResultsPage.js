@@ -46,9 +46,9 @@ const ResultsPageStyle = styled.div`
 `;
 
 const ColoredButton = styled.div`
-  background-color: #425af2;
+  background-color: ${colors.royalBlue};
   width: 100%;
-  color: white;
+  color: ${colors.white};
   border-radius 5rem;
   padding: 1.5rem;
   text-align: center !important;

@@ -15,7 +15,7 @@ import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
 
-const { typography } = theme;
+const { typography, colors } = theme;
 
 const INITIAL_STATE = {};
 
@@ -41,9 +41,9 @@ const SymptomCheckerStyle = styled.div`
 `;
 
 const ColoredButton = styled.div`
-  background-color: #425af2;
+  background-color: ${colors.royalBlue};
   width: 100%;
-  color: white;
+  color: ${colors.white};
   border-radius 5rem;
   padding: 1.5rem;
   text-align: center;
@@ -53,9 +53,9 @@ const ColoredButton = styled.div`
 `;
 
 const TransparentButton = styled.div`
-  background-color: white;  
+  background-color: ${colors.white};  
   width: 100%;
-  color: #425af2;
+  color: ${colors.royalBlue};
   border-radius 5rem;
   padding: 1.5rem;
   text-align: center;
@@ -74,7 +74,7 @@ const ModalStyle = styled(Modal)`
     top: 0;
     left: 0;
     padding: 2.9rem 2.5rem 2.4rem;
-    background: #fff;
+    background: ${colors.white};
     overflow: auto;
     z-index: 1;
     & img.warning-icon {
@@ -149,8 +149,8 @@ const AnswerStyles = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
-  color: #000;
+  background-color: ${colors.white};
+  color: ${colors.black};
   width: 100%;
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: ${typography.size.large};
@@ -164,7 +164,7 @@ const AnswerStyles = styled.div`
   &:hover,
   &.selected {
     background-color: ${theme.colors.royalBlue};
-    color: #fff;
+    color: ${colors.white};
   }
   strong {
     display: block;
@@ -177,16 +177,16 @@ const AnswerStyles = styled.div`
     border-color: transparent;
   }
   & .am-checkbox-checked > .am-checkbox-inner {
-    background: #fff;
+    background: ${colors.white};
     &::after {
-      border-color: #425af2;
+      border-color: ${colors.royalBlue};
       border-right-width: 0.2rem;
       border-bottom-width: 0.2rem;
       margin: 0.1rem 0.1rem 0 0;
     }
   }
   & h6 {
-    color: #939393;
+    color: ${colors.darkGray};
     margin: 0 !important;
     text-align: left !important;
   }
