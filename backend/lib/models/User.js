@@ -17,8 +17,8 @@ const userSchema = new Schema(
   { collection: "users", timestamps: true },
 );
 
-// indices keys aren't meant to be sorted alphabetically. Please don't the keys
-// order unless you really intend to change indexing
+// indices keys aren't meant to be sorted alphabetically. Please don't change
+// the keys' order unless you really intend to change indexing
 userSchema.index({
   type: 1,
   ownerId: 1,
