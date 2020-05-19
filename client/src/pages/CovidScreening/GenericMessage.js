@@ -5,9 +5,9 @@ const { typography, colors } = theme;
 
 const ColoredMessageStyle = styled.div`
   width: 100%;
-  margin: 33px 0 29px;
-  padding: 18px 29px 20px 18px;
-  border-radius: 5px;
+  margin: 3.3rem 0 2.9rem;
+  padding: 1.8rem 2.9rem 2rem 1.8rem;
+  border-radius: 0.5rem;
   color: #fff;
   background: ${(props) => props.color};
 `;
@@ -17,7 +17,7 @@ const SectionTitleStyle = styled.h4`
   font-weight: bold;
   font-size: ${typography.heading.four};
   font-weight: bold;
-  font-size: 22px;
+  font-size: 2.2rem;
   padding: 0 !important;
   margin: 2.9rem 0 !important;
 `;
@@ -28,18 +28,18 @@ const GenericMessageStyle = styled.ol`
   counter-reset: li;
   & li {
     position: relative;
-    margin: 0 0 27px;
-    padding: 0 0 0 38px;
+    margin: 0 0 2.7rem;
+    padding: 0 0 0 3.8rem;
     counter-increment: li;
-    font-size: 11px;
-    line-height: 24px;
+    font-size: 1.1rem;
+    line-height: 2.4rem;
     font-weight: bold;
     &::before {
       position: absolute;
       left: 0;
       top: 0;
-      width: 24px;
-      height: 24px;
+      width: 2.4rem;
+      height: 2.4rem;
       content: counter(li);
       color: #fff;
       background: ${colors.royalBlue};
@@ -50,25 +50,25 @@ const GenericMessageStyle = styled.ol`
       & div {
         font-family: ${typography.heading.font};
         font-weight: 500;
-        font-size: 18px;
+        font-size: 1.8rem;
         color: #282828;
       }
       & h6 {
         font-family: ${typography.heading.font};
         font-weight: 500;
         color: #939393;
-        margin: 9px 0 0 !important;
+        margin: 0.9rem 0 0 !important;
       }
     }
   }
 `;
 
 const GenericResponseStyle = styled.ul`
-  padding: 0 0 0 15px;
-  margin: 0 0 44px;
+  padding: 0 0 0 1.5rem;
+  margin: 0 0 4.4rem;
   & li {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
     color: #282828;
   }
 `;

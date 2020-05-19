@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { mq } from "../../constants/theme";
+import { mq } from "constants/theme";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -45,8 +45,8 @@ const NextButtonWrapper = styled(ButtonWrapper)`
   background-color: #425af2;
   width: 40%;
   color: white;
-  border-radius 50px;
-  padding: 0 5px;
+  border-radius 5rem;
+  padding: 0 .5rem;
   justify-content: center;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 6.8rem;

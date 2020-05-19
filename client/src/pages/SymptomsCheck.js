@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon, Checkbox, Modal } from "antd-mobile";
-import { theme } from "../constants/theme";
+import { theme } from "constants/theme";
 import styled from "styled-components";
 import {
   getAnswersMap,
@@ -44,7 +44,7 @@ const ColoredButton = styled.div`
   background-color: #425af2;
   width: 100%;
   color: white;
-  border-radius 50px;
+  border-radius 5rem;
   padding: 1.5rem;
   text-align: center;
   font-weight: bold;
@@ -56,7 +56,7 @@ const TransparentButton = styled.div`
   background-color: white;  
   width: 100%;
   color: #425af2;
-  border-radius 50px;
+  border-radius 5rem;
   padding: 1.5rem;
   text-align: center;
   font-weight: bold;
@@ -141,7 +141,7 @@ const SubtitleStyle = styled.h5`
 const StyledUl = styled.ul`
   text-align: left;
   padding: 0 0 0 2.5rem;
-  margin: 40px 0;
+  margin: 4rem 0;
   color: rgba(0, 0, 0, 0.85);
 `;
 
@@ -158,8 +158,8 @@ const AnswerStyles = styled.div`
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
-  padding: 20px 25px;
-  margin: 15px 0px;
+  padding: 2rem 2.5rem;
+  margin: 1.5rem 0rem;
   text-align: left;
   &:hover,
   &.selected {
@@ -170,19 +170,19 @@ const AnswerStyles = styled.div`
     display: block;
   }
   & .am-checkbox-wrapper {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 1rem;
   }
   & .am-checkbox-inner {
-    border-radius: 3px;
+    border-radius: 0.3rem;
     border-color: transparent;
   }
   & .am-checkbox-checked > .am-checkbox-inner {
     background: #fff;
     &::after {
       border-color: #425af2;
-      border-right-width: 2px;
-      border-bottom-width: 2px;
-      margin: 1px 1px 0 0;
+      border-right-width: 0.2rem;
+      border-bottom-width: 0.2rem;
+      margin: 0.1rem 0.1rem 0 0;
     }
   }
   & h6 {

@@ -15,8 +15,8 @@ const WizardStep = styled.div`
     font-family: ${font.family.display};
   }
   h5 {
-    height: 55px;
-    line-height: 64px;
+    height: 5.5rem;
+    line-height: 6.4rem;
   }
 `;
 

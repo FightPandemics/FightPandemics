@@ -9,7 +9,7 @@ import {
   SectionTitle,
   GenericResponse,
 } from "./CovidScreening/GenericMessage";
-import { theme } from "../constants/theme";
+import { theme } from "constants/theme";
 const { colors } = theme;
 
 const GenericMessageList = [
@@ -36,7 +36,7 @@ const GenericMessageList = [
 ];
 
 const SubtitleStyle = styled.h5`
-  margin: 15px 0;
+  margin: 1.5rem 0;
 `;
 
 const ResultsPageStyle = styled.div`
@@ -49,7 +49,7 @@ const ColoredButton = styled.div`
   background-color: #425af2;
   width: 100%;
   color: white;
-  border-radius 50px;
+  border-radius 5rem;
   padding: 1.5rem;
   text-align: center !important;
   font-weight: bold;
