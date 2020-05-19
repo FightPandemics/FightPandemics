@@ -5,9 +5,9 @@ import LogoLayout from "./layouts/LogoLayout";
 import NavigationLayout from "./layouts/NavigationLayout";
 import { connect } from "react-redux";
 
-const HOME = "/";
-const LOGIN = "/auth/login";
-const VERIFY_EMAIL = "/auth/verify-email";
+export const HOME = "/";
+export const LOGIN = "/auth/login";
+export const VERIFY_EMAIL = "/auth/verify-email";
 
 // A special wrapper for <Route> that knows how to
 // handle "sub"-routes by passing them in a `routes`

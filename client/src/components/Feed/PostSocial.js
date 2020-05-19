@@ -1,7 +1,11 @@
-import React from "react";
+// Core
+import React, { useContext } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-// ICONS
+// Local
+import { FeedContext } from "pages/Feed.js";
+
+// Icons
 import SvgIcon from "../Icon/SvgIcon";
 import heart from "assets/icons/heart.svg";
 import heartGray from "assets/icons/heart-gray.svg";
@@ -20,13 +24,16 @@ const PostSocial = ({
   numShares,
   onCopyLink,
   setShowComments,
-  likePost,
+  id,
 }) => {
+  const feedContext = useContext(FeedContext);
+  const { handlePostLike } = feedContext;
+
   const renderLikeIcon = () => {
     return liked ? (
-      <SvgIcon src={heartGray} className="social-icon-svg" />
-    ) : (
       <SvgIcon src={heart} className="social-icon-svg" />
+    ) : (
+      <SvgIcon src={heartGray} className="social-icon-svg" />
     );
   };
 
@@ -48,7 +55,7 @@ const PostSocial = ({
 
   return (
     <div className="social-icons">
-      <div className="social-icon" onClick={likePost}>
+      <div className="social-icon" onClick={() => handlePostLike(id)}>
         {renderLikeIcon()}
         <span className="total-number">{numLikes}</span>
         <span className="social-text">Like</span>

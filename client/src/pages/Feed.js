@@ -28,7 +28,9 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  SET_LIKE,
 } from "hooks/actions/feedActions";
+import { LOGIN } from 'templates/RouteWithSubRoutes';
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -182,7 +184,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Feed = () => {
+const Feed = (props) => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
@@ -241,7 +243,7 @@ const Feed = () => {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts:  postsState.posts });
+        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
         const filtered = postsState.posts.filter((item) => item.type === value);
 
@@ -256,6 +258,41 @@ const Feed = () => {
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+  }
+
+  const handlePostLike = (postId) => {
+    const { history, isAuthenticated, user } = props;
+
+    /* added here because userId not working */
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      const post = posts.posts.filter((post) => post._id === postId);
+
+      if (user) {
+        if (!post[0].liked) {
+          axios.put(endPoint)
+            .then((response) => {
+              postsDispatch({ type: SET_LIKE, postId, count: response.data.likesCount });
+            })
+            .catch(error => {
+              console.log({ error });
+            });
+        } else {
+          axios.delete(endPoint)
+            .then((response) => {
+              postsDispatch({ type: SET_LIKE, postId, count: response.data.likesCount });
+            })
+            .catch(error => {
+              console.log({ error });
+            });
+        }
+      }
+    } else {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
+    }
   }
 
   const renderCreatePostModal = () => {
@@ -282,8 +319,8 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    /* Add userId when user is logged */
-    const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
+    const { user } = props;
+    const endpoint = `/api/posts${user && user.userId ? `?userId=${user.userId}` : ''}`;
 
     postsDispatch({ type: FETCH_POSTS });
     axios.get(endpoint)
@@ -293,7 +330,17 @@ const Feed = () => {
       .catch(error => {
         postsDispatch({ type: ERROR_POSTS });
       })
-  }, []);
+  }, [ props ]);
+
+  useEffect(() => {
+    if (posts.status === SET_POSTS && posts.posts.length) {
+      const likePost = sessionStorage.getItem("likePost");
+
+      if (likePost) {
+        handlePostLike(likePost);
+      }
+    }
+  }, [ posts ]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <FeedContext.Provider
@@ -310,6 +357,7 @@ const Feed = () => {
         handleLocation,
         handleOnClose,
         showFilters,
+        handlePostLike,
       }}
     >
       <FeedWrapper>

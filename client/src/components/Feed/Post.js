@@ -23,10 +23,8 @@ const Post = ({ post }) => {
 
   // mock API to test functionality
   /* to be removed after full integration with user api */
-  const [liked, setLiked] = useState(false);
   const [shared, setShared] = useState(false);
   const [comment, setComment] = useState("");
-  const [fakeLikes, setFakeLikes] = useState(post.likesCount);
   const [fakeComments, setFakeComments] = useState(post.commentsCount);
   const [fakeShares, setFakeShares] = useState(0);
 
@@ -100,7 +98,7 @@ const Post = ({ post }) => {
     <Card.Body className="content-wrapper">
       <PostSocial
         url={post.url}
-        liked={liked}
+        liked={ post.liked }
         shared={shared}
         showComments={showComments}
         numLikes={ post.likesCount }
@@ -112,10 +110,7 @@ const Post = ({ post }) => {
           setShared(true);
           return setCopied(!copied);
         }}
-        likePost={() => {
-          liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
-          return setLiked(!liked);
-        }}
+        id={ post._id }
       />
     </Card.Body>
   );
