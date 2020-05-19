@@ -50,7 +50,6 @@ const organizationSchema = new Schema(
         "Community",
         "Government",
         "Health care provider",
-        "Individual",
         "Non-profit",
         "Other",
         "R&D",
