@@ -383,10 +383,6 @@ async function routes(app) {
     async (req) => {
       const { limit, skip } = req.query;
       const { postId } = req.params;
-      if (!postId) {
-        throw app.httpErrors.badRequest();
-      }
-
       const [commentErr, comments] = await app.to(
         Comment.aggregate([
           {
@@ -431,16 +427,15 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: createCommentSchema },
     async (req, reply) => {
-      const { parentId, userId } = req.body;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        throw app.httpErrors.notFound();
-      }
-
+      const userId = req.userId;
+      const { parentId } = req.body;
       const { postId } = req.params;
       const { body: commentProps } = req;
-      if (!postId) {
-        throw app.httpErrors.badRequest();
+
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error("Failed retrieving user", { userErr });
+        throw app.httpErrors.internalServerError();
       }
 
       // Assign postId and parent comment id (if present)
@@ -476,15 +471,14 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const { content, userId } = req.body;
-      const { postId, commentId } = req.params;
-      if (!postId || !commentId) {
-        throw app.httpErrors.badRequest();
-      }
+      const userId = req.userId;
+      const { content } = req.body;
+      const { commentId } = req.params;
 
       const [err, comment] = await app.to(Comment.findById(commentId));
       if (err) {
-        throw app.httpErrors.notFound();
+        req.log.error("Failed retrieving comment", { err });
+        throw app.httpErrors.internalServerError();
       } else if (comment.author.id !== userId) {
         throw app.httpErrors.forbidden();
       }
@@ -504,11 +498,12 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req.userId;
       const { commentId } = req.params;
       const [findErr, comment] = await app.to(Comment.findById(commentId));
       if (findErr) {
-        throw app.httpErrors.notFound();
+        req.log.error("Failed retrieving findErr", { findErr });
+        throw app.httpErrors.internalServerError();
       } else if (comment.author.id !== userId) {
         throw app.httpErrors.forbidden();
       }
@@ -541,7 +536,12 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, userId } = req.params;
+      if (req.params.userId !== req.userId) {
+        app.httpErrors.forbidden();
+      }
+      const userId = req.userId;
+      const { commentId } = req.params;
+
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
           { _id: commentId },
@@ -564,7 +564,11 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, userId } = req.params;
+      if (req.params.userId !== req.userId) {
+        app.httpErrors.forbidden();
+      }
+      const userId = req.userId;
+      const { commentId } = req.params;
 
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
