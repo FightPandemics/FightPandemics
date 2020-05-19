@@ -69,6 +69,10 @@ async function routes(app) {
       } catch (err) {
         if (err.statusCode === 409) {
           throw app.httpErrors.conflict("User already exists");
+        } else if (
+          err.message === "PasswordStrengthError: Password is too weak"
+        ) {
+          throw app.httpErrors.badRequest("Password is too weak");
         }
         req.log.error("Error creating user", { err });
         throw app.httpErrors.internalServerError();
