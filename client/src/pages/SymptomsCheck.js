@@ -165,7 +165,7 @@ const Step3 = (props) => {
           key={i}
           text={answer}
           onSelect={() => toggleAnswer(answer)}
-          checked={checked}
+          checked={!none && checked}
         />
       ))}
       <AnswerCheckbox
