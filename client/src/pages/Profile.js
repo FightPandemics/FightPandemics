@@ -14,28 +14,129 @@ import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
 import ButtonModal from "components/Feed/ButtonModal"; // feed
-import { DARK_GRAY } from "constants/colors";
-
+import {
+  DARK_GRAY,
+  ROYAL_BLUE,
+  TROPICAL_BLUE,
+  LIGHTER_GRAY,
+  LIGHT_GRAY,
+  DARKER_GRAY,
+} from "constants/colors";
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
+import editEmpty from "assets/icons/edit-empty.svg";
 import createPost from "assets/icons/create-post.svg"; // feed
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
+import locationIcon from "assets/icons/location.svg";
 const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const { colors, typography } = theme;
-const SectionHeader = (props) => (
-  <Heading
-    style={{
-      color: "#939393",
-      fontWeight: "bold",
-      fontSize: "1.5rem",
-    }}
-    {...props}
-  />
-);
+const SectionHeader = styled(Heading)`
+  &.ant-typography {
+    display: flex;
+    align-items: center;
+    color: #939393;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+`;
+
+const EditEmptyIcon = styled(SvgIcon)`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    float: right;
+    margin-right: 1.5rem;
+    width: 2rem;
+  }
+`;
+const CreatePostIcon = styled(SvgIcon)`
+  position: fixed;
+  z-index: 1;
+  bottom: 5%;
+  right: 5%;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    bottom: 0;
+    right: 0;
+    width: 4.2rem;
+    position: initial;
+  }
+`;
+const CreatePostDiv = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    color: #000000;
+    display: initial;
+    margin-right: 1rem;
+  }
+`;
+const LocationIcon = styled(SvgIcon)`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    margin-right: 0.5rem;
+  }
+`;
+
+const LinkedinBlueIcon = styled(SvgIcon)`
+  align-self: flex-end;
+  width: 2rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    width: 2.5rem;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+`;
+
+const TwitterBlueIcon = styled(SvgIcon)`
+  align-self: flex-end;
+  width: 2rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin: 0;
+    width: 2.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+`;
+
+const NameDiv = styled(TextLabel)`
+  align-self: center;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    width: 100%;
+    align-self: flex-start;
+    &.ant-typography {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+`;
+const LocationMobileDiv = styled(TextLabel)`
+  align-self: center;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+const LocationDesktopDiv = styled(TextLabel)`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    margin-top: 1rem;
+    align-self: flex-start;
+    &.ant-typography {
+      color: ${DARK_GRAY};
+    }
+  }
+`;
 const EditIcon = styled(SvgIcon)`
   color: #425af2;
   align-self: flex-end;
@@ -58,32 +159,41 @@ const BackgroundHeader = styled.div`
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
+    margin-bottom: 100px;
   }
 `;
-const AboutDescription = styled.div`
+const DescriptionMobile = styled.div`
   background-color: #ffffff;
   borderradius: 5px;
   width: 100%;
   font-size: 1.2rem;
   color: #939393;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
 `;
 const ProfileLayout = styled.div`
   background-color: #f9f9f9;
-  height: 100vh;
-  width: 100vw;
   max-width: 100%;
   max-height: 100%;
   flex-direction: row;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin: auto;
+    padding: 0 10rem;
+  }
 `;
+
 const IconsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   justify-content: space-between;
   align-items: flex-end;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    justify-content: initial;
+  }
 `;
 const HelpContainer = styled.div`
-  align-self: left;
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
   width: 30%;
@@ -94,7 +204,10 @@ const HelpContainer = styled.div`
   margin-left: 1rem;
   margin-bottom: 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
     border: transparent;
+    width: 100%;
+    margin-left: 0;
   }
 `;
 
@@ -112,13 +225,15 @@ const UserInfoContainer = styled.div`
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     z-index: 0;
-    margin-top: 0;
+    margin-top: 9vh;
+    padding-top: 5rem;
     border-radius: 0;
     background-color: transparent;
     align-items: initial;
     flex-direction: row;
   }
 `;
+
 const PlaceholderIcon = styled.div`
   flex: 1;
 `;
@@ -133,7 +248,19 @@ const HelpImage = styled.img`
 `;
 const UserInfoDesktop = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    width: 60%;
+  }
+`;
+
+const DescriptionDesktop = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    color: ${DARK_GRAY};
+  }
 `;
 
 const Profile = (props) => {
@@ -178,11 +305,6 @@ const Profile = (props) => {
       <>
         <FeedWrapper>
           <Posts filteredPosts={fakePosts} />
-          <SvgIcon
-            src={createPost}
-            className="create-post"
-            onClick={() => setModal(!modal)}
-          />
           <ButtonModal
             onClose={() => setModal(false)}
             maskClosable={true}
@@ -213,20 +335,15 @@ const Profile = (props) => {
         {/* {popover(props)} */}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
         <UserInfoDesktop>
-          <TextLabel
-            weight="500"
-            block="true"
-            size={theme.typography.size.large}
-          >
+          <NameDiv>
             {firstName} {lastName}
-          </TextLabel>
-          <TextLabel
-            block="true"
-            color={DARK_GRAY}
-            size={theme.typography.size.medium}
-          >
+            <PlaceholderIcon />
+            <EditEmptyIcon src={editEmpty} />
+          </NameDiv>
+          <DescriptionDesktop> {about} </DescriptionDesktop>
+          <LocationMobileDiv color={DARK_GRAY}>
             {neighborhood}, {country}
-          </TextLabel>
+          </LocationMobileDiv>
           <IconsContainer>
             <HelpContainer>
               <HelpImage
@@ -235,20 +352,32 @@ const Profile = (props) => {
               />
               {needHelp ? "I need help" : "I want to help"}
             </HelpContainer>
+            <LocationDesktopDiv>
+              <LocationIcon src={locationIcon} />
+              {needHelp ? "I need help" : "I want to help"} • {neighborhood},{" "}
+              {country}
+            </LocationDesktopDiv>
             <PlaceholderIcon />
-            <SvgIcon src={linkedinBlue} style={iconStyle} />
-            <SvgIcon src={twitterBlue} style={iconStyle} />
+            <LinkedinBlueIcon src={linkedinBlue} />
+            <TwitterBlueIcon src={twitterBlue} />
           </IconsContainer>
         </UserInfoDesktop>
       </UserInfoContainer>
 
       <WhiteSpace />
       <div style={{ margin: "0 2.5rem" }}>
-        <SectionHeader title="About">About</SectionHeader>
         <WhiteSpace />
-        <AboutDescription>{about}</AboutDescription>
+        <DescriptionMobile>
+          <SectionHeader> About</SectionHeader>
+          {about}
+        </DescriptionMobile>
         <WhiteSpace />
-        <SectionHeader title="My Activity" marginTop="2rem" />
+        <SectionHeader>
+          My Activity
+          <PlaceholderIcon />
+          <CreatePostDiv>Create post</CreatePostDiv>
+          <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
+        </SectionHeader>
         {renderMyActivities()}
       </div>
       <WhiteSpace />

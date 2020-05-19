@@ -12,10 +12,14 @@ export default ({ noPic, initials }) => {
     line-height: 6rem;
     width: 7rem;
     text-align: center;
+    font-weight: 500;
     background-color: #f3f4fe;
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      line-height: 10rem;
-      width: 11rem;
+      height: 80%;
+      line-height: 11rem;
+      width: 12rem;
+      margin-right: 3rem;
+      font-size: 5rem;
     }
   `;
   return <>{noPic ? <InitialDiv>{initials}</InitialDiv> : <div></div>}</>;

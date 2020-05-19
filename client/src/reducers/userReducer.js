@@ -11,7 +11,8 @@ const initialState = {
   otherHelpStatus: false,
   traveling: false,
   displayNeighborhood: false,
-  about: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
+  about:
+    "Lorem ipsum dolor sit amet consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna Lorem ipsum this is 160 characters long",
   editProfile: true,
   facebookURL: "http://facebook.com/dummyData",
   twitterURL: "http://twitter.com/dummyData",
