@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import {
   getAnswersMap,
   getCheckedAnswers,
@@ -56,10 +55,6 @@ const Welcome = (props) => {
     </SCWizardStep>
   );
 };
-
-export const SCWelcome = styled(Welcome)`
-  width: 100%;
-`;
 
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
@@ -688,7 +683,7 @@ const SymptomsCheck = () => {
   return (
     <SCWizardContainer>
       <SCStyledWizard isHashEnabled nav={<WizardNav />}>
-        <SCWelcome update={updateAnswers} />
+        <Welcome update={updateAnswers} />
         <Step1 hashKey={"Step1"} update={updateAnswers} />
         <Step2 hashKey={"Step2"} update={updateAnswers} />
         <Step3 hashKey={"Step3"} update={updateAnswers} />
