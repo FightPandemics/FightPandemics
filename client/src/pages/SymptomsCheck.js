@@ -6,7 +6,6 @@ import {
 } from "../components/StepWizard";
 import {
   SCWizardContainer,
-  SCContentContainer,
   SCButtonsContainer,
   SCAnswerButton,
   SCSubtitle,
