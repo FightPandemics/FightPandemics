@@ -1,20 +1,31 @@
-import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
-import React, { useEffect, useState } from "react";
+import { Alert } from "antd";
+import { Button, Flex, WhiteSpace } from "antd-mobile";
+import axios from "axios";
+import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import {
+  AUTH_SUCCESS,
+} from "constants/action-types";
 import { PASSWORD_MIN_LENGTH } from "config";
 import {
-  authWithSocialProvider,
-  loginWithEmail,
-  signup,
-} from "actions/authActions";
+  AUTH_FORM_LOGIN,
+  AUTH_FORM_LOGIN_ERROR,
+  AUTH_FORM_SIGNUP,
+  AUTH_FORM_SIGNUP_ERROR,
+} from "hooks/actions/authFormActions";
+import {
+  authFormReducer,
+  initialState,
+} from "hooks/reducers/authFormReducer";
+
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
-import { validateEmail } from "utils/common.js";
-import { useQuery } from "utils/hooks.js";
+// import { validateEmail } from "utils/common.js";
+// import { useQuery } from "utils/hooks.js";
 import Heading from "components/Typography/Heading";
 
 import { theme, mq } from "constants/theme";
@@ -160,6 +171,7 @@ const VisibilityIconWrapper = styled.div`
   bottom: 0.6rem;
   right: 0.5rem;
   color: ${colors.tropicalBlue};
+  cursor: pointer;
 `;
 
 const VisibilityButton = ({ onClick, type }) => {
@@ -176,25 +188,40 @@ const VisibilityButton = ({ onClick, type }) => {
 
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm();
+  const { formState, getValues, handleSubmit, register } = useForm();
+  const [authFormState, authFormDispatch] = useReducer(authFormReducer, initialState);
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-  const queryParams = useQuery();
-  const code = queryParams.get("code");
-  const state = queryParams.get("state");
+  /*
+    const queryParams = useQuery();
+    const code = queryParams.get("code");
+    const state = queryParams.get("state");
 
-  useEffect(() => {
-    if (code && state) {
-      dispatch(authWithSocialProvider({ code, state }));
-    }
-  }, [code, state, dispatch]);
-
-  const onLoginWithEmail = (formData) => {
-    dispatch(loginWithEmail(formData));
+    useEffect(() => {
+      if (code && state) {
+        dispatch(authWithSocialProvider({ code, state }));
+      }
+    }, [code, state, dispatch]);
+  */
+  const onLoginWithEmail = async (formData) => {
+    authFormDispatch({ type: AUTH_FORM_LOGIN });
+    try {
+      const res = await axios.post("/api/auth/login", formData);
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      authFormDispatch({ type: AUTH_FORM_LOGIN_ERROR, error: `Login failed, reason: ${message}` });
   };
 
-  const onSignup = (formData) => {
-    dispatch(signup(formData));
+  const onSignup = async (formData) => {
+    authFormDispatch({ type: AUTH_FORM_SIGNUP });
+    try {
+      const res = await axios.post("/api/auth/signup", formData);
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      authFormDispatch({ type: AUTH_FORM_SIGNUP_ERROR, error: `Signup failed, reason: ${message}` });
+    }
   };
 
   const handleSocialLogin = (provider) => {
@@ -217,6 +244,11 @@ const Login = ({ isLoginForm }) => {
     }
   };
 
+  const comparePasswordConfirmation = (confirmPassword) => {
+    const { password } = getValues();
+    return password === confirmPassword || "Password don't match";
+  };
+
   return (
     <LoginContainer>
       <LoginLeftContainer>
@@ -234,6 +266,9 @@ const Login = ({ isLoginForm }) => {
             <Heading className="h4" level={4}>
               {isLoginForm ? "Sign In" : "Sign Up"}
             </Heading>
+            {authFormState.error &&
+              <Alert message={authFormState.error} type="error" />
+            }
             <form id="login-password">
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />
@@ -251,10 +286,9 @@ const Login = ({ isLoginForm }) => {
                 <Input
                   type={passwordType}
                   name="password"
-                  id="password"
                   required
                   placeholder="Enter password"
-                  ref={register}
+                  ref={register({ minLength: PASSWORD_MIN_LENGTH })}
                   style={StyleInput}
                 />
                 <VisibilityButton
@@ -272,10 +306,16 @@ const Login = ({ isLoginForm }) => {
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
-                    id="confirmPassword"
                     required
                     placeholder="Confirm password"
-                    ref={register}
+                    ref={
+                      register({
+                        minLength: PASSWORD_MIN_LENGTH,
+                        validate: {
+                          matchesPreviousPassword: comparePasswordConfirmation,
+                        }
+                      })
+                    }
                     style={StyleInput}
                   />
                   <VisibilityButton
@@ -286,6 +326,7 @@ const Login = ({ isLoginForm }) => {
               )}
               <SubmitButton
                 primary="true"
+                disabled={!formState.isValid}
                 onClick={isLoginForm ? handleSubmit(onLoginWithEmail) : handleSubmit(onSignup)}
               >
                 {isLoginForm ? "Sign In" : "Sign Up"}

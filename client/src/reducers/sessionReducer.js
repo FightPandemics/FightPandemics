@@ -1,8 +1,6 @@
 import {
-  AUTH_LOGIN,
   AUTH_LOGOUT,
-  AUTH_SIGNUP,
-  SET_USER,
+  AUTH_SUCCESS,
 } from "constants/action-types";
 
 const initialState = {
@@ -13,8 +11,7 @@ const initialState = {
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
-    case AUTH_LOGIN:
-    case AUTH_SIGNUP:
+    case AUTH_SUCCESS:
       return {
         ...state,
         accessToken: action.payload.token,
@@ -24,13 +21,7 @@ function sessionReducer(state = initialState, action) {
     case AUTH_LOGOUT:
       return {
         ...state,
-        accessToken: null,
-        isAuthenticated: false,
-      };
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload,
+        initialState,
       };
     default:
       return state;
