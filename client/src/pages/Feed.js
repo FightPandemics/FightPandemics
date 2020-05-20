@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Layout, Menu } from "antd";
 
 // Local
-import ButtonModal from "components/Feed/ButtonModal";
+import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
@@ -245,29 +245,6 @@ const Feed = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
 
-  const renderCreatePostModal = () => {
-    return (
-      <ButtonModal
-        onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
-        maskClosable={true}
-        closable={false}
-        visible={createPostModal}
-        transparent
-      >
-        <h2 className="title">Continue Posting As</h2>
-        <div className="links">
-          <Link className="primary" to="/create-post">
-            Individual
-          </Link>
-
-          <Link className="outline" to="/create-post">
-            Organization
-          </Link>
-        </div>
-      </ButtonModal>
-    );
-  };
-
   useEffect(() => {
     /* Add userId when user is logged */
     const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
@@ -346,7 +323,11 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        {renderCreatePostModal()}
+        <PostAs
+          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+          visible={createPostModal}
+          maskClosable
+        />
       </FeedWrapper>
     </FeedContext.Provider>
   );
