@@ -7,6 +7,7 @@ const StepTitle = styled.h2`
   font-size: ${theme.typography.heading.three};
   line-height: 3rem;
   text-align: center;
+  width: 100%;
 `;
 
 export default StepTitle;
