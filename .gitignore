@@ -5,4 +5,5 @@
 .vscode
 .terraform
 backend.tf
-.DS_Store
+cypress/screenshots/
+cypress/videos
