@@ -4,6 +4,7 @@ import { mq } from "constants/theme";
 
 export default ({ noPic, initials }) => {
   const InitialDiv = styled.div`
+    margin: auto;
     margin-bottom: 1rem;
     border-radius: 50%;
     border: 0.2rem solid #425af2;
@@ -15,6 +16,7 @@ export default ({ noPic, initials }) => {
     font-weight: 500;
     background-color: #f3f4fe;
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      margin: 0;
       height: 80%;
       line-height: 11rem;
       width: 12rem;

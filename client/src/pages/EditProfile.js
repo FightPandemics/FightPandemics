@@ -16,6 +16,7 @@ const ChangePicButton = styled.div`
   text-align: center;
 `;
 
+const CustomForm = styled.form``;
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();

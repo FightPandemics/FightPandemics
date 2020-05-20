@@ -174,8 +174,8 @@ const DescriptionMobile = styled.div`
 `;
 const ProfileLayout = styled.div`
   background-color: #f9f9f9;
-  max-width: 100%;
   max-height: 100%;
+  margin: 0 -25px;
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: auto;
