@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from 'axios';
 
 // Antd
-import { Layout, Menu } from 'antd';
+import { Layout, Menu } from "antd";
 
 // Local
 import PostAs from "components/PostAs/PostAs";
@@ -41,18 +41,18 @@ const { Content, Sider } = Layout;
 
 // feed types
 const HELP_TYPE = {
-  ALL: 'All posts',
-  REQUEST: 'Requesting help',
-  OFFER: 'Offering help'
+  ALL: "All posts",
+  REQUEST: "Requesting help",
+  OFFER: "Offering help",
 };
 
 const initialState = {
-  selectedType: '',
+  selectedType: "",
   showFilters: false,
   filterModal: false,
   createPostModal: false,
   activePanel: null,
-  location: '',
+  location: "",
 };
 
 const SiderWrapper = styled(Sider)`
@@ -61,7 +61,6 @@ const SiderWrapper = styled(Sider)`
   overflow-x: hidden;
   padding-top: 3.3rem;
   position: fixed;
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -71,7 +70,6 @@ const FiltersWrapper = styled.div`
   border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
   margin: 0 2rem;
   padding-top: 2rem;
-
   button {
     align-items: center;
     background-color: transparent;
@@ -84,7 +82,6 @@ const FiltersWrapper = styled.div`
     font-weight: bold;
     margin-bottom: 1rem;
     padding: 0;
-
     span {
       align-items: center;
       border: 0.1rem solid ${ROYAL_BLUE};
@@ -95,7 +92,6 @@ const FiltersWrapper = styled.div`
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
-
       svg {
         fill: ${ROYAL_BLUE};
         height: 2rem;
@@ -111,12 +107,10 @@ const MenuWrapper = styled(Menu)`
       border-left: 0.5rem solid ${WHITE};
       color: ${DARKER_GRAY};
       font-size: ${theme.typography.size.large};
-
       &:hover {
         color: ${ROYAL_BLUE};
       }
     }
-
     .ant-menu-item-selected {
       background-color: transparent;
       border-left: 0.5rem solid ${ROYAL_BLUE};
@@ -130,11 +124,9 @@ const LayoutWrapper = styled(Layout)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     background-color: ${WHITE};
   }
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: #fbfbfd;
     min-height: calc(100vh - 5rem);
-
     .create-post,
     .filter-box {
       display: none;
@@ -144,7 +136,6 @@ const LayoutWrapper = styled(Layout)`
 
 const ContentWrapper = styled(Content)`
   margin: 0;
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
   }
@@ -152,13 +143,11 @@ const ContentWrapper = styled(Content)`
 
 const HeaderWrapper = styled.div`
   display: none;
-
   h1 {
-    font-size:  ${theme.typography.heading.one};
+    font-size: ${theme.typography.heading.one};
     font-weight: bold;
     margin-top: 0;
   }
-
   button {
     align-items: center;
     background-color: transparent;
@@ -169,13 +158,11 @@ const HeaderWrapper = styled.div`
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     padding: 0;
-
     img {
       margin-left: 1.2rem;
       max-height: 4.2rem;
     }
   }
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
     justify-content: space-between;
@@ -294,26 +281,24 @@ const Feed = () => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}>
+            width={290}
+          >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={['ALL']}
+                defaultSelectedKeys={["ALL"]}
                 onClick={handleChangeType}
               >
-                {Object.keys(HELP_TYPE).map((item, index) =>
-                  <Menu.Item key={item}>
-                    {HELP_TYPE[item]}
-                  </Menu.Item>
-                )}
+                {Object.keys(HELP_TYPE).map((item, index) => (
+                  <Menu.Item key={item}>{HELP_TYPE[item]}</Menu.Item>
+                ))}
               </MenuWrapper>
               <FiltersWrapper>
-                <button
-                  onClick={handleShowFilters} >
+                <button onClick={handleShowFilters}>
                   <span>
                     <FiltersIcon />
                   </span>
-                Filters
-              </button>
+                  Filters
+                </button>
                 <FiltersList />
               </FiltersWrapper>
             </div>
@@ -322,12 +307,9 @@ const Feed = () => {
           <ContentWrapper>
             <HeaderWrapper>
               <h1>Feed</h1>
-              <button
-                onClick={handleCreatePost}>
+              <button onClick={handleCreatePost}>
                 Create post
-                <SvgIcon
-                  src={creatPost}
-                />
+                <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />

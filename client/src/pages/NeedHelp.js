@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SubmitButton from "components/Button/SubmitButton";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
@@ -100,9 +100,9 @@ const Step3 = (props) => {
       </WizardFormWrapper>
       <WizardButtonGroup>
         <Link to="/feed">
-        <SubmitButton primary="true" onClick={onSubmit}>
-          Submit
-        </SubmitButton>
+          <SubmitButton primary="true" onClick={onSubmit}>
+            Submit
+          </SubmitButton>
         </Link>
       </WizardButtonGroup>
     </WizardStep>

@@ -28,8 +28,12 @@ const StyledAnswerButton = styled.div`
   }
 `;
 
-const AnswerButton = ({ children, onSelect }) => {
-  return <StyledAnswerButton onClick={onSelect}>{children}</StyledAnswerButton>;
+const AnswerButton = ({ children, onSelect, ...props }) => {
+  return (
+    <StyledAnswerButton onClick={onSelect} {...props}>
+      {children}
+    </StyledAnswerButton>
+  );
 };
 
 export default AnswerButton;
