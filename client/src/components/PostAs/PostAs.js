@@ -24,50 +24,65 @@ import organization from "assets/icons/organization.svg";
 import back from "assets/icons/back-arrow-gray.svg";
 
 const organizations = [
-  { id: 1, title: 'Notion' },
-  { id: 2, title: 'Notion' },
+  { id: 1, title: "Notion" },
+  { id: 2, title: "Notion" },
 ];
 
 const Step1 = ({ active, setStep }) => {
-  return active && (
-    <>
-      <TitleStep>Continue Posting As</TitleStep>
-      <Row gutter={14} justify="center">
-        <Col span={12}>
-          <Option img={person} text="Individual" path={'/create-post'} />
-        </Col>
-        <Col span={12}>
-          <Option img={organization} text="Organization" onClick={() => setStep(2)} />
-        </Col>
-      </Row>
-    </>
-  )
+  return (
+    active && (
+      <>
+        <TitleStep>Continue Posting As</TitleStep>
+        <Row gutter={14} justify="center">
+          <Col span={12}>
+            <Option img={person} text="Individual" path={"/create-post"} />
+          </Col>
+          <Col span={12}>
+            <Option
+              img={organization}
+              text="Organization"
+              onClick={() => setStep(2)}
+            />
+          </Col>
+        </Row>
+      </>
+    )
+  );
 };
 
 const Step2 = ({ active, setStep }) => {
-  return active && (
-    <>
-      <TitleStep>Posting as an Organization</TitleStep>
-      <BackButton src={back} onClick={() => setStep(1)} />
-      {
-        organizations.map((item) => {
+  return (
+    active && (
+      <>
+        <TitleStep>Posting as an Organization</TitleStep>
+        <BackButton src={back} onClick={() => setStep(1)} />
+        {organizations.map((item) => {
           return (
-            <Link to={{ pathname: "/create-post", state: { organization: item } }}>
-              <Button key={item.id} >{item.title}</Button>
+            <Link
+              to={{ pathname: "/create-post", state: { organization: item } }}
+            >
+              <Button key={item.id}>{item.title}</Button>
             </Link>
-          )
-        })
-      }
-      <CreateOrgLink>Create new one</CreateOrgLink>
-    </>
-  )
+          );
+        })}
+        <CreateOrgLink>Create new one</CreateOrgLink>
+      </>
+    )
+  );
 };
 
-const Wrapper = ({ onClose, visible, maskClosable, closable, title, children }) => {
+const Wrapper = ({
+  onClose,
+  visible,
+  maskClosable,
+  closable,
+  title,
+  children,
+}) => {
   return (
     <Container
       title={"Holder"}
-      style={{ textAlign: 'center' }}
+      style={{ textAlign: "center" }}
       footer={null}
       visible={visible}
       onCancel={onClose}
@@ -79,7 +94,7 @@ const Wrapper = ({ onClose, visible, maskClosable, closable, title, children }) 
     >
       {children}
     </Container>
-  )
+  );
 };
 
 const PostAs = (props) => {
@@ -98,38 +113,3 @@ const PostAs = (props) => {
 };
 
 export default PostAs;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
