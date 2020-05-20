@@ -51,7 +51,7 @@ const GenericMessageStyle = styled.ol`
         font-family: ${typography.heading.font};
         font-weight: 500;
         font-size: 1.8rem;
-        color: ${colors.darkGray};
+        color: ${colors.darkerGray};
       }
       & h6 {
         font-family: ${typography.heading.font};
@@ -69,7 +69,7 @@ const GenericResponseStyle = styled.ul`
   & li {
     font-size: 1.6rem;
     line-height: 2.4rem;
-    color: ${colors.darkGray};
+    color: ${colors.darkerGray};
   }
 `;
 
