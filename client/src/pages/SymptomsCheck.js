@@ -55,7 +55,6 @@ const Welcome = (props) => {
     </SCWizardStep>
   );
 };
-
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);

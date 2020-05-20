@@ -5,12 +5,9 @@ import { theme, mq } from "../../constants/theme";
 import {
   AnswerButton,
   AnswerCheckbox,
-  //   getAnswersMap,
-  //   getCheckedAnswers,
   StyledWizard,
   WizardContainer,
   WizardStep,
-  //   WizardNav,
 } from "../StepWizard";
 
 const { typography } = theme;

@@ -26,6 +26,7 @@ async function routes(app) {
 
   // /posts
   const UNLOGGED_POST_SIZE = 120;
+  const EXPIRATION_OPTIONS = ["day", "week", "month"];
 
   app.get(
     "/",
@@ -172,7 +173,11 @@ async function routes(app) {
       };
 
       // ExpireAt needs to calculate the date
-      postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
+      if (postProps.expireAt in EXPIRATION_OPTIONS) {
+        postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
+      } else {
+        postProps.expireAt = null;
+      }
 
       // Initial empty likes array
       postProps.likes = [];
@@ -303,8 +308,10 @@ async function routes(app) {
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if ("expireAt" in body) {
+      if (body.expireAt in EXPIRATION_OPTIONS) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
+      } else {
+        body.expireAt = null;
       }
 
       const [updateErr, updatedPost] = await app.to(
