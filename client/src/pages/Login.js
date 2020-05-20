@@ -164,12 +164,13 @@ const VisibilityIconWrapper = styled.div`
 const VisibilityButton = ({ onClick, type }) => {
   return (
     <VisibilityIconWrapper>
-      {
-        type === "text" ? (<SvgIcon src={eyeMask} onClick={onClick} />) :
-          (<SvgIcon src={eyeUnmask} onClick={onClick} />)
-      }
+      {type === "text" ? (
+        <SvgIcon src={eyeMask} onClick={onClick} />
+      ) : (
+        <SvgIcon src={eyeUnmask} onClick={onClick} />
+      )}
     </VisibilityIconWrapper>
-  )
+  );
 };
 
 const Login = ({ isLoginForm }) => {
@@ -238,11 +239,11 @@ const Login = ({ isLoginForm }) => {
   };
 
   const togglePasswordVisibility = () => {
-     if (passwordType === "password") {
-       setPasswordType("text");
-     } else {
-       setPasswordType("password");
-     }
+    if (passwordType === "password") {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    }
   };
 
   const toggleConfirmPasswordVisibility = () => {
@@ -295,12 +296,18 @@ const Login = ({ isLoginForm }) => {
                   onChange={handleInputChangePassword}
                   style={StyleInput}
                 />
-                <VisibilityButton onClick={togglePasswordVisibility} type={passwordType} />
+                <VisibilityButton
+                  onClick={togglePasswordVisibility}
+                  type={passwordType}
+                />
               </InputWrapper>
-              {
-                !isLoginForm &&
+              {!isLoginForm && (
                 <InputWrapper>
-                  <Label for="confirmPassword" style={StyleLabel} label="Confirm Password" />
+                  <Label
+                    for="confirmPassword"
+                    style={StyleLabel}
+                    label="Confirm Password"
+                  />
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
@@ -311,9 +318,12 @@ const Login = ({ isLoginForm }) => {
                     value={confirmPassword}
                     style={StyleInput}
                   />
-                  <VisibilityButton onClick={toggleConfirmPasswordVisibility} type={confirmPasswordType} />
+                  <VisibilityButton
+                    onClick={toggleConfirmPasswordVisibility}
+                    type={confirmPasswordType}
+                  />
                 </InputWrapper>
-              }
+              )}
               <SubmitButton
                 primary="true"
                 onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
