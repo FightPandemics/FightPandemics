@@ -247,7 +247,6 @@ const Welcome = (props) => {
     </WizardStep>
   );
 };
-
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
@@ -377,7 +376,7 @@ const Step3 = (props) => {
           key={i}
           text={answer}
           onSelect={() => toggleAnswer(answer)}
-          checked={checked}
+          checked={!none && checked}
         />
       ))}
       <AnswerCheckbox
