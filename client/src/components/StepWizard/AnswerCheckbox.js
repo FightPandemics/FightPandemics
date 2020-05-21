@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React from "react";
 import { Checkbox } from "antd-mobile";
-
 import { PRIMARY } from "constants/colors";
 
 const AnswerStyles = styled.div`
@@ -14,6 +13,7 @@ const AnswerStyles = styled.div`
   cursor: pointer;
   padding: 20px 50px;
   margin: 15px 0px;
+  width: 100%;
   &.selected,
   &:hover {
     background-color: ${PRIMARY};
@@ -25,9 +25,13 @@ const AnswerStyles = styled.div`
   }
 `;
 
-const AnswerCheckbox = ({ text, checked, onSelect }) => {
+const AnswerCheckbox = ({ text, checked, onSelect, ...props }) => {
   return (
-    <AnswerStyles onClick={onSelect} className={checked && "selected"}>
+    <AnswerStyles
+      onClick={onSelect}
+      className={checked && "selected"}
+      {...props}
+    >
       <span className="text">{text}</span>
       <Checkbox checked={checked} />
     </AnswerStyles>

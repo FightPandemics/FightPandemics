@@ -34,7 +34,9 @@ const FilterAccord = () => {
                 className={
                   "tag-selectable " +
                   (selectedOptions[filter.label] &&
-                    selectedOptions[filter.label].includes(option) ? 'tag-selected' : '')
+                  selectedOptions[filter.label].includes(option)
+                    ? "tag-selected"
+                    : "")
                 }
               >
                 {option}

@@ -15,8 +15,7 @@ const FlexChild = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledIntro = styled.div` 
-
+const StyledIntro = styled.div`
   @media screen and ${mq.phone.wide.max} {
     margin-top: 4rem;
   }
@@ -38,8 +37,6 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
-  
-
   @media only screen and ${mq.tablet.narrow.min} {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -52,7 +49,6 @@ const MainContainer = styled.div`
 `;
 
 const StyledWelcome = styled.h1`
-
   text-align: left;
   margin: 0 0 7rem 0;
   font-family: ${theme.typography.font.family.display}, sans-serif;
@@ -83,10 +79,8 @@ const StyledStrapline = styled(StyledWelcome)`
   color: white;
   width: 90%;
   text-align: left;
-  font-size: ${theme.typography.heading.one}
-
-  @media only screen and ${mq.phone.narrow.max} {
-    
+  font-size: ${theme.typography.heading.one} @media only screen and
+    ${mq.phone.narrow.max} {
     text-align: center;
     font-weight: bolder;
     margin: 0 auto 1.5rem auto;
@@ -138,7 +132,7 @@ const OnboardingContainer = styled.div`
   }
 `;
 
-const StyleLink = styled.p `
+const StyleLink = styled.p`
   color: ${theme.colors.royalBlue};
   font-size: ${theme.typography.size.large};
   font-family: ${theme.typography.font.family.display};

@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
 import nextArrow from "assets/icons/next-arrow.svg";
 import backArrow from "assets/icons/back-arrow.svg";
+
+const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -25,6 +27,11 @@ const StyledWizardNav = styled.div`
       min-height: 100%;
     }
   }
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -39,15 +46,27 @@ const ButtonWrapper = styled.div`
   p {
     margin: 1rem;
   }
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    width: 19.2rem;
+    font-size: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const NextButtonWrapper = styled(ButtonWrapper)`
-  background-color: #425af2;
+  background-color: ${theme.colors.royalBlue};
   width: 40%;
   color: white;
   border-radius 5rem;
   padding: 0 .5rem;
   justify-content: center;
+
+  @media screen and (max-width: ${desktopBreakpoint}) {
+  width: 19.2rem;
+  font-size: 1.8rem;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 6.8rem;
     height: 6.8rem;
@@ -87,10 +106,12 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
         <p>Back</p>
       </ButtonWrapper>
     ) : (
-      <Link to={"/"}>
-        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />
-        <p>Back</p>
-      </Link>
+      <ButtonWrapper>
+        <Link to={"/"}>
+          <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
+          <p>Back</p>
+        </Link>
+      </ButtonWrapper>
     )}
     {currentStep < totalSteps && (
       <NextButtonWrapper onClick={nextStep}>
