@@ -5,5 +5,3 @@
 .vscode
 .terraform
 backend.tf
-.DS_Store
-.history
