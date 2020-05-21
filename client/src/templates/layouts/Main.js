@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { mq } from "constants/theme";
 
 const Main = styled.main`
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-left: 2rem;
+  margin-right: 2rem;
 
   min-height: calc(100vh-124px);
 

@@ -19,14 +19,15 @@ const EmergencyLine = styled(NoticeBar)`
   border-radius: 0px 0px 0.4rem 0.4rem;
   font-size: ${xlarge};
   .am-notice-bar-content {
+    margin: 0;
     padding-left: 1rem 4rem;
     font-weight: normal;
   }
   .am-notice-bar-operation {
     display: block;
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 2rem;
+    right: 2.4rem;
   }
   h4 {
     color: #fff;
@@ -38,7 +39,6 @@ const EmergencyLine = styled(NoticeBar)`
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     border: 1px solid rgba(185, 185, 185, 0.5);
     padding: 2rem;
-    padding-left: 4rem;
     background-color: #fff;
     height: auto;
     box-shadow: none;
@@ -62,8 +62,8 @@ const EmergencyLine = styled(NoticeBar)`
   }
 
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
-    padding: 0;
-    padding-left: 0;
+    padding: 2rem 8rem 2.1rem 4rem;
+    margin-top: 0.8rem;
   }
 `;
 

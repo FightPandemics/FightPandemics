@@ -23,12 +23,10 @@ const DrawerWrapper = styled(Drawer)`
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
-
     button {
       border: none;
       background: transparent;
       cursor: pointer;
-
       svg {
         path {
           fill: ${ROYAL_BLUE};
@@ -36,52 +34,41 @@ const DrawerWrapper = styled(Drawer)`
       }
     }
   }
-
   .am-accordion {
     border: none;
-
     .am-accordion-item {
       margin: 0;
-
       &.filter-4 {
         display: none;
       }
-
       .am-accordion-header {
         font-family: ${theme.typography.font.family.display};
         font-size: ${theme.typography.size.large};
         font-weight: bold;
         padding: 0;
-
         i {
           height: 1.4rem;
           width: 1.4rem;
         }
       }
-
       .am-accordion-content-box {
         padding: 0;
       }
-
       .am-tag-normal {
         padding: 0 0.7rem;
       }
-
       .location-search {
         color: ${ROYAL_BLUE};
       }
     }
   }
-
   .confirm-buttons {
     .am-button {
       font-size: ${theme.typography.size.large};
       padding: 0 1rem;
-
       &.close-button {
         flex: 0 0 auto;
       }
-
       &.ok-button {
         flex: 0 0 13rem;
       }
