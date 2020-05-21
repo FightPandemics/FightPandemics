@@ -10,7 +10,7 @@ const BaseSelector = (props) => {
     <StyledSelector {...props}>
       {options.map((item) => {
         return (
-          <Option {...optionProps} value={item.value}>
+          <Option {...optionProps} key={item.value} value={item.value}>
             {item[key]}
           </Option>
         );

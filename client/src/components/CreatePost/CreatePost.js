@@ -1,15 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
 import { Row, Col } from "antd";
 import {
-  ADD_OPTION,
-  REMOVE_OPTION,
-  REMOVE_ALL_OPTIONS,
-  TOGGLE_STATE,
-  SET_VALUE,
-  SET_POSTS,
-} from "hooks/actions/feedActions";
-import { theme } from "constants/theme";
-import {
   Container,
   Option,
   CloseButton,
@@ -79,7 +70,7 @@ const Step2 = () => {
             </Button>
           );
         })}
-        <CreateOrgLink>Create new one</CreateOrgLink>
+        <CreateOrgLink to={""}>Create new one</CreateOrgLink>
       </>
     )
   );

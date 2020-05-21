@@ -39,7 +39,7 @@ const Container = styled(Modal)`
   }
 
   .ant-col {
-    &:hover > a > div {
+    &:hover > div {
       background-color: ${colors.royalBlue};
       p {
         color: ${colors.white};
@@ -100,22 +100,21 @@ const CreateOrgLink = styled(Link)`
 `;
 
 const Option = ({ img, text, path, onClick }) => (
-  <Link to={path}>
-    <div
-      onClick={onClick}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        height: "17.2rem",
-        border: `0.2rem solid ${colors.royalBlue}`,
-        borderRadius: "0.8rem",
-      }}
-    >
-      <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
-      <p>{text}</p>
-    </div>
-  </Link>
+  <div
+    onClick={onClick}
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+      height: "17.2rem",
+      border: `0.2rem solid ${colors.royalBlue}`,
+      borderRadius: "0.8rem",
+      cursor: "pointer",
+    }}
+  >
+    <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
+    <p>{text}</p>
+  </div>
 );
 
 const CloseButton = (
