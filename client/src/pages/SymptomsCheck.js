@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Icon, Checkbox, Modal } from "antd-mobile";
 import { theme } from "constants/theme";
 import styled from "styled-components";
+import { DARK_GRAY } from "constants/colors";
+
 import {
   getAnswersMap,
   getCheckedAnswers,
@@ -166,8 +168,8 @@ const AnswerStyles = styled.div`
   text-align: left;
   &:hover,
   &.selected {
-    background-color: ${theme.colors.royalBlue};
     color: ${colors.white};
+    background-color: ${theme.colors.royalBlue};
   }
   strong {
     display: block;
@@ -202,10 +204,21 @@ const AnswerButton = ({ children, onSelect }) => {
 const AnswerCheckbox = ({ text, content, checked, onSelect }) => {
   return (
     <AnswerStyles onClick={onSelect} className={checked && "selected"}>
-      <span>
-        {text}
-        {!!content && <h6>{content}</h6>}
-      </span>
+      <div>
+        <TextLabel size={theme.typography.size.mediun} block="true">
+          {text}
+        </TextLabel>
+        {!!content && (
+          <TextLabel
+            size={theme.typography.size.small}
+            color={DARK_GRAY}
+            block="true"
+            weight="500"
+          >
+            {content}
+          </TextLabel>
+        )}
+      </div>
       <Checkbox checked={checked} />
     </AnswerStyles>
   );
