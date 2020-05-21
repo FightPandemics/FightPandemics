@@ -11,7 +11,7 @@ import {
   MINT_GREEN,
   BLACK,
   WHITE,
-  TROPICAL_BLUE
+  TROPICAL_BLUE,
 } from "./colors";
 
 const theme = {
@@ -51,6 +51,9 @@ const theme = {
       },
     },
   },
+  backgrounds: {
+    primary: "linear-gradient(337.81deg, #425AF2 3.41%, #677CF2 98.66%)",
+  },
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
@@ -64,7 +67,7 @@ const theme = {
     orangeRed: ORANGE_RED,
     mintGreen: MINT_GREEN,
     black: BLACK,
-    white: WHITE
+    white: WHITE,
   },
   button: {
     fontFamily: "DM Sans",
