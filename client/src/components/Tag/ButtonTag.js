@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 
-// Antd 
+// Antd
 import { Button } from "antd-mobile";
 
 // Icons
@@ -22,62 +22,50 @@ const ButtonWrapper = styled(Button)`
   padding: 0 1rem;
   position: relative;
   text-align: center;
-
   .am-modal .am-accordion &::before {
     content: none;
   }
-
   &.tag-closable {
     svg {
-        display: block;
+      display: block;
     }
   }
-
   &.tag-primary {
     ${theme.button.primary}
-
     &.tag-selected,
     &:hover {
       ${theme.button.secondary}
     }
   }
-
   svg {
     display: none;
     height: 1.5rem;
     width: 1.5rem;
-
     path {
-        stroke: ${theme.button.secondary.color};
+      stroke: ${theme.button.secondary.color};
     }
   }
-
   &.tag-selected {
     ${theme.button.primary}
-
     &:hover {
       span {
         color: ${theme.button.primary.color};
       }
     }
-
     svg {
       path {
         stroke: ${theme.button.primary.color};
       }
     }
   }
-
   &:hover {
     @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
       span {
         color: ${theme.button.secondary.color};
       }
     }
-
     @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
       ${theme.button.primary}
-
       svg {
         path {
           stroke: ${theme.button.primary.color};

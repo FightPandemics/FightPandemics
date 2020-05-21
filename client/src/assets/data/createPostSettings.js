@@ -2,9 +2,9 @@ export default {
   shareWith: {
     type: "shareWith",
     title: "Share with ...",
-    default: { text: "In my Zip Code", value: "Zip Code" },
+    default: { text: "In my City", value: "City" },
     options: [
-      { text: "In my Zip Code", value: "Zip Code" },
+      { text: "In my City", value: "City" },
       { text: "In my State", value: "State" },
       { text: "In my Country", value: "Country" },
       { text: "Worldwide", value: "Worldwide" },

@@ -83,7 +83,8 @@ const Post = ({ post }) => {
 
   const renderComments = (
     <Card.Body
-      className={ `comments-wrapper ${showComments ? 'show-comments' : ''}` }>
+      className={`comments-wrapper ${showComments ? "show-comments" : ""}`}
+    >
       <AutoSize
         placeholder={"Write a comment..."}
         onPressEnter={handleComment}
@@ -133,7 +134,9 @@ const Post = ({ post }) => {
     <PostCard>
       <div className="card-header">
         {renderHeader}
-        <div className="card-submenu"><SubMenuIcon /></div>
+        <div className="card-submenu">
+          <SubMenuIcon />
+        </div>
       </div>
       <WhiteSpace size="md" />
       {renderTags}
