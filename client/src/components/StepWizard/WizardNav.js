@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { theme, mq } from "../../constants/theme";
+import { mq, theme } from "constants/theme";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
 import nextArrow from "assets/icons/next-arrow.svg";
 import backArrow from "assets/icons/back-arrow.svg";
 
-const desktopBreakpoint = mq.tablet.narrow.minWidth;
+const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -59,18 +59,36 @@ const NextButtonWrapper = styled(ButtonWrapper)`
   background-color: ${theme.colors.royalBlue};
   width: 40%;
   color: white;
-  border-radius 50px;
-  padding: 0 5px;
+  border-radius 5rem;
+  padding: 0 .5rem;
   justify-content: center;
 
-  @media screen and (min-width: ${desktopBreakpoint}) {
+  @media screen and (max-width: ${desktopBreakpoint}) {
   width: 19.2rem;
   font-size: 1.8rem;
+  }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 6.8rem;
+    height: 6.8rem;
+    p {
+      display: none;
+    }
+    img {
+      height: 1.7rem !important;
+      margin: 0 !important;
+    }
   }
 `;
 
 const PrevButton = styled(SvgIcon)`
   cursor: pointer;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: 1.7rem !important;
+    margin: 2.55rem 0 !important;
+    & + p {
+      display: none;
+    }
+  }
 `;
 
 const NextButton = styled(SvgIcon)`
@@ -91,7 +109,7 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       <ButtonWrapper>
         <Link to={"/"}>
           <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
-          Back
+          <p>Back</p>
         </Link>
       </ButtonWrapper>
     )}
