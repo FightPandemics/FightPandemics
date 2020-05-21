@@ -35,10 +35,19 @@ const locationSchema = new Schema({
     trim: true,
     type: String,
   },
+  state: {
+    lowercase: true,
+    trim: true,
+    type: String,
+  },
   type: {
     default: "Point",
     enum: ["Point"],
     required: true,
+    type: String,
+  },
+  zip: {
+    trim: true,
     type: String,
   },
 });

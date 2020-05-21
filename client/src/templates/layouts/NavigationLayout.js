@@ -1,13 +1,13 @@
 import { Drawer, List, Button } from "antd-mobile";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "components/Header";
 import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
-import DesktopNavbar from "components/Navigation/DesktopNavbar";
-import { theme, mq } from "constants/theme";
+import MobileTabs from "./MobileTabs";
+import { theme } from "constants/theme";
 
 const drawerStyles = {
   position: "relative",
@@ -102,7 +102,10 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
+
 const NavigationLayout = (props) => {
+  const { mobiletabs, tabIndex, isAuthenticated } = props;
+
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -114,7 +117,7 @@ const NavigationLayout = (props) => {
   const drawerMenu = () => (
     <>
       <NavList>
-        {props.isAuthenticated ? (
+        {isAuthenticated ? (
           <>
             <NavItem>
               <Link to="/profile">Profile</Link>
@@ -138,56 +141,33 @@ const NavigationLayout = (props) => {
     </>
   );
 
-  const [ isMobile, setMediaQuery ] = useState(false);
-
-useEffect(() => {
-  const mediaQuery = window.matchMedia(mq.phone.wide.max);;
-  setMediaQuery(mediaQuery.matches);
-  const listenerFunc = (query) => {
-     setMediaQuery(query.currentTarget.matches);
-  };
-  window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
-
-}, [])
-
-
-
   const renderNavigationBar = () => {
-    if(isMobile) {
        return (
-         <Drawer
-           style={{
-             minHeight: document.documentElement.clientHeight,
-             ...drawerStyles,
-           }}
-           enableDragHandle
-           open={drawerOpened}
-           onOpenChange={toggleDrawer}
-           position="right"
-           sidebar={drawerMenu()}
-           sidebarStyle={sidebarStyle}
-           className="app-drawer"
-         >
-           <Header onMenuClick={toggleDrawer} style={{ marginTop: 8 }} />
-           <Main>
-             <props.component {...props} />
-           </Main>
-           {/* <Footnote /> */}
-           <CookieAlert />
-         </Drawer>
-       )
-    } else {
-      return (
-       <div>
-         <DesktopNavbar isAuthenticated={props.isAuthenticated} />
-         <Main style={{ marginTop: 70 }}>
-           <props.component {...props} />
-         </Main>
-         <CookieAlert />
-        </div>
-      )
-    }
+          <div>
+             <Drawer
+               style={{
+                 minHeight: document.documentElement.clientHeight,
+                 ...drawerStyles,
+               }}
+               enableDragHandle
+               open={drawerOpened}
+               onOpenChange={toggleDrawer}
+               position="right"
+               sidebar={drawerMenu()}
+               sidebarStyle={sidebarStyle}
+               className="app-drawer"
+             >
+               <Header onMenuClick={toggleDrawer} isAuthenticated={isAuthenticated} />
+                     {mobiletabs ? <MobileTabs tabIndex={tabIndex} childComponent={props.children} /> : null }
+                     <Main>
+                       <props.component {...props} />
+                     </Main>
+                     <CookieAlert />
 
+               {/* <Footnote /> */}
+             </Drawer>
+          </div>
+        )
   }
 
   return (

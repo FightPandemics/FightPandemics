@@ -4,7 +4,7 @@ import React from "react";
 
 const { typography } = theme;
 
-const AnswerStyles = styled.div`
+const StyledAnswerButton = styled.div`
   display: block;
   background-color: #fff;
   color: #000;
@@ -14,8 +14,10 @@ const AnswerStyles = styled.div`
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
-  padding: 25px 0 25px 52px;
+  padding: 25px 0 25px 25px;
   margin: 15px 0px;
+  width: 100%;
+
   &:hover {
     background-color: ${theme.colors.royalBlue};
     color: #fff;
@@ -26,8 +28,12 @@ const AnswerStyles = styled.div`
   }
 `;
 
-const AnswerButton = ({ children, onSelect }) => {
-  return <AnswerStyles onClick={onSelect}>{children}</AnswerStyles>;
+const AnswerButton = ({ children, onSelect, ...props }) => {
+  return (
+    <StyledAnswerButton onClick={onSelect} {...props}>
+      {children}
+    </StyledAnswerButton>
+  );
 };
 
 export default AnswerButton;

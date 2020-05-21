@@ -22,6 +22,7 @@ const Heading = styled(Title)`
   }
   &.h2 {
     font-size: ${heading.two};
+    text-align: ${(props) => props.textAlign || "center"};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: ${heading.three};
     }

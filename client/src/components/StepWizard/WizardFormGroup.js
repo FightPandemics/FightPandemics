@@ -3,9 +3,11 @@ import { theme } from "constants/theme";
 
 const WizardFormGroup = styled.div`
   display: flex;
-  flex: 1;
   color: ${theme.colors.primary};
   flex-flow: column wrap;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
 
   label {
     ${theme.form.label}

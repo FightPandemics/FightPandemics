@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Main = styled.main`
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-left: 2rem;
+  margin-right: 2rem;
 `;
 
 export default Main;
