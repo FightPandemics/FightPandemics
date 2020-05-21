@@ -1,8 +1,10 @@
 {
   "extends": [
     "react-app"
-  ],
+  ], 
+  "plugins": ["import"],
   "rules":  {
-    "no-var": "warn"
+    "no-var": "warn",
+    "import/prefer-default-export": 1
   }
 }
