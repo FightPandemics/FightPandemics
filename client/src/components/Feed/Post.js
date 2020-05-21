@@ -19,7 +19,10 @@ import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
-  const AvatarName = (post.authorName && post.authorName.match(/\b\w/g).join('').toUpperCase()) || '';
+  const AvatarName =
+    (post.authorName &&
+      post.authorName.match(/\b\w/g).join("").toUpperCase()) ||
+    "";
 
   // mock API to test functionality
   /* to be removed after full integration with user api */
@@ -48,7 +51,9 @@ const Post = ({ post }) => {
   const renderHeader = (
     <Card.Header
       title={post.authorName}
-      thumb={post.photoUrl ? post.photoUrl : <TextAvatar>{ AvatarName }</TextAvatar>}
+      thumb={
+        post.photoUrl ? post.photoUrl : <TextAvatar>{AvatarName}</TextAvatar>
+      }
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
@@ -69,11 +74,12 @@ const Post = ({ post }) => {
 
   const renderTags = (
     <Card.Body>
-      {post.types && post.types.map((tag, idx) => (
-        <FilterTag key={idx} disabled={true} selected={false}>
-          {tag}
-        </FilterTag>
-      ))}
+      {post.types &&
+        post.types.map((tag, idx) => (
+          <FilterTag key={idx} disabled={true} selected={false}>
+            {tag}
+          </FilterTag>
+        ))}
     </Card.Body>
   );
 
@@ -85,7 +91,8 @@ const Post = ({ post }) => {
 
   const renderComments = (
     <Card.Body
-      className={ `comments-wrapper ${showComments ? 'show-comments' : ''}` }>
+      className={`comments-wrapper ${showComments ? "show-comments" : ""}`}
+    >
       <AutoSize
         placeholder={"Write a comment..."}
         onPressEnter={handleComment}
@@ -103,8 +110,8 @@ const Post = ({ post }) => {
         liked={liked}
         shared={shared}
         showComments={showComments}
-        numLikes={ post.likesCount }
-        numComments={ post.commentsCount }
+        numLikes={post.likesCount}
+        numComments={post.commentsCount}
         numShares={fakeShares}
         setShowComments={() => setShowComments(!showComments)}
         onCopyLink={() => {
@@ -138,7 +145,9 @@ const Post = ({ post }) => {
     <PostCard>
       <div className="card-header">
         {renderHeader}
-        <div className="card-submenu"><SubMenuIcon /></div>
+        <div className="card-submenu">
+          <SubMenuIcon />
+        </div>
       </div>
       <WhiteSpace size="md" />
       {renderTags}
