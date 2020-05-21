@@ -31,15 +31,18 @@ async function routes(app) {
   app.get(
     "/",
     {
+      preValidation: [app.authenticateOptional],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req.query;
-      let user, userErr;
+      // TODO: handle optional user if authenticated
+      const { userId } = req;
+      let user;
+      let userErr;
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
-          throw app.httpErrors.notFound();
+          throw app.httpErrors.forbidden();
         }
       }
 
@@ -48,7 +51,7 @@ async function routes(app) {
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
       ];
-      if (user){
+      if (user) {
         filters.push({
           $or: [
             { visibility: "worldwide" },
@@ -68,7 +71,7 @@ async function routes(app) {
               "author.location.city": user.location.city,
             },
           ],
-        })
+        });
       }
       /* eslint-enable sort-keys */
 
@@ -97,55 +100,53 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const sortAndFilterSteps = user
-        ? [{
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: user.location.coordinates,
-                  type: "Point",
+        ? [
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: user.location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
-          }]
-        : [
-            { $match: { $and: filters } },
-            { $sort: { createdAt: -1 } }
           ]
-
+        : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
       const aggregationPipleine = [
         ...sortAndFilterSteps,
-          {
-            $lookup: {
-              as: "comments",
-              foreignField: "postId",
-              from: "comments",
-              localField: "_id",
-            },
+        {
+          $lookup: {
+            as: "comments",
+            foreignField: "postId",
+            from: "comments",
+            localField: "_id",
           },
-          {
-            $project: {
-              _id: true,
-              authorName: "$author.name",
-              authorType: "$author.type",
-              commentsCount: {
-                $size: { $ifNull: ["$comments", []] },
-              },
-              content: contentProjection,
-              distance: true,
-              expireAt: true,
-              likesCount: {
-                $size: { $ifNull: ["$likes", []] },
-              },
-              location: "$author.location",
-              title: true,
-              types: true,
-              visibility: true,
+        },
+        {
+          $project: {
+            _id: true,
+            authorName: "$author.name",
+            authorType: "$author.type",
+            commentsCount: {
+              $size: { $ifNull: ["$comments", []] },
             },
+            content: contentProjection,
+            distance: true,
+            expireAt: true,
+            likesCount: {
+              $size: { $ifNull: ["$likes", []] },
+            },
+            location: "$author.location",
+            title: true,
+            types: true,
+            visibility: true,
           },
+        },
       ];
 
       const [postsErr, posts] = await app.to(
