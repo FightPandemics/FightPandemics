@@ -26,21 +26,17 @@ const INITIAL_STATE = {};
 const SymptomCheckerStyle = styled.div`
   margin-top: 5rem;
   margin-bottom: 5rem;
-  h3 {
-    text-align: center;
-    font-weight: bold;
-    line-height: 1.36;
-  }
-  h4 {
+  text-align: center;
+  .h4 {
     line-height: 1.5;
-    margin-top: 2.4rem;
-    margin-bottom: 2.4rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
     text-align: center;
   }
-  h6 {
-    text-align: center;
-    margin-bottom: 1.6rem;
-    font-weight: normal;
+  .ant-typography.title {
+    margin-bottom: 3rem;
+    line-height: 3rem;
+    padding: 0 1rem;
   }
 `;
 
@@ -170,6 +166,9 @@ const AnswerStyles = styled.div`
   &.selected {
     color: ${colors.white};
     background-color: ${theme.colors.royalBlue};
+    span {
+      color: ${colors.white};
+    }
   }
   strong {
     display: block;
@@ -490,16 +489,31 @@ const Step5 = (props) => {
   );
 };
 
+//refactor required
 const STEP_6_ANSWERS = [
   "They live in an area where COVID-19 is widespread",
   "They have visited an area where COVID-19 is widespread",
   "I’m not sure",
 ];
 
+const STEP_6_STATE = {
+  answers: getAnswersMap(STEP_6_ANSWERS),
+  none: false,
+};
+
 const Step6 = (props) => {
-  const onSelectAnswer = (answer) => {
-    props.update("exposureLast14Days", answer);
-    props.nextStep();
+  const [state, updateState] = useState(STEP_6_STATE);
+  const { answers, none } = state;
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("conditions", checkedAnswers);
+  };
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
 
   return (
@@ -512,14 +526,14 @@ const Step6 = (props) => {
         widespread?
       </Heading>
       <SubtitleStyle>Multiple options can be selected.</SubtitleStyle>
-      {STEP_6_ANSWERS.map((answer, i) => (
-        <AnswerButton key={i} onSelect={() => onSelectAnswer(answer)}>
-          {answer}
-        </AnswerButton>
+      {Object.entries(answers).map(([answer, checked], i) => (
+        <AnswerCheckbox
+          key={i}
+          text={STEP_6_ANSWERS[i]}
+          onSelect={() => toggleAnswer(answer)}
+          checked={!none && checked}
+        />
       ))}
-      <AnswerButton onSelect={() => onSelectAnswer("no exposure")}>
-        None of the above
-      </AnswerButton>
     </WizardStep>
   );
 };
@@ -937,15 +951,28 @@ const SymptomsCheck = () => {
   const confirmToStart = () => updateAnswers("confirmedStart", true);
   return (
     <SymptomCheckerStyle>
-      <h3>COVID-19 Screening Tool</h3>
-      <h4>
+      <Heading level={4} className="h4">
+        COVID-19 Screening Tool
+      </Heading>
+      <TextLabel
+        block="true"
+        textAlign="center"
+        size={theme.typography.size.xlarge}
+        className="title"
+      >
         We will ask you a few questions about your symptoms, travels and
         contacts with others
-      </h4>
-      <h6>
+      </TextLabel>
+      <TextLabel
+        className="block-text"
+        block="true"
+        size={theme.typography.size.xsmall}
+        color={DARK_GRAY}
+        textAlign="center"
+      >
         Your answers will not be stored or shared. This is just a tool to help
         the world.
-      </h6>
+      </TextLabel>
       <ColoredButton onClick={() => forWho("myself")}>For Myself</ColoredButton>
       <TransparentButton onClick={() => forWho("someone")}>
         For Someone Else
@@ -993,6 +1020,7 @@ const SymptomsCheck = () => {
           block="true"
           className="block-text"
           size={theme.typography.size.large}
+          textAlign="center"
         >
           Please consult your healthcare provider for medical advice
         </TextLabel>
