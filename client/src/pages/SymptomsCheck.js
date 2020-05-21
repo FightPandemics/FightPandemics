@@ -11,6 +11,8 @@ import {
   WizardNav,
 } from "components/StepWizard";
 import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
@@ -77,20 +79,20 @@ const ModalStyle = styled(Modal)`
     background: ${colors.white};
     overflow: auto;
     z-index: 1;
+    .ant-typography {
+      &.block-text {
+        margin-bottom: 60px;
+      }
+    }
     & img.warning-icon {
       height: 4.41rem;
     }
     & > a {
       width: 100%;
     }
-    h2 {
-      font-weight: bold;
-    }
-    h4 {
-      font-weight: bold;
-      line-height: normal;
-      margin: 0 0 6.9rem;
-      padding: 0 3rem;
+    .h4 {
+      margin-bottom: 3rem;
+      padding: 0 1rem;
       text-align: center;
     }
     h6 {
@@ -961,13 +963,26 @@ const SymptomsCheck = () => {
           </button>
         </div>
         <img className="warning-icon" src={Disclaimer} />
-        <h2>We are not a provider of healthcare services</h2>
-        <h6>
+        <Heading level={4} className="h4">
+          We are not a provider of healthcare services
+        </Heading>
+        <TextLabel
+          className="block-text"
+          block="true"
+          size={theme.typography.size.medium}
+        >
           This service is provided in good faith for those who are otherwise
           unable to obtain help and resources during this unprecedented public
           health emergency.
-        </h6>
-        <h4>Please consult your healthcare provider for medical advice</h4>
+        </TextLabel>
+        <TextLabel
+          weight="bold"
+          block="true"
+          className="block-text"
+          size={theme.typography.size.large}
+        >
+          Please consult your healthcare provider for medical advice
+        </TextLabel>
         <ColoredButton onClick={confirmToStart}>I understand</ColoredButton>
       </ModalStyle>
     </SymptomCheckerStyle>
