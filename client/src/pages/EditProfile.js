@@ -6,8 +6,16 @@ import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import SubmitButton from "components/Button/SubmitButton";
 import Heading from "components/Typography/Heading";
+import { theme, mq } from "constants/theme";
+import {
+  DARK_GRAY,
+  ROYAL_BLUE,
+  TROPICAL_BLUE,
+  LIGHTER_GRAY,
+  LIGHT_GRAY,
+  DARKER_GRAY,
+} from "constants/colors";
 // dummy data props,context, redux etc
-
 const editProfile = true;
 
 const ChangePicButton = styled.div`
@@ -16,7 +24,17 @@ const ChangePicButton = styled.div`
   text-align: center;
 `;
 
-const CustomForm = styled.form``;
+const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    width: 60%;
+    border: 0.2rem solid ${LIGHT_GRAY};
+    padding: 2rem 3rem;
+  }
+`;
+
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
@@ -68,17 +86,19 @@ function EditProfile(props) {
   return (
     <>
       <Heading
-        title={editProfile ? "Edit Profile" : "Complete Profile"}
         level={4}
         className="h4"
         style={{
           marginBottom: "3rem",
           marginTop: "2rem",
         }}
-      />
+      >
+        {editProfile ? "Edit Profile" : "Complete Profile"}
+      </Heading>
       <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
       <ChangePicButton>Change</ChangePicButton>
-      <form style={{ display: "flex", flexDirection: "column" }}>
+
+      <CustomForm>
         <FormInput
           inputTitle="Self-introduction"
           name="about"
@@ -93,7 +113,7 @@ function EditProfile(props) {
         >
           Save Changes
         </SubmitButton>
-      </form>
+      </CustomForm>
     </>
   );
 }
