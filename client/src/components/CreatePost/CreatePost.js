@@ -9,7 +9,7 @@ import {
   BackButton,
   CreateOrgLink,
 } from "components/CreatePost/StyledPostAs";
-import Form from "./Form";
+import Form from "./Form/Form";
 import person from "assets/icons/person.svg";
 import organization from "assets/icons/organization.svg";
 import back from "assets/icons/back-arrow-gray.svg";
