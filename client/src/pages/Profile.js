@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Popover, WhiteSpace } from "antd-mobile";
 
-import PostAs from "components/PostAs/PostAs";
 import ProfilePic from "components/Picture/ProfilePic";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
@@ -10,10 +9,10 @@ import { theme } from "constants/theme";
 
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
-import { Link } from "react-router-dom";
 import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
+import CreatePost from "components/CreatePost/CreatePost";
 import { DARK_GRAY } from "constants/colors";
 
 // ICONS
@@ -143,11 +142,7 @@ const Profile = (props) => {
               className="create-post"
               onClick={() => setModal(!modal)}
             />
-            <PostAs
-              onClose={() => setModal(false)}
-              maskClosable
-              visible={modal}
-            />
+            <CreatePost onCancel={() => setModal(false)} visible={modal} />
           </FeedWrapper>
         </div>
       </>

@@ -1,20 +1,24 @@
 import React, { useReducer, useEffect } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import axios from 'axios';
+import axios from "axios";
 
 // Antd
-import { Layout, Menu } from 'antd';
+import { Layout, Menu } from "antd";
 
 // Local
-import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer, postsReducer, postsState } from "hooks/reducers/feedReducers";
+import CreatePost from "components/CreatePost/CreatePost";
+import {
+  optionsReducer,
+  feedReducer,
+  postsReducer,
+  postsState,
+} from "hooks/reducers/feedReducers";
 
 // Constants
 import { theme, mq } from "constants/theme";
@@ -41,18 +45,18 @@ const { Content, Sider } = Layout;
 
 // feed types
 const HELP_TYPE = {
-  ALL: 'All posts',
-  REQUEST: 'Requesting help',
-  OFFER: 'Offering help'
+  ALL: "All posts",
+  REQUEST: "Requesting help",
+  OFFER: "Offering help",
 };
 
 const initialState = {
-  selectedType: '',
+  selectedType: "",
   showFilters: false,
   filterModal: false,
   createPostModal: false,
   activePanel: null,
-  location: '',
+  location: "",
 };
 
 const SiderWrapper = styled(Sider)`
@@ -154,7 +158,7 @@ const HeaderWrapper = styled.div`
   display: none;
 
   h1 {
-    font-size:  ${theme.typography.heading.one};
+    font-size: ${theme.typography.heading.one};
     font-weight: bold;
     margin-top: 0;
   }
@@ -186,7 +190,14 @@ const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
-  const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
+  const {
+    filterModal,
+    createPostModal,
+    activePanel,
+    location,
+    selectedType,
+    showFilters,
+  } = feedState;
   const filters = Object.values(filterOptions);
 
   const dispatchAction = (type, key, value) =>
@@ -241,7 +252,7 @@ const Feed = () => {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts:  postsState.posts });
+        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
         const filtered = postsState.posts.filter((item) => item.type === value);
 
@@ -260,16 +271,17 @@ const Feed = () => {
 
   useEffect(() => {
     /* Add userId when user is logged */
-    const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
+    const endpoint = "/api/posts"; // ?userId=xxxxxxxxx
 
     postsDispatch({ type: FETCH_POSTS });
-    axios.get(endpoint)
-      .then(response => {
+    axios
+      .get(endpoint)
+      .then((response) => {
         postsDispatch({ type: SET_POSTS, posts: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         postsDispatch({ type: ERROR_POSTS });
-      })
+      });
   }, []);
 
   return (
@@ -294,26 +306,24 @@ const Feed = () => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}>
+            width={290}
+          >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={['ALL']}
+                defaultSelectedKeys={["ALL"]}
                 onClick={handleChangeType}
               >
-                {Object.keys(HELP_TYPE).map((item, index) =>
-                  <Menu.Item key={item}>
-                    {HELP_TYPE[item]}
-                  </Menu.Item>
-                )}
+                {Object.keys(HELP_TYPE).map((item, index) => (
+                  <Menu.Item key={item}>{HELP_TYPE[item]}</Menu.Item>
+                ))}
               </MenuWrapper>
               <FiltersWrapper>
-                <button
-                  onClick={handleShowFilters} >
+                <button onClick={handleShowFilters}>
                   <span>
                     <FiltersIcon />
                   </span>
-                Filters
-              </button>
+                  Filters
+                </button>
                 <FiltersList />
               </FiltersWrapper>
             </div>
@@ -322,18 +332,17 @@ const Feed = () => {
           <ContentWrapper>
             <HeaderWrapper>
               <h1>Feed</h1>
-              <button
-                onClick={handleCreatePost}>
+              <button onClick={handleCreatePost}>
                 Create post
-                <SvgIcon
-                  src={creatPost}
-                />
+                <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />
-            { posts.status === FETCH_POSTS && <div>Loading...</div> }
-            { posts.status === ERROR_POSTS && <div>Something went wrong ...</div> }
-            <Posts filteredPosts={ posts.posts } />
+            {posts.status === FETCH_POSTS && <div>Loading...</div>}
+            {posts.status === ERROR_POSTS && (
+              <div>Something went wrong ...</div>
+            )}
+            <Posts filteredPosts={posts.posts} />
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
@@ -341,10 +350,9 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        <PostAs
-          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+        <CreatePost
+          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
-          maskClosable
         />
       </FeedWrapper>
     </FeedContext.Provider>
