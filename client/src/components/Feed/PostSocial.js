@@ -1,5 +1,5 @@
 // Core
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // Local
@@ -29,6 +29,17 @@ const PostSocial = ({
   const feedContext = useContext(FeedContext);
   const { handlePostLike } = feedContext;
 
+
+  useEffect(() => {
+    const likePost = sessionStorage.getItem("likePost");
+
+    if (id === likePost) {
+      if (likePost) {
+        handlePostLike(likePost, liked);
+      }
+    }
+  }, [ id, handlePostLike ]);
+
   const renderLikeIcon = () => {
     return liked ? (
       <SvgIcon src={heart} className="social-icon-svg" />
@@ -55,7 +66,7 @@ const PostSocial = ({
 
   return (
     <div className="social-icons">
-      <div className="social-icon" onClick={() => handlePostLike(id)}>
+      <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
         {renderLikeIcon()}
         <span className="total-number">{numLikes}</span>
         <span className="social-text">Like</span>
