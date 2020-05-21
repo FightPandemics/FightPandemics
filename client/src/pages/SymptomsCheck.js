@@ -262,7 +262,7 @@ const Welcome = (props) => {
     </WizardStep>
   );
 };
-
+//all steps require refactor
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
@@ -489,7 +489,6 @@ const Step5 = (props) => {
   );
 };
 
-//refactor required
 const STEP_6_ANSWERS = [
   "They live in an area where COVID-19 is widespread",
   "They have visited an area where COVID-19 is widespread",
