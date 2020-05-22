@@ -163,15 +163,15 @@ const Post = model("Post", postSchema);
 
 function updateAuthorName(authorID, newAuthorName) {
   return Post.where(
-    { "author.authorId": authorID },
-    { $set: { "author.authorName": newAuthorName } },
+    { "author.id": authorID },
+    { $set: { "author.name": newAuthorName } },
   );
 }
 
 function updateAuthorType(authorID, newAuthorType) {
   return Post.where(
-    { "author.authorId": authorID },
-    { $set: { "author.authorType": newAuthorType } },
+    { "author.id": authorID },
+    { $set: { "author.type": newAuthorType } },
   );
 }
 
