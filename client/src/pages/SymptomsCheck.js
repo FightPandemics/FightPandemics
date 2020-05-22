@@ -207,7 +207,7 @@ const AnswerCheckbox = ({ text, content, checked, onSelect }) => {
         <TextLabel size={theme.typography.size.mediun} block="true">
           {text}
         </TextLabel>
-        {!!content && (
+        {content && (
           <TextLabel
             size={theme.typography.size.small}
             color={DARK_GRAY}
@@ -262,7 +262,7 @@ const Welcome = (props) => {
     </WizardStep>
   );
 };
-//all steps require refactor
+
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
