@@ -11,7 +11,7 @@ export const initAuth = () => {
     const { token, emailVerified } = getAuthToken();
 
     if (token) {
-      dispatch({ type: AUTH_LOGIN, payload: { token, emailVerified } });
+      dispatch({ type: AUTH_SUCCESS, payload: { token, emailVerified } });
     }
   };
 };
