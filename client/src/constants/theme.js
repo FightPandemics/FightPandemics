@@ -12,6 +12,7 @@ import {
   MINT_GREEN,
   BLACK,
   WHITE,
+  OFF_WHITE,
   TROPICAL_BLUE,
 } from "./colors";
 
@@ -67,6 +68,7 @@ const theme = {
     mintGreen: MINT_GREEN,
     black: BLACK,
     white: WHITE,
+    offWhite: OFF_WHITE,
   },
   button: {
     fontFamily: "DM Sans",
