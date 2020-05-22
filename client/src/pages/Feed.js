@@ -259,13 +259,13 @@ const Feed = (props) => {
       if (user) {
         if (liked) {
           try {
-            response = await axios.put(endPoint);
+            response = await axios.delete(endPoint);
           } catch (error) {
             console.log({ error });
           }
         } else {
           try {
-            response = await axios.delete(endPoint);
+            response = await axios.put(endPoint);
           } catch (error) {
             console.log({ error });
           }
@@ -288,7 +288,9 @@ const Feed = (props) => {
     postsDispatch({ type: FETCH_POSTS });
     axios.get(endpoint)
       .then(response => {
-        postsDispatch({ type: SET_POSTS, posts: response.data });
+        var posts =  response.data.reduce((obj, item) => (obj[item._id] = item, obj), []);
+
+        postsDispatch({ type: SET_POSTS, posts });
       })
       .catch(error => {
         postsDispatch({ type: ERROR_POSTS });

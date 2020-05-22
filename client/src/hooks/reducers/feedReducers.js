@@ -53,12 +53,16 @@ export const postsReducer = (state = postsState, action) => {
     case ERROR_POSTS:
       return { ...state, status: ERROR_POSTS, posts: [] };
     case SET_LIKE:
-      return { ...state,
-        posts: state.posts.map((post) => (
-          post._id === action.postId ?
-            { ...post, liked: !!!post.liked, likesCount: action.count } :
-            post
-        ))
+      return {
+        ...state,
+        posts: {
+            ...state.posts,
+            [action.postId]: {
+              ...state.posts[action.postId],
+              liked: !!!state.posts[action.postId].liked,
+              likesCount: action.count
+            }
+        }
       };
     default:
       return state;
