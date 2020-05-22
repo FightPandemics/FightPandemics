@@ -11,7 +11,7 @@ import {
 } from "../StepWizard";
 
 const { typography } = theme;
-const { white, black } = theme.colors;
+const { white, black, royalBlue } = theme.colors;
 
 const desktopBreakpoint = mq.tablet.narrow.minWidth;
 const STEP_BUTTON_WIDTH = "55.6rem";
@@ -167,7 +167,7 @@ export const SCAnswerButton = styled(({ children, ...props }) => (
   color: ${black};
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: 1.6rem;
-  border: 0.1rem solid ${theme.colors.royalBlue};
+  border: 0.1rem solid ${royalBlue};
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
@@ -177,7 +177,7 @@ export const SCAnswerButton = styled(({ children, ...props }) => (
   margin: 0 0 2rem 0;
   padding: 1.3rem 0;
   &:hover {
-    background-color: ${theme.colors.royalBlue};
+    background-color: ${royalBlue};
     color: ${white};
   }
 
