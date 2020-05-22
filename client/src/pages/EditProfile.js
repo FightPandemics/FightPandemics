@@ -21,17 +21,57 @@ const editProfile = true;
 const ChangePicButton = styled.div`
   color: #425af2;
   margin-bottom: 3rem;
-  text-align: center;
+  text-align: right;
 `;
 
+const EditProfileLayout = styled.div`
+  background-color: #f9f9f9;
+  flex-direction: row;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    padding: 0 15%;
+  }
+`;
+
+const CustomHeading = styled(Heading)`
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    &.ant-typography {
+      font-size: 3.5rem;
+    }
+  }
+`;
 const CustomForm = styled.form`
   display: flex;
   flex-direction: column;
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 60%;
-    border: 0.2rem solid ${LIGHT_GRAY};
-    padding: 2rem 3rem;
+    width: 70%;
+    border: 0.1rem solid ${LIGHT_GRAY};
+    padding: 3rem 4rem;
+    background-color: #ffffff;
+  }
+`;
+const TitlePictureWrapper = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+const CustomSubmitButton = styled(SubmitButton)`
+  margin-top: 1 rem;
+  margin-bottom: 3 rem;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    width: 30rem;
+    align-self: center;
+  }
+`;
+
+const FillEmptySpace = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    flex: 1;
   }
 `;
 
@@ -84,18 +124,14 @@ function EditProfile(props) {
   };
 
   return (
-    <>
-      <Heading
-        level={4}
-        className="h4"
-        style={{
-          marginBottom: "3rem",
-          marginTop: "2rem",
-        }}
-      >
-        {editProfile ? "Edit Profile" : "Complete Profile"}
-      </Heading>
-      <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+    <EditProfileLayout>
+      <TitlePictureWrapper>
+        <CustomHeading level={4} className="h4">
+          {editProfile ? "Edit Profile" : "Complete Profile"}
+        </CustomHeading>
+        <FillEmptySpace />
+        <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+      </TitlePictureWrapper>
       <ChangePicButton>Change</ChangePicButton>
 
       <CustomForm>
@@ -106,15 +142,11 @@ function EditProfile(props) {
           reference={register({ maxLength: 160 })}
         />
         {renderFormInputs()}
-        <SubmitButton
-          primary="true"
-          style={{ marginTop: "1rem", marginBottom: "3rem" }}
-          onClick={handleSubmit(onSubmit)}
-        >
+        <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
           Save Changes
-        </SubmitButton>
+        </CustomSubmitButton>
       </CustomForm>
-    </>
+    </EditProfileLayout>
   );
 }
 

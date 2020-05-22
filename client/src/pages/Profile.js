@@ -178,8 +178,7 @@ const ProfileLayout = styled.div`
   margin: 0 -25px;
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: auto;
-    padding: 0 10rem;
+    padding: 0 15%;
   }
 `;
 
@@ -225,7 +224,7 @@ const UserInfoContainer = styled.div`
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     z-index: 0;
-    margin-top: 9vh;
+    margin-top: 0rem;
     padding-top: 5rem;
     border-radius: 0;
     background-color: transparent;
