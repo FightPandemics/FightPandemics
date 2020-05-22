@@ -31,21 +31,25 @@ async function routes(app) {
   app.get(
     "/",
     {
-      preValidation: [app.authenticate],
       schema: getPostsSchema,
     },
     async (req) => {
       const { userId } = req.query;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        throw app.httpErrors.notFound();
+      let user, userErr;
+      if (userId) {
+        [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          throw app.httpErrors.notFound();
+        }
       }
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
-        {
+      ];
+      if (user){
+        filters.push({
           $or: [
             { visibility: "worldwide" },
             {
@@ -64,8 +68,8 @@ async function routes(app) {
               "author.location.city": user.location.city,
             },
           ],
-        },
-      ];
+        })
+      }
       /* eslint-enable sort-keys */
 
       // Additional filters
@@ -75,7 +79,6 @@ async function routes(app) {
       }
 
       // Unlogged user limitation for post content size
-      // TODO: how to check for logged/unlogged user?
       /* eslint-disable sort-keys */
       const contentProjection = user
         ? "$content"
@@ -93,9 +96,8 @@ async function routes(app) {
           };
       /* eslint-enable sort-keys */
 
-      const [postsErr, posts] = await app.to(
-        Post.aggregate([
-          {
+      const sortAndFilterSteps = user
+        ? [{
             $geoNear: {
               distanceField: "distance",
               key: "author.location.coordinates",
@@ -107,7 +109,15 @@ async function routes(app) {
               },
               query: { $and: filters },
             },
-          },
+          }]
+        : [
+            { $match: { $and: filters } },
+            { $sort: { createdAt: -1 } }
+          ]
+
+
+      const aggregationPipleine = [
+        ...sortAndFilterSteps,
           {
             $lookup: {
               as: "comments",
@@ -122,13 +132,13 @@ async function routes(app) {
               authorName: "$author.name",
               authorType: "$author.type",
               commentsCount: {
-                $size: "$comments",
+                $size: { $ifNull: ["$comments", []] },
               },
               content: contentProjection,
               distance: true,
               expireAt: true,
               likesCount: {
-                $size: "$likes",
+                $size: { $ifNull: ["$likes", []] },
               },
               location: "$author.location",
               title: true,
@@ -136,8 +146,10 @@ async function routes(app) {
               visibility: true,
             },
           },
-          // TODO: paginate
-        ]),
+      ];
+
+      const [postsErr, posts] = await app.to(
+        Post.aggregate(aggregationPipleine),
       );
 
       if (postsErr) {
