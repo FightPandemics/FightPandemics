@@ -1,7 +1,3 @@
-import axios from "axios";
-import { Toast } from "antd-mobile";
-
-import { GET_ERRORS } from "./types";
 import { AUTH_SUCCESS } from "constants/action-types";
 import { getAuthToken } from "utils/auth-token";
 
