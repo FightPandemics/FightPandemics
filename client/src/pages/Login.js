@@ -1,21 +1,30 @@
-import { Button, Flex, WhiteSpace, Toast } from "antd-mobile";
-import React, { useEffect, useState } from "react";
+import { Alert } from "antd";
+import { Button, Flex, WhiteSpace } from "antd-mobile";
+import axios from "axios";
+import React, { useEffect, useReducer, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { AUTH_SUCCESS } from "constants/action-types";
 import { PASSWORD_MIN_LENGTH } from "config";
 import {
-  authWithSocialProvider,
-  loginWithEmail,
-  signup,
-} from "actions/authActions";
+  AUTH_FORM_LOGIN,
+  AUTH_FORM_LOGIN_ERROR,
+  AUTH_FORM_SIGNUP,
+  AUTH_FORM_SIGNUP_ERROR,
+  AUTH_FORM_SOCIAL,
+  AUTH_FORM_SOCIAL_ERROR,
+} from "hooks/actions/authFormActions";
+import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
-import { validateEmail } from "utils/common.js";
+// import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
 import Heading from "components/Typography/Heading";
-
+import { ORANGE_RED, WHITE } from "constants/colors";
 import { theme, mq } from "constants/theme";
 
 // ICONS
@@ -95,13 +104,11 @@ const ButtonText = styled.span`
   color: ${colors.darkGray};
 `;
 
-const AuthLink = styled.a`
+const AuthLink = styled(Link)`
   font-family: ${typography.font.family.display};
-  font-style: normal;
   font-weight: 300;
   font-size: 1.6rem;
   line-height: 2.1rem;
-  text-align: center;
   color: ${colors.royalBlue};
 `;
 
@@ -132,6 +139,13 @@ const LoginRightContainer = styled.div`
   flex: 1;
 `;
 
+const ErrorAlert = styled(Alert)`
+  background-color: ${ORANGE_RED};
+  .ant-alert-message {
+    color: ${WHITE};
+  }
+`;
+
 const SocialImageContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -159,6 +173,7 @@ const VisibilityIconWrapper = styled.div`
   bottom: 0.6rem;
   right: 0.5rem;
   color: ${colors.tropicalBlue};
+  cursor: pointer;
 `;
 
 const VisibilityButton = ({ onClick, type }) => {
@@ -175,63 +190,64 @@ const VisibilityButton = ({ onClick, type }) => {
 
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { formState, getValues, handleSubmit, register } = useForm({
+    mode: "change",
+  });
+  const [authFormState, authFormDispatch] = useReducer(
+    authFormReducer,
+    initialState,
+  );
   const [passwordType, setPasswordType] = useState("password");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
+
   useEffect(() => {
     if (code && state) {
-      dispatch(authWithSocialProvider({ code, state }));
+      const loadOAuth = async () => {
+        authFormDispatch({ type: AUTH_FORM_SOCIAL });
+        try {
+          const res = await axios.post(`/api/auth/oauth`, { code, state });
+          dispatch({ type: AUTH_SUCCESS, payload: res.data });
+        } catch (err) {
+          const message = err.response?.data?.message || err.message;
+          authFormDispatch({
+            type: AUTH_FORM_SOCIAL_ERROR,
+            error: `Authentication failed, reason: ${message}`,
+          });
+        }
+      };
+      loadOAuth();
     }
   }, [code, state, dispatch]);
 
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const onLoginWithEmail = async (formData) => {
+    authFormDispatch({ type: AUTH_FORM_LOGIN });
+    try {
+      const res = await axios.post("/api/auth/login", formData);
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      authFormDispatch({
+        type: AUTH_FORM_LOGIN_ERROR,
+        error: `Login failed, reason: ${message}`,
+      });
+    }
   };
 
-  const handleInputChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleInputChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handleLoginWithEmail = (evt) => {
-    evt.preventDefault();
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
+  const onSignup = async (formData) => {
+    authFormDispatch({ type: AUTH_FORM_SIGNUP });
+    try {
+      const res = await axios.post("/api/auth/signup", formData);
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      authFormDispatch({
+        type: AUTH_FORM_SIGNUP_ERROR,
+        error: `Signup failed, reason: ${message}`,
+      });
     }
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
-    dispatch(loginWithEmail({ email, password }));
-  };
-
-  const handleSignup = (evt) => {
-    evt.preventDefault();
-    // todo: add inline validation (disable button / indicate error on form)
-    if (!validateEmail(email)) {
-      Toast.fail("Invalid email address!", 3);
-      return;
-    }
-    // todo: add inline validation (disable button / indicate error on form)
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      Toast.fail("Password must be at least 6 characters", 3);
-      return;
-    }
-    // todo: check if passwords are the same (dissable button / indicate error on form)
-    if (password !== confirmPassword) {
-      Toast.fail("Password and confirm password do not match!", 3);
-      return;
-    }
-    dispatch(signup({ email, password, confirmPassword }));
   };
 
   const handleSocialLogin = (provider) => {
@@ -254,6 +270,11 @@ const Login = ({ isLoginForm }) => {
     }
   };
 
+  const comparePasswordConfirmation = (confirmPassword) => {
+    const { password } = getValues();
+    return password === confirmPassword || "Password don't match";
+  };
+
   return (
     <LoginContainer>
       <LoginLeftContainer>
@@ -271,7 +292,10 @@ const Login = ({ isLoginForm }) => {
             <Heading className="h4" level={4}>
               {isLoginForm ? "Sign In" : "Sign Up"}
             </Heading>
-            <form id="login-password" method="POST">
+            {authFormState.error && (
+              <ErrorAlert message={authFormState.error} type="error" />
+            )}
+            <form id="login-password">
               <InputWrapper>
                 <Label for="email" style={StyleLabel} label="E-mail" />
                 <Input
@@ -279,8 +303,7 @@ const Login = ({ isLoginForm }) => {
                   name="email"
                   required
                   placeholder="Enter email address"
-                  value={email}
-                  onChange={handleInputChangeEmail}
+                  ref={register}
                   style={StyleInput}
                 />
               </InputWrapper>
@@ -289,11 +312,9 @@ const Login = ({ isLoginForm }) => {
                 <Input
                   type={passwordType}
                   name="password"
-                  id="password"
                   required
                   placeholder="Enter password"
-                  value={password}
-                  onChange={handleInputChangePassword}
+                  ref={register({ minLength: PASSWORD_MIN_LENGTH })}
                   style={StyleInput}
                 />
                 <VisibilityButton
@@ -311,11 +332,14 @@ const Login = ({ isLoginForm }) => {
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
-                    id="confirmPassword"
                     required
                     placeholder="Confirm password"
-                    onChange={handleInputChangeConfirmPassword}
-                    value={confirmPassword}
+                    ref={register({
+                      minLength: PASSWORD_MIN_LENGTH,
+                      validate: {
+                        matchesPreviousPassword: comparePasswordConfirmation,
+                      },
+                    })}
                     style={StyleInput}
                   />
                   <VisibilityButton
@@ -326,7 +350,12 @@ const Login = ({ isLoginForm }) => {
               )}
               <SubmitButton
                 primary="true"
-                onClick={isLoginForm ? handleLoginWithEmail : handleSignup}
+                disabled={!formState.isValid}
+                onClick={
+                  isLoginForm
+                    ? handleSubmit(onLoginWithEmail)
+                    : handleSubmit(onSignup)
+                }
               >
                 {isLoginForm ? "Sign In" : "Sign Up"}
               </SubmitButton>
@@ -336,19 +365,19 @@ const Login = ({ isLoginForm }) => {
             {isLoginForm ? (
               <>
                 <p>
-                  <AuthLink href="/auth/forgot-password">
+                  <AuthLink to="/auth/forgot-password">
                     Forgot password?
                   </AuthLink>
                 </p>
                 <p>
-                  <AuthLink href="/auth/signup">
+                  <AuthLink to="/auth/signup">
                     Don't have an account? <u>Sign Up</u>
                   </AuthLink>
                 </p>
               </>
             ) : (
               <p>
-                <AuthLink href="/auth/login">
+                <AuthLink to="/auth/login">
                   Already have an account? <u>Sign In</u>
                 </AuthLink>
               </p>
