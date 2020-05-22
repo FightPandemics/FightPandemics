@@ -6,7 +6,7 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 
 const { typography } = theme;
-const { black, royalBlue } = theme.colors;
+const { black, royalBlue, white } = theme.colors;
 
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const needHelpActive = require("assets/thermometer-selected.svg");
@@ -62,7 +62,7 @@ const StyledWelcome = styled.h1`
     margin: 2.5rem auto;
     font-weight: bold;
     text-align: center;
-    color: black;
+    color: ${black};
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
@@ -79,7 +79,7 @@ const StyledWelcome = styled.h1`
 `;
 
 const StyledStrapline = styled(StyledWelcome)`
-  color: white;
+  color: ${white};
   width: 90%;
   text-align: left;
   font-size: ${typography.heading.one} @media only screen and
@@ -99,7 +99,7 @@ const IntroText = styled.div`
 const StyledP = styled.p`
   font-size: ${typography.size.xsmall};
   text-align: left;
-  color: white;
+  color: ${white};
 
   @media only screen and ${mq.phone.wide.max} {
     font-family: ${typography.font.family.display}, sans-serif;
@@ -126,7 +126,7 @@ const StyledP = styled.p`
 
 const OnboardingContainer = styled.div`
   // display: flex;
-  // flexWrap: wrapgit ;
+  // flexWrap: wrap;
   width: 100%;
   margin: auto 0;
 
