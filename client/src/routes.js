@@ -112,6 +112,7 @@ const routes = [
   {
     path: "/create-profile",
     component: CreateUserProfile,
+    layout: "navless",
   },
   {
     path: "/terms-conditions",
