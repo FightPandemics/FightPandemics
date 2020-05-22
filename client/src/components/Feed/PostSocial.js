@@ -38,7 +38,7 @@ const PostSocial = ({
         handlePostLike(likePost, liked);
       }
     }
-  }, [ id, handlePostLike ]);
+  }, [ id, liked, handlePostLike ]);
 
   const renderLikeIcon = () => {
     return liked ? (

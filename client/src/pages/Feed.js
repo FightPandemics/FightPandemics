@@ -248,7 +248,7 @@ const Feed = (props) => {
   };
 
   const handlePostLike = async (postId, liked) => {
-    const { history, isAuthenticated , user } = props;
+    const { history, isAuthenticated, user } = props;
 
     /* added here because userId not working */
     sessionStorage.removeItem("likePost");

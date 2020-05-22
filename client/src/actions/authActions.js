@@ -3,14 +3,15 @@ import { Toast } from "antd-mobile";
 
 import { GET_ERRORS } from "./types";
 import { AUTH_LOGIN, AUTH_SIGNUP } from "constants/action-types";
-import { getAuthToken } from "utils/auth-token";
+import { setAuthToken, getAuthToken } from "utils/auth-token";
 
 // Note: for production apps, both localstorage & cookies contain risks to store user & auth data
 export const initAuth = () => {
   return (dispatch) => {
-    const token = getAuthToken();
+    const { token, emailVerified } = getAuthToken();
+
     if (token) {
-      dispatch({ type: AUTH_LOGIN, payload: { token } });
+      dispatch({ type: AUTH_LOGIN, payload: { token, emailVerified } });
     }
   };
 };
@@ -31,6 +32,10 @@ export const loginWithEmail = (payload) => {
   return async (dispatch) => {
     try {
       const res = await axios.post("/api/auth/login", payload);
+      if (res.data && res.data.token){
+        setAuthToken(res.data);
+      }
+
       dispatch({ type: AUTH_LOGIN, payload: res.data });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
