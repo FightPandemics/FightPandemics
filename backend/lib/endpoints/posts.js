@@ -103,7 +103,7 @@ async function routes(app) {
               key: "author.location.coordinates",
               near: {
                 $geometry: {
-                  coordinates: [0, 0], // user.location.coordinates,
+                  coordinates: user.location.coordinates,
                   type: "Point",
                 },
               },
@@ -169,28 +169,16 @@ async function routes(app) {
     },
     async (req, reply) => {
       const { userId } = req.body;
-      const [userErr] = await app.to(User.findById(userId));
+      const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
       }
 
-      const user = {
-        // "_id": ObjectId("5ea6900c0e0419d4cb123611"),
-        "location":{
-          "coordinates":[-52.243746,-31.761572],
-          "type":"Point",
-          "country":"Brazil",
-          "state":"Rio Grande do Sul",
-          "city":"Pelotas",
-          "neighborhood":"Laranjal",
-          "address":"Rua Prof Delfim Mendes Silveira 846"
-        }
-      };
       const { body: postProps } = req;
 
       // Creates embedded author document
       postProps.author = {
-        id: '5ea6900c0e0419d4cb123611', // user.id,
+        id: user.id,
         location: user.location,
         name: user.name,
         type: user.type,
