@@ -29,8 +29,7 @@ import socialmedia2 from "assets/social-media2.svg";
 import eyeUnmask from "assets/icons/eye-unmask.svg";
 import eyeMask from "assets/icons/eye-mask.svg";
 
-const { colors } = theme;
-const { typography } = theme;
+const { colors, typography } = theme;
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -43,7 +42,7 @@ const StyleInput = {
   lineHeight: "2.5rem",
   paddingBottom: "0.8rem",
   width: "100%",
-  borderBottom: "2px solid #5970EC",
+  borderBottom: `2px solid ${colors.primary}`,
   backgroundColor: "transparent",
 };
 

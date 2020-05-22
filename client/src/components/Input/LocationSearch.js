@@ -7,9 +7,12 @@ import { FeedContext } from "pages/Feed.js";
 import SvgIcon from "../Icon/SvgIcon";
 import shareLocation from "assets/icons/share-my-location.svg";
 
+import { theme } from "constants/theme";
+const { white } = theme.colors;
+
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
-    background-color: #fff;
+    background-color: ${white};
     border: 0.1rem solid black;
     border-radius: 4rem;
   }

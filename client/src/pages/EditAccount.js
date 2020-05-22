@@ -7,9 +7,12 @@ import styled from "styled-components";
 import FormInput from "components/Input/FormInput";
 import Heading from "components/Typography/Heading";
 import UnderLineDescription from "components/Input/UnderlineDescription";
+import { theme } from "constants/theme";
+
+const { royalBlue } = theme.colors;
 
 const Label = styled.label`
-  color: ${(props) => props.inputColor || "#425AF2"};
+  color: ${(props) => props.inputColor || `${royalBlue}`};
   padding-left: ${(props) => props.paddingLeft || ""};
   margin-top: ${(props) => props.marginTop || "1.5rem"};
   font-size: ${(props) => props.size || ""};

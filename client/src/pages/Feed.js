@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import axios from 'axios';
+import axios from "axios";
 
 // Antd
 import { Layout, Menu } from "antd";
@@ -14,11 +14,20 @@ import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer, postsReducer, postsState } from "hooks/reducers/feedReducers";
+import {
+  optionsReducer,
+  feedReducer,
+  postsReducer,
+  postsState,
+} from "hooks/reducers/feedReducers";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import creatPost from "assets/icons/create-post.svg";
+import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
 import { theme, mq } from "constants/theme";
-import { BLACK, DARKER_GRAY, ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -30,10 +39,7 @@ import {
   ERROR_POSTS,
 } from "hooks/actions/feedActions";
 
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import creatPost from "assets/icons/create-post.svg";
-import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
+const { black, darkerGray, royalBlue, white } = theme.colors;
 
 export const FeedContext = React.createContext();
 
@@ -56,7 +62,7 @@ const initialState = {
 };
 
 const SiderWrapper = styled(Sider)`
-  background-color: ${WHITE};
+  background-color: ${white};
   height: calc(100vh - 5rem);
   overflow-x: hidden;
   padding-top: 3.3rem;
@@ -74,7 +80,7 @@ const FiltersWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -84,16 +90,16 @@ const FiltersWrapper = styled.div`
     padding: 0;
     span {
       align-items: center;
-      border: 0.1rem solid ${ROYAL_BLUE};
+      border: 0.1rem solid ${royalBlue};
       border-radius: 50%;
-      color: ${ROYAL_BLUE};
+      color: ${royalBlue};
       display: flex;
       height: 4.2rem;
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
       svg {
-        fill: ${ROYAL_BLUE};
+        fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
       }
@@ -104,17 +110,17 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
-      border-left: 0.5rem solid ${WHITE};
-      color: ${DARKER_GRAY};
+      border-left: 0.5rem solid ${white};
+      color: ${darkerGray};
       font-size: ${theme.typography.size.large};
       &:hover {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
     .ant-menu-item-selected {
       background-color: transparent;
-      border-left: 0.5rem solid ${ROYAL_BLUE};
-      color: ${ROYAL_BLUE};
+      border-left: 0.5rem solid ${royalBlue};
+      color: ${royalBlue};
       font-weight: bold;
     }
   }
@@ -122,7 +128,7 @@ const MenuWrapper = styled(Menu)`
 
 const LayoutWrapper = styled(Layout)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${WHITE};
+    background-color: ${white};
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: #fbfbfd;
@@ -152,7 +158,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -173,7 +179,14 @@ const Feed = () => {
   const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
-  const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
+  const {
+    filterModal,
+    createPostModal,
+    activePanel,
+    location,
+    selectedType,
+    showFilters,
+  } = feedState;
   const filters = Object.values(filterOptions);
 
   const dispatchAction = (type, key, value) =>
@@ -228,7 +241,7 @@ const Feed = () => {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts:  postsState.posts });
+        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
         const filtered = postsState.posts.filter((item) => item.type === value);
 
@@ -247,16 +260,17 @@ const Feed = () => {
 
   useEffect(() => {
     /* Add userId when user is logged */
-    const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
+    const endpoint = "/api/posts"; // ?userId=xxxxxxxxx
 
     postsDispatch({ type: FETCH_POSTS });
-    axios.get(endpoint)
-      .then(response => {
+    axios
+      .get(endpoint)
+      .then((response) => {
         postsDispatch({ type: SET_POSTS, posts: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         postsDispatch({ type: ERROR_POSTS });
-      })
+      });
   }, []);
 
   return (
@@ -313,9 +327,11 @@ const Feed = () => {
               </button>
             </HeaderWrapper>
             <FilterBox />
-            { posts.status === FETCH_POSTS && <div>Loading...</div> }
-            { posts.status === ERROR_POSTS && <div>Something went wrong ...</div> }
-            <Posts filteredPosts={ posts.posts } />
+            {posts.status === FETCH_POSTS && <div>Loading...</div>}
+            {posts.status === ERROR_POSTS && (
+              <div>Something went wrong ...</div>
+            )}
+            <Posts filteredPosts={posts.posts} />
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
