@@ -39,7 +39,7 @@ import {
   ERROR_POSTS,
 } from "hooks/actions/feedActions";
 
-const { black, darkerGray, royalBlue, white } = theme.colors;
+const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
 
@@ -131,7 +131,7 @@ const LayoutWrapper = styled(Layout)`
     background-color: ${white};
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: #fbfbfd;
+    background-color: ${offWhite};
     min-height: calc(100vh - 5rem);
     .create-post,
     .filter-box {
