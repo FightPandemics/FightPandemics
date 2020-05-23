@@ -42,15 +42,17 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
   const records = await base(POSTS_AIRTABLE_NAME).select(selectOptions).all(); // ~8-9s to get from Airtable ~2500 posts; ~2-3s to bulk write to mongo (locally on docker network)
 
   const bulkOps = [];
+  const postsUpdatedAt = new Date(); // for consistent timestamp
   records.forEach((record) => {
     try {
-      const postsData = mapAirtableData(record._rawJson, {
+      const postData = mapAirtableData(record._rawJson, {
         id: sourcedById,
         name: SOURCED_BY_FP_USER.name,
       });
+      postData.updatedAt = postsUpdatedAt;
 
       // bulk write does not perform validation; only include posts that pass validate
-      const validationError = new Post(postsData).validateSync();
+      const validationError = new Post(postData).validateSync();
       if (validationError) {
         throw new Error(JSON.stringify(validationError.errors));
       }
@@ -58,7 +60,7 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
       bulkOps.push({
         updateOne: {
           filter: { airtableId: record.id },
-          update: postsData,
+          update: postData,
           upsert: true,
         },
       });
