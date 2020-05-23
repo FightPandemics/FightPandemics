@@ -1,4 +1,4 @@
-import HomePage from './homePage';
+import HomePage from './homePage.js';
 
 const home = new HomePage();
 
