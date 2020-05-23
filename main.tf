@@ -39,6 +39,14 @@ data "aws_ssm_parameter" "sentry_dsn" {
   name = "/fp/sentry/dsn"
 }
 
+locals {
+  domain = {
+    review     = "fightpandemics.xyz"
+    staging    = "fightpandemics.work"
+    production = "fightpandemics.com"
+  }
+}
+
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
   image_tag  = var.env_name
@@ -63,7 +71,7 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = "http://localhost:8000"
+      value = "https://${var.env_name}.${local.domain[var.fp_context]}"
     },
     {
       name  = "AUTH_SECRET_KEY"
