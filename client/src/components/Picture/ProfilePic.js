@@ -14,7 +14,8 @@ const InitialDiv = styled.div`
   text-align: center;
   font-weight: 500;
   background-color: #f3f4fe;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+  @media screen and (min-width: ${(props) =>
+      props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;
     height: 80%;
     line-height: 11rem;
@@ -23,6 +24,14 @@ const InitialDiv = styled.div`
     font-size: 5rem;
   }
 `;
-export default ({ noPic, initials }) => {
-  return <>{noPic ? <InitialDiv>{initials}</InitialDiv> : <div></div>}</>;
+export default ({ noPic, initials, resolution }) => {
+  return (
+    <>
+      {noPic ? (
+        <InitialDiv resolution={resolution}>{initials}</InitialDiv>
+      ) : (
+        <div></div>
+      )}
+    </>
+  );
 };

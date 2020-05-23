@@ -6,7 +6,8 @@ import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import SubmitButton from "components/Button/SubmitButton";
 import Heading from "components/Typography/Heading";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
+import { Link } from "react-router-dom";
 import {
   DARK_GRAY,
   ROYAL_BLUE,
@@ -21,11 +22,17 @@ const editProfile = true;
 const ChangePicButton = styled.div`
   color: #425af2;
   margin-bottom: 3rem;
-  text-align: right;
+  text-align: center;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    text-align: right;
+    font-weight: 600;
+    margin-right: 1rem;
+  }
 `;
 
 const EditProfileLayout = styled.div`
   background-color: #f9f9f9;
+  margin: 0 -25px;
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     padding: 0 15%;
@@ -47,7 +54,7 @@ const CustomForm = styled.form`
   flex-direction: column;
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 70%;
+    width: 100%;
     border: 0.1rem solid ${LIGHT_GRAY};
     padding: 3rem 4rem;
     background-color: #ffffff;
@@ -75,6 +82,43 @@ const FillEmptySpace = styled.div`
   }
 `;
 
+const OptionDiv = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const FormLayout = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const CustomLink = styled.div`
+  color: #000000;
+  border: 0.1rem solid ${LIGHT_GRAY};
+  border-radius: 0.3rem;
+  padding: 2rem 3rem;  
+  margin-right: 1rem;
+  font-weight: bold;
+  border-left-style: ${(props) => (props.t ? "solid" : "")}
+  border-left-color: ${(props) => (props.isEditProfile ? "#425AF2" : "")}
+  border-left-width: ${(props) => (props.isEditProfile ? "0.6rem" : "")}    
+`;
+
+const CustomAccountLink = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  color: #000000;
+  border: 0.1rem solid ${LIGHT_GRAY};
+  padding: 2rem 3rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+`;
 function getInitials(firstName, lastName) {
   // function to get the initials given firstname and last name
   return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
@@ -130,22 +174,33 @@ function EditProfile(props) {
           {editProfile ? "Edit Profile" : "Complete Profile"}
         </CustomHeading>
         <FillEmptySpace />
-        <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+        <ProfilePic
+          resolution={"7680px"}
+          noPic={true}
+          initials={getInitials(firstName, lastName)}
+        />
       </TitlePictureWrapper>
       <ChangePicButton>Change</ChangePicButton>
-
-      <CustomForm>
-        <FormInput
-          inputTitle="Self-introduction"
-          name="about"
-          defaultValue={about}
-          reference={register({ maxLength: 160 })}
-        />
-        {renderFormInputs()}
-        <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-          Save Changes
-        </CustomSubmitButton>
-      </CustomForm>
+      <FormLayout>
+        <OptionDiv>
+          <CustomLink isEditProfile>
+            <Link to="/edit-account">Account Information</Link>
+          </CustomLink>
+          <CustomLink to="/edit-profile">Profile Information </CustomLink>
+        </OptionDiv>
+        <CustomForm>
+          <FormInput
+            inputTitle="Self-introduction"
+            name="about"
+            defaultValue={about}
+            reference={register({ maxLength: 160 })}
+          />
+          {renderFormInputs()}
+          <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+            Save Changes
+          </CustomSubmitButton>
+        </CustomForm>
+      </FormLayout>
     </EditProfileLayout>
   );
 }
