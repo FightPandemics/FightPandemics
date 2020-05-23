@@ -197,7 +197,7 @@ const CreatePost = (props) => {
         </div>
         <SvgIcon src={horizontalLine} />
         <div className="tags">
-          <AddTags addTag={addTag} filters={types} />
+          <AddTags addTag={addTag} filters={types} selected={formData.tags} />
         </div>
         <span className="error-box">{renderError("tags")}</span>
         <SubmitButton
