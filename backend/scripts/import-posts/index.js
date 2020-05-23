@@ -36,42 +36,54 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
   }).base(airtable.baseId);
 
   const Post = connection.model("Post", postSchema);
-  let newPosts = 0;
-  let existingPosts = 0;
   let failedPosts = 0;
 
   const selectOptions = { maxRecords: parseMaxRecordsArg() };
-  const records = await base(POSTS_AIRTABLE_NAME).select(selectOptions).all(); // ~12s to get & (locally) import ~2500 posts (~8s to get from Airtable)
+  const records = await base(POSTS_AIRTABLE_NAME).select(selectOptions).all(); // ~8-9s to get from Airtable ~2500 posts; ~2-3s to bulk write to mongo (locally on docker network)
 
-  // eslint-disable-next-line no-restricted-syntax
-  for await (const record of records) {
+  const bulkOps = [];
+  records.forEach((record) => {
     try {
-      const res = await Post.findOneAndUpdate(
-        { airtableId: record.id },
-        mapAirtableData(record._rawJson, {
-          id: sourcedById,
-          name: SOURCED_BY_FP_USER.name,
-        }),
-        { new: true, upsert: true, useFindAndModify: false }
-      );
-      res.updatedAt.toString() === res.createdAt.toString() // eslint-disable-line no-unused-expressions
-        ? (newPosts += 1)
-        : (existingPosts += 1);
+      const postsData = mapAirtableData(record._rawJson, {
+        id: sourcedById,
+        name: SOURCED_BY_FP_USER.name,
+      });
+
+      // bulk write does not perform validation; only include posts that pass validate
+      const validationError = new Post(postsData).validateSync();
+      if (validationError) {
+        throw new Error(JSON.stringify(validationError.errors));
+      }
+
+      bulkOps.push({
+        updateOne: {
+          filter: { airtableId: record.id },
+          update: postsData,
+          upsert: true,
+        },
+      });
     } catch (err) {
       failedPosts += 1;
       console.error(
-        `${record.id} failed to import with fields: ${JSON.stringify(
-          record._rawJson.fields
-        )}. Error message: ${err.message}`
+        `${record.id} failed mapping/validation. Error message: ${
+          err.message
+        }. Record fields: ${JSON.stringify(record._rawJson.fields)}.`
       );
     }
+  });
+
+  try {
+    const bulkWriteOpResult = await Post.bulkWrite(bulkOps);
+    const { nUpserted, nModified } = bulkWriteOpResult;
+    const end = Date.now();
+    console.log(
+      `Imported ${nUpserted + nModified} from Airtable in ${
+        (end - start) / 1000
+      }s. Inserted ${nUpserted} new posts; updated ${nModified} existing posts. ${failedPosts} posts failed to import.`
+    );
+  } catch (err) {
+    console.error(`Bulk write failed. Error message: ${err.message}`);
   }
-  const end = Date.now();
-  console.log(
-    `Imported ${newPosts + existingPosts} from Airtable in ${
-      (end - start) / 1000
-    }s. Inserted ${newPosts} new posts; updated ${existingPosts} existing posts. ${failedPosts} posts failed to import.`
-  );
 };
 
 const initSourcedByFPUser = async (connection) => {
