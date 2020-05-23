@@ -10,13 +10,14 @@ import { ReactComponent as CloseIcon } from "assets/icons/close-btn.svg";
 
 // Constants
 import { mq, theme } from "constants/theme";
+const { button, typography } = theme;
 
 const ButtonWrapper = styled(Button)`
-  ${theme.button.secondary}
+  ${button.secondary}
   align-items: center;
   border-radius: 4rem;
   display: inline-flex;
-  font-size: ${theme.typography.size.xsmall};
+  font-size: ${typography.size.xsmall};
   height: 2.5rem;
   margin: 0.5rem 0.3rem;
   padding: 0 1rem;
@@ -31,10 +32,10 @@ const ButtonWrapper = styled(Button)`
     }
   }
   &.tag-primary {
-    ${theme.button.primary}
+    ${button.primary}
     &.tag-selected,
     &:hover {
-      ${theme.button.secondary}
+      ${button.secondary}
     }
   }
   svg {
@@ -42,33 +43,33 @@ const ButtonWrapper = styled(Button)`
     height: 1.5rem;
     width: 1.5rem;
     path {
-      stroke: ${theme.button.secondary.color};
+      stroke: ${button.secondary.color};
     }
   }
   &.tag-selected {
-    ${theme.button.primary}
+    ${button.primary}
     &:hover {
       span {
-        color: ${theme.button.primary.color};
+        color: ${button.primary.color};
       }
     }
     svg {
       path {
-        stroke: ${theme.button.primary.color};
+        stroke: ${button.primary.color};
       }
     }
   }
   &:hover {
     @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
       span {
-        color: ${theme.button.secondary.color};
+        color: ${button.secondary.color};
       }
     }
     @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-      ${theme.button.primary}
+      ${button.primary}
       svg {
         path {
-          stroke: ${theme.button.primary.color};
+          stroke: ${button.primary.color};
         }
       }
     }

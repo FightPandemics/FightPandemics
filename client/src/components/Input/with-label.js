@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { theme } from "constants/theme";
+
+const { royalBlue } = theme.colors;
 
 const StyledLabel = styled.label`
-  color: #425af2;
+  color: ${royalBlue};
 `;
 
 const Label = (Component) => ({ label, style }) => (
