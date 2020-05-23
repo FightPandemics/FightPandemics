@@ -446,9 +446,10 @@ async function routes(app) {
 
       // Creates embedded author document
       commentProps.author = {
-        id: user.id,
+        id: mongoose.Types.ObjectId(user.id),
         location: user.location,
         name: user.name,
+        photo: user.photo,
         type: user.type,
       };
 

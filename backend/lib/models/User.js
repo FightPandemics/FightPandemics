@@ -20,6 +20,7 @@ const UserSchema = new Schema(
       type: Array,
     },
     location: Object,
+    photo: String,
     type: String,
   },
   {
