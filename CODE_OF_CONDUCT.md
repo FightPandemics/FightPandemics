@@ -22,15 +22,17 @@ We invite all those who participate in FightPandemics to help us foster a safe a
 - Trolling, insulting/derogatory comments, and personal or political attacks.
 - Inciting or threatening violence, including encouraging others to hurt themselves
 - The use of sexualized language or imagery and unwelcome sexual attention or advances.
+- Trying to deviate the attention away from FightPandemics and its goals.
+- Deleting other's people contribution without having previous communication.
 - False accusations or accusations without evidence.
-- Spam (unsolicited or frequently off-topic messages)
+- Spam (unsolicited or frequently off-topic messages).
 - Advocating for, or encouraging, any of the above behavior.
 
 ## 4. Consequences of Unacceptable Behavior
-Unacceptable behavior from any volunteer or community member will not be tolerated. If you are subject to or witness unacceptable behavior, or have any other concerns, please notify your team leads and @ManuAlzuru via slack or email (manuel@fightpandemics.com). We have the the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+Unacceptable behavior from any volunteer or community member will not be tolerated. If you are subject to or witness unacceptable behavior, or have any other concerns, please notify your team leads and @Manuel Gonzalez Alzuru🥑 via slack or email (manuel@fightpandemics.com). We have the the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
 ## 5. Addressing Grievances
-If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify @ManuAlzuru via slack or (manuel@fightpandemics.com) and/or the FightPandemics team leads with a concise description of your grievance.
+If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify @ManuAlzuru (manuel@fightpandemics.com) and the FightPandemics team with a concise description of your grievance.
 
 ## 6. Scope
 We expect all volunteers and community participants to abide by this Code of Conduct in all community channels, calls, events and in-person–as well as in all one-on-one communications pertaining to FightPandemics.

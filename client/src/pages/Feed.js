@@ -20,9 +20,13 @@ import {
   postsState,
 } from "hooks/reducers/feedReducers";
 
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import creatPost from "assets/icons/create-post.svg";
+import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
+
 // Constants
 import { theme, mq } from "constants/theme";
-import { BLACK, DARKER_GRAY, ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -34,10 +38,7 @@ import {
   ERROR_POSTS,
 } from "hooks/actions/feedActions";
 
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import creatPost from "assets/icons/create-post.svg";
-import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
+const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
 
@@ -60,7 +61,7 @@ const initialState = {
 };
 
 const SiderWrapper = styled(Sider)`
-  background-color: ${WHITE};
+  background-color: ${white};
   height: calc(100vh - 5rem);
   overflow-x: hidden;
   padding-top: 3.3rem;
@@ -78,7 +79,7 @@ const FiltersWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -88,16 +89,16 @@ const FiltersWrapper = styled.div`
     padding: 0;
     span {
       align-items: center;
-      border: 0.1rem solid ${ROYAL_BLUE};
+      border: 0.1rem solid ${royalBlue};
       border-radius: 50%;
-      color: ${ROYAL_BLUE};
+      color: ${royalBlue};
       display: flex;
       height: 4.2rem;
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
       svg {
-        fill: ${ROYAL_BLUE};
+        fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
       }
@@ -108,17 +109,17 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
-      border-left: 0.5rem solid ${WHITE};
-      color: ${DARKER_GRAY};
+      border-left: 0.5rem solid ${white};
+      color: ${darkerGray};
       font-size: ${theme.typography.size.large};
       &:hover {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
     .ant-menu-item-selected {
       background-color: transparent;
-      border-left: 0.5rem solid ${ROYAL_BLUE};
-      color: ${ROYAL_BLUE};
+      border-left: 0.5rem solid ${royalBlue};
+      color: ${royalBlue};
       font-weight: bold;
     }
   }
@@ -126,10 +127,10 @@ const MenuWrapper = styled(Menu)`
 
 const LayoutWrapper = styled(Layout)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${WHITE};
+    background-color: ${white};
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: #fbfbfd;
+    background-color: ${offWhite};
     min-height: calc(100vh - 5rem);
     .create-post,
     .filter-box {
@@ -156,7 +157,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};

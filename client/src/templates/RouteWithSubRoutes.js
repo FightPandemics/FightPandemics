@@ -13,7 +13,6 @@ const VERIFY_EMAIL = "/auth/verify-email";
 // handle "sub"-routes by passing them in a `routes`
 // prop to the component it renders.
 export const RouteWithSubRoutes = (route) => {
-
   const { emailVerified, isAuthenticated, path, props = {} } = route;
   const { loggedInOnly, notLoggedInOnly, tabIndex, mobiletabs } = props;
 

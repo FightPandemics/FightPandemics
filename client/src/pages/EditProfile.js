@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
+import { theme } from "constants/theme";
 import styled from "styled-components";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
@@ -8,10 +9,12 @@ import SubmitButton from "components/Button/SubmitButton";
 import Heading from "components/Typography/Heading";
 // dummy data props,context, redux etc
 
+const { royalBlue } = theme.colors;
+
 const editProfile = true;
 
 const ChangePicButton = styled.div`
-  color: #425af2;
+  color: ${royalBlue};
   margin-bottom: 3rem;
   text-align: center;
 `;
