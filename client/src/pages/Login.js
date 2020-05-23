@@ -352,26 +352,28 @@ const Login = ({ isLoginForm }) => {
             </form>
             <WhiteSpace />
             <WhiteSpace />
-            {isLoginForm ? (
-              <>
+            <div className="text-center">
+              {isLoginForm ? (
+                <>
+                  <p>
+                    <AuthLink to="/auth/forgot-password">
+                      Forgot password?
+                    </AuthLink>
+                  </p>
+                  <p>
+                    <AuthLink to="/auth/signup">
+                      Don't have an account? <u>Sign Up</u>
+                    </AuthLink>
+                  </p>
+                </>
+              ) : (
                 <p>
-                  <AuthLink to="/auth/forgot-password">
-                    Forgot password?
+                  <AuthLink to="/auth/login">
+                    Already have an account? <u>Sign In</u>
                   </AuthLink>
                 </p>
-                <p>
-                  <AuthLink to="/auth/signup">
-                    Don't have an account? <u>Sign Up</u>
-                  </AuthLink>
-                </p>
-              </>
-            ) : (
-              <p>
-                <AuthLink to="/auth/login">
-                  Already have an account? <u>Sign In</u>
-                </AuthLink>
-              </p>
-            )}
+              )}
+            </div>
             <WhiteSpace />
             <SectionDiv>
               {isLoginForm ? "Or Log in with" : "Or Sign up with"}
