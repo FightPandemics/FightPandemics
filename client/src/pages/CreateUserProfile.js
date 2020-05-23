@@ -173,7 +173,6 @@ const InputGroup = styled.div`
   --py: ${theme.typography.size.xxsmall};
   --my: ${theme.typography.size.xxxlarge};
 
-  color: ${theme.colors.royalBlue};
   margin: var(--my) 0 var(--my) 0;
 
   .address {
