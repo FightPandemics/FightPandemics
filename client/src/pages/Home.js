@@ -24,8 +24,8 @@ const StyledIntro = styled.div`
   }
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: ${royalBlue};
-    border-radius: 1rem;
+    background-image: ${theme.backgrounds.primary};
+    border-radius: 3px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
