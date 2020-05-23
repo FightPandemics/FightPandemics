@@ -427,10 +427,8 @@ async function routes(app) {
     "/:postId/comments",
     { preValidation: [app.authenticate], schema: createCommentSchema },
     async (req, reply) => {
-      const userId = req.userId;
-      const { parentId } = req.body;
-      const { postId } = req.params;
-      const { body: commentProps } = req;
+      const { userId, body: commentProps, params } = req;
+      const { postId } = params;
 
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
@@ -439,9 +437,9 @@ async function routes(app) {
       }
 
       // Assign postId and parent comment id (if present)
-      commentProps.postId = postId;
-      if (parentId) {
-        commentProps.parentId = parentId;
+      commentProps.postId = mongoose.Types.ObjectId(postId);
+      if ("parentId" in commentProps) {
+        commentProps.parentId = mongoose.Types.ObjectId(commentProps.parentId);
       }
 
       // Creates embedded author document
@@ -472,7 +470,7 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const userId = req.userId;
+      const { userId } = req;
       const { content } = req.body;
       const { commentId } = req.params;
 
@@ -480,7 +478,7 @@ async function routes(app) {
       if (err) {
         req.log.error("Failed retrieving comment", { err });
         throw app.httpErrors.internalServerError();
-      } else if (comment.author.id !== userId) {
+      } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -499,13 +497,13 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { userId } = req.userId;
+      const { userId } = req;
       const { commentId } = req.params;
       const [findErr, comment] = await app.to(Comment.findById(commentId));
       if (findErr) {
         req.log.error("Failed retrieving findErr", { findErr });
         throw app.httpErrors.internalServerError();
-      } else if (comment.author.id !== userId) {
+      } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -537,10 +535,10 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      if (req.params.userId !== req.userId) {
-        app.httpErrors.forbidden();
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
       }
-      const userId = req.userId;
+      const { userId } = req;
       const { commentId } = req.params;
 
       const [updateErr, updatedComment] = await app.to(
@@ -551,7 +549,8 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        throw app.httpErrors.notFound();
+        req.log.error("Failed liking comment", { updateErr });
+        throw app.httpErrors.internalServerError();
       }
 
       return {
@@ -565,10 +564,10 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      if (req.params.userId !== req.userId) {
-        app.httpErrors.forbidden();
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
       }
-      const userId = req.userId;
+      const { userId } = req;
       const { commentId } = req.params;
 
       const [updateErr, updatedComment] = await app.to(
@@ -579,7 +578,8 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        throw app.httpErrors.notFound();
+        req.log.error("Failed unliking comment", { updateErr });
+        throw app.httpErrors.internalServerError();
       }
 
       return {
