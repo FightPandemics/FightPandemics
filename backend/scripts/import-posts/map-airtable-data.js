@@ -12,6 +12,19 @@ const cleanEmail = (email) => {
   return emailRegexp.test(cleaned) && cleaned;
 };
 
+const cleanType = (airtableType) => {
+  switch (airtableType) {
+    case "Leisure":
+      return "Entertainment";
+    case "Other":
+      return "Others";
+    case "Research and Development":
+      return "R&D";
+    default:
+      return airtableType.replace(" / ", "/");
+  }
+};
+
 module.exports = (post, sourcedBy) => {
   const {
     android_app: playStore,
@@ -24,7 +37,7 @@ module.exports = (post, sourcedBy) => {
     post_language: language,
     post_name: title,
     post_objective: [objective],
-    post_type: types,
+    post_type: types = ["Others"],
     post_website: website,
     share_with: [visibility] = ["worldwide"],
     state,
@@ -59,7 +72,7 @@ module.exports = (post, sourcedBy) => {
     language,
     objective,
     title,
-    types,
+    types: types.map(cleanType),
     visibility: visibility === "Worlwide" ? "worldwide" : visibility, // spelling mistake not yet fixed in airtable base
   };
 };
