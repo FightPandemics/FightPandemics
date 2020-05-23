@@ -1,19 +1,21 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import TextInput from "components/Input/TextInput";
+
+import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
+import Marker from "assets/create-profile-images/location-marker.svg";
+import logo from "assets/logo.svg";
+import Logo from "components/Logo";
+import Input from "components/Input/BaseInput";
 import Checkbox from "components/Input/Checkbox";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import SubmitButton from "components/Button/SubmitButton";
 import { theme, mq } from "constants/theme";
-
-import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
-import Marker from "assets/create-profile-images/location-marker.svg";
-import Logo from "../components/Logo";
-import logo from "../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { inputStyles, labelStyles } from "constants/formStyles";
+import Label from "../components/Input/Label";
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -67,12 +69,13 @@ const Container = styled.div`
   }
 `;
 
+const InputWrapper = styled.div`
+  margin: 2.2rem auto;
+  width: 100%;
+  position: relative;
+`;
+
 const ProfileFormGroup = styled.form`
-  @media only screen and ${mq.phone.wide.max} {
-    h1 {
-      text-align: center !important;
-    }
-  }
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     width: 350px;
     h1 {
@@ -173,21 +176,6 @@ const InputGroup = styled.div`
   color: ${theme.colors.royalBlue};
   margin: var(--my) 0 var(--my) 0;
 
-  input {
-    background-color: transparent;
-    color: ${theme.colors.darkerGray};
-    font-size: ${theme.typography.size.xlarge};
-    margin-bottom: 3.4rem;
-    padding: var(--py) 0 var(--py) 0;
-    width: 100%;
-  }
-
-  label {
-    font-family: ${theme.typography.font.family.button};
-    font-size: ${theme.typography.size.large};
-    font-weight: 500;
-  }
-
   .address {
     input {
       margin-bottom: 0;
@@ -250,34 +238,58 @@ const CreateProfile = () => {
       <Flex className="form-container" direction="column">
         <WhiteSpace size="xl" />
         <ProfileFormGroup>
-          <Heading
-            level="1"
-            className="h2"
-            color={theme.colors.darkerGray}
-            fontweight="bold"
-          >
+          <Heading className="text-center" level={4}>
             Create your Profile
           </Heading>
           <InputGroup>
-            <TextInput label="E-mail" />
-            <TextInput label="First name" />
-            <TextInput label="Last name" />
+            <InputWrapper>
+              <Label htmlFor="email" style={labelStyles} label="E-mail" />
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                required
+                placeholder="Enter email address"
+                style={inputStyles}
+              />
+            </InputWrapper>
+
+            <InputWrapper>
+              <Label
+                htmlFor="firstName"
+                style={labelStyles}
+                label="First name"
+              />
+              <Input
+                type="text"
+                name="firstName"
+                id="firstName"
+                required
+                style={inputStyles}
+              />
+            </InputWrapper>
+
+            <InputWrapper>
+              <Label htmlFor="lastName" style={labelStyles} label="Last name" />
+              <Input
+                type="text"
+                name="lastName"
+                id="lastName"
+                required
+                style={inputStyles}
+              />
+            </InputWrapper>
+
             <div className="address">
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
-                  <TextInput label="Address" />
+                  <Input label="Address" />
                 </div>
               </DropdownMenu>
             </div>
           </InputGroup>
-          <CheckboxGroup
-            font={theme.typography.font.family.body}
-            description="I am traveling"
-          />
-          <CheckboxGroup
-            font={theme.typography.font.family.body}
-            description="Don't show my address"
-          />
+          <CheckboxGroup description="I am traveling" />
+          <CheckboxGroup description="Don't show my address" />
           <InputGroup>
             <TextLabel
               color={theme.colors.royalBlue}
