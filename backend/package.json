@@ -43,8 +43,8 @@
     "fastify-sensible": "^2.1.1",
     "fluent-schema": "^0.10.0",
     "http-errors": "^1.7.3",
-    "moment": "2.24.0",
-    "mongoose": "^5.9.10",
+    "moment": "2.25.0",
+    "mongoose": "^5.9.11",
     "node-cache": "^5.1.0"
   },
   "devDependencies": {
