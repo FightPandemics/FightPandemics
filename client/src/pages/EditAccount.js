@@ -4,10 +4,24 @@ import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
 import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
+import { getInitials } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
-import Heading from "components/Typography/Heading";
+import ProfilePic from "components/Picture/ProfilePic";
+import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
-
+import {
+  EditLayout,
+  TitlePictureWrapper,
+  FillEmptySpace,
+  CustomLink,
+  CustomForm,
+  CustomHeading,
+  ChangePicButton,
+  CustomSubmitButton,
+  OptionDiv,
+  FormLayout,
+} from "../components/EditProfile/EditComponents";
+import { mq } from "constants/theme";
 const Label = styled.label`
   color: ${(props) => props.inputColor || "#425AF2"};
   padding-left: ${(props) => props.paddingLeft || ""};
@@ -185,57 +199,74 @@ function EditAccount(props) {
       </>
     );
   };
+  const ProfilePicWrapper = styled.div`
+    display: none;
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1.3rem;
+    }
+  `;
 
   return (
-    <>
-      <Heading
-        style={{
-          marginBottom: "3rem",
-          marginTop: "2rem",
-          textAlign: "center",
-        }}
-        level={4}
-        className="h4"
-      >
-        Account Information
-      </Heading>
-      <form style={{ display: "flex", flexDirection: "column" }}>
-        {renderFormInputs()}
-        {renderNeighborhoodCheckBoxes()}
-        <Label>I want to</Label>
-        {renderHelp()}
-        <Label>I need</Label>
-        {renderNeedHelp()}
-        <SubmitButton
-          primary="true"
-          style={{ marginTop: "1rem", marginBottom: "1rem" }}
-          onClick={handleSubmit(onSubmit)}
-        >
-          Save Changes
-        </SubmitButton>
-        <div
-          style={{ display: "flex", marginTop: "1rem", marginBottom: "3rem" }}
-        >
-          <Controller
-            as={<Checkbox color="#646465" />}
-            defaultValue={false}
-            name={"policy"}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          ></Controller>
-          <Label
-            size="1rem"
-            weight="bolder"
-            marginTop="0"
-            paddingLeft="10px"
-            inputColor="#646464"
+    <EditLayout>
+      <TitlePictureWrapper>
+        <CustomHeading level={4} className="h4">
+          Account Information
+        </CustomHeading>
+        <FillEmptySpace />
+        <ProfilePicWrapper>
+          <ProfilePic
+            resolution={"7680px"}
+            noPic={true}
+            initials={getInitials(firstName, lastName)}
+          />
+          <ChangePicButton>Change</ChangePicButton>
+        </ProfilePicWrapper>
+      </TitlePictureWrapper>
+      <FormLayout>
+        <OptionDiv>
+          <CustomLink isSelected>
+            <Link to="/edit-account">Account Information</Link>
+          </CustomLink>
+          <CustomLink>
+            <Link to="/edit-profile">Profile Information</Link>
+          </CustomLink>
+        </OptionDiv>
+        <CustomForm style={{ display: "flex", flexDirection: "column" }}>
+          {renderFormInputs()}
+          {renderNeighborhoodCheckBoxes()}
+          <Label>I want to</Label>
+          {renderHelp()}
+          <Label>I need</Label>
+          {renderNeedHelp()}
+          <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+            Save Changes
+          </CustomSubmitButton>
+          <div
+            style={{ display: "flex", marginTop: "1rem", marginBottom: "3rem" }}
           >
-            By signing up, I agree to Fight Pandemics, Terms of Services and
-            Privacy Policy.
-          </Label>
-        </div>
-      </form>
-    </>
+            <Controller
+              as={<Checkbox color="#646465" />}
+              defaultValue={false}
+              name={"policy"}
+              control={control}
+              onChange={([event]) => event.target.checked}
+            ></Controller>
+            <Label
+              size="1rem"
+              weight="bolder"
+              marginTop="0"
+              paddingLeft="10px"
+              inputColor="#646464"
+            >
+              By signing up, I agree to Fight Pandemics, Terms of Services and
+              Privacy Policy.
+            </Label>
+          </div>
+        </CustomForm>
+      </FormLayout>
+    </EditLayout>
   );
 }
 
