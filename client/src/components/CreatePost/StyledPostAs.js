@@ -97,6 +97,9 @@ const Button = styled(BaseButton)`
 const CreateOrgLink = styled(Link)`
   display: block;
   color: ${colors.royalBlue};
+  &:hover {
+    color: ${colors.royalBlue};
+  }
 `;
 
 const Option = ({ img, text, path, onClick }) => (

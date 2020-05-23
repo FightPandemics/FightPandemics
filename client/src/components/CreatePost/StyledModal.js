@@ -83,7 +83,7 @@ export const ModalWrapper = styled(Modal)`
   }
 
   .ant-modal-body {
-    padding: 3.8rem 4rem 4.7rem 4rem;
+    padding: 2.2rem 3.3rem;
   }
 
   .ant-col > div > p {
@@ -96,10 +96,10 @@ export const ModalWrapper = styled(Modal)`
   .ant-col:hover > div {
     background-color: ${colors.royalBlue};
     color: ${colors.white};
-  }
 
-  .ant-col:hover > div > .icon {
-    filter: brightness(4);
+    .icon {
+      filter: brightness(4);
+    }
   }
 
   .icon {
@@ -109,36 +109,30 @@ export const ModalWrapper = styled(Modal)`
     transform: translate(-50%, 0);
   }
 
-  .ant-modal-body {
-    padding: 2.2rem 3.3rem;
-  }
+  .ant-tabs-nav {
+    .ant-tabs-tab {
+      padding: 0 0 1.2rem 0;
+      color: ${colors.darkerGray};
+    }
 
-  .ant-tabs-bar {
-    position: relative;
-    border-bottom: none;
-  }
+    .ant-tabs-tab.ant-tabs-tab-active {
+      color: ${colors.royalBlue};
+    }
 
-  .ant-tabs-nav .ant-tabs-tab {
-    padding: 0 0 1.2rem 0;
-  }
+    .ant-tabs-ink-bar {
+      width: 11.4rem;
+      height: 0.3rem;
+      background-color: ${colors.royalBlue};
+    }
 
-  .ant-tabs-nav-scroll .ant-tabs-nav .ant-tabs-tab-active,
-  .ant-tabs-nav-scroll .ant-tabs-nav .ant-tabs-tab:hover {
-    color: ${colors.royalBlue};
-  }
+    .ant-tabs-bar {
+      position: relative;
+      border-bottom: none;
+    }
 
-  .ant-tabs-nav .ant-tabs-ink-bar {
-    width: 11.4rem;
-    height: 0.3rem;
-    background-color: ${colors.royalBlue};
-  }
-
-  .ant-tabs-nav .ant-tabs-ink-bar-animated {
-    width: 11.4rem;
-  }
-
-  .ant-tabs-tabpane {
-    margin-top: 2rem;
+    .ant-tabs-tabpane {
+      margin-top: 2rem;
+    }
   }
 `;
 
