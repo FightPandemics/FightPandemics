@@ -4,15 +4,14 @@ import { NoticeBar } from "antd-mobile";
 
 import { theme, mq } from "../../constants/theme";
 
-const { colors } = theme;
 const { typography } = theme;
 const { xlarge, xxlarge, medium } = typography.size;
-const { royalBlue } = colors;
+const { black, royalBlue, red, white } = theme.colors;
 
 const EmergencyLine = styled(NoticeBar)`
   height: auto;
-  background-color: #d1222c;
-  color: #fff;
+  background-color: ${red};
+  color: ${white};
   margin-top: 3rem;
   position: relative;
   box-shadow: 0px 4px 1rem rgba(0, 0, 0, 0.05);
@@ -30,16 +29,16 @@ const EmergencyLine = styled(NoticeBar)`
     right: 2.4rem;
   }
   h4 {
-    color: #fff;
+    color: ${white};
     margin-bottom: 0;
   }
   h3 {
-    color: #fff;
+    color: ${white};
   }
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     border: 1px solid rgba(185, 185, 185, 0.5);
     padding: 2rem;
-    background-color: #fff;
+    background-color: ${white};
     height: auto;
     box-shadow: none;
     .am-notice-bar-operation {
@@ -47,7 +46,7 @@ const EmergencyLine = styled(NoticeBar)`
     }
     h4 {
       font-weight: bold;
-      color: #000;
+      color: ${black};
       font-size: ${medium};
     }
     h3 {

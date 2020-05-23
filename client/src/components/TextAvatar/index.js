@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { Avatar } from "antd";
+import { theme } from "constants/theme";
 
-import { ROYAL_BLUE, SELAGO } from "constants/colors";
+const { royalBlue, selago } = theme.colors;
 
 const TextAvatar = styled(Avatar)`
-  background: ${SELAGO};
-  border: 1px solid ${ROYAL_BLUE};
+  background: ${selago};
+  border: 1px solid ${royalBlue};
   border-radius: 50%;
-  color: ${ROYAL_BLUE};
+  color: ${royalBlue};
   display: block;
   height: 4rem;
   line-height: 4rem;
@@ -15,7 +16,7 @@ const TextAvatar = styled(Avatar)`
   width: 4rem;
 
   span {
-    color: ${ROYAL_BLUE};
+    color: ${royalBlue};
   }
 `;
 

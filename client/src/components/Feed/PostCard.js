@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // Constants
 import { theme, mq } from "constants/theme";
-import { DARK_GRAY } from "constants/colors";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
@@ -55,7 +54,7 @@ const PostCard = styled(Card)`
 
       svg {
         circle {
-          fill: ${DARK_GRAY};
+          fill: ${darkGray};
         }
       }
     }

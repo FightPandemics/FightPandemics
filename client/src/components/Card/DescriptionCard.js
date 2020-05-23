@@ -6,16 +6,23 @@ import { Card, WhiteSpace } from "antd-mobile";
 import { theme } from "../../constants/theme";
 
 const { colors, typography } = theme;
-const { primary, orangeRed, mintGreen } = colors;
+const {
+  primary,
+  orangeRed,
+  mintGreen,
+  lightGray,
+  lighterGray,
+  darkerGray,
+} = colors;
 const { medium, large } = typography.size;
 
 const HospitalCard = styled(Card)`
-  border: 1px solid #ddd;
+  border: 1px solid ${lightGray};
   transition: all 0.3s;
   padding: 1rem;
   border-radius: 2px;
   &:hover {
-    background-color: #f3f4fe;
+    background-color: ${lighterGray};
   }
   .am-card-header {
     margin-right: 0;
@@ -23,7 +30,7 @@ const HospitalCard = styled(Card)`
   .am-card-header-content {
     margin-right: 0;
     font-weight: bold;
-    color: #282828;
+    color: ${darkerGray};
     text-transform: uppercase;
     flex-basis: 65%;
   }
@@ -48,7 +55,7 @@ const HospitalCard = styled(Card)`
   }
   .am-card-footer-content {
     font-weight: 600;
-    color: #5970ec;
+    color: ${primary};
     margin-right: 0;
   }
   .am-card-footer-extra {

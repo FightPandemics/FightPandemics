@@ -5,11 +5,11 @@ import SearchInput from "../Input/SearchInput";
 
 import { theme, mq } from "../../constants/theme";
 const { typography, colors } = theme;
-const { mediumGray } = colors;
+const { white, mediumGray } = colors;
 const { large, xxxlarge } = typography.size;
 
 const ConfirmedCasesContainer = styled.div`
-  background-color: #fff;
+  background-color: ${white};
   border: 0.2px solid rgba(185, 185, 185, 0.5);
   padding: 4rem 3rem;
   margin-top: 4rem;
@@ -26,7 +26,7 @@ const ConfirmedCasesContent = styled.div`
   justify-content: space-around;
   margin-top: 6rem;
   div:not(:last-child) {
-    border-right: 0.1rem solid #ccc;
+    border-right: 0.1rem solid ${mediumGray};
   }
   div {
     padding: 0 5rem;

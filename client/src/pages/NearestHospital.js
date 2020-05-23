@@ -8,22 +8,22 @@ import CheckSymptomsBox from "../components/NearestHospital/CheckSymptomsBox";
 import { withRouter } from "react-router-dom";
 import { theme, mq } from "../constants/theme";
 
-const { colors } = theme;
+const { white, offWhite, royalBlue } = theme.colors;
 
 const NearestHospitalContainer = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #fbfbfd;
+  background-color: ${offWhite};
   display: flex;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block;
-    background-color: ${colors.white};
+    background-color: ${white};
   }
 `;
 
 const NearestHospitalSideBar = styled.div`
   flex-basis: 25%;
-  background-color: #fff;
+  background-color: ${white};
   min-height: 100vh;
   padding-right: 3.5rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -45,7 +45,7 @@ const NearestHospitalContentBox = styled.div`
 
 const ActiveLinkStyles = {
   fontWeight: "bold",
-  borderLeft: "4px solid #425af2",
+  borderLeft: `4px solid ${royalBlue}`,
   padding: ".4rem 2rem",
 };
 
