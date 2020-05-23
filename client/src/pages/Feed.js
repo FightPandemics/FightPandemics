@@ -288,7 +288,7 @@ const Feed = (props) => {
     postsDispatch({ type: FETCH_POSTS });
     axios.get(endpoint)
       .then(response => {
-        var posts =  response.data.reduce((obj, item) => (obj[item._id] = item, obj), []);
+        var posts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), []);
 
         postsDispatch({ type: SET_POSTS, posts });
       })
