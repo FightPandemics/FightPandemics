@@ -25,8 +25,8 @@ const EmergencyLine = styled(NoticeBar)`
   .am-notice-bar-operation {
     display: block;
     position: absolute;
-    top: 20px;
-    right: 24px;
+    top: 2rem;
+    right: 2.4rem;
   }
   h4 {
     color: ${white};
