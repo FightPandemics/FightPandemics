@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Tabs, Input } from "antd";
+import { Tabs } from "antd";
 import createPostSettings from "assets/data/createPostSettings";
 import { Divider, ModalWrapper } from "components/CreatePost/StyledModal";
 import OfferHelp from "components/CreatePost/Form/OfferHelp";
 import AskHelp from "components/CreatePost/Form/AskHelp";
 
 const { shareWith, expires } = createPostSettings;
-
-const { TextArea } = Input;
 
 const { TabPane } = Tabs;
 

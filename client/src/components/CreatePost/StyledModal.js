@@ -18,6 +18,24 @@ export const Section = styled.section`
   display: block;
   width: 100%;
   margin-bottom: 3rem;
+
+  .ant-input {
+    border-color: ${colors.lightGray};
+    color: ${colors.darkGray};
+    box-shadow: none;
+    font-family: ${typography.font.family.display};
+    font-size: ${typography.size.xsmall};
+    font-weight: 600;
+  }
+
+  textarea.ant-input {
+    font-family: ${typography.font.family.body};
+    font-weight: normal;
+  }
+
+  .ant-input::placeholder {
+    color: ${colors.darkGray};
+  }
 `;
 
 export const HeadWrapper = styled.div`
@@ -104,7 +122,8 @@ export const ModalWrapper = styled(Modal)`
     padding: 0 0 1.2rem 0;
   }
 
-  .ant-tabs-nav .ant-tabs-tab-active {
+  .ant-tabs-nav-scroll .ant-tabs-nav .ant-tabs-tab-active,
+  .ant-tabs-nav-scroll .ant-tabs-nav .ant-tabs-tab:hover {
     color: ${colors.royalBlue};
   }
 
