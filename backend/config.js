@@ -14,7 +14,8 @@ const configData = envSchema({
     .prop("GEO_SERVICE_URL", S.string().required())
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
-    .prop("PORT", S.number().default(8000).required()),
+    .prop("PORT", S.number().default(8000).required())
+    .prop("SENTRY_DSN", S.string()),
 });
 
 const config = {
@@ -26,6 +27,10 @@ const config = {
     state: configData.AUTH_STATE,
   },
   env: configData.NODE_ENV,
+  errorNotifier: {
+    url: configData.SENTRY_DSN,
+    environment: configData.NODE_ENV,
+  },
   geoService: {
     host: `http://${configData.GEO_SERVICE_URL}`,
   },
