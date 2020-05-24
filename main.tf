@@ -6,6 +6,11 @@ variable "fp_context" {
   type = string
 }
 
+variable "commit_hash" {
+  type = string
+  default = ""
+}
+
 data "aws_ssm_parameter" "db_host" {
   name = "/fp/database/host"
 }
@@ -79,6 +84,10 @@ module "main" {
     {
       name  = "SENTRY_DSN",
       value = data.aws_ssm_parameter.sentry_dsn.value
+    },
+    {
+      name  = "COMMIT_HASH",
+      value = var.commit_hash
     },
   ]
 }
