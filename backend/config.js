@@ -11,9 +11,9 @@ const configData = envSchema({
     .prop("AUTH_DOMAIN", S.string().required())
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
-    .prop("NODE_ENV", S.string().required())
     .prop("GEO_SERVICE_URL", S.string().required())
     .prop("MONGO_URI", S.string().required())
+    .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required()),
 });
 
