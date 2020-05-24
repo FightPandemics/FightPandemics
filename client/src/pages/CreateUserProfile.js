@@ -75,6 +75,10 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
+const SubLabel = styled.small`
+  color: ${theme.colors.green};
+`;
+
 const ProfileFormGroup = styled.form`
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     width: 350px;
@@ -192,7 +196,7 @@ const InputGroup = styled.div`
 
     label:after {
       content: "Enter address, zip code, or city";
-      color: #209d7f;
+      color: ${theme.colors.green};
       font-size: ${theme.typography.size.xsmall};
       font-family: ${theme.typography.font.family.body};
       margin-top: ${theme.typography.size.xsmall};
@@ -277,15 +281,23 @@ const CreateProfile = () => {
                 required
                 style={inputStyles}
               />
+              <SubLabel>Enter address, zip code, or city</SubLabel>
             </InputWrapper>
 
-            <div className="address">
+            <InputWrapper>
+              <Label htmlFor="address" style={labelStyles} label="Address" />
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
-                  <Input label="Address" />
+                  <Input
+                    type="text"
+                    name="address"
+                    id="address"
+                    required
+                    style={inputStyles}
+                  />
                 </div>
               </DropdownMenu>
-            </div>
+            </InputWrapper>
           </InputGroup>
           <CheckboxGroup description="I am traveling" />
           <CheckboxGroup description="Don't show my address" />
