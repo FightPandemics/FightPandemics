@@ -30,6 +30,10 @@ data "aws_ssm_parameter" "auth_client_secret" {
   name = "/fp/auth/client_secret"
 }
 
+data "aws_ssm_parameter" "sentry_dsn" {
+  name = "/fp/sentry/dsn"
+}
+
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
   image_tag  = var.env_name
@@ -71,6 +75,10 @@ module "main" {
     {
       name  = "NODE_ENV"
       value = var.env_name
+    },
+    {
+      name  = "SENTRY_DSN",
+      value = data.aws_ssm_parameter.sentry_dsn.value
     },
   ]
 }
