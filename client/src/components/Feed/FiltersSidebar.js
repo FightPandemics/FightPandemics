@@ -2,20 +2,20 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 
-// Antd 
-import { Drawer } from 'antd';
+// Antd
+import { Drawer } from "antd";
 
 // Local
 import FilterAccordion from "./FilterAccordion";
 import SubmitButton from "components/Button/SubmitButton";
 import { FeedContext } from "pages/Feed";
 
-// Constants
-import { theme } from "constants/theme";
-import { ROYAL_BLUE } from "constants/colors";
-
 // Icons
 import { ReactComponent as BackIcon } from "assets/icons/back.svg";
+
+// Constants
+import { theme } from "constants/theme";
+const { royalBlue } = theme.colors;
 
 const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
@@ -23,65 +23,52 @@ const DrawerWrapper = styled(Drawer)`
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
-
     button {
       border: none;
       background: transparent;
       cursor: pointer;
-
       svg {
         path {
-          fill: ${ROYAL_BLUE};
+          fill: ${royalBlue};
         }
       }
     }
-  } 
-
+  }
   .am-accordion {
     border: none;
-
     .am-accordion-item {
       margin: 0;
-
       &.filter-4 {
         display: none;
       }
-
       .am-accordion-header {
         font-family: ${theme.typography.font.family.display};
         font-size: ${theme.typography.size.large};
         font-weight: bold;
         padding: 0;
-
         i {
           height: 1.4rem;
           width: 1.4rem;
         }
       }
-
       .am-accordion-content-box {
         padding: 0;
       }
-
       .am-tag-normal {
         padding: 0 0.7rem;
       }
-
       .location-search {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
   }
-
   .confirm-buttons {
     .am-button {
       font-size: ${theme.typography.size.large};
       padding: 0 1rem;
-
       &.close-button {
         flex: 0 0 auto;
       }
-
       &.ok-button {
         flex: 0 0 13rem;
       }
@@ -101,12 +88,11 @@ const FiltersSidebar = () => {
       onClose={handleOnClose}
       visible={showFilters}
       getContainer={false}
-      style={{ position: 'absolute' }}
+      style={{ position: "absolute" }}
       width={290}
     >
       <div>
-        <button
-          onClick={handleOnClose}>
+        <button onClick={handleOnClose}>
           <BackIcon />
         </button>
         <FilterAccordion />

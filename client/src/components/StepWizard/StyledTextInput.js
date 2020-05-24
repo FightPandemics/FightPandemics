@@ -19,9 +19,10 @@ const StyledTextInput = styled(InputItem)`
       ${theme.form.input}
       color: ${theme.colors.darkGray};
       border: 0.1rem solid ${theme.colors.primary};
-      border-width: 0 0 0.1rem 0;
-      padding: 0.5rem 0;
-      margin: 0.5rem 0 1rem;
+      border-width: 0.1rem;
+      border-radius: 5px;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
     }
   }
 `;

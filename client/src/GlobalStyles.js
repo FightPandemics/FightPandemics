@@ -2,12 +2,18 @@ import { createGlobalStyle } from "styled-components";
 import { WHITE } from "./constants/colors";
 
 const globalStyles = createGlobalStyle`
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   background-color: ${WHITE};
   font-family: "Poppins", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,9 +25,16 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .text-center {
   text-align: center !important;
 }
+
+
 
 .app-drawer .am-drawer-sidebar {
   background-color: $white;

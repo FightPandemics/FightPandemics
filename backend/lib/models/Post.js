@@ -1,6 +1,5 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
-const { schema: authorSchema } = require("./Author");
 
 // -- Schema
 const postSchema = new Schema(
@@ -13,10 +12,10 @@ const postSchema = new Schema(
     },
     expireAt: Date,
     externalLinks: {
-      appStore: String,
-      email: String,
-      playStore: String,
-      website: String,
+      appStore: { trim: true, type: String },
+      email: { trim: true, type: String },
+      playStore: { trim: true, type: String },
+      website: { trim: true, type: String },
     },
     language: [String],
     likes: {

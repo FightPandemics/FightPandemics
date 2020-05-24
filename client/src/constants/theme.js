@@ -7,6 +7,12 @@ import {
   LIGHT_GRAY,
   LIGHTER_GRAY,
   SELAGO,
+  ORANGE_RED,
+  RED,
+  MINT_GREEN,
+  BLACK,
+  WHITE,
+  OFF_WHITE,
   TROPICAL_BLUE,
 } from "./colors";
 
@@ -47,6 +53,9 @@ const theme = {
       },
     },
   },
+  backgrounds: {
+    primary: "linear-gradient(337.81deg, #425AF2 3.41%, #677CF2 98.66%)",
+  },
   colors: {
     primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
@@ -57,6 +66,12 @@ const theme = {
     mediumGray: MEDIUM_GRAY,
     lightGray: LIGHT_GRAY,
     lighterGray: LIGHTER_GRAY,
+    orangeRed: ORANGE_RED,
+    red: RED,
+    mintGreen: MINT_GREEN,
+    black: BLACK,
+    white: WHITE,
+    offWhite: OFF_WHITE,
   },
   button: {
     fontFamily: "DM Sans",
@@ -65,7 +80,7 @@ const theme = {
       radius: "24px",
       color: "transparent",
     },
-    color: "#fff",
+    color: WHITE,
     padding: {
       vertical: "1rem",
     },
@@ -77,14 +92,14 @@ const theme = {
     },
     primary: {
       backgroundColor: ROYAL_BLUE,
-      color: "#fff",
+      color: WHITE,
     },
     primarylight: {
       backgroundColor: SELAGO,
       color: ROYAL_BLUE,
     },
     secondary: {
-      backgroundColor: "#fff",
+      backgroundColor: WHITE,
       color: ROYAL_BLUE,
       border: `0.1rem solid ${ROYAL_BLUE} !important`,
     },
@@ -113,7 +128,7 @@ const theme = {
   icon: {
     stroke: PRIMARY,
     light: {
-      stroke: "#fff",
+      stroke: WHITE,
     },
     dark: {
       stroke: PRIMARY,
@@ -129,7 +144,7 @@ const theme = {
       fontSize: "2rem",
     },
     button: {
-      color: "#fff",
+      color: WHITE,
       backgroundColor: ROYAL_BLUE,
       borderColor: ROYAL_BLUE,
     },
