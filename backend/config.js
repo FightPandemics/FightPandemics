@@ -11,6 +11,7 @@ const configData = envSchema({
     .prop("AUTH_DOMAIN", S.string().required())
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
+    .prop("COMMIT_HASH", S.string())
     .prop("GEO_SERVICE_URL", S.string().required())
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
@@ -30,6 +31,7 @@ const config = {
   errorNotifier: {
     url: configData.SENTRY_DSN,
     environment: configData.NODE_ENV,
+    release: configData.COMMIT_HASH,
   },
   geoService: {
     host: `http://${configData.GEO_SERVICE_URL}`,

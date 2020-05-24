@@ -32,6 +32,7 @@ function errorHandler(app, config, done) {
     Sentry.init({
       dsn: config.url,
       environment: config.environment,
+      release: config.release,
     });
     errorHandler = errorNotifierHandler;
   }
