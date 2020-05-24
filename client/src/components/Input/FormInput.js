@@ -1,4 +1,8 @@
 import React from "react";
+import { theme } from "constants/theme";
+
+const { black, orangeRed, primary, royalBlue } = theme.colors;
+
 export default ({
   inputTitle,
   name,
@@ -11,17 +15,17 @@ export default ({
     borderTopStyle: "hidden",
     borderLeftStyle: "hidden",
     borderRightStyle: "hidden",
-    borderColor: error ? "#FF5656" : "#5970EC",
+    borderColor: error ? `${orangeRed}` : `${primary}`,
     borderWidth: "thin",
     marginBottom: "2rem",
     marginTop: "0.4rem",
     paddingBottom: "0.5rem",
-    color: "#000000",
+    color: `${black}`,
   };
   return (
     <>
       {inputTitle && (
-        <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
+        <label style={{ color: error ? `${orangeRed}` : `${royalBlue}` }}>
           {inputTitle}
         </label>
       )}

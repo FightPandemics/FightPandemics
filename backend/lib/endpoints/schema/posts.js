@@ -24,8 +24,7 @@ const getPostsSchema = {
         .prop("objective", S.string().enum(POST_OBJECTIVES)),
     )
     .prop("limit", S.integer())
-    .prop("skip", S.integer())
-    .prop("userId", S.string()),
+    .prop("skip", S.integer()),
 };
 
 const createPostSchema = {

@@ -31,21 +31,28 @@ async function routes(app) {
   app.get(
     "/",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticateOptional],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req.query;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        throw app.httpErrors.notFound();
+      // TODO: handle optional user if authenticated
+      const { userId } = req;
+      let user;
+      let userErr;
+      if (userId) {
+        [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          throw app.httpErrors.forbidden();
+        }
       }
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
-        {
+      ];
+      if (user) {
+        filters.push({
           $or: [
             { visibility: "worldwide" },
             {
@@ -64,8 +71,8 @@ async function routes(app) {
               "author.location.city": user.location.city,
             },
           ],
-        },
-      ];
+        });
+      }
       /* eslint-enable sort-keys */
 
       // Additional filters
@@ -75,7 +82,6 @@ async function routes(app) {
       }
 
       // Unlogged user limitation for post content size
-      // TODO: how to check for logged/unlogged user?
       /* eslint-disable sort-keys */
       const contentProjection = user
         ? "$content"
@@ -93,51 +99,58 @@ async function routes(app) {
           };
       /* eslint-enable sort-keys */
 
-      const [postsErr, posts] = await app.to(
-        Post.aggregate([
-          {
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: user.location.coordinates,
-                  type: "Point",
+      const sortAndFilterSteps = user
+        ? [
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: user.location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
+          ]
+        : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
+
+      const aggregationPipleine = [
+        ...sortAndFilterSteps,
+        {
+          $lookup: {
+            as: "comments",
+            foreignField: "postId",
+            from: "comments",
+            localField: "_id",
           },
-          {
-            $lookup: {
-              as: "comments",
-              foreignField: "postId",
-              from: "comments",
-              localField: "_id",
+        },
+        {
+          $project: {
+            _id: true,
+            authorName: "$author.name",
+            authorType: "$author.type",
+            commentsCount: {
+              $size: { $ifNull: ["$comments", []] },
             },
-          },
-          {
-            $project: {
-              _id: true,
-              authorName: "$author.name",
-              authorType: "$author.type",
-              commentsCount: {
-                $size: "$comments",
-              },
-              content: contentProjection,
-              distance: true,
-              expireAt: true,
-              likesCount: {
-                $size: "$likes",
-              },
-              location: "$author.location",
-              title: true,
-              types: true,
-              visibility: true,
+            content: contentProjection,
+            distance: true,
+            expireAt: true,
+            likesCount: {
+              $size: { $ifNull: ["$likes", []] },
             },
+            location: "$author.location",
+            title: true,
+            types: true,
+            visibility: true,
           },
-          // TODO: paginate
-        ]),
+        },
+      ];
+
+      const [postsErr, posts] = await app.to(
+        Post.aggregate(aggregationPipleine),
       );
 
       if (postsErr) {

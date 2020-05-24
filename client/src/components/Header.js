@@ -14,7 +14,6 @@ import { theme, mq } from "../constants/theme";
 const { colors, typography } = theme;
 const { large } = typography.size;
 
-
 const BrandLink = styled(Link)`
   display: inline-flex;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
@@ -23,15 +22,15 @@ const BrandLink = styled(Link)`
 `;
 
 const StyledNavBar = styled(NavBar)`
-   height: 7rem;
-   margin-top: 0;
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     height: auto;
-     margin-top: .8rem;
-   }
-   .am-navbar-title {
-     display: none;
-   }
+  height: 7rem;
+  margin-top: 0;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: auto;
+    margin-top: 0.8rem;
+  }
+  .am-navbar-title {
+    display: none;
+  }
 `;
 
 const MenuToggle = styled(SvgIcon)`
@@ -42,65 +41,63 @@ const MenuToggle = styled(SvgIcon)`
   }
 `;
 
-
 const DesktopMenu = styled.div`
-   background-color: #fff;
-   display: flex;
-   align-items: center;
-   display: block;
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     display: none;
-   }
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  display: block;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
+  }
 `;
 
 const NavLinks = styled.div`
   align-self: flex-end;
   padding-top: 2rem;
-   ul {
-     list-style-type: none;
-     display: flex;
-     margin-bottom: 0rem;
-     margin-right: 5rem;
+  ul {
+    list-style-type: none;
+    display: flex;
+    margin-bottom: 0rem;
+    margin-right: 5rem;
 
-     .registerBtn {
-       color: ${colors.royalBlue};
-       border: 1px solid ${colors.royalBlue};
-       border-radius: 2rem;
-       padding: 0 .8rem;
-       margin-bottom: .2rem;
-       align-self: center;
-       .registerLink {
-          color: ${colors.primary}
-       }
-       .registerLink:hover {
-         font-weight: 500;
-       }
-     }
+    .registerBtn {
+      color: ${colors.royalBlue};
+      border: 1px solid ${colors.royalBlue};
+      border-radius: 2rem;
+      padding: 0 0.8rem;
+      margin-bottom: 0.2rem;
+      align-self: center;
+      .registerLink {
+        color: ${colors.primary};
+      }
+      .registerLink:hover {
+        font-weight: 500;
+      }
+    }
 
-     li {
-       font-size: ${large};
-       color: #282828;
-       a:not(.registerLink) {
-         color: #282828;
-         text-decoration: none;
-         padding: 1.2rem 1.4rem;
-         transition: all .2s;
-         border-bottom: 3px solid transparent;
-       }
-       a:hover:not(.registerLink)  {
-         font-weight: 600;
-         color: ${colors.royalBlue};
-         border-bottom: 3px solid ${colors.royalBlue};
-       }
-
-     }
-   }
+    li {
+      font-size: ${large};
+      color: #282828;
+      a:not(.registerLink) {
+        color: #282828;
+        text-decoration: none;
+        padding: 1.2rem 1.4rem;
+        transition: all 0.2s;
+        border-bottom: 3px solid transparent;
+      }
+      a:hover:not(.registerLink) {
+        font-weight: 600;
+        color: ${colors.royalBlue};
+        border-bottom: 3px solid ${colors.royalBlue};
+      }
+    }
+  }
 `;
 
 const activeStyles = {
   fontWeight: "600",
-  color: "#425AF2"
-}
+  color: "#425AF2",
+};
 
 export default ({ onMenuClick, ...props }) => {
   return (
@@ -119,27 +116,45 @@ export default ({ onMenuClick, ...props }) => {
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
-          <DesktopMenu>
-               <NavLinks>
-                    <ul>
-                        <li><NavLink activeStyle={activeStyles} to="/feed">Feed</NavLink></li>
-                        <li><NavLink activeStyle={activeStyles} to="/covid-info">COVID-info</NavLink></li>
-                          {props.isAuthenticated ? (
-                            <>
-                            <li><NavLink activeStyle={activeStyles} to="/profile">Profile</NavLink></li>
-                            </>
-                          ) : (
-                            <>
-                            <li><NavLink activeStyle={activeStyles} to="/auth/login">Login</NavLink></li>
-                            <li className="registerBtn">
-                               <NavLink className="registerLink" to="/auth/signup">Register</NavLink>
-                            </li>
-                            </>
-                          )}
-                    </ul>
-               </NavLinks>
+            <DesktopMenu>
+              <NavLinks>
+                <ul>
+                  <li>
+                    <NavLink activeStyle={activeStyles} to="/feed">
+                      Feed
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink activeStyle={activeStyles} to="/covid-info">
+                      COVID-info
+                    </NavLink>
+                  </li>
+                  {props.isAuthenticated ? (
+                    <>
+                      <li>
+                        <NavLink activeStyle={activeStyles} to="/profile">
+                          Profile
+                        </NavLink>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <NavLink activeStyle={activeStyles} to="/auth/login">
+                          Login
+                        </NavLink>
+                      </li>
+                      <li className="registerBtn">
+                        <NavLink className="registerLink" to="/auth/signup">
+                          Register
+                        </NavLink>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </NavLinks>
             </DesktopMenu>
-            </div>
+          </div>
         }
       />
     </div>

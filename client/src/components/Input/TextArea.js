@@ -1,9 +1,11 @@
 import { Input } from "antd";
 import styled from "styled-components";
-import { LIGHTER_GRAY } from "constants/colors";
+import { theme } from "constants/theme";
+
+const { lighterGray } = theme.colors;
 
 const TextArea = styled(Input.TextArea)`
-  background-color: ${LIGHTER_GRAY};
+  background-color: ${lighterGray};
   font-size: 1.4rem;
   color: black;
   resize: none;
