@@ -31,7 +31,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   .form-container {
-    background-color: #fbfbfd;
+    background-color: ${theme.colors.offWhite};
     width: 100%;
     @media only screen and (min-width: ${mq.tablet.narrow.minWidth}) {
       margin-left: 50%;
@@ -107,7 +107,7 @@ const CheckboxContainer = styled.div`
     margin-right: ${theme.typography.size.large};
   }
   span {
-    color: #646464;
+    color: ${theme.colors.darkGray};
     font-size: var(--xsmall);
     font-family: ${(props) => props.font};
   }
@@ -204,7 +204,7 @@ const InputGroup = styled.div`
   }
 
   .underline {
-    color: #209d7f;
+    color: ${theme.colors.green};
     font-size: ${theme.typography.size.xsmall};
     font-family: ${theme.typography.font.family.body};
     margin-top: ${theme.typography.size.xsmall};
