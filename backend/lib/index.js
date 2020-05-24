@@ -27,6 +27,7 @@ module.exports = function createApp(config) {
     return ajv.compile(schema);
   });
 
+  app.register(require("./plugins/error-handler"), config.errorNotifier);
   app.register(require("fastify-sensible"));
   app.register(require("fastify-oas"), {
     exposeRoute: true,
