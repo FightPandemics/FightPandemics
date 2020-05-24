@@ -28,6 +28,7 @@ const TextLabel = styled(Text)`
     font-size: ${(props) => props.size || theme.typography.size.medium};
     font-weight: ${(props) => props.weight || "normal"};
     display: ${(props) => (!props.block ? "" : "block")};
+    text-align: ${(props) => props.textAlign || "left"};
   }
 `;
 export default TextLabel;
