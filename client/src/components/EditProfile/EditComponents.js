@@ -3,20 +3,19 @@ import Heading from "../Typography/Heading";
 import { mq } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
 import {
-  DARK_GRAY,
   ROYAL_BLUE,
-  TROPICAL_BLUE,
   LIGHTER_GRAY,
   LIGHT_GRAY,
-  DARKER_GRAY,
+  BLACK,
+  WHITE,
 } from "../../constants/colors";
 
 export const EditLayout = styled.div`
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    padding: 0 15%;
+    padding: 3rem 15%;
     margin: 0 -25px;
-    background-color: #f9f9f9;
+    background-color: ${LIGHTER_GRAY};
   }
 `;
 
@@ -28,7 +27,7 @@ export const TitlePictureWrapper = styled.div`
 `;
 
 export const CustomLink = styled.div`
-  color: #000000;
+  color: ${BLACK};
   border: 0.1rem solid ${LIGHT_GRAY};
   border-radius: 0.3rem;
   padding: 2rem 3rem;
@@ -37,10 +36,10 @@ export const CustomLink = styled.div`
   white-space: nowrap;
   font-weight: bold;
   border-left-style: ${(props) => (props.isSelected ? "solid" : "")};
-  border-left-color: ${(props) => (props.isSelected ? "#425AF2" : "")};
+  border-left-color: ${(props) => (props.isSelected ? ROYAL_BLUE : "")};
   border-left-width: ${(props) => (props.isSelected ? "0.6rem" : "")};
   a[href] {
-    color: #000000;
+    color: ${BLACK};
   }
 `;
 
@@ -52,7 +51,7 @@ export const CustomForm = styled.form`
     width: 100%;
     border: 0.1rem solid ${LIGHT_GRAY};
     padding: 3rem 4rem;
-    background-color: #ffffff;
+    background-color: ${WHITE};
   }
 `;
 
@@ -69,7 +68,7 @@ export const CustomHeading = styled(Heading)`
 `;
 
 export const ChangePicButton = styled.div`
-  color: #425af2;
+  color: ${ROYAL_BLUE};
   margin-bottom: 3rem;
   text-align: center;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -81,9 +80,7 @@ export const ChangePicButton = styled.div`
 `;
 
 export const CustomSubmitButton = styled(SubmitButton)`
-  margin-top: 1 rem;
-  margin-bottom: 3 rem;
-
+  margin: 2rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     width: 30rem;
     align-self: center;
@@ -112,3 +109,50 @@ export const FillEmptySpace = styled.div`
     flex: 1;
   }
 `;
+
+export const Label = styled.label`
+  color: ${(props) => props.inputColor || ROYAL_BLUE};
+  padding-left: ${(props) => props.paddingLeft || ""};
+  margin-top: ${(props) => props.marginTop || "1.5rem"};
+  font-size: ${(props) => props.size || ""};
+  font-weight: ${(props) => props.weight || ""};
+  white-space: nowrap;
+`;
+
+export const ProfilePicWrapper = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.3rem;
+  }
+`;
+
+export const HelpWrapper = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+export const CheckBoxWrapper = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+`;
+export const CustomEditAccountHeader = styled.h4`
+  display: none;
+  margin-top: 1.7rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    font-size: 3.5rem;
+    font-weight: bold;
+  }
+`;
+export const ToggleHeading = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+
+const LocationIconWrapper = styled.div``;

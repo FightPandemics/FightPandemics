@@ -1,11 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitials } from "utils/userInfo";
-import { mq } from "constants/theme";
 import { Link } from "react-router-dom";
 import {
   FillEmptySpace,
@@ -19,14 +17,6 @@ import {
   OptionDiv,
   FormLayout,
 } from "../components/EditProfile/EditComponents";
-import {
-  DARK_GRAY,
-  ROYAL_BLUE,
-  TROPICAL_BLUE,
-  LIGHTER_GRAY,
-  LIGHT_GRAY,
-  DARKER_GRAY,
-} from "constants/colors";
 // dummy data props,context, redux etc
 const editProfile = true;
 

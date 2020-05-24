@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { mq } from "constants/theme";
-
+import SvgIcon from "../Icon/SvgIcon";
 const FormInput = styled.input`
   border-top-style: hidden;
   border-left-style: hidden;
@@ -16,6 +16,22 @@ const FormInput = styled.input`
     margin-top: 1rem;
     margin-bottom: 4rem;
   }
+  :last-of-type {
+    margin-bottom: 2rem;
+  }
+`;
+
+const Icon = styled(SvgIcon)`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    margin-right: 1rem;
+  }
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
 `;
 // const inputFieldStyle = {
 //   borderTopStyle: "hidden",
@@ -34,14 +50,24 @@ export default ({
   defaultValue,
   reference,
   error,
+  icon,
   ...props
 }) => {
   return (
     <>
-      {inputTitle && (
-        <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
-          {inputTitle}
-        </label>
+      {icon ? (
+        <IconWrapper>
+          <Icon src={icon} />
+          <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
+            {inputTitle || null}
+          </label>
+        </IconWrapper>
+      ) : (
+        inputTitle && (
+          <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
+            {inputTitle}
+          </label>
+        )
       )}
       <FormInput
         name={name}

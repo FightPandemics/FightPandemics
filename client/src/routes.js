@@ -87,16 +87,10 @@ const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
-    props: {
-      isEditProfile: true,
-    },
   },
   {
     path: "/edit-account",
     component: EditAccount,
-    props: {
-      isEditAccount: true,
-    },
   },
   {
     path: "/create-post",

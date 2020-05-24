@@ -2,13 +2,12 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
-import SubmitButton from "components/Button/SubmitButton";
-import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
+import locationIcon from "assets/icons/location.svg";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -20,15 +19,13 @@ import {
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
+  CheckBoxWrapper,
+  Label,
+  HelpWrapper,
+  ToggleHeading,
+  ProfilePicWrapper,
+  CustomEditAccountHeader,
 } from "../components/EditProfile/EditComponents";
-import { mq } from "constants/theme";
-const Label = styled.label`
-  color: ${(props) => props.inputColor || "#425AF2"};
-  padding-left: ${(props) => props.paddingLeft || ""};
-  margin-top: ${(props) => props.marginTop || "1.5rem"};
-  font-size: ${(props) => props.size || ""};
-  font-weight: ${(props) => props.weight || ""};
-`;
 
 function EditAccount(props) {
   // dummy data props,context, redux etc
@@ -38,14 +35,14 @@ function EditAccount(props) {
     lastName,
     email,
     country,
-    neighborhood,
+    address,
     shareInfoStatus,
     volunteerStatus,
     donateStatus,
     medicalHelpStatus,
     otherHelpStatus,
     traveling,
-    displayNeighborhood,
+    displayAddress,
   } = props.user;
   const { register, handleSubmit, control, errors } = useForm();
 
@@ -57,12 +54,13 @@ function EditAccount(props) {
   const userInfo = {
     // label name, variable name, value
     "E mail": ["email", email],
-    "* Name": ["name", firstName + " " + lastName],
-    "* Country": ["country", country],
-    "* Neighborhood": [
-      "neighborhood",
-      neighborhood,
-      "If you do not know your neighborhood, type in zip code or address to find it",
+    Name: ["name", firstName + " " + lastName],
+    Country: ["country", country],
+    Address: [
+      "address",
+      address,
+      "Enter address, zip code or city",
+      locationIcon,
     ],
   };
 
@@ -88,7 +86,7 @@ function EditAccount(props) {
   const renderHelp = () => {
     return Object.entries(helpSection).map(([key, value]) => {
       return (
-        <div key={key} style={{ margin: "1rem 0" }}>
+        <CheckBoxWrapper key={key}>
           <Controller
             as={<Checkbox />}
             defaultValue={value[1]}
@@ -98,7 +96,7 @@ function EditAccount(props) {
           >
             <Label inputColor="#000000">{key}</Label>
           </Controller>
-        </div>
+        </CheckBoxWrapper>
       );
     });
   };
@@ -106,15 +104,7 @@ function EditAccount(props) {
   const renderNeedHelp = () => {
     return Object.entries(needHelpSection).map(([key, value]) => {
       return (
-        <div
-          key={key}
-          style={{
-            margin: "1rem 0",
-            marginBottom: "-1rem",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <CheckBoxWrapper key={key}>
           <Controller
             as={Checkbox}
             defaultValue={value[1]}
@@ -127,7 +117,7 @@ function EditAccount(props) {
               {value[2]}
             </UnderLineDescription>
           </Controller>
-        </div>
+        </CheckBoxWrapper>
       );
     });
   };
@@ -149,6 +139,7 @@ function EditAccount(props) {
             defaultValue={value[1]}
             reference={register({ required: true })}
             error={!!errors[value[0]]}
+            icon={value[3]}
           />
           <UnderLineDescription marginTop={"-1.5rem"}>
             {value[2] || null}
@@ -157,18 +148,10 @@ function EditAccount(props) {
       );
     });
   };
-
-  const renderNeighborhoodCheckBoxes = () => {
+  const renderAddressCheckBoxes = () => {
     return (
-      <>
-        <div
-          style={{
-            margin: "0.5rem 0",
-            marginTop: "-1rem",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+      <HelpWrapper>
+        <CheckBoxWrapper>
           <Controller
             as={Checkbox}
             defaultValue={traveling}
@@ -178,42 +161,33 @@ function EditAccount(props) {
           >
             <Label inputColor="#646464">I am traveling</Label>
           </Controller>
-        </div>
-        <div
-          style={{
-            margin: "0.5rem 0",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        </CheckBoxWrapper>
+        <CheckBoxWrapper>
           <Controller
             as={Checkbox}
-            defaultValue={displayNeighborhood}
-            name="displayNeighborhood"
+            defaultValue={displayAddress}
+            name="displayAddress"
             control={control}
             onChange={([event]) => event.target.checked}
           >
-            <Label inputColor="#646464">Don't show my neighborhood</Label>
+            <Label inputColor="#646464">Don't show my address</Label>
           </Controller>
-        </div>
-      </>
+        </CheckBoxWrapper>
+      </HelpWrapper>
     );
   };
-  const ProfilePicWrapper = styled.div`
-    display: none;
-    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      display: flex;
-      flex-direction: column;
-      margin-top: 1.3rem;
-    }
-  `;
 
   return (
     <EditLayout>
       <TitlePictureWrapper>
-        <CustomHeading level={4} className="h4">
-          Account Information
-        </CustomHeading>
+        <CustomEditAccountHeader className="h4">
+          Edit Profile
+        </CustomEditAccountHeader>
+        <ToggleHeading>
+          <CustomHeading level={4} className="h4">
+            Account Information
+          </CustomHeading>
+        </ToggleHeading>
         <FillEmptySpace />
         <ProfilePicWrapper>
           <ProfilePic
@@ -233,37 +207,16 @@ function EditAccount(props) {
             <Link to="/edit-profile">Profile Information</Link>
           </CustomLink>
         </OptionDiv>
-        <CustomForm style={{ display: "flex", flexDirection: "column" }}>
+        <CustomForm>
           {renderFormInputs()}
-          {renderNeighborhoodCheckBoxes()}
+          {renderAddressCheckBoxes()}
           <Label>I want to</Label>
-          {renderHelp()}
+          <HelpWrapper>{renderHelp()}</HelpWrapper>
           <Label>I need</Label>
-          {renderNeedHelp()}
+          <HelpWrapper>{renderNeedHelp()}</HelpWrapper>
           <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
             Save Changes
           </CustomSubmitButton>
-          <div
-            style={{ display: "flex", marginTop: "1rem", marginBottom: "3rem" }}
-          >
-            <Controller
-              as={<Checkbox color="#646465" />}
-              defaultValue={false}
-              name={"policy"}
-              control={control}
-              onChange={([event]) => event.target.checked}
-            ></Controller>
-            <Label
-              size="1rem"
-              weight="bolder"
-              marginTop="0"
-              paddingLeft="10px"
-              inputColor="#646464"
-            >
-              By signing up, I agree to Fight Pandemics, Terms of Services and
-              Privacy Policy.
-            </Label>
-          </div>
         </CustomForm>
       </FormLayout>
     </EditLayout>
