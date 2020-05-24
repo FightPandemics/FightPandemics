@@ -302,7 +302,7 @@ const Feed = (props) => {
     axios
       .get(endpoint)
       .then((response) => {
-        var posts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), []);
+        const posts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), []);
 
         postsDispatch({ type: SET_POSTS, posts });
       })
