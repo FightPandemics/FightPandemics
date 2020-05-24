@@ -155,7 +155,7 @@ const AnswerStyles = styled.div`
   width: 100%;
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: ${typography.size.large};
-  border: 0.1rem solid ${theme.colors.royalBlue};
+  border: 0.1rem solid ${colors.royalBlue};
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
@@ -164,7 +164,7 @@ const AnswerStyles = styled.div`
   text-align: left;
   &:hover,
   &.selected {
-    background-color: ${theme.colors.royalBlue};
+    background-color: ${colors.royalBlue};
     color: ${colors.white};
   }
   strong {

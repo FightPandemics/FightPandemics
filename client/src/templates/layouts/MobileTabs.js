@@ -5,21 +5,21 @@ import { Tabs } from "antd-mobile";
 import { NavLink } from "react-router-dom";
 
 import { theme, mq } from "../../constants/theme";
-const { colors } = theme;
+const { black, darkGray, darkerGray } = theme.colors;
 
 const CustomLink = styled(NavLink)`
-  color: ${colors.darkGray};
+  color: ${darkGray};
   text-decoration: none;
   font-size: 1.4rem;
   line-height: normal;
   text-align: center;
   &:hover {
-    color: ${colors.black};
+    color: ${black};
   }
 `;
 
 const ActiveLinkStyles = {
-  color: colors.darkerGray,
+  color: `${darkerGray}`,
   fontWeight: "bold",
 };
 

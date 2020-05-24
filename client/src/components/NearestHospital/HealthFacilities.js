@@ -13,6 +13,7 @@ import NrMap from "../../pages/NrMap";
 import DescriptionCard from "../Card/DescriptionCard";
 
 const { colors, typography } = theme;
+const { darkerGray, white, primary, royalBlue } = colors;
 const { xxlarge } = typography.size;
 
 const HealthFacilitiesData = [
@@ -67,7 +68,7 @@ const HealthFacilities = styled.div`
   overflow-y: hidden;
   h2 {
     font-weight: bold;
-    color: #282828;
+    color: ${darkerGray};
   }
   div {
     margin-right: 2rem;
@@ -91,10 +92,10 @@ const ShareLocationContainer = styled.div`
   border-radius: 2px;
   margin-top: 4rem;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  background-color: ${colors.white};
+  background-color: ${white};
   h1 {
     font-size: ${xxlarge};
-    color: #282828;
+    color: ${darkerGray};
     text-align: center;
     padding: 0 5rem;
     font-weight: bold;
@@ -121,15 +122,15 @@ const SearchBarContainer = styled.div`
 const ShareLocation = styled.div`
   padding: 1rem;
   cursor: pointer;
-  color: ${colors.primary};
+  color: ${primary};
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     text-align: center;
   }
   &:hover {
-    color: ${colors.royalBlue};
+    color: ${royalBlue};
   }
   &:active {
-    color: ${colors.royalBlue};
+    color: ${royalBlue};
   }
 `;
 
@@ -142,7 +143,7 @@ const CasesContainer = styled.div`
 
 const shareIconStyles = {
   margin: "0 auto",
-  color: "#425AF2",
+  color: `${royalBlue}`,
   width: "11px",
   marginRight: ".8rem",
 };

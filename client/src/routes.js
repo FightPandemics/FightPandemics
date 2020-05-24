@@ -69,8 +69,8 @@ const routes = [
     component: NearestHospital,
     props: {
       mobiletabs: true,
-      tabIndex: 0
-    }
+      tabIndex: 0,
+    },
   },
   {
     path: "/find-help",
@@ -81,16 +81,16 @@ const routes = [
     component: SymptomsCheck,
     props: {
       mobiletabs: true,
-      tabIndex: 1
-    }
+      tabIndex: 1,
+    },
   },
   {
     path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
-      tabIndex: 2
-    }
+      tabIndex: 2,
+    },
   },
   {
     path: "/profile",

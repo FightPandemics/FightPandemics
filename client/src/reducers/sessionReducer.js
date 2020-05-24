@@ -1,7 +1,4 @@
-import {
-  AUTH_LOGOUT,
-  AUTH_SUCCESS,
-} from "constants/action-types";
+import { AUTH_LOGOUT, AUTH_SUCCESS } from "constants/action-types";
 
 const initialState = {
   accessToken: null,

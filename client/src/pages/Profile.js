@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
-import { DARK_GRAY } from "constants/colors";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -26,10 +25,12 @@ import twitterBlue from "assets/icons/social-twitter-blue.svg";
 const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 
+const { darkGray, royalBlue, white, primary } = theme.colors;
+
 const SectionHeader = (props) => (
   <Heading
     style={{
-      color: "#939393",
+      color: `${darkGray}`,
       fontWeight: "lighter",
       fontSize: "1.5rem",
     }}
@@ -37,13 +38,13 @@ const SectionHeader = (props) => (
   />
 );
 const EditIcon = styled(SvgIcon)`
-  color: #425af2;
+  color: ${royalBlue};
   align-self: flex-end;
   margin-right: 2rem;
   margin-top: 2rem;
 `;
 const MenuIcon = styled(SvgIcon)`
-  color: #ffffff;
+  color: ${white};
   margin-right: 2rem;
   margin-top: 3rem;
   float: right;
@@ -52,16 +53,16 @@ const BackgroundHeader = styled.div`
   height: 23vh;
   left: 0;
   right: 0;
-  background-color: #425af2;
+  background-color: ${royalBlue};
   border-bottom-right-radius: 30px;
   position: relative;import { Link } from "react-router-dom";
 `;
 const AboutDescription = styled.div`
-  background-color: #ffffff;
+  background-color: ${white};
   borderradius: 5px;
   width: 100%;
   font-size: 1.2rem;
-  color: #939393;
+  color: ${darkGray};
   padding: 0 2.5rem;
 `;
 const ProfileLayout = styled.div`
@@ -83,7 +84,7 @@ const HelpContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  border: 0.1rem solid #6c80ff;
+  border: 0.1rem solid ${primary};
   border-radius: 0.2rem;
   text-align: center;
   align-items: center;
@@ -167,7 +168,7 @@ const Profile = (props) => {
         </TextLabel>
         <TextLabel
           block="true"
-          color={DARK_GRAY}
+          color={darkGray}
           size={theme.typography.size.medium}
         >
           {email}
@@ -205,9 +206,8 @@ const Profile = (props) => {
 };
 
 //styling
-
 const userInfoStyle = {
-  backgroundColor: "#FFFFFF",
+  backgroundColor: `${white}`,
   marginTop: "-13vh",
   left: "0",
   right: "0",
