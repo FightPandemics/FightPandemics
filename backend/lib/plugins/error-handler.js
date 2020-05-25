@@ -1,18 +1,18 @@
 const fp = require("fastify-plugin");
 const Sentry = require("@sentry/node");
 
-// Default Fastify error handler
-// https://github.com/fastify/fastify/blob/5bc406d4c6677131237f85b6ae69fe9e34d4b8dd/lib/context.js#L29
+// Default Fastify-Sensible error handler
+// https://github.com/fastify/fastify-sensible/blob/5eec059b2a77579f75bafc91e12f60fb90b6dab5/index.js#L46
 function defaultErrorHandler(error, request, reply) {
-  if (reply.statusCode >= 500) {
-    reply.log.error(
-      { req: request, res: reply, err: error },
-      error && error.message,
-    );
-  } else if (reply.statusCode >= 400) {
-    reply.log.info({ res: reply, err: error }, error && error.message);
+  if (
+    reply.raw.statusCode === 500 &&
+    error.explicitInternalServerError !== true
+  ) {
+    request.log.error(error);
+    reply.send(new Error("Something went wrong"));
+  } else {
+    reply.send(error);
   }
-  reply.send(error);
 }
 
 function errorNotifierHandler(error, request, reply) {
