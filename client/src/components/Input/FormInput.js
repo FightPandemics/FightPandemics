@@ -11,7 +11,7 @@ const FormInput = styled.input`
   margin-bottom: 2rem;
   margin-top: 0.4rem;
   padding-bottom: 0.5rem;
-  color: ${theme.colors.white};
+  color: ${theme.colors.black};
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin-top: 1rem;
     margin-bottom: 4rem;

@@ -16,6 +16,7 @@ export const EditLayout = styled.div`
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: auto;
+    padding: 0 5%;
   }
 `;
 
@@ -23,6 +24,22 @@ export const TitlePictureWrapper = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
     flex-direction: row;
+  }
+`;
+
+export const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    border: 0.1rem solid ${colors.lightGray};
+    padding: 3rem 4rem;
+    background-color: ${colors.white};
+  }
+  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
+    border: 0.1rem solid ${colors.lightGray};
+    padding: 3rem 4rem;
+    min-width: 620px;
+    background-color: ${colors.white};
   }
 `;
 
@@ -41,11 +58,6 @@ export const CustomLink = styled.div`
   a[href] {
     color: ${colors.black};
   }
-`;
-
-export const CustomForm = styled.form`
-  display: flex;
-  flex-direction: ;
 `;
 
 export const CustomHeading = styled(Heading)`
@@ -94,6 +106,7 @@ export const FormLayout = styled.div`
     display: flex;
     flex-direction: row;
     margin-bottom: 10rem;
+    width: 100%;
   }
 `;
 

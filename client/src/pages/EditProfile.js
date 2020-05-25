@@ -36,7 +36,7 @@ function EditProfile(props) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // make a put/patch request to backend to update users profile information
   };
 
