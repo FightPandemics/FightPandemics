@@ -7,7 +7,11 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
+import { ORANGE_RED, WHITE } from "constants/colors";
+import { inputStyles, labelStyles } from "constants/formStyles";
+import { theme, mq } from "constants/theme";
 import { PASSWORD_MIN_LENGTH } from "config";
 import {
   AUTH_FORM_LOGIN,
@@ -21,13 +25,9 @@ import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
-import { inputStyles, labelStyles } from "constants/formStyles";
-// import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
-import Heading from "components/Typography/Heading";
-import { ORANGE_RED, WHITE } from "constants/colors";
-import { theme, mq } from "constants/theme";
 import { setAuthToken } from "utils/auth-token";
+import { validateEmail } from "utils/validators";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -292,7 +292,7 @@ const Login = ({ isLoginForm }) => {
                   id="email"
                   required
                   placeholder="Enter email address"
-                  ref={register}
+                  ref={register({ validate: validateEmail })}
                   style={inputStyles}
                 />
               </InputWrapper>

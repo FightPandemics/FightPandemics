@@ -1,6 +1,7 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
-import React from "react";
+import React, { useReducer } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,12 +11,18 @@ import logo from "assets/logo.svg";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
 import Checkbox from "components/Input/Checkbox";
+import Label from "components/Input/Label";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import SubmitButton from "components/Button/SubmitButton";
 import { theme, mq } from "constants/theme";
 import { inputStyles, labelStyles } from "constants/formStyles";
-import Label from "../components/Input/Label";
+import { CREATE_USER, CREATE_USER_ERROR } from "hooks/actions/userActions";
+import {
+  createUserFormReducer,
+  initialState,
+} from "hooks/reducers/userReducers";
+import { validateEmail } from "utils/validators";
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -226,6 +233,13 @@ const Submit = styled(SubmitButton)`
 `;
 
 const CreateProfile = () => {
+  const { formState, getValues, handleSubmit, register } = useForm({
+    mode: "change",
+  });
+  const [createUserFormState, createUserFormDispatch] = useReducer(
+    createUserFormReducer,
+    initialState,
+  );
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -251,8 +265,7 @@ const CreateProfile = () => {
                 type="email"
                 name="email"
                 id="email"
-                required
-                placeholder="Enter email address"
+                disabled
                 style={inputStyles}
               />
             </InputWrapper>
