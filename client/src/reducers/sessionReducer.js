@@ -4,6 +4,7 @@ const initialState = {
   accessToken: null,
   isAuthenticated: false,
   emailVerified: false,
+  user: null,
 };
 
 function sessionReducer(state = initialState, action) {
@@ -13,7 +14,9 @@ function sessionReducer(state = initialState, action) {
         ...state,
         accessToken: action.payload.token,
         emailVerified: action.payload.emailVerified,
+        email: action.payload.email,
         isAuthenticated: true,
+        user: action.payload.user,
       };
     case AUTH_LOGOUT:
       return {
