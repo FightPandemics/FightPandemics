@@ -5,8 +5,6 @@ import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 
-const { TabPane } = Tabs;
-
 const OfferHelp = ({
   formData,
   renderError,
