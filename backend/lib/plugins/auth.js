@@ -17,6 +17,12 @@ const cache = new NodeCache({
   useClones: false,
 });
 
+const checkAuth = async (req) => {
+  await req.jwtVerify();
+  const { user } = req;
+  req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
+};
+
 const authPlugin = async (app) => {
   app.register(fastifyJwt, {
     algorithms: ["RS256"],
@@ -30,13 +36,21 @@ const authPlugin = async (app) => {
     }),
   });
 
+  app.decorateRequest("userId", null);
+
   app.decorate("authenticate", async (req, reply) => {
     try {
-      await req.jwtVerify();
-      const { user } = req;
-      req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
+      await checkAuth(req);
     } catch (err) {
       reply.send(err);
+    }
+  });
+
+  app.decorate("authenticateOptional", async (req) => {
+    try {
+      await checkAuth(req);
+    } catch (err) {
+      req.userId = null;
     }
   });
 

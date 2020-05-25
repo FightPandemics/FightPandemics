@@ -6,7 +6,7 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 
 const { typography } = theme;
-const { black, royalBlue, white } = theme.colors;
+const { black, royalBlue, white, offWhite } = theme.colors;
 
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const needHelpActive = require("assets/thermometer-selected.svg");
@@ -41,6 +41,7 @@ const StyledIntro = styled.div`
 
 const MainContainer = styled.div`
   @media only screen and ${mq.tablet.narrow.min} {
+    background: ${offWhite};
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-left: -2.5rem;

@@ -8,9 +8,9 @@ const StyledLabel = styled.label`
   color: ${royalBlue};
 `;
 
-const Label = ({ label, style }) => (
-  <StyledLabel>
-    <p style={style}>{label}</p>
+const Label = ({ label, htmlFor, style }) => (
+  <StyledLabel htmlFor={htmlFor} style={style}>
+    {label}
   </StyledLabel>
 );
 

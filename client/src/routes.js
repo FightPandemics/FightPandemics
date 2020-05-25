@@ -14,6 +14,8 @@ import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
+import CreatePost from "./pages/CreatePost";
+import CreateUserProfile from "./pages/CreateUserProfile";
 
 const routes = [
   {
@@ -102,6 +104,15 @@ const routes = [
   {
     path: "/edit-account",
     component: EditAccount,
+  },
+  {
+    path: "/create-post",
+    component: CreatePost,
+  },
+  {
+    path: "/create-profile",
+    component: CreateUserProfile,
+    layout: "navless",
   },
   {
     path: "/terms-conditions",
