@@ -21,14 +21,12 @@ const AddTags = ({ filters, addTag, selected }) => {
         <ButtonTag
           className={
             "tag-selectable " +
-            (selected.length &&
-              selected.includes(filter)
-              ? "tag-selected"
-              : "")
+            (selected.length && selected.includes(filter) ? "tag-selected" : "")
           }
           onClick={addTag(filter)}
           label={filter}
-          key={idx}>
+          key={idx}
+        >
           {filter}
         </ButtonTag>
       ))}
