@@ -45,7 +45,6 @@ async function routes(app) {
     },
   );
 
-  // todo: add "password confirmation" check
   app.post(
     "/signup",
     { preHandler: [app.getServerToken], schema: signupSchema },
