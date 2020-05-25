@@ -375,7 +375,7 @@ const Login = ({ isLoginForm }) => {
               )}
             </div>
             <WhiteSpace />
-            <SectionDiv>
+            <SectionDiv className="text-center">
               {isLoginForm ? "Or Log in with" : "Or Sign up with"}
             </SectionDiv>
             <WhiteSpace />
@@ -395,13 +395,14 @@ const Login = ({ isLoginForm }) => {
             >
               <ButtonText>Gmail</ButtonText>
             </SocialButton>
-            <SocialButton
+            {/** temporarily disable twitter for MVP v1
+             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={twitter} />}
               onClick={() => handleSocialLogin("twitter")}
             >
               <ButtonText>Twitter</ButtonText>
-            </SocialButton>
+            </SocialButton>**/}
             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={linkedin} />}
