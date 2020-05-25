@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Modal, Tabs, Input } from "antd";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import BaseSelector from "components/Selector/Selector";
 import SubmitButton from "components/Button/SubmitButton";
 const { colors, typography } = theme;
@@ -74,7 +74,7 @@ export const Title = styled.span`
 
 export const ModalWrapper = styled(Modal)`
   .ant-modal-content {
-    width: 56.4rem;
+    max-width: 56.4rem;
     border-radius: 1rem;
   }
 
@@ -136,14 +136,18 @@ export const ModalWrapper = styled(Modal)`
   }
 `;
 
-export const SubTitle = styled.span`
+export const SubTitle = styled.p`
   font-family: ${typography.font.family.display};
   font-style: normal;
   font-weight: normal;
   font-size: 1.1rem;
   line-height: 140%;
-  margin-left: 2.8rem;
-  margin-right: 3rem;
+  margin: 0 3rem 2rem 2.8rem;
+
+  @media screen and (min-width: ${mq.phone.wide.minWidth}) {
+    margin-bottom: 0;
+    display: inline-block;
+  }
 `;
 
 export const Selector = styled(BaseSelector)``;
