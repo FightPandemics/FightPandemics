@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -175,7 +176,11 @@ const HeaderWrapper = styled.div`
 `;
 
 const Feed = () => {
-  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+  const { id } = useParams();
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+    createPostModal: id === "create-post",
+  });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const {
