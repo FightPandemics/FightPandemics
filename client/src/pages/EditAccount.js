@@ -25,6 +25,7 @@ import {
   ToggleHeading,
   ProfilePicWrapper,
   CustomEditAccountHeader,
+  Background,
 } from "../components/EditProfile/EditComponents";
 
 function EditAccount(props) {
@@ -178,48 +179,50 @@ function EditAccount(props) {
   };
 
   return (
-    <EditLayout>
-      <TitlePictureWrapper>
-        <CustomEditAccountHeader className="h4">
-          Edit Profile
-        </CustomEditAccountHeader>
-        <ToggleHeading>
-          <CustomHeading level={4} className="h4">
-            Account Information
-          </CustomHeading>
-        </ToggleHeading>
-        <FillEmptySpace />
-        <ProfilePicWrapper>
-          <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
-            initials={getInitials(firstName, lastName)}
-          />
-          <ChangePicButton>Change</ChangePicButton>
-        </ProfilePicWrapper>
-      </TitlePictureWrapper>
-      <FormLayout>
-        <OptionDiv>
-          <CustomLink isSelected>
-            <Link to="/edit-account">Account Information</Link>
-          </CustomLink>
-          <CustomLink>
-            <Link to="/edit-profile">Profile Information</Link>
-          </CustomLink>
-        </OptionDiv>
-        <CustomForm>
-          {renderFormInputs()}
-          {renderAddressCheckBoxes()}
-          <Label>I want to</Label>
-          <HelpWrapper>{renderHelp()}</HelpWrapper>
-          <Label>I need</Label>
-          <HelpWrapper>{renderNeedHelp()}</HelpWrapper>
-          <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-            Save Changes
-          </CustomSubmitButton>
-        </CustomForm>
-      </FormLayout>
-    </EditLayout>
+    <Background>
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomEditAccountHeader className="h4">
+            Edit Profile
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              Account Information
+            </CustomHeading>
+          </ToggleHeading>
+          <FillEmptySpace />
+          <ProfilePicWrapper>
+            <ProfilePic
+              resolution={"7680px"}
+              noPic={true}
+              initials={getInitials(firstName, lastName)}
+            />
+            <ChangePicButton>Change</ChangePicButton>
+          </ProfilePicWrapper>
+        </TitlePictureWrapper>
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink isSelected>
+              <Link to="/edit-account">Account Information</Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to="/edit-profile">Profile Information</Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            {renderFormInputs()}
+            {renderAddressCheckBoxes()}
+            <Label>I want to</Label>
+            <HelpWrapper>{renderHelp()}</HelpWrapper>
+            <Label>I need</Label>
+            <HelpWrapper>{renderNeedHelp()}</HelpWrapper>
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              Save Changes
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
+    </Background>
   );
 }
 

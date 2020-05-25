@@ -16,6 +16,7 @@ import {
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
+  Background,
 } from "../components/EditProfile/EditComponents";
 // dummy data props,context, redux etc
 const editProfile = true;
@@ -64,42 +65,44 @@ function EditProfile(props) {
   };
 
   return (
-    <EditLayout>
-      <TitlePictureWrapper>
-        <CustomHeading level={4} className="h4">
-          {editProfile ? "Edit Profile" : "Complete Profile"}
-        </CustomHeading>
-        <FillEmptySpace />
-        <ProfilePic
-          resolution={"7680px"}
-          noPic={true}
-          initials={getInitials(firstName, lastName)}
-        />
-      </TitlePictureWrapper>
-      <ChangePicButton>Change</ChangePicButton>
-      <FormLayout>
-        <OptionDiv>
-          <CustomLink>
-            <Link to="/edit-account">Account Information</Link>
-          </CustomLink>
-          <CustomLink isSelected>
-            <Link to="/edit-profile">Profile Information</Link>
-          </CustomLink>
-        </OptionDiv>
-        <CustomForm>
-          <FormInput
-            inputTitle="Self-introduction"
-            name="about"
-            defaultValue={about}
-            reference={register({ maxLength: 160 })}
+    <Background>
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomHeading level={4} className="h4">
+            {editProfile ? "Edit Profile" : "Complete Profile"}
+          </CustomHeading>
+          <FillEmptySpace />
+          <ProfilePic
+            resolution={"7680px"}
+            noPic={true}
+            initials={getInitials(firstName, lastName)}
           />
-          {renderFormInputs()}
-          <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-            Save Changes
-          </CustomSubmitButton>
-        </CustomForm>
-      </FormLayout>
-    </EditLayout>
+        </TitlePictureWrapper>
+        <ChangePicButton>Change</ChangePicButton>
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink>
+              <Link to="/edit-account">Account Information</Link>
+            </CustomLink>
+            <CustomLink isSelected>
+              <Link to="/edit-profile">Profile Information</Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            <FormInput
+              inputTitle="Self-introduction"
+              name="about"
+              defaultValue={about}
+              reference={register({ maxLength: 160 })}
+            />
+            {renderFormInputs()}
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              Save Changes
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
+    </Background>
   );
 }
 

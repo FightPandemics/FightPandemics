@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
 import SvgIcon from "../Icon/SvgIcon";
 const FormInput = styled.input`
   border-top-style: hidden;
@@ -11,7 +11,7 @@ const FormInput = styled.input`
   margin-bottom: 2rem;
   margin-top: 0.4rem;
   padding-bottom: 0.5rem;
-  color: #000000;
+  color: ${theme.colors.white};
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin-top: 1rem;
     margin-bottom: 4rem;
@@ -27,11 +27,6 @@ const Icon = styled(SvgIcon)`
     display: initial;
     margin-right: 1rem;
   }
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  align-items: baseline;
 `;
 // const inputFieldStyle = {
 //   borderTopStyle: "hidden",
@@ -56,12 +51,12 @@ export default ({
   return (
     <>
       {icon ? (
-        <IconWrapper>
+        <div style={{ display: "flex", alignItems: "baseline" }}>
           <Icon src={icon} />
           <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
             {inputTitle || null}
           </label>
-        </IconWrapper>
+        </div>
       ) : (
         inputTitle && (
           <label style={{ color: error ? "#FF5656" : "#425AF2" }}>

@@ -3,14 +3,8 @@ import Heading from "../Typography/Heading";
 import SvgIcon from "../Icon/SvgIcon";
 import { Drawer } from "antd";
 import TextLabel from "components/Typography/TextLabel";
-import { mq } from "../../constants/theme";
-import {
-  DARK_GRAY,
-  ROYAL_BLUE,
-  WHITE,
-  LIGHTER_GRAY,
-  BLACK,
-} from "../../constants/colors";
+import { mq, theme } from "../../constants/theme";
+const { colors } = theme;
 
 export const CustomDrawer = styled(Drawer)`
   .ant-drawer-content {
@@ -22,7 +16,7 @@ export const CustomDrawer = styled(Drawer)`
 export const DrawerHeader = styled.div`
   margin: 2rem 0;
   a[href] {
-    color: ${BLACK};
+    color: ${colors.black};
     font-size: 1.7rem;
   }
 `;
@@ -31,7 +25,7 @@ export const SectionHeader = styled(Heading)`
   &.ant-typography {
     display: flex;
     align-items: center;
-    color: ${DARK_GRAY};
+    color: ${colors.darkGray};
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
@@ -62,7 +56,7 @@ export const CreatePostIcon = styled(SvgIcon)`
 export const CreatePostDiv = styled.div`
   display: none;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    color: ${BLACK};
+    color: ${colors.black};
     display: initial;
     margin-right: 1rem;
   }
@@ -115,7 +109,7 @@ export const NameDiv = styled(TextLabel)`
 `;
 export const LocationMobileDiv = styled(TextLabel)`
   align-self: center;
-  color: ${DARK_GRAY};
+  color: ${colors.darkGray};
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
@@ -127,12 +121,12 @@ export const LocationDesktopDiv = styled(TextLabel)`
     margin-top: 1rem;
     align-self: flex-start;
     &.ant-typography {
-      color: ${DARK_GRAY};
+      color: ${colors.darkGray};
     }
   }
 `;
 export const EditIcon = styled(SvgIcon)`
-  color: ${ROYAL_BLUE};
+  color: ${colors.royalBlue};
   align-self: flex-end;
   margin-right: 2rem;
   margin-top: 2rem;
@@ -141,7 +135,7 @@ export const EditIcon = styled(SvgIcon)`
   }
 `;
 export const MenuIcon = styled(SvgIcon)`
-  color: ${WHITE};
+  color: ${colors.white};
   margin-right: 2rem;
   margin-top: 3rem;
   float: right;
@@ -150,7 +144,7 @@ export const BackgroundHeader = styled.div`
   height: 23vh;
   left: 0;
   right: 0;
-  background-color: ${ROYAL_BLUE};
+  background-color: ${colors.royalBlue};
   border-bottom-right-radius: 30px;
   position: relative;
 
@@ -160,17 +154,17 @@ export const BackgroundHeader = styled.div`
   }
 `;
 export const DescriptionMobile = styled.div`
-  background-color: ${WHITE};
+  background-color: ${colors.white};
   borderradius: 5px;
   width: 100%;
   font-size: 1.2rem;
-  color: ${DARK_GRAY};
+  color: ${colors.darkGray};
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
 `;
 export const ProfileLayout = styled.div`
-  background-color: ${LIGHTER_GRAY};
+  background-color: ${colors.lighterGray};
   max-height: 100%;
   margin: 0 -25px;
   flex-direction: row;
@@ -208,7 +202,7 @@ export const HelpContainer = styled.div`
 `;
 
 export const UserInfoContainer = styled.div`
-  background-color: ${WHITE};
+  background-color: ${colors.white};
   margin-top: -13vh;
   margin-left: 2.5rem;
   margin-right: 2.5rem;
@@ -255,6 +249,6 @@ export const DescriptionDesktop = styled.div`
   display: none;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: initial;
-    color: ${DARK_GRAY};
+    color: ${colors.darkGray};
   }
 `;

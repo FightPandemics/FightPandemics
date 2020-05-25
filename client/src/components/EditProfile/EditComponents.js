@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import Heading from "../Typography/Heading";
-import { mq } from "../../constants/theme";
+import { mq, theme } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
-import {
-  ROYAL_BLUE,
-  LIGHTER_GRAY,
-  LIGHT_GRAY,
-  BLACK,
-  WHITE,
-} from "../../constants/colors";
+const { colors } = theme;
+export const Background = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    background-color: ${colors.lighterGray};
+    margin: 0 -25px;
+    padding: 3rem 0;
+  }
+`;
 
 export const EditLayout = styled.div`
   flex-direction: row;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    padding: 3rem 15%;
-    margin: 0 -25px;
-    background-color: ${LIGHTER_GRAY};
+    margin: auto;
   }
 `;
 
@@ -27,8 +27,8 @@ export const TitlePictureWrapper = styled.div`
 `;
 
 export const CustomLink = styled.div`
-  color: ${BLACK};
-  border: 0.1rem solid ${LIGHT_GRAY};
+  color: ${colors.black};
+  border: 0.1rem solid ${colors.lightGray};
   border-radius: 0.3rem;
   padding: 2rem 3rem;
   margin-right: 1rem;
@@ -36,23 +36,16 @@ export const CustomLink = styled.div`
   white-space: nowrap;
   font-weight: bold;
   border-left-style: ${(props) => (props.isSelected ? "solid" : "")};
-  border-left-color: ${(props) => (props.isSelected ? ROYAL_BLUE : "")};
+  border-left-color: ${(props) => (props.isSelected ? colors.royalBlue : "")};
   border-left-width: ${(props) => (props.isSelected ? "0.6rem" : "")};
   a[href] {
-    color: ${BLACK};
+    color: ${colors.black};
   }
 `;
 
 export const CustomForm = styled.form`
   display: flex;
-  flex-direction: column;
-
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 100%;
-    border: 0.1rem solid ${LIGHT_GRAY};
-    padding: 3rem 4rem;
-    background-color: ${WHITE};
-  }
+  flex-direction: ;
 `;
 
 export const CustomHeading = styled(Heading)`
@@ -68,7 +61,7 @@ export const CustomHeading = styled(Heading)`
 `;
 
 export const ChangePicButton = styled.div`
-  color: ${ROYAL_BLUE};
+  color: ${colors.royalBlue};
   margin-bottom: 3rem;
   text-align: center;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -111,7 +104,7 @@ export const FillEmptySpace = styled.div`
 `;
 
 export const Label = styled.label`
-  color: ${(props) => props.inputColor || ROYAL_BLUE};
+  color: ${(props) => props.inputColor || colors.royalBlue};
   padding-left: ${(props) => props.paddingLeft || ""};
   margin-top: ${(props) => props.marginTop || "1.5rem"};
   font-size: ${(props) => props.size || ""};
@@ -154,5 +147,3 @@ export const ToggleHeading = styled.div`
     display: none;
   }
 `;
-
-const LocationIconWrapper = styled.div``;
