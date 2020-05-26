@@ -322,14 +322,14 @@ const Feed = () => {
             <HeaderWrapper>
               <h1>Feed</h1>
               <button onClick={handleCreatePost}>
-                Create post
+                Create a post
                 <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />
             {posts.status === FETCH_POSTS && <div>Loading...</div>}
             {posts.status === ERROR_POSTS && (
-              <div>Something went wrong ...</div>
+              <div>Something went wrong...</div>
             )}
             <Posts filteredPosts={posts.posts} />
             <SvgIcon
