@@ -13,7 +13,7 @@ export const ProfileCompletedWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  background-color: #eeeeef;
+  background-color: ${colors.offWhite};
   height: 100%;
 `;
 
@@ -38,7 +38,7 @@ export const ProfileCompletedButtonsWrapper = styled.div`
   position: relative;
   top: -3rem;
   width: 100%;
-  padding: 0 1em;
+  padding: 0 1rem;
 
   @media screen and (min-width: ${tablet.narrow.minWidth}) {
     top: -6rem;
@@ -53,6 +53,8 @@ export const StyledButton = styled(BaseButton)`
   padding: 1rem 0;
   height: auto;
   border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 2px 2px ${colors.lightGray};
   margin-bottom: 1rem;
 
   @media screen and (min-width: ${tablet.narrow.minWidth}) {

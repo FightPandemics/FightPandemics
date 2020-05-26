@@ -21,8 +21,8 @@ const ProfileCompleted = () => {
         </ProfileCompletedHeadingWrapper>
       </ProfileCompletedHeader>
       <ProfileCompletedButtonsWrapper>
-        <StyledButton secondary={true}>View my Profile</StyledButton>
-        <StyledButton secondary={true}>Continue posting</StyledButton>
+        <StyledButton tertiary={true}>View my Profile</StyledButton>
+        <StyledButton tertiary={true}>Continue posting</StyledButton>
       </ProfileCompletedButtonsWrapper>
     </ProfileCompletedWrapper>
   );
