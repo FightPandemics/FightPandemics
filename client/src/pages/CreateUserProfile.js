@@ -2,6 +2,7 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
 import React, { useReducer } from "react";
 import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -22,7 +23,14 @@ import {
   createUserFormReducer,
   initialState,
 } from "hooks/reducers/userReducers";
-import { validateEmail } from "utils/validators";
+import { validateEmail } from "../utils/validators";
+import { PASSWORD_MIN_LENGTH } from "../config";
+import {
+  AUTH_FORM_SIGNUP,
+  AUTH_FORM_SIGNUP_ERROR,
+} from "../hooks/actions/authFormActions";
+import axios from "axios";
+import { AUTH_SUCCESS } from "../constants/action-types";
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -232,7 +240,7 @@ const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
 
-const CreateProfile = () => {
+const CreateProfile = ({ email }) => {
   const { formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
@@ -240,6 +248,22 @@ const CreateProfile = () => {
     createUserFormReducer,
     initialState,
   );
+
+  const onSubmit = async (formData) => {
+    createUserFormDispatch({ type: CREATE_USER });
+    try {
+      const res = await axios.post("/api/auth/signup", formData);
+      // user created successfully
+      console.log({ res });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      createUserFormDispatch({
+        type: CREATE_USER_ERROR,
+        error: `Signup failed, reason: ${message}`,
+      });
+    }
+  };
+  console.log({ email, formState, createUserFormState });
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -266,7 +290,10 @@ const CreateProfile = () => {
                 name="email"
                 id="email"
                 disabled
+                required
+                ref={register({ validate: validateEmail })}
                 style={inputStyles}
+                value={email}
               />
             </InputWrapper>
 
@@ -281,6 +308,7 @@ const CreateProfile = () => {
                 name="firstName"
                 id="firstName"
                 required
+                ref={register}
                 style={inputStyles}
               />
             </InputWrapper>
@@ -292,6 +320,7 @@ const CreateProfile = () => {
                 name="lastName"
                 id="lastName"
                 required
+                ref={register}
                 style={inputStyles}
               />
               <SubLabel>Enter address, zip code, or city</SubLabel>
@@ -306,6 +335,7 @@ const CreateProfile = () => {
                     name="address"
                     id="address"
                     required
+                    ref={register}
                     style={inputStyles}
                   />
                 </div>
@@ -344,7 +374,13 @@ const CreateProfile = () => {
             />
           </InputGroup>
           <InputGroup>
-            <Submit primary="true">Create Profile</Submit>
+            <Submit
+              disabled={!formState.isValid}
+              primary="true"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Create Profile
+            </Submit>
             <CheckboxGroup>
               <UnderlineLink>
                 By signing up, I agree to the{" "}
@@ -364,4 +400,8 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+const mapStateToProps = ({ session }) => ({
+  email: session.email,
+});
+
+export default connect(mapStateToProps)(CreateProfile);
