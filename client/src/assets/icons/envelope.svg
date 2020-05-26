@@ -1,0 +1,18 @@
+<svg width="35"
+ height="22"
+  viewBox="0 0 42 34" 
+  fill="none"
+   xmlns="http://www.w3.org/2000/svg">
+<path 
+d="M5 1H37C39.2 1 41 2.8 41 5V29C41 31.2 39.2 33 37 33H5C2.8 33 1 31.2 1 29V5C1 2.8 2.8 1 5 1Z" 
+stroke="#425AF2" 
+stroke-width="2" 
+stroke-linecap="round" 
+stroke-linejoin="round"/>
+<path 
+d="M41 5L21 19L1 5" 
+stroke="#425AF2" 
+stroke-width="2" 
+stroke-linecap="round"
+ stroke-linejoin="round"/>
+</svg>
