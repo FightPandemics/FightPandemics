@@ -35,7 +35,6 @@ async function routes(app) {
       schema: getPostsSchema,
     },
     async (req) => {
-      // TODO: handle optional user if authenticated
       const { userId } = req;
       let user;
       let userErr;
@@ -117,7 +116,7 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
-      const aggregationPipleine = [
+      const aggregationPipeline = [
         ...sortAndFilterSteps,
         {
           $lookup: {
@@ -130,18 +129,20 @@ async function routes(app) {
         {
           $project: {
             _id: true,
-            authorName: "$author.name",
-            authorType: "$author.type",
+            author: true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
             },
             content: contentProjection,
             distance: true,
             expireAt: true,
+            externalLinks: true,
+            language: true,
+            liked: { $in: [mongoose.Types.ObjectId(userId), "$likes"] },
             likesCount: {
               $size: { $ifNull: ["$likes", []] },
             },
-            location: "$author.location",
+            objective: true,
             title: true,
             types: true,
             visibility: true,
@@ -150,7 +151,7 @@ async function routes(app) {
       ];
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipleine),
+        Post.aggregate(aggregationPipeline),
       );
 
       if (postsErr) {
@@ -169,24 +170,23 @@ async function routes(app) {
       schema: createPostSchema,
     },
     async (req, reply) => {
-      const { userId } = req.body;
+      const { userId, body: postProps } = req;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
       }
 
-      const { body: postProps } = req;
-
       // Creates embedded author document
       postProps.author = {
-        id: user.id,
+        id: mongoose.Types.ObjectId(user.id),
         location: user.location,
         name: user.name,
+        photo: user.photo,
         type: user.type,
       };
 
       // ExpireAt needs to calculate the date
-      if (postProps.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
       } else {
         postProps.expireAt = null;
@@ -277,12 +277,12 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       if (findErr) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -311,17 +311,17 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (body.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;
@@ -347,6 +347,10 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
+
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(
@@ -374,6 +378,9 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(

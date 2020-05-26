@@ -17,6 +17,7 @@ const UserSchema = new Schema(
     needs: {
       type: Array,
     },
+    photo: String,
     type: String,
     wants: {
       type: Array,
