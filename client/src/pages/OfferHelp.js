@@ -140,6 +140,7 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
+      <p>We respect your privacy. Please read our Terms and Conditions</p>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
