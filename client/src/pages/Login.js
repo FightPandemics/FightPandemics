@@ -21,6 +21,7 @@ import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
+import { inputStyles, labelStyles } from "constants/formStyles";
 // import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
 import Heading from "components/Typography/Heading";
@@ -38,31 +39,13 @@ import socialmedia2 from "assets/social-media2.svg";
 import eyeUnmask from "assets/icons/eye-unmask.svg";
 import eyeMask from "assets/icons/eye-mask.svg";
 
-const { colors } = theme;
-const { typography } = theme;
+const { colors, typography } = theme;
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
   width: 100%;
   position: relative;
 `;
-
-const StyleInput = {
-  fontSize: "1.8rem",
-  lineHeight: "2.5rem",
-  paddingBottom: "0.8rem",
-  width: "100%",
-  borderBottom: "2px solid #5970EC",
-  backgroundColor: "transparent",
-};
-
-const StyleLabel = {
-  fontStyle: "normal",
-  fontWeight: "500",
-  fontSize: "1.6rem",
-  lineHeight: "1.9rem",
-  textAlign: "left",
-};
 
 const StyleSocialIcon = {
   justifyContent: "unset",
@@ -287,9 +270,9 @@ const Login = ({ isLoginForm }) => {
         </SocialImageContainer>
       </LoginLeftContainer>
       <LoginRightContainer>
-        <div className="text-center">
+        <div>
           <FormContainer>
-            <Heading className="h4" level={4}>
+            <Heading className="text-center" level={4}>
               {isLoginForm ? "Sign In" : "Sign Up"}
             </Heading>
             {authFormState.error && (
@@ -297,25 +280,31 @@ const Login = ({ isLoginForm }) => {
             )}
             <form id="login-password">
               <InputWrapper>
-                <Label for="email" style={StyleLabel} label="E-mail" />
+                <Label htmlFor="email" style={labelStyles} label="E-mail" />
                 <Input
                   type="email"
                   name="email"
+                  id="email"
                   required
                   placeholder="Enter email address"
                   ref={register}
-                  style={StyleInput}
+                  style={inputStyles}
                 />
               </InputWrapper>
               <InputWrapper>
-                <Label for="password" style={StyleLabel} label="Password" />
+                <Label
+                  htmlFor="password"
+                  style={labelStyles}
+                  label="Password"
+                />
                 <Input
                   type={passwordType}
                   name="password"
+                  id="password"
                   required
                   placeholder="Enter password"
                   ref={register({ minLength: PASSWORD_MIN_LENGTH })}
-                  style={StyleInput}
+                  style={inputStyles}
                 />
                 <VisibilityButton
                   onClick={togglePasswordVisibility}
@@ -325,13 +314,14 @@ const Login = ({ isLoginForm }) => {
               {!isLoginForm && (
                 <InputWrapper>
                   <Label
-                    for="confirmPassword"
-                    style={StyleLabel}
+                    htmlFor="confirmPassword"
+                    style={labelStyles}
                     label="Confirm Password"
                   />
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
+                    id="confirmPassword"
                     required
                     placeholder="Confirm password"
                     ref={register({
@@ -340,7 +330,7 @@ const Login = ({ isLoginForm }) => {
                         matchesPreviousPassword: comparePasswordConfirmation,
                       },
                     })}
-                    style={StyleInput}
+                    style={inputStyles}
                   />
                   <VisibilityButton
                     onClick={toggleConfirmPasswordVisibility}
@@ -362,28 +352,30 @@ const Login = ({ isLoginForm }) => {
             </form>
             <WhiteSpace />
             <WhiteSpace />
-            {isLoginForm ? (
-              <>
+            <div className="text-center">
+              {isLoginForm ? (
+                <>
+                  <p>
+                    <AuthLink to="/auth/forgot-password">
+                      Forgot password?
+                    </AuthLink>
+                  </p>
+                  <p>
+                    <AuthLink to="/auth/signup">
+                      Don't have an account? <u>Sign Up</u>
+                    </AuthLink>
+                  </p>
+                </>
+              ) : (
                 <p>
-                  <AuthLink to="/auth/forgot-password">
-                    Forgot password?
+                  <AuthLink to="/auth/login">
+                    Already have an account? <u>Sign In</u>
                   </AuthLink>
                 </p>
-                <p>
-                  <AuthLink to="/auth/signup">
-                    Don't have an account? <u>Sign Up</u>
-                  </AuthLink>
-                </p>
-              </>
-            ) : (
-              <p>
-                <AuthLink to="/auth/login">
-                  Already have an account? <u>Sign In</u>
-                </AuthLink>
-              </p>
-            )}
+              )}
+            </div>
             <WhiteSpace />
-            <SectionDiv>
+            <SectionDiv className="text-center">
               {isLoginForm ? "Or Log in with" : "Or Sign up with"}
             </SectionDiv>
             <WhiteSpace />
@@ -403,13 +395,14 @@ const Login = ({ isLoginForm }) => {
             >
               <ButtonText>Gmail</ButtonText>
             </SocialButton>
-            <SocialButton
+            {/** temporarily disable twitter for MVP v1
+             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={twitter} />}
               onClick={() => handleSocialLogin("twitter")}
             >
               <ButtonText>Twitter</ButtonText>
-            </SocialButton>
+            </SocialButton>**/}
             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={linkedin} />}

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { theme } from "constants/theme";
 const { medium } = theme.typography.size;
 const { display } = theme.typography.font.family;
+const { primary } = theme.colors;
 
 const StyledRadioGroup = styled(Radio.Group)`
   width: 100%;
@@ -22,10 +23,10 @@ const StyledRadioGroup = styled(Radio.Group)`
       letter-spacing: 0;
     }
     .ant-radio-inner {
-      border-color: #6076ef;
+      border-color: ${primary};
       border-width: 0.2rem;
       &::after {
-        background-color: #6076ef;
+        background-color: ${primary};
         top: 0.2rem;
         left: 0.2rem;
       }

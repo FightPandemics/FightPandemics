@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 import styled from "styled-components";
 
@@ -19,7 +19,12 @@ const StyledFooter = styled.footer`
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
-  margin-top: 3rem;
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    background: ${colors.white};
+    font-size: 1.4rem;
+    height: 9rem;
+  }
 `;
 
 const Copyright = styled.div`
@@ -29,11 +34,15 @@ const Copyright = styled.div`
 
 const Policies = styled.div`
   color: ${colors.darkGray};
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    margin-top: 1.2rem;
+  }
 `;
 
 const FooterLink = styled(Link)`
   color: ${colors.darkGray};
-  margin: 0 0.5rem;
+  margin: 0 1rem;
   text-decoration-line: underline;
 `;
 
@@ -45,9 +54,9 @@ export default () => {
         Copyright {currentYear} FightPandemics. All rights reserved.
       </Copyright>
       <Policies>
-        <FooterLink href="/terms-conditions">Terms & Conditions</FooterLink> |{" "}
-        <FooterLink href="/privacy-policy">Privacy Policy</FooterLink> |{" "}
-        <FooterLink href="/cookies-policy">Cookies Policy</FooterLink>
+        <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
+        <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}
+        <FooterLink to={"/cookies-policy"}>Cookies Policy</FooterLink>
       </Policies>
     </StyledFooter>
   );

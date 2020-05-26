@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
+import { theme } from "constants/theme";
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
 const default_latitude = 52.520008;
 const default_longitude = 13.404954;
 
+const { mediumGray, lighterGray, royalBlue } = theme.colors;
+
 const PhoneNo = styled.p`
-  color: #425af2;
+  color: ${royalBlue};
 `;
 
 const Wrapper = styled.div`
@@ -28,11 +31,11 @@ const MapStyle = styled.div`
   minheight: 300px;
 `;
 const Cards = styled.div`
-  border: 1px solid #eee;
-  box-shadow: 0 2px 6px #bababa;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
+  border: 1px solid ${lighterGray};
+  box-shadow: 0 2px 6px ${mediumGray};
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 1rem;
 `;
 
 const NrMap = () => {
@@ -58,7 +61,7 @@ const NrMap = () => {
     });
 
     getMyLocation();
-  }, []);
+  }, [createGoogleMap, createMarker, places]);
 
   const createGoogleMap = () => {
     return new window.google.maps.Map(googleMapRef.current, {
@@ -93,7 +96,7 @@ const NrMap = () => {
       createMarker();
       placeDetails();
     }
-  }, [hospitals]);
+  }, [createMarker, hospitals, placeDetails]);
 
   const placeDetails = () => {
     hospitals.map((place) => {
@@ -122,7 +125,7 @@ const NrMap = () => {
     });
   };
 
-  const createMarker = () => {
+  const createMarker = useCallback(() => {
     const image = {
       url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
       size: new window.google.maps.Size(71, 71),
@@ -145,7 +148,7 @@ const NrMap = () => {
       position: { lat: coordinates.latitude, lng: coordinates.longitude },
       map: googleMap.current,
     });
-  };
+  });
 
   const getMyLocation = () => {
     const location = window.navigator && window.navigator.geolocation;

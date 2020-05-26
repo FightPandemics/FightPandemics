@@ -11,7 +11,7 @@ import {
 
 export const postsState = {
   status: SET_POSTS,
-  posts: []
+  posts: [],
 };
 
 export const feedReducer = (oldState, action) => {

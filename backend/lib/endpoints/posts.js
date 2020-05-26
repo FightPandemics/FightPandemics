@@ -31,16 +31,17 @@ async function routes(app) {
   app.get(
     "/",
     {
+      preValidation: [app.authenticateOptional],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req.query;
+      const { userId } = req;
       let user;
       let userErr;
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
-          throw app.httpErrors.notFound();
+          throw app.httpErrors.forbidden();
         }
       }
 
