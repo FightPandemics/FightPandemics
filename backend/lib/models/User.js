@@ -5,7 +5,6 @@ const { isValidEmail } = require("../utils");
 const userSchema = new Schema(
   {
     about: { maxLength: 100, trim: true, type: String },
-    authId: { required: true, type: String },
     email: {
       required: true,
       type: String,

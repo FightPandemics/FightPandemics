@@ -23,6 +23,10 @@ function updateAuthorLastName(lastName) {
 
 const individualUserSchema = new Schema(
   {
+    authId: {
+      required: true,
+      type: String,
+    },
     firstName: {
       required: true,
       set: updateAuthorFirstName,
