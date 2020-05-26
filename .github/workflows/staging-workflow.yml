@@ -45,8 +45,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - env:
-          AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
-          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
@@ -82,8 +80,7 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           TF_VAR_env_name: staging
           TF_VAR_fp_context: staging
-          TF_VAR_auth_secret_key: ${{ secrets.AUTH_SECRET_KEY }}
-          TF_VAR_auth_client_id: ${{ secrets.AUTH_CLIENT_ID }}
+          TF_VAR_commit_hash: ${GITHUB_SHA}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster staging-cluster --service staging --force-new-deployment

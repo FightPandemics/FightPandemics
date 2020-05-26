@@ -5,6 +5,9 @@ import styled from "styled-components";
 import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 
+const { typography } = theme;
+const { black, royalBlue, white, offWhite } = theme.colors;
+
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const needHelpActive = require("assets/thermometer-selected.svg");
 const offerHelpInactive = require("assets/help-gesture-unselected.svg");
@@ -16,13 +19,13 @@ const FlexChild = styled.div`
 `;
 
 const StyledIntro = styled.div`
-  @media screen and ${mq.phone.narrow.max} {
+  @media screen and ${mq.phone.wide.max} {
     margin-top: 4rem;
   }
 
-  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    background-color: ${theme.colors.royalBlue};
-    border-radius: 1rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    background-image: ${theme.backgrounds.primary};
+    border-radius: 3px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -37,30 +40,34 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  @media only screen and ${mq.tablet.narrow.min} {
+    background: ${offWhite};
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: -2.5rem;
+  }
 
-  @media only screen and ${mq.phone.narrow.max} {
+  @media only screen and ${mq.phone.wide.max} {
     display: block;
   }
 `;
 
-const StyledWelcome = styled.h2`
-  font-size: ${theme.typography.heading.three};
+const StyledWelcome = styled.h1`
   text-align: left;
   margin: 0 0 7rem 0;
-  font-family: ${theme.typography.font.family.display}, sans-serif;
+  font-family: ${typography.font.family.display}, sans-serif;
   font-style: normal;
 
-  @media only screen and ${mq.phone.narrow.max} {
-    font-size: ${theme.typography.size.large};
-    font-weight: 300;
-    margin: 2.5rem auto 0;
+  @media only screen and ${mq.phone.wide.max} {
+    font-size: ${typography.size.xlarge};
+    margin: 2.5rem auto;
+    font-weight: bold;
     text-align: center;
+    color: ${black};
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    font-size: ${theme.typography.heading.one};
+    font-size: ${typography.heading.one};
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
@@ -73,17 +80,14 @@ const StyledWelcome = styled.h2`
 `;
 
 const StyledStrapline = styled(StyledWelcome)`
-  color: white;
-  line-height: 7rem;
+  color: ${white};
   width: 90%;
   text-align: left;
-
-  @media only screen and ${mq.phone.narrow.max} {
+  font-size: ${typography.heading.one} @media only screen and
+    ${mq.phone.narrow.max} {
     text-align: center;
-    color: black;
-    font-weight: bold;
-    margin: 0 auto;
-    margin-bottom: 1.5rem;
+    font-weight: bolder;
+    margin: 0 auto 1.5rem auto;
   }
 `;
 
@@ -94,42 +98,50 @@ const IntroText = styled.div`
 `;
 
 const StyledP = styled.p`
-  font-size: ${theme.typography.size.xsmall};
+  font-size: ${typography.size.xsmall};
   text-align: left;
-  color: white;
+  color: ${white};
 
-  @media only screen and ${mq.phone.narrow.max} {
-    font-family: ${theme.typography.font.family.display}, sans-serif;
-    font-size: ${theme.typography.size.small};
+  @media only screen and ${mq.phone.wide.max} {
+    font-family: ${typography.font.family.display}, sans-serif;
+    font-size: ${typography.size.medium};
     text-align: center;
-    color: #000;
-    line-height: 4rem;
+    color: ${black};
+    line-height: 2rem;
     letter-spacing: 0rem;
-    margin: 0;
+    margin: 1rem 0;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    font-size: ${theme.typography.size.large};
+    font-size: ${typography.size.large};
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
-    font-size: ${theme.typography.size.xlarge};
+    font-size: ${typography.size.xlarge};
   }
 
   @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
-    font-size: ${theme.typography.size.xxlarge};
+    font-size: ${typography.size.xxlarge};
   }
 `;
 
 const OnboardingContainer = styled.div`
   // display: flex;
-  // flexWrap: wrapgit ;
+  // flexWrap: wrap;
   width: 100%;
   margin: auto 0;
 
-  @media only screen and ${mq.phone.narrow.max} {
-    margin-top: 4rem;
+  @media only screen and ${mq.phone.wide.max} {
+    margin-top: 6rem;
   }
+`;
+
+const StyleLink = styled.p`
+  color: ${royalBlue};
+  font-size: ${typography.size.large};
+  font-family: ${typography.font.family.display};
+  font-weight: 500;
+  margin-top: 4rem;
 `;
 
 const Home = (props) => {
@@ -168,16 +180,8 @@ const Home = (props) => {
             </ImageButton>
           </FlexChild>
 
-          <Link
-            style={{
-              color: theme.colors.royalBlue,
-              fontSize: theme.typography.size.large,
-              fontFamily: theme.typography.font.family.display,
-              fontWeight: "500",
-            }}
-            to="/feed"
-          >
-            View Community Postings
+          <Link to="/feed">
+            <StyleLink>View Community Postings</StyleLink>
           </Link>
         </OnboardingContainer>
       </>
