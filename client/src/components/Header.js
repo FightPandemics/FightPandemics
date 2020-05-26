@@ -121,8 +121,8 @@ export default ({ onMenuClick, ...props }) => {
                             <li className="registerBtn">
                                <NavLink className="registerLink" to="/auth/signup">Register</NavLink>
                             </li>
-                                <Link><SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-</Link>
+                                <Link to="/feed" ><SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
+                                  </Link>
                             </>
                           )}
                     </ul>
