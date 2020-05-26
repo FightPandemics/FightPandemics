@@ -54,9 +54,9 @@ export default () => {
         Copyright {currentYear} FightPandemics. All rights reserved.
       </Copyright>
       <Policies>
-        <FooterLink href="/terms-conditions">Terms & Conditions</FooterLink> |{" "}
-        <FooterLink href="/privacy-policy">Privacy Policy</FooterLink> |{" "}
-        <FooterLink href="/cookies-policy">Cookies Policy</FooterLink>
+        <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
+        <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}
+        <FooterLink to={"/cookies-policy"}>Cookies Policy</FooterLink>
       </Policies>
     </StyledFooter>
   );
