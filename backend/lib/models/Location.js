@@ -57,7 +57,7 @@ const Location = model("Location", locationSchema);
 const LOCATION_TYPES = locationSchema.tree.type.enum;
 
 module.exports = {
+  LOCATION_TYPES,
   model: Location,
   schema: locationSchema,
-  LOCATION_TYPES,
 };

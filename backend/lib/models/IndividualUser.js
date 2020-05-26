@@ -77,7 +77,7 @@ const IndividualUser = User.discriminator(
 );
 
 module.exports = {
+  INDIVIDUAL_USER_TYPES,
   model: IndividualUser,
   schema: individualUserSchema,
-  INDIVIDUAL_USER_TYPES,
 };

@@ -21,7 +21,7 @@ async function syncIndexes(mongo) {
 
 async function dbConnector(app, config) {
   const connection = await mongoose.createConnection(config.uri, config.params);
-  app.decorate("mongo", connection);  
+  app.decorate("mongo", connection);
   syncIndexes(app.mongo);
 }
 
