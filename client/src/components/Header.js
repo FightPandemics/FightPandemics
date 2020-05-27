@@ -19,8 +19,8 @@ const BrandLink = styled(Link)`
   }
 `;
 const StyledNavBar = styled(NavBar)`
-   height: 7rem;
-   margin-top: 0;
+  height: 7rem;
+  margin-top: 0;
    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
      height: auto;
      margin-top: .8rem;
@@ -33,7 +33,7 @@ const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
   display: none !important;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-  display: block !important;
+    display: block !important;
   }
 `;
 const DesktopMenu = styled.div`
@@ -41,7 +41,7 @@ const DesktopMenu = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-  display: none;
+    display: none;
   }
 `;
 const NavLinks = styled.div`
@@ -52,25 +52,25 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
-     .registerBtn {
-       color: ${colors.royalBlue};
-       border: 1px solid ${colors.royalBlue};
-       border-radius: 2rem;
-       padding: 0 .8rem;
-       margin-bottom: .2rem;
-       align-self: center;
-       .registerLink {
-         color: ${colors.primary}
-        }
+    .registerBtn {
+      color: ${colors.royalBlue};
+      border: 1px solid ${colors.royalBlue};
+      border-radius: 2rem;
+      padding: 0 .8rem;
+      margin-bottom: .2rem;
+      align-self: center;
+     .registerLink {
+       color: ${colors.primary}
+       }
        .registerLink:hover {
          font-weight: 500;
        }
      }
      li {
        font-size: ${large};
-       color: ${colors.DARKER_GRAY};
+       color: ${colors.darkerGray};
        a:not(.registerLink) {
-         color: ${colors.DARKER_GRAY};
+         color: ${colors.darkerGray};
          text-decoration: none;
          padding: 1.2rem 1.4rem;
          transition: all .2s;
@@ -92,9 +92,9 @@ export default ({ onMenuClick, ...props }) => {
   return (
     <div className="header" {...props}>
       <StyledNavBar
-      mode="light"
-      leftContent={
-        <BrandLink to="/">
+       mode="light"
+        leftContent={
+           <BrandLink to="/">
           <Logo src={logo} alt="Fight Pandemics logo" />
           </BrandLink>
          }
