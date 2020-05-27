@@ -63,8 +63,9 @@ const routes = [
     component: About,
   },
   {
-    path: "/CreateOrganizationProfile",
+    path: "/create-organization-profile",
     component: CreateOrganizationProfile,
+    layout: "logo"
   },
   {
     path: "/medical",

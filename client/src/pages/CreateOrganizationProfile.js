@@ -1,6 +1,7 @@
 import { WhiteSpace } from "antd-mobile";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
 import filterOptions from "../assets/data/filterOptions";
 import createOrganizationProfile from "../assets//data/createOrganizationProfile";
@@ -13,11 +14,18 @@ import Input from "../components/Input/BaseInput";
 import SubmitButton from "../components/Button/SubmitButton";
 import Label from "../components/Input/Label";
 import StyledCheckbox from "../components/Input/Checkbox";
+import StyledCheckboxGroup from "../components/Input/CheckboxGroup";
 import { theme } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
 } from "../components/CreatePost/StyledCreatePost";
+
+
+const Container = styled.div`
+   padding: 0 2rem;
+   padding-top: 10vh;
+`;
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -25,20 +33,34 @@ const InputWrapper = styled.div`
 
 const StyleLabel = {
   textAlign: "left",
+  color: "${theme.colors.royalBlue}"
 };
 
 const StyleInput = {
   width: "100%",
+  height: "3rem"
 };
+
+const buttons = {
+  display: "flex",
+  margin: "1rem 0"
+}
+
+const globalText = {
+  marginLeft: '1rem',
+  fontSize: "1.2rem"
+}
 
 const types = Object.values(filterOptions)[2].options;
 const { type, industry } = createOrganizationProfile;
 
 const initialState = {
   state: {
-    modal: false,
+    industryModal: false,
+    typeModal: false,
     options: [],
     selected: "",
+    name: ""
   },
   formData: {
     title: "",
@@ -49,6 +71,8 @@ const initialState = {
   },
   errors: [],
 };
+
+const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others'];
 
 const errorMsg = {
   name: "Please include an organization name.",
@@ -62,6 +86,9 @@ const errorMsg = {
 };
 
 const CreateOrgProfile = (props) => {
+
+  const { register, handleSubmit, watch, control } = useForm();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
@@ -76,7 +103,7 @@ const CreateOrgProfile = (props) => {
   const [state, setState] = useState(initialState.state);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
-  const { modal, selected, options } = state;
+  const { typeModal, industryModal, selected, options } = state;
 
   const handleInputChangeName = (e) => {
     setName(e.target.value);
@@ -113,18 +140,29 @@ const CreateOrgProfile = (props) => {
   };
 
   const showModal = (setting) => (e) => {
+    let currentModal = setting.type === "type" ? "typeModal" : "industryModal"
     setState({
       ...state,
-      modal: !state.modal,
+      [currentModal]: !state[currentModal],
       options: setting.options,
       selected: setting.type,
+      name: setting.type
     });
   };
 
-  const closeModal = (e) => {
+  const closeModalType = (e) => {
     setState({
       ...state,
-      modal: !state.modal,
+      typeModal: !state.typeModal,
+      options: [],
+      selected: "",
+    });
+  };
+
+  const closeModalIndustry = (e) => {
+    setState({
+      ...state,
+      industryModal: !state.industryModal,
       options: [],
       selected: "",
     });
@@ -152,28 +190,36 @@ const CreateOrgProfile = (props) => {
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
       return errorMsg[field];
   };
+  //
+  // const onFormSubmit = async (data) => {
+  //   // e.preventDefault();
+  //   populateErrors();
+  //   console.log(data);
+  //   if (!errors.length) {
+  //     // todo: finish integrating api
+  //     try {
+  //       // const req = await axios.post("/api/posts", formData);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    populateErrors();
-    if (!errors.length) {
-      // todo: finish integrating api
-      try {
-        // const req = await axios.post("/api/posts", formData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+
+    const onFormSubmit = (data) => {
+      console.log(data);
+    };
+
 
   return (
-    <CreatePostWrapper>
+    <Container>
       <Heading className="h4" level={4}>
         Create Organization Profile
       </Heading>
-      <StyledForm onSubmit={handleSubmit}>
+      <WhiteSpace />
+      <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
         <InputWrapper>
-          <Label style={StyleLabel} label="Organization Name" />
+          <Label style={StyleLabel} label="* Organization Name" />
           <Input
             type="text"
             required
@@ -181,12 +227,14 @@ const CreateOrgProfile = (props) => {
             value={name}
             onChange={handleInputChangeName}
             style={StyleInput}
+            ref={register}
+            name="name"
           />
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Organization Contact Email" />
+          <Label style={StyleLabel} label="* Organization Contact E-mail" />
           <Input
             type="email"
             required
@@ -194,12 +242,14 @@ const CreateOrgProfile = (props) => {
             value={email}
             onChange={handleInputChangeEmail}
             style={StyleInput}
+            ref={register}
+            name="email"
           />
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Location" />
+          <Label style={StyleLabel} label="* Location" />
           <Input
             type="text"
             required
@@ -207,46 +257,73 @@ const CreateOrgProfile = (props) => {
             value={location}
             onChange={handleInputChangeLocation}
             style={StyleInput}
+            ref={register}
+            name="location"
           />
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <StyledCheckbox value="global" onChange={handleInputChangeGlobal}>
-            We are a global organization
-          </StyledCheckbox>
+          <Controller
+           as={StyledCheckbox}
+           name="global"
+           control={control}
+           onChange={([event]) => event.target.checked}
+          />
+         <span style={globalText}>We are a global organization</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Type and Industry" />
+          <Label style={StyleLabel} label="* Type and Industry" />
         </InputWrapper>
         <div className="settings">
           <CustomModal
             title={selected ? createOrganizationProfile[selected].title : ""}
             className="post-modal"
             content={
-              <RadioGroup
+              <Controller
+                as={RadioGroup}
                 flex={true}
+                name={state.name}
                 padding="1.3rem 0"
-                onChange={handleFormData(selected)}
+                onChange={([event]) => event.target.value}
                 options={options}
-                value={formData[selected]}
-                defaultValue={formData[selected]}
+                control={control}
               />
             }
-            onClose={closeModal}
-            visible={modal}
+            onClose={closeModalType}
+            visible={typeModal}
             closable={false}
           />
-          <div className="buttons">
+          <CustomModal
+            title={selected ? createOrganizationProfile[selected].title : ""}
+            className="post-modal"
+            content={
+              <Controller
+                as={RadioGroup}
+                flex={true}
+                name={state.name}
+                padding="1.3rem 0"
+                onChange={([event]) => event.target.value}
+                options={options}
+                control={control}
+              />
+            }
+            onClose={closeModalIndustry}
+            visible={industryModal}
+            closable={false}
+          />
+          <div style={buttons}>
             <DownArrowButton
               handleClick={showModal(type)}
               label={formData.type}
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
+              style={{ marginRight: "2rem" }}
             />
+            <WhiteSpace />
             <WhiteSpace />
             <DownArrowButton
               handleClick={showModal(industry)}
@@ -256,59 +333,48 @@ const CreateOrgProfile = (props) => {
               long="true"
             />
           </div>
-
+          <WhiteSpace />
+          <WhiteSpace />
           <InputWrapper>
-            <Label style={StyleLabel} label="What are you looking for" />
-            <StyledCheckbox
-              value="volunteer"
-              onChange={handleInputChangeVolunteer}
-            >
-              Volunteer
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox value="staff" onChange={handleInputChangeStaff}>
-              Staff
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox
-              value="investors"
-              onChange={handleInputChangeInvestors}
-            >
-              Investors
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox
-              value="donations"
-              onChange={handleInputChangeDonations}
-            >
-              Donations
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox value="other" onChange={handleInputChangeOther}>
-              Other
-            </StyledCheckbox>
+            <Label style={StyleLabel} label="* What are you looking for" />
+            <Controller
+             as={StyledCheckboxGroup}
+             control={control}
+             color={theme.colors.royalBlue}
+             display="column"
+             options={organizationNeeds}
+             name="needs"
+             onChange={([checkedValues]) => checkedValues}
+            />
+
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
         </div>
         <SubmitButton
           primary="true"
-          onClick={handleSubmit}
-          className="submit-btn"
+          onClick={handleSubmit(onFormSubmit)}
+          style={{ fontWeight: "normal" }}
         >
           Create Profile
         </SubmitButton>
+        <WhiteSpace />
+        <WhiteSpace />
+        <WhiteSpace />
         <InputWrapper>
           <Label style={StyleLabel} label="" />
           <StyledCheckbox
+            style={{ fontSize: "1.2rem" }}
             value="I agree to the Privacy Policy"
             onChange={handleInputChangePrivacy}
           >
             By signing up, I agree to the{" "}
             <Link to="/privacy-policy">Privacy Policy</Link>
           </StyledCheckbox>
+          <WhiteSpace />
           <Label style={StyleLabel} label="" />
           <StyledCheckbox
+            style={{ fontSize: "1.2rem" }}
             value="I agree to the Terms and Conditions"
             onChange={handleInputChangeConditions}
           >
@@ -318,7 +384,7 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
       </StyledForm>
       <WhiteSpace />
-    </CreatePostWrapper>
+    </Container>
   );
 };
 
