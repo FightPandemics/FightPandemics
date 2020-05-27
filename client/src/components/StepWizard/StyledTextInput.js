@@ -20,7 +20,7 @@ const StyledTextInput = styled(InputItem)`
       ${theme.form.input}
       color: ${darkGray};
       border: none;
-      border-bottom: 0.1rem solid ${royalBlue} !important;
+      border-bottom: 0.1rem solid ${royalBlue};
       font-size: 1.6rem;
       padding: 0.8rem;
       margin: 0.5rem 0;
@@ -28,6 +28,7 @@ const StyledTextInput = styled(InputItem)`
   }
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    background-color: transparent;
     width: 40.8rem;
 
     &.am-list-item {
