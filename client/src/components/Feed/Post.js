@@ -57,7 +57,7 @@ const Post = ({ post }) => {
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
-          {post.location.country}
+          {post.author.location.country}
         </span>
       }
     />

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -37,6 +37,8 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  NEXT_PAGE,
+  SET_LOADING,
 } from "hooks/actions/feedActions";
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
@@ -188,6 +190,7 @@ const Feed = () => {
     showFilters,
   } = feedState;
   const filters = Object.values(filterOptions);
+  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -258,20 +261,57 @@ const Feed = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
 
-  useEffect(() => {
+  const loadPosts = useCallback(async () => {
+    const limit = 5;
+    const skip = posts.page * limit;
     /* Add userId when user is logged */
-    const endpoint = "/api/posts"; // ?userId=xxxxxxxxx
+    const endpoint = `/api/posts?limit=${limit}&skip=${skip}`; // ?userId=xxxxxxxxx
+    let response = {};
 
-    postsDispatch({ type: FETCH_POSTS });
-    axios
-      .get(endpoint)
-      .then((response) => {
-        postsDispatch({ type: SET_POSTS, posts: response.data });
-      })
-      .catch((error) => {
-        postsDispatch({ type: ERROR_POSTS });
-      });
-  }, []);
+    if (posts.isLoading) {
+      return;
+    }
+
+    await postsDispatch({ type: FETCH_POSTS });
+
+    try {
+      response = await axios.get(endpoint);
+    } catch (error) {
+      console.log({ error });
+      await postsDispatch({ type: ERROR_POSTS });
+    }
+
+    if (response.data) {
+      if (response.data.length) {
+        await postsDispatch({ type: SET_POSTS, posts: [ ...posts.posts, ...response.data ] });
+      } else {
+        await postsDispatch({ type: SET_LOADING });
+      }
+    }
+  }, [ posts ]);
+
+  useEffect(() => {
+    loadPosts();
+  }, [ posts.page ]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const scrollObserver = useCallback(
+    node => {
+      new IntersectionObserver(entries => {
+        entries.forEach(async entry => {
+          if (entry.intersectionRatio > 0 && !posts.isLoading && posts.loadMore) {
+            await postsDispatch({ type: NEXT_PAGE });
+          }
+        });
+      }).observe(node);
+    },
+    [ postsDispatch, posts ]
+  );
+
+  useEffect(() => {
+    if (bottomBoundaryRef.current) {
+      scrollObserver(bottomBoundaryRef.current);
+    }
+  }, [scrollObserver, bottomBoundaryRef]);
 
   return (
     <FeedContext.Provider
@@ -327,11 +367,12 @@ const Feed = () => {
               </button>
             </HeaderWrapper>
             <FilterBox />
-            {posts.status === FETCH_POSTS && <div>Loading...</div>}
+            <Posts filteredPosts={posts.posts} />
+            {posts.isLoading && <div>Loading...</div>}
             {posts.status === ERROR_POSTS && (
               <div>Something went wrong...</div>
             )}
-            <Posts filteredPosts={posts.posts} />
+            {!posts.isLoading && <div id="list-bottom" ref={ bottomBoundaryRef }></div>}
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
