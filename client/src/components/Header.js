@@ -3,24 +3,21 @@ import { NavBar } from "antd-mobile";
 import { Link, NavLink } from "react-router-dom";
 // import { Menu as MenuIcon } from "grommet-icons";
 import styled from "styled-components";
-
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
+import envelope from "assets/icons/envelope.svg";
 import menu from "assets/icons/menu.svg";
-
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
 const { colors, typography } = theme;
 const { large } = typography.size;
-
 const BrandLink = styled(Link)`
   display: inline-flex;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     padding-left: 4rem;
   }
 `;
-
 const StyledNavBar = styled(NavBar)`
   height: 7rem;
   margin-top: 0;
@@ -32,7 +29,6 @@ const StyledNavBar = styled(NavBar)`
     display: none;
   }
 `;
-
 const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
   display: none !important;
@@ -40,17 +36,14 @@ const MenuToggle = styled(SvgIcon)`
     display: block !important;
   }
 `;
-
 const DesktopMenu = styled.div`
-  background-color: #fff;
+  background-color: ${colors.white};
   display: flex;
   align-items: center;
-  display: block;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
 `;
-
 const NavLinks = styled.div`
   align-self: flex-end;
   padding-top: 2rem;
@@ -59,7 +52,6 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
-
     .registerBtn {
       color: ${colors.royalBlue};
       border: 1px solid ${colors.royalBlue};
@@ -74,12 +66,11 @@ const NavLinks = styled.div`
         font-weight: 500;
       }
     }
-
     li {
       font-size: ${large};
-      color: #282828;
+      color: ${colors.darkerGray};
       a:not(.registerLink) {
-        color: #282828;
+        color: ${colors.darkerGray};
         text-decoration: none;
         padding: 1.2rem 1.4rem;
         transition: all 0.2s;
@@ -93,12 +84,10 @@ const NavLinks = styled.div`
     }
   }
 `;
-
 const activeStyles = {
   fontWeight: "600",
-  color: "#425AF2",
+  color: `${colors.royalBlue};`,
 };
-
 export default ({ onMenuClick, ...props }) => {
   return (
     <div className="header" {...props}>
@@ -138,19 +127,25 @@ export default ({ onMenuClick, ...props }) => {
                       </li>
                     </>
                   ) : (
-                    <>
-                      <li>
-                        <NavLink activeStyle={activeStyles} to="/auth/login">
-                          Login
+                      <>
+                        <li>
+                          <NavLink activeStyle={activeStyles} to="/auth/login">
+                            Login
                         </NavLink>
-                      </li>
-                      <li className="registerBtn">
-                        <NavLink className="registerLink" to="/auth/signup">
-                          Register
+                        </li>
+                        <li className="registerBtn">
+                          <NavLink className="registerLink" to="/auth/signup">
+                            Register
                         </NavLink>
-                      </li>
-                    </>
-                  )}
+                        </li>
+                        <Link to="/feed">
+                          <SvgIcon
+                            src={envelope}
+                            style={{ marginLeft: "1.5rem" }}
+                          />
+                        </Link>
+                      </>
+                    )}
                 </ul>
               </NavLinks>
             </DesktopMenu>
