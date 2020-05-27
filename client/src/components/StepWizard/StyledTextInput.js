@@ -33,8 +33,6 @@ const StyledTextInput = styled(InputItem)`
     &.am-list-item {
       &.am-input-item {
         height: 5rem;
-        .am-list-line {
-        }
       }
     }
 

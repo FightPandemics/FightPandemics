@@ -30,6 +30,11 @@ const StyledWizardNav = styled.div`
       min-height: 100%;
     }
   }
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    margin: 0 auto 1rem;
+    width: 40rem;
+  }
 `;
 
 const BackButton = styled(LeftRightIconButton)`
