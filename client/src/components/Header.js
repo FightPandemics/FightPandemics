@@ -76,7 +76,7 @@ const NavLinks = styled.div`
         transition: all 0.2s;
         border-bottom: 3px solid transparent;
       }
-      a:hov er:not(.registerLink) {
+      a:hover:not(.registerLink) {
         font-weight: 600;
         color: ${colors.royalBlue};
         border-bottom: 3px solid ${colors.royalBlue};
