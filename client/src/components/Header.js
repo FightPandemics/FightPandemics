@@ -21,13 +21,13 @@ const BrandLink = styled(Link)`
 const StyledNavBar = styled(NavBar)`
   height: 7rem;
   margin-top: 0;
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     height: auto;
-     margin-top: .8rem;
-   }
-   .am-navbar-title {
-     display: none;
-   }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: auto;
+    margin-top: 0.8rem;
+  }
+  .am-navbar-title {
+    display: none;
+  }
 `;
 const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
@@ -56,80 +56,102 @@ const NavLinks = styled.div`
       color: ${colors.royalBlue};
       border: 1px solid ${colors.royalBlue};
       border-radius: 2rem;
-      padding: 0 .8rem;
-      margin-bottom: .2rem;
+      padding: 0 0.8rem;
+      margin-bottom: 0.2rem;
       align-self: center;
-     .registerLink {
-       color: ${colors.primary}
-       }
-       .registerLink:hover {
-         font-weight: 500;
-       }
-     }
-     li {
-       font-size: ${large};
-       color: ${colors.darkerGray};
-       a:not(.registerLink) {
-         color: ${colors.darkerGray};
-         text-decoration: none;
-         padding: 1.2rem 1.4rem;
-         transition: all .2s;
-         border-bottom: 3px solid transparent;
-       }
-       a:hover:not(.registerLink) {
-         font-weight: 600;
-         color: ${colors.royalBlue};
-         border-bottom: 3px solid ${colors.royalBlue};
-       }
-     }
-   }
+      .registerLink {
+        color: ${colors.primary};
+      }
+      .registerLink:hover {
+        font-weight: 500;
+      }
+    }
+    li {
+      font-size: ${large};
+      color: ${colors.darkerGray};
+      a:not(.registerLink) {
+        color: ${colors.darkerGray};
+        text-decoration: none;
+        padding: 1.2rem 1.4rem;
+        transition: all 0.2s;
+        border-bottom: 3px solid transparent;
+      }
+      a:hov er:not(.registerLink) {
+        font-weight: 600;
+        color: ${colors.royalBlue};
+        border-bottom: 3px solid ${colors.royalBlue};
+      }
+    }
+  }
 `;
 const activeStyles = {
   fontWeight: "600",
-  color: `${colors.royalBlue};`
-}
+  color: `${colors.royalBlue};`,
+};
 export default ({ onMenuClick, ...props }) => {
   return (
     <div className="header" {...props}>
       <StyledNavBar
-       mode="light"
+        mode="light"
         leftContent={
-           <BrandLink to="/">
-          <Logo src={logo} alt="Fight Pandemics logo" />
+          <BrandLink to="/">
+            <Logo src={logo} alt="Fight Pandemics logo" />
           </BrandLink>
-         }
-         rightContent={
-           <div>
-             <MenuToggle
-             src={menu}
-             style={{ fontSize: 24, cursor: "pointer" }}
-             onClick={onMenuClick}
-             />
-          <DesktopMenu>
-            <NavLinks>   
-              <ul>
-                <li><NavLink activeStyle={activeStyles} to="/feed">Feed</NavLink></li>
-                <li><NavLink activeStyle={activeStyles} to="/covid-info">COVID-info</NavLink></li>
+        }
+        rightContent={
+          <div>
+            <MenuToggle
+              src={menu}
+              style={{ fontSize: 24, cursor: "pointer" }}
+              onClick={onMenuClick}
+            />
+            <DesktopMenu>
+              <NavLinks>
+                <ul>
+                  <li>
+                    <NavLink activeStyle={activeStyles} to="/feed">
+                      Feed
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink activeStyle={activeStyles} to="/covid-info">
+                      COVID-info
+                    </NavLink>
+                  </li>
                   {props.isAuthenticated ? (
                     <>
-                    <li><NavLink activeStyle={activeStyles} to="/profile">Profile</NavLink></li>
+                      <li>
+                        <NavLink activeStyle={activeStyles} to="/profile">
+                          Profile
+                        </NavLink>
+                      </li>
                     </>
-                    ) : (
-                    <>
-                    <li><NavLink activeStyle={activeStyles} to="/auth/login">Login</NavLink></li>
-                    <li className="registerBtn">
-                      <NavLink className="registerLink" to="/auth/signup">Register</NavLink>
-                    </li>
-                       <Link to="/feed" ><SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-                         </Link>
-                    </>
-                  )}
-              </ul>
-          </NavLinks>
-          </DesktopMenu>
-         </div>
-      }
+                  ) : (
+                      <>
+                        <li>
+                          <NavLink activeStyle={activeStyles} to="/auth/login">
+                            Login
+                        </NavLink>
+                        </li>
+                        <li className="registerBtn">
+                          <NavLink className="registerLink" to="/auth/signup">
+                            Register
+                        </NavLink>
+                        </li>
+                        <Link to="/feed">
+                          <SvgIcon
+                            src={envelope}
+                            style={{ marginLeft: "1.5rem" }}
+                          />
+                        </Link>
+                      </>
+                    )}
+                </ul>
+              </NavLinks>
+            </DesktopMenu>
+          </div>
+        }
       />
-      </div>
-     );
+    </div>
+  );
 };
