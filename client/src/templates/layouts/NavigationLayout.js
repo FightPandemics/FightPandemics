@@ -4,10 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "components/Header";
+import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
+
+const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
   position: "relative",
@@ -16,7 +19,7 @@ const drawerStyles = {
 };
 
 const sidebarStyle = {
-  background: `${theme.colors.royalBlue}`,
+  background: `${royalBlue}`,
 };
 
 const NavList = styled(List)`
@@ -57,7 +60,7 @@ const NavItem = styled(List.Item).attrs((props) => ({
       height: 0 !important;
     }
     & .am-list-content {
-      color: #fff;
+      color: ${white};
       cursor: pointer;
       font-family: "Poppins", sans-serif;
       font-size: 2.4rem;
@@ -68,7 +71,7 @@ const NavItem = styled(List.Item).attrs((props) => ({
   }
 
   &.am-list-item-active {
-    background: #b8c2f8;
+    background: ${tropicalBlue};
   }
 `;
 
@@ -80,7 +83,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   background: unset;
   border-width: 0 !important;
   border-radius: 0;
-  color: #fff;
+  color: ${white};
   cursor: pointer;
   font-size: 2rem;
   position: absolute;
@@ -90,7 +93,7 @@ const CloseNav = styled(Button).attrs((props) => ({
 
   &.am-button-active {
     background: none;
-    color: #fff;
+    color: ${white};
   }
   &::before {
     display: none;
@@ -98,10 +101,9 @@ const CloseNav = styled(Button).attrs((props) => ({
 
   .am-icon {
     stroke-width: 2px;
-    stroke: #fff;
+    stroke: ${white};
   }
 `;
-
 
 const NavigationLayout = (props) => {
   const { mobiletabs, tabIndex, isAuthenticated } = props;
@@ -142,39 +144,39 @@ const NavigationLayout = (props) => {
   );
 
   const renderNavigationBar = () => {
-       return (
-          <div>
-             <Drawer
-               style={{
-                 minHeight: document.documentElement.clientHeight,
-                 ...drawerStyles,
-               }}
-               enableDragHandle
-               open={drawerOpened}
-               onOpenChange={toggleDrawer}
-               position="right"
-               sidebar={drawerMenu()}
-               sidebarStyle={sidebarStyle}
-               className="app-drawer"
-             >
-               <Header onMenuClick={toggleDrawer} isAuthenticated={isAuthenticated} />
-                     {mobiletabs ? <MobileTabs tabIndex={tabIndex} childComponent={props.children} /> : null }
-                     <Main>
-                       <props.component {...props} />
-                     </Main>
-                     <CookieAlert />
+    return (
+      <div>
+        <Drawer
+          style={{
+            minHeight: document.documentElement.clientHeight,
+            ...drawerStyles,
+          }}
+          enableDragHandle
+          open={drawerOpened}
+          onOpenChange={toggleDrawer}
+          position="right"
+          sidebar={drawerMenu()}
+          sidebarStyle={sidebarStyle}
+          className="app-drawer"
+        >
+          <Header
+            onMenuClick={toggleDrawer}
+            isAuthenticated={isAuthenticated}
+          />
+          {mobiletabs ? (
+            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+          ) : null}
+          <Main>
+            <props.component {...props} />
+          </Main>
+          <Footnote />
+          <CookieAlert />
+        </Drawer>
+      </div>
+    );
+  };
 
-               {/* <Footnote /> */}
-             </Drawer>
-          </div>
-        )
-  }
-
-  return (
-    <>
-     {renderNavigationBar()}
-     </>
-  );
+  return <>{renderNavigationBar()}</>;
 };
 
 export default NavigationLayout;

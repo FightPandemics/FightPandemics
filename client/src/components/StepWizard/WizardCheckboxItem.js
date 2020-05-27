@@ -1,24 +1,29 @@
 import styled from "styled-components";
 import { Checkbox } from "antd-mobile";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
+
+const { white, lightGray, royalBlue } = theme.colors;
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
 export const WizardCheckboxWrapper = styled.div`
-  margin: 4rem 0;
+  margin: 4rem auto;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   width: 100%;
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    height: 21rem;
+    width: 40rem;
+  }
 `;
 
 export const WizardCheckboxItem = styled(CheckboxItem)`
   font-family: ${theme.typography.font.family.display};
   font-size: ${theme.typography.size.large};
-  border: 0.1rem solid #dddddd;
-  border-radius: 5px;
-  background-color: #ffffff;
-  margin-bottom: 1em;
+  background-color: ${white};
+  margin-bottom: 1rem;
   width: 100%;
 
   .am-list-line {
@@ -29,7 +34,7 @@ export const WizardCheckboxItem = styled(CheckboxItem)`
 
   .am-checkbox-inner {
     border-radius: 0.5px;
-    border: 0.1rem solid #dddddd;
+    border: 0.1rem solid ${lightGray};
 
     &:after {
       top: 0;
@@ -39,7 +44,13 @@ export const WizardCheckboxItem = styled(CheckboxItem)`
   }
 
   .am-checkbox.am-checkbox-checked .am-checkbox-inner {
-    border-color: ${theme.colors.royalBlue};
-    background: ${theme.colors.royalBlue};
+    border-color: ${royalBlue};
+    background: ${royalBlue};
+  }
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    border: 0.1rem solid ${lightGray};
+    border-radius: 5px;
+    height: 6rem;
   }
 `;

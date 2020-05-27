@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
+import CreateUserProfile from "./pages/CreateUserProfile";
 
 const routes = [
   {
@@ -69,8 +70,8 @@ const routes = [
     component: NearestHospital,
     props: {
       mobiletabs: true,
-      tabIndex: 0
-    }
+      tabIndex: 0,
+    },
   },
   {
     path: "/find-help",
@@ -81,16 +82,16 @@ const routes = [
     component: SymptomsCheck,
     props: {
       mobiletabs: true,
-      tabIndex: 1
-    }
+      tabIndex: 1,
+    },
   },
   {
     path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
-      tabIndex: 2
-    }
+      tabIndex: 2,
+    },
   },
   {
     path: "/profile",
@@ -107,6 +108,11 @@ const routes = [
   {
     path: "/create-post",
     component: CreatePost,
+  },
+  {
+    path: "/create-profile",
+    component: CreateUserProfile,
+    layout: "navless",
   },
   {
     path: "/terms-conditions",

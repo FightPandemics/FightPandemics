@@ -31,21 +31,27 @@ async function routes(app) {
   app.get(
     "/",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticateOptional],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req.query;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        throw app.httpErrors.notFound();
+      const { userId } = req;
+      let user;
+      let userErr;
+      if (userId) {
+        [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          throw app.httpErrors.forbidden();
+        }
       }
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
-        {
+      ];
+      if (user) {
+        filters.push({
           $or: [
             { visibility: "worldwide" },
             {
@@ -64,8 +70,8 @@ async function routes(app) {
               "author.location.city": user.location.city,
             },
           ],
-        },
-      ];
+        });
+      }
       /* eslint-enable sort-keys */
 
       // Additional filters
@@ -75,7 +81,6 @@ async function routes(app) {
       }
 
       // Unlogged user limitation for post content size
-      // TODO: how to check for logged/unlogged user?
       /* eslint-disable sort-keys */
       const contentProjection = user
         ? "$content"
@@ -93,51 +98,60 @@ async function routes(app) {
           };
       /* eslint-enable sort-keys */
 
-      const [postsErr, posts] = await app.to(
-        Post.aggregate([
-          {
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: user.location.coordinates,
-                  type: "Point",
+      const sortAndFilterSteps = user
+        ? [
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: user.location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
+          ]
+        : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
+
+      const aggregationPipeline = [
+        ...sortAndFilterSteps,
+        {
+          $lookup: {
+            as: "comments",
+            foreignField: "postId",
+            from: "comments",
+            localField: "_id",
           },
-          {
-            $lookup: {
-              as: "comments",
-              foreignField: "postId",
-              from: "comments",
-              localField: "_id",
+        },
+        {
+          $project: {
+            _id: true,
+            author: true,
+            commentsCount: {
+              $size: { $ifNull: ["$comments", []] },
             },
-          },
-          {
-            $project: {
-              _id: true,
-              authorName: "$author.name",
-              authorType: "$author.type",
-              commentsCount: {
-                $size: "$comments",
-              },
-              content: contentProjection,
-              distance: true,
-              expireAt: true,
-              likesCount: {
-                $size: "$likes",
-              },
-              location: "$author.location",
-              title: true,
-              types: true,
-              visibility: true,
+            content: contentProjection,
+            distance: true,
+            expireAt: true,
+            externalLinks: true,
+            language: true,
+            liked: { $in: [mongoose.Types.ObjectId(userId), "$likes"] },
+            likesCount: {
+              $size: { $ifNull: ["$likes", []] },
             },
+            objective: true,
+            title: true,
+            types: true,
+            visibility: true,
           },
-          // TODO: paginate
-        ]),
+        },
+      ];
+
+      const [postsErr, posts] = await app.to(
+        Post.aggregate(aggregationPipeline),
       );
 
       if (postsErr) {
@@ -156,24 +170,23 @@ async function routes(app) {
       schema: createPostSchema,
     },
     async (req, reply) => {
-      const { userId } = req.body;
+      const { userId, body: postProps } = req;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
       }
 
-      const { body: postProps } = req;
-
       // Creates embedded author document
       postProps.author = {
-        id: user.id,
+        id: mongoose.Types.ObjectId(user.id),
         location: user.location,
         name: user.name,
+        photo: user.photo,
         type: user.type,
       };
 
       // ExpireAt needs to calculate the date
-      if (postProps.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
       } else {
         postProps.expireAt = null;
@@ -264,12 +277,12 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       if (findErr) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -298,17 +311,17 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (body.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;
@@ -334,6 +347,10 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
+
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(
@@ -361,6 +378,9 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(
