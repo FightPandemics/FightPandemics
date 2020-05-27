@@ -8,8 +8,10 @@ import {
   WizardNav,
   WizardButtonGroup,
   StepTitle,
+  StepSubtitle,
   SkipLink,
   StyledTextInput,
+  StyledSearchInput,
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
@@ -18,7 +20,7 @@ import {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "components/StepWizard";
-import { IconButton, SubmitButton } from "../components/Button";
+import { IconButton, SubmitButton } from "components/Button";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -97,10 +99,10 @@ const Step2 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
-      <p>We want to show you the most relevant results</p>
+      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
       <WizardFormWrapper>
         <WizardFormGroup>
-          <StyledTextInput
+          <StyledSearchInput
             type="text"
             name="manualLocation"
             label="Location search"
@@ -140,7 +142,10 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
-      <p>We respect your privacy. Please read our Terms and Conditions</p>
+      <StepSubtitle>
+        We respect your privacy. Please read our{" "}
+        <Link to={"/terms-conditions"}>Terms and Conditions</Link>.
+      </StepSubtitle>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput

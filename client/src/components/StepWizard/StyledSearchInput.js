@@ -4,7 +4,7 @@ import SearchInput from "components/Input/SearchInput";
 
 const { darkGray, royalBlue } = theme.colors;
 
-const StyledTextInput = styled(SearchInput)`
+const StyledSearchInput = styled(SearchInput)`
   border: none;
   border-bottom: 0.1rem solid ${royalBlue} !important;
   color: ${darkGray};
@@ -20,4 +20,4 @@ const StyledTextInput = styled(SearchInput)`
   }
 `;
 
-export default StyledTextInput;
+export default StyledSearchInput;
