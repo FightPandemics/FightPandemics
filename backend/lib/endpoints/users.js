@@ -50,6 +50,7 @@ async function routes(app) {
       const userData = {
         ...req.body,
         _id: req.userId,
+        authId: req.user.sub,
       };
       return new User(userData).save();
     },
