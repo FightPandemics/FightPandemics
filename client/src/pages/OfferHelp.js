@@ -108,7 +108,7 @@ const Step2 = (props) => {
             type="text"
             name="manualLocation"
             label="Location search"
-            placeholder="Enter Address, Zip Code or City"
+            placeholder="Enter Address, Zip Code, or City"
             onChange={manualLocation}
             value={locationSearch}
           />
@@ -154,7 +154,7 @@ const Step3 = (props) => {
             type="email"
             name="userEmail"
             label="Email"
-            placeholder="Type your email"
+            placeholder="Enter your email address"
             onChange={onChange}
             value={email && email}
           />
