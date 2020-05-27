@@ -19,3 +19,5 @@ export {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "./WizardCheckboxItem";
+export { default as ShareLocation } from "./ShareLocation";
+export { default as ShowAnywhere } from "./ShowAnywhere";

@@ -7,6 +7,8 @@ import {
   WizardStep,
   WizardNav,
   WizardButtonGroup,
+  ShowAnywhere,
+  ShareLocation,
   StepTitle,
   StepSubtitle,
   SkipLink,
@@ -20,7 +22,7 @@ import {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "components/StepWizard";
-import { IconButton, SubmitButton } from "components/Button";
+import { SubmitButton } from "components/Button";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -111,17 +113,17 @@ const Step2 = (props) => {
             value={locationSearch}
           />
         </WizardFormGroup>
-        <IconButton
+        <ShareLocation
           tertiary="true"
-          icon={<SvgIcon src={shareMyLocation} />}
+          icon={<SvgIcon class="share-location-icon" src={shareMyLocation} />}
           onSelect={selectLocationDetection}
         >
           Share my location
-        </IconButton>
+        </ShareLocation>
         <SkipLink>
-          <SubmitButton tertiary="true" onSelect={rejectLocationDetection}>
+          <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
-          </SubmitButton>
+          </ShowAnywhere>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
