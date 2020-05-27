@@ -4,7 +4,7 @@ const { locationSchema } = require("./location");
 
 const organization = {
   about: S.string(),
-  email: S.string(),
+  email: S.string().format("email"),
   global: S.boolean(),
   industry: S.string(),
   language: S.string(),
