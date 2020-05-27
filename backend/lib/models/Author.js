@@ -14,6 +14,7 @@ const authorSchema = new Schema({
     required: true,
     type: String,
   },
+  photo: String,
   type: {
     enum: [
       "Company",

@@ -21,7 +21,7 @@ function errorNotifierHandler(error, request, reply) {
       ip_address: request.raw.ip,
     });
     scope.setTag("path", request.raw.url);
-    Sentry.captureException(err);
+    Sentry.captureException(error);
     defaultErrorHandler(error, request, reply);
   });
 }
