@@ -291,7 +291,7 @@ const CreateProfile = ({ email }) => {
                 id="email"
                 disabled
                 required
-                ref={register({ validate: validateEmail })}
+                ref={register({ validate: validateEmail, required: true })}
                 style={inputStyles}
                 value={email}
               />
@@ -308,7 +308,7 @@ const CreateProfile = ({ email }) => {
                 name="firstName"
                 id="firstName"
                 required
-                ref={register}
+                ref={register({ required: true })}
                 style={inputStyles}
               />
             </InputWrapper>
@@ -320,7 +320,7 @@ const CreateProfile = ({ email }) => {
                 name="lastName"
                 id="lastName"
                 required
-                ref={register}
+                ref={register({ required: true })}
                 style={inputStyles}
               />
               <SubLabel>Enter address, zip code, or city</SubLabel>
@@ -335,7 +335,7 @@ const CreateProfile = ({ email }) => {
                     name="address"
                     id="address"
                     required
-                    ref={register}
+                    ref={register({ required: true })}
                     style={inputStyles}
                   />
                 </div>
