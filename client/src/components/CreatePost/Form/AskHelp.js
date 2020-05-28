@@ -9,6 +9,7 @@ const AskHelp = ({
   formData,
   renderError,
   addTag,
+  selectedTags,
   handleSubmit,
   handleFormData,
 }) => {
@@ -22,6 +23,7 @@ const AskHelp = ({
       />
       <Second
         addTag={addTag}
+        selectedTags={selectedTags}
         renderError={renderError}
         title="What do you need?"
       />

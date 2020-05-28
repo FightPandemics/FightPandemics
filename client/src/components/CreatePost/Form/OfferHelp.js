@@ -9,6 +9,7 @@ const OfferHelp = ({
   formData,
   renderError,
   addTag,
+  selectedTags,
   handleSubmit,
   handleFormData,
 }) => {
@@ -22,6 +23,7 @@ const OfferHelp = ({
       />
       <Second
         addTag={addTag}
+        selectedTags={selectedTags}
         renderError={renderError}
         title="What are you offering"
       />

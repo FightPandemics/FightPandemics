@@ -111,6 +111,7 @@ const ModalComponent = ({ onClose }) => {
             handleFormData={handleFormData}
             renderError={renderError}
             addTag={addTag}
+            selectedTags={formData.tags}
           />
         </TabPane>
         <TabPane tab="Requesting Help" key="2">
@@ -120,6 +121,7 @@ const ModalComponent = ({ onClose }) => {
             handleFormData={handleFormData}
             renderError={renderError}
             addTag={addTag}
+            selectedTags={formData.tags}
           />
         </TabPane>
       </Tabs>
