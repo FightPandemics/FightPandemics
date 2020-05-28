@@ -30,10 +30,9 @@ import { theme, mq } from "constants/theme";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import twitter from "assets/icons/social-twitter.svg";
-import facebook from "assets/icons/social-facebook.svg";
-import gmail from "assets/icons/social-google.svg";
-import linkedin from "assets/icons/social-linkedin.svg";
+import facebook from "super-tiny-icons/images/svg/facebook.svg";
+import google from "super-tiny-icons/images/svg/google.svg";
+import linkedin from "super-tiny-icons/images/svg/linkedin.svg";
 import socialmedia from "assets/social-media.svg";
 import socialmedia2 from "assets/social-media2.svg";
 import eyeUnmask from "assets/icons/eye-unmask.svg";
@@ -390,10 +389,10 @@ const Login = ({ isLoginForm }) => {
             </SocialButton>
             <SocialButton
               style={StyleSocialIcon}
-              icon={<SvgIcon src={gmail} />}
+              icon={<SvgIcon src={google} />}
               onClick={() => handleSocialLogin("google")}
             >
-              <ButtonText>Gmail</ButtonText>
+              <ButtonText>Google</ButtonText>
             </SocialButton>
             {/** temporarily disable twitter for MVP v1
              <SocialButton

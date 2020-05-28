@@ -42,7 +42,7 @@
     "fastify-sensible": "^2.1.1",
     "fluent-schema": "^0.10.0",
     "http-errors": "^1.7.3",
-    "moment": "2.25.1",
+    "moment": "2.25.3",
     "mongoose": "^5.9.11",
     "node-cache": "^5.1.0"
   },

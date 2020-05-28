@@ -46,15 +46,11 @@ const createPostSchema = {
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
-    .prop("userId", S.string())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {
-  querystring: S.object()
-    .prop("skip", S.integer())
-    .prop("limit", S.integer())
-    .prop("userId", S.string().required()),
+  querystring: S.object().prop("skip", S.integer()).prop("limit", S.integer()),
 };
 
 const updatePostSchema = {
@@ -73,7 +69,6 @@ const updatePostSchema = {
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("title", S.string())
     .prop("types", S.array().minItems(1).items(S.string().enum(POST_TYPES)))
-    .prop("userId", S.string().required())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS)),
   params: S.object().prop("postId", S.string()),
 };
