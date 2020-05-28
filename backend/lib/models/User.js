@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { schema: locationSchema } = require("./Location");
+// const { schema: locationSchema } = require("./Location");
 const { isValidEmail } = require("../utils");
 
 const userSchema = new Schema(
@@ -10,7 +10,7 @@ const userSchema = new Schema(
       type: String,
       validator: isValidEmail,
     },
-    location: locationSchema,
+    location: Object,
     photo: String,
   },
   { collection: "users", timestamps: true },
