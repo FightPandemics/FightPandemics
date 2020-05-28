@@ -29,7 +29,6 @@ const PostSocial = ({
   const feedContext = useContext(FeedContext);
   const { handlePostLike } = feedContext;
 
-
   useEffect(() => {
     const likePost = sessionStorage.getItem("likePost");
 
@@ -38,7 +37,7 @@ const PostSocial = ({
         handlePostLike(likePost, liked);
       }
     }
-  }, [ id, liked, handlePostLike ]);
+  }, [id, liked, handlePostLike]);
 
   const renderLikeIcon = () => {
     return liked ? (

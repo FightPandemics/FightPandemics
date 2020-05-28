@@ -3,7 +3,7 @@ import axios from "axios";
 const KEY_TOKEN = "authToken";
 const EMAIL_VERIFIED = "emailVerified";
 
-export const setAuthToken = ({ token, emailVerified}) => {
+export const setAuthToken = ({ token, emailVerified }) => {
   if (!token) return localStorage.removeItem(KEY_TOKEN);
 
   // localStorage.setItem(KEY_TOKEN, token);

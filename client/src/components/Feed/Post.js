@@ -105,7 +105,7 @@ const Post = ({ post }) => {
     <Card.Body className="content-wrapper">
       <PostSocial
         url={post.url}
-        liked={ post.liked }
+        liked={post.liked}
         shared={shared}
         showComments={showComments}
         numLikes={post.likesCount}
@@ -117,7 +117,7 @@ const Post = ({ post }) => {
           setShared(true);
           return setCopied(!copied);
         }}
-        id={ post._id }
+        id={post._id}
       />
     </Card.Body>
   );

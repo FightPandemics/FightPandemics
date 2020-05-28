@@ -210,7 +210,7 @@ const Login = ({ isLoginForm }) => {
     try {
       const res = await axios.post("/api/auth/login", formData);
 
-      if (res.data && res.data.token){
+      if (res.data && res.data.token) {
         setAuthToken(res.data);
       }
 

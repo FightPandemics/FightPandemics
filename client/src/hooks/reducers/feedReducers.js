@@ -56,13 +56,13 @@ export const postsReducer = (state = postsState, action) => {
       return {
         ...state,
         posts: {
-            ...state.posts,
-            [action.postId]: {
-              ...state.posts[action.postId],
-              liked: !!!state.posts[action.postId].liked,
-              likesCount: action.count
-            }
-        }
+          ...state.posts,
+          [action.postId]: {
+            ...state.posts[action.postId],
+            liked: !!!state.posts[action.postId].liked,
+            likesCount: action.count,
+          },
+        },
       };
     default:
       return state;

@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -6,13 +7,13 @@ import axios from "axios";
 import { Layout, Menu } from "antd";
 
 // Local
-import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
+import CreatePost from "components/CreatePost/CreatePost";
 import {
   optionsReducer,
   feedReducer,
@@ -38,7 +39,7 @@ import {
   ERROR_POSTS,
   SET_LIKE,
 } from "hooks/actions/feedActions";
-import { LOGIN } from 'templates/RouteWithSubRoutes';
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
@@ -177,7 +178,11 @@ const HeaderWrapper = styled.div`
 `;
 
 const Feed = (props) => {
-  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+  const { id } = useParams();
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+    createPostModal: id === "create-post",
+  });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const {
@@ -285,7 +290,11 @@ const Feed = (props) => {
         }
 
         if (response.data) {
-          postsDispatch({ type: SET_LIKE, postId, count: response.data.likesCount });
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
     } else {
@@ -296,20 +305,25 @@ const Feed = (props) => {
 
   useEffect(() => {
     const { user } = props;
-    const endpoint = `/api/posts${user && user.userId ? `?userId=${user.userId}` : ''}`;
+    const endpoint = `/api/posts${
+      user && user.userId ? `?userId=${user.userId}` : ""
+    }`;
 
     postsDispatch({ type: FETCH_POSTS });
     axios
       .get(endpoint)
       .then((response) => {
-        const posts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), []);
+        const posts = response.data.reduce(
+          (obj, item) => ((obj[item._id] = item), obj),
+          [],
+        );
 
         postsDispatch({ type: SET_POSTS, posts });
       })
       .catch((error) => {
         postsDispatch({ type: ERROR_POSTS });
-      })
-  }, [ props ]);
+      });
+  }, [props]);
 
   return (
     <FeedContext.Provider
@@ -367,9 +381,7 @@ const Feed = (props) => {
             </HeaderWrapper>
             <FilterBox />
             {posts.status === FETCH_POSTS && <div>Loading...</div>}
-            {posts.status === ERROR_POSTS && (
-              <div>Something went wrong...</div>
-            )}
+            {posts.status === ERROR_POSTS && <div>Something went wrong...</div>}
             <Posts filteredPosts={posts.posts} />
             <SvgIcon
               src={creatPost}
@@ -378,10 +390,9 @@ const Feed = (props) => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        <PostAs
-          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+        <CreatePost
+          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
-          maskClosable
         />
       </FeedWrapper>
     </FeedContext.Provider>
