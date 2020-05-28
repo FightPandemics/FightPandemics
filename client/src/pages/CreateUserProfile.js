@@ -232,14 +232,14 @@ const CreateProfile = ({ email }) => {
     console.log("onSubmit", { formData });
     createUserFormDispatch({ type: CREATE_USER });
     try {
-      // const res = await axios.post("/api/auth/signup", formData);
+      const res = await axios.post("/api/users", formData);
       // user created successfully
-      // console.log({ res });
+      console.log({ res });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       createUserFormDispatch({
         type: CREATE_USER_ERROR,
-        error: `Signup failed, reason: ${message}`,
+        error: `Create user failed, reason: ${message}`,
       });
     }
   };
