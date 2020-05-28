@@ -5,6 +5,8 @@ const Sentry = require("@sentry/node");
 // https://github.com/fastify/fastify-sensible/blob/5eec059b2a77579f75bafc91e12f60fb90b6dab5/index.js#L46
 function defaultErrorHandler(error, request, reply) {
   if (
+    reply &&
+    reply.raw &&
     reply.raw.statusCode === 500 &&
     error.explicitInternalServerError !== true
   ) {

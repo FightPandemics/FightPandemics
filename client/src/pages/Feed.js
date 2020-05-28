@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useCallback, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -7,13 +7,13 @@ import axios from "axios";
 import { Layout, Menu } from "antd";
 
 // Local
-import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
+import CreatePost from "components/CreatePost/CreatePost";
 import {
   optionsReducer,
   feedReducer,
@@ -39,7 +39,9 @@ import {
   ERROR_POSTS,
   NEXT_PAGE,
   SET_LOADING,
+  SET_LIKE,
 } from "hooks/actions/feedActions";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
@@ -177,8 +179,12 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Feed = () => {
-  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+const Feed = (props) => {
+  const { id } = useParams();
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+    createPostModal: id === "create-post",
+  });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const {
@@ -261,11 +267,53 @@ const Feed = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
 
+  const handlePostLike = async (postId, liked) => {
+    const { history, isAuthenticated, user } = props;
+
+    /* added here because userId not working */
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
+        }
+      }
+    } else {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
+    }
+  };
+
   const loadPosts = useCallback(async () => {
+    const { user } = props;
     const limit = 5;
     const skip = posts.page * limit;
     /* Add userId when user is logged */
-    const endpoint = `/api/posts?limit=${limit}&skip=${skip}`; // ?userId=xxxxxxxxx
+    const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
+      user && user.userId ? `&userId=${user.userId}` : ""
+    }`;
     let response = {};
 
     if (posts.isLoading) {
@@ -328,6 +376,7 @@ const Feed = () => {
         handleLocation,
         handleOnClose,
         showFilters,
+        handlePostLike,
       }}
     >
       <FeedWrapper>
@@ -380,10 +429,9 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        <PostAs
-          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+        <CreatePost
+          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
-          maskClosable
         />
       </FeedWrapper>
     </FeedContext.Provider>

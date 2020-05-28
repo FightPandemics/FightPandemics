@@ -9,6 +9,7 @@ import {
   ERROR_POSTS,
   NEXT_PAGE,
   SET_LOADING,
+  SET_LIKE,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -60,6 +61,18 @@ export const postsReducer = (state = postsState, action) => {
       return { ...state, page: state.page + 1 };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };
+    case SET_LIKE:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.postId]: {
+            ...state.posts[action.postId],
+            liked: !!!state.posts[action.postId].liked,
+            likesCount: action.count,
+          },
+        },
+      };
     default:
       return state;
   }
