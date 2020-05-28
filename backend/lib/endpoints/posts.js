@@ -25,6 +25,7 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
+  const POST_PAGE_SIZE = 5;
   const UNLOGGED_POST_SIZE = 120;
   const EXPIRATION_OPTIONS = ["day", "week", "month"];
 
@@ -36,6 +37,7 @@ async function routes(app) {
     },
     async (req) => {
       const { userId } = req;
+      const { limit, filter: paramFilters, skip } = req.query;
       let user;
       let userErr;
       if (userId) {
@@ -75,7 +77,6 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { paramFilters } = req.params;
       if (paramFilters) {
         // TODO: additional filters
       }
@@ -118,6 +119,12 @@ async function routes(app) {
 
       const aggregationPipeline = [
         ...sortAndFilterSteps,
+        {
+          $skip: skip || 0,
+        },
+        {
+          $limit: limit || POST_PAGE_SIZE,
+        },
         {
           $lookup: {
             as: "comments",
