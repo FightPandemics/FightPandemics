@@ -8,7 +8,6 @@ const BaseInput = styled.input`
   border-bottom: ${(props) =>
     props.disabled ? "1px solid " + darkGray : "1px solid " + primary};
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
-  padding-bottom: 1px;
   transition: 150ms border;
 
   &:focus,
@@ -16,7 +15,6 @@ const BaseInput = styled.input`
   &:active {
     border-bottom: ${(props) =>
       props.disabled ? "1px solid " + darkGray : "2px solid " + royalBlue};
-    padding-bottom: 0;
   }
 `;
 
