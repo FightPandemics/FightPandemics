@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal } from "antd-mobile";
 import styled from "styled-components";
+import SubmitButton from "../Button/SubmitButton";
+import SearchInput from "../Input/SearchInput";
 
 import { theme } from "constants/theme.js";
 const { xxlarge } = theme.typography.size;
@@ -30,7 +32,24 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-const CustomModal = ({ title, content, onClose, visible, closable }) => {
+const buttonStyles = {
+  backgroundColor: "#F3F4FE",
+  color: "#425AF2",
+  fontWeight: "500"
+}
+
+const CustomModal = ({ title,
+  content,
+  onClose,
+  visible,
+  closable,
+  closeButtonName,
+  selectCloseButton,
+  closeButton,
+  onSearch,
+  searchBar
+ }) => {
+
   return (
     <StyledModal
       popup
@@ -42,7 +61,19 @@ const CustomModal = ({ title, content, onClose, visible, closable }) => {
       transparent
       animationType="slide-up"
     >
+      {searchBar ? <SearchInput
+        onChange={onSearch}
+      /> :
+      null }
       {content}
+      {closeButton ?
+        <SubmitButton
+        style={buttonStyles}
+        onClick={selectCloseButton}
+        >
+        {closeButtonName}
+        </SubmitButton> : null
+      }
     </StyledModal>
   );
 };

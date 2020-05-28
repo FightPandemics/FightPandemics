@@ -15,16 +15,48 @@ import SubmitButton from "../components/Button/SubmitButton";
 import Label from "../components/Input/Label";
 import StyledCheckbox from "../components/Input/Checkbox";
 import StyledCheckboxGroup from "../components/Input/CheckboxGroup";
-import { theme } from "../constants/theme";
+import createOrganizationSvg from "../assets/icons/create-organization.svg";
+import { theme, mq } from "../constants/theme";
 import {
   CreatePostWrapper,
   StyledForm,
 } from "../components/CreatePost/StyledCreatePost";
 
 
-const Container = styled.div`
-   padding: 0 2rem;
+const Main = styled.div`
+   display: flex;
+   background-color: ${theme.colors.offWhite};
+   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+     display: block;
+     padding: 0 2rem;
+   }
+`;
+
+const SvgContainer = styled.div`
+   flex-basis: 40%;
+   background-color: ${theme.colors.selago};
+   display: block;
+   padding: 4rem;
+   padding-top: 30vh;
+   img {
+     width: 90%;
+   }
+   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+     display: none;
+   }
+`;
+
+const FormContainer = styled.div`
    padding-top: 10vh;
+   padding-left: 15rem;
+   padding-right: 15rem;
+   flex: 1;
+   min-height: 100vh;
+   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+     padding-left: 0;
+     padding-right: 0;
+   }
+
 `;
 
 const InputWrapper = styled.div`
@@ -38,7 +70,8 @@ const StyleLabel = {
 
 const StyleInput = {
   width: "100%",
-  height: "3rem"
+  height: "3rem",
+  backgroundColor: "transparent"
 };
 
 const buttons = {
@@ -61,33 +94,15 @@ const initialState = {
     options: [],
     selected: "",
     name: ""
-  },
-  formData: {
-    title: "",
-    description: "",
-    tags: [],
-    type: type.default.value,
-    industry: industry.default.value,
-  },
-  errors: [],
+  }
 };
 
 const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others'];
 
-const errorMsg = {
-  name: "Please include an organization name.",
-  email: "Please include an organization email.",
-  location: "Please include a location.",
-  type: "Please include an organization type",
-  industry: "Please include an organization industry",
-  interest: "Please include what your looking for",
-  privacy: "Please include our Privacy Policy",
-  conditions: "Please include Terms and Conditions",
-};
 
 const CreateOrgProfile = (props) => {
 
-  const { register, handleSubmit, watch, control } = useForm();
+  const { register, handleSubmit, watch, control, errors } = useForm();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -101,8 +116,6 @@ const CreateOrgProfile = (props) => {
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [state, setState] = useState(initialState.state);
-  const [formData, setFormData] = useState(initialState.formData);
-  const [errors, setErrors] = useState(initialState.errors);
   const { typeModal, industryModal, selected, options } = state;
 
   const handleInputChangeName = (e) => {
@@ -168,28 +181,6 @@ const CreateOrgProfile = (props) => {
     });
   };
 
-  const handleFormData = (field) => (e) => {
-    setFormData({ ...formData, [field]: e.target.value });
-    if (errors.includes(field) && formData[field]) {
-      const newErrors = errors.filter((error) => error !== field);
-      setErrors(newErrors);
-    }
-  };
-
-  const populateErrors = () => {
-    const newErrors = [];
-    for (let field in errorMsg) {
-      if (!errors.includes(field)) {
-        newErrors.push(field);
-      }
-    }
-    setErrors([...errors, ...newErrors]);
-  };
-
-  const renderError = (field) => {
-    if (errors.includes(field) && (!formData[field] || !formData[field].length))
-      return errorMsg[field];
-  };
   //
   // const onFormSubmit = async (data) => {
   //   // e.preventDefault();
@@ -205,14 +196,42 @@ const CreateOrgProfile = (props) => {
   //   }
   // };
 
+  const searchIndustryHandler = (text) => {
+    const industryOptions = [...industry.options];
+    text.toLowerCase();
+    if(options.length < 1) {
+      setState({
+        ...state,
+        options: industry.options,
+      });
+    }
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text.toLowerCase().indexOf(text) > -1) {
+        setState({
+          ...state,
+          options: industry.options,
+        });
+      } else {
+        industryOptions.splice(i, 1);
+        setState({
+          ...state,
+          options: industryOptions,
+        });
+      }
+    }
+  }
 
-    const onFormSubmit = (data) => {
-      console.log(data);
-    };
+  const onFormSubmit = (data) => {
+    console.log(data);
+  };
 
 
   return (
-    <Container>
+    <Main>
+     <SvgContainer>
+        <img src={createOrganizationSvg} />
+     </SvgContainer>
+     <FormContainer>
       <Heading className="h4" level={4}>
         Create Organization Profile
       </Heading>
@@ -227,7 +246,7 @@ const CreateOrgProfile = (props) => {
             value={name}
             onChange={handleInputChangeName}
             style={StyleInput}
-            ref={register}
+            ref={register({ required: true, minLength: 3 })}
             name="name"
           />
         </InputWrapper>
@@ -242,8 +261,8 @@ const CreateOrgProfile = (props) => {
             value={email}
             onChange={handleInputChangeEmail}
             style={StyleInput}
-            ref={register}
             name="email"
+            ref={register({ required: true, minLength: 3 })}
           />
         </InputWrapper>
         <WhiteSpace />
@@ -257,8 +276,8 @@ const CreateOrgProfile = (props) => {
             value={location}
             onChange={handleInputChangeLocation}
             style={StyleInput}
-            ref={register}
             name="location"
+            ref={register({ required: true, minLength: 3 })}
           />
         </InputWrapper>
         <WhiteSpace />
@@ -279,7 +298,7 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
         <div className="settings">
           <CustomModal
-            title={selected ? createOrganizationProfile[selected].title : ""}
+            title="Organization Type"
             className="post-modal"
             content={
               <Controller
@@ -295,9 +314,12 @@ const CreateOrgProfile = (props) => {
             onClose={closeModalType}
             visible={typeModal}
             closable={false}
+            closeButton={true}
+            closeButtonName="Select Type"
+            selectCloseButton={closeModalType}
           />
           <CustomModal
-            title={selected ? createOrganizationProfile[selected].title : ""}
+            title="Select Industry"
             className="post-modal"
             content={
               <Controller
@@ -313,11 +335,16 @@ const CreateOrgProfile = (props) => {
             onClose={closeModalIndustry}
             visible={industryModal}
             closable={false}
+            closeButton={true}
+            closeButtonName="Select Industry"
+            selectCloseButton={closeModalIndustry}
+            searchBar={true}
+            onSearch={searchIndustryHandler}
           />
           <div style={buttons}>
             <DownArrowButton
               handleClick={showModal(type)}
-              label={formData.type}
+              label="Type"
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
@@ -327,7 +354,7 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <DownArrowButton
               handleClick={showModal(industry)}
-              label={formData.industry}
+              label="Industry"
               color={theme.colors.royalBlue}
               bgcolor="#fff"
               long="true"
@@ -384,7 +411,8 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
       </StyledForm>
       <WhiteSpace />
-    </Container>
+      </FormContainer>
+    </Main>
   );
 };
 
