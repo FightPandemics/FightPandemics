@@ -47,6 +47,9 @@ async function routes(app) {
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");
       }
+      if (User.findById(req.userId)) {
+        throw app.httpErrors.conflict("User exists");
+      }
       const userData = {
         ...req.body,
         _id: req.userId,
