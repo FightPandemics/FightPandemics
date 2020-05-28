@@ -1,28 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import { theme } from "constants/theme";
-import styled from "styled-components";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
-import SubmitButton from "components/Button/SubmitButton";
-import Heading from "components/Typography/Heading";
+import { getInitials } from "utils/userInfo";
+import { Link } from "react-router-dom";
+import {
+  FillEmptySpace,
+  EditLayout,
+  TitlePictureWrapper,
+  CustomLink,
+  CustomForm,
+  CustomHeading,
+  ChangePicButton,
+  CustomSubmitButton,
+  OptionDiv,
+  FormLayout,
+  Background,
+} from "../components/EditProfile/EditComponents";
 // dummy data props,context, redux etc
-
-const { royalBlue } = theme.colors;
-
 const editProfile = true;
-
-const ChangePicButton = styled.div`
-  color: ${royalBlue};
-  margin-bottom: 3rem;
-  text-align: center;
-`;
-
-function getInitials(firstName, lastName) {
-  // function to get the initials given firstname and last name
-  return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
-}
 
 function EditProfile(props) {
   // dummy data props,context, redux etc
@@ -39,7 +36,7 @@ function EditProfile(props) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // make a put/patch request to backend to update users profile information
   };
 
@@ -68,35 +65,44 @@ function EditProfile(props) {
   };
 
   return (
-    <>
-      <Heading
-        title={editProfile ? "Edit Profile" : "Complete Profile"}
-        level={4}
-        className="h4"
-        style={{
-          marginBottom: "3rem",
-          marginTop: "2rem",
-        }}
-      />
-      <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
-      <ChangePicButton>Change</ChangePicButton>
-      <form style={{ display: "flex", flexDirection: "column" }}>
-        <FormInput
-          inputTitle="Self-introduction"
-          name="about"
-          defaultValue={about}
-          reference={register({ maxLength: 160 })}
-        />
-        {renderFormInputs()}
-        <SubmitButton
-          primary="true"
-          style={{ marginTop: "1rem", marginBottom: "3rem" }}
-          onClick={handleSubmit(onSubmit)}
-        >
-          Save Changes
-        </SubmitButton>
-      </form>
-    </>
+    <Background>
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomHeading level={4} className="h4">
+            {editProfile ? "Edit Profile" : "Complete Profile"}
+          </CustomHeading>
+          <FillEmptySpace />
+          <ProfilePic
+            resolution={"7680px"}
+            noPic={true}
+            initials={getInitials(firstName, lastName)}
+          />
+        </TitlePictureWrapper>
+        <ChangePicButton>Change</ChangePicButton>
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink>
+              <Link to="/edit-account">Account Information</Link>
+            </CustomLink>
+            <CustomLink isSelected>
+              <Link to="/edit-profile">Profile Information</Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            <FormInput
+              inputTitle="Self-introduction"
+              name="about"
+              defaultValue={about}
+              reference={register({ maxLength: 160 })}
+            />
+            {renderFormInputs()}
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              Save Changes
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
+    </Background>
   );
 }
 

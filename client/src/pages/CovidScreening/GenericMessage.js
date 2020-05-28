@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
+import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+import { DARK_GRAY } from "constants/colors";
+
 const { typography, colors } = theme;
 
 const ColoredMessageStyle = styled.div`
@@ -26,6 +30,9 @@ const GenericMessageStyle = styled.ol`
   padding: 0;
   list-style: none;
   counter-reset: li;
+  .ant-typography.title {
+    margin-bottom: 1rem;
+  }
   & li {
     position: relative;
     margin: 0 0 2.7rem;
@@ -45,20 +52,6 @@ const GenericMessageStyle = styled.ol`
       background: ${colors.royalBlue};
       border-radius: 50%;
       text-align: center;
-    }
-    & > div {
-      & div {
-        font-family: ${typography.heading.font};
-        font-weight: 500;
-        font-size: 1.8rem;
-        color: ${colors.darkerGray};
-      }
-      & h6 {
-        font-family: ${typography.heading.font};
-        font-weight: 500;
-        color: ${colors.darkGray};
-        margin: 0.9rem 0 0 !important;
-      }
     }
   }
 `;
@@ -87,8 +80,16 @@ export const GenericMessage = ({ msg = [] }) => {
       {msg.map((item = [], index) => (
         <li key={index}>
           <div>
-            <div>{item[0]}</div>
-            <h6>{item[1]}</h6>
+            <TextLabel
+              className="title"
+              block="true"
+              size={typography.size.xlarge}
+            >
+              {item[0]}
+            </TextLabel>
+            <TextLabel color={DARK_GRAY} size={typography.size.medium}>
+              {item[1]}
+            </TextLabel>
           </div>
         </li>
       ))}

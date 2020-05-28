@@ -5,6 +5,7 @@ export const SELAGO = "#F3F4FE";
 export const ORANGE_RED = "#FF5656";
 export const RED = "#d1222c";
 export const MINT_GREEN = "#22D9A2";
+export const GREEN = "#209d7f";
 export const LIGHTER_GRAY = "#F9F9F9";
 export const LIGHT_GRAY = "#D7D7D7";
 export const MEDIUM_GRAY = "#C5C5C5";

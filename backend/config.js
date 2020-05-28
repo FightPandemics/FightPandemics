@@ -6,17 +6,19 @@ const { name } = require("./package.json");
 const configData = envSchema({
   data: process.env,
   schema: S.object()
+    .prop("AIRTABLE_API_KEY", S.string().required())
+    .prop("AIRTABLE_BASE_ID", S.string().required())
     .prop("AUTH_APP_URL", S.string())
     .prop("AUTH_CLIENT_ID", S.string().required())
     .prop("AUTH_DOMAIN", S.string().required())
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
-    .prop("NODE_ENV", S.string().required())
+    .prop("COMMIT_HASH", S.string())
     .prop("GEO_SERVICE_URL", S.string().required())
     .prop("MONGO_URI", S.string().required())
-    .prop("AIRTABLE_API_KEY", S.string().required())
-    .prop("AIRTABLE_BASE_ID", S.string().required())
-    .prop("PORT", S.number().default(8000).required()),
+    .prop("NODE_ENV", S.string().required())
+    .prop("PORT", S.number().default(8000).required())
+    .prop("SENTRY_DSN", S.string()),
 });
 
 const config = {
@@ -32,6 +34,11 @@ const config = {
     state: configData.AUTH_STATE,
   },
   env: configData.NODE_ENV,
+  errorNotifier: {
+    url: configData.SENTRY_DSN,
+    environment: configData.NODE_ENV,
+    release: configData.COMMIT_HASH,
+  },
   geoService: {
     host: `http://${configData.GEO_SERVICE_URL}`,
   },

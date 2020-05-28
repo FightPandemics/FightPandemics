@@ -1,7 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import BaseButton from "./BaseButton";
 import { theme } from "constants/theme";
-const { button } = theme;
 
 // props: inline, primary, primarylight, secondary, tertiary
 

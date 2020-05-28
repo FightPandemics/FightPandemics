@@ -65,8 +65,8 @@ const postSchema = new Schema(
 );
 
 // -- Indexes
-/* eslint-disable */
 // Indexes for filtered feed
+/* eslint-disable sort-keys */
 postSchema.index({ "author.location.coordinates": "2dsphere" });
 postSchema.index({
   // Expiration Filter
@@ -159,11 +159,28 @@ postSchema.index({ "author.id": 1, createdAt: -1 });
 
 // Index for like's foreign key for lookup performance
 postSchema.index({ likes: 1 });
-
 /* eslint-enable */
 
 // -- Model
 const Post = model("Post", postSchema);
 
-exports.model = Post;
-exports.schema = postSchema;
+function updateAuthorName(authorID, newAuthorName) {
+  return Post.where(
+    { "author.id": authorID },
+    { $set: { "author.name": newAuthorName } },
+  );
+}
+
+function updateAuthorType(authorID, newAuthorType) {
+  return Post.where(
+    { "author.id": authorID },
+    { $set: { "author.type": newAuthorType } },
+  );
+}
+
+module.exports = {
+  model: Post,
+  schema: postSchema,
+  updateAuthorName,
+  updateAuthorType,
+};

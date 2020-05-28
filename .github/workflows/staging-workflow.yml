@@ -80,6 +80,7 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           TF_VAR_env_name: staging
           TF_VAR_fp_context: staging
+          TF_VAR_commit_hash: ${GITHUB_SHA}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster staging-cluster --service staging --force-new-deployment
