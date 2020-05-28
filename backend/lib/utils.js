@@ -16,9 +16,13 @@ const bool = (env) => env == "true";
 const getBearerToken = (req) =>
   req.headers.authorization.replace("Bearer ", "");
 
+const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+const isValidEmail = (email) => emailRegEx.test(email);
+
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
   getBearerToken,
+  isValidEmail,
 };

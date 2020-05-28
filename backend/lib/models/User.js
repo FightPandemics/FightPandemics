@@ -1,34 +1,32 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
+// const { schema: locationSchema } = require("./Location");
+const { isValidEmail } = require("../utils");
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
-    _id: {
+    about: { maxLength: 100, trim: true, type: String },
+    email: {
       required: true,
-      type: Schema.Types.ObjectId,
-    },
-    address: {
       type: String,
+      validator: isValidEmail,
     },
     location: Object,
-    name: {
-      required: true,
-      type: String,
-    },
-    needs: {
-      type: Array,
-    },
     photo: String,
-    type: String,
-    wants: {
-      type: Array,
-    },
   },
-  {
-    timestamps: true,
-  },
+  { collection: "users", timestamps: true },
 );
 
-const User = model("User", UserSchema);
+// indices keys aren't meant to be sorted alphabetically. Please don't change
+// the keys' order unless you really intend to change indexing
+/* eslint-disable sort-keys */
+userSchema.index({
+  type: 1,
+  ownerId: 1,
+  createdAt: -1,
+});
+/* eslint-enable */
 
+const User = model("User", userSchema);
+
+exports.schema = userSchema;
 exports.model = User;
-exports.schema = UserSchema;
