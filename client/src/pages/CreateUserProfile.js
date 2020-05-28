@@ -1,7 +1,7 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
 import React, { useReducer } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -126,15 +126,22 @@ const CheckboxContainer = styled.div`
   }
 `;
 
-const CheckboxGroup = ({ description, label, name, ref }) => {
+const CheckboxGroup = ({
+  defaultValue,
+  description,
+  label,
+  name,
+  onChange,
+}) => {
   return (
     <CheckboxContainer>
       <Checkbox
+        defaultValue={defaultValue}
         color={theme.colors.royalBlue}
         id={name}
         name={name}
-        ref={ref}
         size={theme.typography.size.xxlarge}
+        onChange={onChange}
       />
       <Flex direction="column" align="start">
         <Label htmlFor={name} style={inlineLabelStyles} label={label} />
@@ -210,8 +217,10 @@ const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
 
-const CreateProfile = ({ email = "robin@gmail.com" }) => {
-  const { formState, getValues, handleSubmit, register } = useForm({
+const handleCheckboxChange = ([evt]) => evt.target.checked;
+
+const CreateProfile = ({ email }) => {
+  const { control, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
   const [createUserFormState, createUserFormDispatch] = useReducer(
@@ -338,12 +347,29 @@ const CreateProfile = ({ email = "robin@gmail.com" }) => {
             >
               I want to
             </TextLabel>
-            <CheckboxGroup name="volunteer" label="Volunteer" ref={register} />
-            <CheckboxGroup name="donate" label="Donate" ref={register} />
-            <CheckboxGroup
-              name="shareInformation"
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Volunteer"
+              name="objectives.volunteer"
+              onChange={handleCheckboxChange}
+            />
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Donate"
+              name="objectives.donate"
+              onChange={handleCheckboxChange}
+            />
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
               label="Share Information"
-              ref={register}
+              name="objectives.shareInformation"
+              onChange={handleCheckboxChange}
             />
           </InputGroup>
           <InputGroup>
@@ -354,13 +380,23 @@ const CreateProfile = ({ email = "robin@gmail.com" }) => {
             >
               I need
             </TextLabel>
-            <CheckboxGroup
-              label="Medical Help"
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
               description="I have symptoms of COVID-19"
+              label="Medical Help"
+              name="needs.medicalHelp"
+              onChange={handleCheckboxChange}
             />
-            <CheckboxGroup
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              description="I need assistance getting groceries, medicine, etc."
               label="Other Help"
-              description="I need assitance getting groceries, medicine, etc."
+              name="needs.otherHelp"
+              onChange={handleCheckboxChange}
             />
           </InputGroup>
           <InputGroup>
