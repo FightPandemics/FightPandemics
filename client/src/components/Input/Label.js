@@ -5,7 +5,7 @@ import { theme } from "constants/theme";
 const { royalBlue } = theme.colors;
 
 const StyledLabel = styled.label`
-  color: ${royalBlue};
+  color: ${(props) => props.color || royalBlue};
 `;
 
 const Label = ({ label, htmlFor, style }) => (

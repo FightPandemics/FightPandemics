@@ -17,7 +17,11 @@ import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import SubmitButton from "components/Button/SubmitButton";
 import { theme, mq } from "constants/theme";
-import { inputStyles, labelStyles } from "constants/formStyles";
+import {
+  blockLabelStyles,
+  inputStyles,
+  inlineLabelStyles,
+} from "constants/formStyles";
 import { CREATE_USER, CREATE_USER_ERROR } from "hooks/actions/userActions";
 import {
   createUserFormReducer,
@@ -107,17 +111,11 @@ const ProfileFormGroup = styled.form`
 `;
 
 const CheckboxContainer = styled.div`
-  --mt: ${theme.typography.size.xxsmall};
   --xsmall: ${theme.typography.size.xsmall};
 
   display: flex;
-  align-items: ${(props) =>
-    props.label && props.description ? "start" : "center"};
-  margin: var(--mt) 0 0 0;
-  p {
-    color: ${theme.colors.darkerGray};
-    font-weight: normal;
-  }
+  align-items: "flex-start";
+  margin: 1.5rem 0;
   .ant-checkbox-wrapper {
     margin-right: ${theme.typography.size.large};
   }
@@ -128,23 +126,19 @@ const CheckboxContainer = styled.div`
   }
 `;
 
-const CheckboxGroup = ({ children, description, font, label }) => {
+const CheckboxGroup = ({ description, label, name, ref }) => {
   return (
-    <CheckboxContainer font={font} label={label} description={description}>
+    <CheckboxContainer>
       <Checkbox
         color={theme.colors.royalBlue}
+        id={name}
+        name={name}
+        ref={ref}
         size={theme.typography.size.xxlarge}
       />
       <Flex direction="column" align="start">
-        {children ?? (
-          <TextLabel
-            color={theme.colors.black}
-            size={theme.typography.size.large}
-          >
-            {label}
-          </TextLabel>
-        )}
-        <span>{description}</span>
+        <Label htmlFor={name} style={inlineLabelStyles} label={label} />
+        {description && <span>{description}</span>}
       </Flex>
     </CheckboxContainer>
   );
@@ -194,30 +188,6 @@ const InputGroup = styled.div`
 
   margin: var(--my) 0 var(--my) 0;
 
-  .address {
-    input {
-      margin-bottom: 0;
-    }
-    label > p:before {
-      content: " ";
-      background-image: url(${Marker});
-      background-size: contain;
-      background-repeat: no-repeat;
-      display: inline-block;
-      margin-right: ${theme.typography.size.xxsmall};
-      height: ${theme.typography.size.xlarge};
-      width: ${theme.typography.size.xlarge};
-    }
-
-    label:after {
-      content: "Enter address, zip code, or city";
-      color: ${theme.colors.green};
-      font-size: ${theme.typography.size.xsmall};
-      font-family: ${theme.typography.font.family.body};
-      margin-top: ${theme.typography.size.xsmall};
-    }
-  }
-
   .underline {
     color: ${theme.colors.green};
     font-size: ${theme.typography.size.xsmall};
@@ -240,7 +210,7 @@ const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
 
-const CreateProfile = ({ email }) => {
+const CreateProfile = ({ email = "robin@gmail.com" }) => {
   const { formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
@@ -250,11 +220,12 @@ const CreateProfile = ({ email }) => {
   );
 
   const onSubmit = async (formData) => {
+    console.log("onSubmit", { formData });
     createUserFormDispatch({ type: CREATE_USER });
     try {
-      const res = await axios.post("/api/auth/signup", formData);
+      // const res = await axios.post("/api/auth/signup", formData);
       // user created successfully
-      console.log({ res });
+      // console.log({ res });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       createUserFormDispatch({
@@ -284,7 +255,11 @@ const CreateProfile = ({ email }) => {
           </Heading>
           <InputGroup>
             <InputWrapper>
-              <Label htmlFor="email" style={labelStyles} label="E-mail" />
+              <Label
+                htmlFor="email"
+                style={{ ...blockLabelStyles, color: theme.colors.darkGray }}
+                label="E-mail"
+              />
               <Input
                 type="email"
                 name="email"
@@ -300,7 +275,7 @@ const CreateProfile = ({ email }) => {
             <InputWrapper>
               <Label
                 htmlFor="firstName"
-                style={labelStyles}
+                style={blockLabelStyles}
                 label="First name"
               />
               <Input
@@ -314,7 +289,11 @@ const CreateProfile = ({ email }) => {
             </InputWrapper>
 
             <InputWrapper>
-              <Label htmlFor="lastName" style={labelStyles} label="Last name" />
+              <Label
+                htmlFor="lastName"
+                style={blockLabelStyles}
+                label="Last name"
+              />
               <Input
                 type="text"
                 name="lastName"
@@ -323,11 +302,14 @@ const CreateProfile = ({ email }) => {
                 ref={register({ required: true })}
                 style={inputStyles}
               />
-              <SubLabel>Enter address, zip code, or city</SubLabel>
             </InputWrapper>
 
             <InputWrapper>
-              <Label htmlFor="address" style={labelStyles} label="Address" />
+              <Label
+                htmlFor="address"
+                style={blockLabelStyles}
+                label="Address"
+              />
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
                   <Input
@@ -338,6 +320,7 @@ const CreateProfile = ({ email }) => {
                     ref={register({ required: true })}
                     style={inputStyles}
                   />
+                  <SubLabel>Enter address, zip code, or city</SubLabel>
                 </div>
               </DropdownMenu>
             </InputWrapper>
@@ -355,9 +338,13 @@ const CreateProfile = ({ email }) => {
             >
               I want to
             </TextLabel>
-            <CheckboxGroup label="Volunteer" />
-            <CheckboxGroup label="Donate" />
-            <CheckboxGroup label="Share Information" />
+            <CheckboxGroup name="volunteer" label="Volunteer" ref={register} />
+            <CheckboxGroup name="donate" label="Donate" ref={register} />
+            <CheckboxGroup
+              name="shareInformation"
+              label="Share Information"
+              ref={register}
+            />
           </InputGroup>
           <InputGroup>
             <TextLabel

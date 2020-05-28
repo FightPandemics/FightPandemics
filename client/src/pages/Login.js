@@ -10,7 +10,7 @@ import styled from "styled-components";
 import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
 import { ORANGE_RED, WHITE } from "constants/colors";
-import { inputStyles, labelStyles } from "constants/formStyles";
+import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
 import { PASSWORD_MIN_LENGTH } from "config";
 import {
@@ -153,7 +153,7 @@ const FormContainer = styled.div`
 
 const VisibilityIconWrapper = styled.div`
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 2.1rem;
   right: 0.5rem;
   color: ${colors.tropicalBlue};
   cursor: pointer;
@@ -291,7 +291,11 @@ const Login = ({ isLoginForm }) => {
             )}
             <form id="login-password">
               <InputWrapper>
-                <Label htmlFor="email" style={labelStyles} label="E-mail" />
+                <Label
+                  htmlFor="email"
+                  style={blockLabelStyles}
+                  label="E-mail"
+                />
                 <Input
                   type="email"
                   name="email"
@@ -305,7 +309,7 @@ const Login = ({ isLoginForm }) => {
               <InputWrapper>
                 <Label
                   htmlFor="password"
-                  style={labelStyles}
+                  style={blockLabelStyles}
                   label="Password"
                 />
                 <Input
@@ -326,7 +330,7 @@ const Login = ({ isLoginForm }) => {
                 <InputWrapper>
                   <Label
                     htmlFor="confirmPassword"
-                    style={labelStyles}
+                    style={blockLabelStyles}
                     label="Confirm Password"
                   />
                   <Input
