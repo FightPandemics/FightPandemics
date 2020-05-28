@@ -342,8 +342,11 @@ const CreateProfile = ({ email }) => {
               </DropdownMenu>
             </InputWrapper>
           </InputGroup>
+          {/*
+            temporarily disabled until the fields are added to the API
           <CheckboxGroup description="I am traveling" />
           <CheckboxGroup description="Don't show my address" />
+          */}
           <InputGroup>
             <TextLabel
               color={theme.colors.royalBlue}
@@ -381,6 +384,7 @@ const CreateProfile = ({ email }) => {
             >
               Create Profile
             </Submit>
+            {/* temporarily disabled until API is updated to save these fields
             <CheckboxGroup>
               <UnderlineLink>
                 By signing up, I agree to the{" "}
@@ -393,6 +397,7 @@ const CreateProfile = ({ email }) => {
                 <a href="/terms-conditions">Terms and Conditions</a>
               </UnderlineLink>
             </CheckboxGroup>
+            */}
           </InputGroup>
         </ProfileFormGroup>
       </Flex>
