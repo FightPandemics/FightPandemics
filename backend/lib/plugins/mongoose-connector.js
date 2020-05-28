@@ -5,7 +5,8 @@ require("../models/Author");
 require("../models/Comment");
 require("../models/Feedback");
 require("../models/Location");
-require("../models/Organization");
+require("../models/IndividualUser");
+require("../models/OrganizationUser");
 require("../models/Post");
 require("../models/User");
 
@@ -20,7 +21,7 @@ async function syncIndexes(mongo) {
 
 async function dbConnector(app, config) {
   const connection = await mongoose.createConnection(config.uri, config.params);
-  app.decorate("mongo", connection);  
+  app.decorate("mongo", connection);
   syncIndexes(app.mongo);
 }
 

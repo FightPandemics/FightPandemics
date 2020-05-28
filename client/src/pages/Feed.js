@@ -37,7 +37,9 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  SET_LIKE,
 } from "hooks/actions/feedActions";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
@@ -175,7 +177,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Feed = () => {
+const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -262,20 +264,66 @@ const Feed = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
 
+  const handlePostLike = async (postId, liked) => {
+    const { history, isAuthenticated, user } = props;
+
+    /* added here because userId not working */
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
+        }
+      }
+    } else {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
+    }
+  };
+
   useEffect(() => {
-    /* Add userId when user is logged */
-    const endpoint = "/api/posts"; // ?userId=xxxxxxxxx
+    const { user } = props;
+    const endpoint = `/api/posts${
+      user && user.userId ? `?userId=${user.userId}` : ""
+    }`;
 
     postsDispatch({ type: FETCH_POSTS });
     axios
       .get(endpoint)
       .then((response) => {
-        postsDispatch({ type: SET_POSTS, posts: response.data });
+        const posts = response.data.reduce(
+          (obj, item) => ((obj[item._id] = item), obj),
+          [],
+        );
+
+        postsDispatch({ type: SET_POSTS, posts });
       })
       .catch((error) => {
         postsDispatch({ type: ERROR_POSTS });
       });
-  }, []);
+  }, [props]);
 
   return (
     <FeedContext.Provider
@@ -292,6 +340,7 @@ const Feed = () => {
         handleLocation,
         handleOnClose,
         showFilters,
+        handlePostLike,
       }}
     >
       <FeedWrapper>
@@ -326,15 +375,13 @@ const Feed = () => {
             <HeaderWrapper>
               <h1>Feed</h1>
               <button onClick={handleCreatePost}>
-                Create post
+                Create a post
                 <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />
             {posts.status === FETCH_POSTS && <div>Loading...</div>}
-            {posts.status === ERROR_POSTS && (
-              <div>Something went wrong ...</div>
-            )}
+            {posts.status === ERROR_POSTS && <div>Something went wrong...</div>}
             <Posts filteredPosts={posts.posts} />
             <SvgIcon
               src={creatPost}

@@ -121,7 +121,7 @@ const FiltersSidebar = () => {
           onClick={handleOnClose}
           style={{ fontWeight: "normal" }}
         >
-          View Results
+          View result
         </SubmitButton>
       </div>
     </DrawerWrapper>

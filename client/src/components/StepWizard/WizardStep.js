@@ -4,7 +4,6 @@ import { theme } from "constants/theme";
 const { font } = theme.typography;
 
 const WizardStep = styled.div`
-  min-height: 100%;
   display: flex;
   flex-flow: column wrap;
   align-items: ${(props) => props.alignItems || "center"};
