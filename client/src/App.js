@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
+import { PrivateRoute } from "./templates/PrivateRoutes";
+import CreatePost from "./routes";
+
 import { initAuth } from "./actions/authActions";
 import routes from "./routes";
 import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
@@ -18,6 +21,10 @@ const App = (props) => {
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
+      </Switch>
+
+      <Switch>
+        <PrivateRoute exact path="/create-post" component={CreatePost} />
       </Switch>
     </Router>
   );
