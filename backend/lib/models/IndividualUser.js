@@ -46,9 +46,9 @@ const individualUserSchema = new Schema(
       volunteer: { default: false, required: true, type: Boolean },
     },
     type: {
+      default: "individual",
       enum: INDIVIDUAL_USER_TYPES,
       lowercase: true,
-      required: true,
       type: String,
     },
     urls: {

@@ -1,7 +1,6 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 const { locationSchema } = require("./location");
-const { INDIVIDUAL_USER_TYPES } = require("../../models/IndividualUser");
 
 const createUserSchema = {
   body: strictSchema()
@@ -20,7 +19,6 @@ const createUserSchema = {
         .prop("shareInformation", S.boolean().required().default(false))
         .prop("volunteer", S.boolean().required().default(false)),
     )
-    .prop("type", S.string().required().enum(INDIVIDUAL_USER_TYPES))
     .prop(
       "url",
       S.object()

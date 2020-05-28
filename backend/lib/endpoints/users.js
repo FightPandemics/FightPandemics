@@ -43,7 +43,7 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
       const user = await Auth0.getUser(getBearerToken(req));
-      const { email_verified: emailVerified } = user;
+      const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");
       }
@@ -51,6 +51,7 @@ async function routes(app) {
         ...req.body,
         _id: req.userId,
         authId: req.user.sub,
+        email,
       };
       return new User(userData).save();
     },
