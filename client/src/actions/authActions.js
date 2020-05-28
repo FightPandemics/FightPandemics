@@ -4,9 +4,10 @@ import { getAuthToken } from "utils/auth-token";
 // Note: for production apps, both localstorage & cookies contain risks to store user & auth data
 export const initAuth = () => {
   return (dispatch) => {
-    const token = getAuthToken();
+    const { token, emailVerified } = getAuthToken();
+
     if (token) {
-      dispatch({ type: AUTH_SUCCESS, payload: { token } });
+      dispatch({ type: AUTH_SUCCESS, payload: { token, emailVerified } });
     }
   };
 };

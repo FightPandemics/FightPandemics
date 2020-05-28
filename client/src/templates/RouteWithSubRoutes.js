@@ -6,9 +6,9 @@ import NavigationLayout from "./layouts/NavigationLayout";
 import NavlessLayout from "./layouts/NavlessLayout";
 import { connect } from "react-redux";
 
-const HOME = "/";
-const LOGIN = "/auth/login";
-const VERIFY_EMAIL = "/auth/verify-email";
+export const HOME = "/";
+export const LOGIN = "/auth/login";
+export const VERIFY_EMAIL = "/auth/verify-email";
 
 const getLayoutComponent = (layout) => {
   switch (layout) {

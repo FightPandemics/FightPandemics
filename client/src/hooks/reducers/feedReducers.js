@@ -7,6 +7,7 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  SET_LIKE,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -51,6 +52,18 @@ export const postsReducer = (state = postsState, action) => {
       return { ...state, status: SET_POSTS, posts: action.posts };
     case ERROR_POSTS:
       return { ...state, status: ERROR_POSTS, posts: [] };
+    case SET_LIKE:
+      return {
+        ...state,
+        posts: {
+            ...state.posts,
+            [action.postId]: {
+              ...state.posts[action.postId],
+              liked: !!!state.posts[action.postId].liked,
+              likesCount: action.count
+            }
+        }
+      };
     default:
       return state;
   }
