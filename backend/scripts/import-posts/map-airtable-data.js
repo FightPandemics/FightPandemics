@@ -25,7 +25,18 @@ const cleanType = (airtableType) => {
   }
 };
 
-module.exports = (post, sourcedBy) => {
+const cleanAuthorType = (airtableAuthorType) => {
+  switch (airtableAuthorType) {
+    case "Organization": // generic "Organization" just "Other"
+      return "Other";
+    case "Goverment":
+      return "Government";
+    default:
+      return airtableAuthorType;
+  }
+};
+
+module.exports = (post, fpOrgsByType) => {
   const {
     android_app: playStore,
     city,
@@ -43,13 +54,15 @@ module.exports = (post, sourcedBy) => {
     state,
   } = post.fields;
 
+  const cleanedAuthorType = cleanAuthorType(authorType);
+
   const author = {
-    // author id/name will refer back to 'Sourced by FightPandemics'
-    id: sourcedBy.id,
-    // while location & type will reflect actual posting (for filtering)
+    // id/name just links make to one of "Sourced by Fightpandemics" orgs for each type (not the original posting org)
+    id: fpOrgsByType[cleanedAuthorType]._id,
+    // location/type will reflect actual posting (for filtering)
     location: {},
-    name: sourcedBy.name,
-    type: authorType,
+    name: fpOrgsByType[cleanedAuthorType].name,
+    type: cleanedAuthorType,
   };
   // only using [first] element if multiple in Airtable location fields
   if (country) [author.location.country] = country;

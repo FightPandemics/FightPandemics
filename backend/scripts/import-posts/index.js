@@ -7,15 +7,11 @@ require("dotenv").config();
 const {
   config: { mongo, airtable },
 } = require("../../config");
-require("../../lib/models/User");
-const { schema: userSchema } = require("../../lib/models/User");
 const { schema: postSchema } = require("../../lib/models/Post");
 const mapAirtableData = require("./map-airtable-data");
+const initSourcedByFpUsers = require("./init-sourced-by-fp-users");
 
 const POSTS_AIRTABLE_NAME = "Posts";
-const SOURCED_BY_FP_USER = {
-  name: "Sourced by FightPandemics",
-};
 const DEFAULT_MAX_RECORDS = 100;
 
 /* TODO: consider library (commander, yargs)
@@ -28,7 +24,7 @@ const parseMaxRecordsArg = () => {
   return parseInt(maxRecordsArg, 10) || DEFAULT_MAX_RECORDS;
 };
 
-const importPostsFromAirtable = async (connection, sourcedById) => {
+const importPostsFromAirtable = async (connection, fpOrgsByType) => {
   const start = Date.now();
 
   const base = new Airtable({
@@ -45,10 +41,7 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
   const postsUpdatedAt = new Date(); // for consistent timestamp
   records.forEach((record) => {
     try {
-      const postData = mapAirtableData(record._rawJson, {
-        id: sourcedById,
-        name: SOURCED_BY_FP_USER.name,
-      });
+      const postData = mapAirtableData(record._rawJson, fpOrgsByType);
       postData.updatedAt = postsUpdatedAt;
 
       // bulk write does not perform validation; only include posts that pass validate
@@ -69,7 +62,7 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
       console.error(
         `${record.id} failed mapping/validation. Error message: ${
           err.message
-        }. Record fields: ${JSON.stringify(record._rawJson.fields)}.`
+        }. Record fields: ${JSON.stringify(record._rawJson.fields)}.`,
       );
     }
   });
@@ -81,28 +74,18 @@ const importPostsFromAirtable = async (connection, sourcedById) => {
     console.log(
       `Imported ${nUpserted + nModified} from Airtable in ${
         (end - start) / 1000
-      }s. Inserted ${nUpserted} new posts; updated ${nModified} existing posts. ${failedPosts} posts failed to import.`
+      }s. Inserted ${nUpserted} new posts; updated ${nModified} existing posts. ${failedPosts} posts failed to import.`,
     );
   } catch (err) {
     console.error(`Bulk write failed. Error message: ${err.message}`);
   }
 };
 
-const initSourcedByFPUser = async (connection) => {
-  const User = connection.model("User", userSchema);
-  const filter = { name: SOURCED_BY_FP_USER.name };
-  return User.findOneAndUpdate(filter, SOURCED_BY_FP_USER, {
-    new: true,
-    upsert: true,
-    useFindAndModify: false,
-  });
-};
-
 (async () => {
   const connection = await mongoose.createConnection(mongo.uri, mongo.params);
   try {
-    const sourcedBy = await initSourcedByFPUser(connection);
-    await importPostsFromAirtable(connection, sourcedBy._id);
+    const fpOrgsByType = await initSourcedByFpUsers(connection);
+    await importPostsFromAirtable(connection, fpOrgsByType);
     process.exit();
   } catch (err) {
     console.error(err);
