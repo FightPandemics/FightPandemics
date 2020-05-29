@@ -92,6 +92,15 @@ const routes = [
   },
   {
     path: "/feed",
+    exact: true,
+    component: Feed,
+    props: {
+      mobiletabs: true,
+      tabIndex: 2,
+    },
+  },
+  {
+    path: "/feed/:id",
     component: Feed,
     props: {
       mobiletabs: true,

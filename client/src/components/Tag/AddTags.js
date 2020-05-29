@@ -13,7 +13,7 @@ const AddTagsWrapper = styled.div`
   }
 `;
 
-const AddTags = ({ filters, addTag, selected }) => {
+const AddTags = ({ filters, addTag, selected = [] }) => {
   return (
     <AddTagsWrapper>
       <p>Add tags to make your post more visible</p>
