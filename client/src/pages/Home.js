@@ -40,6 +40,9 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
+  &.home {
+    margin-right: -2rem;
+  }
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
@@ -146,7 +149,7 @@ const StyleLink = styled.p`
 
 const Home = (props) => {
   return (
-    <MainContainer className="text-center">
+    <MainContainer className="text-center home">
       <StyledIntro>
         <IntroText>
           <StyledStrapline level={2} margin="none">
