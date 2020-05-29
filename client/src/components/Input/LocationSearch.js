@@ -6,6 +6,7 @@ import { FeedContext } from "pages/Feed.js";
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon"
 import navigation from "assets/icons/navigation.svg";
+import searchBlue from "assets/icons/search-blue.svg";
 import { theme } from "constants/theme";
 const { white } = theme.colors;
 
@@ -34,6 +35,7 @@ const LocationSearch = () => {
         placeholder="Zip code, city, state..."
         maxLength={100}
         value={location}
+        prefix={<SvgIcon icon={(searchBlue)} />}
         onChange={handleLocation}
       />
       <WhiteSpace size="lg" />
