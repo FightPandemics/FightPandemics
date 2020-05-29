@@ -131,7 +131,7 @@ const CookiesPolicy = () => {
               according to your internet browser to change cookie preferences:
               <ul>
                 <li>
-                  <TermsLink href="https://support.google.com/chrome/answer/95647?hl=es">
+                  <TermsLink href="https://support.google.com/chrome/answer/95647?hl=en">
                     Chrome
                   </TermsLink>
                 </li>
