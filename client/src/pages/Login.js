@@ -1,4 +1,3 @@
-import { Alert } from "antd";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
@@ -7,9 +6,9 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
-import { ORANGE_RED, WHITE } from "constants/colors";
 import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
 import { PASSWORD_MIN_LENGTH } from "config";
@@ -120,13 +119,6 @@ const LoginLeftContainer = styled.div`
 
 const LoginRightContainer = styled.div`
   flex: 1;
-`;
-
-const ErrorAlert = styled(Alert)`
-  background-color: ${ORANGE_RED};
-  .ant-alert-message {
-    color: ${WHITE};
-  }
 `;
 
 const SocialImageContainer = styled.div`

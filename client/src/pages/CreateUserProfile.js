@@ -9,6 +9,7 @@ import styled from "styled-components";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
 import Checkbox from "components/Input/Checkbox";
@@ -236,6 +237,7 @@ const CreateProfile = ({ email }) => {
       // user created successfully
       console.log({ res });
     } catch (err) {
+      console.log({ err });
       const message = err.response?.data?.message || err.message;
       createUserFormDispatch({
         type: CREATE_USER_ERROR,
@@ -262,6 +264,9 @@ const CreateProfile = ({ email }) => {
           <Heading className="text-center" level={4}>
             Create your Profile
           </Heading>
+          {createUserFormState.error && (
+            <ErrorAlert message={createUserFormState.error} type="error" />
+          )}
           <InputGroup>
             <InputWrapper>
               <Label
@@ -401,7 +406,7 @@ const CreateProfile = ({ email }) => {
           </InputGroup>
           <InputGroup>
             <Submit
-              disabled={!formState.isValid}
+              disabled={!formState.isValid || createUserFormState.loading}
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
