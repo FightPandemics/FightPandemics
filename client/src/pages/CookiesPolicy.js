@@ -131,22 +131,34 @@ const CookiesPolicy = () => {
               according to your internet browser to change cookie preferences:
               <ul>
                 <li>
-                  <TermsLink href="https://support.google.com/chrome/answer/95647?hl=es">
+                  <TermsLink
+                    href="https://support.google.com/chrome/answer/95647?hl=en"
+                    target="_blank"
+                  >
                     Chrome
                   </TermsLink>
                 </li>
                 <li>
-                  <TermsLink href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies">
+                  <TermsLink
+                    href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+                    target="_blank"
+                  >
                     Explorer
                   </TermsLink>
                 </li>
                 <li>
-                  <TermsLink href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop?redirectlocale=en-US&redirectslug=enable-and-disable-cookies-website-preferences">
+                  <TermsLink
+                    href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop?redirectlocale=en-US&redirectslug=enable-and-disable-cookies-website-preferences"
+                    target="_blank"
+                  >
                     Firefox
                   </TermsLink>
                 </li>
                 <li>
-                  <TermsLink href="https://support.apple.com/en-za/guide/safari/sfri11471/mac">
+                  <TermsLink
+                    href="https://support.apple.com/en-za/guide/safari/sfri11471/mac"
+                    target="_blank"
+                  >
                     Safari
                   </TermsLink>
                 </li>
