@@ -1,5 +1,5 @@
 import { WhiteSpace } from "antd-mobile";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
@@ -10,6 +10,7 @@ import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import Heading from "components/Typography/Heading";
 import DownArrowButton from "../components/Button/DownArrowButton";
+import StyledDropDown from "../components/Input/DropDown";
 import Input from "../components/Input/BaseInput";
 import SubmitButton from "../components/Button/SubmitButton";
 import Label from "../components/Input/Label";
@@ -21,7 +22,8 @@ import {
   CreatePostWrapper,
   StyledForm,
 } from "../components/CreatePost/StyledCreatePost";
-
+import { Menu, Dropdown, Item, Button, message, Tooltip } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 const Main = styled.div`
    display: flex;
@@ -48,10 +50,14 @@ const SvgContainer = styled.div`
 
 const FormContainer = styled.div`
    padding-top: 10vh;
-   padding-left: 15rem;
-   padding-right: 15rem;
+   padding-left: 20rem;
+   padding-right: 20rem;
    flex: 1;
    min-height: 100vh;
+   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
+     padding-left: 5;
+     padding-right: 5;
+   }
    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
      padding-left: 0;
      padding-right: 0;
@@ -221,9 +227,83 @@ const CreateOrgProfile = (props) => {
     }
   }
 
+  const [isMobile, setMediaQuery] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(mq.phone.wide.max);
+    setMediaQuery(mediaQuery.matches);
+    const listenerFunc = (query) => {
+      setMediaQuery(query.currentTarget.matches);
+    };
+    window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
+  }, []);
+
+
   const onFormSubmit = (data) => {
     console.log(data);
   };
+
+  const menu = settings => {
+    const options = settings.options;
+    return (
+      <Menu
+         name={settings.type}
+         onClick={event => event.item.node.innerText}
+        >
+        {options.map((option, i) => (
+          <Menu.Item key={i}>
+            {option.text}
+          </Menu.Item>
+        ))}
+      </Menu>
+  )
+  }
+
+  const dropDownButtons = () => {
+    if(isMobile) {
+      return (
+        <div style={buttons}>
+          <DownArrowButton
+            handleClick={showModal(type)}
+            label="Type"
+            color={theme.colors.royalBlue}
+            bgcolor="#fff"
+            long="true"
+            value={options}
+            style={{ marginRight: "2rem" }}
+          />
+          <WhiteSpace />
+          <WhiteSpace />
+          <DownArrowButton
+            handleClick={showModal(industry)}
+            label="Industry"
+            color={theme.colors.royalBlue}
+            bgcolor="#fff"
+            long="true"
+            value={options}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <div style={buttons}>
+          <StyledDropDown
+           overlay={menu(type)}
+           label="Type"
+           placement="bottomCenter"
+           trigger={["click"]}
+           style={{ marginRight: "3rem" }}
+          />
+          <StyledDropDown
+           overlay={menu(industry)}
+           label="Industry"
+           placement="bottomCenter"
+           trigger={["click"]}
+          />
+        </div>
+      )
+    }
+  }
 
 
   return (
@@ -341,25 +421,8 @@ const CreateOrgProfile = (props) => {
             searchBar={true}
             onSearch={searchIndustryHandler}
           />
-          <div style={buttons}>
-            <DownArrowButton
-              handleClick={showModal(type)}
-              label="Type"
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
-              long="true"
-              style={{ marginRight: "2rem" }}
-            />
-            <WhiteSpace />
-            <WhiteSpace />
-            <DownArrowButton
-              handleClick={showModal(industry)}
-              label="Industry"
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
-              long="true"
-            />
-          </div>
+
+          {dropDownButtons()}
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>

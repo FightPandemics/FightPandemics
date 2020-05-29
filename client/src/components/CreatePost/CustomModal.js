@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SubmitButton from "../Button/SubmitButton";
 import SearchInput from "../Input/SearchInput";
 
-import { theme } from "constants/theme.js";
+import { theme, mq } from "constants/theme.js";
 const { xxlarge } = theme.typography.size;
 const { display } = theme.typography.font.family;
 
@@ -29,6 +29,8 @@ const StyledModal = styled(Modal)`
   }
   .am-modal-content {
     padding-bottom: 4rem;
+  }
+
   }
 `;
 
