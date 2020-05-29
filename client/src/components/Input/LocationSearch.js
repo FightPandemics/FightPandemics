@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { SearchBar, WhiteSpace } from "antd-mobile";
 import { FeedContext } from "pages/Feed.js";
+import { Input } from 'antd';
+
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon"
@@ -15,12 +17,10 @@ const {
   lightGray,
 } = colors;
 
-const StyledSearchBar = styled(SearchBar)`
-  &.am-search {
+const StyledSearchBar = styled(Input)`
     background-color: ${white};
     border: 0.1rem solid ${lightGray};
     border-radius: 4rem;
-  }
 `;
 
 
@@ -35,9 +35,11 @@ const LocationSearch = () => {
         placeholder="Zip code, city, state..."
         maxLength={100}
         value={location}
-        prefix={<SvgIcon icon={(searchBlue)} />}
+        size="large"
+        prefix={<SvgIcon src={(searchBlue)} />}
         onChange={handleLocation}
       />
+
       <WhiteSpace size="lg" />
       <WhiteSpace />
       <div className="svgicon-share-mylocation-size">
