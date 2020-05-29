@@ -10,9 +10,9 @@ export const setAuthToken = (token) => {
   // localStorage.setItem(KEY_TOKEN, token);
 
   if (token) {
-    axios.defaults.headers.common["Authorization"] = token; // Apply to every request
+    axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
   } else {
-    delete axios.defaults.headers.common["Authorization"]; // delete auth header
+    delete axios.defaults.headers.common["Authorization"];
   }
 };
 
