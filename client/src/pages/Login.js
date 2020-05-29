@@ -21,18 +21,19 @@ import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
+import { inputStyles, labelStyles } from "constants/formStyles";
 // import { validateEmail } from "utils/common.js";
 import { useQuery } from "utils/hooks.js";
 import Heading from "components/Typography/Heading";
 import { ORANGE_RED, WHITE } from "constants/colors";
 import { theme, mq } from "constants/theme";
+import { setAuthToken } from "utils/auth-token";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import twitter from "assets/icons/social-twitter.svg";
-import facebook from "assets/icons/social-facebook.svg";
-import gmail from "assets/icons/social-google.svg";
-import linkedin from "assets/icons/social-linkedin.svg";
+import facebook from "super-tiny-icons/images/svg/facebook.svg";
+import google from "super-tiny-icons/images/svg/google.svg";
+import linkedin from "super-tiny-icons/images/svg/linkedin.svg";
 import socialmedia from "assets/social-media.svg";
 import socialmedia2 from "assets/social-media2.svg";
 import eyeUnmask from "assets/icons/eye-unmask.svg";
@@ -45,23 +46,6 @@ const InputWrapper = styled.div`
   width: 100%;
   position: relative;
 `;
-
-const StyleInput = {
-  fontSize: "1.8rem",
-  lineHeight: "2.5rem",
-  paddingBottom: "0.8rem",
-  width: "100%",
-  borderBottom: `2px solid ${colors.primary}`,
-  backgroundColor: "transparent",
-};
-
-const StyleLabel = {
-  fontStyle: "normal",
-  fontWeight: "500",
-  fontSize: "1.6rem",
-  lineHeight: "1.9rem",
-  textAlign: "left",
-};
 
 const StyleSocialIcon = {
   justifyContent: "unset",
@@ -225,6 +209,11 @@ const Login = ({ isLoginForm }) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
     try {
       const res = await axios.post("/api/auth/login", formData);
+
+      if (res.data && res.data.token) {
+        setAuthToken(res.data);
+      }
+
       dispatch({ type: AUTH_SUCCESS, payload: res.data });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -286,9 +275,9 @@ const Login = ({ isLoginForm }) => {
         </SocialImageContainer>
       </LoginLeftContainer>
       <LoginRightContainer>
-        <div className="text-center">
+        <div>
           <FormContainer>
-            <Heading className="h4" level={4}>
+            <Heading className="text-center" level={4}>
               {isLoginForm ? "Sign In" : "Sign Up"}
             </Heading>
             {authFormState.error && (
@@ -296,25 +285,31 @@ const Login = ({ isLoginForm }) => {
             )}
             <form id="login-password">
               <InputWrapper>
-                <Label for="email" style={StyleLabel} label="E-mail" />
+                <Label htmlFor="email" style={labelStyles} label="E-mail" />
                 <Input
                   type="email"
                   name="email"
+                  id="email"
                   required
                   placeholder="Enter email address"
                   ref={register}
-                  style={StyleInput}
+                  style={inputStyles}
                 />
               </InputWrapper>
               <InputWrapper>
-                <Label for="password" style={StyleLabel} label="Password" />
+                <Label
+                  htmlFor="password"
+                  style={labelStyles}
+                  label="Password"
+                />
                 <Input
                   type={passwordType}
                   name="password"
+                  id="password"
                   required
                   placeholder="Enter password"
                   ref={register({ minLength: PASSWORD_MIN_LENGTH })}
-                  style={StyleInput}
+                  style={inputStyles}
                 />
                 <VisibilityButton
                   onClick={togglePasswordVisibility}
@@ -324,13 +319,14 @@ const Login = ({ isLoginForm }) => {
               {!isLoginForm && (
                 <InputWrapper>
                   <Label
-                    for="confirmPassword"
-                    style={StyleLabel}
+                    htmlFor="confirmPassword"
+                    style={labelStyles}
                     label="Confirm Password"
                   />
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
+                    id="confirmPassword"
                     required
                     placeholder="Confirm password"
                     ref={register({
@@ -339,7 +335,7 @@ const Login = ({ isLoginForm }) => {
                         matchesPreviousPassword: comparePasswordConfirmation,
                       },
                     })}
-                    style={StyleInput}
+                    style={inputStyles}
                   />
                   <VisibilityButton
                     onClick={toggleConfirmPasswordVisibility}
@@ -361,28 +357,30 @@ const Login = ({ isLoginForm }) => {
             </form>
             <WhiteSpace />
             <WhiteSpace />
-            {isLoginForm ? (
-              <>
+            <div className="text-center">
+              {isLoginForm ? (
+                <>
+                  <p>
+                    <AuthLink to="/auth/forgot-password">
+                      Forgot password?
+                    </AuthLink>
+                  </p>
+                  <p>
+                    <AuthLink to="/auth/signup">
+                      Don't have an account? <u>Sign Up</u>
+                    </AuthLink>
+                  </p>
+                </>
+              ) : (
                 <p>
-                  <AuthLink to="/auth/forgot-password">
-                    Forgot password?
+                  <AuthLink to="/auth/login">
+                    Already have an account? <u>Sign In</u>
                   </AuthLink>
                 </p>
-                <p>
-                  <AuthLink to="/auth/signup">
-                    Don't have an account? <u>Sign Up</u>
-                  </AuthLink>
-                </p>
-              </>
-            ) : (
-              <p>
-                <AuthLink to="/auth/login">
-                  Already have an account? <u>Sign In</u>
-                </AuthLink>
-              </p>
-            )}
+              )}
+            </div>
             <WhiteSpace />
-            <SectionDiv>
+            <SectionDiv className="text-center">
               {isLoginForm ? "Or Log in with" : "Or Sign up with"}
             </SectionDiv>
             <WhiteSpace />
@@ -397,18 +395,19 @@ const Login = ({ isLoginForm }) => {
             </SocialButton>
             <SocialButton
               style={StyleSocialIcon}
-              icon={<SvgIcon src={gmail} />}
+              icon={<SvgIcon src={google} />}
               onClick={() => handleSocialLogin("google")}
             >
-              <ButtonText>Gmail</ButtonText>
+              <ButtonText>Google</ButtonText>
             </SocialButton>
-            <SocialButton
+            {/** temporarily disable twitter for MVP v1
+             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={twitter} />}
               onClick={() => handleSocialLogin("twitter")}
             >
               <ButtonText>Twitter</ButtonText>
-            </SocialButton>
+            </SocialButton>**/}
             <SocialButton
               style={StyleSocialIcon}
               icon={<SvgIcon src={linkedin} />}

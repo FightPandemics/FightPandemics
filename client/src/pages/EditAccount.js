@@ -2,22 +2,31 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
-import SubmitButton from "components/Button/SubmitButton";
-import styled from "styled-components";
+import { getInitials } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
-import Heading from "components/Typography/Heading";
+import ProfilePic from "components/Picture/ProfilePic";
+import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
-import { theme } from "constants/theme";
-
-const { royalBlue } = theme.colors;
-
-const Label = styled.label`
-  color: ${(props) => props.inputColor || `${royalBlue}`};
-  padding-left: ${(props) => props.paddingLeft || ""};
-  margin-top: ${(props) => props.marginTop || "1.5rem"};
-  font-size: ${(props) => props.size || ""};
-  font-weight: ${(props) => props.weight || ""};
-`;
+import locationIcon from "assets/icons/location.svg";
+import {
+  EditLayout,
+  TitlePictureWrapper,
+  FillEmptySpace,
+  CustomLink,
+  CustomForm,
+  CustomHeading,
+  ChangePicButton,
+  CustomSubmitButton,
+  OptionDiv,
+  FormLayout,
+  CheckBoxWrapper,
+  Label,
+  HelpWrapper,
+  ToggleHeading,
+  ProfilePicWrapper,
+  CustomEditAccountHeader,
+  Background,
+} from "../components/EditProfile/EditComponents";
 
 function EditAccount(props) {
   // dummy data props,context, redux etc
@@ -27,31 +36,32 @@ function EditAccount(props) {
     lastName,
     email,
     country,
-    neighborhood,
+    address,
     shareInfoStatus,
     volunteerStatus,
     donateStatus,
     medicalHelpStatus,
     otherHelpStatus,
     traveling,
-    displayNeighborhood,
+    displayAddress,
   } = props.user;
   const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // make a put/patch request to backend to update users Account information
   };
 
   const userInfo = {
     // label name, variable name, value
     "E mail": ["email", email],
-    "* Name": ["name", firstName + " " + lastName],
-    "* Country": ["country", country],
-    "* Neighborhood": [
-      "neighborhood",
-      neighborhood,
-      "If you do not know your neighborhood, type in zip code or address to find it",
+    Name: ["name", firstName + " " + lastName],
+    Country: ["country", country],
+    Address: [
+      "address",
+      address,
+      "Enter address, zip code or city",
+      locationIcon,
     ],
   };
 
@@ -77,7 +87,7 @@ function EditAccount(props) {
   const renderHelp = () => {
     return Object.entries(helpSection).map(([key, value]) => {
       return (
-        <div key={key} style={{ margin: "1rem 0" }}>
+        <CheckBoxWrapper key={key}>
           <Controller
             as={<Checkbox />}
             defaultValue={value[1]}
@@ -87,7 +97,7 @@ function EditAccount(props) {
           >
             <Label inputColor="#000000">{key}</Label>
           </Controller>
-        </div>
+        </CheckBoxWrapper>
       );
     });
   };
@@ -95,15 +105,7 @@ function EditAccount(props) {
   const renderNeedHelp = () => {
     return Object.entries(needHelpSection).map(([key, value]) => {
       return (
-        <div
-          key={key}
-          style={{
-            margin: "1rem 0",
-            marginBottom: "-1rem",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <CheckBoxWrapper key={key}>
           <Controller
             as={Checkbox}
             defaultValue={value[1]}
@@ -116,7 +118,7 @@ function EditAccount(props) {
               {value[2]}
             </UnderLineDescription>
           </Controller>
-        </div>
+        </CheckBoxWrapper>
       );
     });
   };
@@ -138,6 +140,7 @@ function EditAccount(props) {
             defaultValue={value[1]}
             reference={register({ required: true })}
             error={!!errors[value[0]]}
+            icon={value[3]}
           />
           <UnderLineDescription marginTop={"-1.5rem"}>
             {value[2] || null}
@@ -146,18 +149,10 @@ function EditAccount(props) {
       );
     });
   };
-
-  const renderNeighborhoodCheckBoxes = () => {
+  const renderAddressCheckBoxes = () => {
     return (
-      <>
-        <div
-          style={{
-            margin: "0.5rem 0",
-            marginTop: "-1rem",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+      <HelpWrapper>
+        <CheckBoxWrapper>
           <Controller
             as={Checkbox}
             defaultValue={traveling}
@@ -167,78 +162,67 @@ function EditAccount(props) {
           >
             <Label inputColor="#646464">I am traveling</Label>
           </Controller>
-        </div>
-        <div
-          style={{
-            margin: "0.5rem 0",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        </CheckBoxWrapper>
+        <CheckBoxWrapper>
           <Controller
             as={Checkbox}
-            defaultValue={displayNeighborhood}
-            name="displayNeighborhood"
+            defaultValue={displayAddress}
+            name="displayAddress"
             control={control}
             onChange={([event]) => event.target.checked}
           >
-            <Label inputColor="#646464">Don't show my neighborhood</Label>
+            <Label inputColor="#646464">Don't show my address</Label>
           </Controller>
-        </div>
-      </>
+        </CheckBoxWrapper>
+      </HelpWrapper>
     );
   };
 
   return (
-    <>
-      <Heading
-        style={{
-          marginBottom: "3rem",
-          marginTop: "2rem",
-          textAlign: "center",
-        }}
-        level={4}
-        className="h4"
-      >
-        Account Information
-      </Heading>
-      <form style={{ display: "flex", flexDirection: "column" }}>
-        {renderFormInputs()}
-        {renderNeighborhoodCheckBoxes()}
-        <Label>I want to</Label>
-        {renderHelp()}
-        <Label>I need</Label>
-        {renderNeedHelp()}
-        <SubmitButton
-          primary="true"
-          style={{ marginTop: "1rem", marginBottom: "1rem" }}
-          onClick={handleSubmit(onSubmit)}
-        >
-          Save Changes
-        </SubmitButton>
-        <div
-          style={{ display: "flex", marginTop: "1rem", marginBottom: "3rem" }}
-        >
-          <Controller
-            as={<Checkbox color="#646465" />}
-            defaultValue={false}
-            name={"policy"}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          ></Controller>
-          <Label
-            size="1rem"
-            weight="bolder"
-            marginTop="0"
-            paddingLeft="10px"
-            inputColor="#646464"
-          >
-            By signing up, I agree to Fight Pandemics, Terms of Services and
-            Privacy Policy.
-          </Label>
-        </div>
-      </form>
-    </>
+    <Background>
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomEditAccountHeader className="h4">
+            Edit Profile
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              Account Information
+            </CustomHeading>
+          </ToggleHeading>
+          <FillEmptySpace />
+          <ProfilePicWrapper>
+            <ProfilePic
+              resolution={"7680px"}
+              noPic={true}
+              initials={getInitials(firstName, lastName)}
+            />
+            <ChangePicButton>Change</ChangePicButton>
+          </ProfilePicWrapper>
+        </TitlePictureWrapper>
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink isSelected>
+              <Link to="/edit-account">Account Information</Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to="/edit-profile">Profile Information</Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            {renderFormInputs()}
+            {renderAddressCheckBoxes()}
+            <Label>I want to</Label>
+            <HelpWrapper>{renderHelp()}</HelpWrapper>
+            <Label>I need</Label>
+            <HelpWrapper>{renderNeedHelp()}</HelpWrapper>
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              Save Changes
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
+    </Background>
   );
 }
 

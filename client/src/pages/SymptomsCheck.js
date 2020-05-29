@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Icon, Checkbox, Modal } from "antd-mobile";
 import { theme } from "constants/theme";
 import styled from "styled-components";
+import { DARK_GRAY } from "constants/colors";
+
 import {
   getAnswersMap,
   getCheckedAnswers,
@@ -11,6 +13,8 @@ import {
   WizardNav,
 } from "components/StepWizard";
 import Heading from "components/Typography/Heading";
+import TextLabel from "components/Typography/TextLabel";
+
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
@@ -22,21 +26,17 @@ const INITIAL_STATE = {};
 const SymptomCheckerStyle = styled.div`
   margin-top: 5rem;
   margin-bottom: 5rem;
-  h3 {
-    text-align: center;
-    font-weight: bold;
-    line-height: 1.36;
-  }
-  h4 {
+  text-align: center;
+  .h4 {
     line-height: 1.5;
-    margin-top: 2.4rem;
-    margin-bottom: 2.4rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
     text-align: center;
   }
-  h6 {
-    text-align: center;
-    margin-bottom: 1.6rem;
-    font-weight: normal;
+  .ant-typography.title {
+    margin-bottom: 3rem;
+    line-height: 3rem;
+    padding: 0 1rem;
   }
 `;
 
@@ -77,20 +77,20 @@ const ModalStyle = styled(Modal)`
     background: ${colors.white};
     overflow: auto;
     z-index: 1;
+    .ant-typography {
+      &.block-text {
+        margin-bottom: 60px;
+      }
+    }
     & img.warning-icon {
       height: 4.41rem;
     }
     & > a {
       width: 100%;
     }
-    h2 {
-      font-weight: bold;
-    }
-    h4 {
-      font-weight: bold;
-      line-height: normal;
-      margin: 0 0 6.9rem;
-      padding: 0 3rem;
+    .h4 {
+      margin-bottom: 3rem;
+      padding: 0 1rem;
       text-align: center;
     }
     h6 {
@@ -166,6 +166,9 @@ const AnswerStyles = styled.div`
   &.selected {
     background-color: ${colors.royalBlue};
     color: ${colors.white};
+    span {
+      color: ${colors.white};
+    }
   }
   strong {
     display: block;
@@ -200,10 +203,21 @@ const AnswerButton = ({ children, onSelect }) => {
 const AnswerCheckbox = ({ text, content, checked, onSelect }) => {
   return (
     <AnswerStyles onClick={onSelect} className={checked && "selected"}>
-      <span>
-        {text}
-        {!!content && <h6>{content}</h6>}
-      </span>
+      <div>
+        <TextLabel size={theme.typography.size.mediun} block="true">
+          {text}
+        </TextLabel>
+        {content && (
+          <TextLabel
+            size={theme.typography.size.small}
+            color={DARK_GRAY}
+            block="true"
+            weight="500"
+          >
+            {content}
+          </TextLabel>
+        )}
+      </div>
       <Checkbox checked={checked} />
     </AnswerStyles>
   );
@@ -481,10 +495,24 @@ const STEP_6_ANSWERS = [
   "I’m not sure",
 ];
 
+const STEP_6_STATE = {
+  answers: getAnswersMap(STEP_6_ANSWERS),
+  none: false,
+};
+
 const Step6 = (props) => {
-  const onSelectAnswer = (answer) => {
-    props.update("exposureLast14Days", answer);
-    props.nextStep();
+  const [state, updateState] = useState(STEP_6_STATE);
+  const { answers, none } = state;
+  const toggleAnswer = (answer) => {
+    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const checkedAnswers = getCheckedAnswers(updatedAnswers);
+    updateState({ ...state, answers: updatedAnswers });
+    props.update("conditions", checkedAnswers);
+  };
+  const toggleNone = () => {
+    const newNone = !none;
+    updateState({ ...state, none: newNone });
+    props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
 
   return (
@@ -497,14 +525,14 @@ const Step6 = (props) => {
         widespread?
       </Heading>
       <SubtitleStyle>Multiple options can be selected.</SubtitleStyle>
-      {STEP_6_ANSWERS.map((answer, i) => (
-        <AnswerButton key={i} onSelect={() => onSelectAnswer(answer)}>
-          {answer}
-        </AnswerButton>
+      {Object.entries(answers).map(([answer, checked], i) => (
+        <AnswerCheckbox
+          key={i}
+          text={STEP_6_ANSWERS[i]}
+          onSelect={() => toggleAnswer(answer)}
+          checked={!none && checked}
+        />
       ))}
-      <AnswerButton onSelect={() => onSelectAnswer("no exposure")}>
-        None of the above
-      </AnswerButton>
     </WizardStep>
   );
 };
@@ -922,15 +950,28 @@ const SymptomsCheck = () => {
   const confirmToStart = () => updateAnswers("confirmedStart", true);
   return (
     <SymptomCheckerStyle>
-      <h3>COVID-19 Screening Tool</h3>
-      <h4>
+      <Heading level={4} className="h4">
+        COVID-19 Screening Tool
+      </Heading>
+      <TextLabel
+        block="true"
+        textAlign="center"
+        size={theme.typography.size.xlarge}
+        className="title"
+      >
         We will ask you a few questions about your symptoms, travels and
         contacts with others
-      </h4>
-      <h6>
+      </TextLabel>
+      <TextLabel
+        className="block-text"
+        block="true"
+        size={theme.typography.size.xsmall}
+        color={DARK_GRAY}
+        textAlign="center"
+      >
         Your answers will not be stored or shared. This is just a tool to help
         the world.
-      </h6>
+      </TextLabel>
       <ColoredButton onClick={() => forWho("myself")}>For Myself</ColoredButton>
       <TransparentButton onClick={() => forWho("someone")}>
         For Someone Else
@@ -961,13 +1002,27 @@ const SymptomsCheck = () => {
           </button>
         </div>
         <img className="warning-icon" src={Disclaimer} />
-        <h2>We are not a provider of healthcare services</h2>
-        <h6>
+        <Heading level={4} className="h4">
+          We are not a provider of healthcare services
+        </Heading>
+        <TextLabel
+          className="block-text"
+          block="true"
+          size={theme.typography.size.medium}
+        >
           This service is provided in good faith for those who are otherwise
           unable to obtain help and resources during this unprecedented public
           health emergency.
-        </h6>
-        <h4>Please consult your healthcare provider for medical advice</h4>
+        </TextLabel>
+        <TextLabel
+          weight="bold"
+          block="true"
+          className="block-text"
+          size={theme.typography.size.large}
+          textAlign="center"
+        >
+          Please consult your healthcare provider for medical advice
+        </TextLabel>
         <ColoredButton onClick={confirmToStart}>I understand</ColoredButton>
       </ModalStyle>
     </SymptomCheckerStyle>

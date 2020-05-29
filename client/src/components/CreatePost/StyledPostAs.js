@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Modal, Button as BaseButton } from "antd";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import SvgIcon from "components/Icon/SvgIcon";
 import closeButton from "assets/icons/close-btn.svg";
 
@@ -15,10 +15,11 @@ const Container = styled(Modal)`
   line-height: 2.2rem;
   .ant-modal-content {
     position: relative;
-    width: 56.4rem;
+    max-width: 56.4rem;
     min-height: 31.5rem;
     max-height: 55.4rem;
     border-radius: 1rem;
+    margin: 0 5rem;
   }
 
   .ant-modal-header {
@@ -39,7 +40,15 @@ const Container = styled(Modal)`
   }
 
   .ant-col {
-    &:hover > a > div {
+    flex: 0 0 90%;
+    max-width: 100%;
+    margin: 2rem 0;
+
+    img {
+      display: none;
+    }
+
+    &:hover > div {
       background-color: ${colors.royalBlue};
       p {
         color: ${colors.white};
@@ -52,12 +61,19 @@ const Container = styled(Modal)`
     p {
       color: ${colors.royalBlue};
     }
+
+    @media screen and (min-width: ${mq.phone.wide.minWidth}) {
+      flex: 0 0 50%;
+      img {
+        display: block;
+      }
+    }
   }
 `;
 
 const TitleStep = styled.p`
   font-family: ${typography.font.family.display};
-  font-size: ${typography.size.xlarge};
+  font-size: ${typography.size.medium};
   font-weight: bold;
   line-height: 116.8%;
   position: absolute;
@@ -78,7 +94,9 @@ const BackButton = styled(SvgIcon)`
 const Button = styled(BaseButton)`
   &.ant-btn {
     color: ${colors.royalBlue};
-    width: 26.4rem;
+    width: 100%;
+    min-width: 17rem;
+    max-width: 26.4rem;
     height: 4.5rem;
     border: 0.1rem solid ${colors.royalBlue};
     border-radius: 0.8rem;
@@ -97,25 +115,34 @@ const Button = styled(BaseButton)`
 const CreateOrgLink = styled(Link)`
   display: block;
   color: ${colors.royalBlue};
+  &:hover {
+    color: ${colors.royalBlue};
+  }
+`;
+
+const OptionWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 0.2rem solid ${colors.royalBlue};
+  border-radius: 0.8rem;
+  cursor: pointer;
+
+  p {
+    margin-top: 1.4rem;
+  }
+
+  @media screen and (min-width: ${mq.phone.wide.minWidth}) {
+    height: 17.2rem;
+    margin-top: 0.5rem;
+  }
 `;
 
 const Option = ({ img, text, path, onClick }) => (
-  <Link to={path}>
-    <div
-      onClick={onClick}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        height: "17.2rem",
-        border: `0.2rem solid ${colors.royalBlue}`,
-        borderRadius: "0.8rem",
-      }}
-    >
-      <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
-      <p>{text}</p>
-    </div>
-  </Link>
+  <OptionWrapper onClick={onClick}>
+    <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
+    <p>{text}</p>
+  </OptionWrapper>
 );
 
 const CloseButton = (
