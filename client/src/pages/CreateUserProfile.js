@@ -2,8 +2,8 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
 import React, { useReducer } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
@@ -29,13 +29,8 @@ import {
   initialState,
 } from "hooks/reducers/userReducers";
 import { validateEmail } from "../utils/validators";
-import { PASSWORD_MIN_LENGTH } from "../config";
-import {
-  AUTH_FORM_SIGNUP,
-  AUTH_FORM_SIGNUP_ERROR,
-} from "../hooks/actions/authFormActions";
 import axios from "axios";
-import { AUTH_SUCCESS } from "../constants/action-types";
+import { SET_USER } from "../constants/action-types";
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -220,7 +215,8 @@ const Submit = styled(SubmitButton)`
 
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
-const CreateProfile = ({ email }) => {
+const CreateProfile = ({ email, history }) => {
+  const dispatch = useDispatch();
   const { control, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
@@ -230,14 +226,17 @@ const CreateProfile = ({ email }) => {
   );
 
   const onSubmit = async (formData) => {
-    console.log("onSubmit", { formData });
     createUserFormDispatch({ type: CREATE_USER });
     try {
-      const res = await axios.post("/api/users", formData);
-      // user created successfully
-      console.log({ res });
+      const { email, ...body } = formData;
+      const res = await axios.post("/api/users", body);
+
+      dispatch({
+        type: SET_USER,
+        payload: { user: res.data },
+      });
+      history.push("/profile-completed");
     } catch (err) {
-      console.log({ err });
       const message = err.response?.data?.message || err.message;
       createUserFormDispatch({
         type: CREATE_USER_ERROR,
@@ -245,7 +244,7 @@ const CreateProfile = ({ email }) => {
       });
     }
   };
-  console.log({ email, formState, createUserFormState });
+
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -320,7 +319,7 @@ const CreateProfile = ({ email }) => {
 
             <InputWrapper>
               <Label
-                htmlFor="address"
+                htmlFor="location"
                 style={blockLabelStyles}
                 label="Address"
               />
@@ -328,8 +327,8 @@ const CreateProfile = ({ email }) => {
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
                   <Input
                     type="text"
-                    name="address"
-                    id="address"
+                    name="location.address"
+                    id="location"
                     required
                     ref={register({ required: true })}
                     style={inputStyles}
