@@ -9,7 +9,6 @@ const {
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
-const MONGO_ID_KEY = `${auth.appUrl}/mongo_id`;
 const ttlSeconds = 86400;
 const cache = new NodeCache({
   checkperiod: ttlSeconds * 0.2,
@@ -20,7 +19,7 @@ const cache = new NodeCache({
 const checkAuth = async (req) => {
   await req.jwtVerify();
   const { user } = req;
-  req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
+  req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
 const authPlugin = async (app) => {

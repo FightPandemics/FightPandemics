@@ -1,4 +1,5 @@
 const envSchema = require("env-schema");
+const path = require("path");
 const S = require("fluent-schema");
 
 const { name } = require("./package.json");
@@ -24,14 +25,15 @@ const config = {
     appUrl: configData.AUTH_APP_URL,
     clientId: configData.AUTH_CLIENT_ID,
     domain: `https://${configData.AUTH_DOMAIN}`,
+    jwtMongoIdKey: path.join(configData.AUTH_APP_URL, "mongo_id"),
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
   },
   env: configData.NODE_ENV,
   errorNotifier: {
-    url: configData.SENTRY_DSN,
     environment: configData.NODE_ENV,
     release: configData.COMMIT_HASH,
+    url: configData.SENTRY_DSN,
   },
   geoService: {
     host: `http://${configData.GEO_SERVICE_URL}`,
