@@ -2,11 +2,11 @@ import React from "react";
 import { theme } from "../../constants/theme";
 import styled from "styled-components";
 
-import { Menu, Dropdown, Button, message, Tooltip } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Dropdown, Button } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 const { royalBlue } = theme.colors;
-const { small, large } = theme.typography.size;
+const { small } = theme.typography.size;
 
 const StyledButton= styled(Button)`
       font-size: ${small};

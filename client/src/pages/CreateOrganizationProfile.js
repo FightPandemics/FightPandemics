@@ -19,11 +19,9 @@ import StyledCheckboxGroup from "../components/Input/CheckboxGroup";
 import createOrganizationSvg from "../assets/icons/create-organization.svg";
 import { theme, mq } from "../constants/theme";
 import {
-  CreatePostWrapper,
   StyledForm,
 } from "../components/CreatePost/StyledCreatePost";
-import { Menu, Dropdown, Item, Button, message, Tooltip } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 
 const Main = styled.div`
    display: flex;
@@ -71,7 +69,7 @@ const InputWrapper = styled.div`
 
 const StyleLabel = {
   textAlign: "left",
-  color: "${theme.colors.royalBlue}"
+  color: "#425af2"
 };
 
 const StyleInput = {
@@ -108,21 +106,15 @@ const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Othe
 
 const CreateOrgProfile = (props) => {
 
-  const { register, handleSubmit, watch, control, errors } = useForm();
+  const { register, handleSubmit, control } = useForm();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
-  const [global, setGlobal] = useState("");
-  const [volunteer, setVolunteer] = useState("");
-  const [staff, setStaff] = useState("");
-  const [investors, setInvestors] = useState("");
-  const [donations, setDonations] = useState("");
-  const [other, setOther] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [state, setState] = useState(initialState.state);
-  const { typeModal, industryModal, selected, options } = state;
+  const { typeModal, industryModal, options } = state;
 
   const handleInputChangeName = (e) => {
     setName(e.target.value);
@@ -132,24 +124,6 @@ const CreateOrgProfile = (props) => {
   };
   const handleInputChangeLocation = (e) => {
     setLocation(e.target.value);
-  };
-  const handleInputChangeGlobal = (e) => {
-    setGlobal(e.target.value);
-  };
-  const handleInputChangeVolunteer = (e) => {
-    setVolunteer(e.target.value);
-  };
-  const handleInputChangeStaff = (e) => {
-    setStaff(e.target.value);
-  };
-  const handleInputChangeInvestors = (e) => {
-    setInvestors(e.target.value);
-  };
-  const handleInputChangeDonations = (e) => {
-    setDonations(e.target.value);
-  };
-  const handleInputChangeOther = (e) => {
-    setOther(e.target.value);
   };
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.value);
@@ -309,7 +283,7 @@ const CreateOrgProfile = (props) => {
   return (
     <Main>
      <SvgContainer>
-        <img src={createOrganizationSvg} />
+        <img src={createOrganizationSvg} alt="create organization" />
      </SvgContainer>
      <FormContainer>
       <Heading className="h4" level={4}>

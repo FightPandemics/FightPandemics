@@ -67,7 +67,7 @@ const OrgProfileComplete = props => {
     <Container>
       <WhiteSpace />
        <SvgContainer>
-         <img src={smiley} />
+         <img src={smiley} alt=":)" />
        </SvgContainer>
        <WhiteSpace />
        <WhiteSpace />
