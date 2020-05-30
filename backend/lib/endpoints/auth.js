@@ -5,7 +5,9 @@ const {
   oAuthProviderSchema,
   signupSchema,
 } = require("./schema/auth");
-const { config: { auth: authConfig } } = require("../../config");
+const {
+  config: { auth: authConfig },
+} = require("../../config");
 
 /*
  * /api/auth
@@ -23,12 +25,22 @@ async function routes(app) {
         code,
         redirect_uri: req.headers.referer,
       });
-      const user = await Auth0.getUser(token);
-      const { email_verified: emailVerified } = user;
-      /*
-       * todo: also return email address / maybe image for the "create profile" step if needed
-       */
-      return { emailVerified, token };
+      const auth0User = await Auth0.getUser(token);
+      const { email, email_verified: emailVerified } = auth0User;
+      const { payload } = app.jwt.decode(token);
+      const userId = payload[authConfig.jwtMongoIdKey];
+      const dbUser = await User.findById(userId);
+      let user = null;
+      if (dbUser) {
+        const { firstName, lastName } = dbUser;
+        user = {
+          email,
+          firstName,
+          id: userId,
+          lastName,
+        };
+      }
+      return { email, emailVerified, token, user };
     } catch (err) {
       req.log.error("OAuth error", err);
       throw app.httpErrors.internalServerError();
@@ -111,7 +123,7 @@ async function routes(app) {
           lastName,
         };
       }
-      return { emailVerified, token, user };
+      return { email, emailVerified, token, user };
     } catch (err) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("Wrong email or password.");

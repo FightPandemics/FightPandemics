@@ -3,6 +3,7 @@ import { AUTH_LOGOUT, AUTH_SUCCESS, SET_USER } from "constants/action-types";
 const initialState = {
   accessToken: null,
   isAuthenticated: false,
+  email: null,
   emailVerified: false,
   user: null,
 };

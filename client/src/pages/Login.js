@@ -184,6 +184,9 @@ const Login = ({ isLoginForm }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
+          if (res?.data?.token) {
+            setAuthToken(res.data.token);
+          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
