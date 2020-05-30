@@ -38,8 +38,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "install-docker": "docker-compose run client npm install",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "snyk-protect": "snyk protect"
   },
   "browserslist": {
     "production": [
