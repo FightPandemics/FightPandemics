@@ -199,6 +199,7 @@ const InputGroup = styled.div`
   }
 `;
 
+/*
 const UnderlineLink = styled.p`
   --color: ${theme.colors.darkGray};
   color: var(--color) !important;
@@ -208,6 +209,7 @@ const UnderlineLink = styled.p`
   }
   font-size: ${theme.typography.size.small};
 `;
+*/
 
 const Submit = styled(SubmitButton)`
   font-weight: 500;
@@ -318,11 +320,14 @@ const CreateProfile = ({ email, history }) => {
             </InputWrapper>
 
             <InputWrapper>
-              <Label
-                htmlFor="location"
-                style={blockLabelStyles}
-                label="Address"
-              />
+              <Flex direction="row">
+                <Label
+                  htmlFor="location"
+                  icon={Marker}
+                  style={blockLabelStyles}
+                  label="Address"
+                />
+              </Flex>
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
                   <Input
