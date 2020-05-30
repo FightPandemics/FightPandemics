@@ -72,8 +72,8 @@ const initSourcedByFPOrgs = async (connection, sourcedByFPOwner) => {
     };
     const orgUpdate = {
       ...SOURCED_BY_FP_ORG_UPDATE,
-      email: `${orgType}+${sourcedByFPOwner.email}`,
-      name: `${sourcedByFPOwner.name} - ${orgType}`,
+      email: sourcedByFPOwner.email, // can use same email as individual user
+      name: `${sourcedByFPOwner.name} (from ${orgType})`,
     };
 
     let sourcedByFPOrg;
