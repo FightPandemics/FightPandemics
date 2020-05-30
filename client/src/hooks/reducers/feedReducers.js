@@ -7,12 +7,17 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  NEXT_PAGE,
+  SET_LOADING,
   SET_LIKE,
 } from "../actions/feedActions";
 
 export const postsState = {
   status: SET_POSTS,
   posts: [],
+  page: 0,
+  isLoading: false,
+  loadMore: true,
 };
 
 export const feedReducer = (oldState, action) => {
@@ -47,11 +52,15 @@ export const optionsReducer = (oldState, action) => {
 export const postsReducer = (state = postsState, action) => {
   switch (action.type) {
     case FETCH_POSTS:
-      return { ...state, status: FETCH_POSTS, posts: [] };
+      return { ...state, status: FETCH_POSTS, isLoading: true };
     case SET_POSTS:
-      return { ...state, status: SET_POSTS, posts: action.posts };
+      return { ...state, status: SET_POSTS, posts: action.posts, isLoading: false };
     case ERROR_POSTS:
-      return { ...state, status: ERROR_POSTS, posts: [] };
+      return { ...state, status: ERROR_POSTS, posts: [], isLoading: false };
+    case NEXT_PAGE:
+      return { ...state, page: state.page + 1 };
+    case SET_LOADING:
+      return { ...state, isLoading: false, loadMore: false };
     case SET_LIKE:
       return {
         ...state,

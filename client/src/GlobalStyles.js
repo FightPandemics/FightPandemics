@@ -6,6 +6,16 @@ const globalStyles = createGlobalStyle`
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar{
+  width: 5px;
+  background-color: ${WHITE};
+}
+
+::-webkit-scrollbar-thumb{
+  width: 5px;
+  background-color: grey;
+}
+
 html {
   font-size: 62.5%;
 }

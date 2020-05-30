@@ -27,7 +27,7 @@ const initialState = {
   errors: [],
 };
 
-const ModalComponent = ({ onClose }) => {
+const ModalComponent = ({ setCurrentStep, onClose }) => {
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   const [showModal, setShowModal] = useState(true);
@@ -60,6 +60,8 @@ const ModalComponent = ({ onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    // This live bellow is there only to show the confirmation modal for testers
+    setCurrentStep(4);
     e.preventDefault();
     populateErrors();
     if (!errors.length) {

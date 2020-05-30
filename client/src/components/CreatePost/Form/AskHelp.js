@@ -34,7 +34,7 @@ const AskHelp = ({
           onClick={handleSubmit}
           disabled={!formData.title || !formData.description}
         >
-          Share
+          Post
         </Submit>
       </Footer>
     </>

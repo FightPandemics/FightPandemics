@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
+import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 
 const routes = [
@@ -105,6 +106,10 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
+  },
+  {
+    path: "/profile-completed",
+    component: ProfileCompleted,
   },
   {
     path: "/edit-profile",

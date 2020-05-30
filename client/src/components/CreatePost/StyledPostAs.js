@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Modal, Button as BaseButton } from "antd";
+import { Modal, Button as AntDButton } from "antd";
+import BaseButton from "components/Button/BaseButton";
 import { theme, mq } from "constants/theme";
 import SvgIcon from "components/Icon/SvgIcon";
-import closeButton from "assets/icons/close-btn.svg";
 
 const { colors, typography } = theme;
 
@@ -14,17 +14,17 @@ const Container = styled(Modal)`
   font-weight: 600;
   line-height: 2.2rem;
   .ant-modal-content {
-    position: relative;
+    width: 100%;
     max-width: 56.4rem;
-    min-height: 31.5rem;
     max-height: 55.4rem;
     border-radius: 1rem;
-    margin: 0 5rem;
   }
 
   .ant-modal-header {
     height: 5.8rem;
     border-radius: 1rem 1rem 0 0;
+    background-color: ${(props) =>
+      props.currentStep === 4 ? colors.green : colors.white};
 
     .ant-modal-title {
       font-size: ${typography.size.xlarge};
@@ -34,9 +34,17 @@ const Container = styled(Modal)`
   }
 
   .ant-modal-body {
+    display: flex;
     max-height: 49.6rem;
     overflow-y: scroll;
     padding: 3.8rem 4rem 4.7rem 4rem;
+    min-height: 25.7rem;
+    flex-direction: column;
+    justify-content: center;
+    ${(props) =>
+      props.currentStep === 2 || props.currentStep === 4
+        ? "align-items: center"
+        : ""};
   }
 
   .ant-col {
@@ -73,15 +81,16 @@ const Container = styled(Modal)`
 
 const TitleStep = styled.p`
   font-family: ${typography.font.family.display};
-  font-size: ${typography.size.medium};
+  font-size: ${(props) => props.fontSize || typography.size.medium};
   font-weight: bold;
   line-height: 116.8%;
   position: absolute;
   top: 1.7rem;
   left: 50%;
   transform: translate(-50%, 0);
-  color: ${colors.black};
-  background-color: ${colors.white};
+  color: ${(props) => (props.currentStep === 4 ? colors.white : colors.black)};
+  background-color: ${(props) =>
+    props.currentStep === 4 ? colors.green : colors.white};
 `;
 
 const BackButton = styled(SvgIcon)`
@@ -91,7 +100,7 @@ const BackButton = styled(SvgIcon)`
   cursor: pointer;
 `;
 
-const Button = styled(BaseButton)`
+const OptionButton = styled(AntDButton)`
   &.ant-btn {
     color: ${colors.royalBlue};
     width: 100%;
@@ -138,6 +147,17 @@ const OptionWrapper = styled.div`
   }
 `;
 
+const CreateProfileButton = styled(BaseButton)`
+  width: 100%;
+  max-width: 217px;
+  display: inline-block;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    font-size: ${typography.size.medium};
+  }
+`;
+
 const Option = ({ img, text, path, onClick }) => (
   <OptionWrapper onClick={onClick}>
     <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
@@ -145,24 +165,12 @@ const Option = ({ img, text, path, onClick }) => (
   </OptionWrapper>
 );
 
-const CloseButton = (
-  <SvgIcon
-    src={closeButton}
-    style={{
-      position: "absolute",
-      right: "4.0rem",
-      top: "1.7rem",
-      filter: "brightness(0.6)",
-    }}
-  />
-);
-
 export {
   Container,
   Option,
-  CloseButton,
+  CreateProfileButton,
   CreateOrgLink,
   TitleStep,
-  Button,
+  OptionButton,
   BackButton,
 };
