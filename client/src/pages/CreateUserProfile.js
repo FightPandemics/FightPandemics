@@ -320,14 +320,12 @@ const CreateProfile = ({ email, history }) => {
             </InputWrapper>
 
             <InputWrapper>
-              <Flex direction="row">
-                <Label
-                  htmlFor="location"
-                  icon={Marker}
-                  style={blockLabelStyles}
-                  label="Address"
-                />
-              </Flex>
+              <Label
+                htmlFor="location"
+                icon={Marker}
+                style={blockLabelStyles}
+                label="Address"
+              />
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
                   <Input
