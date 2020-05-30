@@ -1,3 +1,5 @@
+const airtableGeocoded = require("./airtable-geocoded.json");
+
 // https://stackoverflow.com/questions/52456065/how-to-format-and-validate-email-node-js/52456632
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
@@ -36,6 +38,16 @@ const cleanAuthorType = (airtableAuthorType) => {
   }
 };
 
+const geocodeLocation = (location) => {
+  // same method used to encode location to get geocoded address from Google Geocoding API
+  const encodedLocation = [
+    location.city,
+    location.state,
+    location.country,
+  ].join(",+");
+  return airtableGeocoded[encodedLocation];
+};
+
 module.exports = (post, fpOrgsByType) => {
   const {
     android_app: playStore,
@@ -59,17 +71,18 @@ module.exports = (post, fpOrgsByType) => {
   const author = {
     // id/name just links make to one of "Sourced by Fightpandemics" orgs for each type (not the original posting org)
     id: fpOrgsByType[cleanedAuthorType]._id,
-    // location/type will reflect actual posting (for filtering)
-    location: {},
     name: fpOrgsByType[cleanedAuthorType].name,
+    // location/type will reflect actual posting (for filtering)
     type: cleanedAuthorType,
   };
-  // only using [first] element if multiple in Airtable location fields
-  if (country) [author.location.country] = country;
-  if (state) [author.location.state] = state;
-  if (city) [author.location.city] = city;
-  // TODO: geocode country/state/city
-  author.location.coordinates = [0, 0];
+
+  const airtableLocation = {};
+  // only using [first] if multiple in airtable location fields
+  if (country) [airtableLocation.country] = country;
+  if (state) [airtableLocation.state] = state;
+  if (city) [airtableLocation.city] = city;
+
+  author.location = geocodeLocation(airtableLocation);
 
   const externalLinks = { website };
   if (appStore && appStore !== "NA") externalLinks.appStore = appStore;
