@@ -27,6 +27,7 @@ import { useQuery } from "utils/hooks.js";
 import Heading from "components/Typography/Heading";
 import { ORANGE_RED, WHITE } from "constants/colors";
 import { theme, mq } from "constants/theme";
+import { setAuthToken } from "utils/auth-token";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -208,6 +209,11 @@ const Login = ({ isLoginForm }) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
     try {
       const res = await axios.post("/api/auth/login", formData);
+
+      if (res.data && res.data.token) {
+        setAuthToken(res.data);
+      }
+
       dispatch({ type: AUTH_SUCCESS, payload: res.data });
     } catch (err) {
       const message = err.response?.data?.message || err.message;

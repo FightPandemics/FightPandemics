@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
+import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 
 const routes = [
@@ -98,6 +99,15 @@ const routes = [
   },
   {
     path: "/feed",
+    exact: true,
+    component: Feed,
+    props: {
+      mobiletabs: true,
+      tabIndex: 2,
+    },
+  },
+  {
+    path: "/feed/:id",
     component: Feed,
     props: {
       mobiletabs: true,
@@ -107,6 +117,10 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
+  },
+  {
+    path: "/profile-completed",
+    component: ProfileCompleted,
   },
   {
     path: "/edit-profile",

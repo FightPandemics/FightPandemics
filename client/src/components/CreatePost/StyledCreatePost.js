@@ -4,7 +4,7 @@ import { theme } from "constants/theme";
 
 const { display } = theme.typography.font.family;
 const { medium, xlarge } = theme.typography.size;
-const { royalBlue, darkGray } = theme.colors;
+const { royalBlue, darkerGray } = theme.colors;
 
 export const CreatePostWrapper = styled.div`
   font-family: ${display};
@@ -57,7 +57,7 @@ export const StyledInput = styled(Input)`
 `;
 
 export const StyledTextArea = styled(Input.TextArea)`
-  color: ${darkGray};
+  color: ${darkerGray};
   font-size: ${medium};
   resize: none;
   border: none;

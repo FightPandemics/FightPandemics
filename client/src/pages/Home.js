@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
+import TextLabel from "components/Typography/TextLabel";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -40,6 +41,9 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
+  &.home {
+    margin-right: -2rem;
+  }
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
@@ -83,10 +87,12 @@ const StyledStrapline = styled(StyledWelcome)`
   color: ${white};
   width: 90%;
   text-align: left;
-  font-size: ${typography.heading.one} @media only screen and
-    ${mq.phone.narrow.max} {
+  font-weight: bolder;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  font-size: ${typography.heading.one};
+  @media only screen and ${mq.phone.narrow.max} {
     text-align: center;
-    font-weight: bolder;
     margin: 0 auto 1.5rem auto;
   }
 `;
@@ -101,6 +107,7 @@ const StyledP = styled.p`
   font-size: ${typography.size.xsmall};
   text-align: left;
   color: ${white};
+  margin: 0.5rem 0;
 
   @media only screen and ${mq.phone.wide.max} {
     font-family: ${typography.font.family.display}, sans-serif;
@@ -146,9 +153,18 @@ const StyleLink = styled.p`
 
 const Home = (props) => {
   return (
-    <MainContainer className="text-center">
+    <MainContainer className="text-center home">
       <StyledIntro>
         <IntroText>
+          <TextLabel
+            color="white"
+            block="true"
+            size={theme.typography.size.xlarge}
+            weight="500"
+          >
+            FightPandemics
+          </TextLabel>
+
           <StyledStrapline level={2} margin="none">
             A place to give and get help
           </StyledStrapline>
