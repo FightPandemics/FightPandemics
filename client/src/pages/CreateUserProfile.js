@@ -279,7 +279,6 @@ const CreateProfile = ({ email, history }) => {
                 type="email"
                 name="email"
                 id="email"
-                inabled
                 required
                 ref={register({ validate: validateEmail, required: true })}
                 style={inputStyles}
