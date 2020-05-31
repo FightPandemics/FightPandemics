@@ -10,6 +10,7 @@ import {
   NEXT_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_COMMENTS,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -73,6 +74,18 @@ export const postsReducer = (state = postsState, action) => {
           },
         },
       };
+      case SET_COMMENTS:
+        return {
+          ...state,
+          posts: {
+            ...state.posts,
+            [action.postId]: {
+              ...state.posts[action.postId],
+              comments: action.comments,
+              commentsCount: action.commentsCount,
+            },
+          },
+        };
     default:
       return state;
   }
