@@ -272,14 +272,14 @@ const CreateProfile = ({ email, history }) => {
             <InputWrapper>
               <Label
                 htmlFor="email"
-                style={{ ...blockLabelStyles, color: theme.colors.darkGray }}
+                style={blockLabelStyles}
                 label="E-mail"
               />
               <Input
                 type="email"
                 name="email"
                 id="email"
-                disabled
+                inabled
                 required
                 ref={register({ validate: validateEmail, required: true })}
                 style={inputStyles}
