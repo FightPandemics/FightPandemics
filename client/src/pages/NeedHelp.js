@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SubmitButton from "components/Button/SubmitButton";
@@ -74,11 +74,26 @@ const Step2 = (props) => {
   );
 };
 
+
 const Step3 = (props) => {
-  const [email, setEmail] = useState("");
-  const onChange = (evt) => setEmail(evt);
-  const onSubmit = () => {
-    props.update("email", email);
+  const [values, setValues] = useState({
+    email: ' '
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 5 && isSubmitting) { }
+  }, [errors]);
+
+  const onChange = (event) => {
+    event.persist();
+    setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+  };
+  const onSubmit = (event) => {
+    if (event) event.preventDefault();
+    setErrors(validate(values));
+    setIsSubmitting(true);
   };
   return (
     <WizardStep>
@@ -90,12 +105,20 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
-            name="userEmail"
+            autoComplete="off"
+            className="none"
+            name="email"
             label="Email"
             placeholder="Email"
-            onChange={onChange}
-            value={email && email}
-          />
+            onChange={
+              onChange
+            }
+            value={values.email}
+            required />
+          {
+            errors.email && (<p className="help is-danger">{errors.email}</p>
+            )
+          }
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
@@ -107,6 +130,15 @@ const Step3 = (props) => {
       </WizardButtonGroup>
     </WizardStep>
   );
+};
+function validate(values) {
+  let errors = {};
+  if (!values.email) {
+    errors.email = 'Email address is required';
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Email address is invalid';
+  }
+  return errors;
 };
 
 const NeedHelp = withRouter((props) => {
