@@ -3,6 +3,7 @@ import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import About from "./pages/About";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
+import OrganizationProfile from "./pages/OrganizationProfile";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -65,6 +66,10 @@ const routes = [
   {
     path: "/CreateOrganizationProfile",
     component: CreateOrganizationProfile,
+  },
+  {
+    path: "/organization",
+    component: OrganizationProfile,
   },
   {
     path: "/medical",
