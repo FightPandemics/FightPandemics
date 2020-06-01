@@ -66,11 +66,10 @@ const Step1 = (props) => {
               key={i}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
-            >
-              {answer}
-            </WizardCheckboxItem>
+              text={answer}
+            />
           ))}
-        </WizardCheckboxWrapper>
+          </WizardCheckboxWrapper>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -115,7 +114,7 @@ const Step2 = (props) => {
         </WizardFormGroup>
         <ShareLocation
           tertiary="true"
-          icon={<SvgIcon class="share-location-icon" src={shareMyLocation} />}
+          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
           onSelect={selectLocationDetection}
         >
           Share my location
