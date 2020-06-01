@@ -191,9 +191,9 @@ const Post = ({ isAuthenticated, post }) => {
   );
 };
 
-const mapStateToProps = ({ session }) => {
+const mapStateToProps = ({ session: { isAuthenticated } }) => {
   return {
-    isAuthenticated: session.isAuthenticated,
+    isAuthenticated,
   };
 };
 
