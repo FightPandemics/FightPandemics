@@ -1,9 +1,11 @@
-import { AUTH_LOGOUT, AUTH_SUCCESS } from "constants/action-types";
+import { AUTH_LOGOUT, AUTH_SUCCESS, SET_USER } from "constants/action-types";
 
 const initialState = {
   accessToken: null,
   isAuthenticated: false,
+  email: null,
   emailVerified: false,
+  user: null,
 };
 
 function sessionReducer(state = initialState, action) {
@@ -13,7 +15,14 @@ function sessionReducer(state = initialState, action) {
         ...state,
         accessToken: action.payload.token,
         emailVerified: action.payload.emailVerified,
+        email: action.payload.email,
         isAuthenticated: true,
+        user: action.payload.user,
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
       };
     case AUTH_LOGOUT:
       return {

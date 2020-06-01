@@ -38,7 +38,7 @@ const buildOauthUrl = (connection, redirectTo) => {
     connection,
     redirect_uri: redirectTo,
     response_type: "code",
-    scope: "openid profile email",
+    scope: "openid email",
     state: config.auth.state,
   });
   return `${AUTH_DOMAIN}/authorize?${qParams}`;

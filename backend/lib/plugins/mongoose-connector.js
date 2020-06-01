@@ -11,10 +11,10 @@ require("../models/Post");
 require("../models/User");
 
 async function syncIndexes(mongo) {
+  mongo.model("Author").syncIndexes();
   mongo.model("Comment").syncIndexes();
   mongo.model("Feedback").syncIndexes();
   mongo.model("Location").syncIndexes();
-  mongo.model("Organization").syncIndexes();
   mongo.model("Post").syncIndexes();
   mongo.model("User").syncIndexes();
 }
