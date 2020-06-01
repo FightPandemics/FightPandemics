@@ -17,6 +17,7 @@ import {
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
+  checkSingleAnswer,
   getAnswersMap,
   getCheckedAnswers,
   WizardCheckboxWrapper,
@@ -47,7 +48,7 @@ const Step1 = (props) => {
   const { answers, none } = state;
 
   const toggleAnswer = (answer) => {
-    const updatedAnswers = { ...answers, [answer]: !answers[answer] };
+    const updatedAnswers = Object.fromEntries(checkSingleAnswer(answers, answer));
     const checkedAnswers = getCheckedAnswers(updatedAnswers);
     updateState({ ...state, answers: updatedAnswers });
     props.update("helpTypeOffered", checkedAnswers);
@@ -61,11 +62,11 @@ const Step1 = (props) => {
       <StepTitle>How do you want to contribute?</StepTitle>
       <WizardFormWrapper>
         <WizardCheckboxWrapper>
-          {Object.entries(answers).map(([answer, checked], i) => (
+          {Object.entries(answers).map(([answer], i) => (
             <WizardCheckboxItem
               key={i}
               onChange={() => toggleAnswer(answer)}
-              checked={!none && checked}
+              checked={!none && state.answers[answer]}
             >
               {answer}
             </WizardCheckboxItem>
@@ -115,7 +116,7 @@ const Step2 = (props) => {
         </WizardFormGroup>
         <ShareLocation
           tertiary="true"
-          icon={<SvgIcon class="share-location-icon" src={shareMyLocation} />}
+          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
           onSelect={selectLocationDetection}
         >
           Share my location
