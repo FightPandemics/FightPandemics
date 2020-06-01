@@ -3,15 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
 import createOrganizationProfile from "../assets//data/createOrganizationProfile";
 import styled from "styled-components";
 import CustomModal from "../components/CreatePost/CustomModal";
 import RadioGroup from "../components/CreatePost/RadioGroup";
 import Heading from "components/Typography/Heading";
 import DownArrowButton from "../components/Button/DownArrowButton";
-import StyledDropDown from "../components/Input/DropDown";
 import Input from "../components/Input/BaseInput";
+import Select from "../components/Input/Select";
 import SubmitButton from "../components/Button/SubmitButton";
 import Label from "../components/Input/Label";
 import StyledCheckbox from "../components/Input/Checkbox";
@@ -21,7 +20,7 @@ import { theme, mq } from "../constants/theme";
 import {
   StyledForm,
 } from "../components/CreatePost/StyledCreatePost";
-import { Menu } from 'antd';
+
 
 const Main = styled.div`
    display: flex;
@@ -53,8 +52,8 @@ const FormContainer = styled.div`
    flex: 1;
    min-height: 100vh;
    @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
-     padding-left: 5;
-     padding-right: 5;
+     padding-left: 5rem;
+     padding-right: 5rem;
    }
    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
      padding-left: 0;
@@ -88,7 +87,12 @@ const globalText = {
   fontSize: "1.2rem"
 }
 
-const types = Object.values(filterOptions)[2].options;
+const errorStyles = {
+  color: "#FF5656",
+  fontSize: "1.2rem",
+  alignSelf: ""
+}
+
 const { type, industry } = createOrganizationProfile;
 
 const initialState = {
@@ -106,31 +110,30 @@ const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Othe
 
 const CreateOrgProfile = (props) => {
 
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, errors } = useForm();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
+  const [ orgType, setType ] = useState("");
+  const [ orgIndustry, setIndustry ] = useState("");
   const [state, setState] = useState(initialState.state);
   const { typeModal, industryModal, options } = state;
 
-  const handleInputChangeName = (e) => {
-    setName(e.target.value);
-  };
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleInputChangeLocation = (e) => {
-    setLocation(e.target.value);
-  };
+
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.value);
   };
   const handleInputChangeConditions = (e) => {
     setConditions(e.target.value);
   };
+  const changeOrgTypeHandler = ([event]) => {
+    setType(event.target.value)
+    return event.target.value
+  }
+  const changeOrgIndustryHandler = ([event]) => {
+    setIndustry(event.target.value)
+    return event.target.value
+  }
 
   const showModal = (setting) => (e) => {
     let currentModal = setting.type === "type" ? "typeModal" : "industryModal"
@@ -147,8 +150,6 @@ const CreateOrgProfile = (props) => {
     setState({
       ...state,
       typeModal: !state.typeModal,
-      options: [],
-      selected: "",
     });
   };
 
@@ -160,21 +161,6 @@ const CreateOrgProfile = (props) => {
       selected: "",
     });
   };
-
-  //
-  // const onFormSubmit = async (data) => {
-  //   // e.preventDefault();
-  //   populateErrors();
-  //   console.log(data);
-  //   if (!errors.length) {
-  //     // todo: finish integrating api
-  //     try {
-  //       // const req = await axios.post("/api/posts", formData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
 
   const searchIndustryHandler = (text) => {
     const industryOptions = [...industry.options];
@@ -213,71 +199,92 @@ const CreateOrgProfile = (props) => {
   }, []);
 
 
-  const onFormSubmit = (data) => {
-    console.log(data);
-  };
-
-  const menu = settings => {
-    const options = settings.options;
-    return (
-      <Menu
-         name={settings.type}
-         onClick={event => event.item.node.innerText}
-        >
-        {options.map((option, i) => (
-          <Menu.Item key={i}>
-            {option.text}
-          </Menu.Item>
-        ))}
-      </Menu>
-  )
-  }
-
   const dropDownButtons = () => {
     if(isMobile) {
       return (
+        <>
         <div style={buttons}>
           <DownArrowButton
             handleClick={showModal(type)}
-            label="Type"
+            label={orgType ? orgType : "Type"}
             color={theme.colors.royalBlue}
             bgcolor="#fff"
             long="true"
-            value={options}
             style={{ marginRight: "2rem" }}
           />
           <WhiteSpace />
           <WhiteSpace />
           <DownArrowButton
             handleClick={showModal(industry)}
-            label="Industry"
+            label={orgIndustry ? orgIndustry : "Industry"}
             color={theme.colors.royalBlue}
             bgcolor="#fff"
             long="true"
-            value={options}
           />
         </div>
+          <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
+        </>
       )
     } else {
       return (
-        <div style={buttons}>
-          <StyledDropDown
-           overlay={menu(type)}
-           label="Type"
-           placement="bottomCenter"
-           trigger={["click"]}
-           style={{ marginRight: "3rem" }}
-          />
-          <StyledDropDown
-           overlay={menu(industry)}
-           label="Industry"
-           placement="bottomCenter"
-           trigger={["click"]}
-          />
+        <div>
+        <Controller
+          as={<Select defaultValue="Type">
+            {type.options.map((option, i) => (
+              <Select.Option key={i} value={option.text}>
+                {option.text}
+              </Select.Option>
+            ))}
+          </Select>}
+         control={control}
+         name="type"
+         rules={{ required: true }}
+         onClick={(event) => event.target.innerText}
+        />
+        <Controller
+        as={<Select defaultValue="Industry">
+          {industry.options.map((option, i) => (
+            <Select.Option key={i} value={option.text}>
+              {option.text}
+            </Select.Option>
+          ))}
+        </Select>}
+        name="industry"
+        rules={{ required: true }}
+        control={control}
+        onClick={(event) => event.target.innerText}
+        />
+         <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
         </div>
       )
     }
   }
+
+  //
+  // const onFormSubmit = async (data) => {
+  //   // e.preventDefault();
+  //   console.log(data);
+  //   if (!errors.length) {
+  //     // todo: finish integrating api
+  //     try {
+  //       // const req = await axios.post("/api/posts", formData);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+
+  const onFormSubmit = (data) => {
+    if(!privacy) {
+      alert("You must agree to our privacy policy before proceeding")
+      return;
+    } else if (!conditions) {
+      alert("You must agree to our terms and conditions before proceeding")
+      return;
+    } else {
+      console.log(data);
+    }
+  };
 
 
   return (
@@ -297,12 +304,12 @@ const CreateOrgProfile = (props) => {
             type="text"
             required
             placeholder="notion"
-            value={name}
-            onChange={handleInputChangeName}
+            onChange={name => name}
             style={StyleInput}
             ref={register({ required: true, minLength: 3 })}
             name="name"
           />
+          <span style={errorStyles}>{errors.name && "Organization name is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
@@ -312,12 +319,12 @@ const CreateOrgProfile = (props) => {
             type="email"
             required
             placeholder="help@notion.com (this is a fake)"
-            value={email}
-            onChange={handleInputChangeEmail}
+            onChange={email => email}
             style={StyleInput}
             name="email"
             ref={register({ required: true, minLength: 3 })}
           />
+          <span style={errorStyles}>{errors.email && "Email is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
@@ -327,12 +334,12 @@ const CreateOrgProfile = (props) => {
             type="text"
             required
             placeholder="Pittsburgh, Pennsylvania, United States"
-            value={location}
-            onChange={handleInputChangeLocation}
+            onChange={location => location}
             style={StyleInput}
             name="location"
             ref={register({ required: true, minLength: 3 })}
           />
+          <span style={errorStyles}>{errors.location && "Location is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
@@ -358,10 +365,12 @@ const CreateOrgProfile = (props) => {
               <Controller
                 as={RadioGroup}
                 flex={true}
-                name={state.name}
+                name="type"
                 padding="1.3rem 0"
-                onChange={([event]) => event.target.value}
+                rules={{ required: true }}
+                onChange={changeOrgTypeHandler}
                 options={options}
+                value={orgType}
                 control={control}
               />
             }
@@ -379,10 +388,12 @@ const CreateOrgProfile = (props) => {
               <Controller
                 as={RadioGroup}
                 flex={true}
-                name={state.name}
+                name="industry"
                 padding="1.3rem 0"
-                onChange={([event]) => event.target.value}
+                rules={{ required: true }}
+                onChange={changeOrgIndustryHandler}
                 options={options}
+                value={orgIndustry}
                 control={control}
               />
             }
@@ -408,9 +419,11 @@ const CreateOrgProfile = (props) => {
              display="column"
              options={organizationNeeds}
              name="needs"
+             rules={{ required: true }}
              onChange={([checkedValues]) => checkedValues}
+             validateStatus="error"
             />
-
+           <span style={errorStyles}>{errors.needs && "Please select at least one option"}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
