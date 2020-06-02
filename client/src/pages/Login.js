@@ -157,8 +157,8 @@ const VisibilityButton = ({ onClick, type }) => {
       {type === "text" ? (
         <SvgIcon src={eyeMask} onClick={onClick} />
       ) : (
-        <SvgIcon src={eyeUnmask} onClick={onClick} />
-      )}
+          <SvgIcon src={eyeUnmask} onClick={onClick} />
+        )}
     </VisibilityIconWrapper>
   );
 };
@@ -377,12 +377,12 @@ const Login = ({ isLoginForm }) => {
                   </p>
                 </>
               ) : (
-                <p>
-                  <AuthLink to="/auth/login">
-                    Already have an account? <u>Sign In</u>
-                  </AuthLink>
-                </p>
-              )}
+                  <p>
+                    <AuthLink to="/auth/login">
+                      Already have an account? <u>Sign In</u>
+                    </AuthLink>
+                  </p>
+                )}
             </div>
             <WhiteSpace />
             <SectionDiv className="text-center">
