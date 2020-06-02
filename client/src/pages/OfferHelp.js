@@ -69,7 +69,7 @@ const Step1 = (props) => {
               text={answer}
             />
           ))}
-          </WizardCheckboxWrapper>
+        </WizardCheckboxWrapper>
       </WizardFormWrapper>
     </WizardStep>
   );
