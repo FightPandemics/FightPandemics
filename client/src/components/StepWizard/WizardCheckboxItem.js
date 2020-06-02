@@ -3,7 +3,7 @@ import React from "react";
 import {Checkbox} from "antd-mobile";
 import {theme, mq} from "constants/theme";
 
-const {white, lightGray, royalBlue} = theme.colors;
+const {white, lightGray, royalBlue, black} = theme.colors;
 
 export const WizardCheckboxWrapper = styled.div`
   margin: 4rem auto;
@@ -43,7 +43,7 @@ const CheckboxItemStyles = styled.div`
     }
   }
    > .text {
-   color: #000;
+   color: ${black};
     flex-grow: 1;
     margin-left: 2rem;
   }
