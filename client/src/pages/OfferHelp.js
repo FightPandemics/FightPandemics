@@ -35,7 +35,7 @@ const INITIAL_STATE = {
 const STEP_1_ANSWERS = [
   "As a Volunteer",
   "As a Donor/Investor",
-  "As a Organization",
+  "As an Organisation",
 ];
 const STEP_1_STATE = {
   answers: getAnswersMap(STEP_1_ANSWERS),
