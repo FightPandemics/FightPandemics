@@ -25,13 +25,16 @@ const CheckboxItemStyles = styled.div`
   padding: 2rem;
   margin-bottom: 1rem;
   width: 100%;
+  cursor: pointer;
 
   .am-list-line {
     &:after {
       background-color: unset !important;
     }
+  } 
+  .am-checkbox-input {
+    cursor: pointer; 
   }
-
   .am-checkbox-inner {
     border-radius: 0.5px;
     border: 0.1rem solid ${lightGray};
