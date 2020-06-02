@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Heading from "../Typography/Heading";
+import { Select } from "antd";
 import { mq, theme } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
 const { colors } = theme;
+
 export const Background = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
@@ -159,4 +161,18 @@ export const ToggleHeading = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
+`;
+
+export const StyledSelect = styled(Select)`
+    width: 50%;
+    border: 1px solid ${theme.colors.royalBlue};
+    border-radius: .3rem;
+    color: ${theme.colors.royalBlue};
+`;
+
+export const SelectWrapper = styled.div`
+   width: 60%;
+   @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
+     width: 90%;
+   }
 `;
