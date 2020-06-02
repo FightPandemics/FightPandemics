@@ -40,6 +40,7 @@ import {
   NEXT_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_COMMENTS,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -307,6 +308,15 @@ const Feed = (props) => {
     }
   };
 
+  const updateComments = ({postId, comments, commentsCount}) => {
+    postsDispatch({
+      type: SET_COMMENTS,
+      postId,
+      comments,
+      commentsCount,
+    });
+  }
+
   const loadPosts = useCallback(async () => {
     const { user } = props;
     const limit = 5;
@@ -330,11 +340,13 @@ const Feed = (props) => {
     }
 
     if (response.data && response.data.length) {
-      await postsDispatch({ type: SET_POSTS, posts: [ ...postsList, ...response.data ] });
+      const loadedPosts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), {});
+
+      await postsDispatch({ type: SET_POSTS, posts: { ...postsList, ...loadedPosts } });
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [ postsList, isLoading ]);
+  }, [ postsList, isLoading, page, props ]);
 
   useEffect(() => {
     loadPosts();
@@ -375,6 +387,7 @@ const Feed = (props) => {
         handleOnClose,
         showFilters,
         handlePostLike,
+        updateComments,
       }}
     >
       <FeedWrapper>
