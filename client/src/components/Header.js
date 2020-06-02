@@ -127,25 +127,25 @@ export default ({ onMenuClick, ...props }) => {
                       </li>
                     </>
                   ) : (
-                      <>
-                        <li>
-                          <NavLink activeStyle={activeStyles} to="/auth/login">
-                            Login
+                    <>
+                      <li>
+                        <NavLink activeStyle={activeStyles} to="/auth/login">
+                          Login
                         </NavLink>
-                        </li>
-                        <li className="registerBtn">
-                          <NavLink className="registerLink" to="/auth/signup">
-                            Register
+                      </li>
+                      <li className="registerBtn">
+                        <NavLink className="registerLink" to="/auth/signup">
+                          Register
                         </NavLink>
-                        </li>
-                        <Link to="/feed">
-                          <SvgIcon
-                            src={envelope}
-                            style={{ marginLeft: "1.5rem" }}
-                          />
-                        </Link>
-                      </>
-                    )}
+                      </li>
+                      <Link to="/feed">
+                        <SvgIcon
+                          src={envelope}
+                          style={{ marginLeft: "1.5rem" }}
+                        />
+                      </Link>
+                    </>
+                  )}
                 </ul>
               </NavLinks>
             </DesktopMenu>

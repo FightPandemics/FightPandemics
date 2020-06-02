@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import "antd/dist/antd.css";
 import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
-// import "typeface-work-sans";
+import "typeface-work-sans";
 
 import App from "./App";
 import GlobalStyles from "./GlobalStyles";

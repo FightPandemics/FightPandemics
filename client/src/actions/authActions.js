@@ -5,6 +5,7 @@ import { getAuthToken } from "utils/auth-token";
 export const initAuth = () => {
   return (dispatch) => {
     const token = getAuthToken();
+
     if (token) {
       dispatch({ type: AUTH_SUCCESS, payload: { token } });
     }

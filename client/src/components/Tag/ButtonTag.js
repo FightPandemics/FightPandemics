@@ -23,6 +23,11 @@ const ButtonWrapper = styled(Button)`
   padding: 0 1rem;
   position: relative;
   text-align: center;
+
+  ::before {
+    border: none !important;
+  }
+
   .am-modal .am-accordion &::before {
     content: none;
   }

@@ -21,7 +21,6 @@ const StyledFooter = styled.footer`
   font-size: 1.1rem;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    background: ${colors.white};
     font-size: 1.4rem;
     height: 9rem;
   }

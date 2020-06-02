@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import ProfilePic from "components/Picture/ProfilePic";
 import { WhiteSpace } from "antd-mobile";
 import { getInitials } from "utils/userInfo";
-import { Link } from "react-router-dom";
 import fakePosts from "assets/data/fakePosts"; // feed
 import Posts from "components/Feed/Posts"; // feed
 import FeedWrapper from "components/Feed/FeedWrapper"; //feed
-import ButtonModal from "components/Feed/ButtonModal"; // feed
+import CreatePost from "components/CreatePost/CreatePost";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
 import createPost from "assets/icons/create-post.svg"; // feed
-import ProfilePic from "components/Picture/ProfilePic";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
@@ -57,23 +60,12 @@ const Profile = (props) => {
       <>
         <FeedWrapper>
           <Posts filteredPosts={fakePosts} />
-          <ButtonModal
-            onClose={() => setModal(false)}
-            maskClosable={true}
-            closable={false}
-            visible={modal}
-            transparent
-          >
-            <h2 className="title">Continue Posting As</h2>
-            <div className="links">
-              <button className="primary">
-                <Link to="/create-post">Individual</Link>
-              </button>
-              <button className="outline">
-                <Link to="/create-post">Organization</Link>
-              </button>
-            </div>
-          </ButtonModal>
+          <SvgIcon
+            src={createPost}
+            className="create-post"
+            onClick={() => setModal(!modal)}
+          />
+          <CreatePost onCancel={() => setModal(false)} visible={modal} />
         </FeedWrapper>
       </>
     );
