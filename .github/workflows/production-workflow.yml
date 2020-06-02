@@ -1,0 +1,101 @@
+name: production
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build_images:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app:
+          - backend
+          - client
+          - geo-service
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - if: matrix.app == 'client'
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
+        run: >
+          echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
+          echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
+          cat .env
+      - name: docker
+        uses: docker/build-push-action@v1.0.1
+        with:
+          path: ./${{ matrix.app }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: fightpandemics/${{ matrix.app }}
+          tags: production
+  deploy_production:
+    runs-on: ubuntu-latest
+    needs: build_images
+    steps:
+      - uses: actions/checkout@v2
+      - env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cat << EOF > backend.tf
+          terraform {
+            backend "s3" {
+              bucket = "fp-production-terraform-state"
+              region = "us-east-1"
+              key = "production.tfstate"
+            }
+          }
+          EOF
+      - run: cat backend.tf
+      - run: cat main.tf
+      - name: 'Terraform Init'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: latest
+          tf_actions_subcommand: 'init'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+      - name: 'Terraform Apply'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: latest
+          tf_actions_subcommand: 'apply'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          TF_VAR_env_name: production
+          TF_VAR_fp_context: production
+          TF_VAR_commit_hash: ${GITHUB_SHA}
+      - uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: ecs update-service --cluster production-cluster --service production --force-new-deployment
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
