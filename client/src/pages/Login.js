@@ -149,7 +149,7 @@ const FormContainer = styled.div`
 
 const VisibilityIconWrapper = styled.div`
   position: absolute;
-  bottom: 2.1rem;
+  top: 2.3rem;
   right: 0.5rem;
   color: ${colors.tropicalBlue};
   cursor: pointer;
@@ -266,7 +266,7 @@ const Login = ({ isLoginForm }) => {
 
   const comparePasswordConfirmation = (confirmPassword) => {
     const { password } = getValues();
-    return password === confirmPassword || "Password don't match";
+    return password === confirmPassword || "Passwords don't match";
   };
 
   return (
@@ -349,13 +349,13 @@ const Login = ({ isLoginForm }) => {
                     type={confirmPasswordType}
                     name="confirmPassword"
                     id="confirmPassword"
+                    className={errors.confirmPassword && "has-error"}
                     required
                     placeholder="Confirm password"
                     ref={register({
                       minLength: PASSWORD_MIN_LENGTH,
-                      validate: {
-                        matchesPreviousPassword: comparePasswordConfirmation,
-                      },
+                      required: "Password confirmation is required.",
+                      validate: comparePasswordConfirmation,
                     })}
                     style={inputStyles}
                   />
@@ -363,6 +363,9 @@ const Login = ({ isLoginForm }) => {
                     onClick={toggleConfirmPasswordVisibility}
                     type={confirmPasswordType}
                   />
+                  {errors.confirmPassword && (
+                    <InputError>{errors.confirmPassword.message}</InputError>
+                  )}
                 </InputWrapper>
               )}
               <SubmitButton
