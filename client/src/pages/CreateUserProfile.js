@@ -3,7 +3,7 @@ import { Dropdown, Menu } from "antd";
 import React, { useReducer } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
@@ -31,6 +31,8 @@ import {
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
+
+const { colors } = theme;
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -90,8 +92,14 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
+const InputError = styled.small`
+  color: ${colors.red};
+  display: block;
+`;
+
 const SubLabel = styled.small`
   color: ${theme.colors.green};
+  display: block;
 `;
 
 const ProfileFormGroup = styled.form`
@@ -219,7 +227,7 @@ const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
   const dispatch = useDispatch();
-  const { control, formState, getValues, handleSubmit, register } = useForm({
+  const { control, errors, formState, handleSubmit, register } = useForm({
     mode: "change",
   });
   const [createUserFormState, createUserFormDispatch] = useReducer(
@@ -246,7 +254,7 @@ const CreateProfile = ({ email, history }) => {
       });
     }
   };
-
+  console.log({ errors });
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -279,12 +287,16 @@ const CreateProfile = ({ email, history }) => {
                 type="email"
                 name="email"
                 id="email"
+                className={errors.email && "has-error"}
                 disabled
-                required
-                ref={register({ validate: validateEmail, required: true })}
+                ref={register({
+                  required: "Email is required.",
+                  validate: (email) => validateEmail(email) || "Invalid email",
+                })}
                 style={inputStyles}
                 value={email}
               />
+              {errors.email && <InputError>{errors.email.message}</InputError>}
             </InputWrapper>
 
             <InputWrapper>
@@ -297,10 +309,15 @@ const CreateProfile = ({ email, history }) => {
                 type="text"
                 name="firstName"
                 id="firstName"
-                required
-                ref={register({ required: true })}
+                className={errors.firstName && "has-error"}
+                ref={register({
+                  required: "First name is required.",
+                })}
                 style={inputStyles}
               />
+              {errors.firstName && (
+                <InputError>{errors.firstName.message}</InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>
@@ -313,10 +330,15 @@ const CreateProfile = ({ email, history }) => {
                 type="text"
                 name="lastName"
                 id="lastName"
-                required
-                ref={register({ required: true })}
+                className={errors.lastName && "has-error"}
+                ref={register({
+                  required: "Last name is required.",
+                })}
                 style={inputStyles}
               />
+              {errors.lastName && (
+                <InputError>{errors.lastName.message}</InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>
@@ -332,10 +354,15 @@ const CreateProfile = ({ email, history }) => {
                     type="text"
                     name="location.address"
                     id="location"
-                    required
-                    ref={register({ required: true })}
+                    className={errors.location?.address && "has-error"}
+                    ref={register({
+                      required: "Location is required.",
+                    })}
                     style={inputStyles}
                   />
+                  {errors.location?.address && (
+                    <InputError>{errors.location.address.message}</InputError>
+                  )}
                   <SubLabel>Enter address, zip code, or city</SubLabel>
                 </div>
               </DropdownMenu>
