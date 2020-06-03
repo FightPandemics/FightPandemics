@@ -90,9 +90,18 @@ const deletePostSchema = {
   params: strictSchema().prop("postId", S.string().required()),
 };
 
-const addCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+const createCommentSchema = {
+  body: strictSchema()
+    .prop("content", S.string().required())
+    .prop("parentId", S.string()),
   params: strictSchema().prop("postId", S.string().required()),
+};
+
+const getCommentsSchema = {
+  params: strictSchema().prop("postId", S.string().required()),
+  queryString: strictSchema()
+    .prop("limit", S.integer())
+    .prop("skip", S.integer()),
 };
 
 const deleteCommentSchema = {
@@ -102,17 +111,18 @@ const deleteCommentSchema = {
 };
 
 const updateCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+  body: strictSchema().prop("content", S.string().required()),
   params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
 
 module.exports = {
-  addCommentSchema,
+  createCommentSchema,
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
+  getCommentsSchema,
   getPostByIdSchema,
   getPostsSchema,
   likeUnlikeCommentSchema,
