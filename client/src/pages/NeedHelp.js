@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Input } from "antd";
+import { theme } from "constants/theme";
+import styled from "styled-components";
 import SubmitButton from "components/Button/SubmitButton";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
@@ -16,6 +19,7 @@ import {
   WizardFormWrapper,
   WizardFormGroup,
 } from "components/StepWizard";
+const { white, lightGray } = theme.colors;
 
 const INITIAL_STATE = {
   answers: [],
@@ -76,22 +80,32 @@ const Step2 = (props) => {
 
 
 const Step3 = (props) => {
-  const [values, setValues] = useState({
-    email: ' '
-  });
+  const [values, setValues] = useState({ email: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+
+  const StyledTextInput = styled(Input)`
+    background-color: ${white};
+    border: 0.1rem solid ${lightGray};
+    border-radius: 4rem;
+    height: 5rem;
+  `
+
   useEffect(() => {
-    if (Object.keys(errors).length === 5 && isSubmitting) { }
+    if (Object.keys(errors).length === 0 && isSubmitting) { }
   }, [errors]);
 
   const onChange = (event) => {
     event.persist();
-    setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+    setValues(values => ({
+      ...values,
+      [event.target.name]: event.target.value
+    }));
   };
+
   const onSubmit = (event) => {
-    if (event) event.preventDefault();
+    if (event.preventDefault());
     setErrors(validate(values));
     setIsSubmitting(true);
   };
@@ -109,7 +123,7 @@ const Step3 = (props) => {
             className="none"
             name="email"
             label="Email"
-            placeholder="Email"
+            placeholder="Enter your email address..."
             onChange={
               onChange
             }
