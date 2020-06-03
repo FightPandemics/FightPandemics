@@ -72,6 +72,7 @@ module.exports = (post, fpOrgsByType) => {
     // id/name just links make to one of "Sourced by Fightpandemics" orgs for each type (not the original posting org)
     id: fpOrgsByType[cleanedAuthorType]._id,
     name: fpOrgsByType[cleanedAuthorType].name,
+    photo: fpOrgsByType[cleanedAuthorType].photo,
     // location/type will reflect actual posting (for filtering)
     type: cleanedAuthorType,
   };
