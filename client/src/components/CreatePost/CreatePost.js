@@ -105,6 +105,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
       footer={null}
       visible={visible && currentStep !== 3}
       destroyOnClose={true}
+      overflow-y: hidden;
       closeIcon={
         <SvgIcon
           src={closeButton}
@@ -113,6 +114,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
             right: "4.0rem",
             top: "1.7rem",
             filter: currentStep === 4 ? "" : "brightness(0.6)",
+    
           }}
         />
       }
