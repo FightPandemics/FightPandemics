@@ -1,18 +1,24 @@
+// Core
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Avatar } from "antd";
+
+// Local
 import StyledComment from "./StyledComment";
 import AutoSize from "components/Input/AutoSize";
 
-// ICONS
+// Icons
 import SvgIcon from "../Icon/SvgIcon";
 import heartSmall from "assets/icons/heart-small.svg";
 
+// Constants
 import { theme } from "constants/theme";
+
 const { royalBlue } = theme.colors;
 
 const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
 
-const NestedComments = ({ comment }) => {
+const NestedComments = ({ isAuthenticated, comment }) => {
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
   const [fakeNumReplies, setFakeNumReplies] = useState(comment.children.length);
@@ -71,12 +77,14 @@ const NestedComments = ({ comment }) => {
   const renderReplyInput = showReply ? (
     <div className="reply-input">
       {renderAvatar}
-      <AutoSize
-        placeholder={"Write a reply..."}
-        onPressEnter={handleReply}
-        onChange={(e) => setReply(e.target.value)}
-        value={reply}
-      />
+      {isAuthenticated ?
+        <AutoSize
+          placeholder={"Write a reply..."}
+          onPressEnter={handleReply}
+          onChange={(e) => setReply(e.target.value)}
+          value={reply}
+        />
+        : ""}
     </div>
   ) : (
     ""
@@ -122,4 +130,10 @@ const NestedComments = ({ comment }) => {
   );
 };
 
-export default NestedComments;
+const mapStateToProps = ({ session }) => {
+  return {
+    isAuthenticated: session.isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps)(NestedComments);

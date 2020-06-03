@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Card, WhiteSpace } from "antd-mobile";
 
-import { theme } from "../../constants/theme";
+import { theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const {
@@ -89,8 +89,8 @@ const DescriptionCard = (props) => {
             isOpen ? (
               <span style={{ color: `${mintGreen}` }}>Open now</span>
             ) : (
-              <span style={{ color: `${orangeRed}` }}>Closed</span>
-            )
+                <span style={{ color: `${orangeRed}` }}>Closed</span>
+              )
           }
         />
         <Card.Body>

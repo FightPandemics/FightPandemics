@@ -35,7 +35,7 @@ const INITIAL_STATE = {
 const STEP_1_ANSWERS = [
   "As a Volunteer",
   "As a Donor/Investor",
-  "As a Organization",
+  "As an Organisation",
 ];
 const STEP_1_STATE = {
   answers: getAnswersMap(STEP_1_ANSWERS),
@@ -66,9 +66,8 @@ const Step1 = (props) => {
               key={i}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
-            >
-              {answer}
-            </WizardCheckboxItem>
+              text={answer}
+            />
           ))}
         </WizardCheckboxWrapper>
       </WizardFormWrapper>
@@ -115,7 +114,7 @@ const Step2 = (props) => {
         </WizardFormGroup>
         <ShareLocation
           tertiary="true"
-          icon={<SvgIcon class="share-location-icon" src={shareMyLocation} />}
+          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
           onSelect={selectLocationDetection}
         >
           Share my location
