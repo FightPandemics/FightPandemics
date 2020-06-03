@@ -55,6 +55,7 @@ const importPostsFromAirtable = async (connection, fpOrgsByType) => {
           filter: { airtableId: record.id },
           update: postData,
           upsert: true,
+          setDefaultsOnInsert: true, // to set likes empty array etc
         },
       });
     } catch (err) {
