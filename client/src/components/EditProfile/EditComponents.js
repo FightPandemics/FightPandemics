@@ -8,9 +8,9 @@ const { colors } = theme;
 export const Background = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
-    background-color: ${colors.lighterGray};
     margin: 0 -25px;
     padding: 3rem 0;
+    /* background-color: ${colors.lighterGray}; */
   }
 `;
 
@@ -164,15 +164,18 @@ export const ToggleHeading = styled.div`
 `;
 
 export const StyledSelect = styled(Select)`
-    width: 50%;
     border: 1px solid ${theme.colors.royalBlue};
     border-radius: .3rem;
     color: ${theme.colors.royalBlue};
+    width: 35%;
+    margin-right: 1.8rem;
+    @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
+      width: 60%;
+      margin-bottom: 1.8rem;
+    }
 `;
 
-export const SelectWrapper = styled.div`
-   width: 60%;
-   @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-     width: 90%;
-   }
-`;
+export const ProfileImage = styled.img`
+   width: 70%;
+   align-self: end;
+`

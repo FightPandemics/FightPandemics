@@ -1,12 +1,14 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
+import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import { getInitials } from "utils/userInfo";
+import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
+import notionLogo from "assets/icons/notion-logo.svg";
 import locationIcon from "assets/icons/location.svg";
 import createOrganizationProfile from "../assets/data/createOrganizationProfile";
 import {
@@ -26,87 +28,63 @@ import {
   ToggleHeading,
   ProfilePicWrapper,
   StyledSelect,
-  SelectWrapper,
   CustomEditAccountHeader,
   Background,
+  ProfileImage
 } from "../components/EditProfile/EditComponents";
+
+const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others']
+
+const errorStyles = {
+  color: "#FF5656",
+  fontSize: "1.2rem",
+  display: "block"
+}
 
 
 function EditOrganizationAccount(props) {
-  // dummy data props,context, redux etc
 
-  const {
-    firstName,
-    lastName,
-    email,
-    country,
-    address,
-    shareInfoStatus,
-    volunteerStatus,
-    donateStatus,
-    medicalHelpStatus,
-    otherHelpStatus,
-    traveling,
-    displayAddress,
-  } = props.user;
   const { register, handleSubmit, control, errors } = useForm();
 
   const { type, industry } = createOrganizationProfile;
 
   const onSubmit = (data) => {
-    // console.log(data);
+    console.log(data);
     // make a put/patch request to backend to update users Account information
   };
 
   const organizationInfo = {
     // label name, variable name, value
-    "Organization Name": ["name", firstName + " " + lastName],
-    "Organization Contact E-mail": ["email", email],
-    "Organization Address": [
-      "address",
-      address
-    ],
+    "Organization Name": ["name", ""],
+    "Organization Contact E-mail": ["email", ""],
+    "Organization Address": ["address", ""],
   };
 
   const lookingFor = {
-    Volunteer: ["volunteer", volunteerStatus],
-    Staff: ["staff", donateStatus],
-    Investors: ["investors", shareInfoStatus],
-    Donations: ["donations", shareInfoStatus],
-    Others: ["others", shareInfoStatus],
-  };
-
-  const needHelpSection = {
-    "Medical Help": [
-      "medicalHelp",
-      medicalHelpStatus,
-      "I have symptoms of COVID-19",
-    ],
-    "Other Help": [
-      "otherHelp",
-      otherHelpStatus,
-      "I need assistance getting groceries, medicine, etc.",
-    ],
+    Volunteer: ["volunteer", ""],
+    Staff: ["staff", ""],
+    Investors: ["investors", ""],
+    Donations: ["donations", ""],
+    Others: ["others", ""],
   };
 
   const renderNeedSection = () => {
-    return Object.entries(lookingFor).map(([key, value]) => {
       return (
-        <SelectWrapper>
-        <CheckBoxWrapper key={key}>
+        <div>
+        <CheckBoxWrapper>
           <Controller
-            as={<Checkbox />}
-            defaultValue={value[1]}
-            name={value[0]}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          >
-            <Label inputColor="#000000">{key}</Label>
-          </Controller>
+           as={StyledCheckboxGroup}
+           control={control}
+           display="column"
+           options={organizationNeeds}
+           name="needs"
+           rules={{ required: true }}
+           onChange={([checkedValues]) => checkedValues}
+          />
         </CheckBoxWrapper>
-        </SelectWrapper>
+            <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
+        </div>
       );
-    });
   };
 
 
@@ -142,8 +120,7 @@ function EditOrganizationAccount(props) {
         <CheckBoxWrapper>
           <Controller
             as={Checkbox}
-            defaultValue={traveling}
-            name={"traveling"}
+            name="global"
             control={control}
             onChange={([event]) => event.target.checked}
           >
@@ -156,18 +133,31 @@ function EditOrganizationAccount(props) {
 
   const renderSelectItems = () => {
     return (
-      <SelectWrapper>
-        <StyledSelect defaultValue="Type">
-           {type.options.map(option => (
-             <StyledSelect.Option value={option.text}>{option.text}</StyledSelect.Option>
+      <div>
+       <Controller
+        as={<StyledSelect defaultValue="Type">
+           {type.options.map((option, i) => (
+             <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
            ))}
-        </StyledSelect>
-        <StyledSelect defaultValue="Industry">
-          {industry.options.map(option => (
-            <StyledSelect.Option value={option.text}>{option.text}</StyledSelect.Option>
+        </StyledSelect>}
+        rules={{ required: true }}
+        control={control}
+        onChange={([text]) => text}
+        name="type"
+        />
+        <Controller
+         as={<StyledSelect defaultValue="Industry">
+          {industry.options.map((option, i) => (
+            <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
           ))}
-        </StyledSelect>
-      </SelectWrapper>
+         </StyledSelect>}
+         rules={{ required: true }}
+         control={control}
+         onChange={([text]) => text}
+         name="industry"
+         />
+              <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
+      </div>
     )
   }
 
@@ -185,11 +175,7 @@ function EditOrganizationAccount(props) {
           </ToggleHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>
-            <ProfilePic
-              resolution={"7680px"}
-              noPic={true}
-              initials={getInitials(firstName, lastName)}
-            />
+            <ProfileImage src={notionLogo} alt="logo" />
             <ChangePicButton>Change</ChangePicButton>
           </ProfilePicWrapper>
         </TitlePictureWrapper>
@@ -205,6 +191,8 @@ function EditOrganizationAccount(props) {
           <CustomForm>
             {renderFormInputs()}
             {renderGlobalCheckBox()}
+            <WhiteSpace />
+            <WhiteSpace />
             {renderSelectItems()}
             <Label>What are you looking for?</Label>
             <HelpWrapper>{renderNeedSection()}</HelpWrapper>
@@ -218,10 +206,6 @@ function EditOrganizationAccount(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
 
-export default connect(mapStateToProps)(EditOrganizationAccount);
+
+export default EditOrganizationAccount;

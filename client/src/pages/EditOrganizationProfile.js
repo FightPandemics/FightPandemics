@@ -1,8 +1,11 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
+import Checkbox from "components/Input/Checkbox";
 import FormInput from "components/Input/FormInput";
+import { WhiteSpace } from "antd-mobile";
 import ProfilePic from "components/Picture/ProfilePic";
+import notionLogo from "assets/icons/notion-logo.svg";
 import { getInitials } from "utils/userInfo";
 import { Link } from "react-router-dom";
 import {
@@ -16,37 +19,33 @@ import {
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
+  CheckBoxWrapper,
+  Label,
   Background,
+  ProfileImage,
+  ProfilePicWrapper
 } from "../components/EditProfile/EditComponents";
 // dummy data props,context, redux etc
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
-  // dummy data props,context, redux etc
-  const {
-    firstName,
-    lastName,
-    facebookURL,
-    twitterURL,
-    githubURL,
-    linkedinURL,
-    personalURL,
-    about,
-  } = props.user;
-  const { register, handleSubmit } = useForm();
+
+  const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(data);
+    console.log(data);
     // make a put/patch request to backend to update users profile information
   };
 
   const labelVariableValue = {
     // label name, variable name, value
-    "Facebook URL": ["facebookURL", facebookURL],
-    "LinkedIn URL": ["linkedinURL", linkedinURL],
-    "Twitter URL": ["twitterURL", twitterURL],
-    "Github URL": ["githubURL", githubURL],
-    "Personal Website": ["personalURL", personalURL],
+    "Organization Owner": ["owner", ""],
+    "Organization Website": ["website", ""],
+    "Organization Language": ["language", ""],
+    "Link to Apple Store": ["appleStoreLink", ""],
+    "Link to Google Play": ["googlePlayLink", ""],
+    "LinkedIn": ["linkedInLink", ""],
+    "Twitter": ["twitterLink", ""],
   };
 
   const renderFormInputs = () => {
@@ -72,13 +71,11 @@ function EditOrganizationProfile(props) {
             {editProfile ? "Edit Profile" : "Complete Profile"}
           </CustomHeading>
           <FillEmptySpace />
-          <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
-            initials={getInitials(firstName, lastName)}
-          />
+          <ProfilePicWrapper>
+            <ProfileImage src={notionLogo} alt="logo" />
+            <ChangePicButton>Change</ChangePicButton>
+          </ProfilePicWrapper>
         </TitlePictureWrapper>
-        <ChangePicButton>Change</ChangePicButton>
         <FormLayout>
           <OptionDiv>
             <CustomLink>
@@ -90,11 +87,32 @@ function EditOrganizationProfile(props) {
           </OptionDiv>
           <CustomForm>
             <FormInput
-              inputTitle="Self-introduction"
-              name="about"
-              defaultValue={about}
-              reference={register({ maxLength: 160 })}
+              inputTitle="Organization Description"
+              name="description"
+              error={!!errors["description"]}
+              reference={register({ required: true, maxLength: 160 })}
+              onChange={(text => text)}
             />
+            <FormInput
+              inputTitle="Organization Address"
+              name="address"
+              error={!!errors["address"]}
+              onChange={(text => text)}
+              reference={register({ required: true, maxLength: 160 })}
+            />
+            <CheckBoxWrapper>
+              <Controller
+                as={Checkbox}
+                name="global"
+                defaultValue={false}
+                control={control}
+                onChange={([event]) => event.target.checked}
+              >
+                <Label inputColor="#646464">We are a global organization</Label>
+              </Controller>
+            </CheckBoxWrapper>
+            <WhiteSpace />
+            <WhiteSpace />
             {renderFormInputs()}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
               Save Changes
@@ -106,10 +124,5 @@ function EditOrganizationProfile(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
 
-export default connect(mapStateToProps)(EditOrganizationProfile);
+export default EditOrganizationProfile;
