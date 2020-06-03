@@ -53,9 +53,9 @@ const importPostsFromAirtable = async (connection, fpOrgsByType) => {
       bulkOps.push({
         updateOne: {
           filter: { airtableId: record.id },
+          setDefaultsOnInsert: true, // to set likes empty array etc
           update: postData,
           upsert: true,
-          setDefaultsOnInsert: true, // to set likes empty array etc
         },
       });
     } catch (err) {
