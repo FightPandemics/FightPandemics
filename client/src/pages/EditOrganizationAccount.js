@@ -2,14 +2,11 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
 import StyledCheckboxGroup from "components/Input/CheckboxGroup";
-import { getInitials } from "utils/userInfo";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
-import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
 import notionLogo from "assets/icons/notion-logo.svg";
-import locationIcon from "assets/icons/location.svg";
 import createOrganizationProfile from "../assets/data/createOrganizationProfile";
 import {
   EditLayout,
@@ -58,14 +55,6 @@ function EditOrganizationAccount(props) {
     "Organization Name": ["name", ""],
     "Organization Contact E-mail": ["email", ""],
     "Organization Address": ["address", ""],
-  };
-
-  const lookingFor = {
-    Volunteer: ["volunteer", ""],
-    Staff: ["staff", ""],
-    Investors: ["investors", ""],
-    Donations: ["donations", ""],
-    Others: ["others", ""],
   };
 
   const renderNeedSection = () => {

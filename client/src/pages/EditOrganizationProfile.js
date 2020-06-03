@@ -1,13 +1,10 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
 import FormInput from "components/Input/FormInput";
 import { WhiteSpace } from "antd-mobile";
-import ProfilePic from "components/Picture/ProfilePic";
 import notionLogo from "assets/icons/notion-logo.svg";
 import plus from "assets/icons/plus.svg";
-import { getInitials } from "utils/userInfo";
 import { Link } from "react-router-dom";
 import {
   FillEmptySpace,

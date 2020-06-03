@@ -1,6 +1,6 @@
 import { Checkbox } from "antd";
 import styled from "styled-components";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 
 const { darkGray, darkerGray } = theme.colors;
 
