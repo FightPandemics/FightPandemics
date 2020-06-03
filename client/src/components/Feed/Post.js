@@ -25,8 +25,8 @@ const Post = ({ isAuthenticated, post }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
   const AvatarName =
-    (post.authorName &&
-      post.authorName.match(/\b\w/g).join("").toUpperCase()) ||
+    (post.author.name &&
+      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
   // mock API to test functionality
@@ -81,9 +81,9 @@ const Post = ({ isAuthenticated, post }) => {
 
  const renderHeader = (
     <Card.Header
-      title={post.authorName}
+      title={post.author.name}
       thumb={
-        post.photoUrl ? post.photoUrl : <TextAvatar>{AvatarName}</TextAvatar>
+        post.author.photo ? post.author.photo : <TextAvatar>{AvatarName}</TextAvatar>
       }
       extra={
         <span>
