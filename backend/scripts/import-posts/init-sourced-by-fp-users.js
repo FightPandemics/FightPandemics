@@ -17,13 +17,21 @@ const SOURCED_BY_FP_OWNER_UPDATE = {
   authId: "NA",
   firstName: "Sourced by",
   lastName: "FightPandemics",
-  photo: "http://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/c970ae56-203d-4f42-acf9-c00d3de6b5cc/255x258.png",
+  photo:
+    "http://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/c970ae56-203d-4f42-acf9-c00d3de6b5cc/255x258.png",
 };
 
 const SOURCED_BY_FP_ORG_UPDATE = {
   global: true,
   industry: "Non-profit",
   language: "English",
+};
+
+// simple slugify so we have unique email in Users collection
+const slugifySourcedByFPOrgEmail = (orgType) => {
+  return `sourcedby-type-${orgType
+    .replace(/\W/g, "-")
+    .toLowerCase()}@fightpandemics.com`;
 };
 
 const initSourcedByFPOwner = async (connection) => {
@@ -73,7 +81,7 @@ const initSourcedByFPOrgs = async (connection, sourcedByFPOwner) => {
     };
     const orgUpdate = {
       ...SOURCED_BY_FP_ORG_UPDATE,
-      email: sourcedByFPOwner.email, // can use same email as individual user
+      email: slugifySourcedByFPOrgEmail(orgType),
       name: `${sourcedByFPOwner.name} (${orgType})`,
       photo: sourcedByFPOwner.photo,
     };
