@@ -114,7 +114,6 @@ const Wrapper = ({ onCancel, visible, children }) => {
             right: "4.0rem",
             top: "1.7rem",
             filter: currentStep === 4 ? "" : "brightness(0.6)",
-    
           }}
         />
       }
