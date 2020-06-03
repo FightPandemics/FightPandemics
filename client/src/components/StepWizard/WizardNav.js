@@ -1,55 +1,115 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { mq, theme } from "constants/theme";
+import LeftRightIconButton from "components/Button/LeftRightIconButton";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
 import nextArrow from "assets/icons/next-arrow.svg";
 import backArrow from "assets/icons/back-arrow.svg";
 
+const desktopBreakpoint = mq.tablet.narrow.maxWidth;
+
+const { royalBlue, white } = theme.colors;
+
 const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 0;
-  height: 7rem;
   margin-bottom: 1rem;
-  /* flex: 0; */
+  width: 100%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
-    flex: 1;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
-    /* min-height: 100%; */
+
     & > div {
       min-height: 100%;
     }
   }
+
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    margin: 0 auto 1rem;
+    width: 40rem;
+  }
 `;
 
-const PrevButton = styled(SvgIcon)`
+const BackButton = styled(LeftRightIconButton)`
+  align-items: center;
+  background-color: transparent;
+  color: ${royalBlue};
   cursor: pointer;
+  display: flex;
+  height: 6.8rem;
+  justify-content: center;
+  width: 6.8rem;
+
+  & span {
+    display: none;
+  }
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    height: 4.8rem;
+    width: 19.2rem;
+    & span {
+      display: inline;
+    }
+  }
 `;
 
-const NextButton = styled(SvgIcon)`
+const BackText = styled.span`
+  margin-left: 3rem;
+`;
+
+const NextButton = styled(LeftRightIconButton)`
+  align-items: center;
+  background-color: ${royalBlue};
+  color: ${white};
   cursor: pointer;
+  display: flex;
+  height: 6.8rem;
+  justify-content: center;
+  width: 6.8rem;
+
+  & span {
+    display: none;
+  }
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    font-weight: bold;
+    height: 4.8rem;
+    width: 19.2rem;
+
+    & span {
+      display: inline;
+    }
+  }
 `;
 
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <PrevButton
-        src={backArrow}
-        onClick={previousStep}
-        a11yTitle={`Navigate to step ${currentStep - 1}`}
-      />
+      <BackButton onClick={previousStep}>
+        <SvgIcon
+          src={backArrow}
+          a11yTitle={`Navigate to step ${currentStep - 1}`}
+        />
+        <BackText>Back</BackText>
+      </BackButton>
     ) : (
-      <Link to={"/"}>
-        <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />
-      </Link>
+      <BackButton>
+        <Link to={"/"}>
+          <SvgIcon src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
+          <BackText>Back</BackText>
+        </Link>
+      </BackButton>
     )}
     {currentStep < totalSteps && (
-      <NextButton src={nextArrow} onClick={nextStep} />
+      <NextButton onClick={nextStep}>
+        <span>Next</span>
+        <SvgIcon src={nextArrow} />
+      </NextButton>
     )}
   </StyledWizardNav>
 );

@@ -1,24 +1,33 @@
-import React, { useReducer } from "react";
-import { Link } from "react-router-dom";
+import React, { useReducer, useEffect, useCallback, useRef } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 // Antd
-import { Layout, Menu } from 'antd';
+import { Layout, Menu } from "antd";
 
 // Local
-import ButtonModal from "components/Feed/ButtonModal";
 import filterOptions from "assets/data/filterOptions";
-import fakePosts from "assets/data/fakePosts";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer, postsReducer } from "hooks/reducers/feedReducers";
+import CreatePost from "components/CreatePost/CreatePost";
+import {
+  optionsReducer,
+  feedReducer,
+  postsReducer,
+  postsState,
+} from "hooks/reducers/feedReducers";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import creatPost from "assets/icons/create-post.svg";
+import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
 import { theme, mq } from "constants/theme";
-import { BLACK, DARKER_GRAY, ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -26,12 +35,16 @@ import {
   TOGGLE_STATE,
   SET_VALUE,
   SET_POSTS,
+  FETCH_POSTS,
+  ERROR_POSTS,
+  NEXT_PAGE,
+  SET_LOADING,
+  SET_LIKE,
+  SET_COMMENTS,
 } from "hooks/actions/feedActions";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import creatPost from "assets/icons/create-post.svg";
-import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
+const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
 
@@ -39,27 +52,26 @@ const { Content, Sider } = Layout;
 
 // feed types
 const HELP_TYPE = {
-  ALL: 'All posts',
-  REQUEST: 'Requesting help',
-  OFFER: 'Offering help'
+  ALL: "All posts",
+  REQUEST: "Requesting help",
+  OFFER: "Offering help",
 };
 
 const initialState = {
-  selectedType: '',
+  selectedType: "",
   showFilters: false,
   filterModal: false,
   createPostModal: false,
   activePanel: null,
-  location: '',
+  location: "",
 };
 
 const SiderWrapper = styled(Sider)`
-  background-color: ${WHITE};
+  background-color: ${white};
   height: calc(100vh - 5rem);
   overflow-x: hidden;
   padding-top: 3.3rem;
   position: fixed;
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -69,12 +81,11 @@ const FiltersWrapper = styled.div`
   border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
   margin: 0 2rem;
   padding-top: 2rem;
-
   button {
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -82,20 +93,18 @@ const FiltersWrapper = styled.div`
     font-weight: bold;
     margin-bottom: 1rem;
     padding: 0;
-
     span {
       align-items: center;
-      border: 0.1rem solid ${ROYAL_BLUE};
+      border: 0.1rem solid ${royalBlue};
       border-radius: 50%;
-      color: ${ROYAL_BLUE};
+      color: ${royalBlue};
       display: flex;
       height: 4.2rem;
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
-
       svg {
-        fill: ${ROYAL_BLUE};
+        fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
       }
@@ -106,19 +115,17 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
-      border-left: 0.5rem solid ${WHITE};
-      color: ${DARKER_GRAY};
+      border-left: 0.5rem solid ${white};
+      color: ${darkerGray};
       font-size: ${theme.typography.size.large};
-
       &:hover {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
-
     .ant-menu-item-selected {
       background-color: transparent;
-      border-left: 0.5rem solid ${ROYAL_BLUE};
-      color: ${ROYAL_BLUE};
+      border-left: 0.5rem solid ${royalBlue};
+      color: ${royalBlue};
       font-weight: bold;
     }
   }
@@ -126,13 +133,11 @@ const MenuWrapper = styled(Menu)`
 
 const LayoutWrapper = styled(Layout)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${WHITE};
+    background-color: ${white};
   }
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: #fbfbfd;
+    background-color: ${offWhite};
     min-height: calc(100vh - 5rem);
-
     .create-post,
     .filter-box {
       display: none;
@@ -142,7 +147,6 @@ const LayoutWrapper = styled(Layout)`
 
 const ContentWrapper = styled(Content)`
   margin: 0;
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
   }
@@ -150,42 +154,51 @@ const ContentWrapper = styled(Content)`
 
 const HeaderWrapper = styled.div`
   display: none;
-
   h1 {
-    font-size:  ${theme.typography.heading.one};
+    font-size: ${theme.typography.heading.one};
     font-weight: bold;
     margin-top: 0;
   }
-
   button {
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     padding: 0;
-
     img {
       margin-left: 1.2rem;
       max-height: 4.2rem;
     }
   }
-
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
     justify-content: space-between;
   }
 `;
 
-const Feed = () => {
-  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+const Feed = (props) => {
+  const { id } = useParams();
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+    createPostModal: id === "create-post",
+  });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, {posts: fakePosts});
-  const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
+  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+  const {
+    filterModal,
+    createPostModal,
+    activePanel,
+    location,
+    selectedType,
+    showFilters,
+  } = feedState;
   const filters = Object.values(filterOptions);
+  const { isLoading, loadMore, page, posts: postsList,status } = posts;
+  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -233,51 +246,130 @@ const Feed = () => {
   };
 
   const handleChangeType = (e) => {
-    const value = HELP_TYPE[e.key]; // e.target.innerHTML;
+    const value = HELP_TYPE[e.key];
 
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts: fakePosts });
+        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
-        const filtered = fakePosts.filter((item) => item.type === value);
+        const filtered = postsState.posts.filter((item) => item.type === value);
 
         postsDispatch({ type: SET_POSTS, posts: filtered });
       }
     }
-  }
+  };
 
   const handleShowFilters = (e) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
-  }
+  };
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+  };
+
+  const handlePostLike = async (postId, liked) => {
+    const { history, isAuthenticated, user } = props;
+
+    /* added here because userId not working */
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
+        }
+      }
+    } else {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
+    }
+  };
+
+  const updateComments = ({postId, comments, commentsCount}) => {
+    postsDispatch({
+      type: SET_COMMENTS,
+      postId,
+      comments,
+      commentsCount,
+    });
   }
 
-  const renderCreatePostModal = () => {
-    return (
-      <ButtonModal
-        onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
-        maskClosable={true}
-        closable={false}
-        visible={createPostModal}
-        transparent
-      >
-        <h2 className="title">Continue Posting As</h2>
-        <div className="links">
-          <Link className="primary" to="/create-post">
-            Individual
-          </Link>
+  const loadPosts = useCallback(async () => {
+    const { user } = props;
+    const limit = 5;
+    const skip = page * limit;
+    /* Add userId when user is logged */
+    const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
+      user && user.userId ? `&userId=${user.userId}` : ""
+    }`;
+    let response = {};
 
-          <Link className="outline" to="/create-post">
-            Organization
-          </Link>
-        </div>
-      </ButtonModal>
-    );
-  };
+    if (isLoading) {
+      return;
+    }
+
+    await postsDispatch({ type: FETCH_POSTS });
+
+    try {
+      response = await axios.get(endpoint);
+    } catch (error) {
+      await postsDispatch({ type: ERROR_POSTS });
+    }
+
+    if (response.data && response.data.length) {
+      const loadedPosts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), {});
+
+      await postsDispatch({ type: SET_POSTS, posts: { ...postsList, ...loadedPosts } });
+    } else {
+      await postsDispatch({ type: SET_LOADING });
+    }
+  }, [ postsList, isLoading, page, props ]);
+
+  useEffect(() => {
+    loadPosts();
+  }, [ page ]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const scrollObserver = useCallback(
+    node => {
+      new IntersectionObserver(entries => {
+        entries.forEach(async entry => {
+          if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
+            await postsDispatch({ type: NEXT_PAGE });
+          }
+        });
+      }).observe(node);
+    },
+    [ postsDispatch, isLoading, loadMore ]
+  );
+
+  useEffect(() => {
+    if (bottomBoundaryRef.current) {
+      scrollObserver(bottomBoundaryRef.current);
+    }
+  }, [scrollObserver, bottomBoundaryRef]);
 
   return (
     <FeedContext.Provider
@@ -294,6 +386,8 @@ const Feed = () => {
         handleLocation,
         handleOnClose,
         showFilters,
+        handlePostLike,
+        updateComments,
       }}
     >
       <FeedWrapper>
@@ -301,26 +395,24 @@ const Feed = () => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}>
+            width={290}
+          >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={['ALL']}
+                defaultSelectedKeys={["ALL"]}
                 onClick={handleChangeType}
               >
-                {Object.keys(HELP_TYPE).map((item, index) =>
-                  <Menu.Item key={item}>
-                    {HELP_TYPE[item]}
-                  </Menu.Item>
-                )}
+                {Object.keys(HELP_TYPE).map((item, index) => (
+                  <Menu.Item key={item}>{HELP_TYPE[item]}</Menu.Item>
+                ))}
               </MenuWrapper>
               <FiltersWrapper>
-                <button
-                  onClick={handleShowFilters} >
+                <button onClick={handleShowFilters}>
                   <span>
                     <FiltersIcon />
                   </span>
-                Filters
-              </button>
+                  Filters
+                </button>
                 <FiltersList />
               </FiltersWrapper>
             </div>
@@ -329,16 +421,18 @@ const Feed = () => {
           <ContentWrapper>
             <HeaderWrapper>
               <h1>Feed</h1>
-              <button
-                onClick={handleCreatePost}>
-                Create post
-                <SvgIcon
-                  src={creatPost}
-                />
+              <button onClick={handleCreatePost}>
+                Create a post
+                <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />
-            <Posts filteredPosts={ posts.posts } />
+            <Posts filteredPosts={postsList} />
+            {isLoading && <div>Loading...</div>}
+            {status === ERROR_POSTS && (
+              <div>Something went wrong...</div>
+            )}
+            {!isLoading && <div id="list-bottom" ref={ bottomBoundaryRef }></div>}
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
@@ -346,7 +440,10 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        {renderCreatePostModal()}
+        <CreatePost
+          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+          visible={createPostModal}
+        />
       </FeedWrapper>
     </FeedContext.Provider>
   );

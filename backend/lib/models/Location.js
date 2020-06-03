@@ -35,15 +35,29 @@ const locationSchema = new Schema({
     trim: true,
     type: String,
   },
+  state: {
+    lowercase: true,
+    trim: true,
+    type: String,
+  },
   type: {
     default: "Point",
     enum: ["Point"],
     required: true,
     type: String,
   },
+  zip: {
+    trim: true,
+    type: String,
+  },
 });
 
 const Location = model("Location", locationSchema);
 
-exports.schema = locationSchema;
-exports.model = Location;
+const LOCATION_TYPES = locationSchema.tree.type.enum;
+
+module.exports = {
+  LOCATION_TYPES,
+  model: Location,
+  schema: locationSchema,
+};

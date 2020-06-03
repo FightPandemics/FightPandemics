@@ -57,8 +57,6 @@ jobs:
         shell: bash
         run: echo "::set-output name=branch::$(echo ${{ steps.get-branch-name.outputs.branch }} | tr -cd '[a-zA-Z0-9]_-')"
       - env:
-          AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
-          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
@@ -94,8 +92,7 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           TF_VAR_env_name: ${{ steps.get-branch-name-sanitized.outputs.branch }}
           TF_VAR_fp_context: review
-          TF_VAR_auth_secret_key: ${{ secrets.AUTH_SECRET_KEY }}
-          TF_VAR_auth_client_id: ${{ secrets.AUTH_CLIENT_ID }}
+          TF_VAR_commit_hash: ${GITHUB_SHA}
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name-sanitized.outputs.branch }} --force-new-deployment

@@ -9,10 +9,12 @@ const authorSchema = new Schema({
     required: true,
     type: ObjectId,
   },
+  location: locationSchema,
   name: {
     required: true,
     type: String,
   },
+  photo: String,
   type: {
     enum: [
       "Company",
@@ -30,7 +32,6 @@ const authorSchema = new Schema({
     trim: true,
     type: String,
   },
-  location: locationSchema,
 });
 
 // -- Model

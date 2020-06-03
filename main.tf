@@ -1,14 +1,14 @@
 variable "env_name" {
   type = string
 }
+
 variable "fp_context" {
   type = string
 }
-variable "auth_secret_key" {
+
+variable "commit_hash" {
   type = string
-}
-variable "auth_client_id" {
-  type = string
+  default = ""
 }
 
 data "aws_ssm_parameter" "db_host" {
@@ -21,6 +21,30 @@ data "aws_ssm_parameter" "db_user" {
 
 data "aws_ssm_parameter" "db_password" {
   name = "/fp/database/password"
+}
+
+data "aws_ssm_parameter" "auth_domain" {
+  name = "/fp/auth/domain"
+}
+
+data "aws_ssm_parameter" "auth_client_id" {
+  name = "/fp/auth/client_id"
+}
+
+data "aws_ssm_parameter" "auth_client_secret" {
+  name = "/fp/auth/client_secret"
+}
+
+data "aws_ssm_parameter" "sentry_dsn" {
+  name = "/fp/sentry/dsn"
+}
+
+locals {
+  domain = {
+    review     = "fightpandemics.xyz"
+    staging    = "fightpandemics.work"
+    production = "fightpandemics.com"
+  }
 }
 
 module "main" {
@@ -47,23 +71,31 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = "http://localhost:8000"
+      value = "https://${var.env_name}.${local.domain[var.fp_context]}"
     },
     {
       name  = "AUTH_SECRET_KEY"
-      value = var.auth_secret_key
+      value = data.aws_ssm_parameter.auth_client_secret.value
     },
     {
       name  = "AUTH_DOMAIN"
-      value = "fightpandemics.eu.auth0.com"
+      value = data.aws_ssm_parameter.auth_domain.value
     },
     {
       name  = "AUTH_CLIENT_ID"
-      value = var.auth_client_id
+      value = data.aws_ssm_parameter.auth_client_id.value
     },
     {
       name  = "NODE_ENV"
       value = var.env_name
+    },
+    {
+      name  = "SENTRY_DSN",
+      value = data.aws_ssm_parameter.sentry_dsn.value
+    },
+    {
+      name  = "COMMIT_HASH",
+      value = var.commit_hash
     },
   ]
 }

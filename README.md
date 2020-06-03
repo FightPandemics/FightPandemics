@@ -159,7 +159,9 @@ We collaborate closely with the design and product team. The design team provide
 
 ### Review branches
 
-Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS. Note that in order for a build to run, the branch name must have the `feature/` prefix. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
+Every time you push code up to this repository on a branch with the `feature/` prefix, a review build based off of your feature branch will be deployed to AWS. For the build to deploy successfully you must be a member of this organization (ask in Slack) and push to this repo. Pull requests are still welcome from forked repos, just omit the `feature/` prefix to skip this build step.
+
+You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
 
 ![Deployment URL](images/deployment_url.png?raw=true)
 

@@ -27,7 +27,11 @@ module.exports = function createApp(config) {
     return ajv.compile(schema);
   });
 
-  app.register(require("fastify-sensible"));
+  app.register(require("./plugins/error-handler"), config.errorNotifier);
+  app.register(
+    require("fastify-sensible"),
+    { errorHandler: false }, // Set errorHandler to false so we can use our custom error handler above.
+  );
   app.register(require("fastify-oas"), {
     exposeRoute: true,
     routePrefix: "/api/documentation",

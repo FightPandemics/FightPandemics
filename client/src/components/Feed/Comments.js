@@ -10,7 +10,7 @@ const CommentsWrapper = styled.div`
 const Comments = ({ comments }) => {
   return (
     <CommentsWrapper>
-      {comments.map((comment) => (
+      {comments && comments.map((comment) => (
         <NestedComments comment={comment} key={comment._id} />
       ))}
     </CommentsWrapper>

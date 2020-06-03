@@ -12,7 +12,7 @@ const {
  * /api/organizations
  */
 async function routes(app) {
-  const Organization = app.mongo.model("Organization");
+  const Organization = app.mongo.model("OrganizationUser");
 
   app.delete(
     "/:organizationId",
