@@ -49,7 +49,7 @@ function EditOrganizationAccount(props) {
   const { type, industry } = createOrganizationProfile;
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // make a put/patch request to backend to update users Account information
   };
 
@@ -166,7 +166,7 @@ function EditOrganizationAccount(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            Edit Profile
+            Edit Organization Profile
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">

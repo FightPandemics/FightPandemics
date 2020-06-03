@@ -6,6 +6,7 @@ import FormInput from "components/Input/FormInput";
 import { WhiteSpace } from "antd-mobile";
 import ProfilePic from "components/Picture/ProfilePic";
 import notionLogo from "assets/icons/notion-logo.svg";
+import plus from "assets/icons/plus.svg";
 import { getInitials } from "utils/userInfo";
 import { Link } from "react-router-dom";
 import {
@@ -23,9 +24,12 @@ import {
   Label,
   Background,
   ProfileImage,
-  ProfilePicWrapper
+  ProfilePicWrapper,
+  MobilePicWrapper,
+  PlusIcon,
+  Eclipse
 } from "../components/EditProfile/EditComponents";
-// dummy data props,context, redux etc
+
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
@@ -33,7 +37,7 @@ function EditOrganizationProfile(props) {
   const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // make a put/patch request to backend to update users profile information
   };
 
@@ -68,13 +72,21 @@ function EditOrganizationProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile ? "Edit Profile" : "Complete Profile"}
+            {editProfile ? "Edit Organization Profile" : "Complete Organization Profile"}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>
             <ProfileImage src={notionLogo} alt="logo" />
             <ChangePicButton>Change</ChangePicButton>
           </ProfilePicWrapper>
+
+          <MobilePicWrapper>
+            <Eclipse>
+              <PlusIcon src={plus} alt="" />
+            </Eclipse>
+            <ChangePicButton>Change</ChangePicButton>
+          </MobilePicWrapper>
+
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>

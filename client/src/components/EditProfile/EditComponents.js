@@ -8,9 +8,13 @@ const { colors } = theme;
 export const Background = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
-    margin: 0 -25px;
     padding: 3rem 0;
     /* background-color: ${colors.lighterGray}; */
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      margin: auto;
+      padding: 0 5%;
+      margin: 0 -25px;
+    }
   }
 `;
 
@@ -136,6 +140,21 @@ export const ProfilePicWrapper = styled.div`
   }
 `;
 
+export const MobilePicWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.3rem;
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  img {
+    align-self: center;
+  }
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+
 export const HelpWrapper = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
@@ -178,4 +197,22 @@ export const StyledSelect = styled(Select)`
 export const ProfileImage = styled.img`
    width: 70%;
    align-self: end;
+`
+
+export const Eclipse = styled.div`
+   width: 7rem;
+   height: 6.5rem;
+   background-color: ${theme.colors.selago};
+   position: relative;
+   border: 2px solid ${theme.colors.royalBlue};
+   border-radius: 100%;
+   align-self: center;
+`
+
+export const PlusIcon = styled.img`
+   width: 40%;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   position: absolute;
 `
