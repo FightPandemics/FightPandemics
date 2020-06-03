@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "constants/theme";
 
-const { darkGray, darkerGray, primary, royalBlue } = theme.colors;
+const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
 
 const BaseInput = styled.input`
   border: unset;
@@ -10,6 +10,10 @@ const BaseInput = styled.input`
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
   transition: 150ms border;
 
+  &.has-error {
+    border-bottom: 1px solid ${red};
+    color: ${red};
+  }
   &:focus,
   &:hover,
   &:active {

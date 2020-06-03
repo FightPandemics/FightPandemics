@@ -46,6 +46,10 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
+const InputError = styled.small`
+  color: ${colors.red};
+`;
+
 const StyleSocialIcon = {
   justifyContent: "unset",
   cursor: "pointer",
@@ -157,15 +161,15 @@ const VisibilityButton = ({ onClick, type }) => {
       {type === "text" ? (
         <SvgIcon src={eyeMask} onClick={onClick} />
       ) : (
-          <SvgIcon src={eyeUnmask} onClick={onClick} />
-        )}
+        <SvgIcon src={eyeUnmask} onClick={onClick} />
+      )}
     </VisibilityIconWrapper>
   );
 };
 
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
-  const { formState, getValues, handleSubmit, register } = useForm({
+  const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
   const [authFormState, authFormDispatch] = useReducer(
@@ -202,6 +206,7 @@ const Login = ({ isLoginForm }) => {
 
   const onLoginWithEmail = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
+
     try {
       const res = await axios.post("/api/auth/login", formData);
 
@@ -286,20 +291,23 @@ const Login = ({ isLoginForm }) => {
             )}
             <form id="login-password">
               <InputWrapper>
-                <Label
-                  htmlFor="email"
-                  style={blockLabelStyles}
-                  label="E-mail"
-                />
+                <Label htmlFor="email" style={blockLabelStyles} label="Email" />
                 <Input
                   type="email"
                   name="email"
                   id="email"
-                  required
+                  className={errors.email && "has-error"}
                   placeholder="Enter email address"
-                  ref={register({ validate: validateEmail })}
+                  ref={register({
+                    required: "Email is required.",
+                    validate: (email) =>
+                      validateEmail(email) || "Invalid email",
+                  })}
                   style={inputStyles}
                 />
+                {errors.email && (
+                  <InputError>{errors.email.message}</InputError>
+                )}
               </InputWrapper>
               <InputWrapper>
                 <Label
@@ -311,15 +319,24 @@ const Login = ({ isLoginForm }) => {
                   type={passwordType}
                   name="password"
                   id="password"
-                  required
+                  className={errors.password && "has-error"}
                   placeholder="Enter password"
-                  ref={register({ minLength: PASSWORD_MIN_LENGTH })}
+                  ref={register({
+                    minLength: {
+                      value: PASSWORD_MIN_LENGTH,
+                      message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+                    },
+                    required: "Password is required.",
+                  })}
                   style={inputStyles}
                 />
                 <VisibilityButton
                   onClick={togglePasswordVisibility}
                   type={passwordType}
                 />
+                {errors.password && (
+                  <InputError>{errors.password.message}</InputError>
+                )}
               </InputWrapper>
               {!isLoginForm && (
                 <InputWrapper>
@@ -377,12 +394,12 @@ const Login = ({ isLoginForm }) => {
                   </p>
                 </>
               ) : (
-                  <p>
-                    <AuthLink to="/auth/login">
-                      Already have an account? <u>Sign In</u>
-                    </AuthLink>
-                  </p>
-                )}
+                <p>
+                  <AuthLink to="/auth/login">
+                    Already have an account? <u>Sign In</u>
+                  </AuthLink>
+                </p>
+              )}
             </div>
             <WhiteSpace />
             <SectionDiv className="text-center">
