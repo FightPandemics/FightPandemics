@@ -101,11 +101,10 @@ const Wrapper = ({ onCancel, visible, children }) => {
   return (
     <Container
       title={" "}
-      style={{ textAlign: "center" }}
+      style={{ textAlign: "center", overflowY: "hidden" }}
       footer={null}
       visible={visible && currentStep !== 3}
       destroyOnClose={true}
-      overflow-y: hidden;
       closeIcon={
         <SvgIcon
           src={closeButton}
