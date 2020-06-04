@@ -71,7 +71,7 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = local.auth_app_url[var.fp_context]}
+      value = local.auth_app_url[var.fp_context]
     },
     {
       name  = "AUTH_SECRET_KEY"
