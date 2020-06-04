@@ -64,6 +64,7 @@ export const RouteWithSubRoutes = (route) => {
             {...rest}
             {...route.props}
             component={route.component}
+            isAuthenticated={isAuthenticated}
             routes={route.routes}
             mobiletabs={mobiletabs}
             tabIndex={tabIndex}
