@@ -46,7 +46,8 @@
     "http-errors": "^1.7.3",
     "moment": "2.25.3",
     "mongoose": "^5.9.13",
-    "node-cache": "^5.1.0"
+    "node-cache": "^5.1.0",
+    "pino-papertrail": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
