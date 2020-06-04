@@ -112,6 +112,9 @@ async function routes(app) {
       const { email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
+      if (!userId) {
+        throw new Error("no mongo_id found in JWT");
+      }
       const dbUser = await User.findById(userId);
       let user = null;
       if (dbUser) {
@@ -128,7 +131,7 @@ async function routes(app) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("Wrong email or password.");
       }
-      req.log.error("Error logging in", { err });
+      req.log.error(err, "Error logging in");
       throw app.httpErrors.internalServerError();
     }
   });
