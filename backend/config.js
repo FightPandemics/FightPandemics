@@ -16,6 +16,9 @@ const configData = envSchema({
     .prop("AUTH_STATE", S.string().required())
     .prop("COMMIT_HASH", S.string())
     .prop("GEO_SERVICE_URL", S.string().required())
+    .prop("LOGGER_HOST", S.string().default("localhost"))
+    .prop("LOGGER_LEVEL", S.string().default("info"))
+    .prop("LOGGER_PORT", S.number().default(1234))
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
@@ -43,6 +46,12 @@ const config = {
   },
   geoService: {
     host: `http://${configData.GEO_SERVICE_URL}`,
+  },
+  logger: {
+    appname: `fp-backend-${configData.NODE_ENV}`,
+    host: configData.LOGGER_HOST,
+    level: configData.LOGGER_LEVEL,
+    port: configData.LOGGER_PORT,
   },
   mongo: {
     params: {
