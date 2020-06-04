@@ -1,0 +1,2602 @@
+{
+  "Los Angeles,+,+": {
+    "address": "Los Angeles, CA, USA",
+    "coordinates": [
+      -118.2436849,
+      34.0522342
+    ],
+    "city": "Los Angeles",
+    "state": "CA",
+    "country": "US"
+  },
+  "New York City,+,+": {
+    "address": "New York, NY, USA",
+    "coordinates": [
+      -74.0059728,
+      40.7127753
+    ],
+    "city": "New York",
+    "state": "NY",
+    "country": "US"
+  },
+  "San Francisco,+,+": {
+    "address": "San Francisco, CA, USA",
+    "coordinates": [
+      -122.4194155,
+      37.7749295
+    ],
+    "city": "SF",
+    "state": "CA",
+    "country": "US"
+  },
+  ",+,+Australia": {
+    "address": "Australia",
+    "coordinates": [
+      133.775136,
+      -25.274398
+    ],
+    "country": "AU"
+  },
+  ",+,+Austria": {
+    "address": "Austria",
+    "coordinates": [
+      14.550072,
+      47.516231
+    ],
+    "country": "AT"
+  },
+  "Vancouver,+BC,+Canada": {
+    "address": "Vancouver, BC, Canada",
+    "coordinates": [
+      -123.1207375,
+      49.2827291
+    ],
+    "city": "Vancouver",
+    "state": "BC",
+    "country": "CA"
+  },
+  "Toronto,+ON,+Canada": {
+    "address": "Toronto, ON, Canada",
+    "coordinates": [
+      -79.3831843,
+      43.653226
+    ],
+    "city": "Toronto",
+    "state": "ON",
+    "country": "CA"
+  },
+  "Montreal,+QB,+Canada": {
+    "address": "Montreal, QC, Canada",
+    "coordinates": [
+      -73.567256,
+      45.5016889
+    ],
+    "city": "Montreal",
+    "state": "QC",
+    "country": "CA"
+  },
+  ",+,+Canada": {
+    "address": "Canada",
+    "coordinates": [
+      -106.346771,
+      56.130366
+    ],
+    "country": "CA"
+  },
+  ",+,+Colombia": {
+    "address": "Colombia",
+    "coordinates": [
+      -74.297333,
+      4.570868
+    ],
+    "country": "CO"
+  },
+  ",+,+France": {
+    "address": "France",
+    "coordinates": [
+      2.213749,
+      46.227638
+    ],
+    "country": "FR"
+  },
+  "Berlin,+,+Germany": {
+    "address": "Berlin, Germany",
+    "coordinates": [
+      13.404954,
+      52.52000659999999
+    ],
+    "city": "Berlin",
+    "state": "Berlin",
+    "country": "DE"
+  },
+  ",+,+Germany": {
+    "address": "Germany",
+    "coordinates": [
+      10.451526,
+      51.165691
+    ],
+    "country": "DE"
+  },
+  ",+,+India": {
+    "address": "India",
+    "coordinates": [
+      78.96288,
+      20.593684
+    ],
+    "country": "IN"
+  },
+  ",+,+Italy": {
+    "address": "Italy",
+    "coordinates": [
+      12.56738,
+      41.87194
+    ],
+    "country": "IT"
+  },
+  ",+,+Japan": {
+    "address": "Japan",
+    "coordinates": [
+      138.252924,
+      36.204824
+    ],
+    "country": "JP"
+  },
+  "Nairobi,+,+Kenya": {
+    "address": "Nairobi, Kenya",
+    "coordinates": [
+      36.8219462,
+      -1.2920659
+    ],
+    "city": "Nairobi",
+    "state": "Nairobi County",
+    "country": "KE"
+  },
+  ",+,+Kuwait": {
+    "address": "Kuwait",
+    "coordinates": [
+      47.481766,
+      29.31166
+    ],
+    "country": "KW"
+  },
+  "Atlixco,+Puebla,+Mexico": {
+    "address": "Atlixco, Puebla, Mexico",
+    "coordinates": [
+      -98.4293891,
+      18.9131227
+    ],
+    "city": "Atlixco",
+    "state": "Pue.",
+    "country": "MX"
+  },
+  ",+,+Mexico": {
+    "address": "Mexico",
+    "coordinates": [
+      -102.552784,
+      23.634501
+    ],
+    "country": "MX"
+  },
+  ",+,+Netherlands": {
+    "address": "Netherlands",
+    "coordinates": [
+      5.291265999999999,
+      52.132633
+    ],
+    "country": "NL"
+  },
+  ",+,+Philippines": {
+    "address": "Philippines",
+    "coordinates": [
+      121.774017,
+      12.879721
+    ],
+    "country": "PH"
+  },
+  ",+,+Rumania": {
+    "address": "Romania",
+    "coordinates": [
+      24.96676,
+      45.943161
+    ],
+    "country": "RO"
+  },
+  "Moscow,+,+Russia": {
+    "address": "Moscow, Russia",
+    "coordinates": [
+      37.6172999,
+      55.755826
+    ],
+    "city": "Moscow",
+    "country": "RU"
+  },
+  ",+,+Somalia": {
+    "address": "Somalia",
+    "coordinates": [
+      46.199616,
+      5.152149
+    ],
+    "country": "SO"
+  },
+  "London,+,+UK": {
+    "address": "London, UK",
+    "coordinates": [
+      -0.1277583,
+      51.5073509
+    ],
+    "city": "London",
+    "state": "England",
+    "country": "GB"
+  },
+  ",+CA,+UK": {
+    "address": "204-226 Imperial Dr, Rayners Lane, Harrow HA2 7HH, UK",
+    "coordinates": [
+      -0.3699475,
+      51.57663729999999
+    ],
+    "city": "Harrow",
+    "state": "England",
+    "country": "GB",
+    "zip": "HA2 7HH"
+  },
+  ",+,+UK": {
+    "address": "United Kingdom",
+    "coordinates": [
+      -3.435973,
+      55.378051
+    ],
+    "country": "GB"
+  },
+  "Las Vegas,+,+USA": {
+    "address": "Las Vegas, NV, USA",
+    "coordinates": [
+      -115.1398296,
+      36.1699412
+    ],
+    "city": "Las Vegas",
+    "state": "NV",
+    "country": "US"
+  },
+  "Los Angeles,+,+USA": {
+    "address": "Los Angeles, CA, USA",
+    "coordinates": [
+      -118.2436849,
+      34.0522342
+    ],
+    "city": "Los Angeles",
+    "state": "CA",
+    "country": "US"
+  },
+  "New York City,+,+USA": {
+    "address": "New York, NY, USA",
+    "coordinates": [
+      -74.0059728,
+      40.7127753
+    ],
+    "city": "New York",
+    "state": "NY",
+    "country": "US"
+  },
+  "San Francisco,+,+USA": {
+    "address": "San Francisco, CA, USA",
+    "coordinates": [
+      -122.4194155,
+      37.7749295
+    ],
+    "city": "SF",
+    "state": "CA",
+    "country": "US"
+  },
+  "Anchorage,+AK,+USA": {
+    "address": "Anchorage, AK, USA",
+    "coordinates": [
+      -149.9002778,
+      61.2180556
+    ],
+    "city": "Anchorage",
+    "state": "AK",
+    "country": "US"
+  },
+  "Juneau,+AK,+USA": {
+    "address": "Juneau, AK, USA",
+    "coordinates": [
+      -134.4197221,
+      58.3019444
+    ],
+    "city": "Juneau",
+    "state": "AK",
+    "country": "US"
+  },
+  "Sitka,+AK,+USA": {
+    "address": "Sitka, AK, USA",
+    "coordinates": [
+      -135.33,
+      57.0530556
+    ],
+    "city": "Sitka",
+    "state": "AK",
+    "country": "US"
+  },
+  "Auburn,+AL,+USA": {
+    "address": "Auburn, AL, USA",
+    "coordinates": [
+      -85.48078249999999,
+      32.6098566
+    ],
+    "city": "Auburn",
+    "state": "AL",
+    "country": "US"
+  },
+  "Flagstaff,+AZ,+USA": {
+    "address": "Flagstaff, AZ, USA",
+    "coordinates": [
+      -111.651302,
+      35.1982836
+    ],
+    "city": "Flagstaff",
+    "state": "AZ",
+    "country": "US"
+  },
+  "Parker,+AZ,+USA": {
+    "address": "Parker, AZ, USA",
+    "coordinates": [
+      -114.2891177,
+      34.1500162
+    ],
+    "city": "Parker",
+    "state": "AZ",
+    "country": "US"
+  },
+  "Phoenix,+AZ,+USA": {
+    "address": "Phoenix, AZ, USA",
+    "coordinates": [
+      -112.0740373,
+      33.4483771
+    ],
+    "city": "Phoenix",
+    "state": "AZ",
+    "country": "US"
+  },
+  "Tucson,+AZ,+USA": {
+    "address": "Tucson, AZ, USA",
+    "coordinates": [
+      -110.9747108,
+      32.2226066
+    ],
+    "city": "Tucson",
+    "state": "AZ",
+    "country": "US"
+  },
+  "Albany,+CA,+USA": {
+    "address": "Albany, CA, USA",
+    "coordinates": [
+      -122.2977557,
+      37.886704
+    ],
+    "city": "Albany",
+    "state": "CA",
+    "country": "US"
+  },
+  "Berkeley,+CA,+USA": {
+    "address": "Berkeley, CA, USA",
+    "coordinates": [
+      -122.273042,
+      37.8715226
+    ],
+    "city": "Berkeley",
+    "state": "CA",
+    "country": "US"
+  },
+  "Fresno,+CA,+USA": {
+    "address": "Fresno, CA, USA",
+    "coordinates": [
+      -119.7871247,
+      36.7377981
+    ],
+    "city": "Fresno",
+    "state": "CA",
+    "country": "US"
+  },
+  "Hayward,+CA,+USA": {
+    "address": "Hayward, CA, USA",
+    "coordinates": [
+      -122.0809964,
+      37.6687665
+    ],
+    "city": "Hayward",
+    "state": "CA",
+    "country": "US"
+  },
+  "Joshua Tree,+CA,+USA": {
+    "address": "Joshua Tree, CA 92252, USA",
+    "coordinates": [
+      -116.3130661,
+      34.134728
+    ],
+    "city": "Joshua Tree",
+    "state": "CA",
+    "country": "US",
+    "zip": "92252"
+  },
+  "Long Beach,+CA,+USA": {
+    "address": "Long Beach, CA, USA",
+    "coordinates": [
+      -118.1937395,
+      33.7700504
+    ],
+    "city": "Long Beach",
+    "state": "CA",
+    "country": "US"
+  },
+  "Los Angeles,+CA,+USA": {
+    "address": "Los Angeles, CA, USA",
+    "coordinates": [
+      -118.2436849,
+      34.0522342
+    ],
+    "city": "Los Angeles",
+    "state": "CA",
+    "country": "US"
+  },
+  "Merced,+CA,+USA": {
+    "address": "Merced, CA, USA",
+    "coordinates": [
+      -120.4829677,
+      37.3021632
+    ],
+    "city": "Merced",
+    "state": "CA",
+    "country": "US"
+  },
+  "Oakland,+CA,+USA": {
+    "address": "Oakland, CA, USA",
+    "coordinates": [
+      -122.2711639,
+      37.8043514
+    ],
+    "city": "Oakland",
+    "state": "CA",
+    "country": "US"
+  },
+  "Richmond,+CA,+USA": {
+    "address": "Richmond, CA, USA",
+    "coordinates": [
+      -122.3477486,
+      37.9357576
+    ],
+    "city": "Richmond",
+    "state": "CA",
+    "country": "US"
+  },
+  "San Diego,+CA,+USA": {
+    "address": "San Diego, CA, USA",
+    "coordinates": [
+      -117.1610838,
+      32.715738
+    ],
+    "city": "San Diego",
+    "state": "CA",
+    "country": "US"
+  },
+  "San Francisco,+CA,+USA": {
+    "address": "San Francisco, CA, USA",
+    "coordinates": [
+      -122.4194155,
+      37.7749295
+    ],
+    "city": "SF",
+    "state": "CA",
+    "country": "US"
+  },
+  "San Mateo,+CA,+USA": {
+    "address": "San Mateo, CA, USA",
+    "coordinates": [
+      -122.3255254,
+      37.5629917
+    ],
+    "city": "San Mateo",
+    "state": "CA",
+    "country": "US"
+  },
+  "Santa Monica,+CA,+USA": {
+    "address": "Santa Monica, CA, USA",
+    "coordinates": [
+      -118.4911912,
+      34.0194543
+    ],
+    "city": "Santa Monica",
+    "state": "CA",
+    "country": "US"
+  },
+  "Tomales,+CA,+USA": {
+    "address": "Tomales, CA 94971, USA",
+    "coordinates": [
+      -122.9055518,
+      38.246307
+    ],
+    "city": "Tomales",
+    "state": "CA",
+    "country": "US",
+    "zip": "94971"
+  },
+  ",+CA,+USA": {
+    "address": "California, USA",
+    "coordinates": [
+      -119.4179324,
+      36.778261
+    ],
+    "state": "CA",
+    "country": "US"
+  },
+  "Boulder,+CO,+USA": {
+    "address": "Boulder, CO, USA",
+    "coordinates": [
+      -105.2705456,
+      40.0149856
+    ],
+    "city": "Boulder",
+    "state": "CO",
+    "country": "US"
+  },
+  "Carbondale,+CO,+USA": {
+    "address": "Carbondale, CO 81623, USA",
+    "coordinates": [
+      -107.2111628,
+      39.4022054
+    ],
+    "city": "Carbondale",
+    "state": "CO",
+    "country": "US",
+    "zip": "81623"
+  },
+  "Colorado Springs,+CO,+USA": {
+    "address": "Colorado Springs, CO, USA",
+    "coordinates": [
+      -104.8213634,
+      38.8338816
+    ],
+    "city": "Colorado Springs",
+    "state": "CO",
+    "country": "US"
+  },
+  "Denver,+CO,+USA": {
+    "address": "Denver, CO, USA",
+    "coordinates": [
+      -104.990251,
+      39.7392358
+    ],
+    "city": "Denver",
+    "state": "CO",
+    "country": "US"
+  },
+  "Durango,+CO,+USA": {
+    "address": "Durango, CO, USA",
+    "coordinates": [
+      -107.8800667,
+      37.27528
+    ],
+    "city": "Durango",
+    "state": "CO",
+    "country": "US"
+  },
+  "Longmont,+CO,+USA": {
+    "address": "Longmont, CO, USA",
+    "coordinates": [
+      -105.1019275,
+      40.1672068
+    ],
+    "city": "Longmont",
+    "state": "CO",
+    "country": "US"
+  },
+  "Hartford,+CT,+USA": {
+    "address": "Hartford, CT, USA",
+    "coordinates": [
+      -72.6733723,
+      41.7658043
+    ],
+    "city": "Hartford",
+    "state": "CT",
+    "country": "US"
+  },
+  "Manchester,+CT,+USA": {
+    "address": "Manchester, CT, USA",
+    "coordinates": [
+      -72.52150089999999,
+      41.7759301
+    ],
+    "city": "Manchester",
+    "state": "CT",
+    "country": "US"
+  },
+  "Milford,+CT,+USA": {
+    "address": "Milford, CT, USA",
+    "coordinates": [
+      -73.064036,
+      41.2306979
+    ],
+    "city": "Milford",
+    "state": "CT",
+    "country": "US"
+  },
+  "New Haven,+CT,+USA": {
+    "address": "New Haven, CT, USA",
+    "coordinates": [
+      -72.9278835,
+      41.308274
+    ],
+    "city": "New Haven",
+    "state": "CT",
+    "country": "US"
+  },
+  ",+CT,+USA": {
+    "address": "Connecticut, USA",
+    "coordinates": [
+      -73.087749,
+      41.6032207
+    ],
+    "state": "CT",
+    "country": "US"
+  },
+  "Washington,+DC,+USA": {
+    "address": "Washington, DC, USA",
+    "coordinates": [
+      -77.0368707,
+      38.9071923
+    ],
+    "city": "Washington",
+    "state": "DC",
+    "country": "US"
+  },
+  "Boca Raton,+FL,+USA": {
+    "address": "Boca Raton, FL, USA",
+    "coordinates": [
+      -80.1289321,
+      26.3683064
+    ],
+    "city": "Boca Raton",
+    "state": "FL",
+    "country": "US"
+  },
+  "Gainesville,+FL,+USA": {
+    "address": "Gainesville, FL, USA",
+    "coordinates": [
+      -82.32482619999999,
+      29.6516344
+    ],
+    "city": "Gainesville",
+    "state": "FL",
+    "country": "US"
+  },
+  "Hernando County,+FL,+USA": {
+    "address": "Hernando County, FL, USA",
+    "coordinates": [
+      -82.4752757,
+      28.5578826
+    ],
+    "state": "FL",
+    "country": "US"
+  },
+  "Miami,+FL,+USA": {
+    "address": "Miami, FL, USA",
+    "coordinates": [
+      -80.1917902,
+      25.7616798
+    ],
+    "city": "Miami",
+    "state": "FL",
+    "country": "US"
+  },
+  "St. Petersburg,+FL,+USA": {
+    "address": "St. Petersburg, FL, USA",
+    "coordinates": [
+      -82.64029149999999,
+      27.7676008
+    ],
+    "city": "St. Petersburg",
+    "state": "FL",
+    "country": "US"
+  },
+  "Tampa,+FL,+USA": {
+    "address": "Tampa, FL, USA",
+    "coordinates": [
+      -82.4571776,
+      27.950575
+    ],
+    "city": "Tampa",
+    "state": "FL",
+    "country": "US"
+  },
+  "Wilton Manors,+FL,+USA": {
+    "address": "Wilton Manors, FL, USA",
+    "coordinates": [
+      -80.13893399999999,
+      26.1603626
+    ],
+    "city": "Wilton Manors",
+    "state": "FL",
+    "country": "US"
+  },
+  ",+FL,+USA": {
+    "address": "Florida, USA",
+    "coordinates": [
+      -81.5157535,
+      27.6648274
+    ],
+    "state": "FL",
+    "country": "US"
+  },
+  "Atlanta,+GA,+USA": {
+    "address": "Atlanta, GA, USA",
+    "coordinates": [
+      -84.3879824,
+      33.7489954
+    ],
+    "city": "Atlanta",
+    "state": "GA",
+    "country": "US"
+  },
+  "Keaau,+HI,+USA": {
+    "address": "Keaau, HI 96749, USA",
+    "coordinates": [
+      -155.0394139,
+      19.6213287
+    ],
+    "city": "Keaau",
+    "state": "HI",
+    "country": "US",
+    "zip": "96749"
+  },
+  "Decorah,+IA,+USA": {
+    "address": "Decorah, IA 52101, USA",
+    "coordinates": [
+      -91.7857092,
+      43.30330559999999
+    ],
+    "city": "Decorah",
+    "state": "IA",
+    "country": "US",
+    "zip": "52101"
+  },
+  "Des Moines,+IA,+USA": {
+    "address": "Des Moines, IA, USA",
+    "coordinates": [
+      -93.6249593,
+      41.5868353
+    ],
+    "city": "Des Moines",
+    "state": "IA",
+    "country": "US"
+  },
+  "Boise,+ID,+USA": {
+    "address": "Boise, ID, USA",
+    "coordinates": [
+      -116.2023137,
+      43.6150186
+    ],
+    "city": "Boise",
+    "state": "ID",
+    "country": "US"
+  },
+  "Canyon County,+ID,+USA": {
+    "address": "Canyon County, ID, USA",
+    "coordinates": [
+      -116.6865435,
+      43.67795810000001
+    ],
+    "state": "ID",
+    "country": "US"
+  },
+  "Idaho Falls,+ID,+USA": {
+    "address": "Idaho Falls, ID, USA",
+    "coordinates": [
+      -112.0407584,
+      43.49266069999999
+    ],
+    "city": "Idaho Falls",
+    "state": "ID",
+    "country": "US"
+  },
+  "Kuna,+ID,+USA": {
+    "address": "Kuna, ID, USA",
+    "coordinates": [
+      -116.4201223,
+      43.4918307
+    ],
+    "city": "Kuna",
+    "state": "ID",
+    "country": "US"
+  },
+  "Pocatello,+ID,+USA": {
+    "address": "Pocatello, ID, USA",
+    "coordinates": [
+      -112.4506191,
+      42.8621042
+    ],
+    "city": "Pocatello",
+    "state": "ID",
+    "country": "US"
+  },
+  "Champaign,+IL,+USA": {
+    "address": "Champaign, IL, USA",
+    "coordinates": [
+      -88.2433829,
+      40.1164204
+    ],
+    "city": "Champaign",
+    "state": "IL",
+    "country": "US"
+  },
+  "Champaign-Urbana,+IL,+USA": {
+    "address": "Urbana, IL, USA",
+    "coordinates": [
+      -88.2072697,
+      40.1105875
+    ],
+    "city": "Urbana",
+    "state": "IL",
+    "country": "US"
+  },
+  "Chicago,+IL,+USA": {
+    "address": "Chicago, IL, USA",
+    "coordinates": [
+      -87.6297982,
+      41.8781136
+    ],
+    "city": "Chicago",
+    "state": "IL",
+    "country": "US"
+  },
+  "Evanston,+IL,+USA": {
+    "address": "Evanston, IL, USA",
+    "coordinates": [
+      -87.68769689999999,
+      42.0450722
+    ],
+    "city": "Evanston",
+    "state": "IL",
+    "country": "US"
+  },
+  "Lyons,+IL,+USA": {
+    "address": "Lyons, IL, USA",
+    "coordinates": [
+      -87.8181128,
+      41.8133651
+    ],
+    "city": "Lyons",
+    "state": "IL",
+    "country": "US"
+  },
+  "Palatine,+IL,+USA": {
+    "address": "Palatine, IL, USA",
+    "coordinates": [
+      -88.03424000000001,
+      42.1103041
+    ],
+    "city": "Palatine",
+    "state": "IL",
+    "country": "US"
+  },
+  "Rockford,+IL,+USA": {
+    "address": "Rockford, IL, USA",
+    "coordinates": [
+      -89.0939952,
+      42.2711311
+    ],
+    "city": "Rockford",
+    "state": "IL",
+    "country": "US"
+  },
+  "Bloomington,+IN,+USA": {
+    "address": "Bloomington, IN, USA",
+    "coordinates": [
+      -86.52638569999999,
+      39.165325
+    ],
+    "city": "Bloomington",
+    "state": "IN",
+    "country": "US"
+  },
+  "Brown County,+IN,+USA": {
+    "address": "Brown County, IN, USA",
+    "coordinates": [
+      -86.17517590000001,
+      39.1749729
+    ],
+    "state": "IN",
+    "country": "US"
+  },
+  "Indianapolis,+IN,+USA": {
+    "address": "Indianapolis, IN, USA",
+    "coordinates": [
+      -86.158068,
+      39.768403
+    ],
+    "city": "Indianapolis",
+    "state": "IN",
+    "country": "US"
+  },
+  "Lafayette,+IN,+USA": {
+    "address": "Lafayette, IN, USA",
+    "coordinates": [
+      -86.87528689999999,
+      40.4167022
+    ],
+    "city": "Lafayette",
+    "state": "IN",
+    "country": "US"
+  },
+  "Richmond,+IN,+USA": {
+    "address": "Richmond, IN 47374, USA",
+    "coordinates": [
+      -84.8902382,
+      39.8289369
+    ],
+    "city": "Richmond",
+    "state": "IN",
+    "country": "US",
+    "zip": "47374"
+  },
+  "South Bend,+IN,+USA": {
+    "address": "South Bend, IN, USA",
+    "coordinates": [
+      -86.25198979999999,
+      41.6763545
+    ],
+    "city": "South Bend",
+    "state": "IN",
+    "country": "US"
+  },
+  "Kansas City,+KS,+USA": {
+    "address": "Kansas City, KS, USA",
+    "coordinates": [
+      -94.62678729999999,
+      39.11553139999999
+    ],
+    "city": "Kansas City",
+    "state": "KS",
+    "country": "US"
+  },
+  "Madison,+KS,+USA": {
+    "address": "Madison, KS 66860, USA",
+    "coordinates": [
+      -96.135829,
+      38.1355772
+    ],
+    "city": "Madison",
+    "state": "KS",
+    "country": "US",
+    "zip": "66860"
+  },
+  "Topeka,+KS,+USA": {
+    "address": "Topeka, KS, USA",
+    "coordinates": [
+      -95.67515759999999,
+      39.0473451
+    ],
+    "city": "Topeka",
+    "state": "KS",
+    "country": "US"
+  },
+  "Wichita,+KS,+USA": {
+    "address": "Wichita, KS, USA",
+    "coordinates": [
+      -97.33005299999999,
+      37.68717609999999
+    ],
+    "city": "Wichita",
+    "state": "KS",
+    "country": "US"
+  },
+  "Prestonsburg,+KY,+USA": {
+    "address": "Prestonsburg, KY 41653, USA",
+    "coordinates": [
+      -82.7715486,
+      37.6656527
+    ],
+    "city": "Prestonsburg",
+    "state": "KY",
+    "country": "US",
+    "zip": "41653"
+  },
+  ",+KY,+USA": {
+    "address": "Kentucky, USA",
+    "coordinates": [
+      -84.2700179,
+      37.8393332
+    ],
+    "state": "KY",
+    "country": "US"
+  },
+  "Baton Rouge,+LA,+USA": {
+    "address": "Baton Rouge, LA, USA",
+    "coordinates": [
+      -91.18714659999999,
+      30.4514677
+    ],
+    "city": "Baton Rouge",
+    "state": "LA",
+    "country": "US"
+  },
+  "New Orleans,+LA,+USA": {
+    "address": "New Orleans, LA, USA",
+    "coordinates": [
+      -90.0715323,
+      29.95106579999999
+    ],
+    "city": "New Orleans",
+    "state": "LA",
+    "country": "US"
+  },
+  "Amherst,+MA,+USA": {
+    "address": "Amherst, MA, USA",
+    "coordinates": [
+      -72.5198537,
+      42.3732216
+    ],
+    "city": "Amherst",
+    "state": "MA",
+    "country": "US"
+  },
+  "Boston,+MA,+USA": {
+    "address": "Boston, MA, USA",
+    "coordinates": [
+      -71.0588801,
+      42.3600825
+    ],
+    "city": "Boston",
+    "state": "MA",
+    "country": "US"
+  },
+  "Brighton,+MA,+USA": {
+    "address": "Brighton, Boston, MA, USA",
+    "coordinates": [
+      -71.1626756,
+      42.3463503
+    ],
+    "city": "Boston",
+    "state": "MA",
+    "country": "US"
+  },
+  "Brookline,+MA,+USA": {
+    "address": "Brookline, MA, USA",
+    "coordinates": [
+      -71.1211635,
+      42.33176419999999
+    ],
+    "city": "Brookline",
+    "state": "MA",
+    "country": "US"
+  },
+  "Cambridge,+MA,+USA": {
+    "address": "Cambridge, MA, USA",
+    "coordinates": [
+      -71.10973349999999,
+      42.3736158
+    ],
+    "city": "Cambridge",
+    "state": "MA",
+    "country": "US"
+  },
+  "Carlisle,+MA,+USA": {
+    "address": "Carlisle, MA 01741, USA",
+    "coordinates": [
+      -71.3495046,
+      42.5292597
+    ],
+    "city": "Carlisle",
+    "state": "MA",
+    "country": "US",
+    "zip": "01741"
+  },
+  "Dorchester,+MA,+USA": {
+    "address": "Dorchester, Boston, MA, USA",
+    "coordinates": [
+      -71.067605,
+      42.30163049999999
+    ],
+    "city": "Boston",
+    "state": "MA",
+    "country": "US"
+  },
+  "Fall River,+MA,+USA": {
+    "address": "Fall River, MA, USA",
+    "coordinates": [
+      -71.1550451,
+      41.7014912
+    ],
+    "city": "Fall River",
+    "state": "MA",
+    "country": "US"
+  },
+  "Framingham,+MA,+USA": {
+    "address": "Framingham, MA, USA",
+    "coordinates": [
+      -71.4161565,
+      42.279286
+    ],
+    "city": "Framingham",
+    "state": "MA",
+    "country": "US"
+  },
+  "Lincoln,+MA,+USA": {
+    "address": "Lincoln, MA, USA",
+    "coordinates": [
+      -71.3039469,
+      42.4259283
+    ],
+    "city": "Lincoln",
+    "state": "MA",
+    "country": "US"
+  },
+  "Lowell,+MA,+USA": {
+    "address": "Lowell, MA, USA",
+    "coordinates": [
+      -71.31617179999999,
+      42.6334247
+    ],
+    "city": "Lowell",
+    "state": "MA",
+    "country": "US"
+  },
+  "Malden,+MA,+USA": {
+    "address": "Malden, MA, USA",
+    "coordinates": [
+      -71.066163,
+      42.4250964
+    ],
+    "city": "Malden",
+    "state": "MA",
+    "country": "US"
+  },
+  "Medford,+MA,+USA": {
+    "address": "Medford, MA, USA",
+    "coordinates": [
+      -71.1061639,
+      42.4184296
+    ],
+    "city": "Medford",
+    "state": "MA",
+    "country": "US"
+  },
+  "Natick,+MA,+USA": {
+    "address": "Natick, MA, USA",
+    "coordinates": [
+      -71.3468091,
+      42.2775281
+    ],
+    "city": "Natick",
+    "state": "MA",
+    "country": "US"
+  },
+  "New Bedford,+MA,+USA": {
+    "address": "New Bedford, MA, USA",
+    "coordinates": [
+      -70.93420499999999,
+      41.6362152
+    ],
+    "city": "New Bedford",
+    "state": "MA",
+    "country": "US"
+  },
+  "Newton,+MA,+USA": {
+    "address": "Newton, MA, USA",
+    "coordinates": [
+      -71.20922139999999,
+      42.3370413
+    ],
+    "city": "Newton",
+    "state": "MA",
+    "country": "US"
+  },
+  "North Brookfield,+MA,+USA": {
+    "address": "North Brookfield, MA, USA",
+    "coordinates": [
+      -72.08503999999999,
+      42.2685574
+    ],
+    "city": "North Brookfield",
+    "state": "MA",
+    "country": "US"
+  },
+  "Northampton,+MA,+USA": {
+    "address": "Northampton, MA, USA",
+    "coordinates": [
+      -72.64120129999999,
+      42.3250896
+    ],
+    "city": "Northampton",
+    "state": "MA",
+    "country": "US"
+  },
+  "Rockland,+MA,+USA": {
+    "address": "Rockland, MA, USA",
+    "coordinates": [
+      -70.9161551,
+      42.1306563
+    ],
+    "city": "Rockland",
+    "state": "MA",
+    "country": "US"
+  },
+  "Salem,+MA,+USA": {
+    "address": "Salem, MA, USA",
+    "coordinates": [
+      -70.8967155,
+      42.51954
+    ],
+    "city": "Salem",
+    "state": "MA",
+    "country": "US"
+  },
+  "Scituate,+MA,+USA": {
+    "address": "Scituate, MA, USA",
+    "coordinates": [
+      -70.7258633,
+      42.195929
+    ],
+    "city": "Scituate",
+    "state": "MA",
+    "country": "US"
+  },
+  "Waltham,+MA,+USA": {
+    "address": "Waltham, MA, USA",
+    "coordinates": [
+      -71.2356113,
+      42.3764852
+    ],
+    "city": "Waltham",
+    "state": "MA",
+    "country": "US"
+  },
+  "Worcester,+MA,+USA": {
+    "address": "Worcester, MA, USA",
+    "coordinates": [
+      -71.8022934,
+      42.2625932
+    ],
+    "city": "Worcester",
+    "state": "MA",
+    "country": "US"
+  },
+  ",+MA,+USA": {
+    "address": "Massachusetts, USA",
+    "coordinates": [
+      -71.3824374,
+      42.4072107
+    ],
+    "state": "MA",
+    "country": "US"
+  },
+  "Baltimore,+MD,+USA": {
+    "address": "Baltimore, MD, USA",
+    "coordinates": [
+      -76.6121893,
+      39.2903848
+    ],
+    "city": "Baltimore",
+    "state": "MD",
+    "country": "US"
+  },
+  "Frederick,+MD,+USA": {
+    "address": "Frederick, MD, USA",
+    "coordinates": [
+      -77.4105409,
+      39.41426879999999
+    ],
+    "city": "Frederick",
+    "state": "MD",
+    "country": "US"
+  },
+  "Fredrick,+MD,+USA": {
+    "address": "Frederick, MD, USA",
+    "coordinates": [
+      -77.4105409,
+      39.41426879999999
+    ],
+    "city": "Frederick",
+    "state": "MD",
+    "country": "US"
+  },
+  "Gaithersburg,+MD,+USA": {
+    "address": "Gaithersburg, MD, USA",
+    "coordinates": [
+      -77.2016062,
+      39.1439689
+    ],
+    "city": "Gaithersburg",
+    "state": "MD",
+    "country": "US"
+  },
+  "Marriottsville,+MD,+USA": {
+    "address": "Marriottsville, MD 21104, USA",
+    "coordinates": [
+      -76.89964739999999,
+      39.3491115
+    ],
+    "city": "Marriottsville",
+    "state": "MD",
+    "country": "US",
+    "zip": "21104"
+  },
+  "Maryland,+MD,+USA": {
+    "address": "Maryland, USA",
+    "coordinates": [
+      -76.64127119999999,
+      39.0457549
+    ],
+    "state": "MD",
+    "country": "US"
+  },
+  "Rockville,+MD,+USA": {
+    "address": "Rockville, MD, USA",
+    "coordinates": [
+      -77.1527578,
+      39.0839973
+    ],
+    "city": "Rockville",
+    "state": "MD",
+    "country": "US"
+  },
+  "Stevensville,+MD,+USA": {
+    "address": "Stevensville, MD 21666, USA",
+    "coordinates": [
+      -76.3143999,
+      38.9806679
+    ],
+    "city": "Stevensville",
+    "state": "MD",
+    "country": "US",
+    "zip": "21666"
+  },
+  "Takoma Park,+MD,+USA": {
+    "address": "Takoma Park, MD, USA",
+    "coordinates": [
+      -77.0074765,
+      38.9778882
+    ],
+    "city": "Takoma Park",
+    "state": "MD",
+    "country": "US"
+  },
+  "Farmington,+ME,+USA": {
+    "address": "Farmington, ME, USA",
+    "coordinates": [
+      -70.1512169,
+      44.67049979999999
+    ],
+    "city": "Farmington",
+    "state": "ME",
+    "country": "US"
+  },
+  ",+ME,+USA": {
+    "address": "Maine, USA",
+    "coordinates": [
+      -69.4454689,
+      45.253783
+    ],
+    "state": "ME",
+    "country": "US"
+  },
+  "Bellaire,+MI,+USA": {
+    "address": "Bellaire, MI 49615, USA",
+    "coordinates": [
+      -85.2111728,
+      44.9802822
+    ],
+    "city": "Bellaire",
+    "state": "MI",
+    "country": "US",
+    "zip": "49615"
+  },
+  "Beulah,+MI,+USA": {
+    "address": "Beulah, MI, USA",
+    "coordinates": [
+      -86.09092419999999,
+      44.631944
+    ],
+    "city": "Beulah",
+    "state": "MI",
+    "country": "US"
+  },
+  "Brimley,+MI,+USA": {
+    "address": "Brimley, MI 49715, USA",
+    "coordinates": [
+      -84.5723077,
+      46.4041232
+    ],
+    "city": "Brimley",
+    "state": "MI",
+    "country": "US",
+    "zip": "49715"
+  },
+  "Detroit,+MI,+USA": {
+    "address": "Detroit, MI, USA",
+    "coordinates": [
+      -83.0457538,
+      42.331427
+    ],
+    "city": "Detroit",
+    "state": "MI",
+    "country": "US"
+  },
+  "Dowagiac,+MI,+USA": {
+    "address": "Dowagiac, MI 49047, USA",
+    "coordinates": [
+      -86.10862279999999,
+      41.9842123
+    ],
+    "city": "Dowagiac",
+    "state": "MI",
+    "country": "US",
+    "zip": "49047"
+  },
+  "Grand Rapids,+MI,+USA": {
+    "address": "Grand Rapids, MI, USA",
+    "coordinates": [
+      -85.6680863,
+      42.9633599
+    ],
+    "city": "Grand Rapids",
+    "state": "MI",
+    "country": "US"
+  },
+  "Kalamazoo,+MI,+USA": {
+    "address": "Kalamazoo, MI, USA",
+    "coordinates": [
+      -85.5872286,
+      42.2917069
+    ],
+    "city": "Kalamazoo",
+    "state": "MI",
+    "country": "US"
+  },
+  "Petoskey,+MI,+USA": {
+    "address": "Petoskey, MI 49770, USA",
+    "coordinates": [
+      -84.9553296,
+      45.3733428
+    ],
+    "city": "Petoskey",
+    "state": "MI",
+    "country": "US",
+    "zip": "49770"
+  },
+  "Traverse City,+MI,+USA": {
+    "address": "Traverse City, MI, USA",
+    "coordinates": [
+      -85.62063169999999,
+      44.7630567
+    ],
+    "city": "Traverse City",
+    "state": "MI",
+    "country": "US"
+  },
+  "Duluth,+MN,+USA": {
+    "address": "Duluth, MN, USA",
+    "coordinates": [
+      -92.1004852,
+      46.78667189999999
+    ],
+    "city": "Duluth",
+    "state": "MN",
+    "country": "US"
+  },
+  "Freeport,+MN,+USA": {
+    "address": "Freeport, MN 56331, USA",
+    "coordinates": [
+      -94.69001039999999,
+      45.6627427
+    ],
+    "city": "Freeport",
+    "state": "MN",
+    "country": "US",
+    "zip": "56331"
+  },
+  "Hackensack,+MN,+USA": {
+    "address": "Hackensack, MN 56452, USA",
+    "coordinates": [
+      -94.52055179999999,
+      46.9307923
+    ],
+    "city": "Hackensack",
+    "state": "MN",
+    "country": "US",
+    "zip": "56452"
+  },
+  "Minneapolis,+MN,+USA": {
+    "address": "Minneapolis, MN, USA",
+    "coordinates": [
+      -93.2650108,
+      44.977753
+    ],
+    "city": "Minneapolis",
+    "state": "MN",
+    "country": "US"
+  },
+  "St Paul,+MN,+USA": {
+    "address": "St Paul, MN, USA",
+    "coordinates": [
+      -93.0899578,
+      44.9537029
+    ],
+    "city": "St Paul",
+    "state": "MN",
+    "country": "US"
+  },
+  "St. Paul,+MN,+USA": {
+    "address": "St Paul, MN, USA",
+    "coordinates": [
+      -93.0899578,
+      44.9537029
+    ],
+    "city": "St Paul",
+    "state": "MN",
+    "country": "US"
+  },
+  "Columbia,+MO,+USA": {
+    "address": "Columbia, MO, USA",
+    "coordinates": [
+      -92.3340724,
+      38.9517053
+    ],
+    "city": "Columbia",
+    "state": "MO",
+    "country": "US"
+  },
+  "Maplewood,+MO,+USA": {
+    "address": "Maplewood, MO, USA",
+    "coordinates": [
+      -90.3245599,
+      38.61255209999999
+    ],
+    "city": "Maplewood",
+    "state": "MO",
+    "country": "US"
+  },
+  "St. Louis,+MO,+USA": {
+    "address": "St. Louis, MO, USA",
+    "coordinates": [
+      -90.19940419999999,
+      38.6270025
+    ],
+    "city": "St. Louis",
+    "state": "MO",
+    "country": "US"
+  },
+  "Biloxi,+MS,+USA": {
+    "address": "Biloxi, MS, USA",
+    "coordinates": [
+      -88.88530779999999,
+      30.3960318
+    ],
+    "city": "Biloxi",
+    "state": "MS",
+    "country": "US"
+  },
+  "Hernando,+MS,+USA": {
+    "address": "Hernando, MS, USA",
+    "coordinates": [
+      -89.9937018,
+      34.823987
+    ],
+    "city": "Hernando",
+    "state": "MS",
+    "country": "US"
+  },
+  "Jackson,+MS,+USA": {
+    "address": "Jackson, MS, USA",
+    "coordinates": [
+      -90.1848103,
+      32.2987573
+    ],
+    "city": "Jackson",
+    "state": "MS",
+    "country": "US"
+  },
+  "Tupelo,+MS,+USA": {
+    "address": "Tupelo, MS, USA",
+    "coordinates": [
+      -88.7033859,
+      34.2576066
+    ],
+    "city": "Tupelo",
+    "state": "MS",
+    "country": "US"
+  },
+  "Butte,+MT,+USA": {
+    "address": "Butte, MT, USA",
+    "coordinates": [
+      -112.5347775,
+      46.0038232
+    ],
+    "city": "Butte",
+    "state": "MT",
+    "country": "US"
+  },
+  "Kalispell,+MT,+USA": {
+    "address": "Kalispell, MT 59901, USA",
+    "coordinates": [
+      -114.316813,
+      48.1919889
+    ],
+    "city": "Kalispell",
+    "state": "MT",
+    "country": "US",
+    "zip": "59901"
+  },
+  "Missoula,+MT,+USA": {
+    "address": "Missoula, MT, USA",
+    "coordinates": [
+      -113.9940314,
+      46.8721284
+    ],
+    "city": "Missoula",
+    "state": "MT",
+    "country": "US"
+  },
+  "Asheville,+NC,+USA": {
+    "address": "Asheville, NC, USA",
+    "coordinates": [
+      -82.5514869,
+      35.5950581
+    ],
+    "city": "Asheville",
+    "state": "NC",
+    "country": "US"
+  },
+  "Ashville,+NC,+USA": {
+    "address": "Asheville, NC, USA",
+    "coordinates": [
+      -82.5514869,
+      35.5950581
+    ],
+    "city": "Asheville",
+    "state": "NC",
+    "country": "US"
+  },
+  "Chapel Hill,+NC,+USA": {
+    "address": "Chapel Hill, NC, USA",
+    "coordinates": [
+      -79.0558445,
+      35.9131996
+    ],
+    "city": "Chapel Hill",
+    "state": "NC",
+    "country": "US"
+  },
+  "Charlotte,+NC,+USA": {
+    "address": "Charlotte, NC, USA",
+    "coordinates": [
+      -80.8431267,
+      35.2270869
+    ],
+    "city": "Charlotte",
+    "state": "NC",
+    "country": "US"
+  },
+  "Mount Airy,+NC,+USA": {
+    "address": "Mt Airy, NC 27030, USA",
+    "coordinates": [
+      -80.6072858,
+      36.4993007
+    ],
+    "city": "Mt Airy",
+    "state": "NC",
+    "country": "US",
+    "zip": "27030"
+  },
+  "Pittsboro,+NC,+USA": {
+    "address": "Pittsboro, NC 27312, USA",
+    "coordinates": [
+      -79.1772371,
+      35.7201463
+    ],
+    "city": "Pittsboro",
+    "state": "NC",
+    "country": "US",
+    "zip": "27312"
+  },
+  "Watauga,+NC,+USA": {
+    "address": "Watauga County, NC, USA",
+    "coordinates": [
+      -81.73494199999999,
+      36.1941825
+    ],
+    "state": "NC",
+    "country": "US"
+  },
+  "Lincoln,+NE,+USA": {
+    "address": "Lincoln, NE, USA",
+    "coordinates": [
+      -96.7025955,
+      40.813616
+    ],
+    "city": "Lincoln",
+    "state": "NE",
+    "country": "US"
+  },
+  "Omaha,+NE,+USA": {
+    "address": "Omaha, NE, USA",
+    "coordinates": [
+      -95.9345034,
+      41.2565369
+    ],
+    "city": "Omaha",
+    "state": "NE",
+    "country": "US"
+  },
+  "Hampton,+NH,+USA": {
+    "address": "Hampton, NH, USA",
+    "coordinates": [
+      -70.83892190000002,
+      42.93759319999999
+    ],
+    "city": "Hampton",
+    "state": "NH",
+    "country": "US"
+  },
+  "Lyme,+NH,+USA": {
+    "address": "Lyme, NH 03768, USA",
+    "coordinates": [
+      -72.1559219,
+      43.8095142
+    ],
+    "city": "Lyme",
+    "state": "NH",
+    "country": "US",
+    "zip": "03768"
+  },
+  "Plymouth,+NH,+USA": {
+    "address": "Plymouth, NH 03264, USA",
+    "coordinates": [
+      -71.6881528,
+      43.7570196
+    ],
+    "city": "Plymouth",
+    "state": "NH",
+    "country": "US",
+    "zip": "03264"
+  },
+  "Takoma Park,+NH,+USA": {
+    "address": "7401 New Hampshire Ave, Takoma Park, MD 20912, USA",
+    "coordinates": [
+      -76.9871418,
+      38.9834406
+    ],
+    "city": "Takoma Park",
+    "state": "MD",
+    "country": "US",
+    "zip": "20912"
+  },
+  ",+NH,+USA": {
+    "address": "New Hampshire, USA",
+    "coordinates": [
+      -71.5723953,
+      43.1938516
+    ],
+    "state": "NH",
+    "country": "US"
+  },
+  "Albuquerque,+NM,+USA": {
+    "address": "Albuquerque, NM, USA",
+    "coordinates": [
+      -106.650422,
+      35.0843859
+    ],
+    "city": "Albuquerque",
+    "state": "NM",
+    "country": "US"
+  },
+  "Santa Fe,+NM,+USA": {
+    "address": "Santa Fe, NM, USA",
+    "coordinates": [
+      -105.937799,
+      35.6869752
+    ],
+    "city": "Santa Fe",
+    "state": "NM",
+    "country": "US"
+  },
+  ",+NM,+USA": {
+    "address": "New Mexico, USA",
+    "coordinates": [
+      -105.8700901,
+      34.5199402
+    ],
+    "state": "NM",
+    "country": "US"
+  },
+  "Las Vegas,+NV,+USA": {
+    "address": "Las Vegas, NV, USA",
+    "coordinates": [
+      -115.1398296,
+      36.1699412
+    ],
+    "city": "Las Vegas",
+    "state": "NV",
+    "country": "US"
+  },
+  "Reno,+NV,+USA": {
+    "address": "Reno, NV, USA",
+    "coordinates": [
+      -119.8138027,
+      39.5296329
+    ],
+    "city": "Reno",
+    "state": "NV",
+    "country": "US"
+  },
+  "Albany,+NY,+USA": {
+    "address": "Albany, NY, USA",
+    "coordinates": [
+      -73.7562317,
+      42.6525793
+    ],
+    "city": "Albany",
+    "state": "NY",
+    "country": "US"
+  },
+  "Auburn,+NY,+USA": {
+    "address": "Auburn, NY 13021, USA",
+    "coordinates": [
+      -76.5660529,
+      42.9317335
+    ],
+    "city": "Auburn",
+    "state": "NY",
+    "country": "US",
+    "zip": "13021"
+  },
+  "Beacon,+NY,+USA": {
+    "address": "Beacon, NY 12508, USA",
+    "coordinates": [
+      -73.9695832,
+      41.5048158
+    ],
+    "city": "Beacon",
+    "state": "NY",
+    "country": "US",
+    "zip": "12508"
+  },
+  "Buffalo,+NY,+USA": {
+    "address": "Buffalo, NY, USA",
+    "coordinates": [
+      -78.8783689,
+      42.88644679999999
+    ],
+    "city": "Buffalo",
+    "state": "NY",
+    "country": "US"
+  },
+  "Geneseo,+NY,+USA": {
+    "address": "Geneseo, NY 14454, USA",
+    "coordinates": [
+      -77.816947,
+      42.795896
+    ],
+    "city": "Geneseo",
+    "state": "NY",
+    "country": "US",
+    "zip": "14454"
+  },
+  "Ithaca,+NY,+USA": {
+    "address": "Ithaca, NY, USA",
+    "coordinates": [
+      -76.5018807,
+      42.4439614
+    ],
+    "city": "Ithaca",
+    "state": "NY",
+    "country": "US"
+  },
+  "Kingston,+NY,+USA": {
+    "address": "Kingston, NY 12401, USA",
+    "coordinates": [
+      -73.9973608,
+      41.9270367
+    ],
+    "city": "Kingston",
+    "state": "NY",
+    "country": "US",
+    "zip": "12401"
+  },
+  "Long Island,+NY,+USA": {
+    "address": "Long Island, New York, USA",
+    "coordinates": [
+      -73.13496099999999,
+      40.789142
+    ],
+    "state": "NY",
+    "country": "US"
+  },
+  "New York City,+NY,+USA": {
+    "address": "New York, NY, USA",
+    "coordinates": [
+      -74.0059728,
+      40.7127753
+    ],
+    "city": "New York",
+    "state": "NY",
+    "country": "US"
+  },
+  "Poughkeepsie,+NY,+USA": {
+    "address": "Poughkeepsie, NY, USA",
+    "coordinates": [
+      -73.9209701,
+      41.7003713
+    ],
+    "city": "Poughkeepsie",
+    "state": "NY",
+    "country": "US"
+  },
+  "Sunnyside,+NY,+USA": {
+    "address": "Sunnyside, Queens, NY, USA",
+    "coordinates": [
+      -73.9196324,
+      40.7432759
+    ],
+    "state": "NY",
+    "country": "US"
+  },
+  "Watertown,+NY,+USA": {
+    "address": "Watertown, NY 13601, USA",
+    "coordinates": [
+      -75.91075649999999,
+      43.9747838
+    ],
+    "city": "Watertown",
+    "state": "NY",
+    "country": "US",
+    "zip": "13601"
+  },
+  ",+NY,+USA": {
+    "address": "New York, NY, USA",
+    "coordinates": [
+      -74.0059728,
+      40.7127753
+    ],
+    "city": "New York",
+    "state": "NY",
+    "country": "US"
+  },
+  "Canton,+OH,+USA": {
+    "address": "Canton, OH, USA",
+    "coordinates": [
+      -81.378447,
+      40.79894729999999
+    ],
+    "city": "Canton",
+    "state": "OH",
+    "country": "US"
+  },
+  "Cincinnati,+OH,+USA": {
+    "address": "Cincinnati, OH, USA",
+    "coordinates": [
+      -84.5120196,
+      39.1031182
+    ],
+    "city": "Cincinnati",
+    "state": "OH",
+    "country": "US"
+  },
+  "Cleveland Heights,+OH,+USA": {
+    "address": "Cleveland Heights, OH, USA",
+    "coordinates": [
+      -81.556235,
+      41.5200518
+    ],
+    "city": "Cleveland Heights",
+    "state": "OH",
+    "country": "US"
+  },
+  "Cleveland,+OH,+USA": {
+    "address": "Cleveland, OH, USA",
+    "coordinates": [
+      -81.6943605,
+      41.49932
+    ],
+    "city": "Cleveland",
+    "state": "OH",
+    "country": "US"
+  },
+  "Columbus,+OH,+USA": {
+    "address": "Columbus, OH, USA",
+    "coordinates": [
+      -82.99879419999999,
+      39.9611755
+    ],
+    "city": "Columbus",
+    "state": "OH",
+    "country": "US"
+  },
+  "Oklahoma City,+OK,+USA": {
+    "address": "Oklahoma City, OK, USA",
+    "coordinates": [
+      -97.5164276,
+      35.4675602
+    ],
+    "city": "Oklahoma City",
+    "state": "OK",
+    "country": "US"
+  },
+  "Tulsa,+OK,+USA": {
+    "address": "Tulsa, OK, USA",
+    "coordinates": [
+      -95.99277500000001,
+      36.1539816
+    ],
+    "city": "Tulsa",
+    "state": "OK",
+    "country": "US"
+  },
+  "Bend,+OR,+USA": {
+    "address": "Bend, OR, USA",
+    "coordinates": [
+      -121.3153096,
+      44.0581728
+    ],
+    "city": "Bend",
+    "state": "OR",
+    "country": "US"
+  },
+  "Cannon Beach,+OR,+USA": {
+    "address": "Cannon Beach, OR, USA",
+    "coordinates": [
+      -123.9615274,
+      45.8917738
+    ],
+    "city": "Cannon Beach",
+    "state": "OR",
+    "country": "US"
+  },
+  "Corvallis,+OR,+USA": {
+    "address": "Corvallis, OR, USA",
+    "coordinates": [
+      -123.2620435,
+      44.5645659
+    ],
+    "city": "Corvallis",
+    "state": "OR",
+    "country": "US"
+  },
+  "Eugene,+OR,+USA": {
+    "address": "Eugene, OR, USA",
+    "coordinates": [
+      -123.0867536,
+      44.0520691
+    ],
+    "city": "Eugene",
+    "state": "OR",
+    "country": "US"
+  },
+  "Portland,+OR,+USA": {
+    "address": "Portland, OR, USA",
+    "coordinates": [
+      -122.6750261,
+      45.5051064
+    ],
+    "city": "Portland",
+    "state": "OR",
+    "country": "US"
+  },
+  "Levittown,+PA,+USA": {
+    "address": "Levittown, PA, USA",
+    "coordinates": [
+      -74.8287747,
+      40.1551096
+    ],
+    "city": "Levittown",
+    "state": "PA",
+    "country": "US"
+  },
+  "Montgomery County,+PA,+USA": {
+    "address": "Montgomery County, PA, USA",
+    "coordinates": [
+      -75.3878525,
+      40.2290075
+    ],
+    "state": "PA",
+    "country": "US"
+  },
+  "Philadelphia,+PA,+USA": {
+    "address": "Philadelphia, PA, USA",
+    "coordinates": [
+      -75.1652215,
+      39.9525839
+    ],
+    "city": "Philadelphia",
+    "state": "PA",
+    "country": "US"
+  },
+  "Pittsburgh,+PA,+USA": {
+    "address": "Pittsburgh, PA, USA",
+    "coordinates": [
+      -79.9958864,
+      40.44062479999999
+    ],
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "US"
+  },
+  "Scranton,+PA,+USA": {
+    "address": "Scranton, PA, USA",
+    "coordinates": [
+      -75.66241219999999,
+      41.408969
+    ],
+    "city": "Scranton",
+    "state": "PA",
+    "country": "US"
+  },
+  "State College,+PA,+USA": {
+    "address": "State College, PA, USA",
+    "coordinates": [
+      -77.8600012,
+      40.7933949
+    ],
+    "city": "State College",
+    "state": "PA",
+    "country": "US"
+  },
+  "Providence,+RI,+USA": {
+    "address": "Providence, RI, USA",
+    "coordinates": [
+      -71.4128343,
+      41.8239891
+    ],
+    "city": "Providence",
+    "state": "RI",
+    "country": "US"
+  },
+  "Providence, Woonsocket,+RI,+USA": {
+    "address": "Woonsocket, RI 02895, USA",
+    "coordinates": [
+      -71.51478390000001,
+      42.00287609999999
+    ],
+    "city": "Woonsocket",
+    "state": "RI",
+    "country": "US",
+    "zip": "02895"
+  },
+  "South Kingston,+RI,+USA": {
+    "address": "South Kingstown, RI, USA",
+    "coordinates": [
+      -71.524667,
+      41.4475686
+    ],
+    "city": "South Kingstown",
+    "state": "RI",
+    "country": "US"
+  },
+  "Columbia,+SC,+USA": {
+    "address": "Columbia, SC, USA",
+    "coordinates": [
+      -81.0348144,
+      34.0007104
+    ],
+    "city": "Columbia",
+    "state": "SC",
+    "country": "US"
+  },
+  "Fayetteville,+TN,+USA": {
+    "address": "Fayetteville, TN 37334, USA",
+    "coordinates": [
+      -86.57055079999999,
+      35.1520266
+    ],
+    "city": "Fayetteville",
+    "state": "TN",
+    "country": "US",
+    "zip": "37334"
+  },
+  "Johnson City,+TN,+USA": {
+    "address": "Johnson City, TN, USA",
+    "coordinates": [
+      -82.3534727,
+      36.3134397
+    ],
+    "city": "Johnson City",
+    "state": "TN",
+    "country": "US"
+  },
+  "Memphis,+TN,+USA": {
+    "address": "Memphis, TN, USA",
+    "coordinates": [
+      -90.0489801,
+      35.1495343
+    ],
+    "city": "Memphis",
+    "state": "TN",
+    "country": "US"
+  },
+  "Nashville,+TN,+USA": {
+    "address": "Nashville, TN, USA",
+    "coordinates": [
+      -86.7816016,
+      36.1626638
+    ],
+    "city": "Nashville",
+    "state": "TN",
+    "country": "US"
+  },
+  "Austin,+TX,+USA": {
+    "address": "Austin, TX, USA",
+    "coordinates": [
+      -97.7430608,
+      30.267153
+    ],
+    "city": "Austin",
+    "state": "TX",
+    "country": "US"
+  },
+  "Dallas,+TX,+USA": {
+    "address": "Dallas, TX, USA",
+    "coordinates": [
+      -96.79698789999999,
+      32.7766642
+    ],
+    "city": "Dallas",
+    "state": "TX",
+    "country": "US"
+  },
+  "Denton,+TX,+USA": {
+    "address": "Denton, TX, USA",
+    "coordinates": [
+      -97.13306829999999,
+      33.2148412
+    ],
+    "city": "Denton",
+    "state": "TX",
+    "country": "US"
+  },
+  "Houston,+TX,+USA": {
+    "address": "Houston, TX, USA",
+    "coordinates": [
+      -95.3698028,
+      29.7604267
+    ],
+    "city": "Houston",
+    "state": "TX",
+    "country": "US"
+  },
+  "San Antonio,+TX,+USA": {
+    "address": "San Antonio, TX, USA",
+    "coordinates": [
+      -98.49362819999999,
+      29.4241219
+    ],
+    "city": "San Antonio",
+    "state": "TX",
+    "country": "US"
+  },
+  "San Marcos,+TX,+USA": {
+    "address": "San Marcos, TX, USA",
+    "coordinates": [
+      -97.9413941,
+      29.8832749
+    ],
+    "city": "San Marcos",
+    "state": "TX",
+    "country": "US"
+  },
+  "Salt Lake City,+UT,+USA": {
+    "address": "Salt Lake City, UT, USA",
+    "coordinates": [
+      -111.8910474,
+      40.7607793
+    ],
+    "city": "Salt Lake City",
+    "state": "UT",
+    "country": "US"
+  },
+  "Weber County,+UT,+USA": {
+    "address": "Weber County, UT, USA",
+    "coordinates": [
+      -111.9522491,
+      41.2602635
+    ],
+    "state": "UT",
+    "country": "US"
+  },
+  "West Valley City,+UT,+USA": {
+    "address": "West Valley City, UT, USA",
+    "coordinates": [
+      -112.0010501,
+      40.6916132
+    ],
+    "city": "West Valley City",
+    "state": "UT",
+    "country": "US"
+  },
+  "Lexington,+VA,+USA": {
+    "address": "Lexington, VA 24450, USA",
+    "coordinates": [
+      -79.4428157,
+      37.78402080000001
+    ],
+    "city": "Lexington",
+    "state": "VA",
+    "country": "US",
+    "zip": "24450"
+  },
+  "Occoquan,+VA,+USA": {
+    "address": "Occoquan Historic District, VA, USA",
+    "coordinates": [
+      -77.260261,
+      38.6837271
+    ],
+    "city": "Occoquan Historic District",
+    "state": "VA",
+    "country": "US"
+  },
+  "Richmond,+VA,+USA": {
+    "address": "Richmond, VA, USA",
+    "coordinates": [
+      -77.4360481,
+      37.5407246
+    ],
+    "city": "Richmond",
+    "state": "VA",
+    "country": "US"
+  },
+  "Bradford,+VT,+USA": {
+    "address": "Bradford, VT, USA",
+    "coordinates": [
+      -72.1290054,
+      43.9925315
+    ],
+    "state": "VT",
+    "country": "US"
+  },
+  "Brattleboro,+VT,+USA": {
+    "address": "Brattleboro, VT 05301, USA",
+    "coordinates": [
+      -72.5578678,
+      42.8509152
+    ],
+    "city": "Brattleboro",
+    "state": "VT",
+    "country": "US",
+    "zip": "05301"
+  },
+  "Colebrook,+VT,+USA": {
+    "address": "Colebrook, NH 03576, USA",
+    "coordinates": [
+      -71.496296,
+      44.894313
+    ],
+    "city": "Colebrook",
+    "state": "NH",
+    "country": "US",
+    "zip": "03576"
+  },
+  "Craftbury,+VT,+USA": {
+    "address": "Craftsbury, VT, USA",
+    "coordinates": [
+      -72.3726071,
+      44.6367179
+    ],
+    "city": "Craftsbury",
+    "state": "VT",
+    "country": "US"
+  },
+  "Dover,+VT,+USA": {
+    "address": "Dover, VT, USA",
+    "coordinates": [
+      -72.88984669999999,
+      42.9640101
+    ],
+    "city": "Dover",
+    "state": "VT",
+    "country": "US"
+  },
+  "Grand Isle,+VT,+USA": {
+    "address": "Grand Isle, VT 05458, USA",
+    "coordinates": [
+      -73.2923538,
+      44.72254359999999
+    ],
+    "city": "Grand Isle",
+    "state": "VT",
+    "country": "US",
+    "zip": "05458"
+  },
+  "Hartford,+VT,+USA": {
+    "address": "Hartford, VT, USA",
+    "coordinates": [
+      -72.3696992,
+      43.6637411
+    ],
+    "city": "Hartford",
+    "state": "VT",
+    "country": "US"
+  },
+  "Lowell,+VT,+USA": {
+    "address": "Lowell, VT 05847, USA",
+    "coordinates": [
+      -72.4476024,
+      44.7992084
+    ],
+    "city": "Lowell",
+    "state": "VT",
+    "country": "US",
+    "zip": "05847"
+  },
+  "Middlebury,+VT,+USA": {
+    "address": "Middlebury, VT 05753, USA",
+    "coordinates": [
+      -73.16734,
+      44.0153371
+    ],
+    "city": "Middlebury",
+    "state": "VT",
+    "country": "US",
+    "zip": "05753"
+  },
+  "Peacham,+VT,+USA": {
+    "address": "Peacham, VT, USA",
+    "coordinates": [
+      -72.1704048,
+      44.3286166
+    ],
+    "city": "Peacham",
+    "state": "VT",
+    "country": "US"
+  },
+  "Putney,+VT,+USA": {
+    "address": "Putney, VT 05346, USA",
+    "coordinates": [
+      -72.5217237,
+      42.975268
+    ],
+    "city": "Putney",
+    "state": "VT",
+    "country": "US",
+    "zip": "05346"
+  },
+  "Bremerton,+WA,+USA": {
+    "address": "Bremerton, WA, USA",
+    "coordinates": [
+      -122.6269768,
+      47.5650067
+    ],
+    "city": "Bremerton",
+    "state": "WA",
+    "country": "US"
+  },
+  "Edmonds,+WA,+USA": {
+    "address": "Edmonds, WA, USA",
+    "coordinates": [
+      -122.3773551,
+      47.8106521
+    ],
+    "city": "Edmonds",
+    "state": "WA",
+    "country": "US"
+  },
+  "Everett,+WA,+USA": {
+    "address": "Everett, WA, USA",
+    "coordinates": [
+      -122.2020795,
+      47.9789848
+    ],
+    "city": "Everett",
+    "state": "WA",
+    "country": "US"
+  },
+  "Hoquiam,+WA,+USA": {
+    "address": "Hoquiam, WA, USA",
+    "coordinates": [
+      -123.8839028,
+      46.97704299999999
+    ],
+    "city": "Hoquiam",
+    "state": "WA",
+    "country": "US"
+  },
+  "Olympia,+WA,+USA": {
+    "address": "Olympia, WA, USA",
+    "coordinates": [
+      -122.9006951,
+      47.0378741
+    ],
+    "city": "Olympia",
+    "state": "WA",
+    "country": "US"
+  },
+  "Pullman,+WA,+USA": {
+    "address": "Pullman, WA 99163, USA",
+    "coordinates": [
+      -117.1817377,
+      46.7297771
+    ],
+    "city": "Pullman",
+    "state": "WA",
+    "country": "US",
+    "zip": "99163"
+  },
+  "Puyallup,+WA,+USA": {
+    "address": "Puyallup, WA, USA",
+    "coordinates": [
+      -122.2928974,
+      47.1853785
+    ],
+    "city": "Puyallup",
+    "state": "WA",
+    "country": "US"
+  },
+  "Seattle,+WA,+USA": {
+    "address": "Seattle, WA, USA",
+    "coordinates": [
+      -122.3320708,
+      47.6062095
+    ],
+    "city": "Seattle",
+    "state": "WA",
+    "country": "US"
+  },
+  "Dane County,+WI,+USA": {
+    "address": "Dane County, WI, USA",
+    "coordinates": [
+      -89.5497632,
+      43.0186073
+    ],
+    "state": "WI",
+    "country": "US"
+  },
+  "Janesville,+WI,+USA": {
+    "address": "Janesville, WI, USA",
+    "coordinates": [
+      -89.0187222,
+      42.6827885
+    ],
+    "city": "Janesville",
+    "state": "WI",
+    "country": "US"
+  },
+  "Charleston,+WV,+USA": {
+    "address": "Charleston, WV, USA",
+    "coordinates": [
+      -81.6326234,
+      38.3498195
+    ],
+    "city": "Charleston",
+    "state": "WV",
+    "country": "US"
+  },
+  ",+WV,+USA": {
+    "address": "West Virginia, USA",
+    "coordinates": [
+      -80.4549026,
+      38.5976262
+    ],
+    "state": "WV",
+    "country": "US"
+  },
+  ",+WY,+USA": {
+    "address": "Wyoming, USA",
+    "coordinates": [
+      -107.2902839,
+      43.0759678
+    ],
+    "state": "WY",
+    "country": "US"
+  },
+  ",+,+USA": {
+    "address": "United States",
+    "coordinates": [
+      -95.712891,
+      37.09024
+    ],
+    "country": "US"
+  },
+  ",+,+": {
+    "address": "Worldwide",
+    "coordinates": [
+      0,
+      0
+    ]
+  }
+}
