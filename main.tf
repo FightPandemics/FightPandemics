@@ -39,6 +39,14 @@ data "aws_ssm_parameter" "sentry_dsn" {
   name = "/fp/sentry/dsn"
 }
 
+data "aws_ssm_parameter" "logger_host" {
+  name = "/fp/logger/host"
+}
+
+data "aws_ssm_parameter" "logger_port" {
+  name = "/fp/logger/port"
+}
+
 locals {
   auth_app_url = {
     review     = "https://review.fightpandemics.xyz"
@@ -96,6 +104,18 @@ module "main" {
     {
       name  = "COMMIT_HASH",
       value = var.commit_hash
+    },
+    {
+      name  = "LOGGER_LEVEL",
+      value = "warn"
+    },
+    {
+      name  = "LOGGER_HOST",
+      value = data.aws_ssm_parameter.logger_host.value
+    },
+    {
+      name  = "LOGGER_PORT",
+      value = data.aws_ssm_parameter.logger_port.value
     },
   ]
 }
