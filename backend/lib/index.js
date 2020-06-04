@@ -14,12 +14,13 @@ const users = require("./endpoints/users");
 const version = require("./endpoints/version");
 
 module.exports = function createApp(config) {
-  const app = fastify({
-    logger: {
-      level: config.logger.level,
-      stream: logStream(config.logger),
-    },
-  });
+  const logger = {
+    level: config.logger.level,
+  };
+  if (config.logger.host) {
+    logger.stream = logStream(config.logger);
+  }
+  const app = fastify({ logger });
   const ajv = new Ajv({
     allErrors: true,
     coerceTypes: true,
