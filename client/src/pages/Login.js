@@ -11,7 +11,7 @@ import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
 import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
-import { PASSWORD_MIN_LENGTH } from "config";
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
 import {
   AUTH_FORM_LOGIN,
   AUTH_FORM_LOGIN_ERROR,
@@ -26,7 +26,7 @@ import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
 import { useQuery } from "utils/hooks.js";
 import { setAuthToken } from "utils/auth-token";
-import { validateEmail } from "utils/validators";
+import { validateEmail, validatePassword } from "utils/validators";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -322,13 +322,21 @@ const Login = ({ isLoginForm }) => {
                   className={errors.password && "has-error"}
                   placeholder="Enter password"
                   ref={register({
+                    maxLength: {
+                      value: PASSWORD_MAX_LENGTH,
+                      message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
+                    },
                     minLength: {
                       value: PASSWORD_MIN_LENGTH,
                       message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
                     },
                     required: "Password is required.",
+                    validate: (password) =>
+                      validatePassword(password) ||
+                      "Password must contain at least 3 of these: " +
+                        "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
                   })}
-                  style={inputStyles}
+                  style={{ ...inputStyles, paddingRight: "3.5rem" }}
                 />
                 <VisibilityButton
                   onClick={togglePasswordVisibility}
@@ -353,11 +361,12 @@ const Login = ({ isLoginForm }) => {
                     required
                     placeholder="Confirm password"
                     ref={register({
+                      maxLength: PASSWORD_MAX_LENGTH,
                       minLength: PASSWORD_MIN_LENGTH,
                       required: "Password confirmation is required.",
                       validate: comparePasswordConfirmation,
                     })}
-                    style={inputStyles}
+                    style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
                   <VisibilityButton
                     onClick={toggleConfirmPasswordVisibility}
