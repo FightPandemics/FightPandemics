@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
+import styled from "styled-components";
+import { mq } from "constants/theme";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import {
   StyledWizard,
@@ -128,7 +130,11 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
-
+const WizardButton = styled(SubmitButton)`
+  width: 70%;
+  margin-top: 5rem;
+  margin-left:8rem;
+`;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const onChange = (evt) => {
@@ -158,17 +164,16 @@ const Step3 = (props) => {
             value={email && email}
           />
         </WizardFormGroup>
-        <WizardButtonGroup>
-          <SubmitButton primary="true" onClick={onSubmit}>
-            Submit
-          </SubmitButton>
-          <SkipLink>
-            <Link to="/AirTableCOVID">
-              {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
-              Skip
+        <WizardButton primary="true" onClick={onSubmit}>
+          Submit
+          </WizardButton>
+        <SkipLink>
+          <Link to="/AirTableCOVID">
+            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+            Skip
             </Link>
-          </SkipLink>
-        </WizardButtonGroup>
+        </SkipLink>
+
       </WizardFormWrapper>
     </WizardStep>
   );
