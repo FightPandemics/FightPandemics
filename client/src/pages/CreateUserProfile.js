@@ -254,7 +254,7 @@ const CreateProfile = ({ email, history }) => {
       });
     }
   };
-  console.log({ errors });
+
   return (
     <Container>
       <Flex className="image-container" direction="column">
