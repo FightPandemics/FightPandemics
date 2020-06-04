@@ -10,7 +10,6 @@ const StyledWizard = styled(StepWizard)`
   align-self: flex-start;
   width: 100%;
   margin: 0 auto;
-
   @media screen and (min-width: ${tablet.narrow.minWidth}) {
     width: 40%;
   }

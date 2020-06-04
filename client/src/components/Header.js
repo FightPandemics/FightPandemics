@@ -113,12 +113,7 @@ export default ({ onMenuClick, ...props }) => {
                       Feed
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink activeStyle={activeStyles} to="/covid-info">
-                      COVID-info
-                    </NavLink>
-                  </li>
-                  {props.isAuthenticated ? (
+    {props.isAuthenticated ? (
                     <>
                       <li>
                         <NavLink activeStyle={activeStyles} to="/profile">

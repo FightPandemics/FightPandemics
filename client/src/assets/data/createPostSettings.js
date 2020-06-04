@@ -13,7 +13,7 @@ export default {
   expires: {
     type: "expires",
     title: "For how long do you want to keep your post?",
-    default: { text: "Forever", value: "Forever" },
+    default: { text: "For a month", value: "Month" },
     options: [
       { text: "Forever", value: "Forever" },
       { text: "For a month", value: "Month" },
