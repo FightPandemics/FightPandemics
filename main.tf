@@ -40,10 +40,10 @@ data "aws_ssm_parameter" "sentry_dsn" {
 }
 
 locals {
-  domain = {
-    review     = "fightpandemics.xyz"
-    staging    = "fightpandemics.work"
-    production = "fightpandemics.com"
+  auth_app_url = {
+    review     = "https://review.fightpandemics.xyz"
+    staging    = "https://staging.fightpandemics.work"
+    production = "https://production.fightpandemics.com"
   }
 }
 
@@ -71,7 +71,7 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = "https://${var.env_name}.${local.domain[var.fp_context]}"
+      value = local.auth_app_url[var.fp_context]
     },
     {
       name  = "AUTH_SECRET_KEY"
