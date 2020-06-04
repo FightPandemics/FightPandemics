@@ -121,11 +121,11 @@ const Step2 = (props) => {
         >
           Share my location
         </ShareLocation>
-        <SkipLink>
+        <Link to="/feed">
           <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
           </ShowAnywhere>
-        </SkipLink>
+        </Link>
       </WizardFormWrapper>
     </WizardStep>
   );
