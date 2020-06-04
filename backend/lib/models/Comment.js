@@ -65,7 +65,7 @@ function updateAuthorType(authorID, newAuthorType) {
 
 module.exports = {
   model: Comment,
-  schema: CommentSchema,
+  schema: commentSchema,
   updateAuthorName,
   updateAuthorType,
 };
