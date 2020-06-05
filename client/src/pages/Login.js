@@ -22,8 +22,9 @@ import {
 } from "hooks/actions/authFormActions";
 import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
-import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
+import InputError from "components/Input/InputError";
+import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
 import { setAuthToken } from "utils/auth-token";
 import { validateEmail, validatePassword } from "utils/validators";
@@ -44,10 +45,6 @@ const InputWrapper = styled.div`
   margin: 2.2rem auto;
   width: 100%;
   position: relative;
-`;
-
-const InputError = styled.small`
-  color: ${colors.red};
 `;
 
 const StyleSocialIcon = {

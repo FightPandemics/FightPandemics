@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Input } from "antd";
-import { theme } from "constants/theme";
-import styled from "styled-components";
+
 import SubmitButton from "components/Button/SubmitButton";
-import { asyncGetGeoLocation } from "utils/geolocation";
+import InputError from "components/Input/InputError";
 import {
   AnswerButton,
   StyledWizard,
@@ -19,7 +16,8 @@ import {
   WizardFormWrapper,
   WizardFormGroup,
 } from "components/StepWizard";
-const { white, lightGray } = theme.colors;
+import { asyncGetGeoLocation } from "utils/geolocation";
+import { validateEmail } from "utils/validators";
 
 const INITIAL_STATE = {
   answers: [],
@@ -78,37 +76,23 @@ const Step2 = (props) => {
   );
 };
 
-
 const Step3 = (props) => {
-  const [values, setValues] = useState({ email: '' });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-
-  const StyledTextInput = styled(Input)`
-    background-color: ${white};
-    border: 0.1rem solid ${lightGray};
-    border-radius: 4rem;
-    height: 5rem;
-  `
+  const [email, setEmail] = useState("");
+  const [valid, setValid] = useState(true);
 
   useEffect(() => {
-    if (Object.keys(errors).length === 0 && isSubmitting) { }
-  }, [errors]);
+    const validated = !email || validateEmail(email);
+    setValid(validated);
+  }, [email]);
 
   const onChange = (event) => {
-    event.persist();
-    setValues(values => ({
-      ...values,
-      [event.target.name]: event.target.value
-    }));
+    setEmail(event.target.value);
   };
 
-  const onSubmit = (event) => {
-    if (event.preventDefault());
-    setErrors(validate(values));
-    setIsSubmitting(true);
+  const onSubmit = () => {
+    console.log("submit");
   };
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
@@ -119,40 +103,24 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
-            autoComplete="off"
-            className="none"
             name="email"
             label="Email"
+            className={!valid && "has-error"}
             placeholder="Enter your email address..."
-            onChange={
-              onChange
-            }
-            value={values.email}
-            required />
-          {
-            errors.email && (<p className="help is-danger">{errors.email}</p>
-            )
-          }
+            onChange={onChange}
+            value={email}
+            required
+          />
+          {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
-        <Link to="/feed">
-          <SubmitButton primary="true" onClick={onSubmit}>
-            Submit
-          </SubmitButton>
-        </Link>
+        <SubmitButton disabled={!valid} primary="true" onClick={onSubmit}>
+          Submit
+        </SubmitButton>
       </WizardButtonGroup>
     </WizardStep>
   );
-};
-function validate(values) {
-  let errors = {};
-  if (!values.email) {
-    errors.email = 'Email address is required';
-  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-    errors.email = 'Email address is invalid';
-  }
-  return errors;
 };
 
 const NeedHelp = withRouter((props) => {

@@ -13,6 +13,7 @@ import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
 import Checkbox from "components/Input/Checkbox";
+import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
@@ -90,11 +91,6 @@ const InputWrapper = styled.div`
   margin: 2.2rem auto;
   width: 100%;
   position: relative;
-`;
-
-const InputError = styled.small`
-  color: ${colors.red};
-  display: block;
 `;
 
 const SubLabel = styled.small`
