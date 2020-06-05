@@ -3,6 +3,7 @@
 const Ajv = require("ajv");
 const cors = require("cors");
 const fastify = require("fastify");
+const logStream = require("./logger");
 
 const auth = require("./endpoints/auth");
 const feedback = require("./endpoints/feedback");
@@ -13,9 +14,13 @@ const users = require("./endpoints/users");
 const version = require("./endpoints/version");
 
 module.exports = function createApp(config) {
-  const app = fastify({
-    logger: true,
-  });
+  const logger = {
+    level: config.logger.level,
+  };
+  if (config.logger.host) {
+    logger.stream = logStream(config.logger);
+  }
+  const app = fastify({ logger });
   const ajv = new Ajv({
     allErrors: true,
     coerceTypes: true,
