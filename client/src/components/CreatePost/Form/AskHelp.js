@@ -32,7 +32,7 @@ const AskHelp = ({
         <Submit
           primary="true"
           onClick={handleSubmit}
-          disabled={!formData.title || !formData.description}
+          disabled={!formData.title || !formData.description || selectedTags < 1}
         >
           Post
         </Submit>
