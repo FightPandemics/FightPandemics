@@ -1,14 +1,13 @@
 import React from "react";
-import Post from "./Post";
+import Post from "../Feed/Post";
 
-const Posts = ({ filteredPosts, handlePostLike, updateComments }) => {
+const Activity = ({ filteredPosts, updateComments }) => {
   return (
-    <div className="feed-posts">
+    <div className="activity">
       {Object.keys(filteredPosts).map((key) => (
         <Post
           post={filteredPosts[key]}
           updateComments={updateComments}
-          handlePostLike={handlePostLike}
           key={key}
         />
       ))}
@@ -16,4 +15,4 @@ const Posts = ({ filteredPosts, handlePostLike, updateComments }) => {
   );
 };
 
-export default Posts;
+export default Activity;

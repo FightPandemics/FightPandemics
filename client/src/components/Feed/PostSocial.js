@@ -15,6 +15,7 @@ import share from "assets/icons/share.svg";
 import shareGray from "assets/icons/share-gray.svg";
 
 const PostSocial = ({
+  handlePostLike,
   url,
   liked,
   shared,
@@ -26,9 +27,6 @@ const PostSocial = ({
   setShowComments,
   id,
 }) => {
-  const feedContext = useContext(FeedContext);
-  const { handlePostLike } = feedContext;
-
   useEffect(() => {
     const likePost = sessionStorage.getItem("likePost");
 

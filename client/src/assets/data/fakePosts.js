@@ -1,7 +1,13 @@
 export default [
   {
     _id: 0,
-    author: "Lily Luke",
+    author: {
+      name: "Lily Luke",
+      location: {
+        city: "Manchester",
+        country: "UK",
+      },
+    },
     numLikes: 12,
     numComments: 3,
     numShares: 10,
@@ -60,7 +66,13 @@ export default [
   },
   {
     _id: 1,
-    author: "Notion",
+    author: {
+      name: "Notion",
+      location: {
+        city: "",
+        country: "Global",
+      },
+    },
     numLikes: 12,
     numComments: 3,
     numShares: 10,
@@ -101,7 +113,13 @@ export default [
   },
   {
     _id: 2,
-    author: "Bob Blue",
+    author: {
+      name: "Bob Blue",
+      location: {
+        city: "Paris",
+        country: "France",
+      },
+    },
     numLikes: 9,
     numComments: 2,
     numShares: 7,
