@@ -15,7 +15,7 @@ const CookieContainer = styled.div`
   display: flex;
   font-family: Poppins;
   font-size: 1rem;
-  line-height: 1.5rem;
+  line-height: 2rem;
   justify-content: center;
   padding: 1.5rem 2rem;
   position: fixed;
