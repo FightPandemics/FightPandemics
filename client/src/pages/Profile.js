@@ -1,17 +1,18 @@
+import { WhiteSpace } from "antd-mobile";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
+import Activity from "components/Profile/Activity";
+import fakePosts from "assets/data/fakePosts";
 import ProfilePic from "components/Picture/ProfilePic";
-import { WhiteSpace } from "antd-mobile";
 import { getInitials } from "utils/userInfo";
-import fakePosts from "assets/data/fakePosts"; // feed
-import Posts from "components/Feed/Posts"; // feed
-import FeedWrapper from "components/Feed/FeedWrapper"; //feed
+import FeedWrapper from "components/Feed/FeedWrapper";
 import CreatePost from "components/CreatePost/CreatePost";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
-import createPost from "assets/icons/create-post.svg"; // feed
+import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
@@ -59,7 +60,7 @@ const Profile = (props) => {
     return (
       <>
         <FeedWrapper>
-          <Posts filteredPosts={fakePosts} />
+          <Activity filteredPosts={fakePosts} />
           <SvgIcon
             src={createPost}
             className="create-post"

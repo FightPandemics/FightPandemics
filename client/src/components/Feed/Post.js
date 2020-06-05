@@ -12,16 +12,13 @@ import FilterTag from "components/Tag/FilterTag";
 import AutoSize from "components/Input/AutoSize";
 import Heading from "components/Typography/Heading";
 import TextAvatar from "components/TextAvatar";
-import { FeedContext } from "pages/Feed.js";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 
-const Post = ({ isAuthenticated, post }) => {
-  const feedContext = useContext(FeedContext);
-  const { updateComments } = feedContext;
+const Post = ({ handlePostLike, isAuthenticated, post, updateComments }) => {
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
   const AvatarName =
@@ -51,7 +48,11 @@ const Post = ({ isAuthenticated, post }) => {
     }
 
     if (response.data) {
-      await updateComments({postId, comments: [ ...post.comments, { ...response.data } ], commentsCount: post.comments.length + 1 });
+      await updateComments({
+        postId,
+        comments: [...post.comments, { ...response.data }],
+        commentsCount: post.comments.length + 1,
+      });
       setComment("");
     }
   };
@@ -70,20 +71,28 @@ const Post = ({ isAuthenticated, post }) => {
       }
 
       if (response.data) {
-        await updateComments({postId, comments: response.data.comments, commentsCount: response.data.commentsCount });
+        await updateComments({
+          postId,
+          comments: response.data.comments,
+          commentsCount: response.data.commentsCount,
+        });
       }
     }
-  }, [ post, showComments, updateComments ]);
+  }, [post, showComments, updateComments]);
 
   useEffect(() => {
     loadComments();
- }, [showComments]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [showComments]); // eslint-disable-line react-hooks/exhaustive-deps
 
- const renderHeader = (
+  const renderHeader = (
     <Card.Header
       title={post.author.name}
       thumb={
-        post.author.photo ? post.author.photo : <TextAvatar>{AvatarName}</TextAvatar>
+        post.author.photo ? (
+          post.author.photo
+        ) : (
+          <TextAvatar>{AvatarName}</TextAvatar>
+        )
       }
       extra={
         <span>
@@ -124,14 +133,16 @@ const Post = ({ isAuthenticated, post }) => {
     <Card.Body
       className={`comments-wrapper ${showComments ? "show-comments" : ""}`}
     >
-      {isAuthenticated ?
+      {isAuthenticated ? (
         <AutoSize
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={(e) => setComment(e.target.value)}
           value={comment}
         />
-      : <div>Only logged in users can comment.</div> }
+      ) : (
+        <div>Only logged in users can comment.</div>
+      )}
       {showComments ? <Comments comments={post.comments} /> : ""}
     </Card.Body>
   );
@@ -139,6 +150,7 @@ const Post = ({ isAuthenticated, post }) => {
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
+        handlePostLike={handlePostLike}
         url={post.url}
         liked={post.liked}
         shared={shared}
