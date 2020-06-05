@@ -36,7 +36,7 @@ const Container = styled(Modal)`
   .ant-modal-body {
     display: flex;
     max-height: 49.6rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 3.8rem 4rem 4.7rem 4rem;
     min-height: 25.7rem;
     flex-direction: column;
