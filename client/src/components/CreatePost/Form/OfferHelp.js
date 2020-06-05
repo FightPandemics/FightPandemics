@@ -32,7 +32,7 @@ const OfferHelp = ({
         <Submit
           primary="true"
           onClick={handleSubmit}
-          disabled={!formData.title || !formData.description || selectedTags < 1}
+          disabled={!formData.title || !formData.description || selectedTags.length === 0}
         >
           Post
         </Submit>
