@@ -93,14 +93,14 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       <BackButton onClick={previousStep}>
         <SvgIcon
           src={backArrow}
-          a11yTitle={`Navigate to step ${currentStep - 1}`}
+          title={`Navigate to step ${currentStep - 1}`}
         />
         <BackText>Back</BackText>
       </BackButton>
     ) : (
       <BackButton>
         <Link to={"/"}>
-          <SvgIcon src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
+          <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
           <BackText>Back</BackText>
         </Link>
       </BackButton>
