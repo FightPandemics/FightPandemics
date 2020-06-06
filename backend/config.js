@@ -15,6 +15,7 @@ const configData = envSchema({
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
     .prop("COMMIT_HASH", S.string())
+    .prop("GOOGLE_MAPS_API_KEY", S.string())
     .prop("LOGGER_HOST", S.string())
     .prop("LOGGER_LEVEL", S.string().default("info"))
     .prop("LOGGER_PORT", S.number().default(1234))
@@ -42,6 +43,9 @@ const config = {
     environment: configData.NODE_ENV,
     release: configData.COMMIT_HASH,
     url: configData.SENTRY_DSN,
+  },
+  geo: {
+    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY
   },
   logger: {
     appname: `fp-backend-${configData.NODE_ENV}`,
