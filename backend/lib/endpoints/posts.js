@@ -169,7 +169,7 @@ async function routes(app) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
       } else if (posts === null) {
-        return []
+        return [];
       }
 
       return posts;
