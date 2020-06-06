@@ -414,7 +414,8 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        throw app.httpErrors.notFound();
+        req.log.error(updateErr, "Failed unliking post");
+        throw app.httpErrors.internalServerError()
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
