@@ -169,10 +169,9 @@ async function routes(app) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
       } else if (posts === null) {
-        throw app.httpErrors.notFound();
+        return []
       }
-
-      return posts;
+      return posts
     },
   );
 
@@ -228,7 +227,7 @@ async function routes(app) {
   app.get(
     "/:postId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticateOptional],
       schema: getPostByIdSchema,
     },
     async (req) => {
