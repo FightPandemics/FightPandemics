@@ -3,6 +3,7 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
+import styled from 'styled-components';
 
 import {
   StyledWizard,
@@ -131,6 +132,12 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
+
+const WizardButton = styled(SubmitButton)`
+  width: 70%;
+  margin-top: 5rem;
+  margin-left:8rem;
+`;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
@@ -172,12 +179,12 @@ const Step3 = (props) => {
           />
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-        <SubmitButton
+        <WizardButton
           disabled={!valid}
           primary="true"
           onClick={onSubmit}>
           Submit
-          </SubmitButton>
+          </WizardButton>
         <SkipLink>
           <Link to="/AirTableCOVID">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
