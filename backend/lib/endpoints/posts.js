@@ -272,7 +272,7 @@ async function routes(app) {
         ]),
       );
       if (commentErr) {
-        req.log.error(commentErr, "Failed requesting comments");
+        req.log.error(commentErr, "Failed retrieving comments");
         throw app.httpErrors.internalServerError();
       }
       const { comments = [], numComments = 0 } = commentQuery[0];
