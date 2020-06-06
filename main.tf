@@ -75,10 +75,6 @@ module "main" {
       value = "mongodb+srv://${data.aws_ssm_parameter.db_user.value}:${data.aws_ssm_parameter.db_password.value}@${data.aws_ssm_parameter.db_host.value}/fightpandemics?retryWrites=true&w=majority"
     },
     {
-      name  = "GEO_SERVICE_URL"
-      value = "localhost:5000"
-    },
-    {
       name  = "AUTH_STATE"
       value = "fight-pandemics"
     },

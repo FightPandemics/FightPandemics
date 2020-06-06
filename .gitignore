@@ -1,6 +1,5 @@
 *.env
 /data
-/geo-service/venv
 **/node_modules
 .idea/
 .vscode

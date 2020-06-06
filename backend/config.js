@@ -15,7 +15,6 @@ const configData = envSchema({
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
     .prop("COMMIT_HASH", S.string())
-    .prop("GEO_SERVICE_URL", S.string().required())
     .prop("LOGGER_HOST", S.string())
     .prop("LOGGER_LEVEL", S.string().default("info"))
     .prop("LOGGER_PORT", S.number().default(1234))
@@ -43,9 +42,6 @@ const config = {
     environment: configData.NODE_ENV,
     release: configData.COMMIT_HASH,
     url: configData.SENTRY_DSN,
-  },
-  geoService: {
-    host: `http://${configData.GEO_SERVICE_URL}`,
   },
   logger: {
     appname: `fp-backend-${configData.NODE_ENV}`,
