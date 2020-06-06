@@ -168,7 +168,7 @@ const Step3 = (props) => {
           Submit
           </WizardButton>
         <SkipLink>
-          <Link to="/AirTableCOVID">
+          <Link to="/feed">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
             Skip
             </Link>
