@@ -1,9 +1,11 @@
+import { Drawer } from "antd";
 import styled from "styled-components";
+
 import Heading from "../Typography/Heading";
 import SvgIcon from "../Icon/SvgIcon";
-import { Drawer } from "antd";
 import TextLabel from "components/Typography/TextLabel";
 import { mq, theme } from "../../constants/theme";
+
 const { colors } = theme;
 
 export const CustomDrawer = styled(Drawer)`
@@ -76,9 +78,7 @@ export const LinkedinBlueIcon = styled(SvgIcon)`
   margin-bottom: 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     width: 2.5rem;
-    margin: 0;
-    margin-bottom: 0.5rem;
-    margin-right: 1rem;
+    margin: 0 1rem 0.5rem 0;
   }
 `;
 
@@ -88,10 +88,8 @@ export const TwitterBlueIcon = styled(SvgIcon)`
   margin-right: 1rem;
   margin-bottom: 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: 0;
+    margin: 0 1rem 0.5rem 0;
     width: 2.5rem;
-    margin-bottom: 0.5rem;
-    margin-right: 1rem;
   }
 `;
 

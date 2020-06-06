@@ -55,22 +55,6 @@ const Profile = (props) => {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
-  //requires responsive implementation
-  const renderMyActivities = () => {
-    return (
-      <>
-        <FeedWrapper>
-          <Activity filteredPosts={fakePosts} />
-          <SvgIcon
-            src={createPost}
-            className="create-post"
-            onClick={() => setModal(!modal)}
-          />
-          <CreatePost onCancel={() => setModal(false)} visible={modal} />
-        </FeedWrapper>
-      </>
-    );
-  };
   return (
     <ProfileLayout>
       <BackgroundHeader>
@@ -123,7 +107,15 @@ const Profile = (props) => {
           <CreatePostDiv>Create post</CreatePostDiv>
           <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
         </SectionHeader>
-        {renderMyActivities()}
+        <FeedWrapper>
+          <Activity filteredPosts={fakePosts} />
+          <SvgIcon
+            src={createPost}
+            className="create-post"
+            onClick={() => setModal(!modal)}
+          />
+          <CreatePost onCancel={() => setModal(false)} visible={modal} />
+        </FeedWrapper>
       </div>
       <CustomDrawer
         placement="bottom"
