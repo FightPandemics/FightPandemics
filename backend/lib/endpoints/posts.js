@@ -228,7 +228,7 @@ async function routes(app) {
   app.get(
     "/:postId",
     {
-      preValidation: [app.authenticateOptional],
+      preValidation: [app.authenticate],
       schema: getPostByIdSchema,
     },
     async (req) => {
