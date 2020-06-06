@@ -236,6 +236,8 @@ async function routes(app) {
       if (postErr) {
         req.log.error(postErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
+      } else if (post === null) {
+        throw app.httpErrors.notFound();
       }
 
       // TODO: add pagination
