@@ -187,8 +187,7 @@ async function routes(app) {
       if (userErr) {
         req.log.error(userErr, "Failed retrieving user");
         throw app.httpErrors.internalServerError();
-      }
-      else if (user == null){
+      } else if (user == null) {
         throw app.httpErrors.notFound();
       }
 
@@ -330,6 +329,7 @@ async function routes(app) {
       const { userId } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
+        req.log.error(err, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post == null) {
         throw app.httpErrors.notFound();
