@@ -300,6 +300,8 @@ async function routes(app) {
       if (findErr) {
         req.log.error(findErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
+      } else if (post === null) {
+        throw app.httpErrors.notFound();
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
