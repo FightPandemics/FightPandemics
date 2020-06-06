@@ -46,7 +46,8 @@ async function routes(app) {
           req.log.error(userErr, "Failed retrieving user");
           throw app.httpErrors.internalServerError();
         } else if (user === null) {
-          throw app.httpErrors.notFound();
+          req.log.error(userErr, "User does not exist");
+          throw app.httpErrors.forbidden();
         }
       }
 
@@ -188,7 +189,7 @@ async function routes(app) {
         req.log.error(userErr, "Failed retrieving user");
         throw app.httpErrors.internalServerError();
       } else if (user === null) {
-        throw app.httpErrors.notFound();
+        throw app.httpErrors.forbidden();
       }
 
       // Creates embedded author document
@@ -316,7 +317,7 @@ async function routes(app) {
         ok: deleteCommentsOk,
       } = await Comment.deleteMany({ postId });
       if (deleteCommentsOk !== 1) {
-        app.log.error({ postId }, "Failed removing comments for deleted post");
+        app.log.error(`Failed removing comments for deleted post=${postId}`);
       }
 
       return { deletedCommentsCount, deletedCount, success: true };
@@ -575,7 +576,7 @@ async function routes(app) {
         ok: deleteNestedOk,
       } = await Comment.deleteMany({ parentId: commentId });
       if (deleteNestedOk !== 1) {
-        app.log.error({ commentId }, "Failed removing nested comments for deleted comment");
+        app.log.error(`Failed removing nested comments for deleted comment=${commentId}`);
       }
 
       return {
