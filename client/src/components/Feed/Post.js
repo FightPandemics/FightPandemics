@@ -1,6 +1,8 @@
 // Core
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
+import axios from "axios";
 
 // Local
 import PostCard from "./PostCard";
@@ -10,49 +12,83 @@ import FilterTag from "components/Tag/FilterTag";
 import AutoSize from "components/Input/AutoSize";
 import Heading from "components/Typography/Heading";
 import TextAvatar from "components/TextAvatar";
+import { FeedContext } from "pages/Feed.js";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 
-const Post = ({ post }) => {
+const Post = ({ isAuthenticated, post }) => {
+  const feedContext = useContext(FeedContext);
+  const { updateComments } = feedContext;
   const [showComments, setShowComments] = useState(false);
   const [copied, setCopied] = useState(false);
-  const AvatarName = (post.authorName && post.authorName.match(/\b\w/g).join('').toUpperCase()) || '';
+  const AvatarName =
+    (post.author.name &&
+      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
+    "";
 
   // mock API to test functionality
   /* to be removed after full integration with user api */
-  const [liked, setLiked] = useState(false);
   const [shared, setShared] = useState(false);
   const [comment, setComment] = useState("");
-  const [fakeLikes, setFakeLikes] = useState(post.likesCount);
-  const [fakeComments, setFakeComments] = useState(post.commentsCount);
   const [fakeShares, setFakeShares] = useState(0);
 
-  const handleComment = (e) => {
+  const handleComment = async (e) => {
     e.preventDefault();
-    const testNewComment = {
-      _id: 10,
-      name: "Guest User",
-      numLikes: 0,
-      children: [],
+    let response = {};
+    const postId = post._id;
+    const endPoint = `/api/posts/${postId}/comments`;
+    const newComment = {
       comment,
     };
-    post.comments.push(testNewComment); // not good but mocking API and testing UI
-    setFakeComments(fakeComments + 1);
-    setShowComments(true);
-    setComment("");
+
+    try {
+      response = await axios.post(endPoint, newComment);
+    } catch (error) {
+      console.log({ error });
+    }
+
+    if (response.data) {
+      await updateComments({postId, comments: [ ...post.comments, { ...response.data } ], commentsCount: post.comments.length + 1 });
+      setComment("");
+    }
   };
 
-  const renderHeader = (
+  const loadComments = useCallback(async () => {
+    let response = {};
+
+    if (showComments && !post.comments) {
+      const postId = post._id;
+      const endPoint = `/api/posts/${postId}`;
+
+      try {
+        response = await axios.get(endPoint);
+      } catch (error) {
+        console.log({ error });
+      }
+
+      if (response.data) {
+        await updateComments({postId, comments: response.data.comments, commentsCount: response.data.commentsCount });
+      }
+    }
+  }, [ post, showComments, updateComments ]);
+
+  useEffect(() => {
+    loadComments();
+ }, [showComments]); // eslint-disable-line react-hooks/exhaustive-deps
+
+ const renderHeader = (
     <Card.Header
-      title={post.authorName}
-      thumb={post.photoUrl ? post.photoUrl : <TextAvatar>{ AvatarName }</TextAvatar>}
+      title={post.author.name}
+      thumb={
+        post.author.photo ? post.author.photo : <TextAvatar>{AvatarName}</TextAvatar>
+      }
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
-          {post.location.country}
+          {post.author.location.country}
         </span>
       }
     />
@@ -69,11 +105,12 @@ const Post = ({ post }) => {
 
   const renderTags = (
     <Card.Body>
-      {post.types && post.types.map((tag, idx) => (
-        <FilterTag key={idx} disabled={true} selected={false}>
-          {tag}
-        </FilterTag>
-      ))}
+      {post.types &&
+        post.types.map((tag, idx) => (
+          <FilterTag key={idx} disabled={true} selected={false}>
+            {tag}
+          </FilterTag>
+        ))}
     </Card.Body>
   );
 
@@ -87,12 +124,14 @@ const Post = ({ post }) => {
     <Card.Body
       className={`comments-wrapper ${showComments ? "show-comments" : ""}`}
     >
-      <AutoSize
-        placeholder={"Write a comment..."}
-        onPressEnter={handleComment}
-        onChange={(e) => setComment(e.target.value)}
-        value={comment}
-      />
+      {isAuthenticated ?
+        <AutoSize
+          placeholder={"Write a comment..."}
+          onPressEnter={handleComment}
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
+        />
+      : <div>Only logged in users can comment.</div> }
       {showComments ? <Comments comments={post.comments} /> : ""}
     </Card.Body>
   );
@@ -101,11 +140,11 @@ const Post = ({ post }) => {
     <Card.Body className="content-wrapper">
       <PostSocial
         url={post.url}
-        liked={liked}
+        liked={post.liked}
         shared={shared}
         showComments={showComments}
-        numLikes={ post.likesCount }
-        numComments={ post.commentsCount }
+        numLikes={post.likesCount}
+        numComments={post.commentsCount}
         numShares={fakeShares}
         setShowComments={() => setShowComments(!showComments)}
         onCopyLink={() => {
@@ -113,10 +152,7 @@ const Post = ({ post }) => {
           setShared(true);
           return setCopied(!copied);
         }}
-        likePost={() => {
-          liked ? setFakeLikes(fakeLikes - 1) : setFakeLikes(fakeLikes + 1);
-          return setLiked(!liked);
-        }}
+        id={post._id}
       />
     </Card.Body>
   );
@@ -155,4 +191,10 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+const mapStateToProps = ({ session: { isAuthenticated } }) => {
+  return {
+    isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps)(Post);

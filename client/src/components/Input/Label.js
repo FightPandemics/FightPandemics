@@ -1,13 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import { theme } from "constants/theme";
+
+const { royalBlue } = theme.colors;
 
 const StyledLabel = styled.label`
-  color: #425af2;
+  color: ${(props) => props.color || royalBlue};
 `;
 
-const Label = ({ label, style }) => (
-  <StyledLabel>
-    <p style={style}>{label}</p>
+const LabelIcon = styled.img`
+  margin-right: 1rem;
+`;
+
+const Label = ({ htmlFor, icon, label, style }) => (
+  <StyledLabel htmlFor={htmlFor} style={style}>
+    {icon && <LabelIcon src={icon} />}
+    {label}
   </StyledLabel>
 );
 

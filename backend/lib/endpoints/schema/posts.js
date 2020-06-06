@@ -24,8 +24,7 @@ const getPostsSchema = {
         .prop("objective", S.string().enum(POST_OBJECTIVES)),
     )
     .prop("limit", S.integer())
-    .prop("skip", S.integer())
-    .prop("userId", S.string()),
+    .prop("skip", S.integer()),
 };
 
 const createPostSchema = {
@@ -47,15 +46,11 @@ const createPostSchema = {
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
-    .prop("userId", S.string())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {
-  querystring: S.object()
-    .prop("skip", S.integer())
-    .prop("limit", S.integer())
-    .prop("userId", S.string().required()),
+  querystring: S.object().prop("skip", S.integer()).prop("limit", S.integer()),
 };
 
 const updatePostSchema = {
@@ -74,7 +69,6 @@ const updatePostSchema = {
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("title", S.string())
     .prop("types", S.array().minItems(1).items(S.string().enum(POST_TYPES)))
-    .prop("userId", S.string().required())
     .prop("visibility", S.string().enum(VISIBILITY_OPTIONS)),
   params: S.object().prop("postId", S.string()),
 };
@@ -96,9 +90,18 @@ const deletePostSchema = {
   params: strictSchema().prop("postId", S.string().required()),
 };
 
-const addCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+const createCommentSchema = {
+  body: strictSchema()
+    .prop("content", S.string().required())
+    .prop("parentId", S.string()),
   params: strictSchema().prop("postId", S.string().required()),
+};
+
+const getCommentsSchema = {
+  params: strictSchema().prop("postId", S.string().required()),
+  queryString: strictSchema()
+    .prop("limit", S.integer())
+    .prop("skip", S.integer()),
 };
 
 const deleteCommentSchema = {
@@ -108,17 +111,18 @@ const deleteCommentSchema = {
 };
 
 const updateCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+  body: strictSchema().prop("content", S.string().required()),
   params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
 
 module.exports = {
-  addCommentSchema,
+  createCommentSchema,
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
+  getCommentsSchema,
   getPostByIdSchema,
   getPostsSchema,
   likeUnlikeCommentSchema,

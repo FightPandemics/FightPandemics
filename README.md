@@ -33,6 +33,7 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
     - For `AIRTABLE` and `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Run `docker-compose up` this will take quite some time. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
+1. To import posts data from Airtable run `docker-compose exec backend-service npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `docker-compose exec backend-service npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
 ### Local Setup
 
@@ -63,6 +64,7 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
     - For `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Start the backend server by running `npm start`. NOTE: If you want the server to automatically restart on code changes, run `npm run dev` instead.
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
+1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
 #### Geo Service
 
@@ -159,7 +161,9 @@ We collaborate closely with the design and product team. The design team provide
 
 ### Review branches
 
-Every time you push code up to the repository, a build based off of your feature review branch will be deployed to AWS. Note that in order for a build to run, the branch name must have the `feature/` prefix. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
+Every time you push code up to this repository on a branch with the `feature/` prefix, a review build based off of your feature branch will be deployed to AWS. For the build to deploy successfully you must be a member of this organization (ask in Slack) and push to this repo. Pull requests are still welcome from forked repos, just omit the `feature/` prefix to skip this build step.
+
+You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
 
 ![Deployment URL](images/deployment_url.png?raw=true)
 

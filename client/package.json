@@ -9,12 +9,13 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
-    "polished": "^3.5.2",
+    "moment": "^2.25.3",
+    "polished": "^3.6.2",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^5.6.1",
+    "react-gtm-module": "^2.0.8",
+    "react-hook-form": "^5.6.2",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
     "react-redux": "^7.2.0",
@@ -24,8 +25,10 @@
     "react-step-wizard": "^5.3.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "snyk": "^1.316.2",
+    "snyk": "^1.319.2",
     "styled-components": "^5.0.1",
+    "super-tiny-icons": "^0.3.2",
+    "tlds": "^1.207.0",
     "typeface-poppins": "^0.0.72",
     "typeface-work-sans": "^0.0.72"
   },
@@ -36,8 +39,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "install-docker": "docker-compose run client npm install",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "snyk-protect": "snyk protect"
   },
   "browserslist": {
     "production": [

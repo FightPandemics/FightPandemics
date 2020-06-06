@@ -1,54 +1,71 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model, ObjectId } = require("mongoose");
+const { schema: authorSchema } = require("./Author");
 
-const CommentSchema = new Schema(
+const commentSchema = new Schema(
   {
-    authorId: {
-      ref: "User",
+    author: Object,
+    content: {
       required: true,
-      type: Schema.Types.ObjectId,
-    },
-    comment: {
-      required: true,
+      trim: true,
       type: String,
     },
     likes: {
-      type: [Schema.Types.ObjectId],
-    },
-    likesCount: {
-      type: Number,
+      // TODO: how to guarantee unique ids?
+      default: [],
+      ref: "User",
+      type: [ObjectId],
     },
     parentId: {
       ref: "Comment",
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
     },
     postId: {
       ref: "Post",
       required: true,
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
     },
   },
-  {
-    timestamps: true,
-  },
+  { collection: "comments", timestamps: true },
 );
 
-CommentSchema.add({
-  childCount: {
-    type: Schema.Types.Number,
-  },
-  children: {
-    ref: "Comment",
-    type: [CommentSchema],
-  },
-});
-
-CommentSchema.index({
-  createdAt: 1,
-  parentId: 1,
+/* eslint-disable */
+// Indexes for displaying comment tree of a post, also servers as post's foreign
+// key index
+commentSchema.index({
   postId: 1,
+  parentId: 1,
+  createdAt: -1,
 });
 
-const Comment = model("Comment", CommentSchema);
+// Index for parent comment's foreign key for lookup performance
+commentSchema.index({ parentId: 1, createdAt: -1 });
 
-exports.model = Comment;
-exports.schema = CommentSchema;
+// Index for author's foreign key for lookup performance
+commentSchema.index({ "author.id": 1, createdAt: -1 });
+
+// Index for like's foreign key for lookup performance
+commentSchema.index({ likes: 1 });
+/* eslint-enable */
+
+const Comment = model("Comment", commentSchema);
+
+function updateAuthorName(authorID, newAuthorName) {
+  return Comment.where(
+    { "author.id": authorID },
+    { $set: { "author.name": newAuthorName } },
+  );
+}
+
+function updateAuthorType(authorID, newAuthorType) {
+  return Comment.where(
+    { "author.id": authorID },
+    { $set: { "author.type": newAuthorType } },
+  );
+}
+
+module.exports = {
+  model: Comment,
+  schema: commentSchema,
+  updateAuthorName,
+  updateAuthorType,
+};

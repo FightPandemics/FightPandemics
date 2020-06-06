@@ -5,28 +5,42 @@ const {
   oAuthProviderSchema,
   signupSchema,
 } = require("./schema/auth");
-const { config } = require("../../config");
+const {
+  config: { auth: authConfig },
+} = require("../../config");
 
 /*
  * /api/auth
  */
 async function routes(app) {
+  const User = app.mongo.model("IndividualUser");
+
   app.post("/oauth", { schema: oAuthSchema }, async (req) => {
     try {
       const { code, state } = req.body;
-      if (decodeURIComponent(state) !== config.auth.state) {
+      if (decodeURIComponent(state) !== authConfig.state) {
         throw app.httpErrors.unauthorized("Invalid state");
       }
       const token = await Auth0.authenticate("authorization_code", {
         code,
         redirect_uri: req.headers.referer,
       });
-      const user = await Auth0.getUser(token);
-      const { email_verified: emailVerified } = user;
-      /*
-       * todo: also return email address / maybe image for the "create profile" step if needed
-       */
-      return { emailVerified, token };
+      const auth0User = await Auth0.getUser(token);
+      const { email, email_verified: emailVerified } = auth0User;
+      const { payload } = app.jwt.decode(token);
+      const userId = payload[authConfig.jwtMongoIdKey];
+      const dbUser = await User.findById(userId);
+      let user = null;
+      if (dbUser) {
+        const { firstName, lastName } = dbUser;
+        user = {
+          email,
+          firstName,
+          id: userId,
+          lastName,
+        };
+      }
+      return { email, emailVerified, token, user };
     } catch (err) {
       req.log.error("OAuth error", err);
       throw app.httpErrors.internalServerError();
@@ -45,7 +59,6 @@ async function routes(app) {
     },
   );
 
-  // todo: add "password confirmation" check
   app.post(
     "/signup",
     { preHandler: [app.getServerToken], schema: signupSchema },
@@ -87,21 +100,38 @@ async function routes(app) {
   );
 
   app.post("/login", { schema: loginSchema }, async (req) => {
-    const { email, password } = req.body;
+    const { body } = req;
+    const { email, password } = body;
     try {
       const token = await Auth0.authenticate("password", {
         password,
         scope: "openid",
         username: email,
       });
-      const user = await Auth0.getUser(token);
-      const { email_verified: emailVerified } = user;
-      return { emailVerified, token };
+      const auth0User = await Auth0.getUser(token);
+      const { email_verified: emailVerified } = auth0User;
+      const { payload } = app.jwt.decode(token);
+      const userId = payload[authConfig.jwtMongoIdKey];
+      if (!userId) {
+        throw new Error("no mongo_id found in JWT");
+      }
+      const dbUser = await User.findById(userId);
+      let user = null;
+      if (dbUser) {
+        const { firstName, lastName } = dbUser;
+        user = {
+          email,
+          firstName,
+          id: userId,
+          lastName,
+        };
+      }
+      return { email, emailVerified, token, user };
     } catch (err) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("Wrong email or password.");
       }
-      req.log.error("Error logging in", { err });
+      req.log.error(err, "Error logging in");
       throw app.httpErrors.internalServerError();
     }
   });

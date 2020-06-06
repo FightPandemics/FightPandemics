@@ -2,7 +2,7 @@ export default {
   shareWith: {
     type: "shareWith",
     title: "Share with ...",
-    default: { text: "In my City", value: "City" },
+    default: { text: "Worldwide", value: "Worldwide" },
     options: [
       { text: "In my City", value: "City" },
       { text: "In my State", value: "State" },

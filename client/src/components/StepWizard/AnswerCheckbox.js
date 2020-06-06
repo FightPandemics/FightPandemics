@@ -1,23 +1,25 @@
 import styled from "styled-components";
 import React from "react";
 import { Checkbox } from "antd-mobile";
-import { PRIMARY } from "constants/colors";
+import { theme } from "constants/theme";
+
+const { primary, white } = theme.colors;
 
 const AnswerStyles = styled.div`
   align-items: center;
   display: flex;
-  border: 2px solid ${PRIMARY};
+  border: 2px solid ${primary};
   border-radius: 8px;
   box-sizing: border-box;
-  color: ${PRIMARY};
+  color: ${primary};
   cursor: pointer;
   padding: 20px 50px;
   margin: 15px 0px;
   width: 100%;
   &.selected,
   &:hover {
-    background-color: ${PRIMARY};
-    color: #fff;
+    background-color: ${primary};
+    color: ${white};
   }
   > .text {
     flex-grow: 1;

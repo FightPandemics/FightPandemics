@@ -3,6 +3,7 @@
 const Ajv = require("ajv");
 const cors = require("cors");
 const fastify = require("fastify");
+const logStream = require("./logger");
 
 const auth = require("./endpoints/auth");
 const feedback = require("./endpoints/feedback");
@@ -13,9 +14,13 @@ const users = require("./endpoints/users");
 const version = require("./endpoints/version");
 
 module.exports = function createApp(config) {
-  const app = fastify({
-    logger: true,
-  });
+  const logger = {
+    level: config.logger.level,
+  };
+  if (config.logger.host) {
+    logger.stream = logStream(config.logger);
+  }
+  const app = fastify({ logger });
   const ajv = new Ajv({
     allErrors: true,
     coerceTypes: true,
@@ -27,7 +32,11 @@ module.exports = function createApp(config) {
     return ajv.compile(schema);
   });
 
-  app.register(require("fastify-sensible"));
+  app.register(require("./plugins/error-handler"), config.errorNotifier);
+  app.register(
+    require("fastify-sensible"),
+    { errorHandler: false }, // Set errorHandler to false so we can use our custom error handler above.
+  );
   app.register(require("fastify-oas"), {
     exposeRoute: true,
     routePrefix: "/api/documentation",

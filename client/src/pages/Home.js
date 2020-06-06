@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
+import TextLabel from "components/Typography/TextLabel";
+
+const { typography } = theme;
+const { black, royalBlue, white, offWhite } = theme.colors;
 
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 const needHelpActive = require("assets/thermometer-selected.svg");
@@ -37,7 +41,11 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
+  &.home {
+    margin-right: -2rem;
+  }
   @media only screen and ${mq.tablet.narrow.min} {
+    background: ${offWhite};
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-left: -2.5rem;
@@ -51,19 +59,19 @@ const MainContainer = styled.div`
 const StyledWelcome = styled.h1`
   text-align: left;
   margin: 0 0 7rem 0;
-  font-family: ${theme.typography.font.family.display}, sans-serif;
+  font-family: ${typography.font.family.display}, sans-serif;
   font-style: normal;
 
   @media only screen and ${mq.phone.wide.max} {
-    font-size: ${theme.typography.size.xlarge};
+    font-size: ${typography.size.xlarge};
     margin: 2.5rem auto;
     font-weight: bold;
     text-align: center;
-    color: black;
+    color: ${black};
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    font-size: ${theme.typography.heading.one};
+    font-size: ${typography.heading.one};
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
@@ -76,13 +84,15 @@ const StyledWelcome = styled.h1`
 `;
 
 const StyledStrapline = styled(StyledWelcome)`
-  color: white;
+  color: ${white};
   width: 90%;
   text-align: left;
-  font-size: ${theme.typography.heading.one} @media only screen and
-    ${mq.phone.narrow.max} {
+  font-weight: bolder;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  font-size: ${typography.heading.one};
+  @media only screen and ${mq.phone.narrow.max} {
     text-align: center;
-    font-weight: bolder;
     margin: 0 auto 1.5rem auto;
   }
 `;
@@ -94,36 +104,37 @@ const IntroText = styled.div`
 `;
 
 const StyledP = styled.p`
-  font-size: ${theme.typography.size.xsmall};
+  font-size: ${typography.size.xsmall};
   text-align: left;
-  color: white;
+  color: ${white};
+  margin: 0.5rem 0;
 
   @media only screen and ${mq.phone.wide.max} {
-    font-family: ${theme.typography.font.family.display}, sans-serif;
-    font-size: ${theme.typography.size.medium};
+    font-family: ${typography.font.family.display}, sans-serif;
+    font-size: ${typography.size.medium};
     text-align: center;
-    color: #000;
+    color: ${black};
     line-height: 2rem;
     letter-spacing: 0rem;
     margin: 1rem 0;
   }
 
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    font-size: ${theme.typography.size.large};
+    font-size: ${typography.size.large};
   }
 
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
-    font-size: ${theme.typography.size.xlarge};
+    font-size: ${typography.size.xlarge};
   }
 
   @media only screen and (min-width: ${mq.desktop.medium.minWidth}) {
-    font-size: ${theme.typography.size.xxlarge};
+    font-size: ${typography.size.xxlarge};
   }
 `;
 
 const OnboardingContainer = styled.div`
   // display: flex;
-  // flexWrap: wrapgit ;
+  // flexWrap: wrap;
   width: 100%;
   margin: auto 0;
 
@@ -133,18 +144,27 @@ const OnboardingContainer = styled.div`
 `;
 
 const StyleLink = styled.p`
-  color: ${theme.colors.royalBlue};
-  font-size: ${theme.typography.size.large};
-  font-family: ${theme.typography.font.family.display};
+  color: ${royalBlue};
+  font-size: ${typography.size.large};
+  font-family: ${typography.font.family.display};
   font-weight: 500;
   margin-top: 4rem;
 `;
 
 const Home = (props) => {
   return (
-    <MainContainer className="text-center">
+    <MainContainer className="text-center home">
       <StyledIntro>
         <IntroText>
+          <TextLabel
+            color="white"
+            block="true"
+            size={theme.typography.size.xlarge}
+            weight="500"
+          >
+            FightPandemics
+          </TextLabel>
+
           <StyledStrapline level={2} margin="none">
             A place to give and get help
           </StyledStrapline>

@@ -1,7 +1,6 @@
 // Core
 import React, { useContext } from "react";
 import styled from "styled-components";
-
 // Antd
 import { Drawer } from "antd";
 
@@ -10,13 +9,12 @@ import FilterAccordion from "./FilterAccordion";
 import SubmitButton from "components/Button/SubmitButton";
 import { FeedContext } from "pages/Feed";
 
-// Constants
-import { theme } from "constants/theme";
-import { ROYAL_BLUE } from "constants/colors";
-
 // Icons
 import { ReactComponent as BackIcon } from "assets/icons/back.svg";
 
+// Constants
+import { theme } from "constants/theme";
+const { royalBlue } = theme.colors;
 const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
     display: flex;
@@ -29,7 +27,7 @@ const DrawerWrapper = styled(Drawer)`
       cursor: pointer;
       svg {
         path {
-          fill: ${ROYAL_BLUE};
+          fill: ${royalBlue};
         }
       }
     }
@@ -47,8 +45,8 @@ const DrawerWrapper = styled(Drawer)`
         font-weight: bold;
         padding: 0;
         i {
-          height: 1.4rem;
-          width: 1.4rem;
+          height: ${theme.typography.size.medium};;
+          width: ${theme.typography.size.medium};;
         }
       }
       .am-accordion-content-box {
@@ -58,9 +56,12 @@ const DrawerWrapper = styled(Drawer)`
         padding: 0 0.7rem;
       }
       .location-search {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
+  }
+  .svgicon-share-mylocation-size{
+    font-size: ${theme.typography.size.small};
   }
   .confirm-buttons {
     .am-button {
@@ -121,7 +122,7 @@ const FiltersSidebar = () => {
           onClick={handleOnClose}
           style={{ fontWeight: "normal" }}
         >
-          View Results
+          View result
         </SubmitButton>
       </div>
     </DrawerWrapper>

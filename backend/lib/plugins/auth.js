@@ -9,13 +9,18 @@ const {
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
-const MONGO_ID_KEY = `${auth.appUrl}/mongo_id`;
 const ttlSeconds = 86400;
 const cache = new NodeCache({
   checkperiod: ttlSeconds * 0.2,
   stdTTL: ttlSeconds,
   useClones: false,
 });
+
+const checkAuth = async (req) => {
+  await req.jwtVerify();
+  const { user } = req;
+  req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
+};
 
 const authPlugin = async (app) => {
   app.register(fastifyJwt, {
@@ -30,13 +35,21 @@ const authPlugin = async (app) => {
     }),
   });
 
+  app.decorateRequest("userId", null);
+
   app.decorate("authenticate", async (req, reply) => {
     try {
-      await req.jwtVerify();
-      const { user } = req;
-      req.userId = mongoose.Types.ObjectId(user[MONGO_ID_KEY]);
+      await checkAuth(req);
     } catch (err) {
       reply.send(err);
+    }
+  });
+
+  app.decorate("authenticateOptional", async (req) => {
+    try {
+      await checkAuth(req);
+    } catch (err) {
+      req.userId = null;
     }
   });
 

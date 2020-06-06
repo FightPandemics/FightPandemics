@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { mq, theme } from "constants/theme";
+import LeftRightIconButton from "components/Button/LeftRightIconButton";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -9,6 +10,8 @@ import nextArrow from "assets/icons/next-arrow.svg";
 import backArrow from "assets/icons/back-arrow.svg";
 
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
+
+const { royalBlue, white } = theme.colors;
 
 const StyledWizardNav = styled.div`
   display: flex;
@@ -29,95 +32,84 @@ const StyledWizardNav = styled.div`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    display: flex;
-    justify-content: center;
+    margin: 0 auto 1rem;
+    width: 40rem;
   }
 `;
 
-const ButtonWrapper = styled.div`
-  cursor: pointer;
-  color: black;
-  display: flex;
-  flex-flow: row no-wrap;
+const BackButton = styled(LeftRightIconButton)`
   align-items: center;
-  justify-content: flex-start;
-  width: 50%;
-
-  p {
-    margin: 1rem;
-  }
-
-  @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 19.2rem;
-    font-size: 2rem;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const NextButtonWrapper = styled(ButtonWrapper)`
-  background-color: ${theme.colors.royalBlue};
-  width: 40%;
-  color: white;
-  border-radius 5rem;
-  padding: 0 .5rem;
+  background-color: transparent;
+  color: ${royalBlue};
+  cursor: pointer;
+  display: flex;
+  height: 6.8rem;
   justify-content: center;
+  width: 6.8rem;
 
-  @media screen and (max-width: ${desktopBreakpoint}) {
-  width: 19.2rem;
-  font-size: 1.8rem;
+  & span {
+    display: none;
   }
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 6.8rem;
-    height: 6.8rem;
-    p {
-      display: none;
-    }
-    img {
-      height: 1.7rem !important;
-      margin: 0 !important;
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    height: 4.8rem;
+    width: 19.2rem;
+    & span {
+      display: inline;
     }
   }
 `;
 
-const PrevButton = styled(SvgIcon)`
-  cursor: pointer;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    height: 1.7rem !important;
-    margin: 2.55rem 0 !important;
-    & + p {
-      display: none;
-    }
-  }
+const BackText = styled.span`
+  margin-left: 3rem;
 `;
 
-const NextButton = styled(SvgIcon)`
+const NextButton = styled(LeftRightIconButton)`
+  align-items: center;
+  background-color: ${royalBlue};
+  color: ${white};
   cursor: pointer;
+  display: flex;
+  height: 6.8rem;
+  justify-content: center;
+  width: 6.8rem;
+
+  & span {
+    display: none;
+  }
+  @media screen and (min-width: ${desktopBreakpoint}) {
+    font-weight: bold;
+    height: 4.8rem;
+    width: 19.2rem;
+
+    & span {
+      display: inline;
+    }
+  }
 `;
 
 const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <ButtonWrapper onClick={previousStep}>
-        <PrevButton
+      <BackButton onClick={previousStep}>
+        <SvgIcon
           src={backArrow}
-          a11yTitle={`Navigate to step ${currentStep - 1}`}
+          title={`Navigate to step ${currentStep - 1}`}
         />
-        <p>Back</p>
-      </ButtonWrapper>
+        <BackText>Back</BackText>
+      </BackButton>
     ) : (
-      <ButtonWrapper>
+      <BackButton>
         <Link to={"/"}>
-          <PrevButton src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
-          <p>Back</p>
+          <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
+          <BackText>Back</BackText>
         </Link>
-      </ButtonWrapper>
+      </BackButton>
     )}
     {currentStep < totalSteps && (
-      <NextButtonWrapper onClick={nextStep}>
-        <p>Next</p>
-        <NextButton src={nextArrow} />
-      </NextButtonWrapper>
+      <NextButton onClick={nextStep}>
+        <span>Next</span>
+        <SvgIcon src={nextArrow} />
+      </NextButton>
     )}
   </StyledWizardNav>
 );

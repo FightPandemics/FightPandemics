@@ -4,8 +4,8 @@ import Post from "./Post";
 const Posts = ({ filteredPosts }) => {
   return (
     <div className="feed-posts">
-      {filteredPosts.map((post) => (
-        <Post post={post} key={post._id} />
+      {Object.keys(filteredPosts).map((key) => (
+        <Post post={filteredPosts[key]} key={key} />
       ))}
     </div>
   );

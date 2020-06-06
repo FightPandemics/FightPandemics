@@ -6,6 +6,11 @@ variable "fp_context" {
   type = string
 }
 
+variable "commit_hash" {
+  type = string
+  default = ""
+}
+
 data "aws_ssm_parameter" "db_host" {
   name = "/fp/database/host"
 }
@@ -28,6 +33,26 @@ data "aws_ssm_parameter" "auth_client_id" {
 
 data "aws_ssm_parameter" "auth_client_secret" {
   name = "/fp/auth/client_secret"
+}
+
+data "aws_ssm_parameter" "sentry_dsn" {
+  name = "/fp/sentry/dsn"
+}
+
+data "aws_ssm_parameter" "logger_host" {
+  name = "/fp/logger/host"
+}
+
+data "aws_ssm_parameter" "logger_port" {
+  name = "/fp/logger/port"
+}
+
+locals {
+  auth_app_url = {
+    review     = "https://review.fightpandemics.xyz"
+    staging    = "https://staging.fightpandemics.work"
+    production = "https://production.fightpandemics.com"
+  }
 }
 
 module "main" {
@@ -54,7 +79,7 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = "http://localhost:8000"
+      value = local.auth_app_url[var.fp_context]
     },
     {
       name  = "AUTH_SECRET_KEY"
@@ -71,6 +96,26 @@ module "main" {
     {
       name  = "NODE_ENV"
       value = var.env_name
+    },
+    {
+      name  = "SENTRY_DSN",
+      value = data.aws_ssm_parameter.sentry_dsn.value
+    },
+    {
+      name  = "COMMIT_HASH",
+      value = var.commit_hash
+    },
+    {
+      name  = "LOGGER_LEVEL",
+      value = "warn"
+    },
+    {
+      name  = "LOGGER_HOST",
+      value = data.aws_ssm_parameter.logger_host.value
+    },
+    {
+      name  = "LOGGER_PORT",
+      value = data.aws_ssm_parameter.logger_port.value
     },
   ]
 }

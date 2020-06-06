@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
-import { SearchBar } from 'antd-mobile';
+import { SearchBar } from "antd-mobile";
 
 import { theme, mq } from "../../constants/theme";
 const { colors } = theme;
-
-
 
 const StyledSearchBar = styled(SearchBar)`
   &.am-search {
@@ -20,11 +18,9 @@ const StyledSearchBar = styled(SearchBar)`
   }
   .am-search-cancel-show {
     display: none;
-   }
+  }
 `;
 
-const SearchInput = props =>  (
-    <StyledSearchBar {...props} />
-)
+const SearchInput = (props) => <StyledSearchBar {...props} />;
 
 export default SearchInput;

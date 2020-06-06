@@ -1,9 +1,9 @@
-const httpErrors = require("http-errors");
 const mongoose = require("mongoose");
 const moment = require("moment");
 
 const {
-  addCommentSchema,
+  createCommentSchema,
+  getCommentsSchema,
   getPostsSchema,
   getPostByIdSchema,
   createPostSchema,
@@ -25,21 +25,25 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
+  const POST_PAGE_SIZE = 5;
   const UNLOGGED_POST_SIZE = 120;
   const EXPIRATION_OPTIONS = ["day", "week", "month"];
 
   app.get(
     "/",
     {
+      preValidation: [app.authenticateOptional],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req.query;
-      let user, userErr;
+      const { userId } = req;
+      const { limit, filter: paramFilters, skip } = req.query;
+      let user;
+      let userErr;
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
-          throw app.httpErrors.notFound();
+          throw app.httpErrors.forbidden();
         }
       }
 
@@ -48,7 +52,7 @@ async function routes(app) {
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
       ];
-      if (user){
+      if (user) {
         filters.push({
           $or: [
             { visibility: "worldwide" },
@@ -68,12 +72,11 @@ async function routes(app) {
               "author.location.city": user.location.city,
             },
           ],
-        })
+        });
       }
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { paramFilters } = req.params;
       if (paramFilters) {
         // TODO: additional filters
       }
@@ -97,59 +100,65 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const sortAndFilterSteps = user
-        ? [{
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: user.location.coordinates,
-                  type: "Point",
+        ? [
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: user.location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
-          }]
-        : [
-            { $match: { $and: filters } },
-            { $sort: { createdAt: -1 } }
           ]
+        : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
-
-      const aggregationPipleine = [
+      const aggregationPipeline = [
         ...sortAndFilterSteps,
-          {
-            $lookup: {
-              as: "comments",
-              foreignField: "postId",
-              from: "comments",
-              localField: "_id",
-            },
+        {
+          $skip: skip || 0,
+        },
+        {
+          $limit: limit || POST_PAGE_SIZE,
+        },
+        {
+          $lookup: {
+            as: "comments",
+            foreignField: "postId",
+            from: "comments",
+            localField: "_id",
           },
-          {
-            $project: {
-              _id: true,
-              authorName: "$author.name",
-              authorType: "$author.type",
-              commentsCount: {
-                $size: { $ifNull: ["$comments", []] },
-              },
-              content: contentProjection,
-              distance: true,
-              expireAt: true,
-              likesCount: {
-                $size: { $ifNull: ["$likes", []] },
-              },
-              location: "$author.location",
-              title: true,
-              types: true,
-              visibility: true,
+        },
+        {
+          $project: {
+            _id: true,
+            author: true,
+            commentsCount: {
+              $size: { $ifNull: ["$comments", []] },
             },
+            content: contentProjection,
+            distance: true,
+            expireAt: true,
+            externalLinks: true,
+            language: true,
+            liked: { $in: [mongoose.Types.ObjectId(userId), "$likes"] },
+            likesCount: {
+              $size: { $ifNull: ["$likes", []] },
+            },
+            objective: true,
+            title: true,
+            types: true,
+            visibility: true,
           },
+        },
       ];
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipleine),
+        Post.aggregate(aggregationPipeline),
       );
 
       if (postsErr) {
@@ -168,24 +177,23 @@ async function routes(app) {
       schema: createPostSchema,
     },
     async (req, reply) => {
-      const { userId } = req.body;
+      const { userId, body: postProps } = req;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         throw app.httpErrors.notFound();
       }
 
-      const { body: postProps } = req;
-
       // Creates embedded author document
       postProps.author = {
-        id: user.id,
+        id: mongoose.Types.ObjectId(user.id),
         location: user.location,
         name: user.name,
+        photo: user.photo,
         type: user.type,
       };
 
       // ExpireAt needs to calculate the date
-      if (postProps.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         postProps.expireAt = moment().add(1, `${postProps.expireAt}s`);
       } else {
         postProps.expireAt = null;
@@ -276,12 +284,12 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       if (findErr) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -310,17 +318,17 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req.body;
+      const { userId } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         throw app.httpErrors.notFound();
-      } else if (post.author.id !== userId) {
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
       const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (body.expireAt in EXPIRATION_OPTIONS) {
+      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;
@@ -346,6 +354,10 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
+
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(
@@ -373,6 +385,9 @@ async function routes(app) {
       schema: likeUnlikePostSchema,
     },
     async (req) => {
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
       const { postId, userId } = req.params;
 
       const [updateErr, updatedPost] = await app.to(
@@ -393,42 +408,121 @@ async function routes(app) {
     },
   );
 
-  app.post(
+  // -- Comments
+  const COMMENT_PAGE_SIZE = 5;
+
+  app.get(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: addCommentSchema },
+    { preValidation: [app.authenticate], schema: getCommentsSchema },
     async (req) => {
-      const { body, params, userId } = req;
-      const { parentId } = body;
-      const { postId } = params;
-      if (parentId) {
-        const parentPost = await Post.findById(parentId);
-        if (!parentPost || parentPost.postId !== postId) {
-          return new httpErrors.BadRequest();
-        }
+      const { limit, skip } = req.query;
+      const { postId } = req.params;
+      const [commentErr, comments] = await app.to(
+        Comment.aggregate([
+          {
+            $match: {
+              parentId: null,
+              postId: mongoose.Types.ObjectId(postId),
+            },
+          },
+          {
+            $lookup: {
+              as: "children",
+              foreignField: "parentId",
+              from: "comments",
+              localField: "_id",
+            },
+          },
+          {
+            $addFields: {
+              childCount: {
+                $size: { $ifNull: ["$children", []] },
+              },
+            },
+          },
+          {
+            $skip: skip || 0,
+          },
+          {
+            $limit: limit || COMMENT_PAGE_SIZE,
+          },
+        ]),
+      );
+      if (commentErr) {
+        req.log.error("Failed retrieving comments", { commentErr });
+        throw app.httpErrors.internalServerError();
       }
-      return new Comment({
-        ...body,
-        authorId: userId,
-        postId,
-      }).save();
+
+      return comments;
     },
   );
 
-  app.put(
+  app.post(
+    "/:postId/comments",
+    { preValidation: [app.authenticate], schema: createCommentSchema },
+    async (req, reply) => {
+      const { userId, body: commentProps, params } = req;
+      const { postId } = params;
+
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error("Failed retrieving user", { userErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      // Assign postId and parent comment id (if present)
+      commentProps.postId = mongoose.Types.ObjectId(postId);
+      if ("parentId" in commentProps) {
+        commentProps.parentId = mongoose.Types.ObjectId(commentProps.parentId);
+      }
+
+      // Creates embedded author document
+      commentProps.author = {
+        id: mongoose.Types.ObjectId(user.id),
+        location: user.location,
+        name: user.name,
+        photo: user.photo,
+        type: user.type,
+      };
+
+      // Initial empty likes array
+      commentProps.likes = [];
+
+      const [err, comment] = await app.to(new Comment(commentProps).save());
+
+      if (err) {
+        req.log.error("Failed creating comment", { err });
+        throw app.httpErrors.internalServerError();
+      }
+
+      reply.code(201);
+      return comment;
+    },
+  );
+
+  app.patch(
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: updateCommentSchema },
     async (req) => {
-      const { body, params, userId } = req;
-      const { comment } = body;
-      const { commentId, postId } = params;
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, authorId: userId, postId },
-        { comment },
-        { new: true },
-      );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      const { userId } = req;
+      const { content } = req.body;
+      const { commentId } = req.params;
+
+      const [err, comment] = await app.to(Comment.findById(commentId));
+      if (err) {
+        req.log.error("Failed retrieving comment", { err });
+        throw app.httpErrors.internalServerError();
+      } else if (!userId.equals(comment.author.id)) {
+        throw app.httpErrors.forbidden();
       }
+
+      comment.content = content;
+      const [updateErr, updatedComment] = await app.to(comment.save());
+      if (updateErr) {
+        req.log.error("Failed updating comment", { updateErr });
+        throw app.httpErrors.internalServerError();
+      }
+
       return updatedComment;
     },
   );
@@ -437,18 +531,37 @@ async function routes(app) {
     "/:postId/comments/:commentId",
     { preValidation: [app.authenticate], schema: deleteCommentSchema },
     async (req) => {
-      const { params, userId } = req;
-      const { commentId, postId } = params;
-      const { ok, deletedCount } = await Comment.deleteMany({
-        $or: [
-          { _id: commentId, authorId: userId, postId },
-          { parentId: commentId, postId },
-        ],
-      });
-      if (ok !== 1 || deletedCount < 1) {
-        return new httpErrors.BadRequest();
+      const { userId } = req;
+      const { commentId } = req.params;
+      const [findErr, comment] = await app.to(Comment.findById(commentId));
+      if (findErr) {
+        req.log.error("Failed retrieving findErr", { findErr });
+        throw app.httpErrors.internalServerError();
+      } else if (!userId.equals(comment.author.id)) {
+        throw app.httpErrors.forbidden();
       }
-      return { deletedCount, success: true };
+
+      const [deleteCommentErr, deletedComment] = await app.to(comment.delete());
+      if (deleteCommentErr) {
+        req.log.error("Failed deleting comment", { deleteCommentErr });
+        throw app.httpErrors.internalServerError();
+      }
+
+      const {
+        deletedCount: deletedNestedCount,
+        ok: deleteNestedOk,
+      } = await Comment.deleteMany({ parentId: commentId });
+      if (deleteNestedOk !== 1) {
+        app.log.error("failed removing nested comments for deleted comment", {
+          commentId,
+        });
+      }
+
+      return {
+        deletedComment,
+        deletedCount: deletedNestedCount + 1,
+        success: true,
+      };
     },
   );
 
@@ -456,22 +569,27 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const { commentId, postId, userId } = req.params;
-      if (userId !== req.userId) {
-        return new httpErrors.Forbidden();
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
       }
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, likes: { $ne: userId }, postId },
-        { $inc: { likesCount: 1 }, $push: { likes: userId } },
-        { new: true },
+      const { userId } = req;
+      const { commentId } = req.params;
+
+      const [updateErr, updatedComment] = await app.to(
+        Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $addToSet: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      if (updateErr) {
+        req.log.error("Failed liking comment", { updateErr });
+        throw app.httpErrors.internalServerError();
       }
 
       return {
         likes: updatedComment.likes,
-        likesCount: updatedComment.likesCount,
+        likesCount: updatedComment.likes.length,
       };
     },
   );
@@ -480,22 +598,27 @@ async function routes(app) {
     "/:postId/comments/:commentId/likes/:userId",
     { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
     async (req) => {
-      const {
-        params: { commentId, postId },
-        userId,
-      } = req;
-      const updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, likes: userId, postId },
-        { $inc: { likesCount: -1 }, $pull: { likes: userId } },
-        { new: true },
+      if (!req.userId.equals(req.params.userId)) {
+        throw app.httpErrors.forbidden();
+      }
+      const { userId } = req;
+      const { commentId } = req.params;
+
+      const [updateErr, updatedComment] = await app.to(
+        Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $pull: { likes: userId } },
+          { new: true },
+        ),
       );
-      if (!updatedComment) {
-        return new httpErrors.BadRequest();
+      if (updateErr) {
+        req.log.error("Failed unliking comment", { updateErr });
+        throw app.httpErrors.internalServerError();
       }
 
       return {
         likes: updatedComment.likes,
-        likesCount: updatedComment.likesCount,
+        likesCount: updatedComment.likes.length,
       };
     },
   );

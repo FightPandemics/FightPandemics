@@ -2,6 +2,7 @@
 /data
 /geo-service/venv
 **/node_modules
+.idea/
 .vscode
 .terraform
 backend.tf

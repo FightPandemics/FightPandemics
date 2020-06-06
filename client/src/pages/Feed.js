@@ -1,24 +1,33 @@
-import React, { useReducer, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useReducer, useEffect, useCallback, useRef } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import axios from 'axios';
+import axios from "axios";
 
 // Antd
 import { Layout, Menu } from "antd";
 
 // Local
-import PostAs from "components/PostAs/PostAs";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
-import { optionsReducer, feedReducer, postsReducer, postsState } from "hooks/reducers/feedReducers";
+import CreatePost from "components/CreatePost/CreatePost";
+import {
+  optionsReducer,
+  feedReducer,
+  postsReducer,
+  postsState,
+} from "hooks/reducers/feedReducers";
+
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import creatPost from "assets/icons/create-post.svg";
+import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
 import { theme, mq } from "constants/theme";
-import { BLACK, DARKER_GRAY, ROYAL_BLUE, WHITE } from "constants/colors";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -28,12 +37,14 @@ import {
   SET_POSTS,
   FETCH_POSTS,
   ERROR_POSTS,
+  NEXT_PAGE,
+  SET_LOADING,
+  SET_LIKE,
+  SET_COMMENTS,
 } from "hooks/actions/feedActions";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import creatPost from "assets/icons/create-post.svg";
-import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
+const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
 
@@ -56,7 +67,7 @@ const initialState = {
 };
 
 const SiderWrapper = styled(Sider)`
-  background-color: ${WHITE};
+  background-color: ${white};
   height: calc(100vh - 5rem);
   overflow-x: hidden;
   padding-top: 3.3rem;
@@ -74,7 +85,7 @@ const FiltersWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -84,16 +95,16 @@ const FiltersWrapper = styled.div`
     padding: 0;
     span {
       align-items: center;
-      border: 0.1rem solid ${ROYAL_BLUE};
+      border: 0.1rem solid ${royalBlue};
       border-radius: 50%;
-      color: ${ROYAL_BLUE};
+      color: ${royalBlue};
       display: flex;
       height: 4.2rem;
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
       svg {
-        fill: ${ROYAL_BLUE};
+        fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
       }
@@ -104,17 +115,17 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
-      border-left: 0.5rem solid ${WHITE};
-      color: ${DARKER_GRAY};
+      border-left: 0.5rem solid ${white};
+      color: ${darkerGray};
       font-size: ${theme.typography.size.large};
       &:hover {
-        color: ${ROYAL_BLUE};
+        color: ${royalBlue};
       }
     }
     .ant-menu-item-selected {
       background-color: transparent;
-      border-left: 0.5rem solid ${ROYAL_BLUE};
-      color: ${ROYAL_BLUE};
+      border-left: 0.5rem solid ${royalBlue};
+      color: ${royalBlue};
       font-weight: bold;
     }
   }
@@ -122,10 +133,10 @@ const MenuWrapper = styled(Menu)`
 
 const LayoutWrapper = styled(Layout)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${WHITE};
+    background-color: ${white};
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: #fbfbfd;
+    background-color: ${offWhite};
     min-height: calc(100vh - 5rem);
     .create-post,
     .filter-box {
@@ -152,7 +163,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
     background-color: transparent;
     border: none;
-    color: ${BLACK};
+    color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
@@ -169,12 +180,25 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Feed = () => {
-  const [feedState, feedDispatch] = useReducer(feedReducer, initialState);
+const Feed = (props) => {
+  const { id } = useParams();
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+    createPostModal: id === "create-post",
+  });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
-  const { filterModal, createPostModal, activePanel, location, selectedType, showFilters } = feedState;
+  const {
+    filterModal,
+    createPostModal,
+    activePanel,
+    location,
+    selectedType,
+    showFilters,
+  } = feedState;
   const filters = Object.values(filterOptions);
+  const { isLoading, loadMore, page, posts: postsList,status } = posts;
+  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -228,7 +252,7 @@ const Feed = () => {
       dispatchAction(SET_VALUE, "selectedType", value);
 
       if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts:  postsState.posts });
+        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
         const filtered = postsState.posts.filter((item) => item.type === value);
 
@@ -245,19 +269,107 @@ const Feed = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
   };
 
-  useEffect(() => {
-    /* Add userId when user is logged */
-    const endpoint = '/api/posts'; // ?userId=xxxxxxxxx
+  const handlePostLike = async (postId, liked) => {
+    const { history, isAuthenticated, user } = props;
 
-    postsDispatch({ type: FETCH_POSTS });
-    axios.get(endpoint)
-      .then(response => {
-        postsDispatch({ type: SET_POSTS, posts: response.data });
-      })
-      .catch(error => {
-        postsDispatch({ type: ERROR_POSTS });
-      })
-  }, []);
+    /* added here because userId not working */
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
+        }
+      }
+    } else {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
+    }
+  };
+
+  const updateComments = ({postId, comments, commentsCount}) => {
+    postsDispatch({
+      type: SET_COMMENTS,
+      postId,
+      comments,
+      commentsCount,
+    });
+  }
+
+  const loadPosts = useCallback(async () => {
+    const { user } = props;
+    const limit = 5;
+    const skip = page * limit;
+    /* Add userId when user is logged */
+    const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
+      user && user.userId ? `&userId=${user.userId}` : ""
+    }`;
+    let response = {};
+
+    if (isLoading) {
+      return;
+    }
+
+    await postsDispatch({ type: FETCH_POSTS });
+
+    try {
+      response = await axios.get(endpoint);
+    } catch (error) {
+      await postsDispatch({ type: ERROR_POSTS });
+    }
+
+    if (response.data && response.data.length) {
+      const loadedPosts =  response.data.reduce((obj, item) => ((obj[item._id] = item, obj)), {});
+
+      await postsDispatch({ type: SET_POSTS, posts: { ...postsList, ...loadedPosts } });
+    } else {
+      await postsDispatch({ type: SET_LOADING });
+    }
+  }, [ postsList, isLoading, page, props ]);
+
+  useEffect(() => {
+    loadPosts();
+  }, [ page ]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const scrollObserver = useCallback(
+    node => {
+      new IntersectionObserver(entries => {
+        entries.forEach(async entry => {
+          if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
+            await postsDispatch({ type: NEXT_PAGE });
+          }
+        });
+      }).observe(node);
+    },
+    [ postsDispatch, isLoading, loadMore ]
+  );
+
+  useEffect(() => {
+    if (bottomBoundaryRef.current) {
+      scrollObserver(bottomBoundaryRef.current);
+    }
+  }, [scrollObserver, bottomBoundaryRef]);
 
   return (
     <FeedContext.Provider
@@ -274,6 +386,8 @@ const Feed = () => {
         handleLocation,
         handleOnClose,
         showFilters,
+        handlePostLike,
+        updateComments,
       }}
     >
       <FeedWrapper>
@@ -308,14 +422,17 @@ const Feed = () => {
             <HeaderWrapper>
               <h1>Feed</h1>
               <button onClick={handleCreatePost}>
-                Create post
+                Create a post
                 <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
             <FilterBox />
-            { posts.status === FETCH_POSTS && <div>Loading...</div> }
-            { posts.status === ERROR_POSTS && <div>Something went wrong ...</div> }
-            <Posts filteredPosts={ posts.posts } />
+            <Posts filteredPosts={postsList} />
+            {isLoading && <div>Loading...</div>}
+            {status === ERROR_POSTS && (
+              <div>Something went wrong...</div>
+            )}
+            {!isLoading && <div id="list-bottom" ref={ bottomBoundaryRef }></div>}
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
@@ -323,10 +440,9 @@ const Feed = () => {
             />
           </ContentWrapper>
         </LayoutWrapper>
-        <PostAs
-          onClose={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
+        <CreatePost
+          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
-          maskClosable
         />
       </FeedWrapper>
     </FeedContext.Provider>
