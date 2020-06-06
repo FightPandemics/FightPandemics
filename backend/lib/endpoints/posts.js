@@ -45,7 +45,7 @@ async function routes(app) {
         if (userErr) {
           req.log.error(userErr, "Failed retrieving user");
           throw app.httpErrors.internalServerError();
-        } else if (user == null) {
+        } else if (user === null) {
           throw app.httpErrors.notFound();
         }
       }
@@ -167,7 +167,7 @@ async function routes(app) {
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
-      } else if (posts == null) {
+      } else if (posts === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -187,7 +187,7 @@ async function routes(app) {
       if (userErr) {
         req.log.error(userErr, "Failed retrieving user");
         throw app.httpErrors.internalServerError();
-      } else if (user == null) {
+      } else if (user === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -331,7 +331,7 @@ async function routes(app) {
       if (err) {
         req.log.error(err, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
-      } else if (post == null) {
+      } else if (post === null) {
         throw app.httpErrors.notFound();
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
@@ -380,7 +380,7 @@ async function routes(app) {
       );
       if (updateErr) {
         throw app.httpErrors.internalServerError();
-      } else if (updatedPost == null) {
+      } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -412,7 +412,7 @@ async function routes(app) {
       );
       if (updateErr) {
         throw app.httpErrors.notFound();
-      } else if (updatedPost == null) {
+      } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
 
