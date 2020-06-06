@@ -381,6 +381,7 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
+        req.log.error(updateErr, "Failed liking post");
         throw app.httpErrors.internalServerError();
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
