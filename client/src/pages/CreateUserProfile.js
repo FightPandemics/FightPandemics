@@ -235,6 +235,14 @@ const CreateProfile = ({ email, history }) => {
     createUserFormDispatch({ type: CREATE_USER });
     try {
       const { email, ...body } = formData;
+      /* TEMP location until geolocation service id done */
+      body.location = {
+        address: 'New York, NY, USA',
+        coordinates: [ -74.0059728, 40.7127753 ],
+        city: "New York",
+        state: "NY",
+        country: "US"
+      }
       const res = await axios.post("/api/users", body);
 
       dispatch({
