@@ -171,7 +171,8 @@ async function routes(app) {
       } else if (posts === null) {
         return []
       }
-      return posts
+
+      return posts;
     },
   );
 
@@ -277,6 +278,7 @@ async function routes(app) {
         req.log.error(commentErr, "Failed retrieving comments");
         throw app.httpErrors.internalServerError();
       }
+
       const { comments = [], numComments = 0 } = commentQuery[0];
 
       return {
