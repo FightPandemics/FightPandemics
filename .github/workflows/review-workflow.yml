@@ -97,6 +97,7 @@ jobs:
           TF_VAR_env_name: ${{ steps.get-branch-name-sanitized.outputs.branch }}
           TF_VAR_fp_context: review
           TF_VAR_commit_hash: ${{ steps.get-git-commit.outputs.hash }}
+          TF_VAR_aws_region: us-east-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster review-cluster --service ${{ steps.get-branch-name-sanitized.outputs.branch }} --force-new-deployment

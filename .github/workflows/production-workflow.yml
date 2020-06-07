@@ -79,6 +79,7 @@ jobs:
           TF_VAR_env_name: production
           TF_VAR_fp_context: production
           TF_VAR_commit_hash: ${{ steps.get-git-commit.outputs.hash }}
+          TF_VAR_aws_region: eu-west-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster production-cluster --service production --force-new-deployment

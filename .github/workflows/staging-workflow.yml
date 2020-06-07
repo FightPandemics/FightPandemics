@@ -85,6 +85,7 @@ jobs:
           TF_VAR_env_name: staging
           TF_VAR_fp_context: staging
           TF_VAR_commit_hash: ${{ steps.get-git-commit.outputs.hash }}
+          TF_VAR_aws_region: us-east-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster staging-cluster --service staging --force-new-deployment
