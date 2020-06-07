@@ -1,3 +1,7 @@
+variable "aws_region" {
+  type = string
+}
+
 variable "env_name" {
   type = string
 }
@@ -57,6 +61,7 @@ locals {
 
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
+  aws_region = var.aws_region
   image_tag  = var.env_name
   fp_context = var.fp_context
   subdomain  = var.env_name
