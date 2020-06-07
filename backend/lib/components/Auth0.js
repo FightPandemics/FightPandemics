@@ -113,12 +113,6 @@ const changePassword = async (token, email) => {
     );
     return res.data;
   } catch (err) {
-    console.log(
-      "ERR HERE",
-      err,
-      AUTH_DOMAIN,
-      JSON.stringify(config.auth.clientId),
-    );
     return wrapError(err);
   }
 };
