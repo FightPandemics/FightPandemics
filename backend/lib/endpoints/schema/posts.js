@@ -1,14 +1,13 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
-const { schema: authorSchema } = require("../../models/Author");
-const { schema: postSchema } = require("../../models/Post");
-
-const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
-const POST_OBJECTIVES = postSchema.tree.objective.enum;
-const POST_TYPES = postSchema.tree.types.enum;
-const USER_TYPES = authorSchema.tree.type.enum;
-const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
+const { USER_TYPES } = require("../../models/Author");
+const {
+  EXPIRATION_OPTIONS,
+  POST_OBJECTIVES,
+  POST_TYPES,
+  VISIBILITY_OPTIONS,
+} = require("../../models/Post");
 
 const getPostsSchema = {
   querystring: strictSchema()
