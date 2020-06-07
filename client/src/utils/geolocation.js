@@ -4,7 +4,7 @@ export const asyncGetGeoLocation = () => {
       const {
         coords: { latitude, longitude },
       } = pos;
-      resolve({ latitude, longitude });
+      resolve({ lat: latitude, lng: longitude });
     };
     const onGeoError = () => {
       reject(new Error("failed getting location"));

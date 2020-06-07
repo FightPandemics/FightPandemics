@@ -49,8 +49,6 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 1. Using nvm, install Node 12.16.2: `nvm install 12.16.2`.
 1. Enter the `client` directory and run `npm install`.
 1. Copy the `.env.example` in the `client` directory to `.env`.
-1. Replace `TODO` entries in `client/.env` with correct values (this is not needed to run the project in a responding but non-functional state). 
-    - For `AIRTABLE` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
 
