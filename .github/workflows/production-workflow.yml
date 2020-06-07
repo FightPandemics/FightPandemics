@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - env:
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_DEFAULT_REGION: eu-west-1
           AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
         run: |
@@ -83,7 +83,7 @@ jobs:
         with:
           args: ecs update-service --cluster production-cluster --service production --force-new-deployment
         env:
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_DEFAULT_REGION: eu-west-1
           AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
   create_release:
