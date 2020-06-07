@@ -53,12 +53,14 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
+import ErrorAlert from "../components/Alert/ErrorAlert";
 
 const socialIcons = {
   google: linkedinBlue,
   facebook: linkedinBlue,
   linkedin: linkedinBlue,
   twitter: twitterBlue,
+  website: linkedinBlue,
 };
 
 const Profile = () => {
@@ -66,6 +68,8 @@ const Profile = () => {
     userProfileReducer,
     initialProfileState,
   );
+  const [modal, setModal] = useState(false);
+  const [drawer, setDrawer] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
     about,
@@ -79,8 +83,6 @@ const Profile = () => {
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address, country } = location;
-  const [modal, setModal] = useState(false);
-  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -101,6 +103,9 @@ const Profile = () => {
     })();
   }, []);
   console.log({ loading, user, error });
+  if (error) {
+    return <ErrorAlert message={error} type="error" />;
+  }
   if (loading) return <div>"loading"</div>;
   return (
     <ProfileLayout>
@@ -132,7 +137,14 @@ const Profile = () => {
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => (
-              <SocialIcon src={socialIcons[name]} />
+              <a
+                href={url}
+                key="name"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SocialIcon src={socialIcons[name]} />
+              </a>
             ))}
           </IconsContainer>
         </UserInfoDesktop>
