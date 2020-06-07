@@ -25,8 +25,7 @@ import {
   HelpContainer,
   HelpImage,
   LocationIcon,
-  LinkedinBlueIcon,
-  TwitterBlueIcon,
+  SocialIcon,
   DescriptionMobile,
   SectionHeader,
   CreatePostDiv,
@@ -54,8 +53,13 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import offerHelpInactive from "assets/help-gesture-unselected.svg";
-import needHelpInactive from "assets/thermometer-unselected.svg";
+
+const socialIcons = {
+  google: linkedinBlue,
+  facebook: linkedinBlue,
+  linkedin: linkedinBlue,
+  twitter: twitterBlue,
+};
 
 const Profile = () => {
   const [userProfileState, userProfileDispatch] = useReducer(
@@ -63,8 +67,18 @@ const Profile = () => {
     initialProfileState,
   );
   const { error, loading, user } = userProfileState;
-  const { firstName = "", lastName = "", about, address, country } = user || {};
-  const needHelp = true;
+  const {
+    about,
+    firstName = "",
+    lastName = "",
+    location = {},
+    needs = {},
+    objectives = {},
+    urls = {},
+  } = user || {};
+  const needHelp = Object.values(needs).some((val) => val === true);
+  const offerHelp = Object.values(objectives).some((val) => val === true);
+  const { address, country } = location;
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
@@ -86,7 +100,7 @@ const Profile = () => {
       }
     })();
   }, []);
-
+  console.log({ loading, user, error });
   if (loading) return <div>"loading"</div>;
   return (
     <ProfileLayout>
@@ -108,20 +122,18 @@ const Profile = () => {
           </LocationMobileDiv>
           <IconsContainer>
             <HelpContainer>
-              <HelpImage
-                src={needHelp ? needHelpInactive : offerHelpInactive}
-                alt="help-type-icon"
-              />
-              {needHelp ? "I need help" : "I want to help"}
+              {needHelp && "I need help "}
+              {offerHelp && "I want to help"}
             </HelpContainer>
             <LocationDesktopDiv>
               <LocationIcon src={locationIcon} />
-              {needHelp ? "I need help" : "I want to help"} • {address},{" "}
-              {country}
+              {needHelp && "I need help "}
+              {offerHelp && "I want to help "} • {address}, {country}
             </LocationDesktopDiv>
             <PlaceholderIcon />
-            <LinkedinBlueIcon src={linkedinBlue} />
-            <TwitterBlueIcon src={twitterBlue} />
+            {Object.entries(urls).map(([name, url]) => (
+              <SocialIcon src={socialIcons[name]} />
+            ))}
           </IconsContainer>
         </UserInfoDesktop>
       </UserInfoContainer>
