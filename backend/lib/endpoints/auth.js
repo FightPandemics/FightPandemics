@@ -144,37 +144,20 @@ async function routes(app) {
       const { body, token } = req;
       const { email } = body;
 
-      const ttl_sec = 300; //5 minutes
-      const result_url = req.headers.referer;
-      const includeEmailInRedirect = true;
-
       try {
-        const getUser = await Auth0.getUserByEmail(token, email);
-        const { user_id } = getUser[0];
-        if (!user_id) {
-          throw app.httpErrors.badRequest(err, `User ${email} does not exist`);
-        }
-        const payload = {
-          result_url,
-          ttl_sec,
-          user_id,
-          includeEmailInRedirect,
-        };
-        const changePasswordTicket = await Auth0.changePassword(token, payload);
-        const { ticket } = changePasswordTicket;
-
+        const responseMessage = await Auth0.changePassword(token, email);
         req.log.info(
-          `Change password ticket created successfully for email=${email}`,
+          `Change password email created successfully for email=${email}`,
         );
-        return { ticket };
+        return { email, responseMessage, token };
       } catch (err) {
         if (err.statusCode === 400) {
           throw app.httpErrors.badRequest(err, `User ${email} does not exist`);
         } else if (err.statusCode === 404) {
           throw app.httpErrors.notFound(err, `User ${email} not found`);
         }
-        req.log.error(err, "Error creating change password ticket");
-        throw app.httpErrors.internalServerError();
+        req.log.error(err, "Error creating change password email");
+        throw app.httpErrors.internalServerError(`Error creating change password email=${email}`);
       }
     },
   );

@@ -97,15 +97,28 @@ const getUserByEmail = async (token, email) => {
   }
 };
 
-const changePassword = async (token, payload) => {
+const changePassword = async (token, email) => {
+  const client_id = config.auth.clientId;
+  const connection = "Username-Password-Authentication";
+  const payload = {
+    client_id,
+    email,
+    connection,
+  };
   try {
     const res = await axios.post(
-      `${AUTH_DOMAIN}/api/v2/tickets/password-change`,
+      `${AUTH_DOMAIN}/dbconnections/change_password`,
       payload,
       getAuthHeaders(token),
     );
     return res.data;
   } catch (err) {
+    console.log(
+      "ERR HERE",
+      err,
+      AUTH_DOMAIN,
+      JSON.stringify(config.auth.clientId),
+    );
     return wrapError(err);
   }
 };
