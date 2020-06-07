@@ -8,9 +8,24 @@ export const FaqContainer = styled.div`
 `;
 
 export const QuestionsContainer = styled.div`
-  max-width: 80rem;
+  max-width: 70rem;
 `;
 
 export const AnswerContainer = styled.div`
-  margin: 1rem 0;
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary {
+  font-size: 1.17em;
+  margin-left: 7px;
+ 
+  margin-bottom: 0.5em;
+  font-family: "Poppins","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 400;
+  cursor: pointer;
+  }
+  p {
+    margin-left: 15px;
+  }
 `;
