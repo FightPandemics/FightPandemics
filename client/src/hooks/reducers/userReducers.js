@@ -38,7 +38,7 @@ export const userProfileReducer = (state, action) => {
     case FETCH_USER_ERROR:
       return { ...state, loading: false, error: payload.error };
     case FETCH_USER_SUCCESS:
-      return { ...state, loading: false, user: payload.user };
+      return { ...state, loading: false, error: null, user: payload.user };
     default:
       return state;
   }

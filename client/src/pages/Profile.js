@@ -1,24 +1,13 @@
 import { WhiteSpace } from "antd-mobile";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import Activity from "components/Profile/Activity";
-import fakePosts from "assets/data/fakePosts";
-import ProfilePic from "components/Picture/ProfilePic";
-import { getInitials } from "utils/userInfo";
-import FeedWrapper from "components/Feed/FeedWrapper";
 import CreatePost from "components/CreatePost/CreatePost";
-
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import createPost from "assets/icons/create-post.svg";
-import menu from "assets/icons/menu.svg";
-import edit from "assets/icons/edit.svg";
-import editEmpty from "assets/icons/edit-empty.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
-import locationIcon from "assets/icons/location.svg";
+import fakePosts from "assets/data/fakePosts";
+import FeedWrapper from "components/Feed/FeedWrapper";
+import ProfilePic from "components/Picture/ProfilePic";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -45,16 +34,60 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
+import {
+  FETCH_USER,
+  FETCH_USER_ERROR,
+  FETCH_USER_SUCCESS,
+} from "hooks/actions/userActions";
+import {
+  userProfileReducer,
+  initialProfileState,
+} from "hooks/reducers/userReducers";
+import { getInitials } from "utils/userInfo";
 
-const offerHelpInactive = require("assets/help-gesture-unselected.svg");
-const needHelpInactive = require("assets/thermometer-unselected.svg");
+// ICONS
+import SvgIcon from "components/Icon/SvgIcon";
+import createPost from "assets/icons/create-post.svg";
+import menu from "assets/icons/menu.svg";
+import edit from "assets/icons/edit.svg";
+import editEmpty from "assets/icons/edit-empty.svg";
+import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
+import twitterBlue from "assets/icons/social-twitter-blue.svg";
+import locationIcon from "assets/icons/location.svg";
+import offerHelpInactive from "assets/help-gesture-unselected.svg";
+import needHelpInactive from "assets/thermometer-unselected.svg";
 
-const Profile = (props) => {
-  const { firstName, lastName, about, address, country } = props.user;
+const Profile = () => {
+  const [userProfileState, userProfileDispatch] = useReducer(
+    userProfileReducer,
+    initialProfileState,
+  );
+  const { error, loading, user } = userProfileState;
+  const { firstName = "", lastName = "", about, address, country } = user || {};
   const needHelp = true;
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
+  useEffect(() => {
+    (async function fetchProfile() {
+      userProfileDispatch({ type: FETCH_USER });
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch({
+          type: FETCH_USER_SUCCESS,
+          user: res.data,
+        });
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch({
+          type: FETCH_USER_ERROR,
+          error: `Failed loading profile, reason: ${message}`,
+        });
+      }
+    })();
+  }, []);
+
+  if (loading) return <div>"loading"</div>;
   return (
     <ProfileLayout>
       <BackgroundHeader>
@@ -137,10 +170,4 @@ const Profile = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;
