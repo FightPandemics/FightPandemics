@@ -85,10 +85,10 @@ const getUser = async (token) => {
   }
 };
 
-const getUserByEmail = async (token) => {
+const getUserByEmail = async (token, email) => {
   try {
     const res = await axios.get(
-      `${AUTH_DOMAIN}/api/v2/users-by-email`,
+      `${AUTH_DOMAIN}/api/v2/users-by-email?email=${email}`,
       getAuthHeaders(token),
     );
     return res.data;
