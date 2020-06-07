@@ -50,6 +50,7 @@ const postSchema = new Schema(
         "R&D",
         "Others",
         "Wellbeing/Mental",
+        "Tech",
       ],
       trim: true,
       type: [String],
