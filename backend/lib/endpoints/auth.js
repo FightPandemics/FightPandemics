@@ -1,5 +1,6 @@
 const Auth0 = require("../components/Auth0");
 const {
+  changePasswordSchema,
   loginSchema,
   oAuthSchema,
   oAuthProviderSchema,
@@ -135,6 +136,43 @@ async function routes(app) {
       throw app.httpErrors.internalServerError();
     }
   });
-}
+
+app.post("/change-password", { preHandler: [app.getServerToken],  schema: changePasswordSchema }, async (req) => {
+
+    const { body, token } = req;
+    const { email } = body;
+    const ttl_sec = 300; //5 minutes
+
+
+    try {
+      const getUser = await Auth0.getUserByEmail(token)
+      const { user_id } = getUser;
+      const payload = {
+        user_id,
+        ttl_sec,
+      }
+    } catch (err) {
+      throw app.httpErrors.badRequest(err); //general catch-all for now
+    }
+
+    
+    try {
+      const changePasswordTicket = await Auth0.changePassword(token, payload);
+      const { ticket } = changePasswordTicket;
+      req.log.info(`Change password ticket created successfully for email=${email}`);
+    } catch (err) {
+      if (err.statusCode === 400) {
+        throw app.httpErrors.badRequest(err, `User ${email} does not exist`);
+      } else if (err.statusCode === 404) {
+        throw app.httpErrors.notFound(err, `User ${email} not found`);
+      } 
+      req.log.error(err , "Error creating change password ticket");
+      throw app.httpErrors.internalServerError();
+    }
+    
+    return { ticket };
+
+  });
+};
 
 module.exports = routes;

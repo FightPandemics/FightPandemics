@@ -85,9 +85,36 @@ const getUser = async (token) => {
   }
 };
 
+const getUserByEmail = async (token) => {
+  try {
+    const res = await axios.get(
+      `${AUTH_DOMAIN}/api/v2/users-by-email`,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
+const changePassword = async (token, payload) => {
+  try {
+    const res = await axios.post(
+      `${AUTH_DOMAIN}/api/v2/tickets/password-change`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
 module.exports = {
   authenticate,
   buildOauthUrl,
+  changePassword,
   createUser,
   getUser,
+  getUserByEmail,
 };
