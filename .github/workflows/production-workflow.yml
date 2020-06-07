@@ -1,15 +1,9 @@
-name: staging
+name: production
 
 on:
   push:
-    branches:
-      - master
-    paths:
-      - backend/**
-      - client/**
-      - geo-service/**
-      - main.tf
-      - .github/workflows/**
+    tags:
+      - 'v*'
 
 jobs:
   build_images:
@@ -38,23 +32,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: fightpandemics/${{ matrix.app }}
-          tags: staging
-  deploy_staging:
+          tags: production
+  deploy_production:
     runs-on: ubuntu-latest
     needs: build_images
     steps:
       - uses: actions/checkout@v2
       - env:
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
         run: |
           cat << EOF > backend.tf
           terraform {
             backend "s3" {
-              bucket = "fp-staging-terraform-state"
-              region = "us-east-1"
-              key = "staging.tfstate"
+              bucket = "fp-production-terraform-state"
+              region = "eu-west-1"
+              key = "production.tfstate"
             }
           }
           EOF
@@ -70,27 +64,44 @@ jobs:
           tf_actions_version: latest
           tf_actions_subcommand: 'init'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
       - name: 'Terraform Apply'
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: latest
           tf_actions_subcommand: 'apply'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
-          TF_VAR_env_name: staging
-          TF_VAR_fp_context: staging
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
+          TF_VAR_env_name: production
+          TF_VAR_fp_context: production
           TF_VAR_commit_hash: ${{ steps.get-git-commit.outputs.hash }}
-          TF_VAR_aws_region: us-east-1
+          TF_VAR_aws_region: eu-west-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: ecs update-service --cluster staging-cluster --service staging --force-new-deployment
+          args: ecs update-service --cluster production-cluster --service production --force-new-deployment
         env:
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.PRODUCTION_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
+  create_release:
+    name: Create Release
+    needs: deploy_production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
 
