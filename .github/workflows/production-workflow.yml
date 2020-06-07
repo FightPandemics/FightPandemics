@@ -88,6 +88,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PRODUCTION_AWS_SECRET_ACCESS_KEY }}
   create_release:
     name: Create Release
+    needs: deploy_production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
