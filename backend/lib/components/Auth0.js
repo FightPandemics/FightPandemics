@@ -85,18 +85,6 @@ const getUser = async (token) => {
   }
 };
 
-const getUserByEmail = async (token, email) => {
-  try {
-    const res = await axios.get(
-      `${AUTH_DOMAIN}/api/v2/users-by-email?email=${email}`,
-      getAuthHeaders(token),
-    );
-    return res.data;
-  } catch (err) {
-    return wrapError(err);
-  }
-};
-
 const changePassword = async (token, email) => {
   const client_id = config.auth.clientId;
   const connection = "Username-Password-Authentication";
@@ -123,5 +111,4 @@ module.exports = {
   changePassword,
   createUser,
   getUser,
-  getUserByEmail,
 };

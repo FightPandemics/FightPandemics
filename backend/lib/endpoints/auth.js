@@ -149,15 +149,12 @@ async function routes(app) {
         req.log.info(
           `Change password email created successfully for email=${email}`,
         );
-        return { email, responseMessage, token };
+        return { email, responseMessage };
       } catch (err) {
-        if (err.statusCode === 400) {
-          throw app.httpErrors.badRequest(err, `User ${email} does not exist`);
-        } else if (err.statusCode === 404) {
-          throw app.httpErrors.notFound(err, `User ${email} not found`);
-        }
         req.log.error(err, "Error creating change password email");
-        throw app.httpErrors.internalServerError(`Error creating change password email=${email}`);
+        throw app.httpErrors.internalServerError(
+          `Error creating change password email=${email}`,
+        );
       }
     },
   );
