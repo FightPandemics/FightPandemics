@@ -18,7 +18,7 @@ const SOURCED_BY_FP_OWNER_UPDATE = {
   firstName: "Sourced by",
   lastName: "FightPandemics",
   photo:
-    "http://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/c970ae56-203d-4f42-acf9-c00d3de6b5cc/255x258.png",
+    "https://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/c970ae56-203d-4f42-acf9-c00d3de6b5cc/255x258.png",
 };
 
 const SOURCED_BY_FP_ORG_UPDATE = {
