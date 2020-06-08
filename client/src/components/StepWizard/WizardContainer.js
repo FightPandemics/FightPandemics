@@ -5,6 +5,7 @@ const WizardContainer = styled.div`
   flex-flow: row no-wrap;
   justify-content: center;
   width: 100%;
+  height: 58rem;
   overflow-x: hidden;
   overflow-y: hidden;
 `;
