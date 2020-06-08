@@ -155,6 +155,8 @@ export const ProfileLayout = styled.div`
   max-height: 100%;
   margin: 0 -25px;
   flex-direction: row;
+  flex-grow: 1;
+  align-self: flex-start;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     padding: 0 15%;
   }

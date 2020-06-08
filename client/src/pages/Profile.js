@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
-import fakePosts from "assets/data/fakePosts";
+import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
@@ -23,7 +23,6 @@ import {
   LocationMobileDiv,
   IconsContainer,
   HelpContainer,
-  HelpImage,
   LocationIcon,
   SocialIcon,
   DescriptionMobile,
@@ -33,6 +32,15 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
+import {
+  postsReducer,
+  postsState as initialPostsState,
+} from "hooks/reducers/feedReducers";
+import {
+  ERROR_POSTS,
+  FETCH_POSTS,
+  SET_POSTS,
+} from "../hooks/actions/feedActions";
 import {
   FETCH_USER,
   FETCH_USER_ERROR,
@@ -53,7 +61,6 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import ErrorAlert from "../components/Alert/ErrorAlert";
 
 const socialIcons = {
   google: linkedinBlue,
@@ -68,10 +75,15 @@ const Profile = () => {
     userProfileReducer,
     initialProfileState,
   );
+  const [postsState, postsDispatch] = useReducer(
+    postsReducer,
+    initialPostsState,
+  );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
+    id: userId,
     about,
     firstName = "",
     lastName = "",
@@ -83,6 +95,7 @@ const Profile = () => {
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address, country } = location;
+  console.log({ postsState });
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -102,7 +115,27 @@ const Profile = () => {
       }
     })();
   }, []);
-  console.log({ loading, user, error });
+  useEffect(() => {
+    (async function fetchPosts() {
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        const res = await axios.get(
+          `/api/posts?limit=5&skip0=&userId=${userId}`,
+        );
+        postsDispatch({
+          type: SET_POSTS,
+          user: res.data,
+        });
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
+        });
+      }
+    })();
+  }, [userId]);
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -165,7 +198,7 @@ const Profile = () => {
           <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
         </SectionHeader>
         <FeedWrapper>
-          <Activity filteredPosts={fakePosts} />
+          <Activity filteredPosts={postsState.posts} />
           <SvgIcon
             src={createPost}
             className="create-post"
