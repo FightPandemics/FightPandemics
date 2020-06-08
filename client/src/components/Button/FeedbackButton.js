@@ -1,6 +1,6 @@
 import { Button } from "antd-mobile";
 import styled from "styled-components";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 
 const { black, royalBlue, white } = theme.colors;
 
