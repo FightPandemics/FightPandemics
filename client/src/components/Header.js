@@ -87,7 +87,7 @@ const NavLinks = styled.div`
 `;
 const activeStyles = {
   fontWeight: "600",
-  color: `${colors.royalBlue};`,
+  color: `${colors.royalBlue}`,
 };
 
 export default ({ isAuthenticated, onMenuClick }) => {

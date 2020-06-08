@@ -13,11 +13,27 @@ async function routes(app) {
     if (result === null) {
       throw app.httpErrors.notFound();
     }
+    const {
+      _id: id,
+      about,
+      email,
+      firstName,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
+    } = result;
     return {
-      email: result.email,
-      firstName: result.firstName,
-      id: result._id,
-      lastName: result.lastName,
+      about,
+      email,
+      firstName,
+      id,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
     };
   });
 

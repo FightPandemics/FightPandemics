@@ -90,7 +90,7 @@ In the event that there is an upcoming deadline for a particular feature, someon
 
 ### API Documentation
 
-To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
+To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/api/documentation`
 
 ## Adding NPM dependencies to package.json
 
