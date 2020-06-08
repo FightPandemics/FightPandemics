@@ -29,6 +29,9 @@ async function routes(app) {
   const UNLOGGED_POST_SIZE = 120;
   const EXPIRATION_OPTIONS = ["day", "week", "month"];
 
+  // @desc    Get all posts
+  // @route   /api/posts/
+  // @method  GET  protected
   app.get(
     "/",
     {
@@ -180,7 +183,9 @@ async function routes(app) {
     },
   );
 
-  // Create Post
+  // @desc    Create a post
+  // @route   /api/posts/
+  // @method  POST  protected
   app.post(
     "/",
     {
@@ -230,6 +235,9 @@ async function routes(app) {
   // /posts/postId
 
   // Get single post
+  // @desc    Get single post
+  // @route   /api/posts/:postId/
+  // @method  GET  protected
   app.get(
     "/:postId",
     {
@@ -297,7 +305,9 @@ async function routes(app) {
     },
   );
 
-  // Delete Single Post
+  // @desc    Delete single post
+  // @route   /api/posts/:postId/
+  // @method  DELETE  protected
   app.delete(
     "/:postId",
     {
@@ -338,7 +348,9 @@ async function routes(app) {
     },
   );
 
-  // Update single post
+  // @desc    Update single post
+  // @route   /api/posts/:postId/
+  // @method  PATCH  protected
   app.patch(
     "/:postId",
     {
@@ -377,9 +389,9 @@ async function routes(app) {
     },
   );
 
-  // @desc    Unlike a post
+  // @desc    Like a post
   // @route   /api/posts/:postId/likes/:userId
-  // @method  DELETE  protected
+  // @method  PUT  protected
   app.put(
     "/:postId/likes/:userId",
     {
