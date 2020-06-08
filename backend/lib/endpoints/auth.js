@@ -42,7 +42,7 @@ async function routes(app) {
       }
       return { email, emailVerified, token, user };
     } catch (err) {
-      req.log.error("OAuth error", err);
+      req.log.error(err, "OAuth error");
       throw app.httpErrors.internalServerError();
     }
   });
@@ -87,7 +87,7 @@ async function routes(app) {
         ) {
           throw app.httpErrors.badRequest("Password is too weak");
         }
-        req.log.error("Error creating user", { err });
+        req.log.error(err, "Error creating user");
         throw app.httpErrors.internalServerError();
       }
       const accessToken = await Auth0.authenticate("password", {

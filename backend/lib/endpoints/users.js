@@ -64,9 +64,7 @@ async function routes(app) {
         throw app.httpErrors.forbidden("Email address not verified");
       }
       if (!req.userId) {
-        req.log.error("No userId for create user, invalid configuration", {
-          email,
-        });
+        req.log.error(`No userId for create user ${email}, invalid configuration`);
         throw app.httpErrors.internalServerError();
       }
       if (await User.findById(req.userId)) {
