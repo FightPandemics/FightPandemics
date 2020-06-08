@@ -50,7 +50,9 @@ async function routes(app) {
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
-        { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
+        {
+          $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
+        },
       ];
       if (user) {
         filters.push({
@@ -87,10 +89,14 @@ async function routes(app) {
         ? "$content"
         : {
             $cond: {
-              if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
+              if: {
+                $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE],
+              },
               then: {
                 $concat: [
-                  { $substr: ["$content", 0, UNLOGGED_POST_SIZE] },
+                  {
+                    $substr: ["$content", 0, UNLOGGED_POST_SIZE],
+                  },
                   "...",
                 ],
               },
@@ -145,7 +151,9 @@ async function routes(app) {
             expireAt: true,
             externalLinks: true,
             language: true,
-            liked: { $in: [mongoose.Types.ObjectId(userId), "$likes"] },
+            liked: {
+              $in: [mongoose.Types.ObjectId(userId), "$likes"],
+            },
             likesCount: {
               $size: { $ifNull: ["$likes", []] },
             },
@@ -162,7 +170,9 @@ async function routes(app) {
       );
 
       if (postsErr) {
-        req.log.error("Failed requesting posts", { postsErr });
+        req.log.error("Failed requesting posts", {
+          postsErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -170,6 +180,7 @@ async function routes(app) {
     },
   );
 
+  // Create Post
   app.post(
     "/",
     {
@@ -205,7 +216,9 @@ async function routes(app) {
       const [err, post] = await app.to(new Post(postProps).save());
 
       if (err) {
-        req.log.error("Failed creating post", { err });
+        req.log.error("Failed creating post", {
+          err,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -216,6 +229,7 @@ async function routes(app) {
 
   // /posts/postId
 
+  // Get single post
   app.get(
     "/:postId",
     {
@@ -249,7 +263,9 @@ async function routes(app) {
           {
             $addFields: {
               childCount: {
-                $size: { $ifNull: ["$children", []] },
+                $size: {
+                  $ifNull: ["$children", []],
+                },
               },
             },
           },
@@ -257,13 +273,17 @@ async function routes(app) {
             $group: {
               _id: null,
               comments: { $push: "$$ROOT" },
-              numComments: { $sum: { $add: ["$childCount", 1] } },
+              numComments: {
+                $sum: { $add: ["$childCount", 1] },
+              },
             },
           },
         ]),
       );
       if (commentErr) {
-        req.log.error("Failed retrieving comments", { commentErr });
+        req.log.error("Failed retrieving comments", {
+          commentErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -277,6 +297,7 @@ async function routes(app) {
     },
   );
 
+  // Delete Single Post
   app.delete(
     "/:postId",
     {
@@ -295,7 +316,9 @@ async function routes(app) {
 
       const [deletePostErr, deletedCount] = await app.to(post.delete());
       if (deletePostErr) {
-        req.log.error("Failed deleting post", { deletePostErr });
+        req.log.error("Failed deleting post", {
+          deletePostErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -307,10 +330,15 @@ async function routes(app) {
         app.log.error("failed removing comments for deleted post", { postId });
       }
 
-      return { deletedCommentsCount, deletedCount, success: true };
+      return {
+        deletedCommentsCount,
+        deletedCount,
+        success: true,
+      };
     },
   );
 
+  // Update single post
   app.patch(
     "/:postId",
     {
@@ -339,7 +367,9 @@ async function routes(app) {
       );
 
       if (updateErr) {
-        req.log.error("Failed updating post", { updateErr });
+        req.log.error("Failed updating post", {
+          updateErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -347,6 +377,9 @@ async function routes(app) {
     },
   );
 
+  // @desc    Unlike a post
+  // @route   /api/posts/:postId/likes/:userId
+  // @method  DELETE  protected
   app.put(
     "/:postId/likes/:userId",
     {
@@ -378,6 +411,9 @@ async function routes(app) {
     },
   );
 
+  // @desc    Unlike a post
+  // @route   /api/posts/:postId/likes/:userId
+  // @method  DELETE  protected
   app.delete(
     "/:postId/likes/:userId",
     {
@@ -411,9 +447,15 @@ async function routes(app) {
   // -- Comments
   const COMMENT_PAGE_SIZE = 5;
 
+  // @desc    Get comments
+  // @route   /api/posts/:postId/comments
+  // @method  GET  protected
   app.get(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: getCommentsSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: getCommentsSchema,
+    },
     async (req) => {
       const { limit, skip } = req.query;
       const { postId } = req.params;
@@ -436,7 +478,9 @@ async function routes(app) {
           {
             $addFields: {
               childCount: {
-                $size: { $ifNull: ["$children", []] },
+                $size: {
+                  $ifNull: ["$children", []],
+                },
               },
             },
           },
@@ -449,7 +493,9 @@ async function routes(app) {
         ]),
       );
       if (commentErr) {
-        req.log.error("Failed retrieving comments", { commentErr });
+        req.log.error("Failed retrieving comments", {
+          commentErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -457,16 +503,24 @@ async function routes(app) {
     },
   );
 
+  // @desc    Add comment
+  // @route   /api/posts/:postId/comments
+  // @method  POST  protected
   app.post(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: createCommentSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: createCommentSchema,
+    },
     async (req, reply) => {
       const { userId, body: commentProps, params } = req;
       const { postId } = params;
 
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
-        req.log.error("Failed retrieving user", { userErr });
+        req.log.error("Failed retrieving user", {
+          userErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -491,7 +545,9 @@ async function routes(app) {
       const [err, comment] = await app.to(new Comment(commentProps).save());
 
       if (err) {
-        req.log.error("Failed creating comment", { err });
+        req.log.error("Failed creating comment", {
+          err,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -500,9 +556,15 @@ async function routes(app) {
     },
   );
 
+  // @desc    Update comment
+  // @route   /api/posts/:postId/comments/:commentId
+  // @method  PATCH  protected
   app.patch(
     "/:postId/comments/:commentId",
-    { preValidation: [app.authenticate], schema: updateCommentSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: updateCommentSchema,
+    },
     async (req) => {
       const { userId } = req;
       const { content } = req.body;
@@ -510,7 +572,9 @@ async function routes(app) {
 
       const [err, comment] = await app.to(Comment.findById(commentId));
       if (err) {
-        req.log.error("Failed retrieving comment", { err });
+        req.log.error("Failed retrieving comment", {
+          err,
+        });
         throw app.httpErrors.internalServerError();
       } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
@@ -519,7 +583,9 @@ async function routes(app) {
       comment.content = content;
       const [updateErr, updatedComment] = await app.to(comment.save());
       if (updateErr) {
-        req.log.error("Failed updating comment", { updateErr });
+        req.log.error("Failed updating comment", {
+          updateErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -527,15 +593,23 @@ async function routes(app) {
     },
   );
 
+  // @desc    Delete a comment
+  // @route   /api/posts/:postId/comments/:commentId
+  // @method  DELETE  protected
   app.delete(
     "/:postId/comments/:commentId",
-    { preValidation: [app.authenticate], schema: deleteCommentSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: deleteCommentSchema,
+    },
     async (req) => {
       const { userId } = req;
       const { commentId } = req.params;
       const [findErr, comment] = await app.to(Comment.findById(commentId));
       if (findErr) {
-        req.log.error("Failed retrieving findErr", { findErr });
+        req.log.error("Failed retrieving findErr", {
+          findErr,
+        });
         throw app.httpErrors.internalServerError();
       } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
@@ -543,14 +617,18 @@ async function routes(app) {
 
       const [deleteCommentErr, deletedComment] = await app.to(comment.delete());
       if (deleteCommentErr) {
-        req.log.error("Failed deleting comment", { deleteCommentErr });
+        req.log.error("Failed deleting comment", {
+          deleteCommentErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
       const {
         deletedCount: deletedNestedCount,
         ok: deleteNestedOk,
-      } = await Comment.deleteMany({ parentId: commentId });
+      } = await Comment.deleteMany({
+        parentId: commentId,
+      });
       if (deleteNestedOk !== 1) {
         app.log.error("failed removing nested comments for deleted comment", {
           commentId,
@@ -565,9 +643,15 @@ async function routes(app) {
     },
   );
 
+  // @desc    Like a comment
+  // @route   /api/posts/:postId/comments/:commentId/likes/:userId
+  // @method  PUT  protected
   app.put(
     "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
       if (!req.userId.equals(req.params.userId)) {
         throw app.httpErrors.forbidden();
@@ -583,7 +667,9 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        req.log.error("Failed liking comment", { updateErr });
+        req.log.error("Failed liking comment", {
+          updateErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
@@ -594,9 +680,15 @@ async function routes(app) {
     },
   );
 
+  // @desc    Unlike a comment
+  // @route   /api/posts/:postId/comments/:commentId/likes/:userId
+  // @method  DELETE  protected
   app.delete(
     "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    {
+      preValidation: [app.authenticate],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
       if (!req.userId.equals(req.params.userId)) {
         throw app.httpErrors.forbidden();
@@ -612,7 +704,9 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        req.log.error("Failed unliking comment", { updateErr });
+        req.log.error("Failed unliking comment", {
+          updateErr,
+        });
         throw app.httpErrors.internalServerError();
       }
 
