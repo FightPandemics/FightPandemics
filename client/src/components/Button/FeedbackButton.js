@@ -1,6 +1,6 @@
 import { Button } from "antd-mobile";
 import styled from "styled-components";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 const { black, royalBlue, white } = theme.colors;
 
@@ -16,8 +16,8 @@ const FeedbackButton = styled(Button)`
     background-color: ${royalBlue};
     color: ${white};
   }
-  &.am-button-ghost:before {
-    border: none;
+  &.am-button {
+    border: solid ${royalBlue} !important;
   }
 `;
 
