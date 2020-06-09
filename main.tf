@@ -39,6 +39,10 @@ data "aws_ssm_parameter" "auth_client_secret" {
   name = "/fp/auth/client_secret"
 }
 
+data "aws_ssm_parameter" "google_maps_api_key" {
+  name = "/fp/googlemaps/key"
+}
+
 data "aws_ssm_parameter" "sentry_dsn" {
   name = "/fp/sentry/dsn"
 }
