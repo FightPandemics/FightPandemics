@@ -24,9 +24,8 @@ async function routes(app) {
       if (err) {
         app.log.error(err, "Failed retrieving address prediction results");
         throw app.httpErrors.internalServerError();
-      } else {
-        return data;
       }
+      return data;
     }
   );
 
@@ -41,9 +40,8 @@ async function routes(app) {
       if (err) {
         app.log.error(err, "Failed retrieving location place details");
         throw app.httpErrors.internalServerError();
-      } else {
-        return data;
       }
+      return data;
     }
   );
 
@@ -56,9 +54,8 @@ async function routes(app) {
       if (err) {
         app.log.error(err, "Failed retrieving location by reverse geocode");
         throw app.httpErrors.internalServerError();
-      } else {
-        return data;
       }
+      return data;
     }
   );
 }
