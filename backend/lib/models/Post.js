@@ -1,6 +1,24 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 
+const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
+const VISIBILITY_OPTIONS = ["city", "country", "state", "worldwide"];
+const POST_OBJECTIVES = ["request", "offer"];
+const POST_TYPES = [
+  "Business",
+  "Education",
+  "Entertainment",
+  "Funding",
+  "Groceries/Food",
+  "Information",
+  "Legal",
+  "Medical Supplies",
+  "R&D",
+  "Others",
+  "Wellbeing/Mental",
+  "Tech",
+];
+
 // -- Schema
 const postSchema = new Schema(
   {
@@ -26,7 +44,7 @@ const postSchema = new Schema(
       type: [ObjectId],
     },
     objective: {
-      enum: ["request", "offer"],
+      enum: POST_OBJECTIVES,
       lowercase: true,
       required: true,
       trim: true,
@@ -38,25 +56,12 @@ const postSchema = new Schema(
       type: String,
     },
     types: {
-      enum: [
-        "Business",
-        "Education",
-        "Entertainment",
-        "Funding",
-        "Groceries/Food",
-        "Information",
-        "Legal",
-        "Medical Supplies",
-        "R&D",
-        "Others",
-        "Wellbeing/Mental",
-        "Tech",
-      ],
+      enum: POST_TYPES,
       trim: true,
       type: [String],
     },
     visibility: {
-      enum: ["city", "country", "state", "worldwide"],
+      enum: VISIBILITY_OPTIONS,
       lowercase: true,
       trim: true,
       type: String,
@@ -180,6 +185,10 @@ function updateAuthorType(authorID, newAuthorType) {
 }
 
 module.exports = {
+  EXPIRATION_OPTIONS,
+  POST_OBJECTIVES,
+  POST_TYPES,
+  VISIBILITY_OPTIONS,
   model: Post,
   schema: postSchema,
   updateAuthorName,

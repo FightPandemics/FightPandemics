@@ -46,6 +46,10 @@ async function routes(app) {
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
+          req.log.error(userErr, "Failed retrieving user");
+          throw app.httpErrors.internalServerError();
+        } else if (user === null) {
+          req.log.error(userErr, "User does not exist");
           throw app.httpErrors.forbidden();
         }
       }
@@ -173,10 +177,10 @@ async function routes(app) {
       );
 
       if (postsErr) {
-        req.log.error("Failed requesting posts", {
-          postsErr,
-        });
+        req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
+      } else if (posts === null) {
+        return [];
       }
 
       return posts;
@@ -196,7 +200,10 @@ async function routes(app) {
       const { userId, body: postProps } = req;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
-        throw app.httpErrors.notFound();
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.forbidden();
       }
 
       // Creates embedded author document
@@ -221,9 +228,7 @@ async function routes(app) {
       const [err, post] = await app.to(new Post(postProps).save());
 
       if (err) {
-        req.log.error("Failed creating post", {
-          err,
-        });
+        req.log.error(err, "Failed creating post");
         throw app.httpErrors.internalServerError();
       }
 
@@ -248,6 +253,9 @@ async function routes(app) {
       const { postId } = req.params;
       const [postErr, post] = await app.to(Post.findById(postId));
       if (postErr) {
+        req.log.error(postErr, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -289,9 +297,7 @@ async function routes(app) {
         ]),
       );
       if (commentErr) {
-        req.log.error("Failed retrieving comments", {
-          commentErr,
-        });
+        req.log.error(commentErr, "Failed retrieving comments");
         throw app.httpErrors.internalServerError();
       }
 
@@ -319,6 +325,9 @@ async function routes(app) {
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       if (findErr) {
+        req.log.error(findErr, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
         throw app.httpErrors.notFound();
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
@@ -326,18 +335,15 @@ async function routes(app) {
 
       const [deletePostErr, deletedCount] = await app.to(post.delete());
       if (deletePostErr) {
-        req.log.error("Failed deleting post", {
-          deletePostErr,
-        });
+        req.log.error(deletePostErr, "Failed deleting post");
         throw app.httpErrors.internalServerError();
       }
-
       const {
         deletedCommentsCount,
         ok: deleteCommentsOk,
       } = await Comment.deleteMany({ postId });
       if (deleteCommentsOk !== 1) {
-        app.log.error("failed removing comments for deleted post", { postId });
+        app.log.error(`Failed removing comments for deleted post=${postId}`);
       }
 
       return {
@@ -358,17 +364,19 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req;
+      const { userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
+        req.log.error(err, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
         throw app.httpErrors.notFound();
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
-      const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
+      if (EXPIRATION_OPTIONS.includes(body.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;
@@ -379,9 +387,7 @@ async function routes(app) {
       );
 
       if (updateErr) {
-        req.log.error("Failed updating post", {
-          updateErr,
-        });
+        req.log.error(updateErr, "Failed updating post");
         throw app.httpErrors.internalServerError();
       }
 
@@ -413,6 +419,9 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
+        req.log.error(updateErr, "Failed liking post");
+        throw app.httpErrors.internalServerError();
+      } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -446,6 +455,9 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
+        req.log.error(updateErr, "Failed unliking post");
+        throw app.httpErrors.internalServerError();
+      } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
 
@@ -505,9 +517,7 @@ async function routes(app) {
         ]),
       );
       if (commentErr) {
-        req.log.error("Failed retrieving comments", {
-          commentErr,
-        });
+        req.log.error(commentErr, "Failed retrieving comments");
         throw app.httpErrors.internalServerError();
       }
 
@@ -530,10 +540,10 @@ async function routes(app) {
 
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
-        req.log.error("Failed retrieving user", {
-          userErr,
-        });
+        req.log.error(userErr, "Failed retrieving user");
         throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
       }
 
       // Assign postId and parent comment id (if present)
@@ -557,9 +567,7 @@ async function routes(app) {
       const [err, comment] = await app.to(new Comment(commentProps).save());
 
       if (err) {
-        req.log.error("Failed creating comment", {
-          err,
-        });
+        req.log.error(err, "Failed creating comment");
         throw app.httpErrors.internalServerError();
       }
 
@@ -584,9 +592,7 @@ async function routes(app) {
 
       const [err, comment] = await app.to(Comment.findById(commentId));
       if (err) {
-        req.log.error("Failed retrieving comment", {
-          err,
-        });
+        req.log.error(err, "Failed retrieving comment");
         throw app.httpErrors.internalServerError();
       } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
@@ -595,9 +601,7 @@ async function routes(app) {
       comment.content = content;
       const [updateErr, updatedComment] = await app.to(comment.save());
       if (updateErr) {
-        req.log.error("Failed updating comment", {
-          updateErr,
-        });
+        req.log.error(updateErr, "Failed updating comment");
         throw app.httpErrors.internalServerError();
       }
 
@@ -619,9 +623,7 @@ async function routes(app) {
       const { commentId } = req.params;
       const [findErr, comment] = await app.to(Comment.findById(commentId));
       if (findErr) {
-        req.log.error("Failed retrieving findErr", {
-          findErr,
-        });
+        req.log.error(findErr, "Failed retrieving comment");
         throw app.httpErrors.internalServerError();
       } else if (!userId.equals(comment.author.id)) {
         throw app.httpErrors.forbidden();
@@ -629,9 +631,7 @@ async function routes(app) {
 
       const [deleteCommentErr, deletedComment] = await app.to(comment.delete());
       if (deleteCommentErr) {
-        req.log.error("Failed deleting comment", {
-          deleteCommentErr,
-        });
+        req.log.error(deleteCommentErr, "Failed deleting comment");
         throw app.httpErrors.internalServerError();
       }
 
@@ -642,9 +642,9 @@ async function routes(app) {
         parentId: commentId,
       });
       if (deleteNestedOk !== 1) {
-        app.log.error("failed removing nested comments for deleted comment", {
-          commentId,
-        });
+        app.log.error(
+          `Failed removing nested comments for deleted comment=${commentId}`,
+        );
       }
 
       return {
@@ -679,9 +679,7 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        req.log.error("Failed liking comment", {
-          updateErr,
-        });
+        req.log.error(updateErr, "Failed liking comment");
         throw app.httpErrors.internalServerError();
       }
 
@@ -716,9 +714,7 @@ async function routes(app) {
         ),
       );
       if (updateErr) {
-        req.log.error("Failed unliking comment", {
-          updateErr,
-        });
+        req.log.error(updateErr, "Failed unliking comment");
         throw app.httpErrors.internalServerError();
       }
 

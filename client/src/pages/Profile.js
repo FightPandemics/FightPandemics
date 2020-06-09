@@ -194,16 +194,11 @@ const Profile = () => {
         <SectionHeader>
           My Activity
           <PlaceholderIcon />
-          <CreatePostDiv>Create post</CreatePostDiv>
+          <CreatePostDiv>Create a post</CreatePostDiv>
           <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
         </SectionHeader>
         <FeedWrapper>
           <Activity filteredPosts={postsState.posts} />
-          <SvgIcon
-            src={createPost}
-            className="create-post"
-            onClick={() => setModal(!modal)}
-          />
           <CreatePost onCancel={() => setModal(false)} visible={modal} />
         </FeedWrapper>
       </div>

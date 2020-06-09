@@ -24,7 +24,7 @@ async function routes(app) {
     );
 
     if (err) {
-      req.log.error("Failed submitting feedback", { err });
+      req.log.error(err, "Failed submitting feedback");
       throw app.httpErrors.internalServerError();
     }
 

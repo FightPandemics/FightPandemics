@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
 
+const LOCATION_TYPES = ["Point"];
+
 const locationSchema = new Schema({
   address: {
     lowercase: true,
@@ -42,7 +44,7 @@ const locationSchema = new Schema({
   },
   type: {
     default: "Point",
-    enum: ["Point"],
+    enum: LOCATION_TYPES,
     required: true,
     type: String,
   },
@@ -53,8 +55,6 @@ const locationSchema = new Schema({
 });
 
 const Location = model("Location", locationSchema);
-
-const LOCATION_TYPES = locationSchema.tree.type.enum;
 
 module.exports = {
   LOCATION_TYPES,

@@ -45,7 +45,12 @@ const geocodeLocation = (location) => {
     location.state,
     location.country,
   ].join(",+");
-  return airtableGeocoded[encodedLocation];
+  const locationSubdocument = airtableGeocoded[encodedLocation];
+  // do via GOogle Maps API later, for now throw error if no mapped location
+  if (!locationSubdocument) {
+    throw new Error(`No mapped location for ${encodedLocation}`);
+  }
+  return locationSubdocument;
 };
 
 module.exports = (post, fpOrgsByType) => {
