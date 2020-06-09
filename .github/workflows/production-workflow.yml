@@ -13,7 +13,6 @@ jobs:
         app:
           - backend
           - client
-          - geo-service
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
