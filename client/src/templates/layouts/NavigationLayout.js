@@ -106,8 +106,9 @@ const CloseNav = styled(Button).attrs((props) => ({
 `;
 
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex, isAuthenticated } = props;
+  const { mobiletabs, tabIndex } = props;
 
+  const isAuthenticated = true;
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -121,7 +122,7 @@ const NavigationLayout = (props) => {
       <NavList>
         {isAuthenticated ? (
           <>
-            <NavItem>
+            <NavItem history={history}>
               <Link to="/profile">Profile</Link>
             </NavItem>
           </>
