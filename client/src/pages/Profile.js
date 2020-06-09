@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Activity from "components/Profile/Activity";
@@ -42,14 +42,11 @@ import {
   SET_POSTS,
 } from "../hooks/actions/feedActions";
 import {
-  FETCH_USER,
-  FETCH_USER_ERROR,
-  FETCH_USER_SUCCESS,
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
 } from "hooks/actions/userActions";
-import {
-  userProfileReducer,
-  initialProfileState,
-} from "hooks/reducers/userReducers";
+import { UserContext, withUserContext } from "context/UserContext";
 import { getInitials } from "utils/userInfo";
 
 // ICONS
@@ -71,16 +68,14 @@ const socialIcons = {
 };
 
 const Profile = () => {
-  const [userProfileState, userProfileDispatch] = useReducer(
-    userProfileReducer,
-    initialProfileState,
-  );
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
     initialPostsState,
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -98,22 +93,18 @@ const Profile = () => {
 
   useEffect(() => {
     (async function fetchProfile() {
-      userProfileDispatch({ type: FETCH_USER });
+      userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
-        userProfileDispatch({
-          type: FETCH_USER_SUCCESS,
-          user: res.data,
-        });
+        userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
-        userProfileDispatch({
-          type: FETCH_USER_ERROR,
-          error: `Failed loading profile, reason: ${message}`,
-        });
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
       }
     })();
-  }, []);
+  }, [userProfileDispatch]);
   useEffect(() => {
     (async function fetchPosts() {
       postsDispatch({ type: FETCH_POSTS });
@@ -221,4 +212,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withUserContext(Profile);
