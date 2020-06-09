@@ -94,8 +94,7 @@ const Profile = () => {
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
-  const { address } = location;
-  console.log({ postsState });
+  const { address, country } = location;
 
   useEffect(() => {
     (async function fetchProfile() {
