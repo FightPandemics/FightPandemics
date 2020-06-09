@@ -37,6 +37,26 @@ async function routes(app) {
     };
   });
 
+  app.patch("/current", { preValidation: [app.authenticate] }, async (req) => {
+    const { body, userId } = req;
+    const [err, user] = await app.to(User.findById(userId));
+    if (err) {
+      req.log.error(err, `Failed retrieving user userId=${userId}`);
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      throw app.httpErrors.notFound();
+    }
+    const [updateErr, updatedUser] = await app.to(
+      Object.assign(user, body).save(),
+    );
+    if (updateErr) {
+      req.log.error(updateErr, "Failed updating user");
+      throw app.httpErrors.internalServerError();
+    }
+
+    return updatedUser;
+  });
+
   app.get(
     "/:userId",
     { preValidation: [app.authenticate], schema: getUserByIdSchema },
