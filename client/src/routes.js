@@ -19,12 +19,12 @@ import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
+import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
-import Logo from "components/Logo";
 
 const routes = [
   {
@@ -184,6 +184,13 @@ const routes = [
     component: EditAccount,
     props: {
       loggedInOnly: true,
+    },
+  },
+  {
+    path: "/post/:postId/",
+    component: PostPage,
+    props: {
+      loggedInOnly: false,
     },
   },
   {

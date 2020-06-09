@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 
 export const HOME = "/";
 export const LOGIN = "/auth/login";
+export const FEED = "/feed";
 export const VERIFY_EMAIL = "/auth/verify-email";
 export const CREATE_PROFILE = "/create-profile";
 

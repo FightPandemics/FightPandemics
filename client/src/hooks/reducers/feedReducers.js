@@ -11,7 +11,6 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
-  SET_COMMENTS,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -86,18 +85,6 @@ export const postsReducer = (state = postsState, action) => {
             ...state.posts[action.postId],
             liked: !!!state.posts[action.postId].liked,
             likesCount: action.count,
-          },
-        },
-      };
-    case SET_COMMENTS:
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          [action.postId]: {
-            ...state.posts[action.postId],
-            comments: action.comments,
-            commentsCount: action.commentsCount,
           },
         },
       };

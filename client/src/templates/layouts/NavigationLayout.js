@@ -210,9 +210,16 @@ const NavigationLayout = (props) => {
         <a href={NOTION_URL}>Notion</a>
       </NavItemBrief>
       <NavItem history={history}>
-        <Link to="/feed">Feed</Link>
+        <Link
+          to={{
+            pathname: "/feed",
+            user,
+          }}
+        >
+          Feed
+        </Link>
       </NavItem>
-      <NavItem history={history}> 
+      <NavItem history={history}>
         <Link to="/about-us">About Us</Link>
       </NavItem>
       <Space height="12rem" />
