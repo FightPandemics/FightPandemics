@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
-import styled from "styled-components";
-import { mq } from "constants/theme";
 import { asyncGetGeoLocation } from "utils/geolocation";
+import { validateEmail } from "utils/validators";
+import styled from 'styled-components';
+
 import {
   StyledWizard,
   WizardContainer,
@@ -130,6 +132,7 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
+
 const WizardButton = styled(SubmitButton)`
   width: 70%;
   margin-top: 5rem;
@@ -137,12 +140,21 @@ const WizardButton = styled(SubmitButton)`
 `;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => {
-    setEmail(evt);
+  const [valid, setValid] = useState(true);
+
+  useEffect(() => {
+    const validated = !email || validateEmail(email);
+    setValid(validated);
+  }, [email]);
+
+  const onChange = (event) => {
+    setEmail(event.target.value);
   };
+
   const onSubmit = () => {
-    props.update("email", email);
+    console.log("submit");
   };
+
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
@@ -157,14 +169,20 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
-            name="userEmail"
+            name="email"
             label="Email"
-            placeholder="Enter your email address"
+            className={!valid && "has-error"}
+            placeholder="Enter your email address..."
             onChange={onChange}
-            value={email && email}
+            value={email}
+            required
           />
+          {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-        <WizardButton primary="true" onClick={onSubmit}>
+        <WizardButton
+          disabled={!valid}
+          primary="true"
+          onClick={onSubmit}>
           Submit
           </WizardButton>
         <SkipLink>
