@@ -94,7 +94,7 @@ async function routes(app) {
               if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
               then: {
                 $concat: [
-                  { $substr: ["$content", 0, UNLOGGED_POST_SIZE] },
+                  { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
                   "...",
                 ],
               },
