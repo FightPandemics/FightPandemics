@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
-import About from "./pages/About";
+import AboutUs from "./pages/AboutUs";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -60,8 +60,8 @@ const routes = [
     component: OfferHelp,
   },
   {
-    path: "/about",
-    component: About,
+    path: "/about-us",
+    component: AboutUs,
   },
   {
     path: "/medical",

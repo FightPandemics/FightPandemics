@@ -132,7 +132,7 @@ const NavigationLayout = (props) => {
             </NavItem>
           </>
         )}
-        <NavItem history={history} link="/about">
+        <NavItem history={history} link="/about-us">
           About Us
         </NavItem>
       </NavList>
