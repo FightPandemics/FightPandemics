@@ -332,7 +332,7 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req;
+      const { userId, body: postProps } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         req.log.error(err, "Failed retrieving post");
