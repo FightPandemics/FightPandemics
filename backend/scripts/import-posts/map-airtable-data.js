@@ -67,7 +67,7 @@ module.exports = (post, fpOrgsByType) => {
     post_objective: [objective],
     post_type: types = ["Others"],
     post_website: website,
-    share_with: [visibility] = ["worldwide"],
+    share_with: visibility = "worldwide",
     state,
   } = post.fields;
 
