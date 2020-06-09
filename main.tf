@@ -95,6 +95,10 @@ module "main" {
       value = data.aws_ssm_parameter.auth_client_id.value
     },
     {
+      name  = "GOOGLE_MAPS_API_KEY"
+      value = data.aws_ssm_parameter.google_maps_api_key.value
+    },
+    {
       name  = "NODE_ENV"
       value = var.env_name
     },

@@ -80,7 +80,7 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
   );
 
   return (
-    <Dropdown overlay={menu} trigger={["click"]}>
+    <Dropdown overlay={menu} visible={predictedAddresses.length > 0}>
       <div id="dropdown-anchor" style={{ position: "relative" }}>
         <Input
           type="text"
