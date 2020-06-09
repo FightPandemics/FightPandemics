@@ -37,7 +37,7 @@ const SubLabel = styled.small`
 `;
 
 const AddressInput = ({ location, errors, onLocationChange }) => {
-  // sessiontoken for combining autocomplete & palce details into single usage
+  // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
   const [predictedAddresses, setPredictedAddresses] = useState([]);
