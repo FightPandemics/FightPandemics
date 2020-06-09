@@ -2,6 +2,9 @@ import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import About from "./pages/About";
+import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
+import EditOrganizationProfile from "./pages/EditOrganizationProfile";
+import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -62,6 +65,18 @@ const routes = [
   {
     path: "/about",
     component: About,
+  },
+  {
+    path: "/CreateOrganizationProfile",
+    component: CreateOrganizationProfile,
+  },
+  {
+    path: "/edit-organization-account",
+    component: EditOrganizationAccount,
+  },
+  {
+    path: "/edit-organization-profile",
+    component: EditOrganizationProfile,
   },
   {
     path: "/medical",
