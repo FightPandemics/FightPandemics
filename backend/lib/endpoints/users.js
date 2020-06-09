@@ -1,6 +1,10 @@
 const Auth0 = require("../components/Auth0");
 const { getBearerToken } = require("../utils");
-const { getUserByIdSchema, createUserSchema } = require("./schema/users");
+const {
+  getUserByIdSchema,
+  createUserSchema,
+  updateUserSchema,
+} = require("./schema/users");
 
 /*
  * /api/users
@@ -37,25 +41,29 @@ async function routes(app) {
     };
   });
 
-  app.patch("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const { body, userId } = req;
-    const [err, user] = await app.to(User.findById(userId));
-    if (err) {
-      req.log.error(err, `Failed retrieving user userId=${userId}`);
-      throw app.httpErrors.internalServerError();
-    } else if (user === null) {
-      throw app.httpErrors.notFound();
-    }
-    const [updateErr, updatedUser] = await app.to(
-      Object.assign(user, body).save(),
-    );
-    if (updateErr) {
-      req.log.error(updateErr, "Failed updating user");
-      throw app.httpErrors.internalServerError();
-    }
+  app.patch(
+    "/current",
+    { preValidation: [app.authenticate], schema: updateUserSchema },
+    async (req) => {
+      const { body, userId } = req;
+      const [err, user] = await app.to(User.findById(userId));
+      if (err) {
+        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+      const [updateErr, updatedUser] = await app.to(
+        Object.assign(user, body).save(),
+      );
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating user");
+        throw app.httpErrors.internalServerError();
+      }
 
-    return updatedUser;
-  });
+      return updatedUser;
+    },
+  );
 
   app.get(
     "/:userId",
@@ -84,7 +92,9 @@ async function routes(app) {
         throw app.httpErrors.forbidden("Email address not verified");
       }
       if (!req.userId) {
-        req.log.error(`No userId for create user ${email}, invalid configuration`);
+        req.log.error(
+          `No userId for create user ${email}, invalid configuration`,
+        );
         throw app.httpErrors.internalServerError();
       }
       if (await User.findById(req.userId)) {
