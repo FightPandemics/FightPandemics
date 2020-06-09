@@ -1,8 +1,12 @@
-import { Drawer, List, Button } from "antd-mobile";
+import { Drawer, List, Button, Flex, WhiteSpace } from "antd-mobile";
+import { Typography } from "antd";
+
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+import TextAvatar from "components/TextAvatar";
+import Avatar from "components/Avatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
@@ -22,18 +26,19 @@ const sidebarStyle = {
   background: `${royalBlue}`,
 };
 
-const NavList = styled(List)`
+const MenuContainer = styled.div`
   width: 63vw !important;
   @media screen and (min-width: 1024px) {
     width: 20vw !important;
   }
+`;
+
+const NavList = styled(List)`
   & .am-list-body {
     background: unset;
     border-width: 0 !important;
     position: absolute;
-    top: 35vh;
     width: 100%;
-    transform: translateY(-50%);
     & div:not(:last-child) {
       & .am-list-line {
         border-bottom: 0;
@@ -49,11 +54,17 @@ const NavList = styled(List)`
   }
 `;
 
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const NavItem = styled(List.Item).attrs((props) => ({
   onClick: props.onClick || (() => props.history.push(props.link)),
 }))`
   background: unset;
-  padding-left: 24px;
+  padding-left: 2.1rem;
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -73,6 +84,39 @@ const NavItem = styled(List.Item).attrs((props) => ({
   &.am-list-item-active {
     background: ${tropicalBlue};
   }
+`;
+
+const NavItemBrief = styled(NavItem).attrs((props) => ({
+  onClick: props.onClick || (() => props.history.push(props.link)),
+}))`
+  padding-left: 4.6rem;
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    & .am-list-content {
+      font-size: 1.8rem;
+      font-weight: normal;
+      line-height: 4.5rem;
+    }
+  }
+`;
+
+const UserName = styled(Typography.Text)`
+  padding: 1.2rem 1.2rem;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  color: ${white};
+`;
+
+const Space = styled.div`
+  height: ${(props) => props.height ?? "1.4rem"};
 `;
 
 const CloseNav = styled(Button).attrs((props) => ({
@@ -105,6 +149,19 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
+const BriefLink = styled(Link)`
+  font-size: 1.8rem;
+  font-weight: normal;
+  line-height: 4.5rem;
+`;
+
+const DividerLine = styled.div`
+  height: 0.1px;
+  background-color: ${white};
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+`;
+
 const NavigationLayout = (props) => {
   const { mobiletabs, tabIndex } = props;
 
@@ -117,28 +174,58 @@ const NavigationLayout = (props) => {
     setDrawerOpened(!drawerOpened);
   };
 
-  const drawerMenu = () => (
+  const AuthenticatedMenu = () => (
     <>
-      <NavList>
-        {isAuthenticated ? (
-          <>
-            <NavItem history={history}>
-              <Link to="/profile">Profile</Link>
-            </NavItem>
-          </>
-        ) : (
-          <>
-            <NavItem history={history} link="/auth/login">
-              Login / Register
-            </NavItem>
-          </>
-        )}
-        <NavItem history={history} link="/about">
-          About Us
+      <WhiteSpace size="lg" />
+      <AvatarContainer>
+        <NavItem history={history}>
+          <TextAvatar size={80} alt="avatar">
+            MM
+          </TextAvatar>
         </NavItem>
-      </NavList>
-      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+        <UserName>name</UserName>
+      </AvatarContainer>
+      <DividerLine />
+      <NavItem history={history}>
+        <Link to="/profile">Profile</Link>
+      </NavItem>
+      <NavItem history={history}>
+        <Link to="/profile">Organization</Link>
+      </NavItem>
+      <NavItemBrief history={history}>
+        <Link to="/profile">Notion</Link>
+      </NavItemBrief>
+      <NavItemBrief history={history}>
+        <Link to="/profile">+ Add new one</Link>
+      </NavItemBrief>
+      <NavItem history={history}>
+        <Link to="/feed">Feed</Link>
+      </NavItem>
+      <Space height="5rem" />
+      <NavItem history={history}>
+        <BriefLink to="/profile">Feedback</BriefLink>
+      </NavItem>
+      <NavItem history={history}>
+        <BriefLink to="/profile">Logout</BriefLink>
+      </NavItem>
     </>
+  );
+
+  const UnAuthenticatedMenu = () => (
+    <>
+      <NavItem history={history} link="/auth/login">
+        Login / Register
+      </NavItem>
+    </>
+  );
+
+  const DrawerMenu = () => (
+    <MenuContainer>
+      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+      <NavList>
+        {isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+      </NavList>
+    </MenuContainer>
   );
 
   const renderNavigationBar = () => {
@@ -153,7 +240,7 @@ const NavigationLayout = (props) => {
           open={drawerOpened}
           onOpenChange={toggleDrawer}
           position="right"
-          sidebar={drawerMenu()}
+          sidebar={DrawerMenu()}
           sidebarStyle={sidebarStyle}
           className="app-drawer"
         >
