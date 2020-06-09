@@ -18,7 +18,6 @@ const CookiesPolicy = () => {
             WHAT ARE COOKIES?
             <ol type="I">
               <li>
-                <br />
                 This Website uses ¨Cookies¨, and other similar mechanisms
                 (hereinafter, Cookies). Cookies are files sent to a browser
                 through a web server to record the activities of the User on a
