@@ -111,6 +111,11 @@ export default ({ isAuthenticated, onMenuClick }) => {
               <NavLinks>
                 <ul>
                   <li>
+                    <NavLink activeStyle={activeStyles} to="/about-us">
+                      About Us
+                    </NavLink>
+                  </li>
+                  <li>
                     <NavLink activeStyle={activeStyles} to="/feed">
                       Feed
                     </NavLink>
