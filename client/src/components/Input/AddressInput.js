@@ -59,7 +59,6 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
 
   const onMenuItemClick = async (predictedAddress) => {
     if (predictedAddress?.place_id) {
-      console.log(geoSessionToken);
       setLoadingPlaceDetails(true);
       const res = await axios.get(`/api/geo/location-details?placeId=${predictedAddress.place_id}&sessiontoken=${geoSessionToken}`);
       setLoadingPlaceDetails(false);
@@ -87,7 +86,7 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
           type="text"
           id="location"
           onChange={onInputChange}
-          disabled={setLoadingPlaceDetails}
+          disabled={loadingPlaceDetails}
           value={inputAddress}
           className={errors.location && "has-errors"}
           style={inputStyles}
