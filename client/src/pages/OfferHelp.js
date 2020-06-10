@@ -3,11 +3,7 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
-import styled from 'styled-components';
-import { theme, mq } from "constants/theme";
-import BaseButton from "components/Button/BaseButton";
-
-
+import WizardSubmit from "components/StepWizard/WizardSubmit"
 import {
   StyledWizard,
   WizardContainer,
@@ -29,7 +25,6 @@ import {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "components/StepWizard";
-import { SubmitButton } from "components/Button";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -136,29 +131,6 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
-const { white, royalBlue } = theme.colors;
-
-const WizardButton = styled(BaseButton)`
-border-radius: 0.8rem;
-margin-right: 7rem;
-margin-left: 7rem;
-  cursor: pointer;
-  color: ${white};
-  padding: 0 0.1rem;
-  background-color: ${royalBlue};
-  &:hover,
-  &.am-button-active {
-    background-color: ${royalBlue};
-    color: ${white};
-  } 
-  html body &.am-button {
-    border: 0.2rem solid ${royalBlue};
-  }
-  /* @media screen and (min-width: ${mq.phone.wide.minWidth}) {
-    margin-top: 1rem;
-    margin-bottom: -0.5rem;
-  } */
-  `;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
@@ -200,12 +172,12 @@ const Step3 = (props) => {
           />
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-        <WizardButton
+        <WizardSubmit
           disabled={!valid}
           primary="true"
           onClick={onSubmit}>
           Submit
-          </WizardButton>
+          </WizardSubmit>
         <SkipLink>
           <Link to="/feed">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
