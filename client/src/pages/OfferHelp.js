@@ -4,6 +4,9 @@ import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
 import styled from 'styled-components';
+import { theme, mq } from "constants/theme";
+import BaseButton from "components/Button/BaseButton";
+
 
 import {
   StyledWizard,
@@ -35,6 +38,7 @@ import shareMyLocation from "assets/icons/share-my-location.svg";
 const INITIAL_STATE = {
   answers: [],
 };
+
 
 const STEP_1_ANSWERS = [
   "As a Volunteer",
@@ -132,12 +136,29 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
+const { white, royalBlue } = theme.colors;
 
-const WizardButton = styled(SubmitButton)`
-  width: 70%;
-  margin-top: 5rem;
-  margin-left:8rem;
-`;
+const WizardButton = styled(BaseButton)`
+border-radius: 0.8rem;
+margin-right: 7rem;
+margin-left: 7rem;
+  cursor: pointer;
+  color: ${white};
+  padding: 0 0.1rem;
+  background-color: ${royalBlue};
+  &:hover,
+  &.am-button-active {
+    background-color: ${royalBlue};
+    color: ${white};
+  } 
+  html body &.am-button {
+    border: 0.2rem solid ${royalBlue};
+  }
+  /* @media screen and (min-width: ${mq.phone.wide.minWidth}) {
+    margin-top: 1rem;
+    margin-bottom: -0.5rem;
+  } */
+  `;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
