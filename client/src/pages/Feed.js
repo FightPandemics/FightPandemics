@@ -40,6 +40,7 @@ import {
   NEXT_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_COMMENTS,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -196,7 +197,7 @@ const Feed = (props) => {
     showFilters,
   } = feedState;
   const filters = Object.values(filterOptions);
-  const { isLoading, loadMore, page, posts: postsList,status } = posts;
+  const { isLoading, loadMore, page, posts: postsList, status } = posts;
   let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
@@ -307,6 +308,15 @@ const Feed = (props) => {
     }
   };
 
+  const updateComments = ({ postId, comments, commentsCount }) => {
+    postsDispatch({
+      type: SET_COMMENTS,
+      postId,
+      comments,
+      commentsCount,
+    });
+  };
+
   const loadPosts = useCallback(async () => {
     const { user } = props;
     const limit = 5;
@@ -330,27 +340,35 @@ const Feed = (props) => {
     }
 
     if (response.data && response.data.length) {
-      await postsDispatch({ type: SET_POSTS, posts: [ ...postsList, ...response.data ] });
+      const loadedPosts = response.data.reduce(
+        (obj, item) => ((obj[item._id] = item), obj),
+        {},
+      );
+
+      await postsDispatch({
+        type: SET_POSTS,
+        posts: { ...postsList, ...loadedPosts },
+      });
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [ postsList, isLoading ]);
+  }, [postsList, isLoading, page, props]);
 
   useEffect(() => {
     loadPosts();
-  }, [ page ]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
-    node => {
-      new IntersectionObserver(entries => {
-        entries.forEach(async entry => {
+    (node) => {
+      new IntersectionObserver((entries) => {
+        entries.forEach(async (entry) => {
           if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
             await postsDispatch({ type: NEXT_PAGE });
           }
         });
       }).observe(node);
     },
-    [ postsDispatch, isLoading, loadMore ]
+    [postsDispatch, isLoading, loadMore],
   );
 
   useEffect(() => {
@@ -375,6 +393,7 @@ const Feed = (props) => {
         handleOnClose,
         showFilters,
         handlePostLike,
+        updateComments,
       }}
     >
       <FeedWrapper>
@@ -414,12 +433,14 @@ const Feed = (props) => {
               </button>
             </HeaderWrapper>
             <FilterBox />
-            <Posts filteredPosts={postsList} />
+            <Posts
+              filteredPosts={postsList}
+              updateComments={updateComments}
+              handlePostLike={handlePostLike}
+            />
             {isLoading && <div>Loading...</div>}
-            {status === ERROR_POSTS && (
-              <div>Something went wrong...</div>
-            )}
-            {!isLoading && <div id="list-bottom" ref={ bottomBoundaryRef }></div>}
+            {status === ERROR_POSTS && <div>Something went wrong...</div>}
+            {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}

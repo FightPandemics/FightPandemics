@@ -69,6 +69,7 @@ const InputWrapper = styled.div`
 const StyleLabel = {
   textAlign: "left",
   color: "#425af2"
+
 };
 
 const StyleInput = {
@@ -92,6 +93,7 @@ const errorStyles = {
   fontSize: "1.2rem",
   alignSelf: ""
 }
+};
 
 const { type, industry } = createOrganizationProfile;
 
@@ -118,7 +120,6 @@ const CreateOrgProfile = (props) => {
   const [ orgIndustry, setIndustry ] = useState("");
   const [state, setState] = useState(initialState.state);
   const { typeModal, industryModal, options } = state;
-
 
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.value);
@@ -260,20 +261,6 @@ const CreateOrgProfile = (props) => {
     }
   }
 
-  //
-  // const onFormSubmit = async (data) => {
-  //   // e.preventDefault();
-  //   console.log(data);
-  //   if (!errors.length) {
-  //     // todo: finish integrating api
-  //     try {
-  //       // const req = await axios.post("/api/posts", formData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const onFormSubmit = (data) => {
     if(!privacy) {
       alert("You must agree to our privacy policy before proceeding")
@@ -313,7 +300,7 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
-        <InputWrapper>
+        <InputWrapper>e
           <Label style={StyleLabel} label="* Organization Contact E-mail" />
           <Input
             type="email"

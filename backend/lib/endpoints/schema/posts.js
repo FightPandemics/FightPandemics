@@ -1,14 +1,13 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
-const { schema: authorSchema } = require("../../models/Author");
-const { schema: postSchema } = require("../../models/Post");
-
-const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
-const POST_OBJECTIVES = postSchema.tree.objective.enum;
-const POST_TYPES = postSchema.tree.types.enum;
-const USER_TYPES = authorSchema.tree.type.enum;
-const VISIBILITY_OPTIONS = postSchema.tree.visibility.enum;
+const { USER_TYPES } = require("../../models/Author");
+const {
+  EXPIRATION_OPTIONS,
+  POST_OBJECTIVES,
+  POST_TYPES,
+  VISIBILITY_OPTIONS,
+} = require("../../models/Post");
 
 const getPostsSchema = {
   querystring: strictSchema()
@@ -90,9 +89,18 @@ const deletePostSchema = {
   params: strictSchema().prop("postId", S.string().required()),
 };
 
-const addCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+const createCommentSchema = {
+  body: strictSchema()
+    .prop("content", S.string().required())
+    .prop("parentId", S.string()),
   params: strictSchema().prop("postId", S.string().required()),
+};
+
+const getCommentsSchema = {
+  params: strictSchema().prop("postId", S.string().required()),
+  queryString: strictSchema()
+    .prop("limit", S.integer())
+    .prop("skip", S.integer()),
 };
 
 const deleteCommentSchema = {
@@ -102,17 +110,18 @@ const deleteCommentSchema = {
 };
 
 const updateCommentSchema = {
-  body: strictSchema().prop("comment", S.string().required()),
+  body: strictSchema().prop("content", S.string().required()),
   params: strictSchema()
     .prop("commentId", S.string().required())
     .prop("postId", S.string().required()),
 };
 
 module.exports = {
-  addCommentSchema,
+  createCommentSchema,
   createPostSchema,
   deleteCommentSchema,
   deletePostSchema,
+  getCommentsSchema,
   getPostByIdSchema,
   getPostsSchema,
   likeUnlikeCommentSchema,

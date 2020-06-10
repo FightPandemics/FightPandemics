@@ -19,12 +19,16 @@ const StyledWizardNav = styled.div`
   align-items: center;
   padding: 1rem 0;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 35rem;
+  max-width: 100%;
+  position: absolute;
+  top: 70%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
+
 
     & > div {
       min-height: 100%;
@@ -93,14 +97,14 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       <BackButton onClick={previousStep}>
         <SvgIcon
           src={backArrow}
-          a11yTitle={`Navigate to step ${currentStep - 1}`}
+          title={`Navigate to step ${currentStep - 1}`}
         />
         <BackText>Back</BackText>
       </BackButton>
     ) : (
       <BackButton>
         <Link to={"/"}>
-          <SvgIcon src={backArrow} a11yTitle="Navigate to the homepage" />{" "}
+          <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
           <BackText>Back</BackText>
         </Link>
       </BackButton>

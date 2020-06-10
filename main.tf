@@ -1,3 +1,7 @@
+variable "aws_region" {
+  type = string
+}
+
 variable "env_name" {
   type = string
 }
@@ -39,16 +43,25 @@ data "aws_ssm_parameter" "sentry_dsn" {
   name = "/fp/sentry/dsn"
 }
 
+data "aws_ssm_parameter" "logger_host" {
+  name = "/fp/logger/host"
+}
+
+data "aws_ssm_parameter" "logger_port" {
+  name = "/fp/logger/port"
+}
+
 locals {
-  domain = {
-    review     = "fightpandemics.xyz"
-    staging    = "fightpandemics.work"
-    production = "fightpandemics.com"
+  auth_app_url = {
+    review     = "https://review.fightpandemics.xyz"
+    staging    = "https://staging.fightpandemics.work"
+    production = "https://production.fightpandemics.com"
   }
 }
 
 module "main" {
   source     = "github.com/FightPandemics/tf-fargate-task//module"
+  aws_region = var.aws_region
   image_tag  = var.env_name
   fp_context = var.fp_context
   subdomain  = var.env_name
@@ -71,7 +84,7 @@ module "main" {
     },
     {
       name  = "AUTH_APP_URL"
-      value = "https://${var.env_name}.${local.domain[var.fp_context]}"
+      value = local.auth_app_url[var.fp_context]
     },
     {
       name  = "AUTH_SECRET_KEY"
@@ -96,6 +109,18 @@ module "main" {
     {
       name  = "COMMIT_HASH",
       value = var.commit_hash
+    },
+    {
+      name  = "LOGGER_LEVEL",
+      value = "warn"
+    },
+    {
+      name  = "LOGGER_HOST",
+      value = data.aws_ssm_parameter.logger_host.value
+    },
+    {
+      name  = "LOGGER_PORT",
+      value = data.aws_ssm_parameter.logger_port.value
     },
   ]
 }

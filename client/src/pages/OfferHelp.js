@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
+import { validateEmail } from "utils/validators";
+import styled from 'styled-components';
+
 import {
   StyledWizard,
   WizardContainer,
@@ -35,7 +39,7 @@ const INITIAL_STATE = {
 const STEP_1_ANSWERS = [
   "As a Volunteer",
   "As a Donor/Investor",
-  "As a Organization",
+  "As an Organisation",
 ];
 const STEP_1_STATE = {
   answers: getAnswersMap(STEP_1_ANSWERS),
@@ -66,9 +70,8 @@ const Step1 = (props) => {
               key={i}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
-            >
-              {answer}
-            </WizardCheckboxItem>
+              text={answer}
+            />
           ))}
         </WizardCheckboxWrapper>
       </WizardFormWrapper>
@@ -115,29 +118,43 @@ const Step2 = (props) => {
         </WizardFormGroup>
         <ShareLocation
           tertiary="true"
-          icon={<SvgIcon class="share-location-icon" src={shareMyLocation} />}
+          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
           onSelect={selectLocationDetection}
         >
           Share my location
         </ShareLocation>
-        <SkipLink>
+        <Link to="/feed">
           <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
           </ShowAnywhere>
-        </SkipLink>
+        </Link>
       </WizardFormWrapper>
     </WizardStep>
   );
 };
 
+const WizardButton = styled(SubmitButton)`
+  width: 70%;
+  margin-top: 5rem;
+  margin-left:8rem;
+`;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => {
-    setEmail(evt);
+  const [valid, setValid] = useState(true);
+
+  useEffect(() => {
+    const validated = !email || validateEmail(email);
+    setValid(validated);
+  }, [email]);
+
+  const onChange = (event) => {
+    setEmail(event.target.value);
   };
+
   const onSubmit = () => {
-    props.update("email", email);
+    console.log("submit");
   };
+
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
@@ -152,24 +169,29 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
-            name="userEmail"
+            name="email"
             label="Email"
-            placeholder="Enter your email address"
+            className={!valid && "has-error"}
+            placeholder="Enter your email address..."
             onChange={onChange}
-            value={email && email}
+            value={email}
+            required
           />
+          {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-        <WizardButtonGroup>
-          <SubmitButton primary="true" onClick={onSubmit}>
-            Submit
-          </SubmitButton>
-          <SkipLink>
-            <Link to="/AirTableCOVID">
-              {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
-              Skip
+        <WizardButton
+          disabled={!valid}
+          primary="true"
+          onClick={onSubmit}>
+          Submit
+          </WizardButton>
+        <SkipLink>
+          <Link to="/feed">
+            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+            Skip
             </Link>
-          </SkipLink>
-        </WizardButtonGroup>
+        </SkipLink>
+
       </WizardFormWrapper>
     </WizardStep>
   );

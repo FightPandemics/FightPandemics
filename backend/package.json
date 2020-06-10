@@ -9,6 +9,7 @@
     "dev": "nodemon --inspect=0.0.0.0:9229 -L server.js",
     "test": "jest",
     "lint": "eslint . --fix",
+    "import-posts": "node ./scripts/import-posts",
     "install-docker": "docker-compose run backend-service npm install"
   },
   "husky": {
@@ -29,6 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "^5.15.5",
+    "airtable": "^0.8.1",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -44,7 +46,8 @@
     "http-errors": "^1.7.3",
     "moment": "2.25.3",
     "mongoose": "^5.9.13",
-    "node-cache": "^5.1.0"
+    "node-cache": "^5.1.0",
+    "pino-papertrail": "^2.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

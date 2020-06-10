@@ -10,6 +10,7 @@ import menu from "assets/icons/menu.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
+
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -86,11 +87,12 @@ const NavLinks = styled.div`
 `;
 const activeStyles = {
   fontWeight: "600",
-  color: `${colors.royalBlue};`,
+  color: `${colors.royalBlue}`,
 };
-export default ({ onMenuClick, ...props }) => {
+
+export default ({ isAuthenticated, onMenuClick }) => {
   return (
-    <div className="header" {...props}>
+    <div className="header">
       <StyledNavBar
         mode="light"
         leftContent={
@@ -113,12 +115,7 @@ export default ({ onMenuClick, ...props }) => {
                       Feed
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink activeStyle={activeStyles} to="/covid-info">
-                      COVID-info
-                    </NavLink>
-                  </li>
-                  {props.isAuthenticated ? (
+                  {isAuthenticated ? (
                     <>
                       <li>
                         <NavLink activeStyle={activeStyles} to="/profile">

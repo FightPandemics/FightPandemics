@@ -45,7 +45,7 @@ const Step1 = () => {
           <Col span={12}>
             <Option
               img={organization}
-              text="Organization"
+              text="Organisation"
               onClick={() => setCurrentStep(2)}
             />
           </Col>
@@ -61,7 +61,7 @@ const Step2 = () => {
   return (
     currentStep === 2 && (
       <>
-        <TitleStep>Posting as an Organization</TitleStep>
+        <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
         {organizations.map((item) => {
           return (
@@ -101,7 +101,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
   return (
     <Container
       title={" "}
-      style={{ textAlign: "center" }}
+      style={{ textAlign: "center", overflowY: "hidden" }}
       footer={null}
       visible={visible && currentStep !== 3}
       destroyOnClose={true}

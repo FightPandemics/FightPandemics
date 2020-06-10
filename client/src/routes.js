@@ -4,6 +4,8 @@ import OfferHelp from "./pages/OfferHelp";
 import About from "./pages/About";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
 import OrgProfileComplete from "./pages/OrgProfileComplete";
+import EditOrganizationProfile from "./pages/EditOrganizationProfile";
+import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -19,6 +21,7 @@ import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
+import Faq from "./pages/Faq";
 
 const routes = [
   {
@@ -74,6 +77,14 @@ const routes = [
     component: OrgProfileComplete
   },
   {
+    path: "/edit-organization-account",
+    component: EditOrganizationAccount,
+  },
+  {
+    path: "/edit-organization-profile",
+    component: EditOrganizationProfile,
+  },
+  {
     path: "/medical",
     component: Medical,
   },
@@ -117,10 +128,17 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
+    props: {
+      loggedInOnly: true,
+    },
   },
+  // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {
     path: "/profile-completed",
     component: ProfileCompleted,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/edit-profile",
@@ -151,6 +169,10 @@ const routes = [
     path: "/cookies-policy",
     component: CookiesPolicy,
   },
+  {
+    path: "/faq", 
+    component: Faq,
+  }
 ];
 
 export default routes;

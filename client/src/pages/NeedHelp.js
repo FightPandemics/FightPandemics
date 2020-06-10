@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
+
 import SubmitButton from "components/Button/SubmitButton";
-import { asyncGetGeoLocation } from "utils/geolocation";
+import InputError from "components/Input/InputError";
 import {
   AnswerButton,
   StyledWizard,
@@ -16,6 +16,8 @@ import {
   WizardFormWrapper,
   WizardFormGroup,
 } from "components/StepWizard";
+import { asyncGetGeoLocation } from "utils/geolocation";
+import { validateEmail } from "utils/validators";
 
 const INITIAL_STATE = {
   answers: [],
@@ -76,10 +78,21 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const onChange = (evt) => setEmail(evt);
-  const onSubmit = () => {
-    props.update("email", email);
+  const [valid, setValid] = useState(true);
+
+  useEffect(() => {
+    const validated = !email || validateEmail(email);
+    setValid(validated);
+  }, [email]);
+
+  const onChange = (event) => {
+    setEmail(event.target.value);
   };
+
+  const onSubmit = () => {
+    console.log("submit");
+  };
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
@@ -90,20 +103,21 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
-            name="userEmail"
+            name="email"
             label="Email"
-            placeholder="Email"
+            className={!valid && "has-error"}
+            placeholder="Enter your email address..."
             onChange={onChange}
-            value={email && email}
+            value={email}
+            required
           />
+          {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
-        <Link to="/feed">
-          <SubmitButton primary="true" onClick={onSubmit}>
-            Submit
-          </SubmitButton>
-        </Link>
+        <SubmitButton disabled={!valid} primary="true" onClick={onSubmit}>
+          Submit
+        </SubmitButton>
       </WizardButtonGroup>
     </WizardStep>
   );

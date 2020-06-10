@@ -1,21 +1,39 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import { Dropdown, Menu } from "antd";
-import React from "react";
+import React, { useReducer } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
 import Checkbox from "components/Input/Checkbox";
+import InputError from "components/Input/InputError";
+import Label from "components/Input/Label";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import SubmitButton from "components/Button/SubmitButton";
 import { theme, mq } from "constants/theme";
-import { inputStyles, labelStyles } from "constants/formStyles";
-import Label from "../components/Input/Label";
+import {
+  blockLabelStyles,
+  inputStyles,
+  inlineLabelStyles,
+} from "constants/formStyles";
+import { CREATE_USER, CREATE_USER_ERROR } from "hooks/actions/userActions";
+import {
+  createUserFormReducer,
+  initialState,
+} from "hooks/reducers/userReducers";
+import { validateEmail } from "../utils/validators";
+import axios from "axios";
+import { SET_USER } from "../constants/action-types";
+
+const { colors } = theme;
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -77,6 +95,7 @@ const InputWrapper = styled.div`
 
 const SubLabel = styled.small`
   color: ${theme.colors.green};
+  display: block;
 `;
 
 const ProfileFormGroup = styled.form`
@@ -92,17 +111,11 @@ const ProfileFormGroup = styled.form`
 `;
 
 const CheckboxContainer = styled.div`
-  --mt: ${theme.typography.size.xxsmall};
   --xsmall: ${theme.typography.size.xsmall};
 
   display: flex;
-  align-items: ${(props) =>
-    props.label && props.description ? "start" : "center"};
-  margin: var(--mt) 0 0 0;
-  p {
-    color: ${theme.colors.darkerGray};
-    font-weight: normal;
-  }
+  align-items: "flex-start";
+  margin: 1.5rem 0;
   .ant-checkbox-wrapper {
     margin-right: ${theme.typography.size.large};
   }
@@ -113,23 +126,26 @@ const CheckboxContainer = styled.div`
   }
 `;
 
-const CheckboxGroup = ({ children, description, font, label }) => {
+const CheckboxGroup = ({
+  defaultValue,
+  description,
+  label,
+  name,
+  onChange,
+}) => {
   return (
-    <CheckboxContainer font={font} label={label} description={description}>
+    <CheckboxContainer>
       <Checkbox
+        defaultValue={defaultValue}
         color={theme.colors.royalBlue}
+        id={name}
+        name={name}
         size={theme.typography.size.xxlarge}
+        onChange={onChange}
       />
       <Flex direction="column" align="start">
-        {children ?? (
-          <TextLabel
-            color={theme.colors.black}
-            size={theme.typography.size.large}
-          >
-            {label}
-          </TextLabel>
-        )}
-        <span>{description}</span>
+        <Label htmlFor={name} style={inlineLabelStyles} label={label} />
+        {description && <span>{description}</span>}
       </Flex>
     </CheckboxContainer>
   );
@@ -179,30 +195,6 @@ const InputGroup = styled.div`
 
   margin: var(--my) 0 var(--my) 0;
 
-  .address {
-    input {
-      margin-bottom: 0;
-    }
-    label > p:before {
-      content: " ";
-      background-image: url(${Marker});
-      background-size: contain;
-      background-repeat: no-repeat;
-      display: inline-block;
-      margin-right: ${theme.typography.size.xxsmall};
-      height: ${theme.typography.size.xlarge};
-      width: ${theme.typography.size.xlarge};
-    }
-
-    label:after {
-      content: "Enter address, zip code, or city";
-      color: ${theme.colors.green};
-      font-size: ${theme.typography.size.xsmall};
-      font-family: ${theme.typography.font.family.body};
-      margin-top: ${theme.typography.size.xsmall};
-    }
-  }
-
   .underline {
     color: ${theme.colors.green};
     font-size: ${theme.typography.size.xsmall};
@@ -211,6 +203,7 @@ const InputGroup = styled.div`
   }
 `;
 
+/*
 const UnderlineLink = styled.p`
   --color: ${theme.colors.darkGray};
   color: var(--color) !important;
@@ -220,12 +213,52 @@ const UnderlineLink = styled.p`
   }
   font-size: ${theme.typography.size.small};
 `;
+*/
 
 const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
 
-const CreateProfile = () => {
+const handleCheckboxChange = ([evt]) => evt.target.checked;
+
+const CreateProfile = ({ email, history }) => {
+  const dispatch = useDispatch();
+  const { control, errors, formState, handleSubmit, register } = useForm({
+    mode: "change",
+  });
+  const [createUserFormState, createUserFormDispatch] = useReducer(
+    createUserFormReducer,
+    initialState,
+  );
+
+  const onSubmit = async (formData) => {
+    createUserFormDispatch({ type: CREATE_USER });
+    try {
+      const { email, ...body } = formData;
+      /* TEMP location until geolocation service id done */
+      body.location = {
+        address: 'New York, NY, USA',
+        coordinates: [ -74.0059728, 40.7127753 ],
+        city: "New York",
+        state: "NY",
+        country: "US"
+      }
+      const res = await axios.post("/api/users", body);
+
+      dispatch({
+        type: SET_USER,
+        payload: { user: res.data },
+      });
+      history.push("/profile-completed");
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      createUserFormDispatch({
+        type: CREATE_USER_ERROR,
+        error: `Create user failed, reason: ${message}`,
+      });
+    }
+  };
+
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -244,63 +277,106 @@ const CreateProfile = () => {
           <Heading className="text-center" level={4}>
             Create your Profile
           </Heading>
+          {createUserFormState.error && (
+            <ErrorAlert message={createUserFormState.error} type="error" />
+          )}
           <InputGroup>
             <InputWrapper>
-              <Label htmlFor="email" style={labelStyles} label="E-mail" />
+              <Label
+                htmlFor="email"
+                style={{ ...blockLabelStyles, color: theme.colors.darkGray }}
+                label="E-mail"
+              />
               <Input
                 type="email"
                 name="email"
                 id="email"
-                required
-                placeholder="Enter email address"
+                className={errors.email && "has-error"}
+                disabled
+                ref={register({
+                  required: "Email is required.",
+                  validate: (email) => validateEmail(email) || "Invalid email",
+                })}
                 style={inputStyles}
+                value={email}
               />
+              {errors.email && <InputError>{errors.email.message}</InputError>}
             </InputWrapper>
 
             <InputWrapper>
               <Label
                 htmlFor="firstName"
-                style={labelStyles}
+                style={blockLabelStyles}
                 label="First name"
               />
               <Input
                 type="text"
                 name="firstName"
                 id="firstName"
-                required
+                className={errors.firstName && "has-error"}
+                ref={register({
+                  required: "First name is required.",
+                })}
                 style={inputStyles}
               />
+              {errors.firstName && (
+                <InputError>{errors.firstName.message}</InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>
-              <Label htmlFor="lastName" style={labelStyles} label="Last name" />
+              <Label
+                htmlFor="lastName"
+                style={blockLabelStyles}
+                label="Last name"
+              />
               <Input
                 type="text"
                 name="lastName"
                 id="lastName"
-                required
+                className={errors.lastName && "has-error"}
+                ref={register({
+                  required: "Last name is required.",
+                })}
                 style={inputStyles}
               />
-              <SubLabel>Enter address, zip code, or city</SubLabel>
+              {errors.lastName && (
+                <InputError>{errors.lastName.message}</InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>
-              <Label htmlFor="address" style={labelStyles} label="Address" />
+              <Label
+                htmlFor="location"
+                icon={Marker}
+                style={blockLabelStyles}
+                label="Address"
+              />
               <DropdownMenu>
                 <div id="dropdown-anchor" style={{ position: "relative" }}>
                   <Input
                     type="text"
-                    name="address"
-                    id="address"
-                    required
+                    name="location.address"
+                    id="location"
+                    className={errors.location?.address && "has-error"}
+                    ref={register({
+                      required: "Location is required.",
+                    })}
                     style={inputStyles}
                   />
+                  {errors.location?.address && (
+                    <InputError>{errors.location.address.message}</InputError>
+                  )}
+                  <SubLabel>Enter address, zip code, or city</SubLabel>
                 </div>
               </DropdownMenu>
             </InputWrapper>
           </InputGroup>
+          {/*
+            temporarily disabled until the fields are added to the API
           <CheckboxGroup description="I am traveling" />
           <CheckboxGroup description="Don't show my address" />
+          */}
           <InputGroup>
             <TextLabel
               color={theme.colors.royalBlue}
@@ -309,9 +385,30 @@ const CreateProfile = () => {
             >
               I want to
             </TextLabel>
-            <CheckboxGroup label="Volunteer" />
-            <CheckboxGroup label="Donate" />
-            <CheckboxGroup label="Share Information" />
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Volunteer"
+              name="objectives.volunteer"
+              onChange={handleCheckboxChange}
+            />
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Donate"
+              name="objectives.donate"
+              onChange={handleCheckboxChange}
+            />
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Share Information"
+              name="objectives.shareInformation"
+              onChange={handleCheckboxChange}
+            />
           </InputGroup>
           <InputGroup>
             <TextLabel
@@ -321,17 +418,34 @@ const CreateProfile = () => {
             >
               I need
             </TextLabel>
-            <CheckboxGroup
-              label="Medical Help"
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
               description="I have symptoms of COVID-19"
+              label="Medical Help"
+              name="needs.medicalHelp"
+              onChange={handleCheckboxChange}
             />
-            <CheckboxGroup
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              description="I need assistance getting groceries, medicine, etc."
               label="Other Help"
-              description="I need assitance getting groceries, medicine, etc."
+              name="needs.otherHelp"
+              onChange={handleCheckboxChange}
             />
           </InputGroup>
           <InputGroup>
-            <Submit primary="true">Create Profile</Submit>
+            <Submit
+              disabled={!formState.isValid || createUserFormState.loading}
+              primary="true"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Create Profile
+            </Submit>
+            {/* temporarily disabled until API is updated to save these fields
             <CheckboxGroup>
               <UnderlineLink>
                 By signing up, I agree to the{" "}
@@ -344,6 +458,7 @@ const CreateProfile = () => {
                 <a href="/terms-conditions">Terms and Conditions</a>
               </UnderlineLink>
             </CheckboxGroup>
+            */}
           </InputGroup>
         </ProfileFormGroup>
       </Flex>
@@ -351,4 +466,8 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+const mapStateToProps = ({ session }) => ({
+  email: session.email,
+});
+
+export default connect(mapStateToProps)(CreateProfile);

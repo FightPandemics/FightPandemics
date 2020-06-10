@@ -60,6 +60,10 @@ jobs:
           EOF
       - run: cat backend.tf
       - run: cat main.tf
+      - id: get-git-commit
+        name: Get git commit
+        shell: bash
+        run: echo "::set-output name=hash::$GITHUB_SHA"
       - name: 'Terraform Init'
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -80,7 +84,8 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           TF_VAR_env_name: staging
           TF_VAR_fp_context: staging
-          TF_VAR_commit_hash: ${GITHUB_SHA}
+          TF_VAR_commit_hash: ${{ steps.get-git-commit.outputs.hash }}
+          TF_VAR_aws_region: us-east-1
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: ecs update-service --cluster staging-cluster --service staging --force-new-deployment

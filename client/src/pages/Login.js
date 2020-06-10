@@ -1,4 +1,3 @@
-import { Alert } from "antd";
 import { Button, Flex, WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
@@ -7,8 +6,12 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import ErrorAlert from "components/Alert/ErrorAlert";
+import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
-import { PASSWORD_MIN_LENGTH } from "config";
+import { inputStyles, blockLabelStyles } from "constants/formStyles";
+import { theme, mq } from "constants/theme";
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
 import {
   AUTH_FORM_LOGIN,
   AUTH_FORM_LOGIN_ERROR,
@@ -19,15 +22,12 @@ import {
 } from "hooks/actions/authFormActions";
 import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
-import Label from "components/Input/Label";
 import Input from "components/Input/BaseInput";
-import { inputStyles, labelStyles } from "constants/formStyles";
-// import { validateEmail } from "utils/common.js";
+import InputError from "components/Input/InputError";
+import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
-import Heading from "components/Typography/Heading";
-import { ORANGE_RED, WHITE } from "constants/colors";
-import { theme, mq } from "constants/theme";
 import { setAuthToken } from "utils/auth-token";
+import { validateEmail, validatePassword } from "utils/validators";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -122,13 +122,6 @@ const LoginRightContainer = styled.div`
   flex: 1;
 `;
 
-const ErrorAlert = styled(Alert)`
-  background-color: ${ORANGE_RED};
-  .ant-alert-message {
-    color: ${WHITE};
-  }
-`;
-
 const SocialImageContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -153,7 +146,7 @@ const FormContainer = styled.div`
 
 const VisibilityIconWrapper = styled.div`
   position: absolute;
-  bottom: 0.6rem;
+  top: 2.3rem;
   right: 0.5rem;
   color: ${colors.tropicalBlue};
   cursor: pointer;
@@ -173,7 +166,7 @@ const VisibilityButton = ({ onClick, type }) => {
 
 const Login = ({ isLoginForm }) => {
   const dispatch = useDispatch();
-  const { formState, getValues, handleSubmit, register } = useForm({
+  const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
   });
   const [authFormState, authFormDispatch] = useReducer(
@@ -192,6 +185,9 @@ const Login = ({ isLoginForm }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
+          if (res?.data?.token) {
+            setAuthToken(res.data.token);
+          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -207,14 +203,18 @@ const Login = ({ isLoginForm }) => {
 
   const onLoginWithEmail = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
+
     try {
       const res = await axios.post("/api/auth/login", formData);
 
-      if (res.data && res.data.token) {
-        setAuthToken(res.data);
+      if (res?.data?.token) {
+        setAuthToken(res.data.token);
       }
 
-      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+      dispatch({
+        type: AUTH_SUCCESS,
+        payload: { ...res.data, email: formData.email },
+      });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
@@ -228,7 +228,10 @@ const Login = ({ isLoginForm }) => {
     authFormDispatch({ type: AUTH_FORM_SIGNUP });
     try {
       const res = await axios.post("/api/auth/signup", formData);
-      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+      dispatch({
+        type: AUTH_SUCCESS,
+        payload: { ...res.data, email: formData.email },
+      });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
@@ -260,7 +263,7 @@ const Login = ({ isLoginForm }) => {
 
   const comparePasswordConfirmation = (confirmPassword) => {
     const { password } = getValues();
-    return password === confirmPassword || "Password don't match";
+    return password === confirmPassword || "Passwords don't match";
   };
 
   return (
@@ -285,62 +288,90 @@ const Login = ({ isLoginForm }) => {
             )}
             <form id="login-password">
               <InputWrapper>
-                <Label htmlFor="email" style={labelStyles} label="E-mail" />
+                <Label htmlFor="email" style={blockLabelStyles} label="Email" />
                 <Input
                   type="email"
                   name="email"
                   id="email"
-                  required
+                  className={errors.email && "has-error"}
                   placeholder="Enter email address"
-                  ref={register}
+                  ref={register({
+                    required: "Email is required.",
+                    validate: (email) =>
+                      validateEmail(email) || "Invalid email",
+                  })}
                   style={inputStyles}
                 />
+                {errors.email && (
+                  <InputError>{errors.email.message}</InputError>
+                )}
               </InputWrapper>
               <InputWrapper>
                 <Label
                   htmlFor="password"
-                  style={labelStyles}
+                  style={blockLabelStyles}
                   label="Password"
                 />
                 <Input
                   type={passwordType}
                   name="password"
                   id="password"
-                  required
+                  className={errors.password && "has-error"}
                   placeholder="Enter password"
-                  ref={register({ minLength: PASSWORD_MIN_LENGTH })}
-                  style={inputStyles}
+                  ref={register({
+                    maxLength: {
+                      value: PASSWORD_MAX_LENGTH,
+                      message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
+                    },
+                    minLength: {
+                      value: PASSWORD_MIN_LENGTH,
+                      message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+                    },
+                    required: "Password is required.",
+                    validate: (password) =>
+                      validatePassword(password) ||
+                      "Password must contain at least 3 of these: " +
+                        "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+                  })}
+                  style={{ ...inputStyles, paddingRight: "3.5rem" }}
                 />
                 <VisibilityButton
                   onClick={togglePasswordVisibility}
                   type={passwordType}
                 />
+                {errors.password && (
+                  <InputError>{errors.password.message}</InputError>
+                )}
               </InputWrapper>
               {!isLoginForm && (
                 <InputWrapper>
                   <Label
                     htmlFor="confirmPassword"
-                    style={labelStyles}
+                    style={blockLabelStyles}
                     label="Confirm Password"
                   />
                   <Input
                     type={confirmPasswordType}
                     name="confirmPassword"
                     id="confirmPassword"
+                    className={errors.confirmPassword && "has-error"}
                     required
                     placeholder="Confirm password"
                     ref={register({
+                      maxLength: PASSWORD_MAX_LENGTH,
                       minLength: PASSWORD_MIN_LENGTH,
-                      validate: {
-                        matchesPreviousPassword: comparePasswordConfirmation,
-                      },
+                      required: "Password confirmation is required.",
+                      validate: comparePasswordConfirmation,
                     })}
-                    style={inputStyles}
+                    style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
                   <VisibilityButton
                     onClick={toggleConfirmPasswordVisibility}
                     type={confirmPasswordType}
                   />
+                  {errors.confirmPassword && (
+                    <InputError>{errors.confirmPassword.message}</InputError>
+                  )}
                 </InputWrapper>
               )}
               <SubmitButton

@@ -13,11 +13,27 @@ async function routes(app) {
     if (result === null) {
       throw app.httpErrors.notFound();
     }
+    const {
+      _id: id,
+      about,
+      email,
+      firstName,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
+    } = result;
     return {
-      email: result.email,
-      firstName: result.firstName,
-      id: result._id,
-      lastName: result.lastName,
+      about,
+      email,
+      firstName,
+      id,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
     };
   });
 
@@ -46,6 +62,10 @@ async function routes(app) {
       const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");
+      }
+      if (!req.userId) {
+        req.log.error(`No userId for create user ${email}, invalid configuration`);
+        throw app.httpErrors.internalServerError();
       }
       if (await User.findById(req.userId)) {
         throw app.httpErrors.conflict("User exists");

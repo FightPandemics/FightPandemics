@@ -33,6 +33,7 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
     - For `AIRTABLE` and `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Run `docker-compose up` this will take quite some time. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
+1. To import posts data from Airtable run `docker-compose exec backend-service npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `docker-compose exec backend-service npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
 ### Local Setup
 
@@ -63,6 +64,7 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
     - For `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Start the backend server by running `npm start`. NOTE: If you want the server to automatically restart on code changes, run `npm run dev` instead.
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
+1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
 #### Geo Service
 
@@ -88,7 +90,7 @@ In the event that there is an upcoming deadline for a particular feature, someon
 
 ### API Documentation
 
-To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/documentation`
+To check the API documentation which is automatically generated using [fastify-oas](https://www.npmjs.com/package/fastify-oas) , go to `http://localhost:8000/api/documentation`
 
 ## Adding NPM dependencies to package.json
 
