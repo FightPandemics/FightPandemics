@@ -1,8 +1,9 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
 import { Link, NavLink } from "react-router-dom";
-// import { Menu as MenuIcon } from "grommet-icons";
 import styled from "styled-components";
+import TextAvatar from "components/TextAvatar";
+
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import envelope from "assets/icons/envelope.svg";
@@ -85,12 +86,13 @@ const NavLinks = styled.div`
     }
   }
 `;
+
 const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
 };
 
-export default ({ isAuthenticated, onMenuClick }) => {
+export default ({ onMenuClick, isAuthenticated }) => {
   return (
     <div className="header">
       <StyledNavBar
