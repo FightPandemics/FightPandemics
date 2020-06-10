@@ -3,8 +3,7 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
-import styled from 'styled-components';
-
+import WizardSubmit from "components/StepWizard/WizardSubmit"
 import {
   StyledWizard,
   WizardContainer,
@@ -26,7 +25,6 @@ import {
   WizardCheckboxWrapper,
   WizardCheckboxItem,
 } from "components/StepWizard";
-import { SubmitButton } from "components/Button";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -35,6 +33,7 @@ import shareMyLocation from "assets/icons/share-my-location.svg";
 const INITIAL_STATE = {
   answers: [],
 };
+
 
 const STEP_1_ANSWERS = [
   "As a Volunteer",
@@ -132,12 +131,6 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
-
-const WizardButton = styled(SubmitButton)`
-  width: 70%;
-  margin-top: 5rem;
-  margin-left:8rem;
-`;
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(true);
@@ -179,12 +172,12 @@ const Step3 = (props) => {
           />
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-        <WizardButton
+        <WizardSubmit
           disabled={!valid}
           primary="true"
           onClick={onSubmit}>
           Submit
-          </WizardButton>
+          </WizardSubmit>
         <SkipLink>
           <Link to="/feed">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
