@@ -166,13 +166,18 @@ const DividerLine = styled.div`
 
 const NavigationLayout = (props) => {
   const { mobiletabs, tabIndex, isAuthenticated, user } = props;
-
-  console.log(user);
-  // const userInitial = getInitials(user)
-
   const history = useHistory();
-
   const [drawerOpened, setDrawerOpened] = useState(false);
+
+  const displayInitials = (user) => {
+    if (user?.firstName && user?.lastName) {
+      const userinitials = getInitials(user.firstName, user.lastName);
+      return userinitials;
+    }
+  };
+
+  const displayFullName = (user) =>
+    user ? `${user?.firstName} ${user?.lastName}` : "";
 
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
@@ -184,10 +189,10 @@ const NavigationLayout = (props) => {
       <AvatarContainer>
         <NavItem history={history}>
           <TextAvatar size={80} alt="avatar">
-            MM
+            {displayInitials(user)}
           </TextAvatar>
         </NavItem>
-        <UserName>name</UserName>
+        <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />
       <NavItem history={history}>
