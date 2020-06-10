@@ -34,7 +34,7 @@ const getUserByIdSchema = {
 
 const updateUserSchema = {
   body: strictSchema()
-    .prop("about", S.string())
+    .prop("about", S.string().maxLength(160))
     .prop("firstName", S.string())
     .prop("lastName", S.string())
     .prop("needs", needsSchema)

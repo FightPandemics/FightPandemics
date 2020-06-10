@@ -4,7 +4,7 @@ import {
   userProfileReducer,
 } from "../hooks/reducers/userReducers";
 
-export const UserContext = createContext({});
+export const UserContext = createContext();
 
 export const withUserContext = (Component) => (props) => {
   const [userProfileState, userProfileDispatch] = useReducer(

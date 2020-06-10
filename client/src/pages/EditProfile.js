@@ -1,10 +1,11 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
+import ErrorAlert from "components/Alert/ErrorAlert";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
-import { getInitials } from "utils/userInfo";
-import { Link } from "react-router-dom";
 import {
   FillEmptySpace,
   EditLayout,
@@ -17,59 +18,67 @@ import {
   OptionDiv,
   FormLayout,
   Background,
-} from "../components/EditProfile/EditComponents";
-// dummy data props,context, redux etc
-const editProfile = true;
+} from "components/EditProfile/EditComponents";
+import { UserContext, withUserContext } from "context/UserContext";
+import {
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
+} from "hooks/actions/userActions";
+import { getInitials } from "utils/userInfo";
+import Input from "../components/Input/BaseInput";
+import InputError from "../components/Input/InputError";
+import { inputStyles } from "../constants/formStyles";
 
-function EditProfile(props) {
-  // dummy data props,context, redux etc
-  const {
-    firstName,
-    lastName,
-    facebookURL,
-    twitterURL,
-    githubURL,
-    linkedinURL,
-    personalURL,
-    about,
-  } = props.user;
-  const { register, handleSubmit } = useForm();
+const SOCIAL_ALLOWED_CHARS = /^[a-zA-Z0-9\.]*$/;
+const URLS_CONFIG = {
+  facebook: ["Facebook URL", SOCIAL_ALLOWED_CHARS, "https://www.facebook.com/"],
+  linkedin: [
+    "LinkedIn URL",
+    SOCIAL_ALLOWED_CHARS,
+    "https://www.linkedin.com/in/",
+  ],
+  twitter: ["Twitter URL", SOCIAL_ALLOWED_CHARS, "https://twitter.com/"],
+  github: ["Github URL", SOCIAL_ALLOWED_CHARS, "https://github.com/"],
+  website: ["Personal Website"],
+};
+
+const ABOUT_MAX_LENGTH = 160;
+
+function EditProfile() {
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const { errors, register, handleSubmit } = useForm({
+    mode: "change",
+  });
+  const { error, loading, user } = userProfileState;
+  const { firstName = "", lastName = "", urls = {}, about } = user || {};
 
   const onSubmit = (data) => {
     // console.log(data);
     // make a put/patch request to backend to update users profile information
   };
 
-  const labelVariableValue = {
-    // label name, variable name, value
-    "Facebook URL": ["facebookURL", facebookURL],
-    "LinkedIn URL": ["linkedinURL", linkedinURL],
-    "Twitter URL": ["twitterURL", twitterURL],
-    "Github URL": ["githubURL", githubURL],
-    "Personal Website": ["personalURL", personalURL],
-  };
-
-  const renderFormInputs = () => {
-    // iterate and create input
-    return Object.entries(labelVariableValue).map(([key, value]) => {
-      return (
-        <FormInput
-          inputTitle={key}
-          name={value[0]}
-          defaultValue={value[1]}
-          reference={register}
-          key={key}
-        />
-      );
-    });
-  };
-
+  useEffect(() => {
+    (async function fetchProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+  }, [userProfileDispatch]);
+  console.log({ errors });
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile ? "Edit Profile" : "Complete Profile"}
+            Edit Profile
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
@@ -89,13 +98,42 @@ function EditProfile(props) {
             </CustomLink>
           </OptionDiv>
           <CustomForm>
+            {error && <ErrorAlert message={error} type="error" />}
             <FormInput
               inputTitle="Self-introduction"
               name="about"
+              type="text"
               defaultValue={about}
-              reference={register({ maxLength: 160 })}
+              error={errors.about}
+              ref={register({
+                maxLength: {
+                  value: ABOUT_MAX_LENGTH,
+                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                },
+              })}
+              style={inputStyles}
+              maxlength={ABOUT_MAX_LENGTH}
             />
-            {renderFormInputs()}
+            {Object.entries(URLS_CONFIG).map(
+              ([key, [label, regex, prefix]]) => (
+                <FormInput
+                  type={prefix ? "text" : "url"}
+                  inputTitle={label}
+                  name={`urls.${key}`}
+                  error={errors[`urls.${key}`]}
+                  prefix={prefix}
+                  defaultValue={urls[key]}
+                  reference={register({
+                    pattern: {
+                      value: SOCIAL_ALLOWED_CHARS,
+                      message:
+                        "Invalid entry: only alphanumeric characters and . are allowed",
+                    },
+                  })}
+                  key={key}
+                />
+              ),
+            )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
               Save Changes
             </CustomSubmitButton>
@@ -106,10 +144,4 @@ function EditProfile(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(EditProfile);
+export default withUserContext(EditProfile);

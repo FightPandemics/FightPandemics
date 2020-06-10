@@ -1,76 +1,83 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
+
+import { blockLabelStyles } from "constants/formStyles";
 import { mq, theme } from "constants/theme";
-import SvgIcon from "../Icon/SvgIcon";
+import InputError from "./InputError";
+import Label from "./Label";
+
+const { colors } = theme;
+
 const FormInput = styled.input`
-  border-top-style: hidden;
-  border-left-style: hidden;
-  border-right-style: hidden;
-  border-color: ${(props) => (props.error ? "#FF5656" : "#5970EC")};
-  border-width: thin;
+  border: none;
+  flex-grow: 1;
+  padding-bottom: 0.5rem;
+  color: ${colors.black};
+`;
+
+const OuterWrapper = styled.div`
+  margin: 2.2rem auto;
+  width: 100%;
+  position: relative;
+`;
+
+const InputWrapper = styled.div`
   margin-bottom: 2rem;
   margin-top: 0.4rem;
-  padding-bottom: 0.5rem;
-  color: ${theme.colors.black};
+  align-items: center;
+  border-bottom: 1px solid ${colors.royalBlue};
+  display: flex;
+  &.has-error {
+    border-bottom-color: ${colors.red};
+    color: ${colors.red};
+  }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin-top: 1rem;
-    margin-bottom: 4rem;
-  }
-  :last-of-type {
     margin-bottom: 2rem;
   }
 `;
 
-const Icon = styled(SvgIcon)`
-  display: none;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: initial;
-    margin-right: 1rem;
-  }
+const Prefix = styled.span`
+  padding-bottom: 0.5rem;
 `;
-// const inputFieldStyle = {
-//   borderTopStyle: "hidden",
-//   borderLeftStyle: "hidden",
-//   borderRightStyle: "hidden",
-//   borderColor: error ? "#FF5656" : "#5970EC",
-//   borderWidth: "thin",
-//   marginBottom: "2rem",
-//   marginTop: "0.4rem",
-//   paddingBottom: "0.5rem",
-//   color: "#000000",
-// };
-export default ({
-  inputTitle,
-  name,
-  defaultValue,
-  reference,
-  error,
-  icon,
-  ...props
-}) => {
-  return (
-    <>
-      {icon ? (
-        <div style={{ display: "flex", alignItems: "baseline" }}>
-          <Icon src={icon} />
-          <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
-            {inputTitle || null}
-          </label>
-        </div>
-      ) : (
-        inputTitle && (
-          <label style={{ color: error ? "#FF5656" : "#425AF2" }}>
-            {inputTitle}
-          </label>
-        )
-      )}
-      <FormInput
-        name={name}
-        defaultValue={defaultValue}
-        ref={reference}
-        placeholder="Please fill in the blank"
-        {...props}
-      />
-    </>
-  );
-};
+
+export default forwardRef(
+  (
+    {
+      inputTitle,
+      name,
+      defaultValue,
+      error,
+      icon,
+      prefix,
+      placeholder,
+      ...props
+    },
+    ref,
+  ) => {
+    console.log({ inputTitle, prefix });
+    return (
+      <OuterWrapper>
+        <Label
+          icon={icon}
+          htmlFor={name}
+          style={blockLabelStyles}
+          label={inputTitle}
+        />
+        <InputWrapper>
+          {prefix && <Prefix>{prefix}</Prefix>}
+          <FormInput
+            className={error && "has-error"}
+            name={name}
+            id={name}
+            value={defaultValue}
+            ref={ref}
+            placeholder={placeholder}
+            {...props}
+          />
+        </InputWrapper>
+        {error && <InputError>{error.message}</InputError>}
+      </OuterWrapper>
+    );
+  },
+);

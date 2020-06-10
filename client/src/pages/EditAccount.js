@@ -27,6 +27,7 @@ import {
   CustomEditAccountHeader,
   Background,
 } from "../components/EditProfile/EditComponents";
+import { withUserContext } from "../context/UserContext";
 
 function EditAccount(props) {
   // dummy data props,context, redux etc
@@ -226,10 +227,4 @@ function EditAccount(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(EditAccount);
+export default withUserContext(EditAccount);
