@@ -89,7 +89,7 @@ const NavItem = styled(List.Item)`
   }
 `;
 
-// const NavItem = styled(NavItem)`
+// const NavItemBrief = styled(NavItem)`
 //   padding-left: 4.6rem;
 //   & .am-list-line {
 //     border-bottom: 0;
@@ -211,14 +211,14 @@ const NavigationLayout = (props) => {
         <BriefAnchor href={NOTION_URL}>Notion</BriefAnchor>
       </NavItem>
       {/* <NavItemBrief history={history}>
-        <Link to="/profile">+ Add new one</Link>
+        <Link to="">+ Add new one</Link>
       </NavItemBrief> */}
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
       <Space height="15rem" />
       {/* <NavItem history={history}>
-        <BriefLink to="/profile">Feedback</BriefLink>
+        <BriefLink to="">Feedback</BriefLink>
       </NavItem> */}
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Logout</BriefLink>

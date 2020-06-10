@@ -122,6 +122,11 @@ export default ({ isAuthenticated, onMenuClick }) => {
                           Profile
                         </NavLink>
                       </li>
+                      <li>
+                        <NavLink activeStyle={activeStyles} to="/auth/logout">
+                          Logout
+                        </NavLink>
+                      </li>
                     </>
                   ) : (
                     <>
