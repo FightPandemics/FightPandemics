@@ -70,7 +70,6 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
         onLocationChange({});
       }
     }
-    console.log("USE EFFECT", Date.now());
     if (inputAddress.length >= 3) {
       debounceGetAddressPredictions.current(inputAddress);
     } else {
