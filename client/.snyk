@@ -9930,3 +9930,5 @@ patch:
         patched: '2020-05-02T20:40:03.216Z'
     - react-scripts > jest > jest-cli > @jest/core > @jest/reporters > jest-runtime > jest-config > @jest/test-sequencer > jest-runner > jest-jasmine2 > @jest/environment > @jest/transform > @babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
         patched: '2020-05-02T20:40:03.216Z'
+    - lodash:
+        patched: '2020-06-10T22:33:20.715Z'

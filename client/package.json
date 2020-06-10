@@ -25,7 +25,7 @@
     "react-step-wizard": "^5.3.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "snyk": "^1.319.2",
+    "snyk": "^1.339.0",
     "styled-components": "^5.0.1",
     "super-tiny-icons": "^0.3.2",
     "tlds": "^1.207.0",
@@ -40,7 +40,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "install-docker": "docker-compose run client npm install",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "browserslist": {
     "production": [
