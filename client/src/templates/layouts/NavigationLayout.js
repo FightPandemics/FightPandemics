@@ -16,6 +16,8 @@ import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
 
+const NOTION_URL =
+  "https://www.notion.so/fightpandemics/FightPandemics-Overview-cd01dcfc05f24312ac454ac94a37eb5e";
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
@@ -62,11 +64,10 @@ const AvatarContainer = styled.div`
   align-items: center;
 `;
 
-const NavItem = styled(List.Item).attrs((props) => ({
-  onClick: props.onClick || (() => props.history.push(props.link)),
-}))`
+const NavItem = styled(List.Item)`
   background: unset;
   padding-left: 2.1rem;
+  height: ${(props) => props.height ?? "inherit"};
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -88,22 +89,20 @@ const NavItem = styled(List.Item).attrs((props) => ({
   }
 `;
 
-const NavItemBrief = styled(NavItem).attrs((props) => ({
-  onClick: props.onClick || (() => props.history.push(props.link)),
-}))`
-  padding-left: 4.6rem;
-  & .am-list-line {
-    border-bottom: 0;
-    &:after {
-      height: 0 !important;
-    }
-    & .am-list-content {
-      font-size: 1.8rem;
-      font-weight: normal;
-      line-height: 3.5rem;
-    }
-  }
-`;
+// const NavItem = styled(NavItem)`
+//   padding-left: 4.6rem;
+//   & .am-list-line {
+//     border-bottom: 0;
+//     &:after {
+//       height: 0 !important;
+//     }
+//     & .am-list-content {
+//       font-size: 1.8rem;
+//       font-weight: normal;
+//       line-height: 3.5rem;
+//     }
+//   }
+// `;
 
 const UserName = styled(Typography.Text)`
   padding: 1.2rem 1.2rem;
@@ -157,6 +156,13 @@ const BriefLink = styled(Link)`
   line-height: 4.5rem;
 `;
 
+const BriefAnchor = styled.a`
+  padding-left: 4.6rem;
+  font-size: 1.8rem;
+  font-weight: normal;
+  line-height: 4.5rem;
+`;
+
 const DividerLine = styled.div`
   height: 0.1px;
   background-color: ${white};
@@ -165,7 +171,7 @@ const DividerLine = styled.div`
 `;
 
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const { mobiletabs, tabIndex, user, isAuthenticated } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -198,32 +204,32 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/profile">Profile</Link>
       </NavItem>
-      <NavItem history={history}>
-        <Link to="/profile">Organization</Link>
+      <NavItem>
+        <Link to="">Organization</Link>
       </NavItem>
-      <NavItemBrief history={history}>
-        <Link to="/profile">Notion</Link>
-      </NavItemBrief>
-      <NavItemBrief history={history}>
+      <NavItem history={history}>
+        <BriefAnchor href={NOTION_URL}>Notion</BriefAnchor>
+      </NavItem>
+      {/* <NavItemBrief history={history}>
         <Link to="/profile">+ Add new one</Link>
-      </NavItemBrief>
+      </NavItemBrief> */}
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
-      <Space height="5rem" />
-      <NavItem history={history}>
+      <Space height="15rem" />
+      {/* <NavItem history={history}>
         <BriefLink to="/profile">Feedback</BriefLink>
-      </NavItem>
+      </NavItem> */}
       <NavItem history={history}>
-        <BriefLink to="/profile">Logout</BriefLink>
+        <BriefLink to="/auth/logout">Logout</BriefLink>
       </NavItem>
     </>
   );
 
   const UnAuthenticatedMenu = () => (
     <>
-      <NavItem history={history} link="/auth/login">
-        Login / Register
+      <NavItem history={history}>
+        <Link to="/auth/login">Login / Register</Link>
       </NavItem>
     </>
   );
