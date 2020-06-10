@@ -18,17 +18,14 @@ const StyledWizardNav = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   width: 35rem;
   max-width: 100%;
-  position: absolute;
-  top: 70%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
-
 
     & > div {
       min-height: 100%;
@@ -36,7 +33,6 @@ const StyledWizardNav = styled.div`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    margin: 0 auto 1rem;
     width: 40rem;
   }
 `;
@@ -102,12 +98,12 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
         <BackText>Back</BackText>
       </BackButton>
     ) : (
-      <BackButton>
-        <Link to={"/"}>
+      <Link to={"/"}>
+        <BackButton>
           <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
           <BackText>Back</BackText>
-        </Link>
-      </BackButton>
+        </BackButton>
+      </Link>
     )}
     {currentStep < totalSteps && (
       <NextButton onClick={nextStep}>
