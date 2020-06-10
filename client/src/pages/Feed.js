@@ -242,7 +242,14 @@ const Feed = (props) => {
   };
 
   const handleCreatePost = () => {
+    const {history ,isAuthenticated} = props;
+
+    if(!isAuthenticated) {
+      history.push(LOGIN)
+    }
+    else {
     dispatchAction(TOGGLE_STATE, "createPostModal");
+    }
   };
 
   const handleChangeType = (e) => {
