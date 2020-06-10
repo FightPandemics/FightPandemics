@@ -12,5 +12,7 @@ export const initAuth = () => {
   };
 };
 
-// removeAuthToken()
-export const authLogout = () => ({ type: AUTH_LOGOUT });
+export const authLogout = () => {
+  removeAuthToken();
+  return { type: AUTH_LOGOUT };
+};
