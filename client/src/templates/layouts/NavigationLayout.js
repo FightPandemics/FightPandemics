@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+import { getInitials } from "utils/userInfo";
+
 import TextAvatar from "components/TextAvatar";
 import Avatar from "components/Avatar";
 import Header from "components/Header";
@@ -98,7 +100,7 @@ const NavItemBrief = styled(NavItem).attrs((props) => ({
     & .am-list-content {
       font-size: 1.8rem;
       font-weight: normal;
-      line-height: 4.5rem;
+      line-height: 3.5rem;
     }
   }
 `;
@@ -116,7 +118,7 @@ const UserName = styled(Typography.Text)`
 `;
 
 const Space = styled.div`
-  height: ${(props) => props.height ?? "1.4rem"};
+  height: ${(props) => props.height ?? "1rem"};
 `;
 
 const CloseNav = styled(Button).attrs((props) => ({
@@ -163,9 +165,11 @@ const DividerLine = styled.div`
 `;
 
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex } = props;
+  const { mobiletabs, tabIndex, isAuthenticated, user } = props;
 
-  const isAuthenticated = true;
+  console.log(user);
+  // const userInitial = getInitials(user)
+
   const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
