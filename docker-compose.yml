@@ -20,18 +20,6 @@ services:
     depends_on:
       - mongo
 
-  geo-service:
-    build:
-      context: geo-service
-      dockerfile: Dockerfile.dev
-    container_name: geo-service
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./geo-service:/app
-    networks:
-      - fp_network
-
   backend-service:
     build:
       context: backend
