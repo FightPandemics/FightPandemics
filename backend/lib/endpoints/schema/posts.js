@@ -12,7 +12,7 @@ const getPostsSchema = {
   querystring: strictSchema()
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
     .prop("limit", S.integer())
-    .prop("objective", S.string().enum(POST_OBJECTIVES).required())
+    .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer()),
 };
 
