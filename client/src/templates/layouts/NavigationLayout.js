@@ -4,9 +4,7 @@ import { Typography } from "antd";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-
 import { getInitials } from "utils/userInfo";
-
 import TextAvatar from "components/TextAvatar";
 import Avatar from "components/Avatar";
 import Header from "components/Header";
@@ -32,6 +30,7 @@ const sidebarStyle = {
 
 const MenuContainer = styled.div`
   width: 63vw !important;
+  overflow: hidden;
   @media screen and (min-width: 1024px) {
     width: 20vw !important;
   }
@@ -89,20 +88,20 @@ const NavItem = styled(List.Item)`
   }
 `;
 
-// const NavItemBrief = styled(NavItem)`
-//   padding-left: 4.6rem;
-//   & .am-list-line {
-//     border-bottom: 0;
-//     &:after {
-//       height: 0 !important;
-//     }
-//     & .am-list-content {
-//       font-size: 1.8rem;
-//       font-weight: normal;
-//       line-height: 3.5rem;
-//     }
-//   }
-// `;
+const NavItemBrief = styled(NavItem)`
+  padding-left: 4.6rem;
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    & .am-list-content {
+      font-size: 1.8rem;
+      font-weight: normal;
+      line-height: 3.5rem;
+    }
+  }
+`;
 
 const UserName = styled(Typography.Text)`
   padding: 1.2rem 1.2rem;
@@ -156,13 +155,6 @@ const BriefLink = styled(Link)`
   line-height: 4.5rem;
 `;
 
-const BriefAnchor = styled.a`
-  padding-left: 4.6rem;
-  font-size: 1.8rem;
-  font-weight: normal;
-  line-height: 4.5rem;
-`;
-
 const DividerLine = styled.div`
   height: 0.1px;
   background-color: ${white};
@@ -170,15 +162,23 @@ const DividerLine = styled.div`
   margin-bottom: 1rem;
 `;
 
+const AvatarInitials = styled(Typography.Text)`
+  font-family: Poppins;
+  font-size: 32.9px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+`;
+
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex, user, isAuthenticated } = props;
+  const { mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
       const userinitials = getInitials(user.firstName, user.lastName);
-      return userinitials;
+      return <AvatarInitials>{userinitials}</AvatarInitials>;
     }
   };
 
@@ -207,19 +207,13 @@ const NavigationLayout = (props) => {
       <NavItem>
         <Link to="">Organization</Link>
       </NavItem>
-      <NavItem history={history}>
-        <BriefAnchor href={NOTION_URL}>Notion</BriefAnchor>
-      </NavItem>
-      {/* <NavItemBrief history={history}>
-        <Link to="">+ Add new one</Link>
-      </NavItemBrief> */}
+      <NavItemBrief history={history}>
+        <a href={NOTION_URL}>Notion</a>
+      </NavItemBrief>
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
-      <Space height="15rem" />
-      {/* <NavItem history={history}>
-        <BriefLink to="">Feedback</BriefLink>
-      </NavItem> */}
+      <Space height="12rem" />
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Logout</BriefLink>
       </NavItem>
