@@ -36,11 +36,7 @@ import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
-import {
-  ERROR_POSTS,
-  FETCH_POSTS,
-  SET_POSTS,
-} from "../hooks/actions/feedActions";
+import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
   fetchUserError,
@@ -50,7 +46,6 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitials } from "utils/userInfo";
 
 // ICONS
-import SvgIcon from "components/Icon/SvgIcon";
 import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
@@ -89,7 +84,7 @@ const Profile = () => {
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
-  const { address, country } = location;
+  const { address } = location;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -145,9 +140,7 @@ const Profile = () => {
             <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
-          <LocationMobileDiv>
-            {address}
-          </LocationMobileDiv>
+          <LocationMobileDiv>{address}</LocationMobileDiv>
           <IconsContainer>
             <HelpContainer>
               {needHelp && "I need help "}
