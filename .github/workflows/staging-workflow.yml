@@ -7,7 +7,6 @@ on:
     paths:
       - backend/**
       - client/**
-      - geo-service/**
       - main.tf
       - .github/workflows/**
 
@@ -19,18 +18,9 @@ jobs:
         app:
           - backend
           - client
-          - geo-service
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
-      - if: matrix.app == 'client'
-        env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE: ${{ secrets.AIRTABLE_API_BASE }}
-        run: >
-          echo "REACT_APP_AIRTABLE_API_KEY=${AIRTABLE_API_KEY}" > ./client/.env
-          echo "REACT_APP_AIRTABLE_BASE=${AIRTABLE_BASE}" >> ./client/.env
-          cat .env
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:

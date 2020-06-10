@@ -101,9 +101,13 @@ async function routes(app) {
               },
               then: {
                 $concat: [
+<<<<<<< HEAD
                   {
                     $substr: ["$content", 0, UNLOGGED_POST_SIZE],
                   },
+=======
+                  { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
+>>>>>>> 479ff408d72239618710e7042ad2a538924d15cc
                   "...",
                 ],
               },

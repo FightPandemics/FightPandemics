@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "airtable": "^0.8.1",
     "antd": "^4.2.0",
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "polished": "^3.6.2",
     "react": "^16.13.1",
@@ -30,7 +30,8 @@
     "super-tiny-icons": "^0.3.2",
     "tlds": "^1.207.0",
     "typeface-poppins": "^0.0.72",
-    "typeface-work-sans": "^0.0.72"
+    "typeface-work-sans": "^0.0.72",
+    "uuid": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
