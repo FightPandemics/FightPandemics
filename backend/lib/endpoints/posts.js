@@ -94,7 +94,7 @@ async function routes(app) {
               if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
               then: {
                 $concat: [
-                  { $substr: ["$content", 0, UNLOGGED_POST_SIZE] },
+                  { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
                   "...",
                 ],
               },
@@ -332,7 +332,7 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req;
+      const { userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         req.log.error(err, "Failed retrieving post");
@@ -342,10 +342,9 @@ async function routes(app) {
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
-      const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
+      if (EXPIRATION_OPTIONS.includes(body.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;

@@ -37,7 +37,7 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
 
 ### Local Setup
 
-If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend or geo-service service will work. If only the backend is running, none of the calls to the geo-service will work.
+If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
 
 #### MongoDB
 
@@ -49,8 +49,6 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 1. Using nvm, install Node 12.16.2: `nvm install 12.16.2`.
 1. Enter the `client` directory and run `npm install`.
 1. Copy the `.env.example` in the `client` directory to `.env`.
-1. Replace `TODO` entries in `client/.env` with correct values (this is not needed to run the project in a responding but non-functional state). 
-    - For `AIRTABLE` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
 
@@ -65,16 +63,6 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 1. Start the backend server by running `npm start`. NOTE: If you want the server to automatically restart on code changes, run `npm run dev` instead.
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
 1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
-
-#### Geo Service
-
-1. Install [pyenv](https://github.com/pyenv/pyenv) (for Max/Linux) or [pyenv-win](https://github.com/pyenv-win/pyenv-win) (for Windows).
-1. Using pyenv, install Python 3.7.6: `pyenv install 3.7.6`
-1. Enter the `geo-service` folder, and create a virtual environment: `python -m venv venv`.
-1. Activate the [virtual environment](https://docs.python.org/3/library/venv.html): `. venv/bin/activate` (Mac/Linux); `venv\Scripts\activate.bat` (Windows CMD); `venv\Scripts\Activate.ps1` (Windows PowerShell).
-1. Run `pip install -r requirements.txt` to install dependencies.
-1. Start the geo-service by running `python app.py`
-1. The geo-service can be accessed at `localhost:5000` using cURL, Postman, or a similar API testing tool.
 
 ### Contributing
 

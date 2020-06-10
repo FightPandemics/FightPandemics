@@ -26,7 +26,7 @@ const App = (props) => {
 };
 
 const tagManagerArgs = {
-  gtmId: 'GTM-TT348T3'
+  gtmId: process.env.REACT_APP_GTM_ID
 }
 
 TagManager.initialize(tagManagerArgs)
