@@ -9,7 +9,9 @@ const StyledWizard = styled(StepWizard)`
   flex-direction: column-reverse;
   align-self: flex-start;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
+  justify-content: space-between;
   @media screen and (min-width: ${tablet.narrow.minWidth}) {
     width: 40%;
   }
