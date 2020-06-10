@@ -724,6 +724,66 @@ async function routes(app) {
       };
     },
   );
+
+  // @desc    Reply to a comment
+  // @route   /api/posts/:postId/comments/:commentId/replies
+  // @method  POST  protected
+  app.post(
+    "/:postId/comments/:commentId/replies",
+    { preValidation: [app.authenticate] },
+    async (req) => {
+      // Get params from params and req
+      const {
+        userId,
+        body: { content },
+      } = req;
+      const { postId, commentId } = req.params;
+
+      // Find user
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      // Find comment
+      const [err, comment] = await app.to(Comment.findById(commentId));
+      if (err) {
+        req.log.error(err, "Failed retrieving comment");
+        throw app.httpErrors.internalServerError();
+      } else if (!userId.equals(comment.author.id)) {
+        throw app.httpErrors.forbidden();
+      }
+
+      // Create reply author
+      const author = {
+        id: mongoose.Types.ObjectId(user.id),
+        location: user.location,
+        name: user.name,
+        photo: user.photo,
+        type: user.type,
+      };
+
+      // Create reply
+      const reply = {
+        content,
+        author,
+      };
+
+      // Add reply to comment
+      comment.replies.unshift(reply);
+
+      const [replyErr, updatedComment] = await app.to(comment.save());
+      if (replyErr) {
+        req.log.error(replyErr, "Failed to reply to comment");
+        throw app.httpErrors.internalServerError();
+      }
+
+      return updatedComment;
+    },
+  );
 }
 
 module.exports = routes;

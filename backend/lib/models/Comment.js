@@ -15,6 +15,16 @@ const commentSchema = new Schema(
       ref: "User",
       type: [ObjectId],
     },
+    replies: [
+      {
+        content: {
+          required: true,
+          trim: true,
+          type: String,
+        },
+        author: Object,
+      },
+    ],
     parentId: {
       ref: "Comment",
       type: ObjectId,
