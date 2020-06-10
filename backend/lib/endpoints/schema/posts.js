@@ -1,7 +1,6 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
-const { USER_TYPES } = require("../../models/Author");
 const {
   EXPIRATION_OPTIONS,
   POST_OBJECTIVES,
@@ -11,18 +10,9 @@ const {
 
 const getPostsSchema = {
   querystring: strictSchema()
-    .prop(
-      "filter",
-      strictSchema()
-        .prop(
-          "author.location.coordinates",
-          S.array().items(S.number()).minItems(2).maxItems(2),
-        )
-        .prop("author.type", S.string().enum(USER_TYPES))
-        .prop("types", S.array().items(S.string().enum(POST_TYPES)))
-        .prop("objective", S.string().enum(POST_OBJECTIVES)),
-    )
+    .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
     .prop("limit", S.integer())
+    .prop("objective", S.string().enum(POST_OBJECTIVES).required())
     .prop("skip", S.integer()),
 };
 
