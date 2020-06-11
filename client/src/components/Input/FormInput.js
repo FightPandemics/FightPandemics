@@ -54,29 +54,26 @@ export default forwardRef(
       ...props
     },
     ref,
-  ) => {
-    console.log({ inputTitle, prefix, error });
-    return (
-      <OuterWrapper>
-        <Label
-          icon={icon}
-          htmlFor={name}
-          style={blockLabelStyles}
-          label={inputTitle}
+  ) => (
+    <OuterWrapper>
+      <Label
+        icon={icon}
+        htmlFor={name}
+        style={blockLabelStyles}
+        label={inputTitle}
+      />
+      <InputWrapper className={error && "has-error"}>
+        {prefix && <Prefix>{prefix}</Prefix>}
+        <FormInput
+          name={name}
+          id={name}
+          value={defaultValue}
+          ref={ref}
+          placeholder={placeholder}
+          {...props}
         />
-        <InputWrapper className={error && "has-error"}>
-          {prefix && <Prefix>{prefix}</Prefix>}
-          <FormInput
-            name={name}
-            id={name}
-            value={defaultValue}
-            ref={ref}
-            placeholder={placeholder}
-            {...props}
-          />
-        </InputWrapper>
-        {error && <InputError>{error.message}</InputError>}
-      </OuterWrapper>
-    );
-  },
+      </InputWrapper>
+      {error && <InputError>{error.message}</InputError>}
+    </OuterWrapper>
+  ),
 );
