@@ -39,7 +39,7 @@ const updateUserSchema = {
     .prop("lastName", S.string())
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)
-    .prop("url", urlsSchema)
+    .prop("urls", urlsSchema)
     .prop("location", locationSchema),
 };
 

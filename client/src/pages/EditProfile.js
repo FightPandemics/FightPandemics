@@ -96,7 +96,7 @@ const ABOUT_MAX_LENGTH = 160;
 
 function EditProfile() {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const { errors, register, handleSubmit } = useForm({
+  const { errors, formState, register, handleSubmit } = useForm({
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
@@ -178,7 +178,11 @@ function EditProfile() {
                 />
               ),
             )}
-            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+            <CustomSubmitButton
+              disabled={!formState.isValid}
+              primary="true"
+              onClick={handleSubmit(onSubmit)}
+            >
               Save Changes
             </CustomSubmitButton>
           </CustomForm>
