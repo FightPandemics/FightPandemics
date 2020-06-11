@@ -142,10 +142,16 @@ const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/create-post",
@@ -155,6 +161,9 @@ const routes = [
     path: "/create-profile",
     component: CreateUserProfile,
     layout: "navless",
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/terms-conditions",
