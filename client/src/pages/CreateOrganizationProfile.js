@@ -93,7 +93,6 @@ const errorStyles = {
   fontSize: "1.2rem",
   alignSelf: ""
 }
-};
 
 const { type, industry } = createOrganizationProfile;
 
