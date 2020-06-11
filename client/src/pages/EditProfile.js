@@ -167,7 +167,6 @@ function EditProfile() {
                   message: `Max. ${ABOUT_MAX_LENGTH} characters`,
                 },
               })}
-              maxlength={ABOUT_MAX_LENGTH}
             />
             {Object.entries(URLS_CONFIG).map(
               ([key, [label, validation, prefix]]) => (
