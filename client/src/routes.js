@@ -21,6 +21,7 @@ import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
+import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 
 const routes = [
@@ -46,6 +47,10 @@ const routes = [
       isLoginForm: false,
       notLoggedInOnly: true,
     },
+  },
+  {
+    path: "/auth/logout",
+    component: Logout,
   },
   {
     path: "/auth/verify-email",
@@ -170,9 +175,9 @@ const routes = [
     component: CookiesPolicy,
   },
   {
-    path: "/faq", 
+    path: "/faq",
     component: Faq,
-  }
+  },
 ];
 
 export default routes;

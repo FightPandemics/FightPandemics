@@ -1,8 +1,12 @@
-import { Drawer, List, Button } from "antd-mobile";
+import { Drawer, List, Button, Flex, WhiteSpace } from "antd-mobile";
+import { Typography } from "antd";
+
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-
+import { getInitials } from "utils/userInfo";
+import TextAvatar from "components/TextAvatar";
+import Avatar from "components/Avatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
@@ -10,6 +14,8 @@ import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
 
+const NOTION_URL =
+  "https://www.notion.so/fightpandemics/FightPandemics-Overview-cd01dcfc05f24312ac454ac94a37eb5e";
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
@@ -22,18 +28,20 @@ const sidebarStyle = {
   background: `${royalBlue}`,
 };
 
-const NavList = styled(List)`
+const MenuContainer = styled.div`
   width: 63vw !important;
+  overflow: hidden;
   @media screen and (min-width: 1024px) {
     width: 20vw !important;
   }
+`;
+
+const NavList = styled(List)`
   & .am-list-body {
     background: unset;
     border-width: 0 !important;
     position: absolute;
-    top: 35vh;
     width: 100%;
-    transform: translateY(-50%);
     & div:not(:last-child) {
       & .am-list-line {
         border-bottom: 0;
@@ -49,11 +57,16 @@ const NavList = styled(List)`
   }
 `;
 
-const NavItem = styled(List.Item).attrs((props) => ({
-  onClick: props.onClick || (() => props.history.push(props.link)),
-}))`
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const NavItem = styled(List.Item)`
   background: unset;
-  padding-left: 24px;
+  padding-left: 2.1rem;
+  height: ${(props) => props.height ?? "inherit"};
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -73,6 +86,37 @@ const NavItem = styled(List.Item).attrs((props) => ({
   &.am-list-item-active {
     background: ${tropicalBlue};
   }
+`;
+
+const NavItemBrief = styled(NavItem)`
+  padding-left: 4.6rem;
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    & .am-list-content {
+      font-size: 1.8rem;
+      font-weight: normal;
+      line-height: 3.5rem;
+    }
+  }
+`;
+
+const UserName = styled(Typography.Text)`
+  padding: 1.2rem 1.2rem;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  color: ${white};
+`;
+
+const Space = styled.div`
+  height: ${(props) => props.height ?? "1rem"};
 `;
 
 const CloseNav = styled(Button).attrs((props) => ({
@@ -105,39 +149,92 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 `;
 
+const BriefLink = styled(Link)`
+  font-size: 1.8rem;
+  font-weight: normal;
+  line-height: 4.5rem;
+`;
+
+const DividerLine = styled.div`
+  height: 0.1px;
+  background-color: ${white};
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const AvatarInitials = styled(Typography.Text)`
+  font-family: Poppins;
+  font-size: 32.9px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+`;
+
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex, isAuthenticated } = props;
-
+  const { mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
-
   const [drawerOpened, setDrawerOpened] = useState(false);
+
+  const displayInitials = (user) => {
+    if (user?.firstName && user?.lastName) {
+      const userinitials = getInitials(user.firstName, user.lastName);
+      return <AvatarInitials>{userinitials}</AvatarInitials>;
+    }
+  };
+
+  const displayFullName = (user) =>
+    user ? `${user?.firstName} ${user?.lastName}` : "";
 
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
   };
 
-  const drawerMenu = () => (
+  const AuthenticatedMenu = () => (
     <>
-      <NavList>
-        {isAuthenticated ? (
-          <>
-            <NavItem>
-              <Link to="/profile">Profile</Link>
-            </NavItem>
-          </>
-        ) : (
-          <>
-            <NavItem history={history} link="/auth/login">
-              Login / Register
-            </NavItem>
-          </>
-        )}
-        <NavItem history={history} link="/about">
-          About Us
+      <WhiteSpace size="lg" />
+      <AvatarContainer>
+        <NavItem history={history}>
+          <TextAvatar size={80} alt="avatar">
+            {displayInitials(user)}
+          </TextAvatar>
         </NavItem>
-      </NavList>
-      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+        <UserName>{displayFullName(user)}</UserName>
+      </AvatarContainer>
+      <DividerLine />
+      <NavItem history={history}>
+        <Link to="/profile">Profile</Link>
+      </NavItem>
+      <NavItem>
+        <Link to="">Organization</Link>
+      </NavItem>
+      <NavItemBrief history={history}>
+        <a href={NOTION_URL}>Notion</a>
+      </NavItemBrief>
+      <NavItem history={history}>
+        <Link to="/feed">Feed</Link>
+      </NavItem>
+      <Space height="12rem" />
+      <NavItem history={history}>
+        <BriefLink to="/auth/logout">Logout</BriefLink>
+      </NavItem>
     </>
+  );
+
+  const UnAuthenticatedMenu = () => (
+    <>
+      <NavItem history={history}>
+        <Link to="/auth/login">Login / Register</Link>
+      </NavItem>
+    </>
+  );
+
+  const DrawerMenu = () => (
+    <MenuContainer>
+      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
+      <NavList>
+        {isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+      </NavList>
+    </MenuContainer>
   );
 
   const renderNavigationBar = () => {
@@ -152,7 +249,7 @@ const NavigationLayout = (props) => {
           open={drawerOpened}
           onOpenChange={toggleDrawer}
           position="right"
-          sidebar={drawerMenu()}
+          sidebar={DrawerMenu()}
           sidebarStyle={sidebarStyle}
           className="app-drawer"
         >

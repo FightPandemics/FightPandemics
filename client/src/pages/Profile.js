@@ -94,7 +94,7 @@ const Profile = () => {
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
-  const { address, country } = location;
+  const { address } = location;
   console.log({ postsState });
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const Profile = () => {
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
           <LocationMobileDiv>
-            {address}, {country}
+            {address}
           </LocationMobileDiv>
           <IconsContainer>
             <HelpContainer>
@@ -166,7 +166,7 @@ const Profile = () => {
             <LocationDesktopDiv>
               <LocationIcon src={locationIcon} />
               {needHelp && "I need help "}
-              {offerHelp && "I want to help "} • {address}, {country}
+              {offerHelp && "I want to help "} • {address}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => (

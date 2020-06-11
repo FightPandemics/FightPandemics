@@ -70,13 +70,13 @@ const MobileTabs = (props) => {
     }
   }, []);
 
-  const removeNoticeBar = () => {
-    sessionStorage.setItem("LocalEmergencyBox", "false");
-  };
+  // const removeNoticeBar = () => {
+  //   sessionStorage.setItem("LocalEmergencyBox", "false");
+  // };
 
   return (
     <TabsContainer>
-      {status ? <LocalEmergencyNumber onClick={removeNoticeBar} /> : null}
+      {/* {status ? <LocalEmergencyNumber onClick={removeNoticeBar} /> : null} */}
       <Tabs
         tabs={tabs}
         page={tabIndex}

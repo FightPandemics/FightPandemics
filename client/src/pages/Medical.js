@@ -5,7 +5,6 @@ import styled from "styled-components";
 import ImageButton from "components/Button/ImageButton";
 import { theme } from "constants/theme";
 
-import { getAirtableRecord } from "utils/airtable";
 import { getLocalStorageJson } from "utils/local-storage";
 
 const nearestHospitalUnselected = require("assets/medical-page-images/nearest-hospital-unselected.png");
@@ -54,33 +53,29 @@ const Medical = (props) => {
   const [state, setState] = useState(INITIAL_STATE);
   //   console.log("render medical page", { props });
 
-  const fetchNumber = (countryName) => {
-    getAirtableRecord(countryName, "Country").then((record) => {
-      const errorMessage =
-        "Sorry, we could not locate the emergency number for your country.";
-      if (!record) return setState({ ...state, loading: false, errorMessage });
-
-      const emergencyNumber = record.fields.Ambulance;
-      setState({ ...state, emergencyNumber, loading: false });
-      localStorage.setItem("emergencyNumber", emergencyNumber);
-    });
+  const fetchNumber = () => {
+    const emergencyNumber = "IN DEVELOPMENT"; // TODO: figure out v1.1 feature later
+    setState({...state, loading: false, emergencyNumber});
+    localStorage.setItem("emergencyNumber", "IN DEVELOPMENT");
   };
 
   const fetchGeoData = () => {
     // Defaulting to San Francisco
     // TODO fix geolocation
     const defaultGeolocation = {
-      latitude: 37.733795,
-      longitude: -122.446747,
+      lat: 37.733795,
+      lng: -122.446747,
     };
     const geolocation = getGeoLocation() || defaultGeolocation;
     axios
-      .get("/api/geo/country", { params: geolocation })
+      .get("/api/geo/location-reverse-geocode", { params: geolocation })
       .then((res) => {
-        setState({ ...state, country: res.data });
-        localStorage.setItem("country", JSON.stringify(res.data));
-
-        fetchNumber(res?.data?.name);
+        const country = res?.data?.location?.country;
+        if (country) {
+          setState({ ...state, country });
+          localStorage.setItem("country", country);
+        }
+        fetchNumber();
       })
       .catch((err) => console.error(err));
   };
