@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
@@ -27,17 +27,18 @@ import {
   CustomEditAccountHeader,
   Background,
 } from "../components/EditProfile/EditComponents";
-import { withUserContext } from "../context/UserContext";
+import { UserContext, withUserContext } from "../context/UserContext";
+import ErrorAlert from "../components/Alert/ErrorAlert";
 
-function EditAccount(props) {
-  // dummy data props,context, redux etc
-
+function EditAccount() {
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const { control, errors, formState, register, handleSubmit } = useForm({
+    mode: "change",
+  });
+  const { error, loading, user } = userProfileState;
   const {
-    firstName,
-    lastName,
-    email,
-    country,
-    address,
+    firstName = "",
+    lastName = "",
     shareInfoStatus,
     volunteerStatus,
     donateStatus,
@@ -45,25 +46,11 @@ function EditAccount(props) {
     otherHelpStatus,
     traveling,
     displayAddress,
-  } = props.user;
-  const { register, handleSubmit, control, errors } = useForm();
+  } = user || {};
 
   const onSubmit = (data) => {
     // console.log(data);
     // make a put/patch request to backend to update users Account information
-  };
-
-  const userInfo = {
-    // label name, variable name, value
-    "E mail": ["email", email],
-    Name: ["name", firstName + " " + lastName],
-    Country: ["country", country],
-    Address: [
-      "address",
-      address,
-      "Enter address, zip code or city",
-      locationIcon,
-    ],
   };
 
   const helpSection = {
@@ -124,32 +111,6 @@ function EditAccount(props) {
     });
   };
 
-  const renderFormInputs = () => {
-    return Object.entries(userInfo).map(([key, value]) => {
-      return (
-        <div
-          key={key}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginBottom: "2rem",
-          }}
-        >
-          <FormInput
-            inputTitle={key}
-            name={value[0]}
-            defaultValue={value[1]}
-            reference={register({ required: true })}
-            error={!!errors[value[0]]}
-            icon={value[3]}
-          />
-          <UnderLineDescription marginTop={"-1.5rem"}>
-            {value[2] || null}
-          </UnderLineDescription>
-        </div>
-      );
-    });
-  };
   const renderAddressCheckBoxes = () => {
     return (
       <HelpWrapper>
@@ -211,7 +172,23 @@ function EditAccount(props) {
             </CustomLink>
           </OptionDiv>
           <CustomForm>
-            {renderFormInputs()}
+            {error && <ErrorAlert message={error} type="error" />}
+            <FormInput
+              inputTitle="First name"
+              name="firstName"
+              type="text"
+              defaultValue={firstName}
+              error={errors.firstName}
+              ref={register({})}
+            />
+            <FormInput
+              inputTitle="Last name"
+              name="lastName"
+              type="text"
+              defaultValue={lastName}
+              error={errors.lastName}
+              ref={register({})}
+            />
             {renderAddressCheckBoxes()}
             <Label>I want to</Label>
             <HelpWrapper>{renderHelp()}</HelpWrapper>
