@@ -1,29 +1,21 @@
-import HomePage from './homePage.js';
+describe('FightPandemics Home screen', () => {
+    context('User opens Home screen ', () => {
+        beforeEach(() => {
+            cy.visit('');
+          });
+  
+      it('Home screen greetings H1', () => {
+        cy.contains('h1', 'A place to give and get help')
+      });
 
-const home = new HomePage();
+      it('Subheading', () => {
+        cy.contains('div > p:nth-child(3)', 'Pandemics will continue to happen.')
+        cy.contains('div > p:nth-child(4)', 'We help communities prepare and respond.')
+      });
 
-context('FightPandemics', () => {
-  beforeEach(() => {
-
-    home.visit();
-  })
-
-  it('Landing Page contains all elements', () => {
-    home.getFirstLineText().should('have.text', 'Pandemics will continue to happen.');
-    home.getSecondLineText().should('have.text', 'We help communities prepare and respond.');
-    home.getLogo().should('be.visible');
-    home.getNeedHelpElement().should(($div) => {
-      const text = $div.text()
-      expect(text).to.include('Need Help')
-    })
-      .and('be.visible');
-    home.getGiveHelpElement().should(($div) => {
-      const text = $div.text()
-      expect(text).to.include('Give Help')
-    })
-      .and('be.visible');
-
-  })
-
-
+      it('Link to Feed screen - View comunity posting', () => {
+        cy.get('a[href^="/feed"]').should('be.visible').and('have.attr', 'href', '/feed')
+        cy.contains('a p', 'View Community Postings')
+      });
+    });
 })
