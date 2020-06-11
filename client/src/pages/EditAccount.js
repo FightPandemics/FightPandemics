@@ -174,10 +174,10 @@ function EditAccount() {
                 label="Address"
               />
               <AddressInput
-                errors={errors.location}
+                error={errors.location}
                 location={location}
-                onLocationChange={() => {
-                  setValue(location);
+                onLocationChange={(value) => {
+                  setValue("location", value);
                 }}
                 ref={register(
                   { name: "location" },

@@ -67,7 +67,7 @@ const AddressInput = ({ location, error, onLocationChange }) => {
       { leading: true },
     ),
   );
-  //console.log({ inputAddress, location });
+
   useEffect(() => {
     if (apiError) setApiError(null);
     if (location.address) {
