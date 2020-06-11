@@ -26,9 +26,7 @@ import {
   fetchUserSuccess,
 } from "hooks/actions/userActions";
 import { getInitials } from "utils/userInfo";
-import Input from "../components/Input/BaseInput";
-import InputError from "../components/Input/InputError";
-import { inputStyles } from "../constants/formStyles";
+import { validateURL } from "utils/validators";
 
 const URLS_CONFIG = {
   facebook: [
@@ -85,10 +83,7 @@ const URLS_CONFIG = {
   website: [
     "Personal Website",
     {
-      pattern: {
-        value: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
-        message: "Invalid URL",
-      },
+      validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
   ],
 };
