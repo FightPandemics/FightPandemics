@@ -8,12 +8,15 @@ const FilterAccord = () => {
   const feedContext = useContext(FeedContext);
   const { filters, activePanel, handleOption, selectedOptions } = feedContext;
 
+  function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
   const renderPanels = () => {
     return filters.map((filter, idx) => {
-      if (filter.label === "Location") {
+      if (filter.label === "location") {
         return (
           <FilterAccordionPanel
-            header={filter.label}
+            header={capitalizeFirstLetter(filter.label)}
             className={filter.className}
             key={idx}
           >
@@ -23,7 +26,7 @@ const FilterAccord = () => {
       } else {
         return (
           <FilterAccordionPanel
-            header={filter.label}
+            header={capitalizeFirstLetter(filter.label)}
             className={filter.className}
             key={idx}
           >

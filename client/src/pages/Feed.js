@@ -319,15 +319,17 @@ const Feed = (props) => {
   };
 
   const loadPosts = useCallback(async () => {
-    const { user } = props;
     const limit = 5;
     const skip = page * limit;
     const test = encodeURI(JSON.stringify(selectedOptions));
+    console.log(showFilters);
+    console.log(filterModal);
+    console.log(selectedOptions);
+    console.log(filters);
     // console.log(test);
-    // {{baseApiUrl}}/posts?skip=0&limit=100&objective=request&filter=%7B%22location%22:%7B%22coordinates%22:%5B-74,40%5D,%22country%22:%22US%22%7D,%22type%22:%5B%22Information%22,%22Medical%20Supplies%22%5D,%22fromWhom%22:%5B%22Community%22,%22University%22%5D%7D
-    const endpoint = `/api/posts?limit=${limit}&skip=${skip}&objective=request`;
-    // const endpoint = `/api/posts?skip=0&limit=100&objective=request&filter=%7B%22type%22:%5B%22Information%22%5D%7D`
-    console.log(endpoint);
+    // const endpoint = `/api/posts?limit=${limit}&skip=${skip}&objective=request&filter=%7B%22type%22:%5B%22Information%22%5D%7D`;    // works
+    let endpoint = `/api/posts?limit=${limit}&skip=${skip}&objective=request&filter=${test}`;
+    // console.log(endpoint);
     let response = {};
 
     if (isLoading) {
@@ -355,7 +357,15 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [props, page, selectedOptions, isLoading, postsList]);
+  }, [
+    page,
+    selectedOptions,
+    showFilters,
+    filterModal,
+    filters,
+    isLoading,
+    postsList,
+  ]);
 
   useEffect(() => {
     loadPosts();
