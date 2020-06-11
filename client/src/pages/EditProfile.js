@@ -30,19 +30,68 @@ import Input from "../components/Input/BaseInput";
 import InputError from "../components/Input/InputError";
 import { inputStyles } from "../constants/formStyles";
 
-const SOCIAL_ALLOWED_CHARS = /^[a-zA-Z0-9\.]*$/;
 const URLS_CONFIG = {
-  facebook: ["Facebook URL", SOCIAL_ALLOWED_CHARS, "https://www.facebook.com/"],
+  facebook: [
+    "Facebook URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9.]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and . are allowed",
+      },
+      minLength: {
+        value: 5,
+        message: "Min. length is 5 characters",
+      },
+    },
+    "https://www.facebook.com/",
+  ],
   linkedin: [
     "LinkedIn URL",
-    SOCIAL_ALLOWED_CHARS,
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9]*$/,
+        message: "Invalid entry: only alphanumeric characters are allowed",
+      },
+    },
     "https://www.linkedin.com/in/",
   ],
-  twitter: ["Twitter URL", SOCIAL_ALLOWED_CHARS, "https://twitter.com/"],
-  github: ["Github URL", SOCIAL_ALLOWED_CHARS, "https://github.com/"],
-  website: ["Personal Website"],
+  twitter: [
+    "Twitter URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9_]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and _ are allowed",
+      },
+      maxLength: {
+        value: 15,
+        message: "Max. length is 15 characters",
+      },
+    },
+    "https://twitter.com/",
+  ],
+  github: [
+    "Github URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9_-]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and _ are allowed",
+      },
+    },
+    "https://github.com/",
+  ],
+  website: [
+    "Personal Website",
+    {
+      pattern: {
+        value: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+        message: "Invalid URL",
+      },
+    },
+  ],
 };
-
 const ABOUT_MAX_LENGTH = 160;
 
 function EditProfile() {
@@ -53,8 +102,8 @@ function EditProfile() {
   const { error, loading, user } = userProfileState;
   const { firstName = "", lastName = "", urls = {}, about } = user || {};
 
-  const onSubmit = (data) => {
-    // console.log(data);
+  const onSubmit = async (formData) => {
+    console.log(formData);
     // make a put/patch request to backend to update users profile information
   };
 
@@ -73,6 +122,8 @@ function EditProfile() {
     })();
   }, [userProfileDispatch]);
   console.log({ errors });
+
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
@@ -111,25 +162,18 @@ function EditProfile() {
                   message: `Max. ${ABOUT_MAX_LENGTH} characters`,
                 },
               })}
-              style={inputStyles}
               maxlength={ABOUT_MAX_LENGTH}
             />
             {Object.entries(URLS_CONFIG).map(
-              ([key, [label, regex, prefix]]) => (
+              ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
                   inputTitle={label}
                   name={`urls.${key}`}
-                  error={errors[`urls.${key}`]}
+                  error={errors.urls?.[key]}
                   prefix={prefix}
                   defaultValue={urls[key]}
-                  reference={register({
-                    pattern: {
-                      value: SOCIAL_ALLOWED_CHARS,
-                      message:
-                        "Invalid entry: only alphanumeric characters and . are allowed",
-                    },
-                  })}
+                  ref={register(validation)}
                   key={key}
                 />
               ),

@@ -10,25 +10,25 @@ const { colors } = theme;
 
 const FormInput = styled.input`
   border: none;
+  box-shadow: none;
   flex-grow: 1;
   padding-bottom: 0.5rem;
   color: ${colors.black};
 `;
 
 const OuterWrapper = styled.div`
-  margin: 2.2rem auto;
+  margin: 1rem auto;
   width: 100%;
   position: relative;
 `;
 
 const InputWrapper = styled.div`
-  margin-bottom: 2rem;
-  margin-top: 0.4rem;
   align-items: center;
   border-bottom: 1px solid ${colors.royalBlue};
   display: flex;
+  margin: 0.4rem 0;
   &.has-error {
-    border-bottom-color: ${colors.red};
+    border-bottom: 1px solid ${colors.red};
     color: ${colors.red};
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -55,7 +55,7 @@ export default forwardRef(
     },
     ref,
   ) => {
-    console.log({ inputTitle, prefix });
+    console.log({ inputTitle, prefix, error });
     return (
       <OuterWrapper>
         <Label
@@ -64,10 +64,9 @@ export default forwardRef(
           style={blockLabelStyles}
           label={inputTitle}
         />
-        <InputWrapper>
+        <InputWrapper className={error && "has-error"}>
           {prefix && <Prefix>{prefix}</Prefix>}
           <FormInput
-            className={error && "has-error"}
             name={name}
             id={name}
             value={defaultValue}
