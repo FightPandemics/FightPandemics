@@ -34,11 +34,12 @@ const StyledMenu = styled(Menu)`
 `;
 
 const SubLabel = styled.small`
-  color: ${props => props.selected ? theme.colors.lightGray : theme.colors.green};
+  color: ${(props) =>
+    props.selected ? theme.colors.lightGray : theme.colors.green};
   display: block;
 `;
 
-const AddressInput = ({ location, errors, onLocationChange }) => {
+const AddressInput = ({ location, error, onLocationChange }) => {
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
@@ -48,22 +49,30 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
   const [apiError, setApiError] = useState(null);
 
   const debounceGetAddressPredictions = useRef(
-    debounce(async (input) => {
-      try { 
-        const { data: { predictions } } = await axios.get(`/api/geo/address-predictions?input=${input}&sessiontoken=${geoSessionToken}`);
-        setPredictedAddresses(predictions);
-      } catch {
-        setPredictedAddresses([]);
-        setApiError("Failed getting predictions. Please retry.");
-      }
-    }, 500, { leading: true })
+    debounce(
+      async (input) => {
+        try {
+          const {
+            data: { predictions },
+          } = await axios.get(
+            `/api/geo/address-predictions?input=${input}&sessiontoken=${geoSessionToken}`,
+          );
+          setPredictedAddresses(predictions);
+        } catch {
+          setPredictedAddresses([]);
+          setApiError("Failed getting predictions. Please retry.");
+        }
+      },
+      500,
+      { leading: true },
+    ),
   );
-
+  //console.log({ inputAddress, location });
   useEffect(() => {
     if (apiError) setApiError(null);
     if (location.address) {
-      if (location.address === inputAddress){
-        // just selected the address? Clear predictions & nothing else 
+      if (location.address === inputAddress) {
+        // just selected the address? Clear predictions & nothing else
         return setPredictedAddresses([]);
       } else {
         // changes input after selected? Clear location & continue
@@ -75,13 +84,15 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
     } else {
       setPredictedAddresses([]);
     }
-  }, [inputAddress]); // Only call effect if input address changes
+  }, [apiError, inputAddress, location.address, onLocationChange]); // Only call effect if input address changes
 
   const onMenuItemClick = async (predictedAddress) => {
     if (predictedAddress?.place_id) {
       setLoadingPlaceDetails(true);
       try {
-        const res = await axios.get(`/api/geo/location-details?placeId=${predictedAddress.place_id}&sessiontoken=${geoSessionToken}`);
+        const res = await axios.get(
+          `/api/geo/location-details?placeId=${predictedAddress.place_id}&sessiontoken=${geoSessionToken}`,
+        );
         setGeoSessionToken(uuidv4()); // session complete after getting place detail
         onLocationChange(res.data.location);
         setInputAddress(res.data.location.address);
@@ -94,14 +105,12 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
   };
 
   const menuItems = predictedAddresses.map((a) => (
-    <Menu.Item onClick={() => onMenuItemClick(a)} key={a.id}>{a.description}</Menu.Item>
+    <Menu.Item onClick={() => onMenuItemClick(a)} key={a.id}>
+      {a.description}
+    </Menu.Item>
   ));
 
-  const menu = (
-    <StyledMenu>
-      {menuItems}
-    </StyledMenu>
-  );
+  const menu = <StyledMenu>{menuItems}</StyledMenu>;
 
   return (
     <Dropdown overlay={menu} visible={predictedAddresses.length > 0}>
@@ -112,15 +121,11 @@ const AddressInput = ({ location, errors, onLocationChange }) => {
           onChange={(e) => setInputAddress(e.target.value)}
           disabled={loadingPlaceDetails}
           value={inputAddress}
-          className={errors.location && "has-errors"}
+          className={error && "has-error"}
           style={inputStyles}
         />
-        {errors.location && (
-          <InputError>{errors.location.message}</InputError>
-        )}
-        {apiError && (
-          <ErrorAlert message={apiError}/>
-        )}
+        {error && <InputError>{error.message}</InputError>}
+        {apiError && <ErrorAlert message={apiError} />}
         <SubLabel selected={location.address}>
           Enter address, zip code, or city
         </SubLabel>
