@@ -24,6 +24,9 @@ import {
   fetchUser,
   fetchUserError,
   fetchUserSuccess,
+  updateUser,
+  updateUserError,
+  updateUserSuccess,
 } from "hooks/actions/userActions";
 import { getInitials } from "utils/userInfo";
 import { validateURL } from "utils/validators";
@@ -98,8 +101,16 @@ function EditProfile() {
   const { firstName = "", lastName = "", urls = {}, about } = user || {};
 
   const onSubmit = async (formData) => {
-    console.log(formData);
-    // make a put/patch request to backend to update users profile information
+    userProfileDispatch(updateUser());
+    try {
+      const res = await axios.patch("/api/users/current", formData);
+      userProfileDispatch(updateUserSuccess(res.data));
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      userProfileDispatch(
+        updateUserError(`Failed updating profile, reason: ${message}`),
+      );
+    }
   };
 
   useEffect(() => {
@@ -116,7 +127,6 @@ function EditProfile() {
       }
     })();
   }, [userProfileDispatch]);
-  console.log({ errors });
 
   if (loading) return <div>"loading"</div>;
   return (
