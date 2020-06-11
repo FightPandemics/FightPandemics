@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
 import { getInitials } from "utils/userInfo";
@@ -6,6 +6,7 @@ import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
+import InputLabel from "components/Input/Label";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -36,6 +37,16 @@ import {
   updateUserSuccess,
 } from "../hooks/actions/userActions";
 import axios from "axios";
+import Marker from "../assets/create-profile-images/location-marker.svg";
+import { blockLabelStyles } from "../constants/formStyles";
+import AddressInput from "../components/Input/AddressInput";
+import styled from "styled-components";
+
+const InputWrapper = styled.div`
+  margin: 2.2rem auto;
+  width: 100%;
+  position: relative;
+`;
 
 const OBJECTIVES = {
   donate: "Donate",
@@ -53,12 +64,28 @@ const NEEDS = {
 
 function EditAccount() {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const { control, errors, formState, register, handleSubmit } = useForm({
+  const {
+    clearError,
+    control,
+    errors,
+    formState,
+    handleSubmit,
+    register,
+    setError,
+    setValue,
+  } = useForm({
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName = "", lastName = "", objectives = {}, needs = {} } =
-    user || {};
+  const {
+    firstName = "",
+    lastName = "",
+    location = {},
+    objectives = {},
+    needs = {},
+  } = user || {};
+
+  console.log({ location });
 
   const onSubmit = async (formData) => {
     console.log({ formData });
@@ -139,6 +166,27 @@ function EditAccount() {
               error={errors.lastName}
               ref={register({})}
             />
+            <InputWrapper>
+              <InputLabel
+                htmlFor="location"
+                icon={Marker}
+                style={blockLabelStyles}
+                label="Address"
+              />
+              <AddressInput
+                errors={errors.location}
+                location={location}
+                onLocationChange={() => {
+                  setValue(location);
+                }}
+                ref={register(
+                  { name: "location" },
+                  {
+                    required: "Location is required",
+                  },
+                )}
+              />
+            </InputWrapper>
             <Label>I want to</Label>
             <HelpWrapper>
               {Object.entries(OBJECTIVES).map(([key, label]) => (
