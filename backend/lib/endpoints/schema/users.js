@@ -19,19 +19,31 @@ const objectivesSchema = S.object()
 const urlsSchema = S.object()
   .prop(
     "facebook",
-    S.string()
-      .pattern(/^[a-zA-Z0-9.]*$/)
-      .minLength(5),
+    S.anyOf([
+      S.null(),
+      S.string()
+        .pattern(/^[a-zA-Z0-9.]*$/)
+        .minLength(5),
+    ]).required(),
   )
-  .prop("github", S.string().pattern(/^[a-zA-Z0-9_-]*$/))
-  .prop("linkedin", S.string().pattern(/^[a-zA-Z0-9]*$/))
+  .prop(
+    "github",
+    S.anyOf([S.null(), S.string().pattern(/^[a-zA-Z0-9_-]*$/)]).required(),
+  )
+  .prop(
+    "linkedin",
+    S.anyOf([S.null(), S.string().pattern(/^[a-zA-Z0-9]*$/)]).required(),
+  )
   .prop(
     "twitter",
-    S.string()
-      .pattern(/^[a-zA-Z0-9_]*$/)
-      .maxLength(15),
+    S.anyOf([
+      S.null(),
+      S.string()
+        .pattern(/^[a-zA-Z0-9_]*$/)
+        .maxLength(15),
+    ]).required(),
   )
-  .prop("website", S.string().pattern(URL_REGEX));
+  .prop("website", S.oneOf([S.null(), S.string().pattern(URL_REGEX)]));
 
 const createUserSchema = {
   body: strictSchema()
