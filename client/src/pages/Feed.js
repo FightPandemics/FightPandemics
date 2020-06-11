@@ -250,7 +250,7 @@ const Feed = (props) => {
     const value = HELP_TYPE[e.key];
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
-
+      // change this to filter on the backend !!
       if (value === HELP_TYPE.ALL) {
         postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       } else {
@@ -258,7 +258,7 @@ const Feed = (props) => {
 
         postsDispatch({ type: SET_POSTS, posts: filtered });
       }
-      postsDispatch({ type: RESET_PAGE });
+      postsDispatch({ type: RESET_PAGE }); // set the page back to 0
     }
   };
 
