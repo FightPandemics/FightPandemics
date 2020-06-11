@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
 import { getInitials } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
-import locationIcon from "assets/icons/location.svg";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -29,6 +27,29 @@ import {
 } from "../components/EditProfile/EditComponents";
 import { UserContext, withUserContext } from "../context/UserContext";
 import ErrorAlert from "../components/Alert/ErrorAlert";
+import {
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
+  updateUser,
+  updateUserError,
+  updateUserSuccess,
+} from "../hooks/actions/userActions";
+import axios from "axios";
+
+const OBJECTIVES = {
+  donate: "Donate",
+  shareInformation: "Share Information",
+  volunteer: "Volunteer",
+};
+
+const NEEDS = {
+  medicalHelp: ["Medical Help", "I have symptoms of COVID-19"],
+  otherHelp: [
+    "Other Help",
+    "I need assistance getting groceries, medicine, etc.",
+  ],
+};
 
 function EditAccount() {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -36,110 +57,39 @@ function EditAccount() {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const {
-    firstName = "",
-    lastName = "",
-    shareInfoStatus,
-    volunteerStatus,
-    donateStatus,
-    medicalHelpStatus,
-    otherHelpStatus,
-    traveling,
-    displayAddress,
-  } = user || {};
+  const { firstName = "", lastName = "", objectives = {}, needs = {} } =
+    user || {};
 
-  const onSubmit = (data) => {
-    // console.log(data);
-    // make a put/patch request to backend to update users Account information
-  };
-
-  const helpSection = {
-    Volunteer: ["volunteer", volunteerStatus],
-    Donate: ["donate", donateStatus],
-    "Share Information": ["shareInfo", shareInfoStatus],
-  };
-
-  const needHelpSection = {
-    "Medical Help": [
-      "medicalHelp",
-      medicalHelpStatus,
-      "I have symptoms of COVID-19",
-    ],
-    "Other Help": [
-      "otherHelp",
-      otherHelpStatus,
-      "I need assistance getting groceries, medicine, etc.",
-    ],
-  };
-
-  const renderHelp = () => {
-    return Object.entries(helpSection).map(([key, value]) => {
-      return (
-        <CheckBoxWrapper key={key}>
-          <Controller
-            as={<Checkbox />}
-            defaultValue={value[1]}
-            name={value[0]}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          >
-            <Label inputColor="#000000">{key}</Label>
-          </Controller>
-        </CheckBoxWrapper>
+  const onSubmit = async (formData) => {
+    console.log({ formData });
+    userProfileDispatch(updateUser());
+    try {
+      const res = await axios.patch("/api/users/current", formData);
+      userProfileDispatch(updateUserSuccess(res.data));
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      userProfileDispatch(
+        updateUserError(`Failed updating profile, reason: ${message}`),
       );
-    });
+    }
   };
 
-  const renderNeedHelp = () => {
-    return Object.entries(needHelpSection).map(([key, value]) => {
-      return (
-        <CheckBoxWrapper key={key}>
-          <Controller
-            as={Checkbox}
-            defaultValue={value[1]}
-            name={value[0]}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          >
-            <Label inputColor="black">{key}</Label>
-            <UnderLineDescription marginLeft="3rem">
-              {value[2]}
-            </UnderLineDescription>
-          </Controller>
-        </CheckBoxWrapper>
-      );
-    });
-  };
+  useEffect(() => {
+    (async function fetchProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch(
+          fetchUserError(`Failed loading account data, reason: ${message}`),
+        );
+      }
+    })();
+  }, [userProfileDispatch]);
 
-  const renderAddressCheckBoxes = () => {
-    return (
-      <HelpWrapper>
-        <CheckBoxWrapper>
-          <Controller
-            as={Checkbox}
-            defaultValue={traveling}
-            name={"traveling"}
-            control={control}
-            onChange={([event]) => event.target.checked}
-          >
-            <Label inputColor="#646464">I am traveling</Label>
-          </Controller>
-        </CheckBoxWrapper>
-        <CheckBoxWrapper>
-          <Controller
-            as={Checkbox}
-            defaultValue={displayAddress}
-            name="displayAddress"
-            control={control}
-            onChange={([event]) => event.target.checked}
-          >
-            <Label inputColor="#646464">Don't show my address</Label>
-          </Controller>
-        </CheckBoxWrapper>
-      </HelpWrapper>
-    );
-  };
-
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
@@ -189,11 +139,39 @@ function EditAccount() {
               error={errors.lastName}
               ref={register({})}
             />
-            {renderAddressCheckBoxes()}
             <Label>I want to</Label>
-            <HelpWrapper>{renderHelp()}</HelpWrapper>
+            <HelpWrapper>
+              {Object.entries(OBJECTIVES).map(([key, label]) => (
+                <CheckBoxWrapper key={key}>
+                  <Controller
+                    as={Checkbox}
+                    defaultChecked={objectives[key]}
+                    name={`objectives.${key}`}
+                    control={control}
+                    onChange={([event]) => event.target.checked}
+                  >
+                    <Label inputColor="#000000">{label}</Label>
+                  </Controller>
+                </CheckBoxWrapper>
+              ))}
+            </HelpWrapper>
             <Label>I need</Label>
-            <HelpWrapper>{renderNeedHelp()}</HelpWrapper>
+            <HelpWrapper>
+              {Object.entries(NEEDS).map(([key, [label, description]]) => (
+                <CheckBoxWrapper key={key}>
+                  <Controller
+                    as={Checkbox}
+                    defaultChecked={needs[key]}
+                    name={`needs.${key}`}
+                    control={control}
+                    onChange={([event]) => event.target.checked}
+                  >
+                    <Label inputColor="black">{label}</Label>
+                    <UnderLineDescription>{description}</UnderLineDescription>
+                  </Controller>
+                </CheckBoxWrapper>
+              ))}
+            </HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
               Save Changes
             </CustomSubmitButton>

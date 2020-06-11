@@ -194,7 +194,7 @@ const Profile = () => {
         key="bottom"
       >
         <DrawerHeader>
-          <Link to="/edit-profile">Edit Account Information</Link>
+          <Link to="/edit-account">Edit Account Information</Link>
         </DrawerHeader>
         <DrawerHeader>
           <Link to="/edit-profile">Edit Profile </Link>
