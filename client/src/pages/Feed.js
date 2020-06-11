@@ -322,6 +322,7 @@ const Feed = (props) => {
     const limit = 5;
     const skip = page * limit;
     /* Add userId when user is logged */
+    // {{baseApiUrl}}/posts?skip=0&limit=100&objective=request&filter=%7B%22location%22:%7B%22coordinates%22:%5B-74,40%5D,%22country%22:%22US%22%7D,%22type%22:%5B%22Information%22,%22Medical%20Supplies%22%5D,%22fromWhom%22:%5B%22Community%22,%22University%22%5D%7D
     const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
       user && user.userId ? `&userId=${user.userId}` : ""
     }`;
