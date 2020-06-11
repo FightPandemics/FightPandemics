@@ -67,7 +67,7 @@ export default forwardRef(
         <FormInput
           name={name}
           id={name}
-          value={defaultValue}
+          defaultValue={defaultValue}
           ref={ref}
           placeholder={placeholder}
           {...props}
