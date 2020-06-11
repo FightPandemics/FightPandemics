@@ -15,6 +15,11 @@ const signupSchema = {
     .prop("confirmPassword", S.string().required()),
 };
 
+const changePasswordSchema = {
+  body: strictSchema()
+    .prop("email", S.string().required())
+};
+
 const oAuthSchema = {
   body: strictSchema()
     .prop("code", S.string().required())
@@ -29,6 +34,7 @@ const oAuthProviderSchema = {
 };
 
 module.exports = {
+  changePasswordSchema,
   loginSchema,
   oAuthProviderSchema,
   oAuthSchema,
