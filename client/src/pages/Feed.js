@@ -38,6 +38,7 @@ import {
   FETCH_POSTS,
   ERROR_POSTS,
   NEXT_PAGE,
+  RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
   SET_COMMENTS,
@@ -247,7 +248,6 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = HELP_TYPE[e.key];
-
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
 
@@ -258,6 +258,7 @@ const Feed = (props) => {
 
         postsDispatch({ type: SET_POSTS, posts: filtered });
       }
+      postsDispatch({ type: RESET_PAGE });
     }
   };
 
@@ -321,11 +322,12 @@ const Feed = (props) => {
     const { user } = props;
     const limit = 5;
     const skip = page * limit;
-    /* Add userId when user is logged */
+    const test = encodeURI(JSON.stringify(selectedOptions));
+    // console.log(test);
     // {{baseApiUrl}}/posts?skip=0&limit=100&objective=request&filter=%7B%22location%22:%7B%22coordinates%22:%5B-74,40%5D,%22country%22:%22US%22%7D,%22type%22:%5B%22Information%22,%22Medical%20Supplies%22%5D,%22fromWhom%22:%5B%22Community%22,%22University%22%5D%7D
-    const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
-      user && user.userId ? `&userId=${user.userId}` : ""
-    }`;
+    const endpoint = `/api/posts?limit=${limit}&skip=${skip}&objective=request`;
+    // const endpoint = `/api/posts?skip=0&limit=100&objective=request&filter=%7B%22type%22:%5B%22Information%22%5D%7D`
+    console.log(endpoint);
     let response = {};
 
     if (isLoading) {
@@ -353,7 +355,7 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [postsList, isLoading, page, props]);
+  }, [props, page, selectedOptions, isLoading, postsList]);
 
   useEffect(() => {
     loadPosts();
