@@ -31,6 +31,7 @@ const TabsContainer = styled.div`
 `;
 
 const tabs = [
+  /* Commenting out for fist MVP launch
   {
     title: (
       <CustomLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">
@@ -45,6 +46,7 @@ const tabs = [
       </CustomLink>
     ),
   },
+  */
   {
     title: (
       <CustomLink activeStyle={ActiveLinkStyles} to="/feed">
