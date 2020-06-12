@@ -85,8 +85,6 @@ function EditAccount() {
     needs = {},
   } = user || {};
 
-  console.log({ location });
-
   const onSubmit = async (formData) => {
     console.log({ formData });
     userProfileDispatch(updateUser());
@@ -136,7 +134,8 @@ function EditAccount() {
               noPic={true}
               initials={getInitials(firstName, lastName)}
             />
-            <ChangePicButton>Change</ChangePicButton>
+            {/* hide this until backend API is available
+              <ChangePicButton>Change</ChangePicButton> */}
           </ProfilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
