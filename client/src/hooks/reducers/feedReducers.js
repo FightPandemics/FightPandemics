@@ -18,6 +18,7 @@ export const postsState = {
   status: SET_POSTS,
   posts: [],
   page: 0,
+  filterType: "",
   isLoading: false,
   loadMore: true,
 };
@@ -67,7 +68,13 @@ export const postsReducer = (state = postsState, action) => {
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
-      return { ...state, page: 0 };
+      return {
+        ...state,
+        page: 0,
+        filterType: action.filterType,
+        posts: [],
+        loadMore: true,
+      };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };
     case SET_LIKE:
