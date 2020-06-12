@@ -3,23 +3,20 @@ const { strictSchema } = require("./utils");
 
 const loginSchema = {
   body: strictSchema()
-    .prop("email", S.string().required())
+    .prop("email", S.string().format("email").required())
     .prop("password", S.string().required()),
 };
 
 // todo: add password confirmation as required field
 const signupSchema = {
   body: strictSchema()
-    .prop("email", S.string().format(S.FORMATS.EMAIL).required())
+    .prop("email", S.string().format("email").required())
     .prop("password", S.string().required())
     .prop("confirmPassword", S.string().required()),
 };
 
 const changePasswordSchema = {
-  body: strictSchema().prop(
-    "email",
-    S.string().format(S.FORMATS.EMAIL).required(),
-  ),
+  body: strictSchema().prop("email", S.string().format("email").required()),
 };
 
 const oAuthSchema = {
