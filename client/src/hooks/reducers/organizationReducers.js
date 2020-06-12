@@ -12,9 +12,9 @@ export const initialState = {
 export const createOrganizationFormReducer = (state, action) => {
   const { type, ...payload } = action;
   switch (type) {
-    case CREATE_USER:
+    case CREATE_ORGANIZATION:
       return { ...state, loading: true, error: null };
-    case CREATE_USER_ERROR:
+    case CREATE_ORGANIZATION_ERROR:
       return { ...state, loading: false, error: payload.error };
     default:
       return state;

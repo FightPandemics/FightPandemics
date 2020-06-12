@@ -31,25 +31,16 @@ import {
   globalText,
   errorStyles
 } from "components/OrganizationProfile/CreateProfileComponents";
-import { CREATE_ORGANIZATION, CREATE_ORGANIZATION_ERROR } from "hooks/actions/userActions";
+import { CREATE_ORGANIZATION, CREATE_ORGANIZATION_ERROR } from "hooks/actions/organizationActions";
 import {
   createOrganizationFormReducer,
   initialState,
-} from "hooks/reducers/userReducers";
+} from "hooks/reducers/organizationReducers";
 import axios from "axios";
 
 
 const { type, industry } = createOrganizationProfile;
 
-const initialState = {
-  state: {
-    industryModal: false,
-    typeModal: false,
-    options: [],
-    selected: "",
-    name: ""
-  }
-};
 
 const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others'];
 
@@ -69,7 +60,6 @@ const CreateOrgProfile = (props) => {
   const [ orgType, setType ] = useState("");
   const [ orgIndustry, setIndustry ] = useState("");
   const [state, setState] = useState(initialState.state);
-  const { typeModal, industryModal, options } = state;
 
 
   const handleLocationChange = (location) => {
@@ -91,34 +81,8 @@ const CreateOrgProfile = (props) => {
     return event.target.value
   }
 
-  const showModal = (setting) => (e) => {
-    let currentModal = setting.type === "type" ? "typeModal" : "industryModal"
-    setState({
-      ...state,
-      [currentModal]: !state[currentModal],
-      options: setting.options,
-      selected: setting.type,
-      name: setting.type
-    });
-  };
 
-  const closeModalType = (e) => {
-    setState({
-      ...state,
-      typeModal: !state.typeModal,
-    });
-  };
-
-  const closeModalIndustry = (e) => {
-    setState({
-      ...state,
-      industryModal: !state.industryModal,
-      options: [],
-      selected: "",
-    });
-  };
-
-  const onFormSubmit = (formData) => {
+  const onFormSubmit = async (formData) => {
     if(!privacy) {
       alert("You must agree to our privacy policy before proceeding")
       return;
@@ -132,7 +96,7 @@ const CreateOrgProfile = (props) => {
           formData.location = location;
           formData.ownerId = props.user._id;
 
-          const res = await axios.post("/api/organizations", body);
+          const res = await axios.post("/api/organizations", formData);
            if(res) {
              console.log(res);
              // history.push("/create-organization-complete");
@@ -150,6 +114,7 @@ const CreateOrgProfile = (props) => {
       return;
     }
 
+  }
 
   };
 
