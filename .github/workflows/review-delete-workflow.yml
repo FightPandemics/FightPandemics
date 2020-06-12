@@ -49,4 +49,5 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           TF_VAR_env_name: ${{ steps.get-branch-name-sanitized.outputs.branch }}
           TF_VAR_fp_context: review
+          TF_VAR_aws_region: us-east-1
 
