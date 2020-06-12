@@ -15,6 +15,7 @@ import {
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
+  WizardSubmit,
 } from "components/StepWizard";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
@@ -114,15 +115,13 @@ const Step3 = (props) => {
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
       </WizardFormWrapper>
-      <WizardButtonGroup>
-        <SubmitButton
-          disabled={email === "" || !valid}
-          primary="true"
-          onClick={onSubmit}
-        >
-          Submit
-        </SubmitButton>
-      </WizardButtonGroup>
+      <WizardSubmit
+        disabled={email === "" || !valid}
+        primary="true"
+        onClick={onSubmit}
+      >
+        Submit
+      </WizardSubmit>
     </WizardStep>
   );
 };

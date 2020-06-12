@@ -3,7 +3,6 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
-import WizardSubmit from "components/StepWizard/WizardSubmit";
 import {
   StyledWizard,
   WizardContainer,
@@ -24,6 +23,7 @@ import {
   getCheckedAnswers,
   WizardCheckboxWrapper,
   WizardCheckboxItem,
+  WizardSubmit,
 } from "components/StepWizard";
 
 // ICONS
