@@ -50,16 +50,19 @@ import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
+import facebookIcon from "assets/icons/social-facebook.svg";
+import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
+import smileIcon from "assets/icons/smile-icon.svg";
 
 const socialIcons = {
-  google: linkedinBlue,
-  facebook: linkedinBlue,
+  github: githubIcon,
+  facebook: facebookIcon,
   linkedin: linkedinBlue,
   twitter: twitterBlue,
-  website: linkedinBlue,
+  website: smileIcon,
 };
 
 const Profile = () => {
@@ -152,20 +155,23 @@ const Profile = () => {
               {offerHelp && "I want to help "} • {address}
             </LocationDesktopDiv>
             <PlaceholderIcon />
-            {Object.entries(urls).map(([name, url]) => (
-              <a
-                href={url}
-                key="name"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SocialIcon src={socialIcons[name]} />
-              </a>
-            ))}
+            {Object.entries(urls).map(([name, url]) => {
+              return (
+                url && (
+                  <a
+                    href={url}
+                    key="name"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SocialIcon src={socialIcons[name]} />
+                  </a>
+                )
+              );
+            })}
           </IconsContainer>
         </UserInfoDesktop>
       </UserInfoContainer>
-
       <WhiteSpace />
       <div style={{ margin: "0 2.5rem" }}>
         <WhiteSpace />
