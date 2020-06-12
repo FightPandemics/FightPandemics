@@ -31,7 +31,7 @@ const TabsContainer = styled.div`
 `;
 
 const tabs = [
-  {
+/*  {
     title: (
       <CustomLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">
         Health Facilities
@@ -44,7 +44,8 @@ const tabs = [
         Symptom Checker
       </CustomLink>
     ),
-  },
+  }, 
+*/
   {
     title: (
       <CustomLink activeStyle={ActiveLinkStyles} to="/feed">
@@ -70,13 +71,13 @@ const MobileTabs = (props) => {
     }
   }, []);
 
-  // const removeNoticeBar = () => {
-  //   sessionStorage.setItem("LocalEmergencyBox", "false");
-  // };
+  const removeNoticeBar = () => {
+    sessionStorage.setItem("LocalEmergencyBox", "false");
+  };
 
   return (
     <TabsContainer>
-      {/* {status ? <LocalEmergencyNumber onClick={removeNoticeBar} /> : null} */}
+      {status ? <LocalEmergencyNumber onClick={removeNoticeBar} /> : null}
       <Tabs
         tabs={tabs}
         page={tabIndex}
