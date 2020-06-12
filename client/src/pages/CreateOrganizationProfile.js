@@ -31,6 +31,11 @@ import {
   globalText,
   errorStyles
 } from "components/OrganizationProfile/CreateProfileComponents";
+import { CREATE_ORGANIZATION, CREATE_ORGANIZATION_ERROR } from "hooks/actions/userActions";
+import {
+  createOrganizationFormReducer,
+  initialState,
+} from "hooks/reducers/userReducers";
 import axios from "axios";
 
 
@@ -52,6 +57,11 @@ const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Othe
 const CreateOrgProfile = (props) => {
 
   const { clearError, register, handleSubmit, control, errors } = useForm();
+
+  const [createOrganizationFormState, createOrganizationFormDispatch] = useReducer(
+    createOrganizationFormReducer,
+    initialState,
+  );
 
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
@@ -108,7 +118,7 @@ const CreateOrgProfile = (props) => {
     });
   };
 
-  const onFormSubmit = (data) => {  
+  const onFormSubmit = (formData) => {
     if(!privacy) {
       alert("You must agree to our privacy policy before proceeding")
       return;
@@ -117,21 +127,30 @@ const CreateOrgProfile = (props) => {
       return;
     } else {
       if(props.user) {
-        data.ownerId = props.user._id;
-        console.log(data);
+        createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
+        try {
+          formData.location = location;
+          formData.ownerId = props.user._id;
 
-        axios.post("/api/organizations", data)
-        .then(ans => {
-          console.log(ans);
-        }).catch(err => {
-          console.log(err)
-        })
-      } else {
-          alert("You must be logged in to create an organization profile")
-          return;
-      }
+          const res = await axios.post("/api/organizations", body);
+           if(res) {
+             console.log(res);
+             // history.push("/create-organization-complete");
+           }
+        } catch (err) {
+          const message = err.response?.data?.message || err.message;
+          createOrganizationFormDispatch({
+            type: CREATE_ORGANIZATION_ERROR,
+            error: `Creating organization failed, reason: ${message}`,
+          });
+        }
 
+    } else {
+      alert("You must be logged in to create an organization profile")
+      return;
     }
+
+
   };
 
 
