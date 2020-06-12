@@ -26,7 +26,6 @@ jobs:
           GTM_ID: ${{ secrets.STAGING_GTM_ID }}
         run: >
           echo "REACT_APP_GTM_ID=${GTM_ID}" > ./client/.env
-          cat .env
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:
