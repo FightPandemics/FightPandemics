@@ -158,6 +158,17 @@ const CreateProfileButton = styled(BaseButton)`
   }
 `;
 
+const CreatePostSuccessMessagePopUpDiv = styled.p`
+  width: 100%;
+  font-size: 3.5rem;
+  height: 4.5rem;
+  margin-bottom: 1rem;
+
+  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    font-size: ${typography.size.xxlarge};
+  }
+`;
+
 const Option = ({ img, text, path, onClick }) => (
   <OptionWrapper onClick={onClick}>
     <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
@@ -173,4 +184,5 @@ export {
   TitleStep,
   OptionButton,
   BackButton,
+  CreatePostSuccessMessagePopUpDiv,
 };

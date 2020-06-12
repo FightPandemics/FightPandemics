@@ -8,6 +8,7 @@ import {
   BackButton,
   CreateProfileButton,
   CreateOrgLink,
+  CreatePostSuccessMessagePopUpDiv,
 } from "components/CreatePost/StyledPostAs";
 import SubmitButton from "components/Button/SubmitButton";
 import Form from "./Form/Form";
@@ -124,7 +125,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
   );
 };
 
-const Step4 = () => {
+const Step4 = ({}) => {
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
   return (
@@ -133,8 +134,12 @@ const Step4 = () => {
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-        <CreateProfileButton primary>Create Profile</CreateProfileButton>
-        <CreateOrgLink to={""}>Skip</CreateOrgLink>
+        {/* <CreateProfileButton primary>Your Post have been posted successfully</CreateProfileButton>*/}
+        <CreatePostSuccessMessagePopUpDiv>
+          Posted Successfully
+        </CreatePostSuccessMessagePopUpDiv>
+        {/* <CreateOrgLink onClick={() => setCurrentStep(1)}>Please click to continue</CreateOrgLink> */}
+        <CreateOrgLink to={"/feed/:id"}>Please click to continue</CreateOrgLink>
       </>
     )
   );
