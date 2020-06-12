@@ -1,98 +1,38 @@
 import { WhiteSpace } from "antd-mobile";
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
-import createOrganizationProfile from "../assets//data/createOrganizationProfile";
-import styled from "styled-components";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
+import createOrganizationProfile from "assets//data/createOrganizationProfile";
+import Marker from "assets/create-profile-images/location-marker.svg";
+import CustomModal from "components/CreatePost/CustomModal";
+import RadioGroup from "components/CreatePost/RadioGroup";
 import Heading from "components/Typography/Heading";
-import DownArrowButton from "../components/Button/DownArrowButton";
-import Input from "../components/Input/BaseInput";
-import Select from "../components/Input/Select";
-import SubmitButton from "../components/Button/SubmitButton";
-import Label from "../components/Input/Label";
-import StyledCheckbox from "../components/Input/Checkbox";
-import StyledCheckboxGroup from "../components/Input/CheckboxGroup";
-import createOrganizationSvg from "../assets/icons/create-organization.svg";
-import { theme, mq } from "../constants/theme";
+import DownArrowButton from "components/Button/DownArrowButton";
+import Input from "components/Input/BaseInput";
+import Select from "components/Input/Select";
+import SubmitButton from "components/Button/SubmitButton";
+import Label from "components/Input/Label";
+import StyledCheckbox from "components/Input/Checkbox";
+import StyledCheckboxGroup from "components/Input/CheckboxGroup";
+import AddressInput from "components/Input/AddressInput";
+import createOrganizationSvg from "assets/icons/create-organization.svg";
+import { connect } from "react-redux";
+import { theme, mq } from "constants/theme";
+import { StyledForm } from "../components/CreatePost/StyledCreatePost";
 import {
-  StyledForm,
-} from "../components/CreatePost/StyledCreatePost";
+  Main,
+  SvgContainer,
+  FormContainer,
+  InputWrapper,
+  styleLabel,
+  styleInput,
+  buttons,
+  globalText,
+  errorStyles
+} from "components/OrganizationProfile/CreateProfileComponents";
+import axios from "axios";
 
-
-const Main = styled.div`
-   display: flex;
-   background-color: ${theme.colors.offWhite};
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     display: block;
-     padding: 0 2rem;
-   }
-`;
-
-const SvgContainer = styled.div`
-   flex-basis: 40%;
-   background-color: ${theme.colors.selago};
-   display: block;
-   padding: 4rem;
-   padding-top: 30vh;
-   img {
-     width: 90%;
-   }
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     display: none;
-   }
-`;
-
-const FormContainer = styled.div`
-   padding-top: 10vh;
-   padding-left: 20rem;
-   padding-right: 20rem;
-   flex: 1;
-   min-height: 100vh;
-   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
-     padding-left: 5rem;
-     padding-right: 5rem;
-   }
-   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-     padding-left: 0;
-     padding-right: 0;
-   }
-
-`;
-
-const InputWrapper = styled.div`
-  width: 100%;
-`;
-
-const StyleLabel = {
-  textAlign: "left",
-  color: "#425af2"
-
-};
-
-const StyleInput = {
-  width: "100%",
-  height: "3rem",
-  backgroundColor: "transparent"
-};
-
-const buttons = {
-  display: "flex",
-  margin: "1rem 0"
-}
-
-const globalText = {
-  marginLeft: '1rem',
-  fontSize: "1.2rem"
-}
-
-const errorStyles = {
-  color: "#FF5656",
-  fontSize: "1.2rem",
-  alignSelf: ""
-}
 
 const { type, industry } = createOrganizationProfile;
 
@@ -111,8 +51,9 @@ const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Othe
 
 const CreateOrgProfile = (props) => {
 
-  const { register, handleSubmit, control, errors } = useForm();
+  const { clearError, register, handleSubmit, control, errors } = useForm();
 
+  const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [ orgType, setType ] = useState("");
@@ -120,6 +61,11 @@ const CreateOrgProfile = (props) => {
   const [state, setState] = useState(initialState.state);
   const { typeModal, industryModal, options } = state;
 
+
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    clearError("location");
+  }
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.value);
   };
@@ -162,105 +108,7 @@ const CreateOrgProfile = (props) => {
     });
   };
 
-  const searchIndustryHandler = (text) => {
-    const industryOptions = [...industry.options];
-    text.toLowerCase();
-    if(options.length < 1) {
-      setState({
-        ...state,
-        options: industry.options,
-      });
-    }
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].text.toLowerCase().indexOf(text) > -1) {
-        setState({
-          ...state,
-          options: industry.options,
-        });
-      } else {
-        industryOptions.splice(i, 1);
-        setState({
-          ...state,
-          options: industryOptions,
-        });
-      }
-    }
-  }
-
-  const [isMobile, setMediaQuery] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(mq.phone.wide.max);
-    setMediaQuery(mediaQuery.matches);
-    const listenerFunc = (query) => {
-      setMediaQuery(query.currentTarget.matches);
-    };
-    window.matchMedia(mq.phone.wide.max).addListener(listenerFunc);
-  }, []);
-
-
-  const dropDownButtons = () => {
-    if(isMobile) {
-      return (
-        <>
-        <div style={buttons}>
-          <DownArrowButton
-            handleClick={showModal(type)}
-            label={orgType ? orgType : "Type"}
-            color={theme.colors.royalBlue}
-            bgcolor="#fff"
-            long="true"
-            style={{ marginRight: "2rem" }}
-          />
-          <WhiteSpace />
-          <WhiteSpace />
-          <DownArrowButton
-            handleClick={showModal(industry)}
-            label={orgIndustry ? orgIndustry : "Industry"}
-            color={theme.colors.royalBlue}
-            bgcolor="#fff"
-            long="true"
-          />
-        </div>
-          <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
-        </>
-      )
-    } else {
-      return (
-        <div>
-        <Controller
-          as={<Select defaultValue="Type">
-            {type.options.map((option, i) => (
-              <Select.Option key={i} value={option.text}>
-                {option.text}
-              </Select.Option>
-            ))}
-          </Select>}
-         control={control}
-         name="type"
-         rules={{ required: true }}
-         onClick={(event) => event.target.innerText}
-        />
-        <Controller
-        as={<Select defaultValue="Industry">
-          {industry.options.map((option, i) => (
-            <Select.Option key={i} value={option.text}>
-              {option.text}
-            </Select.Option>
-          ))}
-        </Select>}
-        name="industry"
-        rules={{ required: true }}
-        control={control}
-        onClick={(event) => event.target.innerText}
-        />
-         <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
-        </div>
-      )
-    }
-  }
-
-  const onFormSubmit = (data) => {
+  const onFormSubmit = (data) => {  
     if(!privacy) {
       alert("You must agree to our privacy policy before proceeding")
       return;
@@ -268,7 +116,21 @@ const CreateOrgProfile = (props) => {
       alert("You must agree to our terms and conditions before proceeding")
       return;
     } else {
-      console.log(data);
+      if(props.user) {
+        data.ownerId = props.user._id;
+        console.log(data);
+
+        axios.post("/api/organizations", data)
+        .then(ans => {
+          console.log(ans);
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+          alert("You must be logged in to create an organization profile")
+          return;
+      }
+
     }
   };
 
@@ -285,13 +147,13 @@ const CreateOrgProfile = (props) => {
       <WhiteSpace />
       <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
         <InputWrapper>
-          <Label style={StyleLabel} label="* Organization Name" />
+          <Label style={styleLabel} label="* Organization Name" />
           <Input
             type="text"
             required
             placeholder="notion"
             onChange={name => name}
-            style={StyleInput}
+            style={styleInput}
             ref={register({ required: true, minLength: 3 })}
             name="name"
           />
@@ -299,32 +161,30 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
-        <InputWrapper>e
-          <Label style={StyleLabel} label="* Organization Contact E-mail" />
+        <InputWrapper>
+          <Label style={styleLabel} label="* Organization Contact E-mail" />
           <Input
             type="email"
             required
             placeholder="help@notion.com (this is a fake)"
             onChange={email => email}
-            style={StyleInput}
+            style={styleInput}
             name="email"
             ref={register({ required: true, minLength: 3 })}
           />
+
           <span style={errorStyles}>{errors.email && "Email is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="* Location" />
-          <Input
-            type="text"
-            required
-            placeholder="Pittsburgh, Pennsylvania, United States"
-            onChange={location => location}
-            style={StyleInput}
-            name="location"
-            ref={register({ required: true, minLength: 3 })}
+          <Label
+            style={styleLabel}
+            htmlFor="location"
+            icon={Marker}
+            label="Address"
           />
+          <AddressInput errors={errors} location={location} onLocationChange={handleLocationChange}/>
           <span style={errorStyles}>{errors.location && "Location is required"}</span>
         </InputWrapper>
         <WhiteSpace />
@@ -341,63 +201,41 @@ const CreateOrgProfile = (props) => {
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="* Type and Industry" />
+          <Label style={styleLabel} label="* Type and Industry" />
         </InputWrapper>
         <div className="settings">
-          <CustomModal
-            title="Organization Type"
-            className="post-modal"
-            content={
-              <Controller
-                as={RadioGroup}
-                flex={true}
-                name="type"
-                padding="1.3rem 0"
-                rules={{ required: true }}
-                onChange={changeOrgTypeHandler}
-                options={options}
-                value={orgType}
-                control={control}
-              />
-            }
-            onClose={closeModalType}
-            visible={typeModal}
-            closable={false}
-            closeButton={true}
-            closeButtonName="Select Type"
-            selectCloseButton={closeModalType}
-          />
-          <CustomModal
-            title="Select Industry"
-            className="post-modal"
-            content={
-              <Controller
-                as={RadioGroup}
-                flex={true}
-                name="industry"
-                padding="1.3rem 0"
-                rules={{ required: true }}
-                onChange={changeOrgIndustryHandler}
-                options={options}
-                value={orgIndustry}
-                control={control}
-              />
-            }
-            onClose={closeModalIndustry}
-            visible={industryModal}
-            closable={false}
-            closeButton={true}
-            closeButtonName="Select Industry"
-            selectCloseButton={closeModalIndustry}
-            searchBar={true}
-            onSearch={searchIndustryHandler}
-          />
 
-          {dropDownButtons()}
+          <Controller
+            as={<Select defaultValue="Type">
+              {type.options.map((option, i) => (
+                <Select.Option key={i} value={option.text}>
+                  {option.text}
+                </Select.Option>
+              ))}
+            </Select>}
+           control={control}
+           name="type"
+           rules={{ required: true }}
+           onClick={(event) => event.target.innerText}
+          />
+          <Controller
+          as={<Select defaultValue="Industry">
+            {industry.options.map((option, i) => (
+              <Select.Option key={i} value={option.text}>
+                {option.text}
+              </Select.Option>
+            ))}
+          </Select>}
+          name="industry"
+          rules={{ required: true }}
+          control={control}
+          onClick={(event) => event.target.innerText}
+          />
+           <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
-            <Label style={StyleLabel} label="* What are you looking for" />
+            <Label style={styleLabel} label="* What are you looking for" />
             <Controller
              as={StyledCheckboxGroup}
              control={control}
@@ -425,7 +263,7 @@ const CreateOrgProfile = (props) => {
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="" />
+          <Label style={styleLabel} label="" />
           <StyledCheckbox
             style={{ fontSize: "1.2rem" }}
             value="I agree to the Privacy Policy"
@@ -435,7 +273,7 @@ const CreateOrgProfile = (props) => {
             <Link to="/privacy-policy">Privacy Policy</Link>
           </StyledCheckbox>
           <WhiteSpace />
-          <Label style={StyleLabel} label="" />
+          <Label style={styleLabel} label="" />
           <StyledCheckbox
             style={{ fontSize: "1.2rem" }}
             value="I agree to the Terms and Conditions"
@@ -452,4 +290,11 @@ const CreateOrgProfile = (props) => {
   );
 };
 
-export default CreateOrgProfile;
+
+const mapStateToProps = ({ session }) => {
+  return {
+    user: session.user
+  };
+};
+
+export default connect(mapStateToProps)(CreateOrgProfile);
