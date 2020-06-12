@@ -252,14 +252,6 @@ const Feed = (props) => {
       dispatchAction(SET_VALUE, "selectedType", value);
       postsDispatch({ type: SET_POSTS, posts: postsState.posts });
       postsDispatch({ type: RESET_PAGE }); // set the page back to 0
-      // if (value === HELP_TYPE.ALL) {
-      //   postsDispatch({ type: SET_POSTS, posts: postsState.posts });
-      // } else {
-      //   const filtered = postsState.posts.filter((item) => item.type === value);
-
-      //   postsDispatch({ type: SET_POSTS, posts: filtered });
-      // }
-      // postsDispatch({ type: RESET_PAGE }); // set the page back to 0
     }
   };
 
@@ -319,32 +311,31 @@ const Feed = (props) => {
     });
   };
 
+  function objectiveURL() {
+    switch (selectedType) {
+      case HELP_TYPE.REQUEST:
+        return "&objective=request";
+      case HELP_TYPE.OFFER:
+        return "&objective=offer";
+      default:
+        return "";
+    }
+  }
   const loadPosts = useCallback(async () => {
     const limit = 5;
     const skip = page * limit;
-    const test = encodeURI(JSON.stringify(selectedOptions));
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
-    let objective = "";
+    const filterURL =
+      Object.keys(selectedOptions).length === 0
+        ? ""
+        : `&filter=${encodeURI(JSON.stringify(selectedOptions))}`;
 
-    switch (selectedType) {
-      case HELP_TYPE.REQUEST: {
-        objective = "&objective=request";
-        break;
-      }
-      case HELP_TYPE.OFFER: {
-        objective = "&objective=offer";
-        break;
-      }
-    }
-    console.log(test);
-    console.log(selectedOptions);
-    console.log(filters);
-    console.log(selectedType);
-    // console.log(test);
+    // console.log(filterURL);
+    // console.log(selectedOptions);
+    // console.log(selectedType);
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL}`;
+    console.log(endpoint);
     // const endpoint = `/api/posts?limit=${limit}&skip=${skip}&objective=request&filter=%7B%22type%22:%5B%22Information%22%5D%7D`;    // works
-    let endpoint = `${baseURL}${objective}&filter=${test}`;
-    // endpoint = `/api/posts?limit=${limit}&skip=${skip}`;
-    // console.log(endpoint);
     let response = {};
 
     if (isLoading) {
@@ -372,11 +363,11 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [page, selectedOptions, selectedType, filters, isLoading, postsList]);
+  }, [page, selectedOptions, objectiveURL, isLoading, postsList]);
 
   useEffect(() => {
     loadPosts();
-  }, [page, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {
