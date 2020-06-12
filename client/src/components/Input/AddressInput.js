@@ -39,14 +39,17 @@ const SubLabel = styled.small`
   display: block;
 `;
 
-const AddressInput = ({ location, error, onLocationChange }) => {
+const AddressInput = ({ defaultLocation = {}, error, onLocationChange }) => {
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
   const [predictedAddresses, setPredictedAddresses] = useState([]);
-  const [inputAddress, setInputAddress] = useState(location.address || "");
+  const [location, setLocation] = useState(defaultLocation);
+  //const [address, setaddress] = useState(location.address || "");
   const [loadingPlaceDetails, setLoadingPlaceDetails] = useState(false);
   const [apiError, setApiError] = useState(null);
+
+  const { address = "" } = location;
 
   const debounceGetAddressPredictions = useRef(
     debounce(
@@ -69,22 +72,26 @@ const AddressInput = ({ location, error, onLocationChange }) => {
   );
 
   useEffect(() => {
+    console.log("effect", {
+      location,
+      address,
+    });
     if (apiError) setApiError(null);
-    if (location.address) {
-      if (location.address === inputAddress) {
+    /*if (location.address) {
+      if (location.address === address) {
         // just selected the address? Clear predictions & nothing else
         return setPredictedAddresses([]);
       } else {
         // changes input after selected? Clear location & continue
         onLocationChange({});
       }
-    }
-    if (inputAddress.length >= 3) {
-      debounceGetAddressPredictions.current(inputAddress);
+    }*/
+    if (address.length >= 3) {
+      debounceGetAddressPredictions.current(address);
     } else {
       setPredictedAddresses([]);
     }
-  }, [apiError, inputAddress, location.address, onLocationChange]); // Only call effect if input address changes
+  }, [apiError, address, location.address, onLocationChange, location]); // Only call effect if input address changes
 
   const onMenuItemClick = async (predictedAddress) => {
     if (predictedAddress?.place_id) {
@@ -94,8 +101,10 @@ const AddressInput = ({ location, error, onLocationChange }) => {
           `/api/geo/location-details?placeId=${predictedAddress.place_id}&sessiontoken=${geoSessionToken}`,
         );
         setGeoSessionToken(uuidv4()); // session complete after getting place detail
+        console.log({ res });
         onLocationChange(res.data.location);
-        setInputAddress(res.data.location.address);
+        setLocation(res.data.location);
+        // setaddress(res.data.location.address);
       } catch {
         setApiError("Failed getting location details. Please retry.");
       } finally {
@@ -118,9 +127,11 @@ const AddressInput = ({ location, error, onLocationChange }) => {
         <Input
           type="text"
           id="location"
-          onChange={(e) => setInputAddress(e.target.value)}
+          onChange={(e) =>
+            setLocation({ ...location, address: e.target.value })
+          }
           disabled={loadingPlaceDetails}
-          value={inputAddress}
+          value={address}
           className={error && "has-error"}
           style={inputStyles}
         />

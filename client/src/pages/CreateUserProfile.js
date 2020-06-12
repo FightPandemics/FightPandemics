@@ -177,16 +177,15 @@ const Submit = styled(SubmitButton)`
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
-  const [location, setLocation] = useState({});
   const dispatch = useDispatch();
   const {
-    clearError,
     control,
     errors,
     formState,
+    getValues,
     handleSubmit,
     register,
-    setError,
+    setValue,
   } = useForm({
     mode: "change",
   });
@@ -196,18 +195,9 @@ const CreateProfile = ({ email, history }) => {
   );
 
   const onSubmit = async (formData) => {
-    if (!location.address) {
-      // all location objects should have address (+coordinates), others optional
-      return setError(
-        "location",
-        "required",
-        "Please select an address from the drop-down",
-      );
-    }
     createUserFormDispatch({ type: CREATE_USER });
     try {
       const { email, ...body } = formData;
-      body.location = location;
       const res = await axios.post("/api/users", body);
 
       dispatch({
@@ -225,8 +215,7 @@ const CreateProfile = ({ email, history }) => {
   };
 
   const handleLocationChange = (location) => {
-    setLocation(location);
-    clearError("location");
+    setValue("location", location);
   };
 
   return (
@@ -324,12 +313,14 @@ const CreateProfile = ({ email, history }) => {
               />
               <AddressInput
                 error={errors.location}
-                location={location}
                 onLocationChange={handleLocationChange}
                 ref={register(
                   { name: "location" },
                   {
                     required: "Location is required",
+                    validate: (location) =>
+                      !!location.address ||
+                      "Please select an address from the drop-down",
                   },
                 )}
               />
