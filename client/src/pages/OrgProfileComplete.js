@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { withRouter } from "react-router-dom"
 import { WhiteSpace } from "antd-mobile";
 import { theme, mq } from "../constants/theme";
 import smiley from "../assets/icons/smiley.svg";
@@ -62,7 +62,6 @@ const StyledLink = styled(Link)`
 
 
 const OrgProfileComplete = props => {
-
   return (
     <Container>
       <WhiteSpace />
@@ -79,7 +78,7 @@ const OrgProfileComplete = props => {
        <WhiteSpace />
        <WhiteSpace />
        <ButtonsContainer>
-           <StyledLink to="/organization-profile/id">View my profile</StyledLink>
+           <StyledLink to={`/organization-profile/${props.history.location.state.orgId}`}>View my profile</StyledLink>
             <WhiteSpace />
             <WhiteSpace />
            <StyledLink to="/feed">Check the feed</StyledLink>
@@ -88,4 +87,4 @@ const OrgProfileComplete = props => {
   )
 }
 
-export default OrgProfileComplete
+export default withRouter(OrgProfileComplete);

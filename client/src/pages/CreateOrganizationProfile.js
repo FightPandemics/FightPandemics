@@ -98,8 +98,7 @@ const CreateOrgProfile = (props) => {
 
           const res = await axios.post("/api/organizations", formData);
            if(res) {
-             console.log(res);
-             // history.push("/create-organization-complete");
+              props.history.push("/create-organization-complete", { orgId: res.data._id });
            }
         } catch (err) {
           const message = err.response?.data?.message || err.message;

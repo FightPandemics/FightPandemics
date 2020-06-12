@@ -79,16 +79,10 @@ async function routes(app) {
   app.post(
     "/",
     {
-      // preValidation: [app.authenticate],
+      preValidation: [app.authenticate],
       schema: createOrganizationSchema,
     },
     async (req) => {
-      if (!req.body.ownerId) {
-        req.log.error(`You have to be logged in to for create an organization profile`);
-        console.log("You have to be logged in to for create an organization profile")
-        throw app.httpErrors.internalServerError();
-      }
-      console.log(req.body);
       return new Organization(req.body).save();
     },
   );
