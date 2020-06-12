@@ -323,9 +323,15 @@ const CreateProfile = ({ email, history }) => {
                 label="Address"
               />
               <AddressInput
-                errors={errors}
+                error={errors.location}
                 location={location}
                 onLocationChange={handleLocationChange}
+                ref={register(
+                  { name: "location" },
+                  {
+                    required: "Location is required",
+                  },
+                )}
               />
             </InputWrapper>
           </InputGroup>
