@@ -3,7 +3,7 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
-import WizardSubmit from "components/StepWizard/WizardSubmit"
+import WizardSubmit from "components/StepWizard/WizardSubmit";
 import {
   StyledWizard,
   WizardContainer,
@@ -33,7 +33,6 @@ import shareMyLocation from "assets/icons/share-my-location.svg";
 const INITIAL_STATE = {
   answers: [],
 };
-
 
 const STEP_1_ANSWERS = [
   "As a Volunteer",
@@ -117,7 +116,9 @@ const Step2 = (props) => {
         </WizardFormGroup>
         <ShareLocation
           tertiary="true"
-          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
+          icon={
+            <SvgIcon className="share-location-icon" src={shareMyLocation} />
+          }
           onSelect={selectLocationDetection}
         >
           Share my location
@@ -133,7 +134,7 @@ const Step2 = (props) => {
 };
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -173,18 +174,18 @@ const Step3 = (props) => {
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
         <WizardSubmit
-          disabled={!valid}
+          disabled={email === "" || !valid}
           primary="true"
-          onClick={onSubmit}>
+          onClick={onSubmit}
+        >
           Submit
-          </WizardSubmit>
+        </WizardSubmit>
         <SkipLink>
           <Link to="/feed">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
             Skip
-            </Link>
+          </Link>
         </SkipLink>
-
       </WizardFormWrapper>
     </WizardStep>
   );

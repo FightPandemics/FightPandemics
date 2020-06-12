@@ -78,7 +78,7 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -115,7 +115,11 @@ const Step3 = (props) => {
         </WizardFormGroup>
       </WizardFormWrapper>
       <WizardButtonGroup>
-        <SubmitButton disabled={!valid} primary="true" onClick={onSubmit}>
+        <SubmitButton
+          disabled={email === "" || !valid}
+          primary="true"
+          onClick={onSubmit}
+        >
           Submit
         </SubmitButton>
       </WizardButtonGroup>
