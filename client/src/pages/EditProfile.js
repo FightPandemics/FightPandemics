@@ -19,6 +19,12 @@ import {
   FormLayout,
   Background,
 } from "components/EditProfile/EditComponents";
+import {
+  FACEBOOK_URL,
+  LINKEDIN_URL,
+  TWITTER_URL,
+  GITHUB_URL,
+} from "constants/urls";
 import { UserContext, withUserContext } from "context/UserContext";
 import {
   fetchUser,
@@ -45,7 +51,7 @@ const URLS_CONFIG = {
         message: "Min. length is 5 characters",
       },
     },
-    "https://www.facebook.com/",
+    FACEBOOK_URL,
   ],
   linkedin: [
     "LinkedIn URL",
@@ -55,7 +61,7 @@ const URLS_CONFIG = {
         message: "Invalid entry: only alphanumeric characters are allowed",
       },
     },
-    "https://www.linkedin.com/in/",
+    LINKEDIN_URL,
   ],
   twitter: [
     "Twitter URL",
@@ -70,7 +76,7 @@ const URLS_CONFIG = {
         message: "Max. length is 15 characters",
       },
     },
-    "https://twitter.com/",
+    TWITTER_URL,
   ],
   github: [
     "Github URL",
@@ -81,7 +87,7 @@ const URLS_CONFIG = {
           "Invalid entry: only alphanumeric characters and _ are allowed",
       },
     },
-    "https://github.com/",
+    GITHUB_URL,
   ],
   website: [
     "Personal Website",

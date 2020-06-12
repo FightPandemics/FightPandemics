@@ -33,6 +33,12 @@ import {
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
 import {
+  FACEBOOK_URL,
+  LINKEDIN_URL,
+  TWITTER_URL,
+  GITHUB_URL,
+} from "constants/urls";
+import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
@@ -57,13 +63,15 @@ import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
 import smileIcon from "assets/icons/smile-icon.svg";
 
-const socialIcons = {
-  github: githubIcon,
-  facebook: facebookIcon,
-  linkedin: linkedinBlue,
-  twitter: twitterBlue,
-  website: smileIcon,
+const URLS = {
+  github: [githubIcon, GITHUB_URL],
+  facebook: [facebookIcon, FACEBOOK_URL],
+  linkedin: [linkedinBlue, LINKEDIN_URL],
+  twitter: [twitterBlue, TWITTER_URL],
+  website: [smileIcon],
 };
+
+const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const Profile = () => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -159,12 +167,16 @@ const Profile = () => {
               return (
                 url && (
                   <a
-                    href={url}
-                    key="name"
+                    href={
+                      name === "website"
+                        ? getHref(url)
+                        : `${URLS[name][1]}${url}`
+                    }
+                    key={name}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <SocialIcon src={socialIcons[name]} />
+                    <SocialIcon src={URLS[name][0]} />
                   </a>
                 )
               );
