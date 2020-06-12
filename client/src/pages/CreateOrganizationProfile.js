@@ -97,7 +97,7 @@ const CreateOrgProfile = (props) => {
         }
         createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
         try {
-          formData.location = location
+          formData.location = location;
           formData.ownerId = props.user.id;
 
           const res = await axios.post("/api/organizations", formData);
@@ -243,8 +243,9 @@ const CreateOrgProfile = (props) => {
           primary="true"
           onClick={handleSubmit(onFormSubmit)}
           style={{ fontWeight: "normal" }}
+          disabled={createOrganizationFormState.loading}
         >
-          Create Profile
+          { createOrganizationFormState.loading ? "Creating Profile..." : "Create Profile" }
         </SubmitButton>
         <WhiteSpace />
         <WhiteSpace />
