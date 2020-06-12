@@ -47,7 +47,7 @@ const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Othe
 
 const CreateOrgProfile = (props) => {
 
-  const { clearError, register, handleSubmit, control, errors } = useForm();
+  const { clearError, register, handleSubmit, control, errors, setError } = useForm();
 
   const [createOrganizationFormState, createOrganizationFormDispatch] = useReducer(
     createOrganizationFormReducer,
@@ -91,10 +91,14 @@ const CreateOrgProfile = (props) => {
       return;
     } else {
       if(props.user) {
+        if (!location.address) {
+          // all location objects should have address (+coordinates), others optional
+          return setError("location", "required", "Please select an address from the drop-down");
+        }
         createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
         try {
-          formData.location = location;
-          formData.ownerId = props.user._id;
+          formData.location = location
+          formData.ownerId = props.user.id;
 
           const res = await axios.post("/api/organizations", formData);
            if(res) {
