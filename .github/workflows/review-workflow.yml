@@ -21,6 +21,9 @@ jobs:
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
+      - if: matrix.app == 'client'
+        run: >
+          rm ./client/.env
       - id: get-branch-name
         uses: ypicard/get-branch-name-github-action@v1
       - id: get-branch-name-sanitized
