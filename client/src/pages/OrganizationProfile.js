@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 // ICONS
@@ -51,6 +51,7 @@ import {
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
+
 
 const URLS = {
   github: [githubIcon, GITHUB_URL],
