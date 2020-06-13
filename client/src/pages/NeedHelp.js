@@ -132,7 +132,7 @@ const NeedHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/medical",
+        pathname: "/need-help#Step3",
       });
     }
   };
