@@ -75,19 +75,28 @@ const routes = [
   {
     path: "/create-organization-profile",
     component: CreateOrganizationProfile,
-    layout: "logo"
+    layout: "logo",
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/create-organization-complete",
-    component: OrgProfileComplete
+    component: OrgProfileComplete,
   },
   {
     path: "/edit-organization-account",
     component: EditOrganizationAccount,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/edit-organization-profile",
     component: EditOrganizationProfile,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/medical",
