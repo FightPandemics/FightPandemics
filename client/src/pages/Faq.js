@@ -397,11 +397,13 @@ const Faq = () => {
               How can I change my organisation profile to an individual profile?
             </summary>
             <p>
-              An organisational profile is tied to your individual profile. Once
-              you create your individual profile, you can add as many
-              organisation profiles as you'd like, tied to that individual
-              profile. Your login will continue to be the email and password you
-              used to sign up for the individual profile.
+              You cannot change your organisation profile to an individual
+              profile. In order to create create an organisational profile, you
+              are required to have an individual profile. Once you create your
+              individual profile, you can add as many organisation profiles as
+              you'd like, tied to that individual profile. Your login will
+              continue to be the email and password you used to sign up for the
+              individual profile.
             </p>
           </details>
         </AnswerContainer>
