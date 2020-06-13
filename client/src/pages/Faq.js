@@ -340,7 +340,7 @@ const Faq = () => {
               post be visible?
             </summary>
             <p>
-              he post to give/receive help can be at a zip code, city, state or
+              The post to give/receive help can be at a zip code, city, state or
               country level for a duration of a day, a week, a month or forever.
               By default, the posts will be set to city level for one month.
             </p>
@@ -475,14 +475,6 @@ const Faq = () => {
         </AnswerContainer>
         <AnswerContainer>
           <details>
-            <summary>
-              Where can I see all my recent posts and activities?
-            </summary>
-            <p></p>
-          </details>
-        </AnswerContainer>
-        <AnswerContainer>
-          <details>
             <summary>How can I update my profile information?</summary>
             <p>
               From the menu in the upper right-hand corner, select "My Profile,"
@@ -503,33 +495,6 @@ const Faq = () => {
               </FaqLink>
             </p>
           </details>
-        </AnswerContainer>
-        <h2 className="text-primary display-5">Links</h2>
-        <AnswerContainer>
-          <p>
-            <FaqLink
-              href="https://fightpandemics.com/terms-conditions"
-              target="_blank"
-            >
-              Terms &amp; Conditions
-            </FaqLink>
-          </p>
-          <p>
-            <FaqLink
-              href="https://fightpandemics.com/privacy-policy"
-              target="_blank"
-            >
-              Privacy Policy
-            </FaqLink>
-          </p>
-          <p>
-            <FaqLink
-              href="https://fightpandemics.com/cookies-policy"
-              target="_blank"
-            >
-              Cookie Policy
-            </FaqLink>
-          </p>
         </AnswerContainer>
         <h2 className="text-primary display-5">Contacts</h2>
         <AnswerContainer>
