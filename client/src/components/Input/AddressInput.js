@@ -45,11 +45,9 @@ const AddressInput = ({ defaultLocation = {}, error, onLocationChange }) => {
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
   const [predictedAddresses, setPredictedAddresses] = useState([]);
   const [location, setLocation] = useState(defaultLocation);
-  //const [address, setaddress] = useState(location.address || "");
+  const [inputAddress, setInputAddress] = useState(location.address || "");
   const [loadingPlaceDetails, setLoadingPlaceDetails] = useState(false);
   const [apiError, setApiError] = useState(null);
-
-  const { address = "" } = location;
 
   const debounceGetAddressPredictions = useRef(
     debounce(
@@ -72,39 +70,34 @@ const AddressInput = ({ defaultLocation = {}, error, onLocationChange }) => {
   );
 
   useEffect(() => {
-    console.log("effect", {
-      location,
-      address,
-    });
     if (apiError) setApiError(null);
-    /*if (location.address) {
-      if (location.address === address) {
+    if (location.address) {
+      if (location.address === inputAddress) {
         // just selected the address? Clear predictions & nothing else
         return setPredictedAddresses([]);
       } else {
         // changes input after selected? Clear location & continue
-        onLocationChange({});
+        // onLocationChange({});
       }
-    }*/
-    if (address.length >= 3) {
-      debounceGetAddressPredictions.current(address);
+    }
+    if (inputAddress.length >= 3) {
+      debounceGetAddressPredictions.current(inputAddress);
     } else {
       setPredictedAddresses([]);
     }
-  }, [apiError, address, location.address, onLocationChange, location]); // Only call effect if input address changes
+  }, [apiError, inputAddress, location.address]); // Only call effect if input address changes
 
   const onMenuItemClick = async (predictedAddress) => {
     if (predictedAddress?.place_id) {
       setLoadingPlaceDetails(true);
       try {
-        const res = await axios.get(
+        const { data } = await axios.get(
           `/api/geo/location-details?placeId=${predictedAddress.place_id}&sessiontoken=${geoSessionToken}`,
         );
         setGeoSessionToken(uuidv4()); // session complete after getting place detail
-        console.log({ res });
-        onLocationChange(res.data.location);
-        setLocation(res.data.location);
-        // setaddress(res.data.location.address);
+        onLocationChange(data.location);
+        setLocation(data.location);
+        setInputAddress(data.location.address);
       } catch {
         setApiError("Failed getting location details. Please retry.");
       } finally {
@@ -127,11 +120,9 @@ const AddressInput = ({ defaultLocation = {}, error, onLocationChange }) => {
         <Input
           type="text"
           id="location"
-          onChange={(e) =>
-            setLocation({ ...location, address: e.target.value })
-          }
+          onChange={(e) => setInputAddress(e.target.value)}
           disabled={loadingPlaceDetails}
-          value={address}
+          value={inputAddress}
           className={error && "has-error"}
           style={inputStyles}
         />

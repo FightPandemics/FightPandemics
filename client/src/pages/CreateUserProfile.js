@@ -215,7 +215,8 @@ const CreateProfile = ({ email, history }) => {
   };
 
   const handleLocationChange = (location) => {
-    setValue("location", location);
+    // 3rd param needed to trigger validation, but seems to trigger infinite loop too and resetting the location
+    setValue("location", location, true);
   };
 
   return (
@@ -315,7 +316,7 @@ const CreateProfile = ({ email, history }) => {
                 error={errors.location}
                 onLocationChange={handleLocationChange}
                 ref={register(
-                  { name: "location" },
+                  { name: "location", type: "custom" },
                   {
                     required: "Location is required",
                     validate: (location) =>
