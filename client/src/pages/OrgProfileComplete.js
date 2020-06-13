@@ -78,7 +78,7 @@ const OrgProfileComplete = props => {
        <WhiteSpace />
        <WhiteSpace />
        <ButtonsContainer>
-           <StyledLink to={`/organization-profile/${props.history.location.state.orgId}`}>View my profile</StyledLink>
+           <StyledLink to={`/organization/${props.history.location.state.orgId}`}>View my profile</StyledLink>
             <WhiteSpace />
             <WhiteSpace />
            <StyledLink to="/feed">Check the feed</StyledLink>

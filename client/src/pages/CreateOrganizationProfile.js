@@ -1,14 +1,11 @@
 import { WhiteSpace } from "antd-mobile";
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
 import createOrganizationProfile from "assets//data/createOrganizationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
-import CustomModal from "components/CreatePost/CustomModal";
-import RadioGroup from "components/CreatePost/RadioGroup";
 import Heading from "components/Typography/Heading";
-import DownArrowButton from "components/Button/DownArrowButton";
 import Input from "components/Input/BaseInput";
 import Select from "components/Input/Select";
 import SubmitButton from "components/Button/SubmitButton";
@@ -18,7 +15,7 @@ import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import AddressInput from "components/Input/AddressInput";
 import createOrganizationSvg from "assets/icons/create-organization.svg";
 import { connect } from "react-redux";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import { StyledForm } from "../components/CreatePost/StyledCreatePost";
 import {
   Main,
@@ -27,7 +24,6 @@ import {
   InputWrapper,
   styleLabel,
   styleInput,
-  buttons,
   globalText,
   errorStyles
 } from "components/OrganizationProfile/CreateProfileComponents";
@@ -57,10 +53,6 @@ const CreateOrgProfile = (props) => {
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
-  const [ orgType, setType ] = useState("");
-  const [ orgIndustry, setIndustry ] = useState("");
-  const [state, setState] = useState(initialState.state);
-
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -72,15 +64,6 @@ const CreateOrgProfile = (props) => {
   const handleInputChangeConditions = (e) => {
     setConditions(e.target.value);
   };
-  const changeOrgTypeHandler = ([event]) => {
-    setType(event.target.value)
-    return event.target.value
-  }
-  const changeOrgIndustryHandler = ([event]) => {
-    setIndustry(event.target.value)
-    return event.target.value
-  }
-
 
   const onFormSubmit = async (formData) => {
     if(!privacy) {
