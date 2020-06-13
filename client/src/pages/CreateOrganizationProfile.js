@@ -1,110 +1,63 @@
 import { WhiteSpace } from "antd-mobile";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";
-import filterOptions from "../assets/data/filterOptions";
-import createOrganizationProfile from "../assets//data/createOrganizationProfile";
-import styled from "styled-components";
-import CustomModal from "../components/CreatePost/CustomModal";
-import RadioGroup from "../components/CreatePost/RadioGroup";
+import createOrganizationProfile from "assets//data/createOrganizationProfile";
+import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
-import DownArrowButton from "../components/Button/DownArrowButton";
-import Input from "../components/Input/BaseInput";
-import SubmitButton from "../components/Button/SubmitButton";
-import Label from "../components/Input/Label";
-import StyledCheckbox from "../components/Input/Checkbox";
-import { theme } from "../constants/theme";
+import Input from "components/Input/BaseInput";
+import Select from "components/Input/Select";
+import SubmitButton from "components/Button/SubmitButton";
+import Label from "components/Input/Label";
+import StyledCheckbox from "components/Input/Checkbox";
+import StyledCheckboxGroup from "components/Input/CheckboxGroup";
+import AddressInput from "components/Input/AddressInput";
+import createOrganizationSvg from "assets/icons/create-organization.svg";
+import { connect } from "react-redux";
+import { theme } from "constants/theme";
+import { StyledForm } from "../components/CreatePost/StyledCreatePost";
 import {
-  CreatePostWrapper,
-  StyledForm,
-} from "../components/CreatePost/StyledCreatePost";
+  Main,
+  SvgContainer,
+  FormContainer,
+  InputWrapper,
+  styleLabel,
+  styleInput,
+  globalText,
+  errorStyles
+} from "components/OrganizationProfile/CreateProfileComponents";
+import { CREATE_ORGANIZATION, CREATE_ORGANIZATION_ERROR } from "hooks/actions/organizationActions";
+import {
+  createOrganizationFormReducer,
+  initialState,
+} from "hooks/reducers/organizationReducers";
+import axios from "axios";
 
-const InputWrapper = styled.div`
-  width: 100%;
-`;
 
-const StyleLabel = {
-  textAlign: "left",
-};
-
-const StyleInput = {
-  width: "100%",
-};
-
-const types = Object.values(filterOptions)[2].options;
 const { type, industry } = createOrganizationProfile;
 
-const initialState = {
-  state: {
-    modal: false,
-    options: [],
-    selected: "",
-  },
-  formData: {
-    title: "",
-    description: "",
-    tags: [],
-    type: type.default.value,
-    industry: industry.default.value,
-  },
-  errors: [],
-};
 
-const errorMsg = {
-  name: "Please include an organization name.",
-  email: "Please include an organization email.",
-  location: "Please include a location.",
-  type: "Please include an organization type",
-  industry: "Please include an organization industry",
-  interest: "Please include what your looking for",
-  privacy: "Please include our Privacy Policy",
-  conditions: "Please include Terms and Conditions",
-};
+const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others'];
+
 
 const CreateOrgProfile = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
-  const [global, setGlobal] = useState("");
-  const [volunteer, setVolunteer] = useState("");
-  const [staff, setStaff] = useState("");
-  const [investors, setInvestors] = useState("");
-  const [donations, setDonations] = useState("");
-  const [other, setOther] = useState("");
+
+  const { clearError, register, handleSubmit, control, errors, setError } = useForm();
+
+  const [createOrganizationFormState, createOrganizationFormDispatch] = useReducer(
+    createOrganizationFormReducer,
+    initialState,
+  );
+
+  const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
-  const [state, setState] = useState(initialState.state);
-  const [formData, setFormData] = useState(initialState.formData);
-  const [errors, setErrors] = useState(initialState.errors);
-  const { modal, selected, options } = state;
 
-  const handleInputChangeName = (e) => {
-    setName(e.target.value);
-  };
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleInputChangeLocation = (e) => {
-    setLocation(e.target.value);
-  };
-  const handleInputChangeGlobal = (e) => {
-    setGlobal(e.target.value);
-  };
-  const handleInputChangeVolunteer = (e) => {
-    setVolunteer(e.target.value);
-  };
-  const handleInputChangeStaff = (e) => {
-    setStaff(e.target.value);
-  };
-  const handleInputChangeInvestors = (e) => {
-    setInvestors(e.target.value);
-  };
-  const handleInputChangeDonations = (e) => {
-    setDonations(e.target.value);
-  };
-  const handleInputChangeOther = (e) => {
-    setOther(e.target.value);
-  };
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    clearError("location");
+  }
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.value);
   };
@@ -112,203 +65,188 @@ const CreateOrgProfile = (props) => {
     setConditions(e.target.value);
   };
 
-  const showModal = (setting) => (e) => {
-    setState({
-      ...state,
-      modal: !state.modal,
-      options: setting.options,
-      selected: setting.type,
-    });
-  };
+  const onFormSubmit = async (formData) => {
+    if(!privacy) {
+      alert("You must agree to our privacy policy before proceeding")
+      return;
+    } else if (!conditions) {
+      alert("You must agree to our terms and conditions before proceeding")
+      return;
+    } else {
+      if(props.user) {
+        if (!location.address) {
+          // all location objects should have address (+coordinates), others optional
+          return setError("location", "required", "Please select an address from the drop-down");
+        }
+        createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
+        try {
+          formData.location = location;
+          formData.ownerId = props.user.id;
 
-  const closeModal = (e) => {
-    setState({
-      ...state,
-      modal: !state.modal,
-      options: [],
-      selected: "",
-    });
-  };
+          const res = await axios.post("/api/organizations", formData);
+           if(res) {
+              props.history.push("/create-organization-complete", { orgId: res.data._id });
+           }
+        } catch (err) {
+          const message = err.response?.data?.message || err.message;
+          createOrganizationFormDispatch({
+            type: CREATE_ORGANIZATION_ERROR,
+            error: `Creating organization failed, reason: ${message}`,
+          });
+        }
 
-  const handleFormData = (field) => (e) => {
-    setFormData({ ...formData, [field]: e.target.value });
-    if (errors.includes(field) && formData[field]) {
-      const newErrors = errors.filter((error) => error !== field);
-      setErrors(newErrors);
+    } else {
+      alert("You must be logged in to create an organization profile")
+      return;
     }
+
+  }
+
   };
 
-  const populateErrors = () => {
-    const newErrors = [];
-    for (let field in errorMsg) {
-      if (!errors.includes(field)) {
-        newErrors.push(field);
-      }
-    }
-    setErrors([...errors, ...newErrors]);
-  };
-
-  const renderError = (field) => {
-    if (errors.includes(field) && (!formData[field] || !formData[field].length))
-      return errorMsg[field];
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    populateErrors();
-    if (!errors.length) {
-      // todo: finish integrating api
-      try {
-        // const req = await axios.post("/api/posts", formData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   return (
-    <CreatePostWrapper>
+    <Main>
+     <SvgContainer>
+        <img src={createOrganizationSvg} alt="create organization" />
+     </SvgContainer>
+     <FormContainer>
       <Heading className="h4" level={4}>
         Create Organization Profile
       </Heading>
-      <StyledForm onSubmit={handleSubmit}>
+      <WhiteSpace />
+      <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
         <InputWrapper>
-          <Label style={StyleLabel} label="Organization Name" />
+          <Label style={styleLabel} label="* Organization Name" />
           <Input
             type="text"
             required
             placeholder="notion"
-            value={name}
-            onChange={handleInputChangeName}
-            style={StyleInput}
+            onChange={name => name}
+            style={styleInput}
+            ref={register({ required: true, minLength: 3 })}
+            name="name"
           />
+          <span style={errorStyles}>{errors.name && "Organization name is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Organization Contact Email" />
+          <Label style={styleLabel} label="* Organization Contact E-mail" />
           <Input
             type="email"
             required
             placeholder="help@notion.com (this is a fake)"
-            value={email}
-            onChange={handleInputChangeEmail}
-            style={StyleInput}
+            onChange={email => email}
+            style={styleInput}
+            name="email"
+            ref={register({ required: true, minLength: 3 })}
           />
+
+          <span style={errorStyles}>{errors.email && "Email is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Location" />
-          <Input
-            type="text"
-            required
-            placeholder="Pittsburgh, Pennsylvania, United States"
-            value={location}
-            onChange={handleInputChangeLocation}
-            style={StyleInput}
+          <Label
+            style={styleLabel}
+            htmlFor="location"
+            icon={Marker}
+            label="Address"
           />
+          <AddressInput errors={errors} location={location} onLocationChange={handleLocationChange}/>
+          <span style={errorStyles}>{errors.location && "Location is required"}</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <StyledCheckbox value="global" onChange={handleInputChangeGlobal}>
-            We are a global organization
-          </StyledCheckbox>
+          <Controller
+           as={StyledCheckbox}
+           name="global"
+           control={control}
+           onChange={([event]) => event.target.checked}
+          />
+         <span style={globalText}>We are a global organization</span>
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="Type and Industry" />
+          <Label style={styleLabel} label="* Type and Industry" />
         </InputWrapper>
         <div className="settings">
-          <CustomModal
-            title={selected ? createOrganizationProfile[selected].title : ""}
-            className="post-modal"
-            content={
-              <RadioGroup
-                flex={true}
-                padding="1.3rem 0"
-                onChange={handleFormData(selected)}
-                options={options}
-                value={formData[selected]}
-                defaultValue={formData[selected]}
-              />
-            }
-            onClose={closeModal}
-            visible={modal}
-            closable={false}
-          />
-          <div className="buttons">
-            <DownArrowButton
-              handleClick={showModal(type)}
-              label={formData.type}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
-              long="true"
-            />
-            <WhiteSpace />
-            <DownArrowButton
-              handleClick={showModal(industry)}
-              label={formData.industry}
-              color={theme.colors.royalBlue}
-              bgcolor="#fff"
-              long="true"
-            />
-          </div>
 
+          <Controller
+            as={<Select defaultValue="Type">
+              {type.options.map((option, i) => (
+                <Select.Option key={i} value={option.text}>
+                  {option.text}
+                </Select.Option>
+              ))}
+            </Select>}
+           control={control}
+           name="type"
+           rules={{ required: true }}
+           onClick={(event) => event.target.innerText}
+          />
+          <Controller
+          as={<Select defaultValue="Industry">
+            {industry.options.map((option, i) => (
+              <Select.Option key={i} value={option.text}>
+                {option.text}
+              </Select.Option>
+            ))}
+          </Select>}
+          name="industry"
+          rules={{ required: true }}
+          control={control}
+          onClick={(event) => event.target.innerText}
+          />
+           <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
+          <WhiteSpace />
+          <WhiteSpace />
           <InputWrapper>
-            <Label style={StyleLabel} label="What are you looking for" />
-            <StyledCheckbox
-              value="volunteer"
-              onChange={handleInputChangeVolunteer}
-            >
-              Volunteer
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox value="staff" onChange={handleInputChangeStaff}>
-              Staff
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox
-              value="investors"
-              onChange={handleInputChangeInvestors}
-            >
-              Investors
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox
-              value="donations"
-              onChange={handleInputChangeDonations}
-            >
-              Donations
-            </StyledCheckbox>
-            <Label style={StyleLabel} label="" />
-            <StyledCheckbox value="other" onChange={handleInputChangeOther}>
-              Other
-            </StyledCheckbox>
+            <Label style={styleLabel} label="* What are you looking for" />
+            <Controller
+             as={StyledCheckboxGroup}
+             control={control}
+             color={theme.colors.royalBlue}
+             display="column"
+             options={organizationNeeds}
+             name="needs"
+             rules={{ required: true }}
+             onChange={([checkedValues]) => checkedValues}
+             validateStatus="error"
+            />
+           <span style={errorStyles}>{errors.needs && "Please select at least one option"}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
         </div>
         <SubmitButton
           primary="true"
-          onClick={handleSubmit}
-          className="submit-btn"
+          onClick={handleSubmit(onFormSubmit)}
+          style={{ fontWeight: "normal" }}
+          disabled={createOrganizationFormState.loading}
         >
-          Create Profile
+          { createOrganizationFormState.loading ? "Creating Profile..." : "Create Profile" }
         </SubmitButton>
+        <WhiteSpace />
+        <WhiteSpace />
+        <WhiteSpace />
         <InputWrapper>
-          <Label style={StyleLabel} label="" />
+          <Label style={styleLabel} label="" />
           <StyledCheckbox
+            style={{ fontSize: "1.2rem" }}
             value="I agree to the Privacy Policy"
             onChange={handleInputChangePrivacy}
           >
             By signing up, I agree to the{" "}
             <Link to="/privacy-policy">Privacy Policy</Link>
           </StyledCheckbox>
-          <Label style={StyleLabel} label="" />
+          <WhiteSpace />
+          <Label style={styleLabel} label="" />
           <StyledCheckbox
+            style={{ fontSize: "1.2rem" }}
             value="I agree to the Terms and Conditions"
             onChange={handleInputChangeConditions}
           >
@@ -318,8 +256,16 @@ const CreateOrgProfile = (props) => {
         </InputWrapper>
       </StyledForm>
       <WhiteSpace />
-    </CreatePostWrapper>
+      </FormContainer>
+    </Main>
   );
 };
 
-export default CreateOrgProfile;
+
+const mapStateToProps = ({ session }) => {
+  return {
+    user: session.user
+  };
+};
+
+export default connect(mapStateToProps)(CreateOrgProfile);

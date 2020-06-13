@@ -66,7 +66,7 @@ const BaseButton = styled(Button)`
       }
       pointer-events: none;
     `}
-    
+
   &.am-button {
     border: none;
   }

@@ -3,6 +3,7 @@ import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import About from "./pages/About";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
+import OrgProfileComplete from "./pages/OrgProfileComplete";
 import EditOrganizationProfile from "./pages/EditOrganizationProfile";
 import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
@@ -72,16 +73,30 @@ const routes = [
     component: About,
   },
   {
-    path: "/CreateOrganizationProfile",
+    path: "/create-organization-profile",
     component: CreateOrganizationProfile,
+    layout: "logo",
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/create-organization-complete",
+    component: OrgProfileComplete,
   },
   {
     path: "/edit-organization-account",
     component: EditOrganizationAccount,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/edit-organization-profile",
     component: EditOrganizationProfile,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/medical",

@@ -21,8 +21,10 @@ export default {
     title: "Industry",
     default: { text: "Industry", value: "Industry" },
     options: [
+      { text: "Automobile", value: "Automobile" },
       { text: "Architecture", value: "Architecture" },
       { text: "Arts & Crafts", value: "Arts & Crafts" },
+      { text: "Banking", value: "Banking" },
     ],
   },
 };
