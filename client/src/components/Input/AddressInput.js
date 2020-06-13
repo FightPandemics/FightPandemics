@@ -84,7 +84,8 @@ const AddressInput = ({ location, error, onLocationChange }) => {
     } else {
       setPredictedAddresses([]);
     }
-  }, [apiError, inputAddress, location.address, onLocationChange]); // Only call effect if input address changes
+    // Only call effect if input address changes
+  }, [inputAddress]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onMenuItemClick = async (predictedAddress) => {
     if (predictedAddress?.place_id) {

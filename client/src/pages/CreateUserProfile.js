@@ -326,12 +326,6 @@ const CreateProfile = ({ email, history }) => {
                 error={errors.location}
                 location={location}
                 onLocationChange={handleLocationChange}
-                ref={register(
-                  { name: "location" },
-                  {
-                    required: "Location is required",
-                  },
-                )}
               />
             </InputWrapper>
           </InputGroup>
