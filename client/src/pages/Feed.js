@@ -356,7 +356,6 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    console.log(endpoint);
     let response = {};
 
     if (isLoading) {
