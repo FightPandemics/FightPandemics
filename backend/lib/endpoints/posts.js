@@ -38,7 +38,7 @@ async function routes(app) {
     async (req) => {
       const { userId } = req;
       const { limit, skip, filter, objective } = req.query;
-      const queryFilters = filter ? JSON.parse(decodeURI(filter)) : {};
+      const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
       if (userId) {

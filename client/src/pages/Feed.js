@@ -348,7 +348,7 @@ const Feed = (props) => {
     delete filterObj["providers"];
     return Object.keys(filterObj).length === 0
       ? ""
-      : `&filter=${encodeURI(JSON.stringify(filterObj))}`;
+      : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
   }
 
   const loadPosts = useCallback(async () => {
