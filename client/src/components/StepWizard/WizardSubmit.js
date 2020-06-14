@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 import BaseButton from "components/Button/BaseButton";
 
-const { white, royalBlue } = theme.colors;
+const { white, royalBlue, lightGray, lighterGray } = theme.colors;
 const WizardSubmit = styled(BaseButton)`
   border-radius: 4rem;
   align-self: center;
@@ -11,12 +11,16 @@ const WizardSubmit = styled(BaseButton)`
   padding: 0 0.1rem;
   background-color: ${royalBlue};
   width: inherit;
+  transition: all .1s;
   
-  &:hover,
-  &.am-button-active {
-    background-color: ${royalBlue};
-    color: ${white};
-  } 
+  &:hover {
+    background-color: ${white};
+    color: ${royalBlue};
+  }
+
+  &:active {
+    transform: translateY(.1rem);
+  }
   
   html body &.am-button {
     border: 0.2rem solid ${royalBlue};
