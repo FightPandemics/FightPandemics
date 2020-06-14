@@ -39,7 +39,7 @@ import {
 import axios from "axios";
 import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
-import AddressInput from "../components/Input/AddressInput";
+import AddressInput from "../components/Input/Location/BaseAddressInput";
 import styled from "styled-components";
 
 const InputWrapper = styled.div`

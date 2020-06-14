@@ -8,7 +8,7 @@ import styled from "styled-components";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
-import AddressInput from "components/Input/AddressInput";
+import AddressInput from "components/Input/Location/BaseAddressInput";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";

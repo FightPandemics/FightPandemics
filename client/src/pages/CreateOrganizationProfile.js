@@ -12,7 +12,7 @@ import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
 import StyledCheckboxGroup from "components/Input/CheckboxGroup";
-import AddressInput from "components/Input/AddressInput";
+import AddressInput from "components/Input/Location/BaseAddressInput";
 import createOrganizationSvg from "assets/icons/create-organization.svg";
 import { connect } from "react-redux";
 import { theme } from "constants/theme";

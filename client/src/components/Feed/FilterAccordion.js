@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag";
-import LocationSearch from "components/Input/LocationSearch";
+import LocationSearch from "components/Input/Location/FeedLocationInput";
 import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
 const FilterAccord = () => {
