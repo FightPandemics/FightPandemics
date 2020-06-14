@@ -21,11 +21,11 @@ export default {
     className: "filter-3",
     options: [
       "Medical supplies",
-      "Groceries / Food",
+      "Groceries/Food",
       "Business",
       "Education",
       "Legal",
-      "Wellbeing / Mental",
+      "Wellbeing/Mental",
       "Entertainment",
       "Information",
       "Funding",

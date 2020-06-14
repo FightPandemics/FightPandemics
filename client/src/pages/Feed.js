@@ -267,6 +267,7 @@ const Feed = (props) => {
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    // postsDispatch({ type: RESET_PAGE });
   };
 
   const handlePostLike = async (postId, liked) => {
@@ -327,6 +328,7 @@ const Feed = (props) => {
         return "";
     }
   }
+
   const loadPosts = useCallback(async () => {
     const limit = 5;
     const skip = page * limit;
@@ -367,7 +369,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     loadPosts();
-  }, [page, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, filterType, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {

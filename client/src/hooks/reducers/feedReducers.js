@@ -71,7 +71,7 @@ export const postsReducer = (state = postsState, action) => {
       return {
         ...state,
         page: 0,
-        filterType: action.filterType,
+        filterType: action.filterType || "",
         posts: [],
         loadMore: true,
       };
