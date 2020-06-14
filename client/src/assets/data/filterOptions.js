@@ -20,7 +20,7 @@ export default {
     label: "type",
     className: "filter-3",
     options: [
-      "Medical supplies",
+      "Medical Supplies",
       "Groceries/Food",
       "Business",
       "Education",

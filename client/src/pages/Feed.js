@@ -60,6 +60,7 @@ const HELP_TYPE = {
 
 const initialState = {
   selectedType: "",
+  initialLoad: true,
   showFilters: false,
   filterModal: false,
   createPostModal: false,
@@ -197,6 +198,7 @@ const Feed = (props) => {
     location,
     selectedType,
     applyFilters,
+    initialLoad,
     showFilters,
   } = feedState;
   const filters = Object.values(filterOptions);
@@ -232,10 +234,10 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-
+    dispatchAction(SET_VALUE, "initialLoad", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
@@ -266,10 +268,14 @@ const Feed = (props) => {
 
   const handleShowFilters = (e) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    dispatchAction(SET_VALUE, "initialLoad", false);
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
+    dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
   const handlePostLike = async (postId, liked) => {
@@ -378,10 +384,10 @@ const Feed = (props) => {
   }, [page, objectiveURL, filterURL, isLoading, postsList]);
 
   useEffect(() => {
-    if (applyFilters) {
+    if (initialLoad || applyFilters) {
       loadPosts();
     }
-  }, [page, filterType, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {
