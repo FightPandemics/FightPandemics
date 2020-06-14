@@ -8,15 +8,12 @@ export const FaqContainer = styled.div`
 `;
 
 export const QuestionsContainer = styled.div`
-  max-width: 70rem;
+  max-width: 65rem;
 `;
 
 export const AnswerContainer = styled.div`
-  summary::-webkit-details-marker {
-    display: none;
-  }
   summary {
-  font-size: 1.17em;
+  font-size: 1.6rem;
   margin-left: 7px;
  
   margin-bottom: 0.5em;
