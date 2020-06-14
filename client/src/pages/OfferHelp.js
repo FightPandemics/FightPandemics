@@ -8,7 +8,6 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
-  WizardButtonGroup,
   ShowAnywhere,
   ShareLocation,
   StepTitle,
@@ -155,10 +154,6 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
-      <StepSubtitle>
-        We respect your privacy. Please read our{" "}
-        <Link to={"/terms-conditions"}>Terms and Conditions</Link>.
-      </StepSubtitle>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
