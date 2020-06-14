@@ -63,6 +63,8 @@ const NEEDS = {
 };
 
 function EditAccount() {
+  // TODO: integrate location w proper react-hook-forms use
+  const [location, setLocation] = useState({});
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const {
     clearError,
@@ -80,16 +82,27 @@ function EditAccount() {
   const {
     firstName = "",
     lastName = "",
-    location = {},
     objectives = {},
     needs = {},
   } = user || {};
 
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    clearError("location");
+  };
+
   const onSubmit = async (formData) => {
-    console.log({ formData });
+    if (!location.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
+    }
     userProfileDispatch(updateUser());
     try {
-      const res = await axios.patch("/api/users/current", formData);
+      const res = await axios.patch("/api/users/current", {...formData, location});
       userProfileDispatch(updateUserSuccess(res.data));
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -104,6 +117,7 @@ function EditAccount() {
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
+        setLocation(res.data.location);
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -175,15 +189,7 @@ function EditAccount() {
               <AddressInput
                 error={errors.location}
                 location={location}
-                onLocationChange={(value) => {
-                  setValue("location", value);
-                }}
-                ref={register(
-                  { name: "location" },
-                  {
-                    required: "Location is required",
-                  },
-                )}
+                onLocationChange={handleLocationChange}
               />
             </InputWrapper>
             <Label>I want to</Label>
