@@ -33,8 +33,6 @@ import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
 
-const { colors } = theme;
-
 const BrandLink = styled(Link)`
   align-self: flex-start;
   img {
@@ -181,7 +179,15 @@ const handleCheckboxChange = ([evt]) => evt.target.checked;
 const CreateProfile = ({ email, history }) => {
   const [location, setLocation] = useState({});
   const dispatch = useDispatch();
-  const { clearError, control, errors, formState, handleSubmit, register, setError } = useForm({
+  const {
+    clearError,
+    control,
+    errors,
+    formState,
+    handleSubmit,
+    register,
+    setError,
+  } = useForm({
     mode: "change",
   });
   const [createUserFormState, createUserFormDispatch] = useReducer(
@@ -190,8 +196,13 @@ const CreateProfile = ({ email, history }) => {
   );
 
   const onSubmit = async (formData) => {
-    if (!location.address) { // all location objects should have address (+coordinates), others optional
-      return setError("location", "required", "Please select an address from the drop-down");
+    if (!location.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
     }
     createUserFormDispatch({ type: CREATE_USER });
     try {
@@ -216,7 +227,7 @@ const CreateProfile = ({ email, history }) => {
   const handleLocationChange = (location) => {
     setLocation(location);
     clearError("location");
-  }
+  };
 
   return (
     <Container>
@@ -311,7 +322,11 @@ const CreateProfile = ({ email, history }) => {
                 style={blockLabelStyles}
                 label="Address"
               />
-              <AddressInput errors={errors} location={location} onLocationChange={handleLocationChange}/>
+              <AddressInput
+                error={errors.location}
+                location={location}
+                onLocationChange={handleLocationChange}
+              />
             </InputWrapper>
           </InputGroup>
           {/*

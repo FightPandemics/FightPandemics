@@ -16,16 +16,19 @@ const StyledCheckboxGroup = styled(Checkbox.Group)`
       background-color: ${(props) => props.color || "#6076ef"};
       border-color: ${darkGray};
     }
+
     .ant-checkbox-checked .ant-checkbox-inner::after {
       transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
       -webkit-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
       -ms-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
       border-color: none;
     }
+
     .ant-checkbox-group-item {
       margin: .5rem;
       color: ${darkerGray};
     }
+
 `;
 
 
