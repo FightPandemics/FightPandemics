@@ -5,18 +5,25 @@ const { updateAuthorName: updateCommentAuthorName } = require("./Comment");
 
 const INDIVIDUAL_USER_TYPES = ["individual"];
 
-function updateAuthorFirstName(firstName) {
-  this.firstName = firstName;
+function fullName(firstName, lastName) {
+  return `${firstName} ${lastName}`;
+}
 
-  this.updateAuthorNameReferences();
+function updateAuthorNameReferences(authorID, newName) {
+  updatePostAuthorName(authorID, newName);
+  updateCommentAuthorName(authorID, newName);
+}
+
+function updateAuthorFirstName(firstName) {
+  const newFullName = fullName(firstName, this.lastName);
+  updateAuthorNameReferences(this._id, newFullName);
 
   return firstName;
 }
 
 function updateAuthorLastName(lastName) {
-  this.lastName = lastName;
-
-  this.updateAuthorNameReferences();
+  const newFullName = fullName(this.firstName, lastName);
+  updateAuthorNameReferences(this._id, newFullName);
 
   return lastName;
 }
@@ -63,13 +70,8 @@ const individualUserSchema = new Schema(
 );
 
 individualUserSchema.virtual("name").get(function getFullName() {
-  return `${this.firstName} ${this.lastName}`;
+  return fullName(this.firstName, this.lastName);
 });
-
-individualUserSchema.methods.updateAuthorNameReferences = function updateAuthorNameReferences() {
-  updatePostAuthorName(this._id, this.name);
-  updateCommentAuthorName(this._id, this.name);
-};
 
 const IndividualUser = User.discriminator(
   "IndividualUser",
