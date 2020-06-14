@@ -50,6 +50,7 @@ const BackButton = styled(LeftRightIconButton)`
   & span {
     display: none;
   }
+
   @media screen and (min-width: ${desktopBreakpoint}) {
     height: 4.8rem;
     width: 19.2rem;
@@ -100,7 +101,7 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
     ) : (
       <Link to={"/"}>
         <BackButton>
-          <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
+          <SvgIcon src={backArrow} title="Navigate to the homepage" />
           <BackText>Back</BackText>
         </BackButton>
       </Link>

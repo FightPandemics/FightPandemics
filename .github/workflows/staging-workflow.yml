@@ -21,6 +21,11 @@ jobs:
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
+      - if: matrix.app == 'client'
+        env:
+          GTM_ID: ${{ secrets.STAGING_GTM_ID }}
+        run: >
+          echo "REACT_APP_GTM_ID=${GTM_ID}" > ./client/.env
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:
