@@ -38,6 +38,7 @@ import {
   FETCH_POSTS,
   ERROR_POSTS,
   NEXT_PAGE,
+  RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
   SET_COMMENTS,
@@ -59,9 +60,11 @@ const HELP_TYPE = {
 
 const initialState = {
   selectedType: "",
+  initialLoad: true,
   showFilters: false,
   filterModal: false,
   createPostModal: false,
+  applyFilters: false,
   activePanel: null,
   location: "",
 };
@@ -194,10 +197,19 @@ const Feed = (props) => {
     activePanel,
     location,
     selectedType,
+    applyFilters,
+    initialLoad,
     showFilters,
   } = feedState;
   const filters = Object.values(filterOptions);
-  const { isLoading, loadMore, page, posts: postsList, status } = posts;
+  const {
+    isLoading,
+    loadMore,
+    page,
+    posts: postsList,
+    status,
+    filterType,
+  } = posts;
   let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
@@ -222,9 +234,10 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-
+    dispatchAction(SET_VALUE, "initialLoad", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
@@ -234,7 +247,9 @@ const Feed = (props) => {
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-
+    if (applyFilters) {
+      postsDispatch({ type: RESET_PAGE, filterType: "" });
+    }
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
@@ -247,26 +262,22 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = HELP_TYPE[e.key];
-
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
-
-      if (value === HELP_TYPE.ALL) {
-        postsDispatch({ type: SET_POSTS, posts: postsState.posts });
-      } else {
-        const filtered = postsState.posts.filter((item) => item.type === value);
-
-        postsDispatch({ type: SET_POSTS, posts: filtered });
-      }
+      postsDispatch({ type: RESET_PAGE, filterType: value });
     }
   };
 
   const handleShowFilters = (e) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    dispatchAction(SET_VALUE, "initialLoad", false);
+    dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
+    dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
   const handlePostLike = async (postId, liked) => {
@@ -317,14 +328,34 @@ const Feed = (props) => {
     });
   };
 
+  function objectiveURL() {
+    switch (selectedType) {
+      case HELP_TYPE.REQUEST:
+        return "&objective=request";
+      case HELP_TYPE.OFFER:
+        return "&objective=offer";
+      default:
+        return "";
+    }
+  }
+  function filterURL() {
+    const filterObj = {
+      ...(selectedOptions["providers"] && {
+        fromWhom: selectedOptions["providers"],
+      }),
+      ...selectedOptions,
+    };
+    delete filterObj["providers"];
+    return Object.keys(filterObj).length === 0
+      ? ""
+      : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+  }
+
   const loadPosts = useCallback(async () => {
-    const { user } = props;
     const limit = 5;
     const skip = page * limit;
-    /* Add userId when user is logged */
-    const endpoint = `/api/posts?limit=${limit}&skip=${skip}${
-      user && user.userId ? `&userId=${user.userId}` : ""
-    }`;
+    const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
     let response = {};
 
     if (isLoading) {
@@ -338,7 +369,6 @@ const Feed = (props) => {
     } catch (error) {
       await postsDispatch({ type: ERROR_POSTS });
     }
-
     if (response.data && response.data.length) {
       const loadedPosts = response.data.reduce(
         (obj, item) => ((obj[item._id] = item), obj),
@@ -352,11 +382,13 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [postsList, isLoading, page, props]);
+  }, [page, objectiveURL, filterURL, isLoading, postsList]);
 
   useEffect(() => {
-    loadPosts();
-  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (initialLoad || applyFilters) {
+      loadPosts();
+    }
+  }, [page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {

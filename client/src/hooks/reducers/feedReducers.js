@@ -8,6 +8,7 @@ import {
   FETCH_POSTS,
   ERROR_POSTS,
   NEXT_PAGE,
+  RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
   SET_COMMENTS,
@@ -17,6 +18,7 @@ export const postsState = {
   status: SET_POSTS,
   posts: [],
   page: 0,
+  filterType: "",
   isLoading: false,
   loadMore: true,
 };
@@ -55,11 +57,24 @@ export const postsReducer = (state = postsState, action) => {
     case FETCH_POSTS:
       return { ...state, status: FETCH_POSTS, isLoading: true };
     case SET_POSTS:
-      return { ...state, status: SET_POSTS, posts: action.posts, isLoading: false };
+      return {
+        ...state,
+        status: SET_POSTS,
+        posts: action.posts,
+        isLoading: false,
+      };
     case ERROR_POSTS:
       return { ...state, status: ERROR_POSTS, posts: [], isLoading: false };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
+    case RESET_PAGE:
+      return {
+        ...state,
+        page: 0,
+        filterType: action.filterType || "",
+        posts: [],
+        loadMore: true,
+      };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };
     case SET_LIKE:
@@ -74,18 +89,18 @@ export const postsReducer = (state = postsState, action) => {
           },
         },
       };
-      case SET_COMMENTS:
-        return {
-          ...state,
-          posts: {
-            ...state.posts,
-            [action.postId]: {
-              ...state.posts[action.postId],
-              comments: action.comments,
-              commentsCount: action.commentsCount,
-            },
+    case SET_COMMENTS:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.postId]: {
+            ...state.posts[action.postId],
+            comments: action.comments,
+            commentsCount: action.commentsCount,
           },
-        };
+        },
+      };
     default:
       return state;
   }
