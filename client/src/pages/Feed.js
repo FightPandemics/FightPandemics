@@ -63,6 +63,7 @@ const initialState = {
   showFilters: false,
   filterModal: false,
   createPostModal: false,
+  applyFilters: false,
   activePanel: null,
   location: "",
 };
@@ -195,6 +196,7 @@ const Feed = (props) => {
     activePanel,
     location,
     selectedType,
+    applyFilters,
     showFilters,
   } = feedState;
   const filters = Object.values(filterOptions);
@@ -233,6 +235,7 @@ const Feed = (props) => {
 
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
+
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
@@ -242,7 +245,7 @@ const Feed = (props) => {
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
@@ -267,7 +270,6 @@ const Feed = (props) => {
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
-    // postsDispatch({ type: RESET_PAGE });
   };
 
   const handlePostLike = async (postId, liked) => {
@@ -328,16 +330,24 @@ const Feed = (props) => {
         return "";
     }
   }
+  function filterURL() {
+    const filterObj = {
+      ...(selectedOptions["providers"] && {
+        fromWhom: selectedOptions["providers"],
+      }),
+      ...selectedOptions,
+    };
+    delete filterObj["providers"];
+    return Object.keys(filterObj).length === 0
+      ? ""
+      : `&filter=${encodeURI(JSON.stringify(filterObj))}`;
+  }
 
   const loadPosts = useCallback(async () => {
     const limit = 5;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
-    const filterURL =
-      Object.keys(selectedOptions).length === 0
-        ? ""
-        : `&filter=${encodeURI(JSON.stringify(selectedOptions))}`;
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
     console.log(endpoint);
     let response = {};
 
@@ -365,10 +375,12 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [page, selectedOptions, objectiveURL, isLoading, postsList]);
+  }, [page, objectiveURL, filterURL, isLoading, postsList]);
 
   useEffect(() => {
-    loadPosts();
+    if (applyFilters) {
+      loadPosts();
+    }
   }, [page, filterType, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
