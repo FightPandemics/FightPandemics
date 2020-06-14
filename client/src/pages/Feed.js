@@ -247,7 +247,9 @@ const Feed = (props) => {
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
+    if (applyFilters) {
+      postsDispatch({ type: RESET_PAGE, filterType: "" });
+    }
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
@@ -269,12 +271,12 @@ const Feed = (props) => {
   const handleShowFilters = (e) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
     dispatchAction(SET_VALUE, "initialLoad", false);
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
   const handleOnClose = () => {
     dispatchAction(TOGGLE_STATE, "showFilters");
+    postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
