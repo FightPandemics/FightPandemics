@@ -113,6 +113,23 @@ const OrganizationProfile = () => {
     urls = {},
   } = organizationData || {};
 
+  useEffect(() => {
+    const organizationId =
+    (async function fetchOrganization() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get(`/api/organization/${organizationId}`);
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+  }, [userProfileDispatch]);
+
+
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
