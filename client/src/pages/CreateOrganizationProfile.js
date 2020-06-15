@@ -12,7 +12,7 @@ import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
 import StyledCheckboxGroup from "components/Input/CheckboxGroup";
-import AddressInput from "components/Input/AddressInput";
+import LocationInput from "components/Input/LocationInput";
 import createOrganizationSvg from "assets/icons/create-organization.svg";
 import { connect } from "react-redux";
 import { theme } from "constants/theme";
@@ -154,8 +154,11 @@ const CreateOrgProfile = (props) => {
             icon={Marker}
             label="Address"
           />
-          <AddressInput errors={errors} location={location} onLocationChange={handleLocationChange}/>
-          <span style={errorStyles}>{errors.location && "Location is required"}</span>
+          <LocationInput
+            formError={errors.location}
+            location={location}
+            onLocationChange={handleLocationChange}
+          />
         </InputWrapper>
         <WhiteSpace />
         <WhiteSpace />

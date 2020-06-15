@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag";
-import LocationSearch from "components/Input/LocationSearch";
+import LocationInput from "components/Input/LocationInput";
 import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 
 const FilterAccord = () => {
   const feedContext = useContext(FeedContext);
-  const { filters, activePanel, handleOption, selectedOptions } = feedContext;
+  const {
+    activePanel,
+    filters,
+    handleLocation,
+    handleOption, 
+    location,
+    selectedOptions,
+  } = feedContext;
 
   function capitalizeFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -20,7 +27,11 @@ const FilterAccord = () => {
             className={filter.className}
             key={idx}
           >
-            <LocationSearch />
+            <LocationInput
+              location={location}
+              onLocationChange={handleLocation}
+              includeNavigator={true}
+            />
           </FilterAccordionPanel>
         );
       } else {

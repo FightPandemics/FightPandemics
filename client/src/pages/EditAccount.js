@@ -39,7 +39,7 @@ import {
 import axios from "axios";
 import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
-import AddressInput from "../components/Input/AddressInput";
+import LocationInput from "../components/Input/LocationInput";
 import styled from "styled-components";
 
 const InputWrapper = styled.div`
@@ -92,7 +92,7 @@ function EditAccount() {
   };
 
   const onSubmit = async (formData) => {
-    if (!location.address) {
+    if (!location?.address) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
@@ -186,8 +186,8 @@ function EditAccount() {
                 style={blockLabelStyles}
                 label="Address"
               />
-              <AddressInput
-                error={errors.location}
+              <LocationInput
+                formError={errors.location}
                 location={location}
                 onLocationChange={handleLocationChange}
               />
