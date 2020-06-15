@@ -158,7 +158,7 @@ const OrganizationProfile = () => {
               <PlaceholderIcon />
               <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
             </NameDiv>
-            <DescriptionDesktop> about here </DescriptionDesktop>
+            <DescriptionDesktop> {about} </DescriptionDesktop>
             <LocationMobileDiv>{address}</LocationMobileDiv>
             <IconsContainer>
               <HelpContainer>
