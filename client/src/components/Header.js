@@ -92,9 +92,16 @@ const activeStyles = {
   color: `${colors.royalBlue}`,
 };
 
+const HeaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100vw;
+`;
+
 export default ({ onMenuClick, isAuthenticated }) => {
   return (
-    <div className="header">
+    <HeaderWrapper className="header">
       <StyledNavBar
         mode="light"
         leftContent={
@@ -156,6 +163,6 @@ export default ({ onMenuClick, isAuthenticated }) => {
           </div>
         }
       />
-    </div>
+    </HeaderWrapper>
   );
 };
