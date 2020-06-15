@@ -15,21 +15,8 @@ const FilterAccord = () => {
     }
     return header.charAt(0).toUpperCase() + header.slice(1);
   }
-
-  function formatOption(option) {
-    let formattedOption = option;
-    if (option === "Health Care Provider") {
-      formattedOption = "Health care provider";
-    } else if (option === "Non-Profit") {
-      formattedOption = "Non-profit";
-    }
-    return formattedOption;
-  }
   const renderPanels = () => {
     return filters.map((filter, idx) => {
-      if (filter.label === "providers") {
-        filter.label = "fromWhom";
-      }
       if (filter.label === "location") {
         return (
           <FilterAccordionPanel
@@ -48,15 +35,14 @@ const FilterAccord = () => {
             key={idx}
           >
             {Object.values(filter.options).map((option, idx) => {
-              let formattedOption = formatOption(option);
               return (
                 <ButtonTag
                   key={idx}
-                  onClick={handleOption(filter.label, formattedOption)}
+                  onClick={handleOption(filter.label, option)}
                   className={
                     "tag-selectable " +
                     (selectedOptions[filter.label] &&
-                    selectedOptions[filter.label].includes(formattedOption)
+                    selectedOptions[filter.label].includes(option)
                       ? "tag-selected"
                       : "")
                   }
