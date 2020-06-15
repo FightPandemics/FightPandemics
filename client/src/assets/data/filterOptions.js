@@ -12,7 +12,7 @@ export default {
       "R&D",
       "Non-Profit",
       "University",
-      "Health Care Providers",
+      "Health Care Provider",
       "Other",
     ],
   },

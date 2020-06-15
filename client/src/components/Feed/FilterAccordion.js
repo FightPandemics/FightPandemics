@@ -8,11 +8,28 @@ const FilterAccord = () => {
   const feedContext = useContext(FeedContext);
   const { filters, activePanel, handleOption, selectedOptions } = feedContext;
 
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
+  function capitalizeFirstLetter(header) {
+    // capitalize first letter and show providers if  header is fromWhom
+    if (header === "fromWhom") {
+      header = "providers";
+    }
+    return header.charAt(0).toUpperCase() + header.slice(1);
+  }
+
+  function formatOption(option) {
+    let formattedOption = option;
+    if (option === "Health Care Provider") {
+      formattedOption = "Health care provider";
+    } else if (option === "Non-Profit") {
+      formattedOption = "Non-profit";
+    }
+    return formattedOption;
   }
   const renderPanels = () => {
     return filters.map((filter, idx) => {
+      if (filter.label === "providers") {
+        filter.label = "fromWhom";
+      }
       if (filter.label === "location") {
         return (
           <FilterAccordionPanel
@@ -30,21 +47,24 @@ const FilterAccord = () => {
             className={filter.className}
             key={idx}
           >
-            {Object.values(filter.options).map((option, idx) => (
-              <ButtonTag
-                key={idx}
-                onClick={handleOption(filter.label, option)}
-                className={
-                  "tag-selectable " +
-                  (selectedOptions[filter.label] &&
-                  selectedOptions[filter.label].includes(option)
-                    ? "tag-selected"
-                    : "")
-                }
-              >
-                {option}
-              </ButtonTag>
-            ))}
+            {Object.values(filter.options).map((option, idx) => {
+              let formattedOption = formatOption(option);
+              return (
+                <ButtonTag
+                  key={idx}
+                  onClick={handleOption(filter.label, formattedOption)}
+                  className={
+                    "tag-selectable " +
+                    (selectedOptions[filter.label] &&
+                    selectedOptions[filter.label].includes(formattedOption)
+                      ? "tag-selected"
+                      : "")
+                  }
+                >
+                  {option}
+                </ButtonTag>
+              );
+            })}
           </FilterAccordionPanel>
         );
       }

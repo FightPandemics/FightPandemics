@@ -339,16 +339,9 @@ const Feed = (props) => {
     }
   }
   function filterURL() {
-    const filterObj = {
-      ...(selectedOptions["providers"] && {
-        fromWhom: selectedOptions["providers"],
-      }),
-      ...selectedOptions,
-    };
-    delete filterObj["providers"];
-    return Object.keys(filterObj).length === 0
+    return Object.keys(selectedOptions).length === 0
       ? ""
-      : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+      : `&filter=${encodeURIComponent(JSON.stringify(selectedOptions))}`;
   }
 
   const loadPosts = useCallback(async () => {
@@ -357,7 +350,6 @@ const Feed = (props) => {
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
     let response = {};
-
     if (isLoading) {
       return;
     }

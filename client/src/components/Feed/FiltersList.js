@@ -8,7 +8,6 @@ import ButtonTag from "../Tag/ButtonTag.js";
 const FiltersList = () => {
   const feedContext = useContext(FeedContext);
   const { handleOption, selectedOptions } = feedContext;
-
   return (
     <div>
       {Object.keys(selectedOptions).map((filter) =>
