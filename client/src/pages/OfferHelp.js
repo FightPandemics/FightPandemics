@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
-import { asyncGetGeoLocation } from "utils/geolocation";
+import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
 import {
   StyledWizard,
@@ -24,10 +24,6 @@ import {
   WizardCheckboxItem,
   WizardSubmit,
 } from "components/StepWizard";
-
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import shareMyLocation from "assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],
@@ -79,18 +75,17 @@ const Step1 = (props) => {
 const Step2 = (props) => {
   const [locationSearch, setLocationSearch] = useState("");
 
-  const selectLocationDetection = async () => {
+  const selectLocationDetection = (location) => {
     try {
-      const location = await asyncGetGeoLocation();
       props.update("location", location);
     } catch {
-      props.update("location", "unknown");
+      props.update("location", null);
     } finally {
       props.nextStep();
     }
   };
   const rejectLocationDetection = () => {
-    props.update("location", "unknown");
+    props.update("location", null);
     props.nextStep();
   };
 
@@ -103,25 +98,13 @@ const Step2 = (props) => {
       <StepTitle>Where are you located?</StepTitle>
       <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
       <WizardFormWrapper>
-        <WizardFormGroup>
-          <StyledSearchInput
-            type="text"
-            name="manualLocation"
-            label="Location search"
-            placeholder="Enter Address, Zip Code, or City"
-            onChange={manualLocation}
-            value={locationSearch}
+        <div style={{ marginBottom: "40px", textAlign: "center" }}>
+          <LocationInput
+            location={props.location}
+            onLocationChange={selectLocationDetection}
+            includeNavigator={true}
           />
-        </WizardFormGroup>
-        <ShareLocation
-          tertiary="true"
-          icon={
-            <SvgIcon className="share-location-icon" src={shareMyLocation} />
-          }
-          onSelect={selectLocationDetection}
-        >
-          Share my location
-        </ShareLocation>
+        </div>
         <Link to="/feed">
           <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere

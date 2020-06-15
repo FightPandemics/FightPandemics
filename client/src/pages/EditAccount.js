@@ -39,7 +39,7 @@ import {
 import axios from "axios";
 import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
-import AddressInput from "../components/Input/AddressInput";
+import LocationInput from "../components/Input/LocationInput";
 import styled from "styled-components";
 
 const InputWrapper = styled.div`
@@ -79,12 +79,8 @@ function EditAccount() {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const {
-    firstName = "",
-    lastName = "",
-    objectives = {},
-    needs = {},
-  } = user || {};
+  const { firstName = "", lastName = "", objectives = {}, needs = {} } =
+    user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -92,7 +88,7 @@ function EditAccount() {
   };
 
   const onSubmit = async (formData) => {
-    if (!location.address) {
+    if (!location?.address) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
@@ -102,7 +98,10 @@ function EditAccount() {
     }
     userProfileDispatch(updateUser());
     try {
-      const res = await axios.patch("/api/users/current", {...formData, location});
+      const res = await axios.patch("/api/users/current", {
+        ...formData,
+        location,
+      });
       userProfileDispatch(updateUserSuccess(res.data));
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -186,8 +185,8 @@ function EditAccount() {
                 style={blockLabelStyles}
                 label="Address"
               />
-              <AddressInput
-                error={errors.location}
+              <LocationInput
+                formError={errors.location}
                 location={location}
                 onLocationChange={handleLocationChange}
               />
