@@ -66,7 +66,7 @@ const initialState = {
   createPostModal: false,
   applyFilters: false,
   activePanel: null,
-  location: "",
+  location: null,
 };
 
 const SiderWrapper = styled(Sider)`
@@ -241,8 +241,12 @@ const Feed = (props) => {
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
-  const handleLocation = (value) =>
+  const handleLocation = (value) => {
+    if (applyFilters) {
+      postsDispatch({ type: RESET_PAGE, filterType: "" });
+    }
     dispatchAction(SET_VALUE, "location", value);
+  };
 
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
@@ -345,6 +349,7 @@ const Feed = (props) => {
       }),
       ...selectedOptions,
     };
+    if (location) filterObj.location = location;
     delete filterObj["providers"];
     return Object.keys(filterObj).length === 0
       ? ""
@@ -388,7 +393,7 @@ const Feed = (props) => {
     if (initialLoad || applyFilters) {
       loadPosts();
     }
-  }, [page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {

@@ -8,7 +8,7 @@ import styled from "styled-components";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
-import AddressInput from "components/Input/Location/BaseAddressInput";
+import LocationInput from "components/Input/LocationInput";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
@@ -322,8 +322,8 @@ const CreateProfile = ({ email, history }) => {
                 style={blockLabelStyles}
                 label="Address"
               />
-              <AddressInput
-                error={errors.location}
+              <LocationInput
+                formError={errors.location}
                 location={location}
                 onLocationChange={handleLocationChange}
               />
