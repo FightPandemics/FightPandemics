@@ -8,7 +8,7 @@ export const FETCH_ORGANIZATION_SUCCESS = "FETCH_ORGANIZATION_SUCCESS";
 
 export const fetchOrganization = () => ({ type: FETCH_ORGANIZATION });
 export const fetchOrganizationError = (error) => ({ type: FETCH_ORGANIZATION_ERROR, error });
-export const fetchOrganizationSuccess = (organization) => ({ type: FETCH_ORGANIZATION_SUCCESS, user });
+export const fetchOrganizationSuccess = (organization) => ({ type: FETCH_ORGANIZATION_SUCCESS, organization });
 
 export const UPDATE_ORGANIZATION = "UPDATE_ORGANIZATION";
 export const UPDATE_ORGANIZATION_ERROR = "UPDATE_ORGANIZATION_ERROR";

@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // ICONS
@@ -51,7 +51,12 @@ import {
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
-
+import {
+  fetchOrganization,
+  fetchOrganizationError,
+  fetchOrganizationSuccess,
+} from "hooks/actions/organizationActions";
+import { OrganizationContext, withOrganizationContext } from "context/OrganizationContext";
 
 const URLS = {
   github: [githubIcon, GITHUB_URL],
@@ -61,88 +66,42 @@ const URLS = {
   website: [smileIcon],
 };
 
-const organizationData = {
-  needs: {
-      donations: false,
-      other: false,
-      staff: false,
-      volunteers: true
-  },
-  __t: "OrganizationUser",
-  _id: "5ee40463c937e03e3075f346",
-  name: "Blurtech",
-  email: "help@gmail.com",
-  global: true,
-  type: "Company",
-  industry: "Banking",
-  location: {
-      address: "Boulder, CO, USA",
-      coordinates: [
-          -105.2705456,
-          40.0149856
-      ],
-      city: "Boulder",
-      state: "CO",
-      country: "US"
-  },
-  urls: {
-    facebook: "www.facebook.com",
-    github: "github.com",
-    linkedin: "www.linkedin.com",
-    twitter: "www.twitter.com",
-    website: "www.blurtech.com",
-  },
-  ownerId: "5ee3978f0a06f52484c80b28",
-  createdAt: "2020-06-12T22:40:35.573Z",
-  updatedAt: "2020-06-12T22:40:35.573Z",
-  __v: 0
-}
-
-
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganizationProfile = () => {
+  const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
+  const { error, loading, organization } = orgProfileState;
 
-  // const { error, loading, user } = organizationData;
   const {
     name,
     email,
-    location = {},
+    location,
     needs,
+    about = "",
     objectives = {},
-    urls = {},
-  } = organizationData || {};
+    urls = {}
+  } = organization || {};
 
   useEffect(() => {
-    const organizationId =
-    (async function fetchOrganization() {
-      userProfileDispatch(fetchUser());
+    const organizationId = window.location.pathname.split("/")[2];
+    (async function fetchProfile() {
+      orgProfileDispatch(fetchOrganization());
       try {
-        const res = await axios.get(`/api/organization/${organizationId}`);
-        userProfileDispatch(fetchUserSuccess(res.data));
+        const res = await axios.get(`/api/organizations/${organizationId}`);
+        orgProfileDispatch(fetchOrganizationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
-        userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+        orgProfileDispatch(
+          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, []);
 
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
-
-  const needHelp = Object.values(needs).some((val) => val === true);
-  const offerHelp = Object.values(objectives).some((val) => val === true);
-  const { address } = location;
-
-
-  // if (error) {
-  //   return <ErrorAlert message={error} type="error" />;
-  // }
-  // if (loading) return <div>"loading"</div>;
 
   const renderURL = () => {
     if(urls.length !== 0) {
@@ -171,74 +130,103 @@ const OrganizationProfile = () => {
   }
   }
 
+  const renderProfileData = () => {
+    let firstName, lastName;
+    if(!organization) {
+      return <p>Loading...</p>
+    } else {
+      const needHelp = Object.values(needs).some((val) => val === true);
+      const offerHelp = Object.values(objectives).some((val) => val === true);
+      const { address } = location;
+      const nameArr = name.split(" ");
+      if (nameArr.length < 2) {
+        firstName = nameArr[0];
+        lastName = firstName.split("").pop();
+      } else {
+        firstName = nameArr[0];
+        lastName = nameArr[1];
+      }
+
+      return (
+        <>
+        <UserInfoContainer>
+          <EditIcon src={edit} onClick={() => setDrawer(true)} />
+          <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+          <UserInfoDesktop>
+            <NameDiv>
+              {name}
+              <PlaceholderIcon />
+              <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
+            </NameDiv>
+            <DescriptionDesktop> about here </DescriptionDesktop>
+            <LocationMobileDiv>{address}</LocationMobileDiv>
+            <IconsContainer>
+              <HelpContainer>
+                {needHelp && "I need help "}
+                {offerHelp && "I want to help "}
+              </HelpContainer>
+              <LocationDesktopDiv>
+                <LocationIcon src={locationIcon} />
+                {needHelp && "I need help "}
+                {offerHelp && "I want to help "} • {address}
+              </LocationDesktopDiv>
+              <PlaceholderIcon />
+              {renderURL()}
+            </IconsContainer>
+          </UserInfoDesktop>
+        </UserInfoContainer>
+        <WhiteSpace />
+        <div style={{ margin: "0 2.5rem" }}>
+          <WhiteSpace />
+          <DescriptionMobile>
+            <SectionHeader> About</SectionHeader>
+            {about}
+          </DescriptionMobile>
+          <WhiteSpace />
+          <SectionHeader>
+            My Activity
+            <PlaceholderIcon />
+            <CreatePostDiv>Create a post</CreatePostDiv>
+            <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
+          </SectionHeader>
+          <FeedWrapper>
+            <Activity filteredPosts="" />
+            <CreatePost onCancel={() => setModal(false)} visible={modal} />
+          </FeedWrapper>
+        </div>
+        <CustomDrawer
+          placement="bottom"
+          closable={false}
+          onClose={() => setDrawer(false)}
+          visible={drawer}
+          height="150px"
+          key="bottom"
+        >
+          <DrawerHeader>
+            <Link to="/edit-organization-account">Edit Account Information</Link>
+          </DrawerHeader>
+          <DrawerHeader>
+            <Link to="/edit-organization-profile">Edit Profile </Link>
+          </DrawerHeader>
+        </CustomDrawer>
+        </>
+      )
+    }
+  }
+
+  if (error) {
+    return <ErrorAlert message={error} type="error" />;
+  }
+  if (loading) return <div>"loading"</div>;
   return (
     <ProfileLayout>
       <BackgroundHeader>
         <MenuIcon src={menu} />
       </BackgroundHeader>
-      <UserInfoContainer>
-        <EditIcon src={edit} onClick={() => setDrawer(true)} />
-        <ProfilePic noPic={true} initials={getInitials(name, email)} />
-        <UserInfoDesktop>
-          <NameDiv>
-            {name}
-            <PlaceholderIcon />
-            <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
-          </NameDiv>
-          <DescriptionDesktop> about here </DescriptionDesktop>
-          <LocationMobileDiv>{address}</LocationMobileDiv>
-          <IconsContainer>
-            <HelpContainer>
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help"}
-            </HelpContainer>
-            <LocationDesktopDiv>
-              <LocationIcon src={locationIcon} />
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} • {address}
-            </LocationDesktopDiv>
-            <PlaceholderIcon />
-            {renderURL()}
-          </IconsContainer>
-        </UserInfoDesktop>
-      </UserInfoContainer>
-      <WhiteSpace />
-      <div style={{ margin: "0 2.5rem" }}>
-        <WhiteSpace />
-        <DescriptionMobile>
-          <SectionHeader> About</SectionHeader>
-          about here....
-        </DescriptionMobile>
-        <WhiteSpace />
-        <SectionHeader>
-          My Activity
-          <PlaceholderIcon />
-          <CreatePostDiv>Create a post</CreatePostDiv>
-          <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
-        </SectionHeader>
-        <FeedWrapper>
-          <Activity filteredPosts="" />
-          <CreatePost onCancel={() => setModal(false)} visible={modal} />
-        </FeedWrapper>
-      </div>
-      <CustomDrawer
-        placement="bottom"
-        closable={false}
-        onClose={() => setDrawer(false)}
-        visible={drawer}
-        height="150px"
-        key="bottom"
-      >
-        <DrawerHeader>
-          <Link to="/edit-organization-account">Edit Account Information</Link>
-        </DrawerHeader>
-        <DrawerHeader>
-          <Link to="/edit-organization-profile">Edit Profile </Link>
-        </DrawerHeader>
-      </CustomDrawer>
+      {renderProfileData()}
       <WhiteSpace />
     </ProfileLayout>
   )
 }
 
-export default OrganizationProfile;
+export default withOrganizationContext(OrganizationProfile);

@@ -99,7 +99,7 @@ const routes = [
     component: OrgProfileComplete,
   },
   {
-    path: "/organization",
+    path: "/organization/:id",
     component: OrganizationProfile,
   },
   {

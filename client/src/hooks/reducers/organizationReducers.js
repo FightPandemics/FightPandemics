@@ -4,7 +4,10 @@ import {
   CREATE_ORGANIZATION_SUCCESS,
   FETCH_ORGANIZATION,
   FETCH_ORGANIZATION_ERROR,
-  FETCH_ORGANIZATION_SUCCESS
+  FETCH_ORGANIZATION_SUCCESS,
+  UPDATE_ORGANIZATION,
+  UPDATE_ORGANIZATION_ERROR,
+  UPDATE_ORGANIZATION_SUCCESS
 } from "../actions/organizationActions";
 
 export const initialState = {
@@ -41,7 +44,7 @@ export const orgProfileReducer = (state, action) => {
       return { ...state, loading: false, error: payload.error };
     case FETCH_ORGANIZATION_SUCCESS:
     case UPDATE_ORGANIZATION_SUCCESS:
-      return { ...state, loading: false, error: null, organization: payload.user };
+      return { ...state, loading: false, error: null, organization: payload.organization };
     default:
       return state;
   }

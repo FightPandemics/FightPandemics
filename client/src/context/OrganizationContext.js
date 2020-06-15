@@ -14,8 +14,8 @@ export const withOrganizationContext = (Component) => (props) => {
   const contextValue = { orgProfileState, orgProfileDispatch };
 
   return (
-    <OrgContext.Provider value={contextValue}>
+    <OrganizationContext.Provider value={contextValue}>
       <Component {...props} />
-    </OrgContext.Provider>
+    </OrganizationContext.Provider>
   );
 };
