@@ -85,9 +85,30 @@ const getUser = async (token) => {
   }
 };
 
+const changePassword = async (token, email) => {
+  const client_id = config.auth.clientId;
+  const connection = "Username-Password-Authentication";
+  const payload = {
+    client_id,
+    email,
+    connection,
+  };
+  try {
+    const res = await axios.post(
+      `${AUTH_DOMAIN}/dbconnections/change_password`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
 module.exports = {
   authenticate,
   buildOauthUrl,
+  changePassword,
   createUser,
   getUser,
 };

@@ -21,3 +21,7 @@ export const getAuthToken = () => {
 
   return token;
 };
+
+export const removeAuthToken = () => {
+  localStorage.removeItem(KEY_TOKEN);
+};

@@ -2,6 +2,10 @@ import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import AboutUs from "./pages/AboutUs";
+import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
+import OrgProfileComplete from "./pages/OrgProfileComplete";
+import EditOrganizationProfile from "./pages/EditOrganizationProfile";
+import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -17,6 +21,7 @@ import NearestHospital from "./pages/NearestHospital";
 import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
+import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 
 const routes = [
@@ -44,6 +49,10 @@ const routes = [
     },
   },
   {
+    path: "/auth/logout",
+    component: Logout,
+  },
+  {
     path: "/auth/verify-email",
     component: VerifyEmail,
     layout: "logo",
@@ -62,6 +71,32 @@ const routes = [
   {
     path: "/about-us",
     component: AboutUs,
+  },
+  {
+    path: "/create-organization-profile",
+    component: CreateOrganizationProfile,
+    layout: "logo",
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/create-organization-complete",
+    component: OrgProfileComplete,
+  },
+  {
+    path: "/edit-organization-account",
+    component: EditOrganizationAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-organization-profile",
+    component: EditOrganizationProfile,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/medical",
@@ -122,10 +157,16 @@ const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/create-post",
@@ -135,6 +176,9 @@ const routes = [
     path: "/create-profile",
     component: CreateUserProfile,
     layout: "navless",
+    props: {
+      loggedInOnly: true,
+    },
   },
   {
     path: "/terms-conditions",
@@ -149,9 +193,9 @@ const routes = [
     component: CookiesPolicy,
   },
   {
-    path: "/faq", 
+    path: "/faq",
     component: Faq,
-  }
+  },
 ];
 
 export default routes;

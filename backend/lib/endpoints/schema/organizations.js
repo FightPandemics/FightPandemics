@@ -27,7 +27,7 @@ const createOrganizationSchema = {
     .prop("email", organization.email.required())
     .prop("global", organization.global.required())
     .prop("industry", organization.industry.required())
-    .prop("language", organization.language.required())
+    .prop("language", organization.language)
     .prop("location", organization.location.required())
     .prop("name", organization.name.required())
     .prop("needs", organization.needs)

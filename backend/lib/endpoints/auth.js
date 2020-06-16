@@ -1,5 +1,6 @@
 const Auth0 = require("../components/Auth0");
 const {
+  changePasswordSchema,
   loginSchema,
   oAuthSchema,
   oAuthProviderSchema,
@@ -135,6 +136,28 @@ async function routes(app) {
       throw app.httpErrors.internalServerError();
     }
   });
+
+  app.post(
+    "/change-password",
+    { preHandler: [app.getServerToken], schema: changePasswordSchema },
+    async (req) => {
+      const { body, token } = req;
+      const { email } = body;
+
+      try {
+        const responseMessage = await Auth0.changePassword(token, email);
+        req.log.info(
+          `Change password email created successfully for email=${email}`,
+        );
+        return { email, responseMessage };
+      } catch (err) {
+        req.log.error(err, "Error creating change password email");
+        throw app.httpErrors.internalServerError(
+          `Error creating change password email=${email}`,
+        );
+      }
+    },
+  );
 }
 
 module.exports = routes;

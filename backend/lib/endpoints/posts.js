@@ -37,7 +37,8 @@ async function routes(app) {
     },
     async (req) => {
       const { userId } = req;
-      const { limit, filter: paramFilters, skip } = req.query;
+      const { limit, skip, filter, objective } = req.query;
+      const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
       if (userId) {
@@ -56,24 +57,33 @@ async function routes(app) {
       const filters = [
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
       ];
-      if (user) {
+
+      // prefer location from query filters, then user if authenticated
+      let location;
+      if (queryFilters.location) {
+        location = queryFilters.location;
+      } else if (user) {
+        location = user.location;
+      }
+
+      if (location) {
         filters.push({
           $or: [
             { visibility: "worldwide" },
             {
               visibility: "country",
-              "author.location.country": user.location.country,
+              "author.location.country": location.country,
             },
             {
               visibility: "state",
-              "author.location.country": user.location.country,
-              "author.location.state": user.location.state,
+              "author.location.country": location.country,
+              "author.location.state": location.state,
             },
             {
               visibility: "city",
-              "author.location.country": user.location.country,
-              "author.location.state": user.location.state,
-              "author.location.city": user.location.city,
+              "author.location.country": location.country,
+              "author.location.state": location.state,
+              "author.location.city": location.city,
             },
           ],
         });
@@ -81,8 +91,15 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      if (paramFilters) {
-        // TODO: additional filters
+      const { fromWhom, type } = queryFilters; // from filterOptions.js
+      if (objective) {
+        filters.push({ objective });
+      }
+      if (fromWhom) {
+        filters.push({ "author.type": { $in: fromWhom } });
+      }
+      if (type) {
+        filters.push({ types: { $in: type } });
       }
 
       // Unlogged user limitation for post content size
@@ -94,7 +111,7 @@ async function routes(app) {
               if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
               then: {
                 $concat: [
-                  { $substr: ["$content", 0, UNLOGGED_POST_SIZE] },
+                  { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
                   "...",
                 ],
               },
@@ -103,7 +120,7 @@ async function routes(app) {
           };
       /* eslint-enable sort-keys */
 
-      const sortAndFilterSteps = user
+      const sortAndFilterSteps = location
         ? [
             {
               $geoNear: {
@@ -111,7 +128,7 @@ async function routes(app) {
                 key: "author.location.coordinates",
                 near: {
                   $geometry: {
-                    coordinates: user.location.coordinates,
+                    coordinates: location.coordinates,
                     type: "Point",
                   },
                 },
@@ -332,7 +349,7 @@ async function routes(app) {
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId } = req;
+      const { userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
       if (err) {
         req.log.error(err, "Failed retrieving post");
@@ -342,10 +359,9 @@ async function routes(app) {
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
-      const { body } = req;
 
       // ExpireAt needs to calculate the date
-      if (EXPIRATION_OPTIONS.includes(postProps.expireAt)) {
+      if (EXPIRATION_OPTIONS.includes(body.expireAt)) {
         body.expireAt = moment().add(1, `${body.expireAt}s`);
       } else {
         body.expireAt = null;

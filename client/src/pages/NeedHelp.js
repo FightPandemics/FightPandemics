@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
-
-import SubmitButton from "components/Button/SubmitButton";
+import { withRouter, Link } from "react-router-dom";
 import InputError from "components/Input/InputError";
 import {
   AnswerButton,
@@ -9,12 +7,13 @@ import {
   WizardContainer,
   WizardStep,
   WizardNav,
-  WizardButtonGroup,
   StepTitle,
   StyledTextInput,
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
+  WizardSubmit,
+  SkipLink
 } from "components/StepWizard";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { validateEmail } from "utils/validators";
@@ -78,7 +77,7 @@ const Step2 = (props) => {
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -94,7 +93,7 @@ const Step3 = (props) => {
   };
 
   return (
-    <WizardStep>
+    <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
@@ -113,12 +112,20 @@ const Step3 = (props) => {
           />
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-      </WizardFormWrapper>
-      <WizardButtonGroup>
-        <SubmitButton disabled={!valid} primary="true" onClick={onSubmit}>
+        <WizardSubmit
+          disabled={email === "" || !valid}
+          primary="true"
+          onClick={onSubmit}
+        >
           Submit
-        </SubmitButton>
-      </WizardButtonGroup>
+        </WizardSubmit>
+        <SkipLink>
+          <Link to="/feed">
+            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+            Skip
+          </Link>
+        </SkipLink>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
@@ -132,7 +139,7 @@ const NeedHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/medical",
+        pathname: "/feed",
       });
     }
   };

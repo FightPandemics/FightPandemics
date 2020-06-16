@@ -5,7 +5,6 @@ import { theme } from "constants/theme";
 const { black, royalBlue, white } = theme.colors;
 
 const FeedbackButton = styled(Button)`
-  border: 0.2rem solid ${royalBlue};
   border-radius: 0.8rem;
   cursor: pointer;
   color: ${black};
@@ -15,9 +14,9 @@ const FeedbackButton = styled(Button)`
   &.am-button-active {
     background-color: ${royalBlue};
     color: ${white};
-  }
-  &.am-button-ghost:before {
-    border: none;
+  } 
+  html body &.am-button {
+    border: 0.2rem solid ${royalBlue};
   }
 `;
 

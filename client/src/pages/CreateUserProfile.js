@@ -1,6 +1,5 @@
 import { Flex, WhiteSpace } from "antd-mobile";
-import { Dropdown, Menu } from "antd";
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import styled from "styled-components";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
+import LocationInput from "components/Input/LocationInput";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Logo from "components/Logo";
 import Input from "components/Input/BaseInput";
@@ -32,8 +32,6 @@ import {
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
-
-const { colors } = theme;
 
 const BrandLink = styled(Link)`
   align-self: flex-start;
@@ -93,11 +91,6 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
-const SubLabel = styled.small`
-  color: ${theme.colors.green};
-  display: block;
-`;
-
 const ProfileFormGroup = styled.form`
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     width: 350px;
@@ -151,44 +144,6 @@ const CheckboxGroup = ({
   );
 };
 
-const StyledMenu = styled(Menu)`
-  padding: ${theme.typography.size.xxsmall};
-  width: 100%;
-  .ant-dropdown-menu-item {
-    display: flex;
-    span {
-      font-size: ${theme.typography.size.medium};
-      margin-right: ${theme.typography.size.xxsmall};
-      :first-child {
-        color: ${theme.colors.darkerGray};
-        font-weight: 500;
-      }
-      :last-child {
-        margin: 0;
-      }
-    }
-    &.ant-dropdown-menu-item-active {
-      background-color: ${theme.colors.selago};
-    }
-  }
-`;
-
-const DropdownMenu = ({ children }) => {
-  const menu = (
-    <StyledMenu>
-      <Menu.Item>
-        <span>10014</span>
-        <span>13th Ave,</span>
-        <span>New York,</span>
-        <span>NY,</span>
-        <span>USA</span>
-      </Menu.Item>
-      <Menu.Divider />
-    </StyledMenu>
-  );
-  return <Dropdown overlay={menu}>{children}</Dropdown>;
-};
-
 const InputGroup = styled.div`
   --py: ${theme.typography.size.xxsmall};
   --my: ${theme.typography.size.xxxlarge};
@@ -222,8 +177,17 @@ const Submit = styled(SubmitButton)`
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
+  const [location, setLocation] = useState({});
   const dispatch = useDispatch();
-  const { control, errors, formState, handleSubmit, register } = useForm({
+  const {
+    clearError,
+    control,
+    errors,
+    formState,
+    handleSubmit,
+    register,
+    setError,
+  } = useForm({
     mode: "change",
   });
   const [createUserFormState, createUserFormDispatch] = useReducer(
@@ -232,17 +196,18 @@ const CreateProfile = ({ email, history }) => {
   );
 
   const onSubmit = async (formData) => {
+    if (!location.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
+    }
     createUserFormDispatch({ type: CREATE_USER });
     try {
       const { email, ...body } = formData;
-      /* TEMP location until geolocation service id done */
-      body.location = {
-        address: 'New York, NY, USA',
-        coordinates: [ -74.0059728, 40.7127753 ],
-        city: "New York",
-        state: "NY",
-        country: "US"
-      }
+      body.location = location;
       const res = await axios.post("/api/users", body);
 
       dispatch({
@@ -257,6 +222,11 @@ const CreateProfile = ({ email, history }) => {
         error: `Create user failed, reason: ${message}`,
       });
     }
+  };
+
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    clearError("location");
   };
 
   return (
@@ -352,24 +322,11 @@ const CreateProfile = ({ email, history }) => {
                 style={blockLabelStyles}
                 label="Address"
               />
-              <DropdownMenu>
-                <div id="dropdown-anchor" style={{ position: "relative" }}>
-                  <Input
-                    type="text"
-                    name="location.address"
-                    id="location"
-                    className={errors.location?.address && "has-error"}
-                    ref={register({
-                      required: "Location is required.",
-                    })}
-                    style={inputStyles}
-                  />
-                  {errors.location?.address && (
-                    <InputError>{errors.location.address.message}</InputError>
-                  )}
-                  <SubLabel>Enter address, zip code, or city</SubLabel>
-                </div>
-              </DropdownMenu>
+              <LocationInput
+                formError={errors.location}
+                location={location}
+                onLocationChange={handleLocationChange}
+              />
             </InputWrapper>
           </InputGroup>
           {/*

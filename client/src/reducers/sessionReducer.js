@@ -26,8 +26,7 @@ function sessionReducer(state = initialState, action) {
       };
     case AUTH_LOGOUT:
       return {
-        ...state,
-        initialState,
+        ...initialState,
       };
     default:
       return state;

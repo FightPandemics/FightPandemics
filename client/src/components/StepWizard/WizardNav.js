@@ -11,24 +11,21 @@ import backArrow from "assets/icons/back-arrow.svg";
 
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
-const { royalBlue, white } = theme.colors;
+const { royalBlue, white, lightGray, lighterGray } = theme.colors;
 
 const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   width: 35rem;
   max-width: 100%;
-  position: absolute;
-  top: 70%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
-
 
     & > div {
       min-height: 100%;
@@ -36,7 +33,6 @@ const StyledWizardNav = styled.div`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    margin: 0 auto 1rem;
     width: 40rem;
   }
 `;
@@ -54,11 +50,25 @@ const BackButton = styled(LeftRightIconButton)`
   & span {
     display: none;
   }
+
   @media screen and (min-width: ${desktopBreakpoint}) {
     height: 4.8rem;
     width: 19.2rem;
+    transition: all 0.1s;
+
     & span {
       display: inline;
+    }
+
+    &:hover {
+      img {
+        // values below are equivalent to royalBlue
+        filter: invert(0.5) sepia(63) saturate(3) hue-rotate(207deg);
+      }
+    }
+
+    &:active {
+      transform: translateY(0.1rem);
     }
   }
 `;
@@ -77,16 +87,35 @@ const NextButton = styled(LeftRightIconButton)`
   justify-content: center;
   width: 6.8rem;
 
+  html body &.am-button {
+    border: 0.2rem solid ${royalBlue};
+  }
+
   & span {
     display: none;
   }
+
   @media screen and (min-width: ${desktopBreakpoint}) {
     font-weight: bold;
     height: 4.8rem;
     width: 19.2rem;
+    transition: all 0.1s;
 
     & span {
       display: inline;
+    }
+
+    &:hover {
+      img {
+        // values below are equivalent text color on hover
+        filter: invert(0.5) sepia(60) saturate(87) hue-rotate(232deg);
+      }
+      background-color: ${white};
+      color: ${royalBlue};
+    }
+
+    &:active {
+      transform: translateY(0.1rem);
     }
   }
 `;
@@ -102,12 +131,12 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
         <BackText>Back</BackText>
       </BackButton>
     ) : (
-      <BackButton>
-        <Link to={"/"}>
-          <SvgIcon src={backArrow} title="Navigate to the homepage" />{" "}
+      <Link to={"/"}>
+        <BackButton>
+          <SvgIcon src={backArrow} title="Navigate to the homepage" />
           <BackText>Back</BackText>
-        </Link>
-      </BackButton>
+        </BackButton>
+      </Link>
     )}
     {currentStep < totalSteps && (
       <NextButton onClick={nextStep}>

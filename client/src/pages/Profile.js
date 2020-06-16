@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Activity from "components/Profile/Activity";
@@ -33,54 +33,55 @@ import {
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
 import {
+  FACEBOOK_URL,
+  LINKEDIN_URL,
+  TWITTER_URL,
+  GITHUB_URL,
+} from "constants/urls";
+import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
+import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
-  ERROR_POSTS,
-  FETCH_POSTS,
-  SET_POSTS,
-} from "../hooks/actions/feedActions";
-import {
-  FETCH_USER,
-  FETCH_USER_ERROR,
-  FETCH_USER_SUCCESS,
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
 } from "hooks/actions/userActions";
-import {
-  userProfileReducer,
-  initialProfileState,
-} from "hooks/reducers/userReducers";
+import { UserContext, withUserContext } from "context/UserContext";
 import { getInitials } from "utils/userInfo";
 
 // ICONS
-import SvgIcon from "components/Icon/SvgIcon";
 import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
+import facebookIcon from "assets/icons/social-facebook.svg";
+import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
+import smileIcon from "assets/icons/smile-icon.svg";
 
-const socialIcons = {
-  google: linkedinBlue,
-  facebook: linkedinBlue,
-  linkedin: linkedinBlue,
-  twitter: twitterBlue,
-  website: linkedinBlue,
+const URLS = {
+  github: [githubIcon, GITHUB_URL],
+  facebook: [facebookIcon, FACEBOOK_URL],
+  linkedin: [linkedinBlue, LINKEDIN_URL],
+  twitter: [twitterBlue, TWITTER_URL],
+  website: [smileIcon],
 };
 
+const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+
 const Profile = () => {
-  const [userProfileState, userProfileDispatch] = useReducer(
-    userProfileReducer,
-    initialProfileState,
-  );
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
     initialPostsState,
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -94,27 +95,22 @@ const Profile = () => {
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
-  const { address, country } = location;
-  console.log({ postsState });
+  const { address } = location;
 
   useEffect(() => {
     (async function fetchProfile() {
-      userProfileDispatch({ type: FETCH_USER });
+      userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
-        userProfileDispatch({
-          type: FETCH_USER_SUCCESS,
-          user: res.data,
-        });
+        userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
-        userProfileDispatch({
-          type: FETCH_USER_ERROR,
-          error: `Failed loading profile, reason: ${message}`,
-        });
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
       }
     })();
-  }, []);
+  }, [userProfileDispatch]);
   useEffect(() => {
     (async function fetchPosts() {
       postsDispatch({ type: FETCH_POSTS });
@@ -155,9 +151,7 @@ const Profile = () => {
             <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
-          <LocationMobileDiv>
-            {address}, {country}
-          </LocationMobileDiv>
+          <LocationMobileDiv>{address}</LocationMobileDiv>
           <IconsContainer>
             <HelpContainer>
               {needHelp && "I need help "}
@@ -166,23 +160,30 @@ const Profile = () => {
             <LocationDesktopDiv>
               <LocationIcon src={locationIcon} />
               {needHelp && "I need help "}
-              {offerHelp && "I want to help "} • {address}, {country}
+              {offerHelp && "I want to help "} • {address}
             </LocationDesktopDiv>
             <PlaceholderIcon />
-            {Object.entries(urls).map(([name, url]) => (
-              <a
-                href={url}
-                key="name"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SocialIcon src={socialIcons[name]} />
-              </a>
-            ))}
+            {Object.entries(urls).map(([name, url]) => {
+              return (
+                url && (
+                  <a
+                    href={
+                      name === "website"
+                        ? getHref(url)
+                        : `${URLS[name][1]}${url}`
+                    }
+                    key={name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SocialIcon src={URLS[name][0]} />
+                  </a>
+                )
+              );
+            })}
           </IconsContainer>
         </UserInfoDesktop>
       </UserInfoContainer>
-
       <WhiteSpace />
       <div style={{ margin: "0 2.5rem" }}>
         <WhiteSpace />
@@ -211,7 +212,7 @@ const Profile = () => {
         key="bottom"
       >
         <DrawerHeader>
-          <Link to="/edit-profile">Edit Account Information</Link>
+          <Link to="/edit-account">Edit Account Information</Link>
         </DrawerHeader>
         <DrawerHeader>
           <Link to="/edit-profile">Edit Profile </Link>
@@ -222,4 +223,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withUserContext(Profile);
