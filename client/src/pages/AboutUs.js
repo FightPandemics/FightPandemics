@@ -14,7 +14,7 @@ import {
 import DesktopBanner from "assets/about-us-images/vision-and-mission.png";
 import MobileBanner from "assets/about-us-images/vision-and-mission-mobile.png";
 
-import OurIdeaImage from "assets/about-us-images/our-idea.png";
+import OurIdeaImage from "assets/about-us-images/our-idea.svg";
 
 // company supporter logos import
 import airtableLogo from "assets/supporters-logos/airtable-logo.svg";

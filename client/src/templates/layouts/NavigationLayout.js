@@ -191,22 +191,6 @@ const NavigationLayout = (props) => {
 
   const AuthenticatedMenu = () => (
     <>
-      <NavList>
-        {isAuthenticated ? (
-          <>
-            <NavItem>
-              <Link to="/profile">Profile</Link>
-            </NavItem>
-          </>
-        ) : (
-          <>
-            <NavItem history={history} link="/auth/login">
-              Login / Register
-            </NavItem>
-          </>
-        )}
-        <NavItem history={history} link="/about-us">
-          About Us
       <WhiteSpace size="lg" />
       <AvatarContainer>
         <NavItem history={history}>
@@ -229,6 +213,9 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
+      <NavItem history={history} link="/about-us">
+        About Us
+      </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Logout</BriefLink>
@@ -240,6 +227,9 @@ const NavigationLayout = (props) => {
     <>
       <NavItem history={history}>
         <Link to="/auth/login">Login / Register</Link>
+      </NavItem>
+      <NavItem history={history} link="/about-us">
+        About Us
       </NavItem>
     </>
   );
