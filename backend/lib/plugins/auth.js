@@ -23,6 +23,7 @@ const checkAuth = async (req) => {
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
+const cookieMaxAge = 60 * 60 * 24 * 7; // 1 week; TODO: ask about alternate?
 const tokenCookieOptions = () => {
   let domain;
   switch (env) {
@@ -41,6 +42,7 @@ const tokenCookieOptions = () => {
   return {
     domain,
     httpOnly: true,
+    maxAge: cookieMaxAge,
     path: "/",
     sameSite: "strict",
     secure: env !== "dev",
@@ -89,7 +91,7 @@ const authPlugin = async (app) => {
   });
 
   app.decorateReply("clearJwtCookie", function () {
-    this.clearCookie("token", tokenCookieOptions());
+    this.clearCookie("token");
   });
   /* eslint-enable */
 
