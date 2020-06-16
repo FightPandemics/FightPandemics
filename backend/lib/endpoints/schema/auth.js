@@ -7,6 +7,10 @@ const loginSchema = {
     .prop("password", S.string().required()),
 };
 
+const logoutSchema = {
+  body: strictSchema(),
+};
+
 // todo: add password confirmation as required field
 const signupSchema = {
   body: strictSchema()
@@ -35,6 +39,7 @@ const oAuthProviderSchema = {
 module.exports = {
   changePasswordSchema,
   loginSchema,
+  logoutSchema,
   oAuthProviderSchema,
   oAuthSchema,
   signupSchema,

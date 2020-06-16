@@ -1,11 +1,12 @@
 const fp = require("fastify-plugin");
 const fastifyJwt = require("fastify-jwt");
+const fastifyCookie = require("fastify-cookie");
 const fastifySecretProvider = require("fastify-authz-jwks");
 const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 
 const {
-  config: { auth },
+  config: { auth, env },
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
@@ -22,10 +23,39 @@ const checkAuth = async (req) => {
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
+const tokenCookieOptions = () => {
+  let domain;
+  switch (env) {
+    case "dev":
+      domain = "localhost";
+      break;
+    case "review":
+      domain = "fightpandemics.xyz";
+      break;
+    case "staging":
+      domain = "fightpandemics.work";
+      break;
+    default:
+      domain = "fightpandemics.com";
+  }
+  return {
+    domain,
+    httpOnly: true,
+    path: "/",
+    sameSite: "strict",
+    secure: env !== "dev",
+  }
+};
+
 const authPlugin = async (app) => {
+  app.register(fastifyCookie);
+
   app.register(fastifyJwt, {
     algorithms: ["RS256"],
     audience: `${auth.domain}/api/v2/`,
+    cookie: {
+      cookieName: "token",
+    },
     decode: { complete: true },
     secret: fastifySecretProvider({
       cache: true,
@@ -52,6 +82,16 @@ const authPlugin = async (app) => {
       req.userId = null;
     }
   });
+
+  /* eslint-disable func-names */
+  app.decorateReply("setJwtCookie", function (token) {
+    this.setCookie("token", token, tokenCookieOptions());
+  });
+
+  app.decorateReply("clearJwtCookie", function () {
+    this.clearCookie("token", tokenCookieOptions());
+  });
+  /* eslint-enable */
 
   app.decorate("getServerToken", async (req, reply) => {
     const msg = {

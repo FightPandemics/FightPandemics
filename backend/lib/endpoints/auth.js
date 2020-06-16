@@ -2,6 +2,7 @@ const Auth0 = require("../components/Auth0");
 const {
   changePasswordSchema,
   loginSchema,
+  logoutSchema,
   oAuthSchema,
   oAuthProviderSchema,
   signupSchema,
@@ -16,7 +17,7 @@ const {
 async function routes(app) {
   const User = app.mongo.model("IndividualUser");
 
-  app.post("/oauth", { schema: oAuthSchema }, async (req) => {
+  app.post("/oauth", { schema: oAuthSchema }, async (req, reply) => {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== authConfig.state) {
@@ -26,6 +27,7 @@ async function routes(app) {
         code,
         redirect_uri: req.headers.referer,
       });
+      reply.setJwtCookie(token);
       const auth0User = await Auth0.getUser(token);
       const { email, email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
@@ -100,7 +102,7 @@ async function routes(app) {
     },
   );
 
-  app.post("/login", { schema: loginSchema }, async (req) => {
+  app.post("/login", { schema: loginSchema }, async (req, reply) => {
     const { body } = req;
     const { email, password } = body;
     try {
@@ -109,6 +111,7 @@ async function routes(app) {
         scope: "openid",
         username: email,
       });
+      reply.setJwtCookie(token);
       const auth0User = await Auth0.getUser(token);
       const { email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
@@ -158,6 +161,17 @@ async function routes(app) {
       }
     },
   );
+
+  app.post("/logout", { schema: logoutSchema }, async (req, reply) => {
+    try {
+      reply.clearJwtCookie();
+      reply.code(204).send();
+    } catch (err) {
+      const errMessage = "Error logging out";
+      req.log(err, errMessage);
+      throw app.httpErrors.internalServerError(errMessage);
+    }
+  });
 }
 
 module.exports = routes;
