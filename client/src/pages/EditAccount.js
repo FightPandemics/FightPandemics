@@ -14,7 +14,6 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
@@ -70,11 +69,9 @@ function EditAccount() {
     clearError,
     control,
     errors,
-    formState,
     handleSubmit,
     register,
     setError,
-    setValue,
   } = useForm({
     mode: "change",
   });

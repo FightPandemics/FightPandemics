@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import LocalEmergencyNumber from "../../components/NearestHospital/LocalEmergencyNumber";
 import { Tabs } from "antd-mobile";
 import { NavLink } from "react-router-dom";
 
@@ -70,7 +69,7 @@ const MobileTabs = (props) => {
     } else {
       sessionStorage.setItem("LocalEmergencyBox", "true");
     }
-  }, []);
+  }, [status]);
 
   // const removeNoticeBar = () => {
   //   sessionStorage.setItem("LocalEmergencyBox", "false");

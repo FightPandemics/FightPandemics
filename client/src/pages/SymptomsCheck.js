@@ -460,11 +460,13 @@ const Step5 = (props) => {
     updateState({ ...state, answers: updatedAnswers });
     props.update("conditions", checkedAnswers);
   };
-  const toggleNone = () => {
+  /* // commenting it out as of now
+    const toggleNone = () => {
     const newNone = !none;
     updateState({ ...state, none: newNone });
     props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
+  */
 
   return (
     <WizardStep alignItems="flex-start">
@@ -509,12 +511,13 @@ const Step6 = (props) => {
     updateState({ ...state, answers: updatedAnswers });
     props.update("conditions", checkedAnswers);
   };
-  const toggleNone = () => {
+  /* // removing this for now as it is not being used.
+    const toggleNone = () => {
     const newNone = !none;
     updateState({ ...state, none: newNone });
     props.update("conditions", newNone ? [] : getCheckedAnswers(answers));
   };
-
+*/
   return (
     <WizardStep alignItems="flex-start">
       <h5>
@@ -620,7 +623,7 @@ const SymptomsCheck = () => {
             <Icon type="cross" size="lg" />
           </button>
         </div>
-        <img className="warning-icon" src={Disclaimer} />
+        <img className="warning-icon" src={Disclaimer} alt="Warning Icon" />
         <Under18 />
         <Link to="/feed">
           <ColoredButton>Done</ColoredButton>
@@ -689,7 +692,7 @@ const SymptomsCheck = () => {
   if (condition1 || condition2 || condition3 || condition4) {
     displayMessage.push(
       "No test needed at this time",
-      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionnaire again.",
+      "As of now your answers suggest you do not need to get tested. If anything changes, take the questionnaire again."
     );
   }
 
@@ -701,7 +704,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Monitor Symptoms",
-      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office.",
+      "Watch for COVID-19 symptoms such as cough, fever and difficulty breathing. If your symptoms get worse contact your doctor's office."
     );
   }
 
@@ -761,7 +764,7 @@ const SymptomsCheck = () => {
   if (condition5 || condition6 || condition7 || condition8) {
     displayMessage.push(
       "Talk to someone about Testing",
-      "Your answers suggest you may need to get tested for COVID-19. You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider.",
+      "Your answers suggest you may need to get tested for COVID-19. You should get in touch with your doctor's office or your state or local health department for more information. Testing access may vary by location and provider."
     );
   }
 
@@ -775,7 +778,7 @@ const SymptomsCheck = () => {
   if (condition9) {
     displayMessage.push(
       "Call your Work Health Provider",
-      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19.",
+      "You should notify your work place of your current symptoms as quickly as you can. This is vital to slowing the spread of COVID-19."
     );
   }
 
@@ -788,7 +791,7 @@ const SymptomsCheck = () => {
   if (condition10) {
     displayMessage.push(
       "Call your Doctor or Care Team",
-      "You should discuss your symptoms with the doctors or care team that look after your facility. Your doctor's response time may vary depending on number of cases in your region",
+      "You should discuss your symptoms with the doctors or care team that look after your facility. Your doctor's response time may vary depending on number of cases in your region"
     );
   }
 
@@ -800,7 +803,7 @@ const SymptomsCheck = () => {
   ) {
     displayMessage.push(
       "Isolate from others",
-      "You should try to stay away from others for at least 7 days from when the symptoms first appeared. Your isolation can end if your symptoms improve significantly and if you have had no fever for at least 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others.",
+      "You should try to stay away from others for at least 7 days from when the symptoms first appeared. Your isolation can end if your symptoms improve significantly and if you have had no fever for at least 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others."
     );
   }
 
@@ -821,7 +824,7 @@ const SymptomsCheck = () => {
     displayMessage.push(
       "Quarantine at Home",
       "You have been exposed. You should stay Home for the next 14 days and see if any symptoms appear",
-      "You should also try and limit your contact with others outside the home",
+      "You should also try and limit your contact with others outside the home"
     );
   }
 
@@ -844,7 +847,7 @@ const SymptomsCheck = () => {
   if (condition12 || condition13) {
     displayMessage.push(
       "Maintain Social Distance",
-      "Small but important steps can slow the spread of COVID-19. Avoid groups of people and keep six feet apart from anyone who's not part of the household. Especially avoid those showing symptoms.",
+      "Small but important steps can slow the spread of COVID-19. Avoid groups of people and keep six feet apart from anyone who's not part of the household. Especially avoid those showing symptoms."
     );
   }
 
@@ -879,7 +882,7 @@ const SymptomsCheck = () => {
   if (condition14 || condition15) {
     displayMessage.push(
       "Monitor Symptoms",
-      "Watch for COVID-19 symptoms such as cough, fever, difficulty breathing. Also check your temperature twice a day for two weeks. If symptoms get worse, call your doctor.",
+      "Watch for COVID-19 symptoms such as cough, fever, difficulty breathing. Also check your temperature twice a day for two weeks. If symptoms get worse, call your doctor."
     );
   }
 
@@ -909,7 +912,7 @@ const SymptomsCheck = () => {
   if (condition16) {
     displayMessage.push(
       "Ask about your Medications",
-      "If you are currently taking prescription medication, you should contact your doctor's office about getting a 30-day supply.",
+      "If you are currently taking prescription medication, you should contact your doctor's office about getting a 30-day supply."
     );
   }
 
@@ -930,7 +933,7 @@ const SymptomsCheck = () => {
   if (condition17) {
     displayMessage.push(
       "Take Precautions to Protect Others",
-      "You may need to wear a mask to help protect yourself and those around you.",
+      "You may need to wear a mask to help protect yourself and those around you."
     );
   }
 
@@ -943,7 +946,7 @@ const SymptomsCheck = () => {
   if (condition18) {
     displayMessage.push(
       "Rest and Take care",
-      "Eat well, drink fluids, and get plenty of rest.",
+      "Eat well, drink fluids, and get plenty of rest."
     );
   }
   const forWho = (answer) => updateAnswers("forWho", answer);
@@ -1001,7 +1004,7 @@ const SymptomsCheck = () => {
             <Icon type="cross" size="lg" />
           </button>
         </div>
-        <img className="warning-icon" src={Disclaimer} />
+        <img className="warning-icon" src={Disclaimer} alt="Warning Icon" />
         <Heading level={4} className="h4">
           We are not a provider of healthcare services
         </Heading>

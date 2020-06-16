@@ -9,12 +9,10 @@ import {
   WizardStep,
   WizardNav,
   ShowAnywhere,
-  ShareLocation,
   StepTitle,
   StepSubtitle,
   SkipLink,
   StyledTextInput,
-  StyledSearchInput,
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
@@ -73,7 +71,6 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
-  const [locationSearch, setLocationSearch] = useState("");
 
   const selectLocationDetection = (location) => {
     try {
@@ -89,7 +86,6 @@ const Step2 = (props) => {
     props.nextStep();
   };
 
-  const manualLocation = (evt) => setLocationSearch(evt); // I am not sure how best to perform the search at the moment.
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
