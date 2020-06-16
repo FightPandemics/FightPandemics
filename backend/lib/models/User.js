@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 // const { schema: locationSchema } = require("./Location");
 const { isValidEmail } = require("../utils");
 
@@ -8,6 +9,8 @@ const userSchema = new Schema(
     email: {
       required: true,
       type: String,
+      unique: true,
+      uniqueCaseInsensitive: true,
       validator: isValidEmail,
     },
     location: Object,
@@ -25,6 +28,9 @@ userSchema.index({
   createdAt: -1,
 });
 /* eslint-enable */
+
+// Apply the uniqueValidator plugin to userSchema.
+userSchema.plugin(uniqueValidator);
 
 const User = model("User", userSchema);
 
