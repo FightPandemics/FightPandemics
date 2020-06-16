@@ -50,6 +50,8 @@ import {
   LINKEDIN_URL,
   TWITTER_URL,
   GITHUB_URL,
+  APPLESTORE_URL,
+  PLAYSTORE_URL
 } from "constants/urls";
 import {
   fetchOrganization,
@@ -59,8 +61,8 @@ import {
 import { OrganizationContext, withOrganizationContext } from "context/OrganizationContext";
 
 const URLS = {
-  github: [githubIcon, GITHUB_URL],
-  facebook: [facebookIcon, FACEBOOK_URL],
+  playStore: ["", PLAYSTORE_URL],
+  appleStore: ["", APPLESTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [smileIcon],
@@ -104,6 +106,7 @@ const OrganizationProfile = () => {
 
 
   const renderURL = () => {
+    if(organization) {
     if(urls.length !== 0) {
     return (
       Object.entries(urls).map(([name, url]) => {
@@ -128,7 +131,8 @@ const OrganizationProfile = () => {
   } else {
     return
   }
-  }
+}
+}
 
   const renderProfileData = () => {
     let firstName, lastName;
