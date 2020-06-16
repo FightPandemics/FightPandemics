@@ -213,6 +213,9 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
+      <NavItem history={history} link="/about-us">
+        About Us
+      </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Logout</BriefLink>
@@ -224,6 +227,9 @@ const NavigationLayout = (props) => {
     <>
       <NavItem history={history}>
         <Link to="/auth/login">Login / Register</Link>
+      </NavItem>
+      <NavItem history={history} link="/about-us">
+        About Us
       </NavItem>
     </>
   );
