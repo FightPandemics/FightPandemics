@@ -1,7 +1,6 @@
 import { AUTH_LOGOUT, AUTH_SUCCESS, SET_USER } from "constants/action-types";
 
 const initialState = {
-  accessToken: null,
   isAuthenticated: false,
   email: null,
   emailVerified: false,
@@ -13,7 +12,6 @@ function sessionReducer(state = initialState, action) {
     case AUTH_SUCCESS:
       return {
         ...state,
-        accessToken: action.payload.token,
         emailVerified: action.payload.emailVerified,
         email: action.payload.email,
         isAuthenticated: true,
@@ -22,6 +20,8 @@ function sessionReducer(state = initialState, action) {
     case SET_USER:
       return {
         ...state,
+        emailVerified: true, // user can't exist in db if email not verified
+        isAuthenticated: true,
         user: action.payload.user,
       };
     case AUTH_LOGOUT:

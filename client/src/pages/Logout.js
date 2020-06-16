@@ -1,13 +1,28 @@
 import React, { useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { authLogout } from "actions/authActions";
+import { Redirect } from "react-router-dom";
 
-function Logout({ authLogout }) {
+import { authLogout } from "actions/authActions"
+
+const Logout = ({ authLogout, isAuthenticated }) => {
   useEffect(() => {
     authLogout();
   }, [authLogout]);
-  return <Redirect to="/" />;
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+  return <div>Logging out...</div>
+  // TODO: add error handling
 }
 
-export default connect(null, { authLogout })(Logout);
+const mapDispatchToProps = {
+  authLogout,
+};
+
+const mapStateToProps = ({ session: { isAuthenticated } }) => {
+  return {
+    isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

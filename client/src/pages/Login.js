@@ -28,7 +28,6 @@ import Input from "components/Input/BaseInput";
 import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
-import { setAuthToken } from "utils/auth-token";
 import { validateEmail, validatePassword } from "utils/validators";
 
 // ICONS
@@ -226,9 +225,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
-          if (res?.data?.token) {
-            setAuthToken(res.data.token);
-          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -247,10 +243,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
 
     try {
       const res = await axios.post("/api/auth/login", formData);
-
-      if (res?.data?.token) {
-        setAuthToken(res.data.token);
-      }
 
       dispatch({
         type: AUTH_SUCCESS,
