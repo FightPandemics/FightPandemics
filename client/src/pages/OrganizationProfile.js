@@ -69,6 +69,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganizationProfile = () => {
+  const organizationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
   const { error, loading, organization } = orgProfileState;
 
@@ -83,7 +84,6 @@ const OrganizationProfile = () => {
   } = organization || {};
 
   useEffect(() => {
-    const organizationId = window.location.pathname.split("/")[2];
     (async function fetchProfile() {
       orgProfileDispatch(fetchOrganization());
       try {
@@ -203,10 +203,10 @@ const OrganizationProfile = () => {
           key="bottom"
         >
           <DrawerHeader>
-            <Link to="/edit-organization-account">Edit Account Information</Link>
+            <Link to={`/edit-organization-account/${organizationId}`}>Edit Account Information</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-organization-profile">Edit Profile </Link>
+            <Link to={`/edit-organization-profile/${organizationId}`}>Edit Profile </Link>
           </DrawerHeader>
         </CustomDrawer>
         </>

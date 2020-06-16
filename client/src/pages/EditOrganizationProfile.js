@@ -27,6 +27,71 @@ import {
   Eclipse
 } from "../components/EditProfile/EditComponents";
 
+
+
+// 
+// const URLS_CONFIG = {
+//   facebook: [
+//     "Facebook URL",
+//     {
+//       pattern: {
+//         value: /^[a-zA-Z0-9.]*$/,
+//         message:
+//           "Invalid entry: only alphanumeric characters and . are allowed",
+//       },
+//       minLength: {
+//         value: 5,
+//         message: "Min. length is 5 characters",
+//       },
+//     },
+//     FACEBOOK_URL,
+//   ],
+//   linkedin: [
+//     "LinkedIn URL",
+//     {
+//       pattern: {
+//         value: /^[a-zA-Z0-9]*$/,
+//         message: "Invalid entry: only alphanumeric characters are allowed",
+//       },
+//     },
+//     LINKEDIN_URL,
+//   ],
+//   twitter: [
+//     "Twitter URL",
+//     {
+//       pattern: {
+//         value: /^[a-zA-Z0-9_]*$/,
+//         message:
+//           "Invalid entry: only alphanumeric characters and _ are allowed",
+//       },
+//       maxLength: {
+//         value: 15,
+//         message: "Max. length is 15 characters",
+//       },
+//     },
+//     TWITTER_URL,
+//   ],
+//   github: [
+//     "Github URL",
+//     {
+//       pattern: {
+//         value: /^[a-zA-Z0-9_-]*$/,
+//         message:
+//           "Invalid entry: only alphanumeric characters and _ are allowed",
+//       },
+//     },
+//     GITHUB_URL,
+//   ],
+//   website: [
+//     "Personal Website",
+//     {
+//       validate: (str) => !str || validateURL(str) || "Invalid URL",
+//     },
+//   ],
+// };
+// const ABOUT_MAX_LENGTH = 160;
+
+
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
