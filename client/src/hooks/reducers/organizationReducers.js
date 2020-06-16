@@ -1,7 +1,6 @@
 import {
   CREATE_ORGANIZATION,
   CREATE_ORGANIZATION_ERROR,
-  CREATE_ORGANIZATION_SUCCESS,
 } from "../actions/organizationActions";
 
 export const initialState = {

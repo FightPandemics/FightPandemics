@@ -11,7 +11,7 @@ import backArrow from "assets/icons/back-arrow.svg";
 
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
-const { royalBlue, white, lightGray, lighterGray } = theme.colors;
+const { royalBlue, white } = theme.colors;
 
 const StyledWizardNav = styled.div`
   display: flex;

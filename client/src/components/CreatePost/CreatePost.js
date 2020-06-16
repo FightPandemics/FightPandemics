@@ -9,7 +9,6 @@ import {
   CreateProfileButton,
   CreateOrgLink,
 } from "components/CreatePost/StyledPostAs";
-import SubmitButton from "components/Button/SubmitButton";
 import Form from "./Form/Form";
 import SvgIcon from "components/Icon/SvgIcon";
 import person from "assets/icons/person.svg";
@@ -126,7 +125,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
 
 const Step4 = () => {
   const createPostContext = useContext(CreatePostContext);
-  const { setForm, currentStep, setCurrentStep } = createPostContext;
+  const { currentStep } = createPostContext;
   return (
     currentStep === 4 && (
       <>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Tabs } from "antd";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";

@@ -1,4 +1,4 @@
-import { Drawer, List, Button, Flex, WhiteSpace } from "antd-mobile";
+import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
 import { Typography } from "antd";
 
 import React, { useState } from "react";
@@ -6,7 +6,6 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Avatar from "components/Avatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";

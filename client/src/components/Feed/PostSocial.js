@@ -1,9 +1,9 @@
 // Core
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // Local
-import { FeedContext } from "pages/Feed.js";
+// import { FeedContext } from "pages/Feed.js";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
