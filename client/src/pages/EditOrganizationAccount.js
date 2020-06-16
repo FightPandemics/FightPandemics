@@ -47,8 +47,6 @@ import ProfilePic from "components/Picture/ProfilePic";
 import { getInitials } from "utils/userInfo";
 
 
-const organizationNeeds = ['Volunteers', 'Staff', 'Donations', 'Other']
-
 const errorStyles = {
   color: "#FF5656",
   fontSize: "1.2rem",
@@ -60,6 +58,13 @@ const InputWrapper = styled.div`
   width: 100%;
   position: relative;
 `;
+
+const NEEDS = {
+  volunteers: "Volunteers",
+  donations: "Donations",
+  staff: "Staff",
+  other: "Other"
+};
 
 
 function EditOrganizationAccount(props) {
@@ -78,8 +83,6 @@ function EditOrganizationAccount(props) {
   needs
  } = organization || {};
 
-  console.log(organization);
-
   const handleLocationChange = (location) => {
     setLocation(location);
     clearError("location");
@@ -87,23 +90,20 @@ function EditOrganizationAccount(props) {
 
 
   const onSubmit = async (formData) => {
-    console.log(formData);
-    // if (!locationData.address || location.address) {
-    //   // all location objects should have address (+coordinates), others optional
-    //   return setError(
-    //     "location",
-    //     "required",
-    //     "Please select an address from the drop-down",
-    //   );
-    // }
-    // formData.location = locationData || location;
+    if (!locationData.address || location.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
+    }
+    formData.location = locationData || location;
     orgProfileDispatch(updateOrganization());
     try {
         const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
         orgProfileDispatch(updateOrganizationSuccess(res.data));
-        console.log(res.data)
     } catch (err) {
-      console.log(err)
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
         updateOrganizationError(`Failed updating organization profile, reason: ${message}`),
@@ -114,7 +114,6 @@ function EditOrganizationAccount(props) {
 
   useEffect(() => {
     const organizationId = window.location.pathname.split("/")[2];
-    console.log(organizationId);
     (async function fetchProfile() {
       orgProfileDispatch(fetchOrganization());
       try {
@@ -129,6 +128,10 @@ function EditOrganizationAccount(props) {
     })();
   }, []);
 
+  const handleCheckboxChange = ([event]) => {
+    return event.target.checked
+  }
+
 
   const organizationInfo = {
     // label name, variable name, value
@@ -139,22 +142,23 @@ function EditOrganizationAccount(props) {
   const renderNeedSection = () => {
 
     if(organization) {
-    const orgNeeds = Object.keys(needs).map(val => needs[val] === true ? val : null);
+
       return (
         <div>
-        <CheckBoxWrapper>
-          <Controller
-           as={StyledCheckboxGroup}
-           control={control}
-           display="column"
-           options={organizationNeeds}
-           name="needs"
-           defaultValue={orgNeeds}
-           rules={{ required: true }}
-           onChange={([checkedValues]) => checkedValues}
-          />
-        </CheckBoxWrapper>
-            <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
+        {Object.entries(NEEDS).map(([key, label]) => (
+          <CheckBoxWrapper key={key}>
+            <Controller
+              as={Checkbox}
+              defaultChecked={needs[key]}
+              name={`needs.${key}`}
+              control={control}
+              onChange={handleCheckboxChange}
+            >
+              <Label inputColor="#000000">{label}</Label>
+            </Controller>
+          </CheckBoxWrapper>
+        ))}
+        <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
         </div>
       );
     }

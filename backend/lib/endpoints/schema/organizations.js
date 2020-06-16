@@ -10,7 +10,11 @@ const organization = {
   language: S.string(),
   location: locationSchema,
   name: S.string(),
-  needs: S.array().maxItems(10).items(S.string()),
+  needs: S.object()
+    .prop("volunteers", S.boolean().required().default(false))
+    .prop("donations", S.boolean().required().default(false))
+    .prop("staff", S.boolean().required().default(false))
+    .prop("other", S.boolean().required().default(false)),
   ownerId: S.string(),
   type: S.string(),
   url: S.object()
