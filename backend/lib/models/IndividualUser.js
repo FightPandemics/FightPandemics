@@ -36,11 +36,9 @@ const individualUserSchema = new Schema(
     },
     firstName: {
       required: true,
-      set: updateAuthorFirstName,
       type: String,
     },
     lastName: {
-      set: updateAuthorLastName,
       type: String,
     },
     needs: {

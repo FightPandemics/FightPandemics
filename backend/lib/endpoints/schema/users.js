@@ -64,10 +64,11 @@ const updateUserSchema = {
     .prop("about", S.string().maxLength(160))
     .prop("firstName", S.string())
     .prop("lastName", S.string())
+    .prop("location", locationSchema)
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)
-    .prop("urls", urlsSchema)
-    .prop("location", locationSchema),
+    .prop("photo", S.string().pattern(URL_REGEX))
+    .prop("urls", urlsSchema),
 };
 
 module.exports = {

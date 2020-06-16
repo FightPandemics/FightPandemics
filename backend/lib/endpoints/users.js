@@ -10,7 +10,9 @@ const {
  * /api/users
  */
 async function routes(app) {
+  const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const Post = app.mongo.model("Post");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const result = await User.findById(req.userId);
@@ -61,6 +63,28 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
+      // -- Update Author References if needed
+      const { firstName, lastName, photo } = body;
+      if (firstName || lastName) {
+        const postUpdate = await Post.updateMany(
+          { "author.id": updatedUser.id },
+          { $set: { "author.name": updatedUser.name } },
+        );
+        const commentUpdate = await Comment.updateMany(
+          { "author.id": updatedUser.id },
+          { $set: { "author.name": updatedUser.name } },
+        );
+      }
+      if (photo) {
+        const postUpdate = await Post.updateMany(
+          { "author.id": updatedUser.id },
+          { $set: { "author.photo": updatedUser.photo } },
+        );
+        const commentUpdate = await Comment.updateMany(
+          { "author.id": updatedUser.id },
+          { $set: { "author.photo": updatedUser.photo } },
+        );
+      }
       return updatedUser;
     },
   );
