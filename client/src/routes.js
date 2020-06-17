@@ -23,6 +23,7 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
+import Logo from "components/Logo";
 
 const routes = [
   {
@@ -37,6 +38,7 @@ const routes = [
     props: {
       isLoginForm: true,
       notLoggedInOnly: true,
+      forgotPassword: false,
     },
   },
   {
@@ -46,7 +48,18 @@ const routes = [
     props: {
       isLoginForm: false,
       notLoggedInOnly: true,
+      forgotPassword: false,
     },
+  },
+  {
+    path: "/auth/forgot-password",
+    component: Login,
+    layout: "logo",
+    props: {
+      isLoginForm: false,
+      notLoggedInOnly: true,
+      forgotPassword: true,
+    }
   },
   {
     path: "/auth/logout",
