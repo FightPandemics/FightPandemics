@@ -76,12 +76,8 @@ function EditAccount() {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const {
-    firstName = "",
-    lastName = "",
-    objectives = {},
-    needs = {},
-  } = user || {};
+  const { firstName = "", lastName = "", objectives = {}, needs = {} } =
+    user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -99,7 +95,10 @@ function EditAccount() {
     }
     userProfileDispatch(updateUser());
     try {
-      const res = await axios.patch("/api/users/current", {...formData, location});
+      const res = await axios.patch("/api/users/current", {
+        ...formData,
+        location,
+      });
       userProfileDispatch(updateUserSuccess(res.data));
     } catch (err) {
       const message = err.response?.data?.message || err.message;

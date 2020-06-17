@@ -9,20 +9,25 @@ const LOCATION_DISPLAY_LENGTH_MAX = 30;
 
 const FiltersList = () => {
   const feedContext = useContext(FeedContext);
-  const { handleLocation, handleOption, location, selectedOptions } = feedContext;
+  const {
+    handleLocation,
+    handleOption,
+    location,
+    selectedOptions,
+  } = feedContext;
 
   return (
     <div>
-      {location &&
+      {location && (
         <ButtonTag
           className="tag-closable"
           onClick={() => handleLocation(null)}
         >
-          {location?.address?.length > LOCATION_DISPLAY_LENGTH_MAX ?
-            `${location?.address?.substr(0, LOCATION_DISPLAY_LENGTH_MAX)}…`
-            : location?.address }
+          {location?.address?.length > LOCATION_DISPLAY_LENGTH_MAX
+            ? `${location?.address?.substr(0, LOCATION_DISPLAY_LENGTH_MAX)}…`
+            : location?.address}
         </ButtonTag>
-      }
+      )}
       {Object.keys(selectedOptions).map((filter) =>
         selectedOptions[filter].map((option, idx) => (
           <ButtonTag
