@@ -65,72 +65,36 @@ async function routes(app) {
 
       // -- Update Author References if needed
       const { firstName, lastName, photo } = body;
-      if (firstName || lastName) {
-        const postUpdate = await Post.updateMany(
-          { "author.id": updatedUser.id },
-          { $set: { "author.name": updatedUser.name } },
+      if (firstName || lastName || photo) {
+        const updateOps = {};
+        if (firstName || lastName) {
+          updateOps["author.name"] = updatedUser.name;
+        }
+        if (photo) {
+          updateOps["author.photo"] = updatedUser.photo;
+        }
+
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
         );
-        const commentUpdate = await Comment.updateMany(
-          { "author.id": updatedUser.id },
-          { $set: { "author.name": updatedUser.name } },
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
         );
-      }
-      if (photo) {
-        const postUpdate = await Post.updateMany(
-          { "author.id": updatedUser.id },
-          { $set: { "author.photo": updatedUser.photo } },
-        );
-        const commentUpdate = await Comment.updateMany(
-          { "author.id": updatedUser.id },
-          { $set: { "author.photo": updatedUser.photo } },
-        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
       }
       return updatedUser;
-    },
-  );
-
-  app.get(
-    "/:userId",
-    { preValidation: [app.authenticate], schema: getUserByIdSchema },
-    async (req) => {
-      const user = await User.findById(req.params.userId);
-      if (user === null) {
-        throw app.httpErrors.notFound();
-      }
-      const { firstName, lastName, _id: id } = user;
-      return {
-        firstName,
-        id,
-        lastName,
-      };
-    },
-  );
-
-  app.post(
-    "/",
-    { preValidation: [app.authenticate], schema: createUserSchema },
-    async (req) => {
-      const user = await Auth0.getUser(getBearerToken(req));
-      const { email, email_verified: emailVerified } = user;
-      if (!emailVerified) {
-        throw app.httpErrors.forbidden("Email address not verified");
-      }
-      if (!req.userId) {
-        req.log.error(
-          `No userId for create user ${email}, invalid configuration`,
-        );
-        throw app.httpErrors.internalServerError();
-      }
-      if (await User.findById(req.userId)) {
-        throw app.httpErrors.conflict("User exists");
-      }
-      const userData = {
-        ...req.body,
-        _id: req.userId,
-        authId: req.user.sub,
-        email,
-      };
-      return new User(userData).save();
     },
   );
 }
