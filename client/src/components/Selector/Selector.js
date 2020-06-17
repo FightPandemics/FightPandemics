@@ -1,7 +1,5 @@
 import React from "react";
 import StyledSelector from "./StyledSelector";
-import { theme } from "constants/theme";
-
 const { Option } = StyledSelector;
 
 const BaseSelector = (props) => {

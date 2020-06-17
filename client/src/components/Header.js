@@ -2,7 +2,6 @@ import React from "react";
 import { NavBar } from "antd-mobile";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
-import TextAvatar from "components/TextAvatar";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
@@ -112,6 +111,11 @@ export default ({ onMenuClick, isAuthenticated }) => {
             <DesktopMenu>
               <NavLinks>
                 <ul>
+                  <li>
+                    <NavLink activeStyle={activeStyles} to="/about-us">
+                      About Us
+                    </NavLink>
+                  </li>
                   <li>
                     <NavLink activeStyle={activeStyles} to="/feed">
                       Feed

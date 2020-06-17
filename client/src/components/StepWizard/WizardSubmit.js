@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 import BaseButton from "components/Button/BaseButton";
 
-const { white, royalBlue, lightGray, lighterGray } = theme.colors;
+const { white, royalBlue } = theme.colors;
 const WizardSubmit = styled(BaseButton)`
   border-radius: 4rem;
   align-self: center;

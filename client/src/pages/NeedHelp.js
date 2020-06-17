@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import InputError from "components/Input/InputError";
+import LocationInput from "components/Input/LocationInput";
+import { validateEmail } from "utils/validators";
 import {
   AnswerButton,
+  ShowAnywhere,
+  StepSubtitle,
   StyledWizard,
   WizardContainer,
   WizardStep,
@@ -13,10 +17,8 @@ import {
   WizardFormWrapper,
   WizardFormGroup,
   WizardSubmit,
-  SkipLink
+  SkipLink,
 } from "components/StepWizard";
-import { asyncGetGeoLocation } from "utils/geolocation";
-import { validateEmail } from "utils/validators";
 
 const INITIAL_STATE = {
   answers: [],
@@ -45,18 +47,17 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
-  const selectLocationDetection = async () => {
+  const selectLocationDetection = (location) => {
     try {
-      const location = await asyncGetGeoLocation();
       props.update("location", location);
     } catch {
-      props.update("location", "unknown");
+      props.update("location", null);
     } finally {
       props.nextStep();
     }
   };
   const rejectLocationDetection = () => {
-    props.update("location", "unknown");
+    props.update("location", null);
     props.nextStep();
   };
   return (
@@ -65,12 +66,21 @@ const Step2 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
-      <AnswerButton onSelect={selectLocationDetection}>
-        Detect my location
-      </AnswerButton>
-      <AnswerButton onSelect={rejectLocationDetection}>
-        Doesn't matter
-      </AnswerButton>
+      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <WizardFormWrapper>
+        <div style={{ marginBottom: "40px", textAlign: "center" }}>
+          <LocationInput
+            location={props.location}
+            onLocationChange={selectLocationDetection}
+            includeNavigator={true}
+          />
+        </div>
+        <Link to="/feed">
+          <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
+            Show me postings from anywhere
+          </ShowAnywhere>
+        </Link>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AnswerButton, StepTitle } from "components/StepWizard";
-import Heading from "components/Typography/Heading";
+import {  StepTitle } from "components/StepWizard";
 import {
   GenericMessage,
   ColoredMessage,

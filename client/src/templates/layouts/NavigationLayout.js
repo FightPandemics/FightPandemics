@@ -1,4 +1,4 @@
-import { Drawer, List, Button, Flex, WhiteSpace } from "antd-mobile";
+import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
 import { Typography } from "antd";
 
 import React, { useState } from "react";
@@ -6,7 +6,6 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Avatar from "components/Avatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
@@ -213,6 +212,9 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
+      <NavItem history={history}> 
+        <Link to="/about-us">About Us</Link>
+      </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Logout</BriefLink>
@@ -224,6 +226,9 @@ const NavigationLayout = (props) => {
     <>
       <NavItem history={history}>
         <Link to="/auth/login">Login / Register</Link>
+      </NavItem>
+      <NavItem history={history}>
+        <Link to="/about-us">About Us</Link>
       </NavItem>
     </>
   );

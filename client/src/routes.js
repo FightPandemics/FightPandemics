@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
-import About from "./pages/About";
+import AboutUs from "./pages/AboutUs";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
 import OrgProfileComplete from "./pages/OrgProfileComplete";
 import EditOrganizationProfile from "./pages/EditOrganizationProfile";
@@ -69,8 +69,8 @@ const routes = [
     component: OfferHelp,
   },
   {
-    path: "/about",
-    component: About,
+    path: "/about-us",
+    component: AboutUs,
   },
   {
     path: "/create-organization-profile",
