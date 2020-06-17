@@ -84,7 +84,7 @@ const supporterLogos = [
 function LogoItem(props) {
   return (
     <div>
-      <img src={props.value} />
+      <img src={props.value} alt="" />
     </div>
   );
 }

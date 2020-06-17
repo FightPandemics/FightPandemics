@@ -332,7 +332,7 @@ const Feed = (props) => {
     });
   };
 
-  function objectiveURL() {
+  const objectiveURL = useCallback(() => {
     switch (selectedType) {
       case HELP_TYPE.REQUEST:
         return "&objective=request";
@@ -341,8 +341,9 @@ const Feed = (props) => {
       default:
         return "";
     }
-  }
-  function filterURL() {
+  }, [selectedType]);
+
+  const filterURL = useCallback(() => {
     const filterObj = {
       ...(selectedOptions["providers"] && {
         fromWhom: selectedOptions["providers"],
@@ -354,7 +355,7 @@ const Feed = (props) => {
     return Object.keys(filterObj).length === 0
       ? ""
       : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-  }
+  }, [location, selectedOptions]);
 
   const loadPosts = useCallback(async () => {
     const limit = 5;
@@ -375,10 +376,10 @@ const Feed = (props) => {
       await postsDispatch({ type: ERROR_POSTS });
     }
     if (response.data && response.data.length) {
-      const loadedPosts = response.data.reduce(
-        (obj, item) => ((obj[item._id] = item), obj),
-        {},
-      );
+      const loadedPosts = response.data.reduce((obj, item) => {
+        obj[item._id] = item;
+        return obj;
+      }, {});
 
       await postsDispatch({
         type: SET_POSTS,

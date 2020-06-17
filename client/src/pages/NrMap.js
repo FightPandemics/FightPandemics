@@ -49,8 +49,8 @@ const NrMap = () => {
   const googleMapRef = useRef();
   const googleMap = useRef();
 
-  const createGoogleMap = () => {
-    return new window.google.maps.Map(googleMapRef.current, {
+  const createGoogleMap = useCallback(() => {
+    new window.google.maps.Map(googleMapRef.current, {
       zoom: 13,
       center: {
         lat: coordinates.latitude,
@@ -58,9 +58,9 @@ const NrMap = () => {
       },
       disableDefaultUI: true,
     });
-  };
+  }, [coordinates.latitude, coordinates.longitude]);
 
-  const places = () => {
+  const places = useCallback(() => {
     new window.google.maps.places.PlacesService(googleMap.current).nearbySearch(
       {
         location: {
@@ -73,9 +73,9 @@ const NrMap = () => {
       (results, status) => {
         if (status !== "OK") return;
         setHospitals(results);
-      }
+      },
     );
-  };
+  }, [coordinates.latitude, coordinates.longitude]);
 
   const createMarker = useCallback(() => {
     const image = {
@@ -100,9 +100,9 @@ const NrMap = () => {
       position: { lat: coordinates.latitude, lng: coordinates.longitude },
       map: googleMap.current,
     });
-  });
+  }, [coordinates.latitude, coordinates.longitude, hospitals]);
 
-  const placeDetails = () => {
+  const placeDetails = useCallback(() => {
     hospitals.forEach((place) => {
       const request = {
         placeId: place.place_id,
@@ -124,10 +124,10 @@ const NrMap = () => {
               return [...detailedHospitals, req];
             });
           }
-        }
+        },
       );
     });
-  };
+  }, [hospitals]);
 
   useEffect(() => {
     const googleMapScript = document.createElement("script");
@@ -166,7 +166,7 @@ const NrMap = () => {
             latitude: "err-latitude",
             longitude: "err-longitude",
           });
-        }
+        },
       );
     }
   };
