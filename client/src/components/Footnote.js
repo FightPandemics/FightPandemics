@@ -53,7 +53,7 @@ export default () => {
         Copyright {currentYear} FightPandemics. All rights reserved.
       </Copyright>
       <Policies>
-        <FooterLink to={"/about-us"}>About Us</FooterLink> |{" "}
+        <FooterLink to={"/about-us"}>About Us</FooterLink> | {" "}
         <FooterLink to={"/faq"}>FAQ</FooterLink> |{" "}
         <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
         <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}

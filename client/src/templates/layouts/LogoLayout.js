@@ -31,13 +31,13 @@ const LogoContainer = styled.div`
 const LogoLayout = (props) => {
   return (
     <>
-      <NavBar mode="light" style={NavbarStyles}>
-        <LogoContainer>
-          <Link to="/">
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </Link>
-        </LogoContainer>
-      </NavBar>
+        <NavBar mode="light" style={NavbarStyles}>
+          <LogoContainer>
+            <Link to="/">
+              <Logo src={logo} alt="Fight Pandemics logo" />
+            </Link>
+          </LogoContainer>
+        </NavBar>
       <div>
         <props.component {...props} />
       </div>

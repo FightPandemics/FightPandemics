@@ -55,7 +55,7 @@ const Medical = (props) => {
 
   const fetchNumber = () => {
     const emergencyNumber = "IN DEVELOPMENT"; // TODO: figure out v1.1 feature later
-    setState({ ...state, loading: false, emergencyNumber });
+    setState({...state, loading: false, emergencyNumber});
     localStorage.setItem("emergencyNumber", "IN DEVELOPMENT");
   };
 

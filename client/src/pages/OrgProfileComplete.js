@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom"
 import { WhiteSpace } from "antd-mobile";
 import { theme, mq } from "../constants/theme";
 import smiley from "../assets/icons/smiley.svg";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background-color: ${theme.colors.offWhite};
+    width: 100%;
+    min-height: 100vh;
+    background-color: ${theme.colors.offWhite};
 `;
 
 const SvgContainer = styled.div`
@@ -22,10 +22,10 @@ const SvgContainer = styled.div`
 `;
 
 const Heading = styled.h2`
-  width: 100%;
-  text-align: center;
-  color: ${theme.colors.darkerGray};
-  font-weight: bold;
+   width: 100%;
+   text-align: center;
+   color: ${theme.colors.darkerGray};
+   font-weight: bold;
 `;
 
 const ButtonsContainer = styled.div`
@@ -39,51 +39,52 @@ const ButtonsContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 50%;
   }
-`;
+`
 
 const StyledLink = styled(Link)`
-  text-decoration: none;
-  margin: 0 auto;
-  font-weight: 500;
-  display: block;
-  text-align: center;
-  background-color: ${theme.colors.white};
-  font-size: ${theme.typography.size.large};
-  color: ${theme.colors.royalBlue};
-  line-height: 7rem;
-  height: 7rem;
-  border-radius: 1rem;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-  &:hover {
-    border: 1px solid ${theme.colors.primary};
-    color: ${theme.colors.royalBlue};
-  }
+   text-decoration: none;
+   margin: 0 auto;
+   font-weight: 500;
+   display: block;
+   text-align: center;
+   background-color: ${theme.colors.white};
+   font-size: ${theme.typography.size.large};
+   color: ${theme.colors.royalBlue};
+   line-height: 7rem;
+   height: 7rem;
+   border-radius: 1rem;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+   &:hover {
+     border: 1px solid ${theme.colors.primary};
+     color: ${theme.colors.royalBlue};
+   }
 `;
 
-const OrgProfileComplete = (props) => {
+
+const OrgProfileComplete = props => {
   return (
     <Container>
       <WhiteSpace />
-      <SvgContainer>
-        <img src={smiley} alt=":)" />
-      </SvgContainer>
-      <WhiteSpace />
-      <WhiteSpace />
-      <Heading>Thank you for joining our community!</Heading>
-      <WhiteSpace />
-      <WhiteSpace />
-      <WhiteSpace />
-      <WhiteSpace />
-      <ButtonsContainer>
-        <StyledLink to={`/organization/${props.history.location.state.orgId}`}>
-          View my profile
-        </StyledLink>
-        <WhiteSpace />
-        <WhiteSpace />
-        <StyledLink to="/feed">Check the feed</StyledLink>
-      </ButtonsContainer>
+       <SvgContainer>
+         <img src={smiley} alt=":)" />
+       </SvgContainer>
+       <WhiteSpace />
+       <WhiteSpace />
+       <Heading>
+          Thank you for joining our community!
+       </Heading>
+       <WhiteSpace />
+       <WhiteSpace />
+       <WhiteSpace />
+       <WhiteSpace />
+       <ButtonsContainer>
+           <StyledLink to={`/organization/${props.history.location.state.orgId}`}>View my profile</StyledLink>
+            <WhiteSpace />
+            <WhiteSpace />
+           <StyledLink to="/feed">Check the feed</StyledLink>
+       </ButtonsContainer>
     </Container>
-  );
-};
+  )
+}
 
 export default withRouter(OrgProfileComplete);

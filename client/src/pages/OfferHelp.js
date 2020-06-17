@@ -71,6 +71,7 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
+
   const selectLocationDetection = (location) => {
     try {
       props.update("location", location);
@@ -93,7 +94,7 @@ const Step2 = (props) => {
       <StepTitle>Where are you located?</StepTitle>
       <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
       <WizardFormWrapper>
-        <div style={{ marginBottom: "40px", textAlign: "center" }}>
+        <div style={{marginBottom: "40px", textAlign: "center"}}>
           <LocationInput
             location={props.location}
             onLocationChange={selectLocationDetection}

@@ -27,24 +27,20 @@ import {
   StyledSelect,
   CustomEditAccountHeader,
   Background,
-  ProfileImage,
+  ProfileImage
 } from "../components/EditProfile/EditComponents";
 
-const organizationNeeds = [
-  "Volunteer",
-  "Staff",
-  "Donations",
-  "Investors",
-  "Others",
-];
+const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others']
 
 const errorStyles = {
   color: "#FF5656",
   fontSize: "1.2rem",
-  display: "block",
-};
+  display: "block"
+}
+
 
 function EditOrganizationAccount(props) {
+
   const { register, handleSubmit, control, errors } = useForm();
 
   const { type, industry } = createOrganizationProfile;
@@ -62,25 +58,24 @@ function EditOrganizationAccount(props) {
   };
 
   const renderNeedSection = () => {
-    return (
-      <div>
+      return (
+        <div>
         <CheckBoxWrapper>
           <Controller
-            as={StyledCheckboxGroup}
-            control={control}
-            display="column"
-            options={organizationNeeds}
-            name="needs"
-            rules={{ required: true }}
-            onChange={([checkedValues]) => checkedValues}
+           as={StyledCheckboxGroup}
+           control={control}
+           display="column"
+           options={organizationNeeds}
+           name="needs"
+           rules={{ required: true }}
+           onChange={([checkedValues]) => checkedValues}
           />
         </CheckBoxWrapper>
-        <span style={errorStyles}>
-          {errors.needs ? "Please select at least one option" : ""}
-        </span>
-      </div>
-    );
+            <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
+        </div>
+      );
   };
+
 
   const renderFormInputs = () => {
     return Object.entries(organizationInfo).map(([key, value]) => {
@@ -128,44 +123,32 @@ function EditOrganizationAccount(props) {
   const renderSelectItems = () => {
     return (
       <div>
-        <Controller
-          as={
-            <StyledSelect defaultValue="Type">
-              {type.options.map((option, i) => (
-                <StyledSelect.Option key={i} value={option.text}>
-                  {option.text}
-                </StyledSelect.Option>
-              ))}
-            </StyledSelect>
-          }
-          rules={{ required: true }}
-          control={control}
-          onChange={([text]) => text}
-          name="type"
+       <Controller
+        as={<StyledSelect defaultValue="Type">
+           {type.options.map((option, i) => (
+             <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
+           ))}
+        </StyledSelect>}
+        rules={{ required: true }}
+        control={control}
+        onChange={([text]) => text}
+        name="type"
         />
         <Controller
-          as={
-            <StyledSelect defaultValue="Industry">
-              {industry.options.map((option, i) => (
-                <StyledSelect.Option key={i} value={option.text}>
-                  {option.text}
-                </StyledSelect.Option>
-              ))}
-            </StyledSelect>
-          }
-          rules={{ required: true }}
-          control={control}
-          onChange={([text]) => text}
-          name="industry"
-        />
-        <span style={errorStyles}>
-          {errors.type || errors.industry
-            ? "Please select organization type and industry from dropdown"
-            : ""}
-        </span>
+         as={<StyledSelect defaultValue="Industry">
+          {industry.options.map((option, i) => (
+            <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
+          ))}
+         </StyledSelect>}
+         rules={{ required: true }}
+         control={control}
+         onChange={([text]) => text}
+         name="industry"
+         />
+              <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <Background>
@@ -211,5 +194,7 @@ function EditOrganizationAccount(props) {
     </Background>
   );
 }
+
+
 
 export default EditOrganizationAccount;

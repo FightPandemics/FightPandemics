@@ -1,4 +1,4 @@
-const papertrail = require("pino-papertrail");
+const papertrail = require('pino-papertrail');
 
 function logStream(config) {
   const options = {
