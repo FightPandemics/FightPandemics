@@ -10,7 +10,7 @@ const FilterAccord = () => {
     activePanel,
     filters,
     handleLocation,
-    handleOption,
+    handleOption, 
     location,
     selectedOptions,
   } = feedContext;

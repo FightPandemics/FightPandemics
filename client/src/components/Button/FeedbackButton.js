@@ -14,7 +14,7 @@ const FeedbackButton = styled(Button)`
   &.am-button-active {
     background-color: ${royalBlue};
     color: ${white};
-  }
+  } 
   html body &.am-button {
     border: 0.2rem solid ${royalBlue};
   }

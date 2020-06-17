@@ -435,7 +435,7 @@ async function routes(app) {
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed unliking post");
-        throw app.httpErrors.internalServerError();
+        throw app.httpErrors.internalServerError()
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
@@ -593,9 +593,7 @@ async function routes(app) {
         ok: deleteNestedOk,
       } = await Comment.deleteMany({ parentId: commentId });
       if (deleteNestedOk !== 1) {
-        app.log.error(
-          `Failed removing nested comments for deleted comment=${commentId}`,
-        );
+        app.log.error(`Failed removing nested comments for deleted comment=${commentId}`);
       }
 
       return {

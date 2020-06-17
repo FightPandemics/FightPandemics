@@ -32,35 +32,35 @@ class Location {
 
   parseNeighborhood() {
     const neighborhood = this.addressComponents.find((ac) =>
-      ac.types.some((t) => t === "neighborhood" || t === "sublocality"),
+      ac.types.some((t) => t === "neighborhood" || t === "sublocality")
     );
     return neighborhood && neighborhood.short_name;
   }
 
   parseCity() {
     const city = this.addressComponents.find((ac) =>
-      ac.types.some((t) => t === "locality" || t === "postal_town"),
+      ac.types.some((t) => t === "locality" || t === "postal_town")
     );
     return city && city.short_name;
   }
 
   parseState() {
     const state = this.addressComponents.find((ac) =>
-      ac.types.some((t) => t === "administrative_area_level_1"),
+      ac.types.some((t) => t === "administrative_area_level_1")
     );
     return state && state.short_name;
   }
 
   parseCountry() {
     const country = this.addressComponents.find((ac) =>
-      ac.types.some((t) => t === "country"),
+      ac.types.some((t) => t === "country")
     );
     return country && country.short_name;
   }
 
   parseZip() {
     const zip = this.addressComponents.find((ac) =>
-      ac.types.some((t) => t === "postal_code"),
+      ac.types.some((t) => t === "postal_code")
     );
     return zip && zip.short_name;
   }

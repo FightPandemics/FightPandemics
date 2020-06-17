@@ -15,6 +15,7 @@ import { theme } from "constants/theme";
 const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
 
 const StyledSelect = styled(Select)`
+
   /* override antd extra x space */
   .ant-select-selector {
     padding: 0 !important;
@@ -60,14 +61,9 @@ const displaySelectedAddressFromLocation = (location) => {
   }
   const { address } = location;
   return { value: address, text: address };
-};
+}
 
-const LocationInput = ({
-  formError,
-  location,
-  onLocationChange,
-  includeNavigator = false,
-}) => {
+const LocationInput = ({ formError, location, onLocationChange, includeNavigator = false }) => {
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
@@ -79,44 +75,40 @@ const LocationInput = ({
 
   useEffect(() => {
     setSelectedAddress(displaySelectedAddressFromLocation(location));
-  }, [location, setSelectedAddress]);
+  },[location, setSelectedAddress]);
 
-  const fetchAddressPredictions = useRef(
-    debounce(
-      async (address) => {
-        setApiError(null);
-        setPredictedAddresses([]);
-        if (address.length >= 3) {
-          setLoadingPredictions(true);
-          try {
-            const { data } = await axios.get(
-              `/api/geo/address-predictions?input=${address}&sessiontoken=${geoSessionToken}`,
-            );
-            const predictions = data.predictions.map((p) => ({
-              text: p.description,
-              value: p.place_id,
-            }));
-            setPredictedAddresses(predictions);
-          } catch {
-            setApiError("Failed getting predictions. Please retry.");
-          } finally {
-            setLoadingPredictions(false);
-          }
+  const fetchAddressPredictions = useRef(debounce(
+    async (address) => {
+      setApiError(null);
+      setPredictedAddresses([]);
+      if (address.length >= 3) {
+        setLoadingPredictions(true);
+        try {
+          const { data } = await axios.get(
+            `/api/geo/address-predictions?input=${address}&sessiontoken=${geoSessionToken}`,
+          );
+          const predictions = data.predictions.map(p => ({
+            text: p.description,
+            value: p.place_id,
+          }));
+          setPredictedAddresses(predictions);
+        } catch {
+          setApiError("Failed getting predictions. Please retry.");
+        } finally {
+          setLoadingPredictions(false);
         }
-      },
-      500,
-      { leading: true },
-    ),
-  ).current;
+      }
+    },
+    500,
+    { leading: true },
+  )).current;
 
   const getAddressFromGeolocation = async () => {
     setApiError(null);
     setLoadingPlaceDetails(true);
     try {
       const { lat, lng } = await asyncGetGeoLocation();
-      const { data } = await axios.get(
-        `/api/geo/location-reverse-geocode?lat=${lat}&lng=${lng}`,
-      );
+      const { data } = await axios.get(`/api/geo/location-reverse-geocode?lat=${lat}&lng=${lng}`);
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
     } catch {
@@ -128,10 +120,9 @@ const LocationInput = ({
 
   const selectAddress = async (address) => {
     setApiError(null);
-    if (!address) {
-      // triggered w undefined by clear button
+    if (!address) { // triggered w undefined by clear button
       onLocationChange(null);
-      setSelectedAddress({ value: "" });
+      setSelectedAddress({value: ""});
     } else {
       const { value: placeId } = address;
       setLoadingPlaceDetails(true);
@@ -173,22 +164,17 @@ const LocationInput = ({
       <SubLabel selected={selectedAddress.value}>
         Enter address, zip code, or city
       </SubLabel>
-      {(apiError || formError) && (
-        <InputError>{apiError || formError.message}</InputError>
-      )}
-      {includeNavigator && (
-        <div>
-          <WhiteSpace />
+      {(apiError || formError) && <InputError>{apiError || formError.message}</InputError>}
+      {includeNavigator && <div>
+          <WhiteSpace/>
           <div
             onClick={getAddressFromGeolocation}
             style={{ cursor: "pointer" }}
-            className="svgicon-share-mylocation-size"
-          >
+            className="svgicon-share-mylocation-size">
             <SvgIcon src={navigation} style={{ marginRight: "1rem" }} />
-            Share My Location
+              Share My Location
           </div>
-        </div>
-      )}
+        </div>}
     </div>
   );
 };

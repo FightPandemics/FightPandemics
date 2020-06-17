@@ -45,7 +45,7 @@ const config = {
     url: configData.SENTRY_DSN,
   },
   geo: {
-    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY
   },
   logger: {
     appname: `fp-backend-${configData.NODE_ENV}`,

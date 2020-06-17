@@ -45,8 +45,8 @@ const DrawerWrapper = styled(Drawer)`
         font-weight: bold;
         padding: 0;
         i {
-          height: ${theme.typography.size.medium};
-          width: ${theme.typography.size.medium};
+          height: ${theme.typography.size.medium};;
+          width: ${theme.typography.size.medium};;
         }
       }
       .am-accordion-content-box {
@@ -60,7 +60,7 @@ const DrawerWrapper = styled(Drawer)`
       }
     }
   }
-  .svgicon-share-mylocation-size {
+  .svgicon-share-mylocation-size{
     font-size: ${theme.typography.size.small};
   }
   .confirm-buttons {

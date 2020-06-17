@@ -24,12 +24,13 @@ import {
   ProfilePicWrapper,
   MobilePicWrapper,
   PlusIcon,
-  Eclipse,
+  Eclipse
 } from "../components/EditProfile/EditComponents";
 
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
+
   const { register, handleSubmit, control, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -44,8 +45,8 @@ function EditOrganizationProfile(props) {
     "Organization Language": ["language", ""],
     "Link to Apple Store": ["appleStoreLink", ""],
     "Link to Google Play": ["googlePlayLink", ""],
-    LinkedIn: ["linkedInLink", ""],
-    Twitter: ["twitterLink", ""],
+    "LinkedIn": ["linkedInLink", ""],
+    "Twitter": ["twitterLink", ""],
   };
 
   const renderFormInputs = () => {
@@ -68,9 +69,7 @@ function EditOrganizationProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile
-              ? "Edit Organization Profile"
-              : "Complete Organization Profile"}
+            {editProfile ? "Edit Organization Profile" : "Complete Organization Profile"}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>
@@ -84,6 +83,7 @@ function EditOrganizationProfile(props) {
             </Eclipse>
             <ChangePicButton>Change</ChangePicButton>
           </MobilePicWrapper>
+
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
@@ -100,13 +100,13 @@ function EditOrganizationProfile(props) {
               name="description"
               error={!!errors["description"]}
               reference={register({ required: true, maxLength: 160 })}
-              onChange={(text) => text}
+              onChange={(text => text)}
             />
             <FormInput
               inputTitle="Organization Address"
               name="address"
               error={!!errors["address"]}
-              onChange={(text) => text}
+              onChange={(text => text)}
               reference={register({ required: true, maxLength: 160 })}
             />
             <CheckBoxWrapper>
@@ -132,5 +132,6 @@ function EditOrganizationProfile(props) {
     </Background>
   );
 }
+
 
 export default EditOrganizationProfile;
