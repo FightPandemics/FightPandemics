@@ -26,6 +26,7 @@ const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
   const renderFilterOptions = (filters) => {
+    console.log(filters);
     return filters.map((filter, idx) => (
       <SelectWithIconButton
         key={idx}

@@ -332,28 +332,29 @@ const Feed = (props) => {
     });
   };
 
-  function objectiveURL() {
-    switch (selectedType) {
-      case HELP_TYPE.REQUEST:
-        return "&objective=request";
-      case HELP_TYPE.OFFER:
-        return "&objective=offer";
-      default:
-        return "";
-    }
-  }
-  function filterURL() {
-    if (location) selectedOptions.location = location;
-    return Object.keys(selectedOptions).length === 0
-      ? ""
-      : `&filter=${encodeURIComponent(JSON.stringify(selectedOptions))}`;
-  }
-
   const loadPosts = useCallback(async () => {
+    const objectiveURL = () => {
+      switch (selectedType) {
+        case HELP_TYPE.REQUEST:
+          return "&objective=request";
+        case HELP_TYPE.OFFER:
+          return "&objective=offer";
+        default:
+          return "";
+      }
+    };
+    const filterURL = () => {
+      const filterObj = { ...selectedOptions };
+      if (location) filterObj.location = location;
+      return Object.keys(filterObj).length === 0
+        ? ""
+        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+    };
     const limit = 5;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -367,10 +368,10 @@ const Feed = (props) => {
       await postsDispatch({ type: ERROR_POSTS });
     }
     if (response.data && response.data.length) {
-      const loadedPosts = response.data.reduce(
-        (obj, item) => ((obj[item._id] = item), obj),
-        {},
-      );
+      const loadedPosts = response.data.reduce((obj, item) => {
+        obj[item._id] = item;
+        return obj;
+      }, {});
 
       await postsDispatch({
         type: SET_POSTS,
@@ -379,7 +380,7 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [page, objectiveURL, filterURL, isLoading, postsList]);
+  }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
 
   useEffect(() => {
     if (initialLoad || applyFilters) {
