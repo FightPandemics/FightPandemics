@@ -1,0 +1,21 @@
+name: Test site for publicly known js vulnerabilities
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+      - 'master'
+
+  schedule:
+    - cron:  '0 13 * * 6'      # Check once a week regardless of commits
+  repository_dispatch:
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing for public javascript library vulnerabilities 
+        uses: mattorb/is-website-vulnerable@github-action_v1   # until PR to original repo is merged
+        with:
+          scan-url: "https://staging.fightpandemics.work/"
