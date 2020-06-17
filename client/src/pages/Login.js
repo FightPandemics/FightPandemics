@@ -20,7 +20,7 @@ import {
   AUTH_FORM_SOCIAL,
   AUTH_FORM_SOCIAL_ERROR,
   AUTH_FORM_FORGOT_PASSWORD,
-  AUTH_FORM_FORGOT_PASSWORD_ERROR
+  AUTH_FORM_FORGOT_PASSWORD_ERROR,
 } from "hooks/actions/authFormActions";
 import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
@@ -79,7 +79,7 @@ const SocialButton = styled(Button)`
   display: flex;
   height: 4.8rem;
   margin: 0.5rem;
-  padding: 2.5rem;
+  padding: 2.5rem 1.8rem;
   width: 13.6rem;
 `;
 
@@ -161,7 +161,8 @@ const BackLinkContainer = styled.div`
     right: 27%;
   }
 
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq.phone.wide.minWidth}) {
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq
+      .phone.wide.minWidth}) {
     position: absolute;
     bottom: 30%;
     right: 40%;
@@ -287,17 +288,17 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       const res = await axios.post("/api/auth/change-password", formData);
       dispatch({
         type: AUTH_SUCCESS,
-        payload: { ...res.data, email: formData.email }
+        payload: { ...res.data, email: formData.email },
       });
       setRecoveryLink(true);
-    } catch(err) {
+    } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
         type: AUTH_FORM_FORGOT_PASSWORD_ERROR,
         error: `Forgot Password failed, reason: ${message}`,
       });
     }
-  }
+  };
 
   const handleSocialLogin = (provider) => {
     window.location.href = `/api/auth/oauth/${provider}`;
@@ -339,15 +340,23 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
             <Heading className="text-center" level={4}>
-              {isLoginForm ? "Sign In" : (forgotPassword) ? "Recover Password" : "Sign Up"}
-            </Heading> 
+              {isLoginForm
+                ? "Sign In"
+                : forgotPassword
+                ? "Recover Password"
+                : "Sign Up"}
+            </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
             )}
             {!forgotPassword ? (
               <form id="login-password">
                 <InputWrapper>
-                  <Label htmlFor="email" style={blockLabelStyles} label="Email" />
+                  <Label
+                    htmlFor="email"
+                    style={blockLabelStyles}
+                    label="Email"
+                  />
                   <Input
                     type="email"
                     name="email"
@@ -445,15 +454,22 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   {isLoginForm ? "Sign In" : "Sign Up"}
                 </SubmitButton>
               </form>
-            ) : (recoveryLink) ? (
+            ) : recoveryLink ? (
               <EmailTextContainer>
-                <p class="text-center">An e-mail has been sent with further instructions. Please check your inbox. </p>
+                <p class="text-center">
+                  An e-mail has been sent with further instructions. Please
+                  check your inbox.{" "}
+                </p>
               </EmailTextContainer>
             ) : (
               <ForgotPasswordContainer>
                 <form id="forgot-password">
                   <InputWrapper>
-                    <Label htmlFor="email" style={blockLabelStyles} label="Your Email" />
+                    <Label
+                      htmlFor="email"
+                      style={blockLabelStyles}
+                      label="Your Email"
+                    />
                     <Input
                       type="email"
                       name="email"
@@ -488,40 +504,38 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             <WhiteSpace />
             {!forgotPassword ? (
               <div className="text-center">
-              {isLoginForm ? (
-                <>
+                {isLoginForm ? (
+                  <>
+                    <p>
+                      <AuthLink to="/auth/forgot-password">
+                        Forgot password?
+                      </AuthLink>
+                    </p>
+                    <p>
+                      <AuthLink to="/auth/signup">
+                        Don't have an account? <u>Sign Up</u>
+                      </AuthLink>
+                    </p>
+                  </>
+                ) : (
                   <p>
-                    <AuthLink to="/auth/forgot-password">
-                      Forgot password?
+                    <AuthLink to="/auth/login">
+                      Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
-                  <p>
-                    <AuthLink to="/auth/signup">
-                      Don't have an account? <u>Sign Up</u>
-                    </AuthLink>
-                  </p>
-                </>
-              ) : (
-                <p>
-                  <AuthLink to="/auth/login">
-                    Already have an account? <u>Sign In</u>
-                  </AuthLink>
-                </p>
-              )}
-            </div>
+                )}
+              </div>
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">
-                    Back to Login screen
-                  </AuthLink>
+                  <AuthLink to="/auth/login">Back to Login screen</AuthLink>
                 </div>
               </BackLinkContainer>
             )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-               {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
               </SectionDiv>
             )}
             <WhiteSpace />
