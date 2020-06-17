@@ -42,3 +42,9 @@ If you feel you have been falsely or unfairly accused of violating this Code of 
 ## 6. Scope
 
 We expect all volunteers and community participants to abide by this Code of Conduct in all community channels, calls, events and in-person–as well as in all one-on-one communications pertaining to FightPandemics.
+
+
+
+
+
+
