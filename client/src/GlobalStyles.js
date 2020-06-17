@@ -44,6 +44,10 @@ a {
   text-align: center !important;
 }
 
+.bkg-white {
+  background-color: ${WHITE} !important;
+}
+
 
 
 .app-drawer .am-drawer-sidebar {
