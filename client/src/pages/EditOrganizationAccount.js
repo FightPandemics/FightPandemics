@@ -85,7 +85,7 @@ function EditOrganizationAccount(props) {
 
 
   const onSubmit = async (formData) => {
-    if (!locationData.address || location.address) {
+    if (!locationData.address || !location.address) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
