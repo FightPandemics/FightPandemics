@@ -16,10 +16,6 @@ const FilterAccord = () => {
   } = feedContext;
 
   function capitalizeFirstLetter(header) {
-    // capitalize first letter and show providers if  header is fromWhom
-    if (header === "fromWhom") {
-      header = "providers";
-    }
     return header.charAt(0).toUpperCase() + header.slice(1);
   }
   const renderPanels = () => {
