@@ -1,5 +1,5 @@
 const Auth0 = require("../components/Auth0");
-const { getBearerToken } = require("../utils");
+const { getCookieToken } = require("../utils");
 const {
   getUserByIdSchema,
   createUserSchema,
@@ -86,7 +86,7 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getBearerToken(req));
+      const user = await Auth0.getUser(getCookieToken(req));
       const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");
