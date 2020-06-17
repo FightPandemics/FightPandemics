@@ -73,7 +73,7 @@ const NrMap = () => {
       (results, status) => {
         if (status !== "OK") return;
         setHospitals(results);
-      }
+      },
     );
   };
 
@@ -124,7 +124,7 @@ const NrMap = () => {
               return [...detailedHospitals, req];
             });
           }
-        }
+        },
       );
     });
   };
@@ -166,7 +166,7 @@ const NrMap = () => {
             latitude: "err-latitude",
             longitude: "err-longitude",
           });
-        }
+        },
       );
     }
   };

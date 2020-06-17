@@ -212,7 +212,7 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/feed">Feed</Link>
       </NavItem>
-      <NavItem history={history}> 
+      <NavItem history={history}>
         <Link to="/about-us">About Us</Link>
       </NavItem>
       <Space height="12rem" />

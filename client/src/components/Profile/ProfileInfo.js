@@ -50,12 +50,12 @@ const offerHelpInactive = require("assets/help-gesture-unselected.svg");
 const needHelpInactive = require("assets/thermometer-unselected.svg");
 
 const PictureContainer = styled.div`
-    img {
-      margin-right: 3rem;
-    }
+  img {
+    margin-right: 3rem;
+  }
 `;
 
-const ProfleInfo = props => {
+const ProfleInfo = (props) => {
   const needHelp = true;
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -72,12 +72,12 @@ const ProfleInfo = props => {
           <PlaceholderIcon />
           <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
         </NameDiv>
-        <DescriptionDesktop> Lorem ipsum dolor sit amet, consectetuer
-        adipiscing elit, sed diam nonummy nibh euismod tincidunt
-         ut laoreet dolore magna </DescriptionDesktop>
-        <LocationMobileDiv>
-          contact@notion.com, California
-        </LocationMobileDiv>
+        <DescriptionDesktop>
+          {" "}
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+          nonummy nibh euismod tincidunt ut laoreet dolore magna{" "}
+        </DescriptionDesktop>
+        <LocationMobileDiv>contact@notion.com, California</LocationMobileDiv>
         <IconsContainer>
           <HelpContainer>
             <HelpImage
@@ -97,7 +97,7 @@ const ProfleInfo = props => {
         </IconsContainer>
       </UserInfoDesktop>
     </UserInfoContainer>
-  )
-}
+  );
+};
 
 export default ProfleInfo;
