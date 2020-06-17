@@ -1,31 +1,10 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
-const { updateAuthorName: updatePostAuthorName } = require("./Post");
-const { updateAuthorName: updateCommentAuthorName } = require("./Comment");
 
 const INDIVIDUAL_USER_TYPES = ["individual"];
 
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
-}
-
-function updateAuthorNameReferences(authorID, newName) {
-  updatePostAuthorName(authorID, newName);
-  updateCommentAuthorName(authorID, newName);
-}
-
-function updateAuthorFirstName(firstName) {
-  const newFullName = fullName(firstName, this.lastName);
-  updateAuthorNameReferences(this._id, newFullName);
-
-  return firstName;
-}
-
-function updateAuthorLastName(lastName) {
-  const newFullName = fullName(this.firstName, lastName);
-  updateAuthorNameReferences(this._id, newFullName);
-
-  return lastName;
 }
 
 const individualUserSchema = new Schema(
