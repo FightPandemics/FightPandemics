@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   AUTH_LOGOUT,
   AUTH_LOGOUT_ERROR,
+  SET_AUTH_LOADING,
   SET_USER,
 } from "constants/action-types";
 
@@ -12,6 +13,9 @@ export const initAuth =  () => {
       const { data: user } = await axios.get("/api/users/current");
       dispatch({ type: SET_USER, payload: { user } });
     } catch {} // TODO: consider are there any errors to handle?
+    finally {
+      dispatch({ type: SET_AUTH_LOADING, payload: false });
+    }
   };
 };
 
