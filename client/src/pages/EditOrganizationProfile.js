@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import Checkbox from "components/Input/Checkbox";
+import { useForm } from "react-hook-form";
 import FormInput from "components/Input/FormInput";
-import { WhiteSpace } from "antd-mobile";
 import { Link } from "react-router-dom";
 import {
   FillEmptySpace,
@@ -11,18 +9,12 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
-  CheckBoxWrapper,
-  Label,
   Background,
-  ProfileImage,
   ProfilePicWrapper,
   MobilePicWrapper,
-  PlusIcon,
-  Eclipse
 } from "../components/EditProfile/EditComponents";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitials } from "utils/userInfo";
@@ -32,7 +24,6 @@ import {
   PLAYSTORE_URL,
   LINKEDIN_URL,
   TWITTER_URL,
-  GITHUB_URL,
 } from "constants/urls";
 import {
   fetchOrganization,
@@ -87,8 +78,8 @@ const URLS_CONFIG = {
     },
     TWITTER_URL,
   ],
-  github: [
-    "Github URL",
+  linkedIn: [
+    "LinkedIn URL",
     {
       pattern: {
         value: /^[a-zA-Z0-9_-]*$/,
@@ -96,7 +87,7 @@ const URLS_CONFIG = {
           "Invalid entry: only alphanumeric characters and _ are allowed",
       },
     },
-    GITHUB_URL,
+    LINKEDIN_URL,
   ],
   website: [
     "Personal Website",
@@ -113,9 +104,8 @@ const editProfile = true;
 function EditOrganizationProfile(props) {
   const organizationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
-  const [ formSuccess, setFormSuccess ] = useState(false);
-  const { register, handleSubmit, control, errors } = useForm();
-  const { error, loading, organization } = orgProfileState;
+  const { register, handleSubmit, errors } = useForm();
+  const { loading, organization } = orgProfileState;
   const {
   name,
   language,
@@ -243,7 +233,7 @@ function EditOrganizationProfile(props) {
               ),
             )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              { orgProfileState.loading ? "Saving Changes..." : "Save Changes" }
+              { loading ? "Saving Changes..." : "Save Changes" }
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

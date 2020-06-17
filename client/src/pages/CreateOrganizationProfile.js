@@ -71,9 +71,6 @@ const CheckboxGroup = ({
 const { type, industry } = createOrganizationProfile;
 
 
-const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others'];
-
-
 const CreateOrgProfile = (props) => {
 
   const { clearError, register, handleSubmit, control, errors, setError } = useForm();
