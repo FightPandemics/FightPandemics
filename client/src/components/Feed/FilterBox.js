@@ -15,9 +15,6 @@ import downArrow from "assets/icons/down-arrow.svg";
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    div:first-child {
-      display: none;
-    }
   }
 `;
 
@@ -40,9 +37,9 @@ const FilterBox = () => {
   const feedContext = useContext(FeedContext);
   const {
     filters,
-    handleShowFilters,
     handleOnClose,
-    showFilters,
+    filterModal,
+    handleFilterModal,
     handleQuit,
   } = feedContext;
   const renderFilterOptions = (filters) => {
@@ -53,7 +50,7 @@ const FilterBox = () => {
         righticon="true"
         size="small"
         icon={<SvgIcon src={downArrow} />}
-        onClick={handleShowFilters}
+        onClick={handleFilterModal}
       >
         {capitalizeFirstLetter(filter.label)}
       </SelectWithIconButton>
@@ -71,7 +68,7 @@ const FilterBox = () => {
       {renderFilterOptions(filters)}
       <ModalWrapper
         popup
-        visible={showFilters}
+        visible={filterModal}
         onClose={handleOnClose}
         animationType="slide-up"
       >

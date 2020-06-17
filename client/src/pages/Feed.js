@@ -215,14 +215,16 @@ const Feed = (props) => {
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const handleFilterModal = (panelIdx) => (e) => {
-    e.preventDefault();
+  const handleFilterModal = () => {
+    // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
-    dispatchAction(
-      SET_VALUE,
-      "activePanel",
-      panelIdx > -1 ? `${panelIdx}` : null,
-    );
+    dispatchAction(SET_VALUE, "initialLoad", false);
+    dispatchAction(SET_VALUE, "applyFilters", false);
+    // dispatchAction(
+    //   SET_VALUE,
+    //   "activePanel",
+    //   panelIdx > -1 ? `${panelIdx}` : null,
+    // );
   };
 
   const handleQuit = (e) => {
@@ -273,13 +275,14 @@ const Feed = (props) => {
   };
 
   const handleShowFilters = (e) => {
-    console.log("TESETING");
+    // desktop
     dispatchAction(TOGGLE_STATE, "showFilters");
     dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
   const handleOnClose = () => {
+    dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
     postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", true);
@@ -335,7 +338,17 @@ const Feed = (props) => {
 
   const loadPosts = useCallback(async () => {
     const objectiveURL = () => {
-      switch (selectedType) {
+      let objective = selectedType;
+      if (
+        selectedOptions["need or give help"] &&
+        selectedOptions["need or give help"].length < 2
+      ) {
+        objective =
+          selectedOptions["need or give help"][0] === "Need Help"
+            ? HELP_TYPE.REQUEST
+            : HELP_TYPE.OFFER;
+      }
+      switch (objective) {
         case HELP_TYPE.REQUEST:
           return "&objective=request";
         case HELP_TYPE.OFFER:
@@ -346,6 +359,7 @@ const Feed = (props) => {
     };
     const filterURL = () => {
       const filterObj = { ...selectedOptions };
+      delete filterObj["need or give help"];
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""
@@ -355,7 +369,6 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -463,7 +476,9 @@ const Feed = (props) => {
                 <SvgIcon src={creatPost} />
               </button>
             </HeaderWrapper>
-            <FilterBox />
+            <div>
+              <FilterBox />
+            </div>
             <Posts
               filteredPosts={postsList}
               updateComments={updateComments}
