@@ -1,9 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
-import { notification } from 'antd';
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
-import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
@@ -17,7 +15,6 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
@@ -72,15 +69,12 @@ function EditOrganizationAccount(props) {
   const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
   const { register, handleSubmit, control, errors, clearError, setError } = useForm();
   const [locationData, setLocation] = useState({});
-  const [formSuccess, setFormSuccess] = useState(false);
-  const { error, loading, organization } = orgProfileState;
+  const { loading, organization } = orgProfileState;
   const {
   name,
   email,
   global,
   location,
-  type,
-  industry,
   needs
  } = organization || {};
 
@@ -91,20 +85,19 @@ function EditOrganizationAccount(props) {
 
 
   const onSubmit = async (formData) => {
-    // if (!locationData.address || location.address) {
-    //   // all location objects should have address (+coordinates), others optional
-    //   return setError(
-    //     "location",
-    //     "required",
-    //     "Please select an address from the drop-down",
-    //   );
-    // }
-    // formData.location = locationData || location;
+    if (!locationData.address || location.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
+    }
+    formData.location = locationData || location;
     orgProfileDispatch(updateOrganization());
     try {
         const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
         orgProfileDispatch(updateOrganizationSuccess(res.data));
-        setFormSuccess(true)
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
@@ -128,15 +121,6 @@ function EditOrganizationAccount(props) {
       }
     })();
   }, []);
-
-  const renderNotificationBar = () => {
-    if(formSuccess) {
-      return notification.success({
-        message: 'Form updated successfully',
-        duration: 2
-      });
-    }
-  }
 
   const handleCheckboxChange = ([event]) => {
     return event.target.checked
@@ -306,7 +290,6 @@ function EditOrganizationAccount(props) {
 
   return (
     <Background>
-     {renderNotificationBar()}
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
@@ -341,7 +324,7 @@ function EditOrganizationAccount(props) {
             <Label>What are you looking for?</Label>
             <HelpWrapper>{renderNeedSection()}</HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              { orgProfileState.loading ? "Saving Changes..." : "Save Changes" }
+              { loading ? "Saving Changes..." : "Save Changes" }
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

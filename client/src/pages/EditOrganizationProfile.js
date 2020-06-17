@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { notification } from 'antd';
 import Checkbox from "components/Input/Checkbox";
 import FormInput from "components/Input/FormInput";
 import { WhiteSpace } from "antd-mobile";
@@ -129,7 +128,6 @@ function EditOrganizationProfile(props) {
     try {
         const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
         orgProfileDispatch(updateOrganizationSuccess(res.data));
-        setFormSuccess(true);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
@@ -181,18 +179,8 @@ function EditOrganizationProfile(props) {
 
   }
 
-  const renderNotificationBar = () => {
-    if(formSuccess) {
-      return notification.open({
-        message: 'Form updated successfully',
-        duration: 2
-      });
-    }
-  }
-
   return (
     <Background>
-     {renderNotificationBar()}
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
