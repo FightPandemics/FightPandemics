@@ -30,14 +30,15 @@ const tokenCookieOptions = () => {
     case "dev":
       domain = "localhost";
       break;
-    case "review":
-      domain = "fightpandemics.xyz";
+    case "production":
+      domain = "fightpandemics.com";
       break;
     case "staging":
       domain = "fightpandemics.work";
       break;
     default:
-      domain = "fightpandemics.com";
+      // review env may be sanitized branch name
+      domain = "fightpandemics.xyz";
   }
   return {
     domain,
