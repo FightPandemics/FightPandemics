@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal } from "antd-mobile";
 import SubmitButton from "components/Button/SubmitButton";
 import TextLabel from "components/Typography/TextLabel";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
@@ -14,19 +14,38 @@ import downArrow from "assets/icons/down-arrow.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    div:first-child {
+      display: none;
+    }
+  }
 `;
 
 const ModalWrapper = styled(Modal)`
   .filter-4 .am-button {
     padding: 0 4.2rem;
   }
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
 `;
-
+function capitalizeFirstLetter(header) {
+  // capitalize first letter and show providers if  header is fromWhom
+  if (header === "fromWhom") {
+    header = "providers";
+  }
+  return header.charAt(0).toUpperCase() + header.slice(1);
+}
 const FilterBox = () => {
   const feedContext = useContext(FeedContext);
-  const { filters, filterModal, handleFilterModal, handleQuit } = feedContext;
+  const {
+    filters,
+    handleShowFilters,
+    handleOnClose,
+    showFilters,
+    handleQuit,
+  } = feedContext;
   const renderFilterOptions = (filters) => {
-    console.log(filters);
     return filters.map((filter, idx) => (
       <SelectWithIconButton
         key={idx}
@@ -34,9 +53,9 @@ const FilterBox = () => {
         righticon="true"
         size="small"
         icon={<SvgIcon src={downArrow} />}
-        onClick={handleFilterModal(idx)}
+        onClick={handleShowFilters}
       >
-        {filter.label}
+        {capitalizeFirstLetter(filter.label)}
       </SelectWithIconButton>
     ));
   };
@@ -52,8 +71,8 @@ const FilterBox = () => {
       {renderFilterOptions(filters)}
       <ModalWrapper
         popup
-        visible={filterModal}
-        onClose={handleFilterModal(null)}
+        visible={showFilters}
+        onClose={handleOnClose}
         animationType="slide-up"
       >
         <FilterAccordion />
@@ -76,7 +95,7 @@ const FilterBox = () => {
           <SubmitButton
             inline
             primary="true"
-            onClick={handleFilterModal(null)}
+            onClick={handleOnClose}
             style={{ fontWeight: "normal" }}
           >
             Apply filters

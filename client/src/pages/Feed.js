@@ -273,6 +273,7 @@ const Feed = (props) => {
   };
 
   const handleShowFilters = (e) => {
+    console.log("TESETING");
     dispatchAction(TOGGLE_STATE, "showFilters");
     dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
@@ -406,7 +407,6 @@ const Feed = (props) => {
       scrollObserver(bottomBoundaryRef.current);
     }
   }, [scrollObserver, bottomBoundaryRef]);
-
   return (
     <FeedContext.Provider
       value={{
@@ -416,6 +416,7 @@ const Feed = (props) => {
         location,
         dispatchAction,
         selectedOptions,
+        handleShowFilters,
         handleOption,
         handleFilterModal,
         handleQuit,
