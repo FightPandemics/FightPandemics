@@ -155,9 +155,17 @@ const VisibilityIconWrapper = styled.div`
 `;
 
 const BackLinkContainer = styled.div`
-  position: fixed;
-  bottom: 30%;
-  right: 27%;
+  @media screen and (max-width: ${mq.phone.wide.minWidth}) {
+    position: absolute;
+    bottom: 30%;
+    right: 27%;
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq.phone.wide.minWidth}) {
+    position: absolute;
+    bottom: 30%;
+    right: 40%;
+  }
 `;
 
 const ForgotPasswordContainer = styled.div`
@@ -206,7 +214,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   );
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-  const [sentRecoveryLink, setRecoveryLink] = useState(false);
+  const [recoveryLink, setRecoveryLink] = useState(false);
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -328,7 +336,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         </SocialImageContainer>
       </LoginLeftContainer>
       <LoginRightContainer>
-        <div class={forgotPassword ? "bkg-white" : "form-container"}>
+        <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
             <Heading className="text-center" level={4}>
               {isLoginForm ? "Sign In" : (forgotPassword) ? "Recover Password" : "Sign Up"}
@@ -437,7 +445,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   {isLoginForm ? "Sign In" : "Sign Up"}
                 </SubmitButton>
               </form>
-            ) : (sentRecoveryLink) ? (
+            ) : (recoveryLink) ? (
               <EmailTextContainer>
                 <p class="text-center">An e-mail has been sent with further instructions. Please check your inbox. </p>
               </EmailTextContainer>
