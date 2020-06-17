@@ -75,7 +75,9 @@ const Step2 = () => {
             </OptionButton>
           );
         })}
-        <CreateOrgLink to={"/create-organization-profile"}>Create new one</CreateOrgLink>
+        <CreateOrgLink to={"/create-organization-profile"}>
+          Create new one
+        </CreateOrgLink>
       </>
     )
   );

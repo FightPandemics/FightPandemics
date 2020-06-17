@@ -19,14 +19,14 @@ async function routes(app) {
     async (req) => {
       const { input, sessiontoken } = req.query;
       const [err, data] = await app.to(
-        getAddressPredictions(input, sessiontoken)
+        getAddressPredictions(input, sessiontoken),
       );
       if (err) {
         app.log.error(err, "Failed retrieving address prediction results");
         throw app.httpErrors.internalServerError();
       }
       return data;
-    }
+    },
   );
 
   app.get(
@@ -35,14 +35,14 @@ async function routes(app) {
     async (req) => {
       const { placeId, sessiontoken } = req.query;
       const [err, data] = await app.to(
-        getLocationDetailsByPlaceId(placeId, sessiontoken)
+        getLocationDetailsByPlaceId(placeId, sessiontoken),
       );
       if (err) {
         app.log.error(err, "Failed retrieving location place details");
         throw app.httpErrors.internalServerError();
       }
       return data;
-    }
+    },
   );
 
   app.get(
@@ -56,7 +56,7 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
       return data;
-    }
+    },
   );
 }
 
