@@ -91,12 +91,12 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { fromWhom, type } = queryFilters; // from filterOptions.js
+      const { providers, type } = queryFilters; // from filterOptions.js
       if (objective) {
         filters.push({ objective });
       }
-      if (fromWhom) {
-        filters.push({ "author.type": { $in: fromWhom } });
+      if (providers) {
+        filters.push({ "author.type": { $in: providers } });
       }
       if (type) {
         filters.push({ types: { $in: type } });

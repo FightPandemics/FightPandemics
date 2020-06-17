@@ -1,7 +1,7 @@
 export default {
   location: { label: "location", className: "filter-1", options: [] },
-  fromWhom: {
-    label: "fromWhom",
+  providers: {
+    label: "providers",
     className: "filter-2",
     options: [
       "Individuals",
