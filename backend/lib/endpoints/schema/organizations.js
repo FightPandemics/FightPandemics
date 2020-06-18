@@ -29,7 +29,7 @@ const createOrganizationSchema = {
   body: strictSchema()
     .prop("about", organization.about)
     .prop("email", organization.email.required())
-    .prop("global", organization.global.required())
+    .prop("global", organization.global.default(false))
     .prop("industry", organization.industry.required())
     .prop("language", organization.language)
     .prop("location", organization.location)
