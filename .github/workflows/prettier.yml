@@ -19,3 +19,5 @@ jobs:
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v2
