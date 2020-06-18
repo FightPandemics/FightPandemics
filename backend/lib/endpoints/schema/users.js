@@ -52,7 +52,8 @@ const createUserSchema = {
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)
     .prop("url", urlsSchema)
-    .prop("location", locationSchema),
+    .prop("location", locationSchema)
+    .required(["location"]),
 };
 
 const getUserByIdSchema = {
