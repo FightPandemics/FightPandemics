@@ -17,7 +17,13 @@ jobs:
     - name: Prettify code
       uses: creyD/prettier_action@v2.2
       with:
-        # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v2
+    - name: Commit push and pr
+      uses: golfzaptw/action-commit-push-pr
+      with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PREFIX_BRANCHES: 'update'
+          DEFAULT_BRANCHES: 'master'
+          COMMIT_MESSAGE: 'prettier'
+          TITLE_PR: 'Prettier'
+          BODY_PR: ''
