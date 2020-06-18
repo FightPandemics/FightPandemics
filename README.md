@@ -161,4 +161,4 @@ When a pull request is merged to master, it will automatically be deployed to th
 
 ### Production
 
-http://fightpandemics.com/
+https://fightpandemics.com/
