@@ -9,7 +9,7 @@ import {
   CreateProfileButton,
   CreateOrgLink,
 } from "components/CreatePost/StyledPostAs";
-import Form from "./Form/Form";
+import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
 import person from "assets/icons/person.svg";
 import organization from "assets/icons/organization.svg";
@@ -75,7 +75,9 @@ const Step2 = () => {
             </OptionButton>
           );
         })}
-        <CreateOrgLink to={"/create-organization-profile"}>Create new one</CreateOrgLink>
+        <CreateOrgLink to={"/create-organization-profile"}>
+          Create new one
+        </CreateOrgLink>
       </>
     )
   );
@@ -85,7 +87,7 @@ const Step3 = ({ onCancel }) => {
   const { currentStep, setCurrentStep } = useContext(CreatePostContext);
   if (currentStep !== 3) return null;
   return (
-    <Form
+    <TabForms
       setCurrentStep={setCurrentStep}
       onClose={() => {
         setCurrentStep(1);

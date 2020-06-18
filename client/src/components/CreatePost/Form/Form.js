@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Tabs } from "antd";
+import First from "./FirstSection";
+import Second from "./SecondSection";
+import Third from "./ThirdSection";
+import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
-import { Divider, ModalWrapper } from "components/CreatePost/StyledModal";
-import OfferHelp from "components/CreatePost/Form/OfferHelp";
-import AskHelp from "components/CreatePost/Form/AskHelp";
 
 const { shareWith, expires } = createPostSettings;
-
-const { TabPane } = Tabs;
 
 const errorMsg = {
   title: "Please include a title for your post.",
@@ -16,19 +14,8 @@ const errorMsg = {
   tags: "Please add at least one tag.",
 };
 
-const OFFERING_FORM = "OFFERING_FORM";
-const REQUESTING_FORM = "REQUESTING_FORM";
-
 const initialState = {
-  currentTab: OFFERING_FORM,
-  requestingForm: {
-    title: "",
-    description: "",
-    tags: [],
-    shareWith: shareWith,
-    expires: expires,
-  },
-  offeringForm: {
+  formData: {
     title: "",
     description: "",
     tags: [],
@@ -38,27 +25,34 @@ const initialState = {
   errors: [],
 };
 
-const ModalComponent = ({ setCurrentStep, onClose }) => {
-  const [currentTab, setCurrentTab] = useState(initialState.currentTab);
-  const [requestingForm, setRequestingFormData] = useState(
-    initialState.requestingForm,
-  );
-  const [offeringForm, setOfferingFormData] = useState(
-    initialState.offeringForm,
-  );
+const Form = ({ setCurrentStep, textData }) => {
+  const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
-  const [showModal, setShowModal] = useState(true);
 
-  const cleanForm = () => {
-    setRequestingFormData(initialState.requestingForm);
-    setOfferingFormData(initialState.offeringForm);
+  const handleFormData = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+
+    if (errors.includes(field) && formData[field]) {
+      const newErrors = errors.filter((error) => error !== field);
+      setErrors(newErrors);
+    }
   };
 
+  const cleanForm = () => setFormData(initialState.formData);
+
   const renderError = (field) => {
-    const formData =
-      currentTab === OFFERING_FORM ? offeringForm : requestingForm;
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
       return errorMsg[field];
+  };
+
+  const addTag = (tag) => (e) => {
+    const hasTag = formData.tags.includes(tag);
+    if (hasTag) {
+      const tags = formData.tags.filter((t) => t !== tag);
+      setFormData({ ...formData, tags });
+    } else {
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
+    }
   };
 
   const populateErrors = () => {
@@ -71,26 +65,8 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
     setErrors([...errors, ...newErrors]);
   };
 
-  const handleFormData = (field) => (e) => {
-    currentTab === REQUESTING_FORM
-      ? setRequestingFormData({ ...requestingForm, [field]: e.target.value })
-      : setOfferingFormData({ ...offeringForm, [field]: e.target.value });
-
-    const formData =
-      currentTab === OFFERING_FORM ? offeringForm : requestingForm;
-
-    if (errors.includes(field) && formData[field]) {
-      const newErrors = errors.filter((error) => error !== field);
-      setErrors(newErrors);
-    }
-  };
-
   const handleSubmit = async (e) => {
-    console.log(currentTab);
     // This live bellow is there only to show the confirmation modal for testers
-    const submitData =
-      currentTab === REQUESTING_FORM ? requestingForm : offeringForm;
-    console.log(submitData);
     setCurrentStep(4);
     e.preventDefault();
     populateErrors();
@@ -105,66 +81,36 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
     }
   };
 
-  const addTag = (tag) => (e) => {
-    const data = currentTab === OFFERING_FORM ? offeringForm : requestingForm;
-    const setFormData =
-      currentTab === OFFERING_FORM
-        ? setOfferingFormData
-        : setRequestingFormData;
-    const hasTag = data.tags.includes(tag);
-    if (hasTag) {
-      const tags = data.tags.filter((t) => t !== tag);
-      setFormData({ ...data, tags });
-    } else {
-      setFormData({ ...data, tags: [...data.tags, tag] });
-    }
-  };
-
-  const closeModal = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      setShowModal(false);
-    }
-  };
-
   return (
-    <ModalWrapper
-      footer={null}
-      visible={showModal}
-      destroyOnClose={true}
-      onCancel={closeModal}
-    >
-      <Divider />
-      <Tabs
-        tabBarStyle={{ color: "#425AF2" }}
-        defaultActiveKey="1"
-        onChange={(key) => setCurrentTab(key)}
-        tabBarGutter={50}
-      >
-        <TabPane tab="Offering Help" key={OFFERING_FORM}>
-          <OfferHelp
-            formData={offeringForm}
-            handleSubmit={handleSubmit}
-            handleFormData={handleFormData}
-            renderError={renderError}
-            addTag={addTag}
-            selectedTags={offeringForm.tags}
-          />
-        </TabPane>
-        <TabPane tab="Requesting Help" key={REQUESTING_FORM}>
-          <AskHelp
-            formData={requestingForm}
-            handleSubmit={handleSubmit}
-            handleFormData={handleFormData}
-            renderError={renderError}
-            addTag={addTag}
-            selectedTags={requestingForm.tags}
-          />
-        </TabPane>
-      </Tabs>
-    </ModalWrapper>
+    <>
+      <First
+        onChangeTitle={handleFormData("title")}
+        onChangeDescription={handleFormData("description")}
+        formData={formData}
+        renderError={renderError}
+      />
+      <Second
+        addTag={addTag}
+        selectedTags={formData.tags}
+        renderError={renderError}
+        title={textData.question}
+      />
+      <Third formData={formData} />
+      <Footer>
+        <Submit
+          primary="true"
+          onClick={handleSubmit}
+          disabled={
+            !formData.title ||
+            !formData.description ||
+            formData.tags.length === 0
+          }
+        >
+          Post
+        </Submit>
+      </Footer>
+    </>
   );
 };
 
-export default ModalComponent;
+export default Form;
