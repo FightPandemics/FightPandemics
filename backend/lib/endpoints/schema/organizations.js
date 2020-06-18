@@ -28,12 +28,13 @@ const createOrganizationSchema = {
     .prop("global", organization.global.required())
     .prop("industry", organization.industry.required())
     .prop("language", organization.language)
-    .prop("location", organization.location.required())
+    .prop("location", organization.location)
     .prop("name", organization.name.required())
     .prop("needs", organization.needs)
     .prop("ownerId", organization.ownerId.required())
     .prop("type", organization.type.required())
-    .prop("url", organization.url),
+    .prop("url", organization.url)
+    .required(["location"]),
 };
 
 const getOrganizationSchema = {
