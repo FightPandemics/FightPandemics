@@ -72,7 +72,7 @@ async function routes(app) {
           organization[key] = req.body[key];
         }
       });
-      return organization.save();c
+      return organization.save();
     },
   );
 
