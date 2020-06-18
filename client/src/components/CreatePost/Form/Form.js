@@ -16,8 +16,19 @@ const errorMsg = {
   tags: "Please add at least one tag.",
 };
 
+const OFFERING_FORM = "OFFERING_FORM";
+const REQUESTING_FORM = "REQUESTING_FORM";
+
 const initialState = {
-  formData: {
+  currentTab: OFFERING_FORM,
+  requestingForm: {
+    title: "",
+    description: "",
+    tags: [],
+    shareWith: shareWith,
+    expires: expires,
+  },
+  offeringForm: {
     title: "",
     description: "",
     tags: [],
@@ -28,15 +39,24 @@ const initialState = {
 };
 
 const ModalComponent = ({ setCurrentStep, onClose }) => {
-  const [formData, setFormData] = useState(initialState.formData);
+  const [currentTab, setCurrentTab] = useState(initialState.currentTab);
+  const [requestingForm, setRequestingFormData] = useState(
+    initialState.requestingForm,
+  );
+  const [offeringForm, setOfferingFormData] = useState(
+    initialState.offeringForm,
+  );
   const [errors, setErrors] = useState(initialState.errors);
   const [showModal, setShowModal] = useState(true);
 
   const cleanForm = () => {
-    setFormData(initialState.formData);
+    setRequestingFormData(initialState.requestingForm);
+    setOfferingFormData(initialState.offeringForm);
   };
 
   const renderError = (field) => {
+    const formData =
+      currentTab === OFFERING_FORM ? offeringForm : requestingForm;
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
       return errorMsg[field];
   };
@@ -52,7 +72,13 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
   };
 
   const handleFormData = (field) => (e) => {
-    setFormData({ ...formData, [field]: e.target.value });
+    currentTab === REQUESTING_FORM
+      ? setRequestingFormData({ ...requestingForm, [field]: e.target.value })
+      : setOfferingFormData({ ...offeringForm, [field]: e.target.value });
+
+    const formData =
+      currentTab === OFFERING_FORM ? offeringForm : requestingForm;
+
     if (errors.includes(field) && formData[field]) {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
@@ -60,7 +86,11 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(currentTab);
     // This live bellow is there only to show the confirmation modal for testers
+    const submitData =
+      currentTab === REQUESTING_FORM ? requestingForm : offeringForm;
+    console.log(submitData);
     setCurrentStep(4);
     e.preventDefault();
     populateErrors();
@@ -68,6 +98,7 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
       // todo: finish integrating api
       try {
         // const req = await axios.post("/api/posts", formData);
+        cleanForm();
       } catch (error) {
         console.log(error);
       }
@@ -75,12 +106,17 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
   };
 
   const addTag = (tag) => (e) => {
-    const hasTag = formData.tags.includes(tag);
+    const data = currentTab === OFFERING_FORM ? offeringForm : requestingForm;
+    const setFormData =
+      currentTab === OFFERING_FORM
+        ? setOfferingFormData
+        : setRequestingFormData;
+    const hasTag = data.tags.includes(tag);
     if (hasTag) {
-      const tags = formData.tags.filter((t) => t !== tag);
-      setFormData({ ...formData, tags });
+      const tags = data.tags.filter((t) => t !== tag);
+      setFormData({ ...data, tags });
     } else {
-      setFormData({ ...formData, tags: [...formData.tags, tag] });
+      setFormData({ ...data, tags: [...data.tags, tag] });
     }
   };
 
@@ -103,27 +139,27 @@ const ModalComponent = ({ setCurrentStep, onClose }) => {
       <Tabs
         tabBarStyle={{ color: "#425AF2" }}
         defaultActiveKey="1"
-        onChange={cleanForm}
+        onChange={(key) => setCurrentTab(key)}
         tabBarGutter={50}
       >
-        <TabPane tab="Offering Help" key="1">
+        <TabPane tab="Offering Help" key={OFFERING_FORM}>
           <OfferHelp
-            formData={formData}
+            formData={offeringForm}
             handleSubmit={handleSubmit}
             handleFormData={handleFormData}
             renderError={renderError}
             addTag={addTag}
-            selectedTags={formData.tags}
+            selectedTags={offeringForm.tags}
           />
         </TabPane>
-        <TabPane tab="Requesting Help" key="2">
+        <TabPane tab="Requesting Help" key={REQUESTING_FORM}>
           <AskHelp
-            formData={formData}
+            formData={requestingForm}
             handleSubmit={handleSubmit}
             handleFormData={handleFormData}
             renderError={renderError}
             addTag={addTag}
-            selectedTags={formData.tags}
+            selectedTags={requestingForm.tags}
           />
         </TabPane>
       </Tabs>
