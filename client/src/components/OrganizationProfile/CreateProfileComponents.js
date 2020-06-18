@@ -45,10 +45,41 @@ export const InputWrapper = styled.div`
   width: 100%;
 `;
 
+
+export const CheckboxContainer = styled.div`
+  --xsmall: ${theme.typography.size.xsmall};
+
+  display: flex;
+  align-items: "flex-start";
+  margin: 1.5rem 0;
+  .ant-checkbox-wrapper {
+    margin-right: ${theme.typography.size.large};
+  }
+  span {
+    color: ${theme.colors.darkGray};
+    font-size: var(--xsmall);
+    font-family: ${(props) => props.font};
+  }
+`;
+
+export const InputGroup = styled.div`
+  --py: ${theme.typography.size.xxsmall};
+  --my: ${theme.typography.size.xxxlarge};
+
+  margin: var(--my) 0 var(--my) 0;
+
+  .underline {
+    color: ${theme.colors.green};
+    font-size: ${theme.typography.size.xsmall};
+    font-family: ${theme.typography.font.family.body};
+    margin-top: ${theme.typography.size.xsmall};
+  }
+`;
+
+
 export const styleLabel = {
   textAlign: "left",
   color: "#425af2"
-
 };
 
 export const styleInput = {

@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
+import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
-import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
-import notionLogo from "assets/icons/notion-logo.svg";
-import createOrganizationProfile from "../assets/data/createOrganizationProfile";
+import InputLabel from "components/Input/Label";
+import orgData from "../assets/data/createOrganizationProfile";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -15,7 +15,6 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
@@ -29,8 +28,21 @@ import {
   Background,
   ProfileImage
 } from "../components/EditProfile/EditComponents";
+import {
+  fetchOrganization,
+  fetchOrganizationError,
+  fetchOrganizationSuccess,
+  updateOrganization,
+  updateOrganizationError,
+  updateOrganizationSuccess
+} from "hooks/actions/organizationActions";
+import axios from "axios";
+import { OrganizationContext, withOrganizationContext } from "context/OrganizationContext";
+import Marker from "../assets/create-profile-images/location-marker.svg";
+import LocationInput from "../components/Input/LocationInput";
+import ProfilePic from "components/Picture/ProfilePic";
+import { getInitials } from "utils/userInfo";
 
-const organizationNeeds = ['Volunteer', 'Staff', 'Donations', 'Investors', 'Others']
 
 const errorStyles = {
   color: "#FF5656",
@@ -38,42 +50,112 @@ const errorStyles = {
   display: "block"
 }
 
+const InputWrapper = styled.div`
+  margin: 2.2rem auto;
+  width: 100%;
+  position: relative;
+`;
+
+const NEEDS = {
+  volunteers: "Volunteers",
+  donations: "Donations",
+  staff: "Staff",
+  other: "Other"
+};
+
 
 function EditOrganizationAccount(props) {
+  // TODO: integrate location w proper react-hook-forms use
+  const organizationId = window.location.pathname.split("/")[2];
+  const [location, setLocation] = useState({});
+  const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
+  const { register, handleSubmit, control, errors, clearError, setError } = useForm();
+  const { loading, organization } = orgProfileState;
+  const {
+  name,
+  email,
+  global,
+  needs
+ } = organization || {};
 
-  const { register, handleSubmit, control, errors } = useForm();
-
-  const { type, industry } = createOrganizationProfile;
-
-  const onSubmit = (data) => {
-    // console.log(data);
-    // make a put/patch request to backend to update users Account information
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    clearError("location");
   };
+
+  const onSubmit = async (formData) => {
+    if (!location?.address) {
+      // all location objects should have address (+coordinates), others optional
+      return setError(
+        "location",
+        "required",
+        "Please select an address from the drop-down",
+      );
+    }
+    formData.location = location;
+    orgProfileDispatch(updateOrganization());
+    try {
+        const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
+        orgProfileDispatch(updateOrganizationSuccess(res.data));
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      orgProfileDispatch(
+        updateOrganizationError(`Failed updating organization profile, reason: ${message}`),
+      );
+    }
+
+  };
+
+  useEffect(() => {
+    (async function fetchProfile() {
+      orgProfileDispatch(fetchOrganization());
+      try {
+        const res = await axios.get(`/api/organizations/${organizationId}`);
+        setLocation(res.data.location);
+        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        orgProfileDispatch(
+          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+  }, []);
+
+  const handleCheckboxChange = ([event]) => {
+    return event.target.checked
+  }
+
 
   const organizationInfo = {
     // label name, variable name, value
-    "Organization Name": ["name", ""],
-    "Organization Contact E-mail": ["email", ""],
-    "Organization Address": ["address", ""],
+    "Organization Name": ["name", name],
+    "Organization Contact E-mail": ["email", email]
   };
 
   const renderNeedSection = () => {
+
+    if(organization) {
+
       return (
         <div>
-        <CheckBoxWrapper>
-          <Controller
-           as={StyledCheckboxGroup}
-           control={control}
-           display="column"
-           options={organizationNeeds}
-           name="needs"
-           rules={{ required: true }}
-           onChange={([checkedValues]) => checkedValues}
-          />
-        </CheckBoxWrapper>
-            <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
+        {Object.entries(NEEDS).map(([key, label]) => (
+          <CheckBoxWrapper key={key}>
+            <Controller
+              as={Checkbox}
+              defaultChecked={needs[key]}
+              name={`needs.${key}`}
+              control={control}
+              onChange={handleCheckboxChange}
+            >
+              <Label inputColor="#000000">{label}</Label>
+            </Controller>
+          </CheckBoxWrapper>
+        ))}
+        <span style={errorStyles}>{errors.needs ? "Please select at least one option" : ""}</span>
         </div>
       );
+    }
   };
 
 
@@ -92,9 +174,9 @@ function EditOrganizationAccount(props) {
             inputTitle={key}
             name={value[0]}
             defaultValue={value[1]}
-            reference={register({ required: true })}
+            ref={register({ required: true })}
             error={!!errors[value[0]]}
-            icon={value[3]}
+            onChange={event => event.target.value}
           />
           <UnderLineDescription marginTop={"-1.5rem"}>
             {value[2] || null}
@@ -104,12 +186,14 @@ function EditOrganizationAccount(props) {
     });
   };
   const renderGlobalCheckBox = () => {
+    if(organization) {
     return (
       <HelpWrapper>
         <CheckBoxWrapper>
           <Controller
             as={Checkbox}
             name="global"
+            defaultChecked={global}
             control={control}
             onChange={([event]) => event.target.checked}
           >
@@ -118,37 +202,90 @@ function EditOrganizationAccount(props) {
         </CheckBoxWrapper>
       </HelpWrapper>
     );
+  }
   };
 
   const renderSelectItems = () => {
+    if(organization) {
     return (
       <div>
        <Controller
-        as={<StyledSelect defaultValue="Type">
-           {type.options.map((option, i) => (
+        as={<StyledSelect>
+           {orgData.type.options.map((option, i) => (
              <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
            ))}
         </StyledSelect>}
-        rules={{ required: true }}
+        defaultValue={organization.type}
         control={control}
         onChange={([text]) => text}
         name="type"
         />
         <Controller
-         as={<StyledSelect defaultValue="Industry">
-          {industry.options.map((option, i) => (
+         as={<StyledSelect>
+          {orgData.industry.options.map((option, i) => (
             <StyledSelect.Option key={i} value={option.text}>{option.text}</StyledSelect.Option>
           ))}
          </StyledSelect>}
+         defaultValue={organization.industry}
          rules={{ required: true }}
          control={control}
          onChange={([text]) => text}
          name="industry"
          />
-              <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
+        <span style={errorStyles}>{errors.type || errors.industry ? "Please select organization type and industry from dropdown" : ""}</span>
       </div>
     )
+    }
   }
+
+  const renderAddressInput = () => {
+    if(organization) {
+      return (
+        <InputWrapper>
+          <InputLabel
+            htmlFor="location"
+            icon={Marker}
+            label="Address"
+          />
+          <LocationInput
+            formError={errors.location}
+            location={location}
+            onLocationChange={handleLocationChange}
+          />
+        </InputWrapper>
+      )
+    } else {
+      return <p>Loading...</p>
+    }
+  }
+
+  const renderProfilePicture = () => {
+    let firstName, lastName;
+    if(organization) {
+      const nameArr = name.split(" ");
+      if (nameArr.length < 2) {
+        firstName = nameArr[0];
+        lastName = firstName.split("").pop();
+      } else {
+        firstName = nameArr[0];
+        lastName = nameArr[1];
+      }
+      return (
+      <ProfilePicWrapper>
+        <ProfilePic
+          resolution={"7680px"}
+          noPic={true}
+          initials={getInitials(firstName, lastName)}
+        />
+        {/* hide this until backend API is available
+          <ChangePicButton>Change</ChangePicButton> */}
+      </ProfilePicWrapper>
+      )
+
+    }
+
+  }
+
 
   return (
     <Background>
@@ -164,21 +301,21 @@ function EditOrganizationAccount(props) {
           </ToggleHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>
-            <ProfileImage src={notionLogo} alt="logo" />
-            <ChangePicButton>Change</ChangePicButton>
+            {renderProfilePicture()}
           </ProfilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
             <CustomLink isSelected>
-              <Link to="/edit-organization-account">Account Information</Link>
+              <Link to={`/edit-organization-account/${organizationId}`}>Account Information</Link>
             </CustomLink>
             <CustomLink>
-              <Link to="/edit-organization-profile">Profile Information</Link>
+              <Link to={`/edit-organization-profile/${organizationId}`}>Profile Information</Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {renderFormInputs()}
+            {renderAddressInput()}
             {renderGlobalCheckBox()}
             <WhiteSpace />
             <WhiteSpace />
@@ -186,7 +323,7 @@ function EditOrganizationAccount(props) {
             <Label>What are you looking for?</Label>
             <HelpWrapper>{renderNeedSection()}</HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              Save Changes
+              { loading ? "Saving Changes..." : "Save Changes" }
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>
@@ -197,4 +334,4 @@ function EditOrganizationAccount(props) {
 
 
 
-export default EditOrganizationAccount;
+export default withOrganizationContext(EditOrganizationAccount);

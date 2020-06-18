@@ -3,29 +3,33 @@ const { strictSchema } = require("./utils");
 const { locationSchema } = require("./location");
 
 const organization = {
-  about: S.string(),
+  about: S.string().maxLength(100),
   email: S.string().format("email"),
   global: S.boolean(),
   industry: S.string(),
   language: S.string(),
   location: locationSchema,
   name: S.string(),
-  needs: S.array().maxItems(10).items(S.string()),
+  needs: S.object()
+    .prop("volunteers", S.boolean().required().default(false))
+    .prop("donations", S.boolean().required().default(false))
+    .prop("staff", S.boolean().required().default(false))
+    .prop("other", S.boolean().required().default(false)),
   ownerId: S.string(),
   type: S.string(),
-  url: S.object()
-    .prop("appStore", S.string().format("url"))
-    .prop("linkedin", S.string().format("url"))
-    .prop("playStore", S.string().format("url"))
-    .prop("twitter", S.string().format("url"))
-    .prop("website", S.string().format("url")),
+  urls: S.object()
+    .prop("appStore", S.string())
+    .prop("linkedin", S.string())
+    .prop("playStore", S.string())
+    .prop("twitter", S.string())
+    .prop("website", S.string()),
 };
 
 const createOrganizationSchema = {
   body: strictSchema()
     .prop("about", organization.about)
     .prop("email", organization.email.required())
-    .prop("global", organization.global.required())
+    .prop("global", organization.global.default(false))
     .prop("industry", organization.industry.required())
     .prop("language", organization.language)
     .prop("location", organization.location)
@@ -33,7 +37,7 @@ const createOrganizationSchema = {
     .prop("needs", organization.needs)
     .prop("ownerId", organization.ownerId.required())
     .prop("type", organization.type.required())
-    .prop("url", organization.url)
+    .prop("urls", organization.urls)
     .required(["location"]),
 };
 
@@ -61,7 +65,7 @@ const updateOrganizationSchema = {
     .prop("needs", organization.needs)
     .prop("ownerId", organization.ownerId)
     .prop("type", organization.type)
-    .prop("url", organization.url),
+    .prop("urls", organization.urls),
   params: strictSchema().prop("organizationId", S.string().required()),
 };
 
