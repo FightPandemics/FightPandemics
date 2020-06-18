@@ -4,6 +4,7 @@ import OfferHelp from "./pages/OfferHelp";
 import AboutUs from "./pages/AboutUs";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
 import OrgProfileComplete from "./pages/OrgProfileComplete";
+import OrganizationProfile from "./pages/OrganizationProfile";
 import EditOrganizationProfile from "./pages/EditOrganizationProfile";
 import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
@@ -59,7 +60,7 @@ const routes = [
       isLoginForm: false,
       notLoggedInOnly: true,
       forgotPassword: true,
-    }
+    },
   },
   {
     path: "/auth/logout",
@@ -96,6 +97,10 @@ const routes = [
   {
     path: "/create-organization-complete",
     component: OrgProfileComplete,
+  },
+  {
+    path: "/organization/:id",
+    component: OrganizationProfile,
   },
   {
     path: "/edit-organization-account",

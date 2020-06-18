@@ -1,10 +1,6 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import Checkbox from "components/Input/Checkbox";
+import React, { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import FormInput from "components/Input/FormInput";
-import { WhiteSpace } from "antd-mobile";
-import notionLogo from "assets/icons/notion-logo.svg";
-import plus from "assets/icons/plus.svg";
 import { Link } from "react-router-dom";
 import {
   FillEmptySpace,
@@ -13,55 +9,164 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
-  CheckBoxWrapper,
-  Label,
   Background,
-  ProfileImage,
   ProfilePicWrapper,
   MobilePicWrapper,
-  PlusIcon,
-  Eclipse
 } from "../components/EditProfile/EditComponents";
+import ProfilePic from "components/Picture/ProfilePic";
+import { getInitials } from "utils/userInfo";
+import { validateURL } from "utils/validators";
+import {
+  APPLESTORE_URL,
+  PLAYSTORE_URL,
+  LINKEDIN_URL,
+  TWITTER_URL,
+} from "constants/urls";
+import {
+  fetchOrganization,
+  fetchOrganizationError,
+  fetchOrganizationSuccess,
+  updateOrganization,
+  updateOrganizationError,
+  updateOrganizationSuccess,
+} from "hooks/actions/organizationActions";
+import axios from "axios";
+import {
+  OrganizationContext,
+  withOrganizationContext,
+} from "context/OrganizationContext";
+
+const URLS_CONFIG = {
+  appleStore: [
+    "Link to Apple Store",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9.]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and . are allowed",
+      },
+      minLength: {
+        value: 5,
+        message: "Min. length is 5 characters",
+      },
+    },
+    APPLESTORE_URL,
+  ],
+  playStore: [
+    "Link to Google Play",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9]*$/,
+        message: "Invalid entry: only alphanumeric characters are allowed",
+      },
+    },
+    PLAYSTORE_URL,
+  ],
+  twitter: [
+    "Twitter URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9_]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and _ are allowed",
+      },
+      maxLength: {
+        value: 15,
+        message: "Max. length is 15 characters",
+      },
+    },
+    TWITTER_URL,
+  ],
+  linkedIn: [
+    "LinkedIn URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9_-]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and _ are allowed",
+      },
+    },
+    LINKEDIN_URL,
+  ],
+  website: [
+    "Personal Website",
+    {
+      validate: (str) => !str || validateURL(str) || "Invalid URL",
+    },
+  ],
+};
+const ABOUT_MAX_LENGTH = 160;
 
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
+  const organizationId = window.location.pathname.split("/")[2];
+  const { orgProfileState, orgProfileDispatch } = useContext(
+    OrganizationContext,
+  );
+  const { register, handleSubmit, errors } = useForm();
+  const { loading, organization } = orgProfileState;
+  const { name, language, about, urls = {} } = organization || {};
 
-  const { register, handleSubmit, control, errors } = useForm();
-
-  const onSubmit = (data) => {
-    // console.log(data);
-    // make a put/patch request to backend to update users profile information
-  };
-
-  const labelVariableValue = {
-    // label name, variable name, value
-    "Organization Owner": ["owner", ""],
-    "Organization Website": ["website", ""],
-    "Organization Language": ["language", ""],
-    "Link to Apple Store": ["appleStoreLink", ""],
-    "Link to Google Play": ["googlePlayLink", ""],
-    "LinkedIn": ["linkedInLink", ""],
-    "Twitter": ["twitterLink", ""],
-  };
-
-  const renderFormInputs = () => {
-    // iterate and create input
-    return Object.entries(labelVariableValue).map(([key, value]) => {
-      return (
-        <FormInput
-          inputTitle={key}
-          name={value[0]}
-          defaultValue={value[1]}
-          reference={register}
-          key={key}
-        />
+  const onSubmit = async (formData) => {
+    orgProfileDispatch(updateOrganization());
+    try {
+      const res = await axios.patch(
+        `/api/organizations/${organizationId}`,
+        formData,
       );
-    });
+      orgProfileDispatch(updateOrganizationSuccess(res.data));
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      orgProfileDispatch(
+        updateOrganizationError(
+          `Failed updating organization profile, reason: ${message}`,
+        ),
+      );
+    }
+  };
+
+  useEffect(() => {
+    (async function fetchProfile() {
+      orgProfileDispatch(fetchOrganization());
+      try {
+        const res = await axios.get(`/api/organizations/${organizationId}`);
+        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        orgProfileDispatch(
+          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+  }, [orgProfileDispatch, organizationId]);
+
+  const renderProfilePicture = () => {
+    let firstName, lastName;
+    if (organization) {
+      const nameArr = name.split(" ");
+      if (nameArr.length < 2) {
+        firstName = nameArr[0];
+        lastName = firstName.split("").pop();
+      } else {
+        firstName = nameArr[0];
+        lastName = nameArr[1];
+      }
+      return (
+        <ProfilePicWrapper>
+          <ProfilePic
+            resolution={"7680px"}
+            noPic={true}
+            initials={getInitials(firstName, lastName)}
+          />
+          {/* hide this until backend API is available
+          <ChangePicButton>Change</ChangePicButton> */}
+        </ProfilePicWrapper>
+      );
+    }
   };
 
   return (
@@ -69,62 +174,66 @@ function EditOrganizationProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile ? "Edit Organization Profile" : "Complete Organization Profile"}
+            {editProfile
+              ? "Edit Organization Profile"
+              : "Complete Organization Profile"}
           </CustomHeading>
           <FillEmptySpace />
-          <ProfilePicWrapper>
-            <ProfileImage src={notionLogo} alt="logo" />
-            <ChangePicButton>Change</ChangePicButton>
-          </ProfilePicWrapper>
+          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
 
-          <MobilePicWrapper>
-            <Eclipse>
-              <PlusIcon src={plus} alt="" />
-            </Eclipse>
-            <ChangePicButton>Change</ChangePicButton>
-          </MobilePicWrapper>
-
+          <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to="/edit-organization-account">Account Information</Link>
+              <Link to={`/edit-organization-account/${organizationId}`}>
+                Account Information
+              </Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to="/edit-organization-profile">Profile Information</Link>
+              <Link to={`/edit-organization-profile/${organizationId}`}>
+                Profile Information
+              </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             <FormInput
               inputTitle="Organization Description"
-              name="description"
-              error={!!errors["description"]}
-              reference={register({ required: true, maxLength: 160 })}
-              onChange={(text => text)}
+              name="about"
+              type="text"
+              defaultValue={about}
+              error={errors.about}
+              ref={register({
+                maxLength: {
+                  value: ABOUT_MAX_LENGTH,
+                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                },
+              })}
             />
             <FormInput
-              inputTitle="Organization Address"
-              name="address"
-              error={!!errors["address"]}
-              onChange={(text => text)}
-              reference={register({ required: true, maxLength: 160 })}
+              inputTitle="Organization Language"
+              name="language"
+              type="text"
+              defaultValue={language}
+              error={errors.language}
+              ref={register()}
             />
-            <CheckBoxWrapper>
-              <Controller
-                as={Checkbox}
-                name="global"
-                defaultValue={false}
-                control={control}
-                onChange={([event]) => event.target.checked}
-              >
-                <Label inputColor="#646464">We are a global organization</Label>
-              </Controller>
-            </CheckBoxWrapper>
-            <WhiteSpace />
-            <WhiteSpace />
-            {renderFormInputs()}
+            {Object.entries(URLS_CONFIG).map(
+              ([key, [label, validation, prefix]]) => (
+                <FormInput
+                  type={prefix ? "text" : "url"}
+                  inputTitle={label}
+                  name={`urls.${key}`}
+                  error={errors.urls?.[key]}
+                  prefix={prefix}
+                  defaultValue={urls[key]}
+                  ref={register(validation)}
+                  key={key}
+                />
+              ),
+            )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              Save Changes
+              {loading ? "Saving Changes..." : "Save Changes"}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>
@@ -133,5 +242,4 @@ function EditOrganizationProfile(props) {
   );
 }
 
-
-export default EditOrganizationProfile;
+export default withOrganizationContext(EditOrganizationProfile);

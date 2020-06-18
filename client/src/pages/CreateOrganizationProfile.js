@@ -1,4 +1,4 @@
-import { WhiteSpace } from "antd-mobile";
+import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -13,6 +13,7 @@ import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
 import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import LocationInput from "components/Input/LocationInput";
+import Checkbox from "components/Input/Checkbox";
 import createOrganizationSvg from "assets/icons/create-organization.svg";
 import { connect } from "react-redux";
 import { theme } from "constants/theme";
@@ -22,6 +23,8 @@ import {
   SvgContainer,
   FormContainer,
   InputWrapper,
+  InputGroup,
+  CheckboxContainer,
   styleLabel,
   styleInput,
   globalText,
@@ -36,6 +39,11 @@ import {
   initialState,
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
+import {
+  blockLabelStyles,
+  inputStyles,
+  inlineLabelStyles,
+} from "constants/formStyles";
 
 const { type, industry } = createOrganizationProfile;
 
@@ -46,6 +54,31 @@ const organizationNeeds = [
   "Investors",
   "Others",
 ];
+
+const CheckboxGroup = ({
+  defaultValue,
+  description,
+  label,
+  name,
+  onChange,
+}) => {
+  return (
+    <CheckboxContainer>
+      <Checkbox
+        defaultValue={defaultValue}
+        color={theme.colors.royalBlue}
+        id={name}
+        name={name}
+        size={theme.typography.size.xxlarge}
+        onChange={onChange}
+      />
+      <Flex direction="column" align="start">
+        <Label htmlFor={name} style={inlineLabelStyles} label={label} />
+        {description && <span>{description}</span>}
+      </Flex>
+    </CheckboxContainer>
+  );
+};
 
 const CreateOrgProfile = (props) => {
   const {
@@ -188,6 +221,45 @@ const CreateOrgProfile = (props) => {
               onChange={([event]) => event.target.checked}
             />
             <span style={globalText}>We are a global organization</span>
+            <InputGroup>
+              <Label style={styleLabel} label="* What are you looking for" />
+              <Controller
+                as={CheckboxGroup}
+                control={control}
+                defaultValue={false}
+                label="Volunteers"
+                name="needs.volunteers"
+                onChange={([event]) => event.target.checked}
+              />
+              <Controller
+                as={CheckboxGroup}
+                control={control}
+                defaultValue={false}
+                label="Donations"
+                name="needs.donations"
+                onChange={([event]) => event.target.checked}
+              />
+              <Controller
+                as={CheckboxGroup}
+                control={control}
+                defaultValue={false}
+                label="Staff"
+                name="needs.staff"
+                onChange={([event]) => event.target.checked}
+              />
+              <Controller
+                as={CheckboxGroup}
+                control={control}
+                defaultValue={false}
+                label="Others"
+                name="needs.other"
+                onChange={([event]) => event.target.checked}
+              />
+            </InputGroup>
+
+            <span style={errorStyles}>
+              {errors.needs && "Please select at least one option"}
+            </span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
