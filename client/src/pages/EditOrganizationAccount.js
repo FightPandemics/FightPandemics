@@ -39,7 +39,7 @@ import {
 import axios from "axios";
 import { OrganizationContext, withOrganizationContext } from "context/OrganizationContext";
 import Marker from "../assets/create-profile-images/location-marker.svg";
-import AddressInput from "../components/Input/AddressInput";
+import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitials } from "utils/userInfo";
 
@@ -65,16 +65,16 @@ const NEEDS = {
 
 
 function EditOrganizationAccount(props) {
+  // TODO: integrate location w proper react-hook-forms use
   const organizationId = window.location.pathname.split("/")[2];
+  const [location, setLocation] = useState({});
   const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
   const { register, handleSubmit, control, errors, clearError, setError } = useForm();
-  const [locationData, setLocation] = useState({});
   const { loading, organization } = orgProfileState;
   const {
   name,
   email,
   global,
-  location,
   needs
  } = organization || {};
 
@@ -83,9 +83,8 @@ function EditOrganizationAccount(props) {
     clearError("location");
   };
 
-
   const onSubmit = async (formData) => {
-    if (!locationData.address || !location.address) {
+    if (!location?.address) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
@@ -93,7 +92,7 @@ function EditOrganizationAccount(props) {
         "Please select an address from the drop-down",
       );
     }
-    formData.location = locationData || location;
+    formData.location = location;
     orgProfileDispatch(updateOrganization());
     try {
         const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
@@ -112,6 +111,7 @@ function EditOrganizationAccount(props) {
       orgProfileDispatch(fetchOrganization());
       try {
         const res = await axios.get(`/api/organizations/${organizationId}`);
+        setLocation(res.data.location);
         orgProfileDispatch(fetchOrganizationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -247,10 +247,9 @@ function EditOrganizationAccount(props) {
             icon={Marker}
             label="Address"
           />
-          <AddressInput
-            error={errors.location}
-            defaultValue={location.address}
-            location={locationData}
+          <LocationInput
+            formError={errors.location}
+            location={location}
             onLocationChange={handleLocationChange}
           />
         </InputWrapper>
