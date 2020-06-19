@@ -4,25 +4,16 @@ import { Redirect } from "react-router-dom";
 
 import { authLogout } from "actions/authActions"
 
-const Logout = ({ authLogout, isAuthenticated }) => {
+const Logout = ({ authLogout }) => {
   useEffect(() => {
     authLogout();
   }, [authLogout]);
-  if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-  return <div>Logging out...</div>
-  // TODO: add error handling
+  return <Redirect to="/" />;
 }
 
 const mapDispatchToProps = {
   authLogout,
 };
-
-const mapStateToProps = ({ session: { isAuthenticated } }) => {
-  return {
-    isAuthenticated,
-  };
-};
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout);

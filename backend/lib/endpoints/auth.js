@@ -2,7 +2,6 @@ const Auth0 = require("../components/Auth0");
 const {
   changePasswordSchema,
   loginSchema,
-  logoutSchema,
   oAuthSchema,
   oAuthProviderSchema,
   signupSchema,
@@ -161,17 +160,6 @@ async function routes(app) {
       }
     },
   );
-
-  app.post("/logout", { schema: logoutSchema }, async (req, reply) => {
-    try {
-      reply.clearJwtCookie();
-      reply.code(204).send();
-    } catch (err) {
-      const errMessage = "Error logging out";
-      req.log(err, errMessage);
-      throw app.httpErrors.internalServerError(errMessage);
-    }
-  });
 }
 
 module.exports = routes;

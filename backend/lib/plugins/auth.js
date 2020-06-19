@@ -5,6 +5,10 @@ const fastifySecretProvider = require("fastify-authz-jwks");
 const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 
+const TOKEN_COOKIE = "token";
+// 2nd non-httpOnly "dummy" cookie so user can logout offline
+const REMEMBER_COOKIE = "remember";
+
 const {
   config: { auth, env },
 } = require("../../config");
@@ -17,14 +21,20 @@ const cache = new NodeCache({
   useClones: false,
 });
 
-const checkAuth = async (req) => {
+const checkAuth = async (req, reply) => {
+  // user has logged out - clear token cookie
+  if (!(REMEMBER_COOKIE in req.cookies) && TOKEN_COOKIE in req.cookies) {
+    delete req.cookies[TOKEN_COOKIE];
+    reply.clearJwtCookie();
+  }
+
   await req.jwtVerify();
   const { user } = req;
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
 const cookieMaxAge = 60 * 60 * 24 * 7; // 1 week; TODO: ask about alternate?
-const tokenCookieOptions = () => {
+const tokenCookieOptions = (httpOnly = true) => {
   let domain;
   switch (env) {
     case "dev":
@@ -42,12 +52,12 @@ const tokenCookieOptions = () => {
   }
   return {
     domain,
-    httpOnly: true,
+    httpOnly,
     maxAge: cookieMaxAge,
     path: "/",
     sameSite: "strict",
     secure: env !== "dev",
-  }
+  };
 };
 
 const authPlugin = async (app) => {
@@ -72,15 +82,15 @@ const authPlugin = async (app) => {
 
   app.decorate("authenticate", async (req, reply) => {
     try {
-      await checkAuth(req);
+      await checkAuth(req, reply);
     } catch (err) {
       reply.send(err);
     }
   });
 
-  app.decorate("authenticateOptional", async (req) => {
+  app.decorate("authenticateOptional", async (req, reply) => {
     try {
-      await checkAuth(req);
+      await checkAuth(req, reply);
     } catch (err) {
       req.userId = null;
     }
@@ -88,11 +98,12 @@ const authPlugin = async (app) => {
 
   /* eslint-disable func-names */
   app.decorateReply("setJwtCookie", function (token) {
-    this.setCookie("token", token, tokenCookieOptions());
+    this.setCookie(TOKEN_COOKIE, token, tokenCookieOptions());
+    this.setCookie(REMEMBER_COOKIE, "-", tokenCookieOptions(false));
   });
 
   app.decorateReply("clearJwtCookie", function () {
-    this.clearCookie("token");
+    this.clearCookie(TOKEN_COOKIE);
   });
   /* eslint-enable */
 

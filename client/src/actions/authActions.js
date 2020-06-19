@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   AUTH_LOGOUT,
-  AUTH_LOGOUT_ERROR,
   SET_AUTH_LOADING,
   SET_USER,
 } from "constants/action-types";
@@ -21,18 +20,12 @@ export const initAuth =  () => {
   };
 };
 
+// 2nd non-httpOnly "dummy" cookie so user can logout offline
+const CLEAR_REMEMBER_COOKIE = 'remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
 export const authLogout = () => {
-  return async (dispatch) => {
-    try {
-      await axios.post("/api/auth/logout", {});
-      dispatch({ type: AUTH_LOGOUT });
-    } catch (err) {
-      console.log(err);
-      const message = err.response?.data?.message || err.message;
-      dispatch({
-        type: AUTH_LOGOUT_ERROR,
-        error: `Logout failed, reason: ${message}`,
-      });
-    }
+  return (dispatch) => {
+    document.cookie = CLEAR_REMEMBER_COOKIE;
+    dispatch({ type: AUTH_LOGOUT });
   };
 };
