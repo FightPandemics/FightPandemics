@@ -21,27 +21,35 @@ const cache = new NodeCache({
   useClones: false,
 });
 
+const authSetCookieOptions = (httpOnly = true) => {
+  return {
+    domain: appDomain,
+    httpOnly,
+    path: "/",
+    maxAge: auth.cookieMaxAgeSeconds,
+    sameSite: "strict",
+    secure: env !== "dev" && httpOnly,
+  };
+};
+
+const authClearCookieOptions = () => {
+  return {
+    domain: appDomain,
+    path: "/",
+    expires: new Date(0),
+  };
+};
+
 const checkAuth = async (req, reply) => {
   // user has logged out - clear token cookie
   if (!(REMEMBER_COOKIE in req.cookies) && TOKEN_COOKIE in req.cookies) {
     delete req.cookies[TOKEN_COOKIE];
-    reply.clearCookie(TOKEN_COOKIE);
+    reply.clearCookie(TOKEN_COOKIE, authClearCookieOptions());
   }
 
   await req.jwtVerify();
   const { user } = req;
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
-};
-
-const authCookieOptions = (httpOnly = true) => {
-  return {
-    domain: appDomain,
-    httpOnly,
-    maxAge: auth.cookieMaxAgeSeconds,
-    path: "/",
-    sameSite: "strict",
-    secure: env !== "dev",
-  };
 };
 
 const authPlugin = async (app) => {
@@ -82,8 +90,8 @@ const authPlugin = async (app) => {
 
   // eslint-disable-next-line func-names
   app.decorateReply("setAuthCookies", function (token) {
-    this.setCookie(TOKEN_COOKIE, token, authCookieOptions());
-    this.setCookie(REMEMBER_COOKIE, "-", authCookieOptions(false));
+    this.setCookie(TOKEN_COOKIE, token, authSetCookieOptions());
+    this.setCookie(REMEMBER_COOKIE, "-", authSetCookieOptions(false));
   });
 
   app.decorate("getServerToken", async (req, reply) => {

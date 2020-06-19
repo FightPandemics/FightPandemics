@@ -21,11 +21,21 @@ export const initAuth =  () => {
 };
 
 // 2nd non-httpOnly "dummy" cookie so user can logout offline
-const CLEAR_REMEMBER_COOKIE = 'remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+const CLEAR_REMEMBER_COOKIE_START = "remember=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;samesite=strict;";
+
+const clearRememberCookie = () => {
+  const { location: { hostname }} = window;
+  let clearRememberCookieString = CLEAR_REMEMBER_COOKIE_START;
+  if (hostname !== "localhost") {
+    // need to include domain if not localhost
+    clearRememberCookieString += `domain=${hostname.split(".").slice(-2).join(".")};`;
+  }
+  document.cookie = clearRememberCookieString;
+}
 
 export const authLogout = () => {
   return (dispatch) => {
-    document.cookie = CLEAR_REMEMBER_COOKIE;
+    clearRememberCookie();
     dispatch({ type: AUTH_LOGOUT });
   };
 };
