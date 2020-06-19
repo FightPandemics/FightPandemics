@@ -8,6 +8,8 @@ const TitleInput = styled(Input)``;
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
   border-top: none;
+  resize: none;
+  overflow-y: scroll;
 `;
 
 const First = ({
