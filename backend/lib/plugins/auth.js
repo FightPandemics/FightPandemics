@@ -10,7 +10,7 @@ const TOKEN_COOKIE = "token";
 const REMEMBER_COOKIE = "remember";
 
 const {
-  config: { auth, env },
+  config: { appDomain, auth, env },
 } = require("../../config");
 const Auth0 = require("../components/Auth0");
 
@@ -33,27 +33,11 @@ const checkAuth = async (req, reply) => {
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
-const cookieMaxAge = 60 * 60 * 24 * 7; // 1 week; TODO: ask about alternate?
 const tokenCookieOptions = (httpOnly = true) => {
-  let domain;
-  switch (env) {
-    case "dev":
-      domain = "localhost";
-      break;
-    case "production":
-      domain = "fightpandemics.com";
-      break;
-    case "staging":
-      domain = "fightpandemics.work";
-      break;
-    default:
-      // review env may be sanitized branch name
-      domain = "fightpandemics.xyz";
-  }
   return {
-    domain,
+    domain: appDomain,
     httpOnly,
-    maxAge: cookieMaxAge,
+    maxAge: auth.cookieMaxAgeSeconds,
     path: "/",
     sameSite: "strict",
     secure: env !== "dev",
