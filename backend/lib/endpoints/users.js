@@ -12,34 +12,49 @@ const {
 async function routes(app) {
   const User = app.mongo.model("IndividualUser");
 
-  app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const result = await User.findById(req.userId);
-    if (result === null) {
-      throw app.httpErrors.notFound();
+  app.get(
+    "/current",
+    { preValidation: [app.authenticateOptional] },
+    async (req) => {
+      const { userId } = req;
+
+      // don't error if not authenticated
+      // client always queries on start to check if authenticated
+      if (!userId) return null;
+
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        req.log.error(userErr, "User does not exist");
+        throw app.httpErrors.notFound();
+      }
+
+      const {
+        _id: id,
+        about,
+        email,
+        firstName,
+        lastName,
+        location,
+        needs,
+        objectives,
+        urls,
+      } = user;
+      return {
+        about,
+        email,
+        firstName,
+        id,
+        lastName,
+        location,
+        needs,
+        objectives,
+        urls,
+      };
     }
-    const {
-      _id: id,
-      about,
-      email,
-      firstName,
-      lastName,
-      location,
-      needs,
-      objectives,
-      urls,
-    } = result;
-    return {
-      about,
-      email,
-      firstName,
-      id,
-      lastName,
-      location,
-      needs,
-      objectives,
-      urls,
-    };
-  });
+  );
 
   app.patch(
     "/current",

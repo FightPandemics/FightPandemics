@@ -12,8 +12,10 @@ export const initAuth =  () => {
     try {
       const { data: user } = await axios.get("/api/users/current");
       dispatch({ type: SET_USER, payload: { user } });
-    } catch {} // TODO: consider are there any errors to handle?
-    finally {
+    } catch (err) {
+      // TODO: do something with error -- user succesfully authenticated but can't find user (redirect to login?)
+      console.log(err);
+    } finally {
       dispatch({ type: SET_AUTH_LOADING, payload: false });
     }
   };

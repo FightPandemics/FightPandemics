@@ -24,12 +24,13 @@ function sessionReducer(state = initialState, action) {
         user: action.payload.user,
       };
     case SET_USER:
+      const { payload: { user } } = action;
       return {
         ...state,
-        emailVerified: true, // user can't exist in db if email not verified
-        isAuthenticated: true,
+        emailVerified: !!user, // user can't exist in db if email not verified
+        isAuthenticated: !!user,
         authLoading: false,
-        user: action.payload.user,
+        user,
       };
     case SET_AUTH_LOADING:
       return {
