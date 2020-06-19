@@ -5,3 +5,5 @@
 .vscode
 .terraform
 backend.tf
+cypresse2e/cypress/screenshots/
+cypresse2e/cypress/videos
