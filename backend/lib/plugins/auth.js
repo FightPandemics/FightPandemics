@@ -25,7 +25,7 @@ const checkAuth = async (req, reply) => {
   // user has logged out - clear token cookie
   if (!(REMEMBER_COOKIE in req.cookies) && TOKEN_COOKIE in req.cookies) {
     delete req.cookies[TOKEN_COOKIE];
-    reply.clearJwtCookie();
+    reply.clearCookie(TOKEN_COOKIE);
   }
 
   await req.jwtVerify();
@@ -33,7 +33,7 @@ const checkAuth = async (req, reply) => {
   req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
 };
 
-const tokenCookieOptions = (httpOnly = true) => {
+const authCookieOptions = (httpOnly = true) => {
   return {
     domain: appDomain,
     httpOnly,
@@ -80,16 +80,11 @@ const authPlugin = async (app) => {
     }
   });
 
-  /* eslint-disable func-names */
-  app.decorateReply("setJwtCookie", function (token) {
-    this.setCookie(TOKEN_COOKIE, token, tokenCookieOptions());
-    this.setCookie(REMEMBER_COOKIE, "-", tokenCookieOptions(false));
+  // eslint-disable-next-line func-names
+  app.decorateReply("setAuthCookies", function (token) {
+    this.setCookie(TOKEN_COOKIE, token, authCookieOptions());
+    this.setCookie(REMEMBER_COOKIE, "-", authCookieOptions(false));
   });
-
-  app.decorateReply("clearJwtCookie", function () {
-    this.clearCookie(TOKEN_COOKIE);
-  });
-  /* eslint-enable */
 
   app.decorate("getServerToken", async (req, reply) => {
     const msg = {

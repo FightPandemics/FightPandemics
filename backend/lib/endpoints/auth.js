@@ -26,7 +26,7 @@ async function routes(app) {
         code,
         redirect_uri: req.headers.referer,
       });
-      reply.setJwtCookie(token);
+      reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email, email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
@@ -110,7 +110,7 @@ async function routes(app) {
         scope: "openid",
         username: email,
       });
-      reply.setJwtCookie(token);
+      reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
