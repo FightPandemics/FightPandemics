@@ -20,10 +20,14 @@ import {
   SkipLink,
   StyledDiv,
 } from "components/StepWizard";
+import createSendgridContact from "../utils/create-sendgrid-contact";
 
 const INITIAL_STATE = {
   answers: [],
 };
+
+// for now just creating an object to collect the data that I need
+let stepsData = {};
 
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
@@ -50,6 +54,12 @@ const Step1 = (props) => {
 const Step2 = (props) => {
   const selectLocationDetection = (location) => {
     try {
+      // assigning the object to hold the steps2 data -> might conver this to useContext instead
+      Object.assign(stepsData, location);
+      // renaming property state to the value that sendgrid expects so state can be saved
+      delete Object.assign(stepsData, {
+        ["state_province_region"]: stepsData["state"],
+      })["state"];
       props.update("location", location);
     } catch {
       props.update("location", null);
@@ -96,11 +106,14 @@ const Step3 = (props) => {
   }, [email]);
 
   const onChange = (event) => {
-    setEmail(event.target.value);
+    let email = event.target.value;
+    stepsData.email = email;
+    setEmail(email);
   };
 
   const onSubmit = () => {
-    console.log("submit");
+    // ideally I want to create a contact on submit and redirect to the feed :)
+    createSendgridContact(stepsData);
   };
 
   return (
