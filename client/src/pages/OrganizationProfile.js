@@ -8,7 +8,6 @@ import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
@@ -45,10 +44,8 @@ import {
 } from "../components/Profile/ProfileComponents";
 import { getInitials } from "utils/userInfo";
 import {
-  FACEBOOK_URL,
   LINKEDIN_URL,
   TWITTER_URL,
-  GITHUB_URL,
   APPLESTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
@@ -79,15 +76,8 @@ const OrganizationProfile = () => {
   );
   const { error, loading, organization } = orgProfileState;
 
-  const {
-    name,
-    email,
-    location,
-    needs,
-    about = "",
-    objectives = {},
-    urls = {},
-  } = organization || {};
+  const { name, location, needs, about = "", objectives = {}, urls = {} } =
+    organization || {};
 
   useEffect(() => {
     (async function fetchProfile() {
