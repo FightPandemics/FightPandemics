@@ -77,14 +77,16 @@ const NestedComments = ({ isAuthenticated, comment }) => {
   const renderReplyInput = showReply ? (
     <div className="reply-input">
       {renderAvatar}
-      {isAuthenticated ?
+      {isAuthenticated ? (
         <AutoSize
           placeholder={"Write a reply..."}
           onPressEnter={handleReply}
           onChange={(e) => setReply(e.target.value)}
           value={reply}
         />
-        : ""}
+      ) : (
+        ""
+      )}
     </div>
   ) : (
     ""
