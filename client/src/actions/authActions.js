@@ -1,4 +1,8 @@
 import axios from "axios";
+import { 
+  checkRememberCookie,
+  clearRememberCookie,
+} from "utils/cookie"
 import {
   AUTH_LOGOUT,
   SET_AUTH_LOADING,
@@ -8,6 +12,9 @@ import {
 // Token stored in httpOnly cookie set/cleared by server
 export const initAuth =  () => {
   return async (dispatch) => {
+    if (!checkRememberCookie()) return;
+
+    dispatch({ type: SET_AUTH_LOADING, payload: true });
     try {
       const { data: user } = await axios.get("/api/users/current");
       dispatch({ type: SET_USER, payload: { user } });
@@ -19,19 +26,6 @@ export const initAuth =  () => {
     }
   };
 };
-
-// 2nd non-httpOnly "dummy" cookie so user can logout offline
-const CLEAR_REMEMBER_COOKIE_START = "remember=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;samesite=strict;";
-
-const clearRememberCookie = () => {
-  const { location: { hostname }} = window;
-  let clearRememberCookieString = CLEAR_REMEMBER_COOKIE_START;
-  if (hostname !== "localhost") {
-    // need to include domain if not localhost
-    clearRememberCookieString += `domain=${hostname.split(".").slice(-2).join(".")};`;
-  }
-  document.cookie = clearRememberCookieString;
-}
 
 export const authLogout = () => {
   return (dispatch) => {

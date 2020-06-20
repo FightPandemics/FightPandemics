@@ -14,13 +14,9 @@ async function routes(app) {
 
   app.get(
     "/current",
-    { preValidation: [app.authenticateOptional] },
+    { preValidation: [app.authenticate] },
     async (req) => {
       const { userId } = req;
-
-      // don't error if not authenticated
-      // client always queries on start to check if authenticated
-      if (!userId) return null;
 
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {

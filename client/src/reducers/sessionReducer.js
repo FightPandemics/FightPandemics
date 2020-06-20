@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   isAuthenticated: false,
-  authLoading: true,
+  authLoading: false,
   email: null,
   emailVerified: false,
   user: null,
@@ -40,7 +40,6 @@ function sessionReducer(state = initialState, action) {
     case AUTH_LOGOUT:
       return {
         ...initialState,
-        authLoading: false,
       };
     default:
       return state;
