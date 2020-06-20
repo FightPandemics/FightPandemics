@@ -22,3 +22,4 @@ export {
 } from "./WizardCheckboxItem";
 export { default as ShareLocation } from "./ShareLocation";
 export { default as ShowAnywhere } from "./ShowAnywhere";
+export { default as StyledDiv } from "./StyledDiv";

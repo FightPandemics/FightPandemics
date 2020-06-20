@@ -18,6 +18,7 @@ import {
   WizardFormGroup,
   WizardSubmit,
   SkipLink,
+  StyledDiv,
 } from "components/StepWizard";
 
 const INITIAL_STATE = {
@@ -108,6 +109,10 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
+      <StyledDiv>
+        We respect your privacy. Please read our{" "}
+        <Link to="/terms-conditions">Terms and Conditions</Link>
+      </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
