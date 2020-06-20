@@ -237,7 +237,7 @@ const NavigationLayout = (props) => {
     <MenuContainer>
       {drawerOpened && <CloseNav onClick={toggleDrawer} />}
       <NavList>
-        {authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+        {!authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
       </NavList>
     </MenuContainer>
   );
