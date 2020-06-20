@@ -60,7 +60,7 @@ const routes = [
       isLoginForm: false,
       notLoggedInOnly: true,
       forgotPassword: true,
-    }
+    },
   },
   {
     path: "/auth/logout",
