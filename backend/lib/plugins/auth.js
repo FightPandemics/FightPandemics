@@ -59,7 +59,7 @@ const authPlugin = async (app) => {
     algorithms: ["RS256"],
     audience: `${auth.domain}/api/v2/`,
     cookie: {
-      cookieName: "token",
+      cookieName: TOKEN_COOKIE,
     },
     decode: { complete: true },
     secret: fastifySecretProvider({
