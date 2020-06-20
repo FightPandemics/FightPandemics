@@ -39,11 +39,7 @@ import {
   initialState,
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
-import {
-  blockLabelStyles,
-  inputStyles,
-  inlineLabelStyles,
-} from "constants/formStyles";
+import { inlineLabelStyles } from "constants/formStyles";
 
 const { type, industry } = createOrganizationProfile;
 

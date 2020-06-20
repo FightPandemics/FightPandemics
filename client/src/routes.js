@@ -24,7 +24,6 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
-import Logo from "components/Logo";
 
 const routes = [
   {
