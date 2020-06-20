@@ -1,5 +1,5 @@
 const Auth0 = require("../components/Auth0");
-const { getBearerToken } = require("../utils");
+const { getCookieToken } = require("../utils");
 const {
   getUserByIdSchema,
   createUserSchema,
@@ -12,34 +12,45 @@ const {
 async function routes(app) {
   const User = app.mongo.model("IndividualUser");
 
-  app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const result = await User.findById(req.userId);
-    if (result === null) {
-      throw app.httpErrors.notFound();
+  app.get(
+    "/current",
+    { preValidation: [app.authenticate] },
+    async (req) => {
+      const { userId } = req;
+
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        req.log.error(userErr, "User does not exist");
+        throw app.httpErrors.notFound();
+      }
+
+      const {
+        _id: id,
+        about,
+        email,
+        firstName,
+        lastName,
+        location,
+        needs,
+        objectives,
+        urls,
+      } = user;
+      return {
+        about,
+        email,
+        firstName,
+        id,
+        lastName,
+        location,
+        needs,
+        objectives,
+        urls,
+      };
     }
-    const {
-      _id: id,
-      about,
-      email,
-      firstName,
-      lastName,
-      location,
-      needs,
-      objectives,
-      urls,
-    } = result;
-    return {
-      about,
-      email,
-      firstName,
-      id,
-      lastName,
-      location,
-      needs,
-      objectives,
-      urls,
-    };
-  });
+  );
 
   app.patch(
     "/current",
@@ -86,7 +97,7 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getBearerToken(req));
+      const user = await Auth0.getUser(getCookieToken(req));
       const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");
