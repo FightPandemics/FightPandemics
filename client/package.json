@@ -38,7 +38,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
+    "pretty": "prettier --write src",
     "install-docker": "docker-compose run client npm install",
     "snyk-protect": "snyk protect"
   },
