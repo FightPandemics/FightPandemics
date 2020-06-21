@@ -170,20 +170,6 @@ postSchema.index({ likes: 1 });
 // -- Model
 const Post = model("Post", postSchema);
 
-function updateAuthorName(authorID, newAuthorName) {
-  return Post.where(
-    { "author.id": authorID },
-    { $set: { "author.name": newAuthorName } },
-  );
-}
-
-function updateAuthorType(authorID, newAuthorType) {
-  return Post.where(
-    { "author.id": authorID },
-    { $set: { "author.type": newAuthorType } },
-  );
-}
-
 module.exports = {
   EXPIRATION_OPTIONS,
   POST_OBJECTIVES,
@@ -191,6 +177,4 @@ module.exports = {
   VISIBILITY_OPTIONS,
   model: Post,
   schema: postSchema,
-  updateAuthorName,
-  updateAuthorType,
 };
