@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "antd";
-
-import Post from "components/Feed/Post";
 import { useHistory, useParams } from "react-router-dom";
 
 import EditPost from "components/CreatePost/EditPost";
 import { FEED } from "templates/RouteWithSubRoutes";
+import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { typeToTag } from "assets/data/formToPostMappings";
 
-const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
+const PostPage = ({
+  user,
+  updateComments,
+  isAuthenticated,
+  handlePostLike,
+}) => {
   const history = useHistory();
   const { postId } = useParams();
 
@@ -21,7 +25,7 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   const [post, setPost] = useState("");
   const [editPost, setEditPost] = useState("");
 
-  const redirectFromFeed = () => {
+  const editRedirectFromFeed = () => {
     setEditPostModal(!editPostModal);
   };
 
@@ -47,7 +51,7 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   };
 
   const postDelete = async () => {
-    let deleterResponse;
+    let deleteResponse;
     if (
       isAuthenticated &&
       user &&
@@ -57,8 +61,8 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
       history.push(FEED);
       let endPoint = `/api/posts/${postId}`;
       try {
-        deleterResponse = await axios.delete(endPoint);
-        if (deleterResponse && deleterResponse.data.success === true) {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
           console.log("success!");
           return;
         }
@@ -82,11 +86,17 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   );
 
   const loadPost = async () => {
+    let postSubstring;
     let response;
     const endPoint = `/api/posts/${postId}`;
-    
-    if (history.location.state.edit) {
-      redirectFromFeed();
+
+    if (
+      history &&
+      history.location &&
+      history.location.state &&
+      history.location.state.edit
+    ) {
+      editRedirectFromFeed();
     }
 
     try {
@@ -99,13 +109,21 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
       let copiedpost = Object.assign({}, response.data.post);
       setFullPost(copiedpost);
       setEditPost(copiedpost);
-      const postSubstring = `${response.data.post.content.substring(
-        0,
-        120,
-      )} . . .`;
+      if (copiedpost.content.length > CONTENT_LENGTH) {
+        postSubstring = `${response.data.post.content.substring(
+          0,
+          CONTENT_LENGTH,
+        )} . . .`;
+      } else {
+        postSubstring = response.data.post.content;
+      }
 
       response.data.post.content = postSubstring;
-      setPost(copiedpost);
+      if (isAuthenticated) {
+        setPost(copiedpost);
+      } else {
+        setPost(response.data.post);
+      }
       setShortPost(response.data.post);
     }
   };
@@ -121,9 +139,12 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
         post={post}
         onClick={(e) => toggleViewContent(e)}
         loadContent={loadContent}
+        editPostModal={editPostModal}
         onSelect={handleEditPost}
         onChange={handlePostDelete}
+        handlePostLike={handlePostLike}
         updateComments={updateComments}
+        fullPostLength={fullPost.content.length}
         user={user}
       />
       {deleteConfirmationModal}
