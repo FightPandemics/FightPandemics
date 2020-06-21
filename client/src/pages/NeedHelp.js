@@ -55,11 +55,7 @@ const Step2 = (props) => {
   const selectLocationDetection = (location) => {
     try {
       // assigning the object to hold the steps2 data -> might conver this to useContext instead
-      Object.assign(stepsData, location);
-      // renaming property state to the value that sendgrid expects so state can be saved
-      delete Object.assign(stepsData, {
-        ["state_province_region"]: stepsData["state"],
-      })["state"];
+      stepsData = { ...location, state_province_region: location["state"] };
       props.update("location", location);
     } catch {
       props.update("location", null);
