@@ -136,7 +136,7 @@ const Step3 = (props) => {
       <StyledDiv>
         We respect your privacy. Please read our{" "}
         <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
-        <Link to="/terms-conditions">Terms &nbsp; Conditions.</Link>
+        <Link to="/terms-conditions">Terms & Conditions.</Link>
       </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
