@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Modal as WebModal } from "antd";
 import { connect } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
 
@@ -14,52 +14,63 @@ import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
-import { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
 import SubMenuButton from "components/Button/SubMenuButton";
+import { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import WizardFormNav from "components/StepWizard/WizardFormNav";
+import {
+  RESET_PAGE,
+  NEXT_PAGE,
+  SET_COMMENTS,
+  SET_LOADING,
+  RESET_LOADING,
+  TOGGLE_SHOW_COMMENTS,
+  TOGGLE_COMMENTS,
+} from "hooks/actions/postActions";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 
 export const CONTENT_LENGTH = 120;
-
 const Post = ({
-  editPostModal,
+  currentPost,
+  deleteModalVisibility,
+  dispatchPostAction,
   fullPostLength,
+  handlePostDelete,
   handlePostLike,
   isAuthenticated,
-  loadContent,
+  loadMorePost,
+  numComments,
   onClick,
   onSelect,
   onChange,
-  post,
   postDelete,
+  showComments,
   user,
 }) => {
-  const comments = useRef([]);
-  const limit = useRef(5);
-  const loadedComments = useRef(0);
-  const page = useRef(0);
-
   const { postId } = useParams();
-  const history = useHistory();
-  const historyLocation = history.location;
+  const limit = useRef(5);
+  const post = currentPost;
 
-  const [comment, setComment] = useState([]);
+  const {
+    _id,
+    content,
+    title,
+    comments,
+    commentsCount,
+    isLoading,
+    loadMoreComments,
+    page,
+  } = post;
+
   const [copied, setCopied] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [loadVisibility, setLoadVisibility] = useState(true);
-  const [modalVisibility, setModalVisibility] = useState(false);
-  const [showComments, setShowComments] = useState(false);
+  const [comment, setComment] = useState([]);
 
   const AvatarName =
-    (post &&
-      post.author &&
-      post.author.name &&
+    (post?.author?.name &&
       post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
@@ -68,95 +79,74 @@ const Post = ({
   const [shared, setShared] = useState(false);
   const [fakeShares, setFakeShares] = useState(0);
 
-  const handlePostDelete = () => {
-    setModalVisibility(!modalVisibility);
+  const setShowComments = () => {
+    if (dispatchPostAction) {
+      dispatchPostAction(TOGGLE_SHOW_COMMENTS);
+    }
   };
 
-  const loadMoreComments = async () => {
-    setLoading(true);
-    if (firstLoad) {
-      page.current = page.current + 2;
-      setFirstLoad(false);
+  const loadComments = async () => {
+    if (commentsCount !== 0) {
+      dispatchPostAction(NEXT_PAGE);
+      dispatchPostAction(NEXT_PAGE);
     } else {
-      page.current = page.current + 1;
+      dispatchPostAction(NEXT_PAGE);
     }
-    let response;
-    const postId = post._id;
 
+    let response;
+    let previousComments = [...comments];
     const skip = 0;
     const endPoint = `/api/posts/${postId}/comments?limit=${
-      limit.current * page.current
+      limit.current * page
     }&skip=${skip}`;
+
+    dispatchPostAction(SET_LOADING);
 
     try {
       response = await axios.get(endPoint);
     } catch (error) {
       console.log({ error });
+      dispatchPostAction(RESET_LOADING);
     }
     if (response && response.data) {
       const currentComments = response.data;
-      const previousComments = [...comments.current];
-      let allComments = [...previousComments, ...currentComments].sort((a, b) =>
-        a.createdAt > b.createdAt ? -1 : 1,
-      );
+      let allComments;
+      if (comments) {
+        allComments = [...comments, ...currentComments];
+      } else {
+        allComments = currentComments;
+      }
 
       allComments = allComments.filter(
         (comment1, index, self) =>
           index === self.findIndex((comment2) => comment2._id === comment1._id),
       );
-      post.numComments = allComments.length;
-      if (post.numComments === loadedComments.current) {
-        setLoadVisibility(false);
+      if (previousComments.length === allComments.length) {
+        dispatchPostAction(TOGGLE_COMMENTS);
+      } else {
+        dispatchPostAction(
+          SET_COMMENTS,
+          "comments",
+          allComments,
+          "numComments",
+          allComments.length,
+        );
       }
-      loadedComments.current = post.numComments;
-      comments.current = allComments;
+
+      dispatchPostAction(RESET_LOADING);
     } else {
-      setLoadVisibility(false);
-      page.current = 0;
+      dispatchPostAction(RESET_LOADING);
+      dispatchPostAction(RESET_PAGE);
     }
-    const currentPage = page.current;
     const currentLimit = limit.current;
-    limit.current = currentLimit * currentPage;
-    setLoading(false);
-  };
-
-  const loadComments = async () => {
-    let response;
-    const postId = post._id;
-
-    const limit = 5;
-    const skip = page.current * limit;
-    const endPoint = `/api/posts/${postId}/comments?limit=${limit}&skip=${skip}`;
-
-    if (isAuthenticated) {
-      try {
-        response = await axios.get(endPoint);
-      } catch (error) {
-        console.log({ error });
-      }
-      if (response && response.data) {
-        setLoadVisibility(true);
-        comments.current = response.data;
-        post.numComments = response.data.length;
-        loadedComments.current = post.numComments;
-      }
-    }
+    limit.current = currentLimit * page;
   };
 
   useEffect(() => {
-    if (
-      historyLocation &&
-      historyLocation.state &&
-      historyLocation.state.comments
-    ) {
-      loadMoreComments();
-      setShowComments(!showComments);
-    } else {
+    if (postId) {
       loadComments();
-      setLoadVisibility(true);
-      setLoading(false);
     }
-  }, [history, editPostModal]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const handleOnChange = async (e) => {
     e.preventDefault();
@@ -176,29 +166,40 @@ const Post = ({
       response = await axios.post(endPoint, newComment);
     } catch (error) {
       console.log({ error });
+      setComment([]);
     }
 
     if (response && response.data) {
+      const currentComment = response.data;
+      const allComments = [currentComment, ...comments];
+      await dispatchPostAction(
+        SET_COMMENTS,
+        "comments",
+        allComments,
+        "numComments",
+        allComments.length,
+      );
       setComment([]);
-      await loadMoreComments();
     }
   };
 
-  const ViewMore = ({ onClick, loadContent }) => (
+  const ViewMore = ({ onClick }) => (
     <Card.Body className="view-more-wrapper">
-      {post && (
+      {postId && isAuthenticated ? (
         <div onClick={onClick}>
-          {loadContent ? (
+          {!loadMorePost ? (
             <span className="view-more">View Less</span>
           ) : (
             <span className="view-more">View More</span>
           )}
         </div>
+      ) : (
+        <span className="view-more">View More</span>
       )}
     </Card.Body>
   );
 
-  const RenderViewMore = ({ onClick, loadContent }) => {
+  const RenderViewMore = ({ onClick }) => {
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
@@ -210,15 +211,15 @@ const Post = ({
           },
         }}
       >
-        <ViewMore onClick={onClick} loadContent={loadContent} />
+        <ViewMore />
       </Link>
     ) : (
       <>
         {isAuthenticated ? (
-          <ViewMore onClick={onClick} loadContent={loadContent} />
+          <ViewMore onClick={onClick} loadContent={loadMorePost} />
         ) : (
           <Link to={{ pathname: LOGIN }}>
-            <ViewMore loadContent={loadContent} />
+            <ViewMore loadContent={loadMorePost} />
           </Link>
         )}
       </>
@@ -238,7 +239,7 @@ const Post = ({
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
-          {post.author.location.country}
+          {post?.author?.location ? post.author.location.country : ""}
         </span>
       }
     />
@@ -247,9 +248,9 @@ const Post = ({
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {post.title}
+        {title}
       </Heading>
-      <p className="post-description">{post.content}</p>
+      <p className="post-description">{content}</p>
     </Card.Body>
   );
 
@@ -278,15 +279,12 @@ const Post = ({
       ) : (
         <div>Only logged in users can comment.</div>
       )}
-      {showComments && isAuthenticated ? (
+      {isAuthenticated ? (
         <>
-          <Comments
-            comments={comments.current}
-            handleOnChange={handleOnChange}
-          />
-          {loadVisibility && (post.numComments > 4 || !editPostModal) ? (
-            <Button disabled={loading} onClick={loadMoreComments}>
-              {loading ? "Loading..." : "Show More Comments"}
+          <Comments comments={comments} handleOnChange={handleOnChange} />
+          {loadMoreComments ? (
+            <Button disabled={isLoading} onClick={loadComments}>
+              {isLoading ? "Loading..." : "Show More Comments"}
             </Button>
           ) : (
             <></>
@@ -297,6 +295,7 @@ const Post = ({
       )}
     </Card.Body>
   );
+
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
@@ -307,10 +306,10 @@ const Post = ({
         postpage={postId}
         showComments={showComments}
         numLikes={post.likesCount}
-        numComments={post.commentsCount}
+        numComments={numComments}
         numShares={fakeShares}
         isAuthenticated={isAuthenticated}
-        setShowComments={() => setShowComments(!showComments)}
+        setShowComments={setShowComments}
         onCopyLink={() => {
           if (!shared) setFakeShares(fakeShares + 1);
           setShared(true);
@@ -337,7 +336,7 @@ const Post = ({
 
   return (
     <>
-      {postId ? (
+      {postId && dispatchPostAction ? (
         //Post in post's page.
         <PostCard
           style={{
@@ -370,7 +369,7 @@ const Post = ({
             <RenderViewMore
               postId={postId}
               onClick={onClick}
-              loadContent={loadContent}
+              loadMorePost={loadMorePost}
             />
           )}
           {renderSocialIcons}
@@ -378,7 +377,7 @@ const Post = ({
           {renderComments}
           <WebModal
             title="Confirm"
-            visible={modalVisibility}
+            visible={deleteModalVisibility}
             onOk={() => postDelete(post)}
             onCancel={handlePostDelete}
             okText="Delete"
@@ -386,7 +385,7 @@ const Post = ({
           >
             <p>Are you sure you want to delete the post?</p>
           </WebModal>
-          {loadContent && (
+          {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
           )}
         </PostCard>
@@ -400,7 +399,7 @@ const Post = ({
                 user &&
                 (user._id === post.author.id || user.id === post.author.id) && (
                   <SubMenuButton
-                    onChange={handlePostDelete}
+                    onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
                     post={post}
                     user={user}
@@ -415,10 +414,10 @@ const Post = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${post._id}`,
+                pathname: `post/${_id}`,
                 state: {
                   post: post,
-                  postId: post._id,
+                  postId: _id,
                   user,
                 },
               }}
@@ -433,14 +432,14 @@ const Post = ({
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
-                loadContent={loadContent}
+                loadMorePost={loadMorePost}
               />
             ))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
             title="Confirm"
-            visible={modalVisibility}
+            visible={deleteModalVisibility}
             onOk={() => postDelete(post)}
             onCancel={handlePostDelete}
             okText="Delete"

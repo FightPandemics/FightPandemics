@@ -12,7 +12,10 @@ const Comments = ({ comments }) => {
     <CommentsWrapper>
       {comments &&
         comments.map((comment) => (
-          <NestedComments comment={comment} key={comment._id} />
+          <NestedComments
+            comment={comment}
+            key={comment._id}
+          />
         ))}
     </CommentsWrapper>
   );

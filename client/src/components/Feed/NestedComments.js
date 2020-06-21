@@ -55,8 +55,8 @@ const NestedComments = ({ isAuthenticated, comment }) => {
         {fakeNumLikes}
       </span>
     ) : (
-        ""
-      );
+      ""
+    );
   };
 
   const handleReply = (e) => {
@@ -85,12 +85,12 @@ const NestedComments = ({ isAuthenticated, comment }) => {
           value={reply}
         />
       ) : (
-          ""
-        )}
+        ""
+      )}
     </div>
   ) : (
-      ""
-    );
+    ""
+  );
 
   const renderReply = () => {
     const style = showReply ? clickedTextStyle : {};

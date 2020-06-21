@@ -444,7 +444,11 @@ const Feed = (props) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
 
-    if (isAuthenticated && user && (user._id === post.author.id || user.id === post.author.id)) {
+    if (
+      isAuthenticated &&
+      user &&
+      (user._id === post.author.id || user.id === post.author.id)
+    ) {
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
@@ -529,7 +533,7 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              postDelete={postDelete}
+              handlePostDelete={postDelete}
               user={user}
             />
             <PostPage
