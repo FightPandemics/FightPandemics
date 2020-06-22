@@ -14,45 +14,41 @@ async function routes(app) {
   const User = app.mongo.model("IndividualUser");
   const Post = app.mongo.model("Post");
 
-  app.get(
-    "/current",
-    { preValidation: [app.authenticate] },
-    async (req) => {
-      const { userId } = req;
+  app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
+    const { userId } = req;
 
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        req.log.error(userErr, "Failed retrieving user");
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        req.log.error(userErr, "User does not exist");
-        throw app.httpErrors.notFound();
-      }
-
-      const {
-        _id: id,
-        about,
-        email,
-        firstName,
-        lastName,
-        location,
-        needs,
-        objectives,
-        urls,
-      } = user;
-      return {
-        about,
-        email,
-        firstName,
-        id,
-        lastName,
-        location,
-        needs,
-        objectives,
-        urls,
-      };
+    const [userErr, user] = await app.to(User.findById(userId));
+    if (userErr) {
+      req.log.error(userErr, "Failed retrieving user");
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      req.log.error(userErr, "User does not exist");
+      throw app.httpErrors.notFound();
     }
-  );
+
+    const {
+      _id: id,
+      about,
+      email,
+      firstName,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
+    } = user;
+    return {
+      about,
+      email,
+      firstName,
+      id,
+      lastName,
+      location,
+      needs,
+      objectives,
+      urls,
+    };
+  });
 
   app.patch(
     "/current",
