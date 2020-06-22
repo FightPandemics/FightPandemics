@@ -56,6 +56,12 @@ data "aws_ssm_parameter" "logger_port" {
 }
 
 locals {
+  app_domain = {
+    review     = "fightpandemics.xyz"
+    staging    = "fightpandemics.work"
+    production = "fightpandemics.com"
+  }
+
   auth_app_url = {
     review     = "https://review.fightpandemics.xyz"
     staging    = "https://staging.fightpandemics.work"
@@ -77,6 +83,10 @@ module "main" {
     {
       name  = "MONGO_URI"
       value = "mongodb+srv://${data.aws_ssm_parameter.db_user.value}:${data.aws_ssm_parameter.db_password.value}@${data.aws_ssm_parameter.db_host.value}/fightpandemics?retryWrites=true&w=majority"
+    },
+    {
+      name  = "APP_DOMAIN"
+      value = local.app_domain[var.fp_context]
     },
     {
       name  = "AUTH_STATE"

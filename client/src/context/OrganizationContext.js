@@ -7,7 +7,7 @@ import {
 export const OrganizationContext = createContext();
 
 export const withOrganizationContext = (Component) => (props) => {
-  const [ orgProfileState, orgProfileDispatch ] = useReducer(
+  const [orgProfileState, orgProfileDispatch] = useReducer(
     orgProfileReducer,
     initialProfileState,
   );

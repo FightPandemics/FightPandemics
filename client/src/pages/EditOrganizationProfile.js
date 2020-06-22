@@ -31,11 +31,13 @@ import {
   fetchOrganizationSuccess,
   updateOrganization,
   updateOrganizationError,
-  updateOrganizationSuccess
+  updateOrganizationSuccess,
 } from "hooks/actions/organizationActions";
 import axios from "axios";
-import { OrganizationContext, withOrganizationContext } from "context/OrganizationContext";
-
+import {
+  OrganizationContext,
+  withOrganizationContext,
+} from "context/OrganizationContext";
 
 const URLS_CONFIG = {
   appleStore: [
@@ -98,30 +100,31 @@ const URLS_CONFIG = {
 };
 const ABOUT_MAX_LENGTH = 160;
 
-
 const editProfile = true;
 
 function EditOrganizationProfile(props) {
   const organizationId = window.location.pathname.split("/")[2];
-  const { orgProfileState, orgProfileDispatch } = useContext(OrganizationContext);
+  const { orgProfileState, orgProfileDispatch } = useContext(
+    OrganizationContext,
+  );
   const { register, handleSubmit, errors } = useForm();
   const { loading, organization } = orgProfileState;
-  const {
-  name,
-  language,
-  about,
-  urls={}
- } = organization || {};
+  const { name, language, about, urls = {} } = organization || {};
 
   const onSubmit = async (formData) => {
     orgProfileDispatch(updateOrganization());
     try {
-        const res = await axios.patch(`/api/organizations/${organizationId}`, formData);
-        orgProfileDispatch(updateOrganizationSuccess(res.data));
+      const res = await axios.patch(
+        `/api/organizations/${organizationId}`,
+        formData,
+      );
+      orgProfileDispatch(updateOrganizationSuccess(res.data));
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
-        updateOrganizationError(`Failed updating organization profile, reason: ${message}`),
+        updateOrganizationError(
+          `Failed updating organization profile, reason: ${message}`,
+        ),
       );
     }
   };
@@ -139,12 +142,11 @@ function EditOrganizationProfile(props) {
         );
       }
     })();
-  }, []);
-
+  }, [orgProfileDispatch, organizationId]);
 
   const renderProfilePicture = () => {
     let firstName, lastName;
-    if(organization) {
+    if (organization) {
       const nameArr = name.split(" ");
       if (nameArr.length < 2) {
         firstName = nameArr[0];
@@ -154,49 +156,47 @@ function EditOrganizationProfile(props) {
         lastName = nameArr[1];
       }
       return (
-      <ProfilePicWrapper>
-        <ProfilePic
-          resolution={"7680px"}
-          noPic={true}
-          initials={getInitials(firstName, lastName)}
-        />
-        {/* hide this until backend API is available
+        <ProfilePicWrapper>
+          <ProfilePic
+            resolution={"7680px"}
+            noPic={true}
+            initials={getInitials(firstName, lastName)}
+          />
+          {/* hide this until backend API is available
           <ChangePicButton>Change</ChangePicButton> */}
-      </ProfilePicWrapper>
-      )
-
+        </ProfilePicWrapper>
+      );
     }
-
-  }
+  };
 
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile ? "Edit Organization Profile" : "Complete Organization Profile"}
+            {editProfile
+              ? "Edit Organization Profile"
+              : "Complete Organization Profile"}
           </CustomHeading>
           <FillEmptySpace />
-          <ProfilePicWrapper>
-            {renderProfilePicture()}
-          </ProfilePicWrapper>
+          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
 
-          <MobilePicWrapper>
-             {renderProfilePicture()}
-          </MobilePicWrapper>
-
+          <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to={`/edit-organization-account/${organizationId}`}>Account Information</Link>
+              <Link to={`/edit-organization-account/${organizationId}`}>
+                Account Information
+              </Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to={`/edit-organization-profile/${organizationId}`}>Profile Information</Link>
+              <Link to={`/edit-organization-profile/${organizationId}`}>
+                Profile Information
+              </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
-
             <FormInput
               inputTitle="Organization Description"
               name="about"
@@ -233,7 +233,7 @@ function EditOrganizationProfile(props) {
               ),
             )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              { loading ? "Saving Changes..." : "Save Changes" }
+              {loading ? "Saving Changes..." : "Save Changes"}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>
@@ -241,6 +241,5 @@ function EditOrganizationProfile(props) {
     </Background>
   );
 }
-
 
 export default withOrganizationContext(EditOrganizationProfile);

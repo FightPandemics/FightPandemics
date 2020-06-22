@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Transition } from 'react-transition-group';
 import { withRouter, Link } from "react-router-dom";
 import InputError from "components/Input/InputError";
 import LocationInput from "components/Input/LocationInput";
@@ -18,6 +19,7 @@ import {
   WizardFormGroup,
   WizardSubmit,
   SkipLink,
+  StyledDiv,
 } from "components/StepWizard";
 
 const INITIAL_STATE = {
@@ -108,6 +110,10 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
+      <StyledDiv>
+        We respect your privacy. Please read our{" "}
+        <Link to="/terms-conditions">Terms and Conditions</Link>
+      </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
@@ -142,6 +148,12 @@ const Step3 = (props) => {
 
 const NeedHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
+  const [transition, setTransition] = useState(false);
+
+  useEffect(() => {
+    setTransition(!transition);
+  },[]);
+  
   const updateAnswers = (key, value) => {
     const { answers } = state;
     const updatedAnswers = { ...answers, [key]: value };
@@ -155,11 +167,15 @@ const NeedHelp = withRouter((props) => {
   };
   return (
     <WizardContainer className="wizard-container">
-      <StyledWizard isHashEnabled nav={<WizardNav />}>
-        <Step1 hashKey={"Step1"} update={updateAnswers} />
-        <Step2 hashKey={"Step2"} update={updateAnswers} />
-        <Step3 hashKey={"Step3"} update={updateAnswers} />
-      </StyledWizard>
+      <Transition in={transition} timeout={500}>
+        {status=> (
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav/>}>
+            <Step1 hashKey={"Step1"} update={updateAnswers} />
+            <Step2 hashKey={"Step2"} update={updateAnswers} />
+            <Step3 hashKey={"Step3"} update={updateAnswers} />
+          </StyledWizard>
+        )}      
+      </Transition>
     </WizardContainer>
   );
 });

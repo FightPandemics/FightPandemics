@@ -2,7 +2,7 @@ export default {
   shareWith: {
     type: "shareWith",
     title: "Share with ...",
-    default: { text: "Worldwide", value: "Worldwide" },
+    default: { text: "In my City", value: "City" },
     options: [
       { text: "In my City", value: "City" },
       { text: "In my State", value: "State" },
@@ -13,7 +13,7 @@ export default {
   expires: {
     type: "expires",
     title: "For how long do you want to keep your post?",
-    default: { text: "Forever", value: "Forever" },
+    default: { text: "For a month", value: "Month" },
     options: [
       { text: "Forever", value: "Forever" },
       { text: "For a month", value: "Month" },
@@ -26,8 +26,8 @@ export default {
     title: "",
     default: { text: "", value: "" },
     options: [
-      { text: "Looking for help", value: "Looking" },
-      { text: "Offering to help", value: "Offering" },
+      { text: "Looking for help", value: "request" },
+      { text: "Offering to help", value: "offer" },
     ],
   },
 };

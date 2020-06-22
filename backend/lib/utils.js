@@ -13,8 +13,7 @@ const dateToEpoch = (date) => Math.round(date.getTime() / 1000);
 // eslint-disable-next-line eqeqeq
 const bool = (env) => env == "true";
 
-const getBearerToken = (req) =>
-  req.headers.authorization.replace("Bearer ", "");
+const getCookieToken = (req) => req.cookies.token;
 
 const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const isValidEmail = (email) => emailRegEx.test(email);
@@ -23,6 +22,6 @@ module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
-  getBearerToken,
+  getCookieToken,
   isValidEmail,
 };

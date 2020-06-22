@@ -10,13 +10,13 @@ const FilterAccord = () => {
     activePanel,
     filters,
     handleLocation,
-    handleOption, 
+    handleOption,
     location,
     selectedOptions,
   } = feedContext;
 
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
+  function capitalizeFirstLetter(header) {
+    return header.charAt(0).toUpperCase() + header.slice(1);
   }
   const renderPanels = () => {
     return filters.map((filter, idx) => {
@@ -41,21 +41,23 @@ const FilterAccord = () => {
             className={filter.className}
             key={idx}
           >
-            {Object.values(filter.options).map((option, idx) => (
-              <ButtonTag
-                key={idx}
-                onClick={handleOption(filter.label, option)}
-                className={
-                  "tag-selectable " +
-                  (selectedOptions[filter.label] &&
-                  selectedOptions[filter.label].includes(option)
-                    ? "tag-selected"
-                    : "")
-                }
-              >
-                {option}
-              </ButtonTag>
-            ))}
+            {Object.values(filter.options).map((option, idx) => {
+              return (
+                <ButtonTag
+                  key={idx}
+                  onClick={handleOption(filter.label, option)}
+                  className={
+                    "tag-selectable " +
+                    (selectedOptions[filter.label] &&
+                    selectedOptions[filter.label].includes(option)
+                      ? "tag-selected"
+                      : "")
+                  }
+                >
+                  {option}
+                </ButtonTag>
+              );
+            })}
           </FilterAccordionPanel>
         );
       }
