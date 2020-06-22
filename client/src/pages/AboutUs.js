@@ -157,8 +157,8 @@ const AboutUs = () => {
         </AboutUsLink>
         <p>
           Or contact us at:{" "}
-          <AboutUsLink href="mailto:admin@fightpandemics.com">
-            admin@fightpandemics.com
+          <AboutUsLink href="mailto:contact@fightpandemics.com">
+            contact@fightpandemics.com
           </AboutUsLink>
         </p>
       </SocialContainer>
