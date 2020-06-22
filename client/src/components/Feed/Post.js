@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import { Link, useParams } from "react-router-dom";
 import { Modal as WebModal } from "antd";
-
 import axios from "axios";
 
 // Local
@@ -17,7 +16,8 @@ import Heading from "components/Typography/Heading";
 import TextAvatar from "components/TextAvatar";
 import SubMenuButton from "components/Button/SubMenuButton";
 import { typeToTag } from "assets/data/formToPostMappings";
-
+import { StyledWizard } from "components/StepWizard";
+import WizardFormNav from "components/StepWizard/WizardFormNav";
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
@@ -286,7 +286,7 @@ const Post = ({
           </>
         ) : (
           <>{renderSocialIcons}</>
-        )}
+        )}     
         <WebModal
           title="Confirm"
           visible={modalVisibility}
@@ -297,6 +297,9 @@ const Post = ({
         >
           <p>Are you sure you want to delete the post?</p>
         </WebModal>
+        {loadContent && 
+        <StyledWizard nav={<WizardFormNav />}></StyledWizard>
+        }   
       </PostCard>
     </>
   );
