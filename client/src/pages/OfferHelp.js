@@ -136,7 +136,8 @@ const Step3 = (props) => {
       <StepTitle>What is your email address?</StepTitle>
       <StyledDiv>
         We respect your privacy. Please read our{" "}
-        <Link to="/terms-conditions">Terms and Conditions</Link>
+        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
+        <Link to="/terms-conditions">Terms & Conditions.</Link>
       </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
