@@ -1,5 +1,5 @@
 const envSchema = require("env-schema");
-const path = require("path");
+const url = require("url");
 const S = require("fluent-schema");
 
 const { name } = require("./package.json");
@@ -38,7 +38,7 @@ const config = {
     clientId: configData.AUTH_CLIENT_ID,
     cookieMaxAgeSeconds: configData.AUTH_COOKIE_MAX_AGE_SECONDS,
     domain: `https://${configData.AUTH_DOMAIN}`,
-    jwtMongoIdKey: path.join(configData.AUTH_APP_URL, "mongo_id"),
+    jwtMongoIdKey: url.resolve(configData.AUTH_APP_URL, "mongo_id"),
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
   },
@@ -49,7 +49,7 @@ const config = {
     url: configData.SENTRY_DSN,
   },
   geo: {
-    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY,
   },
   logger: {
     appname: `fp-backend-${configData.NODE_ENV}`,

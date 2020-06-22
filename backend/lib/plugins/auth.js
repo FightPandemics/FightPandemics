@@ -25,8 +25,8 @@ const authSetCookieOptions = (httpOnly = true) => {
   return {
     domain: appDomain,
     httpOnly,
-    path: "/",
     maxAge: auth.cookieMaxAgeSeconds,
+    path: "/",
     sameSite: "strict",
     secure: env !== "dev" && httpOnly,
   };
@@ -35,8 +35,8 @@ const authSetCookieOptions = (httpOnly = true) => {
 const authClearCookieOptions = () => {
   return {
     domain: appDomain,
-    path: "/",
     expires: new Date(0),
+    path: "/",
   };
 };
 
@@ -49,7 +49,11 @@ const checkAuth = async (req, reply) => {
 
   await req.jwtVerify();
   const { user } = req;
-  req.userId = mongoose.Types.ObjectId(user[auth.jwtMongoIdKey]);
+  const userId = user[auth.jwtMongoIdKey];
+  if (!userId) {
+    throw new Error("User id not found in JWT");
+  }
+  req.userId = mongoose.Types.ObjectId(userId);
 };
 
 const authPlugin = async (app) => {
@@ -84,6 +88,10 @@ const authPlugin = async (app) => {
     try {
       await checkAuth(req, reply);
     } catch (err) {
+      if (err.message === "User id not found in JWT") {
+        reply.send(err);
+        return;
+      }
       req.userId = null;
     }
   });
