@@ -1,24 +1,10 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
-const { updateAuthorName: updatePostAuthorName } = require("./Post");
-const { updateAuthorName: updateCommentAuthorName } = require("./Comment");
 
 const INDIVIDUAL_USER_TYPES = ["individual"];
 
-function updateAuthorFirstName(firstName) {
-  this.firstName = firstName;
-
-  this.updateAuthorNameReferences();
-
-  return firstName;
-}
-
-function updateAuthorLastName(lastName) {
-  this.lastName = lastName;
-
-  this.updateAuthorNameReferences();
-
-  return lastName;
+function fullName(firstName, lastName) {
+  return `${firstName} ${lastName}`;
 }
 
 const individualUserSchema = new Schema(
@@ -29,11 +15,9 @@ const individualUserSchema = new Schema(
     },
     firstName: {
       required: true,
-      set: updateAuthorFirstName,
       type: String,
     },
     lastName: {
-      set: updateAuthorLastName,
       type: String,
     },
     needs: {
@@ -63,13 +47,8 @@ const individualUserSchema = new Schema(
 );
 
 individualUserSchema.virtual("name").get(function getFullName() {
-  return `${this.firstName} ${this.lastName}`;
+  return fullName(this.firstName, this.lastName);
 });
-
-individualUserSchema.methods.updateAuthorNameReferences = function updateAuthorNameReferences() {
-  updatePostAuthorName(this._id, this.name);
-  updateCommentAuthorName(this._id, this.name);
-};
 
 const IndividualUser = User.discriminator(
   "IndividualUser",

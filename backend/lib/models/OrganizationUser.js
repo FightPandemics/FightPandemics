@@ -1,27 +1,5 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
-const {
-  updateAuthorName: updatePostAuthorName,
-  updateAuthorType: updatePostAuthorType,
-} = require("./Post");
-const {
-  updateAuthorName: updateCommentAuthorName,
-  updateAuthorType: updateCommentAuthorType,
-} = require("./Comment");
-
-function updateAuthorNameReferences(name) {
-  updatePostAuthorName(this._id, name);
-  updateCommentAuthorName(this._id, name);
-
-  return name;
-}
-
-function updateAuthorTypeReferences(type) {
-  updatePostAuthorType(this._id, type);
-  updateCommentAuthorType(this._id, type);
-
-  return type;
-}
 
 const organizationSchema = new Schema(
   {
@@ -30,7 +8,6 @@ const organizationSchema = new Schema(
     language: String,
     name: {
       required: true,
-      set: updateAuthorNameReferences,
       type: String,
     },
     needs: {
@@ -57,7 +34,6 @@ const organizationSchema = new Schema(
         "University",
       ],
       required: true,
-      set: updateAuthorTypeReferences,
       type: String,
     },
     urls: {

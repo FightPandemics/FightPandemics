@@ -10,7 +10,9 @@ const {
  * /api/users
  */
 async function routes(app) {
+  const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const Post = app.mongo.model("Post");
 
   app.get(
     "/current",
@@ -72,6 +74,37 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
+      // -- Update Author References if needed
+      const { firstName, lastName, photo } = body;
+      if (firstName || lastName || photo) {
+        const updateOps = {};
+        if (firstName || lastName) {
+          updateOps["author.name"] = updatedUser.name;
+        }
+        if (photo) {
+          updateOps["author.photo"] = updatedUser.photo;
+        }
+
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+      }
       return updatedUser;
     },
   );
