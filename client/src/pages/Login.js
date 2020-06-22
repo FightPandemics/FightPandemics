@@ -19,6 +19,8 @@ import {
   AUTH_FORM_SIGNUP_ERROR,
   AUTH_FORM_SOCIAL,
   AUTH_FORM_SOCIAL_ERROR,
+  AUTH_FORM_FORGOT_PASSWORD,
+  AUTH_FORM_FORGOT_PASSWORD_ERROR,
 } from "hooks/actions/authFormActions";
 import { authFormReducer, initialState } from "hooks/reducers/authFormReducer";
 import SubmitButton from "components/Button/SubmitButton";
@@ -26,7 +28,6 @@ import Input from "components/Input/BaseInput";
 import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
-import { setAuthToken } from "utils/auth-token";
 import { validateEmail, validatePassword } from "utils/validators";
 
 // ICONS
@@ -77,7 +78,7 @@ const SocialButton = styled(Button)`
   display: flex;
   height: 4.8rem;
   margin: 0.5rem;
-  padding: 2.5rem;
+  padding: 2.5rem 1.8rem;
   width: 13.6rem;
 `;
 
@@ -152,6 +153,44 @@ const VisibilityIconWrapper = styled.div`
   cursor: pointer;
 `;
 
+const BackLinkContainer = styled.div`
+  @media screen and (max-width: ${mq.phone.wide.minWidth}) {
+    position: absolute;
+    bottom: 30%;
+    right: 27%;
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq
+      .phone.wide.minWidth}) {
+    position: absolute;
+    bottom: 30%;
+    right: 40%;
+  }
+`;
+
+const ForgotPasswordContainer = styled.div`
+  margin-top: 25%;
+`;
+
+const EmailButtonContainer = styled.div`
+  margin-top: 15%;
+`;
+
+const EmailTextContainer = styled.div`
+  position: absolute;
+  width: 295px;
+  height: 55px;
+  left: 40px;
+  top: 268px;
+
+  > p {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+  }
+`;
+
 const VisibilityButton = ({ onClick, type }) => {
   return (
     <VisibilityIconWrapper>
@@ -164,7 +203,7 @@ const VisibilityButton = ({ onClick, type }) => {
   );
 };
 
-const Login = ({ isLoginForm }) => {
+const Login = ({ isLoginForm, forgotPassword }) => {
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -175,6 +214,7 @@ const Login = ({ isLoginForm }) => {
   );
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+  const [recoveryLink, setRecoveryLink] = useState(false);
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -185,9 +225,6 @@ const Login = ({ isLoginForm }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
-          if (res?.data?.token) {
-            setAuthToken(res.data.token);
-          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -206,10 +243,6 @@ const Login = ({ isLoginForm }) => {
 
     try {
       const res = await axios.post("/api/auth/login", formData);
-
-      if (res?.data?.token) {
-        setAuthToken(res.data.token);
-      }
 
       dispatch({
         type: AUTH_SUCCESS,
@@ -237,6 +270,24 @@ const Login = ({ isLoginForm }) => {
       authFormDispatch({
         type: AUTH_FORM_SIGNUP_ERROR,
         error: `Signup failed, reason: ${message}`,
+      });
+    }
+  };
+
+  const onForgotPassword = async (formData) => {
+    authFormDispatch({ type: AUTH_FORM_FORGOT_PASSWORD });
+    try {
+      const res = await axios.post("/api/auth/change-password", formData);
+      dispatch({
+        type: AUTH_SUCCESS,
+        payload: { ...res.data, email: formData.email },
+      });
+      setRecoveryLink(true);
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      authFormDispatch({
+        type: AUTH_FORM_FORGOT_PASSWORD_ERROR,
+        error: `Forgot Password failed, reason: ${message}`,
       });
     }
   };
@@ -278,175 +329,242 @@ const Login = ({ isLoginForm }) => {
         </SocialImageContainer>
       </LoginLeftContainer>
       <LoginRightContainer>
-        <div>
+        <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
             <Heading className="text-center" level={4}>
-              {isLoginForm ? "Sign In" : "Sign Up"}
+              {isLoginForm
+                ? "Sign In"
+                : forgotPassword
+                ? "Recover Password"
+                : "Sign Up"}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
             )}
-            <form id="login-password">
-              <InputWrapper>
-                <Label htmlFor="email" style={blockLabelStyles} label="Email" />
-                <Input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className={errors.email && "has-error"}
-                  placeholder="Enter email address"
-                  ref={register({
-                    required: "Email is required.",
-                    validate: (email) =>
-                      validateEmail(email) || "Invalid email",
-                  })}
-                  style={inputStyles}
-                />
-                {errors.email && (
-                  <InputError>{errors.email.message}</InputError>
-                )}
-              </InputWrapper>
-              <InputWrapper>
-                <Label
-                  htmlFor="password"
-                  style={blockLabelStyles}
-                  label="Password"
-                />
-                <Input
-                  type={passwordType}
-                  name="password"
-                  id="password"
-                  className={errors.password && "has-error"}
-                  placeholder="Enter password"
-                  ref={register({
-                    maxLength: {
-                      value: PASSWORD_MAX_LENGTH,
-                      message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
-                    },
-                    minLength: {
-                      value: PASSWORD_MIN_LENGTH,
-                      message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
-                    },
-                    required: "Password is required.",
-                    validate: (password) =>
-                      validatePassword(password) ||
-                      "Password must contain at least 3 of these: " +
-                        "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
-                  })}
-                  style={{ ...inputStyles, paddingRight: "3.5rem" }}
-                />
-                <VisibilityButton
-                  onClick={togglePasswordVisibility}
-                  type={passwordType}
-                />
-                {errors.password && (
-                  <InputError>{errors.password.message}</InputError>
-                )}
-              </InputWrapper>
-              {!isLoginForm && (
+            {!forgotPassword ? (
+              <form id="login-password">
                 <InputWrapper>
                   <Label
-                    htmlFor="confirmPassword"
+                    htmlFor="email"
                     style={blockLabelStyles}
-                    label="Confirm Password"
+                    label="Email"
                   />
                   <Input
-                    type={confirmPasswordType}
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    className={errors.confirmPassword && "has-error"}
-                    required
-                    placeholder="Confirm password"
+                    type="email"
+                    name="email"
+                    id="email"
+                    className={errors.email && "has-error"}
+                    placeholder="Enter email address"
                     ref={register({
-                      maxLength: PASSWORD_MAX_LENGTH,
-                      minLength: PASSWORD_MIN_LENGTH,
-                      required: "Password confirmation is required.",
-                      validate: comparePasswordConfirmation,
+                      required: "Email is required.",
+                      validate: (email) =>
+                        validateEmail(email) || "Invalid email",
+                    })}
+                    style={inputStyles}
+                  />
+                  {errors.email && (
+                    <InputError>{errors.email.message}</InputError>
+                  )}
+                </InputWrapper>
+                <InputWrapper>
+                  <Label
+                    htmlFor="password"
+                    style={blockLabelStyles}
+                    label="Password"
+                  />
+                  <Input
+                    type={passwordType}
+                    name="password"
+                    id="password"
+                    className={errors.password && "has-error"}
+                    placeholder="Enter password"
+                    ref={register({
+                      maxLength: {
+                        value: PASSWORD_MAX_LENGTH,
+                        message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
+                      },
+                      minLength: {
+                        value: PASSWORD_MIN_LENGTH,
+                        message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+                      },
+                      required: "Password is required.",
+                      validate: (password) =>
+                        validatePassword(password) ||
+                        "Password must contain at least 3 of these: " +
+                          "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
                     })}
                     style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
                   <VisibilityButton
-                    onClick={toggleConfirmPasswordVisibility}
-                    type={confirmPasswordType}
+                    onClick={togglePasswordVisibility}
+                    type={passwordType}
                   />
-                  {errors.confirmPassword && (
-                    <InputError>{errors.confirmPassword.message}</InputError>
+                  {errors.password && (
+                    <InputError>{errors.password.message}</InputError>
                   )}
                 </InputWrapper>
-              )}
-              <SubmitButton
-                primary="true"
-                disabled={!formState.isValid}
-                onClick={
-                  isLoginForm
-                    ? handleSubmit(onLoginWithEmail)
-                    : handleSubmit(onSignup)
-                }
-              >
-                {isLoginForm ? "Sign In" : "Sign Up"}
-              </SubmitButton>
-            </form>
-            <WhiteSpace />
-            <WhiteSpace />
-            <div className="text-center">
-              {isLoginForm ? (
-                <>
-                  <p>
-                    <AuthLink to="/auth/forgot-password">
-                      Forgot password?
-                    </AuthLink>
-                  </p>
-                  <p>
-                    <AuthLink to="/auth/signup">
-                      Don't have an account? <u>Sign Up</u>
-                    </AuthLink>
-                  </p>
-                </>
-              ) : (
-                <p>
-                  <AuthLink to="/auth/login">
-                    Already have an account? <u>Sign In</u>
-                  </AuthLink>
+                {!isLoginForm && (
+                  <InputWrapper>
+                    <Label
+                      htmlFor="confirmPassword"
+                      style={blockLabelStyles}
+                      label="Confirm Password"
+                    />
+                    <Input
+                      type={confirmPasswordType}
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      className={errors.confirmPassword && "has-error"}
+                      required
+                      placeholder="Confirm password"
+                      ref={register({
+                        maxLength: PASSWORD_MAX_LENGTH,
+                        minLength: PASSWORD_MIN_LENGTH,
+                        required: "Password confirmation is required.",
+                        validate: comparePasswordConfirmation,
+                      })}
+                      style={{ ...inputStyles, paddingRight: "3.5rem" }}
+                    />
+                    <VisibilityButton
+                      onClick={toggleConfirmPasswordVisibility}
+                      type={confirmPasswordType}
+                    />
+                    {errors.confirmPassword && (
+                      <InputError>{errors.confirmPassword.message}</InputError>
+                    )}
+                  </InputWrapper>
+                )}
+                <SubmitButton
+                  primary="true"
+                  disabled={!formState.isValid}
+                  onClick={
+                    isLoginForm
+                      ? handleSubmit(onLoginWithEmail)
+                      : handleSubmit(onSignup)
+                  }
+                >
+                  {isLoginForm ? "Sign In" : "Sign Up"}
+                </SubmitButton>
+              </form>
+            ) : recoveryLink ? (
+              <EmailTextContainer>
+                <p class="text-center">
+                  An e-mail has been sent with further instructions. Please
+                  check your inbox.{" "}
                 </p>
-              )}
-            </div>
+              </EmailTextContainer>
+            ) : (
+              <ForgotPasswordContainer>
+                <form id="forgot-password">
+                  <InputWrapper>
+                    <Label
+                      htmlFor="email"
+                      style={blockLabelStyles}
+                      label="Your Email"
+                    />
+                    <Input
+                      type="email"
+                      name="email"
+                      id="email"
+                      className={errors.email && "has-error"}
+                      placeholder="Enter email address"
+                      ref={register({
+                        required: "Email is required.",
+                        validate: (email) =>
+                          validateEmail(email) || "Invalid email",
+                      })}
+                      style={inputStyles}
+                    />
+                    {errors.email && (
+                      <InputError>{errors.email.message}</InputError>
+                    )}
+                  </InputWrapper>
+
+                  <EmailButtonContainer>
+                    <SubmitButton
+                      primary="true"
+                      disabled={!formState.isValid}
+                      onClick={handleSubmit(onForgotPassword)}
+                    >
+                      Email me a recovery link
+                    </SubmitButton>
+                  </EmailButtonContainer>
+                </form>
+              </ForgotPasswordContainer>
+            )}
             <WhiteSpace />
-            <SectionDiv className="text-center">
-              {isLoginForm ? "Or Log in with" : "Or Sign up with"}
-            </SectionDiv>
+            <WhiteSpace />
+            {!forgotPassword ? (
+              <div className="text-center">
+                {isLoginForm ? (
+                  <>
+                    <p>
+                      <AuthLink to="/auth/forgot-password">
+                        Forgot password?
+                      </AuthLink>
+                    </p>
+                    <p>
+                      <AuthLink to="/auth/signup">
+                        Don't have an account? <u>Sign Up</u>
+                      </AuthLink>
+                    </p>
+                  </>
+                ) : (
+                  <p>
+                    <AuthLink to="/auth/login">
+                      Already have an account? <u>Sign In</u>
+                    </AuthLink>
+                  </p>
+                )}
+              </div>
+            ) : (
+              <BackLinkContainer>
+                <div className="text-center">
+                  <AuthLink to="/auth/login">Back to Login screen</AuthLink>
+                </div>
+              </BackLinkContainer>
+            )}
+            <WhiteSpace />
+            {!forgotPassword && (
+              <SectionDiv className="text-center">
+                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+              </SectionDiv>
+            )}
             <WhiteSpace />
           </FormContainer>
-          <FlexBox>
-            <SocialButton
-              style={StyleSocialIcon}
-              icon={<SvgIcon src={facebook} />}
-              onClick={() => handleSocialLogin("facebook")}
-            >
-              <ButtonText>Facebook</ButtonText>
-            </SocialButton>
-            <SocialButton
-              style={StyleSocialIcon}
-              icon={<SvgIcon src={google} />}
-              onClick={() => handleSocialLogin("google")}
-            >
-              <ButtonText>Google</ButtonText>
-            </SocialButton>
-            {/** temporarily disable twitter for MVP v1
-             <SocialButton
-              style={StyleSocialIcon}
-              icon={<SvgIcon src={twitter} />}
-              onClick={() => handleSocialLogin("twitter")}
-            >
-              <ButtonText>Twitter</ButtonText>
-            </SocialButton>**/}
-            <SocialButton
-              style={StyleSocialIcon}
-              icon={<SvgIcon src={linkedin} />}
-              onClick={() => handleSocialLogin("linkedin")}
-            >
-              <ButtonText>Linkedin</ButtonText>
-            </SocialButton>
-          </FlexBox>
+          {!forgotPassword && (
+            <FlexBox>
+              <SocialButton
+                style={StyleSocialIcon}
+                icon={<SvgIcon src={facebook} />}
+                onClick={() => handleSocialLogin("facebook")}
+              >
+                <ButtonText>Facebook</ButtonText>
+              </SocialButton>
+              <SocialButton
+                style={StyleSocialIcon}
+                icon={<SvgIcon src={google} />}
+                onClick={() => handleSocialLogin("google")}
+              >
+                <ButtonText>Google</ButtonText>
+              </SocialButton>
+              {/** temporarily disable twitter for MVP v1
+               <SocialButton
+                style={StyleSocialIcon}
+                icon={<SvgIcon src={twitter} />}
+                onClick={() => handleSocialLogin("twitter")}
+              >
+                <ButtonText>Twitter</ButtonText>
+              </SocialButton>**/}
+              <SocialButton
+                style={StyleSocialIcon}
+                icon={<SvgIcon src={linkedin} />}
+                onClick={() => handleSocialLogin("linkedin")}
+              >
+                <ButtonText>Linkedin</ButtonText>
+              </SocialButton>
+            </FlexBox>
+          )}
         </div>
       </LoginRightContainer>
     </LoginContainer>

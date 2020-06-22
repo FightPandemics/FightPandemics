@@ -14,6 +14,7 @@ export { default as StyledSearchInput } from "./StyledSearchInput";
 export { default as WizardProgress } from "./WizardProgress";
 export { default as WizardFormWrapper } from "./WizardFormWrapper";
 export { default as WizardFormGroup } from "./WizardFormGroup";
+export { default as WizardSubmit } from "./WizardSubmit";
 // export { default as WizardCheckboxItem } from "./WizardCheckboxItem";
 export {
   WizardCheckboxWrapper,
@@ -21,3 +22,4 @@ export {
 } from "./WizardCheckboxItem";
 export { default as ShareLocation } from "./ShareLocation";
 export { default as ShowAnywhere } from "./ShowAnywhere";
+export { default as StyledDiv } from "./StyledDiv";

@@ -1,0 +1,12 @@
+{
+    "name": "cypresse2e",
+    "version": "1.0.0",
+    "description": "Cypress tests",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "private": true,
+    "devDependencies": {
+        "cypress": "4.7.0"
+    }
+}

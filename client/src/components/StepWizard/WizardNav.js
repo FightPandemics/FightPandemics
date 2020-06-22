@@ -54,8 +54,21 @@ const BackButton = styled(LeftRightIconButton)`
   @media screen and (min-width: ${desktopBreakpoint}) {
     height: 4.8rem;
     width: 19.2rem;
+    transition: all 0.1s;
+
     & span {
       display: inline;
+    }
+
+    &:hover {
+      img {
+        // values below are equivalent to royalBlue
+        filter: invert(0.5) sepia(63) saturate(3) hue-rotate(207deg);
+      }
+    }
+
+    &:active {
+      transform: translateY(0.1rem);
     }
   }
 `;
@@ -74,16 +87,35 @@ const NextButton = styled(LeftRightIconButton)`
   justify-content: center;
   width: 6.8rem;
 
+  html body &.am-button {
+    border: 0.2rem solid ${royalBlue};
+  }
+
   & span {
     display: none;
   }
+
   @media screen and (min-width: ${desktopBreakpoint}) {
     font-weight: bold;
     height: 4.8rem;
     width: 19.2rem;
+    transition: all 0.1s;
 
     & span {
       display: inline;
+    }
+
+    &:hover {
+      img {
+        // values below are equivalent text color on hover
+        filter: invert(0.5) sepia(60) saturate(87) hue-rotate(232deg);
+      }
+      background-color: ${white};
+      color: ${royalBlue};
+    }
+
+    &:active {
+      transform: translateY(0.1rem);
     }
   }
 `;

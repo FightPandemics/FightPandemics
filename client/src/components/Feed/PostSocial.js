@@ -1,9 +1,9 @@
 // Core
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // Local
-import { FeedContext } from "pages/Feed.js";
+// import { FeedContext } from "pages/Feed.js";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -24,6 +24,7 @@ const PostSocial = ({
   numComments,
   numShares,
   onCopyLink,
+  postpage,
   setShowComments,
   id,
 }) => {
@@ -61,8 +62,24 @@ const PostSocial = ({
     );
   };
 
-  return (
-    <div className="social-icons">
+  const renderFeedSocialIcons = (
+    <>
+      <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
+        {renderLikeIcon()}
+        <span className="total-number">{numLikes}</span>
+        <span className="social-text">Like</span>
+      </div>
+      <span></span>
+      <div className="social-icon" onClick={setShowComments}>
+        {renderCommentIcon()}
+        <span className="total-number">{numComments}</span>
+      </div>
+      <span></span>
+    </>
+  );
+
+  const renderPostSocialIcons = (
+    <>
       <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
         {renderLikeIcon()}
         <span className="total-number">{numLikes}</span>
@@ -84,6 +101,12 @@ const PostSocial = ({
           </span>
         </CopyToClipboard>
       </div>
+    </>
+  );
+
+  return (
+    <div className="social-icons">
+      {!postpage ? <>{renderFeedSocialIcons}</> : <>{renderPostSocialIcons}</>}
     </div>
   );
 };

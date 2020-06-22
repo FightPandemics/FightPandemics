@@ -158,8 +158,13 @@ const CreateProfileButton = styled(BaseButton)`
   }
 `;
 
-const Option = ({ img, text, path, onClick }) => (
-  <OptionWrapper onClick={onClick}>
+const Option = ({ img, text, onClick, type }) => (
+  <OptionWrapper
+    onClick={() => onClick(text)}
+    style={{
+      backgroundColor: type === text.toLowerCase() && `${colors.lightGray}`,
+    }}
+  >
     <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
     <p>{text}</p>
   </OptionWrapper>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import LocalEmergencyNumber from "../../components/NearestHospital/LocalEmergencyNumber";
 import { Tabs } from "antd-mobile";
 import { NavLink } from "react-router-dom";
 
@@ -27,6 +26,7 @@ const TabsContainer = styled.div`
   display: none !important;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block !important;
+    padding-top: 4rem; /* Offset header's height */
   }
 `;
 
@@ -70,7 +70,7 @@ const MobileTabs = (props) => {
     } else {
       sessionStorage.setItem("LocalEmergencyBox", "true");
     }
-  }, []);
+  }, [status]);
 
   // const removeNoticeBar = () => {
   //   sessionStorage.setItem("LocalEmergencyBox", "false");

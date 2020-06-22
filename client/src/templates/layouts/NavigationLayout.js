@@ -1,4 +1,4 @@
-import { Drawer, List, Button, Flex, WhiteSpace } from "antd-mobile";
+import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
 import { Typography } from "antd";
 
 import React, { useState } from "react";
@@ -6,7 +6,6 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitials } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Avatar from "components/Avatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
@@ -171,7 +170,7 @@ const AvatarInitials = styled(Typography.Text)`
 `;
 
 const NavigationLayout = (props) => {
-  const { mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -211,7 +210,17 @@ const NavigationLayout = (props) => {
         <a href={NOTION_URL}>Notion</a>
       </NavItemBrief>
       <NavItem history={history}>
-        <Link to="/feed">Feed</Link>
+        <Link
+          to={{
+            pathname: "/feed",
+            user,
+          }}
+        >
+          Feed
+        </Link>
+      </NavItem>
+      <NavItem history={history}>
+        <Link to="/about-us">About Us</Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
@@ -225,6 +234,9 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/auth/login">Login / Register</Link>
       </NavItem>
+      <NavItem history={history}>
+        <Link to="/about-us">About Us</Link>
+      </NavItem>
     </>
   );
 
@@ -232,7 +244,7 @@ const NavigationLayout = (props) => {
     <MenuContainer>
       {drawerOpened && <CloseNav onClick={toggleDrawer} />}
       <NavList>
-        {isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+        {!authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
       </NavList>
     </MenuContainer>
   );
@@ -254,6 +266,7 @@ const NavigationLayout = (props) => {
           className="app-drawer"
         >
           <Header
+            authLoading={authLoading}
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
           />

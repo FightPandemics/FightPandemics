@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
-import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import { DARK_GRAY } from "constants/colors";
 

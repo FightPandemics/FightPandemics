@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
-
-import SubmitButton from "components/Button/SubmitButton";
+import { Transition } from 'react-transition-group';
+import { withRouter, Link } from "react-router-dom";
 import InputError from "components/Input/InputError";
+import LocationInput from "components/Input/LocationInput";
+import { validateEmail } from "utils/validators";
 import {
   AnswerButton,
+  ShowAnywhere,
+  StepSubtitle,
   StyledWizard,
   WizardContainer,
   WizardStep,
   WizardNav,
-  WizardButtonGroup,
   StepTitle,
   StyledTextInput,
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
+  WizardSubmit,
+  SkipLink,
+  StyledDiv,
 } from "components/StepWizard";
-import { asyncGetGeoLocation } from "utils/geolocation";
-import { validateEmail } from "utils/validators";
 
 const INITIAL_STATE = {
   answers: [],
@@ -46,18 +49,17 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
-  const selectLocationDetection = async () => {
+  const selectLocationDetection = (location) => {
     try {
-      const location = await asyncGetGeoLocation();
       props.update("location", location);
     } catch {
-      props.update("location", "unknown");
+      props.update("location", null);
     } finally {
       props.nextStep();
     }
   };
   const rejectLocationDetection = () => {
-    props.update("location", "unknown");
+    props.update("location", null);
     props.nextStep();
   };
   return (
@@ -66,19 +68,28 @@ const Step2 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>Where are you located?</StepTitle>
-      <AnswerButton onSelect={selectLocationDetection}>
-        Detect my location
-      </AnswerButton>
-      <AnswerButton onSelect={rejectLocationDetection}>
-        Doesn't matter
-      </AnswerButton>
+      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <WizardFormWrapper>
+        <div style={{ marginBottom: "40px", textAlign: "center" }}>
+          <LocationInput
+            location={props.location}
+            onLocationChange={selectLocationDetection}
+            includeNavigator={true}
+          />
+        </div>
+        <Link to="/feed">
+          <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
+            Show me postings from anywhere
+          </ShowAnywhere>
+        </Link>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
 
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -94,11 +105,16 @@ const Step3 = (props) => {
   };
 
   return (
-    <WizardStep>
+    <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
+      <StyledDiv>
+        We respect your privacy. Please read our{" "}
+        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
+        <Link to="/terms-conditions">Terms & Conditions.</Link>
+      </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
@@ -113,18 +129,32 @@ const Step3 = (props) => {
           />
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
-      </WizardFormWrapper>
-      <WizardButtonGroup>
-        <SubmitButton disabled={!valid} primary="true" onClick={onSubmit}>
+        <WizardSubmit
+          disabled={email === "" || !valid}
+          primary="true"
+          onClick={onSubmit}
+        >
           Submit
-        </SubmitButton>
-      </WizardButtonGroup>
+        </WizardSubmit>
+        <SkipLink>
+          <Link to="/feed">
+            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
+            Skip
+          </Link>
+        </SkipLink>
+      </WizardFormWrapper>
     </WizardStep>
   );
 };
 
 const NeedHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
+  const [transition, setTransition] = useState(false);
+
+  useEffect(() => {
+    setTransition(!transition);
+  },[]);
+  
   const updateAnswers = (key, value) => {
     const { answers } = state;
     const updatedAnswers = { ...answers, [key]: value };
@@ -132,17 +162,21 @@ const NeedHelp = withRouter((props) => {
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
       props.history.push({
-        pathname: "/need-help#Step3",
+        pathname: "/feed",
       });
     }
   };
   return (
     <WizardContainer className="wizard-container">
-      <StyledWizard isHashEnabled nav={<WizardNav />}>
-        <Step1 hashKey={"Step1"} update={updateAnswers} />
-        <Step2 hashKey={"Step2"} update={updateAnswers} />
-        <Step3 hashKey={"Step3"} update={updateAnswers} />
-      </StyledWizard>
+      <Transition in={transition} timeout={500}>
+        {status=> (
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav/>}>
+            <Step1 hashKey={"Step1"} update={updateAnswers} />
+            <Step2 hashKey={"Step2"} update={updateAnswers} />
+            <Step3 hashKey={"Step3"} update={updateAnswers} />
+          </StyledWizard>
+        )}      
+      </Transition>
     </WizardContainer>
   );
 });

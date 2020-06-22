@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { Transition } from 'react-transition-group';
 import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
-import { asyncGetGeoLocation } from "utils/geolocation";
+import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
-import WizardSubmit from "components/StepWizard/WizardSubmit"
 import {
   StyledWizard,
   WizardContainer,
   WizardStep,
   WizardNav,
-  WizardButtonGroup,
   ShowAnywhere,
-  ShareLocation,
   StepTitle,
   StepSubtitle,
   SkipLink,
   StyledTextInput,
-  StyledSearchInput,
   WizardProgress,
   WizardFormWrapper,
   WizardFormGroup,
@@ -24,16 +21,13 @@ import {
   getCheckedAnswers,
   WizardCheckboxWrapper,
   WizardCheckboxItem,
+  WizardSubmit,
+  StyledDiv,
 } from "components/StepWizard";
-
-// ICONS
-import SvgIcon from "components/Icon/SvgIcon";
-import shareMyLocation from "assets/icons/share-my-location.svg";
 
 const INITIAL_STATE = {
   answers: [],
 };
-
 
 const STEP_1_ANSWERS = [
   "As a Volunteer",
@@ -79,24 +73,20 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
-  const [locationSearch, setLocationSearch] = useState("");
-
-  const selectLocationDetection = async () => {
+  const selectLocationDetection = (location) => {
     try {
-      const location = await asyncGetGeoLocation();
       props.update("location", location);
     } catch {
-      props.update("location", "unknown");
+      props.update("location", null);
     } finally {
       props.nextStep();
     }
   };
   const rejectLocationDetection = () => {
-    props.update("location", "unknown");
+    props.update("location", null);
     props.nextStep();
   };
 
-  const manualLocation = (evt) => setLocationSearch(evt); // I am not sure how best to perform the search at the moment.
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
@@ -105,23 +95,13 @@ const Step2 = (props) => {
       <StepTitle>Where are you located?</StepTitle>
       <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
       <WizardFormWrapper>
-        <WizardFormGroup>
-          <StyledSearchInput
-            type="text"
-            name="manualLocation"
-            label="Location search"
-            placeholder="Enter Address, Zip Code, or City"
-            onChange={manualLocation}
-            value={locationSearch}
+        <div style={{ marginBottom: "40px", textAlign: "center" }}>
+          <LocationInput
+            location={props.location}
+            onLocationChange={selectLocationDetection}
+            includeNavigator={true}
           />
-        </WizardFormGroup>
-        <ShareLocation
-          tertiary="true"
-          icon={<SvgIcon className="share-location-icon" src={shareMyLocation} />}
-          onSelect={selectLocationDetection}
-        >
-          Share my location
-        </ShareLocation>
+        </div>
         <Link to="/feed">
           <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
             Show me postings from anywhere
@@ -133,7 +113,7 @@ const Step2 = (props) => {
 };
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -154,10 +134,11 @@ const Step3 = (props) => {
         Question {props.currentStep}/{props.totalSteps}
       </WizardProgress>
       <StepTitle>What is your email address?</StepTitle>
-      <StepSubtitle>
+      <StyledDiv>
         We respect your privacy. Please read our{" "}
-        <Link to={"/terms-conditions"}>Terms and Conditions</Link>.
-      </StepSubtitle>
+        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
+        <Link to="/terms-conditions">Terms & Conditions.</Link>
+      </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
@@ -173,18 +154,18 @@ const Step3 = (props) => {
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
         <WizardSubmit
-          disabled={!valid}
+          disabled={email === "" || !valid}
           primary="true"
-          onClick={onSubmit}>
+          onClick={onSubmit}
+        >
           Submit
-          </WizardSubmit>
+        </WizardSubmit>
         <SkipLink>
           <Link to="/feed">
             {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
             Skip
-            </Link>
+          </Link>
         </SkipLink>
-
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -192,6 +173,11 @@ const Step3 = (props) => {
 
 const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
+  const [transition, setTransition] = useState(false);
+
+  useEffect(() => {
+    setTransition(!transition);
+  },[]);
   const updateAnswers = (key, value) => {
     const { answers } = state;
     const updatedAnswers = { ...answers, [key]: value };
@@ -205,11 +191,15 @@ const OfferHelp = withRouter((props) => {
   };
   return (
     <WizardContainer className="wizard-container">
-      <StyledWizard isHashEnabled nav={<WizardNav />}>
-        <Step1 hashKey={"Step1"} update={updateAnswers} />
-        <Step2 hashKey={"Step2"} update={updateAnswers} />
-        <Step3 hashKey={"Step3"} update={updateAnswers} />
-      </StyledWizard>
+      <Transition in={transition} timeout={500}>
+        {status=> (
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
+            <Step1 hashKey={"Step1"} update={updateAnswers} />
+            <Step2 hashKey={"Step2"} update={updateAnswers} />
+            <Step3 hashKey={"Step3"} update={updateAnswers} />
+          </StyledWizard>
+        )}
+      </Transition>
     </WizardContainer>
   );
 });

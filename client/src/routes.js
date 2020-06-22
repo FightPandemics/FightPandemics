@@ -1,9 +1,10 @@
 import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
-import About from "./pages/About";
+import AboutUs from "./pages/AboutUs";
 import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
 import OrgProfileComplete from "./pages/OrgProfileComplete";
+import OrganizationProfile from "./pages/OrganizationProfile";
 import EditOrganizationProfile from "./pages/EditOrganizationProfile";
 import EditOrganizationAccount from "./pages/EditOrganizationAccount";
 import Medical from "./pages/Medical";
@@ -18,6 +19,7 @@ import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
+import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
@@ -37,6 +39,7 @@ const routes = [
     props: {
       isLoginForm: true,
       notLoggedInOnly: true,
+      forgotPassword: false,
     },
   },
   {
@@ -46,6 +49,17 @@ const routes = [
     props: {
       isLoginForm: false,
       notLoggedInOnly: true,
+      forgotPassword: false,
+    },
+  },
+  {
+    path: "/auth/forgot-password",
+    component: Login,
+    layout: "logo",
+    props: {
+      isLoginForm: false,
+      notLoggedInOnly: true,
+      forgotPassword: true,
     },
   },
   {
@@ -69,8 +83,8 @@ const routes = [
     component: OfferHelp,
   },
   {
-    path: "/about",
-    component: About,
+    path: "/about-us",
+    component: AboutUs,
   },
   {
     path: "/create-organization-profile",
@@ -83,6 +97,10 @@ const routes = [
   {
     path: "/create-organization-complete",
     component: OrgProfileComplete,
+  },
+  {
+    path: "/organization/:id",
+    component: OrganizationProfile,
   },
   {
     path: "/edit-organization-account",
@@ -166,6 +184,13 @@ const routes = [
     component: EditAccount,
     props: {
       loggedInOnly: true,
+    },
+  },
+  {
+    path: "/post/:postId/",
+    component: PostPage,
+    props: {
+      loggedInOnly: false,
     },
   },
   {

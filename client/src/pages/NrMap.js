@@ -49,22 +49,8 @@ const NrMap = () => {
   const googleMapRef = useRef();
   const googleMap = useRef();
 
-  useEffect(() => {
-    const googleMapScript = document.createElement("script");
-    googleMapScript.src = url;
-    window.document.body.appendChild(googleMapScript);
-
-    googleMapScript.addEventListener("load", () => {
-      googleMap.current = createGoogleMap();
-      createMarker();
-      places();
-    });
-
-    getMyLocation();
-  }, [createGoogleMap, createMarker, places]);
-
-  const createGoogleMap = () => {
-    return new window.google.maps.Map(googleMapRef.current, {
+  const createGoogleMap = useCallback(() => {
+    new window.google.maps.Map(googleMapRef.current, {
       zoom: 13,
       center: {
         lat: coordinates.latitude,
@@ -72,9 +58,9 @@ const NrMap = () => {
       },
       disableDefaultUI: true,
     });
-  };
+  }, [coordinates.latitude, coordinates.longitude]);
 
-  const places = () => {
+  const places = useCallback(() => {
     new window.google.maps.places.PlacesService(googleMap.current).nearbySearch(
       {
         location: {
@@ -89,17 +75,35 @@ const NrMap = () => {
         setHospitals(results);
       },
     );
-  };
+  }, [coordinates.latitude, coordinates.longitude]);
 
-  useEffect(() => {
-    if (hospitals && hospitals.length > 0) {
-      createMarker();
-      placeDetails();
-    }
-  }, [createMarker, hospitals, placeDetails]);
+  const createMarker = useCallback(() => {
+    const image = {
+      url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
+      size: new window.google.maps.Size(71, 71),
+      origin: new window.google.maps.Point(0, 0),
+      anchor: new window.google.maps.Point(17, 34),
+      scaledSize: new window.google.maps.Size(25, 25),
+    };
+    hospitals.forEach((e) => {
+      new window.google.maps.Marker({
+        position: {
+          lat: e.geometry.location.lat(),
+          lng: e.geometry.location.lng(),
+        },
+        icon: image,
+        animation: window.google.maps.Animation.DROP,
+        map: googleMap.current,
+      });
+    });
+    new window.google.maps.Marker({
+      position: { lat: coordinates.latitude, lng: coordinates.longitude },
+      map: googleMap.current,
+    });
+  }, [coordinates.latitude, coordinates.longitude, hospitals]);
 
-  const placeDetails = () => {
-    hospitals.map((place) => {
+  const placeDetails = useCallback(() => {
+    hospitals.forEach((place) => {
       const request = {
         placeId: place.place_id,
         fields: [
@@ -123,32 +127,28 @@ const NrMap = () => {
         },
       );
     });
-  };
+  }, [hospitals]);
 
-  const createMarker = useCallback(() => {
-    const image = {
-      url: "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
-      size: new window.google.maps.Size(71, 71),
-      origin: new window.google.maps.Point(0, 0),
-      anchor: new window.google.maps.Point(17, 34),
-      scaledSize: new window.google.maps.Size(25, 25),
-    };
-    hospitals.map((e) => {
-      new window.google.maps.Marker({
-        position: {
-          lat: e.geometry.location.lat(),
-          lng: e.geometry.location.lng(),
-        },
-        icon: image,
-        animation: window.google.maps.Animation.DROP,
-        map: googleMap.current,
-      });
+  useEffect(() => {
+    const googleMapScript = document.createElement("script");
+    googleMapScript.src = url;
+    window.document.body.appendChild(googleMapScript);
+
+    googleMapScript.addEventListener("load", () => {
+      googleMap.current = createGoogleMap();
+      createMarker();
+      places();
     });
-    new window.google.maps.Marker({
-      position: { lat: coordinates.latitude, lng: coordinates.longitude },
-      map: googleMap.current,
-    });
-  });
+
+    getMyLocation();
+  }, [createGoogleMap, createMarker, places]);
+
+  useEffect(() => {
+    if (hospitals && hospitals.length > 0) {
+      createMarker();
+      placeDetails();
+    }
+  }, [createMarker, hospitals, placeDetails]);
 
   const getMyLocation = () => {
     const location = window.navigator && window.navigator.geolocation;

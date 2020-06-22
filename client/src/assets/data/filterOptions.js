@@ -1,7 +1,7 @@
 export default {
-  location: { label: "Location", className: "filter-1", options: [] },
-  fromWhom: {
-    label: "Providers",
+  location: { label: "location", className: "filter-1", options: [] },
+  providers: {
+    label: "providers",
     className: "filter-2",
     options: [
       "Individuals",
@@ -10,22 +10,22 @@ export default {
       "Community",
       "Government",
       "R&D",
-      "Non-Profit",
+      "Non-profit",
       "University",
-      "Health Care Providers",
+      "Health care provider",
       "Other",
     ],
   },
   type: {
-    label: "Type",
+    label: "type",
     className: "filter-3",
     options: [
-      "Medical supplies",
-      "Groceries / Food",
+      "Medical Supplies",
+      "Groceries/Food",
       "Business",
       "Education",
       "Legal",
-      "Wellbeing / Mental",
+      "Wellbeing/Mental",
       "Entertainment",
       "Information",
       "Funding",
@@ -35,7 +35,7 @@ export default {
     ],
   },
   lookingFor: {
-    label: "Need or give help",
+    label: "need or give help",
     className: "filter-4",
     options: ["Need Help", "Give Help"],
   },

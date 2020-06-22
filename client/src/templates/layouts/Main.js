@@ -3,7 +3,7 @@ import { theme, mq } from "constants/theme";
 const { offWhite } = theme.colors;
 
 const Main = styled.main`
-  padding: 0 2rem;
+  padding-top: 1rem;
 
   display: flex;
   align-items: center;
@@ -13,6 +13,7 @@ const Main = styled.main`
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: ${offWhite};
+    padding-top: 7rem;
 
     min-height: calc(100% - 160px);
   }

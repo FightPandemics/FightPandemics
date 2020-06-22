@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Modal, Tabs, Input } from "antd";
+import { Modal } from "antd";
 import { theme, mq } from "constants/theme";
 import BaseSelector from "components/Selector/Selector";
 import SubmitButton from "components/Button/SubmitButton";
