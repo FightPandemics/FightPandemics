@@ -94,12 +94,11 @@ const activeStyles = {
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   width: 100vw;
 `;
 
 export default ({ authLoading, onMenuClick, isAuthenticated }) => {
-
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
@@ -140,15 +139,13 @@ export default ({ authLoading, onMenuClick, isAuthenticated }) => {
               </NavLink>
             </li>
             <Link to="/feed">
-              <SvgIcon
-                src={envelope}
-                style={{ marginLeft: "1.5rem" }}
-              />
+              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
             </Link>
           </>
         )}
-    </>)
-  }
+      </>
+    );
+  };
 
   return (
     <HeaderWrapper className="header">
@@ -168,9 +165,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated }) => {
             />
             <DesktopMenu>
               <NavLinks>
-                <ul>
-                  {renderNavLinkItems()}
-                </ul>
+                <ul>{renderNavLinkItems()}</ul>
               </NavLinks>
             </DesktopMenu>
           </div>

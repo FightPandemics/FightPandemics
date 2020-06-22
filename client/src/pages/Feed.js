@@ -151,7 +151,7 @@ const LayoutWrapper = styled(Layout)`
 `;
 
 const ContentWrapper = styled(Content)`
-  margin: 0;
+  margin: 0 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
   }
