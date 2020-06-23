@@ -37,9 +37,7 @@ import {
   initialState,
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
-import {
-  inlineLabelStyles,
-} from "constants/formStyles";
+import { inlineLabelStyles } from "constants/formStyles";
 
 const { type, industry } = createOrganizationProfile;
 
@@ -293,19 +291,6 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
-          <SubmitButton
-            primary="true"
-            onClick={handleSubmit(onFormSubmit)}
-            style={{ fontWeight: "normal" }}
-            disabled={createOrganizationFormState.loading}
-          >
-            {createOrganizationFormState.loading
-              ? "Creating Profile..."
-              : "Create Profile"}
-          </SubmitButton>
-          <WhiteSpace />
-          <WhiteSpace />
-          <WhiteSpace />
           <InputWrapper>
             <Label style={styleLabel} label="" />
             <StyledCheckbox
@@ -327,6 +312,19 @@ const CreateOrgProfile = (props) => {
               <Link to="/terms-conditions">Terms and Conditions</Link>
             </StyledCheckbox>
           </InputWrapper>
+          <WhiteSpace />
+          <WhiteSpace />
+          <WhiteSpace />
+          <SubmitButton
+            primary="true"
+            onClick={handleSubmit(onFormSubmit)}
+            style={{ fontWeight: "normal" }}
+            disabled={createOrganizationFormState.loading}
+          >
+            {createOrganizationFormState.loading
+              ? "Creating Profile..."
+              : "Create Profile"}
+          </SubmitButton>
         </StyledForm>
         <WhiteSpace />
       </FormContainer>
