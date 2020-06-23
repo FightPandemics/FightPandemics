@@ -182,7 +182,7 @@ const Home = (props) => {
               activeImg={needHelpActive}
               onClick={() => props.history.push("/need-help")}
             >
-              Need Help
+              Request Help
             </ImageButton>
           </FlexChild>
           <FlexChild>
@@ -192,7 +192,7 @@ const Home = (props) => {
               activeImg={offerHelpActive}
               onClick={() => props.history.push("/offer-help")}
             >
-              Give Help
+              Offer Help
             </ImageButton>
           </FlexChild>
 
