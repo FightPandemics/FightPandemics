@@ -1,0 +1,29 @@
+name: Cypress end-to-end tests
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - backend/**
+      - client/**
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
+          start: 
+          wait-on: http://localhost:3000
+
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: screenshots-in-headless-chrome
+          path: cypresse2e/screenshots
