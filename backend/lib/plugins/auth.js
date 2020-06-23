@@ -115,7 +115,7 @@ const authPlugin = async (app) => {
       token =
         cache.get(key) || (await Auth0.authenticate("client_credentials"));
       const decodedToken = await app.jwt.decode(token);
-      if (decodedToken.exp * 1000 < Date.now()) {
+      if (decodedToken.payload.exp * 1000 < Date.now()) {
         req.log.info({ message: msg.expired });
         token = await Auth0.authenticate("client_credentials");
       }
