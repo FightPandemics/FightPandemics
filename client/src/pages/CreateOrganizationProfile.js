@@ -2,7 +2,6 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-// import axios from "axios";
 import createOrganizationProfile from "assets//data/createOrganizationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
@@ -11,7 +10,6 @@ import Select from "components/Input/Select";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
-import StyledCheckboxGroup from "components/Input/CheckboxGroup";
 import LocationInput from "components/Input/LocationInput";
 import Checkbox from "components/Input/Checkbox";
 import createOrganizationSvg from "assets/icons/create-organization.svg";
@@ -40,20 +38,10 @@ import {
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
 import {
-  blockLabelStyles,
-  inputStyles,
   inlineLabelStyles,
 } from "constants/formStyles";
 
 const { type, industry } = createOrganizationProfile;
-
-const organizationNeeds = [
-  "Volunteer",
-  "Staff",
-  "Donations",
-  "Investors",
-  "Others",
-];
 
 const CheckboxGroup = ({
   defaultValue,
@@ -302,25 +290,6 @@ const CreateOrgProfile = (props) => {
                 ? "Please select organization type and industry from dropdown"
                 : ""}
             </span>
-            <WhiteSpace />
-            <WhiteSpace />
-            <InputWrapper>
-              <Label style={styleLabel} label="* What are you looking for" />
-              <Controller
-                as={StyledCheckboxGroup}
-                control={control}
-                color={theme.colors.royalBlue}
-                display="column"
-                options={organizationNeeds}
-                name="needs"
-                rules={{ required: true }}
-                onChange={([checkedValues]) => checkedValues}
-                validateStatus="error"
-              />
-              <span style={errorStyles}>
-                {errors.needs && "Please select at least one option"}
-              </span>
-            </InputWrapper>
             <WhiteSpace />
             <WhiteSpace />
           </div>
