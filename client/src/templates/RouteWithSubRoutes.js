@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 
 export const HOME = "/";
 export const LOGIN = "/auth/login";
+export const LOGOUT = "/auth/logout";
 export const FEED = "/feed";
 export const VERIFY_EMAIL = "/auth/verify-email";
 export const CREATE_PROFILE = "/create-profile";
@@ -27,7 +28,15 @@ const getLayoutComponent = (layout) => {
 // handle "sub"-routes by passing them in a `routes`
 // prop to the component it renders.
 export const RouteWithSubRoutes = (route) => {
-  const { authLoading, emailVerified, isAuthenticated, path, props = {}, user } = route;
+  const {
+    authError,
+    authLoading,
+    emailVerified,
+    isAuthenticated,
+    path,
+    props = {},
+    user,
+  } = route;
   const { loggedInOnly, notLoggedInOnly, tabIndex, mobiletabs, forgotPassword } = props;
 
   return (
@@ -38,7 +47,10 @@ export const RouteWithSubRoutes = (route) => {
         let redirect;
 
         if (!authLoading) { // don't apply redirect if authLoading
-          if (loggedInOnly && !isAuthenticated) {
+          if (authError && location.pathname !== LOGOUT) {
+            // logout as means to handle auth error edge cases
+            redirect = LOGOUT;
+          } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
             redirect = HOME;
@@ -84,6 +96,7 @@ export const RouteWithSubRoutes = (route) => {
 
 const mapDispatchToProps = {};
 const mapStateToProps = ({ session }) => ({
+  authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
   isAuthenticated: session.isAuthenticated,

@@ -1,4 +1,5 @@
 import {
+  AUTH_ERROR,
   AUTH_LOGOUT,
   AUTH_SUCCESS,
   SET_AUTH_LOADING,
@@ -7,14 +8,21 @@ import {
 
 const initialState = {
   isAuthenticated: false,
+  authError: null,
   authLoading: false,
   email: null,
   emailVerified: false,
+  error: null,
   user: null,
 };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
+    case AUTH_ERROR:
+      return {
+        ...initialState,
+        authError: action.error,
+      };
     case AUTH_SUCCESS:
       return {
         ...state,
