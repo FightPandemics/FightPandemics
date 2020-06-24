@@ -6,6 +6,7 @@ import createOrganizationProfile from "assets//data/createOrganizationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
 import Input from "components/Input/BaseInput";
+import InputError from "components/Input/InputError";
 import Select from "components/Input/Select";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
@@ -84,6 +85,8 @@ const CreateOrgProfile = (props) => {
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
+  const [validEmail, setValid] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -94,6 +97,10 @@ const CreateOrgProfile = (props) => {
   };
   const handleInputChangeConditions = (e) => {
     setConditions(e.target.checked);
+  };
+  const handleInputChangeEmail = (e) => {
+    setEmail(e.target.value);
+    setValid(e.target.checkValidity());
   };
 
   const onFormSubmit = async (formData) => {
@@ -172,12 +179,16 @@ const CreateOrgProfile = (props) => {
               type="email"
               required
               placeholder=""
-              onChange={(email) => email}
+              onChange={handleInputChangeEmail}
               style={styleInput}
               name="email"
               ref={register({ required: true, minLength: 3 })}
             />
-
+            {validEmail || email === "" ? (
+              ""
+            ) : (
+              <InputError>Email is invalid</InputError>
+            )}
             <span style={errorStyles}>
               {errors.email && "Email is required"}
             </span>
@@ -318,7 +329,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions)}
+            disabled={!(privacy && conditions && validEmail)}
           >
             {createOrganizationFormState.loading
               ? "Creating Profile..."
