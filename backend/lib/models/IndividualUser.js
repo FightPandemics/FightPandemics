@@ -50,6 +50,12 @@ individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
 });
 
+individualUserSchema.virtual("organizations", {
+  foreignField: "ownerId",
+  localField: "_id",
+  ref: "OrganizationUser",
+});
+
 const IndividualUser = User.discriminator(
   "IndividualUser",
   individualUserSchema,

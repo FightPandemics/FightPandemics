@@ -16,8 +16,9 @@ async function routes(app) {
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
-
-    const [userErr, user] = await app.to(User.findById(userId));
+    const [userErr, user] = await app.to(
+      User.findById(userId).populate("organizations"),
+    );
     if (userErr) {
       req.log.error(userErr, "Failed retrieving user");
       throw app.httpErrors.internalServerError();
@@ -31,21 +32,25 @@ async function routes(app) {
       about,
       email,
       firstName,
+      hide,
       lastName,
       location,
       needs,
       objectives,
+      organizations,
       urls,
     } = user;
     return {
       about,
       email,
       firstName,
+      hide,
       id,
       lastName,
       location,
       needs,
       objectives,
+      organizations,
       urls,
     };
   });
