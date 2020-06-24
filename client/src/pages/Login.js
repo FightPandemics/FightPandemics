@@ -239,6 +239,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   }, [code, state, dispatch]);
 
   const onLoginWithEmail = async (formData) => {
+    console.log("Submitted");
     authFormDispatch({ type: AUTH_FORM_LOGIN });
 
     try {
@@ -436,12 +437,12 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 )}
                 <SubmitButton
                   primary="true"
-                  disabled={!formState.isValid}
                   onClick={
                     isLoginForm
                       ? handleSubmit(onLoginWithEmail)
                       : handleSubmit(onSignup)
                   }
+                  disabled={!formState.isValid}
                 >
                   {isLoginForm ? "Sign In" : "Sign Up"}
                 </SubmitButton>
