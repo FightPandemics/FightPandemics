@@ -154,7 +154,7 @@ const CreateOrgProfile = (props) => {
             <Input
               type="text"
               required
-              placeholder="notion"
+              placeholder=""
               onChange={(name) => name}
               style={styleInput}
               ref={register({ required: true, minLength: 3 })}
@@ -171,7 +171,7 @@ const CreateOrgProfile = (props) => {
             <Input
               type="email"
               required
-              placeholder="help@notion.com (this is a fake)"
+              placeholder="example@example.com"
               onChange={(email) => email}
               style={styleInput}
               name="email"
