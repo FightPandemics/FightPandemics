@@ -1,8 +1,8 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Text } from "react";
 import { Link } from "react-router-dom";
-
+import Header from "../components/Header";
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
@@ -19,6 +19,7 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import PrivacyPolicy from "pages/PrivacyPolicy";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -88,8 +89,15 @@ const OrganizationProfile = () => {
     objectives = {},
     urls = {},
   } = organization || {};
-
+  
+  
+  
+  
+  
+  
+  
   useEffect(() => {
+    
     (async function fetchProfile() {
       orgProfileDispatch(fetchOrganization());
       try {
@@ -131,7 +139,7 @@ const OrganizationProfile = () => {
       }
     }
   };
-
+  
   const renderProfileData = () => {
     let firstName, lastName;
     if (!organization) {
@@ -141,9 +149,11 @@ const OrganizationProfile = () => {
       const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
       const nameArr = name.split(" ");
+      
       if (nameArr.length < 2) {
         firstName = nameArr[0];
         lastName = firstName.split("").pop();
+        
       } else {
         firstName = nameArr[0];
         lastName = nameArr[1];
@@ -151,15 +161,18 @@ const OrganizationProfile = () => {
 
       return (
         <>
+        
           <UserInfoContainer>
             <EditIcon src={edit} onClick={() => setDrawer(true)} />
             <ProfilePic
               noPic={true}
               initials={getInitials(firstName, lastName)}
             />
+            
             <UserInfoDesktop>
               <NameDiv>
                 {name}
+                
                 <PlaceholderIcon />
                 <EditEmptyIcon
                   src={editEmpty}
@@ -194,6 +207,7 @@ const OrganizationProfile = () => {
             <SectionHeader>
               My Activity
               <PlaceholderIcon />
+              
               <CreatePostDiv>Create a post</CreatePostDiv>
               <CreatePostIcon
                 src={createPost}
@@ -228,6 +242,7 @@ const OrganizationProfile = () => {
       );
     }
   };
+  
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -244,4 +259,6 @@ const OrganizationProfile = () => {
   );
 };
 
+  
 export default withOrganizationContext(OrganizationProfile);
+

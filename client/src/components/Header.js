@@ -10,6 +10,9 @@ import menu from "assets/icons/menu.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
+import { Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -98,7 +101,30 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated }) => {
+export default ({ authLoading, onMenuClick, isAuthenticated, orgname }) => {
+  const menu = (
+    
+    <Menu>
+      <Menu.Item>
+        <Link   to="/profile">
+          My Profile
+        </Link>
+      </Menu.Item>
+      
+      <Menu.Item>
+      <Link   to="/create-organization-profile">
+      Add Organisation
+        </Link>
+        
+      </Menu.Item>
+      <Menu.Item>
+        <Link   to="/auth/logout">
+          Log Out
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
+  
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
@@ -116,9 +142,12 @@ export default ({ authLoading, onMenuClick, isAuthenticated }) => {
         {isAuthenticated ? (
           <>
             <li>
-              <NavLink activeStyle={activeStyles} to="/profile">
-                Profile
-              </NavLink>
+              <Dropdown overlay={menu}>
+    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+      Profile <DownOutlined />
+    </a>
+  </Dropdown>
+  
             </li>
             <li>
               <NavLink activeStyle={activeStyles} to="/auth/logout">

@@ -248,7 +248,7 @@ const Post = ({
           {renderHeader}
           <div className="card-submenu">
             {isAuthenticated &&
-              user &&
+              user && 
               (user._id === post.author.id || user.id === post.author.id) &&
               (!postId ? (
                 <SubMenuButton

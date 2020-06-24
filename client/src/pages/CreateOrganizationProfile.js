@@ -68,7 +68,9 @@ const CheckboxGroup = ({
   );
 };
 
+
 const CreateOrgProfile = (props) => {
+  
   const {
     clearError,
     register,
@@ -84,7 +86,9 @@ const CreateOrgProfile = (props) => {
   ] = useReducer(createOrganizationFormReducer, initialState);
 
   const [location, setLocation] = useState({});
+  
   const [privacy, setPrivacy] = useState("");
+  console.log(privacy);
   const [conditions, setConditions] = useState("");
 
   const handleLocationChange = (location) => {
@@ -99,6 +103,8 @@ const CreateOrgProfile = (props) => {
   };
 
   const onFormSubmit = async (formData) => {
+    console.log(formData.name); // prints out the name of the organisation created by the user
+    
     if (!privacy) {
       alert("You must agree to our privacy policy before proceeding");
       return;
@@ -124,7 +130,10 @@ const CreateOrgProfile = (props) => {
           if (res) {
             props.history.push("/create-organization-complete", {
               orgId: res.data._id,
+              
             });
+            console.log(props.orgId)
+            
           }
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -142,6 +151,7 @@ const CreateOrgProfile = (props) => {
 
   return (
     <Main>
+      
       <SvgContainer>
         <img src={createOrganizationSvg} alt="create organization" />
       </SvgContainer>
@@ -161,7 +171,9 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               ref={register({ required: true, minLength: 3 })}
               name="name"
+              
             />
+            
             <span style={errorStyles}>
               {errors.name && "Organization name is required"}
             </span>

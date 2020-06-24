@@ -22,13 +22,16 @@ const PrivacyPolicy = () => {
     <PolicyContainer>
       <TextContainer>
         <h2 className="text-primary display-6">Privacy Policy</h2>
+        <h2>{}</h2>
         <Paragraph>
           <strong>FightPandemics, INC.</strong> (the <strong>“Company”</strong>,{" "}
           <strong>“We”</strong> or/and <strong>“Us”</strong>) is the manager of
           this website and hereby informs YOU how We will collect and process
           your Personal Data (as defined below) when YOU use our services,
           websites and applications (the <strong>"Services"</strong>).
+
         </Paragraph>
+        
         <Paragraph>
           By using the Services, YOU consent that we can collect and process
           your Personal Data. For the avoidance of doubt, We will only use your
