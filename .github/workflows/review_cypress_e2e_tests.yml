@@ -1,12 +1,8 @@
 name: Cypress end-to-end tests
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - backend/**
-      - client/**
+  pull_request:
+    types: [opened]
 
 jobs:
   cypress-run:
