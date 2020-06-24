@@ -239,7 +239,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   }, [code, state, dispatch]);
 
   const onLoginWithEmail = async (formData) => {
-    console.log("Submitted");
     authFormDispatch({ type: AUTH_FORM_LOGIN });
 
     try {
