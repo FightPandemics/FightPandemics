@@ -318,7 +318,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={createOrganizationFormState.loading}
+            disabled={!(privacy && conditions)}
           >
             {createOrganizationFormState.loading
               ? "Creating Profile..."
