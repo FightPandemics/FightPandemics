@@ -171,7 +171,7 @@ const CreateOrgProfile = (props) => {
             <Input
               type="email"
               required
-              placeholder="example@example.com"
+              placeholder=""
               onChange={(email) => email}
               style={styleInput}
               name="email"
