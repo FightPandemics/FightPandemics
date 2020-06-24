@@ -228,7 +228,6 @@ const NavigationLayout = (props) => {
   const displayFullName = (user) =>
     user ? `${user?.firstName} ${user?.lastName}` : "";
 
-  const [changeValue, setChangeValue] = useState(false);
   const [feedbackState, feedbackDispatch] = useReducer(
     feedbackReducer,
     initialState.feedbackReducer,
@@ -280,9 +279,9 @@ const NavigationLayout = (props) => {
 
   const closeRadioModal = () => {
     submitFeedbackForm();
-    toggleModal("thanksModal");
     toggleModal("radioModal");
-    if (feedbackFormState.error === "") {
+    if (!feedbackFormState.error) {
+      toggleModal("thanksModal");
     }
   };
 
@@ -290,13 +289,13 @@ const NavigationLayout = (props) => {
     feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
     try {
       await axios.post("/api/feedback", {
-        rating: rating,
-        age: age,
+        rating,
+        age,
         userId: 5,
-        covidImpact: covidImpact,
-        generalFeedback: generalFeedback,
-        mostValuableFeature: mostValuableFeature,
-        whatWouldChange: whatWouldChange,
+        covidImpact,
+        generalFeedback,
+        mostValuableFeature,
+        whatWouldChange,
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -310,7 +309,7 @@ const NavigationLayout = (props) => {
   const renderThanksModal = () => {
     return (
       <ThanksModal
-        onClose={() => dispatchAction(TOGGLE_STATE, "thanksModal")}
+        onClose={() => toggleModal("thanksModal")}
         visible={thanksModal}
         transparent
       >
@@ -329,6 +328,7 @@ const NavigationLayout = (props) => {
       {
         stateKey: "age",
         label: "What is your age?",
+        type: "number",
       },
     ];
 
@@ -351,15 +351,13 @@ const NavigationLayout = (props) => {
       },
     ];
 
-    const handleChange = (event) => {
-      setChangeValue(event.target.value);
-    };
-
     const RadioGroupWithLabel = withLabel(() => (
       <RadioGroup
-        onChange={handleChange}
+        onChange={(e) =>
+          dispatchAction(SET_VALUE, "covidImpact", e.target.value)
+        }
         options={radioButtonOptions}
-        value={changeValue}
+        value={covidImpact}
         padding="1rem 1rem"
       />
     ));
@@ -372,13 +370,15 @@ const NavigationLayout = (props) => {
         transparent
       >
         <h2 className="title">We are almost done!</h2>
-        {inputLabelsText.map((label, index) => (
+        {inputLabelsText.map(({ label, stateKey, type }) => (
           <>
             <FormInput
-              key={index}
-              label={label.label}
-              value={label.stateKey}
-              onChange={dispatchAction}
+              type={type}
+              key={stateKey}
+              inputTitle={label}
+              onChange={(e) =>
+                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
+              }
             />
             <RadioGroupWithLabel label="How has COVID-19 impacted you?" />
           </>
@@ -407,7 +407,9 @@ const NavigationLayout = (props) => {
           <FormInput
             key={stateKey}
             inputTitle={label}
-            onChange={dispatchAction}
+            onChange={(e) =>
+              dispatchAction(SET_VALUE, stateKey, e.target.value)
+            }
           />
         ))}
         <FeedbackSubmitButton title="Next" onClick={closeTextFeedbackModal} />
@@ -416,7 +418,7 @@ const NavigationLayout = (props) => {
   };
 
   const renderRatingModal = () => {
-    const ratingScale = ["1", "2", "3", "4", "5"];
+    const ratingScale = [1, 2, 3, 4, 5];
     return (
       <RatingModal
         maskClosable={true}
