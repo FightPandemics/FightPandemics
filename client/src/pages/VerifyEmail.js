@@ -100,8 +100,8 @@ const VerifyEmail = ({ email }) => {
   );
 };
 
-const mapStateToProps = ({ state }) => ({
-  email: state.email,
+const mapStateToProps = ({ session }) => ({
+  email: session.email,
 });
 
 export default connect(mapStateToProps)(VerifyEmail);

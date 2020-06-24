@@ -19,7 +19,6 @@ export const authFormReducer = (state, action) => {
   switch (type) {
     case AUTH_FORM_LOGIN:
     case AUTH_FORM_SIGNUP:
-      return { ...state, email: payload.email };
     case AUTH_FORM_FORGOT_PASSWORD:
     case AUTH_FORM_SOCIAL:
       return { ...state, loading: true, error: null };
