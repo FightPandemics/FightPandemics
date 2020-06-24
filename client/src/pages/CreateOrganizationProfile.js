@@ -90,10 +90,10 @@ const CreateOrgProfile = (props) => {
     clearError("location");
   };
   const handleInputChangePrivacy = (e) => {
-    setPrivacy(e.target.value);
+    setPrivacy(e.target.checked);
   };
   const handleInputChangeConditions = (e) => {
-    setConditions(e.target.value);
+    setConditions(e.target.checked);
   };
 
   const onFormSubmit = async (formData) => {
