@@ -26,6 +26,10 @@ const ThanksModal = styled(Modal)`
       padding-bottom: 2rem;
     }
   }
+
+  .am-modal-close-x:hover {
+    cursor: pointer;
+  }
 `;
 
 export default ThanksModal;

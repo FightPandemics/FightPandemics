@@ -20,6 +20,7 @@ import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
 import ThanksModal from "components/Feedback/ThanksModal";
 import withLabel from "components/Input/with-label";
 import { theme } from "constants/theme";
+
 import {
   TOGGLE_STATE,
   SET_VALUE,
@@ -312,6 +313,8 @@ const NavigationLayout = (props) => {
         onClose={() => toggleModal("thanksModal")}
         visible={thanksModal}
         transparent
+        closable
+        maskClosable
       >
         <h2 className="title">Thank you!</h2>
         <p>
@@ -363,8 +366,8 @@ const NavigationLayout = (props) => {
     ));
     return (
       <RadioModal
-        maskClosable={true}
-        closable={true}
+        maskClosable
+        closable
         visible={radioModal}
         onClose={() => closeRadioModal()}
         transparent
@@ -394,8 +397,8 @@ const NavigationLayout = (props) => {
   const renderTextFeedbackModal = () => {
     return (
       <TextFeedbackModal
-        maskClosable={true}
-        closable={true}
+        maskClosable
+        closable
         visible={textFeedbackModal}
         onClose={closeTextFeedbackModal}
         transparent
@@ -421,7 +424,7 @@ const NavigationLayout = (props) => {
     const ratingScale = [1, 2, 3, 4, 5];
     return (
       <RatingModal
-        maskClosable={true}
+        maskClosable
         closable={false}
         visible={ratingModal}
         transparent

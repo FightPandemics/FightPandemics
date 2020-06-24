@@ -27,6 +27,10 @@ const TextFeedbackModal = styled(Modal)`
       color: ${darkerGray};
     }
   }
+
+  .am-modal-close-x:hover {
+    cursor: pointer;
+  }
 `;
 
 export default TextFeedbackModal;
