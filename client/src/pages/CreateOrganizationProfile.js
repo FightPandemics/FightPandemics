@@ -314,7 +314,6 @@ const CreateOrgProfile = (props) => {
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
-          <WhiteSpace />
           <SubmitButton
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
