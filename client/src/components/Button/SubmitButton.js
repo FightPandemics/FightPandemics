@@ -5,6 +5,9 @@ import BaseButton from "./BaseButton";
 
 const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
-})``;
+})`
+  width: 100%;
+  height: 47px;
+`;
 
 export default SubmitButton;
