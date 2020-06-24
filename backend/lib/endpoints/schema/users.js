@@ -16,6 +16,8 @@ const objectivesSchema = S.object()
   .prop("shareInformation", S.boolean().required().default(false))
   .prop("volunteer", S.boolean().required().default(false));
 
+const hideSchema = S.object().prop("address", S.boolean().default(false));
+
 const urlsSchema = S.object()
   .prop(
     "facebook",
@@ -49,6 +51,7 @@ const createUserSchema = {
   body: strictSchema()
     .prop("firstName", S.string().required())
     .prop("lastName", S.string().required())
+    .prop("hide", hideSchema)
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)
     .prop("url", urlsSchema)
@@ -65,6 +68,7 @@ const updateUserSchema = {
     .prop("about", S.string().maxLength(160))
     .prop("firstName", S.string())
     .prop("lastName", S.string())
+    .prop("hide", hideSchema)
     .prop("location", locationSchema)
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)

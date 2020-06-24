@@ -332,8 +332,17 @@ const CreateProfile = ({ email, history }) => {
           {/*
             temporarily disabled until the fields are added to the API
           <CheckboxGroup description="I am traveling" />
-          <CheckboxGroup description="Don't show my address" />
           */}
+          <InputGroup>
+            <Controller
+              as={CheckboxGroup}
+              control={control}
+              defaultValue={false}
+              label="Don't show my address"
+              name="hide.address"
+              onChange={handleCheckboxChange}
+            />
+          </InputGroup>
           <InputGroup>
             <TextLabel
               color={theme.colors.royalBlue}
