@@ -6,6 +6,12 @@ const {
   schema: organizationUserSchema,
 } = require("../../lib/models/OrganizationUser");
 
+// generic location with required elements
+const SOURCED_BY_FP_LOCATION = {
+  address: "Worldwide",
+  coordinates: [0, 0],
+};
+
 const SOURCED_BY_FP_OWNER_FILTER = {
   // don't update email post-launch
   email: "sourcedby@fightpandemics.com",
@@ -17,6 +23,7 @@ const SOURCED_BY_FP_OWNER_UPDATE = {
   authId: "NA",
   firstName: "Sourced by",
   lastName: "FightPandemics",
+  location: SOURCED_BY_FP_LOCATION,
   photo:
     "https://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/da36013a-1030-4afe-bbb5-91c5c10d7fb1/515x507.png"
 };
@@ -25,6 +32,7 @@ const SOURCED_BY_FP_ORG_UPDATE = {
   global: true,
   industry: "Non-profit",
   language: "English",
+  location: SOURCED_BY_FP_LOCATION,
 };
 
 // simple slugify so we have unique email in Users collection
