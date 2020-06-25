@@ -36,7 +36,7 @@ const StyledWizardNav = styled.div`
 `;
 
 const WizardFormNav = () => (
-  <StyledWizardNav>  
+  <StyledWizardNav>
     <Link to={"/feed"}>
       <BackButton>
         <SvgIcon src={backArrow} title="Navigate to feed page" />
