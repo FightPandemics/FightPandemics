@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import {
   AboutUsContainer,
-  TextContainer,
+  ContentContainer,
   MobileViewBannerContainer,
   WebViewBannerContainer,
   OurIdeaImageContainer,
   MissionAndVisionBannerContainer,
   SupportersLogosContainer,
   SocialContainer,
+  SocialTextContainer,
   AboutUsLink,
+  AccentedContentContainer,
+  JoinButton,
 } from "components/AboutUs/AboutUsContainer";
 
 import DesktopBanner from "assets/about-us-images/vision-and-mission.png";
@@ -101,7 +106,7 @@ const AboutUs = () => {
   return (
     <AboutUsContainer>
       <MissionAndVisionBannerContainer>
-        <h1 className="text-primary display-6">About Us</h1>
+        <h1>About Us</h1>
         <WebViewBannerContainer
           src={DesktopBanner}
           alt="Desktop Mission and Vision Banner"
@@ -111,9 +116,9 @@ const AboutUs = () => {
           alt="Mobile Mission and Vision Banner"
         />
       </MissionAndVisionBannerContainer>
-      <TextContainer>
-        <br />
-        <h2 className="text-primary display-6">Our Story</h2>
+
+      <ContentContainer>
+        <h2>Our Story</h2>
         <p>
           FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was
           infected with COVID-19 in France. Upon returning home to Barcelona, he
@@ -124,43 +129,56 @@ const AboutUs = () => {
           by so many coming together, Manuel launched the project with one
           mission in mind: to ensure that others could connect in time.
         </p>
-        <br />
-        <h2 className="text-primary display-6">Our Community</h2>
+      </ContentContainer>
+
+      <AccentedContentContainer>
+        <h2>Our Community</h2>
         <p>
           We are built by a team of 450+ volunteer developers, designers,
           scientists, health experts, and product managers from around the world
         </p>
         {/* Add FightPandemics Video */}
-        {/* Add buttons for Join as Ambassador and Join as a Volunteer here*/}
-        <br />
-        <h2 className="text-primary display-6">Our Idea</h2>
+
+        {/* <Link to="">
+          <JoinButton>Join as a Volunteer</JoinButton>
+        </Link>
+        <Link to="">
+          <JoinButton>Join as an Ambassador</JoinButton>
+        </Link> */}
+      </AccentedContentContainer>
+
+      <ContentContainer>
+        <h2>Our Idea</h2>
         <OurIdeaImageContainer src={OurIdeaImage} alt="Our Idea Picture" />
-      </TextContainer>
-      <br />
-      <h2 className="text-primary display-6">Our Supporters</h2>
+      </ContentContainer>
+
+      <h2>Our Supporters</h2>
       <SupportersLogosContainer>
         <LogosList supporterLogos={supporterLogos} />
       </SupportersLogosContainer>
-      <h2 className="text-primary display-6">Follow us on social media</h2>
+
       <SocialContainer>
-        <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
-          <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
-        </AboutUsLink>
-        <AboutUsLink href="https://www.facebook.com/FightPandemics/">
-          <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
-        </AboutUsLink>
-        <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-          <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
-        </AboutUsLink>
-        <AboutUsLink href="https://twitter.com/FightPandemics">
-          <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
-        </AboutUsLink>
-        <p>
-          Or contact us at:{" "}
-          <AboutUsLink href="mailto:contact@fightpandemics.com">
-            contact@fightpandemics.com
+        <h2>Follow us on social media</h2>
+        <div>
+          <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
+            <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
           </AboutUsLink>
-        </p>
+          <AboutUsLink href="https://www.facebook.com/FightPandemics/">
+            <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+          </AboutUsLink>
+          <AboutUsLink href="https://www.instagram.com/fightpandemics/">
+            <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
+          </AboutUsLink>
+          <AboutUsLink href="https://twitter.com/FightPandemics">
+            <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+          </AboutUsLink>
+        </div>
+        <SocialTextContainer>
+          <p>Or contact us at: </p>
+          <AboutUsLink href="mailto:contact@fightpandemics.com">
+            <p>contact@fightpandemics.com</p>
+          </AboutUsLink>
+        </SocialTextContainer>
       </SocialContainer>
     </AboutUsContainer>
   );
