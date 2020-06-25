@@ -17,7 +17,8 @@ import {
   TdRight,
 } from "components/PolicyPages/TableStyles";
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({}) => {
+ 
   return (
     <PolicyContainer>
       <TextContainer>

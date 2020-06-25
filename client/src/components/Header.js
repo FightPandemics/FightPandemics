@@ -101,7 +101,17 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated, orgname }) => {
+
+
+export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, user}) => {
+  // if(user) {
+  //   const {organizations} = user;
+  // }
+  
+  // const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
+  // console.log(user.organizations);
+  console.log(user);
+  //console.log(session);
   const menu = (
     
     <Menu>
@@ -115,8 +125,18 @@ export default ({ authLoading, onMenuClick, isAuthenticated, orgname }) => {
       <Link   to="/create-organization-profile">
       Add Organisation
         </Link>
+        </Menu.Item>
+        {user ? user.organizations.map(organization => (
+      <Menu.Item>
+      <Link to={`/organization/${organization._id}`}>
+      {organization.name}
+    </Link>
+    </Menu.Item>
+    )) : null}
+
+
         
-      </Menu.Item>
+      
       <Menu.Item>
         <Link   to="/auth/logout">
           Log Out
