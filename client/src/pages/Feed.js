@@ -8,6 +8,7 @@ import { Layout, Menu } from "antd";
 
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
@@ -207,6 +208,7 @@ const Feed = (props) => {
 
   const filters = Object.values(filterOptions);
   const {
+    error: postsError,
     filterType,
     isLoading,
     loadMore,
@@ -378,7 +380,7 @@ const Feed = (props) => {
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      await postsDispatch({ type: ERROR_POSTS });
+      await postsDispatch({ error, type: ERROR_POSTS });
     }
 
     if (response && response.data && response.data.length) {
@@ -543,7 +545,7 @@ const Feed = (props) => {
               user={user}
               isAuthenticated={isAuthenticated}
             />
-            {status === ERROR_POSTS && <div>Something went wrong...</div>}
+            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}
