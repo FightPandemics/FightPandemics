@@ -35,10 +35,10 @@ export const StyledButtonWizard = styled(StepWizard)`
 export const WizardFormNav = () => (
   <StyledWizardNav>
     <Link to={"/feed"}>
-        <BackButton>
-          <SvgIcon src={backArrow} title="Navigate to feed page" />
-          <BackText>Back</BackText>
-        </BackButton>
+      <BackButton>
+        <SvgIcon src={backArrow} title="Navigate to feed page" />
+        <BackText>Back</BackText>
+      </BackButton>
     </Link>    
   </StyledWizardNav>
 );
