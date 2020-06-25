@@ -57,8 +57,8 @@ const URLS_CONFIG = {
     "LinkedIn URL",
     {
       pattern: {
-        value: /^[a-zA-Z0-9]*$/,
-        message: "Invalid entry: only alphanumeric characters are allowed",
+        value: /^[a-zA-Z0-9-]*$/,
+        message: "Invalid entry: only alphanumeric characters and dashes are allowed",
       },
     },
     LINKEDIN_URL,

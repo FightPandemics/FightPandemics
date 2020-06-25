@@ -32,7 +32,7 @@ const urlsSchema = S.object()
   )
   .prop(
     "linkedin",
-    S.anyOf([S.null(), S.string().pattern(/^[a-zA-Z0-9]*$/)]).required(),
+    S.anyOf([S.null(), S.string().pattern(/^[a-zA-Z0-9-]*$/)]).required(),
   )
   .prop(
     "twitter",
