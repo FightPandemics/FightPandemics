@@ -16,8 +16,8 @@ import Heading from "components/Typography/Heading";
 import TextAvatar from "components/TextAvatar";
 import SubMenuButton from "components/Button/SubMenuButton";
 import { typeToTag } from "assets/data/formToPostMappings";
-import { StyledWizard } from "components/StepWizard";
-import WizardFormNav from "components/StepWizard/WizardFormNav"
+import { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
+import WizardFormNav from "components/StepWizard/WizardFormNav";
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
@@ -298,7 +298,7 @@ const Post = ({
           <p>Are you sure you want to delete the post?</p>
         </WebModal>
         {postId && 
-        <StyledWizard nav={<WizardFormNav />}></StyledWizard>
+        <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
         }   
       </PostCard>
     </>
