@@ -32,7 +32,7 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 `;
 
-export const WizardFormNav = () => (
+const WizardFormNav = () => (
   <StyledWizardNav>
     <Link to={"/feed"}>
       <BackButton>
