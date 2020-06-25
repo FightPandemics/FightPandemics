@@ -139,14 +139,25 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
+      const paginationSteps =
+        limit === -1
+          ? [
+              {
+                $skip: skip || 0,
+              },
+            ]
+          : [
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || POST_PAGE_SIZE,
+              },
+            ];
+
       const aggregationPipeline = [
         ...sortAndFilterSteps,
-        {
-          $skip: skip || 0,
-        },
-        {
-          $limit: limit || POST_PAGE_SIZE,
-        },
+        ...paginationSteps,
         {
           $lookup: {
             as: "comments",
