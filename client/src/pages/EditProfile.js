@@ -149,7 +149,8 @@ function EditProfile() {
             initials={getInitials(firstName, lastName)}
           />
         </TitlePictureWrapper>
-        <ChangePicButton>Change</ChangePicButton>
+        {/* hide this until backend API is available
+        <ChangePicButton>Change</ChangePicButton> */}
         <FormLayout>
           <OptionDiv>
             <CustomLink>
