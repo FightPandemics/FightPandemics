@@ -100,7 +100,6 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-
 export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, user}) => {
   
 
