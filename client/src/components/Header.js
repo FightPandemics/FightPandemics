@@ -159,7 +159,6 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
     </a>
   </Dropdown>
             </li>
-            
           </>
         ) : (
           <>
