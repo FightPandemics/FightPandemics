@@ -9,7 +9,6 @@ import EditPost from "components/CreatePost/EditPost";
 import { typeToTag } from "assets/data/formToPostMappings";
 
 // Constants
-import { SET_LIKE } from "hooks/actions/feedActions";
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
 
 const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
