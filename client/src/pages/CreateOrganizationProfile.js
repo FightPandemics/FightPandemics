@@ -108,8 +108,6 @@ const CreateOrgProfile = (props) => {
   };
 
   const onFormSubmit = async (formData) => {
-    console.log(formData.name); // prints out the name of the organisation created by the user
-    
     if (!privacy) {
       alert("You must agree to our privacy policy before proceeding");
       return;
