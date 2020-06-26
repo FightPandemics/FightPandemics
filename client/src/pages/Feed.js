@@ -186,6 +186,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const Feed = (props) => {
+  console.log(props.history.location.state);
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -535,7 +536,9 @@ const Feed = (props) => {
               handlePostDelete={postDelete}
               user={user}
             />
-            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
+            {status === ERROR_POSTS && (
+              <ErrorAlert message={postsError.message} />
+            )}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}
