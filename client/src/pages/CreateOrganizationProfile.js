@@ -128,8 +128,7 @@ const CreateOrgProfile = (props) => {
           const res = await axios.post("/api/organizations", formData);
           if (res) {
             props.history.push("/create-organization-complete", {
-              orgId: res.data._id,
-              
+              orgId: res.data._id,             
             });
             
           }
