@@ -155,7 +155,6 @@ const OrganizationProfile = () => {
               noPic={true}
               initials={getInitials(firstName, lastName)}
             />
-            
             <UserInfoDesktop>
               <NameDiv>
                 {name}
