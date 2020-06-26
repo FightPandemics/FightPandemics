@@ -137,7 +137,7 @@ const Step4 = () => {
     currentStep === 4 && (
       <>
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
-          Post Successfully Created
+          Success
         </TitleStep>
 
         <Link to={`/post/${postId}`}>

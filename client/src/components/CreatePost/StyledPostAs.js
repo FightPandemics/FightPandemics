@@ -148,8 +148,7 @@ const OptionWrapper = styled.div`
 `;
 
 const ViewPostButton = styled(BaseButton)`
-  width: 100%;
-  max-width: 217px;
+  width: 30rem;
   display: inline-block;
   margin-bottom: 20px;
 
