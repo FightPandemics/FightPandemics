@@ -16,7 +16,6 @@ async function routes(app) {
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
-
     const [userErr, user] = await app.to(User.findById(userId));
     if (userErr) {
       req.log.error(userErr, "Failed retrieving user");
@@ -31,6 +30,7 @@ async function routes(app) {
       about,
       email,
       firstName,
+      hide,
       lastName,
       location,
       needs,
@@ -41,6 +41,7 @@ async function routes(app) {
       about,
       email,
       firstName,
+      hide,
       id,
       lastName,
       location,

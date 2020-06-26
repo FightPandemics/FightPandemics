@@ -37,7 +37,7 @@ async function routes(app) {
     },
     async (req) => {
       const { userId } = req;
-      const { limit, skip, filter, objective } = req.query;
+      const { authorId, filter, limit, objective, skip } = req.query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -92,6 +92,9 @@ async function routes(app) {
 
       // Additional filters
       const { providers, type } = queryFilters; // from filterOptions.js
+      if (authorId) {
+        filters.push({ "author.id": mongoose.Types.ObjectId(authorId) });
+      }
       if (objective) {
         filters.push({ objective });
       }
@@ -136,14 +139,25 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
+      const paginationSteps =
+        limit === -1
+          ? [
+              {
+                $skip: skip || 0,
+              },
+            ]
+          : [
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || POST_PAGE_SIZE,
+              },
+            ];
+
       const aggregationPipeline = [
         ...sortAndFilterSteps,
-        {
-          $skip: skip || 0,
-        },
-        {
-          $limit: limit || POST_PAGE_SIZE,
-        },
+        ...paginationSteps,
         {
           $lookup: {
             as: "comments",
