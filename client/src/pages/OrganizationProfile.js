@@ -130,7 +130,6 @@ const OrganizationProfile = () => {
       }
     }
   };
-  
   const renderProfileData = () => {
     let firstName, lastName;
     if (!organization) {
