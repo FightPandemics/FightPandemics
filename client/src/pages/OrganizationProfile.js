@@ -172,7 +172,6 @@ const OrganizationProfile = () => {
             <UserInfoDesktop>
               <NameDiv>
                 {name}
-                
                 <PlaceholderIcon />
                 <EditEmptyIcon
                   src={editEmpty}
