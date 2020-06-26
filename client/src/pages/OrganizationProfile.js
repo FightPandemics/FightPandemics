@@ -139,7 +139,6 @@ const OrganizationProfile = () => {
       const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
       const nameArr = name.split(" ");
-      
       if (nameArr.length < 2) {
         firstName = nameArr[0];
         lastName = firstName.split("").pop();        
