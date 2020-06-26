@@ -33,7 +33,7 @@ const PostSocial = ({
 
     if (id === likePost) {
       if (likePost) {
-        handlePostLike(likePost, liked);
+        handlePostLike(likePost, liked, false);
       }
     }
   }, [id, liked, handlePostLike]);
@@ -64,7 +64,7 @@ const PostSocial = ({
 
   const renderFeedSocialIcons = (
     <>
-      <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
+      <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
         {renderLikeIcon()}
         <span className="total-number">{numLikes}</span>
         <span className="social-text">Like</span>
@@ -80,7 +80,7 @@ const PostSocial = ({
 
   const renderPostSocialIcons = (
     <>
-      <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
+      <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
         {renderLikeIcon()}
         <span className="total-number">{numLikes}</span>
         <span className="social-text">Like</span>

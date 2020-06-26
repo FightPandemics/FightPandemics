@@ -298,8 +298,7 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async (postId, liked) => {
-    /* added here because userId not working */
+  const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
@@ -330,8 +329,10 @@ const Feed = (props) => {
         }
       }
     } else {
-      sessionStorage.setItem("likePost", postId);
-      history.push(LOGIN);
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
+      }
     }
   };
 

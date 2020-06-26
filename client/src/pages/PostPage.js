@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { Modal } from "antd";
 
+// Local
 import Post from "components/Feed/Post";
-import { useHistory, useParams } from "react-router-dom";
-
 import EditPost from "components/CreatePost/EditPost";
-import { FEED } from "templates/RouteWithSubRoutes";
 import { typeToTag } from "assets/data/formToPostMappings";
+
+// Constants
+import { SET_LIKE } from "hooks/actions/feedActions";
+import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
 
 const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   const history = useHistory();
@@ -23,6 +26,44 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
 
   const redirectFromFeed = () => {
     setEditPostModal(!editPostModal);
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          const currentPost = { ...post };
+
+          currentPost.liked = !!!liked;
+          currentPost.likesCount = response.data.likesCount;
+          setPost(currentPost);
+        }
+      }
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
+      }
+    }
   };
 
   const handleEditPost = async () => {
@@ -125,6 +166,7 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
         onChange={handlePostDelete}
         updateComments={updateComments}
         user={user}
+        handlePostLike={handlePostLike}
       />
       {deleteConfirmationModal}
       <EditPost
