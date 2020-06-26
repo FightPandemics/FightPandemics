@@ -122,8 +122,6 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
     </Link>
     </Menu.Item>
     )) : null}
-
-
         
 <Menu.Divider />
       <Menu.Item>
