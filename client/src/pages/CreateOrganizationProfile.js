@@ -85,7 +85,6 @@ const CreateOrgProfile = (props) => {
   const [location, setLocation] = useState({});
   
   const [privacy, setPrivacy] = useState("");
-  console.log(privacy);
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
   const [email, setEmail] = useState("");
