@@ -152,8 +152,7 @@ const OrganizationProfile = () => {
       }
 
       return (
-        <>
-        
+        <>        
           <UserInfoContainer>
             <EditIcon src={edit} onClick={() => setDrawer(true)} />
             <ProfilePic
