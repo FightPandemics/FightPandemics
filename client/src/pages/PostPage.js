@@ -84,8 +84,8 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   const loadPost = async () => {
     let response;
     const endPoint = `/api/posts/${postId}`;
-    
-    if (history.location.state.edit) {
+
+    if (history.location.state?.edit) {
       redirectFromFeed();
     }
 

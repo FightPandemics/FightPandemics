@@ -34,6 +34,7 @@ const Form = ({
   type,
   onShareWithChange,
   onExpirationChange,
+  setPostUrl,
 }) => {
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
@@ -84,7 +85,8 @@ const Form = ({
 
     if (!errors.length) {
       try {
-        await axios.post("/api/posts", payload);
+        const res = await axios.post("/api/posts", payload);
+        setPostUrl(res.data._id);
         cleanForm();
       } catch (error) {
         console.log(error);

@@ -1,12 +1,13 @@
 import React, { useState, createContext, useContext } from "react";
 import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import {
   Container,
   Option,
   TitleStep,
   OptionButton,
   BackButton,
-  CreateProfileButton,
+  ViewPostButton,
   CreateOrgLink,
 } from "components/CreatePost/StyledPostAs";
 import TabForms from "./Form/TabForms";
@@ -83,7 +84,7 @@ const Step2 = () => {
   );
 };
 
-const Step3 = ({ onCancel }) => {
+const Step3 = ({ onCancel, setPostUrl }) => {
   const { currentStep, setCurrentStep } = useContext(CreatePostContext);
   if (currentStep !== 3) return null;
   return (
@@ -93,6 +94,7 @@ const Step3 = ({ onCancel }) => {
         setCurrentStep(1);
         onCancel();
       }}
+      setPostUrl={setPostUrl}
     />
   );
 };
@@ -125,17 +127,19 @@ const Wrapper = ({ onCancel, visible, children }) => {
   );
 };
 
-const Step4 = () => {
+const Step4 = ({ postUrl }) => {
   const createPostContext = useContext(CreatePostContext);
   const { currentStep } = createPostContext;
   return (
     currentStep === 4 && (
       <>
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
-          Success
+          Post Successfully Created
         </TitleStep>
-        <CreateProfileButton primary>Create Profile</CreateProfileButton>
-        <CreateOrgLink to={""}>Skip</CreateOrgLink>
+
+        <Link to={`/post/${postUrl}`}>
+          <ViewPostButton primary>View Your Post</ViewPostButton>
+        </Link>
       </>
     )
   );
@@ -144,6 +148,7 @@ const Step4 = () => {
 const CreatePost = (props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
+  const [postUrl, setPostUrl] = useState("");
 
   return (
     <CreatePostContext.Provider
@@ -152,9 +157,9 @@ const CreatePost = (props) => {
       <Wrapper {...props}>
         <Step1 />
         <Step2 />
-        <Step4 />
+        <Step4 postUrl={postUrl} />
       </Wrapper>
-      <Step3 {...props} />
+      <Step3 setPostUrl={setPostUrl} {...props} />
     </CreatePostContext.Provider>
   );
 };

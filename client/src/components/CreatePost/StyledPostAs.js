@@ -147,7 +147,7 @@ const OptionWrapper = styled.div`
   }
 `;
 
-const CreateProfileButton = styled(BaseButton)`
+const ViewPostButton = styled(BaseButton)`
   width: 100%;
   max-width: 217px;
   display: inline-block;
@@ -173,7 +173,7 @@ const Option = ({ img, text, onClick, type }) => (
 export {
   Container,
   Option,
-  CreateProfileButton,
+  ViewPostButton,
   CreateOrgLink,
   TitleStep,
   OptionButton,
