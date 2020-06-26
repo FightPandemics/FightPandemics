@@ -100,8 +100,6 @@ const HeaderWrapper = styled.div`
 `;
 
 export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, user}) => {
-  
-
   const menu = (
     
     <Menu>
