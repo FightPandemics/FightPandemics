@@ -71,7 +71,7 @@ const PostSocial = ({
         <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">Like</span>
+          <span className="social-text"> Like</span>
         </div>
       ) : (
         <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
