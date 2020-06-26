@@ -79,7 +79,6 @@ const Step2 = ({ user }) => {
   );
 };
 
-
 const Step3 = ({ onCancel }) => {
   const { currentStep, setCurrentStep } = useContext(CreatePostContext);
   if (currentStep !== 3) return null;
