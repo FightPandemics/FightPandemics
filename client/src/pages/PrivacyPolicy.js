@@ -28,7 +28,6 @@ const PrivacyPolicy = () => {
           this website and hereby informs YOU how We will collect and process
           your Personal Data (as defined below) when YOU use our services,
           websites and applications (the <strong>"Services"</strong>).
-
         </Paragraph>
         
         <Paragraph>
