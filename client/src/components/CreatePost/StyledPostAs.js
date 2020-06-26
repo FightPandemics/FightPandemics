@@ -121,7 +121,7 @@ const OptionButton = styled(AntDButton)`
   }
 `;
 
-const CreateOrgLink = styled(Link)`
+const StyledLink = styled(Link)`
   display: block;
   color: ${colors.royalBlue};
   &:hover {
@@ -147,16 +147,6 @@ const OptionWrapper = styled.div`
   }
 `;
 
-const ViewPostButton = styled(BaseButton)`
-  width: 30rem;
-  display: inline-block;
-  margin-bottom: 20px;
-
-  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
-    font-size: ${typography.size.medium};
-  }
-`;
-
 const Option = ({ img, text, onClick, type }) => (
   <OptionWrapper
     onClick={() => onClick(text)}
@@ -169,12 +159,4 @@ const Option = ({ img, text, onClick, type }) => (
   </OptionWrapper>
 );
 
-export {
-  Container,
-  Option,
-  ViewPostButton,
-  CreateOrgLink,
-  TitleStep,
-  OptionButton,
-  BackButton,
-};
+export { Container, Option, StyledLink, TitleStep, OptionButton, BackButton };
