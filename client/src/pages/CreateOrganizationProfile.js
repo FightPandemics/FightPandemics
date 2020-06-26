@@ -129,8 +129,7 @@ const CreateOrgProfile = (props) => {
           if (res) {
             props.history.push("/create-organization-complete", {
               orgId: res.data._id,             
-            });
-            
+            });           
           }
         } catch (err) {
           const message = err.response?.data?.message || err.message;
