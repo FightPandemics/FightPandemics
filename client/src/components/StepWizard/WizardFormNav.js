@@ -9,7 +9,7 @@ import { mq } from "constants/theme";
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 export const StyledButtonWizard = styled(StepWizard)`
-display: inline-block
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 10rem;
@@ -20,10 +20,12 @@ display: inline-block
     display: flex;
     flex-flow: row wrap;
     max-height: calc(100% - 8rem); /* align-items: stretch; */
+
     & > div {
       min-height: 100%;
     }
   }
+  
   @media screen and (min-width: ${desktopBreakpoint}) {
     width: 40rem;
   }
