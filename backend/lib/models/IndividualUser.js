@@ -17,6 +17,9 @@ const individualUserSchema = new Schema(
       required: true,
       type: String,
     },
+    hide: {
+      address: { default: false, type: Boolean },
+    },
     lastName: {
       type: String,
     },

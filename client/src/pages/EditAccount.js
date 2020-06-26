@@ -76,8 +76,13 @@ function EditAccount() {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName = "", lastName = "", objectives = {}, needs = {} } =
-    user || {};
+  const {
+    firstName = "",
+    hide = {},
+    lastName = "",
+    needs = {},
+    objectives = {},
+  } = user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -188,6 +193,18 @@ function EditAccount() {
                 onLocationChange={handleLocationChange}
               />
             </InputWrapper>
+            <CheckBoxWrapper>
+              <Controller
+                as={Checkbox}
+                defaultValue={hide.address}
+                name="hide.address"
+                control={control}
+                onChange={([event]) => event.target.checked}
+                valueName="checked"
+              >
+                <Label inputColor="#000000">Don't show my address</Label>
+              </Controller>
+            </CheckBoxWrapper>
             <Label>I want to</Label>
             <HelpWrapper>
               {Object.entries(OBJECTIVES).map(([key, label]) => (

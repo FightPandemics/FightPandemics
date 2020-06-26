@@ -6,6 +6,7 @@ import createOrganizationProfile from "assets//data/createOrganizationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
 import Input from "components/Input/BaseInput";
+import InputError from "components/Input/InputError";
 import Select from "components/Input/Select";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
@@ -37,9 +38,7 @@ import {
   initialState,
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
-import {
-  inlineLabelStyles,
-} from "constants/formStyles";
+import { inlineLabelStyles } from "constants/formStyles";
 
 const { type, industry } = createOrganizationProfile;
 
@@ -90,16 +89,22 @@ const CreateOrgProfile = (props) => {
   const [privacy, setPrivacy] = useState("");
   console.log(privacy);
   const [conditions, setConditions] = useState("");
+  const [validEmail, setValid] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleLocationChange = (location) => {
     setLocation(location);
     clearError("location");
   };
   const handleInputChangePrivacy = (e) => {
-    setPrivacy(e.target.value);
+    setPrivacy(e.target.checked);
   };
   const handleInputChangeConditions = (e) => {
-    setConditions(e.target.value);
+    setConditions(e.target.checked);
+  };
+  const handleInputChangeEmail = (e) => {
+    setEmail(e.target.value);
+    setValid(e.target.checkValidity());
   };
 
   const onFormSubmit = async (formData) => {
@@ -166,7 +171,7 @@ const CreateOrgProfile = (props) => {
             <Input
               type="text"
               required
-              placeholder="notion"
+              placeholder=""
               onChange={(name) => name}
               style={styleInput}
               ref={register({ required: true, minLength: 3 })}
@@ -185,13 +190,17 @@ const CreateOrgProfile = (props) => {
             <Input
               type="email"
               required
-              placeholder="help@notion.com (this is a fake)"
-              onChange={(email) => email}
+              placeholder=""
+              onChange={handleInputChangeEmail}
               style={styleInput}
               name="email"
               ref={register({ required: true, minLength: 3 })}
             />
-
+            {validEmail || email === "" ? (
+              ""
+            ) : (
+              <InputError>Email is invalid</InputError>
+            )}
             <span style={errorStyles}>
               {errors.email && "Email is required"}
             </span>
@@ -305,19 +314,6 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
-          <SubmitButton
-            primary="true"
-            onClick={handleSubmit(onFormSubmit)}
-            style={{ fontWeight: "normal" }}
-            disabled={createOrganizationFormState.loading}
-          >
-            {createOrganizationFormState.loading
-              ? "Creating Profile..."
-              : "Create Profile"}
-          </SubmitButton>
-          <WhiteSpace />
-          <WhiteSpace />
-          <WhiteSpace />
           <InputWrapper>
             <Label style={styleLabel} label="" />
             <StyledCheckbox
@@ -339,6 +335,18 @@ const CreateOrgProfile = (props) => {
               <Link to="/terms-conditions">Terms and Conditions</Link>
             </StyledCheckbox>
           </InputWrapper>
+          <WhiteSpace />
+          <WhiteSpace />
+          <SubmitButton
+            primary="true"
+            onClick={handleSubmit(onFormSubmit)}
+            style={{ fontWeight: "normal" }}
+            disabled={!(privacy && conditions && validEmail)}
+          >
+            {createOrganizationFormState.loading
+              ? "Creating Profile..."
+              : "Create Profile"}
+          </SubmitButton>
         </StyledForm>
         <WhiteSpace />
       </FormContainer>

@@ -2,8 +2,9 @@ import axios from "axios";
 import { 
   checkRememberCookie,
   clearRememberCookie,
-} from "utils/cookie"
+} from "utils/cookie";
 import {
+  AUTH_ERROR,
   AUTH_LOGOUT,
   SET_AUTH_LOADING,
   SET_USER,
@@ -18,9 +19,8 @@ export const initAuth =  () => {
     try {
       const { data: user } = await axios.get("/api/users/current");
       dispatch({ type: SET_USER, payload: { user } });
-    } catch (err) {
-      // TODO: do something with error -- user succesfully authenticated but can't find user (redirect to login?)
-      console.log(err);
+    } catch (error) {
+      dispatch({ error, type: AUTH_ERROR });
     } finally {
       dispatch({ type: SET_AUTH_LOADING, payload: false });
     }

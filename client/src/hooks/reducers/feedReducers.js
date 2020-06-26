@@ -17,6 +17,7 @@ export const postsState = {
   status: SET_POSTS,
   posts: [],
   page: 0,
+  error: null,
   filterType: "",
   isLoading: false,
   loadMore: true,
@@ -59,11 +60,18 @@ export const postsReducer = (state = postsState, action) => {
       return {
         ...state,
         status: SET_POSTS,
+        error: null,
         posts: action.posts,
         isLoading: false,
       };
     case ERROR_POSTS:
-      return { ...state, status: ERROR_POSTS, posts: [], isLoading: false };
+      return {
+        ...state,
+        status: ERROR_POSTS,
+        error: action.error,
+        posts: [],
+        isLoading: false,
+      };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
