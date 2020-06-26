@@ -4,7 +4,7 @@ export default {
     label: "providers",
     className: "filter-2",
     options: [
-      "Individuals",
+      "Individual",
       "Startup",
       "Company",
       "Community",

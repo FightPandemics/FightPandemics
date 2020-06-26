@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
-const INDIVIDUAL_USER_TYPES = ["individual"];
+const INDIVIDUAL_USER_TYPES = ["Individual"];
 
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
@@ -17,6 +17,9 @@ const individualUserSchema = new Schema(
       required: true,
       type: String,
     },
+    hide: {
+      address: { default: false, type: Boolean },
+    },
     lastName: {
       type: String,
     },
@@ -30,9 +33,8 @@ const individualUserSchema = new Schema(
       volunteer: { default: false, required: true, type: Boolean },
     },
     type: {
-      default: "individual",
+      default: "Individual",
       enum: INDIVIDUAL_USER_TYPES,
-      lowercase: true,
       type: String,
     },
     urls: {

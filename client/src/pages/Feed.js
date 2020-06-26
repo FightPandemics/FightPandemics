@@ -8,6 +8,7 @@ import { Layout, Menu } from "antd";
 
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
@@ -15,7 +16,6 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
-import PostPage from "pages/PostPage";
 
 import {
   optionsReducer,
@@ -207,6 +207,7 @@ const Feed = (props) => {
 
   const filters = Object.values(filterOptions);
   const {
+    error: postsError,
     filterType,
     isLoading,
     loadMore,
@@ -379,7 +380,7 @@ const Feed = (props) => {
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      await postsDispatch({ type: ERROR_POSTS });
+      await postsDispatch({ error, type: ERROR_POSTS });
     }
 
     if (response && response.data && response.data.length) {
@@ -444,7 +445,7 @@ const Feed = (props) => {
   }, [scrollObserver, bottomBoundaryRef]);
 
   const postDelete = async (post) => {
-    let deleterResponse;
+    let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
 
     if (
@@ -453,8 +454,8 @@ const Feed = (props) => {
       (user._id === post.author.id || user.id === post.author.id)
     ) {
       try {
-        deleterResponse = await axios.delete(endPoint);
-        if (deleterResponse && deleterResponse.data.success === true) {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
             ...postsList,
           };
@@ -536,15 +537,10 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              postDelete={postDelete}
+              handlePostDelete={postDelete}
               user={user}
             />
-            <PostPage
-              handlePostLike={handlePostLike}
-              user={user}
-              isAuthenticated={isAuthenticated}
-            />
-            {status === ERROR_POSTS && <div>Something went wrong...</div>}
+            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}

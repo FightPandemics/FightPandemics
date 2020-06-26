@@ -1,30 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { Modal } from "antd";
 
 // Local
-import Post from "components/Feed/Post";
+import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import EditPost from "components/CreatePost/EditPost";
 import { typeToTag } from "assets/data/formToPostMappings";
+import Loader from "components/Feed/StyledLoader";
+import { postReducer, postState } from "hooks/reducers/postReducers";
 
 // Constants
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
+import {
+  SET_POST,
+  FETCH_POST,
+  SET_DELETE_MODAL_VISIBILITY,
+  SET_EDIT_POST_MODAL_VISIBILITY,
+  SET_SHORT_CONTENT,
+  RESET_LOADMORE,
+  SET_LOADMORE,
+  SET_FULL_CONTENT,
+  SET_LIKE,
+} from "hooks/actions/postActions";
 
-const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
+export const PostContext = React.createContext();
+
+const PostPage = ({
+  user,
+  updateComments,
+  isAuthenticated,
+}) => {
   const history = useHistory();
   const { postId } = useParams();
+  const [post, postDispatch] = useReducer(postReducer, postState);
+  const dispatchPostAction = (type, key1, value1, key2, value2) => {
+    let obj = { type };
 
-  const [loadContent, setLoadContent] = useState(true);
-  const [fullPost, setFullPost] = useState("");
-  const [editPostModal, setEditPostModal] = useState(false);
-  const [modalVisibility, setModalVisibility] = useState(false);
-  const [shortPost, setShortPost] = useState("");
-  const [post, setPost] = useState("");
-  const [editPost, setEditPost] = useState("");
+    if (key1 && key2) {
+      obj[key1] = value1;
+      obj[key2] = value2;
+      postDispatch(obj);
+    } else if (type) {
+      postDispatch(obj);
+    } else {
+      obj[key1] = value1;
+      postDispatch(obj);
+    }
+  };
 
-  const redirectFromFeed = () => {
-    setEditPostModal(!editPostModal);
+  const {
+    postLength,
+    fullContent,
+    partialContent: postSubstring,
+    editPostModalVisibility,
+    deleteModalVisibility,
+    loadMorePost,
+    showComments,
+  } = post;
+
+  const initialState = { ...post };
+
+  const editRedirectFromFeed = () => {
+    postDispatch({
+      type: SET_EDIT_POST_MODAL_VISIBILITY,
+      visibility: true,
+    });
   };
 
   const handlePostLike = async (postId, liked, create) => {
@@ -50,11 +91,11 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
         }
 
         if (response.data) {
-          const currentPost = { ...post };
-
-          currentPost.liked = !!!liked;
-          currentPost.likesCount = response.data.likesCount;
-          setPost(currentPost);
+          postDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
     } else {
@@ -65,45 +106,87 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
     }
   };
 
-  const handleEditPost = async () => {
-    setEditPostModal(!editPostModal);
+  const handleEditPost = () => {
+    if (editPostModalVisibility) {
+      postDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
   };
-  const handleCloseEditPost = async () => {
-    setEditPostModal(!editPostModal);
-    loadPost();
+
+  const handleCloseEditPost = () => {
+    postDispatch({
+      type: SET_EDIT_POST_MODAL_VISIBILITY,
+      visibility: false,
+    });
   };
 
   const toggleViewContent = async () => {
-    setLoadContent(!loadContent);
-    if (!loadContent) {
-      setPost(fullPost);
+    if (!loadMorePost) {
+      postDispatch({
+        type: SET_POST,
+        post,
+        content: postSubstring,
+      });
+      dispatchPostAction(SET_LOADMORE);
     } else {
-      setPost(shortPost);
+      postDispatch({
+        type: SET_POST,
+        post,
+        content: fullContent,
+      });
+      dispatchPostAction(RESET_LOADMORE);
     }
   };
 
   const handlePostDelete = () => {
-    setModalVisibility(!modalVisibility);
+    postDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: true,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: false,
+    });
   };
 
   const postDelete = async () => {
-    let deleterResponse;
+    let deleteResponse;
     if (
       isAuthenticated &&
       user &&
       (user._id === post.author.id || user.id === post.author.id)
     ) {
-      setModalVisibility(!modalVisibility);
+      dispatchPostAction(
+        SET_DELETE_MODAL_VISIBILITY,
+        "deleteModalVisibility",
+        false,
+      );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}`;
       try {
-        deleterResponse = await axios.delete(endPoint);
-        if (deleterResponse && deleterResponse.data.success === true) {
-          console.log("success!");
-          return;
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          dispatchPostAction(
+            SET_POST,
+            "post",
+            initialState,
+            "content",
+            initialState.content,
+          );
         }
       } catch (error) {
         console.log({ error });
+        dispatchPostAction(SET_POST, "post", post, "content", post.content);
       }
     }
   };
@@ -111,9 +194,9 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   const deleteConfirmationModal = (
     <Modal
       title="Confirm"
-      visible={modalVisibility}
+      visible={deleteModalVisibility}
       onOk={postDelete}
-      onCancel={handlePostDelete}
+      onCancel={handleCancelPostDelete}
       okText="Delete"
       cancelText="Cancel"
     >
@@ -124,62 +207,118 @@ const PostPage = ({ user, onChange, updateComments, isAuthenticated }) => {
   const loadPost = async () => {
     let response;
     const endPoint = `/api/posts/${postId}`;
-    
-    if (history.location.state.edit) {
-      redirectFromFeed();
-    }
+
+    dispatchPostAction(FETCH_POST);
 
     try {
       response = await axios.get(endPoint);
     } catch (error) {
       console.log({ error });
+      dispatchPostAction(
+        SET_POST,
+        "post",
+        initialState,
+        "content",
+        initialState.content,
+      );
     }
     if (response && response.data) {
       response.data.post.types.map((type) => typeToTag(type));
       let copiedpost = Object.assign({}, response.data.post);
-      setFullPost(copiedpost);
-      setEditPost(copiedpost);
-      const postSubstring = `${response.data.post.content.substring(
-        0,
-        120,
-      )} . . .`;
+      let postSubstring = response.data.post.content;
 
-      response.data.post.content = postSubstring;
-      setPost(copiedpost);
-      setShortPost(response.data.post);
+      if (postSubstring.length > CONTENT_LENGTH) {
+        postSubstring = `${postSubstring.substring(0, CONTENT_LENGTH)} . . .`;
+      }
+      postDispatch({
+        type: SET_SHORT_CONTENT,
+        content: postSubstring,
+      });
+
+      postDispatch({
+        type: SET_FULL_CONTENT,
+        content: copiedpost.content,
+        length: copiedpost.content.length,
+      });
+
+      if (isAuthenticated) {
+        postDispatch({
+          type: SET_POST,
+          post: copiedpost,
+          content: copiedpost.content,
+          length: copiedpost.content.length,
+        });
+      } else {
+        postDispatch({
+          type: SET_POST,
+          post: response.data.post,
+          content: response.data.post.content,
+          length: copiedpost.content.length,
+        });
+      }
+       //Check if routed to post's page after clicking on "Edit" in feed.
+      if (history?.location?.state?.edit) {
+        editRedirectFromFeed();
+      }
     }
   };
 
   useEffect(() => {
-    if (postId) {
-      loadPost();
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadPost(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return post ? (
+
+  return (
     <>
-      <Post
-        post={post}
-        onClick={(e) => toggleViewContent(e)}
-        loadContent={loadContent}
-        onSelect={handleEditPost}
-        onChange={handlePostDelete}
-        updateComments={updateComments}
-        user={user}
-        handlePostLike={handlePostLike}
-      />
-      {deleteConfirmationModal}
-      <EditPost
-        user={user}
-        onSelect={handleEditPost}
-        isAuthenticated={isAuthenticated}
-        onCancel={handleCloseEditPost}
-        loadPost={loadPost}
-        post={editPost}
-        visible={editPostModal}
-      />
+      {postId && (
+        <PostContext.Provider
+          value={{
+            user,
+            fullContent,
+            loadMorePost,
+            updateComments,
+            isAuthenticated,
+            handlePostLike,
+            editPostModalVisibility,
+            dispatchPostAction,
+            postDispatch,
+            showComments,
+          }}
+        >
+          {post && dispatchPostAction && postLength ? (
+            <>
+              <Post
+                currentPost={post}
+                postDispatch={postDispatch}
+                dispatchPostAction={dispatchPostAction}
+                onClick={toggleViewContent}
+                loadMorePost={loadMorePost}
+                onSelect={handleEditPost}
+                showComments={showComments}
+                onChange={handlePostDelete}
+                handlePostLike={handlePostLike}
+                updateComments={updateComments}
+                fullPostLength={postLength}
+                user={user}
+              />
+              {deleteConfirmationModal}
+              <EditPost
+                user={user}
+                dispatchAction={dispatchPostAction}
+                loadPost={loadPost}
+                // onSelect={handleEditPost}
+                isAuthenticated={isAuthenticated}
+                onCancel={handleCloseEditPost}
+                fullContent={fullContent}
+                currentPost={post}
+                visible={editPostModalVisibility}
+              />
+            </>
+          ) : (
+            <Loader />
+          )}
+        </PostContext.Provider>
+      )}
     </>
-  ) : (
-    <> </>
   );
 };
 

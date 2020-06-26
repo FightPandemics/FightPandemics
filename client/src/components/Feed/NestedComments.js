@@ -106,13 +106,14 @@ const NestedComments = ({ isAuthenticated, comment }) => {
   };
   const renderTimeStamp = <span>1w</span>;
 
-  const commentActions = [
-    renderTimeStamp,
-    renderLikeButton(),
-    renderReply(),
-    renderNumLikes(),
-    renderReplyInput,
-  ];
+  //TODO: Add comment replies, like button and number of likes.
+  // const commentActions = [
+  //   renderTimeStamp,
+  //   renderLikeButton(),
+  //   renderReply(),
+  //   renderNumLikes(),
+  //   renderReplyInput,
+  // ];
 
   const nestedComments = (comment.children || []).map((comment) => {
     return <NestedComments comment={comment} key={comment._id} />;
@@ -121,7 +122,8 @@ const NestedComments = ({ isAuthenticated, comment }) => {
   return (
     <div>
       <StyledComment
-        actions={commentActions}
+        //TODO: Add comment replies, like button and number of likes.
+        // actions={commentActions}
         author={<span>{comment.author.name}</span>}
         avatar={renderAvatar}
         content={<p>{comment.content}</p>}
