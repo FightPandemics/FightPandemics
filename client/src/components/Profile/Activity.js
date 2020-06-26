@@ -8,7 +8,11 @@ const Activity = ({ filteredPosts, updateComments }) => {
       {!posts.length
         ? "No activity found"
         : posts.map(([key, post]) => (
-            <Post post={post} updateComments={updateComments} key={key} />
+            <Post
+              currentPost={post}
+              updateComments={updateComments}
+              key={key}
+            />
           ))}
     </div>
   );
