@@ -67,7 +67,6 @@ const CheckboxGroup = ({
   );
 };
 
-
 const CreateOrgProfile = (props) => {
   
   const {
