@@ -29,7 +29,6 @@ const PrivacyPolicy = () => {
           your Personal Data (as defined below) when YOU use our services,
           websites and applications (the <strong>"Services"</strong>).
         </Paragraph>
-        
         <Paragraph>
           By using the Services, YOU consent that we can collect and process
           your Personal Data. For the avoidance of doubt, We will only use your
