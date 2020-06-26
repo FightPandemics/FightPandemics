@@ -13,7 +13,6 @@ import { theme, mq } from "../constants/theme";
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
