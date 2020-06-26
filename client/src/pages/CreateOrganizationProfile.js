@@ -132,7 +132,6 @@ const CreateOrgProfile = (props) => {
               orgId: res.data._id,
               
             });
-            console.log(props.orgId)
             
           }
         } catch (err) {
