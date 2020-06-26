@@ -34,7 +34,7 @@ const ModalComponent = ({
   renderError,
   setExpiration,
   setShareWith,
-  setPostUrl,
+  setPostId,
   addTag,
   post,
   user,
@@ -82,7 +82,7 @@ const ModalComponent = ({
                   renderError={renderError}
                   addTag={addTag}
                   onClose={onClose}
-                  setPostUrl={setPostUrl}
+                  setPostId={setPostId}
                 />
               </TabPane>
             ))}

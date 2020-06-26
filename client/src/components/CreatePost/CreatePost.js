@@ -84,8 +84,10 @@ const Step2 = () => {
   );
 };
 
-const Step3 = ({ onCancel, setPostUrl }) => {
-  const { currentStep, setCurrentStep } = useContext(CreatePostContext);
+const Step3 = ({ onCancel }) => {
+  const { currentStep, setCurrentStep, setPostId } = useContext(
+    CreatePostContext,
+  );
   if (currentStep !== 3) return null;
   return (
     <TabForms
@@ -94,7 +96,7 @@ const Step3 = ({ onCancel, setPostUrl }) => {
         setCurrentStep(1);
         onCancel();
       }}
-      setPostUrl={setPostUrl}
+      setPostId={setPostId}
     />
   );
 };
@@ -127,9 +129,10 @@ const Wrapper = ({ onCancel, visible, children }) => {
   );
 };
 
-const Step4 = ({ postUrl }) => {
+const Step4 = () => {
   const createPostContext = useContext(CreatePostContext);
-  const { currentStep } = createPostContext;
+  const { currentStep, postId } = createPostContext;
+
   return (
     currentStep === 4 && (
       <>
@@ -137,7 +140,7 @@ const Step4 = ({ postUrl }) => {
           Post Successfully Created
         </TitleStep>
 
-        <Link to={`/post/${postUrl}`}>
+        <Link to={`/post/${postId}`}>
           <ViewPostButton primary>View Your Post</ViewPostButton>
         </Link>
       </>
@@ -148,18 +151,18 @@ const Step4 = ({ postUrl }) => {
 const CreatePost = (props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
-  const [postUrl, setPostUrl] = useState("");
+  const [postId, setPostId] = useState("");
 
   return (
     <CreatePostContext.Provider
-      value={{ form, setForm, currentStep, setCurrentStep }}
+      value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
       <Wrapper {...props}>
         <Step1 />
         <Step2 />
-        <Step4 postUrl={postUrl} />
+        <Step4 />
       </Wrapper>
-      <Step3 setPostUrl={setPostUrl} {...props} />
+      <Step3 {...props} />
     </CreatePostContext.Provider>
   );
 };
