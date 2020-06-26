@@ -22,7 +22,6 @@ const PrivacyPolicy = () => {
     <PolicyContainer>
       <TextContainer>
         <h2 className="text-primary display-6">Privacy Policy</h2>
-        <h2>{}</h2>
         <Paragraph>
           <strong>FightPandemics, INC.</strong> (the <strong>“Company”</strong>,{" "}
           <strong>“We”</strong> or/and <strong>“Us”</strong>) is the manager of
