@@ -166,8 +166,7 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               ref={register({ required: true, minLength: 3 })}
               name="name"
-            />
-            
+            />          
             <span style={errorStyles}>
               {errors.name && "Organization name is required"}
             </span>
