@@ -21,11 +21,6 @@ const { typography } = theme;
 
 const CreatePostContext = createContext();
 
-const organizations = [
-  { id: 1, title: "Notion" },
-  { id: 2, title: "Notion" },
-];
-
 const Step1 = () => {
   const createPostContext = useContext(CreatePostContext);
   const { currentStep, setCurrentStep } = createPostContext;
@@ -54,15 +49,16 @@ const Step1 = () => {
   );
 };
 
-const Step2 = () => {
+const Step2 = ({ user }) => {
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
+ 
   return (
     currentStep === 2 && (
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
-        {organizations.map((item) => {
+        {user.organizations.map((item) => {
           return (
             <OptionButton
               key={item.id}
@@ -71,7 +67,7 @@ const Step2 = () => {
                 setCurrentStep(3);
               }}
             >
-              {item.title}
+              {item.name}
             </OptionButton>
           );
         })}
@@ -82,6 +78,7 @@ const Step2 = () => {
     )
   );
 };
+
 
 const Step3 = ({ onCancel }) => {
   const { currentStep, setCurrentStep } = useContext(CreatePostContext);
@@ -151,7 +148,7 @@ const CreatePost = (props) => {
     >
       <Wrapper {...props}>
         <Step1 />
-        <Step2 />
+        <Step2 user={props.user}/>
         <Step4 />
       </Wrapper>
       <Step3 {...props} />
