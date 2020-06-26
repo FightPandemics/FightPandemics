@@ -16,7 +16,6 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
-import PostPage from "pages/PostPage";
 
 import {
   optionsReducer,
@@ -534,11 +533,6 @@ const Feed = (props) => {
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
               handlePostDelete={postDelete}
-              user={user}
-            />
-            <PostPage
-              handlePostLike={handlePostLike}
-              isAuthenticated={isAuthenticated}
               user={user}
             />
             {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}

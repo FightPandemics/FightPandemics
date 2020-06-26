@@ -282,7 +282,7 @@ const Post = ({
       {isAuthenticated ? (
         <>
           <Comments comments={comments} handleOnChange={handleOnChange} />
-          {loadMoreComments ? (
+          {loadMoreComments && commentsCount >= 5 ? (
             <Button disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
             </Button>
