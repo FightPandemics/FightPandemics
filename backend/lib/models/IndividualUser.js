@@ -58,7 +58,6 @@ individualUserSchema.virtual("organizations", {
   localField: "_id",
   ref: "OrganizationUser",
 });
-
 const IndividualUser = User.discriminator(
   "IndividualUser",
   individualUserSchema,
