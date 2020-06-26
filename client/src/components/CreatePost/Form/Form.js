@@ -28,14 +28,7 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({
-  setCurrentStep,
-  textData,
-  type,
-  onShareWithChange,
-  onExpirationChange,
-  setPostId,
-}) => {
+const Form = ({ setCurrentStep, textData, type, setPostId }) => {
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   formData.help = type;
@@ -47,6 +40,10 @@ const Form = ({
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
     }
+  };
+
+  const handleSelectorChange = (field, val) => {
+    setFormData({ ...formData, [field]: val });
   };
 
   const cleanForm = () => setFormData(initialState.formData);
@@ -110,8 +107,8 @@ const Form = ({
       />
       <Third
         formData={formData}
-        onShareWithChange={onShareWithChange}
-        onExpirationChange={onExpirationChange}
+        onShareWithChange={(val) => handleSelectorChange("shareWith", val)}
+        onExpirationChange={(val) => handleSelectorChange("expires", val)}
       />
       <Footer>
         <Submit

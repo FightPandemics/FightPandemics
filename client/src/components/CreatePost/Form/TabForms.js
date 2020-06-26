@@ -26,9 +26,10 @@ const ModalComponent = ({
   onClose,
   onSelect,
   loadPost,
-  formData,
   handleEdit,
+  fullContent,
   handleCloseEditPost,
+  dispatchAction,
   handleEditPost,
   handleFormData,
   renderError,
@@ -36,7 +37,7 @@ const ModalComponent = ({
   setShareWith,
   setPostId,
   addTag,
-  post,
+  currentPost,
   user,
 }) => {
   const [showModal, setShowModal] = useState(true);
@@ -52,22 +53,24 @@ const ModalComponent = ({
       <Divider />
       <Tabs
         tabBarStyle={{ color: "#425AF2" }}
-        defaultActiveKey={post ? post.objective : "offer"}
+        defaultActiveKey={currentPost ? currentPost.objective : "offer"}
         tabBarGutter={50}
       >
-        {post
+        {currentPost
           ? tabs.map((tab) => (
               <TabPane tab={tab.title} key={tab.key}>
                 <EditForm
                   type={tab.key}
                   textData={{ question: tab.question }}
                   onClose={onClose}
-                  post={post}
+                  loadPost={loadPost}
+                  fullContent={fullContent}
+                  dispatchAction={dispatchAction}
+                  currentPost={currentPost}
                   user={user}
                   onSelect={handleEditPost}
                   isAuthenticated={isAuthenticated}
                   onCancel={handleCloseEditPost}
-                  loadPost={loadPost}
                 />
               </TabPane>
             ))
