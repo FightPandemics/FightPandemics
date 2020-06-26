@@ -242,7 +242,6 @@ const OrganizationProfile = () => {
       );
     }
   };
-  
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
