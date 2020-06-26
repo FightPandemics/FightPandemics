@@ -244,6 +244,4 @@ const OrganizationProfile = () => {
   );
 };
 
-  
 export default withOrganizationContext(OrganizationProfile);
-
