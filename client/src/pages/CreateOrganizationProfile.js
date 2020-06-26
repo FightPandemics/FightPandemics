@@ -83,7 +83,6 @@ const CreateOrgProfile = (props) => {
   ] = useReducer(createOrganizationFormReducer, initialState);
 
   const [location, setLocation] = useState({});
-  
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
