@@ -192,7 +192,6 @@ const OrganizationProfile = () => {
             <SectionHeader>
               My Activity
               <PlaceholderIcon />
-              
               <CreatePostDiv>Create a post</CreatePostDiv>
               <CreatePostIcon
                 src={createPost}
