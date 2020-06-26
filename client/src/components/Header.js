@@ -104,14 +104,8 @@ const HeaderWrapper = styled.div`
 
 
 export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, user}) => {
-  // if(user) {
-  //   const {organizations} = user;
-  // }
   
-  // const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
-  // console.log(user.organizations);
-  console.log(user);
-  //console.log(session);
+
   const menu = (
     
     <Menu>
@@ -120,12 +114,13 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
           My Profile
         </Link>
       </Menu.Item>
-      
+      <Menu.Divider />
       <Menu.Item>
       <Link   to="/create-organization-profile">
       Add Organisation
         </Link>
         </Menu.Item>
+        <Menu.Divider />
         {user ? user.organizations.map(organization => (
       <Menu.Item>
       <Link to={`/organization/${organization._id}`}>
@@ -136,7 +131,7 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
 
 
         
-      
+<Menu.Divider />
       <Menu.Item>
         <Link   to="/auth/logout">
           Log Out
@@ -162,18 +157,14 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
         {isAuthenticated ? (
           <>
             <li>
-              <Dropdown overlay={menu}>
+              <Dropdown overlay={menu} trigger={['click']}>
     <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-      Profile <DownOutlined />
+      Profile 
     </a>
   </Dropdown>
   
             </li>
-            <li>
-              <NavLink activeStyle={activeStyles} to="/auth/logout">
-                Logout
-              </NavLink>
-            </li>
+            
           </>
         ) : (
           <>

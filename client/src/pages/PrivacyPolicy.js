@@ -17,8 +17,7 @@ import {
   TdRight,
 } from "components/PolicyPages/TableStyles";
 
-const PrivacyPolicy = ({}) => {
- 
+const PrivacyPolicy = () => {
   return (
     <PolicyContainer>
       <TextContainer>
@@ -459,7 +458,7 @@ const PrivacyPolicy = ({}) => {
             </Paragraph>
           </li>
           <li>
-            <strong>Where We Store Your Personal Data</strong>li>
+            <strong>Where We Store Your Personal Data</strong>
             <Paragraph>
               The Services are provided in the United States of America.
               Notwithstanding, your Personal Data will be stored, processed in
