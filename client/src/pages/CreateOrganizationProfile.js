@@ -149,7 +149,6 @@ const CreateOrgProfile = (props) => {
 
   return (
     <Main>
-      
       <SvgContainer>
         <img src={createOrganizationSvg} alt="create organization" />
       </SvgContainer>
