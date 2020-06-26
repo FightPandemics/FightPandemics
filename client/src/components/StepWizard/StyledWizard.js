@@ -4,7 +4,7 @@ import { mq } from "constants/theme";
 
 const { tablet, desktop } = mq;
 
-export const StyledWizard = styled(StepWizard)`
+const StyledWizard = styled(StepWizard)`
   display: flex;
   flex-direction: column-reverse;
   align-self: flex-start;
