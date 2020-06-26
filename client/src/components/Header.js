@@ -131,7 +131,6 @@ export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, u
       </Menu.Item>
     </Menu>
   );
-  
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
