@@ -173,6 +173,7 @@ const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
+
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
       const userinitials = getInitials(user.firstName, user.lastName);
