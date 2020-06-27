@@ -178,7 +178,7 @@ const OfferHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  }, [transition]);
+  }, [transition]); //
 
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
