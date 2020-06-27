@@ -88,6 +88,7 @@ const OrganizationProfile = () => {
     objectives = {},
     urls = {},
   } = organization || {};
+  
   useEffect(() => {
     (async function fetchProfile() {
       orgProfileDispatch(fetchOrganization());
@@ -130,6 +131,7 @@ const OrganizationProfile = () => {
       }
     }
   };
+
   const renderProfileData = () => {
     let firstName, lastName;
     if (!organization) {
@@ -141,14 +143,14 @@ const OrganizationProfile = () => {
       const nameArr = name.split(" ");
       if (nameArr.length < 2) {
         firstName = nameArr[0];
-        lastName = firstName.split("").pop();        
+        lastName = firstName.split("").pop();
       } else {
         firstName = nameArr[0];
         lastName = nameArr[1];
       }
 
       return (
-        <>        
+        <>
           <UserInfoContainer>
             <EditIcon src={edit} onClick={() => setDrawer(true)} />
             <ProfilePic
