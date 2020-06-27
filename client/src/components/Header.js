@@ -6,11 +6,10 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import envelope from "assets/icons/envelope.svg";
-import menu from "assets/icons/menu.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
-import { Menu, Dropdown } from 'antd';
+import { Menu, Dropdown } from "antd";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -98,35 +97,30 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated, user}) => {
+export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
   const menu = (
-    
     <Menu>
       <Menu.Item>
-        <Link   to="/profile">
-          My Profile
-        </Link>
+        <Link to="/profile">My Profile</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-      <Link   to="/create-organization-profile">
-      Add Organisation
-        </Link>
-        </Menu.Item>
-        <Menu.Divider />
-        {user ? user.organizations.map(organization => (
+        <Link to="/create-organization-profile">Add Organisation</Link>
+      </Menu.Item>
+      <Menu.Divider />
+      {user
+        ? user.organizations.map((organization) => (
+            <Menu.Item>
+              <Link to={`/organization/${organization._id}`}>
+                {organization.name}
+              </Link>
+            </Menu.Item>
+          ))
+        : null}
+
+      <Menu.Divider />
       <Menu.Item>
-      <Link to={`/organization/${organization._id}`}>
-      {organization.name}
-    </Link>
-    </Menu.Item>
-    )) : null}
-        
-<Menu.Divider />
-      <Menu.Item>
-        <Link   to="/auth/logout">
-          Log Out
-        </Link>
+        <Link to="/auth/logout">Log Out</Link>
       </Menu.Item>
     </Menu>
   );
@@ -147,11 +141,14 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user}) => {
         {isAuthenticated ? (
           <>
             <li>
-              <Dropdown overlay={menu} trigger={['click']}>
-    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-      Profile 
-    </a>
-  </Dropdown>
+              <Dropdown overlay={menu} trigger={["click"]}>
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Profile
+                </a>
+              </Dropdown>
             </li>
           </>
         ) : (
