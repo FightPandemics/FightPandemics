@@ -25,7 +25,7 @@ const configData = envSchema({
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
     .prop("SENTRY_DSN", S.string())
-    .prop("SENDGRID_CONTACS_API_URL", S.string())
+    .prop("SENDGRID_CONTACTS_API_URL", S.string())
     .prop("SENDGRID_API_KEY", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
 });
@@ -48,7 +48,7 @@ const config = {
   sendgrid: {
     apiKey: configData.SENDGRID_API_KEY,
     contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
-    contactsApiUrl: configData.SENDGRID_CONTACS_API_URL,
+    contactsApiUrl: configData.SENDGRID_CONTACTS_API_URL,
   },
   env: configData.NODE_ENV,
   errorNotifier: {
