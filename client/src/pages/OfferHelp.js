@@ -120,7 +120,7 @@ const Step3 = (props) => {
   }, [email]);
 
   const onChange = (event) => {
-    setEmail(event.target.value;);
+    setEmail(event.target.value);
   };
 
   const onSubmit = () => {
