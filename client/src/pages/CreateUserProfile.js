@@ -404,7 +404,9 @@ const CreateProfile = ({ email, history }) => {
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
-              Create Profile
+              {createUserFormState.loading
+                ? "Creating Profile..."
+                : "Create Profile"}
             </Submit>
           </InputGroup>
         </ProfileFormGroup>
