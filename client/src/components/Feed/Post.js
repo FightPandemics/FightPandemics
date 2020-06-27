@@ -144,9 +144,9 @@ const Post = ({
 
   useEffect(() => {
     if (postId) {
-      loadComments();
+      loadComments(); //react-hooks/exhaustive-deps
     }
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   const handleOnChange = async (e) => {
     e.preventDefault();
@@ -180,6 +180,35 @@ const Post = ({
         allComments.length,
       );
       setComment([]);
+    }
+  };
+
+  const deleteComment = async (comment) => {
+    let response;
+    const postId = comment.postId;
+    const commentId = comment._id;
+    if (isAuthenticated && comment.author.id === user.id) {
+      const endPoint = `/api/posts/${postId}/comments/${commentId}`;
+
+      try {
+        response = await axios.delete(endPoint);
+      } catch (error) {
+        console.log({ error });
+      }
+      if (response && response.data) {
+        let filterComments = comments.filter((comment) => {
+          if (comment._id !== commentId) {
+            return comment;
+          }
+        });
+        await dispatchPostAction(
+          SET_COMMENTS,
+          "comments",
+          filterComments,
+          "numComments",
+          filterComments.length,
+        );
+      }
     }
   };
 
@@ -281,7 +310,13 @@ const Post = ({
       )}
       {isAuthenticated ? (
         <>
-          <Comments comments={comments} handleOnChange={handleOnChange} />
+          <Comments
+            comments={comments}
+            handleOnChange={handleOnChange}
+            deleteComment={deleteComment}
+            dispatchPostAction={dispatchPostAction}
+            user={user}
+          />
           {loadMoreComments && commentsCount >= 5 ? (
             <Button disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
