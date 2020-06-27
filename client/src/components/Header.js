@@ -11,7 +11,6 @@ import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
 import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -99,7 +98,7 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ session, authLoading, onMenuClick, isAuthenticated, orgname, user}) => {
+export default ({ authLoading, onMenuClick, isAuthenticated, user}) => {
   const menu = (
     
     <Menu>
