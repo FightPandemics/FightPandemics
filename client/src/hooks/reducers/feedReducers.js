@@ -18,7 +18,7 @@ export const postsState = {
   posts: [],
   page: 0,
   error: null,
-  filterType: "",
+  filterType: "ALL",
   isLoading: false,
   loadMore: true,
 };

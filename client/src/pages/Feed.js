@@ -186,7 +186,6 @@ const HeaderWrapper = styled.div`
 `;
 
 const Feed = (props) => {
-  console.log(props.history.location.state);
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -259,6 +258,7 @@ const Feed = (props) => {
   };
 
   const handleOption = (label, option) => (e) => {
+    console.log(label, option);
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
     if (applyFilters) {
@@ -278,13 +278,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleChangeType = (e) => {
+  const handleChangeType = useCallback((e) => {
     const value = HELP_TYPE[e.key];
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", value);
       postsDispatch({ type: RESET_PAGE, filterType: value });
     }
-  };
+  });
 
   const handleShowFilters = (e) => {
     // desktop
@@ -334,6 +334,7 @@ const Feed = (props) => {
   };
 
   const loadPosts = useCallback(async () => {
+    console.log("IJWEIFJWEF");
     const objectiveURL = () => {
       let objective = selectedType;
       if (
@@ -417,6 +418,30 @@ const Feed = (props) => {
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    // only run once for onboarding
+    if (props.history.location.state) {
+      const {
+        postType,
+        helpType,
+        location,
+        providers,
+      } = props.history.location.state;
+      // console.log(postType, helpType, location, providers);
+      if (postType === "Requesting help") {
+        handleChangeType({ key: "REQUEST" });
+        // if (helpType === "medical") {
+        //   handleOption("type", "Medical Supplies");
+        // }
+        // else {
+
+        // }
+      } else {
+        // offering help
+        handleChangeType({ key: "OFFER" });
+      }
+    }
+  }, [handleChangeType, props.history.location.state]);
   const scrollObserver = useCallback(
     (node) => {
       new IntersectionObserver((entries) => {
