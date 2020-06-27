@@ -108,15 +108,14 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         <Link to="/create-organization-profile">Add Organisation</Link>
       </Menu.Item>
       <Menu.Divider />
-      {user
-        ? user.organizations.map((organization) => (
-            <Menu.Item>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
-              </Link>
-            </Menu.Item>
-          ))
-        : null}
+      {user?.organizations?.map((organization) => (
+        <Menu.Item>
+          <Link to={`/organization/${organization._id}`}>
+            {organization.name}
+          </Link>
+        </Menu.Item>
+        ))
+      }
 
       <Menu.Divider />
       <Menu.Item>
