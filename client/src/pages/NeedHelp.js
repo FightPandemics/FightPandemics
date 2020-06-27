@@ -99,7 +99,7 @@ const Step3 = (props) => {
     setEmail(event.target.value);
   };
 
-   const onSubmit = () => {
+  const onSubmit = () => {
     console.log("submit");
   };
 
