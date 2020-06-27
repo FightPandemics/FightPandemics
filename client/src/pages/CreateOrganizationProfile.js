@@ -128,8 +128,8 @@ const CreateOrgProfile = (props) => {
           const res = await axios.post("/api/organizations", formData);
           if (res) {
             props.history.push("/create-organization-complete", {
-              orgId: res.data._id,             
-            });           
+              orgId: res.data._id,
+            });
           }
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -166,7 +166,7 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               ref={register({ required: true, minLength: 3 })}
               name="name"
-            />          
+            />
             <span style={errorStyles}>
               {errors.name && "Organization name is required"}
             </span>
