@@ -23,6 +23,7 @@ import {
 } from "components/StepWizard";
 
 const INITIAL_STATE = {
+  postType: "Requesting help",
   helpType: "",
   location: "",
   email: "",
@@ -155,7 +156,6 @@ const NeedHelp = withRouter((props) => {
   }, [transition]);
 
   const updateAnswers = (key, value) => {
-    console.log(key, value);
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
     if (key === "email") {
@@ -173,12 +173,7 @@ const NeedHelp = withRouter((props) => {
           <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3
-              hashKey={"Step3"}
-              update={updateAnswers}
-              {...props}
-              state={state}
-            />
+            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
         )}
       </Transition>
