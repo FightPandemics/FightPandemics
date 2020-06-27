@@ -139,7 +139,7 @@ const Step3 = (props) => {
           Submit
         </WizardSubmit>
         <SkipLink>
-          <Link to="/feed">Skip</Link>
+          <span onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -155,6 +155,7 @@ const NeedHelp = withRouter((props) => {
   }, [transition]);
 
   const updateAnswers = (key, value) => {
+    console.log(key, value);
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
     if (key === "email") {
