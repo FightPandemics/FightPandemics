@@ -139,14 +139,7 @@ const Step3 = (props) => {
           Submit
         </WizardSubmit>
         <SkipLink>
-          <Link
-            to={{
-              pathname: "/feed",
-              state: props.state,
-            }}
-          >
-            Skip
-          </Link>
+          <Link to="/feed">Skip</Link>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -162,11 +155,7 @@ const NeedHelp = withRouter((props) => {
   }, [transition]);
 
   const updateAnswers = (key, value) => {
-    console.log(key, value);
-    console.log("STATE", state);
     const updatedAnswers = { ...state, [key]: value };
-    console.log(updatedAnswers);
-
     setState({ ...updatedAnswers });
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
