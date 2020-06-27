@@ -3,7 +3,6 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
-import axios from "axios";
 import {
   StyledWizard,
   WizardContainer,
@@ -28,9 +27,6 @@ import {
 const INITIAL_STATE = {
   answers: [],
 };
-
-// for now just creating an object to collect the data that I need
-let stepsData = {};
 
 const STEP_1_ANSWERS = [
   "As a Volunteer",
@@ -78,8 +74,6 @@ const Step1 = (props) => {
 const Step2 = (props) => {
   const selectLocationDetection = (location) => {
     try {
-      // assigning the object to hold the steps2 data -> might conver this to useContext instead
-      stepsData.location = location;
       props.update("location", location);
     } catch {
       props.update("location", null);
@@ -126,18 +120,11 @@ const Step3 = (props) => {
   }, [email]);
 
   const onChange = (event) => {
-    let email = event.target.value;
-    stepsData.email = email;
-    setEmail(email);
+    setEmail(event.target.value;);
   };
 
-  const onSubmit = async () => {
-    // ideally I want to create a contact on submit and redirect to the feed :)
-    try {
-      const res = await axios.put(`/api/sendgrid/create-contact`, stepsData);
-    } catch (err) {
-      console.log(err);
-    }
+  const onSubmit = () => {
+    console.log("submit");
   };
 
   return (
