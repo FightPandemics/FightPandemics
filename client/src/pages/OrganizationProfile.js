@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState, useEffect, useContext, Text } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // ICONS
