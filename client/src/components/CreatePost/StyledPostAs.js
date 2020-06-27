@@ -131,6 +131,7 @@ const CreateOrgLink = styled(Link)`
 
 const ViewPostButton = styled(BaseButton)`
   width: 30rem;
+  font-size: 1.3rem;
 `;
 
 const OptionWrapper = styled.div`
