@@ -170,7 +170,7 @@ const CreateProfile = ({ email, history }) => {
     } else if (!conditions) {
       alert("You must agree to our terms and conditions before proceeding");
       return;
-    } else if (!location.address) {
+    } else if (!location) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
