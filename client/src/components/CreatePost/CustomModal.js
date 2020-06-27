@@ -37,10 +37,11 @@ const StyledModal = styled(Modal)`
 const buttonStyles = {
   backgroundColor: "#F3F4FE",
   color: "#425AF2",
-  fontWeight: "500"
-}
+  fontWeight: "500",
+};
 
-const CustomModal = ({ title,
+const CustomModal = ({
+  title,
   content,
   onClose,
   visible,
@@ -49,9 +50,8 @@ const CustomModal = ({ title,
   selectCloseButton,
   closeButton,
   onSearch,
-  searchBar
- }) => {
-
+  searchBar,
+}) => {
   return (
     <StyledModal
       popup
@@ -63,19 +63,13 @@ const CustomModal = ({ title,
       transparent
       animationType="slide-up"
     >
-      {searchBar ? <SearchInput
-        onChange={onSearch}
-      /> :
-      null }
+      {searchBar ? <SearchInput onChange={onSearch} /> : null}
       {content}
-      {closeButton ?
-        <SubmitButton
-        style={buttonStyles}
-        onClick={selectCloseButton}
-        >
-        {closeButtonName}
-        </SubmitButton> : null
-      }
+      {closeButton ? (
+        <SubmitButton style={buttonStyles} onClick={selectCloseButton}>
+          {closeButtonName}
+        </SubmitButton>
+      ) : null}
     </StyledModal>
   );
 };

@@ -6,8 +6,7 @@ import { initAuth } from "./actions/authActions";
 import routes from "./routes";
 import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
-import TagManager from 'react-gtm-module';
-
+import TagManager from "react-gtm-module";
 
 const App = (props) => {
   useEffect(() => {
@@ -26,11 +25,10 @@ const App = (props) => {
 };
 
 const tagManagerArgs = {
-  gtmId: process.env.REACT_APP_GTM_ID
-}
+  gtmId: process.env.REACT_APP_GTM_ID,
+};
 
-TagManager.initialize(tagManagerArgs)
-
+TagManager.initialize(tagManagerArgs);
 
 const mapDispatchToProps = {
   initAuth: initAuth,
