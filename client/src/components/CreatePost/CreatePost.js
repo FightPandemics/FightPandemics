@@ -1,13 +1,14 @@
 import React, { useState, createContext, useContext } from "react";
 import { Row, Col } from "antd";
-
+import { Link } from "react-router-dom";
 import {
   Container,
   Option,
   TitleStep,
   OptionButton,
   BackButton,
-  StyledLink,
+  CreateOrgLink,
+  ViewPostButton,
 } from "components/CreatePost/StyledPostAs";
 import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -75,9 +76,9 @@ const Step2 = () => {
             </OptionButton>
           );
         })}
-        <StyledLink to={"/create-organization-profile"}>
+        <CreateOrgLink to={"/create-organization-profile"}>
           Create new one
-        </StyledLink>
+        </CreateOrgLink>
       </>
     )
   );
@@ -138,10 +139,9 @@ const Step4 = () => {
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-
-        <StyledLink to={`/post/${postId}`} primary>
-          View Your Post
-        </StyledLink>
+        <Link to={`/post/${postId}`}>
+          <ViewPostButton primary>View Your Post</ViewPostButton>
+        </Link>
       </>
     )
   );

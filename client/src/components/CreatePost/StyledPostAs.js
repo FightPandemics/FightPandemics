@@ -121,12 +121,16 @@ const OptionButton = styled(AntDButton)`
   }
 `;
 
-const StyledLink = styled(Link)`
+const CreateOrgLink = styled(Link)`
   display: block;
   color: ${colors.royalBlue};
   &:hover {
     color: ${colors.royalBlue};
   }
+`;
+
+const ViewPostButton = styled(BaseButton)`
+  width: 30rem;
 `;
 
 const OptionWrapper = styled.div`
@@ -159,4 +163,12 @@ const Option = ({ img, text, onClick, type }) => (
   </OptionWrapper>
 );
 
-export { Container, Option, StyledLink, TitleStep, OptionButton, BackButton };
+export {
+  Container,
+  Option,
+  CreateOrgLink,
+  TitleStep,
+  OptionButton,
+  BackButton,
+  ViewPostButton,
+};
