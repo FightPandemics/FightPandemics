@@ -28,7 +28,15 @@ const getLayoutComponent = (layout) => {
 // handle "sub"-routes by passing them in a `routes`
 // prop to the component it renders.
 export const RouteWithSubRoutes = (route) => {
-  const { emailVerified, isAuthenticated, path, props = {}, user } = route;
+  const {
+    authError,
+    authLoading,
+    emailVerified,
+    isAuthenticated,
+    path,
+    props = {},
+    user,
+  } = route;
   const {
     loggedInOnly,
     notLoggedInOnly,
@@ -53,13 +61,13 @@ export const RouteWithSubRoutes = (route) => {
           } else if (notLoggedInOnly && isAuthenticated) {
             redirect = HOME;
           } else if (isAuthenticated) {
-             if (
-            !emailVerified &&
-            location.pathname !== VERIFY_EMAIL &&
-            !forgotPassword
-          ) {
-            redirect = VERIFY_EMAIL;
-          } else if (emailVerified && forgotPassword) {
+            if (
+              !emailVerified &&
+              location.pathname !== VERIFY_EMAIL &&
+              !forgotPassword
+            ) {
+              redirect = VERIFY_EMAIL;
+            } else if (emailVerified && forgotPassword) {
               redirect = LOGIN;
             } else if (
               emailVerified &&
