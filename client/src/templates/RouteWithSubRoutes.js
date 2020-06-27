@@ -52,8 +52,7 @@ export const RouteWithSubRoutes = (route) => {
         const Layout = getLayoutComponent(route.layout);
         let redirect;
 
-        if (!authLoading) {
-          // don't apply redirect if authLoading
+        if (!authLoading) { // don't apply redirect if authLoading
           if (authError && location.pathname !== LOGOUT) {
             // logout as means to handle auth error edge cases
             redirect = LOGOUT;
