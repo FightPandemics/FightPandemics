@@ -140,7 +140,7 @@ const NestedComments = ({
   // };
 
   const commentActions = [
-    <>
+    <Space size="small">
       <CommentButton
         size="small"
         type="text"
@@ -160,7 +160,7 @@ const NestedComments = ({
       >
         Delete
       </CommentButton>
-    </>,
+    </Space>,
   ];
 
   const nestedComments = (comment.children || []).map((comment) => {
