@@ -52,13 +52,13 @@ const Step1 = () => {
 const Step2 = ({ user }) => {
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
- 
+
   return (
     currentStep === 2 && (
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
-        {user.organizations.map((item) => {
+        {user.organizations?.map((item) => {
           return (
             <OptionButton
               key={item.id}
@@ -147,7 +147,7 @@ const CreatePost = (props) => {
     >
       <Wrapper {...props}>
         <Step1 />
-        <Step2 user={props.user}/>
+        <Step2 user={props.user} />
         <Step4 />
       </Wrapper>
       <Step3 {...props} />
