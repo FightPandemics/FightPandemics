@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
+import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
@@ -44,6 +45,7 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitials } from "utils/userInfo";
+import { refetchUser } from "actions/authActions";
 
 const errorStyles = {
   color: "#FF5656",
@@ -64,7 +66,7 @@ const NEEDS = {
   other: "Other",
 };
 
-function EditOrganizationAccount(props) {
+function EditOrganizationAccount({ refetchUser }) {
   // TODO: integrate location w proper react-hook-forms use
   const organizationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
@@ -104,6 +106,7 @@ function EditOrganizationAccount(props) {
         formData,
       );
       orgProfileDispatch(updateOrganizationSuccess(res.data));
+      refetchUser();
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
@@ -345,4 +348,13 @@ function EditOrganizationAccount(props) {
   );
 }
 
-export default withOrganizationContext(EditOrganizationAccount);
+const mapDispatchToProps = {
+  refetchUser,
+};
+
+// mixing context & redux is awkward here
+// TODO: implement consistent approach to state management
+export default connect(
+  null,
+  mapDispatchToProps
+)(withOrganizationContext(EditOrganizationAccount));

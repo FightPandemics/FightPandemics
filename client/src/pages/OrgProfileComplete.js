@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { WhiteSpace } from "antd-mobile";
 import { theme, mq } from "../constants/theme";
 import smiley from "../assets/icons/smiley.svg";
 import { Link } from "react-router-dom";
+import { refetchUser } from "actions/authActions";
 
 const Container = styled.div`
   width: 100%;
@@ -60,7 +62,11 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const OrgProfileComplete = (props) => {
+const OrgProfileComplete = ({ history, refetchUser }) => {
+  useEffect(() => {
+    refetchUser();
+  // will only run once (on mount) to update navbar org list
+  }, [refetchUser]);
   return (
     <Container>
       <WhiteSpace />
@@ -75,7 +81,7 @@ const OrgProfileComplete = (props) => {
       <WhiteSpace />
       <WhiteSpace />
       <ButtonsContainer>
-        <StyledLink to={`/organization/${props.history.location.state.orgId}`}>
+        <StyledLink to={`/organization/${history.location.state.orgId}`}>
           View my profile
         </StyledLink>
         <WhiteSpace />
@@ -86,4 +92,11 @@ const OrgProfileComplete = (props) => {
   );
 };
 
-export default withRouter(OrgProfileComplete);
+const mapDispatchToProps = {
+  refetchUser,
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withRouter(OrgProfileComplete));
