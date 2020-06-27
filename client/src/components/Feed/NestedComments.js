@@ -23,14 +23,14 @@ import { theme } from "constants/theme";
 
 import { SET_COMMENT } from "hooks/actions/postActions";
 
-const { royalBlue, lighterGray, darkGrey } = theme.colors;
+const { royalBlue, lighterGray, darkGray } = theme.colors;
 
 const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
 const { TextArea } = Input;
 const CommentButton = styled(Button)`
-  text-color: ${darkGrey};
-  background-color: ${lighterGray};
+  color: ${darkGray};
   border: none;
+  border-radius: 2rem;
 `;
 const TextInput = styled(TextArea)`
   background-color: ${lighterGray};
@@ -139,30 +139,6 @@ const NestedComments = ({
   //   );
   // };
 
-  const commentActions = [
-    <Space size="small">
-      <CommentButton
-        size="small"
-        type="text"
-        style={
-          editComment
-            ? { border: "none", color: royalBlue }
-            : { border: "none" }
-        }
-        onClick={() => toggleEditComment()}
-      >
-        Edit
-      </CommentButton>
-      <CommentButton
-        size="small"
-        type="text"
-        onClick={() => handleDeleteComment()}
-      >
-        Delete
-      </CommentButton>
-    </Space>,
-  ];
-
   const nestedComments = (comment.children || []).map((comment) => {
     return <NestedComments comment={comment} key={comment._id} />;
   });
@@ -209,6 +185,17 @@ const NestedComments = ({
     setEditComment(!editComment);
   };
 
+  const commentActions = [
+    <Space size="small">
+      <CommentButton size="small" ghost onClick={() => toggleEditComment()}>
+        Edit
+      </CommentButton>
+      <CommentButton size="small" ghost onClick={() => handleDeleteComment()}>
+        Delete
+      </CommentButton>
+    </Space>,
+  ];
+
   const editCommentContent = (
     <>
       {isAuthenticated && comment.author.id === user.id && (
@@ -220,13 +207,14 @@ const NestedComments = ({
           />
           <Space direction="vertical">
             <span></span>
-            <CommentButton
+            <Button
               size="small"
-              type="link"
+              ghost
+              style={{ color: royalBlue, borderRadium: "4rem" }}
               onClick={() => handleSubmit()}
             >
               Save
-            </CommentButton>
+            </Button>
           </Space>
         </>
       )}
