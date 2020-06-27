@@ -12,6 +12,8 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
+  margin-left: 2rem;
+  margin-right 2rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
@@ -45,7 +47,8 @@ const PostCard = styled(Card)`
       justify-content: space-between;
 
       .card-submenu {
-        display: none;
+        display: flex;
+        cursor: pointer;
 
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           display: block;
@@ -63,6 +66,7 @@ const PostCard = styled(Card)`
       display: block;
       flex: 1 1 auto;
       padding: 0;
+      margin-right: 1rem;
 
       .am-card-header-content {
         align-items: unset;
@@ -93,6 +97,7 @@ const PostCard = styled(Card)`
       border-top: unset;
       padding: 0;
       color: black;
+      white-space: pre-line;
 
       &::before {
         content: none;
@@ -128,6 +133,7 @@ const PostCard = styled(Card)`
         font-size: ${large};
         font-weight: 500;
         color: ${royalBlue};
+        cursor: pointer;
 
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           font-size: ${small};
@@ -158,7 +164,7 @@ const PostCard = styled(Card)`
           display: inline;
 
           @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-            display: none;
+            display: inline;
           }
         }
 

@@ -24,7 +24,7 @@ const StyledNavBar = styled(NavBar)`
   margin-top: 0;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
-    margin-top: 0.8rem;
+    margin-top: 0;
   }
   .am-navbar-title {
     display: none;
@@ -94,11 +94,59 @@ const activeStyles = {
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   width: 100vw;
 `;
 
-export default ({ onMenuClick, isAuthenticated }) => {
+export default ({ authLoading, onMenuClick, isAuthenticated }) => {
+  const renderNavLinkItems = () => {
+    if (authLoading) return null;
+    return (
+      <>
+        <li>
+          <NavLink activeStyle={activeStyles} to="/about-us">
+            About Us
+          </NavLink>
+        </li>
+        <li>
+          <NavLink activeStyle={activeStyles} to="/feed">
+            Feed
+          </NavLink>
+        </li>
+        {isAuthenticated ? (
+          <>
+            <li>
+              <NavLink activeStyle={activeStyles} to="/profile">
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeStyle={activeStyles} to="/auth/logout">
+                Logout
+              </NavLink>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink activeStyle={activeStyles} to="/auth/login">
+                Login
+              </NavLink>
+            </li>
+            <li className="registerBtn">
+              <NavLink className="registerLink" to="/auth/signup">
+                Register
+              </NavLink>
+            </li>
+            <Link to="/feed">
+              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
+            </Link>
+          </>
+        )}
+      </>
+    );
+  };
+
   return (
     <HeaderWrapper className="header">
       <StyledNavBar
@@ -117,51 +165,7 @@ export default ({ onMenuClick, isAuthenticated }) => {
             />
             <DesktopMenu>
               <NavLinks>
-                <ul>
-                  <li>
-                    <NavLink activeStyle={activeStyles} to="/about-us">
-                      About Us
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink activeStyle={activeStyles} to="/feed">
-                      Feed
-                    </NavLink>
-                  </li>
-                  {isAuthenticated ? (
-                    <>
-                      <li>
-                        <NavLink activeStyle={activeStyles} to="/profile">
-                          Profile
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink activeStyle={activeStyles} to="/auth/logout">
-                          Logout
-                        </NavLink>
-                      </li>
-                    </>
-                  ) : (
-                    <>
-                      <li>
-                        <NavLink activeStyle={activeStyles} to="/auth/login">
-                          Login
-                        </NavLink>
-                      </li>
-                      <li className="registerBtn">
-                        <NavLink className="registerLink" to="/auth/signup">
-                          Register
-                        </NavLink>
-                      </li>
-                      <Link to="/feed">
-                        <SvgIcon
-                          src={envelope}
-                          style={{ marginLeft: "1.5rem" }}
-                        />
-                      </Link>
-                    </>
-                  )}
-                </ul>
+                <ul>{renderNavLinkItems()}</ul>
               </NavLinks>
             </DesktopMenu>
           </div>

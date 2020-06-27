@@ -26,6 +26,7 @@ const TabsContainer = styled.div`
   display: none !important;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block !important;
+    padding-top: 4rem; /* Offset header's height */
   }
 `;
 

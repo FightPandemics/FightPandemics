@@ -13,7 +13,7 @@ const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 const { royalBlue, white } = theme.colors;
 
-const StyledWizardNav = styled.div`
+export const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,7 +37,7 @@ const StyledWizardNav = styled.div`
   }
 `;
 
-const BackButton = styled(LeftRightIconButton)`
+export const BackButton = styled(LeftRightIconButton)`
   align-items: center;
   background-color: transparent;
   color: ${royalBlue};
@@ -73,7 +73,7 @@ const BackButton = styled(LeftRightIconButton)`
   }
 `;
 
-const BackText = styled.span`
+export const BackText = styled.span`
   margin-left: 3rem;
 `;
 

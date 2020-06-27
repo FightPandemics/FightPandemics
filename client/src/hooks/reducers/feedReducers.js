@@ -11,13 +11,13 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
-  SET_COMMENTS,
 } from "../actions/feedActions";
 
 export const postsState = {
   status: SET_POSTS,
   posts: [],
   page: 0,
+  error: null,
   filterType: "",
   isLoading: false,
   loadMore: true,
@@ -60,11 +60,18 @@ export const postsReducer = (state = postsState, action) => {
       return {
         ...state,
         status: SET_POSTS,
+        error: null,
         posts: action.posts,
         isLoading: false,
       };
     case ERROR_POSTS:
-      return { ...state, status: ERROR_POSTS, posts: [], isLoading: false };
+      return {
+        ...state,
+        status: ERROR_POSTS,
+        error: action.error,
+        posts: [],
+        isLoading: false,
+      };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
@@ -86,18 +93,6 @@ export const postsReducer = (state = postsState, action) => {
             ...state.posts[action.postId],
             liked: !!!state.posts[action.postId].liked,
             likesCount: action.count,
-          },
-        },
-      };
-    case SET_COMMENTS:
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          [action.postId]: {
-            ...state.posts[action.postId],
-            comments: action.comments,
-            commentsCount: action.commentsCount,
           },
         },
       };

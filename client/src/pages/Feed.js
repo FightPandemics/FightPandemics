@@ -7,13 +7,16 @@ import axios from "axios";
 import { Layout, Menu } from "antd";
 
 // Local
+import CreatePost from "components/CreatePost/CreatePost";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
+import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
-import CreatePost from "components/CreatePost/CreatePost";
+
 import {
   optionsReducer,
   feedReducer,
@@ -41,7 +44,6 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
-  SET_COMMENTS,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -149,7 +151,7 @@ const LayoutWrapper = styled(Layout)`
 `;
 
 const ContentWrapper = styled(Content)`
-  margin: 0;
+  margin: 0 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
   }
@@ -191,6 +193,7 @@ const Feed = (props) => {
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+
   const {
     filterModal,
     createPostModal,
@@ -201,15 +204,19 @@ const Feed = (props) => {
     initialLoad,
     showFilters,
   } = feedState;
+
   const filters = Object.values(filterOptions);
   const {
+    error: postsError,
+    filterType,
     isLoading,
     loadMore,
     page,
     posts: postsList,
     status,
-    filterType,
   } = posts;
+
+  const { history, isAuthenticated, user } = props;
   let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
@@ -263,7 +270,11 @@ const Feed = (props) => {
   };
 
   const handleCreatePost = () => {
-    dispatchAction(TOGGLE_STATE, "createPostModal");
+    if (isAuthenticated) {
+      dispatchAction(TOGGLE_STATE, "createPostModal");
+    } else {
+      history.push(LOGIN);
+    }
   };
 
   const handleChangeType = (e) => {
@@ -289,13 +300,8 @@ const Feed = (props) => {
   };
 
   const handlePostLike = async (postId, liked) => {
-    const { history, isAuthenticated, user } = props;
-
-    /* added here because userId not working */
-    sessionStorage.removeItem("likePost");
-
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user.userId}`;
+      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
       let response = {};
 
       if (user) {
@@ -322,18 +328,8 @@ const Feed = (props) => {
         }
       }
     } else {
-      sessionStorage.setItem("likePost", postId);
       history.push(LOGIN);
     }
-  };
-
-  const updateComments = ({ postId, comments, commentsCount }) => {
-    postsDispatch({
-      type: SET_COMMENTS,
-      postId,
-      comments,
-      commentsCount,
-    });
   };
 
   const loadPosts = useCallback(async () => {
@@ -379,17 +375,35 @@ const Feed = (props) => {
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      await postsDispatch({ type: ERROR_POSTS });
+      await postsDispatch({ error, type: ERROR_POSTS });
     }
-    if (response.data && response.data.length) {
+
+    if (response && response.data && response.data.length) {
       const loadedPosts = response.data.reduce((obj, item) => {
         obj[item._id] = item;
         return obj;
       }, {});
 
+      if (postsList) {
+        await postsDispatch({
+          type: SET_POSTS,
+          posts: { ...postsList, ...loadedPosts },
+        });
+      } else {
+        await postsDispatch({
+          type: SET_POSTS,
+          posts: { ...loadedPosts },
+        });
+      }
+    } else if (response && response.data) {
       await postsDispatch({
         type: SET_POSTS,
-        posts: { ...postsList, ...loadedPosts },
+        posts: { ...postsList },
+      });
+      await postsDispatch({
+        type: SET_LOADING,
+        isLoading: false,
+        loadMore: false,
       });
     } else {
       await postsDispatch({ type: SET_LOADING });
@@ -412,14 +426,49 @@ const Feed = (props) => {
         });
       }).observe(node);
     },
-    [postsDispatch, isLoading, loadMore],
+    [postsDispatch, loadMore, isLoading],
   );
 
   useEffect(() => {
+    let observer;
     if (bottomBoundaryRef.current) {
-      scrollObserver(bottomBoundaryRef.current);
+      observer = scrollObserver(bottomBoundaryRef.current);
     }
+    return () => {
+      observer && observer.disconnect();
+    };
   }, [scrollObserver, bottomBoundaryRef]);
+
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+
+    if (
+      isAuthenticated &&
+      user &&
+      (user._id === post.author.id || user.id === post.author.id)
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsList,
+          };
+          delete allPosts[post._id];
+
+          await postsDispatch({
+            type: SET_POSTS,
+            posts: allPosts,
+          });
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
   return (
     <FeedContext.Provider
       value={{
@@ -437,7 +486,6 @@ const Feed = (props) => {
         handleOnClose,
         showFilters,
         handlePostLike,
-        updateComments,
       }}
     >
       <FeedWrapper>
@@ -480,13 +528,15 @@ const Feed = (props) => {
               <FilterBox />
             </div>
             <Posts
+              isAuthenticated={isAuthenticated}
               filteredPosts={postsList}
-              updateComments={updateComments}
               handlePostLike={handlePostLike}
+              loadPosts={loadPosts}
+              handlePostDelete={postDelete}
+              user={user}
             />
-            {isLoading && <div>Loading...</div>}
-            {status === ERROR_POSTS && <div>Something went wrong...</div>}
-            {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
+            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
+            {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}
               onClick={handleCreatePost}
@@ -497,7 +547,9 @@ const Feed = (props) => {
         <CreatePost
           onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
+          user={user}
         />
+        {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>
     </FeedContext.Provider>
   );

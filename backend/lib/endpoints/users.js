@@ -1,5 +1,5 @@
 const Auth0 = require("../components/Auth0");
-const { getBearerToken } = require("../utils");
+const { getCookieToken } = require("../utils");
 const {
   getUserByIdSchema,
   createUserSchema,
@@ -10,33 +10,47 @@ const {
  * /api/users
  */
 async function routes(app) {
+  const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const Post = app.mongo.model("Post");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const result = await User.findById(req.userId);
-    if (result === null) {
+    const { userId } = req;
+    const [userErr, user] = await app.to(
+      User.findById(userId).populate("organizations"),
+    );
+    if (userErr) {
+      req.log.error(userErr, "Failed retrieving user");
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      req.log.error(userErr, "User does not exist");
       throw app.httpErrors.notFound();
     }
+
     const {
       _id: id,
       about,
       email,
       firstName,
+      hide,
       lastName,
       location,
       needs,
       objectives,
+      organizations,
       urls,
-    } = result;
+    } = user;
     return {
       about,
       email,
       firstName,
+      hide,
       id,
       lastName,
       location,
       needs,
       objectives,
+      organizations,
       urls,
     };
   });
@@ -61,6 +75,37 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
+      // -- Update Author References if needed
+      const { firstName, lastName, photo } = body;
+      if (firstName || lastName || photo) {
+        const updateOps = {};
+        if (firstName || lastName) {
+          updateOps["author.name"] = updatedUser.name;
+        }
+        if (photo) {
+          updateOps["author.photo"] = updatedUser.photo;
+        }
+
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+      }
       return updatedUser;
     },
   );
@@ -86,7 +131,7 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getBearerToken(req));
+      const user = await Auth0.getUser(getCookieToken(req));
       const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
         throw app.httpErrors.forbidden("Email address not verified");

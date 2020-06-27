@@ -4,8 +4,10 @@ import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
+import axios from "axios";
+import { formDataToPost } from "assets/data/formToPostMappings";
 
-const { shareWith, expires } = createPostSettings;
+const { shareWith, expires, helpTypes } = createPostSettings;
 
 const errorMsg = {
   title: "Please include a title for your post.",
@@ -19,15 +21,17 @@ const initialState = {
     title: "",
     description: "",
     tags: [],
-    shareWith: shareWith,
-    expires: expires,
+    shareWith: shareWith.default.value,
+    expires: expires.default.value,
+    help: helpTypes.default.value,
   },
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData }) => {
+const Form = ({ setCurrentStep, textData, type }) => {
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
+  formData.help = type;
 
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
@@ -36,6 +40,10 @@ const Form = ({ setCurrentStep, textData }) => {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
     }
+  };
+
+  const handleSelectorChange = (field, val) => {
+    setFormData({ ...formData, [field]: val });
   };
 
   const cleanForm = () => setFormData(initialState.formData);
@@ -66,14 +74,15 @@ const Form = ({ setCurrentStep, textData }) => {
   };
 
   const handleSubmit = async (e) => {
-    // This live bellow is there only to show the confirmation modal for testers
     setCurrentStep(4);
     e.preventDefault();
     populateErrors();
+
+    const payload = formDataToPost(formData);
+
     if (!errors.length) {
-      // todo: finish integrating api
       try {
-        // const req = await axios.post("/api/posts", formData);
+        await axios.post("/api/posts", payload);
         cleanForm();
       } catch (error) {
         console.log(error);
@@ -95,7 +104,11 @@ const Form = ({ setCurrentStep, textData }) => {
         renderError={renderError}
         title={textData.question}
       />
-      <Third formData={formData} />
+      <Third
+        formData={formData}
+        onShareWithChange={(val) => handleSelectorChange("shareWith", val)}
+        onExpirationChange={(val) => handleSelectorChange("expires", val)}
+      />
       <Footer>
         <Submit
           primary="true"

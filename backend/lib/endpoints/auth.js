@@ -16,7 +16,7 @@ const {
 async function routes(app) {
   const User = app.mongo.model("IndividualUser");
 
-  app.post("/oauth", { schema: oAuthSchema }, async (req) => {
+  app.post("/oauth", { schema: oAuthSchema }, async (req, reply) => {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== authConfig.state) {
@@ -26,19 +26,21 @@ async function routes(app) {
         code,
         redirect_uri: req.headers.referer,
       });
+      reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email, email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
-      const dbUser = await User.findById(userId);
+      const dbUser = await User.findById(userId).populate("organizations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName } = dbUser;
+        const { firstName, lastName, organizations } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
+          organizations
         };
       }
       return { email, emailVerified, token, user };
@@ -100,7 +102,7 @@ async function routes(app) {
     },
   );
 
-  app.post("/login", { schema: loginSchema }, async (req) => {
+  app.post("/login", { schema: loginSchema }, async (req, reply) => {
     const { body } = req;
     const { email, password } = body;
     try {
@@ -109,6 +111,7 @@ async function routes(app) {
         scope: "openid",
         username: email,
       });
+      reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
@@ -116,15 +119,16 @@ async function routes(app) {
       if (!userId) {
         throw new Error("no mongo_id found in JWT");
       }
-      const dbUser = await User.findById(userId);
+      const dbUser = await User.findById(userId).populate("organizations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName } = dbUser;
+        const { firstName, lastName, organizations } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
+          organizations
         };
       }
       return { email, emailVerified, token, user };

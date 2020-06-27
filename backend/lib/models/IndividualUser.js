@@ -1,24 +1,10 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
-const { updateAuthorName: updatePostAuthorName } = require("./Post");
-const { updateAuthorName: updateCommentAuthorName } = require("./Comment");
 
-const INDIVIDUAL_USER_TYPES = ["individual"];
+const INDIVIDUAL_USER_TYPES = ["Individual"];
 
-function updateAuthorFirstName(firstName) {
-  this.firstName = firstName;
-
-  this.updateAuthorNameReferences();
-
-  return firstName;
-}
-
-function updateAuthorLastName(lastName) {
-  this.lastName = lastName;
-
-  this.updateAuthorNameReferences();
-
-  return lastName;
+function fullName(firstName, lastName) {
+  return `${firstName} ${lastName}`;
 }
 
 const individualUserSchema = new Schema(
@@ -29,11 +15,12 @@ const individualUserSchema = new Schema(
     },
     firstName: {
       required: true,
-      set: updateAuthorFirstName,
       type: String,
     },
+    hide: {
+      address: { default: false, type: Boolean },
+    },
     lastName: {
-      set: updateAuthorLastName,
       type: String,
     },
     needs: {
@@ -46,9 +33,8 @@ const individualUserSchema = new Schema(
       volunteer: { default: false, required: true, type: Boolean },
     },
     type: {
-      default: "individual",
+      default: "Individual",
       enum: INDIVIDUAL_USER_TYPES,
-      lowercase: true,
       type: String,
     },
     urls: {
@@ -63,13 +49,14 @@ const individualUserSchema = new Schema(
 );
 
 individualUserSchema.virtual("name").get(function getFullName() {
-  return `${this.firstName} ${this.lastName}`;
+  return fullName(this.firstName, this.lastName);
 });
 
-individualUserSchema.methods.updateAuthorNameReferences = function updateAuthorNameReferences() {
-  updatePostAuthorName(this._id, this.name);
-  updateCommentAuthorName(this._id, this.name);
-};
+individualUserSchema.virtual("organizations", {
+  foreignField: "ownerId",
+  localField: "_id",
+  ref: "OrganizationUser",
+});
 
 const IndividualUser = User.discriminator(
   "IndividualUser",

@@ -12,7 +12,9 @@ const {
  * /api/organizations
  */
 async function routes(app) {
+  const Comment = app.mongo.model("Comment");
   const Organization = app.mongo.model("OrganizationUser");
+  const Post = app.mongo.model("Post");
 
   app.delete(
     "/:organizationId",
@@ -67,12 +69,48 @@ async function routes(app) {
       if (organization === null) {
         return new httpErrors.NotFound();
       }
-      Object.keys(req.body).forEach((key) => {
-        if (organization[key] !== req.body[key]) {
-          organization[key] = req.body[key];
+
+      const [updateErr, updatedOrg] = await app.to(
+        Object.assign(organization, req.body).save(),
+      );
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating organization");
+        throw app.httpErrors.internalServerError();
+      }
+
+      // -- Update Author References if needed
+      const { name, photo, type } = req.body;
+      if (name || photo || type) {
+        const updateOps = {};
+        if (name) {
+          updateOps["author.name"] = updatedOrg.name;
         }
-      });
-      return organization.save();
+        if (photo) {
+          updateOps["author.photo"] = updatedOrg.photo;
+        }
+        if (type) {
+          updateOps["author.type"] = updatedOrg.type;
+        }
+
+        const [postErr] = await app.to(
+          Post.updateMany({ "author.id": updatedOrg._id }, { $set: updateOps }),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedOrg._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+      }
+
+      return updatedOrg;
     },
   );
 

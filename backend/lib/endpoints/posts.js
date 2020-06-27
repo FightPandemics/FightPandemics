@@ -37,7 +37,7 @@ async function routes(app) {
     },
     async (req) => {
       const { userId } = req;
-      const { limit, skip, filter, objective } = req.query;
+      const { authorId, filter, limit, objective, skip } = req.query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -92,6 +92,9 @@ async function routes(app) {
 
       // Additional filters
       const { providers, type } = queryFilters; // from filterOptions.js
+      if (authorId) {
+        filters.push({ "author.id": mongoose.Types.ObjectId(authorId) });
+      }
       if (objective) {
         filters.push({ objective });
       }
@@ -104,20 +107,18 @@ async function routes(app) {
 
       // Unlogged user limitation for post content size
       /* eslint-disable sort-keys */
-      const contentProjection = user
-        ? "$content"
-        : {
-            $cond: {
-              if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
-              then: {
-                $concat: [
-                  { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
-                  "...",
-                ],
-              },
-              else: "$content",
-            },
-          };
+      const contentProjection = {
+        $cond: {
+          if: { $gt: [{ $strLenCP: "$content" }, UNLOGGED_POST_SIZE] },
+          then: {
+            $concat: [
+              { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
+              "...",
+            ],
+          },
+          else: "$content",
+        },
+      };
       /* eslint-enable sort-keys */
 
       const sortAndFilterSteps = location
@@ -138,14 +139,25 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
 
+      const paginationSteps =
+        limit === -1
+          ? [
+              {
+                $skip: skip || 0,
+              },
+            ]
+          : [
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || POST_PAGE_SIZE,
+              },
+            ];
+
       const aggregationPipeline = [
         ...sortAndFilterSteps,
-        {
-          $skip: skip || 0,
-        },
-        {
-          $limit: limit || POST_PAGE_SIZE,
-        },
+        ...paginationSteps,
         {
           $lookup: {
             as: "comments",
@@ -206,6 +218,7 @@ async function routes(app) {
         req.log.error(userErr, "Failed retrieving user");
         throw app.httpErrors.internalServerError();
       } else if (user === null) {
+        req.log.error(userErr, "User does not exist");
         throw app.httpErrors.forbidden();
       }
 
@@ -245,7 +258,7 @@ async function routes(app) {
   app.get(
     "/:postId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticateOptional],
       schema: getPostByIdSchema,
     },
     async (req) => {
@@ -258,46 +271,53 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // TODO: add pagination
-      const [commentErr, commentQuery] = await app.to(
-        Comment.aggregate([
-          {
-            $match: {
-              parentId: null,
-              postId: mongoose.Types.ObjectId(postId),
-            },
-          },
-          {
-            $lookup: {
-              as: "children",
-              foreignField: "parentId",
-              from: "comments",
-              localField: "_id",
-            },
-          },
-          {
-            $addFields: {
-              childCount: {
-                $size: { $ifNull: ["$children", []] },
+      const [comment] = await app.to(Comment.findOne({ postId }));
+
+      let comments = [];
+      let numComments = 0;
+
+      if (comment) {
+        // TODO: add pagination
+        const [commentQueryErr, commentQuery] = await app.to(
+          Comment.aggregate([
+            {
+              $match: {
+                parentId: null,
+                postId: mongoose.Types.ObjectId(postId),
               },
             },
-          },
-          {
-            $group: {
-              _id: null,
-              comments: { $push: "$$ROOT" },
-              numComments: { $sum: { $add: ["$childCount", 1] } },
+            {
+              $lookup: {
+                as: "children",
+                foreignField: "parentId",
+                from: "comments",
+                localField: "_id",
+              },
             },
-          },
-        ]),
-      );
-      if (commentErr) {
-        req.log.error(commentErr, "Failed retrieving comments");
-        throw app.httpErrors.internalServerError();
+            {
+              $addFields: {
+                childCount: {
+                  $size: { $ifNull: ["$children", []] },
+                },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                comments: { $push: "$$ROOT" },
+                numComments: { $sum: { $add: ["$childCount", 1] } },
+              },
+            },
+          ]),
+        );
+        if (commentQueryErr) {
+          req.log.error(commentErr, "Failed retrieving comments");
+          throw app.httpErrors.internalServerError();
+        } else if (commentQuery) {
+          comments = commentQuery[0].comments;
+          numComments = commentQuery[0].comments;
+        }
       }
-
-      const { comments = [], numComments = 0 } = commentQuery[0];
-
       return {
         comments,
         numComments,
@@ -435,7 +455,7 @@ async function routes(app) {
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed unliking post");
-        throw app.httpErrors.internalServerError()
+        throw app.httpErrors.internalServerError();
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
@@ -480,10 +500,10 @@ async function routes(app) {
             },
           },
           {
-            $skip: skip || 0,
+            $skip: parseInt(skip) || 0,
           },
           {
-            $limit: limit || COMMENT_PAGE_SIZE,
+            $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
           },
         ]),
       );
@@ -593,7 +613,9 @@ async function routes(app) {
         ok: deleteNestedOk,
       } = await Comment.deleteMany({ parentId: commentId });
       if (deleteNestedOk !== 1) {
-        app.log.error(`Failed removing nested comments for deleted comment=${commentId}`);
+        app.log.error(
+          `Failed removing nested comments for deleted comment=${commentId}`,
+        );
       }
 
       return {

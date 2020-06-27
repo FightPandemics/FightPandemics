@@ -21,14 +21,14 @@ const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
 const NestedComments = ({ isAuthenticated, comment }) => {
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
-  const [fakeNumReplies, setFakeNumReplies] = useState(comment.children.length);
+  const [fakeNumReplies, setFakeNumReplies] = useState(0);
   const [reply, setReply] = useState("");
   const [showReply, setShowReply] = useState(false);
 
   const renderAvatar = (
     <Avatar
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
-      alt={`${comment.name}`}
+      alt={`${comment.author}`}
     />
   );
 
@@ -106,13 +106,14 @@ const NestedComments = ({ isAuthenticated, comment }) => {
   };
   const renderTimeStamp = <span>1w</span>;
 
-  const commentActions = [
-    renderTimeStamp,
-    renderLikeButton(),
-    renderReply(),
-    renderNumLikes(),
-    renderReplyInput,
-  ];
+  //TODO: Add comment replies, like button and number of likes.
+  // const commentActions = [
+  //   renderTimeStamp,
+  //   renderLikeButton(),
+  //   renderReply(),
+  //   renderNumLikes(),
+  //   renderReplyInput,
+  // ];
 
   const nestedComments = (comment.children || []).map((comment) => {
     return <NestedComments comment={comment} key={comment._id} />;
@@ -121,10 +122,11 @@ const NestedComments = ({ isAuthenticated, comment }) => {
   return (
     <div>
       <StyledComment
-        actions={commentActions}
-        author={<span>{comment.name}</span>}
+        //TODO: Add comment replies, like button and number of likes.
+        // actions={commentActions}
+        author={<span>{comment.author.name}</span>}
         avatar={renderAvatar}
-        content={<p>{comment.comment}</p>}
+        content={<p>{comment.content}</p>}
       >
         {nestedComments}
       </StyledComment>
