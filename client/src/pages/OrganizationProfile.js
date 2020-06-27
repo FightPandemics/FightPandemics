@@ -2,6 +2,7 @@ import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useState, useEffect, useContext, Text } from "react";
 import { Link } from "react-router-dom";
+
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
@@ -18,7 +19,6 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
-import PrivacyPolicy from "pages/PrivacyPolicy";
 import {
   ProfileLayout,
   BackgroundHeader,
