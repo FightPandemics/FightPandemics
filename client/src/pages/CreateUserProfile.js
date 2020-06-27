@@ -137,7 +137,6 @@ const CreateProfile = ({ email, history }) => {
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
-
   const dispatch = useDispatch();
   const {
     clearError,
