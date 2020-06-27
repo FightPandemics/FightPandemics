@@ -26,7 +26,6 @@ import {
   StyledSelect,
   CustomEditAccountHeader,
   Background,
-  ProfileImage,
 } from "../components/EditProfile/EditComponents";
 import {
   fetchOrganization,

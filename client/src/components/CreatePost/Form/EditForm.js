@@ -7,6 +7,11 @@ import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 
 import {
+  SET_POST,
+  RESET_POST,
+} from "hooks/actions/postActions";
+
+import {
   postToFormData,
   formDataToPostPatch,
 } from "assets/data/formToPostMappings";
@@ -20,13 +25,15 @@ const errorMsg = {
 
 const EditModalComponent = ({
   isAuthenticated,
-  loadPost,
   onClose,
-  post,
+  currentPost,
   textData,
+  dispatchAction,
   type,
   user,
 }) => {
+  const post = { ...currentPost };
+
   const initialState = {
     formData: postToFormData(post),
     errors: [],
@@ -105,10 +112,14 @@ const EditModalComponent = ({
       try {
         response = await axios.patch(endPoint, payload);
         if (response && response.data) {
-          loadPost();
+          dispatchAction(SET_POST, "content", response.data.content, "post", {
+            ...post,
+            ...response.data,
+          });
         }
       } catch (error) {
         console.log({ error });
+        dispatchAction(RESET_POST);
       }
     }
   };

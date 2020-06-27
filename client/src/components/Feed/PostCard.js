@@ -164,7 +164,7 @@ const PostCard = styled(Card)`
           display: inline;
 
           @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-            display: none;
+            display: inline;
           }
         }
 

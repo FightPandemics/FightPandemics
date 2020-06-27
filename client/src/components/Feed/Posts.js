@@ -14,7 +14,8 @@ const Posts = ({
     <div className="feed-posts">
       {Object.keys(filteredPosts).map((key) => (
         <Post
-          post={filteredPosts[key]}
+          currentPost={filteredPosts[key]}
+          numComments={filteredPosts[key].commentsCount}
           loadPosts={loadPosts}
           handlePostLike={handlePostLike}
           handlePostDelete={handlePostDelete}
