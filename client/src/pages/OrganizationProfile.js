@@ -88,7 +88,7 @@ const OrganizationProfile = () => {
     objectives = {},
     urls = {},
   } = organization || {};
-  
+
   useEffect(() => {
     (async function fetchProfile() {
       orgProfileDispatch(fetchOrganization());
