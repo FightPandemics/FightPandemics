@@ -442,6 +442,30 @@ const Feed = (props) => {
       }
     }
   }, [handleChangeType, props.history.location.state]);
+  useEffect(() => {
+    // only run once for onboarding
+    if (props.history.location.state) {
+      const {
+        postType,
+        helpType,
+        location,
+        providers,
+      } = props.history.location.state;
+      // console.log(postType, helpType, location, providers);
+      if (postType === "Requesting help") {
+        handleChangeType({ key: "REQUEST" });
+        // if (helpType === "medical") {
+        //   handleOption("type", "Medical Supplies");
+        // }
+        // else {
+
+        // }
+      } else {
+        // offering help
+        handleChangeType({ key: "OFFER" });
+      }
+    }
+  }, [handleChangeType, props.history.location.state]);
   const scrollObserver = useCallback(
     (node) => {
       new IntersectionObserver((entries) => {
