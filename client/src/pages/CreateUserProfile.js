@@ -8,7 +8,6 @@ import {
   InputWrapper,
   InputGroup,
   CheckboxContainer,
-  styleLabel,
 } from "components/OrganizationProfile/CreateProfileComponents";
 import StyledCheckbox from "components/Input/Checkbox";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
@@ -378,7 +377,6 @@ const CreateProfile = ({ email, history }) => {
             />
           </InputGroup>
           <InputWrapper>
-            <Label style={styleLabel} label="" />
             <StyledCheckbox
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Privacy Policy"
@@ -388,7 +386,6 @@ const CreateProfile = ({ email, history }) => {
               <Link to="/privacy-policy">Privacy Policy</Link>
             </StyledCheckbox>
             <WhiteSpace />
-            <Label style={styleLabel} label="" />
             <StyledCheckbox
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Terms and Conditions"
