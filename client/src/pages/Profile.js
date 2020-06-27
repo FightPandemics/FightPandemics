@@ -200,7 +200,11 @@ const Profile = () => {
         </SectionHeader>
         <FeedWrapper>
           <Activity filteredPosts={postsState.posts} />
-          <CreatePost onCancel={() => setModal(false)} visible={modal} />
+          <CreatePost
+            onCancel={() => setModal(false)}
+            visible={modal}
+            user={user}
+          />
         </FeedWrapper>
       </div>
       <CustomDrawer
