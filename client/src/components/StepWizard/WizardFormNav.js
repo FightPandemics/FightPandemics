@@ -14,7 +14,7 @@ export const StyledButtonWizard = styled(StepWizard)`
   align-items: center;
   padding: 0 10rem;
   margin: 0 auto 1rem;
-  width: 30rem;
+  width: 25rem;
   max-width: 100%;
   & + div {
     display: flex;
@@ -25,9 +25,13 @@ export const StyledButtonWizard = styled(StepWizard)`
       min-height: 100%;
     }
   }
-  
+
   @media screen and (min-width: ${desktopBreakpoint}) {
     width: 40rem;
+  }
+
+  @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    padding-left: 7rem;
   }
 `;
 
