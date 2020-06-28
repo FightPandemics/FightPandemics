@@ -139,7 +139,6 @@ const OrganizationProfile = () => {
           type: SET_POSTS,
           posts: res.data,
         });
-        console.log(`DATA ${JSON.stringify(res.data)}`);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         postsDispatch({
