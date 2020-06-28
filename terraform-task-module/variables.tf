@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type = string
+  type    = string
   default = "us-east-1"
 }
 variable "fp_context" {
@@ -12,15 +12,22 @@ variable "subdomain" {
 variable "backend_env_variables" {
   default = []
   type = list(object({
-    name: string
-    value: string
+    name : string
+    value : string
+  }))
+}
+variable "datadog_env_variables" {
+  default = []
+  type = list(object({
+    name : string
+    value : string
   }))
 }
 variable "backend_port" {
-  type = number
+  type    = number
   default = 8000
 }
 variable "client_port" {
-  type = number
+  type    = number
   default = 80
 }
