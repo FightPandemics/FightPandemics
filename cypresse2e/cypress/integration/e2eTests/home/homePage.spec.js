@@ -5,7 +5,7 @@ describe('FightPandemics Home screen', () => {
           });
   
       it('Home screen greetings H1', () => {
-        cy.contains('h1', 'A place to give and get help')
+        cy.contains('h1', 'A place to offer and receive help')
       });
 
       it('Subheading', () => {
