@@ -431,8 +431,8 @@ const Feed = (props) => {
         location,
         providers,
       } = props.history.location.state;
-      // console.log(postType, helpType, location, providers);
       if (postType === "Requesting help") {
+        // requesting help
         handleChangeType({ key: "REQUEST" });
         if (helpType === "medical") {
           let option = filters[2].options[0];
@@ -446,12 +446,19 @@ const Feed = (props) => {
       } else {
         // offering help
         handleChangeType({ key: "OFFER" });
-        console.log(providers);
         if (providers) {
           let organizationFilter = providers.filter(
             (option) => option === "As an Organisation",
           );
-          //
+          if (organizationFilter) {
+            for (let i = 1; i < filters[1].options.length; ++i) {
+              let option = filters[1].options[i];
+              handleOnboardingOptions(option, "providers");
+            }
+          } else {
+            let option = filters[1].options[0];
+            handleOnboardingOptions(option, "providers");
+          }
         }
       }
     }
