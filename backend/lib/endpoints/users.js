@@ -112,17 +112,41 @@ async function routes(app) {
 
   app.get(
     "/:userId",
-    { preValidation: [app.authenticate], schema: getUserByIdSchema },
+    { schema: getUserByIdSchema },
     async (req) => {
       const user = await User.findById(req.params.userId);
       if (user === null) {
         throw app.httpErrors.notFound();
       }
-      const { firstName, lastName, _id: id } = user;
+
+      const {
+        _id: id,
+        about,
+        firstName,
+        hide,
+        lastName,
+        needs,
+        objectives,
+        urls,
+      } = user;
+
+      let { location } = user;
+      // never reveal user's coordinates
+      delete location.coordinates;
+
+      if (hide.address) {
+        location = {};
+      }
+
       return {
+        about,
         firstName,
         id,
         lastName,
+        location,
+        needs,
+        objectives,
+        urls,
       };
     },
   );
