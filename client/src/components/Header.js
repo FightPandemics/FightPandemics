@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
+import MenuIcon from "assets/icons/menu.svg";
 import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
@@ -183,7 +184,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         rightContent={
           <div>
             <MenuToggle
-              src={menu}
+              src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
