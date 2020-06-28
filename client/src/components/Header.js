@@ -181,7 +181,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
           </BrandLink>
         }
         rightContent={
-          <div >
+          <div>
             <MenuToggle
               src={menu}
               style={{ fontSize: 24, cursor: "pointer" }}
