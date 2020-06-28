@@ -70,7 +70,7 @@ locals {
 }
 
 module "main" {
-  source     = "github.com/FightPandemics/tf-fargate-task//module"
+  source     = "./terraform-task-module"
   aws_region = var.aws_region
   image_tag  = var.env_name
   fp_context = var.fp_context
