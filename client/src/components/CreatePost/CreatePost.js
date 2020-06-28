@@ -62,7 +62,7 @@ const Step2 = ({ user }) => {
         {user.organizations?.map((item) => {
           return (
             <OptionButton
-              key={item.id}
+              key={item._id}
               onClick={() => {
                 setForm({ organization: item });
                 setCurrentStep(3);
