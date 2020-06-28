@@ -61,7 +61,7 @@ const HELP_TYPE = {
 };
 
 const initialState = {
-  selectedType: "",
+  selectedType: "ALL",
   initialLoad: true,
   showFilters: false,
   filterModal: false,
@@ -334,7 +334,6 @@ const Feed = (props) => {
   };
 
   const loadPosts = useCallback(async () => {
-    console.log("IJWEIFJWEF");
     const objectiveURL = () => {
       let objective = selectedType;
       if (
@@ -367,6 +366,7 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -421,6 +421,10 @@ const Feed = (props) => {
   useEffect(() => {
     // only run once for onboarding
     if (props.history.location.state) {
+      const handleOnboardingOptions = (option, label) => {
+        optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
+      };
+
       const {
         postType,
         helpType,
@@ -430,42 +434,29 @@ const Feed = (props) => {
       // console.log(postType, helpType, location, providers);
       if (postType === "Requesting help") {
         handleChangeType({ key: "REQUEST" });
-        // if (helpType === "medical") {
-        //   handleOption("type", "Medical Supplies");
-        // }
-        // else {
-
-        // }
+        if (helpType === "medical") {
+          let option = filters[2].options[0];
+          handleOnboardingOptions(option, "type");
+        } else {
+          for (let i = 1; i < filters[2].options.length; ++i) {
+            let option = filters[2].options[i];
+            handleOnboardingOptions(option, "type");
+          }
+        }
       } else {
         // offering help
         handleChangeType({ key: "OFFER" });
+        console.log(providers);
+        if (providers) {
+          let organizationFilter = providers.filter(
+            (option) => option === "As an Organisation",
+          );
+          //
+        }
       }
     }
-  }, [handleChangeType, props.history.location.state]);
-  useEffect(() => {
-    // only run once for onboarding
-    if (props.history.location.state) {
-      const {
-        postType,
-        helpType,
-        location,
-        providers,
-      } = props.history.location.state;
-      // console.log(postType, helpType, location, providers);
-      if (postType === "Requesting help") {
-        handleChangeType({ key: "REQUEST" });
-        // if (helpType === "medical") {
-        //   handleOption("type", "Medical Supplies");
-        // }
-        // else {
+  }, [filters, handleChangeType, props.history.location.state]);
 
-        // }
-      } else {
-        // offering help
-        handleChangeType({ key: "OFFER" });
-      }
-    }
-  }, [handleChangeType, props.history.location.state]);
   const scrollObserver = useCallback(
     (node) => {
       new IntersectionObserver((entries) => {
@@ -547,7 +538,7 @@ const Feed = (props) => {
           >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={["ALL"]}
+                defaultSelectedKeys={[selectedType]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
