@@ -88,7 +88,7 @@ const NavItem = styled(List.Item)`
 `;
 
 const NavItemBrief = styled(NavItem)`
-  padding-left: 4.6rem;
+  padding-left: 2.75rem;
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -203,12 +203,21 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/profile">Profile</Link>
       </NavItem>
-      <NavItem>
-        <Link to="">Organization</Link>
-      </NavItem>
-      <NavItemBrief history={history}>
-        <a href={NOTION_URL}>Notion</a>
-      </NavItemBrief>
+      {user?.organizations?.length > 0 ? (
+        <NavItem>
+          Organization
+          {user?.organizations?.map((organization) => (
+            <NavItemBrief history={history} key={organization._id}>
+              <Link to={`/organization/${organization._id}`}>
+                {organization.name}
+              </Link>
+            </NavItemBrief>
+          ))}
+          <NavItemBrief>
+            <Link to="/create-organization-profile">+ Add Organization</Link>
+          </NavItemBrief>
+        </NavItem>
+      ) : null}
       <NavItem history={history}>
         <Link
           to={{
@@ -244,7 +253,11 @@ const NavigationLayout = (props) => {
     <MenuContainer>
       {drawerOpened && <CloseNav onClick={toggleDrawer} />}
       <NavList>
-        {!authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+        {!authLoading && isAuthenticated ? (
+          <AuthenticatedMenu />
+        ) : (
+          <UnAuthenticatedMenu />
+        )}
       </NavList>
     </MenuContainer>
   );
