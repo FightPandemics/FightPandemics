@@ -28,7 +28,7 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type }) => {
+const Form = ({ setCurrentStep, textData, type, setPostId }) => {
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   formData.help = type;
@@ -82,7 +82,8 @@ const Form = ({ setCurrentStep, textData, type }) => {
 
     if (!errors.length) {
       try {
-        await axios.post("/api/posts", payload);
+        const res = await axios.post("/api/posts", payload);
+        setPostId(res.data._id);
         cleanForm();
       } catch (error) {
         console.log(error);

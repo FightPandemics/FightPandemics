@@ -244,7 +244,11 @@ const NavigationLayout = (props) => {
     <MenuContainer>
       {drawerOpened && <CloseNav onClick={toggleDrawer} />}
       <NavList>
-        {!authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+        {!authLoading && isAuthenticated ? (
+          <AuthenticatedMenu />
+        ) : (
+          <UnAuthenticatedMenu />
+        )}
       </NavList>
     </MenuContainer>
   );
@@ -269,6 +273,7 @@ const NavigationLayout = (props) => {
             authLoading={authLoading}
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
+            user={user}
           />
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />

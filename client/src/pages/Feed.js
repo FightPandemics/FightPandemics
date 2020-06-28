@@ -535,7 +535,9 @@ const Feed = (props) => {
               handlePostDelete={postDelete}
               user={user}
             />
-            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
+            {status === ERROR_POSTS && (
+              <ErrorAlert message={postsError.message} />
+            )}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}
@@ -547,6 +549,7 @@ const Feed = (props) => {
         <CreatePost
           onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
+          user={user}
         />
         {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>

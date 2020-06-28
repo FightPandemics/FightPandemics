@@ -112,7 +112,7 @@ const CreateOrgProfile = (props) => {
       return;
     } else {
       if (props.user) {
-        if (!location.address) {
+        if (!location) {
           // all location objects should have address (+coordinates), others optional
           return setError(
             "location",

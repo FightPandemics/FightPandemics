@@ -183,36 +183,36 @@ export const ToggleHeading = styled.div`
 `;
 
 export const StyledSelect = styled(Select)`
-    border: 1px solid ${theme.colors.royalBlue};
-    border-radius: .3rem;
-    color: ${theme.colors.royalBlue};
-    width: 35%;
-    margin-right: 1.8rem;
-    @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-      width: 60%;
-      margin-bottom: 1.8rem;
-    }
+  border: 1px solid ${theme.colors.royalBlue};
+  border-radius: 0.3rem;
+  color: ${theme.colors.royalBlue};
+  width: 35%;
+  margin-right: 1.8rem;
+  @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
+    width: 60%;
+    margin-bottom: 1.8rem;
+  }
 `;
 
 export const ProfileImage = styled.img`
-   width: 70%;
-   align-self: end;
-`
+  width: 70%;
+  align-self: end;
+`;
 
 export const Eclipse = styled.div`
-   width: 7rem;
-   height: 6.5rem;
-   background-color: ${theme.colors.selago};
-   position: relative;
-   border: 2px solid ${theme.colors.royalBlue};
-   border-radius: 100%;
-   align-self: center;
-`
+  width: 7rem;
+  height: 6.5rem;
+  background-color: ${theme.colors.selago};
+  position: relative;
+  border: 2px solid ${theme.colors.royalBlue};
+  border-radius: 100%;
+  align-self: center;
+`;
 
 export const PlusIcon = styled.img`
-   width: 40%;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   position: absolute;
-`
+  width: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+`;

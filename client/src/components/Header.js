@@ -5,12 +5,12 @@ import styled from "styled-components";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
+import MenuIcon from "assets/icons/menu.svg";
 import envelope from "assets/icons/envelope.svg";
-import menu from "assets/icons/menu.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { theme, mq } from "../constants/theme";
-
+import { Menu, Dropdown } from "antd";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -98,7 +98,31 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated }) => {
+export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/profile">My Profile</Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>
+        <Link to="/create-organization-profile">Add Organisation</Link>
+      </Menu.Item>
+      <Menu.Divider />
+      {user?.organizations?.map((organization) => (
+        <Menu.Item key={organization._id}>
+          <Link to={`/organization/${organization._id}`}>
+            {organization.name}
+          </Link>
+        </Menu.Item>
+      ))}
+
+      <Menu.Divider />
+      <Menu.Item>
+        <Link to="/auth/logout">Log Out</Link>
+      </Menu.Item>
+    </Menu>
+  );
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
@@ -116,14 +140,14 @@ export default ({ authLoading, onMenuClick, isAuthenticated }) => {
         {isAuthenticated ? (
           <>
             <li>
-              <NavLink activeStyle={activeStyles} to="/profile">
-                Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink activeStyle={activeStyles} to="/auth/logout">
-                Logout
-              </NavLink>
+              <Dropdown overlay={menu} trigger={["click"]}>
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Profile
+                </a>
+              </Dropdown>
             </li>
           </>
         ) : (
@@ -159,7 +183,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated }) => {
         rightContent={
           <div>
             <MenuToggle
-              src={menu}
+              src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
