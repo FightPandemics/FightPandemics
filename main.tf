@@ -11,7 +11,7 @@ variable "fp_context" {
 }
 
 variable "commit_hash" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -53,6 +53,11 @@ data "aws_ssm_parameter" "logger_host" {
 
 data "aws_ssm_parameter" "logger_port" {
   name = "/fp/logger/port"
+}
+
+data "aws_ssm_parameter" "datadog_api_key" {
+  count = var.fp_context == "production" ? 1 : 0
+  name  = "/fp/datadog/key"
 }
 
 locals {
@@ -136,5 +141,19 @@ module "main" {
       name  = "LOGGER_PORT",
       value = data.aws_ssm_parameter.logger_port.value
     },
+  ]
+  datadog_env_variables = [
+    {
+      name  = "DD_API_KEY",
+      value = var.fp_context == "production" ? data.aws_ssm_parameter.datadog_api_key[0].value : ""
+    },
+    {
+      name  = "DD_SITE",
+      value = "datadoghq.eu"
+    },
+    {
+      name  = "ECS_FARGATE",
+      value = "true"
+    }
   ]
 }

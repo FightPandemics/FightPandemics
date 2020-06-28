@@ -16,6 +16,13 @@ variable "backend_env_variables" {
     value: string
   }))
 }
+variable "datadog_env_variables" {
+  default = []
+  type = list(object({
+    name: string
+    value: string
+  }))
+}
 variable "backend_port" {
   type = number
   default = 8000
