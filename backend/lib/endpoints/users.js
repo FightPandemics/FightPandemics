@@ -112,18 +112,26 @@ async function routes(app) {
 
   app.get(
     "/:userId",
-    { schema: getUserByIdSchema },
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getUserByIdSchema,
+    },
     async (req) => {
-      const user = await User.findById(req.params.userId);
+      const {
+        params: { userId },
+        userId: authUserId,
+      } = req;
+
+      const user = await User.findById(userId);
       if (user === null) {
         throw app.httpErrors.notFound();
       }
 
       const {
-        _id: id,
         about,
         firstName,
         hide,
+        id,
         lastName,
         needs,
         objectives,
@@ -131,7 +139,8 @@ async function routes(app) {
       } = user;
 
       let { location } = user;
-      // never reveal user's coordinates
+
+      // never reveal user's email, coordinates in profile
       delete location.coordinates;
 
       if (hide.address) {
@@ -146,6 +155,7 @@ async function routes(app) {
         location,
         needs,
         objectives,
+        ownUser: authUserId !== null && authUserId.equals(user.id),
         urls,
       };
     },

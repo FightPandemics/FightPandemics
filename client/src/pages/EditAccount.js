@@ -105,7 +105,8 @@ function EditAccount(props) {
         location,
       });
       userProfileDispatch(updateUserSuccess(res.data));
-      props.history.push("/profile");
+      // TODO: consistently return _id or id or both
+      props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       userProfileDispatch(

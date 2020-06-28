@@ -248,6 +248,7 @@ const PostPage = ({
             <>
               <Post
                 currentPost={post}
+                includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
                 onClick={toggleViewContent}

@@ -90,7 +90,7 @@ const PostSocial = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${id}`,
+                pathname: `/post/${id}`,
                 state: {
                   postId: id,
                   comments: true,
