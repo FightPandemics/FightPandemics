@@ -203,21 +203,21 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to="/profile">Profile</Link>
       </NavItem>
-      {user?.organizations?.length > 0 ? (
-        <NavItem>
-          Organization
-          {user?.organizations?.map((organization) => (
-            <NavItemBrief history={history} key={organization._id}>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
-              </Link>
-            </NavItemBrief>
-          ))}
-          <NavItemBrief>
-            <Link to="/create-organization-profile">+ Add Organization</Link>
-          </NavItemBrief>
-        </NavItem>
-      ) : null}
+      <NavItem>
+        Organization
+        {user?.organizations?.length > 0
+          ? user?.organizations?.map((organization) => (
+              <NavItemBrief history={history} key={organization._id}>
+                <Link to={`/organization/${organization._id}`}>
+                  {organization.name}
+                </Link>
+              </NavItemBrief>
+            ))
+          : null}
+        <NavItemBrief>
+          <Link to="/create-organization-profile">+ Add Organization</Link>
+        </NavItemBrief>
+      </NavItem>
       <NavItem history={history}>
         <Link
           to={{
