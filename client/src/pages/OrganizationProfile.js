@@ -133,7 +133,7 @@ const OrganizationProfile = () => {
       postsDispatch({ type: FETCH_POSTS });
       try {
         const res = await axios.get(
-          `/api/posts?limit=5&authorId=${organizationId}`,
+          `/api/posts?limit=-1&authorId=${organizationId}`,
         );
         postsDispatch({
           type: SET_POSTS,
