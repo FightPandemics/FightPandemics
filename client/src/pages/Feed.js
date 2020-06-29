@@ -365,7 +365,6 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -431,10 +430,10 @@ const Feed = (props) => {
         providers,
       } = props.history.location.state;
       location && dispatchAction(SET_VALUE, "location", location);
-      if (postType === "Requesting help") {
+      const value = Object.keys(HELP_TYPE).find(key => HELP_TYPE[key] === postType);
+      if (postType === HELP_TYPE.REQUEST) {
         // requesting help
-
-        handleChangeType({ key: "REQUEST" });
+        handleChangeType({ key: value });
         if (helpType === "medical") {
           let option = filters[2].options[0];
           handleOnboardingOptions(option, "type");
@@ -446,7 +445,7 @@ const Feed = (props) => {
         }
       } else {
         // offering help
-        handleChangeType({ key: "OFFER" });
+        handleChangeType({ key: value });
         if (providers) {
           let organizationFilter = providers.filter(
             (option) => option === "As an Organisation",
@@ -517,14 +516,6 @@ const Feed = (props) => {
       }
     }
   };
-  const handleDefaultMenu = () => {
-    if (props.history.location.state) {
-      return props.history.location.state.postType === "Requesting help"
-        ? "REQUEST"
-        : "OFFER";
-    }
-    return "ALL";
-  };
   return (
     <FeedContext.Provider
       value={{
@@ -553,7 +544,8 @@ const Feed = (props) => {
           >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={[handleDefaultMenu()]}
+                defaultSelectedKeys={["ALL"]}
+                selectedKeys={[selectedType]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (

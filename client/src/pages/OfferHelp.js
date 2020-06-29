@@ -49,7 +49,6 @@ const Step1 = (props) => {
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
     const checkedAnswers = getCheckedAnswers(updatedAnswers);
-    console.log(checkedAnswers);
     updateState({ ...state, answers: updatedAnswers });
     props.update("providers", checkedAnswers);
   };
