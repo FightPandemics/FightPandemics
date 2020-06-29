@@ -66,7 +66,7 @@ const initialState = {
   showFilters: false,
   filterModal: false,
   createPostModal: false,
-  applyFilters: false,
+  applyFilters: true,
   activePanel: null,
   location: null,
 };
