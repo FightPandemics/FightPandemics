@@ -277,13 +277,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleChangeType = useCallback((e) => {
-    const value = HELP_TYPE[e.key];
+  const handleChangeType = (e) => {
+    const value = e.key;
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", e.key);
       postsDispatch({ type: RESET_PAGE, filterType: value });
     }
-  });
+  };
 
   const handleShowFilters = (e) => {
     // desktop
@@ -365,6 +365,7 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -462,7 +463,7 @@ const Feed = (props) => {
         }
       }
     }
-  }, [filters, handleChangeType, props.history.location.state]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {
