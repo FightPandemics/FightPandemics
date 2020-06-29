@@ -64,7 +64,7 @@ export default () => {
         <FooterALink
           href="https://medium.com/@FightPandemics"
           target="_blank"
-          alt="FightPandmeics Blog Link"
+          alt="FightPandemics Blog Link"
         >
           Blog
         </FooterALink>
