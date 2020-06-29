@@ -277,13 +277,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleChangeType = useCallback((e) => {
+  const handleChangeType = (e) => {
     const value = HELP_TYPE[e.key];
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", e.key);
       postsDispatch({ type: RESET_PAGE, filterType: value });
     }
-  });
+  };
 
   const handleShowFilters = (e) => {
     // desktop
@@ -462,7 +462,7 @@ const Feed = (props) => {
         }
       }
     }
-  }, [filters, handleChangeType, props.history.location.state]);
+  }, []);
 
   const scrollObserver = useCallback(
     (node) => {
