@@ -153,7 +153,7 @@ const NeedHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  }, [transition]);
+  }, []);
 
   const updateAnswers = (key, value) => {
     const { answers } = state;
