@@ -36,6 +36,15 @@ import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 
 const INDIVIDUAL_AUTHOR_TYPE = "Individual";
+const isAuthorOrg = (arganizations, author) => {
+  let isValid = false
+  arganizations.map(org => {
+    if(org.name === author.name) {
+      isValid = true;
+    }
+  })
+  return isValid;
+}
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -450,7 +459,7 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user._id === post.author.id || user.id === post.author.id) && (
+                (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
