@@ -81,6 +81,7 @@ export const postsReducer = (state = postsState, action) => {
         filterType: action.filterType || "",
         posts: [],
         loadMore: true,
+        isLoading: false,
       };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };

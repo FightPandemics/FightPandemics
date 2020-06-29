@@ -258,7 +258,6 @@ const Feed = (props) => {
   };
 
   const handleOption = (label, option) => (e) => {
-    console.log(label, option);
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
     if (applyFilters) {
@@ -281,7 +280,7 @@ const Feed = (props) => {
   const handleChangeType = useCallback((e) => {
     const value = HELP_TYPE[e.key];
     if (selectedType !== value) {
-      dispatchAction(SET_VALUE, "selectedType", value);
+      dispatchAction(SET_VALUE, "selectedType", e.key);
       postsDispatch({ type: RESET_PAGE, filterType: value });
     }
   });
@@ -342,13 +341,13 @@ const Feed = (props) => {
       ) {
         objective =
           selectedOptions["need or give help"][0] === "Need Help"
-            ? HELP_TYPE.REQUEST
-            : HELP_TYPE.OFFER;
+            ? "REQUEST"
+            : "OFFER";
       }
       switch (objective) {
-        case HELP_TYPE.REQUEST:
+        case "REQUEST":
           return "&objective=request";
-        case HELP_TYPE.OFFER:
+        case "OFFER":
           return "&objective=offer";
         default:
           return "";
@@ -366,7 +365,6 @@ const Feed = (props) => {
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    console.log(endpoint);
     let response = {};
     if (isLoading) {
       return;
@@ -419,7 +417,7 @@ const Feed = (props) => {
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // only run once for onboarding
+    // Onboarding
     if (props.history.location.state) {
       const handleOnboardingOptions = (option, label) => {
         optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
@@ -431,8 +429,10 @@ const Feed = (props) => {
         location,
         providers,
       } = props.history.location.state;
+      location && dispatchAction(SET_VALUE, "location", location);
       if (postType === "Requesting help") {
         // requesting help
+
         handleChangeType({ key: "REQUEST" });
         if (helpType === "medical") {
           let option = filters[2].options[0];
@@ -450,7 +450,7 @@ const Feed = (props) => {
           let organizationFilter = providers.filter(
             (option) => option === "As an Organisation",
           );
-          if (organizationFilter) {
+          if (organizationFilter.length > 0) {
             for (let i = 1; i < filters[1].options.length; ++i) {
               let option = filters[1].options[i];
               handleOnboardingOptions(option, "providers");
@@ -516,7 +516,14 @@ const Feed = (props) => {
       }
     }
   };
-
+  const handleDefaultMenu = () => {
+    if (props.history.location.state) {
+      return props.history.location.state.postType === "Requesting help"
+        ? "REQUEST"
+        : "OFFER";
+    }
+    return "ALL";
+  };
   return (
     <FeedContext.Provider
       value={{
@@ -545,7 +552,7 @@ const Feed = (props) => {
           >
             <div>
               <MenuWrapper
-                defaultSelectedKeys={[selectedType]}
+                defaultSelectedKeys={[handleDefaultMenu()]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
