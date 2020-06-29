@@ -462,7 +462,7 @@ const Feed = (props) => {
         }
       }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {
