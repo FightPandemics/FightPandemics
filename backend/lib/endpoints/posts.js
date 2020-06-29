@@ -352,7 +352,7 @@ async function routes(app) {
       return {
         comments,
         numComments,
-        projectedPost,
+        post: projectedPost,
       };
     },
   );
