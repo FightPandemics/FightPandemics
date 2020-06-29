@@ -37,7 +37,13 @@ export const RouteWithSubRoutes = (route) => {
     props = {},
     user,
   } = route;
-  const { loggedInOnly, notLoggedInOnly, tabIndex, mobiletabs, forgotPassword } = props;
+  const {
+    loggedInOnly,
+    notLoggedInOnly,
+    tabIndex,
+    mobiletabs,
+    forgotPassword,
+  } = props;
 
   return (
     <Route
@@ -55,7 +61,11 @@ export const RouteWithSubRoutes = (route) => {
           } else if (notLoggedInOnly && isAuthenticated) {
             redirect = HOME;
           } else if (isAuthenticated) {
-            if (!emailVerified && location.pathname !== VERIFY_EMAIL && !forgotPassword) {
+            if (
+              !emailVerified &&
+              location.pathname !== VERIFY_EMAIL &&
+              !forgotPassword
+            ) {
               redirect = VERIFY_EMAIL;
             } else if (emailVerified && forgotPassword) {
               redirect = LOGIN;

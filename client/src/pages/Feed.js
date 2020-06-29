@@ -604,6 +604,7 @@ const Feed = (props) => {
         <CreatePost
           onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
+          user={user}
         />
         {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>

@@ -8,7 +8,6 @@ import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
@@ -45,10 +44,8 @@ import {
 } from "../components/Profile/ProfileComponents";
 import { getInitials } from "utils/userInfo";
 import {
-  FACEBOOK_URL,
   LINKEDIN_URL,
   TWITTER_URL,
-  GITHUB_URL,
   APPLESTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
@@ -58,9 +55,15 @@ import {
   fetchOrganizationSuccess,
 } from "hooks/actions/organizationActions";
 import {
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
+} from "hooks/actions/userActions";
+import {
   OrganizationContext,
   withOrganizationContext,
 } from "context/OrganizationContext";
+import { UserContext, withUserContext } from "context/UserContext";
 
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
@@ -80,18 +83,17 @@ const OrganizationProfile = () => {
   const { error, loading, organization } = orgProfileState;
 
   const {
-    name,
-    email,
-    location,
-    needs,
-    about = "",
-    objectives = {},
-    urls = {},
-  } = organization || {};
+    userProfileState: { user },
+    userProfileDispatch,
+  } = useContext(UserContext);
+
+  const { name, location, needs, about = "", objectives = {}, urls = {} } =
+    organization || {};
 
   useEffect(() => {
-    (async function fetchProfile() {
+    (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganization());
+      userProfileDispatch(fetchUser());
       try {
         const res = await axios.get(`/api/organizations/${organizationId}`);
         orgProfileDispatch(fetchOrganizationSuccess(res.data));
@@ -102,7 +104,20 @@ const OrganizationProfile = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId]);
+
+    (async function fetchUserProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+  }, [orgProfileDispatch, organizationId, userProfileDispatch]);
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -202,7 +217,11 @@ const OrganizationProfile = () => {
             </SectionHeader>
             <FeedWrapper>
               <Activity filteredPosts="" />
-              <CreatePost onCancel={() => setModal(false)} visible={modal} />
+              <CreatePost
+                onCancel={() => setModal(false)}
+                visible={modal}
+                user={user}
+              />
             </FeedWrapper>
           </div>
           <CustomDrawer
@@ -244,4 +263,4 @@ const OrganizationProfile = () => {
   );
 };
 
-export default withOrganizationContext(OrganizationProfile);
+export default withUserContext(withOrganizationContext(OrganizationProfile));

@@ -27,6 +27,17 @@ export const initAuth =  () => {
   };
 };
 
+export const refetchUser =  () => {
+  return async (dispatch) => {
+    try {
+      const { data: user } = await axios.get("/api/users/current");
+      dispatch({ type: SET_USER, payload: { user } });
+    } catch (error) {
+      dispatch({ error, type: AUTH_ERROR });
+    }
+  };
+};
+
 export const authLogout = () => {
   return (dispatch) => {
     clearRememberCookie();
