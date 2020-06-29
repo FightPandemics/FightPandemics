@@ -61,7 +61,7 @@ const NEEDS = {
   ],
 };
 
-function EditAccount() {
+function EditAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
   const [location, setLocation] = useState({});
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -105,6 +105,7 @@ function EditAccount() {
         location,
       });
       userProfileDispatch(updateUserSuccess(res.data));
+      props.history.push("/profile");
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       userProfileDispatch(
