@@ -32,9 +32,10 @@ const TermsConditions = () => {
           Terms of Service (“Agreement”), which is set forth in its entirety
           below. This Agreement is between you and FightPandemics, Inc. (“we,”
           “FightPandemics” or the “Company”), and it governs your access to and
-          use of the services, websites, and applications offered by FightPandemics 
-          (the “Services”). Your access to and use of the Services are
-          conditioned on your acceptance of and compliance with this Agreement.
+          use of the services, websites, and applications offered by
+          FightPandemics (the “Services”). Your access to and use of the
+          Services are conditioned on your acceptance of and compliance with
+          this Agreement.
         </Paragraph>
         <Paragraph>
           The Site is not directed to any person in any jurisdiction where (by
@@ -160,9 +161,9 @@ const TermsConditions = () => {
                         <ol type="a">
                           <li>
                             That you will only provide FightPandemics with
-                            Content that you have a right to provide to FightPandemics 
-                            and to allow FightPandemics to display
-                            through the Services,
+                            Content that you have a right to provide to
+                            FightPandemics and to allow FightPandemics to
+                            display through the Services,
                           </li>
                           <li>
                             That you have adequate rights to all copyrights,
@@ -227,8 +228,8 @@ const TermsConditions = () => {
                       <li>
                         Treat any Content, email or other information you
                         receive as a result of your access to the Services as a
-                        recommendation or representation of any kind by FightPandemics 
-                        or any employee, officer, director,
+                        recommendation or representation of any kind by
+                        FightPandemics or any employee, officer, director,
                         representative or other agent of the foregoing (each a
                         “Company Person”) on which you should rely unless such
                         information has been expressly identified as created by
@@ -240,7 +241,7 @@ const TermsConditions = () => {
                         displayed on, published by or otherwise available
                         through FightPandemics, other than Content, software or
                         intellectual property that you own or otherwise have
-                        rights to without regard for its appearance on 
+                        rights to without regard for its appearance on
                         FightPandemics;
                       </li>
                       <li>
@@ -261,8 +262,8 @@ const TermsConditions = () => {
                       </li>
                       <li>
                         Use FightPandemics to market services, particularly
-                        investment advisory services that might cause FightPandemics 
-                        to have to register as a broker dealer or
+                        investment advisory services that might cause
+                        FightPandemics to have to register as a broker dealer or
                         investment adviser with the SEC, or to be treated as an
                         underwriter; or
                       </li>
@@ -277,7 +278,8 @@ const TermsConditions = () => {
               <li>
                 <strong>Indemnify FightPandemics and Related Parties.</strong>
                 You are promising to hold the Company harmless against any
-                damage that may happen to us as a result of your use of FightPandemics.
+                damage that may happen to us as a result of your use of
+                FightPandemics.
                 <ol type="i">
                   <li>
                     <i>Indemnity.</i> You agree to indemnify and hold the
@@ -306,16 +308,16 @@ const TermsConditions = () => {
                     against FightPandemics and any Company Person that are in
                     any way related to the Services or your use of Content,
                     including any representations, recommendations or referrals
-                    you may receive as a result of your registration with FightPandemics. 
-                    You are solely responsible for your use of the
-                    Services, for any Content you provide, and for any
+                    you may receive as a result of your registration with
+                    FightPandemics. You are solely responsible for your use of
+                    the Services, for any Content you provide, and for any
                     consequences thereof, including the use of your Content by
                     other users and third-party partners.
                   </li>
                   <li>
-                    <i>FightPandemics Employees.</i> You understand that
-                    Company Persons may participate in the Services as Users,
-                    and that FightPandemics is not responsible for any of their
+                    <i>FightPandemics Employees.</i> You understand that Company
+                    Persons may participate in the Services as Users, and that
+                    FightPandemics is not responsible for any of their
                     activities, including statements or other information in any
                     emails or other communications such individuals make in that
                     capacity.
@@ -325,13 +327,14 @@ const TermsConditions = () => {
               <li>
                 <strong>Confidentiality.</strong>
                 By registering with FightPandemics, or otherwise using the
-                Services or viewing content made available through FightPandemics 
-                in any way, you may have an opportunity to see
+                Services or viewing content made available through
+                FightPandemics in any way, you may have an opportunity to see
                 information deemed as confidential. It is expected that you will
                 use discretion in determining what you do with that information.
                 You agree, however, that you will not republish any information
                 you acquire through the Services via an Internet website, for
-                which one of the principal purposes is to compete with FightPandemics.
+                which one of the principal purposes is to compete with
+                FightPandemics.
               </li>
               <li>
                 <strong>Other User Obligations.</strong>
@@ -391,9 +394,10 @@ const TermsConditions = () => {
                   </li>
                   <li>
                     If you operate, manage or otherwise control a search engine
-                    or robot, or you republish a significant fraction of FightPandemics 
-                    Content (as we may determine in our reasonable
-                    discretion), you must additionally follow these rules:
+                    or robot, or you republish a significant fraction of
+                    FightPandemics Content (as we may determine in our
+                    reasonable discretion), you must additionally follow these
+                    rules:
                     <ol>
                       <li>You must use a descriptive user agent header.</li>
                       <li>You must follow robots.txt at all times.</li>
@@ -417,7 +421,8 @@ const TermsConditions = () => {
                 Policy & our Cookies Policy to learn more about how we collect
                 and use information about you via the Services. The Privacy &
                 Cookies Policy explains how FightPandemics treats your personal
-                information and protects your privacy when you access FightPandemics and use the Services.
+                information and protects your privacy when you access
+                FightPandemics and use the Services.
               </li>
               <li>
                 <strong>Amendments to the Privacy & Cookies Policy.</strong>
@@ -441,11 +446,11 @@ const TermsConditions = () => {
               </li>
               <li>
                 <strong>Data Processing Addendum.</strong>
-                If you are a user to the Services, to the extent that FightPandemics 
-                processes any Personal Data (as defined in the DPA)
-                that is subject to the GDPR (as defined in the DPA), on your
-                behalf, in the provision of the Services, the terms of the data
-                processing addendum at{" "}
+                If you are a user to the Services, to the extent that
+                FightPandemics processes any Personal Data (as defined in the
+                DPA) that is subject to the GDPR (as defined in the DPA), on
+                your behalf, in the provision of the Services, the terms of the
+                data processing addendum at{" "}
                 <TermsLink href="#">www.fightpandemics.com/dpa</TermsLink>{" "}
                 ("DPA"), which are hereby incorporated by reference, shall apply
                 and the parties agree to comply with such terms. For the
@@ -483,9 +488,9 @@ const TermsConditions = () => {
                   </li>
                   <li>do not modify the Content, except as described below;</li>
                   <li>
-                    attribute FightPandemics with a human and
-                    machine-followable link (an anchor tag) linking back to the
-                    page displaying the original source of the Content on FightPandemics;
+                    attribute FightPandemics with a human and machine-followable
+                    link (an anchor tag) linking back to the page displaying the
+                    original source of the Content on FightPandemics;
                   </li>
                   <li>
                     make a reasonable effort to update a particular piece of
@@ -533,8 +538,8 @@ const TermsConditions = () => {
               </li>
               <li>
                 <strong>Right to Discontinue the Services.</strong>
-                FightPandemics reserves the right to discontinue the Services
-                or to change the Services in any way and at any time, with or
+                FightPandemics reserves the right to discontinue the Services or
+                to change the Services in any way and at any time, with or
                 without notice to you, without liability.
               </li>
               <li>
@@ -613,9 +618,9 @@ const TermsConditions = () => {
               </li>
               <li>
                 <strong>Verifying Due Diligence.</strong>
-                We are not responsible for doing diligence on any User of FightPandemics, 
-                or verifying any representations, materials or other
-                information provided by other Users to you.
+                We are not responsible for doing diligence on any User of
+                FightPandemics, or verifying any representations, materials or
+                other information provided by other Users to you.
               </li>
               <li>
                 <strong>No Recommendations.</strong> This tool does not provide
@@ -699,23 +704,24 @@ const TermsConditions = () => {
                 <TermsLink href="mailto:legal@fightpandemics">
                   legal@fightpandemics.com
                 </TermsLink>
-                , or by mailing a letter to the corporate address of FightPandemics 
-                (listed below) containing the following information in
-                accordance with the DMCA: (i) identification of the material
-                that is claimed to be infringing or to be the subject of
-                infringing activity and that is to be removed or access to which
-                is to be disabled, and information reasonably sufficient to
-                permit us to locate the material; (ii) identification of the
-                copyrighted work claimed to have been infringed; (iii) your
-                contact information, including your address, telephone number,
-                and an email address; (iv) a statement by you that you have a
-                good faith belief that use of the material in the manner
-                complained of is not authorized by the copyright owner, its
-                agent or the law; (v) a statement that the information in the
-                notification is accurate, and, under penalty of perjury, that
-                you are authorized to act on behalf of the copyright owner; and
-                (vi) a physical or electronic signature of the copyright owner
-                or a person authorized to act on their behalf.
+                , or by mailing a letter to the corporate address of
+                FightPandemics (listed below) containing the following
+                information in accordance with the DMCA: (i) identification of
+                the material that is claimed to be infringing or to be the
+                subject of infringing activity and that is to be removed or
+                access to which is to be disabled, and information reasonably
+                sufficient to permit us to locate the material; (ii)
+                identification of the copyrighted work claimed to have been
+                infringed; (iii) your contact information, including your
+                address, telephone number, and an email address; (iv) a
+                statement by you that you have a good faith belief that use of
+                the material in the manner complained of is not authorized by
+                the copyright owner, its agent or the law; (v) a statement that
+                the information in the notification is accurate, and, under
+                penalty of perjury, that you are authorized to act on behalf of
+                the copyright owner; and (vi) a physical or electronic signature
+                of the copyright owner or a person authorized to act on their
+                behalf.
               </li>
               <li>
                 Our corporate address for notice of alleged copyright
@@ -848,9 +854,9 @@ const TermsConditions = () => {
                 communications maintained by the Services. We make no warranty
                 that the Services will meet your requirements or be available on
                 an uninterrupted, secure or error-free basis. No advice or
-                information, whether oral or written, obtained from FightPandemics
-                 or through the Services, will create any warranty not
-                expressly made herein.
+                information, whether oral or written, obtained from
+                FightPandemics or through the Services, will create any warranty
+                not expressly made herein.
               </li>
               <li>
                 UNDER NO CIRCUMSTANCES WILL ANY COMPANY PERSON BE LIABLE TO YOU
@@ -1258,21 +1264,22 @@ const TermsConditions = () => {
                 been specifically allowed to do so in a separate Agreement with
                 FightPandemics (note crawling the Services is permissible in
                 accordance with this Agreement, but scraping the Services is
-                expressly prohibited without the prior consent of FightPandemics); 
-                remove, obscure or change any copyright, trademark,
-                hyperlink or other proprietary rights notices contained in or on
-                the Services or any website on which the Services are offered or
-                on a third party website and/or Company software on which
-                Company code is embeddable or embedded on; remove, obscure or
-                change any notice, banner, advertisement or other branding on
-                the Services; submit any Content or material that falsely
-                expresses or implies that such Content or material is sponsored
-                or endorsed by the Company; interfere with or circumvent any
-                security feature of the Services or any feature that restricts
-                or enforces limitations on use of or access to the Services,
-                such as probing or scanning the vulnerability of any system,
-                network or breach; or sell access to the Services or any part
-                thereof other than through a mechanism approved by the Company.
+                expressly prohibited without the prior consent of
+                FightPandemics); remove, obscure or change any copyright,
+                trademark, hyperlink or other proprietary rights notices
+                contained in or on the Services or any website on which the
+                Services are offered or on a third party website and/or Company
+                software on which Company code is embeddable or embedded on;
+                remove, obscure or change any notice, banner, advertisement or
+                other branding on the Services; submit any Content or material
+                that falsely expresses or implies that such Content or material
+                is sponsored or endorsed by the Company; interfere with or
+                circumvent any security feature of the Services or any feature
+                that restricts or enforces limitations on use of or access to
+                the Services, such as probing or scanning the vulnerability of
+                any system, network or breach; or sell access to the Services or
+                any part thereof other than through a mechanism approved by the
+                Company.
               </li>
               <li>
                 "Content" means any information, text, graphics or other

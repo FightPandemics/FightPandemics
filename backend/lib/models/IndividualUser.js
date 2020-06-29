@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
-const INDIVIDUAL_USER_TYPES = ["individual"];
+const INDIVIDUAL_USER_TYPES = ["Individual"];
 
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
@@ -33,9 +33,8 @@ const individualUserSchema = new Schema(
       volunteer: { default: false, required: true, type: Boolean },
     },
     type: {
-      default: "individual",
+      default: "Individual",
       enum: INDIVIDUAL_USER_TYPES,
-      lowercase: true,
       type: String,
     },
     urls: {
@@ -51,6 +50,12 @@ const individualUserSchema = new Schema(
 
 individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
+});
+
+individualUserSchema.virtual("organizations", {
+  foreignField: "ownerId",
+  localField: "_id",
+  ref: "OrganizationUser",
 });
 
 const IndividualUser = User.discriminator(

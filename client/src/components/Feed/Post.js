@@ -15,10 +15,9 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import SubMenuButton from "components/Button/SubMenuButton";
-import { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
+import WizardFormNav, { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
-import WizardFormNav from "components/StepWizard/WizardFormNav";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -338,57 +337,60 @@ const Post = ({
     <>
       {postId && dispatchPostAction ? (
         //Post in post's page.
-        <PostCard
-          style={{
-            display: "inline-block",
-            maxWidth: "80rem",
-            marginTop: "1rem",
-          }}
-        >
-          <div className="card-header">
-            {renderHeader}
-            <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (user._id === post.author.id || user.id === post.author.id) && (
-                  <SubMenuButton
-                    onSelect={onSelect}
-                    onChange={onChange}
-                    postId={postId}
-                    post={post}
-                    user={user}
-                  />
-                )}
-            </div>
-          </div>
-          <WhiteSpace size="md" />
-          {renderTags}
-          <WhiteSpace />
-          {renderContent}
-          {fullPostLength > CONTENT_LENGTH && (
-            <RenderViewMore
-              postId={postId}
-              onClick={onClick}
-              loadMorePost={loadMorePost}
-            />
-          )}
-          {renderSocialIcons}
-          {renderShareModal}
-          {renderComments}
-          <WebModal
-            title="Confirm"
-            visible={deleteModalVisibility}
-            onOk={() => postDelete(post)}
-            onCancel={handlePostDelete}
-            okText="Delete"
-            cancelText="Cancel"
+        <div>
+          <PostCard
+            style={{
+              display: "inline-block",
+              maxWidth: "80rem",
+              marginTop: "1rem",
+            }}
           >
-            <p>Are you sure you want to delete the post?</p>
-          </WebModal>
+            <div className="card-header">
+              {renderHeader}
+              <div className="card-submenu">
+                {isAuthenticated &&
+                  user &&
+                  (user._id === post.author.id || user.id === post.author.id) && (
+                    <SubMenuButton
+                      onSelect={onSelect}
+                      onChange={onChange}
+                      postId={postId}
+                      post={post}
+                      user={user}
+                    />
+                  )}
+              </div>
+            </div>
+            <WhiteSpace size="md" />
+            {renderTags}
+            <WhiteSpace />
+            {renderContent}
+            {fullPostLength > CONTENT_LENGTH && (
+              <RenderViewMore
+                postId={postId}
+                onClick={onClick}
+                loadMorePost={loadMorePost}
+              />
+            )}
+            {renderSocialIcons}
+            {renderShareModal}
+            {renderComments}
+            <WebModal
+              title="Confirm"
+              visible={deleteModalVisibility}
+              onOk={() => postDelete(post)}
+              onCancel={handlePostDelete}
+              okText="Delete"
+              cancelText="Cancel"
+            >
+              <p>Are you sure you want to delete the post?</p>
+            </WebModal>
+            
+          </PostCard>
           {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
           )}
-        </PostCard>
+        </div>
       ) : (
         //Post in feed.
         <PostCard>
