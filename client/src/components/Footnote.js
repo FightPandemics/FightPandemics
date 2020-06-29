@@ -45,6 +45,12 @@ const FooterLink = styled(Link)`
   text-decoration-line: underline;
 `;
 
+const FooterALink = styled.a`
+  color: ${colors.darkGray};
+  margin: 0 1rem;
+  text-decoration-line: underline;
+`;
+
 export default () => {
   const currentYear = new Date().getFullYear();
   return (
@@ -55,7 +61,14 @@ export default () => {
       <Policies>
         <FooterLink to={"/about-us"}>About Us</FooterLink> |{" "}
         <FooterLink to={"/faq"}>FAQ</FooterLink> |{" "}
-        <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
+        <FooterALink
+          href="https://medium.com/@FightPandemics"
+          target="_blank"
+          alt="FightPandmeics Blog Link"
+        >
+          Blog
+        </FooterALink>
+        | <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
         <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}
         <FooterLink to={"/cookies-policy"}>Cookies Policy</FooterLink>
       </Policies>
