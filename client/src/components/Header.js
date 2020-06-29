@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
+import MenuIcon from "assets/icons/menu.svg";
 import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
@@ -108,8 +109,8 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         <Link to="/create-organization-profile">Add Organisation</Link>
       </Menu.Item>
       <Menu.Divider />
-      {user
-        ? user.organizations.map((organization) => (
+      {user?.organizations?.length > 0
+        ? user?.organizations?.map((organization) => (
             <Menu.Item>
               <Link to={`/organization/${organization._id}`}>
                 {organization.name}
@@ -117,8 +118,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
             </Menu.Item>
           ))
         : null}
-
-      <Menu.Divider />
+      {user?.organizations?.length > 0 && <Menu.Divider />}
       <Menu.Item>
         <Link to="/auth/logout">Log Out</Link>
       </Menu.Item>
@@ -184,7 +184,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         rightContent={
           <div>
             <MenuToggle
-              src={menu}
+              src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />

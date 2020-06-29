@@ -168,9 +168,9 @@ const NeedHelp = withRouter((props) => {
   };
   return (
     <WizardContainer className="wizard-container">
-      <Transition in={transition} timeout={500}>
+      <Transition in={transition} timeout={250}>
         {(status) => (
-          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav/>}>
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
             <Step3 hashKey={"Step3"} update={updateAnswers} />
