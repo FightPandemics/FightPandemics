@@ -1,5 +1,5 @@
 // Core
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -86,7 +86,7 @@ const Post = ({
     }
   };
 
-  const loadComments = useCallback(async () => {
+  const loadComments = async () => {
     if (commentsCount !== 0) {
       dispatchPostAction(NEXT_PAGE);
       dispatchPostAction(NEXT_PAGE);
@@ -141,13 +141,13 @@ const Post = ({
     }
     const currentLimit = limit.current;
     limit.current = currentLimit * page;
-  });
+  };
 
   useEffect(() => {
     if (postId) {
       loadComments();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOnChange = async (e) => {
