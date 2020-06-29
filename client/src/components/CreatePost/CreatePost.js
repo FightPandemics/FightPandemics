@@ -20,7 +20,7 @@ import { theme } from "constants/theme";
 
 const { typography } = theme;
 
-const CreatePostContext = createContext();
+export const CreatePostContext = createContext();
 
 const Step1 = () => {
   const createPostContext = useContext(CreatePostContext);
@@ -60,11 +60,12 @@ const Step2 = ({ user }) => {
         <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
         {user.organizations?.map((item) => {
+          const { _id: organizationId } = item;
           return (
             <OptionButton
-              key={item._id}
+              key={organizationId}
               onClick={() => {
-                setForm({ organization: item });
+                setForm({ organizationId });
                 setCurrentStep(3);
               }}
             >
@@ -161,5 +162,4 @@ const CreatePost = (props) => {
     </CreatePostContext.Provider>
   );
 };
-
 export default CreatePost;

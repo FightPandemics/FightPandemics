@@ -1,5 +1,5 @@
 resource "aws_alb_target_group" "app" {
-  name        = replace(substr(var.subdomain, 0 , 32), "/-$/" , "" )
+  name        = replace(substr(var.subdomain, 0, 32), "/-$/", "")
   port        = var.client_port
   protocol    = "HTTP"
   vpc_id      = data.aws_vpc.main.id
@@ -17,7 +17,7 @@ resource "aws_alb_listener_rule" "main" {
     target_group_arn = aws_alb_target_group.app.arn
   }
   condition {
-    field = "host-header"
+    field  = "host-header"
     values = [var.fp_context == "production" ? "fightpandemics.com" : "${var.subdomain}.*"]
   }
 }

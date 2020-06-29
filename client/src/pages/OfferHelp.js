@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Transition } from 'react-transition-group';
+import { Transition } from "react-transition-group";
 import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
@@ -177,7 +177,7 @@ const OfferHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  },[]);
+  }, [transition]);
   const updateAnswers = (key, value) => {
     const { answers } = state;
     const updatedAnswers = { ...answers, [key]: value };
@@ -191,8 +191,8 @@ const OfferHelp = withRouter((props) => {
   };
   return (
     <WizardContainer className="wizard-container">
-      <Transition in={transition} timeout={500}>
-        {status=> (
+      <Transition in={transition} timeout={250}>
+        {(status) => (
           <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
