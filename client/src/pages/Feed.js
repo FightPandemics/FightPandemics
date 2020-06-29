@@ -62,11 +62,10 @@ const HELP_TYPE = {
 
 const initialState = {
   selectedType: "ALL",
-  initialLoad: true,
   showFilters: false,
   filterModal: false,
   createPostModal: false,
-  applyFilters: true,
+  applyFilters: false,
   activePanel: null,
   location: null,
 };
@@ -201,7 +200,6 @@ const Feed = (props) => {
     location,
     selectedType,
     applyFilters,
-    initialLoad,
     showFilters,
   } = feedState;
 
@@ -225,7 +223,6 @@ const Feed = (props) => {
   const handleFilterModal = () => {
     // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
-    dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
     // dispatchAction(
     //   SET_VALUE,
@@ -243,7 +240,7 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-    dispatchAction(SET_VALUE, "initialLoad", true);
+    dispatchAction(SET_VALUE, "applyFilters", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     postsDispatch({ type: RESET_PAGE, filterType: "" });
@@ -288,7 +285,6 @@ const Feed = (props) => {
   const handleShowFilters = (e) => {
     // desktop
     dispatchAction(TOGGLE_STATE, "showFilters");
-    dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
@@ -411,7 +407,7 @@ const Feed = (props) => {
   }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
 
   useEffect(() => {
-    if (initialLoad || applyFilters) {
+    if (applyFilters) {
       loadPosts();
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -462,6 +458,7 @@ const Feed = (props) => {
         }
       }
     }
+    dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
