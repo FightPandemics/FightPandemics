@@ -64,7 +64,6 @@ const BaseButton = styled(Button)`
           }
         }};
       }
-      pointer-events: none;
     `}
 
 
