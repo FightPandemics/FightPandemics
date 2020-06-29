@@ -147,7 +147,8 @@ const Post = ({
     if (postId) {
       loadComments();
     }
-  }, [loadComments, postId]); // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnChange = async (e) => {
     e.preventDefault();
