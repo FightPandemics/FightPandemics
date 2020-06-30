@@ -366,7 +366,7 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { userId } = req;    
+      const { userId } = req; 
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
       const [orgErr, org] = await app.to(User.findById(userId));

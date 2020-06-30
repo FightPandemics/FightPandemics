@@ -499,7 +499,7 @@ const Feed = (props) => {
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
-    
+
     if (
       isAuthenticated &&
       user &&
