@@ -1,7 +1,7 @@
 describe('FightPandemics Navigation bar', () => {
     context('When user is not logged in Register and Login button are visible', () => {
         beforeEach(() => {
-            cy.visit('');
+          cy.visit('http://localhost');
           });
   
       it('Login button should be visible when user is not logged in', () => {
