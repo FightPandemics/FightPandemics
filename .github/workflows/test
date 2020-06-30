@@ -1,5 +1,6 @@
 name: Artifacts
-on: [push]
+on: 
+  pull_request:
 jobs:
   cypress-run:
     runs-on: ubuntu-16.04
