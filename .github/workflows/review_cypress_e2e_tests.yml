@@ -16,9 +16,8 @@ jobs:
           working-directory: cypresse2e
           browser: chrome 
 
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: screenshots-in-headless-chrome
-          working-directory: cypresse2e/screenshots
-          
+          path: cypresse2e/screenshots
