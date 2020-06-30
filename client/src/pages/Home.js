@@ -41,9 +41,6 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
-  &.home {
-    margin-right: -2rem;
-  }
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
