@@ -115,13 +115,13 @@ const Profile = () => {
     (async function fetchPosts() {
       postsDispatch({ type: FETCH_POSTS });
       try {
-        const res = await axios.get(
-          `/api/posts?limit=5&skip0=&userId=${userId}`,
-        );
-        postsDispatch({
-          type: SET_POSTS,
-          user: res.data,
-        });
+        if (userId) {
+          const res = await axios.get(`/api/posts?limit=-1&authorId=${userId}`);
+          postsDispatch({
+            type: SET_POSTS,
+            posts: res.data,
+          });
+        }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         postsDispatch({
@@ -200,7 +200,11 @@ const Profile = () => {
         </SectionHeader>
         <FeedWrapper>
           <Activity filteredPosts={postsState.posts} />
-          <CreatePost onCancel={() => setModal(false)} visible={modal} />
+          <CreatePost
+            onCancel={() => setModal(false)}
+            visible={modal}
+            user={user}
+          />
         </FeedWrapper>
       </div>
       <CustomDrawer

@@ -3,8 +3,8 @@ import styled from "styled-components";
 import backArrow from "assets/icons/back-arrow.svg";
 import { StyledWizardNav, BackButton, BackText } from 'components/StepWizard/WizardNav';
 import { Link } from "react-router-dom";
-import SvgIcon from "components/Icon/SvgIcon";
 import StepWizard from "react-step-wizard";
+import SvgIcon from "components/Icon/SvgIcon";
 import { mq } from "constants/theme";
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
@@ -12,11 +12,10 @@ export const StyledButtonWizard = styled(StepWizard)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 12rem;
+  padding: 0 10rem;
   margin: 0 auto 1rem;
-  width: 35rem;
+  width: 25rem;
   max-width: 100%;
-
   & + div {
     display: flex;
     flex-flow: row wrap;
@@ -29,6 +28,10 @@ export const StyledButtonWizard = styled(StepWizard)`
 
   @media screen and (min-width: ${desktopBreakpoint}) {
     width: 40rem;
+  }
+
+  @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    padding-left: 7rem;
   }
 `;
 

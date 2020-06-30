@@ -16,7 +16,6 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
-import PostPage from "pages/PostPage";
 
 import {
   optionsReducer,
@@ -301,9 +300,6 @@ const Feed = (props) => {
   };
 
   const handlePostLike = async (postId, liked) => {
-    /* added here because userId not working */
-    sessionStorage.removeItem("likePost");
-
     if (isAuthenticated) {
       const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
       let response = {};
@@ -332,7 +328,6 @@ const Feed = (props) => {
         }
       }
     } else {
-      sessionStorage.setItem("likePost", postId);
       history.push(LOGIN);
     }
   };
@@ -445,7 +440,7 @@ const Feed = (props) => {
   }, [scrollObserver, bottomBoundaryRef]);
 
   const postDelete = async (post) => {
-    let deleterResponse;
+    let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
 
     if (
@@ -454,8 +449,8 @@ const Feed = (props) => {
       (user._id === post.author.id || user.id === post.author.id)
     ) {
       try {
-        deleterResponse = await axios.delete(endPoint);
-        if (deleterResponse && deleterResponse.data.success === true) {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
             ...postsList,
           };
@@ -537,13 +532,8 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              postDelete={postDelete}
+              handlePostDelete={postDelete}
               user={user}
-            />
-            <PostPage
-              handlePostLike={handlePostLike}
-              user={user}
-              isAuthenticated={isAuthenticated}
             />
             {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
             {isLoading ? <Loader /> : <></>}
@@ -557,6 +547,7 @@ const Feed = (props) => {
         <CreatePost
           onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
           visible={createPostModal}
+          user={user}
         />
         {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>

@@ -89,8 +89,8 @@ const DescriptionCard = (props) => {
             isOpen ? (
               <span style={{ color: `${mintGreen}` }}>Open now</span>
             ) : (
-                <span style={{ color: `${orangeRed}` }}>Closed</span>
-              )
+              <span style={{ color: `${orangeRed}` }}>Closed</span>
+            )
           }
         />
         <Card.Body>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
+import { CreatePostContext } from "components/CreatePost/CreatePost";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
 import axios from "axios";
@@ -28,7 +29,8 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type }) => {
+const Form = ({ setCurrentStep, textData, type, setPostId }) => {
+  const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   formData.help = type;
@@ -79,10 +81,12 @@ const Form = ({ setCurrentStep, textData, type }) => {
     populateErrors();
 
     const payload = formDataToPost(formData);
+    if (form.organizationId) payload.organizationId = form.organizationId;
 
     if (!errors.length) {
       try {
-        await axios.post("/api/posts", payload);
+        const res = await axios.post("/api/posts", payload);
+        setPostId(res.data._id);
         cleanForm();
       } catch (error) {
         console.log(error);
