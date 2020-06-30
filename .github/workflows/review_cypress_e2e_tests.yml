@@ -20,4 +20,5 @@ jobs:
         if: failure()
         with:
           name: screenshots-in-headless-chrome
-          path: cypresse2e/screenshots
+          working-directory: cypresse2e/screenshots
+          
