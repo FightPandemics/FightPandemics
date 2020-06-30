@@ -81,7 +81,7 @@ const VerifyEmail = ({ email }) => {
     <VerifyEmailContainer>
       <VerifyEmailLeftContainer>
         <EnvelopeImageContainer>
-          <img className="EnvelopeSVG" src={emailVerify} alt="" />
+          <img className="EnvelopeSVG" src={emailVerify} alt="envelope" />
         </EnvelopeImageContainer>
       </VerifyEmailLeftContainer>
       <VerifyEmailRightContainer>
