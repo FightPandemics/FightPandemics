@@ -366,15 +366,17 @@ async function routes(app) {
       schema: deletePostSchema,
     },
     async (req) => {
-      const { userId } = req;
+      const { userId } = req;      
       const { postId } = req.params;
+      
       const [findErr, post] = await app.to(Post.findById(postId));
+      const [orgErr, org] = await app.to(User.findById(userId));
       if (findErr) {
         req.log.error(findErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
-      } else if (!userId.equals(post.author.id)) {
+      } else if (!userId.equals(post.author.id) && (org && !org._id.equals(userId))) {
         throw app.httpErrors.forbidden();
       }
 

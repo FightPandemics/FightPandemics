@@ -16,6 +16,7 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
+import { isAuthorOrg } from "components/Feed/Post";
 
 import {
   optionsReducer,
@@ -489,11 +490,10 @@ const Feed = (props) => {
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
-
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
