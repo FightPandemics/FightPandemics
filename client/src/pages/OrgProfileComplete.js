@@ -65,7 +65,7 @@ const StyledLink = styled(Link)`
 const OrgProfileComplete = ({ history, refetchUser }) => {
   useEffect(() => {
     refetchUser();
-  // will only run once (on mount) to update navbar org list
+    // will only run once (on mount) to update navbar org list
   }, [refetchUser]);
   return (
     <Container>

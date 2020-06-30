@@ -356,5 +356,5 @@ const mapDispatchToProps = {
 // TODO: implement consistent approach to state management
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withOrganizationContext(EditOrganizationAccount));
