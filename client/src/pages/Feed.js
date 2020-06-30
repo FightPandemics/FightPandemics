@@ -16,7 +16,6 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
-import { isAuthorOrg } from "components/Feed/Post";
 
 import {
   optionsReducer,
@@ -47,6 +46,16 @@ import {
   SET_LIKE,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+
+export const isAuthorOrg = (organizations, author) => {
+  let isValid = false
+  organizations.map(org => {
+    if(org.name === author.name) {
+      isValid = true;
+    }
+  })
+  return isValid;
+}
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 

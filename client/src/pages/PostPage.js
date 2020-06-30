@@ -8,7 +8,7 @@ import { FEED } from "templates/RouteWithSubRoutes";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import Loader from "components/Feed/StyledLoader";
 import { typeToTag } from "assets/data/formToPostMappings";
-import { isAuthorOrg } from "components/Feed/Post";
+import { isAuthorOrg } from "pages/Feed";
 
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import {

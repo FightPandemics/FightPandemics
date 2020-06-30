@@ -30,21 +30,12 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
+import { isAuthorOrg } from "pages/Feed";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
-
 const INDIVIDUAL_AUTHOR_TYPE = "Individual";
-export const isAuthorOrg = (arganizations, author) => {
-  let isValid = false
-  arganizations.map(org => {
-    if(org.name === author.name) {
-      isValid = true;
-    }
-  })
-  return isValid;
-}
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -79,7 +70,6 @@ const Post = ({
     loadMoreComments,
     page,
   } = post;
-
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
 
@@ -408,7 +398,7 @@ const Post = ({
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author)) && (
+                  (user._id === post.author.id || user.id === post.author.id || (user.organizations && isAuthorOrg(user.organizations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}

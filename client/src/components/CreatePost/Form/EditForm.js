@@ -5,7 +5,7 @@ import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
-import { isAuthorOrg } from "components/Feed/Post";
+import { isAuthorOrg } from "pages/Feed";
 
 import {
   SET_POST,
