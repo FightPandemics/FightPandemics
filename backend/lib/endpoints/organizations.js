@@ -57,13 +57,24 @@ async function routes(app) {
 
   app.get(
     "/:organizationId",
-    { schema: getOrganizationSchema },
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getOrganizationSchema,
+    },
     async (req) => {
-      const result = await Organization.findById(req.params.organizationId);
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+
+      const result = await Organization.findById(organizationId);
       if (result === null) {
         return new httpErrors.NotFound();
       }
-      return result;
+      return {
+        ...result.toObject(),
+        isOwner: userId !== null && userId.equals(result.ownerId),
+      };
     },
   );
 
