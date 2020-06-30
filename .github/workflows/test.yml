@@ -1,8 +1,8 @@
-
-name: CI
+name: Cypress end-to-end tests
 
 on:
   pull_request:
+
 
 jobs:
   cypress-run:
@@ -13,10 +13,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          working-directory: master
+          working-directory: cypresse2e
           browser: chrome 
 
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: screenshots-in-headless-chrome
