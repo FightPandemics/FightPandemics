@@ -48,7 +48,10 @@ a {
   background-color: ${WHITE} !important;
 }
 
-
+.app-drawer .am-drawer-content {
+  display: flex;
+  flex-direction: column;
+}
 
 .app-drawer .am-drawer-sidebar {
   background-color: $white;

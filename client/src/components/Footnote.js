@@ -8,6 +8,7 @@ const { colors } = theme;
 
 const StyledFooter = styled.footer`
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;

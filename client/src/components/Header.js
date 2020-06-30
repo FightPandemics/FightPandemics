@@ -92,6 +92,7 @@ const activeStyles = {
 };
 
 const HeaderWrapper = styled.div`
+  flex-shrink: 0;
   position: fixed;
   top: 0;
   z-index: 2;

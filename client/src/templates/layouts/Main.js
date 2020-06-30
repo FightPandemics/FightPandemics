@@ -6,6 +6,7 @@ const Main = styled.main`
   padding-top: 1rem;
 
   display: flex;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
 
