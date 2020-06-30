@@ -16,7 +16,7 @@ jobs:
           browser: chrome
           working-directory: cypresse2e
           start: npx cypress run
-          wait-on: https://localhost:3000
+          wait-on: http://localhost:3000
 
       - uses: actions/upload-artifact@v1
         if: failure()
