@@ -23,14 +23,26 @@ async function routes(app) {
       schema: deleteOrganizationSchema,
     },
     async (req) => {
-      // TODO: make sure user can only delete organizations they own
-      const result = await Organization.findByIdAndRemove(
-        req.params.organizationId,
-      );
-      if (result === null) {
-        return new httpErrors.NotFound();
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      if (orgErr) {
+        req.log.error(orgErr, "Failed retrieving organization");
+        throw app.httpErrors.internalServerError();
+      } else if (org == null) {
+        throw app.httpErrors.notFound();
+      } else if (!org.ownerId.equals(userId)) {
+        req.log.error("User not allowed to delete this organization");
+        throw app.httpErrors.forbidden();
       }
-      return result;
+      const [deleteOrgErr, deletedOrganization] = await app.to(org.delete());
+      if (deleteOrgErr) {
+        req.log.error(deleteOrgErr, "Failed deleting organization");
+        throw app.httpErrors.internalServerError();
+      }
+      return { deletedOrganization, success: true };
     },
   );
 
