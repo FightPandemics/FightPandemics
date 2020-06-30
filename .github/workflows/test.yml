@@ -13,7 +13,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          working-directory: cypresse2e
+          working-directory: master
           browser: chrome 
 
       - uses: actions/upload-artifact@v1
