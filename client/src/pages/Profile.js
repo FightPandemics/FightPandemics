@@ -116,7 +116,7 @@ const Profile = () => {
       postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
-          const res = await axios.get(`/api/posts?limit=5&authorId=${userId}`);
+          const res = await axios.get(`/api/posts?limit=-1&authorId=${userId}`);
           postsDispatch({
             type: SET_POSTS,
             posts: res.data,

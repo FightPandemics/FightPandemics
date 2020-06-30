@@ -285,6 +285,7 @@ async function routes(app) {
       schema: getPostByIdSchema,
     },
     async (req) => {
+      const { userId } = req;
       const { postId } = req.params;
       const [postErr, post] = await app.to(Post.findById(postId));
       if (postErr) {
@@ -341,10 +342,17 @@ async function routes(app) {
           numComments = commentQuery[0].comments;
         }
       }
+
+      const projectedPost = {
+        ...post.toObject(),
+        liked: post.likes.includes(mongoose.Types.ObjectId(userId)),
+        likesCount: post.likes.length,
+      };
+
       return {
         comments,
         numComments,
-        post,
+        post: projectedPost,
       };
     },
   );
