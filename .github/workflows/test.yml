@@ -10,8 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: start server
-        uses: npm start
+      - run: npm start
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
