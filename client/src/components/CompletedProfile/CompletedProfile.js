@@ -52,6 +52,7 @@ export const ProfileCompletedButtonsWrapper = styled.div`
 export const StyledButton = styled(BaseButton)`
   padding: 1rem 0;
   height: auto;
+  width: 100%;
   border-radius: 10px;
   border: none;
   box-shadow: 0px 0px 2px 2px ${colors.lightGray};
