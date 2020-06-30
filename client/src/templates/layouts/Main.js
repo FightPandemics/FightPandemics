@@ -3,8 +3,7 @@ import { theme, mq } from "constants/theme";
 const { offWhite } = theme.colors;
 
 const Main = styled.main`
-  padding-top: 1rem;
-
+  padding-top: 4rem;
   display: flex;
   align-items: inherit;
   justify-content: center;
