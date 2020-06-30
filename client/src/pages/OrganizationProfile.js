@@ -170,13 +170,14 @@ const OrganizationProfile = () => {
               <LocationMobileDiv>{address}</LocationMobileDiv>
               <IconsContainer>
                 <HelpContainer>
-                  {needHelp && "I need help "}
-                  {offerHelp && "I want to help "}
+                  {/* {needHelp && "I need help "}
+                  {offerHelp && "I want to help "} */}
                 </HelpContainer>
                 <LocationDesktopDiv>
                   <LocationIcon src={locationIcon} />
-                  {needHelp && "I need help "}
-                  {offerHelp && "I want to help "} • {address}
+                  {/* {needHelp && "I need help "}
+                  {offerHelp && "I want to help "} • {address} */}
+                  {address}
                 </LocationDesktopDiv>
                 <PlaceholderIcon />
                 {renderURL()}
