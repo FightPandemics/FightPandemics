@@ -399,7 +399,10 @@ const Post = ({
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id || user.id === post.author.id || (user.organizations && isAuthorOrg(user.organizations, post.author))) && (
+                  (user._id === post.author.id || 
+                  user.id === post.author.id || 
+                  (user.organizations && isAuthorOrg(user.organizations, post.author)))
+                   && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
