@@ -1,7 +1,7 @@
 describe('FightPandemics Home screen', () => {
     context('User opens Home screen ', () => {
         beforeEach(() => {
-            cy.visit('');
+            cy.visit('http://localhost');
           });
   
       it('Home screen greetings H1', () => {
