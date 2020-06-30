@@ -83,7 +83,7 @@ const Step2 = ({ user }) => {
 
 const Step3 = ({ onCancel }) => {
   const { currentStep, setCurrentStep, setPostId } = useContext(
-    CreatePostContext
+    CreatePostContext,
   );
   if (currentStep !== 3) return null;
   return (
