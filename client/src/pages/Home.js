@@ -45,7 +45,6 @@ const MainContainer = styled.div`
     background: ${offWhite};
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-left: -2.5rem;
   }
 
   @media only screen and ${mq.phone.wide.max} {
