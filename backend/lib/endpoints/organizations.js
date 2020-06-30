@@ -62,16 +62,23 @@ async function routes(app) {
       schema: updateOrganizationSchema,
     },
     async (req) => {
-      // TODO: make sure user can only update organizations they own
-      const organization = await Organization.findById(
-        req.params.organizationId,
-      );
-      if (organization === null) {
-        return new httpErrors.NotFound();
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      if (orgErr) {
+        req.log.error(orgErr, "Failed retrieving organization");
+        throw app.httpErrors.internalServerError();
+      } else if (org == null) {
+        throw app.httpErrors.notFound();
+      } else if (!org.ownerId.equals(userId)) {
+        req.log.error("User not allowed to update this organization");
+        throw app.httpErrors.forbidden();
       }
 
       const [updateErr, updatedOrg] = await app.to(
-        Object.assign(organization, req.body).save(),
+        Object.assign(org, req.body).save(),
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed updating organization");
@@ -121,7 +128,8 @@ async function routes(app) {
       schema: createOrganizationSchema,
     },
     async (req) => {
-      return new Organization(req.body).save();
+      const { body, userId: ownerId } = req;
+      return new Organization({ ...body, ownerId }).save();
     },
   );
 }
