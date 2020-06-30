@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import { Checkbox } from "antd-mobile";
 import { theme, mq } from "constants/theme";
+import StyledCheckbox from "components/Input/Checkbox";
 
 const { white, lightGray, royalBlue, black } = theme.colors;
 
@@ -59,7 +59,6 @@ const CheckboxItemStyles = styled.div`
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     border: 0.1rem solid ${lightGray};
     border-radius: 5px;
-    height: 6rem;
   }
 `;
 
@@ -70,7 +69,7 @@ export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {
       className={checked && "selected"}
       {...props}
     >
-      <Checkbox checked={checked} />
+      <StyledCheckbox checked={checked} />
       <span className="text">{text}</span>
     </CheckboxItemStyles>
   );
