@@ -371,12 +371,17 @@ async function routes(app) {
       
       const [findErr, post] = await app.to(Post.findById(postId));
       const [orgErr, org] = await app.to(User.findById(userId));
+
       if (findErr) {
         req.log.error(findErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
-      } else if (!userId.equals(post.author.id) && (org && !org._id.equals(userId))) {
+      } else if (org) {
+        if(!org._id.equals(userId)) {
+          throw app.httpErrors.forbidden();
+        }
+      } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }
 
@@ -406,11 +411,17 @@ async function routes(app) {
     async (req) => {
       const { userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
+      const [orgErr, org] = await app.to(User.findById(userId));
+
       if (err) {
         req.log.error(err, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
+      } else if (org) {
+        if(!org._id.equals(userId)) {
+          throw app.httpErrors.forbidden();
+        }
       } else if (!userId.equals(post.author.id)) {
         throw app.httpErrors.forbidden();
       }

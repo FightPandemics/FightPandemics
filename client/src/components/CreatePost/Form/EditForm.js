@@ -5,6 +5,7 @@ import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
+import { isAuthorOrg } from "components/Feed/Post";
 
 import {
   SET_POST,
@@ -105,7 +106,7 @@ const EditModalComponent = ({
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
     ) {
       const endPoint = `/api/posts/${postId}`;
 
