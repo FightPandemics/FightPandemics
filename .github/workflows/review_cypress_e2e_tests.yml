@@ -13,9 +13,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          browser: chrome
           working-directory: cypresse2e
-          start: npx cypress run
+          browser: chrome 
           wait-on: http://localhost:3000
 
       - uses: actions/upload-artifact@v1
