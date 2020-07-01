@@ -31,7 +31,7 @@ async function routes(app) {
       if (orgErr) {
         req.log.error(orgErr, "Failed retrieving organization");
         throw app.httpErrors.internalServerError();
-      } else if (org == null) {
+      } else if (org === null) {
         throw app.httpErrors.notFound();
       } else if (!org.ownerId.equals(userId)) {
         req.log.error("User not allowed to delete this organization");
@@ -93,7 +93,7 @@ async function routes(app) {
       if (orgErr) {
         req.log.error(orgErr, "Failed retrieving organization");
         throw app.httpErrors.internalServerError();
-      } else if (org == null) {
+      } else if (org === null) {
         throw app.httpErrors.notFound();
       } else if (!org.ownerId.equals(userId)) {
         req.log.error("User not allowed to update this organization");
