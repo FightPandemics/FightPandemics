@@ -47,10 +47,10 @@ const SubMenuButton = ({ onSelect, onChange, postId, user, post }) => {
       <Menu.Item onClick={onSelect} key="edit">
         <Link
           to={{
-            pathname: `/post/${post._id}`,
+            pathname: `post/${post?._id}`,
             state: {
               post: post,
-              postId: post._id,
+              postId: post?._id,
               edit: true,
               user,
             },

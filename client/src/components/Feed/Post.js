@@ -58,7 +58,10 @@ const Post = ({
 }) => {
   const { postId } = useParams();
   const limit = useRef(5);
-  const post = currentPost;
+  let post;
+  if(currentPost) {
+  post = currentPost 
+}
 
   const {
     _id,
@@ -69,7 +72,7 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
-  } = post;
+  } = post || {}
   
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
@@ -265,9 +268,9 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post.author.name}
+      title={post?.author?.name}
       thumb={
-        post.author.photo ? (
+        post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
@@ -298,8 +301,8 @@ const Post = ({
 
   const renderTags = (
     <Card.Body>
-      {post.types &&
-        post.types.map((tag, idx) => (
+      {post?.types &&
+        post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
             {typeToTag(tag)}
           </FilterTag>
@@ -349,11 +352,11 @@ const Post = ({
       <PostSocial
         handlePostLike={handlePostLike}
         url={window.location.href}
-        liked={post.liked}
+        liked={post?.liked}
         shared={shared}
         postpage={postId}
         showComments={showComments}
-        numLikes={post.likesCount}
+        numLikes={post?.likesCount}
         numComments={numComments}
         numShares={fakeShares}
         isAuthenticated={isAuthenticated}
@@ -363,7 +366,7 @@ const Post = ({
           setShared(true);
           return setCopied(!copied);
         }}
-        id={post._id}
+        id={post?._id}
       />
     </Card.Body>
   );
@@ -452,7 +455,7 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author)) && (
+                (user?._id === post?.author?.id || user?.id === post?.author?.id || isAuthorOrg(user.organizations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
@@ -466,7 +469,7 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated ? (
+          {isAuthenticated  && post ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
@@ -483,7 +486,11 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
+<<<<<<< HEAD
             (post.content.length > CONTENT_LENGTH ? (
+=======
+            (post?.content?.length > CONTENT_LENGTH && (
+>>>>>>> implement delete orgPost from orgProfile
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}

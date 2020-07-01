@@ -1,19 +1,23 @@
 import React from "react";
 import Post from "../Feed/Post";
 
-const Activity = ({ filteredPosts, updateComments }) => {
+const Activity = ({ filteredPosts, updateComments, user, handlePostDelete }) => {
   const posts = Object.entries(filteredPosts);
+  
   return (
     <div className="activity">
       {!posts.length
         ? "No activity found"
-        : posts.map(([key, post]) => (
+        : posts.map(([key, post]) => {
+          return (
             <Post
               currentPost={post}
               updateComments={updateComments}
+              handlePostDelete={handlePostDelete}
               key={key}
+              user={user}
             />
-          ))}
+          )})}
     </div>
   );
 };

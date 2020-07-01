@@ -1,7 +1,9 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useContext, useReducer } from "react";
 import { Link } from "react-router-dom";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -42,6 +44,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
+import { isAuthorOrg } from "pages/Feed";
 import { getInitials } from "utils/userInfo";
 import {
   LINKEDIN_URL,
@@ -64,6 +67,7 @@ import {
   withOrganizationContext,
 } from "context/OrganizationContext";
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
+import { FETCH_ORGANIZATION } from "hooks/actions/organizationActions"
 import {
   postsReducer,
   postsState as initialPostsState,
@@ -134,26 +138,26 @@ const OrganizationProfile = () => {
       }
     })();
   }, [orgProfileDispatch, organizationId, userProfileDispatch]);
-
+  async function fetchOrganizationPosts() {
+    postsDispatch({ type: FETCH_POSTS });
+    try {
+      const res = await axios.get(
+        `/api/posts?limit=-1&authorId=${organizationId}`,
+      );
+      postsDispatch({
+        type: SET_POSTS,
+        posts: res.data,
+      });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      postsDispatch({
+        type: ERROR_POSTS,
+        error: `Failed loading acitivity, reason: ${message}`,
+      });
+    }
+  };
   useEffect(() => {
-    (async function fetchOrganizationPosts() {
-      postsDispatch({ type: FETCH_POSTS });
-      try {
-        const res = await axios.get(
-          `/api/posts?limit=-1&authorId=${organizationId}`,
-        );
-        postsDispatch({
-          type: SET_POSTS,
-          posts: res.data,
-        });
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading acitivity, reason: ${message}`,
-        });
-      }
-    })();
+    (fetchOrganizationPosts)()
   }, [organizationId]);
 
   const [modal, setModal] = useState(false);
@@ -185,6 +189,33 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
+
+    const postDelete = async (post) => {
+      console.log('post in delete:   ', post)
+      let deleteResponse;
+      const endPoint = `/api/posts/${post._id}`;
+      console.log(isAuthorOrg(user.organizations, post.author))
+      if (
+        user &&
+        (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
+      ) {
+        try {
+          deleteResponse = await axios.delete(endPoint);
+          if (deleteResponse && deleteResponse.data.success === true) {
+            const allPosts = {
+              ...postsState.posts,
+            };
+            delete allPosts[post._id];
+            fetchOrganizationPosts()
+          }
+        } catch (error) {
+          console.log({
+            error,
+          });
+        }
+      }
+    };
+
     let firstName, lastName;
     if (!organization) {
       return <p>Loading...</p>;
@@ -254,7 +285,7 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
-              <Activity filteredPosts={postsState.posts} />
+              <Activity filteredPosts={postsState.posts} user={user} handlePostDelete={postDelete} />
               {isOwner && (
                 <CreatePost
                   onCancel={() => setModal(false)}

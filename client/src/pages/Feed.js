@@ -517,6 +517,7 @@ const Feed = (props) => {
             type: SET_POSTS,
             posts: allPosts,
           });
+          console.log('allposts in feed: ', allPosts)
         }
       } catch (error) {
         console.log({
