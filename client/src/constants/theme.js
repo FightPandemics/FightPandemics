@@ -192,6 +192,9 @@ const mq = {
     large: {
       minWidth: "1920px",
     },
+    extra: {
+      minWidth: "3840px",
+    },
   },
 };
 

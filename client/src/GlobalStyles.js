@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { WHITE, SELAGO } from "./constants/colors";
+import { mq } from "./constants/theme";
 
 const globalStyles = createGlobalStyle`
 * {
@@ -18,6 +19,10 @@ const globalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
+
+  @media screen and (min-width: ${mq.desktop.extra.minWidth}) {
+    font-size: 150%;
+  }
 }
 
 body {

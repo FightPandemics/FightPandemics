@@ -110,4 +110,10 @@ export const SocialContainer = styled.div`
 export const AboutUsLink = styled.a`
   color: ${primary};
   display: inline-block;
+
+  @media screen and (min-width: ${mq.desktop.extra.minWidth}) {
+    img {
+      width: 3rem;
+    }
+  }
 `;
