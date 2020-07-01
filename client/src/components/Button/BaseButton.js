@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Button } from "antd";
+import { Button } from "antd-mobile";
 import { theme } from "constants/theme";
 const { button } = theme;
 
