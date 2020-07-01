@@ -70,6 +70,7 @@ async function routes(app) {
         return new httpErrors.NotFound();
       }
 
+      console.log(req.body);
       const [updateErr, updatedOrg] = await app.to(
         Object.assign(organization, req.body).save(),
       );

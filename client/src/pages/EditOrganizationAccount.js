@@ -80,7 +80,9 @@ function EditOrganizationAccount({ refetchUser }) {
     errors,
     clearError,
     setError,
-  } = useForm();
+  } = useForm( {
+    mode: "change",
+  });
   const { loading, organization } = orgProfileState;
   const { name, email, global, needs } = organization || {};
 
@@ -154,7 +156,7 @@ function EditOrganizationAccount({ refetchUser }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={handleCheckboxChange}
+                onChange={([event]) => event.target.checked}
               >
                 <Label inputColor="#000000">{label}</Label>
               </Controller>
@@ -337,7 +339,9 @@ function EditOrganizationAccount({ refetchUser }) {
             <WhiteSpace />
             {renderSelectItems()}
             <Label>What are you looking for?</Label>
-            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+            <HelpWrapper>
+              {renderNeedSection()}
+            </HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
               {loading ? "Saving Changes..." : "Save Changes"}
             </CustomSubmitButton>
