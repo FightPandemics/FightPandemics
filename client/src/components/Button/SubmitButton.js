@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { Button } from "antd";
-// import BaseButton from "./BaseButton";
 import { theme } from "constants/theme";
 const { button } = theme;
 
