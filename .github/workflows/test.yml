@@ -13,4 +13,5 @@ jobs:
       - uses: actions/checkout@v1
       - uses: cypress-io/github-action@v2
         with:
+          working-directory: cypresse2e
           browser: chrome
