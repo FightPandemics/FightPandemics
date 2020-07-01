@@ -4,6 +4,7 @@ import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
+import axios from "axios";
 import {
   StyledWizard,
   WizardContainer,
@@ -184,6 +185,13 @@ const OfferHelp = withRouter((props) => {
     setState({ ...updatedAnswers });
     if (key === "email") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
+      if (value) {
+        try {
+          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
+        } catch (err) {
+          console.log(err);
+        }
+      }
       props.history.push({
         pathname: "/feed",
         state: updatedAnswers,

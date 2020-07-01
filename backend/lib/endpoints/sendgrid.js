@@ -18,12 +18,15 @@ const populateSendgridContactsObj = (body) => {
   };
 };
 
-const getHeaders = () => {
+const getOps = (body) => {
   return {
+    method: "PUT",
     headers: {
-      Authorization: `Bearer ${sendgridConfig.apiKey}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${sendgridConfig.apiKey}`,
     },
+    data: JSON.stringify(populateSendgridContactsObj(body)),
+    url: sendgridConfig.contactsApiUrl,
   };
 };
 
@@ -31,18 +34,25 @@ const getHeaders = () => {
  * /api/sendgrid
  */
 async function routes(app) {
-  app.put("/create-contact", { schema: sendgridContactSchema }, async (req) => {
-    try {
-      let contacts = populateSendgridContactsObj(req.body);
-      await axios.put(sendgridConfig.contactsApiUrl, contacts, getHeaders());
-      req.log.info(
-        `Contact with email=${req.body.email} created successfully in SendGrid!`,
-      );
-    } catch (err) {
-      req.log.error(err);
-      throw app.httpErrors.internalServerError();
-    }
-  });
+  app.put(
+    "/create-contact",
+    { schema: sendgridContactSchema },
+    async (req, res) => {
+      try {
+        axios(getOps(req.body))
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log("sendgrid error: " + error);
+          });
+        res.send("Contact created on sendgrid successfully!");
+      } catch (err) {
+        req.log.error(err);
+        throw app.httpErrors.internalServerError();
+      }
+    },
+  );
 }
 
 module.exports = routes;
