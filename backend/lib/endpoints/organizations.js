@@ -23,14 +23,26 @@ async function routes(app) {
       schema: deleteOrganizationSchema,
     },
     async (req) => {
-      // TODO: make sure user can only delete organizations they own
-      const result = await Organization.findByIdAndRemove(
-        req.params.organizationId,
-      );
-      if (result === null) {
-        return new httpErrors.NotFound();
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      if (orgErr) {
+        req.log.error(orgErr, "Failed retrieving organization");
+        throw app.httpErrors.internalServerError();
+      } else if (org === null) {
+        throw app.httpErrors.notFound();
+      } else if (!org.ownerId.equals(userId)) {
+        req.log.error("User not allowed to delete this organization");
+        throw app.httpErrors.forbidden();
       }
-      return result;
+      const [deleteOrgErr, deletedOrganization] = await app.to(org.delete());
+      if (deleteOrgErr) {
+        req.log.error(deleteOrgErr, "Failed deleting organization");
+        throw app.httpErrors.internalServerError();
+      }
+      return { deletedOrganization, success: true };
     },
   );
 
@@ -45,13 +57,24 @@ async function routes(app) {
 
   app.get(
     "/:organizationId",
-    { schema: getOrganizationSchema },
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getOrganizationSchema,
+    },
     async (req) => {
-      const result = await Organization.findById(req.params.organizationId);
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+
+      const result = await Organization.findById(organizationId);
       if (result === null) {
         return new httpErrors.NotFound();
       }
-      return result;
+      return {
+        ...result.toObject(),
+        isOwner: userId !== null && userId.equals(result.ownerId),
+      };
     },
   );
 
@@ -62,17 +85,24 @@ async function routes(app) {
       schema: updateOrganizationSchema,
     },
     async (req) => {
-      // TODO: make sure user can only update organizations they own
-      const organization = await Organization.findById(
-        req.params.organizationId,
-      );
-      if (organization === null) {
-        return new httpErrors.NotFound();
+      const {
+        params: { organizationId },
+        userId,
+      } = req;
+      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      if (orgErr) {
+        req.log.error(orgErr, "Failed retrieving organization");
+        throw app.httpErrors.internalServerError();
+      } else if (org === null) {
+        throw app.httpErrors.notFound();
+      } else if (!org.ownerId.equals(userId)) {
+        req.log.error("User not allowed to update this organization");
+        throw app.httpErrors.forbidden();
       }
 
       console.log(req.body);
       const [updateErr, updatedOrg] = await app.to(
-        Object.assign(organization, req.body).save(),
+        Object.assign(org, req.body).save(),
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed updating organization");
@@ -122,7 +152,8 @@ async function routes(app) {
       schema: createOrganizationSchema,
     },
     async (req) => {
-      return new Organization(req.body).save();
+      const { body, userId: ownerId } = req;
+      return new Organization({ ...body, ownerId }).save();
     },
   );
 }
