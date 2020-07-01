@@ -98,7 +98,7 @@ const OrganizationProfile = () => {
 
   const {
     name,
-    location,
+    location = {},
     needs,
     about = "",
     isOwner,
