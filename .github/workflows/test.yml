@@ -12,5 +12,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          working-directory: cypresse2e
           start: npm start
           wait-on: 'http://localhost:3030'
