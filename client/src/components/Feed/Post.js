@@ -414,13 +414,13 @@ const Post = ({
             {renderTags}
             <WhiteSpace />
             {renderContent}
-            {fullPostLength > CONTENT_LENGTH && (
+            {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            )}
+            ): (<Card.Body className="view-more-wrapper"/>)}
             {renderSocialIcons}
             {renderShareModal}
             {renderComments}
@@ -478,13 +478,13 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH && (
+            (post.content.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ))}
+            ): (<Card.Body className="view-more-wrapper"/>))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
