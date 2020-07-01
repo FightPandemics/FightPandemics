@@ -96,8 +96,15 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const { name, location, needs, about = "", objectives = {}, urls = {} } =
-    organization || {};
+  const {
+    name,
+    location,
+    needs,
+    about = "",
+    isOwner,
+    objectives = {},
+    urls = {},
+  } = organization || {};
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -197,7 +204,7 @@ const OrganizationProfile = () => {
       return (
         <>
           <UserInfoContainer>
-            <EditIcon src={edit} onClick={() => setDrawer(true)} />
+            {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
             <ProfilePic
               noPic={true}
               initials={getInitials(firstName, lastName)}
@@ -206,10 +213,12 @@ const OrganizationProfile = () => {
               <NameDiv>
                 {name}
                 <PlaceholderIcon />
-                <EditEmptyIcon
-                  src={editEmpty}
-                  onClick={() => setDrawer(true)}
-                />
+                {isOwner && (
+                  <EditEmptyIcon
+                    src={editEmpty}
+                    onClick={() => setDrawer(true)}
+                  />
+                )}
               </NameDiv>
               <DescriptionDesktop> {about} </DescriptionDesktop>
               <LocationMobileDiv>{address}</LocationMobileDiv>
@@ -237,42 +246,50 @@ const OrganizationProfile = () => {
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              My Activity
+              Activity
               <PlaceholderIcon />
-              <CreatePostDiv>Create a post</CreatePostDiv>
-              <CreatePostIcon
-                src={createPost}
-                onClick={() => setModal(!modal)}
-              />
+              {isOwner && (
+                <>
+                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostIcon
+                    src={createPost}
+                    onClick={() => setModal(!modal)}
+                  />
+                </>
+              )}
             </SectionHeader>
             <FeedWrapper>
               <Activity filteredPosts={postsState.posts} />
-              <CreatePost
-                onCancel={() => setModal(false)}
-                visible={modal}
-                user={user}
-              />
+              {isOwner && (
+                <CreatePost
+                  onCancel={() => setModal(false)}
+                  visible={modal}
+                  user={user}
+                />
+              )}
             </FeedWrapper>
           </div>
-          <CustomDrawer
-            placement="bottom"
-            closable={false}
-            onClose={() => setDrawer(false)}
-            visible={drawer}
-            height="150px"
-            key="bottom"
-          >
-            <DrawerHeader>
-              <Link to={`/edit-organization-account/${organizationId}`}>
-                Edit Account Information
-              </Link>
-            </DrawerHeader>
-            <DrawerHeader>
-              <Link to={`/edit-organization-profile/${organizationId}`}>
-                Edit Profile{" "}
-              </Link>
-            </DrawerHeader>
-          </CustomDrawer>
+          {isOwner && (
+            <CustomDrawer
+              placement="bottom"
+              closable={false}
+              onClose={() => setDrawer(false)}
+              visible={drawer}
+              height="150px"
+              key="bottom"
+            >
+              <DrawerHeader>
+                <Link to={`/edit-organization-account/${organizationId}`}>
+                  Edit Account Information
+                </Link>
+              </DrawerHeader>
+              <DrawerHeader>
+                <Link to={`/edit-organization-profile/${organizationId}`}>
+                  Edit Profile{" "}
+                </Link>
+              </DrawerHeader>
+            </CustomDrawer>
+          )}
         </>
       );
     }

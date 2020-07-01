@@ -123,7 +123,6 @@ const CreateOrgProfile = (props) => {
         createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
         try {
           formData.location = location;
-          formData.ownerId = props.user.id;
 
           const res = await axios.post("/api/organizations", formData);
           if (res) {
