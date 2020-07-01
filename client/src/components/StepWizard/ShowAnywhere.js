@@ -1,11 +1,11 @@
-import SubmitButton from "components/Button/SubmitButton";
+import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { royalBlue } = theme.colors;
 const { xlarge } = theme.typography.size;
 
-const ShowAnywhere = styled(SubmitButton)`
+const ShowAnywhere = styled(BaseButton)`
   :hover {
     background-color: transparent;
     color: ${royalBlue};
