@@ -167,14 +167,6 @@ const PostCard = styled(Card)`
             display: inline;
           }
         }
-
-        .social-text {
-          display: none;
-
-          @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-            display: inline;
-          }
-        }
       }
 
       &.comments-wrapper {
