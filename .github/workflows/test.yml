@@ -13,5 +13,5 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: cypresse2e
-          start: yarn start
+          start: npm start
           wait-on: 'http://localhost:3030'
