@@ -18,12 +18,15 @@ const populateSendgridContactsObj = (body) => {
   };
 };
 
-const getHeaders = () => {
+const getOps = (body) => {
   return {
+    method: "PUT",
     headers: {
-      Authorization: `Bearer ${sendgridConfig.apiKey}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${sendgridConfig.apiKey}`,
     },
+    data: JSON.stringify(populateSendgridContactsObj(body)),
+    url: sendgridConfig.contactsApiUrl,
   };
 };
 
@@ -36,9 +39,14 @@ async function routes(app) {
     { schema: sendgridContactSchema },
     async (req, res) => {
       try {
-        let contacts = populateSendgridContactsObj(req.body);
-        axios.put(sendgridConfig.contactsApiUrl, contacts, getHeaders());
-        res.send(`Contact with email=${req.body.email} created successfully!`);
+        axios(getOps(req.body))
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log("sendgrid error: " + error);
+          });
+        res.send("Contact created on sendgrid successfully!");
       } catch (err) {
         req.log.error(err);
         throw app.httpErrors.internalServerError();
