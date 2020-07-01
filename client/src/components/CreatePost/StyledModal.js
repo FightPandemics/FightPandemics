@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Modal } from "antd";
 import { theme, mq } from "constants/theme";
 import BaseSelector from "components/Selector/Selector";
-import SubmitButton from "components/Button/SubmitButton";
+import BaseButton from "components/Button/BaseButton";
 const { colors, typography } = theme;
 
 export const Divider = styled.span`
@@ -157,7 +157,7 @@ export const Footer = styled.div`
   flex-direction: column;
 `;
 
-export const Submit = styled(SubmitButton)`
+export const Submit = styled(BaseButton)`
   width: 13.5rem;
   height: 4.3rem;
   align-self: flex-end;

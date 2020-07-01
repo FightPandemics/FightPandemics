@@ -6,10 +6,7 @@ import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 
-import {
-  SET_POST,
-  RESET_POST,
-} from "hooks/actions/postActions";
+import { SET_POST, RESET_POST } from "hooks/actions/postActions";
 
 import {
   postToFormData,
