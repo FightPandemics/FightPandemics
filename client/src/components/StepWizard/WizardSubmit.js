@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
-import BaseButton from "components/Button/BaseButton";
+import SubmitButton from "components/Button/SubmitButton";
 
 const { white, royalBlue } = theme.colors;
-const WizardSubmit = styled(BaseButton)`
+const WizardSubmit = styled(SubmitButton)`
   border-radius: 4rem;
   align-self: center;
   cursor: pointer;
