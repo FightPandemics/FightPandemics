@@ -88,7 +88,7 @@ const NavItem = styled(List.Item)`
 `;
 
 const NavItemBrief = styled(NavItem)`
-  padding-left: 4.6rem;
+  padding-left: 2.75rem;
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -201,14 +201,23 @@ const NavigationLayout = (props) => {
       </AvatarContainer>
       <DividerLine />
       <NavItem history={history}>
-        <Link to="/profile">Profile</Link>
+        <Link to={`/profile/${user?.id}`}>Profile</Link>
       </NavItem>
       <NavItem>
-        <Link to="">Organization</Link>
+        Organization
+        {user?.organizations?.length > 0
+          ? user?.organizations?.map((organization) => (
+              <NavItemBrief history={history} key={organization._id}>
+                <Link to={`/organization/${organization._id}`}>
+                  {organization.name}
+                </Link>
+              </NavItemBrief>
+            ))
+          : null}
+        <NavItemBrief>
+          <Link to="/create-organization-profile">+ Add Organization</Link>
+        </NavItemBrief>
       </NavItem>
-      <NavItemBrief history={history}>
-        <a href={NOTION_URL}>Notion</a>
-      </NavItemBrief>
       <NavItem history={history}>
         <Link
           to={{
@@ -244,7 +253,11 @@ const NavigationLayout = (props) => {
     <MenuContainer>
       {drawerOpened && <CloseNav onClick={toggleDrawer} />}
       <NavList>
-        {!authLoading && isAuthenticated ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}
+        {!authLoading && isAuthenticated ? (
+          <AuthenticatedMenu />
+        ) : (
+          <UnAuthenticatedMenu />
+        )}
       </NavList>
     </MenuContainer>
   );
@@ -269,6 +282,7 @@ const NavigationLayout = (props) => {
             authLoading={authLoading}
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
+            user={user}
           />
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />

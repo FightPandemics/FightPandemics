@@ -216,7 +216,7 @@ const PostPage = ({
           length: copiedpost.content.length,
         });
       }
-       //Check if routed to post's page after clicking on "Edit" in feed.
+      //Check if routed to post's page after clicking on "Edit" in feed.
       if (history?.location?.state?.edit) {
         editRedirectFromFeed();
       }
@@ -248,6 +248,7 @@ const PostPage = ({
             <>
               <Post
                 currentPost={post}
+                includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
                 onClick={toggleViewContent}

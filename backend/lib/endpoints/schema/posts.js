@@ -31,6 +31,7 @@ const createPostSchema = {
     )
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES).required())
+    .prop("organizationId", S.string())
     .prop("title", S.string().required())
     .prop(
       "types",
