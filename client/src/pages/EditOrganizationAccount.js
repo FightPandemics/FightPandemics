@@ -84,7 +84,7 @@ function EditOrganizationAccount({ refetchUser }) {
     mode: "change",
   });
   const { loading, organization } = orgProfileState;
-  const { name, email, global, needs } = organization || {};
+  const { name, email, global, needs = {}} = organization || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -156,7 +156,7 @@ function EditOrganizationAccount({ refetchUser }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={([event]) => event.target.checked}
+                onChange={handleCheckboxChange}
               >
                 <Label inputColor="#000000">{label}</Label>
               </Controller>
