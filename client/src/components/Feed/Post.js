@@ -191,6 +191,35 @@ const Post = ({
     }
   };
 
+  const deleteComment = async (comment) => {
+    let response;
+    const postId = comment.postId;
+    const commentId = comment._id;
+    if (isAuthenticated && comment.author.id === user.id) {
+      const endPoint = `/api/posts/${postId}/comments/${commentId}`;
+
+      try {
+        response = await axios.delete(endPoint);
+      } catch (error) {
+        console.log({ error });
+      }
+      if (response && response.data) {
+        let filterComments = comments.filter((comment) => {
+          if (comment._id !== commentId) {
+            return comment;
+          }
+        });
+        await dispatchPostAction(
+          SET_COMMENTS,
+          "comments",
+          filterComments,
+          "numComments",
+          filterComments.length,
+        );
+      }
+    }
+  };
+
   const ViewMore = ({ onClick }) => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
@@ -293,7 +322,13 @@ const Post = ({
       )}
       {isAuthenticated ? (
         <>
-          <Comments comments={comments} handleOnChange={handleOnChange} />
+          <Comments
+            comments={comments}
+            handleOnChange={handleOnChange}
+            deleteComment={deleteComment}
+            dispatchPostAction={dispatchPostAction}
+            user={user}
+          />
           {loadMoreComments && commentsCount >= 5 ? (
             <Button disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
