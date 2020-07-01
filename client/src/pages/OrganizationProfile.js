@@ -1,9 +1,7 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useContext, useReducer } from "react";
 import { Link } from "react-router-dom";
-import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -67,7 +65,7 @@ import {
   withOrganizationContext,
 } from "context/OrganizationContext";
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
-import { FETCH_ORGANIZATION } from "hooks/actions/organizationActions"
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   postsReducer,
   postsState as initialPostsState,
@@ -216,6 +214,20 @@ const OrganizationProfile = () => {
       }
     };
 
+    const handleEditPost = () => {
+      if (postsState.editPostModalVisibility) {
+        postsDispatch({
+          type: SET_EDIT_POST_MODAL_VISIBILITY,
+          visibility: false,
+        });
+      } else {
+        postsDispatch({
+          type: SET_EDIT_POST_MODAL_VISIBILITY,
+          visibility: true,
+        });
+      }
+    };
+
     let firstName, lastName;
     if (!organization) {
       return <p>Loading...</p>;
@@ -285,6 +297,7 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
+<<<<<<< HEAD
               <Activity filteredPosts={postsState.posts} user={user} handlePostDelete={postDelete} />
               {isOwner && (
                 <CreatePost
@@ -293,6 +306,19 @@ const OrganizationProfile = () => {
                   user={user}
                 />
               )}
+=======
+              <Activity 
+                filteredPosts={postsState.posts}
+                user={user}
+                handlePostDelete={postDelete}
+                handleEditPost={handleEditPost}
+              />
+              <CreatePost
+                onCancel={() => setModal(false)}
+                visible={modal}
+                user={user}
+              />
+>>>>>>> edit functionality in process
             </FeedWrapper>
           </div>
           {isOwner && (

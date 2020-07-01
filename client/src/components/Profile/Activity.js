@@ -1,7 +1,13 @@
 import React from "react";
 import Post from "../Feed/Post";
 
-const Activity = ({ filteredPosts, updateComments, user, handlePostDelete }) => {
+const Activity = ({ 
+  filteredPosts,
+  updateComments,
+  user,
+  handlePostDelete,
+  handleEditPost,
+  }) => {
   const posts = Object.entries(filteredPosts);
   
   return (
@@ -14,6 +20,7 @@ const Activity = ({ filteredPosts, updateComments, user, handlePostDelete }) => 
               currentPost={post}
               updateComments={updateComments}
               handlePostDelete={handlePostDelete}
+              // handleEditPost={handleEditPost}
               key={key}
               user={user}
             />
