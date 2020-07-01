@@ -484,7 +484,7 @@ const Post = ({
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ): ((<Card.Body className="view-more-wrapper"/>)))}
+            ): (<Card.Body className="view-more-wrapper"/>))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
