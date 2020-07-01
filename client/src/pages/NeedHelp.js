@@ -161,11 +161,12 @@ const NeedHelp = withRouter((props) => {
     setState({ ...updatedAnswers });
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
-      console.log(updatedAnswers);
-      try {
-        axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-      } catch (err) {
-        console.log(err);
+      if (value) {
+        try {
+          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
+        } catch (err) {
+          console.log(err);
+        }
       }
       props.history.push({
         pathname: "/feed",
@@ -177,7 +178,7 @@ const NeedHelp = withRouter((props) => {
     <WizardContainer className="wizard-container">
       <Transition in={transition} timeout={250}>
         {(status) => (
-          <StyledWizard isHashEnabled status={status} nav={<WizardNav/>}>
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
             <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />

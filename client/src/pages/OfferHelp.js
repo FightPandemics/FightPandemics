@@ -185,11 +185,12 @@ const OfferHelp = withRouter((props) => {
     setState({ ...updatedAnswers });
     if (key === "email") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
-      console.log(updatedAnswers);
-      try {
-        axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-      } catch (err) {
-        console.log(err);
+      if (value) {
+        try {
+          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
+        } catch (err) {
+          console.log(err);
+        }
       }
       props.history.push({
         pathname: "/feed",
