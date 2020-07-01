@@ -2,16 +2,15 @@ name: Cypress end-to-end tests
 
 on:
   pull_request:
-
+    
 jobs:
-  cypress-run:
+cypress-run:
     runs-on: ubuntu-16.04
+    # Cypress Docker image with Chrome v78
+    # and Firefox v70 pre-installed
+    container: cypress/browsers:node12.13.0-chrome78-ff70
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+      - uses: actions/checkout@v1
+      - uses: cypress-io/github-action@v2
         with:
-          working-directory: cypresse2e
-          start: npm start
-          wait-on: 'http://localhost:3030'
+          browser: chrome
