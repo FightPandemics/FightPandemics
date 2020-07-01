@@ -100,7 +100,6 @@ async function routes(app) {
         throw app.httpErrors.forbidden();
       }
 
-      console.log(req.body);
       const [updateErr, updatedOrg] = await app.to(
         Object.assign(org, req.body).save(),
       );

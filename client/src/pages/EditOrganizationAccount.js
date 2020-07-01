@@ -100,6 +100,10 @@ function EditOrganizationAccount({ refetchUser }) {
         "Please select an address from the drop-down",
       );
     }
+    Object.entries(NEEDS).map(([key, label]) => {
+      if (formData.needs[key] === undefined)
+        formData.needs[key] = needs[key];
+    });
     formData.location = location;
     orgProfileDispatch(updateOrganization());
     try {
@@ -135,10 +139,6 @@ function EditOrganizationAccount({ refetchUser }) {
     })();
   }, [orgProfileDispatch, organizationId]);
 
-  const handleCheckboxChange = ([event]) => {
-    return event.target.checked;
-  };
-
   const organizationInfo = {
     // label name, variable name, value
     "Organization Name": ["name", name],
@@ -156,7 +156,7 @@ function EditOrganizationAccount({ refetchUser }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={handleCheckboxChange}
+                onChange={([event]) => event.target.checked}
               >
                 <Label inputColor="#000000">{label}</Label>
               </Controller>
