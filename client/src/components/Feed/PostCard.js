@@ -14,6 +14,7 @@ const PostCard = styled(Card)`
   margin-bottom: 4rem;
   margin-left: 2rem;
   margin-right 2rem;
+  overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
