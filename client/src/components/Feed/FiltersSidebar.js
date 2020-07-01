@@ -6,7 +6,7 @@ import { Drawer } from "antd";
 
 // Local
 import FilterAccordion from "./FilterAccordion";
-import SubmitButton from "components/Button/SubmitButton";
+import BaseButton from "components/Button/BaseButton";
 import { FeedContext } from "pages/Feed";
 
 // Icons
@@ -106,7 +106,7 @@ const FiltersSidebar = () => {
           padding: "2rem 0",
         }}
       >
-        <SubmitButton
+        <BaseButton
           className="close-button"
           inline
           tertiary="true"
@@ -114,8 +114,8 @@ const FiltersSidebar = () => {
           style={{ fontWeight: "normal" }}
         >
           Quit filters
-        </SubmitButton>
-        <SubmitButton
+        </BaseButton>
+        <BaseButton
           className="ok-button"
           inline
           primary="true"
@@ -123,7 +123,7 @@ const FiltersSidebar = () => {
           style={{ fontWeight: "normal" }}
         >
           View result
-        </SubmitButton>
+        </BaseButton>
       </div>
     </DrawerWrapper>
   );
