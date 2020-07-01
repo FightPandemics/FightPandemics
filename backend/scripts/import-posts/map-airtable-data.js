@@ -33,6 +33,8 @@ const cleanAuthorType = (airtableAuthorType) => {
       return "Other";
     case "Goverment":
       return "Government";
+    case "Health Care Providers":
+      return "Health care provider";
     default:
       return airtableAuthorType;
   }
