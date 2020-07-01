@@ -34,6 +34,8 @@ import {
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 
+const INDIVIDUAL_AUTHOR_TYPE = "Individual";
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -42,6 +44,7 @@ const Post = ({
   fullPostLength,
   handlePostDelete,
   handlePostLike,
+  includeProfileLink,
   isAuthenticated,
   loadMorePost,
   numComments,
@@ -75,6 +78,9 @@ const Post = ({
       post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
+  const authorProfileLink = `/${
+    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
+  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -205,7 +211,7 @@ const Post = ({
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
-          pathname: `post/${post._id}`,
+          pathname: `/post/${post._id}`,
           state: {
             post: post,
             postId: post._id,
@@ -245,6 +251,10 @@ const Post = ({
         </span>
       }
     />
+  );
+
+  const renderHeaderWithLink = (
+    <Link to={authorProfileLink}>{renderHeader}</Link>
   );
 
   const renderContent = (
@@ -349,7 +359,7 @@ const Post = ({
             }}
           >
             <div className="card-header">
-              {renderHeader}
+              {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
@@ -398,7 +408,7 @@ const Post = ({
         //Post in feed.
         <PostCard>
           <div className="card-header">
-            {renderHeader}
+            {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
@@ -419,7 +429,7 @@ const Post = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${_id}`,
+                pathname: `/post/${_id}`,
                 state: {
                   post: post,
                   postId: _id,

@@ -11,7 +11,7 @@ import {
   StyledButton,
 } from "components/CompletedProfile/CompletedProfile";
 
-const ProfileCompleted = () => {
+const ProfileCompleted = ({ user }) => {
   return (
     <ProfileCompletedWrapper>
       <ProfileCompletedHeader>
@@ -23,7 +23,8 @@ const ProfileCompleted = () => {
         </ProfileCompletedHeadingWrapper>
       </ProfileCompletedHeader>
       <ProfileCompletedButtonsWrapper>
-        <Link to="/profile">
+        {/* TODO: consistently return _id or id or both */}
+        <Link to={`/profile/${user?.id || user?._id}`}>
           <StyledButton tertiary={true}>View my Profile</StyledButton>
         </Link>
         <Link to="/feed">

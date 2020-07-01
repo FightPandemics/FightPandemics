@@ -158,11 +158,8 @@ const routes = [
     },
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     component: Profile,
-    props: {
-      loggedInOnly: true,
-    },
   },
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {

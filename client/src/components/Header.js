@@ -102,7 +102,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to="/profile">My Profile</Link>
+        <Link to={`/profile/${user?.id}`}>My Profile</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
