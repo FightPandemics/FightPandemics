@@ -10,11 +10,10 @@ const TextArea = styled(Input.TextArea)`
   color: black;
   resize: none;
   border: none;
-  width: 96%;
+  width: 87%;
   border-radius: 4rem;
   padding: 1.4rem;
   overflow: hidden;
-
   &.ant-input:focus,
   &.ant-input-focused {
     box-shadow: unset;
