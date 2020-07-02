@@ -7,7 +7,7 @@ const CommentsWrapper = styled.div`
   margin: 2rem 0;
 `;
 
-const Comments = ({ comments }) => {
+const Comments = ({ comments, deleteComment, dispatchPostAction, user }) => {
   return (
     <CommentsWrapper>
       {comments &&
@@ -15,6 +15,9 @@ const Comments = ({ comments }) => {
           <NestedComments
             comment={comment}
             key={comment._id}
+            dispatchPostAction={dispatchPostAction}
+            deleteComment={deleteComment}
+            user={user}
           />
         ))}
     </CommentsWrapper>

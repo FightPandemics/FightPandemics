@@ -73,7 +73,11 @@ const URLS = {
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
-const Profile = () => {
+const Profile = ({
+  match: {
+    params: { id: pathUserId },
+  },
+}) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
@@ -91,6 +95,7 @@ const Profile = () => {
     location = {},
     needs = {},
     objectives = {},
+    ownUser,
     urls = {},
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
@@ -101,7 +106,7 @@ const Profile = () => {
     (async function fetchProfile() {
       userProfileDispatch(fetchUser());
       try {
-        const res = await axios.get("/api/users/current");
+        const res = await axios.get(`/api/users/${pathUserId}`);
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -110,13 +115,13 @@ const Profile = () => {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [pathUserId, userProfileDispatch]);
   useEffect(() => {
     (async function fetchPosts() {
       postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
-          const res = await axios.get(`/api/posts?limit=5&authorId=${userId}`);
+          const res = await axios.get(`/api/posts?limit=-1&authorId=${userId}`);
           postsDispatch({
             type: SET_POSTS,
             posts: res.data,
@@ -142,25 +147,31 @@ const Profile = () => {
         <MenuIcon src={menu} />
       </BackgroundHeader>
       <UserInfoContainer>
-        <EditIcon src={edit} onClick={() => setDrawer(true)} />
+        {ownUser && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
         <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
         <UserInfoDesktop>
           <NameDiv>
             {firstName} {lastName}
             <PlaceholderIcon />
-            <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
+            {ownUser && (
+              <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
+            )}
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
-          <LocationMobileDiv>{address}</LocationMobileDiv>
+          {address ? (
+            <LocationMobileDiv>{address}</LocationMobileDiv>
+          ) : (
+            <WhiteSpace />
+          )}
           <IconsContainer>
             <HelpContainer>
               {needHelp && "I need help "}
               {offerHelp && "I want to help"}
             </HelpContainer>
             <LocationDesktopDiv>
-              <LocationIcon src={locationIcon} />
+              {address && <LocationIcon src={locationIcon} />}
               {needHelp && "I need help "}
-              {offerHelp && "I want to help "} • {address}
+              {offerHelp && "I want to help "} {address && `• ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -193,31 +204,46 @@ const Profile = () => {
         </DescriptionMobile>
         <WhiteSpace />
         <SectionHeader>
-          My Activity
+          {ownUser ? "My Activity" : "User Activity"}
           <PlaceholderIcon />
-          <CreatePostDiv>Create a post</CreatePostDiv>
-          <CreatePostIcon src={createPost} onClick={() => setModal(!modal)} />
+          {ownUser && (
+            <>
+              <CreatePostDiv>Create a post</CreatePostDiv>
+              <CreatePostIcon
+                src={createPost}
+                onClick={() => setModal(!modal)}
+              />
+            </>
+          )}
         </SectionHeader>
         <FeedWrapper>
           <Activity filteredPosts={postsState.posts} />
-          <CreatePost onCancel={() => setModal(false)} visible={modal} />
+          {ownUser && (
+            <CreatePost
+              onCancel={() => setModal(false)}
+              visible={modal}
+              user={user}
+            />
+          )}
         </FeedWrapper>
       </div>
-      <CustomDrawer
-        placement="bottom"
-        closable={false}
-        onClose={() => setDrawer(false)}
-        visible={drawer}
-        height="150px"
-        key="bottom"
-      >
-        <DrawerHeader>
-          <Link to="/edit-account">Edit Account Information</Link>
-        </DrawerHeader>
-        <DrawerHeader>
-          <Link to="/edit-profile">Edit Profile </Link>
-        </DrawerHeader>
-      </CustomDrawer>
+      {ownUser && (
+        <CustomDrawer
+          placement="bottom"
+          closable={false}
+          onClose={() => setDrawer(false)}
+          visible={drawer}
+          height="150px"
+          key="bottom"
+        >
+          <DrawerHeader>
+            <Link to="/edit-account">Edit Account Information</Link>
+          </DrawerHeader>
+          <DrawerHeader>
+            <Link to="/edit-profile">Edit Profile </Link>
+          </DrawerHeader>
+        </CustomDrawer>
+      )}
       <WhiteSpace />
     </ProfileLayout>
   );

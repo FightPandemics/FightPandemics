@@ -16,7 +16,9 @@ async function routes(app) {
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
-    const [userErr, user] = await app.to(User.findById(userId));
+    const [userErr, user] = await app.to(
+      User.findById(userId).populate("organizations"),
+    );
     if (userErr) {
       req.log.error(userErr, "Failed retrieving user");
       throw app.httpErrors.internalServerError();
@@ -35,6 +37,7 @@ async function routes(app) {
       location,
       needs,
       objectives,
+      organizations,
       urls,
     } = user;
     return {
@@ -47,6 +50,7 @@ async function routes(app) {
       location,
       needs,
       objectives,
+      organizations,
       urls,
     };
   });
@@ -108,17 +112,51 @@ async function routes(app) {
 
   app.get(
     "/:userId",
-    { preValidation: [app.authenticate], schema: getUserByIdSchema },
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getUserByIdSchema,
+    },
     async (req) => {
-      const user = await User.findById(req.params.userId);
+      const {
+        params: { userId },
+        userId: authUserId,
+      } = req;
+
+      const user = await User.findById(userId);
       if (user === null) {
         throw app.httpErrors.notFound();
       }
-      const { firstName, lastName, _id: id } = user;
+
+      const {
+        about,
+        firstName,
+        hide,
+        id,
+        lastName,
+        needs,
+        objectives,
+        urls,
+      } = user;
+
+      let { location } = user;
+
+      // never reveal user's email, coordinates in profile
+      delete location.coordinates;
+
+      if (hide.address) {
+        location = {};
+      }
+
       return {
+        about,
         firstName,
         id,
         lastName,
+        location,
+        needs,
+        objectives,
+        ownUser: authUserId !== null && authUserId.equals(user.id),
+        urls,
       };
     },
   );

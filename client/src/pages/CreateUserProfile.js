@@ -4,7 +4,12 @@ import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import {
+  InputWrapper,
+  InputGroup,
+  CheckboxContainer,
+} from "components/OrganizationProfile/CreateProfileComponents";
+import StyledCheckbox from "components/Input/Checkbox";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import logo from "assets/logo.svg";
@@ -85,12 +90,6 @@ const Container = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
-  margin: 2.2rem auto;
-  width: 100%;
-  position: relative;
-`;
-
 const ProfileFormGroup = styled.form`
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
     width: 350px;
@@ -100,22 +99,6 @@ const ProfileFormGroup = styled.form`
   }
   p {
     margin-bottom: 0;
-  }
-`;
-
-const CheckboxContainer = styled.div`
-  --xsmall: ${theme.typography.size.xsmall};
-
-  display: flex;
-  align-items: "flex-start";
-  margin: 1.5rem 0;
-  .ant-checkbox-wrapper {
-    margin-right: ${theme.typography.size.large};
-  }
-  span {
-    color: ${theme.colors.darkGray};
-    font-size: var(--xsmall);
-    font-family: ${(props) => props.font};
   }
 `;
 
@@ -144,32 +127,6 @@ const CheckboxGroup = ({
   );
 };
 
-const InputGroup = styled.div`
-  --py: ${theme.typography.size.xxsmall};
-  --my: ${theme.typography.size.xxxlarge};
-
-  margin: var(--my) 0 var(--my) 0;
-
-  .underline {
-    color: ${theme.colors.green};
-    font-size: ${theme.typography.size.xsmall};
-    font-family: ${theme.typography.font.family.body};
-    margin-top: ${theme.typography.size.xsmall};
-  }
-`;
-
-/*
-const UnderlineLink = styled.p`
-  --color: ${theme.colors.darkGray};
-  color: var(--color) !important;
-  a {
-    color: var(--color);
-    text-decoration: underline;
-  }
-  font-size: ${theme.typography.size.small};
-`;
-*/
-
 const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
@@ -178,6 +135,8 @@ const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
   const [location, setLocation] = useState({});
+  const [privacy, setPrivacy] = useState("");
+  const [conditions, setConditions] = useState("");
   const dispatch = useDispatch();
   const {
     clearError,
@@ -195,8 +154,21 @@ const CreateProfile = ({ email, history }) => {
     initialState,
   );
 
+  const handleInputChangePrivacy = (e) => {
+    setPrivacy(e.target.checked);
+  };
+  const handleInputChangeConditions = (e) => {
+    setConditions(e.target.checked);
+  };
+
   const onSubmit = async (formData) => {
-    if (!location.address) {
+    if (!privacy) {
+      alert("You must agree to our privacy policy before proceeding");
+      return;
+    } else if (!conditions) {
+      alert("You must agree to our terms and conditions before proceeding");
+      return;
+    } else if (!location) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
@@ -403,28 +375,35 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleCheckboxChange}
             />
           </InputGroup>
+          <InputWrapper>
+            <StyledCheckbox
+              style={{ fontSize: "1.2rem" }}
+              value="I agree to the Privacy Policy"
+              onChange={handleInputChangePrivacy}
+            >
+              By signing up, I agree to the{" "}
+              <Link to="/privacy-policy">Privacy Policy</Link>
+            </StyledCheckbox>
+            <WhiteSpace />
+            <StyledCheckbox
+              style={{ fontSize: "1.2rem" }}
+              value="I agree to the Terms and Conditions"
+              onChange={handleInputChangeConditions}
+            >
+              By signing up, I agree to the{" "}
+              <Link to="/terms-conditions">Terms and Conditions</Link>
+            </StyledCheckbox>
+          </InputWrapper>
           <InputGroup>
             <Submit
-              disabled={!formState.isValid || createUserFormState.loading}
+              disabled={!formState.isValid || !(privacy && conditions)}
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
-              Create Profile
+              {createUserFormState.loading
+                ? "Creating Profile..."
+                : "Create Profile"}
             </Submit>
-            {/* temporarily disabled until API is updated to save these fields
-            <CheckboxGroup>
-              <UnderlineLink>
-                By signing up, I agree to the{" "}
-                <a href="/privacy-policy">Privacy Policy</a>
-              </UnderlineLink>
-            </CheckboxGroup>
-            <CheckboxGroup>
-              <UnderlineLink>
-                By signing up, I agree to the{" "}
-                <a href="/terms-conditions">Terms and Conditions</a>
-              </UnderlineLink>
-            </CheckboxGroup>
-            */}
           </InputGroup>
         </ProfileFormGroup>
       </Flex>

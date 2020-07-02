@@ -9,11 +9,19 @@ const { xsmall, medium } = typography.size;
 
 const StyledComment = styled(Comment)`
   &.ant-comment {
+    cursor: default;
     font-family: ${display};
+    display: inline-block;
+    word-break: break-word;
     .ant-comment-inner {
       padding: 1rem 0;
       .ant-comment-content {
         max-width: 30rem;
+        .ant-comment-content-author-time {
+          cursor: default;
+          padding-right: 25px;
+          color: ${darkGray};
+        }
         .ant-comment-content-author {
           border-top-left-radius: 1.5rem;
           border-top-right-radius: 1.5rem;
@@ -28,6 +36,7 @@ const StyledComment = styled(Comment)`
         .ant-comment-content-detail {
           border-bottom-left-radius: 1.5rem;
           border-bottom-right-radius: 1.5rem;
+          outline: none;
           padding: 0 1.5rem 1.5rem;
           font-size: ${medium};
           line-height: 140%;

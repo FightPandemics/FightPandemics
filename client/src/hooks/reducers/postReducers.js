@@ -11,6 +11,7 @@ import {
   SET_LOADING,
   RESET_LOADMORE,
   SET_LOADMORE,
+  SET_COMMENT,
   SET_COMMENTS,
   SHOW_COMMENTS,
   TOGGLE_COMMENTS,
@@ -117,6 +118,18 @@ export const postReducer = (state = postState, action) => {
         ...state,
         comments: action.comments,
         commentsCount: action.numComments,
+      };
+    case SET_COMMENT:
+      state.comments = state.comments.map((comment) => {
+        if (comment._id === action.commentId) {
+          return { ...comment, content: action.comment };
+        } else {
+          return comment;
+        }
+      });
+      return {
+        ...state,
+        comments: state.comments,
       };
     case TOGGLE_COMMENTS:
       return {

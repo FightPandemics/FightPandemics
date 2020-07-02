@@ -3,10 +3,9 @@ import { theme, mq } from "constants/theme";
 const { offWhite } = theme.colors;
 
 const Main = styled.main`
-  padding-top: 1rem;
-
+  padding-top: 4rem;
   display: flex;
-  align-items: center;
+  align-items: inherit;
   justify-content: center;
 
   min-height: calc(100% - 119px);
@@ -15,7 +14,7 @@ const Main = styled.main`
     background-color: ${offWhite};
     padding-top: 7rem;
 
-    min-height: calc(100% - 160px);
+    min-height: calc(100% - 9rem);
   }
 `;
 

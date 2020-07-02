@@ -13,7 +13,6 @@ import {
   CustomLink,
   CustomForm,
   CustomHeading,
-  ChangePicButton,
   CustomSubmitButton,
   OptionDiv,
   FormLayout,
@@ -58,7 +57,8 @@ const URLS_CONFIG = {
     {
       pattern: {
         value: /^[a-zA-Z0-9-]*$/,
-        message: "Invalid entry: only alphanumeric characters and dashes are allowed",
+        message:
+          "Invalid entry: only alphanumeric characters and dashes are allowed",
       },
     },
     LINKEDIN_URL,
@@ -98,7 +98,7 @@ const URLS_CONFIG = {
 };
 const ABOUT_MAX_LENGTH = 160;
 
-function EditProfile() {
+function EditProfile(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const { errors, formState, register, handleSubmit } = useForm({
     mode: "change",
@@ -111,6 +111,8 @@ function EditProfile() {
     try {
       const res = await axios.patch("/api/users/current", formData);
       userProfileDispatch(updateUserSuccess(res.data));
+      // TODO: consistently return _id or id or both
+      props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       userProfileDispatch(

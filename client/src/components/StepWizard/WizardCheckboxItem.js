@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import React from "react";
-import {Checkbox} from "antd-mobile";
-import {theme, mq} from "constants/theme";
+import { theme, mq } from "constants/theme";
+import StyledCheckbox from "components/Input/Checkbox";
 
-const {white, lightGray, royalBlue, black} = theme.colors;
+const { white, lightGray, royalBlue, black } = theme.colors;
 
 export const WizardCheckboxWrapper = styled.div`
   margin: 4rem auto;
@@ -31,9 +31,9 @@ const CheckboxItemStyles = styled.div`
     &:after {
       background-color: unset !important;
     }
-  } 
+  }
   .am-checkbox-input {
-    cursor: pointer; 
+    cursor: pointer;
   }
   .am-checkbox-inner {
     border-radius: 0.5px;
@@ -45,8 +45,8 @@ const CheckboxItemStyles = styled.div`
       width: 0.7rem;
     }
   }
-   > .text {
-   color: ${black};
+  > .text {
+    color: ${black};
     flex-grow: 1;
     margin-left: 2rem;
   }
@@ -59,19 +59,18 @@ const CheckboxItemStyles = styled.div`
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     border: 0.1rem solid ${lightGray};
     border-radius: 5px;
-    height: 6rem;
   }
 `;
 
-export const WizardCheckboxItem = ({text, checked, onChange, ...props}) => {
-    return (
-        <CheckboxItemStyles
-            onClick={onChange}
-            className={checked && "selected"}
-            {...props}
-        >
-            <Checkbox checked={checked}/>
-            <span className="text">{text}</span>
-        </CheckboxItemStyles>
-    );
+export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {
+  return (
+    <CheckboxItemStyles
+      onClick={onChange}
+      className={checked && "selected"}
+      {...props}
+    >
+      <StyledCheckbox checked={checked} />
+      <span className="text">{text}</span>
+    </CheckboxItemStyles>
+  );
 };

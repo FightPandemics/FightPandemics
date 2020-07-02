@@ -112,7 +112,7 @@ const CreateOrgProfile = (props) => {
       return;
     } else {
       if (props.user) {
-        if (!location.address) {
+        if (!location) {
           // all location objects should have address (+coordinates), others optional
           return setError(
             "location",
@@ -123,7 +123,6 @@ const CreateOrgProfile = (props) => {
         createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
         try {
           formData.location = location;
-          formData.ownerId = props.user.id;
 
           const res = await axios.post("/api/organizations", formData);
           if (res) {

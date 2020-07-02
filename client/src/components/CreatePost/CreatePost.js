@@ -1,13 +1,14 @@
 import React, { useState, createContext, useContext } from "react";
 import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import {
   Container,
   Option,
   TitleStep,
   OptionButton,
   BackButton,
-  CreateProfileButton,
   CreateOrgLink,
+  ViewPostButton,
 } from "components/CreatePost/StyledPostAs";
 import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -19,12 +20,7 @@ import { theme } from "constants/theme";
 
 const { typography } = theme;
 
-const CreatePostContext = createContext();
-
-const organizations = [
-  { id: 1, title: "Notion" },
-  { id: 2, title: "Notion" },
-];
+export const CreatePostContext = createContext();
 
 const Step1 = () => {
   const createPostContext = useContext(CreatePostContext);
@@ -54,24 +50,26 @@ const Step1 = () => {
   );
 };
 
-const Step2 = () => {
+const Step2 = ({ user }) => {
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
+
   return (
     currentStep === 2 && (
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
-        {organizations.map((item) => {
+        {user.organizations?.map((item) => {
+          const { _id: organizationId } = item;
           return (
             <OptionButton
-              key={item.id}
+              key={organizationId}
               onClick={() => {
-                setForm({ organization: item });
+                setForm({ organizationId });
                 setCurrentStep(3);
               }}
             >
-              {item.title}
+              {item.name}
             </OptionButton>
           );
         })}
@@ -84,7 +82,9 @@ const Step2 = () => {
 };
 
 const Step3 = ({ onCancel }) => {
-  const { currentStep, setCurrentStep } = useContext(CreatePostContext);
+  const { currentStep, setCurrentStep, setPostId } = useContext(
+    CreatePostContext,
+  );
   if (currentStep !== 3) return null;
   return (
     <TabForms
@@ -93,6 +93,7 @@ const Step3 = ({ onCancel }) => {
         setCurrentStep(1);
         onCancel();
       }}
+      setPostId={setPostId}
     />
   );
 };
@@ -127,15 +128,17 @@ const Wrapper = ({ onCancel, visible, children }) => {
 
 const Step4 = () => {
   const createPostContext = useContext(CreatePostContext);
-  const { currentStep } = createPostContext;
+  const { currentStep, postId } = createPostContext;
+
   return (
     currentStep === 4 && (
       <>
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-        <CreateProfileButton primary>Create Profile</CreateProfileButton>
-        <CreateOrgLink to={""}>Skip</CreateOrgLink>
+        <Link to={`/post/${postId}`}>
+          <ViewPostButton primary>View Your Post</ViewPostButton>
+        </Link>
       </>
     )
   );
@@ -144,19 +147,19 @@ const Step4 = () => {
 const CreatePost = (props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
+  const [postId, setPostId] = useState("");
 
   return (
     <CreatePostContext.Provider
-      value={{ form, setForm, currentStep, setCurrentStep }}
+      value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
       <Wrapper {...props}>
         <Step1 />
-        <Step2 />
+        <Step2 user={props.user} />
         <Step4 />
       </Wrapper>
       <Step3 {...props} />
     </CreatePostContext.Provider>
   );
 };
-
 export default CreatePost;

@@ -24,7 +24,10 @@ const configData = envSchema({
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
-    .prop("SENTRY_DSN", S.string()),
+    .prop("SENTRY_DSN", S.string())
+    .prop("SENDGRID_CONTACTS_API_URL", S.string())
+    .prop("SENDGRID_API_KEY", S.string())
+    .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
 });
 
 const config = {
@@ -41,6 +44,11 @@ const config = {
     jwtMongoIdKey: url.resolve(configData.AUTH_APP_URL, "mongo_id"),
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
+  },
+  sendgrid: {
+    apiKey: configData.SENDGRID_API_KEY,
+    contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
+    contactsApiUrl: configData.SENDGRID_CONTACTS_API_URL,
   },
   env: configData.NODE_ENV,
   errorNotifier: {

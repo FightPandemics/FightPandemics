@@ -213,6 +213,7 @@ async function routes(app) {
     },
     async (req, reply) => {
       const { userId, body: postProps } = req;
+      // return postProps;
       const [userErr, user] = await app.to(User.findById(userId));
       if (userErr) {
         req.log.error(userErr, "Failed retrieving user");
@@ -222,13 +223,35 @@ async function routes(app) {
         throw app.httpErrors.forbidden();
       }
 
+      // Author defaults to user unless organizationId set
+      let author = user;
+      const { organizationId } = postProps;
+      if (organizationId) {
+        const [orgErr, org] = await app.to(User.findById(organizationId));
+        if (orgErr) {
+          req.log.error(userErr, "Failed retrieving organization");
+          throw app.httpErrors.internalServerError();
+        } else if (org === null) {
+          req.log.error(userErr, "Organization does not exist");
+          throw app.httpErrors.forbidden();
+        } else if (org.ownerId.toString() !== userId.toString()) {
+          req.log.error(
+            userErr,
+            "User not allowed to post as this organization",
+          );
+          throw app.httpErrors.forbidden();
+        }
+        author = org;
+        delete postProps.organizationId;
+      }
+
       // Creates embedded author document
       postProps.author = {
-        id: mongoose.Types.ObjectId(user.id),
-        location: user.location,
-        name: user.name,
-        photo: user.photo,
-        type: user.type,
+        id: mongoose.Types.ObjectId(author.id),
+        location: author.location,
+        name: author.name,
+        photo: author.photo,
+        type: author.type,
       };
 
       // ExpireAt needs to calculate the date
@@ -262,6 +285,7 @@ async function routes(app) {
       schema: getPostByIdSchema,
     },
     async (req) => {
+      const { userId } = req;
       const { postId } = req.params;
       const [postErr, post] = await app.to(Post.findById(postId));
       if (postErr) {
@@ -318,10 +342,17 @@ async function routes(app) {
           numComments = commentQuery[0].comments;
         }
       }
+
+      const projectedPost = {
+        ...post.toObject(),
+        liked: post.likes.includes(mongoose.Types.ObjectId(userId)),
+        likesCount: post.likes.length,
+      };
+
       return {
         comments,
         numComments,
-        post,
+        post: projectedPost,
       };
     },
   );
