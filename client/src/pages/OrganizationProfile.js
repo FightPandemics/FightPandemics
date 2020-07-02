@@ -1,6 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
 import { Link } from "react-router-dom";
 
 // ICONS
@@ -63,6 +63,11 @@ import {
   OrganizationContext,
   withOrganizationContext,
 } from "context/OrganizationContext";
+import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
+import {
+  postsReducer,
+  postsState as initialPostsState,
+} from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 
 const URLS = {
@@ -81,14 +86,25 @@ const OrganizationProfile = () => {
     OrganizationContext,
   );
   const { error, loading, organization } = orgProfileState;
+  const [postsState, postsDispatch] = useReducer(
+    postsReducer,
+    initialPostsState,
+  );
 
   const {
     userProfileState: { user },
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const { name, location, needs, about = "", objectives = {}, urls = {} } =
-    organization || {};
+  const {
+    name,
+    location = {},
+    needs,
+    about = "",
+    isOwner,
+    objectives = {},
+    urls = {},
+  } = organization || {};
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -118,6 +134,27 @@ const OrganizationProfile = () => {
       }
     })();
   }, [orgProfileDispatch, organizationId, userProfileDispatch]);
+
+  useEffect(() => {
+    (async function fetchOrganizationPosts() {
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        const res = await axios.get(
+          `/api/posts?limit=-1&authorId=${organizationId}`,
+        );
+        postsDispatch({
+          type: SET_POSTS,
+          posts: res.data,
+        });
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading acitivity, reason: ${message}`,
+        });
+      }
+    })();
+  }, [organizationId]);
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -167,7 +204,7 @@ const OrganizationProfile = () => {
       return (
         <>
           <UserInfoContainer>
-            <EditIcon src={edit} onClick={() => setDrawer(true)} />
+            {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
             <ProfilePic
               noPic={true}
               initials={getInitials(firstName, lastName)}
@@ -176,10 +213,12 @@ const OrganizationProfile = () => {
               <NameDiv>
                 {name}
                 <PlaceholderIcon />
-                <EditEmptyIcon
-                  src={editEmpty}
-                  onClick={() => setDrawer(true)}
-                />
+                {isOwner && (
+                  <EditEmptyIcon
+                    src={editEmpty}
+                    onClick={() => setDrawer(true)}
+                  />
+                )}
               </NameDiv>
               <DescriptionDesktop> {about} </DescriptionDesktop>
               <LocationMobileDiv>{address}</LocationMobileDiv>
@@ -207,42 +246,50 @@ const OrganizationProfile = () => {
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              My Activity
+              Activity
               <PlaceholderIcon />
-              <CreatePostDiv>Create a post</CreatePostDiv>
-              <CreatePostIcon
-                src={createPost}
-                onClick={() => setModal(!modal)}
-              />
+              {isOwner && (
+                <>
+                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostIcon
+                    src={createPost}
+                    onClick={() => setModal(!modal)}
+                  />
+                </>
+              )}
             </SectionHeader>
             <FeedWrapper>
-              <Activity filteredPosts="" />
-              <CreatePost
-                onCancel={() => setModal(false)}
-                visible={modal}
-                user={user}
-              />
+              <Activity filteredPosts={postsState.posts} />
+              {isOwner && (
+                <CreatePost
+                  onCancel={() => setModal(false)}
+                  visible={modal}
+                  user={user}
+                />
+              )}
             </FeedWrapper>
           </div>
-          <CustomDrawer
-            placement="bottom"
-            closable={false}
-            onClose={() => setDrawer(false)}
-            visible={drawer}
-            height="150px"
-            key="bottom"
-          >
-            <DrawerHeader>
-              <Link to={`/edit-organization-account/${organizationId}`}>
-                Edit Account Information
-              </Link>
-            </DrawerHeader>
-            <DrawerHeader>
-              <Link to={`/edit-organization-profile/${organizationId}`}>
-                Edit Profile{" "}
-              </Link>
-            </DrawerHeader>
-          </CustomDrawer>
+          {isOwner && (
+            <CustomDrawer
+              placement="bottom"
+              closable={false}
+              onClose={() => setDrawer(false)}
+              visible={drawer}
+              height="150px"
+              key="bottom"
+            >
+              <DrawerHeader>
+                <Link to={`/edit-organization-account/${organizationId}`}>
+                  Edit Account Information
+                </Link>
+              </DrawerHeader>
+              <DrawerHeader>
+                <Link to={`/edit-organization-profile/${organizationId}`}>
+                  Edit Profile{" "}
+                </Link>
+              </DrawerHeader>
+            </CustomDrawer>
+          )}
         </>
       );
     }

@@ -41,14 +41,10 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
-  &.home {
-    margin-right: -2rem;
-  }
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-left: -2.5rem;
   }
 
   @media only screen and ${mq.phone.wide.max} {

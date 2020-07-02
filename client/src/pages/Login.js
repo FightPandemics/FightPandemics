@@ -342,7 +342,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               <ErrorAlert message={authFormState.error} type="error" />
             )}
             {!forgotPassword ? (
-              <form id="login-password">
+              <form
+                onSubmit={
+                  isLoginForm
+                    ? handleSubmit(onLoginWithEmail)
+                    : handleSubmit(onSignup)
+                }
+                id="login-password"
+              >
                 <InputWrapper>
                   <Label
                     htmlFor="email"
@@ -434,14 +441,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     )}
                   </InputWrapper>
                 )}
+                {/* <button type="submit"></button> */}
                 <SubmitButton
                   primary="true"
+                  htmlType="submit"
                   disabled={!formState.isValid}
-                  onClick={
-                    isLoginForm
-                      ? handleSubmit(onLoginWithEmail)
-                      : handleSubmit(onSignup)
-                  }
                 >
                   {isLoginForm ? "Sign In" : "Sign Up"}
                 </SubmitButton>

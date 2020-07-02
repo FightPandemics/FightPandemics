@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import backArrow from "assets/icons/back-arrow.svg";
-import { StyledWizardNav, BackButton, BackText } from 'components/StepWizard/WizardNav';
+import {
+  StyledWizardNav,
+  BackButton,
+  BackText,
+} from "components/StepWizard/WizardNav";
 import { Link } from "react-router-dom";
 import StepWizard from "react-step-wizard";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -42,7 +46,7 @@ const WizardFormNav = () => (
         <SvgIcon src={backArrow} title="Navigate to feed page" />
         <BackText>Back</BackText>
       </BackButton>
-    </Link>    
+    </Link>
   </StyledWizardNav>
 );
 

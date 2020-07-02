@@ -15,6 +15,7 @@ const Posts = ({
       {Object.keys(filteredPosts).map((key) => (
         <Post
           currentPost={filteredPosts[key]}
+          includeProfileLink={true}
           numComments={filteredPosts[key].commentsCount}
           loadPosts={loadPosts}
           handlePostLike={handlePostLike}

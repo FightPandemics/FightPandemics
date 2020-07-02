@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Transition } from 'react-transition-group';
+import { Transition } from "react-transition-group";
 import { withRouter, Link } from "react-router-dom";
 import InputError from "components/Input/InputError";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
+import axios from "axios";
 import {
   AnswerButton,
   ShowAnywhere,
@@ -23,12 +24,15 @@ import {
 } from "components/StepWizard";
 
 const INITIAL_STATE = {
-  answers: [],
+  postType: "Requesting help",
+  helpType: "",
+  location: "",
+  email: "",
 };
 
 const Step1 = (props) => {
   const onSelectAnswer = (answer) => {
-    props.update("helpTypeNeeded", answer);
+    props.update("helpType", answer);
     props.nextStep();
   };
   return (
@@ -40,7 +44,7 @@ const Step1 = (props) => {
       <AnswerButton onSelect={() => onSelectAnswer("medical")}>
         <strong>Medical:</strong> I have symptoms of COVID-19.
       </AnswerButton>
-      <AnswerButton onSelect={() => onSelectAnswer("other, non medical")}>
+      <AnswerButton onSelect={() => onSelectAnswer("other")}>
         <strong>Other Help:</strong> I need assistance getting
         groceries/medicine/etc.
       </AnswerButton>
@@ -101,7 +105,7 @@ const Step3 = (props) => {
   };
 
   const onSubmit = () => {
-    console.log("submit");
+    props.update("email", email);
   };
 
   return (
@@ -137,10 +141,7 @@ const Step3 = (props) => {
           Submit
         </WizardSubmit>
         <SkipLink>
-          <Link to="/feed">
-            {/* By clicking on “skip”, users can skip the landing questions to see the information directly */}
-            Skip
-          </Link>
+          <span onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -153,29 +154,36 @@ const NeedHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  },[]);
-  
+  }, []);
+
   const updateAnswers = (key, value) => {
-    const { answers } = state;
-    const updatedAnswers = { ...answers, [key]: value };
-    setState({ ...state, updatedAnswers });
+    const updatedAnswers = { ...state, [key]: value };
+    setState({ ...updatedAnswers });
     if (key === "email") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
+      if (value) {
+        try {
+          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
+        } catch (err) {
+          console.log(err);
+        }
+      }
       props.history.push({
         pathname: "/feed",
+        state: updatedAnswers,
       });
     }
   };
   return (
     <WizardContainer className="wizard-container">
       <Transition in={transition} timeout={250}>
-        {status=> (
-          <StyledWizard isHashEnabled status={status} nav={<WizardNav/>}>
+        {(status) => (
+          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3 hashKey={"Step3"} update={updateAnswers} />
+            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
-        )}      
+        )}
       </Transition>
     </WizardContainer>
   );

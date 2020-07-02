@@ -36,6 +36,48 @@ const translateISOToString = (ISO) => {
   }
 };
 
+const timeAgo = (time) => {
+  moment.updateLocale("en", {
+    relativeTime: {
+      future: "in %s",
+      past: "%s ago",
+      s: (number) => number + "second ago",
+      ss: "%d seconds ago",
+      m: "1 minute ago",
+      mm: "%d minutes ago",
+      h: "1 hour ago",
+      hh: "%d hours ago",
+      d: "1 day ago",
+      dd: "%ddays ago",
+      M: "a month ago",
+      MM: "%d months ago",
+      y: "a year ago",
+      yy: "%d years ago",
+    },
+  });
+
+  let secondsElapsed = moment().diff(time, "seconds");
+  let dayStart = moment().startOf("day").seconds(secondsElapsed);
+
+  if (secondsElapsed > 300) {
+    return moment(time).fromNow(true);
+  } else if (secondsElapsed < 60) {
+    return dayStart.format("s ") + "seconds ago";
+  } else {
+    const minute = dayStart.format("m ");
+    const minuteString = minute > 1 ? " minutes ago" : " minute ago";
+    return minute.concat(minuteString);
+  }
+};
+
+export const translateISOTimeStamp = (ISO) => {
+  return timeAgo(ISO);
+};
+
+export const translateISOTimeTitle = (ISO) => {
+  return moment(ISO).format("YYYY-MM-DD HH:mm:ss");
+};
+
 export const tagToType = (tag) => {
   if (tag === "Other") {
     return "Others";
