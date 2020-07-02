@@ -225,7 +225,7 @@ const NavigationLayout = (props) => {
             user,
           }}
         >
-          Feed
+          Help Board
         </Link>
       </NavItem>
       <NavItem history={history}>
@@ -233,7 +233,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Logout</BriefLink>
+        <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
     </>
   );
@@ -241,7 +241,7 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Login / Register</Link>
+        <Link to="/auth/login">Sign In / Join Now</Link>
       </NavItem>
       <NavItem history={history}>
         <Link to="/about-us">About Us</Link>
