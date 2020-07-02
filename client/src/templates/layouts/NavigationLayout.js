@@ -20,7 +20,6 @@ import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
 import ThanksModal from "components/Feedback/ThanksModal";
 import withLabel from "components/Input/with-label";
 import { theme } from "constants/theme";
-
 import {
   TOGGLE_STATE,
   SET_VALUE,

@@ -6,8 +6,7 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
-import { ReactComponent as FeedbackIcon } from "assets/icons/mail.svg";
-import envelope from "assets/icons/envelope.svg";
+import { ReactComponent as FeedbackIcon } from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
@@ -57,8 +56,8 @@ const NavLinks = styled.div`
     border: none;
     background: transparent;
     cursor: pointer;
+    padding-top: 0.4rem;
   }
-
   ul {
     list-style-type: none;
     display: flex;
@@ -181,10 +180,7 @@ export default ({
                 Register
               </NavLink>
             </li>
-            <Link to="/feed">
-              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-            </Link>
-            <li>
+            <li className="feedbackBtn">
               <button onClick={onFeedbackIconClick}>
                 <FeedbackIcon />
               </button>
