@@ -2,7 +2,6 @@ import { theme } from "constants/theme";
 import { Button } from "antd";
 import styled from "styled-components";
 
-
 const { darkGray, lightGray, royalBlue, white } = theme.colors;
 
 export const StyledCommentButton = styled(Button)`
