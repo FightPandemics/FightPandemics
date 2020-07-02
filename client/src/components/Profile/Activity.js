@@ -6,7 +6,6 @@ const Activity = ({
   updateComments,
   user,
   handlePostDelete,
-  handleEditPost,
   }) => {
   const posts = Object.entries(filteredPosts);
   
@@ -20,7 +19,6 @@ const Activity = ({
               currentPost={post}
               updateComments={updateComments}
               handlePostDelete={handlePostDelete}
-              // handleEditPost={handleEditPost}
               key={key}
               user={user}
             />
