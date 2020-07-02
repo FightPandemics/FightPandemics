@@ -165,7 +165,7 @@ const CreatePost = ({ onCancel, ...props }) => {
         <Step2 user={props.user} />
         <Step4 />
       </Wrapper>
-      <Step3 {...props} />
+      <Step3 onCancel={clearState} {...props} />
     </CreatePostContext.Provider>
   );
 };
