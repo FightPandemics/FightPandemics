@@ -60,8 +60,8 @@ const StyledComment = styled(Comment)`
               position: absolute;
               min-width: 3.6rem;
               min-height: 1.7rem;
-              right: -5px;
-              top: -12px;
+              right: -0.5rem;
+              top: -1.2rem;
               padding: 0.2rem 0.3rem;
               img {
                 padding-left: 0.2rem;
@@ -76,11 +76,11 @@ const StyledComment = styled(Comment)`
                 align-items: center;
                 span {
                   padding-right: 0;
-                  margin-right: 12px;
+                  margin-right: 1.2rem;
                 }
 
                 textarea {
-                  width: calc(100% - 50px);
+                  width: calc(100% - 50pxrem);
                 }
               }
             }

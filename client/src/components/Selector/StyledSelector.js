@@ -15,7 +15,7 @@ const StyledSelector = styled(Select)`
     border-radius: 0.5rem !important;
     align-items: center;
     text-align: center;
-    padding-right: 0 5px;
+    padding-right: 0 0.5rem;
 
     span.ant-select-selection-item {
       font-family: ${typography.font.family.body};

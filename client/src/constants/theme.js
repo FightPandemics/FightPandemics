@@ -79,7 +79,7 @@ const theme = {
     fontFamily: "DM Sans",
     border: {
       width: "0",
-      radius: "24px",
+      radius: "2.4rem",
       color: "transparent",
     },
     color: WHITE,

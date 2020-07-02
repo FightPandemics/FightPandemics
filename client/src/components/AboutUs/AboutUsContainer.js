@@ -103,17 +103,11 @@ export const SocialContainer = styled.div`
   margin: 0 auto;
   img {
     margin: 2rem 3rem;
-    max-width: 3rem;
+    width: 3rem;
   }
 `;
 
 export const AboutUsLink = styled.a`
   color: ${primary};
   display: inline-block;
-
-  @media screen and (min-width: ${mq.desktop.extra.minWidth}) {
-    img {
-      width: 3rem;
-    }
-  }
 `;

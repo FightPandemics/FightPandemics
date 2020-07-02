@@ -178,16 +178,16 @@ const EmailButtonContainer = styled.div`
 
 const EmailTextContainer = styled.div`
   position: absolute;
-  width: 295px;
-  height: 55px;
-  left: 40px;
-  top: 268px;
+  width: 29.5rem;
+  height: 5.5rem;
+  left: 4rem;
+  top: 26.8rem;
 
   > p {
     font-family: Poppins;
     font-style: normal;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 1.5rem;
   }
 `;
 
@@ -331,7 +331,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       <LoginRightContainer>
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
-            <Heading className="text-center" level={4}>
+            <Heading className="h4 text-center" level={4}>
               {isLoginForm
                 ? "Sign In"
                 : forgotPassword

@@ -20,15 +20,15 @@ const Wrapper = styled.div`
   grid-column-gap: 0.5em;
 `;
 const Nested = styled.div`
-  height: 309px;
+  height: 30.9rem;
   overflow-y: auto;
 `;
 const MapStyle = styled.div`
   margin: 2% auto;
   width: 100%;
-  maxwidth: 800px;
+  maxwidth: 80rem;
   height: 50vh;
-  minheight: 300px;
+  minheight: 30rem;
 `;
 const Cards = styled.div`
   border: 1px solid ${lighterGray};
