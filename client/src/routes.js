@@ -33,7 +33,7 @@ const routes = [
     exact: true,
   },
   {
-    path: "/auth/login",
+    path: "/auth/signin",
     component: Login,
     layout: "logo",
     props: {
@@ -75,7 +75,7 @@ const routes = [
     },
   },
   {
-    path: "/need-help",
+    path: "/request-help",
     component: NeedHelp,
   },
   {
@@ -141,7 +141,7 @@ const routes = [
     },
   },
   {
-    path: "/feed",
+    path: "/help-board",
     exact: true,
     component: Feed,
     props: {
