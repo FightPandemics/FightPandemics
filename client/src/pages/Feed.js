@@ -10,7 +10,7 @@ import { Layout, Menu } from "antd";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import Wrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -563,7 +563,7 @@ const Feed = (props) => {
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
-              <h1>Feed</h1>
+              <h1>Help Board</h1>
               <button onClick={handleCreatePost}>
                 Create a post
                 <SvgIcon src={creatPost} />
