@@ -1,14 +1,15 @@
 // Core
 import React, { useState } from "react";
 import axios from "axios";
+import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
-import { Avatar, Button, Input, Tooltip, Space } from "antd";
 import styled from "styled-components";
 
 // Local
-import StyledComment from "./StyledComment";
-import Loader from "components/Feed/StyledLoader";
 import AutoSize from "components/Input/AutoSize";
+import Loader from "components/Feed/StyledLoader";
+import StyledComment from "./StyledComment";
+import { StyledCommentButton } from "./StyledCommentButton";
 import {
   translateISOTimeStamp,
   translateISOTimeTitle,
@@ -23,15 +24,10 @@ import { theme } from "constants/theme";
 
 import { SET_COMMENT } from "hooks/actions/postActions";
 
-const { royalBlue, lighterGray, darkGray } = theme.colors;
-
+const { lighterGray, royalBlue } = theme.colors;
 const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
+
 const { TextArea } = Input;
-const CommentButton = styled(Button)`
-  color: ${darkGray};
-  border: none;
-  border-radius: 2rem;
-`;
 const TextInput = styled(TextArea)`
   background-color: ${lighterGray};
   border: none;
@@ -187,13 +183,13 @@ const NestedComments = ({
 
   const commentActions = [
     <Space size="small">
-      <CommentButton size="small" ghost onClick={() => toggleEditComment()}>
+      <StyledCommentButton size="small"ghost  onClick={() => toggleEditComment()}>
         Edit
-      </CommentButton>
-      <CommentButton size="small" ghost onClick={() => handleDeleteComment()}>
+      </StyledCommentButton>
+      <StyledCommentButton size="small" ghost onClick={() => handleDeleteComment()}>
         Delete
-      </CommentButton>
-    </Space>,
+      </StyledCommentButton>
+    </Space>
   ];
 
   const editCommentContent = (
@@ -207,14 +203,13 @@ const NestedComments = ({
           />
           <Space direction="vertical">
             <span></span>
-            <Button
+            <StyledCommentButton
               size="small"
               ghost
-              style={{ color: royalBlue, borderRadium: "4rem" }}
               onClick={() => handleSubmit()}
             >
               Save
-            </Button>
+            </StyledCommentButton>
           </Space>
         </>
       )}

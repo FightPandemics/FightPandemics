@@ -18,6 +18,7 @@ import SubMenuButton from "components/Button/SubMenuButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
+import { StyledLoadMoreButton } from "./StyledCommentButton";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import {
@@ -204,11 +205,8 @@ const Post = ({
         console.log({ error });
       }
       if (response && response.data) {
-        let filterComments = comments.filter((comment) => {
-          if (comment._id !== commentId) {
-            return comment;
-          }
-        });
+        let filterComments = comments.filter((comment) => comment._id !== commentId)
+
         await dispatchPostAction(
           SET_COMMENTS,
           "comments",
@@ -330,9 +328,9 @@ const Post = ({
             user={user}
           />
           {loadMoreComments && commentsCount >= 5 ? (
-            <Button disabled={isLoading} onClick={loadComments}>
+            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
-            </Button>
+            </StyledLoadMoreButton>
           ) : (
             <></>
           )}
