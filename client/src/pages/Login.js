@@ -509,7 +509,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                     <p>
                       <AuthLink to="/auth/signup">
-                        Don't have an account? <u>Sign Up</u>
+                        Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
@@ -531,7 +531,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+                {isLoginForm ? "Or Sign In with" : "Or Join Now with"}
               </SectionDiv>
             )}
             <WhiteSpace />
