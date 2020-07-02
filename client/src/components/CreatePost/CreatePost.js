@@ -144,16 +144,23 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = (props) => {
+const CreatePost = ({ toggleModal, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
+
+  const clearState = () => {
+    toggleModal();
+    setCurrentStep(1);
+    setForm({});
+    setPostId("");
+  };
 
   return (
     <CreatePostContext.Provider
       value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
-      <Wrapper {...props}>
+      <Wrapper onCancel={clearState} {...props}>
         <Step1 />
         <Step2 user={props.user} />
         <Step4 />
