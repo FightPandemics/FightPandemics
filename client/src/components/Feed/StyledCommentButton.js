@@ -14,12 +14,6 @@ export const StyledCommentButton = styled(Button)`
   }
 `;
 
-export const StyledLoadMoreButton = styled(Button)`
-    color: ${darkGray};
+export const StyledLoadMoreButton = styled(StyledCommentButton)`
     border-color: ${lightGray};
-    border-radius: 1rem;
-    :hover{
-    color: ${royalBlue};
-    border: 1px solid ${white};
-    }
 `;
