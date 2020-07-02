@@ -187,7 +187,7 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
-    
+
     const postDelete = async (post) => {
       console.log('post in delete:   ', post)
       let deleteResponse;
@@ -211,6 +211,20 @@ const OrganizationProfile = () => {
             error,
           });
         }
+      }
+    };
+
+    const handleEditPost = () => {
+      if (postsState.editPostModalVisibility) {
+        postsDispatch({
+          type: SET_EDIT_POST_MODAL_VISIBILITY,
+          visibility: false,
+        });
+      } else {
+        postsDispatch({
+          type: SET_EDIT_POST_MODAL_VISIBILITY,
+          visibility: true,
+        });
       }
     };
 
@@ -284,9 +298,10 @@ const OrganizationProfile = () => {
             </SectionHeader>
             <FeedWrapper>
               <Activity 
-                filteredPosts={postsState.posts}
-                user={user}
-                handlePostDelete={postDelete} 
+              filteredPosts={postsState.posts}
+              user={user}
+              handlePostDelete={postDelete}
+              handleEditPost={handleEditPost}
               />
               {isOwner && (
                 <CreatePost
