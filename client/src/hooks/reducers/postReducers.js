@@ -39,7 +39,7 @@ export const postState = {
   commentsCount: 0,
   totalCommentCount: 0,
   postLength: 0,
-  deleteModalVisibility: false,
+  deleteModalVisibility: 0,
   editPostModalVisibility: false,
   showComments: true,
   isLoading: false,

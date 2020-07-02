@@ -11,6 +11,7 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -21,6 +22,7 @@ export const postsState = {
   filterType: "",
   isLoading: false,
   loadMore: true,
+  deleteModalVisibility: 0,
 };
 
 export const feedReducer = (oldState, action) => {
@@ -84,6 +86,11 @@ export const postsReducer = (state = postsState, action) => {
       };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };
+    case SET_DELETE_MODAL_VISIBILITY:
+      return {
+        ...state,
+        deleteModalVisibility: action.visibility,
+      };
     case SET_LIKE:
       return {
         ...state,

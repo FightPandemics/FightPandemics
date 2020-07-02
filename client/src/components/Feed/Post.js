@@ -39,7 +39,8 @@ const Post = ({
   deleteModalVisibility,
   dispatchPostAction,
   fullPostLength,
-  handlePostDelete,
+  handleCancelPostDelete,
+  handleCommentDelete,
   handlePostLike,
   isAuthenticated,
   loadMorePost,
@@ -183,6 +184,21 @@ const Post = ({
     }
   };
 
+  const handleDeleteComment = async (comment) => {
+    setComment(comment);
+    handleCommentDelete();
+  };
+
+  const handleDeleteOk = () => {
+    if (deleteModalVisibility === 1) {
+      postDelete(post);
+    } else if (deleteModalVisibility === 2) {
+      deleteComment(comment)
+    }
+
+    handleCancelPostDelete();
+  };
+
   const deleteComment = async (comment) => {
     let response;
     const postId = comment.postId;
@@ -303,7 +319,7 @@ const Post = ({
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
-          value={comment}
+          value={typeof comment === 'string' && comment }
         />
       ) : (
         <div>Only logged in users can comment.</div>
@@ -313,7 +329,7 @@ const Post = ({
           <Comments
             comments={comments}
             handleOnChange={handleOnChange}
-            deleteComment={deleteComment}
+            deleteComment={handleDeleteComment}
             dispatchPostAction={dispatchPostAction}
             user={user}
           />
@@ -412,13 +428,16 @@ const Post = ({
           {renderComments}
           <WebModal
             title="Confirm"
-            visible={deleteModalVisibility}
-            onOk={() => postDelete(post)}
-            onCancel={handlePostDelete}
+            visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
+            onOk={() => handleDeleteOk() }
+            onCancel={handleCancelPostDelete}
             okText="Delete"
             cancelText="Cancel"
           >
-            <p>Are you sure you want to delete the post?</p>
+            { deleteModalVisibility === 1
+              && <p>Are you sure you want to delete the post?</p>
+              || <p>Are you sure you want to delete the comment?</p>
+            }
           </WebModal>
           {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
@@ -434,7 +453,7 @@ const Post = ({
                 user &&
                 (user._id === post.author.id || user.id === post.author.id) && (
                   <SubMenuButton
-                    onChange={() => handlePostDelete(post)}
+                    onChange={onChange}
                     onSelect={onSelect}
                     post={post}
                     user={user}
@@ -474,13 +493,16 @@ const Post = ({
           {renderShareModal}
           <WebModal
             title="Confirm"
-            visible={deleteModalVisibility}
-            onOk={() => postDelete(post)}
-            onCancel={handlePostDelete}
+            visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
+            onOk={() => handleDeleteOk() }
+            onCancel={handleCancelPostDelete}
             okText="Delete"
             cancelText="Cancel"
           >
-            <p>Are you sure you want to delete the post?</p>
+            {deleteModalVisibility === 1
+              ? <p>Are you sure you want to delete the post?</p>
+              : <p>Are you sure you want to delete the comment?</p>
+            }
           </WebModal>
         </PostCard>
       )}

@@ -44,6 +44,7 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -214,6 +215,7 @@ const Feed = (props) => {
     page,
     posts: postsList,
     status,
+    deleteModalVisibility,
   } = posts;
 
   const { history, isAuthenticated, user } = props;
@@ -330,6 +332,20 @@ const Feed = (props) => {
     } else {
       history.push(LOGIN);
     }
+  };
+
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: 1,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: 0,
+    });
   };
 
   const loadPosts = useCallback(async () => {
@@ -532,8 +548,11 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              handlePostDelete={postDelete}
+              postDelete={postDelete}
               user={user}
+              deleteModalVisibility={deleteModalVisibility}
+              handlePostDelete={handlePostDelete}
+              handleCancelPostDelete={handleCancelPostDelete}
             />
             {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
             {isLoading ? <Loader /> : <></>}

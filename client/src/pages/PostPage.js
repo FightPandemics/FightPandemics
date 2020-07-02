@@ -108,14 +108,21 @@ const PostPage = ({
   const handlePostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: true,
+      visibility: 1,
     });
   };
 
   const handleCancelPostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: false,
+      visibility: 0,
+    });
+  };
+
+  const handleCommentDelete = () => {
+    postDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: 2,
     });
   };
 
@@ -129,7 +136,7 @@ const PostPage = ({
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
         "deleteModalVisibility",
-        false,
+        0,
       );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}`;
@@ -150,19 +157,6 @@ const PostPage = ({
       }
     }
   };
-
-  const deleteConfirmationModal = (
-    <Modal
-      title="Confirm"
-      visible={deleteModalVisibility}
-      onOk={postDelete}
-      onCancel={handleCancelPostDelete}
-      okText="Delete"
-      cancelText="Cancel"
-    >
-      <p> Are you sure you want to delete the post? </p>
-    </Modal>
-  );
 
   const loadPost = async () => {
     let response;
@@ -248,6 +242,7 @@ const PostPage = ({
             <>
               <Post
                 currentPost={post}
+                deleteModalVisibility={deleteModalVisibility}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
                 onClick={toggleViewContent}
@@ -255,12 +250,14 @@ const PostPage = ({
                 onSelect={handleEditPost}
                 showComments={showComments}
                 onChange={handlePostDelete}
+                handleCancelPostDelete={handleCancelPostDelete}
+                handleCommentDelete={handleCommentDelete}
+                postDelete={postDelete}
                 handlePostLike={handlePostLike}
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}
               />
-              {deleteConfirmationModal}
               <EditPost
                 user={user}
                 dispatchAction={dispatchPostAction}
