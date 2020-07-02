@@ -19,7 +19,7 @@ export const postsState = {
   posts: [],
   page: 0,
   error: null,
-  filterType: "",
+  filterType: "ALL",
   isLoading: false,
   loadMore: true,
   deleteModalVisibility: 0,
@@ -83,6 +83,7 @@ export const postsReducer = (state = postsState, action) => {
         filterType: action.filterType || "",
         posts: [],
         loadMore: true,
+        isLoading: false,
       };
     case SET_LOADING:
       return { ...state, isLoading: false, loadMore: false };

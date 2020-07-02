@@ -71,12 +71,13 @@ const PostSocial = ({
         <div className="social-icon">
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">Like</span>
+          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
         </div>
       ) : (
         <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
+          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
         </div>
       )}
       <span></span>
@@ -90,7 +91,7 @@ const PostSocial = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${id}`,
+                pathname: `/post/${id}`,
                 state: {
                   postId: id,
                   comments: true,

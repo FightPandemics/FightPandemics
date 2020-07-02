@@ -15,10 +15,11 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import SubMenuButton from "components/Button/SubMenuButton";
-import { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
+import WizardFormNav, {
+  StyledButtonWizard,
+} from "components/StepWizard/WizardFormNav";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
-import WizardFormNav from "components/StepWizard/WizardFormNav";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -33,6 +34,8 @@ import {
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 
+const INDIVIDUAL_AUTHOR_TYPE = "Individual";
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -42,6 +45,7 @@ const Post = ({
   handleCancelPostDelete,
   handleCommentDelete,
   handlePostLike,
+  includeProfileLink,
   isAuthenticated,
   loadMorePost,
   numComments,
@@ -75,6 +79,9 @@ const Post = ({
       post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
+  const authorProfileLink = `/${
+    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
+  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -145,9 +152,10 @@ const Post = ({
 
   useEffect(() => {
     if (postId) {
-      loadComments(); //react-hooks/exhaustive-deps
+      loadComments();
     }
-  }, []); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnChange = async (e) => {
     e.preventDefault();
@@ -248,7 +256,7 @@ const Post = ({
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
-          pathname: `post/${post._id}`,
+          pathname: `/post/${post._id}`,
           state: {
             post: post,
             postId: post._id,
@@ -288,6 +296,10 @@ const Post = ({
         </span>
       }
     />
+  );
+
+  const renderHeaderWithLink = (
+    <Link to={authorProfileLink}>{renderHeader}</Link>
   );
 
   const renderContent = (
@@ -397,32 +409,33 @@ const Post = ({
           }}
         >
           <div className="card-header">
-            {renderHeader}
+            {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (user._id === post.author.id || user.id === post.author.id) && (
-                  <SubMenuButton
-                    onSelect={onSelect}
-                    onChange={onChange}
-                    postId={postId}
-                    post={post}
-                    user={user}
-                  />
-                )}
+            {isAuthenticated &&
+                  user &&
+                  (user._id === post.author.id ||
+                    user.id === post.author.id) && (
+                    <SubMenuButton
+                      onSelect={onSelect}
+                      onChange={onChange}
+                      postId={postId}
+                      post={post}
+                      user={user}
+                    />
+                  )}
             </div>
           </div>
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
           {renderContent}
-          {fullPostLength > CONTENT_LENGTH && (
-            <RenderViewMore
-              postId={postId}
-              onClick={onClick}
-              loadMorePost={loadMorePost}
-            />
-          )}
+          {fullPostLength > CONTENT_LENGTH ? (
+              <RenderViewMore
+                postId={postId}
+                onClick={onClick}
+                loadMorePost={loadMorePost}
+              />
+            ): (<Card.Body className="view-more-wrapper"/>)}
           {renderSocialIcons}
           {renderShareModal}
           {renderComments}
@@ -442,12 +455,12 @@ const Post = ({
           {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
           )}
-        </PostCard>
+        </div>
       ) : (
         //Post in feed.
         <PostCard>
           <div className="card-header">
-            {renderHeader}
+            {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
@@ -468,7 +481,7 @@ const Post = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${_id}`,
+                pathname: `/post/${_id}`,
                 state: {
                   post: post,
                   postId: _id,
@@ -482,13 +495,13 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH && (
+            (post.content.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ))}
+            ): (<Card.Body className="view-more-wrapper"/>))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal

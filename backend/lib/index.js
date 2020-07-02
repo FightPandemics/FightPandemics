@@ -11,6 +11,7 @@ const geo = require("./endpoints/geo");
 const organizations = require("./endpoints/organizations");
 const posts = require("./endpoints/posts");
 const users = require("./endpoints/users");
+const sendgrid = require("./endpoints/sendgrid");
 const version = require("./endpoints/version");
 
 module.exports = function createApp(config) {
@@ -51,6 +52,7 @@ module.exports = function createApp(config) {
   app.register(organizations, { prefix: "api/organizations" });
   app.register(posts, { prefix: "/api/posts" });
   app.register(users, { prefix: "/api/users" });
+  app.register(sendgrid, { prefix: "/api/sendgrid" });
   app.get("/api/version", version);
 
   return app;

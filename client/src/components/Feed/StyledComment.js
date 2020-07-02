@@ -11,6 +11,8 @@ const StyledComment = styled(Comment)`
   &.ant-comment {
     cursor: default;
     font-family: ${display};
+    display: inline-block;
+    word-break: break-word;
     .ant-comment-inner {
       padding: 1rem 0;
       .ant-comment-content {

@@ -40,7 +40,7 @@ async function routes(app) {
           firstName,
           id: userId,
           lastName,
-          organizations
+          organizations,
         };
       }
       return { email, emailVerified, token, user };
@@ -128,7 +128,7 @@ async function routes(app) {
           firstName,
           id: userId,
           lastName,
-          organizations
+          organizations,
         };
       }
       return { email, emailVerified, token, user };

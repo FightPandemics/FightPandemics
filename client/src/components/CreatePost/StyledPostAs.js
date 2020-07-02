@@ -129,6 +129,11 @@ const CreateOrgLink = styled(Link)`
   }
 `;
 
+const ViewPostButton = styled(BaseButton)`
+  width: 30rem;
+  font-size: 1.3rem;
+`;
+
 const OptionWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -147,17 +152,6 @@ const OptionWrapper = styled.div`
   }
 `;
 
-const CreateProfileButton = styled(BaseButton)`
-  width: 100%;
-  max-width: 217px;
-  display: inline-block;
-  margin-bottom: 20px;
-
-  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
-    font-size: ${typography.size.medium};
-  }
-`;
-
 const Option = ({ img, text, onClick, type }) => (
   <OptionWrapper
     onClick={() => onClick(text)}
@@ -173,9 +167,9 @@ const Option = ({ img, text, onClick, type }) => (
 export {
   Container,
   Option,
-  CreateProfileButton,
   CreateOrgLink,
   TitleStep,
   OptionButton,
   BackButton,
+  ViewPostButton,
 };

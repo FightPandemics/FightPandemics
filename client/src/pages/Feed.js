@@ -62,8 +62,7 @@ const HELP_TYPE = {
 };
 
 const initialState = {
-  selectedType: "",
-  initialLoad: true,
+  selectedType: "ALL",
   showFilters: false,
   filterModal: false,
   createPostModal: false,
@@ -202,7 +201,6 @@ const Feed = (props) => {
     location,
     selectedType,
     applyFilters,
-    initialLoad,
     showFilters,
   } = feedState;
 
@@ -227,7 +225,6 @@ const Feed = (props) => {
   const handleFilterModal = () => {
     // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
-    dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
     // dispatchAction(
     //   SET_VALUE,
@@ -245,7 +242,7 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-    dispatchAction(SET_VALUE, "initialLoad", true);
+    dispatchAction(SET_VALUE, "applyFilters", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     postsDispatch({ type: RESET_PAGE, filterType: "" });
@@ -280,9 +277,9 @@ const Feed = (props) => {
   };
 
   const handleChangeType = (e) => {
-    const value = HELP_TYPE[e.key];
+    const value = e.key;
     if (selectedType !== value) {
-      dispatchAction(SET_VALUE, "selectedType", value);
+      dispatchAction(SET_VALUE, "selectedType", e.key);
       postsDispatch({ type: RESET_PAGE, filterType: value });
     }
   };
@@ -290,7 +287,6 @@ const Feed = (props) => {
   const handleShowFilters = (e) => {
     // desktop
     dispatchAction(TOGGLE_STATE, "showFilters");
-    dispatchAction(SET_VALUE, "initialLoad", false);
     dispatchAction(SET_VALUE, "applyFilters", false);
   };
 
@@ -357,13 +353,13 @@ const Feed = (props) => {
       ) {
         objective =
           selectedOptions["need or give help"][0] === "Need Help"
-            ? HELP_TYPE.REQUEST
-            : HELP_TYPE.OFFER;
+            ? "REQUEST"
+            : "OFFER";
       }
       switch (objective) {
-        case HELP_TYPE.REQUEST:
+        case "REQUEST":
           return "&objective=request";
-        case HELP_TYPE.OFFER:
+        case "OFFER":
           return "&objective=offer";
         default:
           return "";
@@ -427,10 +423,59 @@ const Feed = (props) => {
   }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
 
   useEffect(() => {
-    if (initialLoad || applyFilters) {
+    if (applyFilters) {
       loadPosts();
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    // Onboarding
+    if (props.history.location.state) {
+      const handleOnboardingOptions = (option, label) => {
+        optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
+      };
+
+      const {
+        postType,
+        helpType,
+        location,
+        providers,
+      } = props.history.location.state;
+      location && dispatchAction(SET_VALUE, "location", location);
+      const value = Object.keys(HELP_TYPE).find(key => HELP_TYPE[key] === postType);
+      if (postType === HELP_TYPE.REQUEST) {
+        // requesting help
+        handleChangeType({ key: value });
+        if (helpType === "medical") {
+          let option = filters[2].options[0];
+          handleOnboardingOptions(option, "type");
+        } else {
+          for (let i = 1; i < filters[2].options.length; ++i) {
+            let option = filters[2].options[i];
+            handleOnboardingOptions(option, "type");
+          }
+        }
+      } else {
+        // offering help
+        handleChangeType({ key: value });
+        if (providers) {
+          let organizationFilter = providers.filter(
+            (option) => option === "As an Organisation",
+          );
+          if (organizationFilter.length > 0) {
+            for (let i = 1; i < filters[1].options.length; ++i) {
+              let option = filters[1].options[i];
+              handleOnboardingOptions(option, "providers");
+            }
+          } else {
+            let option = filters[1].options[0];
+            handleOnboardingOptions(option, "providers");
+          }
+        }
+      }
+    }
+    dispatchAction(SET_VALUE, "applyFilters", true);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollObserver = useCallback(
     (node) => {
@@ -484,7 +529,6 @@ const Feed = (props) => {
       }
     }
   };
-
   return (
     <FeedContext.Provider
       value={{
@@ -514,6 +558,7 @@ const Feed = (props) => {
             <div>
               <MenuWrapper
                 defaultSelectedKeys={["ALL"]}
+                selectedKeys={[selectedType]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
@@ -554,7 +599,9 @@ const Feed = (props) => {
               handlePostDelete={handlePostDelete}
               handleCancelPostDelete={handleCancelPostDelete}
             />
-            {status === ERROR_POSTS && <ErrorAlert message={postsError.message}/>}
+            {status === ERROR_POSTS && (
+              <ErrorAlert message={postsError.message} />
+            )}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
               src={creatPost}
