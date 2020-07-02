@@ -5,7 +5,7 @@ import SvgIcon from "components/Icon/SvgIcon";
 import send from "assets/icons/send.svg";
 import { Button } from "antd";
 import { mq, theme } from "constants/theme";
-const { royalBlue, white } = theme.colors;
+const { white } = theme.colors;
 
 const SendButton = styled(Button)`
   align-items: center;
@@ -21,7 +21,6 @@ const SendButton = styled(Button)`
     height: 5rem;
     padding: 1rem 1rem;
   }
-
 `;
 
 const AutoSize = ({ placeholder, value, onChange, onPressEnter }) => {
