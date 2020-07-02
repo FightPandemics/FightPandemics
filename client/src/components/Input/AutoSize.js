@@ -25,7 +25,7 @@ const SendButton = styled(Button)`
 
 const AutoSize = ({ placeholder, value, onChange, onPressEnter }) => {
   return (
-    <div>
+    <>
       <TextArea
         autoSize
         value={value}
@@ -36,7 +36,7 @@ const AutoSize = ({ placeholder, value, onChange, onPressEnter }) => {
       <SendButton onClick={onPressEnter}>
         <SvgIcon src={send} />
       </SendButton>
-    </div>
+    </>
   );
 };
 
