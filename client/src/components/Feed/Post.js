@@ -401,40 +401,42 @@ const Post = ({
     <>
       {postId && dispatchPostAction ? (
         //Post in post's page.
-        <PostCard
-          style={{
-            display: "inline-block",
-            maxWidth: "80rem",
-            marginTop: "1rem",
-          }}
-        >
-          <div className="card-header">
-            {includeProfileLink ? renderHeaderWithLink : renderHeader}
-            <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (user._id === post.author.id ||
-                  user.id === post.author.id) && (
-                  <SubMenuButton
-                    onSelect={onSelect}
-                    onChange={onChange}
-                    postId={postId}
-                    post={post}
-                    user={user}
-                  />
-              )}
+        <div>
+          <PostCard
+            style={{
+              display: "inline-block",
+              maxWidth: "80rem",
+              marginTop: "1rem",
+            }}
+          >
+            <div className="card-header">
+              {includeProfileLink ? renderHeaderWithLink : renderHeader}
+              <div className="card-submenu">
+                {isAuthenticated &&
+                  user &&
+                  (user._id === post.author.id ||
+                    user.id === post.author.id) && (
+                    <SubMenuButton
+                      onSelect={onSelect}
+                      onChange={onChange}
+                      postId={postId}
+                      post={post}
+                      user={user}
+                    />
+                )}
+              </div>
             </div>
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
             {renderContent}
             {fullPostLength > CONTENT_LENGTH ? (
-                <RenderViewMore
-                  postId={postId}
-                  onClick={onClick}
-                  loadMorePost={loadMorePost}
-                />
-              ): (<Card.Body className="view-more-wrapper"/>)}
+              <RenderViewMore
+                postId={postId}
+                onClick={onClick}
+                loadMorePost={loadMorePost}
+              />
+            ): (<Card.Body className="view-more-wrapper"/>)}
             {renderSocialIcons}
             {renderShareModal}
             {renderComments}
@@ -451,11 +453,11 @@ const Post = ({
                 || <p>Are you sure you want to delete the comment?</p>
               }
             </WebModal>
-            {showComments && (
-              <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
-            )}
-          </div>
-        </PostCard>
+          </PostCard>
+          {showComments && (
+            <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
+          )}
+        </div>
       ) : (
         //Post in feed.
         <PostCard>
