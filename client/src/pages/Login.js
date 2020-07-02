@@ -336,7 +336,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 ? "Sign In"
                 : forgotPassword
                 ? "Recover Password"
-                : "Sign Up"}
+                : "Join Now"}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -447,7 +447,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   htmlType="submit"
                   disabled={!formState.isValid}
                 >
-                  {isLoginForm ? "Sign In" : "Sign Up"}
+                  {isLoginForm ? "Sign In" : "Join Now"}
                 </SubmitButton>
               </form>
             ) : recoveryLink ? (
