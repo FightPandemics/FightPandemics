@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
-import { Modal } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 
 import EditPost from "components/CreatePost/EditPost";

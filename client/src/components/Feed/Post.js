@@ -411,51 +411,51 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-            {isAuthenticated &&
-                  user &&
-                  (user._id === post.author.id ||
-                    user.id === post.author.id) && (
-                    <SubMenuButton
-                      onSelect={onSelect}
-                      onChange={onChange}
-                      postId={postId}
-                      post={post}
-                      user={user}
-                    />
-                  )}
+              {isAuthenticated &&
+                user &&
+                (user._id === post.author.id ||
+                  user.id === post.author.id) && (
+                  <SubMenuButton
+                    onSelect={onSelect}
+                    onChange={onChange}
+                    postId={postId}
+                    post={post}
+                    user={user}
+                  />
+              )}
             </div>
+            <WhiteSpace size="md" />
+            {renderTags}
+            <WhiteSpace />
+            {renderContent}
+            {fullPostLength > CONTENT_LENGTH ? (
+                <RenderViewMore
+                  postId={postId}
+                  onClick={onClick}
+                  loadMorePost={loadMorePost}
+                />
+              ): (<Card.Body className="view-more-wrapper"/>)}
+            {renderSocialIcons}
+            {renderShareModal}
+            {renderComments}
+            <WebModal
+              title="Confirm"
+              visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
+              onOk={() => handleDeleteOk() }
+              onCancel={handleCancelPostDelete}
+              okText="Delete"
+              cancelText="Cancel"
+            >
+              { (deleteModalVisibility === 1
+                && <p>Are you sure you want to delete the post?</p>)
+                || <p>Are you sure you want to delete the comment?</p>
+              }
+            </WebModal>
+            {showComments && (
+              <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
+            )}
           </div>
-          <WhiteSpace size="md" />
-          {renderTags}
-          <WhiteSpace />
-          {renderContent}
-          {fullPostLength > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
-            ): (<Card.Body className="view-more-wrapper"/>)}
-          {renderSocialIcons}
-          {renderShareModal}
-          {renderComments}
-          <WebModal
-            title="Confirm"
-            visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
-            onOk={() => handleDeleteOk() }
-            onCancel={handleCancelPostDelete}
-            okText="Delete"
-            cancelText="Cancel"
-          >
-            { deleteModalVisibility === 1
-              && <p>Are you sure you want to delete the post?</p>
-              || <p>Are you sure you want to delete the comment?</p>
-            }
-          </WebModal>
-          {showComments && (
-            <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
-          )}
-        </div>
+        </PostCard>
       ) : (
         //Post in feed.
         <PostCard>
