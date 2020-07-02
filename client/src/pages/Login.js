@@ -54,6 +54,7 @@ const StyleSocialIcon = {
 };
 
 const SectionDiv = styled.div`
+  font-size: 1.4rem;
   text-transform: uppercase;
   color: ${colors.lightGray};
   &:before,
@@ -73,7 +74,7 @@ const FlexBox = styled(Flex).attrs((props) => ({
 }))``;
 
 const SocialButton = styled(Button)`
-  border: 1px solid ${colors.lightGray};
+  border: 0.1rem solid ${colors.lightGray};
   border-radius: unset;
   display: flex;
   height: 4.8rem;
@@ -134,6 +135,9 @@ const SocialImageContainer = styled.div`
     .SocialImageSVG {
       width: 100%;
     }
+  }
+  img {
+    width: 36.4rem;
   }
 `;
 

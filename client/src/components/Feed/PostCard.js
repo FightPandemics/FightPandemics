@@ -162,6 +162,7 @@ const PostCard = styled(Card)`
         }
 
         .total-number {
+          font-size: ${medium};
           display: inline;
 
           @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
