@@ -594,9 +594,7 @@ const Feed = (props) => {
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
-          toggleModal={() =>
-            dispatchAction(TOGGLE_STATE, "showCreatePostModal")
-          }
+          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
           visible={showCreatePostModal}
           user={user}
         />

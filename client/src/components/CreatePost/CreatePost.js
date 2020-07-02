@@ -144,13 +144,13 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = ({ toggleModal, ...props }) => {
+const CreatePost = ({ onCancel, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
 
   const clearState = () => {
-    toggleModal();
+    onCancel();
     setCurrentStep(1);
     setForm({});
     setPostId("");
