@@ -193,7 +193,7 @@ const Home = (props) => {
           </FlexChild>
 
           <Link to="/feed">
-            <StyleLink>View Community Postings</StyleLink>
+            <StyleLink>View Help Board</StyleLink>
           </Link>
         </OnboardingContainer>
       </>
