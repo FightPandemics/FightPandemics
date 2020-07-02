@@ -1,15 +1,15 @@
 // Core
 import React, { useState } from "react";
 import axios from "axios";
+import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
-import { Avatar, Button, Input, Tooltip, Space } from "antd";
 import styled from "styled-components";
 
 // Local
+import AutoSize from "components/Input/AutoSize";
+import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
-import Loader from "components/Feed/StyledLoader";
-import AutoSize from "components/Input/AutoSize";
 import {
   translateISOTimeStamp,
   translateISOTimeTitle,
@@ -25,7 +25,6 @@ import { theme } from "constants/theme";
 import { SET_COMMENT } from "hooks/actions/postActions";
 
 const { lighterGray, royalBlue } = theme.colors;
-
 const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
 
 const { TextArea } = Input;
