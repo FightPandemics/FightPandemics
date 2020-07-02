@@ -14,6 +14,7 @@ const TextArea = styled(Input.TextArea)`
   border-radius: 4rem;
   padding: 1.4rem;
   overflow: hidden;
+  
   &.ant-input:focus,
   &.ant-input-focused {
     box-shadow: unset;
