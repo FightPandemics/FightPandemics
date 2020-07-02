@@ -14,6 +14,7 @@ const PostCard = styled(Card)`
   margin-bottom: 4rem;
   margin-left: 2rem;
   margin-right 2rem;
+  overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
@@ -162,14 +163,6 @@ const PostCard = styled(Card)`
 
         .total-number {
           display: inline;
-
-          @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-            display: inline;
-          }
-        }
-
-        .social-text {
-          display: none;
 
           @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
             display: inline;
