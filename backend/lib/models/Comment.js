@@ -1,5 +1,6 @@
 const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
+const { translateISOtoRelativeTime } = require("../utils");
 
 const commentSchema = new Schema(
   {
@@ -15,6 +16,7 @@ const commentSchema = new Schema(
       ref: "User",
       type: [ObjectId],
     },
+    timeElapsed : String,
     parentId: {
       ref: "Comment",
       type: ObjectId,
@@ -46,6 +48,12 @@ commentSchema.index({ "author.id": 1, createdAt: -1 });
 // Index for like's foreign key for lookup performance
 commentSchema.index({ likes: 1 });
 /* eslint-enable */
+
+// post-save hook to set timeElapsed property with relative time string generated from createdAt.
+commentSchema.post('save', function(doc) {
+  this.set({ timeElapsed: translateISOtoRelativeTime(doc.createdAt) });
+  this.save();
+});
 
 const Comment = model("Comment", commentSchema);
 
