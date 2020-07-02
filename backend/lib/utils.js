@@ -54,8 +54,8 @@ const timeAgo = (ISODate) => {
   }
 };
 
-const translateISOtoRelativeTime = (ISO) => {
-  return timeAgo(ISO);
+const translateISOtoRelativeTime = (ISODate) => {
+  return timeAgo(ISODate);
 };
 
 module.exports = {
