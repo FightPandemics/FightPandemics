@@ -121,7 +121,20 @@ async function routes(app) {
       schema: createOrganizationSchema,
     },
     async (req) => {
-      return new Organization(req.body).save();
+      const [newOrgErr, newOrg] = await app.to(
+        new Organization(req.body).save(),
+      );
+
+      if (newOrgErr) {
+        req.log.error(newOrgErr, "Failed creating organization");
+        if (newOrgErr.name === "MongoError" && newOrgErr.code === 11000) {
+          throw app.httpErrors.conflict("Email address is already in use.");
+        } else {
+          throw app.httpErrors.internalServerError();
+        }
+      }
+
+      return newOrg;
     },
   );
 }
