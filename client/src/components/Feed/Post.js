@@ -15,7 +15,10 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import SubMenuButton from "components/Button/SubMenuButton";
-import WizardFormNav, { StyledButtonWizard } from "components/StepWizard/WizardFormNav";
+import WizardFormNav, {
+  StyledButtonWizard,
+} from "components/StepWizard/WizardFormNav";
+import { StyledLoadMoreButton } from "./StyledCommentButton";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import {
@@ -32,6 +35,8 @@ import {
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 
+const INDIVIDUAL_AUTHOR_TYPE = "Individual";
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -40,6 +45,7 @@ const Post = ({
   fullPostLength,
   handlePostDelete,
   handlePostLike,
+  includeProfileLink,
   isAuthenticated,
   loadMorePost,
   numComments,
@@ -73,6 +79,9 @@ const Post = ({
       post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
+  const authorProfileLink = `/${
+    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
+  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -145,7 +154,8 @@ const Post = ({
     if (postId) {
       loadComments();
     }
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnChange = async (e) => {
     e.preventDefault();
@@ -182,6 +192,32 @@ const Post = ({
     }
   };
 
+  const deleteComment = async (comment) => {
+    let response;
+    const postId = comment.postId;
+    const commentId = comment._id;
+    if (isAuthenticated && comment.author.id === user.id) {
+      const endPoint = `/api/posts/${postId}/comments/${commentId}`;
+
+      try {
+        response = await axios.delete(endPoint);
+      } catch (error) {
+        console.log({ error });
+      }
+      if (response && response.data) {
+        let filterComments = comments.filter((comment) => comment._id !== commentId)
+
+        await dispatchPostAction(
+          SET_COMMENTS,
+          "comments",
+          filterComments,
+          "numComments",
+          filterComments.length,
+        );
+      }
+    }
+  };
+
   const ViewMore = ({ onClick }) => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
@@ -202,7 +238,7 @@ const Post = ({
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
-          pathname: `post/${post._id}`,
+          pathname: `/post/${post._id}`,
           state: {
             post: post,
             postId: post._id,
@@ -245,6 +281,10 @@ const Post = ({
     />
   );
 
+  const renderHeaderWithLink = (
+    <Link to={authorProfileLink}>{renderHeader}</Link>
+  );
+
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
@@ -281,11 +321,17 @@ const Post = ({
       )}
       {isAuthenticated ? (
         <>
-          <Comments comments={comments} handleOnChange={handleOnChange} />
+          <Comments
+            comments={comments}
+            handleOnChange={handleOnChange}
+            deleteComment={deleteComment}
+            dispatchPostAction={dispatchPostAction}
+            user={user}
+          />
           {loadMoreComments && commentsCount >= 5 ? (
-            <Button disabled={isLoading} onClick={loadComments}>
+            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
-            </Button>
+            </StyledLoadMoreButton>
           ) : (
             <></>
           )}
@@ -347,11 +393,12 @@ const Post = ({
             }}
           >
             <div className="card-header">
-              {renderHeader}
+              {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id || user.id === post.author.id) && (
+                  (user._id === post.author.id ||
+                    user.id === post.author.id) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -366,13 +413,13 @@ const Post = ({
             {renderTags}
             <WhiteSpace />
             {renderContent}
-            {fullPostLength > CONTENT_LENGTH && (
+            {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            )}
+            ): (<Card.Body className="view-more-wrapper"/>)}
             {renderSocialIcons}
             {renderShareModal}
             {renderComments}
@@ -386,7 +433,6 @@ const Post = ({
             >
               <p>Are you sure you want to delete the post?</p>
             </WebModal>
-
           </PostCard>
           {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
@@ -396,7 +442,7 @@ const Post = ({
         //Post in feed.
         <PostCard>
           <div className="card-header">
-            {renderHeader}
+            {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
@@ -417,7 +463,7 @@ const Post = ({
           {isAuthenticated ? (
             <Link
               to={{
-                pathname: `post/${_id}`,
+                pathname: `/post/${_id}`,
                 state: {
                   post: post,
                   postId: _id,
@@ -431,13 +477,13 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH && (
+            (post.content.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ))}
+            ): (<Card.Body className="view-more-wrapper"/>))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
