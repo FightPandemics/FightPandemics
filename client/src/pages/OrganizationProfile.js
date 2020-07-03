@@ -42,7 +42,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { getOrgInitials } from "utils/userInfo";
+import { getInitials } from "utils/userInfo";
 import {
   LINKEDIN_URL,
   TWITTER_URL,
@@ -193,12 +193,12 @@ const OrganizationProfile = () => {
       const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
       const nameArr = name.split(" ");
-      if (nameArr.length < 1) {
+      if (nameArr.length < 2) {
         firstName = nameArr[0];
         lastName = firstName.split("").pop();
       } else {
         firstName = nameArr[0];
-        lastName = nameArr[0];
+        lastName = nameArr[1];
       }
 
       return (
@@ -207,7 +207,7 @@ const OrganizationProfile = () => {
             {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
             <ProfilePic
               noPic={true}
-              initials={getOrgInitials(firstName)}
+              initials={getInitials(firstName, lastName)}
             />
             <UserInfoDesktop>
               <NameDiv>
