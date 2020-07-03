@@ -11,7 +11,7 @@ const Posts = ({
   user,
 }) => {
   return (
-    <div className="feed-posts"> 
+    <div className="feed-posts">
       {Object.keys(filteredPosts).map((key) => (
         <Post
           currentPost={filteredPosts[key]}

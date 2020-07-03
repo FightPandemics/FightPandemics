@@ -94,7 +94,7 @@ const OrganizationProfile = () => {
     postsReducer,
     initialPostsState,
   );
-  
+
   const {
     userProfileState: { user },
     userProfileDispatch,
@@ -109,7 +109,7 @@ const OrganizationProfile = () => {
     objectives = {},
     urls = {},
   } = organization || {};
-  
+
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganization());
