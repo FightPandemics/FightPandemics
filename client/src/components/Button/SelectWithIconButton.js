@@ -10,7 +10,7 @@ const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
   font-weight: 600;
   font-size: 1.4rem;
   margin: 0.5rem;
-  padding: 2rem !important;
+  padding: 1rem !important;
 
   ${(props) =>
     props.long &&
