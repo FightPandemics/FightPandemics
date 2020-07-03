@@ -16,7 +16,6 @@ const commentSchema = new Schema(
       ref: "User",
       type: [ObjectId],
     },
-    timeElapsed : String,
     parentId: {
       ref: "Comment",
       type: ObjectId,
@@ -49,11 +48,12 @@ commentSchema.index({ "author.id": 1, createdAt: -1 });
 commentSchema.index({ likes: 1 });
 /* eslint-enable */
 
-// post-save hook to set timeElapsed property with relative time string generated from createdAt.
-commentSchema.post('save', function(doc) {
-  this.set({ timeElapsed: translateISOtoRelativeTime(doc.createdAt) });
-  this.save();
-});
+commentSchema.set('toObject', { virtuals: true })
+commentSchema.set('toJSON', { virtuals: true })
+
+//set virtual 'timeElapsed' property on Comment POST and Comment PATCH.
+commentSchema.virtual("timeElapsed")
+  .get(function () { return translateISOtoRelativeTime(this.createdAt) });
 
 const Comment = model("Comment", commentSchema);
 
