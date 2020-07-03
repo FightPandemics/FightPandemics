@@ -4,9 +4,10 @@ import { Modal } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 
 import EditPost from "components/CreatePost/EditPost";
+import Loader from "components/Feed/StyledLoader";
 import { FEED } from "templates/RouteWithSubRoutes";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
-import Loader from "components/Feed/StyledLoader";
+import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 
 import { postReducer, postState } from "hooks/reducers/postReducers";
@@ -228,7 +229,7 @@ const PostPage = ({
   }, []);
 
   return (
-    <>
+    <StyledPostPage>
       {postId && (
         <PostContext.Provider
           value={{
@@ -279,7 +280,7 @@ const PostPage = ({
           )}
         </PostContext.Provider>
       )}
-    </>
+    </StyledPostPage>
   );
 };
 
