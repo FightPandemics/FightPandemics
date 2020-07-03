@@ -538,13 +538,13 @@ async function routes(app) {
           {
             $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
           },
-        ]),
+        ]).then(comments => {
+          comments.forEach(comment => {
+            comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
+           })
+          return comments;
+        })
       );
-      // Set 'timeElapsed' property on every comment.
-      comments.forEach(comment => {
-        comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
-      })
-
       if (commentErr) {
         req.log.error(commentErr, "Failed retrieving comments");
         throw app.httpErrors.internalServerError();
