@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Modal as WebModal } from "antd";
+import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
@@ -205,7 +205,9 @@ const Post = ({
         console.log({ error });
       }
       if (response && response.data) {
-        let filterComments = comments.filter((comment) => comment._id !== commentId)
+        let filterComments = comments.filter(
+          (comment) => comment._id !== commentId,
+        );
 
         await dispatchPostAction(
           SET_COMMENTS,
@@ -274,7 +276,7 @@ const Post = ({
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
-		  {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
+          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
           {post?.author?.location?.country ? post.author.location.country : ""}
         </span>
       }
@@ -419,7 +421,9 @@ const Post = ({
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ): (<Card.Body className="view-more-wrapper"/>)}
+            ) : (
+              <Card.Body className="view-more-wrapper" />
+            )}
             {renderSocialIcons}
             {renderShareModal}
             {renderComments}
@@ -483,7 +487,9 @@ const Post = ({
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ): (<Card.Body className="view-more-wrapper"/>))}
+            ) : (
+              <Card.Body className="view-more-wrapper" />
+            ))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
