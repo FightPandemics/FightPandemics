@@ -48,12 +48,9 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 export const isAuthorOrg = (organizations, author) => {
-  let isValid = false
-  organizations.map(org => {
-    if(org.name === author.name) {
-      isValid = true;
-    }
-  })
+  const isValid = organizations.some(
+    (organization) => organization.name === author.name
+  );
   return isValid;
 }
 
@@ -517,7 +514,6 @@ const Feed = (props) => {
             type: SET_POSTS,
             posts: allPosts,
           });
-          console.log('allposts in feed: ', allPosts)
         }
       } catch (error) {
         console.log({

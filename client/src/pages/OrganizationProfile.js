@@ -83,7 +83,9 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganizationProfile = () => {
-  const organizationId = window.location.pathname.split("/")[2];
+  let url = window.location.pathname.split("/")
+  const organizationId = url[url.length-1]
+
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganizationContext,
   );
@@ -92,7 +94,7 @@ const OrganizationProfile = () => {
     postsReducer,
     initialPostsState,
   );
-
+  
   const {
     userProfileState: { user },
     userProfileDispatch,
@@ -107,7 +109,7 @@ const OrganizationProfile = () => {
     objectives = {},
     urls = {},
   } = organization || {};
-
+  
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganization());
@@ -136,6 +138,7 @@ const OrganizationProfile = () => {
       }
     })();
   }, [orgProfileDispatch, organizationId, userProfileDispatch]);
+
   async function fetchOrganizationPosts() {
     postsDispatch({ type: FETCH_POSTS });
     try {
@@ -150,10 +153,11 @@ const OrganizationProfile = () => {
       const message = err.response?.data?.message || err.message;
       postsDispatch({
         type: ERROR_POSTS,
-        error: `Failed loading acitivity, reason: ${message}`,
+        error: `Failed loading activity, reason: ${message}`,
       });
     }
   };
+
   useEffect(() => {
     (fetchOrganizationPosts)()
   }, [organizationId]);
@@ -189,10 +193,8 @@ const OrganizationProfile = () => {
   const renderProfileData = () => {
 
     const postDelete = async (post) => {
-      console.log('post in delete:   ', post)
       let deleteResponse;
       const endPoint = `/api/posts/${post._id}`;
-      console.log(isAuthorOrg(user.organizations, post.author))
       if (
         user &&
         (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
@@ -214,7 +216,7 @@ const OrganizationProfile = () => {
       }
     };
 
-    const handleEditPost = () => {
+    const handleEditPost = () => {     
       if (postsState.editPostModalVisibility) {
         postsDispatch({
           type: SET_EDIT_POST_MODAL_VISIBILITY,
