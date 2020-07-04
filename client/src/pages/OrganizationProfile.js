@@ -297,7 +297,6 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
-<<<<<<< HEAD
               <Activity filteredPosts={postsState.posts} user={user} handlePostDelete={postDelete} />
               {isOwner && (
                 <CreatePost
@@ -306,19 +305,6 @@ const OrganizationProfile = () => {
                   user={user}
                 />
               )}
-=======
-              <Activity 
-                filteredPosts={postsState.posts}
-                user={user}
-                handlePostDelete={postDelete}
-                handleEditPost={handleEditPost}
-              />
-              <CreatePost
-                onCancel={() => setModal(false)}
-                visible={modal}
-                user={user}
-              />
->>>>>>> edit functionality in process
             </FeedWrapper>
           </div>
           {isOwner && (
