@@ -60,8 +60,8 @@ const Post = ({
   const limit = useRef(5);
   let post;
   if(currentPost) {
-  post = currentPost 
-}
+    post = currentPost 
+  }
 
   const {
     _id,

@@ -139,7 +139,7 @@ const OrganizationProfile = () => {
     })();
   }, [orgProfileDispatch, organizationId, userProfileDispatch]);
 
-  async function fetchOrganizationPosts() {
+  const fetchOrganizationPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
     try {
       const res = await axios.get(
@@ -164,6 +164,44 @@ const OrganizationProfile = () => {
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (
+      user &&
+      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchOrganizationPosts()
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handleEditPost = () => {     
+    if (postsState.editPostModalVisibility) {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
+  };
 
   const renderURL = () => {
     if (organization) {
@@ -191,44 +229,6 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
-
-    const postDelete = async (post) => {
-      let deleteResponse;
-      const endPoint = `/api/posts/${post._id}`;
-      if (
-        user &&
-        (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
-      ) {
-        try {
-          deleteResponse = await axios.delete(endPoint);
-          if (deleteResponse && deleteResponse.data.success === true) {
-            const allPosts = {
-              ...postsState.posts,
-            };
-            delete allPosts[post._id];
-            fetchOrganizationPosts()
-          }
-        } catch (error) {
-          console.log({
-            error,
-          });
-        }
-      }
-    };
-
-    const handleEditPost = () => {     
-      if (postsState.editPostModalVisibility) {
-        postsDispatch({
-          type: SET_EDIT_POST_MODAL_VISIBILITY,
-          visibility: false,
-        });
-      } else {
-        postsDispatch({
-          type: SET_EDIT_POST_MODAL_VISIBILITY,
-          visibility: true,
-        });
-      }
-    };
 
     let firstName, lastName;
     if (!organization) {
