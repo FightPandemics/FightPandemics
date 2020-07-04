@@ -486,7 +486,7 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH ? (
+            (post?.content?.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
@@ -495,13 +495,6 @@ const Post = ({
             ) : (
               <Card.Body className="view-more-wrapper" />
             ))}
-          {fullPostLength > CONTENT_LENGTH ? (
-            <RenderViewMore
-              postId={postId}
-              onClick={onClick}
-              loadMorePost={loadMorePost}
-            />
-          ): (<Card.Body className="view-more-wrapper"/>)}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal
