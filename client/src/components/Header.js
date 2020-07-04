@@ -47,7 +47,8 @@ const DesktopMenu = styled.div`
 `;
 const NavLinks = styled.div`
   align-self: flex-end;
-  padding-top: 2rem;
+  padding-top: 1rem;
+  white-space: nowrap;
   ul {
     list-style-type: none;
     display: flex;
