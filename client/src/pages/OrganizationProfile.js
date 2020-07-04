@@ -82,8 +82,8 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganizationProfile = () => {
-  let url = window.location.pathname.split("/")
-  const organizationId = url[url.length-1]
+  let url = window.location.pathname.split("/");
+  const organizationId = url[url.length - 1];
 
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganizationContext,
@@ -99,13 +99,8 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const {
-    name,
-    location = {},
-    about = "",
-    isOwner,
-    urls = {},
-  } = organization || {};
+  const { name, location = {}, about = "", isOwner, urls = {} } =
+    organization || {};
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -156,7 +151,7 @@ const OrganizationProfile = () => {
   };
 
   useEffect(() => {
-    (fetchOrganizationPosts)()
+    fetchOrganizationPosts();
   }, [organizationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [modal, setModal] = useState(false);
@@ -167,7 +162,9 @@ const OrganizationProfile = () => {
     const endPoint = `/api/posts/${post._id}`;
     if (
       user &&
-      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organizations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -176,7 +173,7 @@ const OrganizationProfile = () => {
             ...postsState.posts,
           };
           delete allPosts[post._id];
-          fetchOrganizationPosts()
+          fetchOrganizationPosts();
         }
       } catch (error) {
         console.log({
@@ -186,7 +183,7 @@ const OrganizationProfile = () => {
     }
   };
 
-  const handleEditPost = () => {     
+  const handleEditPost = () => {
     if (postsState.editPostModalVisibility) {
       postsDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
@@ -226,7 +223,6 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
-
     let firstName, lastName;
     if (!organization) {
       return <p>Loading...</p>;
@@ -264,7 +260,7 @@ const OrganizationProfile = () => {
               <LocationMobileDiv>{address}</LocationMobileDiv>
               <IconsContainer>
                 <LocationDesktopDiv>
-                  <LocationIcon src={locationIcon} /> 
+                  <LocationIcon src={locationIcon} />
                   {address}
                 </LocationDesktopDiv>
                 <PlaceholderIcon />
@@ -294,7 +290,7 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
-              <Activity 
+              <Activity
                 filteredPosts={postsState.posts}
                 user={user}
                 handlePostDelete={postDelete}
