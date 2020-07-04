@@ -47,7 +47,8 @@ const DesktopMenu = styled.div`
 `;
 const NavLinks = styled.div`
   align-self: flex-end;
-  padding-top: 2rem;
+  padding-top: 1rem;
+  white-space: nowrap;
   ul {
     list-style-type: none;
     display: flex;
@@ -111,7 +112,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <Menu.Divider />
       {user?.organizations?.length > 0
         ? user?.organizations?.map((organization) => (
-            <Menu.Item>
+            <Menu.Item key={organization._id}>
               <Link to={`/organization/${organization._id}`}>
                 {organization.name}
               </Link>
