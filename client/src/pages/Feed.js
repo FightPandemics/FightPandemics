@@ -47,6 +47,13 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+export const isAuthorOrg = (organizations, author) => {
+  const isValid = organizations.some(
+    (organization) => organization.name === author.name,
+  );
+  return isValid;
+};
+
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
@@ -64,7 +71,7 @@ const initialState = {
   selectedType: "ALL",
   showFilters: false,
   filterModal: false,
-  createPostModal: false,
+  showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
   location: null,
@@ -188,14 +195,14 @@ const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
-    createPostModal: id === "create-post",
+    showCreatePostModal: id === "create-post",
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
 
   const {
     filterModal,
-    createPostModal,
+    showCreatePostModal,
     activePanel,
     location,
     selectedType,
@@ -268,7 +275,7 @@ const Feed = (props) => {
 
   const handleCreatePost = () => {
     if (isAuthenticated) {
-      dispatchAction(TOGGLE_STATE, "createPostModal");
+      dispatchAction(TOGGLE_STATE, "showCreatePostModal");
     } else {
       history.push(LOGIN);
     }
@@ -431,7 +438,9 @@ const Feed = (props) => {
         providers,
       } = props.history.location.state;
       location && dispatchAction(SET_VALUE, "location", location);
-      const value = Object.keys(HELP_TYPE).find(key => HELP_TYPE[key] === postType);
+      const value = Object.keys(HELP_TYPE).find(
+        (key) => HELP_TYPE[key] === postType,
+      );
       if (postType === HELP_TYPE.REQUEST) {
         // requesting help
         handleChangeType({ key: value });
@@ -496,7 +505,9 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organizations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -597,8 +608,8 @@ const Feed = (props) => {
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
-          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
-          visible={createPostModal}
+          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+          visible={showCreatePostModal}
           user={user}
         />
         {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}

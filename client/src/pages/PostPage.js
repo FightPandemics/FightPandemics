@@ -8,6 +8,9 @@ import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import EditPost from "components/CreatePost/EditPost";
 import { typeToTag } from "assets/data/formToPostMappings";
 import Loader from "components/Feed/StyledLoader";
+import { FEED } from "templates/RouteWithSubRoutes";
+import { StyledPostPage } from "components/Feed/StyledPostPage";
+import { isAuthorOrg } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 
 // Constants
@@ -164,7 +167,7 @@ const PostPage = ({
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
     ) {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
@@ -268,7 +271,7 @@ const PostPage = ({
   }, []);
 
   return (
-    <>
+    <StyledPostPage>
       {postId && (
         <PostContext.Provider
           value={{
@@ -319,7 +322,7 @@ const PostPage = ({
           )}
         </PostContext.Provider>
       )}
-    </>
+    </StyledPostPage>
   );
 };
 
