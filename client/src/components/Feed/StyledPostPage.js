@@ -1,4 +1,4 @@
-import { mq,theme } from "constants/theme";
+import { mq } from "constants/theme";
 import styled from "styled-components";
 import PostCard from "./PostCard";
 
@@ -12,7 +12,10 @@ export const StyledPostPage = styled.div`
 `;
 
 export const StyledPostPagePostCard = styled(PostCard)`
-  maxWidth: 80rem;
-  marginTop: 1rem;
-  overflowWrap: break-word;
+  max-width: 80rem;
+  margin-top: 1rem;
+  overflow-wrap: break-word;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 2rem;
+  }
 `;
