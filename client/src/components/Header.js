@@ -56,6 +56,7 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
+    align-items: center;
     .registerBtn {
       color: ${colors.royalBlue};
       border: 0.1rem solid ${colors.royalBlue};

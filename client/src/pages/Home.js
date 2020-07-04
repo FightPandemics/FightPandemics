@@ -42,6 +42,7 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
+  width: 100%;
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
