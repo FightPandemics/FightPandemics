@@ -89,7 +89,7 @@ const PostCard = styled(Card)`
         margin-top: -1.8rem;
 
         .status-icon {
-          width: 1rem;
+          width: fit-content;
           margin-right: 0.8rem;
         }
       }
