@@ -112,7 +112,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <Menu.Divider />
       {user?.organizations?.length > 0
         ? user?.organizations?.map((organization) => (
-            <Menu.Item>
+            <Menu.Item key={organization._id}>
               <Link to={`/organization/${organization._id}`}>
                 {organization.name}
               </Link>
