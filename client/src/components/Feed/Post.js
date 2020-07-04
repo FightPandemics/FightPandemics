@@ -19,6 +19,7 @@ import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
 import { StyledLoadMoreButton } from "./StyledCommentButton";
+import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import {
@@ -386,14 +387,8 @@ const Post = ({
     <>
       {postId && dispatchPostAction ? (
         //Post in post's page.
-        <div>
-          <PostCard
-            style={{
-              display: "inline-block",
-              maxWidth: "80rem",
-              marginTop: "1rem",
-            }}
-          >
+        <>
+          <StyledPostPagePostCard>
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
@@ -437,11 +432,11 @@ const Post = ({
             >
               <p>Are you sure you want to delete the post?</p>
             </WebModal>
-          </PostCard>
+          </StyledPostPagePostCard>
           {showComments && (
             <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
           )}
-        </div>
+        </>
       ) : (
         //Post in feed.
         <PostCard>
