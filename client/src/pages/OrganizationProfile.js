@@ -231,7 +231,7 @@ const OrganizationProfile = () => {
       const nameArr = name.split(" ");
       if (nameArr.length < 2) {
         firstName = nameArr[0];
-        lastName = firstName.split("").pop();
+        lastName = "";
       } else {
         firstName = nameArr[0];
         lastName = nameArr[1];

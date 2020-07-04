@@ -80,7 +80,11 @@ const Post = ({
 
   const AvatarName =
     (post?.author?.name &&
-      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
+      post.author.name
+        .split(" ") // splitting the name
+        .map((n) => n[0].toUpperCase()) // getting all initials
+        .join("") // uniting all the initials
+        .substring(0, 2)) || // only getting 2 initials
     "";
 
   // mock API to test functionality
