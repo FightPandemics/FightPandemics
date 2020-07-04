@@ -32,7 +32,6 @@ import {
   LocationDesktopDiv,
   LocationMobileDiv,
   IconsContainer,
-  HelpContainer,
   LocationIcon,
   SocialIcon,
   DescriptionMobile,
@@ -103,10 +102,8 @@ const OrganizationProfile = () => {
   const {
     name,
     location = {},
-    needs,
     about = "",
     isOwner,
-    objectives = {},
     urls = {},
   } = organization || {};
 
@@ -160,7 +157,7 @@ const OrganizationProfile = () => {
 
   useEffect(() => {
     (fetchOrganizationPosts)()
-  }, [organizationId]);
+  }, [organizationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -234,8 +231,6 @@ const OrganizationProfile = () => {
     if (!organization) {
       return <p>Loading...</p>;
     } else {
-      const needHelp = Object.values(needs).some((val) => val === true);
-      const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
       const nameArr = name.split(" ");
       if (nameArr.length < 2) {
@@ -300,10 +295,10 @@ const OrganizationProfile = () => {
             </SectionHeader>
             <FeedWrapper>
               <Activity 
-              filteredPosts={postsState.posts}
-              user={user}
-              handlePostDelete={postDelete}
-              handleEditPost={handleEditPost}
+                filteredPosts={postsState.posts}
+                user={user}
+                handlePostDelete={postDelete}
+                handleEditPost={handleEditPost}
               />
               {isOwner && (
                 <CreatePost
