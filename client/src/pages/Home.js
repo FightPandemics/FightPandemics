@@ -162,7 +162,7 @@ const Home = (props) => {
           </TextLabel>
 
           <StyledStrapline level={2} margin="none">
-            A place to offer and receive help
+            A place to offer and request help
           </StyledStrapline>
           <StyledP>Pandemics will continue to happen.</StyledP>
           <StyledP>We help communities prepare and respond.</StyledP>
