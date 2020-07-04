@@ -11,7 +11,6 @@ import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import {
-  translateISOTimeStamp,
   translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
 
@@ -231,7 +230,7 @@ const NestedComments = ({
         <StyledComment
           datetime={
             <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>{translateISOTimeStamp(comment.createdAt)}</span>
+              <span>{comment?.timeElapsed ? (comment.timeElapsed): ("")}</span>
             </Tooltip>
           }
           author={<span>{comment.author.name}</span>}

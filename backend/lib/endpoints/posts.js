@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
+const { translateISOtoRelativeTime } = require("../utils");
+
 const {
   createCommentSchema,
   getCommentsSchema,
@@ -536,7 +538,12 @@ async function routes(app) {
           {
             $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
           },
-        ]),
+        ]).then(comments => {
+          comments.forEach(comment => {
+            comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
+           })
+          return comments;
+        })
       );
       if (commentErr) {
         req.log.error(commentErr, "Failed retrieving comments");
