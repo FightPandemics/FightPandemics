@@ -10,6 +10,7 @@ const { heading } = theme.typography;
 const Heading = styled(Title)`
   &.ant-typography {
     font-weight: bold;
+    padding: 1rem;
     color: ${(props) => props.color};
     ${heading.font}
   }
