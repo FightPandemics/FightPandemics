@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
-import SubmitButton from "./SubmitButton";
+import BaseButton from "./BaseButton";
 
 // props: icon, long, righticon
 
-const SelectWithIconButton = styled(SubmitButton).attrs(({ icon, inline }) => {
+const SelectWithIconButton = styled(BaseButton).attrs(({ icon, inline }) => {
   return { icon, inline: "true" };
 })`
   border-radius: 0.6rem;
   font-weight: 600;
   font-size: 1.4rem;
   margin: 0.5rem;
-  padding: 1rem !important;
+  padding: 2rem !important;
 
   ${(props) =>
     props.long &&
