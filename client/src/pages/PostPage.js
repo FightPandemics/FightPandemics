@@ -9,6 +9,7 @@ import { FEED } from "templates/RouteWithSubRoutes";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
+import { isAuthorOrg } from "pages/Feed";
 
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import {
@@ -125,7 +126,7 @@ const PostPage = ({
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
     ) {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
