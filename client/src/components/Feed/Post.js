@@ -59,8 +59,8 @@ const Post = ({
   const { postId } = useParams();
   const limit = useRef(5);
   let post;
-  if(currentPost) {
-    post = currentPost 
+  if (currentPost) {
+    post = currentPost;
   }
 
   const {
@@ -72,7 +72,7 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
-  } = post || {}
+  } = post || {};
 
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
@@ -402,10 +402,10 @@ const Post = ({
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id || 
-                  user.id === post.author.id || 
-                  (user.organizations && isAuthorOrg(user.organizations, post.author)))
-                   && (
+                  (user._id === post.author.id ||
+                    user.id === post.author.id ||
+                    (user.organizations &&
+                      isAuthorOrg(user.organizations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -455,7 +455,9 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user?._id === post?.author?.id || user?.id === post?.author?.id || isAuthorOrg(user.organizations, post.author)) && (
+                (user?._id === post?.author?.id ||
+                  user?.id === post?.author?.id ||
+                  isAuthorOrg(user.organizations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
@@ -469,7 +471,7 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated  && post ? (
+          {isAuthenticated && post ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
