@@ -19,7 +19,7 @@ import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
 import { StyledLoadMoreButton } from "./StyledCommentButton";
-import {StyledPostPagePostCard} from "./StyledPostPage";
+import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import {

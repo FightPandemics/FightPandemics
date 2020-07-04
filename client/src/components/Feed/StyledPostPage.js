@@ -7,12 +7,11 @@ export const StyledPostPage = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100%;
     position: relative;
-    overflow-wrap: break-word;
   }      
 `;
 
 export const StyledPostPagePostCard = styled(PostCard)`
-  max-width: 80rem;
+  max-width: 100%;
   margin-top: 1rem;
   overflow-wrap: break-word;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
