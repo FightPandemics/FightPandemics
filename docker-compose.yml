@@ -59,6 +59,19 @@ services:
     networks:
       - fp_network
 
+  cypresse2e:
+    build: cypresse2e
+    dockerfile: Dockerfile.dev
+    container_name: cypresse2e
+    depends_on:
+      - client
+    environment:
+      - CYPRESS_baseUrl=http://client
+    command: npx cypress run
+    volumes:
+      - ./cypresse2e/cypress:/app/cypress
+      - ./cypresse2e/cypress.json:/app/cypress.json
+
 networks:
   fp_network:
     driver: bridge
