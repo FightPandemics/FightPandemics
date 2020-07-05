@@ -1,0 +1,6 @@
+FROM cypress/base:10
+WORKDIR '/app'
+COPY . .
+RUN npm ci
+CMD ["npx", "concurrently", "npm:start"]
+RUN npx cypress verify
