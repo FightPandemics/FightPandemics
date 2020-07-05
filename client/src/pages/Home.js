@@ -173,6 +173,7 @@ const Home = (props) => {
         <OnboardingContainer>
           <FlexChild>
             <ImageButton
+              id="HP_RE"
               type="ghost"
               inactiveImg={needHelpInactive}
               activeImg={needHelpActive}
@@ -183,6 +184,7 @@ const Home = (props) => {
           </FlexChild>
           <FlexChild>
             <ImageButton
+              id="HP_OF"
               type="ghost"
               inactiveImg={offerHelpInactive}
               activeImg={offerHelpActive}
@@ -193,7 +195,7 @@ const Home = (props) => {
           </FlexChild>
 
           <Link to="/feed">
-            <StyleLink>View Community Postings</StyleLink>
+            <StyleLink id="HP_VHB">View Community Postings</StyleLink>
           </Link>
         </OnboardingContainer>
       </>
