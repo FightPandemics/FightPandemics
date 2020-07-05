@@ -67,6 +67,8 @@ const LocationInput = ({
   location,
   onLocationChange,
   includeNavigator = false,
+  gtmAddressLineTag = "",
+  gtmShareLocationTag = "",
 }) => {
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
@@ -154,6 +156,7 @@ const LocationInput = ({
   return (
     <div>
       <StyledSelect
+        id={gtmAddressLineTag}
         showArrow={false}
         showSearch
         allowClear={selectedAddress.value}
@@ -180,6 +183,7 @@ const LocationInput = ({
         <div>
           <WhiteSpace />
           <div
+            id={gtmShareLocationTag}
             onClick={getAddressFromGeolocation}
             style={{ cursor: "pointer" }}
             className="svgicon-share-mylocation-size"
