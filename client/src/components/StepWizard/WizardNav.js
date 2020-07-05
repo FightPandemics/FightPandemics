@@ -120,10 +120,16 @@ const NextButton = styled(LeftRightIconButton)`
   }
 `;
 
-const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
+const WizardNav = ({
+  currentStep,
+  nextStep,
+  previousStep,
+  totalSteps,
+  gtmPrefix,
+}) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <BackButton onClick={previousStep}>
+      <BackButton id={`${gtmPrefix}${currentStep}_BA`} onClick={previousStep}>
         <SvgIcon
           src={backArrow}
           title={`Navigate to step ${currentStep - 1}`}
@@ -132,14 +138,14 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       </BackButton>
     ) : (
       <Link to={"/"}>
-        <BackButton>
+        <BackButton id={`${gtmPrefix}${currentStep}_BA`}>
           <SvgIcon src={backArrow} title="Navigate to the homepage" />
           <BackText>Back</BackText>
         </BackButton>
       </Link>
     )}
     {currentStep < totalSteps && (
-      <NextButton onClick={nextStep}>
+      <NextButton id={`${gtmPrefix}${currentStep}_NE`} onClick={nextStep}>
         <span>Next</span>
         <SvgIcon src={nextArrow} />
       </NextButton>
