@@ -156,7 +156,7 @@ const LocationInput = ({
   return (
     <div>
       <StyledSelect
-        id={gtmPrefix + GTM.wizardNav.enterAddress}
+        id={gtmPrefix + GTM.locationInput.enterAddress}
         showArrow={false}
         showSearch
         allowClear={selectedAddress.value}
@@ -183,7 +183,7 @@ const LocationInput = ({
         <div>
           <WhiteSpace />
           <div
-            id={gtmPrefix + GTM.wizardNav.shareLocation}
+            id={gtmPrefix + GTM.locationInput.shareLocation}
             onClick={getAddressFromGeolocation}
             style={{ cursor: "pointer" }}
             className="svgicon-share-mylocation-size"

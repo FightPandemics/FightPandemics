@@ -4,10 +4,12 @@ module.exports = {
     back: "_BA",
     skip: "_SK",
     submit: "_SUB",
-    enterAddress: "_EAZ",
-    shareLocation: "_SL",
     showAnywhere: "_SA",
     enterEmail: "_EE",
+  },
+  locationInput: {
+    enterAddress: "_EAZ",
+    shareLocation: "_SL",
   },
   requestHelp: {
     prefix: "RES",
