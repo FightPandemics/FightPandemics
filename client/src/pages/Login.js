@@ -515,7 +515,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   </>
                 ) : (
                   <p>
-                    <AuthLink to="/auth/login">
+                    <AuthLink id="SU_SI" to="/auth/login">
                       Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
@@ -539,6 +539,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           {!forgotPassword && (
             <FlexBox>
               <SocialButton
+                id="SU_FB"
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
@@ -546,6 +547,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Facebook</ButtonText>
               </SocialButton>
               <SocialButton
+                id="SU_GG"
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
@@ -561,6 +563,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Twitter</ButtonText>
               </SocialButton>**/}
               <SocialButton
+                id="SU_LK"
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}

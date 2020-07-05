@@ -160,12 +160,13 @@ const Step3 = (props) => {
         <WizardSubmit
           disabled={email === "" || !valid}
           primary="true"
+          id="OFS3_SUB"
           onClick={onSubmit}
         >
           Submit
         </WizardSubmit>
         <SkipLink>
-          <span onClick={onSubmit}>Skip</span>
+          <span  id="OFS3_SK" onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
