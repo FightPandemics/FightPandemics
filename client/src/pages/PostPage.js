@@ -126,7 +126,9 @@ const PostPage = ({
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organizations, post.author))
     ) {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
@@ -185,6 +187,20 @@ const PostPage = ({
       );
     }
     if (response && response.data) {
+      // DEMO - issue with SPAs and social sharing
+      const urlTag = document.createElement("meta");
+      const titleTag = document.createElement("meta");
+      const descriptionTag = document.createElement("meta");
+      urlTag.setAttribute("property", "og:url");
+      urlTag.content = `https://${window.location.hostname}/post/${postId}`;
+      titleTag.setAttribute("property", "og:title");
+      titleTag.content = response.data.post.title;
+      descriptionTag.setAttribute("property", "og:description");
+      descriptionTag.content = response.data.post.content;
+      const head = document.querySelector("head");
+      head.appendChild(urlTag);
+      head.appendChild(titleTag);
+      head.appendChild(descriptionTag);
       response.data.post.types.map((type) => typeToTag(type));
       let copiedpost = Object.assign({}, response.data.post);
       let postSubstring = response.data.post.content;
