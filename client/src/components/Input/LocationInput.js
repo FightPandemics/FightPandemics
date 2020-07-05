@@ -11,6 +11,7 @@ import SvgIcon from "components/Icon/SvgIcon";
 import navigation from "assets/icons/navigation.svg";
 import { asyncGetGeoLocation } from "utils/geolocation";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
 
@@ -155,7 +156,7 @@ const LocationInput = ({
   return (
     <div>
       <StyledSelect
-        id={`${gtmPrefix}_EAZ`}
+        id={gtmPrefix + GTM.wizardNav.enterAddress}
         showArrow={false}
         showSearch
         allowClear={selectedAddress.value}
@@ -182,7 +183,7 @@ const LocationInput = ({
         <div>
           <WhiteSpace />
           <div
-            id={`${gtmPrefix}_SL`}
+            id={gtmPrefix + GTM.wizardNav.shareLocation}
             onClick={getAddressFromGeolocation}
             style={{ cursor: "pointer" }}
             className="svgicon-share-mylocation-size"
