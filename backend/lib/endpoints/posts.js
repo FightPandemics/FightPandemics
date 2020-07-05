@@ -369,12 +369,16 @@ async function routes(app) {
       const { userId } = req;
       const { postId } = req.params;
       const [findErr, post] = await app.to(Post.findById(postId));
+
       if (findErr) {
         req.log.error(findErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
-      } else if (!userId.equals(post.author.id)) {
+      }
+
+      const [, author] = await app.to(User.findById(post.author.id));
+      if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
       }
 
@@ -404,12 +408,16 @@ async function routes(app) {
     async (req) => {
       const { userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
+
       if (err) {
         req.log.error(err, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
-      } else if (!userId.equals(post.author.id)) {
+      }
+
+      const [, author] = await app.to(User.findById(post.author.id));
+      if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
       }
 
@@ -538,12 +546,12 @@ async function routes(app) {
           {
             $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
           },
-        ]).then(comments => {
-          comments.forEach(comment => {
+        ]).then((comments) => {
+          comments.forEach((comment) => {
             comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
-           })
+          });
           return comments;
-        })
+        }),
       );
       if (commentErr) {
         req.log.error(commentErr, "Failed retrieving comments");

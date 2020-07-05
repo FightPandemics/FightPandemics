@@ -47,6 +47,13 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+export const isAuthorOrg = (organizations, author) => {
+  const isValid = organizations.some(
+    (organization) => organization.name === author.name,
+  );
+  return isValid;
+};
+
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
@@ -493,7 +500,9 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organizations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);

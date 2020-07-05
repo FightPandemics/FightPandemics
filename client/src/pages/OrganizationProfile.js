@@ -32,7 +32,6 @@ import {
   LocationDesktopDiv,
   LocationMobileDiv,
   IconsContainer,
-  HelpContainer,
   LocationIcon,
   SocialIcon,
   DescriptionMobile,
@@ -42,6 +41,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
+import { isAuthorOrg } from "pages/Feed";
 import { getInitials } from "utils/userInfo";
 import {
   LINKEDIN_URL,
@@ -64,6 +64,7 @@ import {
   withOrganizationContext,
 } from "context/OrganizationContext";
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   postsReducer,
   postsState as initialPostsState,
@@ -81,7 +82,9 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganizationProfile = () => {
-  const organizationId = window.location.pathname.split("/")[2];
+  let url = window.location.pathname.split("/");
+  const organizationId = url[url.length - 1];
+
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganizationContext,
   );
@@ -96,15 +99,8 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const {
-    name,
-    location = {},
-    needs,
-    about = "",
-    isOwner,
-    objectives = {},
-    urls = {},
-  } = organization || {};
+  const { name, location = {}, about = "", isOwner, urls = {} } =
+    organization || {};
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -135,29 +131,71 @@ const OrganizationProfile = () => {
     })();
   }, [orgProfileDispatch, organizationId, userProfileDispatch]);
 
+  const fetchOrganizationPosts = async () => {
+    postsDispatch({ type: FETCH_POSTS });
+    try {
+      const res = await axios.get(
+        `/api/posts?limit=-1&authorId=${organizationId}`,
+      );
+      postsDispatch({
+        type: SET_POSTS,
+        posts: res.data,
+      });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      postsDispatch({
+        type: ERROR_POSTS,
+        error: `Failed loading activity, reason: ${message}`,
+      });
+    }
+  };
+
   useEffect(() => {
-    (async function fetchOrganizationPosts() {
-      postsDispatch({ type: FETCH_POSTS });
-      try {
-        const res = await axios.get(
-          `/api/posts?limit=-1&authorId=${organizationId}`,
-        );
-        postsDispatch({
-          type: SET_POSTS,
-          posts: res.data,
-        });
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading acitivity, reason: ${message}`,
-        });
-      }
-    })();
-  }, [organizationId]);
+    fetchOrganizationPosts();
+  }, [organizationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (
+      user &&
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organizations, post.author))
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchOrganizationPosts();
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handleEditPost = () => {
+    if (postsState.editPostModalVisibility) {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
+  };
 
   const renderURL = () => {
     if (organization) {
@@ -189,8 +227,6 @@ const OrganizationProfile = () => {
     if (!organization) {
       return <p>Loading...</p>;
     } else {
-      const needHelp = Object.values(needs).some((val) => val === true);
-      const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
       const nameArr = name.split(" ");
       if (nameArr.length < 2) {
@@ -254,7 +290,12 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
-              <Activity filteredPosts={postsState.posts} />
+              <Activity
+                filteredPosts={postsState.posts}
+                user={user}
+                handlePostDelete={postDelete}
+                handleEditPost={handleEditPost}
+              />
               {isOwner && (
                 <CreatePost
                   onCancel={() => setModal(false)}

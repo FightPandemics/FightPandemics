@@ -4,6 +4,7 @@ import axios from "axios";
 import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -13,6 +14,7 @@ import { StyledCommentButton } from "./StyledCommentButton";
 import {
   translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
+import { authorProfileLink } from "./utils";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -233,8 +235,10 @@ const NestedComments = ({
               <span>{comment?.timeElapsed ? (comment.timeElapsed): ("")}</span>
             </Tooltip>
           }
-          author={<span>{comment.author.name}</span>}
-          avatar={renderAvatar}
+          author={
+            <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
+          }
+          avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (

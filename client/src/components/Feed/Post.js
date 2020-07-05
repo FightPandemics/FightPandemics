@@ -31,12 +31,12 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
+import { isAuthorOrg } from "pages/Feed";
+import { authorProfileLink } from "./utils";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
-
-const INDIVIDUAL_AUTHOR_TYPE = "Individual";
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -59,7 +59,10 @@ const Post = ({
 }) => {
   const { postId } = useParams();
   const limit = useRef(5);
-  const post = currentPost;
+  let post;
+  if (currentPost) {
+    post = currentPost;
+  }
 
   const {
     _id,
@@ -70,7 +73,7 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
-  } = post;
+  } = post || {};
 
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
@@ -80,9 +83,6 @@ const Post = ({
       post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
     "";
 
-  const authorProfileLink = `/${
-    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
-  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -266,9 +266,9 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post.author.name}
+      title={post?.author?.name}
       thumb={
-        post.author.photo ? (
+        post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
@@ -285,7 +285,7 @@ const Post = ({
   );
 
   const renderHeaderWithLink = (
-    <Link to={authorProfileLink}>{renderHeader}</Link>
+    <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
 
   const renderContent = (
@@ -299,8 +299,8 @@ const Post = ({
 
   const renderTags = (
     <Card.Body>
-      {post.types &&
-        post.types.map((tag, idx) => (
+      {post?.types &&
+        post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
             {typeToTag(tag)}
           </FilterTag>
@@ -350,11 +350,11 @@ const Post = ({
       <PostSocial
         handlePostLike={handlePostLike}
         url={window.location.href}
-        liked={post.liked}
+        liked={post?.liked}
         shared={shared}
         postpage={postId}
         showComments={showComments}
-        numLikes={post.likesCount}
+        numLikes={post?.likesCount}
         numComments={numComments}
         numShares={fakeShares}
         isAuthenticated={isAuthenticated}
@@ -364,7 +364,7 @@ const Post = ({
           setShared(true);
           return setCopied(!copied);
         }}
-        id={post._id}
+        id={post?._id}
       />
     </Card.Body>
   );
@@ -395,7 +395,9 @@ const Post = ({
                 {isAuthenticated &&
                   user &&
                   (user._id === post.author.id ||
-                    user.id === post.author.id) && (
+                    user.id === post.author.id ||
+                    (user.organizations &&
+                      isAuthorOrg(user.organizations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -445,7 +447,9 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user._id === post.author.id || user.id === post.author.id) && (
+                (user?._id === post?.author?.id ||
+                  user?.id === post?.author?.id ||
+                  isAuthorOrg(user.organizations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
@@ -459,7 +463,7 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated ? (
+          {isAuthenticated && post ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
@@ -476,7 +480,7 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH ? (
+            (post?.content?.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
