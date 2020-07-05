@@ -215,11 +215,14 @@ const NavigationLayout = (props) => {
             ))
           : null}
         <NavItemBrief>
-          <Link to="/create-organization-profile">+ Add Organization</Link>
+          <Link id="NAV_ADO" to="/create-organization-profile">
+            + Add Organization
+          </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
+          id="NAV_HB"
           to={{
             pathname: "/feed",
             user,
@@ -229,7 +232,9 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id="NAV_AU" to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
@@ -241,10 +246,14 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Login / Register</Link>
+        <Link id="NAV_SI" to="/auth/login">
+          Login / Register
+        </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id="NAV_AU" to="/about-us">
+          About Us
+        </Link>
       </NavItem>
     </>
   );
