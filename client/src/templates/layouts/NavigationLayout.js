@@ -12,6 +12,7 @@ import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const NOTION_URL =
   "https://www.notion.so/fightpandemics/FightPandemics-Overview-cd01dcfc05f24312ac454ac94a37eb5e";
@@ -215,14 +216,17 @@ const NavigationLayout = (props) => {
             ))
           : null}
         <NavItemBrief>
-          <Link id="NAV_ADO" to="/create-organization-profile">
+          <Link
+            id={GTM.navBar.prefix + GTM.navBar.addOrg}
+            to="/create-organization-profile"
+          >
             + Add Organization
           </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
-          id="NAV_HB"
+          id={GTM.navBar.prefix + GTM.navBar.feed}
           to={{
             pathname: "/feed",
             user,
@@ -232,7 +236,7 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link id="NAV_AU" to="/about-us">
+        <Link id={GTM.navBar.prefix + GTM.navBar.aboutUs} to="/about-us">
           About Us
         </Link>
       </NavItem>
@@ -246,12 +250,12 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link id="NAV_SI" to="/auth/login">
+        <Link id={GTM.navBar.prefix + GTM.navBar.login} to="/auth/login">
           Login / Register
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link id="NAV_AU" to="/about-us">
+        <Link id={GTM.navBar.prefix + GTM.navBar.aboutUs} to="/about-us">
           About Us
         </Link>
       </NavItem>
