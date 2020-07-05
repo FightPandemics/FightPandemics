@@ -67,11 +67,14 @@ services:
     depends_on:
       - client
     environment:
-      - CYPRESS_baseUrl=http://client
-    command: npx cypress run
+      - CYPRESS_baseUrl=http://client:3000
+    command: npx cypress run 
     volumes:
       - ./cypresse2e/cypress:/app/cypress
       - ./cypresse2e/cypress.json:/app/cypress.json
+    working_dir: /app
+    networks:
+      - fp_network
 
 networks:
   fp_network:
