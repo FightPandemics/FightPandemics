@@ -508,14 +508,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       </AuthLink>
                     </p>
                     <p>
-                      <AuthLink  id="SU_JN" to="/auth/signup">
+                      <AuthLink  id= "SU_JN" to="/auth/signup">
                         Don't have an account? <u>Sign Up</u>
                       </AuthLink>
                     </p>
                   </>
                 ) : (
                   <p>
-                    <AuthLink id="SI_SI" to="/auth/login">
+                    <AuthLink id="SU_SI" to="/auth/login">
                       Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
