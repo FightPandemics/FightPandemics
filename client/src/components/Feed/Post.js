@@ -33,6 +33,7 @@ import {
 } from "hooks/actions/postActions";
 import { isAuthorOrg } from "pages/Feed";
 import { authorProfileLink } from "./utils";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -79,9 +80,7 @@ const Post = ({
   const [comment, setComment] = useState([]);
 
   const AvatarName =
-    (post?.author?.name &&
-      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
-    "";
+    (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
 
   // mock API to test functionality
   /* to be removed after full integration with user api */

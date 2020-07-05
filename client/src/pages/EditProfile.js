@@ -33,7 +33,7 @@ import {
   updateUserError,
   updateUserSuccess,
 } from "hooks/actions/userActions";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 
 const URLS_CONFIG = {
@@ -104,7 +104,7 @@ function EditProfile(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName = "", lastName = "", urls = {}, about } = user || {};
+  const { firstName, lastName, urls = {}, about } = user || {};
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
@@ -148,7 +148,7 @@ function EditProfile(props) {
           <ProfilePic
             resolution={"7680px"}
             noPic={true}
-            initials={getInitials(firstName, lastName)}
+            initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
           />
         </TitlePictureWrapper>
         {/* hide this until backend API is available
