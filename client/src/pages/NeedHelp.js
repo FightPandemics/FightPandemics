@@ -76,8 +76,7 @@ const Step2 = (props) => {
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
-            gtmAddressLineTag="RES2_EAZ"
-            gtmShareLocationTag="RES2_SL"
+            gtmPrefix="RES2"
             location={props.location}
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
