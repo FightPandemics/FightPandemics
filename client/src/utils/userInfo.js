@@ -1,8 +1,7 @@
-export const getInitials = (firstName, lastName) => {
-  return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
-};
-
 export const getInitialsFromFullName = (fullName) => {
-  const [firstName, lastName] = fullName.split(" ");
-  return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+  return fullName
+    .split(" ")
+    .map((n) => n[0].toUpperCase())
+    .join("")
+    .substring(0, 2);
 };

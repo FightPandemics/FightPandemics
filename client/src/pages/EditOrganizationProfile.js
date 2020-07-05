@@ -17,7 +17,7 @@ import {
   MobilePicWrapper,
 } from "../components/EditProfile/EditComponents";
 import ProfilePic from "components/Picture/ProfilePic";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 import {
   APPLESTORE_URL,
@@ -145,22 +145,13 @@ function EditOrganizationProfile(props) {
   }, [orgProfileDispatch, organizationId]);
 
   const renderProfilePicture = () => {
-    let firstName, lastName;
     if (organization) {
-      const nameArr = name.split(" ");
-      if (nameArr.length < 2) {
-        firstName = nameArr[0];
-        lastName = firstName.split("").pop();
-      } else {
-        firstName = nameArr[0];
-        lastName = nameArr[1];
-      }
       return (
         <ProfilePicWrapper>
           <ProfilePic
             resolution={"7680px"}
             noPic={true}
-            initials={getInitials(firstName, lastName)}
+            initials={getInitialsFromFullName(name)}
           />
           {/* hide this until backend API is available
           <ChangePicButton>Change</ChangePicButton> */}
