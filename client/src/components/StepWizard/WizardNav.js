@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { mq, theme } from "constants/theme";
 import LeftRightIconButton from "components/Button/LeftRightIconButton";
+import GTM from "constants/gtm-tags";
 
 // ICONS
 import SvgIcon from "../Icon/SvgIcon";
@@ -120,10 +121,19 @@ const NextButton = styled(LeftRightIconButton)`
   }
 `;
 
-const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
+const WizardNav = ({
+  currentStep,
+  nextStep,
+  previousStep,
+  totalSteps,
+  gtmPrefix,
+}) => (
   <StyledWizardNav>
     {currentStep > 1 ? (
-      <BackButton onClick={previousStep}>
+      <BackButton
+        id={gtmPrefix + currentStep + GTM.wizardNav.back}
+        onClick={previousStep}
+      >
         <SvgIcon
           src={backArrow}
           title={`Navigate to step ${currentStep - 1}`}
@@ -132,14 +142,17 @@ const WizardNav = ({ currentStep, nextStep, previousStep, totalSteps }) => (
       </BackButton>
     ) : (
       <Link to={"/"}>
-        <BackButton>
+        <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
           <SvgIcon src={backArrow} title="Navigate to the homepage" />
           <BackText>Back</BackText>
         </BackButton>
       </Link>
     )}
     {currentStep < totalSteps && (
-      <NextButton onClick={nextStep}>
+      <NextButton
+        id={gtmPrefix + currentStep + GTM.wizardNav.next}
+        onClick={nextStep}
+      >
         <span>Next</span>
         <SvgIcon src={nextArrow} />
       </NextButton>
