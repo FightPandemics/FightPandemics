@@ -1,5 +1,5 @@
 module.exports = {
-  navBar: {
+  nav: {
     prefix: "NAV",
     login: "_SI",
     register: "_JN",

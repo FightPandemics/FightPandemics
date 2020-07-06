@@ -217,7 +217,7 @@ const NavigationLayout = (props) => {
           : null}
         <NavItemBrief>
           <Link
-            id={GTM.navBar.prefix + GTM.navBar.addOrg}
+            id={GTM.nav.prefix + GTM.nav.addOrg}
             to="/create-organization-profile"
           >
             + Add Organization
@@ -226,7 +226,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <NavItem history={history}>
         <Link
-          id={GTM.navBar.prefix + GTM.navBar.feed}
+          id={GTM.nav.prefix + GTM.nav.feed}
           to={{
             pathname: "/feed",
             user,
@@ -236,7 +236,7 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link id={GTM.navBar.prefix + GTM.navBar.aboutUs} to="/about-us">
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
           About Us
         </Link>
       </NavItem>
@@ -250,12 +250,12 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link id={GTM.navBar.prefix + GTM.navBar.login} to="/auth/login">
+        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
           Login / Register
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link id={GTM.navBar.prefix + GTM.navBar.aboutUs} to="/about-us">
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
           About Us
         </Link>
       </NavItem>

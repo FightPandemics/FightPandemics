@@ -110,7 +110,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <Menu.Divider />
       <Menu.Item>
         <Link
-          id={GTM.navBar.prefix + GTM.navBar.addOrg}
+          id={GTM.nav.prefix + GTM.nav.addOrg}
           to="/create-organization-profile"
         >
           Add Organisation
@@ -138,7 +138,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <>
         <li>
           <NavLink
-            id={GTM.navBar.prefix + GTM.navBar.aboutUs}
+            id={GTM.nav.prefix + GTM.nav.aboutUs}
             activeStyle={activeStyles}
             to="/about-us"
           >
@@ -147,7 +147,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         </li>
         <li>
           <NavLink
-            id={GTM.navBar.prefix + GTM.navBar.feed}
+            id={GTM.nav.prefix + GTM.nav.feed}
             activeStyle={activeStyles}
             to="/feed"
           >
@@ -171,7 +171,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
           <>
             <li>
               <NavLink
-                id={GTM.navBar.prefix + GTM.navBar.login}
+                id={GTM.nav.prefix + GTM.nav.login}
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
@@ -180,14 +180,14 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
             </li>
             <li className="registerBtn">
               <NavLink
-                id={GTM.navBar.prefix + GTM.navBar.register}
+                id={GTM.nav.prefix + GTM.nav.register}
                 className="registerLink"
                 to="/auth/signup"
               >
                 Register
               </NavLink>
             </li>
-            <Link id={GTM.navBar.prefix + GTM.navBar.feedBack} to="/feed">
+            <Link id={GTM.nav.prefix + GTM.nav.feedBack} to="/feed">
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
             </Link>
           </>
