@@ -61,14 +61,14 @@ import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import smileIcon from "assets/icons/smile-icon.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
 
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
-  website: [smileIcon],
+  website: [websiteIcon],
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
