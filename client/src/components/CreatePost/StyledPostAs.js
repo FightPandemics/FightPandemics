@@ -136,6 +136,7 @@ const ViewPostButton = styled(BaseButton)`
 
 const OptionWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   border: 0.2rem solid ${colors.royalBlue};
