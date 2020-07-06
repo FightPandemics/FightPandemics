@@ -92,7 +92,7 @@ const URLS_CONFIG = {
     LINKEDIN_URL,
   ],
   website: [
-    "Personal Website",
+    "Website",
     {
       validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
