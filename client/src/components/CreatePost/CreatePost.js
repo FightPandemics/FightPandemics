@@ -144,21 +144,30 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = (props) => {
+const CreatePost = ({ onCancel, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
+
+  const clearState = () => {
+    onCancel();
+    // delay for modal close effect to complete before re-render
+    setTimeout(() => {
+      setCurrentStep(1);
+      setPostId("");
+    }, 200);
+  };
 
   return (
     <CreatePostContext.Provider
       value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
-      <Wrapper {...props}>
+      <Wrapper onCancel={clearState} {...props}>
         <Step1 />
         <Step2 user={props.user} />
         <Step4 />
       </Wrapper>
-      <Step3 {...props} />
+      <Step3 onCancel={clearState} {...props} />
     </CreatePostContext.Provider>
   );
 };

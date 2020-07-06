@@ -44,7 +44,7 @@ import {
 import Marker from "../assets/create-profile-images/location-marker.svg";
 import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { refetchUser } from "actions/authActions";
 
 const errorStyles = {
@@ -98,6 +98,9 @@ function EditOrganizationAccount({ refetchUser }) {
         "Please select an address from the drop-down",
       );
     }
+    Object.entries(NEEDS).map(([key, label]) => {
+      if (formData.needs[key] === undefined) formData.needs[key] = needs[key];
+    });
     formData.location = location;
     orgProfileDispatch(updateOrganization());
     try {
@@ -133,10 +136,6 @@ function EditOrganizationAccount({ refetchUser }) {
     })();
   }, [orgProfileDispatch, organizationId]);
 
-  const handleCheckboxChange = ([event]) => {
-    return event.target.checked;
-  };
-
   const organizationInfo = {
     // label name, variable name, value
     "Organization Name": ["name", name],
@@ -154,7 +153,7 @@ function EditOrganizationAccount({ refetchUser }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={handleCheckboxChange}
+                onChange={([event]) => event.target.checked}
               >
                 <Label inputColor="#000000">{label}</Label>
               </Controller>
@@ -277,22 +276,13 @@ function EditOrganizationAccount({ refetchUser }) {
   };
 
   const renderProfilePicture = () => {
-    let firstName, lastName;
     if (organization) {
-      const nameArr = name.split(" ");
-      if (nameArr.length < 2) {
-        firstName = nameArr[0];
-        lastName = firstName.split("").pop();
-      } else {
-        firstName = nameArr[0];
-        lastName = nameArr[1];
-      }
       return (
         <ProfilePicWrapper>
           <ProfilePic
             resolution={"7680px"}
             noPic={true}
-            initials={getInitials(firstName, lastName)}
+            initials={getInitialsFromFullName(name)}
           />
           {/* hide this until backend API is available
           <ChangePicButton>Change</ChangePicButton> */}

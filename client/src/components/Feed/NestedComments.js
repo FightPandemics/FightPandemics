@@ -4,6 +4,7 @@ import axios from "axios";
 import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -11,9 +12,9 @@ import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import {
-  translateISOTimeStamp,
   translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
+import { authorProfileLink } from "./utils";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -231,11 +232,13 @@ const NestedComments = ({
         <StyledComment
           datetime={
             <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>{translateISOTimeStamp(comment.createdAt)}</span>
+              <span>{comment?.timeElapsed ? (comment.timeElapsed): ("")}</span>
             </Tooltip>
           }
-          author={<span>{comment.author.name}</span>}
-          avatar={renderAvatar}
+          author={
+            <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
+          }
+          avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (

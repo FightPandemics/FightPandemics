@@ -17,6 +17,7 @@ import createOrganizationSvg from "assets/icons/create-organization.svg";
 import { connect } from "react-redux";
 import { theme } from "constants/theme";
 import { StyledForm } from "../components/CreatePost/StyledCreatePost";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import {
   Main,
   SvgContainer,
@@ -105,11 +106,15 @@ const CreateOrgProfile = (props) => {
 
   const onFormSubmit = async (formData) => {
     if (!privacy) {
-      alert("You must agree to our privacy policy before proceeding");
-      return;
+      return createOrganizationFormDispatch({
+        type: CREATE_ORGANIZATION_ERROR,
+        error: `You must agree to our privacy policy before proceeding`,
+      });
     } else if (!conditions) {
-      alert("You must agree to our terms and conditions before proceeding");
-      return;
+      return createOrganizationFormDispatch({
+        type: CREATE_ORGANIZATION_ERROR,
+        error: `You must agree to our terms and conditions before proceeding`,
+      });
     } else {
       if (props.user) {
         if (!location) {
@@ -138,8 +143,10 @@ const CreateOrgProfile = (props) => {
           });
         }
       } else {
-        alert("You must be logged in to create an organization profile");
-        return;
+        return createOrganizationFormDispatch({
+          type: CREATE_ORGANIZATION_ERROR,
+          error: `You must be logged in to create an organization profile`,
+        });
       }
     }
   };
@@ -153,6 +160,12 @@ const CreateOrgProfile = (props) => {
         <Heading className="h4" level={4}>
           Create Organization Profile
         </Heading>
+        {createOrganizationFormState.error && (
+          <ErrorAlert
+            message={createOrganizationFormState.error}
+            type="error"
+          />
+        )}
         <WhiteSpace />
         <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
           <InputWrapper>

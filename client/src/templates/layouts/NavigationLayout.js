@@ -4,7 +4,7 @@ import { Typography } from "antd";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
@@ -12,9 +12,8 @@ import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
-const NOTION_URL =
-  "https://www.notion.so/fightpandemics/FightPandemics-Overview-cd01dcfc05f24312ac454ac94a37eb5e";
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
@@ -176,8 +175,11 @@ const NavigationLayout = (props) => {
 
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
-      const userinitials = getInitials(user.firstName, user.lastName);
-      return <AvatarInitials>{userinitials}</AvatarInitials>;
+      return (
+        <AvatarInitials>
+          {getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
+        </AvatarInitials>
+      );
     }
   };
 
@@ -215,11 +217,17 @@ const NavigationLayout = (props) => {
             ))
           : null}
         <NavItemBrief>
-          <Link to="/create-organization-profile">+ Add Organization</Link>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organization-profile"
+          >
+            + Add Organization
+          </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
+          id={GTM.nav.prefix + GTM.nav.feed}
           to={{
             pathname: "/feed",
             user,
@@ -229,7 +237,9 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
@@ -241,10 +251,14 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Sign In / Join Now</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
+          Sign In / Join Now
+        </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
     </>
   );

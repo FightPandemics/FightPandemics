@@ -152,7 +152,21 @@ async function routes(app) {
     },
     async (req) => {
       const { body, userId: ownerId } = req;
-      return new Organization({ ...body, ownerId }).save();
+      const [newOrgErr, newOrg] = await app.to(
+        new Organization({ ...body, ownerId }).save(),
+      );
+
+      if (newOrgErr) {
+        req.log.error(newOrgErr, "Failed creating organization");
+        if (newOrgErr.name === "ValidationError") {
+          throw app.httpErrors.conflict(
+            "Email address is already in use or email address cannot be validated!",
+          );
+        } else {
+          throw app.httpErrors.internalServerError();
+        }
+      }
+      return newOrg;
     },
   );
 }
