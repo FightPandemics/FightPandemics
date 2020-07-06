@@ -5,6 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
 import axios from "axios";
+import GTM from "constants/gtm-tags";
 import {
   StyledWizard,
   WizardContainer,
@@ -65,6 +66,7 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
+              id={GTM.step1.volunteer + props.currentStep + GTM.step1.orgbtn + GTM.step1.donor}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
