@@ -12,6 +12,10 @@ const WizardSubmit = styled(BaseButton)`
   background-color: ${royalBlue};
   width: inherit;
   transition: all .1s;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
   &:hover {
     background-color: ${white};
