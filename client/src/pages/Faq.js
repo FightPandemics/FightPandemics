@@ -411,7 +411,7 @@ const Faq = () => {
           <details>
             <summary>How can I reset my password?</summary>
             <p>
-              Click on "Login" from the homepage and then click on "Forgot
+              Click on "Sign In" from the homepage and then click on "Forgot
               password" and follow the instructions
             </p>
           </details>
@@ -422,7 +422,7 @@ const Faq = () => {
             <p>
               Please check if your password has at least 8 letters. If you
               already have an account but forgot your login password, click on
-              "Login" from the homepage and then go to "Forgot password".
+              "Sign In" from the homepage and then go to "Forgot password".
             </p>
           </details>
         </AnswerContainer>
