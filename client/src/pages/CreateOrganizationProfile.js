@@ -258,7 +258,6 @@ const CreateOrgProfile = (props) => {
                 onChange={([event]) => event.target.checked}
               />
             </InputGroup>
-
             <span style={errorStyles}>
               {errors.needs && "Please select at least one option"}
             </span>
@@ -306,8 +305,7 @@ const CreateOrgProfile = (props) => {
             </span>
             <WhiteSpace />
             <WhiteSpace />
-          </div>
-          
+          </div> 
           <InputWrapper>
             <Label style={styleLabel} label="" />   
             <StyledCheckbox
