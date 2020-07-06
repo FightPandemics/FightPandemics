@@ -439,7 +439,7 @@ const Post = ({
           {showComments && (
             <StyledButtonWizard
               nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
-            ></StyledButtonWizard>
+            />
           )}
         </>
       ) : (
