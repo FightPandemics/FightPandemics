@@ -13,6 +13,8 @@ const Container = styled(Modal)`
   font-size: ${typography.size.medium};
   font-weight: 600;
   line-height: 2.2rem;
+  width: 52rem !important;
+
   .ant-modal-content {
     width: 100%;
     max-width: 56.4rem;
@@ -142,6 +144,7 @@ const OptionWrapper = styled.div`
   border: 0.2rem solid ${colors.royalBlue};
   border-radius: 0.8rem;
   cursor: pointer;
+  font-size: 1.4rem;
 
   p {
     margin-top: 1.4rem;
