@@ -1,5 +1,6 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
+import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,8 +10,9 @@ import MenuIcon from "assets/icons/menu.svg";
 import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+
+import GTM from "constants/gtm-tags";
 import { theme, mq } from "../constants/theme";
-import { Menu, Dropdown } from "antd";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -107,7 +109,12 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/create-organization-profile">Add Organisation</Link>
+        <Link
+          id={GTM.navBar.prefix + GTM.navBar.addOrg}
+          to="/create-organization-profile"
+        >
+          Add Organisation
+        </Link>
       </Menu.Item>
       <Menu.Divider />
       {user?.organizations?.length > 0
@@ -130,12 +137,20 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
     return (
       <>
         <li>
-          <NavLink activeStyle={activeStyles} to="/about-us">
+          <NavLink
+            id={GTM.navBar.prefix + GTM.navBar.aboutUs}
+            activeStyle={activeStyles}
+            to="/about-us"
+          >
             About Us
           </NavLink>
         </li>
         <li>
-          <NavLink activeStyle={activeStyles} to="/feed">
+          <NavLink
+            id={GTM.navBar.prefix + GTM.navBar.feed}
+            activeStyle={activeStyles}
+            to="/feed"
+          >
             Feed
           </NavLink>
         </li>
@@ -155,16 +170,24 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         ) : (
           <>
             <li>
-              <NavLink activeStyle={activeStyles} to="/auth/login">
+              <NavLink
+                id={GTM.navBar.prefix + GTM.navBar.login}
+                activeStyle={activeStyles}
+                to="/auth/login"
+              >
                 Login
               </NavLink>
             </li>
             <li className="registerBtn">
-              <NavLink className="registerLink" to="/auth/signup">
+              <NavLink
+                id={GTM.navBar.prefix + GTM.navBar.register}
+                className="registerLink"
+                to="/auth/signup"
+              >
                 Register
               </NavLink>
             </li>
-            <Link to="/feed">
+            <Link id={GTM.navBar.prefix + GTM.navBar.feedBack} to="/feed">
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
             </Link>
           </>
