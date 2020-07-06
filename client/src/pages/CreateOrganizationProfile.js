@@ -41,12 +41,9 @@ import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
 
-
 const FooterLink = styled(Link)`
-
    margin: 0.50em;
   text-decoration-line: underline;
-
 `;
 
 const { type, industry } = createOrganizationProfile;
@@ -331,8 +328,7 @@ const CreateOrgProfile = (props) => {
               By signing up, I agree to the{" "}
               <FooterLink to="/terms-conditions">Terms and Conditions</FooterLink>
             </StyledCheckbox>
-          </InputWrapper>
-          
+          </InputWrapper>         
           <WhiteSpace />
           <WhiteSpace />
           <SubmitButton
