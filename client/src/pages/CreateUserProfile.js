@@ -136,7 +136,6 @@ const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
 
-
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
