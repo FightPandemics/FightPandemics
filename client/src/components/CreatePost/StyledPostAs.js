@@ -163,7 +163,10 @@ const Option = ({ img, text, onClick, type }) => (
       backgroundColor: type === text.toLowerCase() && `${colors.lightGray}`,
     }}
   >
-    <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
+    <SvgIcon
+      src={img}
+      style={{ marginBottom: "1.5rem", width: "4rem", height: "auto" }}
+    />
     <p>{text}</p>
   </OptionWrapper>
 );
