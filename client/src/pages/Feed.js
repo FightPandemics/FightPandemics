@@ -48,7 +48,7 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 export const isAuthorOrg = (organizations, author) => {
-  const isValid = organizations.some(
+  const isValid = organizations?.some(
     (organization) => organization.name === author.name,
   );
   return isValid;
