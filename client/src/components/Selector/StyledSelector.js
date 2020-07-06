@@ -24,6 +24,10 @@ const StyledSelector = styled(Select)`
       color: ${colors.royalBlue};
     }
   }
+
+  .ant-select-arrow {
+    right: 1rem;
+  }
 `;
 
 export default StyledSelector;
