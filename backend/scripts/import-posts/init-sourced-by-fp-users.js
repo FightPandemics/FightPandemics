@@ -14,7 +14,7 @@ const SOURCED_BY_FP_LOCATION = {
 
 const SOURCED_BY_FP_OWNER_FILTER = {
   // don't update email post-launch
-  email: "sourcedby@fightpandemics.com",
+  email: "admin@fightpandemics.com",
 };
 
 const SOURCED_BY_FP_OWNER_UPDATE = {
