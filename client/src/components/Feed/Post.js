@@ -314,6 +314,7 @@ const Post = ({
     >
       {isAuthenticated ? (
         <AutoSize
+          gtmTag={GTM.post.prefix + GTM.post.writeComment + postId}
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
