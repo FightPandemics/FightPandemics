@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import StepWizard from "react-step-wizard";
 import SvgIcon from "components/Icon/SvgIcon";
 import { mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 export const StyledButtonWizard = styled(StepWizard)`
@@ -39,10 +40,10 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 `;
 
-const WizardFormNav = () => (
+const WizardFormNav = ({ gtmPrefix = "" }) => (
   <StyledWizardNav>
     <Link to={"/feed"}>
-      <BackButton>
+      <BackButton id={gtmPrefix + GTM.wizardNav.back}>
         <SvgIcon src={backArrow} title="Navigate to feed page" />
         <BackText>Back</BackText>
       </BackButton>
