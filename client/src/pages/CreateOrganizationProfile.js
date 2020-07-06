@@ -39,6 +39,15 @@ import {
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
+import styled from "styled-components";
+
+
+const FooterLink = styled(Link)`
+
+   margin: 0.50em;
+  text-decoration-line: underline;
+
+`;
 
 const { type, industry } = createOrganizationProfile;
 
@@ -301,15 +310,16 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
+          
           <InputWrapper>
-            <Label style={styleLabel} label="" />
+            <Label style={styleLabel} label="" />   
             <StyledCheckbox
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              By signing up, I agree to the{""}
+              <FooterLink to="/privacy-policy">Privacy Policy</FooterLink>
             </StyledCheckbox>
             <WhiteSpace />
             <Label style={styleLabel} label="" />
@@ -317,11 +327,12 @@ const CreateOrgProfile = (props) => {
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
-            >
+            >              
               By signing up, I agree to the{" "}
-              <Link to="/terms-conditions">Terms and Conditions</Link>
+              <FooterLink to="/terms-conditions">Terms and Conditions</FooterLink>
             </StyledCheckbox>
           </InputWrapper>
+          
           <WhiteSpace />
           <WhiteSpace />
           <SubmitButton

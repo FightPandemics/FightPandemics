@@ -38,6 +38,15 @@ import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
 
+
+
+const FooterLink = styled(Link)`
+
+   margin: 0.50em;
+  text-decoration-line: underline;
+
+`;
+
 const BrandLink = styled(Link)`
   align-self: flex-start;
   img {
@@ -130,6 +139,7 @@ const CheckboxGroup = ({
 const Submit = styled(SubmitButton)`
   font-weight: 500;
 `;
+
 
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
@@ -382,7 +392,7 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <FooterLink  to="/privacy-policy">Privacy Policy</FooterLink >
             </StyledCheckbox>
             <WhiteSpace />
             <StyledCheckbox
@@ -391,7 +401,7 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <Link to="/terms-conditions">Terms and Conditions</Link>
+              <FooterLink  to="/terms-conditions">Terms and Conditions</FooterLink >
             </StyledCheckbox>
           </InputWrapper>
           <InputGroup>
