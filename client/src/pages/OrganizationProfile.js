@@ -12,6 +12,7 @@ import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
 import smileIcon from "assets/icons/smile-icon.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -77,6 +78,7 @@ const URLS = {
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [smileIcon],
+  email: [envelopeBlue],
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
@@ -99,8 +101,10 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const { name, location = {}, about = "", isOwner, urls = {} } =
+  const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organization || {};
+
+  const urlsAndEmail = { ...urls, email };
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -199,14 +203,21 @@ const OrganizationProfile = () => {
 
   const renderURL = () => {
     if (organization) {
-      if (urls.length !== 0) {
-        return Object.entries(urls).map(([name, url]) => {
+      if (urlsAndEmail.length !== 0) {
+        return Object.entries(urlsAndEmail).map(([name, url]) => {
+          let href;
+          if (name === "website") {
+            href = getHref(url);
+          } else if (name === "email") {
+            href = `mailto:${url}`;
+          } else {
+            href = `${URLS[name][1]}${url}`;
+          }
+
           return (
             url && (
               <a
-                href={
-                  name === "website" ? getHref(url) : `${URLS[name][1]}${url}`
-                }
+                href={href}
                 key={name}
                 target="_blank"
                 rel="noopener noreferrer"
