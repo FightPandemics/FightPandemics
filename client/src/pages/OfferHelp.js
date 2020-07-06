@@ -66,7 +66,12 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
-              id={GTM.step1.volunteer + props.currentStep + GTM.step1.orgbtn + GTM.step1.donor}
+              id={
+                GTM.step1.volunteer +
+                props.currentStep +
+                GTM.step1.orgbtn +
+                GTM.step1.donor
+              }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
@@ -104,11 +109,20 @@ const Step2 = (props) => {
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
             location={props.location}
+            gtmPrefix={GTM.requestHelp.prefix + props.currentStep}
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
           />
         </div>
-        <ShowAnywhere tertiary="true" onClick={rejectLocationDetection}>
+        <ShowAnywhere
+          tertiary="true"
+          onClick={rejectLocationDetection}
+          id={
+            GTM.requestHelp.prefix +
+            props.currentStep +
+            GTM.wizardNav.showAnywhere
+          }
+        >
           Show me postings from anywhere
         </ShowAnywhere>
       </WizardFormWrapper>
@@ -147,6 +161,11 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
+            id={
+              GTM.requestHelp.prefix +
+              props.currentStep +
+              GTM.wizardNav.enterEmail
+            }
             name="email"
             label="Email"
             className={!valid && "has-error"}
@@ -159,12 +178,15 @@ const Step3 = (props) => {
         </WizardFormGroup>
         <WizardSubmit
           disabled={email === "" || !valid}
+          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.submit}
           primary="true"
           onClick={onSubmit}
         >
           Submit
         </WizardSubmit>
-        <SkipLink>
+        <SkipLink
+          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+        >
           <span onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
@@ -202,7 +224,11 @@ const OfferHelp = withRouter((props) => {
     <WizardContainer className="wizard-container">
       <Transition in={transition} timeout={250}>
         {(status) => (
-          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
+          <StyledWizard
+            isHashEnabled
+            status={status}
+            nav={<WizardNav gtmPrefix={GTM.requestHelp.prefix} />}
+          >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
             <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
