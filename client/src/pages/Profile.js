@@ -49,7 +49,7 @@ import {
   fetchUserSuccess,
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -90,8 +90,8 @@ const Profile = ({
   const {
     id: userId,
     about,
-    firstName = "",
-    lastName = "",
+    firstName,
+    lastName,
     location = {},
     needs = {},
     objectives = {},
@@ -101,6 +101,7 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
+  const fullName = `${firstName} $`;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -148,7 +149,10 @@ const Profile = ({
       </BackgroundHeader>
       <UserInfoContainer>
         {ownUser && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
-        <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+        <ProfilePic
+          noPic={true}
+          initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
+        />
         <UserInfoDesktop>
           <NameDiv>
             {firstName} {lastName}

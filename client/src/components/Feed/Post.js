@@ -32,11 +32,12 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { isAuthorOrg } from "pages/Feed";
+import { authorProfileLink } from "./utils";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
-const INDIVIDUAL_AUTHOR_TYPE = "Individual";
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -79,13 +80,8 @@ const Post = ({
   const [comment, setComment] = useState([]);
 
   const AvatarName =
-    (post?.author?.name &&
-      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
-    "";
+    (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
 
-  const authorProfileLink = `/${
-    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
-  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -288,7 +284,7 @@ const Post = ({
   );
 
   const renderHeaderWithLink = (
-    <Link to={authorProfileLink}>{renderHeader}</Link>
+    <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
 
   const renderContent = (
