@@ -94,7 +94,7 @@ const Faq = () => {
             </p>
             <p>
               To join now as a user click the menu button and select the
-              "Join Now/Sign In" option. There you will be able to join now with
+              "Join Now/Sign In" option. There you will be able to join with
               your email or social media credentials.
             </p>
             <p>
@@ -368,7 +368,7 @@ const Faq = () => {
             <summary>How do I join now?</summary>
             <p>
               To join the community, click the "Menu" button and
-              select "Join Now/Sign In". There you will be able to join now with
+              select "Join Now/Sign In". There you will be able to join with
               your choice of email or social media credentials.
             </p>
             <p>
