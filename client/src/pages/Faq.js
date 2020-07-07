@@ -209,7 +209,7 @@ const Faq = () => {
             </summary>
             <p>
               You do not need to be signed to view any of the postings on the
-              feed, but you will need to sign in to comment or like a post.
+              help board, but you will need to sign in to comment or like a post.
             </p>
           </details>
         </AnswerContainer>
@@ -230,7 +230,7 @@ const Faq = () => {
             </summary>
             <p>
               Yes, once you are signed up as an individual, you can create one
-              or multiple organizational profile linked to your account.
+              or multiple organisational profile linked to your account.
             </p>
           </details>
         </AnswerContainer>
@@ -241,7 +241,7 @@ const Faq = () => {
             </summary>
             <p>
               When you create posts either offering or seeking help, your name/
-              your organisation's name is displayed to anyone viewing the feed.
+              your organisation's name is displayed to anyone viewing the help board.
             </p>
           </details>
         </AnswerContainer>
