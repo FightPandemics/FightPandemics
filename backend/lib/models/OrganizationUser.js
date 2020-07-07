@@ -29,7 +29,6 @@ const organizationSchema = new Schema(
         "Health care provider",
         "Non-profit",
         "Other",
-        "R&D",
         "Startup",
         "University",
       ],
