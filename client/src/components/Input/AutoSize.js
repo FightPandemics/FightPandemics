@@ -5,6 +5,7 @@ import SvgIcon from "components/Icon/SvgIcon";
 import send from "assets/icons/send.svg";
 import { Button } from "antd";
 import { mq, theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 const { white } = theme.colors;
 
 const SendButton = styled(Button)`
@@ -23,10 +24,17 @@ const SendButton = styled(Button)`
   }
 `;
 
-const AutoSize = ({ placeholder, value, onChange, onPressEnter }) => {
+const AutoSize = ({
+  placeholder,
+  value,
+  onChange,
+  onPressEnter,
+  gtmTag = "",
+}) => {
   return (
     <>
       <TextArea
+        id={gtmTag}
         autoSize
         value={value}
         onChange={onChange}
