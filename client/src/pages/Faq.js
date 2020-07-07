@@ -89,7 +89,7 @@ const Faq = () => {
               How can I post an offer or request for help on FightPandemics?
             </summary>
             <p>
-              As a registered user you have unlimited access to view and create
+              When you join the community, you will have unlimited access to view and create
               posts and comments on FightPandemics platform.
             </p>
             <p>
@@ -367,7 +367,7 @@ const Faq = () => {
           <details>
             <summary>How do I join now?</summary>
             <p>
-              To join now as a registered user, click the "Menu" button and
+              To join the community, click the "Menu" button and
               select "Join Now/Sign In". There you will be able to join now with
               your choice of email or social media credentials.
             </p>
