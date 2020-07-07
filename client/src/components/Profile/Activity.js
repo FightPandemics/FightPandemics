@@ -17,6 +17,7 @@ const Activity = ({
             <Post
               currentPost={post}
               updateComments={updateComments}
+              numComments={post.commentsCount}
               handlePostDelete={handlePostDelete}
               onSelect={handleEditPost}
               key={key}
