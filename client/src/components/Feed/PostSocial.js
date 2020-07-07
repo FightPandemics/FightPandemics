@@ -118,6 +118,9 @@ const PostSocial = ({
               <div className="social-icon">
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
+                <span className="social-text">
+                  {numComments > 1 ? " Comments" : " Comment"}
+                </span>
               </div>
             </Link>
           )}
