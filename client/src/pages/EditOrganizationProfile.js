@@ -161,6 +161,7 @@ function EditOrganizationProfile(props) {
     }
   };
 
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
