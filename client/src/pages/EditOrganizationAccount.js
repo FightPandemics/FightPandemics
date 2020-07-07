@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
-import { connect } from "react-redux";
 import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
@@ -45,7 +44,6 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
-import { refetchUser } from "actions/authActions";
 
 const errorStyles = {
   color: "#FF5656",
@@ -66,7 +64,7 @@ const NEEDS = {
   other: "Other",
 };
 
-function EditOrganizationAccount({ refetchUser }) {
+function EditOrganizationAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
   const organizationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
@@ -109,7 +107,7 @@ function EditOrganizationAccount({ refetchUser }) {
         formData,
       );
       orgProfileDispatch(updateOrganizationSuccess(res.data));
-      refetchUser();
+      props.history.push(`/organization/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
@@ -291,6 +289,7 @@ function EditOrganizationAccount({ refetchUser }) {
     }
   };
 
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
@@ -338,13 +337,4 @@ function EditOrganizationAccount({ refetchUser }) {
   );
 }
 
-const mapDispatchToProps = {
-  refetchUser,
-};
-
-// mixing context & redux is awkward here
-// TODO: implement consistent approach to state management
-export default connect(
-  null,
-  mapDispatchToProps,
-)(withOrganizationContext(EditOrganizationAccount));
+export default withOrganizationContext(EditOrganizationAccount);
