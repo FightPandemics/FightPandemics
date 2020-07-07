@@ -21,6 +21,9 @@ const SendButton = styled(Button)`
     height: 5rem;
     padding: 1rem 1rem;
   }
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    padding: 1rem 1rem;
+  }
 `;
 
 const AutoSize = ({
