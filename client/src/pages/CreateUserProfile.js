@@ -38,6 +38,10 @@ import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
 
+const StyledUnderlineLink = styled(Link)`
+  text-decoration-line: underline;
+`;
+
 const BrandLink = styled(Link)`
   align-self: flex-start;
   img {
@@ -382,7 +386,9 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+                Privacy Policy
+              </StyledUnderlineLink>
             </StyledCheckbox>
             <WhiteSpace />
             <StyledCheckbox
@@ -391,7 +397,9 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <Link to="/terms-conditions">Terms and Conditions</Link>
+              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+                Terms and Conditions
+              </StyledUnderlineLink>
             </StyledCheckbox>
           </InputWrapper>
           <InputGroup>
