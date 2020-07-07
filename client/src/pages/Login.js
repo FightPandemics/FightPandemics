@@ -520,7 +520,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Login screen</AuthLink>
+                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
                 </div>
               </BackLinkContainer>
             )}
