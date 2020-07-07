@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 // Local
 // import { FeedContext } from "pages/Feed.js";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -27,7 +28,7 @@ const PostSocial = ({
   numComments,
   numShares,
   onCopyLink,
-  postpage,
+  postId,
   setShowComments,
   id,
 }) => {
@@ -65,24 +66,39 @@ const PostSocial = ({
     );
   };
 
+  const gtmTag = (element) =>
+    GTM.post.prefix + GTM.post[element] + "_" + postId;
+
   const renderPostSocialIcons = (
     <>
-      {postpage ? (
-        <div className="social-icon">
+      {postId ? (
+        <div id={gtmTag("like")} className="social-icon">
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       ) : (
-        <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
+        <div
+          id={gtmTag("like")}
+          className="social-icon"
+          onClick={() => handlePostLike(id, liked)}
+        >
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       )}
       <span></span>
-      {postpage ? (
-        <div className="social-icon" onClick={setShowComments}>
+      {postId ? (
+        <div
+          id={gtmTag("comment")}
+          className="social-icon"
+          onClick={setShowComments}
+        >
           {renderCommentIcon()}
           <span className="social-text">Comment</span>
         </div>
@@ -98,14 +114,23 @@ const PostSocial = ({
                 },
               }}
             >
-              <div className="social-icon" onClick={setShowComments}>
+              <div
+                id={gtmTag("comment")}
+                className="social-icon"
+                onClick={setShowComments}
+              >
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
               </div>
             </Link>
           ) : (
-            <Link to={{ pathname: LOGIN }}>
-              <div className="social-icon">
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postcomment", `/post/${id}`)
+              }
+              to={{ pathname: LOGIN }}
+            >
+              <div id={gtmTag("comment")} className="social-icon">
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
               </div>
@@ -115,8 +140,8 @@ const PostSocial = ({
       )}
 
       <span></span>
-      <div className="social-icon">
-        {!postpage ? (
+      <div id={gtmTag("share")} className="social-icon">
+        {!postId ? (
           <CopyToClipboard
             text={window.location.href.replace(
               window.location.pathname,

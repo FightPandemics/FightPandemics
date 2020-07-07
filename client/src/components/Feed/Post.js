@@ -34,6 +34,7 @@ import {
 import { isAuthorOrg } from "pages/Feed";
 import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -313,6 +314,7 @@ const Post = ({
     >
       {isAuthenticated ? (
         <AutoSize
+          gtmTag={GTM.post.prefix + GTM.post.writeComment + postId}
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
@@ -351,7 +353,7 @@ const Post = ({
         url={window.location.href}
         liked={post?.liked}
         shared={shared}
-        postpage={postId}
+        postId={postId}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
@@ -435,7 +437,9 @@ const Post = ({
             </WebModal>
           </StyledPostPagePostCard>
           {showComments && (
-            <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
+            <StyledButtonWizard
+              nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
+            />
           )}
         </>
       ) : (

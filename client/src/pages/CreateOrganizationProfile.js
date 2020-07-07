@@ -40,6 +40,11 @@ import {
 } from "hooks/reducers/organizationReducers";
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
+import styled from "styled-components";
+
+const StyledUnderlineLink = styled(Link)`
+  text-decoration-line: underline;
+`;
 
 const { type, industry } = createOrganizationProfile;
 
@@ -265,7 +270,6 @@ const CreateOrgProfile = (props) => {
                 onChange={([event]) => event.target.checked}
               />
             </InputGroup>
-
             <span style={errorStyles}>
               {errors.needs && "Please select at least one option"}
             </span>
@@ -322,7 +326,9 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+                Privacy Policy
+              </StyledUnderlineLink>
             </StyledCheckbox>
             <WhiteSpace />
             <Label style={styleLabel} label="" />
@@ -332,7 +338,9 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <Link to="/terms-conditions">Terms and Conditions</Link>
+              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+                Terms and Conditions
+              </StyledUnderlineLink>
             </StyledCheckbox>
           </InputWrapper>
           <WhiteSpace />

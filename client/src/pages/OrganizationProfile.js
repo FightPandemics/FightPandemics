@@ -11,7 +11,7 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import smileIcon from "assets/icons/smile-icon.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
 import Activity from "components/Profile/Activity";
@@ -77,7 +77,7 @@ const URLS = {
   appleStore: ["", APPLESTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
-  website: [smileIcon],
+  website: [websiteIcon],
   email: [envelopeBlue],
 };
 

@@ -80,7 +80,7 @@ const URLS_CONFIG = {
     },
     TWITTER_URL,
   ],
-  linkedIn: [
+  linkedin: [
     "LinkedIn URL",
     {
       pattern: {
@@ -119,6 +119,7 @@ function EditOrganizationProfile(props) {
         formData,
       );
       orgProfileDispatch(updateOrganizationSuccess(res.data));
+      props.history.push(`/organization/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
@@ -160,6 +161,7 @@ function EditOrganizationProfile(props) {
     }
   };
 
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
