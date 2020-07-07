@@ -71,20 +71,27 @@ const PostSocial = ({
         <div className="social-icon">
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       ) : (
         <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       )}
       <span></span>
       {postpage ? (
         <div className="social-icon" onClick={setShowComments}>
           {renderCommentIcon()}
-          <span className="social-text">Comment</span>
+          <div className="total-number">{numComments}</div>
+          <span className="social-text">
+            {numComments > 1 ? " Comments" : " Comment"}
+          </span>
         </div>
       ) : (
         <>
@@ -101,6 +108,9 @@ const PostSocial = ({
               <div className="social-icon" onClick={setShowComments}>
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
+                <span className="social-text">
+                  {numComments > 1 ? " Comments" : " Comment"}
+                </span>
               </div>
             </Link>
           ) : (
