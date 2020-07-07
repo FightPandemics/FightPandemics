@@ -48,12 +48,23 @@ commentSchema.index({ "author.id": 1, createdAt: -1 });
 commentSchema.index({ likes: 1 });
 /* eslint-enable */
 
-commentSchema.set('toObject', { virtuals: true })
-commentSchema.set('toJSON', { virtuals: true })
+commentSchema.set("toObject", { virtuals: true });
+commentSchema.set("toJSON", { virtuals: true });
 
-//set virtual 'timeElapsed' property on Comment POST and Comment PATCH.
-commentSchema.virtual("timeElapsed")
-  .get(function () { return translateISOtoRelativeTime(this.createdAt) });
+//set virtual 'createTimeElapsed' property on Comment POST and Comment PATCH.
+commentSchema.virtual("createTimeElapsed").get(function () {
+  return translateISOtoRelativeTime(this.createdAt);
+});
+
+//set virtual 'editTimeElapsed' property on Comment POST and Comment PATCH.
+commentSchema.virtual("editTimeElapsed").get(function () {
+  return translateISOtoRelativeTime(this.updatedAt);
+});
+
+//set virtual 'edited' property and Boolean value on Comment POST and Comment PATCH.
+commentSchema.virtual("edited").get(function () {
+  return this.createdAt < this.updatedAt;
+});
 
 const Comment = model("Comment", commentSchema);
 

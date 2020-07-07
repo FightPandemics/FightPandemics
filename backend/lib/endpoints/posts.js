@@ -535,6 +535,13 @@ async function routes(app) {
           },
           {
             $addFields: {
+              edited: {
+                $cond: {
+                  if: { $gte: ["$createdAt", "$updatedAt"] },
+                  then: false,
+                  else: true,
+                },
+              },
               childCount: {
                 $size: { $ifNull: ["$children", []] },
               },
@@ -548,7 +555,10 @@ async function routes(app) {
           },
         ]).then((comments) => {
           comments.forEach((comment) => {
-            comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
+            comment.createTimeElapsed = translateISOtoRelativeTime(comment.createdAt);
+            comment.editTimeElapsed = translateISOtoRelativeTime(
+              comment.updatedAt,
+            );
           });
           return comments;
         }),

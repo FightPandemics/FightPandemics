@@ -16,7 +16,8 @@ const StyledComment = styled(Comment)`
     .ant-comment-inner {
       padding: 1rem 0;
       .ant-comment-content {
-        max-width: 30rem;
+        min-width: 40rem;
+        max-width: 45rem;
         .ant-comment-content-author-time {
           cursor: default;
           padding-right: 25px;
