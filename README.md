@@ -62,6 +62,10 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
 1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
+#### Geolocation
+
+We are using the Google Maps API via our backend for geolocation requirements. It is not required for most frontend and backend development and is mocked with a limited set of fixed results when no key is present. This is to reduce friction for developer onboarding. If you need to work on this feature ask in Slack engineering channel about how to get your own development key.
+
 ### Contributing
 
 Check the issues and projects tab of the original repository for available tickets. Please follow our [instructions](https://www.notion.so/fightpandemics/How-to-create-a-ticket-in-GitHub-3ee2abb2d7f24b90ac35553dd0a117c4) on how to properly open an issue and make pull requests to our repo.
