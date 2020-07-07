@@ -155,8 +155,8 @@ const VisibilityIconWrapper = styled.div`
 
 const BackLinkContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.minWidth}) {
-    position: absolute;
-    bottom: 30%;
+    position: fixed;
+    bottom: auto;
     right: 27%;
   }
 
