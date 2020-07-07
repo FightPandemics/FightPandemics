@@ -89,12 +89,12 @@ const Faq = () => {
               How can I post an offer or request for help on FightPandemics?
             </summary>
             <p>
-              When you join the community, you will have unlimited access to view and create
-              posts and comments on FightPandemics platform.
+              When you join the community, you will have unlimited access to
+              view and create posts and comments on FightPandemics platform.
             </p>
             <p>
-              To join now as a user click the menu button and select the
-              "Join Now/Sign In" option. There you will be able to join with
+              To join the community as a user click the menu button and select
+              the "Join Now/Sign In" option. There you will be able to join with
               your email or social media credentials.
             </p>
             <p>
@@ -209,7 +209,8 @@ const Faq = () => {
             </summary>
             <p>
               You do not need to be signed to view any of the postings on the
-              help board, but you will need to sign in to comment or like a post.
+              help board, but you will need to sign in to comment or like a
+              post.
             </p>
           </details>
         </AnswerContainer>
@@ -241,7 +242,8 @@ const Faq = () => {
             </summary>
             <p>
               When you create posts either offering or seeking help, your name/
-              your organisation's name is displayed to anyone viewing the help board.
+              your organisation's name is displayed to anyone viewing the help
+              board.
             </p>
           </details>
         </AnswerContainer>
@@ -365,11 +367,11 @@ const Faq = () => {
 
         <AnswerContainer>
           <details>
-            <summary>How do I join now?</summary>
+            <summary>How do I join?</summary>
             <p>
-              To join the community, click the "Menu" button and
-              select "Join Now/Sign In". There you will be able to join with
-              your choice of email or social media credentials.
+              To join the community, click the "Menu" button and select "Join
+              Now/Sign In". There you will be able to join with your choice of
+              email or social media credentials.
             </p>
             <p>
               As a registered user, you have unlimited access to view and create
@@ -386,8 +388,8 @@ const Faq = () => {
               An organisational profile is tied to your individual profile. Once
               you create your individual profile, you can add as many
               organisational profiles as you'd like tied to that individual
-              profile. Your sign in credentials will continue to be the email and password you
-              used to join now for the individual profile.
+              profile. Your sign in credentials will continue to be the email
+              and password you used to join for the individual profile.
             </p>
           </details>
         </AnswerContainer>
@@ -401,9 +403,9 @@ const Faq = () => {
               profile. In order to create create an organisational profile, you
               are required to have an individual profile. Once you create your
               individual profile, you can add as many organisation profiles as
-              you'd like, tied to that individual profile. Your sign in credentials will
-              continue to be the email and password you used to join now for the
-              individual profile.
+              you'd like, tied to that individual profile. Your sign in
+              credentials will continue to be the email and password you used to
+              join for the individual profile.
             </p>
           </details>
         </AnswerContainer>
