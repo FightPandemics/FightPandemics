@@ -237,16 +237,18 @@ const NestedComments = ({
       {comment ? (
         <StyledComment
           datetime={
-            <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>
-                {comment?.createTimeElapsed ? comment.createTimeElapsed : ""}
-              </span>
-              <span>
-                {comment?.edited && comment?.editTimeElapsed
-                  ? ` · edited  ${comment.editTimeElapsed}`
-                  : ""}
-              </span>
-            </Tooltip>
+            <>
+              <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
+                <span>
+                  {comment?.createTimeElapsed ? comment.createTimeElapsed : ""}
+                </span>
+              </Tooltip>
+              {comment?.edited && comment?.editTimeElapsed && (
+                <Tooltip title={translateISOTimeTitle(comment.editTimeElapsed)}>
+                  <span>{` · edited  ${comment.editTimeElapsed}`}</span>
+                </Tooltip>
+              )}
+            </>
           }
           author={
             <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
