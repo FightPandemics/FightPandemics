@@ -12,6 +12,7 @@ export const LOGOUT = "/auth/logout";
 export const FEED = "/feed";
 export const VERIFY_EMAIL = "/auth/verify-email";
 export const CREATE_PROFILE = "/create-profile";
+export const PROFILE = "/profile";
 
 const getLayoutComponent = (layout) => {
   switch (layout) {
