@@ -38,8 +38,7 @@ import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
 
-const FooterLink = styled(Link)`
-   margin: 0.50em;
+const StyledUnderlineLink = styled(Link)`
   text-decoration-line: underline;
 `;
 
@@ -387,7 +386,9 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <FooterLink to="/privacy-policy">Privacy Policy</FooterLink >
+              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+                Privacy Policy
+              </StyledUnderlineLink>
             </StyledCheckbox>
             <WhiteSpace />
             <StyledCheckbox
@@ -396,7 +397,9 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <FooterLink to="/terms-conditions">Terms and Conditions</FooterLink >
+              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+                Terms and Conditions
+              </StyledUnderlineLink>
             </StyledCheckbox>
           </InputWrapper>
           <InputGroup>

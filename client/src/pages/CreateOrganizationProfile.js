@@ -41,8 +41,7 @@ import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
 
-const FooterLink = styled(Link)`
-   margin: 0.50em;
+const StyledUnderlineLink = styled(Link)`
   text-decoration-line: underline;
 `;
 
@@ -305,16 +304,18 @@ const CreateOrgProfile = (props) => {
             </span>
             <WhiteSpace />
             <WhiteSpace />
-          </div> 
+          </div>
           <InputWrapper>
-            <Label style={styleLabel} label="" />   
+            <Label style={styleLabel} label="" />
             <StyledCheckbox
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{""}
-              <FooterLink to="/privacy-policy">Privacy Policy</FooterLink>
+              By signing up, I agree to the{" "}
+              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+                Privacy Policy
+              </StyledUnderlineLink>
             </StyledCheckbox>
             <WhiteSpace />
             <Label style={styleLabel} label="" />
@@ -322,11 +323,13 @@ const CreateOrgProfile = (props) => {
               style={{ fontSize: "1.2rem" }}
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
-            >              
+            >
               By signing up, I agree to the{" "}
-              <FooterLink to="/terms-conditions">Terms and Conditions</FooterLink>
+              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+                Terms and Conditions
+              </StyledUnderlineLink>
             </StyledCheckbox>
-          </InputWrapper>         
+          </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
           <SubmitButton
