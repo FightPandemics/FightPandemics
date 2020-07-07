@@ -9,7 +9,6 @@ export default {
       "Company",
       "Community",
       "Government",
-      "R&D",
       "Non-profit",
       "University",
       "Health care provider",

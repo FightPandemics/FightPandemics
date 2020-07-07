@@ -8,7 +8,6 @@ export default {
       { text: "Company", value: "Company" },
       { text: "Community", value: "Community" },
       { text: "Government", value: "Government" },
-      { text: "R&D", value: "R&D" },
       { text: "Non-profit", value: "Non-profit" },
       { text: "University", value: "University" },
       { text: "Health care provider", value: "Health care provider" },
