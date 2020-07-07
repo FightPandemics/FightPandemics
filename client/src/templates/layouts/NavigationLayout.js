@@ -233,7 +233,7 @@ const NavigationLayout = (props) => {
             user,
           }}
         >
-          Feed
+          Help Board
         </Link>
       </NavItem>
       <NavItem history={history}>
@@ -243,7 +243,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Logout</BriefLink>
+        <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
     </>
   );
@@ -252,7 +252,7 @@ const NavigationLayout = (props) => {
     <>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-          Login / Register
+          Sign In / Join Now
         </Link>
       </NavItem>
       <NavItem history={history}>

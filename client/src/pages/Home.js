@@ -197,7 +197,7 @@ const Home = (props) => {
 
           <Link to="/feed">
             <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
-              View Community Postings
+              View Help Board
             </StyleLink>
           </Link>
         </OnboardingContainer>
