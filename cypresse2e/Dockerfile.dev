@@ -1,6 +1,7 @@
-FROM cypress/base:10
+FROM cypress/base:12.1.0
 WORKDIR '/app'
 COPY . .
+ENV CI=1
 RUN npm ci
 RUN npx cypress verify
 # Add dockerize tool -------------------
