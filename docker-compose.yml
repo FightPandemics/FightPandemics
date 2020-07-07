@@ -68,7 +68,7 @@ services:
       - client
     environment:
       - CYPRESS_baseUrl=http://client:3000
-    command: npx cypress run 
+    command: dockerize -wait http://client:3000 -timeout 300s npx cypress run
     volumes:
       - ./cypresse2e/cypress:/app/cypress
       - ./cypresse2e/cypress.json:/app/cypress.json
