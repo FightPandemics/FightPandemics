@@ -51,7 +51,8 @@ module.exports = {
     google: "_GG",
     linkedin: "_LK",
   },
-  step1: {
+  offerHelp: {
+    prefix: "OFS",
     volunteer: "_VO",
     donor: "_DI",
     orgbtn: "_ORG",

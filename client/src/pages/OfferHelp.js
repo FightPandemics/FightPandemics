@@ -67,10 +67,10 @@ const Step1 = (props) => {
             <WizardCheckboxItem
               key={i}
               id={
-                GTM.step1.volunteer +
+                GTM.offerHelp.volunteer +
                 props.currentStep +
-                GTM.step1.orgbtn +
-                GTM.step1.donor
+                GTM.offerHelp.orgbtn +
+                GTM.offerHelp.donor
               }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
@@ -109,7 +109,7 @@ const Step2 = (props) => {
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
             location={props.location}
-            gtmPrefix={GTM.requestHelp.prefix + props.currentStep}
+            gtmPrefix={GTM.offerHelp.prefix + props.currentStep}
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
           />
@@ -162,7 +162,7 @@ const Step3 = (props) => {
           <StyledTextInput
             type="email"
             id={
-              GTM.requestHelp.prefix +
+              GTM.offerHelp.prefix +
               props.currentStep +
               GTM.wizardNav.enterEmail
             }
@@ -178,14 +178,14 @@ const Step3 = (props) => {
         </WizardFormGroup>
         <WizardSubmit
           disabled={email === "" || !valid}
-          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.submit}
+          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.submit}
           primary="true"
           onClick={onSubmit}
         >
           Submit
         </WizardSubmit>
         <SkipLink
-          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip}
         >
           <span onClick={onSubmit}>Skip</span>
         </SkipLink>
@@ -227,7 +227,7 @@ const OfferHelp = withRouter((props) => {
           <StyledWizard
             isHashEnabled
             status={status}
-            nav={<WizardNav gtmPrefix={GTM.requestHelp.prefix} />}
+            nav={<WizardNav gtmPrefix={GTM.offerHelp.prefix} />}
           >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
