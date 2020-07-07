@@ -230,7 +230,7 @@ const Faq = () => {
             </summary>
             <p>
               Yes, once you are signed up as an individual, you can create one
-              or multiple organizational profile linked to your account.
+              or multiple organisational profile linked to your account.
             </p>
           </details>
         </AnswerContainer>
