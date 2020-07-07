@@ -421,7 +421,7 @@ const Faq = () => {
             <summary>Why is my password not valid?</summary>
             <p>
               Please check if your password has at least 8 letters. If you
-              already have an account but forgot your login password, click on
+              already have an account but forgot your sign in password, click on
               "Sign In" from the homepage and then go to "Forgot password".
             </p>
           </details>
