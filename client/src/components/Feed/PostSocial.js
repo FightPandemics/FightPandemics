@@ -100,7 +100,10 @@ const PostSocial = ({
           onClick={setShowComments}
         >
           {renderCommentIcon()}
-          <span className="social-text">Comment</span>
+          <div className="total-number">{numComments}</div>
+          <span className="social-text">
+            {numComments > 1 ? " Comments" : " Comment"}
+          </span>
         </div>
       ) : (
         <>
@@ -120,7 +123,8 @@ const PostSocial = ({
                 onClick={setShowComments}
               >
                 {renderCommentIcon()}
-                <span className="total-number">{numComments}</span>
+
+                <div className="total-number">{numComments}</div>
                 <span className="social-text">
                   {numComments > 1 ? " Comments" : " Comment"}
                 </span>
@@ -135,7 +139,7 @@ const PostSocial = ({
             >
               <div id={gtmTag("comment")} className="social-icon">
                 {renderCommentIcon()}
-                <span className="total-number">{numComments}</span>
+                <div className="total-number">{numComments}</div>
                 <span className="social-text">
                   {numComments > 1 ? " Comments" : " Comment"}
                 </span>

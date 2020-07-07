@@ -56,6 +56,7 @@ const PostPage = ({
     editPostModalVisibility,
     deleteModalVisibility,
     loadMorePost,
+    commentsCount,
     showComments,
   } = post;
 
@@ -258,6 +259,7 @@ const PostPage = ({
                 loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
                 showComments={showComments}
+                numComments={commentsCount}
                 onChange={handlePostDelete}
                 handlePostLike={handlePostLike}
                 updateComments={updateComments}
