@@ -93,8 +93,8 @@ const Faq = () => {
               posts and comments on FightPandemics platform.
             </p>
             <p>
-              To sign up as a user click the menu button and select the
-              "Register/Log in" option. There you will be able to sign up with
+              To join now as a user click the menu button and select the
+              "Join Now/Sign In" option. There you will be able to join now with
               your email or social media credentials.
             </p>
             <p>
@@ -197,7 +197,7 @@ const Faq = () => {
             <p>
               From the homepage, select "Give help" to see all the posts created
               by users asking for help and filter the results by location and
-              type. You need to be logged in to reach out to them. You can also
+              type. You need to be signed in to reach out to them. You can also
               create your own postings describing the help you're able to offer.
             </p>
           </details>
@@ -365,10 +365,10 @@ const Faq = () => {
 
         <AnswerContainer>
           <details>
-            <summary>How do I sign up?</summary>
+            <summary>How do I join now?</summary>
             <p>
-              To sign up as a registered user, click the "Menu" button and
-              select "Register/Log in". There you will be able to sign up with
+              To join now as a registered user, click the "Menu" button and
+              select "Join Now/Sign In". There you will be able to join now with
               your choice of email or social media credentials.
             </p>
             <p>
@@ -387,7 +387,7 @@ const Faq = () => {
               you create your individual profile, you can add as many
               organisational profiles as you'd like tied to that individual
               profile. Your sign in credentials will continue to be the email and password you
-              used to sign up for the individual profile.
+              used to join now for the individual profile.
             </p>
           </details>
         </AnswerContainer>
@@ -402,7 +402,7 @@ const Faq = () => {
               are required to have an individual profile. Once you create your
               individual profile, you can add as many organisation profiles as
               you'd like, tied to that individual profile. Your sign in credentials will
-              continue to be the email and password you used to sign up for the
+              continue to be the email and password you used to join now for the
               individual profile.
             </p>
           </details>
