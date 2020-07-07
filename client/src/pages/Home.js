@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
+import GTM from "constants/gtm-tags";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -173,6 +174,7 @@ const Home = (props) => {
         <OnboardingContainer>
           <FlexChild>
             <ImageButton
+              id={GTM.homePage.prefix + GTM.homePage.requestHelp}
               type="ghost"
               inactiveImg={needHelpInactive}
               activeImg={needHelpActive}
@@ -183,6 +185,7 @@ const Home = (props) => {
           </FlexChild>
           <FlexChild>
             <ImageButton
+              id={GTM.homePage.prefix + GTM.homePage.offerHelp}
               type="ghost"
               inactiveImg={offerHelpInactive}
               activeImg={offerHelpActive}
@@ -193,7 +196,9 @@ const Home = (props) => {
           </FlexChild>
 
           <Link to="/feed">
-            <StyleLink>View Community Postings</StyleLink>
+            <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
+              View Community Postings
+            </StyleLink>
           </Link>
         </OnboardingContainer>
       </>

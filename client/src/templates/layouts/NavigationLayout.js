@@ -12,6 +12,7 @@ import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
@@ -216,11 +217,17 @@ const NavigationLayout = (props) => {
             ))
           : null}
         <NavItemBrief>
-          <Link to="/create-organization-profile">+ Add Organization</Link>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organization-profile"
+          >
+            + Add Organization
+          </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
+          id={GTM.nav.prefix + GTM.nav.feed}
           to={{
             pathname: "/feed",
             user,
@@ -230,7 +237,9 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
@@ -242,10 +251,14 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Login / Register</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
+          Login / Register
+        </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
     </>
   );

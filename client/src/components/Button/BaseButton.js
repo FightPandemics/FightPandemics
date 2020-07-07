@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Button } from "antd";
+import { Button } from "antd-mobile";
 import { theme } from "constants/theme";
 const { button } = theme;
 
@@ -64,8 +64,8 @@ const BaseButton = styled(Button)`
           }
         }};
       }
+      pointer-events: none;
     `}
-
 
   &.am-button {
     border: none;
