@@ -124,7 +124,12 @@ const PostSocial = ({
               </div>
             </Link>
           ) : (
-            <Link to={{ pathname: LOGIN }}>
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postcomment", `/post/${id}`)
+              }
+              to={{ pathname: LOGIN }}
+            >
               <div id={gtmTag("comment")} className="social-icon">
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>

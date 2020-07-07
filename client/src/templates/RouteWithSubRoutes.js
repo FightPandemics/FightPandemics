@@ -60,7 +60,13 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
-            redirect = HOME;
+            const postCommentRedirect = sessionStorage.getItem("postcomment");
+            if (postCommentRedirect) {
+              redirect = postCommentRedirect;
+              sessionStorage.removeItem("postcomment");
+            } else {
+              redirect = HOME;
+            }
           } else if (isAuthenticated) {
             if (
               !emailVerified &&
@@ -79,7 +85,6 @@ export const RouteWithSubRoutes = (route) => {
             }
           }
         }
-
         return redirect ? (
           <Redirect
             to={{
