@@ -31,4 +31,12 @@ module.exports = {
     medical: "_MH",
     other: "_OH",
   },
+  post: {
+    prefix: "PO",
+    like: "_LK",
+    comment: "_CM",
+    share: "_SH",
+    viewMore: "_VM",
+    writeComment: "_WC",
+  },
 };
