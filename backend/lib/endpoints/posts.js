@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { translateISOtoRelativeTime } = require("../utils");
+const { setElapsedTimeText } = require("../utils");
 
 const {
   createCommentSchema,
@@ -535,13 +535,6 @@ async function routes(app) {
           },
           {
             $addFields: {
-              edited: {
-                $cond: {
-                  if: { $gte: ["$createdAt", "$updatedAt"] },
-                  then: false,
-                  else: true,
-                },
-              },
               childCount: {
                 $size: { $ifNull: ["$children", []] },
               },
@@ -555,8 +548,8 @@ async function routes(app) {
           },
         ]).then((comments) => {
           comments.forEach((comment) => {
-            comment.createTimeElapsed = translateISOtoRelativeTime(comment.createdAt);
-            comment.editTimeElapsed = translateISOtoRelativeTime(
+            comment.elapsedTimeText = setElapsedTimeText(
+              comment.createdAt,
               comment.updatedAt,
             );
           });

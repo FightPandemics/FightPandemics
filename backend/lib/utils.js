@@ -20,7 +20,7 @@ const getCookieToken = (req) => req.cookies.token;
 const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const isValidEmail = (email) => emailRegEx.test(email);
 
-const timeAgo = (ISODate) => {
+const translateISOtoRelativeTime = (ISODate) => {
   moment.updateLocale("en", {
     relativeTime: {
       future: "in %s",
@@ -54,8 +54,14 @@ const timeAgo = (ISODate) => {
   }
 };
 
-const translateISOtoRelativeTime = (ISODate) => {
-  return timeAgo(ISODate);
+const setElapsedTimeText = (createdAt, updatedAt) => {
+  if (createdAt < updatedAt) {
+    return `${translateISOtoRelativeTime(
+      createdAt,
+    )} · edited  ${translateISOtoRelativeTime(updatedAt)}`;
+  } else {
+    return translateISOtoRelativeTime(createdAt);
+  }
 };
 
 module.exports = {
@@ -64,5 +70,5 @@ module.exports = {
   generateUUID,
   getCookieToken,
   isValidEmail,
-  translateISOtoRelativeTime,
+  setElapsedTimeText,
 };

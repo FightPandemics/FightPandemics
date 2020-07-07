@@ -240,16 +240,9 @@ const NestedComments = ({
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
-                  {comment?.createTimeElapsed ? comment.createTimeElapsed : ""}
+                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
                 </span>
               </Tooltip>
-              {comment?.edited && comment?.editTimeElapsed && (
-                <Tooltip title={translateISOTimeTitle(comment.updatedAt)}>
-                  <span>
-                    <i>{` · edited  ${comment.editTimeElapsed}`}</i>
-                  </span>
-                </Tooltip>
-              )}
             </>
           }
           author={
