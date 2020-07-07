@@ -93,9 +93,9 @@ const Faq = () => {
               view and create posts and comments on FightPandemics platform.
             </p>
             <p>
-              To join the community as a user click the menu button and select
-              the "Join Now/Sign In" option. There you will be able to join with
-              your email or social media credentials.
+              To join the community as a user, click the "Menu" button and
+              select the "Join Now/Sign In" option. There you will be able to
+              join with your choice of email or social media credentials.
             </p>
             <p>
               Once you have completed your profile, select the menu button,
@@ -369,13 +369,13 @@ const Faq = () => {
           <details>
             <summary>How do I join?</summary>
             <p>
-              To join the community, click the "Menu" button and select "Join
-              Now/Sign In". There you will be able to join with your choice of
-              email or social media credentials.
+              To join the community as a user, click the "Menu" button and
+              select the "Join Now/Sign In" option. There you will be able to
+              join with your choice of email or social media credentials.
             </p>
             <p>
-              As a registered user, you have unlimited access to view and create
-              posts and comments on the FightPandemics platform.
+              When you join the community, you will have unlimited access to
+              view and create posts and comments on FightPandemics platform.
             </p>
           </details>
         </AnswerContainer>
