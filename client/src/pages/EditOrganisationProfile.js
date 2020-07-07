@@ -26,18 +26,18 @@ import {
   TWITTER_URL,
 } from "constants/urls";
 import {
-  fetchOrganization,
-  fetchOrganizationError,
-  fetchOrganizationSuccess,
-  updateOrganization,
-  updateOrganizationError,
-  updateOrganizationSuccess,
-} from "hooks/actions/organizationActions";
+  fetchOrganisation,
+  fetchOrganisationError,
+  fetchOrganisationSuccess,
+  updateOrganisation,
+  updateOrganisationError,
+  updateOrganisationSuccess,
+} from "hooks/actions/organisationActions";
 import axios from "axios";
 import {
-  OrganizationContext,
-  withOrganizationContext,
-} from "context/OrganizationContext";
+  OrganisationContext,
+  withOrganisationContext,
+} from "context/OrganisationContext";
 
 const URLS_CONFIG = {
   appleStore: [
@@ -102,29 +102,29 @@ const ABOUT_MAX_LENGTH = 160;
 
 const editProfile = true;
 
-function EditOrganizationProfile(props) {
-  const organizationId = window.location.pathname.split("/")[2];
+function EditOrganisationProfile(props) {
+  const organisationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganizationContext,
+    OrganisationContext,
   );
   const { register, handleSubmit, errors } = useForm();
-  const { loading, organization } = orgProfileState;
-  const { name, language, about, urls = {} } = organization || {};
+  const { loading, organisation } = orgProfileState;
+  const { name, language, about, urls = {} } = organisation || {};
 
   const onSubmit = async (formData) => {
-    orgProfileDispatch(updateOrganization());
+    orgProfileDispatch(updateOrganisation());
     try {
       const res = await axios.patch(
-        `/api/organizations/${organizationId}`,
+        `/api/organisations/${organisationId}`,
         formData,
       );
-      orgProfileDispatch(updateOrganizationSuccess(res.data));
-      props.history.push(`/organization/${res.data._id}`);
+      orgProfileDispatch(updateOrganisationSuccess(res.data));
+      props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
-        updateOrganizationError(
-          `Failed updating organization profile, reason: ${message}`,
+        updateOrganisationError(
+          `Failed updating organisation profile, reason: ${message}`,
         ),
       );
     }
@@ -132,21 +132,21 @@ function EditOrganizationProfile(props) {
 
   useEffect(() => {
     (async function fetchProfile() {
-      orgProfileDispatch(fetchOrganization());
+      orgProfileDispatch(fetchOrganisation());
       try {
-        const res = await axios.get(`/api/organizations/${organizationId}`);
-        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+        const res = await axios.get(`/api/organisations/${organisationId}`);
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
-          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId]);
+  }, [orgProfileDispatch, organisationId]);
 
   const renderProfilePicture = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <ProfilePicWrapper>
           <ProfilePic
@@ -168,8 +168,8 @@ function EditOrganizationProfile(props) {
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
             {editProfile
-              ? "Edit Organization Profile"
-              : "Complete Organization Profile"}
+              ? "Edit Organisation Profile"
+              : "Complete Organisation Profile"}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
@@ -179,19 +179,19 @@ function EditOrganizationProfile(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to={`/edit-organization-account/${organizationId}`}>
+              <Link to={`/edit-organisation-account/${organisationId}`}>
                 Account Information
               </Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to={`/edit-organization-profile/${organizationId}`}>
+              <Link to={`/edit-organisation-profile/${organisationId}`}>
                 Profile Information
               </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             <FormInput
-              inputTitle="Organization Description"
+              inputTitle="Organisation Description"
               name="about"
               type="text"
               defaultValue={about}
@@ -204,7 +204,7 @@ function EditOrganizationProfile(props) {
               })}
             />
             <FormInput
-              inputTitle="Organization Language"
+              inputTitle="Organisation Language"
               name="language"
               type="text"
               defaultValue={language}
@@ -235,4 +235,4 @@ function EditOrganizationProfile(props) {
   );
 }
 
-export default withOrganizationContext(EditOrganizationProfile);
+export default withOrganisationContext(EditOrganisationProfile);

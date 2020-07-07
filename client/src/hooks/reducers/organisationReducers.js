@@ -1,26 +1,26 @@
 import {
-  CREATE_ORGANIZATION,
-  CREATE_ORGANIZATION_ERROR,
-  //CREATE_ORGANIZATION_SUCCESS,
-  FETCH_ORGANIZATION,
-  FETCH_ORGANIZATION_ERROR,
-  FETCH_ORGANIZATION_SUCCESS,
-  UPDATE_ORGANIZATION,
-  UPDATE_ORGANIZATION_ERROR,
-  UPDATE_ORGANIZATION_SUCCESS,
-} from "../actions/organizationActions";
+  CREATE_Organisation,
+  CREATE_Organisation_ERROR,
+  //CREATE_Organisation_SUCCESS,
+  FETCH_Organisation,
+  FETCH_Organisation_ERROR,
+  FETCH_Organisation_SUCCESS,
+  UPDATE_Organisation,
+  UPDATE_Organisation_ERROR,
+  UPDATE_Organisation_SUCCESS,
+} from "../actions/organisationActions";
 
 export const initialState = {
   error: null,
   loading: false,
 };
 
-export const createOrganizationFormReducer = (state, action) => {
+export const createOrganisationFormReducer = (state, action) => {
   const { type, ...payload } = action;
   switch (type) {
-    case CREATE_ORGANIZATION:
+    case CREATE_Organisation:
       return { ...state, loading: true, error: null };
-    case CREATE_ORGANIZATION_ERROR:
+    case CREATE_Organisation_ERROR:
       return { ...state, loading: false, error: payload.error };
     default:
       return state;
@@ -30,25 +30,25 @@ export const createOrganizationFormReducer = (state, action) => {
 export const initialProfileState = {
   error: null,
   loading: false,
-  organization: null,
+  organisation: null,
 };
 
 export const orgProfileReducer = (state, action) => {
   const { type, ...payload } = action;
   switch (type) {
-    case FETCH_ORGANIZATION:
-    case UPDATE_ORGANIZATION:
+    case FETCH_Organisation:
+    case UPDATE_Organisation:
       return { ...state, loading: true, error: null };
-    case FETCH_ORGANIZATION_ERROR:
-    case UPDATE_ORGANIZATION_ERROR:
+    case FETCH_Organisation_ERROR:
+    case UPDATE_Organisation_ERROR:
       return { ...state, loading: false, error: payload.error };
-    case FETCH_ORGANIZATION_SUCCESS:
-    case UPDATE_ORGANIZATION_SUCCESS:
+    case FETCH_Organisation_SUCCESS:
+    case UPDATE_Organisation_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        organization: payload.organization,
+        organisation: payload.organisation,
       };
     default:
       return state;

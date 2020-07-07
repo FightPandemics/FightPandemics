@@ -81,7 +81,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId }) => {
     populateErrors();
 
     const payload = formDataToPost(formData);
-    if (form.organizationId) payload.organizationId = form.organizationId;
+    if (form.organisationId) payload.organisationId = form.organisationId;
 
     if (!errors.length) {
       try {

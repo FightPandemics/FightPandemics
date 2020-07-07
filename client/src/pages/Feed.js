@@ -47,9 +47,9 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
-export const isAuthorOrg = (organizations, author) => {
-  const isValid = organizations?.some(
-    (organization) => organization.name === author.name,
+export const isAuthorOrg = (organisations, author) => {
+  const isValid = organisations?.some(
+    (organisation) => organisation.name === author.name,
   );
   return isValid;
 };
@@ -452,10 +452,10 @@ const Feed = (props) => {
         // offering help
         handleChangeType({ key: value });
         if (providers) {
-          let organizationFilter = providers.filter(
+          let organisationFilter = providers.filter(
             (option) => option === "As an Organisation",
           );
-          if (organizationFilter.length > 0) {
+          if (organisationFilter.length > 0) {
             for (let i = 1; i < filters[1].options.length; ++i) {
               let option = filters[1].options[i];
               handleOnboardingOptions(option, "providers");
@@ -502,7 +502,7 @@ const Feed = (props) => {
       user &&
       (user._id === post.author.id ||
         user.id === post.author.id ||
-        isAuthorOrg(user.organizations, post.author))
+        isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);

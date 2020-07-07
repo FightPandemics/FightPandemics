@@ -206,12 +206,12 @@ const NavigationLayout = (props) => {
         <Link to={`/profile/${user?.id}`}>Profile</Link>
       </NavItem>
       <NavItem>
-        Organization
-        {user?.organizations?.length > 0
-          ? user?.organizations?.map((organization) => (
-              <NavItemBrief history={history} key={organization._id}>
-                <Link to={`/organization/${organization._id}`}>
-                  {organization.name}
+        Organisation
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <NavItemBrief history={history} key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
                 </Link>
               </NavItemBrief>
             ))
@@ -219,9 +219,9 @@ const NavigationLayout = (props) => {
         <NavItemBrief>
           <Link
             id={GTM.nav.prefix + GTM.nav.addOrg}
-            to="/create-organization-profile"
+            to="/create-organisation-profile"
           >
-            + Add Organization
+            + Add Organisation
           </Link>
         </NavItemBrief>
       </NavItem>
