@@ -253,6 +253,7 @@ const PostPage = ({
                 includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
+                numComments={post.commentsCount}
                 onClick={toggleViewContent}
                 loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
