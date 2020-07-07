@@ -1,4 +1,4 @@
-FROM cypress/base:10 as builder
+FROM cypress/base:12.1.0 as builder
 WORKDIR '/app'
 COPY package.json package-lock.json ./
 ENV CI=1
