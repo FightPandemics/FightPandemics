@@ -17,6 +17,7 @@ const StyledComment = styled(Comment)`
       padding: 1rem 0;
       .ant-comment-content {
         width: 45rem;
+        word-break: break-word;
         @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
           width: 26rem;
         }
