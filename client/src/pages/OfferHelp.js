@@ -55,6 +55,19 @@ const Step1 = (props) => {
     props.update("providers", checkedAnswers);
   };
 
+  const gtmSwitcher = (key) => {
+    switch (key) {
+      case 0:
+        return GTM.offerHelp.volunteer;
+      case 1:
+        return GTM.offerHelp.donor;
+      case 2:
+        return GTM.offerHelp.orgbtn;
+      default:
+        return;
+    }
+  };
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
@@ -66,7 +79,7 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
-              id={GTM.offerHelp.prefix + GTM.offerHelp.volunteer + i}
+              id={GTM.offerHelp.prefix + gtmSwitcher(i)}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
@@ -182,7 +195,7 @@ const Step3 = (props) => {
         <SkipLink
           id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip}
         >
-          <span onClick={onSubmit}>Skip</span>
+          <span id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip} onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
