@@ -434,9 +434,17 @@ const Feed = (props) => {
         providers,
       } = props.history.location.state;
       location && dispatchAction(SET_VALUE, "location", location);
-      const value = Object.keys(HELP_TYPE).find(
-        (key) => HELP_TYPE[key] === postType,
-      );
+      const getValue = postType => {
+        switch(postType) {
+        case "Requesting help":
+          return "OFFER";
+        case "Offering help":
+          return "REQUEST";
+        default:
+          return "All";
+        }
+      };
+      const value = getValue(postType);
       if (postType === HELP_TYPE.REQUEST) {
         // requesting help
         handleChangeType({ key: value });
