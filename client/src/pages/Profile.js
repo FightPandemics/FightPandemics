@@ -101,7 +101,6 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
-  const fullName = `${firstName} $`;
 
   useEffect(() => {
     (async function fetchProfile() {
