@@ -9,10 +9,10 @@ const StyledImg = styled.img`
   }
 `;
 
-const SvgIcon = ({ className, src, ...props }) => (
+const SvgIcon = ({ alt = "Icon", className, src, ...props }) => (
   <StyledImg
     {...props}
-    alt="Icon"
+    alt={alt}
     className={props.onClick ? `${className} is-clickable` : className}
     src={src}
   />
