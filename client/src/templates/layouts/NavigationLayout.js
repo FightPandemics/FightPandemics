@@ -285,13 +285,13 @@ const NavigationLayout = (props) => {
     }
   };
 
-  const submitFeedbackForm = async () => {
+  const submitFeedbackForm = async (user) => {
     feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
     try {
       await axios.post("/api/feedback", {
         rating,
         age,
-        userId: 5,
+        userId: user.id,
         covidImpact,
         generalFeedback,
         mostValuableFeature,
