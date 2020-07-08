@@ -251,6 +251,7 @@ const Post = ({
             post: post,
             postId: post._id,
             user,
+            from: window.location.href,
           },
         }}
       >
@@ -261,7 +262,12 @@ const Post = ({
         {isAuthenticated ? (
           <ViewMore onClick={onClick} loadContent={loadMorePost} />
         ) : (
-          <Link to={{ pathname: LOGIN }}>
+          <Link
+            to={{
+              pathname: LOGIN,
+              state: { from: window.location.href },
+            }}
+          >
             <ViewMore loadContent={loadMorePost} />
           </Link>
         )}
@@ -479,6 +485,7 @@ const Post = ({
                   post: post,
                   postId: _id,
                   user,
+                  from: window.location.href,
                 },
               }}
             >

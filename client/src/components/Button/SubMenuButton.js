@@ -52,6 +52,7 @@ const SubMenuButton = ({ onSelect, onChange, postId, user, post }) => {
               post: post,
               postId: post?._id,
               edit: true,
+              from: window.location.href,
               user,
             },
           }}

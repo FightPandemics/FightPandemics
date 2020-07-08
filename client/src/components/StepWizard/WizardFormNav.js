@@ -47,7 +47,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     <StyledWizardNav>
       <BackButton
         onClick={() => {
-          if (document.referrer) {
+          if (history?.location?.state?.from) {
             history.goBack();
           } else {
             history.push(FEED);

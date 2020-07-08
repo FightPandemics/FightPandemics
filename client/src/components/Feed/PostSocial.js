@@ -114,6 +114,7 @@ const PostSocial = ({
                 state: {
                   postId: id,
                   comments: true,
+                  from: window.location.href,
                 },
               }}
             >
@@ -134,7 +135,10 @@ const PostSocial = ({
               onClick={() =>
                 sessionStorage.setItem("postcomment", `/post/${id}`)
               }
-              to={{ pathname: LOGIN }}
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
             >
               <div id={gtmTag("comment")} className="social-icon">
                 {renderCommentIcon()}
