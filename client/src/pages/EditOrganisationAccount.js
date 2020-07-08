@@ -7,7 +7,7 @@ import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
 import UnderLineDescription from "components/Input/UnderlineDescription";
 import InputLabel from "components/Input/Label";
-import orgData from "../assets/data/createOrganizationProfile";
+import orgData from "../assets/data/createOrganisationProfile";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -28,18 +28,18 @@ import {
   Background,
 } from "../components/EditProfile/EditComponents";
 import {
-  fetchOrganization,
-  fetchOrganizationError,
-  fetchOrganizationSuccess,
-  updateOrganization,
-  updateOrganizationError,
-  updateOrganizationSuccess,
-} from "hooks/actions/organizationActions";
+  fetchOrganisation,
+  fetchOrganisationError,
+  fetchOrganisationSuccess,
+  updateOrganisation,
+  updateOrganisationError,
+  updateOrganisationSuccess,
+} from "hooks/actions/organisationActions";
 import axios from "axios";
 import {
-  OrganizationContext,
-  withOrganizationContext,
-} from "context/OrganizationContext";
+  OrganisationContext,
+  withOrganisationContext,
+} from "context/OrganisationContext";
 import Marker from "../assets/create-profile-images/location-marker.svg";
 import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
@@ -64,12 +64,12 @@ const NEEDS = {
   other: "Other",
 };
 
-function EditOrganizationAccount(props) {
+function EditOrganisationAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
-  const organizationId = window.location.pathname.split("/")[2];
+  const organisationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganizationContext,
+    OrganisationContext,
   );
   const {
     register,
@@ -79,8 +79,8 @@ function EditOrganizationAccount(props) {
     clearError,
     setError,
   } = useForm();
-  const { loading, organization } = orgProfileState;
-  const { name, email, global, needs } = organization || {};
+  const { loading, organisation } = orgProfileState;
+  const { name, email, global, needs } = organisation || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -100,19 +100,19 @@ function EditOrganizationAccount(props) {
       if (formData.needs[key] === undefined) formData.needs[key] = needs[key];
     });
     formData.location = location;
-    orgProfileDispatch(updateOrganization());
+    orgProfileDispatch(updateOrganisation());
     try {
       const res = await axios.patch(
-        `/api/organizations/${organizationId}`,
+        `/api/organisations/${organisationId}`,
         formData,
       );
-      orgProfileDispatch(updateOrganizationSuccess(res.data));
-      props.history.push(`/organization/${res.data._id}`);
+      orgProfileDispatch(updateOrganisationSuccess(res.data));
+      props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
-        updateOrganizationError(
-          `Failed updating organization profile, reason: ${message}`,
+        updateOrganisationError(
+          `Failed updating organisation profile, reason: ${message}`,
         ),
       );
     }
@@ -120,28 +120,28 @@ function EditOrganizationAccount(props) {
 
   useEffect(() => {
     (async function fetchProfile() {
-      orgProfileDispatch(fetchOrganization());
+      orgProfileDispatch(fetchOrganisation());
       try {
-        const res = await axios.get(`/api/organizations/${organizationId}`);
+        const res = await axios.get(`/api/organisations/${organisationId}`);
         setLocation(res.data.location);
-        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
-          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId]);
+  }, [orgProfileDispatch, organisationId]);
 
-  const organizationInfo = {
+  const organisationInfo = {
     // label name, variable name, value
-    "Organization Name": ["name", name],
-    "Organization Contact E-mail": ["email", email],
+    "Organisation Name": ["name", name],
+    "Organisation Contact E-mail": ["email", email],
   };
 
   const renderNeedSection = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <div>
           {Object.entries(NEEDS).map(([key, label]) => (
@@ -166,7 +166,7 @@ function EditOrganizationAccount(props) {
   };
 
   const renderFormInputs = () => {
-    return Object.entries(organizationInfo).map(([key, value]) => {
+    return Object.entries(organisationInfo).map(([key, value]) => {
       return (
         <div
           key={key}
@@ -192,7 +192,7 @@ function EditOrganizationAccount(props) {
     });
   };
   const renderGlobalCheckBox = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <HelpWrapper>
           <CheckBoxWrapper>
@@ -203,7 +203,7 @@ function EditOrganizationAccount(props) {
               control={control}
               onChange={([event]) => event.target.checked}
             >
-              <Label inputColor="#646464">We are a global organization</Label>
+              <Label inputColor="#646464">We are a global organisation</Label>
             </Controller>
           </CheckBoxWrapper>
         </HelpWrapper>
@@ -212,7 +212,7 @@ function EditOrganizationAccount(props) {
   };
 
   const renderSelectItems = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <div>
           <Controller
@@ -225,7 +225,7 @@ function EditOrganizationAccount(props) {
                 ))}
               </StyledSelect>
             }
-            defaultValue={organization.type}
+            defaultValue={organisation.type}
             control={control}
             onChange={([text]) => text}
             name="type"
@@ -240,7 +240,7 @@ function EditOrganizationAccount(props) {
                 ))}
               </StyledSelect>
             }
-            defaultValue={organization.industry}
+            defaultValue={organisation.industry}
             rules={{ required: true }}
             control={control}
             onChange={([text]) => text}
@@ -248,7 +248,7 @@ function EditOrganizationAccount(props) {
           />
           <span style={errorStyles}>
             {errors.type || errors.industry
-              ? "Please select organization type and industry from dropdown"
+              ? "Please select organisation type and industry from dropdown"
               : ""}
           </span>
         </div>
@@ -257,7 +257,7 @@ function EditOrganizationAccount(props) {
   };
 
   const renderAddressInput = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <InputWrapper>
           <InputLabel htmlFor="location" icon={Marker} label="Address" />
@@ -274,7 +274,7 @@ function EditOrganizationAccount(props) {
   };
 
   const renderProfilePicture = () => {
-    if (organization) {
+    if (organisation) {
       return (
         <ProfilePicWrapper>
           <ProfilePic
@@ -295,7 +295,7 @@ function EditOrganizationAccount(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            Edit Organization Profile
+            Edit Organisation Profile
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
@@ -308,12 +308,12 @@ function EditOrganizationAccount(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink isSelected>
-              <Link to={`/edit-organization-account/${organizationId}`}>
+              <Link to={`/edit-organisation-account/${organisationId}`}>
                 Account Information
               </Link>
             </CustomLink>
             <CustomLink>
-              <Link to={`/edit-organization-profile/${organizationId}`}>
+              <Link to={`/edit-organisation-profile/${organisationId}`}>
                 Profile Information
               </Link>
             </CustomLink>
@@ -337,4 +337,4 @@ function EditOrganizationAccount(props) {
   );
 }
 
-export default withOrganizationContext(EditOrganizationAccount);
+export default withOrganisationContext(EditOrganisationAccount);

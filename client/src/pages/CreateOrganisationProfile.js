@@ -2,7 +2,7 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import createOrganizationProfile from "assets//data/createOrganizationProfile";
+import createOrganisationProfile from "assets//data/createOrganisationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
 import Input from "components/Input/BaseInput";
@@ -13,7 +13,7 @@ import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
 import LocationInput from "components/Input/LocationInput";
 import Checkbox from "components/Input/Checkbox";
-import createOrganizationSvg from "assets/icons/create-organization.svg";
+import createOrganisationSvg from "assets/icons/create-organisation.svg";
 import { connect } from "react-redux";
 import { theme } from "constants/theme";
 import { StyledForm } from "../components/CreatePost/StyledCreatePost";
@@ -29,15 +29,15 @@ import {
   styleInput,
   globalText,
   errorStyles,
-} from "components/OrganizationProfile/CreateProfileComponents";
+} from "components/OrganisationProfile/CreateProfileComponents";
 import {
-  CREATE_ORGANIZATION,
-  CREATE_ORGANIZATION_ERROR,
-} from "hooks/actions/organizationActions";
+  CREATE_Organisation,
+  CREATE_Organisation_ERROR,
+} from "hooks/actions/organisationActions";
 import {
-  createOrganizationFormReducer,
+  createOrganisationFormReducer,
   initialState,
-} from "hooks/reducers/organizationReducers";
+} from "hooks/reducers/organisationReducers";
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
@@ -46,7 +46,7 @@ const StyledUnderlineLink = styled(Link)`
   text-decoration-line: underline;
 `;
 
-const { type, industry } = createOrganizationProfile;
+const { type, industry } = createOrganisationProfile;
 
 const CheckboxGroup = ({
   defaultValue,
@@ -84,9 +84,9 @@ const CreateOrgProfile = (props) => {
   } = useForm();
 
   const [
-    createOrganizationFormState,
-    createOrganizationFormDispatch,
-  ] = useReducer(createOrganizationFormReducer, initialState);
+    createOrganisationFormState,
+    createOrganisationFormDispatch,
+  ] = useReducer(createOrganisationFormReducer, initialState);
 
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
@@ -111,13 +111,13 @@ const CreateOrgProfile = (props) => {
 
   const onFormSubmit = async (formData) => {
     if (!privacy) {
-      return createOrganizationFormDispatch({
-        type: CREATE_ORGANIZATION_ERROR,
+      return createOrganisationFormDispatch({
+        type: CREATE_Organisation_ERROR,
         error: `You must agree to our privacy policy before proceeding`,
       });
     } else if (!conditions) {
-      return createOrganizationFormDispatch({
-        type: CREATE_ORGANIZATION_ERROR,
+      return createOrganisationFormDispatch({
+        type: CREATE_Organisation_ERROR,
         error: `You must agree to our terms and conditions before proceeding`,
       });
     } else {
@@ -130,27 +130,27 @@ const CreateOrgProfile = (props) => {
             "Please select an address from the drop-down",
           );
         }
-        createOrganizationFormDispatch({ type: CREATE_ORGANIZATION });
+        createOrganisationFormDispatch({ type: CREATE_Organisation });
         try {
           formData.location = location;
 
-          const res = await axios.post("/api/organizations", formData);
+          const res = await axios.post("/api/organisations", formData);
           if (res) {
-            props.history.push("/create-organization-complete", {
+            props.history.push("/create-organisation-complete", {
               orgId: res.data._id,
             });
           }
         } catch (err) {
           const message = err.response?.data?.message || err.message;
-          createOrganizationFormDispatch({
-            type: CREATE_ORGANIZATION_ERROR,
-            error: `Creating organization failed, reason: ${message}`,
+          createOrganisationFormDispatch({
+            type: CREATE_Organisation_ERROR,
+            error: `Creating organisation failed, reason: ${message}`,
           });
         }
       } else {
-        return createOrganizationFormDispatch({
-          type: CREATE_ORGANIZATION_ERROR,
-          error: `You must be logged in to create an organization profile`,
+        return createOrganisationFormDispatch({
+          type: CREATE_Organisation_ERROR,
+          error: `You must be logged in to create an organisation profile`,
         });
       }
     }
@@ -159,22 +159,22 @@ const CreateOrgProfile = (props) => {
   return (
     <Main>
       <SvgContainer>
-        <img src={createOrganizationSvg} alt="create organization" />
+        <img src={createOrganisationSvg} alt="create organisation" />
       </SvgContainer>
       <FormContainer>
         <Heading className="h4" level={4}>
-          Create Organization Profile
+          Create Organisation Profile
         </Heading>
-        {createOrganizationFormState.error && (
+        {createOrganisationFormState.error && (
           <ErrorAlert
-            message={createOrganizationFormState.error}
+            message={createOrganisationFormState.error}
             type="error"
           />
         )}
         <WhiteSpace />
         <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
           <InputWrapper>
-            <Label style={styleLabel} label="* Organization Name" />
+            <Label style={styleLabel} label="* Organisation Name" />
             <Input
               type="text"
               required
@@ -185,13 +185,13 @@ const CreateOrgProfile = (props) => {
               name="name"
             />
             <span style={errorStyles}>
-              {errors.name && "Organization name is required"}
+              {errors.name && "Organisation name is required"}
             </span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
-            <Label style={styleLabel} label="* Organization Contact E-mail" />
+            <Label style={styleLabel} label="* Organisation Contact E-mail" />
             <Input
               type="email"
               required
@@ -234,7 +234,7 @@ const CreateOrgProfile = (props) => {
               control={control}
               onChange={([event]) => event.target.checked}
             />
-            <span style={globalText}>We are a global organization</span>
+            <span style={globalText}>We are a global organisation</span>
             <InputGroup>
               <Label style={styleLabel} label="* What are you looking for" />
               <Controller
@@ -312,7 +312,7 @@ const CreateOrgProfile = (props) => {
             />
             <span style={errorStyles}>
               {errors.type || errors.industry
-                ? "Please select organization type and industry from dropdown"
+                ? "Please select organisation type and industry from dropdown"
                 : ""}
             </span>
             <WhiteSpace />
@@ -351,7 +351,7 @@ const CreateOrgProfile = (props) => {
             style={{ fontWeight: "normal" }}
             disabled={!(privacy && conditions && validEmail)}
           >
-            {createOrganizationFormState.loading
+            {createOrganisationFormState.loading
               ? "Creating Profile..."
               : "Create Profile"}
           </SubmitButton>

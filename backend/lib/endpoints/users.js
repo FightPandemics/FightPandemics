@@ -17,7 +17,7 @@ async function routes(app) {
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
     const [userErr, user] = await app.to(
-      User.findById(userId).populate("organizations"),
+      User.findById(userId).populate("organisations"),
     );
     if (userErr) {
       req.log.error(userErr, "Failed retrieving user");
@@ -37,7 +37,7 @@ async function routes(app) {
       location,
       needs,
       objectives,
-      organizations,
+      organisations,
       urls,
     } = user;
     return {
@@ -50,7 +50,7 @@ async function routes(app) {
       location,
       needs,
       objectives,
-      organizations,
+      organisations,
       urls,
     };
   });
@@ -122,7 +122,7 @@ async function routes(app) {
         userId: authUserId,
       } = req;
 
-      const user = await User.findById(userId).populate("organizations");
+      const user = await User.findById(userId).populate("organisations");
       if (user === null) {
         throw app.httpErrors.notFound();
       }
@@ -134,7 +134,7 @@ async function routes(app) {
         id,
         lastName,
         needs,
-        organizations,
+        organisations,
         objectives,
         urls,
       } = user;
@@ -155,7 +155,7 @@ async function routes(app) {
         lastName,
         location,
         needs,
-        organizations,
+        organisations,
         objectives,
         ownUser: authUserId !== null && authUserId.equals(user.id),
         urls,

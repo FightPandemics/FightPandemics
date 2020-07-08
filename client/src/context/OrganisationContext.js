@@ -2,11 +2,11 @@ import React, { createContext, useReducer } from "react";
 import {
   initialProfileState,
   orgProfileReducer,
-} from "../hooks/reducers/organizationReducers";
+} from "../hooks/reducers/organisationReducers";
 
-export const OrganizationContext = createContext();
+export const OrganisationContext = createContext();
 
-export const withOrganizationContext = (Component) => (props) => {
+export const withOrganisationContext = (Component) => (props) => {
   const [orgProfileState, orgProfileDispatch] = useReducer(
     orgProfileReducer,
     initialProfileState,
@@ -14,8 +14,8 @@ export const withOrganizationContext = (Component) => (props) => {
   const contextValue = { orgProfileState, orgProfileDispatch };
 
   return (
-    <OrganizationContext.Provider value={contextValue}>
+    <OrganisationContext.Provider value={contextValue}>
       <Component {...props} />
-    </OrganizationContext.Provider>
+    </OrganisationContext.Provider>
   );
 };

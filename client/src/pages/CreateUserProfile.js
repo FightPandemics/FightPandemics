@@ -8,7 +8,7 @@ import {
   InputWrapper,
   InputGroup,
   CheckboxContainer,
-} from "components/OrganizationProfile/CreateProfileComponents";
+} from "components/OrganisationProfile/CreateProfileComponents";
 import StyledCheckbox from "components/Input/Checkbox";
 import PersonalDataImage from "assets/create-profile-images/personal-data.svg";
 import Marker from "assets/create-profile-images/location-marker.svg";

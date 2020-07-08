@@ -111,22 +111,22 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <Menu.Item>
         <Link
           id={GTM.nav.prefix + GTM.nav.addOrg}
-          to="/create-organization-profile"
+          to="/create-organisation-profile"
         >
           Add Organisation
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      {user?.organizations?.length > 0
-        ? user?.organizations?.map((organization) => (
-            <Menu.Item key={organization._id}>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
+      {user?.organisations?.length > 0
+        ? user?.organisations?.map((organisation) => (
+            <Menu.Item key={organisation._id}>
+              <Link to={`/organisation/${organisation._id}`}>
+                {organisation.name}
               </Link>
             </Menu.Item>
           ))
         : null}
-      {user?.organizations?.length > 0 && <Menu.Divider />}
+      {user?.organisations?.length > 0 && <Menu.Divider />}
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
