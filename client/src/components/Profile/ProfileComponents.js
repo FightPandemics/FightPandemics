@@ -132,17 +132,17 @@ export const BackgroundHeader = styled.div`
   left: 0;
   right: 0;
   background-color: ${colors.royalBlue};
-  border-bottom-right-radius: 30px;
+  border-bottom-right-radius: 30
   position: relative;
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
-    margin-bottom: 100px;
+    margin-bottom: 10rem;
   }
 `;
 export const DescriptionMobile = styled.div`
   background-color: ${colors.white};
-  borderradius: 5px;
+  borderradius: 0.5rem;
   width: 100%;
   font-size: 1.2rem;
   color: ${colors.darkGray};
@@ -153,7 +153,7 @@ export const DescriptionMobile = styled.div`
 export const ProfileLayout = styled.div`
   background-color: ${colors.lighterGray};
   max-height: 100%;
-  margin: 0 -25px;
+  margin: 0 -2.5rem;
   flex-direction: row;
   flex-grow: 1;
   align-self: flex-start;
@@ -195,7 +195,7 @@ export const UserInfoContainer = styled.div`
   margin-top: -13vh;
   margin-left: 2.5rem;
   margin-right: 2.5rem;
-  border-radius: 10px;
+  border-radius: 1rem;
   z-index: 1;
   filter: drop-shadow(#00000012 5px 0px 5px);
   flex-direction: column;

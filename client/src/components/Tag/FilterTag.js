@@ -8,6 +8,10 @@ const { xsmall } = theme.typography.size;
 const FilterTag = styled(Tag).attrs(({ selected, disabled }) => {
   return { selected, disabled };
 })`
+  &.am-tag {
+    height: 2.5rem;
+    line-height: 2.5rem;
+  }
   &.am-tag-normal,
   &.am-tag-active,
   &.am-tag-disabled {

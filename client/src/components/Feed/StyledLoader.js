@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export default styled.div`
-  margin: 100px auto;
-  font-size: 10px;
+  margin: 10rem auto;
+  font-size: 1rem;
   width: 1em;
   height: 1em;
   border-radius: 50%;

@@ -8,7 +8,7 @@ const logStream = require("./logger");
 const auth = require("./endpoints/auth");
 const feedback = require("./endpoints/feedback");
 const geo = require("./endpoints/geo");
-const organizations = require("./endpoints/organizations");
+const organisations = require("./endpoints/organisations");
 const posts = require("./endpoints/posts");
 const users = require("./endpoints/users");
 const sendgrid = require("./endpoints/sendgrid");
@@ -49,7 +49,7 @@ module.exports = function createApp(config) {
   app.register(auth, { prefix: "/api/auth" });
   app.register(feedback, { prefix: "/api/feedback" });
   app.register(geo, { prefix: "/api/geo" });
-  app.register(organizations, { prefix: "api/organizations" });
+  app.register(organisations, { prefix: "api/organisations" });
   app.register(posts, { prefix: "/api/posts" });
   app.register(users, { prefix: "/api/users" });
   app.register(sendgrid, { prefix: "/api/sendgrid" });

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import GTM from "constants/gtm-tags";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
@@ -54,6 +54,7 @@ const StyleSocialIcon = {
 };
 
 const SectionDiv = styled.div`
+  font-size: 1.4rem;
   text-transform: uppercase;
   color: ${colors.lightGray};
   &:before,
@@ -73,7 +74,7 @@ const FlexBox = styled(Flex).attrs((props) => ({
 }))``;
 
 const SocialButton = styled(Button)`
-  border: 1px solid ${colors.lightGray};
+  border: 0.1rem solid ${colors.lightGray};
   border-radius: unset;
   display: flex;
   height: 4.8rem;
@@ -135,6 +136,9 @@ const SocialImageContainer = styled.div`
       width: 100%;
     }
   }
+  img {
+    width: 36.4rem;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -178,16 +182,16 @@ const EmailButtonContainer = styled.div`
 
 const EmailTextContainer = styled.div`
   position: absolute;
-  width: 295px;
-  height: 55px;
-  left: 40px;
-  top: 268px;
+  width: 29.5rem;
+  height: 5.5rem;
+  left: 4rem;
+  top: 26.8rem;
 
   > p {
     font-family: Poppins;
     font-style: normal;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 1.5rem;
   }
 `;
 
@@ -331,7 +335,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       <LoginRightContainer>
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
-            <Heading className="text-center" level={4}>
+            <Heading className="h4 text-center" level={4}>
               {isLoginForm
                 ? "Sign In"
                 : forgotPassword
@@ -437,6 +441,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <SubmitButton
                   primary="true"
                   disabled={!formState.isValid}
+                  id={
+                    isLoginForm
+                      ? GTM.sign.inPrefix + GTM.sign.in
+                      : GTM.sign.upPrefix + GTM.sign.up
+                  }
                   onClick={
                     isLoginForm
                       ? handleSubmit(onLoginWithEmail)
@@ -504,14 +513,20 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       </AuthLink>
                     </p>
                     <p>
-                      <AuthLink to="/auth/signup">
+                      <AuthLink
+                        id={GTM.sign.inPrefix + GTM.sign.up}
+                        to="/auth/signup"
+                      >
                         Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
                 ) : (
                   <p>
-                    <AuthLink to="/auth/login">
+                    <AuthLink
+                      id={GTM.sign.upPrefix + GTM.sign.in}
+                      to="/auth/login"
+                    >
                       Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
@@ -535,6 +550,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           {!forgotPassword && (
             <FlexBox>
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.facebook
+                    : GTM.sign.upPrefix + GTM.social.facebook
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
@@ -542,6 +562,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Facebook</ButtonText>
               </SocialButton>
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.google
+                    : GTM.sign.upPrefix + GTM.social.google
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
@@ -557,6 +582,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Twitter</ButtonText>
               </SocialButton>**/}
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.linkedin
+                    : GTM.sign.upPrefix + GTM.social.linkedin
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}

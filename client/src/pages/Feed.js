@@ -47,9 +47,9 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
-export const isAuthorOrg = (organizations, author) => {
-  const isValid = organizations?.some(
-    (organization) => organization.name === author.name,
+export const isAuthorOrg = (organisations, author) => {
+  const isValid = organisations?.some(
+    (organisation) => organisation.name === author.name,
   );
   return isValid;
 };
@@ -126,6 +126,7 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
+      height: 3rem;
       border-left: 0.5rem solid ${white};
       color: ${darkerGray};
       font-size: ${theme.typography.size.large};
@@ -452,10 +453,10 @@ const Feed = (props) => {
         // offering help
         handleChangeType({ key: value });
         if (providers) {
-          let organizationFilter = providers.filter(
+          let organisationFilter = providers.filter(
             (option) => option === "As an Organisation",
           );
-          if (organizationFilter.length > 0) {
+          if (organisationFilter.length > 0) {
             for (let i = 1; i < filters[1].options.length; ++i) {
               let option = filters[1].options[i];
               handleOnboardingOptions(option, "providers");
@@ -502,7 +503,7 @@ const Feed = (props) => {
       user &&
       (user._id === post.author.id ||
         user.id === post.author.id ||
-        isAuthorOrg(user.organizations, post.author))
+        isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -548,7 +549,7 @@ const Feed = (props) => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}
+            width="29rem"
           >
             <div>
               <MenuWrapper
@@ -577,7 +578,10 @@ const Feed = (props) => {
               <h1>Help Board</h1>
               <button onClick={handleCreatePost}>
                 Create a post
-                <SvgIcon src={creatPost} />
+                <SvgIcon
+                  src={creatPost}
+                  style={{ width: "5rem", height: "5rem" }}
+                />
               </button>
             </HeaderWrapper>
             <div>

@@ -12,6 +12,7 @@ const getPostsSchema = {
   querystring: strictSchema()
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
+    .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("limit", S.integer())
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer()),
@@ -31,7 +32,7 @@ const createPostSchema = {
     )
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES).required())
-    .prop("organizationId", S.string())
+    .prop("organisationId", S.string())
     .prop("title", S.string().required())
     .prop(
       "types",

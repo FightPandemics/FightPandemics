@@ -342,10 +342,10 @@ const PrivacyPolicy = () => {
                 <li>
                   <u>Maintenance of the Services and Customer Support:</u> we
                   will process your data in order to deliver the Services YOU
-                  have requested, including, for example, YOU joining as a
-                  user, managing your account and profile, and authenticating
-                  YOU when YOU sign in, as well as to resolve technical issues
-                  YOU encounter, to respond to your requests for assistance.
+                  have requested, including, for example, YOU joining as a user,
+                  managing your account and profile, and authenticating YOU when
+                  YOU sign in, as well as to resolve technical issues YOU
+                  encounter, to respond to your requests for assistance.
                 </li>
                 <li>
                   <u>Processing investments and payments:</u> as the purpose of
@@ -416,7 +416,7 @@ const PrivacyPolicy = () => {
                 </li>
                 <li>
                   <u>
-                    Asset purchasers, merger, reorganization, dissolution or
+                    Asset purchasers, merger, reorganisation, dissolution or
                     similar event:
                   </u>{" "}
                   We may also transfer your Personal Data as part of the

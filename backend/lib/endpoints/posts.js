@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { translateISOtoRelativeTime } = require("../utils");
+const { setElapsedTimeText } = require("../utils");
 
 const {
   createCommentSchema,
@@ -38,8 +38,15 @@ async function routes(app) {
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req;
-      const { authorId, filter, limit, objective, skip } = req.query;
+      const { query, userId } = req;
+      const {
+        authorId,
+        ignoreUserLocation,
+        filter,
+        limit,
+        objective,
+        skip,
+      } = query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -64,7 +71,7 @@ async function routes(app) {
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
-      } else if (user) {
+      } else if (user && !ignoreUserLocation) {
         location = user.location;
       }
 
@@ -225,26 +232,26 @@ async function routes(app) {
         throw app.httpErrors.forbidden();
       }
 
-      // Author defaults to user unless organizationId set
+      // Author defaults to user unless organisationId set
       let author = user;
-      const { organizationId } = postProps;
-      if (organizationId) {
-        const [orgErr, org] = await app.to(User.findById(organizationId));
+      const { organisationId } = postProps;
+      if (organisationId) {
+        const [orgErr, org] = await app.to(User.findById(organisationId));
         if (orgErr) {
-          req.log.error(userErr, "Failed retrieving organization");
+          req.log.error(userErr, "Failed retrieving organisation");
           throw app.httpErrors.internalServerError();
         } else if (org === null) {
-          req.log.error(userErr, "Organization does not exist");
+          req.log.error(userErr, "Organisation does not exist");
           throw app.httpErrors.forbidden();
         } else if (org.ownerId.toString() !== userId.toString()) {
           req.log.error(
             userErr,
-            "User not allowed to post as this organization",
+            "User not allowed to post as this organisation",
           );
           throw app.httpErrors.forbidden();
         }
         author = org;
-        delete postProps.organizationId;
+        delete postProps.organisationId;
       }
 
       // Creates embedded author document
@@ -548,7 +555,10 @@ async function routes(app) {
           },
         ]).then((comments) => {
           comments.forEach((comment) => {
-            comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
+            comment.elapsedTimeText = setElapsedTimeText(
+              comment.createdAt,
+              comment.updatedAt,
+            );
           });
           return comments;
         }),

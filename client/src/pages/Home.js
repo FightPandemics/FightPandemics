@@ -27,7 +27,7 @@ const StyledIntro = styled.div`
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-image: ${theme.backgrounds.primary};
-    border-radius: 3px;
+    border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -42,6 +42,7 @@ const StyledIntro = styled.div`
 `;
 
 const MainContainer = styled.div`
+  width: 100%;
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;

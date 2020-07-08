@@ -52,10 +52,10 @@ individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
 });
 
-individualUserSchema.virtual("organizations", {
+individualUserSchema.virtual("organisations", {
   foreignField: "ownerId",
   localField: "_id",
-  ref: "OrganizationUser",
+  ref: "OrganisationUser",
 });
 
 const IndividualUser = User.discriminator(

@@ -13,6 +13,8 @@ const Container = styled(Modal)`
   font-size: ${typography.size.medium};
   font-weight: 600;
   line-height: 2.2rem;
+  width: 52rem !important;
+
   .ant-modal-content {
     width: 100%;
     max-width: 56.4rem;
@@ -136,11 +138,13 @@ const ViewPostButton = styled(BaseButton)`
 
 const OptionWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   border: 0.2rem solid ${colors.royalBlue};
   border-radius: 0.8rem;
   cursor: pointer;
+  font-size: 1.4rem;
 
   p {
     margin-top: 1.4rem;
@@ -159,7 +163,10 @@ const Option = ({ img, text, onClick, type }) => (
       backgroundColor: type === text.toLowerCase() && `${colors.lightGray}`,
     }}
   >
-    <SvgIcon src={img} style={{ marginBottom: "1.5rem" }} />
+    <SvgIcon
+      src={img}
+      style={{ marginBottom: "1.5rem", width: "4rem", height: "auto" }}
+    />
     <p>{text}</p>
   </OptionWrapper>
 );

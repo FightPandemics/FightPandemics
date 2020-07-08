@@ -402,8 +402,8 @@ const Post = ({
                   user &&
                   (user._id === post.author.id ||
                     user.id === post.author.id ||
-                    (user.organizations &&
-                      isAuthorOrg(user.organizations, post.author))) && (
+                    (user.organisations &&
+                      isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -457,7 +457,7 @@ const Post = ({
                 user &&
                 (user?._id === post?.author?.id ||
                   user?.id === post?.author?.id ||
-                  isAuthorOrg(user.organizations, post.author)) && (
+                  isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}

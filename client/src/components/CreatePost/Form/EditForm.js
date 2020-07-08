@@ -105,7 +105,7 @@ const EditModalComponent = ({
       user &&
       (user._id === post.author.id ||
         user.id === post.author.id ||
-        isAuthorOrg(user.organizations, post.author))
+        isAuthorOrg(user.organisations, post.author))
     ) {
       const endPoint = `/api/posts/${postId}`;
 

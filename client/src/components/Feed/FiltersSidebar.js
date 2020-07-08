@@ -44,6 +44,7 @@ const DrawerWrapper = styled(Drawer)`
         font-size: ${theme.typography.size.large};
         font-weight: bold;
         padding: 0;
+        height: 4.4rem;
         i {
           height: ${theme.typography.size.medium};
           width: ${theme.typography.size.medium};
@@ -90,7 +91,7 @@ const FiltersSidebar = () => {
       visible={showFilters}
       getContainer={false}
       style={{ position: "absolute" }}
-      width={290}
+      width="29rem"
     >
       <div>
         <button onClick={handleOnClose}>

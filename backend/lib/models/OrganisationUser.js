@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
-const organizationSchema = new Schema(
+const organisationSchema = new Schema(
   {
     global: Boolean,
     industry: { required: true, type: String },
@@ -46,10 +46,10 @@ const organizationSchema = new Schema(
   { collection: "users" },
 );
 
-const OrganizationUser = User.discriminator(
-  "OrganizationUser",
-  organizationSchema,
+const OrganisationUser = User.discriminator(
+  "OrganisationUser",
+  organisationSchema,
 );
 
-exports.schema = organizationSchema;
-exports.model = OrganizationUser;
+exports.schema = organisationSchema;
+exports.model = OrganisationUser;

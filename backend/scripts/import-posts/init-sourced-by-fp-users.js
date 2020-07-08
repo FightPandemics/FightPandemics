@@ -3,8 +3,8 @@ const {
   schema: individualUserSchema,
 } = require("../../lib/models/IndividualUser");
 const {
-  schema: organizationUserSchema,
-} = require("../../lib/models/OrganizationUser");
+  schema: organisationUserSchema,
+} = require("../../lib/models/OrganisationUser");
 
 // generic location with required elements
 const SOURCED_BY_FP_LOCATION = {
@@ -25,7 +25,7 @@ const SOURCED_BY_FP_OWNER_UPDATE = {
   lastName: "FightPandemics",
   location: SOURCED_BY_FP_LOCATION,
   photo:
-    "https://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/da36013a-1030-4afe-bbb5-91c5c10d7fb1/515x507.png"
+    "https://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/da36013a-1030-4afe-bbb5-91c5c10d7fb1/515x507.png",
 };
 
 const SOURCED_BY_FP_ORG_UPDATE = {
@@ -71,18 +71,18 @@ const initSourcedByFPOwner = async (connection) => {
 // Returns [{ type: OrgDoc }] to associate posts with the correct author.type
 const initSourcedByFPOrgs = async (connection, sourcedByFPOwner) => {
   const User = connection.model("User", userSchema);
-  const OrganizationUser = User.discriminator(
-    "OrganizationUser",
-    organizationUserSchema,
+  const OrganisationUser = User.discriminator(
+    "OrganisationUser",
+    organisationUserSchema,
   );
 
   /*
-    Need to create one Sourced by FP Org per organization.type enum
+    Need to create one Sourced by FP Org per organisation.type enum
     Since all post author.type references updated whenver the author type is updated
   */
   const fpOrgsByType = {};
   /* eslint-disable-next-line no-restricted-syntax */
-  for await (const orgType of organizationUserSchema.tree.type.enum) {
+  for await (const orgType of organisationUserSchema.tree.type.enum) {
     const orgFilter = {
       ownerId: sourcedByFPOwner._id,
       type: orgType,
@@ -95,7 +95,7 @@ const initSourcedByFPOrgs = async (connection, sourcedByFPOwner) => {
     };
 
     let sourcedByFPOrg;
-    sourcedByFPOrg = await OrganizationUser.findOne(orgFilter);
+    sourcedByFPOrg = await OrganisationUser.findOne(orgFilter);
     if (sourcedByFPOrg) {
       Object.keys(orgUpdate).forEach((key) => {
         if (sourcedByFPOrg[key] !== orgUpdate[key]) {
@@ -104,7 +104,7 @@ const initSourcedByFPOrgs = async (connection, sourcedByFPOwner) => {
       });
       await sourcedByFPOrg.save();
     } else {
-      sourcedByFPOrg = await new OrganizationUser({
+      sourcedByFPOrg = await new OrganisationUser({
         ...orgFilter,
         ...orgUpdate,
       }).save();

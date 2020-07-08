@@ -13,7 +13,7 @@ export const Background = styled.div`
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
       margin: auto;
       padding: 0 5%;
-      margin: 0 -25px;
+      margin: 0 -2.5rem;
     }
   }
 `;
@@ -44,7 +44,7 @@ export const CustomForm = styled.form`
   @media screen and (min-width: ${mq.desktop.small.minWidth}) {
     border: 0.1rem solid ${colors.lightGray};
     padding: 3rem 4rem;
-    min-width: 620px;
+    min-width: 62rem;
     background-color: ${colors.white};
   }
 `;

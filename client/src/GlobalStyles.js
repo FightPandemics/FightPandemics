@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { WHITE, SELAGO } from "./constants/colors";
+import { mq } from "./constants/theme";
 
 const globalStyles = createGlobalStyle`
 * {
@@ -18,6 +19,10 @@ const globalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
+
+  @media screen and (min-width: ${mq.desktop.extra.minWidth}) {
+    font-size: 150%;
+  }
 }
 
 body {
@@ -57,7 +62,7 @@ a {
 }
 
 .app-drawer .am-drawer-sidebar .am-list {
-  width: 200px;
+  width: 20rem;
   padding: 0;
 }
 
@@ -66,7 +71,7 @@ a {
 }
 
 .nav-item {
-  padding: 5px 10px;
+  padding: .5rem 1rem;
 
   > a,
   > a.nav-link {
@@ -81,12 +86,12 @@ a {
 }
 
 .btn-light {
-  border: 1px solid #ddd;
+  border: .1rem solid #ddd;
 }
 
 .ant-select-dropdown {
   font-family: Work Sans;
-  font-size: 11px;
+  font-size: 1.1rem;
 
   .ant-select-item-option-content {
     font-weight: normal;

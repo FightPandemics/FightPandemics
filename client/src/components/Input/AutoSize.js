@@ -5,7 +5,6 @@ import SvgIcon from "components/Icon/SvgIcon";
 import send from "assets/icons/send.svg";
 import { Button } from "antd";
 import { mq, theme } from "constants/theme";
-import GTM from "constants/gtm-tags";
 const { white } = theme.colors;
 
 const SendButton = styled(Button)`
@@ -18,9 +17,9 @@ const SendButton = styled(Button)`
   height: 4.5rem;
   justify-content: center;
 
-  @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+  @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
     height: 5rem;
-    padding: 1rem 1rem;
+    padding: .5rem .5rem;
   }
 `;
 

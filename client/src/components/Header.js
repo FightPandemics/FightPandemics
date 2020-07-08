@@ -56,9 +56,10 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
+    align-items: center;
     .registerBtn {
       color: ${colors.royalBlue};
-      border: 1px solid ${colors.royalBlue};
+      border: 0.1rem solid ${colors.royalBlue};
       border-radius: 2rem;
       padding: 0 0.8rem;
       margin-bottom: 0.2rem;
@@ -78,12 +79,12 @@ const NavLinks = styled.div`
         text-decoration: none;
         padding: 1.2rem 1.4rem;
         transition: all 0.2s;
-        border-bottom: 3px solid transparent;
+        border-bottom: 0.3rem solid transparent;
       }
       a:hover:not(.registerLink) {
         font-weight: 600;
         color: ${colors.royalBlue};
-        border-bottom: 3px solid ${colors.royalBlue};
+        border-bottom: 0.3rem solid ${colors.royalBlue};
       }
     }
   }
@@ -111,22 +112,22 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
       <Menu.Item>
         <Link
           id={GTM.nav.prefix + GTM.nav.addOrg}
-          to="/create-organization-profile"
+          to="/create-organisation-profile"
         >
           Add Organisation
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      {user?.organizations?.length > 0
-        ? user?.organizations?.map((organization) => (
-            <Menu.Item key={organization._id}>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
+      {user?.organisations?.length > 0
+        ? user?.organisations?.map((organisation) => (
+            <Menu.Item key={organisation._id}>
+              <Link to={`/organisation/${organisation._id}`}>
+                {organisation.name}
               </Link>
             </Menu.Item>
           ))
         : null}
-      {user?.organizations?.length > 0 && <Menu.Divider />}
+      {user?.organisations?.length > 0 && <Menu.Divider />}
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>

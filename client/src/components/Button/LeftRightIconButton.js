@@ -7,7 +7,7 @@ const LeftRightIconButton = styled(BaseButton).attrs(({ icon, inline }) => {
   return { icon, inline };
 })`
   font-weight: 400;
-  width: 192px;
+  width: 19.2rem;
   &.am-button > span {
     margin-right: 3rem;
   }
