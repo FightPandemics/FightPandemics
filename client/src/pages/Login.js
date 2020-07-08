@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import GTM from "constants/gtm-tags";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
@@ -441,6 +441,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <SubmitButton
                   primary="true"
                   disabled={!formState.isValid}
+                  id={
+                    isLoginForm
+                      ? GTM.sign.inPrefix + GTM.sign.in
+                      : GTM.sign.upPrefix + GTM.sign.up
+                  }
                   onClick={
                     isLoginForm
                       ? handleSubmit(onLoginWithEmail)
@@ -508,14 +513,20 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       </AuthLink>
                     </p>
                     <p>
-                      <AuthLink to="/auth/signup">
+                      <AuthLink
+                        id={GTM.sign.inPrefix + GTM.sign.up}
+                        to="/auth/signup"
+                      >
                         Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
                 ) : (
                   <p>
-                    <AuthLink to="/auth/login">
+                    <AuthLink
+                      id={GTM.sign.upPrefix + GTM.sign.in}
+                      to="/auth/login"
+                    >
                       Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
@@ -539,6 +550,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           {!forgotPassword && (
             <FlexBox>
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.facebook
+                    : GTM.sign.upPrefix + GTM.social.facebook
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
@@ -546,6 +562,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Facebook</ButtonText>
               </SocialButton>
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.google
+                    : GTM.sign.upPrefix + GTM.social.google
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
@@ -561,6 +582,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Twitter</ButtonText>
               </SocialButton>**/}
               <SocialButton
+                id={
+                  isLoginForm
+                    ? GTM.sign.inPrefix + GTM.social.linkedin
+                    : GTM.sign.upPrefix + GTM.social.linkedin
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}

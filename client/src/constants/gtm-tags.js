@@ -39,4 +39,16 @@ module.exports = {
     viewMore: "_VM",
     writeComment: "_WC",
   },
+  sign: {
+    inPrefix: "SI",
+    upPrefix: "SU",
+    in: "_SI",
+    up: "_JN",
+  },
+
+  social: {
+    facebook: "_FB",
+    google: "_GG",
+    linkedin: "_LK",
+  },
 };

@@ -5,7 +5,6 @@ import SvgIcon from "components/Icon/SvgIcon";
 import send from "assets/icons/send.svg";
 import { Button } from "antd";
 import { mq, theme } from "constants/theme";
-import GTM from "constants/gtm-tags";
 const { white } = theme.colors;
 
 const SendButton = styled(Button)`
