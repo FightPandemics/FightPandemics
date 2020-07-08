@@ -70,7 +70,8 @@ const Step1 = (props) => {
                 GTM.offerHelp.volunteer +
                 props.currentStep +
                 GTM.offerHelp.orgbtn +
-                GTM.offerHelp.donor
+                GTM.offerHelp.donor +
+                i
               }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
