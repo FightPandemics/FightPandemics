@@ -42,6 +42,7 @@ import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -116,9 +117,9 @@ const Profile = ({
       }
     })();
   }, [pathUserId, userProfileDispatch]);
-  useEffect(() => {
-    (async function fetchPosts() {
-      postsDispatch({ type: FETCH_POSTS });
+
+  const fetchPosts = async() => {
+    postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
           const res = await axios.get(
@@ -136,8 +137,49 @@ const Profile = ({
           error: `Failed loading activity, reason: ${message}`,
         });
       }
-    })();
-  }, [userId]);
+  }
+
+  useEffect(() => {
+    (fetchPosts)();
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (
+      user &&
+      (user._id === post.author.id || user.id === post.author.id )
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchPosts();
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handleEditPost = () => {
+    if (postsState.editPostModalVisibility) {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
+  };
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -223,7 +265,12 @@ const Profile = ({
           )}
         </SectionHeader>
         <FeedWrapper>
-          <Activity filteredPosts={postsState.posts} />
+          <Activity 
+            filteredPosts={postsState.posts}
+            user={user}
+            handlePostDelete={postDelete}
+            handleEditPost={handleEditPost}
+          />
           {ownUser && (
             <CreatePost
               onCancel={() => setModal(false)}
