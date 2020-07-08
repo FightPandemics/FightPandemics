@@ -120,21 +120,23 @@ const Profile = ({
 
   const fetchPosts = async() => {
     postsDispatch({ type: FETCH_POSTS });
-    try {
-      if (userId) {
-        const res = await axios.get(`/api/posts?limit=-1&authorId=${userId}`);
+      try {
+        if (userId) {
+          const res = await axios.get(
+            `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
+          );
+          postsDispatch({
+            type: SET_POSTS,
+            posts: res.data,
+          });
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
         postsDispatch({
-          type: SET_POSTS,
-          posts: res.data,
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
         });
       }
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      postsDispatch({
-        type: ERROR_POSTS,
-        error: `Failed loading activity, reason: ${message}`,
-      });
-    }
   }
 
   useEffect(() => {
@@ -149,14 +151,13 @@ const Profile = ({
       (user._id === post.author.id || user.id === post.author.id )
     ) {
       try {
-        if (userId) {
-          const res = await axios.get(
-            `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
-          );
-          postsDispatch({
-            type: SET_POSTS,
-            posts: res.data,
-          });
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchPosts();
         }
       } catch (error) {
         console.log({
