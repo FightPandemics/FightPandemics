@@ -128,7 +128,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         : null}
       {user?.organizations?.length > 0 && <Menu.Divider />}
       <Menu.Item>
-        <Link to="/auth/logout">Log Out</Link>
+        <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
     </Menu>
   );
@@ -151,7 +151,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
             activeStyle={activeStyles}
             to="/feed"
           >
-            Feed
+            Help Board
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -175,7 +175,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
-                Login
+                Sign In
               </NavLink>
             </li>
             <li className="registerBtn">
@@ -184,7 +184,7 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
                 className="registerLink"
                 to="/auth/signup"
               >
-                Register
+                Join Now
               </NavLink>
             </li>
             <Link id={GTM.nav.prefix + GTM.nav.feedBack} to="/feed">

@@ -228,7 +228,12 @@ const Post = ({
           {!loadMorePost ? (
             <span className="view-more">View Less</span>
           ) : (
-            <span className="view-more">View More</span>
+            <span
+              id={GTM.post.prefix + GTM.post.viewMore}
+              className="view-more"
+            >
+              View More
+            </span>
           )}
         </div>
       ) : (
@@ -314,7 +319,7 @@ const Post = ({
     >
       {isAuthenticated ? (
         <AutoSize
-          gtmTag={GTM.post.prefix + GTM.post.writeComment + postId}
+          gtmTag={`${GTM.post.prefix}${GTM.post.writeComment}_${postId}`}
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}

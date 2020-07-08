@@ -574,7 +574,7 @@ const Feed = (props) => {
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
-              <h1>Feed</h1>
+              <h1>Help Board</h1>
               <button onClick={handleCreatePost}>
                 Create a post
                 <SvgIcon src={creatPost} />

@@ -336,7 +336,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 ? "Sign In"
                 : forgotPassword
                 ? "Recover Password"
-                : "Sign Up"}
+                : "Join Now"}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -443,7 +443,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       : handleSubmit(onSignup)
                   }
                 >
-                  {isLoginForm ? "Sign In" : "Sign Up"}
+                  {isLoginForm ? "Sign In" : "Join Now"}
                 </SubmitButton>
               </form>
             ) : recoveryLink ? (
@@ -505,7 +505,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                     <p>
                       <AuthLink to="/auth/signup">
-                        Don't have an account? <u>Sign Up</u>
+                        Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
@@ -520,14 +520,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Login screen</AuthLink>
+                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
                 </div>
               </BackLinkContainer>
             )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+                {isLoginForm ? "Or Sign In with" : "Or Join Now with"}
               </SectionDiv>
             )}
             <WhiteSpace />
