@@ -33,6 +33,7 @@ import {
 } from "hooks/reducers/feedbackReducers";
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
+import GTM from "constants/gtm-tags";
 
 const { royalBlue, tropicalBlue, white, orangeRed } = theme.colors;
 
@@ -461,36 +462,44 @@ const NavigationLayout = (props) => {
         <Link to={`/profile/${user?.id}`}>Profile</Link>
       </NavItem>
       <NavItem>
-        Organization
-        {user?.organizations?.length > 0
-          ? user?.organizations?.map((organization) => (
-              <NavItemBrief history={history} key={organization._id}>
-                <Link to={`/organization/${organization._id}`}>
-                  {organization.name}
+        Organisation
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <NavItemBrief history={history} key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
                 </Link>
               </NavItemBrief>
             ))
           : null}
         <NavItemBrief>
-          <Link to="/create-organization-profile">+ Add Organization</Link>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            + Add Organisation
+          </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
+          id={GTM.nav.prefix + GTM.nav.feed}
           to={{
             pathname: "/feed",
             user,
           }}
         >
-          Feed
+          Help Board
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Logout</BriefLink>
+        <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
     </>
   );
@@ -498,10 +507,14 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Login / Register</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
+          Sign In / Join Now
+        </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <NavItem
         size={"small"}

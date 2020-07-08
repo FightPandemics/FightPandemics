@@ -1,5 +1,6 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
+import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,9 +11,10 @@ import { ReactComponent as FeedbackIcon } from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
+
 import { theme, mq } from "../constants/theme";
 import { Menu, Dropdown } from "antd";
-
+import GTM from "constants/gtm-tags";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -123,21 +125,26 @@ export default ({
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/create-organization-profile">Add Organisation</Link>
+        <Link
+          id={GTM.nav.prefix + GTM.nav.addOrg}
+          to="/create-organisation-profile"
+        >
+          Add Organisation
+        </Link>
       </Menu.Item>
       <Menu.Divider />
-      {user?.organizations?.length > 0
-        ? user?.organizations?.map((organization) => (
-            <Menu.Item key={organization._id}>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
+      {user?.organisations?.length > 0
+        ? user?.organisations?.map((organisation) => (
+            <Menu.Item key={organisation._id}>
+              <Link to={`/organisation/${organisation._id}`}>
+                {organisation.name}
               </Link>
             </Menu.Item>
           ))
         : null}
-      {user?.organizations?.length > 0 && <Menu.Divider />}
+      {user?.organisations?.length > 0 && <Menu.Divider />}
       <Menu.Item>
-        <Link to="/auth/logout">Log Out</Link>
+        <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
     </Menu>
   );
@@ -146,13 +153,21 @@ export default ({
     return (
       <>
         <li>
-          <NavLink activeStyle={activeStyles} to="/about-us">
+          <NavLink
+            id={GTM.nav.prefix + GTM.nav.aboutUs}
+            activeStyle={activeStyles}
+            to="/about-us"
+          >
             About Us
           </NavLink>
         </li>
         <li>
-          <NavLink activeStyle={activeStyles} to="/feed">
-            Feed
+          <NavLink
+            id={GTM.nav.prefix + GTM.nav.feed}
+            activeStyle={activeStyles}
+            to="/feed"
+          >
+            Help Board
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -171,20 +186,26 @@ export default ({
         ) : (
           <>
             <li>
-              <NavLink activeStyle={activeStyles} to="/auth/login">
-                Login
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.login}
+                activeStyle={activeStyles}
+                to="/auth/login"
+              >
+                Sign In
               </NavLink>
             </li>
             <li className="registerBtn">
-              <NavLink className="registerLink" to="/auth/signup">
-                Register
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.register}
+                className="registerLink"
+                to="/auth/signup"
+              >
+                Join Now
               </NavLink>
             </li>
-            <li className="feedbackBtn">
-              <button onClick={onFeedbackIconClick}>
-                <FeedbackIcon />
-              </button>
-            </li>
+            <Link id={GTM.nav.prefix + GTM.nav.feedBack} to="/feed">
+              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
+            </Link>
           </>
         )}
       </>

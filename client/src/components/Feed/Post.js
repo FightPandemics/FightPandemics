@@ -34,6 +34,7 @@ import {
 import { isAuthorOrg } from "pages/Feed";
 import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -227,7 +228,12 @@ const Post = ({
           {!loadMorePost ? (
             <span className="view-more">View Less</span>
           ) : (
-            <span className="view-more">View More</span>
+            <span
+              id={GTM.post.prefix + GTM.post.viewMore}
+              className="view-more"
+            >
+              View More
+            </span>
           )}
         </div>
       ) : (
@@ -313,6 +319,7 @@ const Post = ({
     >
       {isAuthenticated ? (
         <AutoSize
+          gtmTag={`${GTM.post.prefix}${GTM.post.writeComment}_${postId}`}
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
@@ -351,7 +358,7 @@ const Post = ({
         url={window.location.href}
         liked={post?.liked}
         shared={shared}
-        postpage={postId}
+        postId={postId}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
@@ -395,8 +402,8 @@ const Post = ({
                   user &&
                   (user._id === post.author.id ||
                     user.id === post.author.id ||
-                    (user.organizations &&
-                      isAuthorOrg(user.organizations, post.author))) && (
+                    (user.organisations &&
+                      isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -435,7 +442,9 @@ const Post = ({
             </WebModal>
           </StyledPostPagePostCard>
           {showComments && (
-            <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
+            <StyledButtonWizard
+              nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
+            />
           )}
         </>
       ) : (
@@ -448,7 +457,7 @@ const Post = ({
                 user &&
                 (user?._id === post?.author?.id ||
                   user?.id === post?.author?.id ||
-                  isAuthorOrg(user.organizations, post.author)) && (
+                  isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}

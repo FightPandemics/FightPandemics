@@ -56,6 +56,7 @@ const PostPage = ({
     editPostModalVisibility,
     deleteModalVisibility,
     loadMorePost,
+    commentsCount,
     showComments,
   } = post;
 
@@ -126,7 +127,9 @@ const PostPage = ({
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id || isAuthorOrg(user.organizations, post.author))
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organisations, post.author))
     ) {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
@@ -257,6 +260,7 @@ const PostPage = ({
                 loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
                 showComments={showComments}
+                numComments={commentsCount}
                 onChange={handlePostDelete}
                 handlePostLike={handlePostLike}
                 updateComments={updateComments}

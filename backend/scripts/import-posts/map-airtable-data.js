@@ -29,12 +29,14 @@ const cleanType = (airtableType) => {
 
 const cleanAuthorType = (airtableAuthorType) => {
   switch (airtableAuthorType) {
-    case "Organization": // generic "Organization" just "Other"
+    case "Organisation": // generic "Organisation" just "Other"
       return "Other";
     case "Goverment":
       return "Government";
     case "Health Care Providers":
       return "Health care provider";
+    case "R&D":
+      return "Company";
     default:
       return airtableAuthorType;
   }

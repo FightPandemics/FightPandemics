@@ -42,7 +42,7 @@ const ProfleInfo = (props) => {
     <UserInfoContainer>
       <EditIcon src={edit} />
       <PictureContainer>
-        <img src={notionLogo} alt="organization logo" />
+        <img src={notionLogo} alt="organisation logo" />
       </PictureContainer>
       <UserInfoDesktop>
         <NameDiv>

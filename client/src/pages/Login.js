@@ -155,8 +155,8 @@ const VisibilityIconWrapper = styled.div`
 
 const BackLinkContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.minWidth}) {
-    position: absolute;
-    bottom: 30%;
+    position: fixed;
+    bottom: auto;
     right: 27%;
   }
 
@@ -336,20 +336,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 ? "Sign In"
                 : forgotPassword
                 ? "Recover Password"
-                : "Sign Up"}
+                : "Join Now"}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
             )}
             {!forgotPassword ? (
-              <form
-                onSubmit={
-                  isLoginForm
-                    ? handleSubmit(onLoginWithEmail)
-                    : handleSubmit(onSignup)
-                }
-                id="login-password"
-              >
+              <form id="login-password">
                 <InputWrapper>
                   <Label
                     htmlFor="email"
@@ -441,13 +434,16 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     )}
                   </InputWrapper>
                 )}
-                {/* <button type="submit"></button> */}
                 <SubmitButton
                   primary="true"
-                  htmlType="submit"
                   disabled={!formState.isValid}
+                  onClick={
+                    isLoginForm
+                      ? handleSubmit(onLoginWithEmail)
+                      : handleSubmit(onSignup)
+                  }
                 >
-                  {isLoginForm ? "Sign In" : "Sign Up"}
+                  {isLoginForm ? "Sign In" : "Join Now"}
                 </SubmitButton>
               </form>
             ) : recoveryLink ? (
@@ -509,7 +505,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                     <p>
                       <AuthLink to="/auth/signup">
-                        Don't have an account? <u>Sign Up</u>
+                        Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
@@ -524,14 +520,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Login screen</AuthLink>
+                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
                 </div>
               </BackLinkContainer>
             )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-                {isLoginForm ? "Or Log in with" : "Or Sign up with"}
+                {isLoginForm ? "Or Sign In with" : "Or Join Now with"}
               </SectionDiv>
             )}
             <WhiteSpace />

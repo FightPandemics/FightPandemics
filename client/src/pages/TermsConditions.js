@@ -326,7 +326,7 @@ const TermsConditions = () => {
               </li>
               <li>
                 <strong>Confidentiality.</strong>
-                By registering with FightPandemics, or otherwise using the
+                By joining FightPandemics, or otherwise using the
                 Services or viewing content made available through
                 FightPandemics in any way, you may have an opportunity to see
                 information deemed as confidential. It is expected that you will

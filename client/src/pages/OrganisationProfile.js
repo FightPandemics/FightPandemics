@@ -11,7 +11,8 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import smileIcon from "assets/icons/smile-icon.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -50,19 +51,19 @@ import {
   PLAYSTORE_URL,
 } from "constants/urls";
 import {
-  fetchOrganization,
-  fetchOrganizationError,
-  fetchOrganizationSuccess,
-} from "hooks/actions/organizationActions";
+  fetchOrganisation,
+  fetchOrganisationError,
+  fetchOrganisationSuccess,
+} from "hooks/actions/organisationActions";
 import {
   fetchUser,
   fetchUserError,
   fetchUserSuccess,
 } from "hooks/actions/userActions";
 import {
-  OrganizationContext,
-  withOrganizationContext,
-} from "context/OrganizationContext";
+  OrganisationContext,
+  withOrganisationContext,
+} from "context/OrganisationContext";
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
@@ -76,19 +77,20 @@ const URLS = {
   appleStore: ["", APPLESTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
-  website: [smileIcon],
+  website: [websiteIcon],
+  email: [envelopeBlue],
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
-const OrganizationProfile = () => {
+const OrganisationProfile = () => {
   let url = window.location.pathname.split("/");
-  const organizationId = url[url.length - 1];
+  const organisationId = url[url.length - 1];
 
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganizationContext,
+    OrganisationContext,
   );
-  const { error, loading, organization } = orgProfileState;
+  const { error, loading, organisation } = orgProfileState;
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
     initialPostsState,
@@ -99,20 +101,22 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const { name, location = {}, about = "", isOwner, urls = {} } =
-    organization || {};
+  const { email, name, location = {}, about = "", isOwner, urls = {} } =
+    organisation || {};
+
+  const urlsAndEmail = { ...urls, email };
 
   useEffect(() => {
     (async function fetchOrgProfile() {
-      orgProfileDispatch(fetchOrganization());
+      orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
       try {
-        const res = await axios.get(`/api/organizations/${organizationId}`);
-        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+        const res = await axios.get(`/api/organisations/${organisationId}`);
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
-          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
@@ -129,13 +133,13 @@ const OrganizationProfile = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
-  const fetchOrganizationPosts = async () => {
+  const fetchOrganisationPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
     try {
       const res = await axios.get(
-        `/api/posts?limit=-1&authorId=${organizationId}`,
+        `/api/posts?limit=-1&authorId=${organisationId}`,
       );
       postsDispatch({
         type: SET_POSTS,
@@ -151,8 +155,8 @@ const OrganizationProfile = () => {
   };
 
   useEffect(() => {
-    fetchOrganizationPosts();
-  }, [organizationId]); // eslint-disable-line react-hooks/exhaustive-deps
+    fetchOrganisationPosts();
+  }, [organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -164,7 +168,7 @@ const OrganizationProfile = () => {
       user &&
       (user._id === post.author.id ||
         user.id === post.author.id ||
-        isAuthorOrg(user.organizations, post.author))
+        isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -173,7 +177,7 @@ const OrganizationProfile = () => {
             ...postsState.posts,
           };
           delete allPosts[post._id];
-          fetchOrganizationPosts();
+          fetchOrganisationPosts();
         }
       } catch (error) {
         console.log({
@@ -198,15 +202,22 @@ const OrganizationProfile = () => {
   };
 
   const renderURL = () => {
-    if (organization) {
-      if (urls.length !== 0) {
-        return Object.entries(urls).map(([name, url]) => {
+    if (organisation) {
+      if (urlsAndEmail.length !== 0) {
+        return Object.entries(urlsAndEmail).map(([name, url]) => {
+          let href;
+          if (name === "website") {
+            href = getHref(url);
+          } else if (name === "email") {
+            href = `mailto:${url}`;
+          } else {
+            href = `${URLS[name][1]}${url}`;
+          }
+
           return (
             url && (
               <a
-                href={
-                  name === "website" ? getHref(url) : `${URLS[name][1]}${url}`
-                }
+                href={href}
                 key={name}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -223,7 +234,7 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
-    if (!organization) {
+    if (!organisation) {
       return <p>Loading...</p>;
     } else {
       const { address } = location;
@@ -302,12 +313,12 @@ const OrganizationProfile = () => {
               key="bottom"
             >
               <DrawerHeader>
-                <Link to={`/edit-organization-account/${organizationId}`}>
+                <Link to={`/edit-organisation-account/${organisationId}`}>
                   Edit Account Information
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
-                <Link to={`/edit-organization-profile/${organizationId}`}>
+                <Link to={`/edit-organisation-profile/${organisationId}`}>
                   Edit Profile{" "}
                 </Link>
               </DrawerHeader>
@@ -333,4 +344,4 @@ const OrganizationProfile = () => {
   );
 };
 
-export default withUserContext(withOrganizationContext(OrganizationProfile));
+export default withUserContext(withOrganisationContext(OrganisationProfile));
