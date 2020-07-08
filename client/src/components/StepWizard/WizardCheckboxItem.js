@@ -2,7 +2,6 @@ import styled from "styled-components";
 import React from "react";
 import { theme, mq } from "constants/theme";
 import StyledCheckbox from "components/Input/Checkbox";
-
 const { white, lightGray, royalBlue, black } = theme.colors;
 
 export const WizardCheckboxWrapper = styled.div`

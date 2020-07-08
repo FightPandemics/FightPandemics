@@ -5,6 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
 import axios from "axios";
+import GTM from "constants/gtm-tags";
 import {
   StyledWizard,
   WizardContainer,
@@ -54,6 +55,19 @@ const Step1 = (props) => {
     props.update("providers", checkedAnswers);
   };
 
+  const gtmSwitcher = (key) => {
+    switch (key) {
+      case 0:
+        return GTM.offerHelp.volunteer;
+      case 1:
+        return GTM.offerHelp.donor;
+      case 2:
+        return GTM.offerHelp.orgbtn;
+      default:
+        return;
+    }
+  };
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
@@ -65,6 +79,7 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
+              id={GTM.offerHelp.prefix + gtmSwitcher(i)}
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
@@ -102,11 +117,20 @@ const Step2 = (props) => {
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
             location={props.location}
+            gtmPrefix={GTM.offerHelp.prefix + props.currentStep}
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
           />
         </div>
-        <ShowAnywhere tertiary="true" onClick={rejectLocationDetection}>
+        <ShowAnywhere
+          tertiary="true"
+          onClick={rejectLocationDetection}
+          id={
+            GTM.requestHelp.prefix +
+            props.currentStep +
+            GTM.wizardNav.showAnywhere
+          }
+        >
           Show me postings from anywhere
         </ShowAnywhere>
       </WizardFormWrapper>
@@ -145,6 +169,11 @@ const Step3 = (props) => {
         <WizardFormGroup controlId="userEmailGroup">
           <StyledTextInput
             type="email"
+            id={
+              GTM.offerHelp.prefix +
+              props.currentStep +
+              GTM.wizardNav.enterEmail
+            }
             name="email"
             label="Email"
             className={!valid && "has-error"}
@@ -157,13 +186,16 @@ const Step3 = (props) => {
         </WizardFormGroup>
         <WizardSubmit
           disabled={email === "" || !valid}
+          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.submit}
           primary="true"
           onClick={onSubmit}
         >
           Submit
         </WizardSubmit>
-        <SkipLink>
-          <span onClick={onSubmit}>Skip</span>
+        <SkipLink
+          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+        >
+          <span id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip} onClick={onSubmit}>Skip</span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
@@ -200,7 +232,11 @@ const OfferHelp = withRouter((props) => {
     <WizardContainer className="wizard-container">
       <Transition in={transition} timeout={250}>
         {(status) => (
-          <StyledWizard isHashEnabled status={status} nav={<WizardNav />}>
+          <StyledWizard
+            isHashEnabled
+            status={status}
+            nav={<WizardNav gtmPrefix={GTM.offerHelp.prefix} />}
+          >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
             <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />

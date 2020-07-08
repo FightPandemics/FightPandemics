@@ -51,4 +51,10 @@ module.exports = {
     google: "_GG",
     linkedin: "_LK",
   },
+  offerHelp: {
+    prefix: "OFS",
+    volunteer: "_VO",
+    donor: "_DI",
+    orgbtn: "_ORG",
+  },
 };
