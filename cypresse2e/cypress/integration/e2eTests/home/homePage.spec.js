@@ -5,7 +5,7 @@ describe('FightPandemics Home screen', () => {
           });
   
       it('Home screen greetings H1', () => {
-        cy.contains('h1', 'A place to offer and receive help')
+        cy.contains('h1', 'A place to offer and request help')
       });
 
       it('Subheading', () => {
@@ -15,7 +15,7 @@ describe('FightPandemics Home screen', () => {
 
       it('Link to Feed screen - View comunity posting', () => {
         cy.get('a[href^="/feed"]').should('be.visible').and('have.attr', 'href', '/feed')
-        cy.contains('a p', 'View Community Postings')
+        cy.contains('a p', 'View Help Board')
       });
     });
 })
