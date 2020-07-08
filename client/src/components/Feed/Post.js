@@ -34,11 +34,21 @@ import {
 import { isAuthorOrg } from "pages/Feed";
 import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+
+const URLS = {
+  // playStore: [""], // TODO: add once design is done
+  // appleStore: [""],
+  website: [websiteIcon],
+  email: [envelopeBlue],
+};
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -72,6 +82,7 @@ const Post = ({
     title,
     comments,
     commentsCount,
+    externalLinks = {},
     isLoading,
     loadMoreComments,
     page,
@@ -221,12 +232,32 @@ const Post = ({
     }
   };
 
+  const renderExternalLinks = () => {
+    return Object.entries(externalLinks).map(([name, url]) => {
+      return (
+        url && (
+          <a
+            href={name === "email" ? `mailto:${url}` : url}
+            key={name}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLinkIcon src={URLS[name]} alt={name} />
+          </a>
+        )
+      );
+    });
+  };
+
   const ViewMore = ({ onClick }) => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
         <div onClick={onClick}>
           {!loadMorePost ? (
-            <span className="view-more">View Less</span>
+            <>
+              <IconsContainer>{renderExternalLinks()}</IconsContainer>
+              <span className="view-more">View Less</span>
+            </>
           ) : (
             <span
               id={GTM.post.prefix + GTM.post.viewMore}
@@ -425,7 +456,9 @@ const Post = ({
                 loadMorePost={loadMorePost}
               />
             ) : (
-              <Card.Body className="view-more-wrapper" />
+              <Card.Body className="view-more-wrapper">
+                {renderExternalLinks()}
+              </Card.Body>
             )}
             {renderSocialIcons}
             {renderShareModal}
