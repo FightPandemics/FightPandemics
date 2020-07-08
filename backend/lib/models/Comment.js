@@ -1,6 +1,6 @@
 const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
-const { translateISOtoRelativeTime } = require("../utils");
+const { setElapsedTimeText } = require("../utils");
 
 const commentSchema = new Schema(
   {
@@ -48,12 +48,13 @@ commentSchema.index({ "author.id": 1, createdAt: -1 });
 commentSchema.index({ likes: 1 });
 /* eslint-enable */
 
-commentSchema.set('toObject', { virtuals: true })
-commentSchema.set('toJSON', { virtuals: true })
+commentSchema.set("toObject", { virtuals: true });
+commentSchema.set("toJSON", { virtuals: true });
 
-//set virtual 'timeElapsed' property on Comment POST and Comment PATCH.
-commentSchema.virtual("timeElapsed")
-  .get(function () { return translateISOtoRelativeTime(this.createdAt) });
+//set virtual 'elapsedTimeText' property on Comment POST and Comment PATCH.
+commentSchema.virtual("elapsedTimeText").get(function () {
+  return setElapsedTimeText(this.createdAt, this.updatedAt);
+});
 
 const Comment = model("Comment", commentSchema);
 

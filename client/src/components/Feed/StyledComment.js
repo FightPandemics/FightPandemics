@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Comment } from "antd";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const { darkGray, lighterGray, white } = colors;
@@ -12,14 +12,17 @@ const StyledComment = styled(Comment)`
     cursor: default;
     font-family: ${display};
     display: inline-block;
-    word-break: break-word;
+    overflow-wrap: break-word;
     .ant-comment-inner {
       padding: 1rem 0;
       .ant-comment-content {
-        max-width: 30rem;
+        width: 45rem;
+        word-break: break-word;
+        @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
+          width: 26rem;
+        }
         .ant-comment-content-author-time {
           cursor: default;
-          padding-right: 25px;
           color: ${darkGray};
         }
         .ant-comment-content-author {

@@ -11,9 +11,7 @@ import AutoSize from "components/Input/AutoSize";
 import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
-import {
-  translateISOTimeTitle,
-} from "assets/data/formToPostMappings";
+import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
 
 // Icons
@@ -161,7 +159,7 @@ const NestedComments = ({
             "commentId",
             commentId,
             "comment",
-            response.data.content,
+            response.data,
           );
           setEditComment(!editComment);
         }
@@ -184,13 +182,21 @@ const NestedComments = ({
 
   const commentActions = [
     <Space size="small">
-      <StyledCommentButton size="small"ghost  onClick={() => toggleEditComment()}>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => toggleEditComment()}
+      >
         Edit
       </StyledCommentButton>
-      <StyledCommentButton size="small" ghost onClick={() => handleDeleteComment()}>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => handleDeleteComment()}
+      >
         Delete
       </StyledCommentButton>
-    </Space>
+    </Space>,
   ];
 
   const editCommentContent = (
@@ -231,9 +237,13 @@ const NestedComments = ({
       {comment ? (
         <StyledComment
           datetime={
-            <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>{comment?.timeElapsed ? (comment.timeElapsed): ("")}</span>
-            </Tooltip>
+            <>
+              <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
+                <span>
+                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
+                </span>
+              </Tooltip>
+            </>
           }
           author={
             <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>

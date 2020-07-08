@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { translateISOtoRelativeTime } = require("../utils");
+const { setElapsedTimeText } = require("../utils");
 
 const {
   createCommentSchema,
@@ -548,7 +548,10 @@ async function routes(app) {
           },
         ]).then((comments) => {
           comments.forEach((comment) => {
-            comment.timeElapsed = translateISOtoRelativeTime(comment.createdAt);
+            comment.elapsedTimeText = setElapsedTimeText(
+              comment.createdAt,
+              comment.updatedAt,
+            );
           });
           return comments;
         }),
