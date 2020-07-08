@@ -91,19 +91,17 @@ const Step2 = (props) => {
             includeNavigator={true}
           />
         </div>
-        <Link to="/feed">
-          <ShowAnywhere
-            id={
-              GTM.requestHelp.prefix +
-              props.currentStep +
-              GTM.wizardNav.showAnywhere
-            }
-            tertiary="true"
-            onSelect={rejectLocationDetection}
-          >
-            Show me postings from anywhere
-          </ShowAnywhere>
-        </Link>
+        <ShowAnywhere
+          id={
+            GTM.requestHelp.prefix +
+            props.currentStep +
+            GTM.wizardNav.showAnywhere
+          }
+          tertiary="true"
+          onClick={rejectLocationDetection}
+        >
+          Show me postings from anywhere
+        </ShowAnywhere>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -180,7 +178,7 @@ const NeedHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };

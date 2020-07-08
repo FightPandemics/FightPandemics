@@ -106,11 +106,9 @@ const Step2 = (props) => {
             includeNavigator={true}
           />
         </div>
-        <Link to="/feed">
-          <ShowAnywhere tertiary="true" onSelect={rejectLocationDetection}>
-            Show me postings from anywhere
-          </ShowAnywhere>
-        </Link>
+        <ShowAnywhere tertiary="true" onClick={rejectLocationDetection}>
+          Show me postings from anywhere
+        </ShowAnywhere>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -178,7 +176,7 @@ const OfferHelp = withRouter((props) => {
 
   useEffect(() => {
     setTransition(!transition);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
