@@ -29,7 +29,8 @@ const cleanType = (airtableType) => {
 
 const cleanAuthorType = (airtableAuthorType) => {
   switch (airtableAuthorType) {
-    case "Organisation": // generic "Organisation" just "Other"
+    // don't rename this to Organisations
+    case "Organization": // generic - make "Other"
       return "Other";
     case "Goverment":
       return "Government";
