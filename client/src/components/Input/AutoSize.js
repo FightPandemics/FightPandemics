@@ -17,9 +17,9 @@ const SendButton = styled(Button)`
   height: 4.5rem;
   justify-content: center;
 
-  @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+  @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
     height: 5rem;
-    padding: 1rem 1rem;
+    padding: .5rem .5rem;
   }
 `;
 
