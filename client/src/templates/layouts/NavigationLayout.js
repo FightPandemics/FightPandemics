@@ -264,6 +264,25 @@ const NavigationLayout = (props) => {
     dispatchAction(TOGGLE_STATE, modalName);
   };
 
+  const closeModalandReset = (modalName, actionNames) => {
+    if (actionNames) {
+      actionsArray.forEach((action) => dispatchAction(SET_VALUE, action, ""));
+    }
+
+    toggleModal(modalName);
+  };
+
+  const nextModal = (currentModal, nextModal, actionName, value) => {
+    if (drawerOpened) {
+      toggleDrawer();
+    }
+    if (actionName && value) {
+      dispatchAction(SET_VALUE, actionName, value);
+    }
+    toggleModal(currentModal);
+    toggleModal(nextModal);
+  };
+
   const closeRatingModal = (ratingValue) => {
     if (drawerOpened) {
       toggleDrawer();
@@ -307,24 +326,20 @@ const NavigationLayout = (props) => {
     }
   };
 
-  const renderThanksModal = () => {
-    return (
-      <ThanksModal
-        onClose={() => toggleModal("thanksModal")}
-        visible={thanksModal}
-        transparent
-        closable
-        maskClosable
-      >
-        <h2 className="title">Thank you!</h2>
-        <p>
-          Your input means a lot and helps us help you and others during and
-          after the COVID-19 pandemic.
-        </p>
-        <Logo src={logo} alt="FightPandemics logo" />
-      </ThanksModal>
-    );
-  };
+  const renderThanksModal = () => (
+    <ThanksModal
+      onClose={() => closeModalandReset("thanksModal")}
+      visible={thanksModal}
+      transparent
+    >
+      <h2 className="title">Thank you!</h2>
+      <p>
+        Your input means a lot and helps us help you and others during and after
+        the COVID-19 pandemic.
+      </p>
+      <Logo src={logo} alt="FightPandemics logo" />
+    </ThanksModal>
+  );
 
   const renderRadioModal = () => {
     const inputLabelsText = [
@@ -366,10 +381,8 @@ const NavigationLayout = (props) => {
     ));
     return (
       <RadioModal
-        maskClosable
-        closable
         visible={radioModal}
-        onClose={() => closeRadioModal()}
+        onClose={() => closeModalandReset("radioModal", ["covidImpact", "age"])}
         transparent
       >
         <h2 className="title">We are almost done!</h2>
@@ -397,10 +410,13 @@ const NavigationLayout = (props) => {
   const renderTextFeedbackModal = () => {
     return (
       <TextFeedbackModal
-        maskClosable
-        closable
         visible={textFeedbackModal}
-        onClose={closeTextFeedbackModal}
+        onClose={() =>
+          closeModalandReset(
+            "textFeedbackModal",
+            TEXT_FEEDBACK.map({ stateKey }),
+          )
+        }
         transparent
       >
         <h2 className="title">
@@ -415,7 +431,10 @@ const NavigationLayout = (props) => {
             }
           />
         ))}
-        <FeedbackSubmitButton title="Next" onClick={closeTextFeedbackModal} />
+        <FeedbackSubmitButton
+          title="Next"
+          onClick={() => nextModal("textFeedbackModal", "radioModal")}
+        />
       </TextFeedbackModal>
     );
   };
@@ -424,15 +443,19 @@ const NavigationLayout = (props) => {
     const ratingScale = [1, 2, 3, 4, 5];
     return (
       <RatingModal
-        maskClosable
-        closable={false}
+        onClose={() => closeModalandReset("ratingModal", ["rating"])}
         visible={ratingModal}
         transparent
       >
         <h3 className="title">How well does FightPandemics meet your needs?</h3>
         <div className="rectangle">
           {ratingScale.map((rating, index) => (
-            <div key={index} onClick={() => closeRatingModal(rating)}>
+            <div
+              key={index}
+              onClick={() =>
+                nextModal("ratingModal", "textFeedbackModal", "rating", rating)
+              }
+            >
               {rating}
             </div>
           ))}

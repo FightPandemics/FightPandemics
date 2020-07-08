@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Modal } from "antd-mobile";
+import { Modal } from "antd";
 import { theme } from "constants/theme";
 
 const { darkerGray } = theme.colors;
