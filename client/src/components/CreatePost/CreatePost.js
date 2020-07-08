@@ -136,7 +136,12 @@ const Step4 = () => {
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-        <Link to={`/post/${postId}`}>
+        <Link
+          to={{
+            pathname: `/post/${postId}`,
+            state: { from: window.location.href },
+          }}
+        >
           <ViewPostButton primary>View Your Post</ViewPostButton>
         </Link>
       </>
