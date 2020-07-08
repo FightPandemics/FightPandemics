@@ -38,8 +38,15 @@ async function routes(app) {
       schema: getPostsSchema,
     },
     async (req) => {
-      const { userId } = req;
-      const { authorId, filter, limit, objective, skip } = req.query;
+      const { query, userId } = req;
+      const {
+        authorId,
+        ignoreUserLocation,
+        filter,
+        limit,
+        objective,
+        skip,
+      } = query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -64,7 +71,7 @@ async function routes(app) {
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
-      } else if (user) {
+      } else if (user && !ignoreUserLocation) {
         location = user.location;
       }
 

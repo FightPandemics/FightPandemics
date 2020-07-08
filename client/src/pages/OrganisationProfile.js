@@ -139,7 +139,7 @@ const OrganisationProfile = () => {
     postsDispatch({ type: FETCH_POSTS });
     try {
       const res = await axios.get(
-        `/api/posts?limit=-1&authorId=${organisationId}`,
+        `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
       );
       postsDispatch({
         type: SET_POSTS,
