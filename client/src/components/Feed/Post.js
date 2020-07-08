@@ -250,8 +250,8 @@ const Post = ({
           state: {
             post: post,
             postId: post._id,
-            user,
             from: window.location.href,
+            user,
           },
         }}
       >
@@ -484,8 +484,8 @@ const Post = ({
                 state: {
                   post: post,
                   postId: _id,
-                  user,
                   from: window.location.href,
+                  user,
                 },
               }}
             >
