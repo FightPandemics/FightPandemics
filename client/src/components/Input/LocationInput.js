@@ -190,7 +190,10 @@ const LocationInput = ({
             style={{ cursor: "pointer", fontSize: medium }}
             className="svgicon-share-mylocation-size"
           >
-            <SvgIcon src={navigation} style={{ marginRight: "1rem" }} />
+            <SvgIcon
+              src={navigation}
+              style={{ marginRight: "1rem", pointerEvents: "none" }}
+            />
             Share My Location
           </div>
         </div>
