@@ -443,8 +443,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   disabled={!formState.isValid}
                   id={
                     isLoginForm
-                      ? GTM.loginSignIn.prefix + GTM.loginSignIn.signIn
-                      : GTM.loginSignUp.prefix + GTM.loginSignUp.signUp
+                      ? GTM.sign.inPrefix + GTM.sign.in
+                      : GTM.sign.upPrefix + GTM.sign.up
                   }
                   onClick={
                     isLoginForm
@@ -514,22 +514,17 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                     <p>
                       <AuthLink
-                        id={
-                          GTM.loginSignIn.prefix +
-                          GTM.loginSignIn.noAccountSignUp
-                        }
+                        id={GTM.sign.inPrefix + GTM.sign.up}
                         to="/auth/signup"
                       >
-                        Don't have an account? <u>Sign Up</u>
+                        Don't have an account? <u>Join Now</u>
                       </AuthLink>
                     </p>
                   </>
                 ) : (
                   <p>
                     <AuthLink
-                      id={
-                        GTM.loginSignUp.prefix + GTM.loginSignUp.noAccountSignIn
-                      }
+                      id={GTM.sign.upPrefix + GTM.sign.in}
                       to="/auth/login"
                     >
                       Already have an account? <u>Sign In</u>
@@ -557,8 +552,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               <SocialButton
                 id={
                   isLoginForm
-                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.facebook
-                    : GTM.loginSignUp.prefix + GTM.loginSignUp.facebook
+                    ? GTM.sign.inPrefix + GTM.social.facebook
+                    : GTM.sign.upPrefix + GTM.social.facebook
                 }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={facebook} />}
@@ -569,8 +564,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               <SocialButton
                 id={
                   isLoginForm
-                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.google
-                    : GTM.loginSignUp.prefix + GTM.loginSignUp.google
+                    ? GTM.sign.inPrefix + GTM.social.google
+                    : GTM.sign.upPrefix + GTM.social.google
                 }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={google} />}
@@ -589,8 +584,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               <SocialButton
                 id={
                   isLoginForm
-                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.linkedin
-                    : GTM.loginSignUp.prefix + GTM.loginSignUp.linkedin
+                    ? GTM.sign.inPrefix + GTM.social.linkedin
+                    : GTM.sign.upPrefix + GTM.social.linkedin
                 }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={linkedin} />}

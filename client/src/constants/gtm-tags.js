@@ -39,18 +39,14 @@ module.exports = {
     viewMore: "_VM",
     writeComment: "_WC",
   },
-  loginSignIn: {
-    prefix: "SI",
-    signIn: "_SI",
-    noAccountSignUp: "_JN",
-    facebook: "_FB",
-    google: "_GG",
-    linkedin: "_LK",
+  sign: {
+    inPrefix: "SI",
+    upPrefix: "SU",
+    in: "_SI",
+    up: "_JN",
   },
-  loginSignUp: {
-    prefix: "SU",
-    signUp: "_SU",
-    noAccountSignIn: "_SI",
+
+  social: {
     facebook: "_FB",
     google: "_GG",
     linkedin: "_LK",
