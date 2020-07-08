@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import GTM from "constants/gtm-tags";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import { AUTH_SUCCESS } from "constants/action-types";
@@ -441,6 +441,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <SubmitButton
                   primary="true"
                   disabled={!formState.isValid}
+                  id={
+                    isLoginForm
+                      ? GTM.loginSignIn.prefix + GTM.loginSignIn.signIn
+                      : GTM.loginSignUp.prefix + GTM.loginSignUp.signUp
+                  }
                   onClick={
                     isLoginForm
                       ? handleSubmit(onLoginWithEmail)
@@ -508,14 +513,25 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       </AuthLink>
                     </p>
                     <p>
-                      <AuthLink  id="SU_JN" to="/auth/signup">
+                      <AuthLink
+                        id={
+                          GTM.loginSignIn.prefix +
+                          GTM.loginSignIn.noAccountSignUp
+                        }
+                        to="/auth/signup"
+                      >
                         Don't have an account? <u>Sign Up</u>
                       </AuthLink>
                     </p>
                   </>
                 ) : (
                   <p>
-                    <AuthLink id="SI_SI" to="/auth/login">
+                    <AuthLink
+                      id={
+                        GTM.loginSignUp.prefix + GTM.loginSignUp.noAccountSignIn
+                      }
+                      to="/auth/login"
+                    >
                       Already have an account? <u>Sign In</u>
                     </AuthLink>
                   </p>
@@ -539,7 +555,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           {!forgotPassword && (
             <FlexBox>
               <SocialButton
-                id="SU_FB"
+                id={
+                  isLoginForm
+                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.facebook
+                    : GTM.loginSignUp.prefix + GTM.loginSignUp.facebook
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
@@ -547,7 +567,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Facebook</ButtonText>
               </SocialButton>
               <SocialButton
-                id="SU_GG"
+                id={
+                  isLoginForm
+                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.google
+                    : GTM.loginSignUp.prefix + GTM.loginSignUp.google
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
@@ -563,7 +587,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 <ButtonText>Twitter</ButtonText>
               </SocialButton>**/}
               <SocialButton
-                id="SU_LK"
+                id={
+                  isLoginForm
+                    ? GTM.loginSignIn.prefix + GTM.loginSignIn.linkedin
+                    : GTM.loginSignUp.prefix + GTM.loginSignUp.linkedin
+                }
                 style={StyleSocialIcon}
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}
