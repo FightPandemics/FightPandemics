@@ -54,6 +54,7 @@ const StyleSocialIcon = {
 };
 
 const SectionDiv = styled.div`
+  font-size: 1.4rem;
   text-transform: uppercase;
   color: ${colors.lightGray};
   &:before,
@@ -73,7 +74,7 @@ const FlexBox = styled(Flex).attrs((props) => ({
 }))``;
 
 const SocialButton = styled(Button)`
-  border: 1px solid ${colors.lightGray};
+  border: 0.1rem solid ${colors.lightGray};
   border-radius: unset;
   display: flex;
   height: 4.8rem;
@@ -135,6 +136,9 @@ const SocialImageContainer = styled.div`
       width: 100%;
     }
   }
+  img {
+    width: 36.4rem;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -178,16 +182,16 @@ const EmailButtonContainer = styled.div`
 
 const EmailTextContainer = styled.div`
   position: absolute;
-  width: 295px;
-  height: 55px;
-  left: 40px;
-  top: 268px;
+  width: 29.5rem;
+  height: 5.5rem;
+  left: 4rem;
+  top: 26.8rem;
 
   > p {
     font-family: Poppins;
     font-style: normal;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 1.5rem;
   }
 `;
 
@@ -331,7 +335,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       <LoginRightContainer>
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
           <FormContainer>
-            <Heading className="text-center" level={4}>
+            <Heading className="h4 text-center" level={4}>
               {isLoginForm
                 ? "Sign In"
                 : forgotPassword

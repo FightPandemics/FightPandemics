@@ -104,7 +104,7 @@ const NavItemBrief = styled(NavItem)`
 const UserName = styled(Typography.Text)`
   padding: 1.2rem 1.2rem;
   font-family: Poppins;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -129,7 +129,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   cursor: pointer;
   font-size: 2rem;
   position: absolute;
-  top: 4px;
+  top: 0.4rem;
   right: 0.4rem;
   z-index: 300;
 
@@ -142,7 +142,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 
   .am-icon {
-    stroke-width: 2px;
+    stroke-width: 0.2rem;
     stroke: ${white};
   }
 `;
@@ -162,7 +162,7 @@ const DividerLine = styled.div`
 
 const AvatarInitials = styled(Typography.Text)`
   font-family: Poppins;
-  font-size: 32.9px;
+  font-size: 3.29rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

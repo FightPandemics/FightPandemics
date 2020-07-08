@@ -96,7 +96,7 @@ const Container = styled.div`
 
 const ProfileFormGroup = styled.form`
   @media only screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    width: 350px;
+    width: 35rem;
     h1 {
       margin-left: -${theme.typography.size.large};
     }

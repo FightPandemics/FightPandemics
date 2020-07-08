@@ -14,8 +14,8 @@ const StyledAnswerButton = styled.div`
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
-  padding: 25px 0 25px 25px;
-  margin: 15px 0px;
+  padding: 2.5rem 0 2.5rem 2.5rem;
+  margin: 1.5rem 0;
   width: 100%;
 
   &:hover {

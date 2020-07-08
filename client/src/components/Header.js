@@ -56,9 +56,10 @@ const NavLinks = styled.div`
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
+    align-items: center;
     .registerBtn {
       color: ${colors.royalBlue};
-      border: 1px solid ${colors.royalBlue};
+      border: 0.1rem solid ${colors.royalBlue};
       border-radius: 2rem;
       padding: 0 0.8rem;
       margin-bottom: 0.2rem;
@@ -78,12 +79,12 @@ const NavLinks = styled.div`
         text-decoration: none;
         padding: 1.2rem 1.4rem;
         transition: all 0.2s;
-        border-bottom: 3px solid transparent;
+        border-bottom: 0.3rem solid transparent;
       }
       a:hover:not(.registerLink) {
         font-weight: 600;
         color: ${colors.royalBlue};
-        border-bottom: 3px solid ${colors.royalBlue};
+        border-bottom: 0.3rem solid ${colors.royalBlue};
       }
     }
   }

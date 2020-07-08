@@ -58,7 +58,7 @@ const CheckboxItemStyles = styled.div`
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     border: 0.1rem solid ${lightGray};
-    border-radius: 5px;
+    border-radius: 0.5rem;
   }
 `;
 

@@ -17,7 +17,7 @@ const CheckSymptomsBox = styled.div`
   font-size: ${large};
   border: 1px solid rgba(156, 155, 155, 0.27);
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 0.2rem;
   padding: 2rem;
   p {
     flex-basis: 47%;

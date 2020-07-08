@@ -89,6 +89,7 @@ const PostCard = styled(Card)`
         margin-top: -1.8rem;
 
         .status-icon {
+          width: fit-content;
           margin-right: 0.8rem;
         }
       }
@@ -162,6 +163,7 @@ const PostCard = styled(Card)`
         }
 
         .total-number {
+          font-size: ${medium};
           display: inline;
 
           @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {

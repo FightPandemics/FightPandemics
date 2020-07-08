@@ -126,6 +126,7 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
+      height: 3rem;
       border-left: 0.5rem solid ${white};
       color: ${darkerGray};
       font-size: ${theme.typography.size.large};
@@ -548,7 +549,7 @@ const Feed = (props) => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}
+            width="29rem"
           >
             <div>
               <MenuWrapper
@@ -577,7 +578,10 @@ const Feed = (props) => {
               <h1>Help Board</h1>
               <button onClick={handleCreatePost}>
                 Create a post
-                <SvgIcon src={creatPost} />
+                <SvgIcon
+                  src={creatPost}
+                  style={{ width: "5rem", height: "5rem" }}
+                />
               </button>
             </HeaderWrapper>
             <div>

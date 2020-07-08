@@ -216,6 +216,7 @@ const Profile = ({
               <CreatePostIcon
                 src={createPost}
                 onClick={() => setModal(!modal)}
+                style={{ width: "5rem", height: "5rem" }}
               />
             </>
           )}
