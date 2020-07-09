@@ -45,7 +45,7 @@ import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
-  // appleStore: [""],
+  // appStore: [""],
   website: [websiteIcon],
   email: [envelopeBlue],
 };

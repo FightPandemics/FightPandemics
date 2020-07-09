@@ -47,7 +47,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import {
   LINKEDIN_URL,
   TWITTER_URL,
-  APPLESTORE_URL,
+  APPSTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
 import {
@@ -74,7 +74,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
-  appleStore: ["", APPLESTORE_URL],
+  appStore: ["", APPSTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
@@ -222,7 +222,7 @@ const OrganisationProfile = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} />
+                <SocialIcon src={URLS[name][0]} alt={name} />
               </a>
             )
           );
