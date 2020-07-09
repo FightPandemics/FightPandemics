@@ -80,11 +80,7 @@ const PostSocial = ({
           </span>
         </div>
       ) : (
-        <div
-          id={gtmTag("like")}
-          className="social-icon"
-          onClick={() => handlePostLike(id, liked)}
-        >
+        <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
           <span className="social-text">
@@ -114,14 +110,11 @@ const PostSocial = ({
                 state: {
                   postId: id,
                   comments: true,
+                  from: window.location.href,
                 },
               }}
             >
-              <div
-                id={gtmTag("comment")}
-                className="social-icon"
-                onClick={setShowComments}
-              >
+              <div className="social-icon" onClick={setShowComments}>
                 {renderCommentIcon()}
 
                 <div className="total-number">{numComments}</div>
@@ -135,9 +128,12 @@ const PostSocial = ({
               onClick={() =>
                 sessionStorage.setItem("postcomment", `/post/${id}`)
               }
-              to={{ pathname: LOGIN }}
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
             >
-              <div id={gtmTag("comment")} className="social-icon">
+              <div className="social-icon">
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
                 <span className="social-text">
@@ -150,8 +146,18 @@ const PostSocial = ({
       )}
 
       <span></span>
-      <div id={gtmTag("share")} className="social-icon">
-        {!postId ? (
+
+      {postId ? (
+        <div id={gtmTag("share")} className="social-icon">
+          <CopyToClipboard text={url} onCopy={onCopyLink}>
+            <span>
+              {renderShareIcon()}
+              <span className="social-text">Share</span>
+            </span>
+          </CopyToClipboard>
+        </div>
+      ) : (
+        <div className="social-icon">
           <CopyToClipboard
             text={window.location.href.replace(
               window.location.pathname,
@@ -164,18 +170,10 @@ const PostSocial = ({
               <span className="social-text">Share</span>
             </span>
           </CopyToClipboard>
-        ) : (
-          <CopyToClipboard text={url} onCopy={onCopyLink}>
-            <span>
-              {renderShareIcon()}
-              <span className="social-text">Share</span>
-            </span>
-          </CopyToClipboard>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
-
   return <div className="social-icons">{renderPostSocialIcons}</div>;
 };
 

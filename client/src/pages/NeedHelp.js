@@ -164,8 +164,9 @@ const Step3 = (props) => {
         </WizardSubmit>
         <SkipLink
           id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+          onClick={onSubmit}
         >
-          <span onClick={onSubmit}>Skip</span>
+          Skip
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>

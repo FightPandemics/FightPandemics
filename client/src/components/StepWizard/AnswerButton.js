@@ -26,6 +26,10 @@ const StyledAnswerButton = styled.div`
   strong {
     display: block;
   }
+
+  & > * {
+    pointer-events: none;
+  }
 `;
 
 const AnswerButton = ({ children, onSelect, ...props }) => {
