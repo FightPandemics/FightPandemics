@@ -25,8 +25,8 @@ const configData = envSchema({
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
     .prop("SENTRY_DSN", S.string())
-    .prop("SENDGRID_CONTACTS_API_URL", S.string())
     .prop("SENDGRID_API_KEY", S.string())
+    .prop("SENDGRID_CONTACTS_API_URL", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
 });
 
@@ -45,11 +45,6 @@ const config = {
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
   },
-  sendgrid: {
-    apiKey: configData.SENDGRID_API_KEY,
-    contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
-    contactsApiUrl: configData.SENDGRID_CONTACTS_API_URL,
-  },
   env: configData.NODE_ENV,
   errorNotifier: {
     environment: configData.NODE_ENV,
@@ -67,6 +62,7 @@ const config = {
   },
   mongo: {
     params: {
+      useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
@@ -77,6 +73,11 @@ const config = {
         : `mongodb://${configData.MONGO_URI}`,
   },
   name,
+  sendgrid: {
+    apiKey: configData.SENDGRID_API_KEY,
+    contactsApiUrl: configData.SENDGRID_CONTACTS_API_URL,
+    contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
+  },
   server: {
     port: configData.PORT,
   },
