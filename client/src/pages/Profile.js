@@ -51,6 +51,7 @@ import {
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
+import GTM from "constants/gtm-tags";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -118,38 +119,35 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]);
 
-  const fetchPosts = async() => {
+  const fetchPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
-      try {
-        if (userId) {
-          const res = await axios.get(
-            `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
-          );
-          postsDispatch({
-            type: SET_POSTS,
-            posts: res.data,
-          });
-        }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
+    try {
+      if (userId) {
+        const res = await axios.get(
+          `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
+        );
         postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
+          type: SET_POSTS,
+          posts: res.data,
         });
       }
-  }
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      postsDispatch({
+        type: ERROR_POSTS,
+        error: `Failed loading activity, reason: ${message}`,
+      });
+    }
+  };
 
   useEffect(() => {
-    (fetchPosts)();
+    fetchPosts();
   }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
-    if (
-      user &&
-      (user._id === post.author.id || user.id === post.author.id )
-    ) {
+    if (user && (user._id === post.author.id || user.id === post.author.id)) {
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
@@ -191,7 +189,13 @@ const Profile = ({
         <MenuIcon src={menu} />
       </BackgroundHeader>
       <UserInfoContainer>
-        {ownUser && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
+        {ownUser && (
+          <EditIcon
+            src={edit}
+            id={GTM.user.profilePrefix + GTM.profile.modify}
+            onClick={() => setDrawer(true)}
+          />
+        )}
         <ProfilePic
           noPic={true}
           initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
@@ -201,7 +205,11 @@ const Profile = ({
             {firstName} {lastName}
             <PlaceholderIcon />
             {ownUser && (
-              <EditEmptyIcon src={editEmpty} onClick={() => setDrawer(true)} />
+              <EditEmptyIcon
+                src={editEmpty}
+                id={GTM.user.profilePrefix + GTM.profile.modify}
+                onClick={() => setDrawer(true)}
+              />
             )}
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
@@ -257,6 +265,7 @@ const Profile = ({
             <>
               <CreatePostDiv>Create a post</CreatePostDiv>
               <CreatePostIcon
+                id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
                 onClick={() => setModal(!modal)}
                 style={{ width: "5rem", height: "5rem" }}
@@ -265,7 +274,7 @@ const Profile = ({
           )}
         </SectionHeader>
         <FeedWrapper>
-          <Activity 
+          <Activity
             filteredPosts={postsState.posts}
             user={user}
             handlePostDelete={postDelete}
@@ -276,6 +285,7 @@ const Profile = ({
               onCancel={() => setModal(false)}
               visible={modal}
               user={user}
+              gtmPrefix={GTM.user.profilePrefix}
             />
           )}
         </FeedWrapper>

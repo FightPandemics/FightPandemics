@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import { Divider, ModalWrapper } from "components/CreatePost/StyledModal";
 import Form from "components/CreatePost/Form/Form";
 import EditForm from "components/CreatePost/Form/EditForm";
+import GTM from "constants/gtm-tags";
 
 const { TabPane } = Tabs;
 
@@ -22,9 +23,7 @@ const tabs = [
 const ModalComponent = ({
   isAuthenticated,
   setCurrentStep,
-  onCancel,
   onClose,
-  onSelect,
   loadPost,
   handleEdit,
   fullContent,
@@ -33,15 +32,22 @@ const ModalComponent = ({
   handleEditPost,
   handleFormData,
   renderError,
-  setExpiration,
-  setShareWith,
   setPostId,
   addTag,
   currentPost,
   user,
+  gtmTagPrefix
 }) => {
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
+
+  const tagSwtichTabs = (key) => {
+    switch(key) {
+      case "offer": return `_${GTM.offerHelp.prefix}`;
+      case "request": return `_${GTM.requestHelp.prefix}`; 
+      default: return;
+    }
+  }
 
   return (
     <ModalWrapper
@@ -49,6 +55,7 @@ const ModalComponent = ({
       visible={showModal}
       destroyOnClose={true}
       onCancel={closeModal}
+      id={gtmTagPrefix}
     >
       <Divider />
       <Tabs
@@ -79,6 +86,7 @@ const ModalComponent = ({
                 tab={tab.title}
                 key={tab.key}
                 style={{ fontSize: "1.4rem" }}
+                id={gtmTagPrefix +  tagSwtichTabs(tab.key)}
               >
                 <Form
                   type={tab.key}
@@ -90,6 +98,7 @@ const ModalComponent = ({
                   addTag={addTag}
                   onClose={onClose}
                   setPostId={setPostId}
+                  gtmPrefix={gtmTagPrefix +  tagSwtichTabs(tab.key)}
                 />
               </TabPane>
             ))}
