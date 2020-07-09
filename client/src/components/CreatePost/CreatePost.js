@@ -68,7 +68,16 @@ const Step2 = ({ user, gtmPrefix }) => {
     currentStep === 2 && (
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
-        <BackButton src={back} onClick={() => setCurrentStep(1)} />
+        <BackButton
+          id={
+            gtmPrefix +
+            GTM.post.createPost +
+            (currentStep - 1) +
+            GTM.wizardNav.back
+          }
+          src={back}
+          onClick={() => setCurrentStep(1)}
+        />
         {user.organisations?.map((item) => {
           const { _id: organisationId } = item;
           return (

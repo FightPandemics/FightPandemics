@@ -41,6 +41,7 @@ import {
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
+import GTM from "constants/gtm-tags";
 
 const StyledUnderlineLink = styled(Link)`
   text-decoration-line: underline;
@@ -350,6 +351,9 @@ const CreateOrgProfile = (props) => {
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
             disabled={!(privacy && conditions && validEmail)}
+            id={
+              GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
+            }
           >
             {createOrganisationFormState.loading
               ? "Creating Profile..."
