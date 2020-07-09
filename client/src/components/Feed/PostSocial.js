@@ -147,8 +147,8 @@ const PostSocial = ({
       <span></span>
 
       {postId ? (
-        <div id={gtmTag("share")} className="social-icon">
-          <CopyToClipboard text={url} onCopy={onCopyLink}>
+        <div className="social-icon">
+          <CopyToClipboard id={gtmTag("share")} text={url} onCopy={onCopyLink}>
             <span>
               {renderShareIcon()}
               <span className="social-text">Share</span>
