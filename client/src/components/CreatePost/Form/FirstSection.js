@@ -31,6 +31,7 @@ const First = ({
         onChange={onChangeTitle}
         value={formData.title}
         placeholder="Title"
+        maxLength={20}
       />
       <TextInput
         onChange={onChangeDescription}
