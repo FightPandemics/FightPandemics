@@ -222,7 +222,7 @@ const OrganisationProfile = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} />
+                <SocialIcon src={URLS[name][0]} alt={name} />
               </a>
             )
           );
