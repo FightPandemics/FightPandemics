@@ -362,7 +362,7 @@ const Feed = (props) => {
       const filterObj = { ...selectedOptions };
       delete filterObj["need or give help"];
 
-      if (location) {filterObj.location = location; delete filterObj["providers"];}
+      if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
@@ -422,6 +422,7 @@ const Feed = (props) => {
         delete selectedOptions["providers"];
         setOnboarding(false)
       }
+      console.log('selectedOptions', selectedOptions)
       loadPosts();
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
