@@ -361,7 +361,6 @@ const Feed = (props) => {
     const filterURL = () => {
       const filterObj = { ...selectedOptions };
       delete filterObj["need or give help"];
-
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""
@@ -420,9 +419,8 @@ const Feed = (props) => {
     if (applyFilters) {
       if(isOnboarding) {
         delete selectedOptions["providers"];
-        setOnboarding(false)
+        setOnboarding(false);
       }
-      console.log('selectedOptions', selectedOptions)
       loadPosts();
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
