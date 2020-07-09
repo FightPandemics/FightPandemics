@@ -3,8 +3,14 @@ import { Input } from "antd";
 import styled from "styled-components";
 import Head from "./Head";
 import { Section } from "../StyledModal";
+import { theme } from "constants/theme";
+const { black, royalBlue } = theme.colors;
 
-const TitleInput = styled(Input)``;
+const TitleInput = styled(Input)`
+  font-size: 1.5rem !important;
+  color: ${black} !important;
+  border: solid 0.1rem;
+`;
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
   border-top: none;
@@ -29,7 +35,7 @@ const First = ({
       <TextInput
         onChange={onChangeDescription}
         value={formData.description}
-        rows={4}
+        rows={7}
         placeholder="Write your post"
       />
       <span className="error-box">{renderError("description")}</span>
