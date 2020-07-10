@@ -1,4 +1,10 @@
-import React, { useReducer, useEffect, useCallback, useRef, useState } from "react";
+import React, {
+  useReducer,
+  useEffect,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -425,7 +431,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (applyFilters) {
-      if(isOnboarding) {
+      if (isOnboarding) {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
@@ -634,6 +640,7 @@ const Feed = (props) => {
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
+          gtmPrefix={GTM.feed.prefix}
           onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
           visible={showCreatePostModal}
           user={user}
