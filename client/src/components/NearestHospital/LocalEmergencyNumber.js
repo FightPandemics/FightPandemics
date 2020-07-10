@@ -52,10 +52,10 @@ const EmergencyLine = styled(NoticeBar)`
     h3 {
       font-weight: bold;
       color: ${royalBlue};
-      border-bottom: 1px solid ${royalBlue};
+      border-bottom: 0.1rem solid ${royalBlue};
       display: inline;
       font-size: ${xxlarge};
-      border-radius: 2px;
+      border-radius: 0.2rem;
       padding: 0 0.4rem;
     }
   }

@@ -17,30 +17,30 @@ import {
   MobilePicWrapper,
 } from "../components/EditProfile/EditComponents";
 import ProfilePic from "components/Picture/ProfilePic";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 import {
-  APPLESTORE_URL,
+  APPSTORE_URL,
   PLAYSTORE_URL,
   LINKEDIN_URL,
   TWITTER_URL,
 } from "constants/urls";
 import {
-  fetchOrganization,
-  fetchOrganizationError,
-  fetchOrganizationSuccess,
-  updateOrganization,
-  updateOrganizationError,
-  updateOrganizationSuccess,
-} from "hooks/actions/organizationActions";
+  fetchOrganisation,
+  fetchOrganisationError,
+  fetchOrganisationSuccess,
+  updateOrganisation,
+  updateOrganisationError,
+  updateOrganisationSuccess,
+} from "hooks/actions/organisationActions";
 import axios from "axios";
 import {
-  OrganizationContext,
-  withOrganizationContext,
-} from "context/OrganizationContext";
+  OrganisationContext,
+  withOrganisationContext,
+} from "context/OrganisationContext";
 
 const URLS_CONFIG = {
-  appleStore: [
+  appStore: [
     "Link to Apple Store",
     {
       pattern: {
@@ -53,7 +53,7 @@ const URLS_CONFIG = {
         message: "Min. length is 5 characters",
       },
     },
-    APPLESTORE_URL,
+    APPSTORE_URL,
   ],
   playStore: [
     "Link to Google Play",
@@ -80,7 +80,7 @@ const URLS_CONFIG = {
     },
     TWITTER_URL,
   ],
-  linkedIn: [
+  linkedin: [
     "LinkedIn URL",
     {
       pattern: {
@@ -92,7 +92,7 @@ const URLS_CONFIG = {
     LINKEDIN_URL,
   ],
   website: [
-    "Personal Website",
+    "Website",
     {
       validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
@@ -102,28 +102,29 @@ const ABOUT_MAX_LENGTH = 160;
 
 const editProfile = true;
 
-function EditOrganizationProfile(props) {
-  const organizationId = window.location.pathname.split("/")[2];
+function EditOrganisationProfile(props) {
+  const organisationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganizationContext,
+    OrganisationContext,
   );
   const { register, handleSubmit, errors } = useForm();
-  const { loading, organization } = orgProfileState;
-  const { name, language, about, urls = {} } = organization || {};
+  const { loading, organisation } = orgProfileState;
+  const { name, language, about, urls = {} } = organisation || {};
 
   const onSubmit = async (formData) => {
-    orgProfileDispatch(updateOrganization());
+    orgProfileDispatch(updateOrganisation());
     try {
       const res = await axios.patch(
-        `/api/organizations/${organizationId}`,
+        `/api/organisations/${organisationId}`,
         formData,
       );
-      orgProfileDispatch(updateOrganizationSuccess(res.data));
+      orgProfileDispatch(updateOrganisationSuccess(res.data));
+      props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       orgProfileDispatch(
-        updateOrganizationError(
-          `Failed updating organization profile, reason: ${message}`,
+        updateOrganisationError(
+          `Failed updating organisation profile, reason: ${message}`,
         ),
       );
     }
@@ -131,36 +132,27 @@ function EditOrganizationProfile(props) {
 
   useEffect(() => {
     (async function fetchProfile() {
-      orgProfileDispatch(fetchOrganization());
+      orgProfileDispatch(fetchOrganisation());
       try {
-        const res = await axios.get(`/api/organizations/${organizationId}`);
-        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+        const res = await axios.get(`/api/organisations/${organisationId}`);
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
-          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId]);
+  }, [orgProfileDispatch, organisationId]);
 
   const renderProfilePicture = () => {
-    let firstName, lastName;
-    if (organization) {
-      const nameArr = name.split(" ");
-      if (nameArr.length < 2) {
-        firstName = nameArr[0];
-        lastName = firstName.split("").pop();
-      } else {
-        firstName = nameArr[0];
-        lastName = nameArr[1];
-      }
+    if (organisation) {
       return (
         <ProfilePicWrapper>
           <ProfilePic
             resolution={"7680px"}
             noPic={true}
-            initials={getInitials(firstName, lastName)}
+            initials={getInitialsFromFullName(name)}
           />
           {/* hide this until backend API is available
           <ChangePicButton>Change</ChangePicButton> */}
@@ -169,14 +161,15 @@ function EditOrganizationProfile(props) {
     }
   };
 
+  if (loading) return <div>"loading"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
             {editProfile
-              ? "Edit Organization Profile"
-              : "Complete Organization Profile"}
+              ? "Edit Organisation Profile"
+              : "Complete Organisation Profile"}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
@@ -186,19 +179,19 @@ function EditOrganizationProfile(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to={`/edit-organization-account/${organizationId}`}>
+              <Link to={`/edit-organisation-account/${organisationId}`}>
                 Account Information
               </Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to={`/edit-organization-profile/${organizationId}`}>
+              <Link to={`/edit-organisation-profile/${organisationId}`}>
                 Profile Information
               </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             <FormInput
-              inputTitle="Organization Description"
+              inputTitle="Organisation Description"
               name="about"
               type="text"
               defaultValue={about}
@@ -211,7 +204,7 @@ function EditOrganizationProfile(props) {
               })}
             />
             <FormInput
-              inputTitle="Organization Language"
+              inputTitle="Organisation Language"
               name="language"
               type="text"
               defaultValue={language}
@@ -242,4 +235,4 @@ function EditOrganizationProfile(props) {
   );
 }
 
-export default withOrganizationContext(EditOrganizationProfile);
+export default withOrganisationContext(EditOrganisationProfile);

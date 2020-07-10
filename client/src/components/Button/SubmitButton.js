@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import BaseButton from "./BaseButton";
 
 // props: inline, primary, primarylight, secondary, tertiary
@@ -6,14 +6,10 @@ import BaseButton from "./BaseButton";
 const SubmitButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
-  ${(props) =>
-    props.disabled &&
-    css`
-      background-color: #8e87f4 !important;
-      color: #fff !important;
-    `}
-  width: 100%;
-  height: 47px;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default SubmitButton;

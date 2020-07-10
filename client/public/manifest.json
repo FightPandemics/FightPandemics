@@ -4,8 +4,13 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "16x16 24x24 32x32 64x64",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logoIcon.svg",
+      "sizes": "96x96 128x128 192x192 256x256 512x512",
+      "type": "image/svg+xml"
     }
   ],
   "start_url": ".",

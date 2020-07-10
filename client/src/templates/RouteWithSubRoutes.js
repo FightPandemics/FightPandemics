@@ -12,6 +12,7 @@ export const LOGOUT = "/auth/logout";
 export const FEED = "/feed";
 export const VERIFY_EMAIL = "/auth/verify-email";
 export const CREATE_PROFILE = "/create-profile";
+export const PROFILE = "/profile";
 
 const getLayoutComponent = (layout) => {
   switch (layout) {
@@ -60,7 +61,13 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
-            redirect = HOME;
+            const postCommentRedirect = sessionStorage.getItem("postcomment");
+            if (postCommentRedirect) {
+              redirect = postCommentRedirect;
+              sessionStorage.removeItem("postcomment");
+            } else {
+              redirect = HOME;
+            }
           } else if (isAuthenticated) {
             if (
               !emailVerified &&
@@ -79,7 +86,6 @@ export const RouteWithSubRoutes = (route) => {
             }
           }
         }
-
         return redirect ? (
           <Redirect
             to={{

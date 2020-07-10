@@ -4,7 +4,7 @@ import { Typography } from "antd";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import Header from "components/Header";
 import Footnote from "components/Footnote";
@@ -12,9 +12,8 @@ import CookieAlert from "components/CookieAlert";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
-const NOTION_URL =
-  "https://www.notion.so/fightpandemics/FightPandemics-Overview-cd01dcfc05f24312ac454ac94a37eb5e";
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
@@ -105,7 +104,7 @@ const NavItemBrief = styled(NavItem)`
 const UserName = styled(Typography.Text)`
   padding: 1.2rem 1.2rem;
   font-family: Poppins;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -130,7 +129,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   cursor: pointer;
   font-size: 2rem;
   position: absolute;
-  top: 4px;
+  top: 0.4rem;
   right: 0.4rem;
   z-index: 300;
 
@@ -143,7 +142,7 @@ const CloseNav = styled(Button).attrs((props) => ({
   }
 
   .am-icon {
-    stroke-width: 2px;
+    stroke-width: 0.2rem;
     stroke: ${white};
   }
 `;
@@ -163,7 +162,7 @@ const DividerLine = styled.div`
 
 const AvatarInitials = styled(Typography.Text)`
   font-family: Poppins;
-  font-size: 32.9px;
+  font-size: 3.29rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -176,8 +175,11 @@ const NavigationLayout = (props) => {
 
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
-      const userinitials = getInitials(user.firstName, user.lastName);
-      return <AvatarInitials>{userinitials}</AvatarInitials>;
+      return (
+        <AvatarInitials>
+          {getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
+        </AvatarInitials>
+      );
     }
   };
 
@@ -204,36 +206,44 @@ const NavigationLayout = (props) => {
         <Link to={`/profile/${user?.id}`}>Profile</Link>
       </NavItem>
       <NavItem>
-        Organization
-        {user?.organizations?.length > 0
-          ? user?.organizations?.map((organization) => (
-              <NavItemBrief history={history} key={organization._id}>
-                <Link to={`/organization/${organization._id}`}>
-                  {organization.name}
+        Organisation
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <NavItemBrief history={history} key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
                 </Link>
               </NavItemBrief>
             ))
           : null}
         <NavItemBrief>
-          <Link to="/create-organization-profile">+ Add Organization</Link>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            + Add Organisation
+          </Link>
         </NavItemBrief>
       </NavItem>
       <NavItem history={history}>
         <Link
+          id={GTM.nav.prefix + GTM.nav.feed}
           to={{
             pathname: "/feed",
             user,
           }}
         >
-          Feed
+          Help Board
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
       <Space height="12rem" />
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Logout</BriefLink>
+        <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
     </>
   );
@@ -241,10 +251,14 @@ const NavigationLayout = (props) => {
   const UnAuthenticatedMenu = () => (
     <>
       <NavItem history={history}>
-        <Link to="/auth/login">Login / Register</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
+          Sign In / Join Now
+        </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link to="/about-us">About Us</Link>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
+          About Us
+        </Link>
       </NavItem>
     </>
   );

@@ -15,8 +15,8 @@ const Input = styled(BaseInput).attrs((props) => ({
 
 const StyleEye = {
   float: "right",
-  marginLeft: "-25px",
-  marginTop: "-10px",
+  marginLeft: "-2.5rem",
+  marginTop: "-1rem",
   position: "relative",
   zIndex: 2,
   opacity: 0.5,

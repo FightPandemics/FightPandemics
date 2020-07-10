@@ -1,18 +1,18 @@
 // Core
 import React, { useState } from "react";
 import axios from "axios";
+import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
-import { Avatar, Button, Input, Tooltip, Space } from "antd";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Local
-import StyledComment from "./StyledComment";
-import Loader from "components/Feed/StyledLoader";
 import AutoSize from "components/Input/AutoSize";
-import {
-  translateISOTimeStamp,
-  translateISOTimeTitle,
-} from "assets/data/formToPostMappings";
+import Loader from "components/Feed/StyledLoader";
+import StyledComment from "./StyledComment";
+import { StyledCommentButton } from "./StyledCommentButton";
+import { translateISOTimeTitle } from "assets/data/formToPostMappings";
+import { authorProfileLink } from "./utils";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -23,15 +23,10 @@ import { theme } from "constants/theme";
 
 import { SET_COMMENT } from "hooks/actions/postActions";
 
-const { royalBlue, lighterGray, darkGray } = theme.colors;
-
+const { lighterGray, royalBlue } = theme.colors;
 const clickedTextStyle = { color: royalBlue, fontWeight: "bold" };
+
 const { TextArea } = Input;
-const CommentButton = styled(Button)`
-  color: ${darkGray};
-  border: none;
-  border-radius: 2rem;
-`;
 const TextInput = styled(TextArea)`
   background-color: ${lighterGray};
   border: none;
@@ -163,7 +158,7 @@ const NestedComments = ({
             "commentId",
             commentId,
             "comment",
-            response.data.content,
+            response.data,
           );
           setEditComment(!editComment);
         }
@@ -185,12 +180,20 @@ const NestedComments = ({
 
   const commentActions = [
     <Space size="small">
-      <CommentButton size="small" ghost onClick={() => toggleEditComment()}>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => toggleEditComment()}
+      >
         Edit
-      </CommentButton>
-      <CommentButton size="small" ghost onClick={() => handleDeleteComment()}>
+      </StyledCommentButton>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => handleDeleteComment()}
+      >
         Delete
-      </CommentButton>
+      </StyledCommentButton>
     </Space>,
   ];
 
@@ -205,14 +208,13 @@ const NestedComments = ({
           />
           <Space direction="vertical">
             <span></span>
-            <Button
+            <StyledCommentButton
               size="small"
               ghost
-              style={{ color: royalBlue, borderRadium: "4rem" }}
               onClick={() => handleSubmit()}
             >
               Save
-            </Button>
+            </StyledCommentButton>
           </Space>
         </>
       )}
@@ -233,12 +235,18 @@ const NestedComments = ({
       {comment ? (
         <StyledComment
           datetime={
-            <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>{translateISOTimeStamp(comment.createdAt)}</span>
-            </Tooltip>
+            <>
+              <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
+                <span>
+                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
+                </span>
+              </Tooltip>
+            </>
           }
-          author={<span>{comment.author.name}</span>}
-          avatar={renderAvatar}
+          author={
+            <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
+          }
+          avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (

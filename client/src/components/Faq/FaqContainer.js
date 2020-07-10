@@ -14,7 +14,7 @@ export const QuestionsContainer = styled.div`
 export const AnswerContainer = styled.div`
   summary {
     font-size: 1.6rem;
-    margin-left: 7px;
+    margin-left: 0.7rem;
 
     margin-bottom: 0.5em;
     font-family: "Poppins", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
@@ -24,6 +24,6 @@ export const AnswerContainer = styled.div`
     cursor: pointer;
   }
   p {
-    margin-left: 15px;
+    margin-left: 1.5rem;
   }
 `;

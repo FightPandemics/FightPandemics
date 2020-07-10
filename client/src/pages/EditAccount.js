@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { Link } from "react-router-dom";
@@ -76,13 +76,8 @@ function EditAccount(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const {
-    firstName = "",
-    hide = {},
-    lastName = "",
-    needs = {},
-    objectives = {},
-  } = user || {};
+  const { firstName, hide = {}, lastName, needs = {}, objectives = {} } =
+    user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -149,7 +144,7 @@ function EditAccount(props) {
             <ProfilePic
               resolution={"7680px"}
               noPic={true}
-              initials={getInitials(firstName, lastName)}
+              initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             {/* hide this until backend API is available
               <ChangePicButton>Change</ChangePicButton> */}

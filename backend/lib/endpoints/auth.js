@@ -31,16 +31,16 @@ async function routes(app) {
       const { email, email_verified: emailVerified } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
-      const dbUser = await User.findById(userId).populate("organizations");
+      const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organizations } = dbUser;
+        const { firstName, lastName, organisations } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
-          organizations,
+          organisations,
         };
       }
       return { email, emailVerified, token, user };
@@ -119,16 +119,16 @@ async function routes(app) {
       if (!userId) {
         throw new Error("no mongo_id found in JWT");
       }
-      const dbUser = await User.findById(userId).populate("organizations");
+      const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organizations } = dbUser;
+        const { firstName, lastName, organisations } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
-          organizations,
+          organisations,
         };
       }
       return { email, emailVerified, token, user };

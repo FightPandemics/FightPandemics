@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 // Local
 // import { FeedContext } from "pages/Feed.js";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -27,7 +28,7 @@ const PostSocial = ({
   numComments,
   numShares,
   onCopyLink,
-  postpage,
+  postId,
   setShowComments,
   id,
 }) => {
@@ -65,26 +66,40 @@ const PostSocial = ({
     );
   };
 
+  const gtmTag = (element) =>
+    GTM.post.prefix + GTM.post[element] + "_" + postId;
+
   const renderPostSocialIcons = (
     <>
-      {postpage ? (
-        <div className="social-icon">
+      {postId ? (
+        <div id={gtmTag("like")} className="social-icon">
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       ) : (
         <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
-          <span className="social-text">{numLikes > 1 ? " Likes" : " Like"}</span>
+          <span className="social-text">
+            {numLikes > 1 ? " Likes" : " Like"}
+          </span>
         </div>
       )}
       <span></span>
-      {postpage ? (
-        <div className="social-icon" onClick={setShowComments}>
+      {postId ? (
+        <div
+          id={gtmTag("comment")}
+          className="social-icon"
+          onClick={setShowComments}
+        >
           {renderCommentIcon()}
-          <span className="social-text">Comment</span>
+          <div className="total-number">{numComments}</div>
+          <span className="social-text">
+            {numComments > 1 ? " Comments" : " Comment"}
+          </span>
         </div>
       ) : (
         <>
@@ -95,19 +110,34 @@ const PostSocial = ({
                 state: {
                   postId: id,
                   comments: true,
+                  from: window.location.href,
                 },
               }}
             >
               <div className="social-icon" onClick={setShowComments}>
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
+                <span className="social-text">
+                  {numComments > 1 ? " Comments" : " Comment"}
+                </span>
               </div>
             </Link>
           ) : (
-            <Link to={{ pathname: LOGIN }}>
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postcomment", `/post/${id}`)
+              }
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
+            >
               <div className="social-icon">
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
+                <span className="social-text">
+                  {numComments > 1 ? " Comments" : " Comment"}
+                </span>
               </div>
             </Link>
           )}
@@ -115,8 +145,18 @@ const PostSocial = ({
       )}
 
       <span></span>
-      <div className="social-icon">
-        {!postpage ? (
+
+      {postId ? (
+        <div id={gtmTag("share")} className="social-icon">
+          <CopyToClipboard text={url} onCopy={onCopyLink}>
+            <span>
+              {renderShareIcon()}
+              <span className="social-text">Share</span>
+            </span>
+          </CopyToClipboard>
+        </div>
+      ) : (
+        <div className="social-icon">
           <CopyToClipboard
             text={window.location.href.replace(
               window.location.pathname,
@@ -129,18 +169,10 @@ const PostSocial = ({
               <span className="social-text">Share</span>
             </span>
           </CopyToClipboard>
-        ) : (
-          <CopyToClipboard text={url} onCopy={onCopyLink}>
-            <span>
-              {renderShareIcon()}
-              <span className="social-text">Share</span>
-            </span>
-          </CopyToClipboard>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
-
   return <div className="social-icons">{renderPostSocialIcons}</div>;
 };
 

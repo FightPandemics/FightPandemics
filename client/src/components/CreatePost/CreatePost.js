@@ -13,7 +13,7 @@ import {
 import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
 import person from "assets/icons/person.svg";
-import organization from "assets/icons/organization.svg";
+import organisation from "assets/icons/organisation.svg";
 import back from "assets/icons/back-arrow-gray.svg";
 import closeButton from "assets/icons/close-btn.svg";
 import { theme } from "constants/theme";
@@ -39,7 +39,7 @@ const Step1 = () => {
           </Col>
           <Col span={12}>
             <Option
-              img={organization}
+              img={organisation}
               text="Organisation"
               onClick={() => setCurrentStep(2)}
             />
@@ -59,13 +59,13 @@ const Step2 = ({ user }) => {
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
         <BackButton src={back} onClick={() => setCurrentStep(1)} />
-        {user.organizations?.map((item) => {
-          const { _id: organizationId } = item;
+        {user.organisations?.map((item) => {
+          const { _id: organisationId } = item;
           return (
             <OptionButton
-              key={organizationId}
+              key={organisationId}
               onClick={() => {
-                setForm({ organizationId });
+                setForm({ organisationId });
                 setCurrentStep(3);
               }}
             >
@@ -73,7 +73,7 @@ const Step2 = ({ user }) => {
             </OptionButton>
           );
         })}
-        <CreateOrgLink to={"/create-organization-profile"}>
+        <CreateOrgLink to={"/create-organisation-profile"}>
           Create new one
         </CreateOrgLink>
       </>
@@ -136,7 +136,12 @@ const Step4 = () => {
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-        <Link to={`/post/${postId}`}>
+        <Link
+          to={{
+            pathname: `/post/${postId}`,
+            state: { from: window.location.href },
+          }}
+        >
           <ViewPostButton primary>View Your Post</ViewPostButton>
         </Link>
       </>
@@ -144,21 +149,30 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = (props) => {
+const CreatePost = ({ onCancel, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
+
+  const clearState = () => {
+    onCancel();
+    // delay for modal close effect to complete before re-render
+    setTimeout(() => {
+      setCurrentStep(1);
+      setPostId("");
+    }, 200);
+  };
 
   return (
     <CreatePostContext.Provider
       value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
-      <Wrapper {...props}>
+      <Wrapper onCancel={clearState} {...props}>
         <Step1 />
         <Step2 user={props.user} />
         <Step4 />
       </Wrapper>
-      <Step3 {...props} />
+      <Step3 onCancel={clearState} {...props} />
     </CreatePostContext.Provider>
   );
 };

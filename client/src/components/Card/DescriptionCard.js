@@ -17,10 +17,10 @@ const {
 const { medium, large } = typography.size;
 
 const HospitalCard = styled(Card)`
-  border: 1px solid ${lightGray};
+  border: 0.1rem solid ${lightGray};
   transition: all 0.3s;
   padding: 1rem;
-  border-radius: 2px;
+  border-radius: 0.2rem;
   &:hover {
     background-color: ${lighterGray};
   }

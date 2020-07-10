@@ -1,73 +1,73 @@
 const httpErrors = require("http-errors");
 
 const {
-  createOrganizationSchema,
-  deleteOrganizationSchema,
-  getOrganizationSchema,
-  getOrganizationsSchema,
-  updateOrganizationSchema,
-} = require("./schema/organizations");
+  createOrganisationSchema,
+  deleteOrganisationSchema,
+  getOrganisationSchema,
+  getOrganisationsSchema,
+  updateOrganisationSchema,
+} = require("./schema/organisations");
 
 /*
- * /api/organizations
+ * /api/organisations
  */
 async function routes(app) {
   const Comment = app.mongo.model("Comment");
-  const Organization = app.mongo.model("OrganizationUser");
+  const Organisation = app.mongo.model("OrganisationUser");
   const Post = app.mongo.model("Post");
 
   app.delete(
-    "/:organizationId",
+    "/:organisationId",
     {
       preValidation: [app.authenticate],
-      schema: deleteOrganizationSchema,
+      schema: deleteOrganisationSchema,
     },
     async (req) => {
       const {
-        params: { organizationId },
+        params: { organisationId },
         userId,
       } = req;
-      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      const [orgErr, org] = await app.to(Organisation.findById(organisationId));
       if (orgErr) {
-        req.log.error(orgErr, "Failed retrieving organization");
+        req.log.error(orgErr, "Failed retrieving organisation");
         throw app.httpErrors.internalServerError();
       } else if (org === null) {
         throw app.httpErrors.notFound();
       } else if (!org.ownerId.equals(userId)) {
-        req.log.error("User not allowed to delete this organization");
+        req.log.error("User not allowed to delete this organisation");
         throw app.httpErrors.forbidden();
       }
-      const [deleteOrgErr, deletedOrganization] = await app.to(org.delete());
+      const [deleteOrgErr, deletedOrganisation] = await app.to(org.delete());
       if (deleteOrgErr) {
-        req.log.error(deleteOrgErr, "Failed deleting organization");
+        req.log.error(deleteOrgErr, "Failed deleting organisation");
         throw app.httpErrors.internalServerError();
       }
-      return { deletedOrganization, success: true };
+      return { deletedOrganisation, success: true };
     },
   );
 
-  app.get("/", { schema: getOrganizationsSchema }, async (req) => {
+  app.get("/", { schema: getOrganisationsSchema }, async (req) => {
     const { ownerId } = req.params;
     const filter = ownerId ? { ownerId } : {};
-    const sortedOrganizations = await Organization.find(filter).sort({
+    const sortedOrganisations = await Organisation.find(filter).sort({
       name: 1,
     });
-    return sortedOrganizations;
+    return sortedOrganisations;
   });
 
   app.get(
-    "/:organizationId",
+    "/:organisationId",
     {
       preValidation: [app.authenticateOptional],
-      schema: getOrganizationSchema,
+      schema: getOrganisationSchema,
     },
     async (req) => {
       const {
-        params: { organizationId },
+        params: { organisationId },
         userId,
       } = req;
 
-      const result = await Organization.findById(organizationId);
+      const result = await Organisation.findById(organisationId);
       if (result === null) {
         return new httpErrors.NotFound();
       }
@@ -79,24 +79,24 @@ async function routes(app) {
   );
 
   app.patch(
-    "/:organizationId",
+    "/:organisationId",
     {
       preValidation: [app.authenticate],
-      schema: updateOrganizationSchema,
+      schema: updateOrganisationSchema,
     },
     async (req) => {
       const {
-        params: { organizationId },
+        params: { organisationId },
         userId,
       } = req;
-      const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      const [orgErr, org] = await app.to(Organisation.findById(organisationId));
       if (orgErr) {
-        req.log.error(orgErr, "Failed retrieving organization");
+        req.log.error(orgErr, "Failed retrieving organisation");
         throw app.httpErrors.internalServerError();
       } else if (org === null) {
         throw app.httpErrors.notFound();
       } else if (!org.ownerId.equals(userId)) {
-        req.log.error("User not allowed to update this organization");
+        req.log.error("User not allowed to update this organisation");
         throw app.httpErrors.forbidden();
       }
 
@@ -104,7 +104,7 @@ async function routes(app) {
         Object.assign(org, req.body).save(),
       );
       if (updateErr) {
-        req.log.error(updateErr, "Failed updating organization");
+        req.log.error(updateErr, "Failed updating organisation");
         throw app.httpErrors.internalServerError();
       }
 
@@ -148,11 +148,25 @@ async function routes(app) {
     "/",
     {
       preValidation: [app.authenticate],
-      schema: createOrganizationSchema,
+      schema: createOrganisationSchema,
     },
     async (req) => {
       const { body, userId: ownerId } = req;
-      return new Organization({ ...body, ownerId }).save();
+      const [newOrgErr, newOrg] = await app.to(
+        new Organisation({ ...body, ownerId }).save(),
+      );
+
+      if (newOrgErr) {
+        req.log.error(newOrgErr, "Failed creating organisation");
+        if (newOrgErr.name === "ValidationError") {
+          throw app.httpErrors.conflict(
+            "Email address is already in use or email address cannot be validated!",
+          );
+        } else {
+          throw app.httpErrors.internalServerError();
+        }
+      }
+      return newOrg;
     },
   );
 }

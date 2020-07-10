@@ -14,14 +14,24 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
       <div className="buttons">
         <SubTitle>The post will be visible to</SubTitle>
         <Selector
-          suffixIcon={<SvgIcon src={downArrowSlim} />}
+          suffixIcon={
+            <SvgIcon
+              src={downArrowSlim}
+              style={{ width: "1.5rem", height: "auto" }}
+            />
+          }
           onChange={onShareWithChange}
           defaultValue={formData ? formData.shareWith : shareWith.default.value}
           filterOption={false}
           options={shareWith.options}
         />
         <Selector
-          suffixIcon={<SvgIcon src={downArrowSlim} />}
+          suffixIcon={
+            <SvgIcon
+              src={downArrowSlim}
+              style={{ width: "1.5rem", height: "auto" }}
+            />
+          }
           onChange={onExpirationChange}
           defaultValue={formData ? formData.expires : expires.default.value}
           filterOption={false}

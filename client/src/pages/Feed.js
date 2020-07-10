@@ -48,6 +48,13 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+export const isAuthorOrg = (organisations, author) => {
+  const isValid = organisations?.some(
+    (organisation) => organisation.name === author.name,
+  );
+  return isValid;
+};
+
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
 export const FeedContext = React.createContext();
@@ -65,7 +72,7 @@ const initialState = {
   selectedType: "ALL",
   showFilters: false,
   filterModal: false,
-  createPostModal: false,
+  showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
   location: null,
@@ -120,6 +127,7 @@ const FiltersWrapper = styled.div`
 const MenuWrapper = styled(Menu)`
   &.ant-menu {
     .ant-menu-item {
+      height: 3rem;
       border-left: 0.5rem solid ${white};
       color: ${darkerGray};
       font-size: ${theme.typography.size.large};
@@ -189,14 +197,14 @@ const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
-    createPostModal: id === "create-post",
+    showCreatePostModal: id === "create-post",
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
 
   const {
     filterModal,
-    createPostModal,
+    showCreatePostModal,
     activePanel,
     location,
     selectedType,
@@ -270,7 +278,7 @@ const Feed = (props) => {
 
   const handleCreatePost = () => {
     if (isAuthenticated) {
-      dispatchAction(TOGGLE_STATE, "createPostModal");
+      dispatchAction(TOGGLE_STATE, "showCreatePostModal");
     } else {
       history.push(LOGIN);
     }
@@ -442,7 +450,17 @@ const Feed = (props) => {
         providers,
       } = props.history.location.state;
       location && dispatchAction(SET_VALUE, "location", location);
-      const value = Object.keys(HELP_TYPE).find(key => HELP_TYPE[key] === postType);
+      const getValue = postType => {
+        switch(postType) {
+        case "Requesting help":
+          return "OFFER";
+        case "Offering help":
+          return "REQUEST";
+        default:
+          return "All";
+        }
+      };
+      const value = getValue(postType);
       if (postType === HELP_TYPE.REQUEST) {
         // requesting help
         handleChangeType({ key: value });
@@ -459,10 +477,10 @@ const Feed = (props) => {
         // offering help
         handleChangeType({ key: value });
         if (providers) {
-          let organizationFilter = providers.filter(
+          let organisationFilter = providers.filter(
             (option) => option === "As an Organisation",
           );
-          if (organizationFilter.length > 0) {
+          if (organisationFilter.length > 0) {
             for (let i = 1; i < filters[1].options.length; ++i) {
               let option = filters[1].options[i];
               handleOnboardingOptions(option, "providers");
@@ -507,7 +525,9 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id || user.id === post.author.id)
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -553,7 +573,7 @@ const Feed = (props) => {
           <SiderWrapper
             breakpoint="md"
             className="site-layout-background"
-            width={290}
+            width="29rem"
           >
             <div>
               <MenuWrapper
@@ -579,10 +599,13 @@ const Feed = (props) => {
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
-              <h1>Feed</h1>
+              <h1>Help Board</h1>
               <button onClick={handleCreatePost}>
                 Create a post
-                <SvgIcon src={creatPost} />
+                <SvgIcon
+                  src={creatPost}
+                  style={{ width: "5rem", height: "5rem" }}
+                />
               </button>
             </HeaderWrapper>
             <div>
@@ -611,8 +634,8 @@ const Feed = (props) => {
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
-          onCancel={() => dispatchAction(TOGGLE_STATE, "createPostModal")}
-          visible={createPostModal}
+          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+          visible={showCreatePostModal}
           user={user}
         />
         {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}

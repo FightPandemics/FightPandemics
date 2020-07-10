@@ -10,7 +10,6 @@ const USER_TYPES = [
   "Individual",
   "Non-profit",
   "Other",
-  "R&D",
   "Startup",
   "University",
 ];

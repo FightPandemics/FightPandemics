@@ -259,7 +259,7 @@ const PrivacyPolicy = () => {
                     <u>Technical Data</u>
                   </TdLeft>
                   <TdRight>
-                    Internet protocol (IP) address, your login data, browser
+                    Internet protocol (IP) address, your sign in data, browser
                     type and version, time zone setting and location, browser
                     plug-in types and versions, operating system and platform
                     and other technology on the devices YOU use to access this
@@ -342,10 +342,10 @@ const PrivacyPolicy = () => {
                 <li>
                   <u>Maintenance of the Services and Customer Support:</u> we
                   will process your data in order to deliver the Services YOU
-                  have requested, including, for example, registering YOU as a
-                  user, managing your account and profile, and authenticating
-                  YOU when YOU log in, as well as to resolve technical issues
-                  YOU encounter, to respond to your requests for assistance.
+                  have requested, including, for example, YOU joining as a user,
+                  managing your account and profile, and authenticating YOU when
+                  YOU sign in, as well as to resolve technical issues YOU
+                  encounter, to respond to your requests for assistance.
                 </li>
                 <li>
                   <u>Processing investments and payments:</u> as the purpose of
@@ -416,7 +416,7 @@ const PrivacyPolicy = () => {
                 </li>
                 <li>
                   <u>
-                    Asset purchasers, merger, reorganization, dissolution or
+                    Asset purchasers, merger, reorganisation, dissolution or
                     similar event:
                   </u>{" "}
                   We may also transfer your Personal Data as part of the
@@ -471,7 +471,7 @@ const PrivacyPolicy = () => {
               will promptly notify by e-mail to those persons whose personal
               information has been compromised. WE cannot ensure that your
               Personal Data will be protected, controlled or otherwise managed
-              pursuant to this Privacy Policy if YOU share your login and
+              pursuant to this Privacy Policy if YOU share your sign in and
               password information with any third party.
             </Paragraph>
           </li>

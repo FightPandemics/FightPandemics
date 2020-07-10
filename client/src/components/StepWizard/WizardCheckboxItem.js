@@ -2,7 +2,6 @@ import styled from "styled-components";
 import React from "react";
 import { theme, mq } from "constants/theme";
 import StyledCheckbox from "components/Input/Checkbox";
-
 const { white, lightGray, royalBlue, black } = theme.colors;
 
 export const WizardCheckboxWrapper = styled.div`
@@ -58,7 +57,7 @@ const CheckboxItemStyles = styled.div`
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     border: 0.1rem solid ${lightGray};
-    border-radius: 5px;
+    border-radius: 0.5rem;
   }
 `;
 

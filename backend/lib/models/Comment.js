@@ -1,5 +1,6 @@
 const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
+const { setElapsedTimeText } = require("../utils");
 
 const commentSchema = new Schema(
   {
@@ -46,6 +47,14 @@ commentSchema.index({ "author.id": 1, createdAt: -1 });
 // Index for like's foreign key for lookup performance
 commentSchema.index({ likes: 1 });
 /* eslint-enable */
+
+commentSchema.set("toObject", { virtuals: true });
+commentSchema.set("toJSON", { virtuals: true });
+
+//set virtual 'elapsedTimeText' property on Comment POST and Comment PATCH.
+commentSchema.virtual("elapsedTimeText").get(function () {
+  return setElapsedTimeText(this.createdAt, this.updatedAt);
+});
 
 const Comment = model("Comment", commentSchema);
 
