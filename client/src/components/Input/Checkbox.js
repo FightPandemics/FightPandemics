@@ -5,6 +5,8 @@ import { theme } from "constants/theme";
 const { darkGray } = theme.colors;
 
 const StyledCheckbox = styled(Checkbox)`
+  pointer-events: none !important;
+
   .ant-checkbox-inner {
     border-color: ${darkGray};
     width: 2rem;
