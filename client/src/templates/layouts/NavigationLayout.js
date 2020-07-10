@@ -1,17 +1,39 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
 import { Typography } from "antd";
-
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Header from "components/Header";
-import Footnote from "components/Footnote";
 import CookieAlert from "components/CookieAlert";
+import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
+import Footnote from "components/Footnote";
+import Header from "components/Header";
 import Main from "./Main";
 import MobileTabs from "./MobileTabs";
+import RadioGroup from "components/Feedback/RadioGroup";
+import RadioModal from "components/Feedback/RadioModal";
+import RatingModal from "components/Feedback/RatingModal";
+import FormInput from "components/Input/FormInput";
+import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
+import ThanksModal from "components/Feedback/ThanksModal";
+import withLabel from "components/Input/with-label";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import { theme } from "constants/theme";
+import {
+  TOGGLE_STATE,
+  SET_VALUE,
+  FEEDBACK_FORM_SUBMIT,
+  FEEDBACK_FORM_SUBMIT_ERROR,
+} from "hooks/actions/feedbackActions";
+import {
+  feedbackReducer,
+  feedbackFormReducer,
+  initialState,
+} from "hooks/reducers/feedbackReducers";
+import Logo from "components/Logo";
+import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
 
 const { royalBlue, tropicalBlue, white } = theme.colors;
@@ -74,10 +96,12 @@ const NavItem = styled(List.Item)`
       color: ${white};
       cursor: pointer;
       font-family: "Poppins", sans-serif;
-      font-size: 2.4rem;
-      font-weight: 600;
+      font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
+      font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
       line-height: 6rem;
       padding: 0;
+      margin: ${(props) =>
+        typeof props.margin != undefined ? props.margin : "inherit"};
     }
   }
 
@@ -115,9 +139,13 @@ const UserName = styled(Typography.Text)`
 
 const Space = styled.div`
   height: ${(props) => props.height ?? "1rem"};
+
+  @media (max-height: 699px) {
+    height: ${(props) => props.limitMobileHeight && 0};
+  }
 `;
 
-const CloseNav = styled(Button).attrs((props) => ({
+const CloseNav = styled(Button).attrs(() => ({
   inline: true,
   icon: "cross",
   size: "lg",
@@ -168,6 +196,25 @@ const AvatarInitials = styled(Typography.Text)`
   font-style: normal;
 `;
 
+const RatingWrapper = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const TEXT_FEEDBACK = [
+  {
+    stateKey: "mostValuableFeature",
+    label: "Which features are the most valuable to you?",
+  },
+  {
+    stateKey: "whatWouldChange",
+    label:
+      "If you could change one thing about FightPandemics, what would it be?",
+  },
+  { stateKey: "generalFeedback", label: "Any other feedback for us?" },
+];
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
@@ -186,8 +233,232 @@ const NavigationLayout = (props) => {
   const displayFullName = (user) =>
     user ? `${user?.firstName} ${user?.lastName}` : "";
 
+  const [feedbackState, feedbackDispatch] = useReducer(
+    feedbackReducer,
+    initialState.feedbackReducer,
+  );
+
+  const [feedbackFormState, feedbackFormDispatch] = useReducer(
+    feedbackFormReducer,
+    initialState.feedbackFormReducer,
+  );
+
+  const {
+    ratingModal,
+    textFeedbackModal,
+    radioModal,
+    thanksModal,
+    rating,
+    mostValuableFeature,
+    whatWouldChange,
+    generalFeedback,
+    age,
+    covidImpact,
+  } = feedbackState;
+
+  const dispatchAction = (type, key, value) => {
+    feedbackDispatch({ type, key, value });
+  };
+
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
+  };
+
+  const toggleModal = (modalName) => {
+    dispatchAction(TOGGLE_STATE, modalName);
+  };
+
+  const closeModalandReset = (modalName, actionNames = null) => {
+    if (actionNames) {
+      actionNames.forEach((action) => dispatchAction(SET_VALUE, action, ""));
+    }
+
+    toggleModal(modalName);
+  };
+
+  const nextModal = (currentModal, nextModal, actionName, value) => {
+    if (actionName && value) {
+      dispatchAction(SET_VALUE, actionName, value);
+    }
+
+    toggleModal(currentModal);
+    toggleModal(nextModal);
+  };
+
+  const submitFeedbackForm = async () => {
+    feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
+
+    try {
+      const res = await axios.post("/api/feedback", {
+        rating,
+        age,
+        ...(user && { userId: user.id }),
+        covidImpact,
+        generalFeedback,
+        mostValuableFeature,
+        whatWouldChange,
+      });
+
+      if (res) {
+        toggleModal("thanksModal");
+      }
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      feedbackFormDispatch({
+        type: FEEDBACK_FORM_SUBMIT_ERROR,
+        error: `Could not submit feedback, reason: ${message}`,
+      });
+    }
+  };
+
+  const renderThanksModal = () => (
+    <ThanksModal
+      onClose={() => closeModalandReset("thanksModal")}
+      visible={thanksModal}
+      transparent
+      closable
+    >
+      <h2 className="title">Thank you!</h2>
+      <p>
+        Your input means a lot and helps us help you and others during and after
+        the COVID-19 pandemic.
+      </p>
+      <Logo src={logo} alt="FightPandemics logo" />
+    </ThanksModal>
+  );
+
+  const renderRadioModal = () => {
+    const inputLabelsText = [
+      {
+        stateKey: "age",
+        label: "What is your age?",
+        type: "number",
+      },
+    ];
+
+    const radioButtonOptions = [
+      {
+        stateKey: "covidImpact",
+        value: "I go to work/school normally",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I am healthy but in a stay-at-home quarantine",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I have mild symptoms but haven't been tested",
+      },
+      {
+        stateKey: "covidImpact",
+        value: "I am diagnosed with Covid-19",
+      },
+    ];
+
+    const RadioGroupWithLabel = withLabel(() => (
+      <RadioGroup
+        onChange={(e) =>
+          dispatchAction(SET_VALUE, "covidImpact", e.target.value)
+        }
+        options={radioButtonOptions}
+        value={covidImpact}
+        padding="1rem 1rem"
+      />
+    ));
+    return (
+      <RadioModal
+        visible={radioModal}
+        onClose={() => closeModalandReset("radioModal", ["covidImpact", "age"])}
+        transparent
+        closable
+      >
+        <h2 className="title">We are almost done!</h2>
+        {inputLabelsText.map(({ label, stateKey, type }) => (
+          <>
+            <FormInput
+              type={type}
+              key={stateKey}
+              inputTitle={label}
+              onChange={(e) =>
+                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
+              }
+            />
+            <RadioGroupWithLabel label="How has COVID-19 impacted you?" />
+          </>
+        ))}
+        <FeedbackSubmitButton
+          title="Submit Feedback"
+          onClick={() => {
+            toggleModal("radioModal");
+            submitFeedbackForm();
+          }}
+        />
+      </RadioModal>
+    );
+  };
+
+  const renderTextFeedbackModal = () => {
+    return (
+      <TextFeedbackModal
+        visible={textFeedbackModal}
+        onClose={() => {
+          closeModalandReset(
+            "textFeedbackModal",
+            TEXT_FEEDBACK.map(({ stateKey }) => stateKey),
+          );
+        }}
+        transparent
+        closable
+      >
+        <h2 className="title">
+          Thank you for being an early user of FightPandemics!
+        </h2>
+        {TEXT_FEEDBACK.map(({ label, stateKey }) => (
+          <FormInput
+            key={stateKey}
+            inputTitle={label}
+            onChange={(e) =>
+              dispatchAction(SET_VALUE, stateKey, e.target.value)
+            }
+          />
+        ))}
+        <FeedbackSubmitButton
+          title="Next"
+          onClick={() => nextModal("textFeedbackModal", "radioModal")}
+        />
+      </TextFeedbackModal>
+    );
+  };
+
+  const renderRatingModal = () => {
+    const ratingScale = [1, 2, 3, 4, 5];
+    return (
+      <RatingModal
+        onClose={() => closeModalandReset("ratingModal", ["rating"])}
+        visible={ratingModal}
+        closable
+        transparent
+      >
+        <h3 className="title">How well does FightPandemics meet your needs?</h3>
+        <div className="rectangle">
+          {ratingScale.map((rating, index) => (
+            <RatingWrapper
+              key={index}
+              onClick={() =>
+                nextModal("ratingModal", "textFeedbackModal", "rating", rating)
+              }
+            >
+              {rating}
+            </RatingWrapper>
+          ))}
+        </div>
+        <div className="scale-text">
+          <div>Poorly</div>
+          <div className="spacer"></div>
+          <div>Very well</div>
+        </div>
+      </RatingModal>
+    );
   };
 
   const AuthenticatedMenu = () => (
@@ -241,7 +512,17 @@ const NavigationLayout = (props) => {
           About Us
         </Link>
       </NavItem>
-      <Space height="12rem" />
+      <Space height="10vh" limitMobileHeight />
+      <NavItem
+        id={GTM.nav.prefix + GTM.nav.feedBack}
+        onClick={() => {
+          dispatchAction(TOGGLE_STATE, "ratingModal");
+          toggleDrawer();
+        }}
+        size="small"
+      >
+        Feedback
+      </NavItem>
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
@@ -250,6 +531,7 @@ const NavigationLayout = (props) => {
 
   const UnAuthenticatedMenu = () => (
     <>
+      <Space height="10rem" />
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
           Sign In / Join Now
@@ -259,6 +541,17 @@ const NavigationLayout = (props) => {
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
           About Us
         </Link>
+      </NavItem>
+      <Space height="33vh" />
+      <NavItem
+        id={GTM.nav.prefix + GTM.nav.feedBack}
+        onClick={() => {
+          dispatchAction(TOGGLE_STATE, "ratingModal");
+          toggleDrawer();
+        }}
+        size="small"
+      >
+        Feedback
       </NavItem>
     </>
   );
@@ -276,40 +569,54 @@ const NavigationLayout = (props) => {
     </MenuContainer>
   );
 
-  const renderNavigationBar = () => {
-    return (
-      <div>
-        <Drawer
-          style={{
-            minHeight: document.documentElement.clientHeight,
-            ...drawerStyles,
-          }}
-          enableDragHandle
-          open={drawerOpened}
-          onOpenChange={toggleDrawer}
-          position="right"
-          sidebar={DrawerMenu()}
-          sidebarStyle={sidebarStyle}
-          className="app-drawer"
-        >
-          <Header
-            authLoading={authLoading}
-            onMenuClick={toggleDrawer}
-            isAuthenticated={isAuthenticated}
-            user={user}
-          />
-          {mobiletabs ? (
-            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
-          ) : null}
-          <Main>
-            <props.component {...props} />
-          </Main>
-          <Footnote />
-          <CookieAlert />
-        </Drawer>
-      </div>
-    );
-  };
+  const renderNavigationBar = () => (
+    <div>
+      <Drawer
+        style={{
+          minHeight: document.documentElement.clientHeight,
+          ...drawerStyles,
+        }}
+        enableDragHandle
+        open={drawerOpened}
+        onOpenChange={toggleDrawer}
+        position="right"
+        sidebar={DrawerMenu()}
+        sidebarStyle={sidebarStyle}
+        className="app-drawer"
+      >
+        <Header
+          authLoading={authLoading}
+          onMenuClick={toggleDrawer}
+          isAuthenticated={isAuthenticated}
+          user={user}
+          onFeedbackIconClick={() =>
+            dispatchAction(TOGGLE_STATE, "ratingModal")
+          }
+        />
+
+        {mobiletabs ? (
+          <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+        ) : null}
+        <Main>
+          <props.component {...props} />
+          {feedbackFormState.error && (
+            <ErrorAlert
+              message={feedbackFormState.error}
+              type="error"
+              closable={true}
+              fullWidthBanner={true}
+            />
+          )}
+          {renderRatingModal()}
+          {renderTextFeedbackModal()}
+          {renderRadioModal()}
+          {renderThanksModal()}
+        </Main>
+        <Footnote />
+        <CookieAlert />
+      </Drawer>
+    </div>
+  );
 
   return <>{renderNavigationBar()}</>;
 };
