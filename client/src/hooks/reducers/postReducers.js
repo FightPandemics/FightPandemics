@@ -122,7 +122,7 @@ export const postReducer = (state = postState, action) => {
     case SET_COMMENT:
       state.comments = state.comments.map((comment) => {
         if (comment._id === action.commentId) {
-          return { ...comment, content: action.comment };
+          return { ...action.comment };
         } else {
           return comment;
         }

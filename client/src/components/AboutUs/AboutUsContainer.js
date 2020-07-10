@@ -103,7 +103,7 @@ export const SocialContainer = styled.div`
   margin: 0 auto;
   img {
     margin: 2rem 3rem;
-    max-width: 3rem;
+    width: 3rem;
   }
 `;
 

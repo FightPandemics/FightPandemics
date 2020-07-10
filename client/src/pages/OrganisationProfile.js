@@ -11,7 +11,8 @@ import editEmpty from "assets/icons/edit-empty.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import smileIcon from "assets/icons/smile-icon.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -32,7 +33,6 @@ import {
   LocationDesktopDiv,
   LocationMobileDiv,
   IconsContainer,
-  HelpContainer,
   LocationIcon,
   SocialIcon,
   DescriptionMobile,
@@ -42,28 +42,30 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { getInitials } from "utils/userInfo";
+import { isAuthorOrg } from "pages/Feed";
+import { getInitialsFromFullName } from "utils/userInfo";
 import {
   LINKEDIN_URL,
   TWITTER_URL,
-  APPLESTORE_URL,
+  APPSTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
 import {
-  fetchOrganization,
-  fetchOrganizationError,
-  fetchOrganizationSuccess,
-} from "hooks/actions/organizationActions";
+  fetchOrganisation,
+  fetchOrganisationError,
+  fetchOrganisationSuccess,
+} from "hooks/actions/organisationActions";
 import {
   fetchUser,
   fetchUserError,
   fetchUserSuccess,
 } from "hooks/actions/userActions";
 import {
-  OrganizationContext,
-  withOrganizationContext,
-} from "context/OrganizationContext";
+  OrganisationContext,
+  withOrganisationContext,
+} from "context/OrganisationContext";
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   postsReducer,
   postsState as initialPostsState,
@@ -72,20 +74,23 @@ import { UserContext, withUserContext } from "context/UserContext";
 
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
-  appleStore: ["", APPLESTORE_URL],
+  appStore: ["", APPSTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
-  website: [smileIcon],
+  website: [websiteIcon],
+  email: [envelopeBlue],
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
-const OrganizationProfile = () => {
-  const organizationId = window.location.pathname.split("/")[2];
+const OrganisationProfile = () => {
+  let url = window.location.pathname.split("/");
+  const organisationId = url[url.length - 1];
+
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganizationContext,
+    OrganisationContext,
   );
-  const { error, loading, organization } = orgProfileState;
+  const { error, loading, organisation } = orgProfileState;
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
     initialPostsState,
@@ -96,27 +101,22 @@ const OrganizationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
-  const {
-    name,
-    location = {},
-    needs,
-    about = "",
-    isOwner,
-    objectives = {},
-    urls = {},
-  } = organization || {};
+  const { email, name, location = {}, about = "", isOwner, urls = {} } =
+    organisation || {};
+
+  const urlsAndEmail = { ...urls, email };
 
   useEffect(() => {
     (async function fetchOrgProfile() {
-      orgProfileDispatch(fetchOrganization());
+      orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
       try {
-        const res = await axios.get(`/api/organizations/${organizationId}`);
-        orgProfileDispatch(fetchOrganizationSuccess(res.data));
+        const res = await axios.get(`/api/organisations/${organisationId}`);
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
-          fetchOrganizationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
       }
     })();
@@ -133,47 +133,96 @@ const OrganizationProfile = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organizationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+
+  const fetchOrganisationPosts = async () => {
+    postsDispatch({ type: FETCH_POSTS });
+    try {
+      const res = await axios.get(
+        `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
+      );
+      postsDispatch({
+        type: SET_POSTS,
+        posts: res.data,
+      });
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      postsDispatch({
+        type: ERROR_POSTS,
+        error: `Failed loading activity, reason: ${message}`,
+      });
+    }
+  };
 
   useEffect(() => {
-    (async function fetchOrganizationPosts() {
-      postsDispatch({ type: FETCH_POSTS });
-      try {
-        const res = await axios.get(
-          `/api/posts?limit=-1&authorId=${organizationId}`,
-        );
-        postsDispatch({
-          type: SET_POSTS,
-          posts: res.data,
-        });
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading acitivity, reason: ${message}`,
-        });
-      }
-    })();
-  }, [organizationId]);
+    fetchOrganisationPosts();
+  }, [organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (
+      user &&
+      (user._id === post.author.id ||
+        user.id === post.author.id ||
+        isAuthorOrg(user.organisations, post.author))
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchOrganisationPosts();
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handleEditPost = () => {
+    if (postsState.editPostModalVisibility) {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
+  };
+
   const renderURL = () => {
-    if (organization) {
-      if (urls.length !== 0) {
-        return Object.entries(urls).map(([name, url]) => {
+    if (organisation) {
+      if (urlsAndEmail.length !== 0) {
+        return Object.entries(urlsAndEmail).map(([name, url]) => {
+          let href;
+          if (name === "website") {
+            href = getHref(url);
+          } else if (name === "email") {
+            href = `mailto:${url}`;
+          } else {
+            href = `${URLS[name][1]}${url}`;
+          }
+
           return (
             url && (
               <a
-                href={
-                  name === "website" ? getHref(url) : `${URLS[name][1]}${url}`
-                }
+                href={href}
                 key={name}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} />
+                <SocialIcon src={URLS[name][0]} alt={name} />
               </a>
             )
           );
@@ -185,30 +234,15 @@ const OrganizationProfile = () => {
   };
 
   const renderProfileData = () => {
-    let firstName, lastName;
-    if (!organization) {
+    if (!organisation) {
       return <p>Loading...</p>;
     } else {
-      const needHelp = Object.values(needs).some((val) => val === true);
-      const offerHelp = Object.values(objectives).some((val) => val === true);
       const { address } = location;
-      const nameArr = name.split(" ");
-      if (nameArr.length < 2) {
-        firstName = nameArr[0];
-        lastName = firstName.split("").pop();
-      } else {
-        firstName = nameArr[0];
-        lastName = nameArr[1];
-      }
-
       return (
         <>
           <UserInfoContainer>
             {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
-            <ProfilePic
-              noPic={true}
-              initials={getInitials(firstName, lastName)}
-            />
+            <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
             <UserInfoDesktop>
               <NameDiv>
                 {name}
@@ -223,14 +257,9 @@ const OrganizationProfile = () => {
               <DescriptionDesktop> {about} </DescriptionDesktop>
               <LocationMobileDiv>{address}</LocationMobileDiv>
               <IconsContainer>
-                <HelpContainer>
-                  {needHelp && "I need help "}
-                  {offerHelp && "I want to help "}
-                </HelpContainer>
                 <LocationDesktopDiv>
                   <LocationIcon src={locationIcon} />
-                  {needHelp && "I need help "}
-                  {offerHelp && "I want to help "} • {address}
+                  {address}
                 </LocationDesktopDiv>
                 <PlaceholderIcon />
                 {renderURL()}
@@ -259,7 +288,12 @@ const OrganizationProfile = () => {
               )}
             </SectionHeader>
             <FeedWrapper>
-              <Activity filteredPosts={postsState.posts} />
+              <Activity
+                filteredPosts={postsState.posts}
+                user={user}
+                handlePostDelete={postDelete}
+                handleEditPost={handleEditPost}
+              />
               {isOwner && (
                 <CreatePost
                   onCancel={() => setModal(false)}
@@ -279,12 +313,12 @@ const OrganizationProfile = () => {
               key="bottom"
             >
               <DrawerHeader>
-                <Link to={`/edit-organization-account/${organizationId}`}>
+                <Link to={`/edit-organisation-account/${organisationId}`}>
                   Edit Account Information
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
-                <Link to={`/edit-organization-profile/${organizationId}`}>
+                <Link to={`/edit-organisation-profile/${organisationId}`}>
                   Edit Profile{" "}
                 </Link>
               </DrawerHeader>
@@ -310,4 +344,4 @@ const OrganizationProfile = () => {
   );
 };
 
-export default withUserContext(withOrganizationContext(OrganizationProfile));
+export default withUserContext(withOrganisationContext(OrganisationProfile));

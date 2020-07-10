@@ -79,7 +79,7 @@ const ModalStyle = styled(Modal)`
     z-index: 1;
     .ant-typography {
       &.block-text {
-        margin-bottom: 60px;
+        margin-bottom: 6rem;
       }
     }
     & img.warning-icon {

@@ -75,7 +75,11 @@ const ModalComponent = ({
               </TabPane>
             ))
           : tabs.map((tab) => (
-              <TabPane tab={tab.title} key={tab.key}>
+              <TabPane
+                tab={tab.title}
+                key={tab.key}
+                style={{ fontSize: "1.4rem" }}
+              >
                 <Form
                   type={tab.key}
                   textData={{ question: tab.question }}

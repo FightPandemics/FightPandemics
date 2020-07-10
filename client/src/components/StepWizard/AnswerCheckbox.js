@@ -9,12 +9,12 @@ const AnswerStyles = styled.div`
   align-items: center;
   display: flex;
   border: 2px solid ${primary};
-  border-radius: 8px;
+  border-radius: 0.8rem;
   box-sizing: border-box;
   color: ${primary};
   cursor: pointer;
-  padding: 20px 50px;
-  margin: 15px 0px;
+  padding: 2rem 5rem;
+  margin: 1.5rem 0;
   width: 100%;
   &.selected,
   &:hover {
@@ -23,7 +23,7 @@ const AnswerStyles = styled.div`
   }
   > .text {
     flex-grow: 1;
-    margin-right: 10px;
+    margin-right: 1rem;
   }
 `;
 

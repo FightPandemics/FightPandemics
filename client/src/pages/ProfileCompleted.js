@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 
 import {
   ProfileCompletedButtonsWrapper,
@@ -24,10 +25,10 @@ const ProfileCompleted = ({ user }) => {
       </ProfileCompletedHeader>
       <ProfileCompletedButtonsWrapper>
         {/* TODO: consistently return _id or id or both */}
-        <Link to={`/profile/${user?.id || user?._id}`}>
+        <Link to={`${PROFILE}/${user?.id || user?._id}`}>
           <StyledButton tertiary={true}>View my Profile</StyledButton>
         </Link>
-        <Link to="/feed">
+        <Link to={FEED}>
           <StyledButton tertiary={true}>Continue posting</StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>

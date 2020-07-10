@@ -42,6 +42,7 @@ import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -49,7 +50,7 @@ import {
   fetchUserSuccess,
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
-import { getInitials } from "utils/userInfo";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -61,14 +62,14 @@ import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import smileIcon from "assets/icons/smile-icon.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
 
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
-  website: [smileIcon],
+  website: [websiteIcon],
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
@@ -90,8 +91,8 @@ const Profile = ({
   const {
     id: userId,
     about,
-    firstName = "",
-    lastName = "",
+    firstName,
+    lastName,
     location = {},
     needs = {},
     objectives = {},
@@ -116,12 +117,14 @@ const Profile = ({
       }
     })();
   }, [pathUserId, userProfileDispatch]);
-  useEffect(() => {
-    (async function fetchPosts() {
-      postsDispatch({ type: FETCH_POSTS });
+
+  const fetchPosts = async() => {
+    postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
-          const res = await axios.get(`/api/posts?limit=-1&authorId=${userId}`);
+          const res = await axios.get(
+            `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
+          );
           postsDispatch({
             type: SET_POSTS,
             posts: res.data,
@@ -134,8 +137,49 @@ const Profile = ({
           error: `Failed loading activity, reason: ${message}`,
         });
       }
-    })();
-  }, [userId]);
+  }
+
+  useEffect(() => {
+    (fetchPosts)();
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (
+      user &&
+      (user._id === post.author.id || user.id === post.author.id )
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsState.posts,
+          };
+          delete allPosts[post._id];
+          fetchPosts();
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handleEditPost = () => {
+    if (postsState.editPostModalVisibility) {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: false,
+      });
+    } else {
+      postsDispatch({
+        type: SET_EDIT_POST_MODAL_VISIBILITY,
+        visibility: true,
+      });
+    }
+  };
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -148,7 +192,10 @@ const Profile = ({
       </BackgroundHeader>
       <UserInfoContainer>
         {ownUser && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
-        <ProfilePic noPic={true} initials={getInitials(firstName, lastName)} />
+        <ProfilePic
+          noPic={true}
+          initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
+        />
         <UserInfoDesktop>
           <NameDiv>
             {firstName} {lastName}
@@ -212,12 +259,18 @@ const Profile = ({
               <CreatePostIcon
                 src={createPost}
                 onClick={() => setModal(!modal)}
+                style={{ width: "5rem", height: "5rem" }}
               />
             </>
           )}
         </SectionHeader>
         <FeedWrapper>
-          <Activity filteredPosts={postsState.posts} />
+          <Activity 
+            filteredPosts={postsState.posts}
+            user={user}
+            handlePostDelete={postDelete}
+            handleEditPost={handleEditPost}
+          />
           {ownUser && (
             <CreatePost
               onCancel={() => setModal(false)}

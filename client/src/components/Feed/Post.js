@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Modal as WebModal } from "antd";
+import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
@@ -18,6 +18,8 @@ import SubMenuButton from "components/Button/SubMenuButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
+import { StyledLoadMoreButton } from "./StyledCommentButton";
+import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import {
@@ -29,12 +31,24 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
+import { isAuthorOrg } from "pages/Feed";
+import { authorProfileLink } from "./utils";
+import { getInitialsFromFullName } from "utils/userInfo";
+import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
+import websiteIcon from "assets/icons/social-website-blue.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 
-const INDIVIDUAL_AUTHOR_TYPE = "Individual";
+const URLS = {
+  // playStore: [""], // TODO: add once design is done
+  // appStore: [""],
+  website: [websiteIcon],
+  email: [envelopeBlue],
+};
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -57,7 +71,10 @@ const Post = ({
 }) => {
   const { postId } = useParams();
   const limit = useRef(5);
-  const post = currentPost;
+  let post;
+  if (currentPost) {
+    post = currentPost;
+  }
 
   const {
     _id,
@@ -65,22 +82,18 @@ const Post = ({
     title,
     comments,
     commentsCount,
+    externalLinks = {},
     isLoading,
     loadMoreComments,
     page,
-  } = post;
+  } = post || {};
 
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
 
   const AvatarName =
-    (post?.author?.name &&
-      post.author.name.match(/\b\w/g).join("").toUpperCase()) ||
-    "";
+    (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
 
-  const authorProfileLink = `/${
-    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organization"
-  }/${post.author.id}`;
   // mock API to test functionality
   /* to be removed after full integration with user api */
   const [shared, setShared] = useState(false);
@@ -204,11 +217,10 @@ const Post = ({
         console.log({ error });
       }
       if (response && response.data) {
-        let filterComments = comments.filter((comment) => {
-          if (comment._id !== commentId) {
-            return comment;
-          }
-        });
+        let filterComments = comments.filter(
+          (comment) => comment._id !== commentId,
+        );
+
         await dispatchPostAction(
           SET_COMMENTS,
           "comments",
@@ -220,14 +232,39 @@ const Post = ({
     }
   };
 
+  const renderExternalLinks = () => {
+    return Object.entries(externalLinks).map(([name, url]) => {
+      return (
+        url && (
+          <a
+            href={name === "email" ? `mailto:${url}` : url}
+            key={name}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLinkIcon src={URLS[name]} alt={name} />
+          </a>
+        )
+      );
+    });
+  };
+
   const ViewMore = ({ onClick }) => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
         <div onClick={onClick}>
           {!loadMorePost ? (
-            <span className="view-more">View Less</span>
+            <>
+              <IconsContainer>{renderExternalLinks()}</IconsContainer>
+              <span className="view-more">View Less</span>
+            </>
           ) : (
-            <span className="view-more">View More</span>
+            <span
+              id={GTM.post.prefix + GTM.post.viewMore}
+              className="view-more"
+            >
+              View More
+            </span>
           )}
         </div>
       ) : (
@@ -244,6 +281,7 @@ const Post = ({
           state: {
             post: post,
             postId: post._id,
+            from: window.location.href,
             user,
           },
         }}
@@ -255,7 +293,12 @@ const Post = ({
         {isAuthenticated ? (
           <ViewMore onClick={onClick} loadContent={loadMorePost} />
         ) : (
-          <Link to={{ pathname: LOGIN }}>
+          <Link
+            to={{
+              pathname: LOGIN,
+              state: { from: window.location.href },
+            }}
+          >
             <ViewMore loadContent={loadMorePost} />
           </Link>
         )}
@@ -265,9 +308,9 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post.author.name}
+      title={post?.author?.name}
       thumb={
-        post.author.photo ? (
+        post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
@@ -276,14 +319,15 @@ const Post = ({
       extra={
         <span>
           <SvgIcon src={statusIndicator} className="status-icon" />
-          {post?.author?.location ? post.author.location.country : ""}
+          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
+          {post?.author?.location?.country ? post.author.location.country : ""}
         </span>
       }
     />
   );
 
   const renderHeaderWithLink = (
-    <Link to={authorProfileLink}>{renderHeader}</Link>
+    <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
 
   const renderContent = (
@@ -297,8 +341,8 @@ const Post = ({
 
   const renderTags = (
     <Card.Body>
-      {post.types &&
-        post.types.map((tag, idx) => (
+      {post?.types &&
+        post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
             {typeToTag(tag)}
           </FilterTag>
@@ -312,6 +356,7 @@ const Post = ({
     >
       {isAuthenticated ? (
         <AutoSize
+          gtmTag={`${GTM.post.prefix}${GTM.post.writeComment}_${postId}`}
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
@@ -330,9 +375,9 @@ const Post = ({
             user={user}
           />
           {loadMoreComments && commentsCount >= 5 ? (
-            <Button disabled={isLoading} onClick={loadComments}>
+            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
-            </Button>
+            </StyledLoadMoreButton>
           ) : (
             <></>
           )}
@@ -348,11 +393,11 @@ const Post = ({
       <PostSocial
         handlePostLike={handlePostLike}
         url={window.location.href}
-        liked={post.liked}
+        liked={post?.liked}
         shared={shared}
-        postpage={postId}
+        postId={postId}
         showComments={showComments}
-        numLikes={post.likesCount}
+        numLikes={post?.likesCount}
         numComments={numComments}
         numShares={fakeShares}
         isAuthenticated={isAuthenticated}
@@ -362,7 +407,7 @@ const Post = ({
           setShared(true);
           return setCopied(!copied);
         }}
-        id={post._id}
+        id={post?._id}
       />
     </Card.Body>
   );
@@ -385,21 +430,17 @@ const Post = ({
     <>
       {postId && dispatchPostAction ? (
         //Post in post's page.
-        <div>
-          <PostCard
-            style={{
-              display: "inline-block",
-              maxWidth: "80rem",
-              marginTop: "1rem",
-            }}
-          >
+        <>
+          <StyledPostPagePostCard>
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
                   (user._id === post.author.id ||
-                    user.id === post.author.id) && (
+                    user.id === post.author.id ||
+                    (user.organisations &&
+                      isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
                       onSelect={onSelect}
                       onChange={onChange}
@@ -420,7 +461,11 @@ const Post = ({
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ): (<Card.Body className="view-more-wrapper"/>)}
+            ) : (
+              <Card.Body className="view-more-wrapper">
+                {renderExternalLinks()}
+              </Card.Body>
+            )}
             {renderSocialIcons}
             {renderShareModal}
             {renderComments}
@@ -434,11 +479,13 @@ const Post = ({
             >
               <p>Are you sure you want to delete the post?</p>
             </WebModal>
-          </PostCard>
+          </StyledPostPagePostCard>
           {showComments && (
-            <StyledButtonWizard nav={<WizardFormNav />}></StyledButtonWizard>
+            <StyledButtonWizard
+              nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
+            />
           )}
-        </div>
+        </>
       ) : (
         //Post in feed.
         <PostCard>
@@ -447,7 +494,9 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user._id === post.author.id || user.id === post.author.id) && (
+                (user?._id === post?.author?.id ||
+                  user?.id === post?.author?.id ||
+                  isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={() => handlePostDelete(post)}
                     onSelect={onSelect}
@@ -461,13 +510,14 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated ? (
+          {isAuthenticated && post ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
                 state: {
                   post: post,
                   postId: _id,
+                  from: window.location.href,
                   user,
                 },
               }}
@@ -478,13 +528,15 @@ const Post = ({
             <>{renderContent}</>
           )}
           {fullPostLength > CONTENT_LENGTH ||
-            (post.content.length > CONTENT_LENGTH ? (
+            (post?.content?.length > CONTENT_LENGTH ? (
               <RenderViewMore
                 postId={postId}
                 onClick={onClick}
                 loadMorePost={loadMorePost}
               />
-            ): (<Card.Body className="view-more-wrapper"/>))}
+            ) : (
+              <Card.Body className="view-more-wrapper" />
+            ))}
           {renderSocialIcons}
           {renderShareModal}
           <WebModal

@@ -81,7 +81,7 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
       <WhiteSpace />
       <WhiteSpace />
       <ButtonsContainer>
-        <StyledLink to={`/organization/${history.location.state.orgId}`}>
+        <StyledLink to={`/organisation/${history.location.state.orgId}`}>
           View my profile
         </StyledLink>
         <WhiteSpace />
