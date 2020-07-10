@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Modal } from "antd";
+import { Modal } from "antd-mobile";
 import { theme } from "../../constants/theme";
 
 const { royalBlue, white } = theme.colors;
@@ -60,6 +60,10 @@ const RatingModal = styled(Modal)`
   .spacer {
     visibility: hidden;
     flex-grow: 1;
+  }
+
+  .am-modal-close-x:hover {
+    cursor: pointer;
   }
 `;
 

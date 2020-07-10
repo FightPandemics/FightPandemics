@@ -7,13 +7,11 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
-import { ReactComponent as FeedbackIcon } from "assets/icons/envelope.svg";
+import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
-
 import { theme, mq } from "../constants/theme";
-import { Menu, Dropdown } from "antd";
 import GTM from "constants/gtm-tags";
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -203,9 +201,12 @@ export default ({
                 Join Now
               </NavLink>
             </li>
-            <Link id={GTM.nav.prefix + GTM.nav.feedBack} to="/feed">
+            <button
+              id={GTM.nav.prefix + GTM.nav.feedBack}
+              onClick={onFeedbackIconClick}
+            >
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-            </Link>
+            </button>
           </>
         )}
       </>

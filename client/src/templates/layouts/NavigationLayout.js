@@ -1,5 +1,5 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Alert, Typography } from "antd";
+import { Typography } from "antd";
 import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -19,6 +19,7 @@ import FormInput from "components/Input/FormInput";
 import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
 import ThanksModal from "components/Feedback/ThanksModal";
 import withLabel from "components/Input/with-label";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import { theme } from "constants/theme";
 import {
   TOGGLE_STATE,
@@ -35,7 +36,7 @@ import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
 
-const { royalBlue, tropicalBlue, white, orangeRed } = theme.colors;
+const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
   position: "relative",
@@ -170,13 +171,6 @@ const CloseNav = styled(Button).attrs(() => ({
   }
 `;
 
-const ErrorAlert = styled(Alert)`
-  background-color: ${orangeRed};
-  .ant-alert-message {
-    color: ${white};
-  }
-`;
-
 const BriefLink = styled(Link)`
   font-size: 1.8rem;
   font-weight: normal;
@@ -196,6 +190,12 @@ const AvatarInitials = styled(Typography.Text)`
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
+`;
+
+const RatingWrapper = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const TEXT_FEEDBACK = [
@@ -264,59 +264,40 @@ const NavigationLayout = (props) => {
     dispatchAction(TOGGLE_STATE, modalName);
   };
 
-  const closeModalandReset = (modalName, actionNames) => {
+  const closeModalandReset = (modalName, actionNames = null) => {
     if (actionNames) {
-      actionsArray.forEach((action) => dispatchAction(SET_VALUE, action, ""));
+      actionNames.forEach((action) => dispatchAction(SET_VALUE, action, ""));
     }
 
     toggleModal(modalName);
   };
 
   const nextModal = (currentModal, nextModal, actionName, value) => {
-    if (drawerOpened) {
-      toggleDrawer();
-    }
     if (actionName && value) {
       dispatchAction(SET_VALUE, actionName, value);
     }
+
     toggleModal(currentModal);
     toggleModal(nextModal);
   };
 
-  const closeRatingModal = (ratingValue) => {
-    if (drawerOpened) {
-      toggleDrawer();
-    }
-    dispatchAction(SET_VALUE, "rating", ratingValue);
-    toggleModal("ratingModal");
-    toggleModal("textFeedbackModal");
-  };
-
-  const closeTextFeedbackModal = () => {
-    toggleModal("textFeedbackModal");
-    toggleModal("radioModal");
-  };
-
-  const closeRadioModal = () => {
-    submitFeedbackForm();
-    toggleModal("radioModal");
-    if (!feedbackFormState.error) {
-      toggleModal("thanksModal");
-    }
-  };
-
-  const submitFeedbackForm = async (user) => {
+  const submitFeedbackForm = async () => {
     feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
+
     try {
-      await axios.post("/api/feedback", {
+      const res = await axios.post("/api/feedback", {
         rating,
         age,
-        userId: user.id,
+        ...(user && { userId: user.id }),
         covidImpact,
         generalFeedback,
         mostValuableFeature,
         whatWouldChange,
       });
+
+      if (res) {
+        toggleModal("thanksModal");
+      }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       feedbackFormDispatch({
@@ -331,6 +312,7 @@ const NavigationLayout = (props) => {
       onClose={() => closeModalandReset("thanksModal")}
       visible={thanksModal}
       transparent
+      closable
     >
       <h2 className="title">Thank you!</h2>
       <p>
@@ -384,6 +366,7 @@ const NavigationLayout = (props) => {
         visible={radioModal}
         onClose={() => closeModalandReset("radioModal", ["covidImpact", "age"])}
         transparent
+        closable
       >
         <h2 className="title">We are almost done!</h2>
         {inputLabelsText.map(({ label, stateKey, type }) => (
@@ -401,7 +384,10 @@ const NavigationLayout = (props) => {
         ))}
         <FeedbackSubmitButton
           title="Submit Feedback"
-          onClick={closeRadioModal}
+          onClick={() => {
+            toggleModal("radioModal");
+            submitFeedbackForm();
+          }}
         />
       </RadioModal>
     );
@@ -411,13 +397,14 @@ const NavigationLayout = (props) => {
     return (
       <TextFeedbackModal
         visible={textFeedbackModal}
-        onClose={() =>
+        onClose={() => {
           closeModalandReset(
             "textFeedbackModal",
-            TEXT_FEEDBACK.map({ stateKey }),
-          )
-        }
+            TEXT_FEEDBACK.map(({ stateKey }) => stateKey),
+          );
+        }}
         transparent
+        closable
       >
         <h2 className="title">
           Thank you for being an early user of FightPandemics!
@@ -445,19 +432,20 @@ const NavigationLayout = (props) => {
       <RatingModal
         onClose={() => closeModalandReset("ratingModal", ["rating"])}
         visible={ratingModal}
+        closable
         transparent
       >
         <h3 className="title">How well does FightPandemics meet your needs?</h3>
         <div className="rectangle">
           {ratingScale.map((rating, index) => (
-            <div
+            <RatingWrapper
               key={index}
               onClick={() =>
                 nextModal("ratingModal", "textFeedbackModal", "rating", rating)
               }
             >
               {rating}
-            </div>
+            </RatingWrapper>
           ))}
         </div>
         <div className="scale-text">
@@ -540,9 +528,11 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem
-        size={"small"}
-        margin={"8rem 0 0"}
-        onClick={() => dispatchAction(TOGGLE_STATE, "ratingModal")}
+        id={GTM.nav.prefix + GTM.nav.feedBack}
+        onClick={() => {
+          dispatchAction(TOGGLE_STATE, "ratingModal");
+          toggleDrawer();
+        }}
       >
         Feedback
       </NavItem>
@@ -563,54 +553,54 @@ const NavigationLayout = (props) => {
     </MenuContainer>
   );
 
-  const renderNavigationBar = () => {
-    return (
-      <div>
-        <Drawer
-          style={{
-            minHeight: document.documentElement.clientHeight,
-            ...drawerStyles,
-          }}
-          enableDragHandle
-          open={drawerOpened}
-          onOpenChange={toggleDrawer}
-          position="right"
-          sidebar={DrawerMenu()}
-          sidebarStyle={sidebarStyle}
-          className="app-drawer"
-        >
-          <Header
-            authLoading={authLoading}
-            onMenuClick={toggleDrawer}
-            isAuthenticated={isAuthenticated}
-            user={user}
-            onFeedbackIconClick={() =>
-              dispatchAction(TOGGLE_STATE, "ratingModal")
-            }
-          />
-          {mobiletabs ? (
-            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
-          ) : null}
-          <Main>
-            <props.component {...props} />
-            {renderRatingModal()}
-            {renderTextFeedbackModal()}
-            {renderRadioModal()}
-            {renderThanksModal()}
-            {feedbackFormState.error && (
-              <ErrorAlert
-                message={feedbackFormState.error}
-                type="error"
-                closable={true}
-              />
-            )}
-          </Main>
-          <Footnote />
-          <CookieAlert />
-        </Drawer>
-      </div>
-    );
-  };
+  const renderNavigationBar = () => (
+    <div>
+      <Drawer
+        style={{
+          minHeight: document.documentElement.clientHeight,
+          ...drawerStyles,
+        }}
+        enableDragHandle
+        open={drawerOpened}
+        onOpenChange={toggleDrawer}
+        position="right"
+        sidebar={DrawerMenu()}
+        sidebarStyle={sidebarStyle}
+        className="app-drawer"
+      >
+        <Header
+          authLoading={authLoading}
+          onMenuClick={toggleDrawer}
+          isAuthenticated={isAuthenticated}
+          user={user}
+          onFeedbackIconClick={() =>
+            dispatchAction(TOGGLE_STATE, "ratingModal")
+          }
+        />
+
+        {mobiletabs ? (
+          <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+        ) : null}
+        <Main>
+          <props.component {...props} />
+          {feedbackFormState.error && (
+            <ErrorAlert
+              message={feedbackFormState.error}
+              type="error"
+              closable={true}
+              fullWidthBanner={true}
+            />
+          )}
+          {renderRatingModal()}
+          {renderTextFeedbackModal()}
+          {renderRadioModal()}
+          {renderThanksModal()}
+        </Main>
+        <Footnote />
+        <CookieAlert />
+      </Drawer>
+    </div>
+  );
 
   return <>{renderNavigationBar()}</>;
 };
