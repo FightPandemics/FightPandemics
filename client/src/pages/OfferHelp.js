@@ -79,7 +79,12 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
-              id={GTM.offerHelp.prefix + GTM.wizardNav.step + gtmSwitcher(i)}
+              id={
+                GTM.offerHelp.prefix +
+                GTM.wizardNav.step +
+                props.currentStep +
+                gtmSwitcher(i)
+              }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
