@@ -158,7 +158,7 @@ const LocationInput = ({
   return (
     <div>
       <StyledSelect
-        id={gtmPrefix + GTM.locationInput.enterAddress}
+        id={`${GTM.feed.prefix}${GTM.post.filterPost}${GTM.post.location}${GTM.locationInput.enterAddress}`}
         showArrow={false}
         showSearch
         allowClear={selectedAddress.value}
@@ -185,7 +185,7 @@ const LocationInput = ({
         <div>
           <WhiteSpace />
           <div
-            id={gtmPrefix + GTM.locationInput.shareLocation}
+            id={`${GTM.feed.prefix}${GTM.post.filterPost}${GTM.post.location}${GTM.locationInput.shareLocation}`}
             onClick={getAddressFromGeolocation}
             style={{ cursor: "pointer", fontSize: medium }}
             className="svgicon-share-mylocation-size"

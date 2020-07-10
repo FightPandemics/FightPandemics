@@ -66,13 +66,16 @@ const PostSocial = ({
     );
   };
 
-  const gtmTag = (element) =>
-    GTM.post.prefix + GTM.post[element] + "_" + postId;
+  const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
   const renderPostSocialIcons = (
     <>
       {postId ? (
-        <div id={gtmTag("like")} className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
+        <div
+          id={gtmTag("like", GTM.post.prefix)}
+          className="social-icon"
+          onClick={() => handlePostLike(id, liked, true)}
+        >
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
           <span className="social-text">
@@ -80,7 +83,11 @@ const PostSocial = ({
           </span>
         </div>
       ) : (
-        <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
+        <div
+          id={gtmTag("like", GTM.feed.prefix)}
+          className="social-icon"
+          onClick={() => handlePostLike(id, liked, true)}
+        >
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
           <span className="social-text">
@@ -91,7 +98,7 @@ const PostSocial = ({
       <span></span>
       {postId ? (
         <div
-          id={gtmTag("comment")}
+          id={gtmTag("comment", GTM.post.prefix)}
           className="social-icon"
           onClick={setShowComments}
         >
@@ -114,7 +121,11 @@ const PostSocial = ({
                 },
               }}
             >
-              <div className="social-icon" onClick={setShowComments}>
+              <div
+                id={gtmTag("comment", GTM.feed.prefix)}
+                className="social-icon"
+                onClick={setShowComments}
+              >
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
                 <span className="social-text">
@@ -148,7 +159,11 @@ const PostSocial = ({
 
       {postId ? (
         <div className="social-icon">
-          <CopyToClipboard id={gtmTag("share")} text={url} onCopy={onCopyLink}>
+          <CopyToClipboard
+            id={gtmTag("share", GTM.post.prefix)}
+            text={url}
+            onCopy={onCopyLink}
+          >
             <span>
               {renderShareIcon()}
               <span className="social-text">Share</span>
@@ -156,7 +171,7 @@ const PostSocial = ({
           </CopyToClipboard>
         </div>
       ) : (
-        <div className="social-icon">
+        <div id={gtmTag("share", GTM.feed.prefix)} className="social-icon">
           <CopyToClipboard
             text={window.location.href.replace(
               window.location.pathname,
