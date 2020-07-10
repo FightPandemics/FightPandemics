@@ -1,4 +1,10 @@
-import React, { useReducer, useEffect, useCallback, useRef, useState } from "react";
+import React, {
+  useReducer,
+  useEffect,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -144,6 +150,10 @@ const MenuWrapper = styled(Menu)`
 `;
 
 const LayoutWrapper = styled(Layout)`
+  .create-post {
+    height: 4rem;
+    width: 4rem;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     background-color: ${white};
   }
@@ -417,7 +427,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (applyFilters) {
-      if(isOnboarding) {
+      if (isOnboarding) {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
@@ -439,14 +449,14 @@ const Feed = (props) => {
         providers,
       } = props.history.location.state;
       location && dispatchAction(SET_VALUE, "location", location);
-      const getValue = postType => {
-        switch(postType) {
-        case "Requesting help":
-          return "OFFER";
-        case "Offering help":
-          return "REQUEST";
-        default:
-          return "All";
+      const getValue = (postType) => {
+        switch (postType) {
+          case "Requesting help":
+            return "OFFER";
+          case "Offering help":
+            return "REQUEST";
+          default:
+            return "All";
         }
       };
       const value = getValue(postType);
