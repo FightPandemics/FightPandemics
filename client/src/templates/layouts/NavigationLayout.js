@@ -139,6 +139,10 @@ const UserName = styled(Typography.Text)`
 
 const Space = styled.div`
   height: ${(props) => props.height ?? "1rem"};
+
+  @media (max-height: 699px) {
+    height: ${(props) => props.limitMobileHeight && 0};
+  }
 `;
 
 const CloseNav = styled(Button).attrs(() => ({
@@ -508,7 +512,17 @@ const NavigationLayout = (props) => {
           About Us
         </Link>
       </NavItem>
-      <Space height="12rem" />
+      <Space height="10vh" limitMobileHeight />
+      <NavItem
+        id={GTM.nav.prefix + GTM.nav.feedBack}
+        onClick={() => {
+          dispatchAction(TOGGLE_STATE, "ratingModal");
+          toggleDrawer();
+        }}
+        size="small"
+      >
+        Feedback
+      </NavItem>
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
@@ -517,6 +531,7 @@ const NavigationLayout = (props) => {
 
   const UnAuthenticatedMenu = () => (
     <>
+      <Space height="10rem" />
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
           Sign In / Join Now
@@ -527,16 +542,17 @@ const NavigationLayout = (props) => {
           About Us
         </Link>
       </NavItem>
+      <Space height="33vh" />
       <NavItem
         id={GTM.nav.prefix + GTM.nav.feedBack}
         onClick={() => {
           dispatchAction(TOGGLE_STATE, "ratingModal");
           toggleDrawer();
         }}
+        size="small"
       >
         Feedback
       </NavItem>
-      {drawerOpened && <CloseNav onClick={toggleDrawer} />}
     </>
   );
 

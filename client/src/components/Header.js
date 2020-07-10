@@ -141,6 +141,8 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
+      <Menu.Item onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>

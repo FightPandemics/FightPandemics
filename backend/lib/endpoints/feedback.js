@@ -10,7 +10,12 @@ async function routes(app) {
     const { userId } = req.body;
 
     if (userId) {
-      const [userFeedback] = await app.to(Feedback.findOne({ userId }));
+      const [userFeedbackErr, userFeedback] = await app.to(
+        Feedback.findOne({
+          userId,
+        }),
+      );
+
       if (userFeedback) {
         throw app.httpErrors.conflict("Feedback already submitted");
       }
@@ -29,7 +34,9 @@ async function routes(app) {
     }
 
     reply.code(201);
-    return { success: true };
+    return {
+      success: true,
+    };
   });
 }
 
