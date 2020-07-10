@@ -36,18 +36,15 @@ const ModalComponent = ({
   addTag,
   currentPost,
   user,
-  gtmTagPrefix
+  gtmTagPrefix,
 }) => {
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
 
-  const tagSwtichTabs = (key) => {
-    switch(key) {
-      case "offer": return `_${GTM.offerHelp.prefix}`;
-      case "request": return `_${GTM.requestHelp.prefix}`; 
-      default: return;
-    }
-  }
+  const tagsMap = {
+    offer: `_${GTM.offerHelp.prefix}`,
+    request: `_${GTM.requestHelp.prefix}`,
+  };
 
   return (
     <ModalWrapper
@@ -55,7 +52,6 @@ const ModalComponent = ({
       visible={showModal}
       destroyOnClose={true}
       onCancel={closeModal}
-      id={gtmTagPrefix}
     >
       <Divider />
       <Tabs
@@ -84,9 +80,8 @@ const ModalComponent = ({
           : tabs.map((tab) => (
               <TabPane
                 tab={tab.title}
-                key={tab.key}
+                key={gtmTagPrefix + tagsMap[tab.key]}
                 style={{ fontSize: "1.4rem" }}
-                id={gtmTagPrefix +  tagSwtichTabs(tab.key)}
               >
                 <Form
                   type={tab.key}
@@ -98,7 +93,7 @@ const ModalComponent = ({
                   addTag={addTag}
                   onClose={onClose}
                   setPostId={setPostId}
-                  gtmPrefix={gtmTagPrefix +  tagSwtichTabs(tab.key)}
+                  gtmPrefix={gtmTagPrefix + tagsMap[tab.key]}
                 />
               </TabPane>
             ))}

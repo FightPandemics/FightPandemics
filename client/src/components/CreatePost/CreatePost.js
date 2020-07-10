@@ -73,6 +73,7 @@ const Step2 = ({ user, gtmPrefix }) => {
             gtmPrefix +
             GTM.post.createPost +
             (currentStep - 1) +
+            GTM.post.orgBtn +
             GTM.wizardNav.back
           }
           src={back}
@@ -98,6 +99,7 @@ const Step2 = ({ user, gtmPrefix }) => {
             gtmPrefix +
             GTM.post.createPost +
             (currentStep - 1) +
+            GTM.post.orgBtn +
             GTM.organisation.createNew
           }
         >
