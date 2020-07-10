@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback, useRef } from "react";
+import React, { useReducer, useEffect, useCallback, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -200,6 +200,7 @@ const Feed = (props) => {
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+  const [isOnboarding, setOnboarding] = useState(true);
 
   const {
     filterModal,
@@ -416,6 +417,10 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (applyFilters) {
+      if(isOnboarding) {
+        delete selectedOptions["providers"];
+        setOnboarding(false);
+      }
       loadPosts();
     }
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
