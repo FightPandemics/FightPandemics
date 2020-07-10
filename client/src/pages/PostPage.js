@@ -1,17 +1,19 @@
 import React, { useEffect, useReducer } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { Modal } from "antd";
-import { useHistory, useParams } from "react-router-dom";
 
+// Local
 import EditPost from "components/CreatePost/EditPost";
 import Loader from "components/Feed/StyledLoader";
-import { FEED } from "templates/RouteWithSubRoutes";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg } from "pages/Feed";
-
 import { postReducer, postState } from "hooks/reducers/postReducers";
+
+// Constants
+import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
 import {
   SET_POST,
   FETCH_POST,
@@ -21,6 +23,7 @@ import {
   RESET_LOADMORE,
   SET_LOADMORE,
   SET_FULL_CONTENT,
+  SET_LIKE,
 } from "hooks/actions/postActions";
 
 export const PostContext = React.createContext();
@@ -29,7 +32,6 @@ const PostPage = ({
   user,
   updateComments,
   isAuthenticated,
-  handlePostLike,
 }) => {
   const history = useHistory();
   const { postId } = useParams();
@@ -67,6 +69,44 @@ const PostPage = ({
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: true,
     });
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+
+        if (response.data) {
+          postDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
+        }
+      }
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
+      }
+    }
   };
 
   const handleEditPost = () => {

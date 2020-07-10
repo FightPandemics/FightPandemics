@@ -304,7 +304,9 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async (postId, liked) => {
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
     if (isAuthenticated) {
       const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
       let response = {};
@@ -333,7 +335,10 @@ const Feed = (props) => {
         }
       }
     } else {
-      history.push(LOGIN);
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
+      }
     }
   };
 
