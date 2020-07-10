@@ -7,8 +7,9 @@ async function routes(app) {
   const Feedback = app.mongo.model("Feedback");
 
   app.post("/", { schema: createFeedbackSchema }, async (req, reply) => {
+    // TODO: update backend to keep track of what user submitted feedback and save it in the db (save userid)
+    /* commenting this out for soft launch
     const { userId } = req.body;
-
     if (userId) {
       const [userFeedbackErr, userFeedback] = await app.to(
         Feedback.findOne({
@@ -20,7 +21,7 @@ async function routes(app) {
         throw app.httpErrors.conflict("Feedback already submitted");
       }
     }
-
+    */
     const [err] = await app.to(
       new Feedback({
         ...req.body,
