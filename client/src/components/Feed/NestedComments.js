@@ -144,7 +144,7 @@ const NestedComments = ({
 
   const handleSubmit = async () => {
     let response;
-    const { postId , commentId } = comment;
+    const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
     if (isAuthenticated && comment.author.id === user.id) {
