@@ -45,7 +45,6 @@ const CheckboxItemStyles = styled.div`
     }
   }
   > .text {
-    pointer-events: none;
     color: ${black};
     flex-grow: 1;
     margin-left: 2rem;
