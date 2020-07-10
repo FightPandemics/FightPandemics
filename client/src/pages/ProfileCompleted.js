@@ -11,6 +11,7 @@ import {
   HeadingIcon,
   StyledButton,
 } from "components/CompletedProfile/CompletedProfile";
+import GTM from "constants/gtm-tags";
 
 const ProfileCompleted = ({ user }) => {
   return (
@@ -26,10 +27,20 @@ const ProfileCompleted = ({ user }) => {
       <ProfileCompletedButtonsWrapper>
         {/* TODO: consistently return _id or id or both */}
         <Link to={`${PROFILE}/${user?.id || user?._id}`}>
-          <StyledButton tertiary={true}>View my Profile</StyledButton>
+          <StyledButton
+            tertiary={true}
+            id={GTM.user.profilePrefix + GTM.profile.viewProfile}
+          >
+            View my Profile
+          </StyledButton>
         </Link>
         <Link to={FEED}>
-          <StyledButton tertiary={true}>Continue posting</StyledButton>
+          <StyledButton
+            tertiary={true}
+            id={GTM.user.profilePrefix + GTM.profile.continuePosting}
+          >
+            Continue posting
+          </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>
     </ProfileCompletedWrapper>
