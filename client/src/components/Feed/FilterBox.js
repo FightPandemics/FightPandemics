@@ -4,6 +4,7 @@ import { Modal } from "antd-mobile";
 import SubmitButton from "components/Button/SubmitButton";
 import TextLabel from "components/Typography/TextLabel";
 import { theme, mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
@@ -33,7 +34,14 @@ function capitalizeFirstLetter(header) {
   }
   return header.charAt(0).toUpperCase() + header.slice(1);
 }
-const FilterBox = () => {
+
+const gtmTagsMap = {
+  "offer or request help": GTM.post.requestOffer,
+  type: GTM.post.type,
+  location: GTM.post.location,
+  providers: GTM.post.providers,
+};
+const FilterBox = ({ gtmPrefix }) => {
   const feedContext = useContext(FeedContext);
   const {
     filters,
@@ -51,6 +59,7 @@ const FilterBox = () => {
         size="small"
         icon={<SvgIcon src={downArrow} />}
         onClick={handleFilterModal}
+        id={gtmPrefix + gtmTagsMap[filter.label]}
       >
         {capitalizeFirstLetter(filter.label)}
       </SelectWithIconButton>
@@ -72,7 +81,7 @@ const FilterBox = () => {
         onClose={handleOnClose}
         animationType="slide-up"
       >
-        <FilterAccordion />
+        <FilterAccordion gtmPrefix={gtmPrefix} />
         <div
           className="confirm-buttons"
           style={{
@@ -86,6 +95,7 @@ const FilterBox = () => {
             secondary="true"
             onClick={handleQuit}
             style={{ fontWeight: "normal" }}
+            id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
           >
             Quit filters
           </SubmitButton>
@@ -94,6 +104,7 @@ const FilterBox = () => {
             primary="true"
             onClick={handleOnClose}
             style={{ fontWeight: "normal" }}
+            id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
           >
             Apply filters
           </SubmitButton>
