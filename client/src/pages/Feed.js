@@ -53,6 +53,7 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
+import gtmTags from "../constants/gtm-tags";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -61,7 +62,13 @@ export const isAuthorOrg = (organisations, author) => {
   return isValid;
 };
 
-const gtmTag = (element, prefix) => prefix + GTM.post[element];
+const gtmTagsMap = {
+  ALL: GTM.post.allPost,
+  REQUEST: `_${GTM.requestHelp.prefix}`,
+  OFFER: `_${GTM.offerHelp.prefix}`,
+};
+
+const gtmTag = (tag) => GTM.feed.prefix + tag;
 
 const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 
@@ -585,12 +592,14 @@ const Feed = (props) => {
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
-                  <Menu.Item key={item}>{HELP_TYPE[item]}</Menu.Item>
+                  <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
+                    {HELP_TYPE[item]}
+                  </Menu.Item>
                 ))}
               </MenuWrapper>
               <FiltersWrapper>
                 <button
-                  id={gtmTag("filterPost", GTM.feed.prefix)}
+                  id={gtmTag(GTM.post.filterPost)}
                   onClick={handleShowFilters}
                 >
                   <span>
@@ -601,24 +610,25 @@ const Feed = (props) => {
                 <FiltersList />
               </FiltersWrapper>
             </div>
-            <FiltersSidebar />
+            <FiltersSidebar gtmPrefix={GTM.feed.prefix}/>
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
               <h1>Help Board</h1>
               <button
-                id={gtmTag("createPost", GTM.feed.prefix)}
+                id={gtmTag(GTM.post.createPost)}
                 onClick={handleCreatePost}
               >
                 Create a post
                 <SvgIcon
+                  id={gtmTag(GTM.post.createPost)}
                   src={creatPost}
                   style={{ width: "5rem", height: "5rem" }}
                 />
               </button>
             </HeaderWrapper>
             <div>
-              <FilterBox />
+              <FilterBox gtmPrefix={GTM.feed.prefix} />
             </div>
             <Posts
               isAuthenticated={isAuthenticated}
@@ -633,6 +643,7 @@ const Feed = (props) => {
             )}
             {isLoading ? <Loader /> : <></>}
             <SvgIcon
+              id={gtmTag(GTM.post.createPost)}
               src={creatPost}
               onClick={handleCreatePost}
               className="create-post"
