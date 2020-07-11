@@ -8,6 +8,7 @@ import { Drawer } from "antd";
 import FilterAccordion from "./FilterAccordion";
 import SubmitButton from "components/Button/SubmitButton";
 import { FeedContext } from "pages/Feed";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import { ReactComponent as BackIcon } from "assets/icons/back.svg";
@@ -78,7 +79,7 @@ const DrawerWrapper = styled(Drawer)`
   }
 `;
 
-const FiltersSidebar = () => {
+const FiltersSidebar = ({ gtmPrefix }) => {
   const feedContext = useContext(FeedContext);
   const { handleQuit, handleOnClose, showFilters } = feedContext;
 
@@ -97,7 +98,7 @@ const FiltersSidebar = () => {
         <button onClick={handleOnClose}>
           <BackIcon />
         </button>
-        <FilterAccordion />
+        <FilterAccordion gtmPrefix={gtmPrefix} />
       </div>
       <div
         className="confirm-buttons"
@@ -113,6 +114,7 @@ const FiltersSidebar = () => {
           tertiary="true"
           onClick={handleQuit}
           style={{ fontWeight: "normal" }}
+          id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
         >
           Quit filters
         </SubmitButton>
@@ -122,6 +124,7 @@ const FiltersSidebar = () => {
           primary="true"
           onClick={handleOnClose}
           style={{ fontWeight: "normal" }}
+          id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
         >
           View result
         </SubmitButton>
