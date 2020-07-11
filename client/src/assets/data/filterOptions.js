@@ -34,8 +34,8 @@ export default {
     ],
   },
   lookingFor: {
-    label: "need or give help",
+    label: "offer or request help",
     className: "filter-4",
-    options: ["Need Help", "Give Help"],
+    options: ["Request Help", "Offer Help"],
   },
 };

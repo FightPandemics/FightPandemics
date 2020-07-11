@@ -53,7 +53,6 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
-import gtmTags from "../constants/gtm-tags";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
