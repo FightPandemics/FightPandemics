@@ -20,6 +20,9 @@ import {
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
 } from "../actions/postActions";
+import {
+  DELETE_MODAL_HIDE,
+} from "../actions/feedActions";
 
 export const postState = {
   status: SET_POST,
@@ -40,7 +43,7 @@ export const postState = {
   commentsCount: 0,
   totalCommentCount: 0,
   postLength: 0,
-  deleteModalVisibility: 0,
+  deleteModalVisibility: DELETE_MODAL_HIDE,
   editPostModalVisibility: false,
   showComments: true,
   isLoading: false,

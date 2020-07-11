@@ -42,6 +42,7 @@ import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+import { DELETE_MODAL_POST, DELETE_MODAL_COMMENT, DELETE_MODAL_HIDE } from "hooks/actions/feedActions";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -211,9 +212,9 @@ const Post = ({
   };
 
   const handleDeleteOk = () => {
-    if (deleteModalVisibility === 1) {
+    if (deleteModalVisibility === DELETE_MODAL_POST) {
       postDelete(post);
-    } else if (deleteModalVisibility === 2) {
+    } else if (deleteModalVisibility === DELETE_MODAL_COMMENT) {
       deleteComment(comment)
     }
 
@@ -487,13 +488,13 @@ const Post = ({
             {renderComments}
             <WebModal
               title="Confirm"
-              visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
+              visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE}
               onOk={() => handleDeleteOk() }
               onCancel={handleCancelPostDelete}
               okText="Delete"
               cancelText="Cancel"
             >
-              { (deleteModalVisibility === 1
+              { (deleteModalVisibility === DELETE_MODAL_POST
                 && <p>Are you sure you want to delete the post?</p>)
                 || <p>Are you sure you want to delete the comment?</p>
               }
@@ -560,13 +561,13 @@ const Post = ({
           {renderShareModal}
           <WebModal
             title="Confirm"
-            visible={!!deleteModalVisibility && deleteModalVisibility !== 0}
+            visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE}
             onOk={() => handleDeleteOk() }
             onCancel={handleCancelPostDelete}
             okText="Delete"
             cancelText="Cancel"
           >
-            {deleteModalVisibility === 1
+            {deleteModalVisibility === DELETE_MODAL_POST
               ? <p>Are you sure you want to delete the post?</p>
               : <p>Are you sure you want to delete the comment?</p>
             }

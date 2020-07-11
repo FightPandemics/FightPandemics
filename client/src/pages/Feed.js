@@ -45,6 +45,8 @@ import {
   SET_LOADING,
   SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -347,14 +349,14 @@ const Feed = (props) => {
   const handlePostDelete = () => {
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: 1,
+      visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: 0,
+      visibility: DELETE_MODAL_HIDE,
     });
   };
 

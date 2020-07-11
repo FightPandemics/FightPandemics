@@ -12,6 +12,7 @@ import {
   SET_LOADING,
   SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_HIDE,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -22,7 +23,7 @@ export const postsState = {
   filterType: "ALL",
   isLoading: false,
   loadMore: true,
-  deleteModalVisibility: 0,
+  deleteModalVisibility: DELETE_MODAL_HIDE,
 };
 
 export const feedReducer = (oldState, action) => {
