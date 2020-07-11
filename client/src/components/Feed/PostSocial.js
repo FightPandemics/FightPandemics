@@ -182,8 +182,9 @@ const PostSocial = ({
           </CopyToClipboard>
         </div>
       ) : (
-        <div id={gtmTag("share", GTM.feed.prefix)} className="social-icon">
+        <div className="social-icon">
           <CopyToClipboard
+            id={gtmTag("share", GTM.feed.prefix)}
             text={window.location.href.replace(
               window.location.pathname,
               `/post/${id}`,
