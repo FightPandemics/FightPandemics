@@ -34,6 +34,10 @@ const Copyright = styled.div`
 
 const Policies = styled.div`
   color: ${colors.darkGray};
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     margin-top: 1.2rem;
