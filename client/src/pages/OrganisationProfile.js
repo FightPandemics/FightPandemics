@@ -47,7 +47,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import {
   LINKEDIN_URL,
   TWITTER_URL,
-  APPLESTORE_URL,
+  APPSTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
 import {
@@ -71,10 +71,11 @@ import {
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
+import GTM from "constants/gtm-tags";
 
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
-  appleStore: ["", APPLESTORE_URL],
+  appStore: ["", APPSTORE_URL],
   linkedin: [linkedinBlue, LINKEDIN_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
@@ -222,7 +223,7 @@ const OrganisationProfile = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} />
+                <SocialIcon src={URLS[name][0]} alt={name} />
               </a>
             )
           );
@@ -241,7 +242,13 @@ const OrganisationProfile = () => {
       return (
         <>
           <UserInfoContainer>
-            {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
+            {isOwner && (
+              <EditIcon
+                src={edit}
+                id={GTM.organisation.orgPrefix + GTM.profile.modify}
+                onClick={() => setDrawer(true)}
+              />
+            )}
             <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
             <UserInfoDesktop>
               <NameDiv>
@@ -250,6 +257,7 @@ const OrganisationProfile = () => {
                 {isOwner && (
                   <EditEmptyIcon
                     src={editEmpty}
+                    id={GTM.organisation.orgPrefix + GTM.profile.modify}
                     onClick={() => setDrawer(true)}
                   />
                 )}
@@ -282,6 +290,7 @@ const OrganisationProfile = () => {
                   <CreatePostDiv>Create a post</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
                     onClick={() => setModal(!modal)}
                   />
                 </>
@@ -296,6 +305,7 @@ const OrganisationProfile = () => {
               />
               {isOwner && (
                 <CreatePost
+                  gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={() => setModal(false)}
                   visible={modal}
                   user={user}

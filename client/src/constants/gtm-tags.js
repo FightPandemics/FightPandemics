@@ -18,6 +18,7 @@ module.exports = {
     next: "_NE",
     back: "_BA",
     skip: "_SK",
+    step: "S",
     submit: "_SUB",
     showAnywhere: "_SA",
     enterEmail: "_EE",
@@ -27,7 +28,7 @@ module.exports = {
     shareLocation: "_SL",
   },
   requestHelp: {
-    prefix: "RES",
+    prefix: "RE",
     medical: "_MH",
     other: "_OH",
   },
@@ -38,6 +39,27 @@ module.exports = {
     share: "_SH",
     viewMore: "_VM",
     writeComment: "_WC",
+    createPost: "_CP",
+    orgBtn: "_ORG",
+    individualBtn: "_IN",
+    button: "_PO",
+  },
+  user: {
+    completedPrefix: "PC",
+    profilePrefix: "PR",
+  },
+  organisation: {
+    orgPrefix: "ORG",
+    completedPrefix: "COC",
+    createOrgProfPrefix: "COP",
+    createNew: "_CN",
+  },
+  profile: {
+    createProfile: "_CPR",
+    viewProfile: "_VP",
+    continuePosting: "_CNP",
+    continueToFeed: "_CF",
+    modify: "_MOD",
   },
   sign: {
     inPrefix: "SI",
@@ -52,7 +74,7 @@ module.exports = {
     linkedin: "_LK",
   },
   offerHelp: {
-    prefix: "OFS",
+    prefix: "OF",
     volunteer: "_VO",
     donor: "_DI",
     orgbtn: "_ORG",

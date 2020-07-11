@@ -44,14 +44,22 @@ const Step1 = (props) => {
       <StepTitle>What type of help do you need?</StepTitle>
       <AnswerButton
         id={
-          GTM.requestHelp.prefix + props.currentStep + GTM.requestHelp.medical
+          GTM.requestHelp.prefix +
+          GTM.wizardNav.step +
+          props.currentStep +
+          GTM.requestHelp.medical
         }
         onSelect={() => onSelectAnswer("medical")}
       >
         <strong>Medical:</strong> I have symptoms of COVID-19.
       </AnswerButton>
       <AnswerButton
-        id={GTM.requestHelp.prefix + props.currentStep + GTM.requestHelp.other}
+        id={
+          GTM.requestHelp.prefix +
+          GTM.wizardNav.step +
+          props.currentStep +
+          GTM.requestHelp.other
+        }
         onSelect={() => onSelectAnswer("other")}
       >
         <strong>Other Help:</strong> I need assistance getting
@@ -85,7 +93,9 @@ const Step2 = (props) => {
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
-            gtmPrefix={GTM.requestHelp.prefix + props.currentStep}
+            gtmPrefix={
+              GTM.requestHelp.prefix + GTM.wizardNav.step + props.currentStep
+            }
             location={props.location}
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
@@ -94,6 +104,7 @@ const Step2 = (props) => {
         <ShowAnywhere
           id={
             GTM.requestHelp.prefix +
+            GTM.wizardNav.step +
             props.currentStep +
             GTM.wizardNav.showAnywhere
           }
@@ -140,6 +151,7 @@ const Step3 = (props) => {
           <StyledTextInput
             id={
               GTM.requestHelp.prefix +
+              GTM.wizardNav.step +
               props.currentStep +
               GTM.wizardNav.enterEmail
             }
@@ -155,7 +167,12 @@ const Step3 = (props) => {
           {!valid && <InputError>Email is invalid</InputError>}
         </WizardFormGroup>
         <WizardSubmit
-          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.submit}
+          id={
+            GTM.requestHelp.prefix +
+            GTM.wizardNav.step +
+            props.currentStep +
+            GTM.wizardNav.submit
+          }
           disabled={email === "" || !valid}
           primary="true"
           onClick={onSubmit}
@@ -163,7 +180,12 @@ const Step3 = (props) => {
           Submit
         </WizardSubmit>
         <SkipLink
-          id={GTM.requestHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+          id={
+            GTM.requestHelp.prefix +
+            GTM.wizardNav.step +
+            props.currentStep +
+            GTM.wizardNav.skip
+          }
           onClick={onSubmit}
         >
           Skip

@@ -79,7 +79,12 @@ const Step1 = (props) => {
           {Object.entries(answers).map(([answer, checked], i) => (
             <WizardCheckboxItem
               key={i}
-              id={GTM.offerHelp.prefix + gtmSwitcher(i)}
+              id={
+                GTM.offerHelp.prefix +
+                GTM.wizardNav.step +
+                props.currentStep +
+                gtmSwitcher(i)
+              }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
               text={answer}
@@ -117,7 +122,9 @@ const Step2 = (props) => {
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
             location={props.location}
-            gtmPrefix={GTM.offerHelp.prefix + props.currentStep}
+            gtmPrefix={
+              GTM.offerHelp.prefix + GTM.wizardNav.step + props.currentStep
+            }
             onLocationChange={selectLocationDetection}
             includeNavigator={true}
           />
@@ -126,7 +133,8 @@ const Step2 = (props) => {
           tertiary="true"
           onClick={rejectLocationDetection}
           id={
-            GTM.requestHelp.prefix +
+            GTM.offerHelp.prefix +
+            GTM.wizardNav.step +
             props.currentStep +
             GTM.wizardNav.showAnywhere
           }
@@ -171,6 +179,7 @@ const Step3 = (props) => {
             type="email"
             id={
               GTM.offerHelp.prefix +
+              GTM.wizardNav.step +
               props.currentStep +
               GTM.wizardNav.enterEmail
             }
@@ -186,16 +195,36 @@ const Step3 = (props) => {
         </WizardFormGroup>
         <WizardSubmit
           disabled={email === "" || !valid}
-          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.submit}
+          id={
+            GTM.offerHelp.prefix +
+            GTM.wizardNav.step +
+            props.currentStep +
+            GTM.wizardNav.submit
+          }
           primary="true"
           onClick={onSubmit}
         >
           Submit
         </WizardSubmit>
         <SkipLink
-          id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip}
+          id={
+            GTM.offerHelp.prefix +
+            GTM.wizardNav.step +
+            props.currentStep +
+            GTM.wizardNav.skip
+          }
         >
-          <span id={GTM.offerHelp.prefix + props.currentStep + GTM.wizardNav.skip} onClick={onSubmit}>Skip</span>
+          <span
+            id={
+              GTM.offerHelp.prefix +
+              GTM.wizardNav.step +
+              props.currentStep +
+              GTM.wizardNav.skip
+            }
+            onClick={onSubmit}
+          >
+            Skip
+          </span>
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>

@@ -7,6 +7,7 @@ import { theme, mq } from "../constants/theme";
 import smiley from "../assets/icons/smiley.svg";
 import { Link } from "react-router-dom";
 import { refetchUser } from "actions/authActions";
+import GTM from "constants/gtm-tags";
 
 const Container = styled.div`
   width: 100%;
@@ -81,12 +82,20 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
       <WhiteSpace />
       <WhiteSpace />
       <ButtonsContainer>
-        <StyledLink to={`/organisation/${history.location.state.orgId}`}>
+        <StyledLink
+          id={GTM.organisation.completedPrefix + GTM.profile.viewProfile}
+          to={`/organisation/${history.location.state.orgId}`}
+        >
           View my profile
         </StyledLink>
         <WhiteSpace />
         <WhiteSpace />
-        <StyledLink to="/feed">Check the feed</StyledLink>
+        <StyledLink
+          id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
+          to="/feed"
+        >
+          Check the feed
+        </StyledLink>
       </ButtonsContainer>
     </Container>
   );

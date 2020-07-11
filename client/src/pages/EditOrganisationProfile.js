@@ -20,7 +20,7 @@ import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 import {
-  APPLESTORE_URL,
+  APPSTORE_URL,
   PLAYSTORE_URL,
   LINKEDIN_URL,
   TWITTER_URL,
@@ -40,7 +40,7 @@ import {
 } from "context/OrganisationContext";
 
 const URLS_CONFIG = {
-  appleStore: [
+  appStore: [
     "Link to Apple Store",
     {
       pattern: {
@@ -53,7 +53,7 @@ const URLS_CONFIG = {
         message: "Min. length is 5 characters",
       },
     },
-    APPLESTORE_URL,
+    APPSTORE_URL,
   ],
   playStore: [
     "Link to Google Play",
