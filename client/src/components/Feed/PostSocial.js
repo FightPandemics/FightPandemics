@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 // Local
 // import { FeedContext } from "pages/Feed.js";
@@ -41,27 +42,35 @@ const PostSocial = ({
     }
   }, [id, liked, handlePostLike]);
 
+  const StyledSvg = styled(SvgIcon)`
+    pointer-events: none;
+  `;
+
+  const StyledSpan = styled.span`
+    pointer-events: none;
+  `;
+
   const renderLikeIcon = () => {
     return liked ? (
-      <SvgIcon src={heart} className="social-icon-svg" />
+      <StyledSvg src={heart} className="social-icon-svg" />
     ) : (
-      <SvgIcon src={heartGray} className="social-icon-svg" />
+      <StyledSvg src={heartGray} className="social-icon-svg" />
     );
   };
 
   const renderCommentIcon = () => {
     return showComments || numComments > 0 ? (
-      <SvgIcon src={comment} className="social-icon-svg" />
+      <StyledSvg src={comment} className="social-icon-svg" />
     ) : (
-      <SvgIcon src={commentGray} className="social-icon-svg" />
+      <StyledSvg src={commentGray} className="social-icon-svg" />
     );
   };
 
   const renderShareIcon = () => {
     return shared ? (
-      <SvgIcon src={share} className="social-icon-svg" />
+      <StyledSvg src={share} className="social-icon-svg" />
     ) : (
-      <SvgIcon src={shareGray} className="social-icon-svg" />
+      <StyledSvg src={shareGray} className="social-icon-svg" />
     );
   };
 
@@ -76,10 +85,10 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <span className="total-number">{numLikes}</span>
-          <span className="social-text">
+          <StyledSpan className="total-number">{numLikes}</StyledSpan>
+          <StyledSpan className="social-text">
             {numLikes > 1 ? " Likes" : " Like"}
-          </span>
+          </StyledSpan>
         </div>
       ) : (
         <div
@@ -88,10 +97,10 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <span className="total-number">{numLikes}</span>
-          <span className="social-text">
+          <StyledSpan className="total-number">{numLikes}</StyledSpan>
+          <StyledSpan className="social-text">
             {numLikes > 1 ? " Likes" : " Like"}
-          </span>
+          </StyledSpan>
         </div>
       )}
       <span></span>
@@ -102,10 +111,10 @@ const PostSocial = ({
           onClick={setShowComments}
         >
           {renderCommentIcon()}
-          <div className="total-number">{numComments}</div>
-          <span className="social-text">
+          <StyledSpan className="total-number">{numComments}</StyledSpan>
+          <StyledSpan className="social-text">
             {numComments > 1 ? " Comments" : " Comment"}
-          </span>
+          </StyledSpan>
         </div>
       ) : (
         <>
@@ -126,10 +135,10 @@ const PostSocial = ({
                 onClick={setShowComments}
               >
                 {renderCommentIcon()}
-                <div className="total-number">{numComments}</div>
-                <span className="social-text">
+                <StyledSpan className="total-number">{numComments}</StyledSpan>
+                <StyledSpan className="social-text">
                   {numComments > 1 ? " Comments" : " Comment"}
-                </span>
+                </StyledSpan>
               </div>
             </Link>
           ) : (
@@ -147,10 +156,10 @@ const PostSocial = ({
                 className="social-icon"
               >
                 {renderCommentIcon()}
-                <div className="total-number">{numComments}</div>
-                <span className="social-text">
+                <StyledSpan className="total-number">{numComments}</StyledSpan>
+                <StyledSpan className="social-text">
                   {numComments > 1 ? " Comments" : " Comment"}
-                </span>
+                </StyledSpan>
               </div>
             </Link>
           )}
@@ -168,13 +177,14 @@ const PostSocial = ({
           >
             <span>
               {renderShareIcon()}
-              <span className="social-text">Share</span>
+              <StyledSpan className="social-text">Share</StyledSpan>
             </span>
           </CopyToClipboard>
         </div>
       ) : (
-        <div id={gtmTag("share", GTM.feed.prefix)} className="social-icon">
+        <div className="social-icon">
           <CopyToClipboard
+            id={gtmTag("share", GTM.feed.prefix)}
             text={window.location.href.replace(
               window.location.pathname,
               `/post/${id}`,
@@ -183,7 +193,7 @@ const PostSocial = ({
           >
             <span>
               {renderShareIcon()}
-              <span className="social-text">Share</span>
+              <StyledSpan className="social-text">Share</StyledSpan>
             </span>
           </CopyToClipboard>
         </div>
