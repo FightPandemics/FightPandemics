@@ -89,7 +89,6 @@ const Post = ({
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
-
   const [copied, setCopied] = useState(false);
   const [comment, setComment] = useState([]);
 

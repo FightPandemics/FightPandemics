@@ -11,11 +11,10 @@ const providersGtmTagsMap = {
   2: GTM.providersFilters.company,
   3: GTM.providersFilters.community,
   4: GTM.providersFilters.government,
-  5: GTM.providersFilters.researchAndDevelopment,
-  6: GTM.providersFilters.nonProfit,
-  7: GTM.providersFilters.university,
-  8: GTM.providersFilters.healthCareProvider,
-  9: GTM.providersFilters.others,
+  5: GTM.providersFilters.nonProfit,
+  6: GTM.providersFilters.university,
+  7: GTM.providersFilters.healthCareProvider,
+  8: GTM.providersFilters.others,
 };
 
 const typeGtmTagsMap = {
@@ -27,12 +26,28 @@ const typeGtmTagsMap = {
   5: GTM.typeFilter.wellbeingMental,
   6: GTM.typeFilter.entertainment,
   7: GTM.typeFilter.information,
-  8: GTM.typeFilter.researchAndDevelopment,
-  9: GTM.typeFilter.tech,
-  10: GTM.typeFilter.other,
+  8: GTM.typeFilter.funding,
+  9: GTM.typeFilter.researchAndDevelopment,
+  10: GTM.typeFilter.tech,
+  11: GTM.typeFilter.other,
 };
 
-const providersOrType = (label, idx) => {
+const requestOrOffer = {
+  0: GTM.requestHelp.prefix,
+  1: GTM.offerHelp.prefix,
+};
+
+const gtmTagsMap = {
+  "offer or request help": GTM.post.requestOffer,
+  type: GTM.post.type,
+  location: GTM.post.location,
+  providers: GTM.post.providers,
+};
+
+const filterOps = (label, idx) => {
+  if (label === "offer or request help") {
+    return `_${requestOrOffer[idx]}`;
+  }
   return label === "providers"
     ? GTM.post.providers + providersGtmTagsMap[idx]
     : GTM.post.type + typeGtmTagsMap[idx];
@@ -78,16 +93,12 @@ const FilterAccord = ({ gtmPrefix }) => {
             header={capitalizeFirstLetter(filter.label)}
             className={filter.className}
             key={idx}
-            id={
-              filter.label === "providers"
-                ? gtmTag(GTM.post.providers)
-                : gtmTag(GTM.post.type)
-            }
+            id={gtmTag(gtmTagsMap[filter.label])}
           >
             {Object.values(filter.options).map((option, idx) => {
               return (
                 <ButtonTag
-                  id={gtmPrefix + providersOrType(filter.label, idx)}
+                  id={gtmPrefix + filterOps(filter.label, idx)}
                   key={idx}
                   onClick={handleOption(filter.label, option)}
                   className={

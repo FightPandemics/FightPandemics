@@ -26,7 +26,6 @@ const PostSocial = ({
   showComments,
   numLikes,
   numComments,
-  numShares,
   onCopyLink,
   postId,
   setShowComments,
@@ -143,7 +142,10 @@ const PostSocial = ({
                 state: { from: window.location.href },
               }}
             >
-              <div className="social-icon">
+              <div
+                id={gtmTag("comment", GTM.feed.prefix)}
+                className="social-icon"
+              >
                 {renderCommentIcon()}
                 <div className="total-number">{numComments}</div>
                 <span className="social-text">
