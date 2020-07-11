@@ -7,7 +7,7 @@
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.16",
     "moment": "^2.25.3",
     "polished": "^3.6.2",
     "react": "^16.13.1",
