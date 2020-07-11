@@ -24,6 +24,10 @@ import {
   SET_FULL_CONTENT,
   SET_LIKE,
 } from "hooks/actions/postActions";
+import {
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+  DELETE_MODAL_COMMENT } from "hooks/actions/feedActions";
 
 export const PostContext = React.createContext();
 
@@ -150,21 +154,21 @@ const PostPage = ({
   const handlePostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: 1,
+      visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: 0,
+      visibility: DELETE_MODAL_HIDE,
     });
   };
 
   const handleCommentDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: 2,
+      visibility: DELETE_MODAL_COMMENT,
     });
   };
 
@@ -180,7 +184,7 @@ const PostPage = ({
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
         "deleteModalVisibility",
-        0,
+        DELETE_MODAL_HIDE,
       );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}`;
