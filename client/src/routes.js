@@ -20,7 +20,6 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import PostPage from "./pages/PostPage";
-import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
@@ -189,10 +188,6 @@ const routes = [
     props: {
       loggedInOnly: false,
     },
-  },
-  {
-    path: "/create-post",
-    component: CreatePost,
   },
   {
     path: "/create-profile",

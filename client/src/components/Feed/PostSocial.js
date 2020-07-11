@@ -37,7 +37,7 @@ const PostSocial = ({
 
     if (id === likePost) {
       if (likePost) {
-        handlePostLike(likePost, liked);
+        handlePostLike(likePost, liked, false);
       }
     }
   }, [id, liked, handlePostLike]);
@@ -72,7 +72,7 @@ const PostSocial = ({
   const renderPostSocialIcons = (
     <>
       {postId ? (
-        <div id={gtmTag("like")} className="social-icon">
+        <div id={gtmTag("like")} className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
           <span className="social-text">
@@ -80,7 +80,7 @@ const PostSocial = ({
           </span>
         </div>
       ) : (
-        <div className="social-icon" onClick={() => handlePostLike(id, liked)}>
+        <div className="social-icon" onClick={() => handlePostLike(id, liked, true)}>
           {renderLikeIcon()}
           <span className="total-number">{numLikes}</span>
           <span className="social-text">
@@ -147,8 +147,8 @@ const PostSocial = ({
       <span></span>
 
       {postId ? (
-        <div id={gtmTag("share")} className="social-icon">
-          <CopyToClipboard text={url} onCopy={onCopyLink}>
+        <div className="social-icon">
+          <CopyToClipboard id={gtmTag("share")} text={url} onCopy={onCopyLink}>
             <span>
               {renderShareIcon()}
               <span className="social-text">Share</span>

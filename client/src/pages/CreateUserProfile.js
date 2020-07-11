@@ -37,6 +37,7 @@ import {
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER } from "../constants/action-types";
+import GTM from "constants/gtm-tags";
 
 const StyledUnderlineLink = styled(Link)`
   text-decoration-line: underline;
@@ -407,6 +408,7 @@ const CreateProfile = ({ email, history }) => {
               disabled={!formState.isValid || !(privacy && conditions)}
               primary="true"
               onClick={handleSubmit(onSubmit)}
+              id={GTM.user.profilePrefix + GTM.profile.createProfile}
             >
               {createUserFormState.loading
                 ? "Creating Profile..."

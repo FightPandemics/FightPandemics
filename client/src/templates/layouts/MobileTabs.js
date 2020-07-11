@@ -51,7 +51,7 @@ const tabs = [
   {
     title: (
       <CustomLink activeStyle={ActiveLinkStyles} to="/feed">
-        Feed
+        Help Board
       </CustomLink>
     ),
   },

@@ -156,8 +156,9 @@ const OptionWrapper = styled.div`
   }
 `;
 
-const Option = ({ img, text, onClick, type }) => (
+const Option = ({ img, text, onClick, type, gtmTag}) => (
   <OptionWrapper
+    id={gtmTag}
     onClick={() => onClick(text)}
     style={{
       backgroundColor: type === text.toLowerCase() && `${colors.lightGray}`,

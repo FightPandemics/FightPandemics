@@ -71,6 +71,7 @@ import {
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
+import GTM from "constants/gtm-tags";
 
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
@@ -241,7 +242,13 @@ const OrganisationProfile = () => {
       return (
         <>
           <UserInfoContainer>
-            {isOwner && <EditIcon src={edit} onClick={() => setDrawer(true)} />}
+            {isOwner && (
+              <EditIcon
+                src={edit}
+                id={GTM.organisation.orgPrefix + GTM.profile.modify}
+                onClick={() => setDrawer(true)}
+              />
+            )}
             <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
             <UserInfoDesktop>
               <NameDiv>
@@ -250,6 +257,7 @@ const OrganisationProfile = () => {
                 {isOwner && (
                   <EditEmptyIcon
                     src={editEmpty}
+                    id={GTM.organisation.orgPrefix + GTM.profile.modify}
                     onClick={() => setDrawer(true)}
                   />
                 )}
@@ -282,6 +290,7 @@ const OrganisationProfile = () => {
                   <CreatePostDiv>Create a post</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
                     onClick={() => setModal(!modal)}
                   />
                 </>
@@ -296,6 +305,7 @@ const OrganisationProfile = () => {
               />
               {isOwner && (
                 <CreatePost
+                  gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={() => setModal(false)}
                   visible={modal}
                   user={user}

@@ -11,8 +11,8 @@ import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
-import GTM from "constants/gtm-tags";
 import { theme, mq } from "../constants/theme";
+import GTM from "constants/gtm-tags";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -51,6 +51,13 @@ const NavLinks = styled.div`
   align-self: flex-end;
   padding-top: 1rem;
   white-space: nowrap;
+  padding-top: 2rem;
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding-top: 0.4rem;
+  }
   ul {
     list-style-type: none;
     display: flex;
@@ -74,6 +81,7 @@ const NavLinks = styled.div`
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
+      padding: 0 1rem;
       a:not(.registerLink) {
         color: ${colors.darkerGray};
         text-decoration: none;
@@ -102,7 +110,13 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
+export default ({
+  authLoading,
+  onMenuClick,
+  isAuthenticated,
+  user,
+  onFeedbackIconClick,
+}) => {
   const menu = (
     <Menu>
       <Menu.Item>
@@ -128,6 +142,8 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
+      <Menu.Item onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
@@ -188,9 +204,12 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
                 Join Now
               </NavLink>
             </li>
-            <Link id={GTM.nav.prefix + GTM.nav.feedBack} to="/feed">
+            <button
+              id={GTM.nav.prefix + GTM.nav.feedBack}
+              onClick={onFeedbackIconClick}
+            >
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-            </Link>
+            </button>
           </>
         )}
       </>

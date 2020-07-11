@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { theme, mq } from "constants/theme";
-import StyledCheckbox from "components/Input/Checkbox";
+import Checkbox from "components/Input/Checkbox";
 const { white, lightGray, royalBlue, black } = theme.colors;
 
 export const WizardCheckboxWrapper = styled.div`
@@ -59,6 +59,10 @@ const CheckboxItemStyles = styled.div`
     border: 0.1rem solid ${lightGray};
     border-radius: 0.5rem;
   }
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  pointer-events: none;
 `;
 
 export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {

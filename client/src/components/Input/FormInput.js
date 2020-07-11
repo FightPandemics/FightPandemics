@@ -11,15 +11,16 @@ const { colors } = theme;
 const FormInput = styled.input`
   border: none;
   box-shadow: none;
+  color: ${colors.black};
   flex-grow: 1;
   padding-bottom: 0.5rem;
-  color: ${colors.black};
 `;
 
 const OuterWrapper = styled.div`
   margin: 1rem auto;
-  width: 100%;
   position: relative;
+  text-align: left;
+  width: 100%;
 `;
 
 const InputWrapper = styled.div`
