@@ -42,7 +42,14 @@ import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+import {
+  SET_EDIT_POST_MODAL_VISIBILITY,
+} from "hooks/actions/postActions";
+import {
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
 import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -103,6 +110,9 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
+  const {
+    deleteModalVisibility,
+  } = postsState;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -163,6 +173,20 @@ const Profile = ({
         });
       }
     }
+  };
+
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
   };
 
   const handleEditPost = () => {
@@ -277,8 +301,11 @@ const Profile = ({
           <Activity
             filteredPosts={postsState.posts}
             user={user}
-            handlePostDelete={postDelete}
+            postDelete={postDelete}
+            handlePostDelete={handlePostDelete}
             handleEditPost={handleEditPost}
+            deleteModalVisibility={deleteModalVisibility}
+            handleCancelPostDelete={handleCancelPostDelete}
           />
           {ownUser && (
             <CreatePost

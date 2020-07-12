@@ -67,6 +67,11 @@ import {
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
+import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
@@ -106,6 +111,10 @@ const OrganisationProfile = () => {
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
+
+  const {
+    deleteModalVisibility,
+  } = postsState;
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -186,6 +195,20 @@ const OrganisationProfile = () => {
         });
       }
     }
+  };
+
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
   };
 
   const handleEditPost = () => {
@@ -300,8 +323,11 @@ const OrganisationProfile = () => {
               <Activity
                 filteredPosts={postsState.posts}
                 user={user}
-                handlePostDelete={postDelete}
+                postDelete={postDelete}
+                handlePostDelete={handlePostDelete}
                 handleEditPost={handleEditPost}
+                deleteModalVisibility={deleteModalVisibility}
+                handleCancelPostDelete={handleCancelPostDelete}
               />
               {isOwner && (
                 <CreatePost

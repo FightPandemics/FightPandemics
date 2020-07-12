@@ -92,6 +92,7 @@ const Post = ({
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [copied, setCopied] = useState(false);
+  const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
 
   const AvatarName =
@@ -212,6 +213,11 @@ const Post = ({
     handleCommentDelete();
   };
 
+  const handleDelete = () => {
+    setToDelete(post._id);
+    onChange();
+  }
+
   const handleDeleteOk = () => {
     if (deleteModalVisibility === DELETE_MODAL_POST) {
       postDelete(post);
@@ -219,6 +225,7 @@ const Post = ({
       deleteComment(comment)
     }
 
+    setToDelete('');
     handleCancelPostDelete();
   };
 
@@ -526,7 +533,7 @@ const Post = ({
                   user?.id === post?.author?.id ||
                   isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
-                    onChange={onChange}
+                    onChange={handleDelete}
                     onSelect={onSelect}
                     post={post}
                     user={user}
@@ -569,7 +576,7 @@ const Post = ({
           {renderShareModal}
           <WebModal
             title="Confirm"
-            visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE}
+            visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE && toDelete === post._id}
             onOk={() => handleDeleteOk() }
             onCancel={handleCancelPostDelete}
             okText="Delete"
