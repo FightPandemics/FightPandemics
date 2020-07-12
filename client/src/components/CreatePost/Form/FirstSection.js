@@ -7,15 +7,14 @@ import { theme } from "constants/theme";
 const { black } = theme.colors;
 
 const TitleInput = styled(Input)`
-  .ant-modal-root .ant-modal-content .ant.modal-body & {
+  .ant-modal-root .ant-modal-content .ant-modal-body & {
     font-size: 1.5rem;
     color: ${black};
-    border: solid 0.1rem;
   }
 `;
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
-  .ant-modal-root .ant-modal-content .ant.modal-body & {
+  .ant-modal-root .ant-modal-content .ant-modal-body & {
     border-top: none;
     font-size: 1.2rem;
     resize: none;
