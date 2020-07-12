@@ -310,6 +310,7 @@ const NavigationLayout = (props) => {
       });
     }
   };
+
   const renderThanksModal = () => (
     <ThanksModal
       onClose={() => closeModalandReset("thanksModal")}
