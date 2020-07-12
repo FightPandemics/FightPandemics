@@ -323,7 +323,7 @@ const NavigationLayout = (props) => {
         after the COVID-19 pandemic.
       </p>
       <Link to="/">
-        <Logo src={logo} alt="Fight Pandemics logo" />
+        <Logo src={logo} alt="FightPandemics logo" />
       </Link>
     </ThanksModal>
   );
