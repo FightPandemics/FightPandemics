@@ -46,6 +46,7 @@ import {
   SET_EDIT_POST_MODAL_VISIBILITY,
 } from "hooks/actions/postActions";
 import {
+  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
@@ -136,9 +137,14 @@ const Profile = ({
         const res = await axios.get(
           `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
         );
+        const loadedPosts = res?.data?.length && res.data.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+
         postsDispatch({
           type: SET_POSTS,
-          posts: res.data,
+          posts: loadedPosts,
         });
       }
     } catch (err) {
@@ -200,6 +206,37 @@ const Profile = ({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
+    }
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+    let response = {};
+
+    if (user) {
+      if (liked) {
+        try {
+          response = await axios.delete(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      } else {
+        try {
+          response = await axios.put(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      }
+
+      if (response.data) {
+        postsDispatch({
+          type: SET_LIKE,
+          postId,
+          count: response.data.likesCount,
+        });
+      }
     }
   };
 
@@ -306,6 +343,7 @@ const Profile = ({
             handleEditPost={handleEditPost}
             deleteModalVisibility={deleteModalVisibility}
             handleCancelPostDelete={handleCancelPostDelete}
+            handlePostLike={handlePostLike}
           />
           {ownUser && (
             <CreatePost

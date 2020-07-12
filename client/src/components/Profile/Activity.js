@@ -10,6 +10,7 @@ const Activity = ({
   handleCancelPostDelete,
   postDelete,
   deleteModalVisibility,
+  handlePostLike,
 }) => {
   const posts = Object.entries(filteredPosts);
   return (
@@ -28,6 +29,7 @@ const Activity = ({
               user={user}
               handleCancelPostDelete={handleCancelPostDelete}
               deleteModalVisibility={deleteModalVisibility}
+              handlePostLike={handlePostLike}
             />
           ))}
     </div>
