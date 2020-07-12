@@ -488,11 +488,9 @@ const Post = ({
               <p>Are you sure you want to delete the post?</p>
             </WebModal>
           </StyledPostPagePostCard>
-          {showComments && (
-            <StyledButtonWizard
-              nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
-            />
-          )}
+          <StyledButtonWizard
+            nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
+          />
         </>
       ) : (
         //Post in feed.
