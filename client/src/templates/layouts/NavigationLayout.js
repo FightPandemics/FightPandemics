@@ -310,7 +310,6 @@ const NavigationLayout = (props) => {
       });
     }
   };
-
   const renderThanksModal = () => (
     <ThanksModal
       onClose={() => closeModalandReset("thanksModal")}
@@ -323,8 +322,9 @@ const NavigationLayout = (props) => {
         Your input means a lot and helps us improve our services during and
         after the COVID-19 pandemic.
       </p>
-
-      <Logo src={logo} alt="FightPandemics logo" />
+      <Link to="/">
+        <Logo src={logo} alt="Fight Pandemics logo" />
+      </Link>
     </ThanksModal>
   );
 
