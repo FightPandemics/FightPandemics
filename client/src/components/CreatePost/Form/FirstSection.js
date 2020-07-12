@@ -5,7 +5,6 @@ import Head from "./Head";
 import { Section } from "../StyledModal";
 import { theme } from "constants/theme";
 const { black } = theme.colors;
-
 const TitleInput = styled(Input)`
   font-size: 1.5rem !important;
   color: ${black} !important;
