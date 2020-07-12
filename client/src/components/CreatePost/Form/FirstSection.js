@@ -4,20 +4,24 @@ import styled from "styled-components";
 import Head from "./Head";
 import { Section } from "../StyledModal";
 import { theme } from "constants/theme";
-
 const { black } = theme.colors;
+
 const TitleInput = styled(Input)`
-  font-size: 1.5rem !important;
-  color: ${black} !important;
-  border: solid 0.1rem;
+  .ant-modal-root .ant-modal-content .ant.modal-body & {
+    font-size: 1.5rem;
+    color: ${black};
+    border: solid 0.1rem;
+  }
 `;
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
-  border-top: none;
-  font-size: 1.2rem !important;
-  resize: none;
-  overflow-y: scroll;
-  font-weight: 450 !important;
+  .ant-modal-root .ant-modal-content .ant.modal-body & {
+    border-top: none;
+    font-size: 1.2rem;
+    resize: none;
+    overflow-y: scroll;
+    font-weight: 450;
+  }
 `;
 
 const First = ({
