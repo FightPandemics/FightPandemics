@@ -89,9 +89,9 @@ const MapContainer = styled.div`
 
 const ShareLocationContainer = styled.div`
   padding: 6rem;
-  border-radius: 2px;
+  border-radius: 0.2rem;
   margin-top: 4rem;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 0.1rem solid rgba(0, 0, 0, 0.12);
   background-color: ${white};
   h1 {
     font-size: ${xxlarge};

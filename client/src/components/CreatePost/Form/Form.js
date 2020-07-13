@@ -7,6 +7,7 @@ import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
 import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
+import GTM from "constants/gtm-tags";
 
 const { shareWith, expires, helpTypes } = createPostSettings;
 
@@ -29,7 +30,7 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type, setPostId }) => {
+const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
@@ -81,7 +82,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId }) => {
     populateErrors();
 
     const payload = formDataToPost(formData);
-    if (form.organizationId) payload.organizationId = form.organizationId;
+    if (form.organisationId) payload.organisationId = form.organisationId;
 
     if (!errors.length) {
       try {
@@ -122,6 +123,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId }) => {
             !formData.description ||
             formData.tags.length === 0
           }
+          id={gtmPrefix + GTM.post.button}
         >
           Post
         </Submit>

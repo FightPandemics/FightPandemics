@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import backArrow from "assets/icons/back-arrow.svg";
+import { FEED } from "../../templates/RouteWithSubRoutes";
 import {
   StyledWizardNav,
   BackButton,
   BackText,
 } from "components/StepWizard/WizardNav";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import StepWizard from "react-step-wizard";
 import SvgIcon from "components/Icon/SvgIcon";
 import { mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 const desktopBreakpoint = mq.tablet.narrow.maxWidth;
 
 export const StyledButtonWizard = styled(StepWizard)`
@@ -39,15 +41,25 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 `;
 
-const WizardFormNav = () => (
-  <StyledWizardNav>
-    <Link to={"/feed"}>
-      <BackButton>
-        <SvgIcon src={backArrow} title="Navigate to feed page" />
+const WizardFormNav = ({ gtmPrefix = "" }) => {
+  const history = useHistory();
+  return (
+    <StyledWizardNav>
+      <BackButton
+        onClick={() => {
+          if (history?.location?.state?.from) {
+            history.goBack();
+          } else {
+            history.push(FEED);
+          }
+        }}
+        id={gtmPrefix + GTM.wizardNav.back}
+      >
+        <SvgIcon src={backArrow} title="Navigate to previous page or feed" />
         <BackText>Back</BackText>
       </BackButton>
-    </Link>
-  </StyledWizardNav>
-);
+    </StyledWizardNav>
+  );
+};
 
 export default WizardFormNav;

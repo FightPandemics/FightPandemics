@@ -4,6 +4,9 @@ const {
   config: { sendgrid: sendgridConfig },
 } = require("../../config");
 
+const SENDGRID_CONTACTS_API_URL =
+  "https://api.sendgrid.com/v3/marketing/contacts";
+
 const populateSendgridContactsObj = (body) => {
   return {
     contacts: [
@@ -26,7 +29,7 @@ const getOps = (body) => {
       Authorization: `Bearer ${sendgridConfig.apiKey}`,
     },
     data: JSON.stringify(populateSendgridContactsObj(body)),
-    url: sendgridConfig.contactsApiUrl,
+    url: SENDGRID_CONTACTS_API_URL,
   };
 };
 

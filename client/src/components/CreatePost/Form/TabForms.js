@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import { Divider, ModalWrapper } from "components/CreatePost/StyledModal";
 import Form from "components/CreatePost/Form/Form";
 import EditForm from "components/CreatePost/Form/EditForm";
+import GTM from "constants/gtm-tags";
 
 const { TabPane } = Tabs;
 
@@ -22,9 +23,7 @@ const tabs = [
 const ModalComponent = ({
   isAuthenticated,
   setCurrentStep,
-  onCancel,
   onClose,
-  onSelect,
   loadPost,
   handleEdit,
   fullContent,
@@ -33,15 +32,19 @@ const ModalComponent = ({
   handleEditPost,
   handleFormData,
   renderError,
-  setExpiration,
-  setShareWith,
   setPostId,
   addTag,
   currentPost,
   user,
+  gtmTagPrefix,
 }) => {
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
+
+  const tagsMap = {
+    offer: `_${GTM.offerHelp.prefix}`,
+    request: `_${GTM.requestHelp.prefix}`,
+  };
 
   return (
     <ModalWrapper
@@ -75,7 +78,11 @@ const ModalComponent = ({
               </TabPane>
             ))
           : tabs.map((tab) => (
-              <TabPane tab={tab.title} key={tab.key}>
+              <TabPane
+                tab={tab.title}
+                key={gtmTagPrefix + tagsMap[tab.key]}
+                style={{ fontSize: "1.4rem" }}
+              >
                 <Form
                   type={tab.key}
                   textData={{ question: tab.question }}
@@ -86,6 +93,7 @@ const ModalComponent = ({
                   addTag={addTag}
                   onClose={onClose}
                   setPostId={setPostId}
+                  gtmPrefix={gtmTagPrefix + tagsMap[tab.key]}
                 />
               </TabPane>
             ))}

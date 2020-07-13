@@ -73,6 +73,8 @@ export const Title = styled.span`
 `;
 
 export const ModalWrapper = styled(Modal)`
+  width: 52rem !important;
+
   .ant-modal-content {
     max-width: 56.4rem;
     border-radius: 1rem;
@@ -110,6 +112,8 @@ export const ModalWrapper = styled(Modal)`
   }
 
   .ant-tabs-nav {
+    font-size: 1.4rem;
+
     .ant-tabs-tab {
       padding: 0 0 1.2rem 0;
       color: ${colors.darkerGray};

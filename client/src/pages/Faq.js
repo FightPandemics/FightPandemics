@@ -89,13 +89,13 @@ const Faq = () => {
               How can I post an offer or request for help on FightPandemics?
             </summary>
             <p>
-              As a registered user you have unlimited access to view and create
-              posts and comments on FightPandemics platform.
+              When you join the community, you will have unlimited access to
+              view and create posts and comments on FightPandemics platform.
             </p>
             <p>
-              To sign up as a user click the menu button and select the
-              "Register/Log in" option. There you will be able to sign up with
-              your email or social media credentials.
+              To join the community as a user, click the "Menu" button and
+              select the "Join Now/Sign In" option. There you will be able to
+              join with your choice of email or social media credentials.
             </p>
             <p>
               Once you have completed your profile, select the menu button,
@@ -197,7 +197,7 @@ const Faq = () => {
             <p>
               From the homepage, select "Give help" to see all the posts created
               by users asking for help and filter the results by location and
-              type. You need to be logged in to reach out to them. You can also
+              type. You need to be signed in to reach out to them. You can also
               create your own postings describing the help you're able to offer.
             </p>
           </details>
@@ -209,7 +209,8 @@ const Faq = () => {
             </summary>
             <p>
               You do not need to be signed to view any of the postings on the
-              feed, but you will need to sign in to comment or like a post.
+              help board, but you will need to sign in to comment or like a
+              post.
             </p>
           </details>
         </AnswerContainer>
@@ -230,7 +231,7 @@ const Faq = () => {
             </summary>
             <p>
               Yes, once you are signed up as an individual, you can create one
-              or multiple organizational profile linked to your account.
+              or multiple organisational profile linked to your account.
             </p>
           </details>
         </AnswerContainer>
@@ -241,7 +242,8 @@ const Faq = () => {
             </summary>
             <p>
               When you create posts either offering or seeking help, your name/
-              your organisation's name is displayed to anyone viewing the feed.
+              your organisation's name is displayed to anyone viewing the help
+              board.
             </p>
           </details>
         </AnswerContainer>
@@ -365,15 +367,15 @@ const Faq = () => {
 
         <AnswerContainer>
           <details>
-            <summary>How do I sign up?</summary>
+            <summary>How do I join?</summary>
             <p>
-              To sign up as a registered user, click the "Menu" button and
-              select "Register/Log in". There you will be able to sign up with
-              your choice of email or social media credentials.
+              To join the community as a user, click the "Menu" button and
+              select the "Join Now/Sign In" option. There you will be able to
+              join with your choice of email or social media credentials.
             </p>
             <p>
-              As a registered user, you have unlimited access to view and create
-              posts and comments on the FightPandemics platform.
+              When you join the community, you will have unlimited access to
+              view and create posts and comments on FightPandemics platform.
             </p>
           </details>
         </AnswerContainer>
@@ -386,8 +388,8 @@ const Faq = () => {
               An organisational profile is tied to your individual profile. Once
               you create your individual profile, you can add as many
               organisational profiles as you'd like tied to that individual
-              profile. Your login will continue to be the email and password you
-              used to sign up for the individual profile.
+              profile. Your sign in credentials will continue to be the email
+              and password you used to join for the individual profile.
             </p>
           </details>
         </AnswerContainer>
@@ -401,9 +403,9 @@ const Faq = () => {
               profile. In order to create create an organisational profile, you
               are required to have an individual profile. Once you create your
               individual profile, you can add as many organisation profiles as
-              you'd like, tied to that individual profile. Your login will
-              continue to be the email and password you used to sign up for the
-              individual profile.
+              you'd like, tied to that individual profile. Your sign in
+              credentials will continue to be the email and password you used to
+              join for the individual profile.
             </p>
           </details>
         </AnswerContainer>
@@ -411,7 +413,7 @@ const Faq = () => {
           <details>
             <summary>How can I reset my password?</summary>
             <p>
-              Click on "Login" from the homepage and then click on "Forgot
+              Click on "Sign In" from the homepage and then click on "Forgot
               password" and follow the instructions
             </p>
           </details>
@@ -421,8 +423,8 @@ const Faq = () => {
             <summary>Why is my password not valid?</summary>
             <p>
               Please check if your password has at least 8 letters. If you
-              already have an account but forgot your login password, click on
-              "Login" from the homepage and then go to "Forgot password".
+              already have an account but forgot your sign in password, click on
+              "Sign In" from the homepage and then go to "Forgot password".
             </p>
           </details>
         </AnswerContainer>

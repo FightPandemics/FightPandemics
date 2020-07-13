@@ -4,16 +4,15 @@ import axios from "axios";
 import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
 import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
-import {
-  translateISOTimeStamp,
-  translateISOTimeTitle,
-} from "assets/data/formToPostMappings";
+import { translateISOTimeTitle } from "assets/data/formToPostMappings";
+import { authorProfileLink } from "./utils";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -160,7 +159,7 @@ const NestedComments = ({
             "commentId",
             commentId,
             "comment",
-            response.data.content,
+            response.data,
           );
           setEditComment(!editComment);
         }
@@ -183,13 +182,21 @@ const NestedComments = ({
 
   const commentActions = [
     <Space size="small">
-      <StyledCommentButton size="small"ghost  onClick={() => toggleEditComment()}>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => toggleEditComment()}
+      >
         Edit
       </StyledCommentButton>
-      <StyledCommentButton size="small" ghost onClick={() => handleDeleteComment()}>
+      <StyledCommentButton
+        size="small"
+        ghost
+        onClick={() => handleDeleteComment()}
+      >
         Delete
       </StyledCommentButton>
-    </Space>
+    </Space>,
   ];
 
   const editCommentContent = (
@@ -230,12 +237,18 @@ const NestedComments = ({
       {comment ? (
         <StyledComment
           datetime={
-            <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
-              <span>{translateISOTimeStamp(comment.createdAt)}</span>
-            </Tooltip>
+            <>
+              <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
+                <span>
+                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
+                </span>
+              </Tooltip>
+            </>
           }
-          author={<span>{comment.author.name}</span>}
-          avatar={renderAvatar}
+          author={
+            <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
+          }
+          avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (

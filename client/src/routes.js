@@ -2,11 +2,11 @@ import Home from "./pages/Home";
 import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import AboutUs from "./pages/AboutUs";
-import CreateOrganizationProfile from "./pages/CreateOrganizationProfile";
+import CreateOrganisationProfile from "./pages/CreateOrganisationProfile";
 import OrgProfileComplete from "./pages/OrgProfileComplete";
-import OrganizationProfile from "./pages/OrganizationProfile";
-import EditOrganizationProfile from "./pages/EditOrganizationProfile";
-import EditOrganizationAccount from "./pages/EditOrganizationAccount";
+import OrganisationProfile from "./pages/OrganisationProfile";
+import EditOrganisationProfile from "./pages/EditOrganisationProfile";
+import EditOrganisationAccount from "./pages/EditOrganisationAccount";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -20,7 +20,6 @@ import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
 import PostPage from "./pages/PostPage";
-import CreatePost from "./pages/CreatePost";
 import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
@@ -87,31 +86,31 @@ const routes = [
     component: AboutUs,
   },
   {
-    path: "/create-organization-profile",
-    component: CreateOrganizationProfile,
+    path: "/create-organisation-profile",
+    component: CreateOrganisationProfile,
     layout: "logo",
     props: {
       loggedInOnly: true,
     },
   },
   {
-    path: "/create-organization-complete",
+    path: "/create-organisation-complete",
     component: OrgProfileComplete,
   },
   {
-    path: "/organization/:id",
-    component: OrganizationProfile,
+    path: "/organisation/:id",
+    component: OrganisationProfile,
   },
   {
-    path: "/edit-organization-account",
-    component: EditOrganizationAccount,
+    path: "/edit-organisation-account",
+    component: EditOrganisationAccount,
     props: {
       loggedInOnly: true,
     },
   },
   {
-    path: "/edit-organization-profile",
-    component: EditOrganizationProfile,
+    path: "/edit-organisation-profile",
+    component: EditOrganisationProfile,
     props: {
       loggedInOnly: true,
     },
@@ -189,10 +188,6 @@ const routes = [
     props: {
       loggedInOnly: false,
     },
-  },
-  {
-    path: "/create-post",
-    component: CreatePost,
   },
   {
     path: "/create-profile",

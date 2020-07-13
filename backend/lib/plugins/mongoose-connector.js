@@ -6,7 +6,7 @@ require("../models/Comment");
 require("../models/Feedback");
 require("../models/Location");
 require("../models/IndividualUser");
-require("../models/OrganizationUser");
+require("../models/OrganisationUser");
 require("../models/Post");
 require("../models/User");
 

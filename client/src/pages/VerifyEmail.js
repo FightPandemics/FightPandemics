@@ -50,7 +50,7 @@ const VerifyEmailRightContainer = styled.div`
 const VerifyDirectionsContainer = styled.div`
   .directions-header {
     font-family: Poppins;
-    font-size: 26px;
+    font-size: 2.6rem;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -59,9 +59,9 @@ const VerifyDirectionsContainer = styled.div`
   }
 
   .directions-text {
-    width: 406px;
+    width: 40.6rem;
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

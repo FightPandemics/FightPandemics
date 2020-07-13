@@ -56,8 +56,6 @@ const SubmitButton = styled(Button).attrs(({ size, inline }) => {
       background-color: #8e87f4 !important;
       color: ${button.color} !important;
     `}
-  width: 100%;
-  height: 47px;
 `;
 
 export default SubmitButton;

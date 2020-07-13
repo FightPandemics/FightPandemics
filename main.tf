@@ -43,6 +43,14 @@ data "aws_ssm_parameter" "google_maps_api_key" {
   name = "/fp/googlemaps/key"
 }
 
+data "aws_ssm_parameter" "sendgrid_api_key" {
+  name = "/fp/sendgrid/key"
+}
+
+data "aws_ssm_parameter" "sendgrid_contact_list_id" {
+  name = "/fp/sendgrid/contact_list_id"
+}
+
 data "aws_ssm_parameter" "sentry_dsn" {
   name = "/fp/sentry/dsn"
 }
@@ -116,6 +124,14 @@ module "main" {
     {
       name  = "GOOGLE_MAPS_API_KEY"
       value = data.aws_ssm_parameter.google_maps_api_key.value
+    },
+    {
+      name  = "SENDGRID_API_KEY"
+      value = data.aws_ssm_parameter.sendgrid_api_key.value
+    },
+    {
+      name  = "SENDGRID_CONTACTS_LIST_ID"
+      value = data.aws_ssm_parameter.sendgrid_contact_list_id.value
     },
     {
       name  = "NODE_ENV"

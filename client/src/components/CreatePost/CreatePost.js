@@ -13,16 +13,17 @@ import {
 import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
 import person from "assets/icons/person.svg";
-import organization from "assets/icons/organization.svg";
+import organisation from "assets/icons/organisation.svg";
 import back from "assets/icons/back-arrow-gray.svg";
 import closeButton from "assets/icons/close-btn.svg";
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const { typography } = theme;
 
 export const CreatePostContext = createContext();
 
-const Step1 = () => {
+const Step1 = ({ gtmPrefix }) => {
   const createPostContext = useContext(CreatePostContext);
   const { currentStep, setCurrentStep } = createPostContext;
   return (
@@ -32,6 +33,12 @@ const Step1 = () => {
         <Row gutter={14} justify="center">
           <Col span={12}>
             <Option
+              gtmTag={
+                gtmPrefix +
+                GTM.post.createPost +
+                currentStep +
+                GTM.post.individualBtn
+              }
               img={person}
               text="Individual"
               onClick={() => setCurrentStep(3)}
@@ -39,7 +46,10 @@ const Step1 = () => {
           </Col>
           <Col span={12}>
             <Option
-              img={organization}
+              gtmTag={
+                gtmPrefix + GTM.post.createPost + currentStep + GTM.post.orgBtn
+              }
+              img={organisation}
               text="Organisation"
               onClick={() => setCurrentStep(2)}
             />
@@ -50,7 +60,7 @@ const Step1 = () => {
   );
 };
 
-const Step2 = ({ user }) => {
+const Step2 = ({ user, gtmPrefix }) => {
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
 
@@ -58,14 +68,24 @@ const Step2 = ({ user }) => {
     currentStep === 2 && (
       <>
         <TitleStep>Posting as an Organisation</TitleStep>
-        <BackButton src={back} onClick={() => setCurrentStep(1)} />
-        {user.organizations?.map((item) => {
-          const { _id: organizationId } = item;
+        <BackButton
+          id={
+            gtmPrefix +
+            GTM.post.createPost +
+            (currentStep - 1) +
+            GTM.post.orgBtn +
+            GTM.wizardNav.back
+          }
+          src={back}
+          onClick={() => setCurrentStep(1)}
+        />
+        {user.organisations?.map((item) => {
+          const { _id: organisationId } = item;
           return (
             <OptionButton
-              key={organizationId}
+              key={organisationId}
               onClick={() => {
-                setForm({ organizationId });
+                setForm({ organisationId });
                 setCurrentStep(3);
               }}
             >
@@ -73,7 +93,16 @@ const Step2 = ({ user }) => {
             </OptionButton>
           );
         })}
-        <CreateOrgLink to={"/create-organization-profile"}>
+        <CreateOrgLink
+          to={"/create-organisation-profile"}
+          id={
+            gtmPrefix +
+            GTM.post.createPost +
+            (currentStep - 1) +
+            GTM.post.orgBtn +
+            GTM.organisation.createNew
+          }
+        >
           Create new one
         </CreateOrgLink>
       </>
@@ -81,7 +110,7 @@ const Step2 = ({ user }) => {
   );
 };
 
-const Step3 = ({ onCancel }) => {
+const Step3 = ({ onCancel, gtmPrefix }) => {
   const { currentStep, setCurrentStep, setPostId } = useContext(
     CreatePostContext,
   );
@@ -94,6 +123,7 @@ const Step3 = ({ onCancel }) => {
         onCancel();
       }}
       setPostId={setPostId}
+      gtmTagPrefix={gtmPrefix + GTM.post.createPost + (currentStep - 1)}
     />
   );
 };
@@ -136,7 +166,12 @@ const Step4 = () => {
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           Success
         </TitleStep>
-        <Link to={`/post/${postId}`}>
+        <Link
+          to={{
+            pathname: `/post/${postId}`,
+            state: { from: window.location.href },
+          }}
+        >
           <ViewPostButton primary>View Your Post</ViewPostButton>
         </Link>
       </>
@@ -144,21 +179,30 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = (props) => {
+const CreatePost = ({ onCancel, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
+
+  const clearState = () => {
+    onCancel();
+    // delay for modal close effect to complete before re-render
+    setTimeout(() => {
+      setCurrentStep(1);
+      setPostId("");
+    }, 200);
+  };
 
   return (
     <CreatePostContext.Provider
       value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
-      <Wrapper {...props}>
-        <Step1 />
-        <Step2 user={props.user} />
-        <Step4 />
+      <Wrapper onCancel={clearState} {...props}>
+        <Step1 gtmPrefix={props.gtmPrefix} />
+        <Step2 user={props.user} gtmPrefix={props.gtmPrefix} />
+        <Step4 gtmPrefix={props.gtmPrefix} />
       </Wrapper>
-      <Step3 {...props} />
+      <Step3 onCancel={clearState} {...props} gtmPrefix={props.gtmPrefix} />
     </CreatePostContext.Provider>
   );
 };

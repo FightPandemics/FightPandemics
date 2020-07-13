@@ -18,6 +18,7 @@ import {
   TOGGLE_SHOW_COMMENTS,
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
+  SET_LIKE,
 } from "../actions/postActions";
 
 export const postState = {
@@ -121,7 +122,7 @@ export const postReducer = (state = postState, action) => {
     case SET_COMMENT:
       state.comments = state.comments.map((comment) => {
         if (comment._id === action.commentId) {
-          return { ...comment, content: action.comment };
+          return { ...action.comment };
         } else {
           return comment;
         }
@@ -147,6 +148,12 @@ export const postReducer = (state = postState, action) => {
         commentsCount: state.commentsCount,
         showComments: true,
         loadMoreComments: true,
+      };
+    case SET_LIKE:
+      return {
+        ...state,
+        liked: !!!state.liked,
+        likesCount: action.count,
       };
     default:
       return state;

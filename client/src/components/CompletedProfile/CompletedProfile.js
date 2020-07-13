@@ -24,7 +24,7 @@ export const ProfileCompletedHeader = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   background-color: ${colors.royalBlue};
-  border-bottom-right-radius: 15px;
+  border-bottom-right-radius: 1.5rem;
 
   @media screen and (min-width: ${tablet.wide.minWidth}) {
     background: 0 0;
@@ -53,7 +53,7 @@ export const StyledButton = styled(BaseButton)`
   padding: 1rem 0;
   height: auto;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 1rem;
   border: none;
   box-shadow: 0px 0px 2px 2px ${colors.lightGray};
   margin-bottom: 1rem;

@@ -1,5 +1,6 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
+import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,8 +10,9 @@ import MenuIcon from "assets/icons/menu.svg";
 import envelope from "assets/icons/envelope.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+
 import { theme, mq } from "../constants/theme";
-import { Menu, Dropdown } from "antd";
+import GTM from "constants/gtm-tags";
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -47,15 +49,24 @@ const DesktopMenu = styled.div`
 `;
 const NavLinks = styled.div`
   align-self: flex-end;
+  padding-top: 1rem;
+  white-space: nowrap;
   padding-top: 2rem;
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding-top: 0.4rem;
+  }
   ul {
     list-style-type: none;
     display: flex;
     margin-bottom: 0rem;
     margin-right: 5rem;
+    align-items: center;
     .registerBtn {
       color: ${colors.royalBlue};
-      border: 1px solid ${colors.royalBlue};
+      border: 0.1rem solid ${colors.royalBlue};
       border-radius: 2rem;
       padding: 0 0.8rem;
       margin-bottom: 0.2rem;
@@ -70,17 +81,18 @@ const NavLinks = styled.div`
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
+      padding: 0 1rem;
       a:not(.registerLink) {
         color: ${colors.darkerGray};
         text-decoration: none;
         padding: 1.2rem 1.4rem;
         transition: all 0.2s;
-        border-bottom: 3px solid transparent;
+        border-bottom: 0.3rem solid transparent;
       }
       a:hover:not(.registerLink) {
         font-weight: 600;
         color: ${colors.royalBlue};
-        border-bottom: 3px solid ${colors.royalBlue};
+        border-bottom: 0.3rem solid ${colors.royalBlue};
       }
     }
   }
@@ -98,29 +110,42 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
+export default ({
+  authLoading,
+  onMenuClick,
+  isAuthenticated,
+  user,
+  onFeedbackIconClick,
+}) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/profile/${user?.id}`}>My Profile</Link>
+        <Link to={`/profile/${user?.id || user?._id}`}>My Profile</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/create-organization-profile">Add Organisation</Link>
+        <Link
+          id={GTM.nav.prefix + GTM.nav.addOrg}
+          to="/create-organisation-profile"
+        >
+          Add Organisation
+        </Link>
       </Menu.Item>
       <Menu.Divider />
-      {user?.organizations?.length > 0
-        ? user?.organizations?.map((organization) => (
-            <Menu.Item>
-              <Link to={`/organization/${organization._id}`}>
-                {organization.name}
+      {user?.organisations?.length > 0
+        ? user?.organisations?.map((organisation) => (
+            <Menu.Item key={organisation._id}>
+              <Link to={`/organisation/${organisation._id}`}>
+                {organisation.name}
               </Link>
             </Menu.Item>
           ))
         : null}
-      {user?.organizations?.length > 0 && <Menu.Divider />}
+      {user?.organisations?.length > 0 && <Menu.Divider />}
+      <Menu.Item onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Divider />
       <Menu.Item>
-        <Link to="/auth/logout">Log Out</Link>
+        <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
     </Menu>
   );
@@ -129,13 +154,21 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
     return (
       <>
         <li>
-          <NavLink activeStyle={activeStyles} to="/about-us">
+          <NavLink
+            id={GTM.nav.prefix + GTM.nav.aboutUs}
+            activeStyle={activeStyles}
+            to="/about-us"
+          >
             About Us
           </NavLink>
         </li>
         <li>
-          <NavLink activeStyle={activeStyles} to="/feed">
-            Feed
+          <NavLink
+            id={GTM.nav.prefix + GTM.nav.feed}
+            activeStyle={activeStyles}
+            to="/feed"
+          >
+            Help Board
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -154,18 +187,29 @@ export default ({ authLoading, onMenuClick, isAuthenticated, user }) => {
         ) : (
           <>
             <li>
-              <NavLink activeStyle={activeStyles} to="/auth/login">
-                Login
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.login}
+                activeStyle={activeStyles}
+                to="/auth/login"
+              >
+                Sign In
               </NavLink>
             </li>
             <li className="registerBtn">
-              <NavLink className="registerLink" to="/auth/signup">
-                Register
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.register}
+                className="registerLink"
+                to="/auth/signup"
+              >
+                Join Now
               </NavLink>
             </li>
-            <Link to="/feed">
+            <button
+              id={GTM.nav.prefix + GTM.nav.feedBack}
+              onClick={onFeedbackIconClick}
+            >
               <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
-            </Link>
+            </button>
           </>
         )}
       </>
