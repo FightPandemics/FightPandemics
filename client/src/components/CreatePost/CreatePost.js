@@ -185,7 +185,7 @@ const CreatePost = ({ onCancel, ...props }) => {
   const [postId, setPostId] = useState("");
 
   const clearState = () => {
-    onCancel();
+    onCancel(currentStep);
     // delay for modal close effect to complete before re-render
     setTimeout(() => {
       setCurrentStep(1);
