@@ -27,15 +27,12 @@ import {
 import {
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  DELETE_MODAL_COMMENT } from "hooks/actions/feedActions";
+  DELETE_MODAL_COMMENT,
+} from "hooks/actions/feedActions";
 
 export const PostContext = React.createContext();
 
-const PostPage = ({
-  user,
-  updateComments,
-  isAuthenticated,
-}) => {
+const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
@@ -78,7 +75,7 @@ const PostPage = ({
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      const endPoint = `/api/posts/${postId}/likes/${user && user._id}`;
       let response = {};
 
       if (user) {

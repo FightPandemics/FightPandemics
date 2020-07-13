@@ -42,9 +42,7 @@ import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
-import {
-  SET_EDIT_POST_MODAL_VISIBILITY,
-} from "hooks/actions/postActions";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
@@ -111,9 +109,7 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
-  const {
-    deleteModalVisibility,
-  } = postsState;
+  const { deleteModalVisibility } = postsState;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -137,10 +133,12 @@ const Profile = ({
         const res = await axios.get(
           `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
         );
-        const loadedPosts = res?.data?.length && res.data.reduce((obj, item) => {
-          obj[item._id] = item;
-          return obj;
-        }, {});
+        const loadedPosts =
+          res?.data?.length &&
+          res.data.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
 
         postsDispatch({
           type: SET_POSTS,
@@ -212,7 +210,7 @@ const Profile = ({
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
-    const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+    const endPoint = `/api/posts/${postId}/likes/${user && user._id}`;
     let response = {};
 
     if (user) {

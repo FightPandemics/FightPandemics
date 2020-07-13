@@ -327,7 +327,7 @@ const Feed = (props) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      const endPoint = `/api/posts/${postId}/likes/${user && user._id}`;
       let response = {};
 
       if (user) {
@@ -627,7 +627,7 @@ const Feed = (props) => {
                 <FiltersList />
               </FiltersWrapper>
             </div>
-            <FiltersSidebar gtmPrefix={GTM.feed.prefix}/>
+            <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
