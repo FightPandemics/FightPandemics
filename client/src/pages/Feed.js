@@ -575,6 +575,14 @@ const Feed = (props) => {
       }
     }
   };
+
+  const onCancelModal = (currentStep) => {
+    dispatchAction(TOGGLE_STATE, "showCreatePostModal");
+    if (currentStep == 4) {
+      loadPosts();
+    }
+  };
+
   return (
     <FeedContext.Provider
       value={{
@@ -670,7 +678,7 @@ const Feed = (props) => {
         </LayoutWrapper>
         <CreatePost
           gtmPrefix={GTM.feed.prefix}
-          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+          onCancel={onCancelModal}
           visible={showCreatePostModal}
           user={user}
         />
