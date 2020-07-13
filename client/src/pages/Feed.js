@@ -50,6 +50,9 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
@@ -236,6 +239,7 @@ const Feed = (props) => {
     page,
     posts: postsList,
     status,
+    deleteModalVisibility,
   } = posts;
 
   const { history, isAuthenticated, user } = props;
@@ -355,6 +359,20 @@ const Feed = (props) => {
         history.push(LOGIN);
       }
     }
+  };
+
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
   };
 
   const loadPosts = useCallback(async () => {
@@ -634,8 +652,11 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              handlePostDelete={postDelete}
+              postDelete={postDelete}
               user={user}
+              deleteModalVisibility={deleteModalVisibility}
+              handlePostDelete={handlePostDelete}
+              handleCancelPostDelete={handleCancelPostDelete}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />

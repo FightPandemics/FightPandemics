@@ -67,6 +67,12 @@ import {
 import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
+  SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
+import {
   postsReducer,
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
@@ -107,6 +113,10 @@ const OrganisationProfile = () => {
 
   const urlsAndEmail = { ...urls, email };
 
+  const {
+    deleteModalVisibility,
+  } = postsState;
+
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
@@ -142,9 +152,14 @@ const OrganisationProfile = () => {
       const res = await axios.get(
         `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
       );
+      const loadedPosts = res?.data?.length && res.data.reduce((obj, item) => {
+        obj[item._id] = item;
+        return obj;
+      }, {});
+
       postsDispatch({
         type: SET_POSTS,
-        posts: res.data,
+        posts: loadedPosts,
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -188,6 +203,20 @@ const OrganisationProfile = () => {
     }
   };
 
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
+  };
+
   const handleEditPost = () => {
     if (postsState.editPostModalVisibility) {
       postsDispatch({
@@ -199,6 +228,37 @@ const OrganisationProfile = () => {
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
+    }
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+    let response = {};
+
+    if (user) {
+      if (liked) {
+        try {
+          response = await axios.delete(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      } else {
+        try {
+          response = await axios.put(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      }
+
+      if (response.data) {
+        postsDispatch({
+          type: SET_LIKE,
+          postId,
+          count: response.data.likesCount,
+        });
+      }
     }
   };
 
@@ -300,8 +360,12 @@ const OrganisationProfile = () => {
               <Activity
                 filteredPosts={postsState.posts}
                 user={user}
-                handlePostDelete={postDelete}
+                postDelete={postDelete}
+                handlePostDelete={handlePostDelete}
                 handleEditPost={handleEditPost}
+                deleteModalVisibility={deleteModalVisibility}
+                handleCancelPostDelete={handleCancelPostDelete}
+                handlePostLike={handlePostLike}
               />
               {isOwner && (
                 <CreatePost
