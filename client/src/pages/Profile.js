@@ -329,7 +329,6 @@ const Profile = ({
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
                 onClick={() => setModal(!modal)}
-                style={{ width: "5rem", height: "5rem" }}
               />
             </>
           )}
