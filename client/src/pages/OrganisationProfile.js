@@ -113,9 +113,7 @@ const OrganisationProfile = () => {
 
   const urlsAndEmail = { ...urls, email };
 
-  const {
-    deleteModalVisibility,
-  } = postsState;
+  const { deleteModalVisibility } = postsState;
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -152,10 +150,12 @@ const OrganisationProfile = () => {
       const res = await axios.get(
         `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
       );
-      const loadedPosts = res?.data?.length && res.data.reduce((obj, item) => {
-        obj[item._id] = item;
-        return obj;
-      }, {});
+      const loadedPosts =
+        res?.data?.length &&
+        res.data.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
 
       postsDispatch({
         type: SET_POSTS,
@@ -234,7 +234,7 @@ const OrganisationProfile = () => {
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
-    const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
     let response = {};
 
     if (user) {
