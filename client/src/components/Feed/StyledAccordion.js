@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Accordion } from "antd-mobile";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 const { display } = theme.typography.font.family;
 
 export const FilterAccordion = styled(Accordion)`
@@ -17,6 +17,10 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   cursor: pointer;
   margin: 1.2rem;
 
+  @media screen and ${mq.phone.wide.max} {
+    margin: 1rem;
+  }
+
   &.am-accordion-item {
     .am-accordion-header,
     .am-accordion-content-box {
@@ -30,6 +34,11 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       display: flex !important;
       font-weight: bold !important;
       font-size: ${theme.typography.size.large} !important;
+
+      @media screen and ${mq.phone.wide.max} {
+        height: 35px;
+        line-height: 35px;
+      }
 
       i {
         transform: unset;
@@ -48,7 +57,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   }
 
   .am-accordion-content-box {
-    padding: 0.8rem 1rem;
+    padding: 0 1rem;
   }
 
   &.filter-2,
