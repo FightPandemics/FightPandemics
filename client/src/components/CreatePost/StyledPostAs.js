@@ -114,6 +114,8 @@ const OptionButton = styled(AntDButton)`
     margin-bottom: 1.5rem;
     text-align: left;
     padding-left: 2.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &.ant-btn:hover {
