@@ -238,6 +238,13 @@ const Profile = ({
     }
   };
 
+  const onCancelModal = (currentStep) => {
+    setModal(false);
+    if (currentStep == 4) {
+      fetchPosts();
+    }
+  };
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -344,7 +351,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel={() => setModal(false)}
+              onCancel={onCancelModal}
               visible={modal}
               user={user}
               gtmPrefix={GTM.user.profilePrefix}
