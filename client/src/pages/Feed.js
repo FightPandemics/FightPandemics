@@ -31,7 +31,7 @@ import {
 } from "hooks/reducers/feedReducers";
 
 // ICONS
-import SvgIcon from "components/Icon/SvgIcon";
+import { CreatePostIcon } from "../components/Profile/ProfileComponents";
 import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
@@ -201,7 +201,6 @@ const HeaderWrapper = styled.div`
     padding: 0;
     img {
       margin-left: 1.2rem;
-      max-height: 4.2rem;
     }
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -637,10 +636,9 @@ const Feed = (props) => {
                 onClick={handleCreatePost}
               >
                 Create a post
-                <SvgIcon
+                <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}
-                  style={{ width: "5rem", height: "5rem" }}
                 />
               </button>
             </HeaderWrapper>
@@ -662,7 +660,7 @@ const Feed = (props) => {
               <ErrorAlert message={postsError.message} />
             )}
             {isLoading ? <Loader /> : <></>}
-            <SvgIcon
+            <CreatePostIcon
               id={gtmTag(GTM.post.createPost)}
               src={creatPost}
               onClick={handleCreatePost}
