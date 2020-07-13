@@ -320,10 +320,12 @@ const NavigationLayout = (props) => {
     >
       <h2 className="title">Thank you!</h2>
       <p>
-        Your input means a lot and helps us help you and others during and after
-        the COVID-19 pandemic.
+        Your input means a lot and helps us improve our services during and
+        after the COVID-19 pandemic.
       </p>
-      <Logo src={logo} alt="FightPandemics logo" />
+      <Link to="/">
+        <Logo src={logo} alt="FightPandemics logo" />
+      </Link>
     </ThanksModal>
   );
 
