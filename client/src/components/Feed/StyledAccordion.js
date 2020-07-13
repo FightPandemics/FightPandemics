@@ -29,6 +29,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
     .am-accordion-header {
       display: flex !important;
       font-weight: bold !important;
+      font-size: ${theme.typography.size.large} !important;
 
       i {
         transform: unset;
