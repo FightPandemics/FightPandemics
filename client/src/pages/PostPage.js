@@ -75,7 +75,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user._id}`;
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
       let response = {};
 
       if (user) {
