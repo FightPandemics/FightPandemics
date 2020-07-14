@@ -4,6 +4,7 @@ import ButtonTag from "../Tag/ButtonTag";
 import LocationInput from "components/Input/LocationInput";
 import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
+import styled from "styled-components";
 
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
@@ -44,6 +45,10 @@ const gtmTagsMap = {
   providers: GTM.post.providers,
 };
 
+const AccordionHeader = styled.div`
+  width: 100%;
+`;
+
 const filterOps = (label, idx) => {
   if (label === "offer or request help") {
     return `_${requestOrOffer[idx]}`;
@@ -74,10 +79,13 @@ const FilterAccord = ({ gtmPrefix }) => {
       if (filter.label === "location") {
         return (
           <FilterAccordionPanel
-            header={capitalizeFirstLetter(filter.label)}
+            header={
+              <AccordionHeader id={gtmTag(GTM.post.location)}>
+                {capitalizeFirstLetter(filter.label)}
+              </AccordionHeader>
+            }
             className={filter.className}
             key={idx}
-            id={gtmTag(GTM.post.location)}
           >
             <LocationInput
               location={location}
@@ -90,10 +98,13 @@ const FilterAccord = ({ gtmPrefix }) => {
       } else {
         return (
           <FilterAccordionPanel
-            header={capitalizeFirstLetter(filter.label)}
+            header={
+              <AccordionHeader id={gtmTag(gtmTagsMap[filter.label])}>
+                {capitalizeFirstLetter(filter.label)}
+              </AccordionHeader>
+            }
             className={filter.className}
             key={idx}
-            id={gtmTag(gtmTagsMap[filter.label])}
           >
             {Object.values(filter.options).map((option, idx) => {
               return (
