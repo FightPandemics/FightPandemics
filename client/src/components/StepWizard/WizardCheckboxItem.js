@@ -75,7 +75,7 @@ export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {
       {...props}
     >
       <StyledCheckbox checked={checked} />
-      <StyledSpan className="text">{text}</StyledSpan>
+      <StyledSpan>{text}</StyledSpan>
     </CheckboxItemStyles>
   );
 };
