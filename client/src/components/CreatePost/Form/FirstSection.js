@@ -15,6 +15,7 @@ const TitleInput = styled(Input)`
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
   .ant-modal-root .ant-modal-content .ant-modal-body & {
+    color: ${black};
     border-top: none;
     font-size: 1.2rem;
     resize: none;
@@ -37,14 +38,12 @@ const First = ({
         value={formData.title}
         placeholder="Title"
         maxLength={35}
-        required
       />
       <TextInput
         onChange={onChangeDescription}
         value={formData.description}
         rows={7}
         placeholder="Write your post"
-        required
       />
       <span className="error-box">{renderError("description")}</span>
     </Section>
