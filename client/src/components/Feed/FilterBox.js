@@ -87,7 +87,7 @@ const FilterBox = ({ gtmPrefix }) => {
           style={{
             display: "flex",
             justifyContent: "space-evenly",
-            padding: "2rem 0",
+            padding: "1rem 0",
           }}
         >
           <SubmitButton
