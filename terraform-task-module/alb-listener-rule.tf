@@ -21,3 +21,23 @@ resource "aws_alb_listener_rule" "main" {
     values = [var.fp_context == "production" ? "fightpandemics.com" : "${var.subdomain}.*"]
   }
 }
+
+resource "aws_alb_listener_rule" "redirect" {
+  count        = var.fp_context == "production" ? 1 : 0
+  listener_arn = data.aws_alb_listener.main.arn
+  action {
+    type = "redirect"
+
+    redirect {
+      host        = "fightpandemics.com"
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+  condition {
+    host_header {
+      values = ["*.fightpandemics.com"]
+    }
+  }
+}
