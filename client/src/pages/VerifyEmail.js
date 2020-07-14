@@ -76,7 +76,7 @@ const VerifyDirectionsContainer = styled.div`
   }
 `;
 
-const VerifyEmail = ({ email }) => {
+const VerifyEmail = ({ forgotPasswordRequested, email }) => {
   return (
     <VerifyEmailContainer>
       <VerifyEmailLeftContainer>
@@ -87,11 +87,24 @@ const VerifyEmail = ({ email }) => {
       <VerifyEmailRightContainer>
         <div className="text-center">
           <VerifyDirectionsContainer>
-            <h1 className="directions-header">Check your inbox</h1>
+            <h1 className="directions-header">
+              {forgotPasswordRequested
+                ? "Recover Password"
+                : "Check your inbox"}
+            </h1>
             <p className="directions-text">
-              We just emailed a link to {email}. Click the link to confirm your
-              account and complete your profile. If you don't see a message
-              within a few minutes please check your spam folder.
+              {forgotPasswordRequested ? (
+                <>
+                  An e-mail has been sent with further instructions. <br />
+                  Please check your inbox.
+                </>
+              ) : (
+                <>
+                  We just emailed a link to {email}. Click the link to confirm
+                  your account and complete your profile. If you don't see a
+                  message within a few minutes please check your spam folder.
+                </>
+              )}
             </p>
           </VerifyDirectionsContainer>
         </div>
@@ -102,6 +115,7 @@ const VerifyEmail = ({ email }) => {
 
 const mapStateToProps = ({ session }) => ({
   email: session.email,
+  forgotPasswordRequested: session.forgotPasswordRequested,
 });
 
 export default connect(mapStateToProps)(VerifyEmail);

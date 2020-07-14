@@ -10,7 +10,7 @@ export const HOME = "/";
 export const LOGIN = "/auth/login";
 export const LOGOUT = "/auth/logout";
 export const FEED = "/feed";
-export const VERIFY_EMAIL = "/auth/verify-email";
+export const CHECK_EMAIL = "/auth/check-email";
 export const CREATE_PROFILE = "/create-profile";
 export const PROFILE = "/profile";
 
@@ -33,6 +33,7 @@ export const RouteWithSubRoutes = (route) => {
     authError,
     authLoading,
     emailVerified,
+    forgotPasswordRequested,
     isAuthenticated,
     path,
     props = {},
@@ -68,13 +69,18 @@ export const RouteWithSubRoutes = (route) => {
             } else {
               redirect = HOME;
             }
+          } else if (
+            forgotPasswordRequested &&
+            location.pathname !== CHECK_EMAIL
+          ) {
+            redirect = CHECK_EMAIL;
           } else if (isAuthenticated) {
             if (
               !emailVerified &&
-              location.pathname !== VERIFY_EMAIL &&
+              location.pathname !== CHECK_EMAIL &&
               !forgotPassword
             ) {
-              redirect = VERIFY_EMAIL;
+              redirect = CHECK_EMAIL;
             } else if (emailVerified && forgotPassword) {
               redirect = LOGIN;
             } else if (
@@ -116,6 +122,7 @@ const mapStateToProps = ({ session }) => ({
   authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
+  forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
 });
