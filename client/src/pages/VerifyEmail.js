@@ -59,7 +59,6 @@ const VerifyDirectionsContainer = styled.div`
   }
 
   .directions-text {
-    width: 40.6rem;
     font-family: Poppins;
     font-size: 1.4rem;
     font-weight: 500;
@@ -67,7 +66,11 @@ const VerifyDirectionsContainer = styled.div`
     font-style: normal;
     line-height: 1.29;
     letter-spacing: normal;
-    margin-left: 25%;
+    padding: 0 8vw;
+
+    @media screen and (min-width: ${mq.desktop.large.minWidth}) {
+      padding: 0 15vw;
+    }
 
     @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
       width: 100%;
