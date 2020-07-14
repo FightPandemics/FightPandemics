@@ -178,7 +178,12 @@ async function routes(app) {
         {
           $project: {
             _id: true,
-            author: true,
+            "author.id": true,
+            "author.location.city": true,
+            "author.location.state": true,
+            "author.location.country": true,
+            "author.name": true,
+            "author.type": true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
             },
@@ -296,7 +301,14 @@ async function routes(app) {
     async (req) => {
       const { userId } = req;
       const { postId } = req.params;
-      const [postErr, post] = await app.to(Post.findById(postId));
+      const [postErr, post] = await app.to(
+        Post.findById(postId).select({
+          "author.location.address": false,
+          "author.location.coordinates": false,
+          "author.location.neighborhood": false,
+          "author.location.zip": false,
+        }),
+      );
       if (postErr) {
         req.log.error(postErr, "Failed retrieving post");
         throw app.httpErrors.internalServerError();
