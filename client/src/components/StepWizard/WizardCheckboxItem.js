@@ -44,11 +44,6 @@ const CheckboxItemStyles = styled.div`
       width: 0.7rem;
     }
   }
-  > .text {
-    color: ${black};
-    flex-grow: 1;
-    margin-left: 2rem;
-  }
 
   .am-checkbox.am-checkbox-checked .am-checkbox-inner {
     border-color: ${royalBlue};
@@ -65,6 +60,13 @@ const StyledCheckbox = styled(Checkbox)`
   pointer-events: none;
 `;
 
+const StyledSpan = styled.span`
+  pointer-events: none;
+  color: ${black};
+  flex-grow: 1;
+  margin-left: 2rem;
+`;
+
 export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {
   return (
     <CheckboxItemStyles
@@ -73,7 +75,7 @@ export const WizardCheckboxItem = ({ text, checked, onChange, ...props }) => {
       {...props}
     >
       <StyledCheckbox checked={checked} />
-      <span className="text">{text}</span>
+      <StyledSpan className="text">{text}</StyledSpan>
     </CheckboxItemStyles>
   );
 };
