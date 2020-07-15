@@ -94,7 +94,7 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
           id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
           to="/feed"
         >
-          Check the feed
+          Check the Help Board
         </StyledLink>
       </ButtonsContainer>
     </Container>
