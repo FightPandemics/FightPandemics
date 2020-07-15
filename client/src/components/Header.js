@@ -98,7 +98,7 @@ const NavLinks = styled.div`
   }
 `;
 
-const activeStyles = {
+export const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
 };

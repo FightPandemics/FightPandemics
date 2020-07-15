@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from "react";
+import { NavLink } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -6,12 +7,14 @@ import isEmpty from 'lodash/isEmpty';
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
+import activeStyles from "components/Header"
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
+import GTM from "constants/gtm-tags";
 
 // Constants
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
@@ -34,6 +37,7 @@ import {
 import { theme, mq } from "constants/theme";
 
 const { typography } = theme;
+const { font, two, four } = theme.typography.heading;
 
 const Container = styled.div`
   padding: 6rem;
@@ -44,6 +48,19 @@ const Container = styled.div`
   font-family: ${typography.font.family.display};
   font-size: ${typography.size.large};
   font-weight: normal;
+`;
+
+const Title = styled.h2`
+  font-family: ${font};
+  font-weight: bold;
+  font-size: ${four};
+  line-height: 3rem;
+  text-align: center;
+  width: 100%;
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    font-size: ${two};
+  }
 `;
 
 export const PostContext = React.createContext();
@@ -284,9 +301,20 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   }, []);
 
   if(isPostDeleted) return (
-    <Container>
-      This post has been deleted. Check our help board for more posts.
-    </Container>
+    <>
+      <Container>
+        <Title>Ahh... snap!</Title>
+        The post you have been looking for has expired. Please check our Help Board for more such posts.
+        <NavLink
+          style={{ textDecoration: 'underline' }}
+          id={GTM.nav.prefix + GTM.nav.feed}
+          activeStyle={activeStyles}
+          to="/feed"
+        >
+          Help Board
+        </NavLink>
+      </Container>   
+    </>    
   );
   return (
     <StyledPostPage>
