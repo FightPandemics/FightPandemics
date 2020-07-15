@@ -2,6 +2,7 @@ import {
   AUTH_ERROR,
   AUTH_LOGOUT,
   AUTH_SUCCESS,
+  FORGOT_PASSWORD_REQUEST_SUCCESS,
   SET_AUTH_LOADING,
   SET_USER,
 } from "constants/action-types";
@@ -13,6 +14,7 @@ const initialState = {
   email: null,
   emailVerified: false,
   error: null,
+  forgotPasswordRequested: false,
   user: null,
 };
 
@@ -31,8 +33,17 @@ function sessionReducer(state = initialState, action) {
         isAuthenticated: true,
         user: action.payload.user,
       };
+    case FORGOT_PASSWORD_REQUEST_SUCCESS:
+      return {
+        ...state,
+        email: action.payload.email,
+        forgotPasswordRequested: true,
+        isAuthenticated: true, // required for redirect logic to verify-email
+      };
     case SET_USER:
-      const { payload: { user } } = action;
+      const {
+        payload: { user },
+      } = action;
       return {
         ...state,
         emailVerified: !!user, // user can't exist in db if email not verified
@@ -44,7 +55,7 @@ function sessionReducer(state = initialState, action) {
       return {
         ...state,
         authLoading: action.payload,
-      }
+      };
     case AUTH_LOGOUT:
       return {
         ...initialState,

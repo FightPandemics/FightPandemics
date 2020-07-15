@@ -8,7 +8,10 @@ import styled from "styled-components";
 import GTM from "constants/gtm-tags";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
-import { AUTH_SUCCESS } from "constants/action-types";
+import {
+  AUTH_SUCCESS,
+  FORGOT_PASSWORD_REQUEST_SUCCESS,
+} from "constants/action-types";
 import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
@@ -218,7 +221,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   );
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-  const [recoveryLink, setRecoveryLink] = useState(false);
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -281,12 +283,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   const onForgotPassword = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_FORGOT_PASSWORD });
     try {
-      const res = await axios.post("/api/auth/change-password", formData);
+      await axios.post("/api/auth/change-password", formData);
       dispatch({
-        type: AUTH_SUCCESS,
-        payload: { ...res.data, email: formData.email },
+        type: FORGOT_PASSWORD_REQUEST_SUCCESS,
+        payload: { email: formData.email },
       });
-      setRecoveryLink(true);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
@@ -455,13 +456,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   {isLoginForm ? "Sign In" : "Join Now"}
                 </SubmitButton>
               </form>
-            ) : recoveryLink ? (
-              <EmailTextContainer>
-                <p class="text-center">
-                  An e-mail has been sent with further instructions. Please
-                  check your inbox.{" "}
-                </p>
-              </EmailTextContainer>
             ) : (
               <ForgotPasswordContainer>
                 <form id="forgot-password">

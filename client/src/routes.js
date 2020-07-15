@@ -66,7 +66,7 @@ const routes = [
     component: Logout,
   },
   {
-    path: "/auth/verify-email",
+    path: "/auth/check-email",
     component: VerifyEmail,
     layout: "logo",
     props: {
