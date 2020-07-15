@@ -3,6 +3,11 @@ import { Accordion } from "antd-mobile";
 import { theme } from "constants/theme";
 const { display } = theme.typography.font.family;
 
+export const AccordionHeader = styled.div`
+  width: 100%;
+  text-align: left;
+`;
+
 export const FilterAccordion = styled(Accordion)`
   font-family: ${display};
   &.am-accordion {

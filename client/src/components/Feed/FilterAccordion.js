@@ -2,9 +2,12 @@ import React, { useContext } from "react";
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag";
 import LocationInput from "components/Input/LocationInput";
-import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
+import {
+  FilterAccordion,
+  FilterAccordionPanel,
+  AccordionHeader,
+} from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
-import styled from "styled-components";
 
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
@@ -44,10 +47,6 @@ const gtmTagsMap = {
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
-
-const AccordionHeader = styled.div`
-  width: 100%;
-`;
 
 const filterOps = (label, idx) => {
   if (label === "offer or request help") {
