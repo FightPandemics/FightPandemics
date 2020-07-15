@@ -102,6 +102,11 @@ a {
   }
 }
 
+/* transform: translateZ(1px) messes up z-index precendence on iPhones */
+.feed-filter-modal-wrap {
+  transform: none;
+}
+
 `;
 
 export default globalStyles;
