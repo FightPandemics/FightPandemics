@@ -378,11 +378,11 @@ const Feed = (props) => {
     const objectiveURL = () => {
       let objective = selectedType;
       if (
-        selectedOptions["need or give help"] &&
-        selectedOptions["need or give help"].length < 2
+        selectedOptions["offer or request help"] &&
+        selectedOptions["offer or request help"].length < 2
       ) {
         objective =
-          selectedOptions["need or give help"][0] === "Need Help"
+          selectedOptions["offer or request help"][0] === "Request Help"
             ? "REQUEST"
             : "OFFER";
       }
@@ -397,7 +397,7 @@ const Feed = (props) => {
     };
     const filterURL = () => {
       const filterObj = { ...selectedOptions };
-      delete filterObj["need or give help"];
+      delete filterObj["offer or request help"];
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""
