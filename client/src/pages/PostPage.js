@@ -1,6 +1,8 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import styled from "styled-components";
 import axios from "axios";
+import isEmpty from 'lodash/isEmpty';
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
@@ -10,6 +12,7 @@ import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
+import CustomModal from "components/CreatePost/CustomModal";
 
 // Constants
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
@@ -29,6 +32,21 @@ import {
   DELETE_MODAL_HIDE,
   DELETE_MODAL_COMMENT,
 } from "hooks/actions/feedActions";
+import { theme, mq } from "constants/theme";
+
+const { typography } = theme;
+
+const Container = styled.div`
+padding: 6rem;
+display: flex;
+align-items: center;
+flex-flow: column;
+text-align: center;
+font-family: ${typography.font.family.display};
+font-size: ${typography.size.large};
+font-weight: normal;
+
+`;
 
 export const PostContext = React.createContext();
 
@@ -213,6 +231,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       response = await axios.get(endPoint);
     } catch (error) {
       console.log({ error });
+
       dispatchPostAction(
         SET_POST,
         "post",
@@ -262,10 +281,17 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     }
   };
 
+  const isPostDeleted = isEmpty(post.author) && post.status === SET_POST;
+ 
   useEffect(() => {
     loadPost(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if(isPostDeleted) return (
+    <Container>
+      This post has been deleted. Check our help board for more posts.
+    </Container>
+  );
   return (
     <StyledPostPage>
       {postId && (
