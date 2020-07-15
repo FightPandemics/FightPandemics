@@ -20,7 +20,7 @@ import {
 } from "components/EditProfile/EditComponents";
 import {
   FACEBOOK_URL,
-  LINKEDIN_URL,
+  LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
@@ -61,7 +61,7 @@ const URLS_CONFIG = {
           "Invalid entry: only alphanumeric characters and dashes are allowed",
       },
     },
-    LINKEDIN_URL,
+    LINKEDIN_INDIVIDUAL_URL,
   ],
   twitter: [
     "Twitter URL",

@@ -45,7 +45,7 @@ import {
 import { isAuthorOrg } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
-  LINKEDIN_URL,
+  LINKEDIN_ORGANISATION_URL,
   TWITTER_URL,
   APPSTORE_URL,
   PLAYSTORE_URL,
@@ -76,7 +76,7 @@ import GTM from "constants/gtm-tags";
 const URLS = {
   playStore: ["", PLAYSTORE_URL],
   appStore: ["", APPSTORE_URL],
-  linkedin: [linkedinBlue, LINKEDIN_URL],
+  linkedin: [linkedinBlue, LINKEDIN_ORGANISATION_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
   email: [envelopeBlue],

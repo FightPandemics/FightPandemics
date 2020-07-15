@@ -22,7 +22,7 @@ import { validateURL } from "utils/validators";
 import {
   APPSTORE_URL,
   PLAYSTORE_URL,
-  LINKEDIN_URL,
+  LINKEDIN_ORGANISATION_URL,
   TWITTER_URL,
 } from "constants/urls";
 import {
@@ -57,12 +57,12 @@ const URLS_CONFIG = {
     "LinkedIn URL",
     {
       pattern: {
-        value: /^[a-zA-Z0-9_\-/]*$/,
+        value: /^[a-zA-Z0-9_-]*$/,
         message:
-          'Invalid entry: only alphanumeric characters and these special characters: "_-/" are allowed',
+          "Invalid entry: only alphanumeric characters and _ are allowed",
       },
     },
-    LINKEDIN_URL,
+    LINKEDIN_ORGANISATION_URL,
   ],
   website: [
     "Website",

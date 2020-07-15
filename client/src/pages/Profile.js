@@ -34,7 +34,7 @@ import {
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
-  LINKEDIN_URL,
+  LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
@@ -68,7 +68,7 @@ import websiteIcon from "assets/icons/social-website-blue.svg";
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
-  linkedin: [linkedinBlue, LINKEDIN_URL],
+  linkedin: [linkedinBlue, LINKEDIN_INDIVIDUAL_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
 };
