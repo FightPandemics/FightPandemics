@@ -90,24 +90,23 @@ const VerifyEmail = ({ forgotPasswordRequested, email }) => {
       <VerifyEmailRightContainer>
         <div className="text-center">
           <VerifyDirectionsContainer>
-            <h1 className="directions-header">
-              {forgotPasswordRequested
-                ? "Recover Password"
-                : "Check your inbox"}
-            </h1>
+            <h1 className="directions-header">Check your inbox</h1>
             <p className="directions-text">
               {forgotPasswordRequested ? (
                 <>
-                  An e-mail has been sent with further instructions. <br />
-                  Please check your inbox.
+                  An e-mail has been sent to {email} with further instructions
+                  on how to reset your password.
                 </>
               ) : (
                 <>
                   We just emailed a link to {email}. Click the link to confirm
-                  your account and complete your profile. If you don't see a
-                  message within a few minutes please check your spam folder.
+                  your account and complete your profile.
                 </>
               )}
+              <br />
+              <br />
+              If you don't see a message within a few minutes please check spam,
+              promotions or other incoming mail folders.
             </p>
           </VerifyDirectionsContainer>
         </div>
