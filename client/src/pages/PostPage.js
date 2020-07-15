@@ -228,7 +228,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       response = await axios.get(endPoint);
     } catch (error) {
       console.log({ error });
-
       dispatchPostAction(
         SET_POST,
         "post",
