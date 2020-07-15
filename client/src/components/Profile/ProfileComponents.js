@@ -48,10 +48,10 @@ export const CreatePostIcon = styled(SvgIcon)`
   z-index: 1;
   bottom: 5%;
   right: 5%;
+  height: 5rem;
+  width: 5rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    bottom: 0;
-    right: 0;
-    width: 4.2rem;
+    width: 5rem;
     position: initial;
   }
 `;

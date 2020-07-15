@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feature/**
+      - rc/**
+      - hotfix/**
     paths:
       - backend/**
       - client/**

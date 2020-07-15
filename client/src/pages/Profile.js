@@ -43,6 +43,12 @@ import {
   postsState as initialPostsState,
 } from "hooks/reducers/feedReducers";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+import {
+  SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
 import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -103,6 +109,7 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
+  const { deleteModalVisibility } = postsState;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -126,9 +133,16 @@ const Profile = ({
         const res = await axios.get(
           `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
         );
+        const loadedPosts =
+          res?.data?.length &&
+          res.data.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+
         postsDispatch({
           type: SET_POSTS,
-          posts: res.data,
+          posts: loadedPosts,
         });
       }
     } catch (err) {
@@ -165,6 +179,20 @@ const Profile = ({
     }
   };
 
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
+  };
+
   const handleEditPost = () => {
     if (postsState.editPostModalVisibility) {
       postsDispatch({
@@ -176,6 +204,37 @@ const Profile = ({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
+    }
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+    let response = {};
+
+    if (user) {
+      if (liked) {
+        try {
+          response = await axios.delete(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      } else {
+        try {
+          response = await axios.put(endPoint);
+        } catch (error) {
+          console.log({ error });
+        }
+      }
+
+      if (response.data) {
+        postsDispatch({
+          type: SET_LIKE,
+          postId,
+          count: response.data.likesCount,
+        });
+      }
     }
   };
 
@@ -268,7 +327,6 @@ const Profile = ({
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
                 onClick={() => setModal(!modal)}
-                style={{ width: "5rem", height: "5rem" }}
               />
             </>
           )}
@@ -277,8 +335,12 @@ const Profile = ({
           <Activity
             filteredPosts={postsState.posts}
             user={user}
-            handlePostDelete={postDelete}
+            postDelete={postDelete}
+            handlePostDelete={handlePostDelete}
             handleEditPost={handleEditPost}
+            deleteModalVisibility={deleteModalVisibility}
+            handleCancelPostDelete={handleCancelPostDelete}
+            handlePostLike={handlePostLike}
           />
           {ownUser && (
             <CreatePost

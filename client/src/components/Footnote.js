@@ -12,6 +12,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
 
+  padding: 1rem 2rem;
   width: 100%;
   height: 7.1rem;
 
@@ -33,6 +34,10 @@ const Copyright = styled.div`
 
 const Policies = styled.div`
   color: ${colors.darkGray};
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     margin-top: 1.2rem;

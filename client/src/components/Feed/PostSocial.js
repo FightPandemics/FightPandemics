@@ -18,6 +18,14 @@ import share from "assets/icons/share.svg";
 import shareGray from "assets/icons/share-gray.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+const StyledSvg = styled(SvgIcon)`
+  pointer-events: none;
+`;
+
+const StyledSpan = styled.span`
+  pointer-events: none;
+`;
+
 const PostSocial = ({
   handlePostLike,
   isAuthenticated,
@@ -41,14 +49,6 @@ const PostSocial = ({
       }
     }
   }, [id, liked, handlePostLike]);
-
-  const StyledSvg = styled(SvgIcon)`
-    pointer-events: none;
-  `;
-
-  const StyledSpan = styled.span`
-    pointer-events: none;
-  `;
 
   const renderLikeIcon = () => {
     return liked ? (

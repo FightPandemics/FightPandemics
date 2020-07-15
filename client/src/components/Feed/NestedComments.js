@@ -144,8 +144,7 @@ const NestedComments = ({
 
   const handleSubmit = async () => {
     let response;
-    const postId = comment.postId;
-    const commentId = comment._id;
+    const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
     if (isAuthenticated && comment.author.id === user.id) {
@@ -172,7 +171,6 @@ const NestedComments = ({
   };
 
   const handleDeleteComment = () => {
-    setEditedComment("");
     deleteComment(comment);
   };
 

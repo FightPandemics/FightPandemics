@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import { Modal } from "antd";
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
@@ -25,14 +24,15 @@ import {
   SET_FULL_CONTENT,
   SET_LIKE,
 } from "hooks/actions/postActions";
+import {
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+  DELETE_MODAL_COMMENT,
+} from "hooks/actions/feedActions";
 
 export const PostContext = React.createContext();
 
-const PostPage = ({
-  user,
-  updateComments,
-  isAuthenticated,
-}) => {
+const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
@@ -75,7 +75,7 @@ const PostPage = ({
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
       let response = {};
 
       if (user) {
@@ -151,14 +151,21 @@ const PostPage = ({
   const handlePostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: true,
+      visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
     postDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: false,
+      visibility: DELETE_MODAL_HIDE,
+    });
+  };
+
+  const handleCommentDelete = () => {
+    postDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_COMMENT,
     });
   };
 
@@ -174,7 +181,7 @@ const PostPage = ({
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
         "deleteModalVisibility",
-        false,
+        DELETE_MODAL_HIDE,
       );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}`;
@@ -195,19 +202,6 @@ const PostPage = ({
       }
     }
   };
-
-  const deleteConfirmationModal = (
-    <Modal
-      title="Confirm"
-      visible={deleteModalVisibility}
-      onOk={postDelete}
-      onCancel={handleCancelPostDelete}
-      okText="Delete"
-      cancelText="Cancel"
-    >
-      <p> Are you sure you want to delete the post? </p>
-    </Modal>
-  );
 
   const loadPost = async () => {
     let response;
@@ -293,6 +287,7 @@ const PostPage = ({
             <>
               <Post
                 currentPost={post}
+                deleteModalVisibility={deleteModalVisibility}
                 includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
@@ -302,12 +297,14 @@ const PostPage = ({
                 showComments={showComments}
                 numComments={commentsCount}
                 onChange={handlePostDelete}
+                handleCancelPostDelete={handleCancelPostDelete}
+                handleCommentDelete={handleCommentDelete}
+                postDelete={postDelete}
                 handlePostLike={handlePostLike}
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}
               />
-              {deleteConfirmationModal}
               <EditPost
                 user={user}
                 dispatchAction={dispatchPostAction}

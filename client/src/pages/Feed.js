@@ -31,7 +31,7 @@ import {
 } from "hooks/reducers/feedReducers";
 
 // ICONS
-import SvgIcon from "components/Icon/SvgIcon";
+import { CreatePostIcon } from "../components/Profile/ProfileComponents";
 import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
@@ -50,6 +50,9 @@ import {
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
@@ -198,7 +201,6 @@ const HeaderWrapper = styled.div`
     padding: 0;
     img {
       margin-left: 1.2rem;
-      max-height: 4.2rem;
     }
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -236,6 +238,7 @@ const Feed = (props) => {
     page,
     posts: postsList,
     status,
+    deleteModalVisibility,
   } = posts;
 
   const { history, isAuthenticated, user } = props;
@@ -323,7 +326,7 @@ const Feed = (props) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user && user.id}`;
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
       let response = {};
 
       if (user) {
@@ -355,6 +358,20 @@ const Feed = (props) => {
         history.push(LOGIN);
       }
     }
+  };
+
+  const handlePostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
   };
 
   const loadPosts = useCallback(async () => {
@@ -609,7 +626,7 @@ const Feed = (props) => {
                 <FiltersList />
               </FiltersWrapper>
             </div>
-            <FiltersSidebar gtmPrefix={GTM.feed.prefix}/>
+            <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
@@ -619,10 +636,9 @@ const Feed = (props) => {
                 onClick={handleCreatePost}
               >
                 Create a post
-                <SvgIcon
+                <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}
-                  style={{ width: "5rem", height: "5rem" }}
                 />
               </button>
             </HeaderWrapper>
@@ -634,14 +650,17 @@ const Feed = (props) => {
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
-              handlePostDelete={postDelete}
+              postDelete={postDelete}
               user={user}
+              deleteModalVisibility={deleteModalVisibility}
+              handlePostDelete={handlePostDelete}
+              handleCancelPostDelete={handleCancelPostDelete}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
             )}
             {isLoading ? <Loader /> : <></>}
-            <SvgIcon
+            <CreatePostIcon
               id={gtmTag(GTM.post.createPost)}
               src={creatPost}
               onClick={handleCreatePost}

@@ -5,10 +5,12 @@ const Posts = ({
   isAuthenticated,
   filteredPosts,
   handlePostLike,
-  handlePostDelete,
+  handleCancelPostDelete,
   loadPosts,
   postDelete,
   user,
+  deleteModalVisibility,
+  handlePostDelete,
 }) => {
   return (
     <div className="feed-posts">
@@ -19,11 +21,13 @@ const Posts = ({
           numComments={filteredPosts[key].commentsCount}
           loadPosts={loadPosts}
           handlePostLike={handlePostLike}
-          handlePostDelete={handlePostDelete}
+          handleCancelPostDelete={handleCancelPostDelete}
           postDelete={postDelete}
           isAuthenticated={isAuthenticated}
           user={user}
           key={key}
+          deleteModalVisibility={deleteModalVisibility}
+          onChange={handlePostDelete}
         />
       ))}
     </div>
