@@ -2,7 +2,11 @@ import React, { useContext } from "react";
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag";
 import LocationInput from "components/Input/LocationInput";
-import { FilterAccordion, FilterAccordionPanel } from "./StyledAccordion";
+import {
+  FilterAccordion,
+  FilterAccordionPanel,
+  AccordionHeader,
+} from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 
 const providersGtmTagsMap = {
@@ -74,10 +78,13 @@ const FilterAccord = ({ gtmPrefix }) => {
       if (filter.label === "location") {
         return (
           <FilterAccordionPanel
-            header={capitalizeFirstLetter(filter.label)}
+            header={
+              <AccordionHeader id={gtmTag(GTM.post.location)}>
+                {capitalizeFirstLetter(filter.label)}
+              </AccordionHeader>
+            }
             className={filter.className}
             key={idx}
-            id={gtmTag(GTM.post.location)}
           >
             <LocationInput
               location={location}
@@ -90,10 +97,13 @@ const FilterAccord = ({ gtmPrefix }) => {
       } else {
         return (
           <FilterAccordionPanel
-            header={capitalizeFirstLetter(filter.label)}
+            header={
+              <AccordionHeader id={gtmTag(gtmTagsMap[filter.label])}>
+                {capitalizeFirstLetter(filter.label)}
+              </AccordionHeader>
+            }
             className={filter.className}
             key={idx}
-            id={gtmTag(gtmTagsMap[filter.label])}
           >
             {Object.values(filter.options).map((option, idx) => {
               return (

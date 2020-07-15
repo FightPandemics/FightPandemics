@@ -42,7 +42,7 @@ module.exports = {
     createPost: "_CP",
     allPost: "_AP",
     filterPost: "_FI",
-    quitFilters: "_QF", 
+    quitFilters: "_QF",
     viewResults: "_VR",
     requestOffer: "_RO",
     location: "_LO",
@@ -79,7 +79,7 @@ module.exports = {
   social: {
     facebook: "_FB",
     google: "_GG",
-    linkedin: "_LK",
+    linkedin: "_LN",
   },
   offerHelp: {
     prefix: "OF",
