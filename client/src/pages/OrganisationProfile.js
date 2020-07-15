@@ -262,13 +262,6 @@ const OrganisationProfile = () => {
     }
   };
 
-  const onCancelModal = (currentStep) => {
-    setModal(false);
-    if (currentStep == 4) {
-      fetchOrganisationPosts();
-    }
-  };
-
   const renderURL = () => {
     if (organisation) {
       if (urlsAndEmail.length !== 0) {
@@ -377,7 +370,8 @@ const OrganisationProfile = () => {
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onCancelModal}
+                  onCancel={() => setModal(false)}
+                  loadPosts={fetchOrganisationPosts}
                   visible={modal}
                   user={user}
                 />
