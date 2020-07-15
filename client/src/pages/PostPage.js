@@ -12,7 +12,6 @@ import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
-import CustomModal from "components/CreatePost/CustomModal";
 
 // Constants
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
@@ -37,15 +36,14 @@ import { theme, mq } from "constants/theme";
 const { typography } = theme;
 
 const Container = styled.div`
-padding: 6rem;
-display: flex;
-align-items: center;
-flex-flow: column;
-text-align: center;
-font-family: ${typography.font.family.display};
-font-size: ${typography.size.large};
-font-weight: normal;
-
+  padding: 6rem;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  text-align: center;
+  font-family: ${typography.font.family.display};
+  font-size: ${typography.size.large};
+  font-weight: normal;
 `;
 
 export const PostContext = React.createContext();
@@ -110,7 +108,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
             console.log({ error });
           }
         }
-
         if (response.data) {
           postDispatch({
             type: SET_LIKE,
