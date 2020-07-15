@@ -42,7 +42,11 @@ import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
-import { DELETE_MODAL_POST, DELETE_MODAL_COMMENT, DELETE_MODAL_HIDE } from "hooks/actions/feedActions";
+import {
+  DELETE_MODAL_POST,
+  DELETE_MODAL_COMMENT,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -216,16 +220,16 @@ const Post = ({
   const handleDelete = () => {
     setToDelete(post._id);
     onChange();
-  }
+  };
 
   const handleDeleteOk = () => {
     if (deleteModalVisibility === DELETE_MODAL_POST) {
       postDelete(post);
     } else if (deleteModalVisibility === DELETE_MODAL_COMMENT) {
-      deleteComment(comment)
+      deleteComment(comment);
     }
 
-    setToDelete('');
+    setToDelete("");
     handleCancelPostDelete();
   };
 
@@ -392,7 +396,7 @@ const Post = ({
           placeholder={"Write a comment..."}
           onPressEnter={handleComment}
           onChange={handleOnChange}
-          value={typeof comment === 'string' && comment }
+          value={typeof comment === "string" && comment}
         />
       ) : (
         <div>Only logged in users can comment.</div>
@@ -480,7 +484,7 @@ const Post = ({
                       post={post}
                       user={user}
                     />
-                )}
+                  )}
               </div>
             </div>
             <WhiteSpace size="md" />
@@ -503,16 +507,18 @@ const Post = ({
             {renderComments}
             <WebModal
               title="Confirm"
-              visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE}
-              onOk={() => handleDeleteOk() }
+              visible={
+                !!deleteModalVisibility &&
+                deleteModalVisibility !== DELETE_MODAL_HIDE
+              }
+              onOk={() => handleDeleteOk()}
               onCancel={handleCancelPostDelete}
               okText="Delete"
               cancelText="Cancel"
             >
-              { (deleteModalVisibility === DELETE_MODAL_POST
-                && <p>Are you sure you want to delete the post?</p>)
-                || <p>Are you sure you want to delete the comment?</p>
-              }
+              {(deleteModalVisibility === DELETE_MODAL_POST && (
+                <p>Are you sure you want to delete the post?</p>
+              )) || <p>Are you sure you want to delete the comment?</p>}
             </WebModal>
           </StyledPostPagePostCard>
           <StyledButtonWizard
@@ -574,16 +580,21 @@ const Post = ({
           {renderShareModal}
           <WebModal
             title="Confirm"
-            visible={!!deleteModalVisibility && deleteModalVisibility !== DELETE_MODAL_HIDE && toDelete === post._id}
-            onOk={() => handleDeleteOk() }
+            visible={
+              !!deleteModalVisibility &&
+              deleteModalVisibility !== DELETE_MODAL_HIDE &&
+              toDelete === post._id
+            }
+            onOk={() => handleDeleteOk()}
             onCancel={handleCancelPostDelete}
             okText="Delete"
             cancelText="Cancel"
           >
-            {deleteModalVisibility === DELETE_MODAL_POST
-              ? <p>Are you sure you want to delete the post?</p>
-              : <p>Are you sure you want to delete the comment?</p>
-            }
+            {deleteModalVisibility === DELETE_MODAL_POST ? (
+              <p>Are you sure you want to delete the post?</p>
+            ) : (
+              <p>Are you sure you want to delete the comment?</p>
+            )}
           </WebModal>
         </PostCard>
       )}
