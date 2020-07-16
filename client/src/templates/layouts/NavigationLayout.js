@@ -5,6 +5,8 @@ import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
+import tagManagerArgs from "App";
+import TagManager from "react-gtm-module";
 import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
@@ -620,7 +622,12 @@ const NavigationLayout = (props) => {
     </div>
   );
 
-  return <>{renderNavigationBar()}</>;
+  if (isAuthenticated) { 
+    tagManagerArgs['dataLayer'] = {userId: user.id};
+    TagManager.initialize(tagManagerArgs);
+  } 
+
+  return <>{renderNavigationBar()}</>; 
 };
 
 export default NavigationLayout;
