@@ -25,7 +25,7 @@ const SOURCED_BY_FP_OWNER_UPDATE = {
   lastName: "FightPandemics",
   location: SOURCED_BY_FP_LOCATION,
   photo:
-    "https://cdn.mcauto-images-production.sendgrid.net/85ee67c5cadc8b02/da36013a-1030-4afe-bbb5-91c5c10d7fb1/515x507.png",
+    "https://raw.githubusercontent.com/FightPandemics/FightPandemics/master/images/fp_logo.png",
 };
 
 const SOURCED_BY_FP_ORG_UPDATE = {
