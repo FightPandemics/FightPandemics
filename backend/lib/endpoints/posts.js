@@ -183,6 +183,7 @@ async function routes(app) {
             "author.location.state": true,
             "author.location.country": true,
             "author.name": true,
+            "author.photo": true,
             "author.type": true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
