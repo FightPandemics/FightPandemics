@@ -77,6 +77,7 @@ const FilterBox = ({ gtmPrefix }) => {
       {renderFilterOptions(filters)}
       <ModalWrapper
         popup
+        wrapClassName="feed-filter-modal-wrap"
         visible={filterModal}
         onClose={handleOnClose}
         animationType="slide-up"

@@ -150,6 +150,7 @@ const OptionWrapper = styled.div`
 
   p {
     margin-top: 1.4rem;
+    pointer-events: none;
   }
 
   @media screen and (min-width: ${mq.phone.wide.minWidth}) {
@@ -158,7 +159,14 @@ const OptionWrapper = styled.div`
   }
 `;
 
-const Option = ({ img, text, onClick, type, gtmTag}) => (
+const StyledSvgIcon = styled(SvgIcon)`
+  margin-bottom: 1.5rem;
+  width: 4rem;
+  height: auto;
+  pointer-events: none;
+`;
+
+const Option = ({ img, text, onClick, type, gtmTag }) => (
   <OptionWrapper
     id={gtmTag}
     onClick={() => onClick(text)}
@@ -166,10 +174,7 @@ const Option = ({ img, text, onClick, type, gtmTag}) => (
       backgroundColor: type === text.toLowerCase() && `${colors.lightGray}`,
     }}
   >
-    <SvgIcon
-      src={img}
-      style={{ marginBottom: "1.5rem", width: "4rem", height: "auto" }}
-    />
+    <StyledSvgIcon src={img} />
     <p>{text}</p>
   </OptionWrapper>
 );

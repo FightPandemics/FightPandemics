@@ -285,12 +285,7 @@ const Post = ({
           {!loadMorePost ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
-              <span
-                id={gtmTag("viewMore", GTM.post.prefix)}
-                className="view-more"
-              >
-                View Less
-              </span>
+              <span className="view-more">View Less</span>
             </>
           ) : (
             <span

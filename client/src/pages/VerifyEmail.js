@@ -59,7 +59,6 @@ const VerifyDirectionsContainer = styled.div`
   }
 
   .directions-text {
-    width: 40.6rem;
     font-family: Poppins;
     font-size: 1.4rem;
     font-weight: 500;
@@ -67,7 +66,11 @@ const VerifyDirectionsContainer = styled.div`
     font-style: normal;
     line-height: 1.29;
     letter-spacing: normal;
-    margin-left: 25%;
+    padding: 0 8vw;
+
+    @media screen and (min-width: ${mq.desktop.large.minWidth}) {
+      padding: 0 15vw;
+    }
 
     @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
       width: 100%;
@@ -76,7 +79,7 @@ const VerifyDirectionsContainer = styled.div`
   }
 `;
 
-const VerifyEmail = ({ email }) => {
+const VerifyEmail = ({ forgotPasswordRequested, email }) => {
   return (
     <VerifyEmailContainer>
       <VerifyEmailLeftContainer>
@@ -89,9 +92,21 @@ const VerifyEmail = ({ email }) => {
           <VerifyDirectionsContainer>
             <h1 className="directions-header">Check your inbox</h1>
             <p className="directions-text">
-              We just emailed a link to {email}. Click the link to confirm your
-              account and complete your profile. If you don't see a message
-              within a few minutes please check your spam folder.
+              {forgotPasswordRequested ? (
+                <>
+                  An e-mail has been sent to {email} with further instructions
+                  on how to reset your password.
+                </>
+              ) : (
+                <>
+                  We just emailed a link to {email}. Click the link to confirm
+                  your account and complete your profile.
+                </>
+              )}
+              <br />
+              <br />
+              If you don't see a message within a few minutes please check spam,
+              promotions or other incoming mail folders.
             </p>
           </VerifyDirectionsContainer>
         </div>
@@ -102,6 +117,7 @@ const VerifyEmail = ({ email }) => {
 
 const mapStateToProps = ({ session }) => ({
   email: session.email,
+  forgotPasswordRequested: session.forgotPasswordRequested,
 });
 
 export default connect(mapStateToProps)(VerifyEmail);

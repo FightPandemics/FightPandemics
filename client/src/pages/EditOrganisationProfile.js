@@ -40,31 +40,8 @@ import {
 } from "context/OrganisationContext";
 
 const URLS_CONFIG = {
-  appStore: [
-    "Link to Apple Store",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9.]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and . are allowed",
-      },
-      minLength: {
-        value: 5,
-        message: "Min. length is 5 characters",
-      },
-    },
-    APPSTORE_URL,
-  ],
-  playStore: [
-    "Link to Google Play",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9]*$/,
-        message: "Invalid entry: only alphanumeric characters are allowed",
-      },
-    },
-    PLAYSTORE_URL,
-  ],
+  appStore: ["Link to Apple Store", {}, APPSTORE_URL],
+  playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
   twitter: [
     "Twitter URL",
     {
@@ -73,10 +50,6 @@ const URLS_CONFIG = {
         message:
           "Invalid entry: only alphanumeric characters and _ are allowed",
       },
-      maxLength: {
-        value: 15,
-        message: "Max. length is 15 characters",
-      },
     },
     TWITTER_URL,
   ],
@@ -84,9 +57,9 @@ const URLS_CONFIG = {
     "LinkedIn URL",
     {
       pattern: {
-        value: /^[a-zA-Z0-9_-]*$/,
+        value: /^[a-zA-Z0-9_\-/]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
+          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       },
     },
     LINKEDIN_URL,
