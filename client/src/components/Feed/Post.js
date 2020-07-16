@@ -339,20 +339,26 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post?.author?.name}
+      title={
+        <div className="titleWrapper">
+          <div className="author">{post?.author?.name}</div>
+          <div className="location-status">
+            <SvgIcon src={statusIndicator} className="status-icon" />
+            {post?.author?.location?.city
+              ? `${post.author.location.city}, `
+              : ""}
+            {post?.author?.location?.country
+              ? post.author.location.country
+              : ""}
+          </div>
+        </div>
+      }
       thumb={
         post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
         )
-      }
-      extra={
-        <span>
-          <SvgIcon src={statusIndicator} className="status-icon" />
-          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
-          {post?.author?.location?.country ? post.author.location.country : ""}
-        </span>
       }
     />
   );
