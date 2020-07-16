@@ -24,7 +24,7 @@ const App = (props) => {
   );
 };
 
-const tagManagerArgs = {
+export const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
 };
 
