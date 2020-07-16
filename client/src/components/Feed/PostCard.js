@@ -71,7 +71,7 @@ const PostCard = styled(Card)`
         align-items: unset;
         font-size: ${medium};
 
-        .titleWrapper {
+        .title-wrapper {
           width: calc(100% - 4.7rem);
         }
 
