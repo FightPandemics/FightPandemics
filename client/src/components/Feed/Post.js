@@ -340,7 +340,7 @@ const Post = ({
   const renderHeader = (
     <Card.Header
       title={
-        <div className="title-Wrapper">
+        <div className="title-wrapper">
           <div className="author">{post?.author?.name}</div>
           <div className="location-status">
             <SvgIcon src={statusIndicator} className="status-icon" />
