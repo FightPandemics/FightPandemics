@@ -28,7 +28,7 @@ export const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
 };
 
-TagManager.initialize(tagManagerArgs);
+// TagManager.initialize(tagManagerArgs);
 
 const mapDispatchToProps = {
   initAuth: initAuth,
