@@ -208,7 +208,10 @@ export default ({
               id={GTM.nav.prefix + GTM.nav.feedBack}
               onClick={onFeedbackIconClick}
             >
-              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
+              <SvgIcon
+                src={envelope}
+                style={{ marginLeft: "1.5rem", pointerEvents: "none" }}
+              />
             </button>
           </>
         )}
