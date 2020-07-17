@@ -6,8 +6,6 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
-import tagManagerArgs from "App";
-import TagManager from "react-gtm-module";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -152,15 +150,6 @@ const StyleLink = styled.p`
 `;
 
 const Home = props => {
-  const { isAuthenticated, user, history } = props;
-
-  if (isAuthenticated) { 
-    tagManagerArgs['dataLayer'] = {userId: user.id};
-    TagManager.initialize(tagManagerArgs);
-  } else {
-    TagManager.initialize(tagManagerArgs);
-  }
-
   return (
     <MainContainer className="text-center home">
       <StyledIntro>
@@ -190,7 +179,7 @@ const Home = props => {
               type="ghost"
               inactiveImg={needHelpInactive}
               activeImg={needHelpActive}
-              onClick={() => history.push("/need-help")}
+              onClick={() => props.history.push("/need-help")}
             >
               Request Help
             </ImageButton>
@@ -201,7 +190,7 @@ const Home = props => {
               type="ghost"
               inactiveImg={offerHelpInactive}
               activeImg={offerHelpActive}
-              onClick={() => history.push("/offer-help")}
+              onClick={() => props.history.push("/offer-help")}
             >
               Offer Help
             </ImageButton>

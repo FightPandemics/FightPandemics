@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import GTM from "constants/gtm-tags";
+import tagManagerArgs from "App";
+import TagManager from "react-gtm-module";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import {
@@ -231,6 +233,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
+          const { token, emailVerified, user : { id } } = res.data;
+          if (token && emailVerified) { 
+            tagManagerArgs['dataLayer'] = { userId: id };
+            TagManager.initialize(tagManagerArgs);
+          } else {
+            TagManager.initialize(tagManagerArgs);
+          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
