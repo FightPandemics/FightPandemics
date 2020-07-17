@@ -60,6 +60,7 @@ const supporterLogos = [
   aut0Logo,
   awsLogo,
   calendlyLogo,
+  dataDogLogo,
   datasauraiLogo,
   figmaLogo,
   googleMapsLogo,
@@ -71,6 +72,7 @@ const supporterLogos = [
   mongodbLogo,
   newrelicLogo,
   notionLogo,
+  pagerDuty,
   papertrailLogo,
   sendgridLogo,
   sentryLogo,
@@ -81,8 +83,6 @@ const supporterLogos = [
   workableLogo,
   zendeskLogo,
   zeplinLogo,
-  dataDogLogo,
-  pagerDuty,
 ];
 
 function LogoItem(props) {
