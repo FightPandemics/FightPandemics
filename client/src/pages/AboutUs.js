@@ -44,8 +44,8 @@ import typeformLogo from "assets/supporters-logos/typeform-logo.png";
 import workableLogo from "assets/supporters-logos/workableLogo.png";
 import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
 import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
-import dataDogLogo from "assets/supporters-logos/datadog-logo.svg";
-import pagerDuty from "assets/supporters-logos/pagerduty.svg";
+import datadogLogo from "assets/supporters-logos/datadog-logo.svg";
+import pagerdutyLogo from "assets/supporters-logos/pagerduty.svg";
 
 // social icons
 import instagramLogo from "assets/icons/social-instagram-unfilled.svg";
@@ -60,7 +60,7 @@ const supporterLogos = [
   aut0Logo,
   awsLogo,
   calendlyLogo,
-  dataDogLogo,
+  datadogLogo,
   datasauraiLogo,
   figmaLogo,
   googleMapsLogo,
@@ -72,7 +72,7 @@ const supporterLogos = [
   mongodbLogo,
   newrelicLogo,
   notionLogo,
-  pagerDuty,
+  pagerdutyLogo,
   papertrailLogo,
   sendgridLogo,
   sentryLogo,
