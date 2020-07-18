@@ -325,6 +325,9 @@ const Post = ({
           <ViewMore onClick={onClick} loadContent={loadMorePost} />
         ) : (
           <Link
+                onClick={() =>
+                  sessionStorage.setItem("postviewmore", `/post/${post._id}`)
+                }
             to={{
               pathname: LOGIN,
               state: { from: window.location.href },
