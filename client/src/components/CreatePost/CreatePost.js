@@ -6,6 +6,7 @@ import {
   Option,
   TitleStep,
   OptionButton,
+  OptionButtonWrapper,
   BackButton,
   CreateOrgLink,
   ViewPostButton,
@@ -79,6 +80,7 @@ const Step2 = ({ user, gtmPrefix }) => {
           src={back}
           onClick={() => setCurrentStep(1)}
         />
+        <OptionButtonWrapper>
         {user.organisations?.map((item) => {
           const { _id: organisationId } = item;
           return (
@@ -93,6 +95,7 @@ const Step2 = ({ user, gtmPrefix }) => {
             </OptionButton>
           );
         })}
+        </OptionButtonWrapper>
         <CreateOrgLink
           to={"/create-organisation-profile"}
           id={
