@@ -39,6 +39,9 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       display: flex !important;
       font-weight: bold !important;
       font-size: ${theme.typography.size.large} !important;
+      padding: 0;
+      margin-left 1.5rem;
+      margin-right: 3rem;
 
       @media screen and ${mq.phone.wide.max} {
         height: 35px;
