@@ -81,20 +81,20 @@ const Step2 = ({ user, gtmPrefix }) => {
           onClick={() => setCurrentStep(1)}
         />
         <OptionButtonWrapper>
-        {user.organisations?.map((item) => {
-          const { _id: organisationId } = item;
-          return (
-            <OptionButton
-              key={organisationId}
-              onClick={() => {
-                setForm({ organisationId });
-                setCurrentStep(3);
-              }}
-            >
-              {item.name}
-            </OptionButton>
-          );
-        })}
+          {user.organisations?.map((item) => {
+            const { _id: organisationId } = item;
+            return (
+              <OptionButton
+                key={organisationId}
+                onClick={() => {
+                  setForm({ organisationId });
+                  setCurrentStep(3);
+                }}
+              >
+                {item.name}
+              </OptionButton>
+            );
+          })}
         </OptionButtonWrapper>
         <CreateOrgLink
           to={"/create-organisation-profile"}

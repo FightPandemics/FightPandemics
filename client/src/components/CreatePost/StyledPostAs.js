@@ -167,7 +167,7 @@ const StyledSvgIcon = styled(SvgIcon)`
 `;
 
 const OptionButtonWrapper = styled.div`
-overflow: auto;
+  overflow: auto;
 `;
 
 const Option = ({ img, text, onClick, type, gtmTag }) => (
