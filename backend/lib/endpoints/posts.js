@@ -180,9 +180,10 @@ async function routes(app) {
             _id: true,
             "author.id": true,
             "author.location.city": true,
-            "author.location.state": true,
             "author.location.country": true,
+            "author.location.state": true,
             "author.name": true,
+            "author.photo": true,
             "author.type": true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
@@ -512,6 +513,12 @@ async function routes(app) {
             },
           },
           {
+            $skip: parseInt(skip, 10) || 0,
+          },
+          {
+            $limit: parseInt(limit, 10) || COMMENT_PAGE_SIZE,
+          },
+          {
             $lookup: {
               as: "children",
               foreignField: "parentId",
@@ -526,14 +533,8 @@ async function routes(app) {
               },
             },
           },
-          {
-            $skip: parseInt(skip) || 0,
-          },
-          {
-            $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
-          },
-        ]).then((comments) => {
-          comments.forEach((comment) => {
+        ]).then((pageComments) => {
+          pageComments.forEach((comment) => {
             comment.elapsedTimeText = setElapsedTimeText(
               comment.createdAt,
               comment.updatedAt,
