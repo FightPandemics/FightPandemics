@@ -1,4 +1,5 @@
 ![staging](https://github.com/FightPandemics/FightPandemics/workflows/staging/badge.svg)
+![production](https://github.com/FightPandemics/FightPandemics/workflows/production/badge.svg)
 
 #  FightPandemics.com Overview
 
