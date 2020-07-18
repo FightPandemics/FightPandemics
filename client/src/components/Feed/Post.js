@@ -122,16 +122,19 @@ const Post = ({
     }
 
     let response;
+    let commentCountRes;
     let previousComments = [...comments];
     const skip = 0;
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
     }&skip=${skip}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
     dispatchPostAction(SET_LOADING);
 
     try {
       response = await axios.get(endPoint);
+      commentCountRes = await axios.get(totalCommentCountEndPoint);
     } catch (error) {
       console.log({ error });
       dispatchPostAction(RESET_LOADING);
@@ -157,7 +160,7 @@ const Post = ({
           "comments",
           allComments,
           "numComments",
-          allComments.length,
+          commentCountRes.data.numComments,
         );
       }
 
@@ -185,14 +188,17 @@ const Post = ({
   const handleComment = async (e) => {
     e.preventDefault();
     let response;
+    let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}`;
     const newComment = {
       content: comment,
     };
 
     try {
       response = await axios.post(endPoint, newComment);
+      commentCountRes = await axios.get(totalCommentCountEndPoint);
     } catch (error) {
       console.log({ error });
       setComment([]);
@@ -206,7 +212,7 @@ const Post = ({
         "comments",
         allComments,
         "numComments",
-        allComments.length,
+        commentCountRes.data.numComments,
       );
       setComment([]);
     }
@@ -235,13 +241,16 @@ const Post = ({
 
   const deleteComment = async (comment) => {
     let response;
+    let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
     if (isAuthenticated && comment.author.id === user.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
       try {
         response = await axios.delete(endPoint);
+        commentCountRes = await axios.get(totalCommentCountEndPoint);
       } catch (error) {
         console.log({ error });
       }
@@ -255,7 +264,7 @@ const Post = ({
           "comments",
           filterComments,
           "numComments",
-          filterComments.length,
+          commentCountRes.data.numComments,
         );
       }
     }
@@ -604,3 +613,4 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
+
