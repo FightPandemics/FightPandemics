@@ -533,8 +533,8 @@ async function routes(app) {
               },
             },
           },
-        ]).then((pageComments) => {
-          pageComments.forEach((comment) => {
+        ]).then((comments) => {
+          comments.forEach((comment) => {
             comment.elapsedTimeText = setElapsedTimeText(
               comment.createdAt,
               comment.updatedAt,
