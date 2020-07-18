@@ -243,7 +243,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           const { token, emailVerified } = res.data;
           const userId = res.data?.user?.id;
           if (token && emailVerified) {
-            // on initial sign in with social there is not id
+            // on initial sign in with social there is no id
             TagManager.dataLayer(getTagManagerArgs(userId ? userId : -1));
           }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
