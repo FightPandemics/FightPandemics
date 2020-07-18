@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import GTM from "constants/gtm-tags";
+import TagManager from "react-gtm-module";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import {
@@ -210,6 +211,14 @@ const VisibilityButton = ({ onClick, type }) => {
   );
 };
 
+const getTagManagerArgs = (userId) => {
+  return {
+    dataLayer: {
+      userId: userId,
+    },
+  };
+};
+
 const Login = ({ isLoginForm, forgotPassword }) => {
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
@@ -231,6 +240,12 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
+          const { token, emailVerified } = res.data;
+          const userId = res.data?.user?.id;
+          if (token && emailVerified) {
+            // on initial sign in with social there is not id
+            TagManager.dataLayer(getTagManagerArgs(userId ? userId : -1));
+          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -249,7 +264,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
 
     try {
       const res = await axios.post("/api/auth/login", formData);
-
+      TagManager.dataLayer(getTagManagerArgs(res.data?.user?.id));
       dispatch({
         type: AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
