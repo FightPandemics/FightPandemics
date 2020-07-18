@@ -57,6 +57,11 @@ const NavLinks = styled.div`
     background: transparent;
     cursor: pointer;
     padding-top: 0.4rem;
+
+    img {
+      margin-left: 1.5rem;
+      pointer-events: none;
+    }
   }
   ul {
     list-style-type: none;
@@ -208,10 +213,7 @@ export default ({
               id={GTM.nav.prefix + GTM.nav.feedBack}
               onClick={onFeedbackIconClick}
             >
-              <SvgIcon
-                src={envelope}
-                style={{ marginLeft: "1.5rem", pointerEvents: "none" }}
-              />
+              <SvgIcon src={envelope} />
             </button>
           </>
         )}
