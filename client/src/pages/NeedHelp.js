@@ -79,7 +79,8 @@ const Step2 = (props) => {
       props.nextStep();
     }
   };
-  const rejectLocationDetection = () => {
+  const rejectLocationDetection = (e) => {
+    e.nativeEvent.stopImmediatePropagation(); // click event bubbling causing GTM tag misfiring
     props.update("location", null);
     props.nextStep();
   };
