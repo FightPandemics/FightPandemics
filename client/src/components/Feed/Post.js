@@ -326,7 +326,7 @@ const Post = ({
         ) : (
           <Link
                 onClick={() =>
-                  sessionStorage.setItem("postviewmore", `/post/${post._id}`)
+                  sessionStorage.setItem("postredirect", `/post/${post._id}`)
                 }
             to={{
               pathname: LOGIN,
