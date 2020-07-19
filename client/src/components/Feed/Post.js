@@ -74,7 +74,6 @@ const Post = ({
   postDelete,
   showComments,
   user,
-  ownUser
 }) => {
   const { postId } = useParams();
   const limit = useRef(5);
