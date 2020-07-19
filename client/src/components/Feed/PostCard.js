@@ -12,8 +12,7 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  padding-left: 2rem;
-  padding-right 2rem;
+  padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
