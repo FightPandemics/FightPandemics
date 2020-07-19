@@ -303,6 +303,7 @@ const NavigationLayout = (props) => {
 
       if (res) {
         toggleModal("thanksModal");
+        setTimeout(() => dispatchAction(SET_VALUE, "thanksModal", false), 3000);
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -622,12 +623,12 @@ const NavigationLayout = (props) => {
     </div>
   );
 
-  if (isAuthenticated) { 
-    tagManagerArgs['dataLayer'] = {userId: user.id};
+  if (isAuthenticated) {
+    tagManagerArgs["dataLayer"] = { userId: user.id };
     TagManager.initialize(tagManagerArgs);
-  } 
+  }
 
-  return <>{renderNavigationBar()}</>; 
+  return <>{renderNavigationBar()}</>;
 };
 
 export default NavigationLayout;
