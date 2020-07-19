@@ -12,8 +12,8 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  margin-left: 2rem;
-  margin-right 2rem;
+  padding-left: 2rem;
+  padding-right 2rem;
   overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -120,6 +120,11 @@ const PostCard = styled(Card)`
       &.content-wrapper {
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           padding: 0 3.4rem;
+        }
+
+        .ant-typography {
+          margin: 0;
+          padding: 1rem 0;
         }
       }
 
