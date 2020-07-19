@@ -62,14 +62,11 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
-            const postCommentRedirect = sessionStorage.getItem("postcomment");
-            const postViewMoreRedirect = sessionStorage.getItem("postviewmore");
-            if (postCommentRedirect) {
-              redirect = postCommentRedirect;
-              sessionStorage.removeItem("postcomment");
-            } else if (postViewMoreRedirect) {
-              redirect = postViewMoreRedirect;
-              sessionStorage.removeItem("postviewmore");
+            //redirect to the appropriate post if View More or Comment clicked
+            const postRedirect = sessionStorage.getItem("postredirect");
+            if (postRedirect) {
+              redirect = postRedirect;
+              sessionStorage.removeItem("postredirect");
             } else {
               redirect = HOME;
             }
