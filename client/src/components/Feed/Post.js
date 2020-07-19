@@ -74,6 +74,7 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  ownUser
 }) => {
   const { postId } = useParams();
   const limit = useRef(5);
@@ -529,7 +530,7 @@ const Post = ({
               {isAuthenticated &&
                 user &&
                 (user?._id === post?.author?.id ||
-                  user?.id === post?.author?.id ||
+                  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser)) ||
                   isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={handleDelete}
@@ -604,3 +605,4 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
+
