@@ -117,6 +117,7 @@ const FiltersWrapper = styled.div`
     color: ${black};
     cursor: pointer;
     display: flex;
+    width: 100%;
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     font-weight: bold;
@@ -132,10 +133,12 @@ const FiltersWrapper = styled.div`
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
+      pointer-events: none;
       svg {
         fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
+        pointer-events: none;
       }
     }
   }
@@ -201,6 +204,7 @@ const HeaderWrapper = styled.div`
     padding: 0;
     img {
       margin-left: 1.2rem;
+      pointer-events: none;
     }
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
