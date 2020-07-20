@@ -83,6 +83,35 @@ const AvatarContainer = styled.div`
   align-items: center;
 `;
 
+const FeedbackItem = styled(List.Item)`
+  background: unset;
+  padding-left: 2.1rem;
+  cursor: pointer;
+  height: ${(props) => props.height ?? "inherit"};
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    pointer-events: none;
+    & .am-list-content {
+      color: ${white};
+      pointer: none;
+      font-family: "Poppins", sans-serif;
+      font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
+      font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
+      line-height: 6rem;
+      padding: 0;
+      margin: ${(props) =>
+        typeof props.margin != undefined ? props.margin : "inherit"};
+    }
+  }
+
+  &.am-list-item-active {
+    background: ${tropicalBlue};
+  }
+`;
+
 const NavItem = styled(List.Item)`
   background: unset;
   padding-left: 2.1rem;
@@ -515,8 +544,8 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <Space height="10vh" limitMobileHeight />
-      <NavItem
-        id={GTM.nav.prefix + GTM.nav.feedBack}
+      <FeedbackItem
+        id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
           dispatchAction(TOGGLE_STATE, "ratingModal");
           toggleDrawer();
@@ -524,7 +553,7 @@ const NavigationLayout = (props) => {
         size="small"
       >
         Feedback
-      </NavItem>
+      </FeedbackItem>
       <NavItem history={history}>
         <BriefLink to="/auth/logout">Sign Out</BriefLink>
       </NavItem>
@@ -545,8 +574,8 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <Space height="33vh" />
-      <NavItem
-        id={GTM.nav.prefix + GTM.nav.feedBack}
+      <FeedbackItem
+        id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
           dispatchAction(TOGGLE_STATE, "ratingModal");
           toggleDrawer();
@@ -554,7 +583,7 @@ const NavigationLayout = (props) => {
         size="small"
       >
         Feedback
-      </NavItem>
+      </FeedbackItem>
     </>
   );
 
@@ -618,9 +647,9 @@ const NavigationLayout = (props) => {
         <CookieAlert />
       </Drawer>
     </div>
-  ); 
+  );
 
-  return <>{renderNavigationBar()}</>; 
+  return <>{renderNavigationBar()}</>;
 };
 
 export default NavigationLayout;
