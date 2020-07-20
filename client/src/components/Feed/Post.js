@@ -474,7 +474,7 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-                {isAuthenticated && 
+                {isAuthenticated &&
                   user &&
                   (isAuthorUser(user, post) ||
                     (user.organisations &&
