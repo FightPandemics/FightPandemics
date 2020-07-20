@@ -144,7 +144,7 @@ const PostSocial = ({
           ) : (
             <Link
               onClick={() =>
-                sessionStorage.setItem("postcomment", `/post/${id}`)
+                sessionStorage.setItem("postredirect", `/post/${id}`)
               }
               to={{
                 pathname: LOGIN,
