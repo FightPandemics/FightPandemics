@@ -460,6 +460,11 @@ const Post = ({
     </Modal>
   );
 
+  const isAuthorUser = (user, post) => {
+    return user?._id === post?.author?.id ||
+    (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
+  }
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -469,10 +474,9 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-                {isAuthenticated &&
+                {isAuthenticated && 
                   user &&
-                  (user._id === post.author.id ||
-                    user.id === post.author.id ||
+                  (isAuthorUser(user, post) ||
                     (user.organisations &&
                       isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
@@ -531,8 +535,7 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user?._id === post?.author?.id ||
-                  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser)) ||
+                (isAuthorUser(user, post) ||
                   isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={handleDelete}
@@ -607,4 +610,3 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
-
