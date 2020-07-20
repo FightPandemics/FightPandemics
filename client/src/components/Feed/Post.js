@@ -31,7 +31,7 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
-import { isAuthorOrg } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
@@ -459,11 +459,6 @@ const Post = ({
       </Heading>
     </Modal>
   );
-
-  const isAuthorUser = (user, post) => {
-    return user?._id === post?.author?.id ||
-    (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
-  }
 
   return (
     <>

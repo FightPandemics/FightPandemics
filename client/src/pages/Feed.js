@@ -64,6 +64,11 @@ export const isAuthorOrg = (organisations, author) => {
   return isValid;
 };
 
+export const isAuthorUser = (user, post) => {
+  return user?._id === post?.author?.id ||
+  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
+}
+
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
   REQUEST: `_${GTM.requestHelp.prefix}`,
@@ -555,9 +560,7 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id ||
-        user.id === post.author.id ||
-        isAuthorOrg(user.organisations, post.author))
+      (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
