@@ -18,12 +18,18 @@ import share from "assets/icons/share.svg";
 import shareGray from "assets/icons/share-gray.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+// Constants
+import { mq } from "constants/theme";
+
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;
 `;
 
 const StyledSpan = styled.span`
   pointer-events: none;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
+  }
 `;
 
 const PostSocial = ({
@@ -54,24 +60,24 @@ const PostSocial = ({
     return liked ? (
       <StyledSvg src={heart} className="social-icon-svg" />
     ) : (
-      <StyledSvg src={heartGray} className="social-icon-svg" />
-    );
+        <StyledSvg src={heartGray} className="social-icon-svg" />
+      );
   };
 
   const renderCommentIcon = () => {
     return showComments || numComments > 0 ? (
       <StyledSvg src={comment} className="social-icon-svg" />
     ) : (
-      <StyledSvg src={commentGray} className="social-icon-svg" />
-    );
+        <StyledSvg src={commentGray} className="social-icon-svg" />
+      );
   };
 
   const renderShareIcon = () => {
     return shared ? (
       <StyledSvg src={share} className="social-icon-svg" />
     ) : (
-      <StyledSvg src={shareGray} className="social-icon-svg" />
-    );
+        <StyledSvg src={shareGray} className="social-icon-svg" />
+      );
   };
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
@@ -91,18 +97,18 @@ const PostSocial = ({
           </StyledSpan>
         </div>
       ) : (
-        <div
-          id={gtmTag("like", GTM.feed.prefix)}
-          className="social-icon"
-          onClick={() => handlePostLike(id, liked, true)}
-        >
-          {renderLikeIcon()}
-          <StyledSpan className="total-number">{numLikes}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numLikes > 1 ? " Likes" : " Like"}
-          </StyledSpan>
-        </div>
-      )}
+          <div
+            id={gtmTag("like", GTM.feed.prefix)}
+            className="social-icon"
+            onClick={() => handlePostLike(id, liked, true)}
+          >
+            {renderLikeIcon()}
+            <StyledSpan className="total-number">{numLikes}</StyledSpan>
+            <StyledSpan className="social-text">
+              {numLikes > 1 ? " Likes" : " Like"}
+            </StyledSpan>
+          </div>
+        )}
       <span></span>
       {postId ? (
         <div
@@ -117,54 +123,54 @@ const PostSocial = ({
           </StyledSpan>
         </div>
       ) : (
-        <>
-          {isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${id}`,
-                state: {
-                  postId: id,
-                  comments: true,
-                  from: window.location.href,
-                },
-              }}
-            >
-              <div
-                id={gtmTag("comment", GTM.feed.prefix)}
-                className="social-icon"
-                onClick={setShowComments}
+          <>
+            {isAuthenticated ? (
+              <Link
+                to={{
+                  pathname: `/post/${id}`,
+                  state: {
+                    postId: id,
+                    comments: true,
+                    from: window.location.href,
+                  },
+                }}
               >
-                {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
-              </div>
-            </Link>
-          ) : (
-            <Link
-              onClick={() =>
-                sessionStorage.setItem("postredirect", `/post/${id}`)
-              }
-              to={{
-                pathname: LOGIN,
-                state: { from: window.location.href },
-              }}
-            >
-              <div
-                id={gtmTag("comment", GTM.feed.prefix)}
-                className="social-icon"
-              >
-                {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
-              </div>
-            </Link>
-          )}
-        </>
-      )}
+                <div
+                  id={gtmTag("comment", GTM.feed.prefix)}
+                  className="social-icon"
+                  onClick={setShowComments}
+                >
+                  {renderCommentIcon()}
+                  <StyledSpan className="total-number">{numComments}</StyledSpan>
+                  <StyledSpan className="social-text">
+                    {numComments > 1 ? " Comments" : " Comment"}
+                  </StyledSpan>
+                </div>
+              </Link>
+            ) : (
+                <Link
+                  onClick={() =>
+                    sessionStorage.setItem("postredirect", `/post/${id}`)
+                  }
+                  to={{
+                    pathname: LOGIN,
+                    state: { from: window.location.href },
+                  }}
+                >
+                  <div
+                    id={gtmTag("comment", GTM.feed.prefix)}
+                    className="social-icon"
+                  >
+                    {renderCommentIcon()}
+                    <StyledSpan className="total-number">{numComments}</StyledSpan>
+                    <StyledSpan className="social-text">
+                      {numComments > 1 ? " Comments" : " Comment"}
+                    </StyledSpan>
+                  </div>
+                </Link>
+              )}
+          </>
+        )}
 
       <span></span>
 
@@ -182,22 +188,22 @@ const PostSocial = ({
           </CopyToClipboard>
         </div>
       ) : (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.feed.prefix)}
-            text={window.location.href.replace(
-              window.location.pathname,
-              `/post/${id}`,
-            )}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
-        </div>
-      )}
+          <div className="social-icon">
+            <CopyToClipboard
+              id={gtmTag("share", GTM.feed.prefix)}
+              text={window.location.href.replace(
+                window.location.pathname,
+                `/post/${id}`,
+              )}
+              onCopy={onCopyLink}
+            >
+              <span>
+                {renderShareIcon()}
+                <StyledSpan className="social-text">Share</StyledSpan>
+              </span>
+            </CopyToClipboard>
+          </div>
+        )}
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
