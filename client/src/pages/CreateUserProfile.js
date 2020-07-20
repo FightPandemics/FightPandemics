@@ -23,6 +23,9 @@ import Label from "components/Input/Label";
 import Heading from "components/Typography/Heading";
 import TextLabel from "components/Typography/TextLabel";
 import SubmitButton from "components/Button/SubmitButton";
+import PrivacyPolicyContent from "components/PolicyPages/PrivacyPolicyContent";
+import TermsConditionsContent from "components/PolicyPages/TermsConditionsContent";
+import PolicyModal from "components/PolicyPages/PolicyModal";
 import { theme, mq } from "constants/theme";
 import {
   blockLabelStyles,
@@ -39,7 +42,7 @@ import axios from "axios";
 import { SET_USER } from "../constants/action-types";
 import GTM from "constants/gtm-tags";
 
-const StyledUnderlineLink = styled(Link)`
+const StyledUnderlineLink = styled.a`
   text-decoration-line: underline;
 `;
 
@@ -142,6 +145,13 @@ const CreateProfile = ({ email, history }) => {
   const [location, setLocation] = useState({});
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
+  const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
+    false,
+  );
+  const [
+    termsConditionsModalVisible,
+    setTermsConditionsModalVisible,
+  ] = useState(false);
   const dispatch = useDispatch();
   const {
     clearError,
@@ -164,6 +174,22 @@ const CreateProfile = ({ email, history }) => {
   };
   const handleInputChangeConditions = (e) => {
     setConditions(e.target.checked);
+  };
+
+  const showPrivacyPolicyModal = (e) => {
+    e.preventDefault();
+    setPrivacyPolicyModalVisible(true);
+  };
+  const hidePrivacyPolicyModal = () => {
+    setPrivacyPolicyModalVisible(false);
+  };
+
+  const showTermsConditionsModal = (e) => {
+    e.preventDefault();
+    setTermsConditionsModalVisible(true);
+  };
+  const hideTermsConditionsModal = () => {
+    setTermsConditionsModalVisible(false);
   };
 
   const onSubmit = async (formData) => {
@@ -387,7 +413,7 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+              <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
                 Privacy Policy
               </StyledUnderlineLink>
             </StyledCheckbox>
@@ -398,7 +424,7 @@ const CreateProfile = ({ email, history }) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+              <StyledUnderlineLink onClick={showTermsConditionsModal}>
                 Terms and Conditions
               </StyledUnderlineLink>
             </StyledCheckbox>
@@ -417,6 +443,20 @@ const CreateProfile = ({ email, history }) => {
           </InputGroup>
         </ProfileFormGroup>
       </Flex>
+      <PolicyModal
+        title="Privacy Policy"
+        visible={privacyPolicyModalVisible}
+        handleHideModal={hidePrivacyPolicyModal}
+      >
+        <PrivacyPolicyContent />
+      </PolicyModal>
+      <PolicyModal
+        title={`Terms & Conditions`}
+        visible={termsConditionsModalVisible}
+        handleHideModal={hideTermsConditionsModal}
+      >
+        <TermsConditionsContent />
+      </PolicyModal>
     </Container>
   );
 };
