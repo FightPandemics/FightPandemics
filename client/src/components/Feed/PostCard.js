@@ -117,10 +117,6 @@ const PostCard = styled(Card)`
       }
 
       &.content-wrapper {
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          padding: 0 3.4rem;
-        }
-
         .ant-typography {
           margin: 0;
           padding: 1rem 0;
@@ -131,7 +127,6 @@ const PostCard = styled(Card)`
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
           margin-bottom: 1.3rem;
-          padding: 0 3.4rem;
         }
       }
 
