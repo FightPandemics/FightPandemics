@@ -80,6 +80,17 @@ const PostSocial = ({
     );
   };
 
+  const renderLabels = (label, labelCountProp) => {
+    return (
+      <>
+        <StyledSpan className="total-number">{labelCountProp}</StyledSpan>
+        <StyledSpan className="social-text">
+          {labelCountProp > 1 ? ` ${label}s` : ` ${label}`}
+        </StyledSpan>
+      </>
+    );
+  };
+
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
   const renderPostSocialIcons = (
@@ -91,10 +102,7 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <StyledSpan className="total-number">{numLikes}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numLikes > 1 ? " Likes" : " Like"}
-          </StyledSpan>
+          {renderLabels("Like", numLikes)}
         </div>
       ) : (
         <div
@@ -103,10 +111,7 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <StyledSpan className="total-number">{numLikes}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numLikes > 1 ? " Likes" : " Like"}
-          </StyledSpan>
+          {renderLabels("Like", numLikes)}
         </div>
       )}
       <span></span>
@@ -117,10 +122,7 @@ const PostSocial = ({
           onClick={setShowComments}
         >
           {renderCommentIcon()}
-          <StyledSpan className="total-number">{numComments}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numComments > 1 ? " Comments" : " Comment"}
-          </StyledSpan>
+          {renderLabels("Comment", numComments)}
         </div>
       ) : (
         <>
@@ -141,10 +143,7 @@ const PostSocial = ({
                 onClick={setShowComments}
               >
                 {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
+                {renderLabels("Comment", numComments)}
               </div>
             </Link>
           ) : (
@@ -162,10 +161,7 @@ const PostSocial = ({
                 className="social-icon"
               >
                 {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
+                {renderLabels("Comment", numComments)}
               </div>
             </Link>
           )}
