@@ -104,6 +104,10 @@ const PostCard = styled(Card)`
         content: none;
       }
 
+      .am-tag {
+        margin: 0.5rem 0.6rem 0.5rem 0rem;
+      }
+
       h2 {
         font-weight: bold;
         line-height: 2.7rem;
