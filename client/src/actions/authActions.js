@@ -45,12 +45,8 @@ export const refetchUser = () => {
 };
 
 export const authLogout = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     clearRememberCookie();
-    // also clear httpOnly cookie w jwt token (if online)
-    try {
-      await axios.get(GET_CURRENT_USER_ENDPOINT);
-    } catch {}
     TagManager.dataLayer({
       dataLayer: {
         userId: -1,
