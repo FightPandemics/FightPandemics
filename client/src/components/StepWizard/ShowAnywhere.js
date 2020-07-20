@@ -11,6 +11,10 @@ const ShowAnywhere = styled(SubmitButton)`
     color: ${royalBlue};
   }
 
+  span {
+    pointer-events: none;
+  }
+
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     background-color: transparent;
     color: ${royalBlue};

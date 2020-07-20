@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import GTM from "constants/gtm-tags";
+import TagManager from "react-gtm-module";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import {
@@ -183,21 +184,6 @@ const EmailButtonContainer = styled.div`
   margin-top: 15%;
 `;
 
-const EmailTextContainer = styled.div`
-  position: absolute;
-  width: 29.5rem;
-  height: 5.5rem;
-  left: 4rem;
-  top: 26.8rem;
-
-  > p {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-`;
-
 const VisibilityButton = ({ onClick, type }) => {
   return (
     <VisibilityIconWrapper>
@@ -231,6 +217,16 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
         try {
           const res = await axios.post(`/api/auth/oauth`, { code, state });
+          const { token, emailVerified } = res.data;
+          const userId = res.data?.user?.id;
+          if (token && emailVerified) {
+            // on initial sign in with social there is no id
+            TagManager.dataLayer({
+              dataLayer: {
+                userId: userId ? userId : -1,
+              },
+            });
+          }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -249,7 +245,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
 
     try {
       const res = await axios.post("/api/auth/login", formData);
-
+      TagManager.dataLayer({
+        dataLayer: {
+          userId: res.data?.user?.id,
+        },
+      });
       dispatch({
         type: AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },

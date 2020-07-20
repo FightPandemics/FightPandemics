@@ -57,6 +57,11 @@ const NavLinks = styled.div`
     background: transparent;
     cursor: pointer;
     padding-top: 0.4rem;
+
+    img {
+      margin-left: 1.5rem;
+      pointer-events: none;
+    }
   }
   ul {
     list-style-type: none;
@@ -142,7 +147,9 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
-      <Menu.Item onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Item 
+      id={GTM.nav.prefix + GTM.nav.feedback}
+      onClick={onFeedbackIconClick}>Feedback</Menu.Item>
       <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
@@ -205,10 +212,10 @@ export default ({
               </NavLink>
             </li>
             <button
-              id={GTM.nav.prefix + GTM.nav.feedBack}
+              id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
             >
-              <SvgIcon src={envelope} style={{ marginLeft: "1.5rem" }} />
+              <SvgIcon src={envelope} />
             </button>
           </>
         )}
