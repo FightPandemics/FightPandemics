@@ -623,12 +623,12 @@ const NavigationLayout = (props) => {
     </div>
   );
 
-  if (isAuthenticated) {
-    tagManagerArgs["dataLayer"] = { userId: user.id };
+  if (isAuthenticated) { 
+    tagManagerArgs['dataLayer'] = {userId: user.id};
     TagManager.initialize(tagManagerArgs);
-  }
+  } 
 
-  return <>{renderNavigationBar()}</>;
+  return <>{renderNavigationBar()}</>; 
 };
 
 export default NavigationLayout;
