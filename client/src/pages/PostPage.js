@@ -225,6 +225,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       response.data.post.types.map((type) => typeToTag(type));
       let copiedpost = Object.assign({}, response.data.post);
       let postSubstring = response.data.post.content;
+      const { numComments } = response.data;
 
       if (postSubstring.length > CONTENT_LENGTH) {
         postSubstring = `${postSubstring.substring(0, CONTENT_LENGTH)} . . .`;
@@ -246,6 +247,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
           post: copiedpost,
           content: copiedpost.content,
           length: copiedpost.content.length,
+          numComments,
         });
       } else {
         postDispatch({
@@ -253,6 +255,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
           post: response.data.post,
           content: response.data.post.content,
           length: copiedpost.content.length,
+          numComments,
         });
       }
       //Check if routed to post's page after clicking on "Edit" in feed.
