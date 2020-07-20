@@ -147,7 +147,9 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
-      <Menu.Item onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Item 
+      id={GTM.nav.prefix + GTM.nav.feedback}
+      onClick={onFeedbackIconClick}>Feedback</Menu.Item>
       <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
@@ -210,7 +212,7 @@ export default ({
               </NavLink>
             </li>
             <button
-              id={GTM.nav.prefix + GTM.nav.feedBack}
+              id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
             >
               <SvgIcon src={envelope} />

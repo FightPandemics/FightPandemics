@@ -6,7 +6,7 @@ module.exports = {
     aboutUs: "_AU",
     addOrg: "_ADO",
     feed: "_HB",
-    feedBack: "_FDB",
+    feedback: "_FDB",
   },
   homePage: {
     prefix: "HP",
