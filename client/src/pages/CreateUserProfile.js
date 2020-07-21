@@ -142,7 +142,7 @@ const Submit = styled(SubmitButton)`
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
 const CreateProfile = ({ email, history }) => {
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
@@ -204,7 +204,7 @@ const CreateProfile = ({ email, history }) => {
       return setError(
         "location",
         "required",
-        "Please select an address from the drop-down",
+        "Address is required",
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
