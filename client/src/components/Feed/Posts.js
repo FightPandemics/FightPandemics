@@ -1,5 +1,23 @@
 import React from "react";
+import styled from "styled-components";
+
+//Local
 import Post from "./Post";
+
+// Constants
+import { mq } from "constants/theme";
+
+const HorizontalRule = styled.hr`
+  display: none;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(243, 244, 254, 1);
+    display: block;
+    max-width: 325px;
+  }
+`;
 
 const Posts = ({
   isAuthenticated,
@@ -11,10 +29,10 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
-}) => {
-  return (
-    <div className="feed-posts">
-      {Object.keys(filteredPosts).map((key) => (
+}) => (
+  <div className="feed-posts">
+    {Object.keys(filteredPosts).map((key) => (
+      <>
         <Post
           currentPost={filteredPosts[key]}
           includeProfileLink={true}
@@ -29,9 +47,10 @@ const Posts = ({
           deleteModalVisibility={deleteModalVisibility}
           onChange={handlePostDelete}
         />
-      ))}
-    </div>
-  );
-};
+        <HorizontalRule />
+      </>
+    ))}
+  </div>
+);
 
 export default Posts;
