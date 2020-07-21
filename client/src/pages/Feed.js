@@ -258,8 +258,7 @@ const Feed = (props) => {
     // );
   };
 
-  const handleQuit = (e) => {
-    e.preventDefault();
+  const refetchPosts = () => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -272,6 +271,11 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "activePanel", null);
     postsDispatch({ type: RESET_PAGE, filterType: "" });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+  };
+
+  const handleQuit = (e) => {
+    e.preventDefault();
+    refetchPosts();
   };
 
   const handleLocation = (value) => {
@@ -672,7 +676,7 @@ const Feed = (props) => {
         <CreatePost
           gtmPrefix={GTM.feed.prefix}
           onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
-          loadPosts={loadPosts}
+          loadPosts={refetchPosts}
           visible={showCreatePostModal}
           user={user}
         />
