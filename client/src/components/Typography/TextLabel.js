@@ -27,12 +27,12 @@ const TextLabel = styled(Text)`
     color: ${(props) => props.color || "black"};
     font-size: ${(props) => props.size || theme.typography.size.medium};
     font-weight: ${(props) => props.weight || "normal"};
-	text-align: ${(props) => props.textAlign || "left"};
-	display: none;
+    text-align: ${(props) => props.textAlign || "left"};
+    display: none;
 
-	@media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-		display: block;
-	}
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      display: block;
+    }
   }
 `;
 export default TextLabel;

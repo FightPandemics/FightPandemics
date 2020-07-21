@@ -33,8 +33,8 @@ const StyledIntro = styled.div`
     justify-content: space-around;
     width: 100%;
     height: 100%;
-	padding: 16rem 7rem 16rem 5rem;
-	transition: all .3s ease;
+    padding: 16rem 7rem 16rem 5rem;
+    transition: all .3s ease;
   }
 
   @media only screen and ${mq.desktop.medium.minWidth} {
