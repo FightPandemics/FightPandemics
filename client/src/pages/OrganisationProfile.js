@@ -369,6 +369,7 @@ const OrganisationProfile = () => {
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={() => setModal(false)}
+                  loadPosts={fetchOrganisationPosts}
                   visible={modal}
                   user={user}
                 />

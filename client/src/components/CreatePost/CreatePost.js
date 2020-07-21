@@ -182,13 +182,16 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = ({ onCancel, ...props }) => {
+const CreatePost = ({ onCancel, loadPosts, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
 
   const clearState = () => {
     onCancel();
+    if (currentStep === 4) {
+      loadPosts();
+    }
     // delay for modal close effect to complete before re-render
     setTimeout(() => {
       setCurrentStep(1);
