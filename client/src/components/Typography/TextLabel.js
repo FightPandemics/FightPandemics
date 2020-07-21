@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 import styled from "styled-components";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const { Text } = Typography;
 
@@ -11,8 +11,8 @@ const { Text } = Typography;
     medium: "1.4rem",
     large: "1.6rem",
     xlarge: "1.8rem"
-    
-    usage: 
+
+    usage:
     <TextLabel
         block="true"
         color={DARK_GRAY}
@@ -27,8 +27,12 @@ const TextLabel = styled(Text)`
     color: ${(props) => props.color || "black"};
     font-size: ${(props) => props.size || theme.typography.size.medium};
     font-weight: ${(props) => props.weight || "normal"};
-    display: ${(props) => (!props.block ? "" : "block")};
-    text-align: ${(props) => props.textAlign || "left"};
+	text-align: ${(props) => props.textAlign || "left"};
+	display: none;
+
+	@media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+		display: block;
+	}
   }
 `;
 export default TextLabel;
