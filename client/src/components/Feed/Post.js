@@ -32,7 +32,7 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { isAuthorOrg } from "pages/Feed";
-import { authorProfileLink } from "./utils";
+import { authorProfileLink, buildLocationString } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
@@ -342,15 +342,14 @@ const Post = ({
       title={
         <div className="title-wrapper">
           <div className="author">{post?.author?.name}</div>
-          <div className="location-status">
-            <SvgIcon src={statusIndicator} className="status-icon" />
-            {post?.author?.location?.city
-              ? `${post.author.location.city}, `
-              : ""}
-            {post?.author?.location?.country
-              ? post.author.location.country
-              : ""}
-          </div>
+          {post?.author?.location?.country ? (
+            <div className="location-status">
+              <SvgIcon src={statusIndicator} className="status-icon" />
+              {buildLocationString(post.author.location)}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       }
       thumb={
