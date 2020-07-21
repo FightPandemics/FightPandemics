@@ -7,6 +7,10 @@ import {
   SET_USER,
 } from "constants/action-types";
 
+import TagManager from "react-gtm-module";
+
+const GET_CURRENT_USER_ENDPOINT = "/api/users/current";
+
 // Token stored in httpOnly cookie set/cleared by server
 export const initAuth = () => {
   return async (dispatch) => {
@@ -14,7 +18,12 @@ export const initAuth = () => {
 
     dispatch({ type: SET_AUTH_LOADING, payload: true });
     try {
-      const { data: user } = await axios.get("/api/users/current");
+      const { data: user } = await axios.get(GET_CURRENT_USER_ENDPOINT);
+      TagManager.dataLayer({
+        dataLayer: {
+          userId: user.id,
+        },
+      });
       dispatch({ type: SET_USER, payload: { user } });
     } catch (error) {
       dispatch({ error, type: AUTH_ERROR });
@@ -27,7 +36,7 @@ export const initAuth = () => {
 export const refetchUser = () => {
   return async (dispatch) => {
     try {
-      const { data: user } = await axios.get("/api/users/current");
+      const { data: user } = await axios.get(GET_CURRENT_USER_ENDPOINT);
       dispatch({ type: SET_USER, payload: { user } });
     } catch (error) {
       dispatch({ error, type: AUTH_ERROR });
@@ -38,6 +47,11 @@ export const refetchUser = () => {
 export const authLogout = () => {
   return (dispatch) => {
     clearRememberCookie();
+    TagManager.dataLayer({
+      dataLayer: {
+        userId: -1,
+      },
+    });
     dispatch({ type: AUTH_LOGOUT });
   };
 };

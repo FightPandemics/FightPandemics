@@ -64,6 +64,11 @@ export const isAuthorOrg = (organisations, author) => {
   return isValid;
 };
 
+export const isAuthorUser = (user, post) => {
+  return user?._id === post?.author?.id ||
+  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
+}
+
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
   REQUEST: `_${GTM.requestHelp.prefix}`,
@@ -117,6 +122,7 @@ const FiltersWrapper = styled.div`
     color: ${black};
     cursor: pointer;
     display: flex;
+    width: 100%;
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
     font-weight: bold;
@@ -132,10 +138,12 @@ const FiltersWrapper = styled.div`
       justify-content: center;
       margin-right: 1rem;
       width: 4.2rem;
+      pointer-events: none;
       svg {
         fill: ${royalBlue};
         height: 2rem;
         width: 2rem;
+        pointer-events: none;
       }
     }
   }
@@ -201,6 +209,7 @@ const HeaderWrapper = styled.div`
     padding: 0;
     img {
       margin-left: 1.2rem;
+      pointer-events: none;
     }
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -551,9 +560,7 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id ||
-        user.id === post.author.id ||
-        isAuthorOrg(user.organisations, post.author))
+      (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);

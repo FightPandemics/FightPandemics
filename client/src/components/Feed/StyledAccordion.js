@@ -39,6 +39,9 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       display: flex !important;
       font-weight: bold !important;
       font-size: ${theme.typography.size.large} !important;
+      padding: 0;
+      margin-left 1.5rem;
+      margin-right: 3rem;
 
       @media screen and ${mq.phone.wide.max} {
         height: 35px;
@@ -50,6 +53,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
         transition: unset;
         background-size: unset;
         background-image: url("data:image/svg+xml,%3Csvg width='24' height='29' viewBox='0 0 24 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 5.97754V22.715' stroke='%23425AF2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 14.3464H19' stroke='%23425AF2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+        pointer-events: none;
       }
     }
 

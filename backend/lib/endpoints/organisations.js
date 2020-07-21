@@ -158,7 +158,7 @@ async function routes(app) {
 
       if (newOrgErr) {
         req.log.error(newOrgErr, "Failed creating organisation");
-        if (newOrgErr.name === "ValidationError") {
+        if (newOrgErr.name === "ValidationError" || newOrgErr.name === "MongoError") {
           throw app.httpErrors.conflict(
             "Email address is already in use or email address cannot be validated!",
           );
