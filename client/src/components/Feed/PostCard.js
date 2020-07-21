@@ -12,8 +12,7 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  margin-left: 2rem;
-  margin-right 2rem;
+  padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -105,6 +104,10 @@ const PostCard = styled(Card)`
         content: none;
       }
 
+      .am-tag {
+        margin: 0.5rem 0.6rem 0.5rem 0rem;
+      }
+
       h2 {
         font-weight: bold;
         line-height: 2.7rem;
@@ -118,8 +121,9 @@ const PostCard = styled(Card)`
       }
 
       &.content-wrapper {
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          padding: 0 3.4rem;
+        .ant-typography {
+          margin: 0;
+          padding: 1rem 0;
         }
       }
 
@@ -127,7 +131,6 @@ const PostCard = styled(Card)`
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
           margin-bottom: 1.3rem;
-          padding: 0 3.4rem;
         }
       }
 
