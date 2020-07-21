@@ -154,7 +154,7 @@ const CreateOrgProfile = (props) => {
           return setError(
             "location",
             "required",
-            "Address is required",
+            "Please select an address from the drop-down",
           );
         }
         createOrganisationFormDispatch({ type: CREATE_Organisation });
