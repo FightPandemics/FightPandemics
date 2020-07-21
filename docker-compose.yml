@@ -59,11 +59,11 @@ services:
     networks:
       - fp_network
 
-  cypress_e2e:
+  cypress-e2e:
     build: 
       context: cypresse2e
       dockerfile: Dockerfile.dev
-    container_name: cypress_e2e
+    container_name: cypress-e2e
     depends_on:
       - client
     environment:
