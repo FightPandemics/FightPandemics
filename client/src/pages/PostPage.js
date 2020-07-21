@@ -8,7 +8,7 @@ import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
-import { isAuthorOrg } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 
 // Constants
@@ -174,9 +174,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id ||
-        user.id === post.author.id ||
-        isAuthorOrg(user.organisations, post.author))
+      (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
     ) {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,

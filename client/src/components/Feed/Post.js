@@ -31,7 +31,7 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
-import { isAuthorOrg } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
@@ -471,8 +471,7 @@ const Post = ({
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id ||
-                    user.id === post.author.id ||
+                  (isAuthorUser(user, post) ||
                     (user.organisations &&
                       isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
@@ -531,8 +530,7 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user?._id === post?.author?.id ||
-                  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser)) ||
+                (isAuthorUser(user, post) ||
                   isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={handleDelete}
@@ -607,4 +605,3 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
-
