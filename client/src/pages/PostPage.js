@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from "react";
-import { NavLink } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -7,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
-import activeStyles from "components/Header"
+import { ButtonsContainer, StyledLink} from "pages/OrgProfileComplete";
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
@@ -36,7 +35,7 @@ import {
 } from "hooks/actions/feedActions";
 import { theme, mq } from "constants/theme";
 
-const { typography } = theme;
+const { colors, typography } = theme;
 const { font, two, four } = theme.typography.heading;
 
 const Container = styled.div`
@@ -61,6 +60,10 @@ const Title = styled.h2`
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     font-size: ${two};
   }
+`;
+
+const Body = styled.p`
+  margin-bottom: 1rem
 `;
 
 export const PostContext = React.createContext();
@@ -301,20 +304,20 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   }, []);
 
   if(isPostDeleted) return (
-    <>
-      <Container>
-        <Title>Ahh... snap!</Title>
+    <Container>
+      <Title>Ahh... snap!</Title>
+      <Body>
         The post you have been looking for has expired. Please check our Help Board for more such posts.
-        <NavLink
-          style={{ textDecoration: 'underline' }}
-          id={GTM.nav.prefix + GTM.nav.feed}
-          activeStyle={activeStyles}
+      </Body>
+      <ButtonsContainer>
+        <StyledLink
+          id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
           to="/feed"
         >
           Help Board
-        </NavLink>
-      </Container>   
-    </>    
+        </StyledLink>
+      </ButtonsContainer>
+    </Container>
   );
   return (
     <StyledPostPage>

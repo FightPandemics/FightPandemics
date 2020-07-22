@@ -31,7 +31,7 @@ const Heading = styled.h2`
   font-weight: bold;
 `;
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   width: 100%;
   display: block;
   width: 22%;
@@ -44,7 +44,7 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   margin: 0 auto;
   font-weight: 500;
