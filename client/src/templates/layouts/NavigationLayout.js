@@ -506,7 +506,7 @@ const NavigationLayout = (props) => {
       </AvatarContainer>
       <DividerLine />
       <NavItem history={history}>
-        <Link to={`/profile/${user?.id}`}>Profile</Link>
+        <Link to={`/profile/${user?.id || user?._id}`}>Profile</Link>
       </NavItem>
       <NavItem>
         Organisation
