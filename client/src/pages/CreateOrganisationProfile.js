@@ -12,6 +12,9 @@ import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
 import StyledCheckbox from "components/Input/Checkbox";
 import LocationInput from "components/Input/LocationInput";
+import PrivacyPolicyContent from "components/PolicyPages/PrivacyPolicyContent";
+import TermsConditionsContent from "components/PolicyPages/TermsConditionsContent";
+import PolicyModal from "components/PolicyPages/PolicyModal";
 import Checkbox from "components/Input/Checkbox";
 import createOrganisationSvg from "assets/icons/create-organisation.svg";
 import { connect } from "react-redux";
@@ -43,7 +46,7 @@ import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
 import GTM from "constants/gtm-tags";
 
-const StyledUnderlineLink = styled(Link)`
+const StyledUnderlineLink = styled.a`
   text-decoration-line: underline;
 `;
 
@@ -94,6 +97,13 @@ const CreateOrgProfile = (props) => {
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
   const [email, setEmail] = useState("");
+  const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
+    false,
+  );
+  const [
+    termsConditionsModalVisible,
+    setTermsConditionsModalVisible,
+  ] = useState(false);
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -108,6 +118,22 @@ const CreateOrgProfile = (props) => {
   const handleInputChangeEmail = (e) => {
     setEmail(e.target.value);
     setValid(e.target.checkValidity());
+  };
+
+  const showPrivacyPolicyModal = (e) => {
+    e.preventDefault();
+    setPrivacyPolicyModalVisible(true);
+  };
+  const hidePrivacyPolicyModal = () => {
+    setPrivacyPolicyModalVisible(false);
+  };
+
+  const showTermsConditionsModal = (e) => {
+    e.preventDefault();
+    setTermsConditionsModalVisible(true);
+  };
+  const hideTermsConditionsModal = () => {
+    setTermsConditionsModalVisible(false);
   };
 
   const onFormSubmit = async (formData) => {
@@ -327,7 +353,7 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangePrivacy}
             >
               By signing up, I agree to the{" "}
-              <StyledUnderlineLink to="/privacy-policy" target="_blank">
+              <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
                 Privacy Policy
               </StyledUnderlineLink>
             </StyledCheckbox>
@@ -339,7 +365,7 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangeConditions}
             >
               By signing up, I agree to the{" "}
-              <StyledUnderlineLink to="/terms-conditions" target="_blank">
+              <StyledUnderlineLink onClick={showTermsConditionsModal}>
                 Terms and Conditions
               </StyledUnderlineLink>
             </StyledCheckbox>
@@ -362,6 +388,20 @@ const CreateOrgProfile = (props) => {
         </StyledForm>
         <WhiteSpace />
       </FormContainer>
+      <PolicyModal
+        title="Privacy Policy"
+        visible={privacyPolicyModalVisible}
+        handleHideModal={hidePrivacyPolicyModal}
+      >
+        <PrivacyPolicyContent />
+      </PolicyModal>
+      <PolicyModal
+        title={`Terms & Conditions`}
+        visible={termsConditionsModalVisible}
+        handleHideModal={hideTermsConditionsModal}
+      >
+        <TermsConditionsContent />
+      </PolicyModal>
     </Main>
   );
 };
