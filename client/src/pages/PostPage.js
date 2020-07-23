@@ -1,12 +1,13 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import isEmpty from 'lodash/isEmpty';
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
-import { ButtonsContainer, StyledLink} from "pages/OrgProfileComplete";
+import { ButtonsContainer } from "pages/OrgProfileComplete";
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
@@ -50,6 +51,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
+  margin-bottom: 3rem;
   font-family: ${font};
   font-weight: bold;
   font-size: ${four};
@@ -63,7 +65,26 @@ const Title = styled.h2`
 `;
 
 const Body = styled.p`
-  margin-bottom: 1rem
+  margin-bottom: 3rem
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  margin: 0 auto;
+  font-weight: 500;
+  display: block;
+  text-align: center;
+  background-color: ${theme.colors.white};
+  font-size: ${theme.typography.size.large};
+  color: ${theme.colors.royalBlue};
+  line-height: 7rem;
+  height: 7rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  &:focus {
+    border: 1px solid ${theme.colors.primary};
+    color: ${theme.colors.royalBlue};
+  }
 `;
 
 export const PostContext = React.createContext();

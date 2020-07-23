@@ -44,7 +44,7 @@ export const ButtonsContainer = styled.div`
   }
 `;
 
-export const StyledLink = styled(Link)`
+const StyledLink = styled(Link)`
   text-decoration: none;
   margin: 0 auto;
   font-weight: 500;
