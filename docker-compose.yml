@@ -62,7 +62,7 @@ services:
   cypress-e2e:
     build: 
       context: cypresse2e
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: cypress-e2e
     depends_on:
       - client
