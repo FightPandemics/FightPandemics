@@ -3,24 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
+import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  LinkedinShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailIcon,
-  FacebookIcon,
-  LinkedinIcon,
-  RedditIcon,
-  TelegramIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -30,6 +14,7 @@ import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
+import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
 import WizardFormNav, {
   StyledButtonWizard,
@@ -460,67 +445,6 @@ const Post = ({
     </Card.Body>
   );
 
-  const renderShareModal = (
-    <Modal
-      onClose={() => setShowSocial(false)}
-      maskClosable={true}
-      closable={true}
-      visible={showSocial}
-      transparent
-    >
-      <Heading level={4} className="h4">
-        Share via...
-      </Heading>
-
-      <div>
-        <EmailShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          title={post.title}
-          body={post.content}
-        >
-          <EmailIcon size={50} round />
-        </EmailShareButton>
-        <FacebookShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          hashtag={"#fightpandemics"}
-        >
-          <FacebookIcon size={50} round />
-        </FacebookShareButton>
-        <LinkedinShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          title={post.title}
-        >
-          <LinkedinIcon size={50} round />
-        </LinkedinShareButton>
-        <RedditShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          title={post.title}
-        >
-          <RedditIcon size={50} round />
-        </RedditShareButton>
-        <TelegramShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          title={post.title}
-        >
-          <TelegramIcon size={50} round />
-        </TelegramShareButton>
-        <TwitterShareButton
-          url={`https://fightpandemics.com/post/${post._id}`}
-          title={post.title}
-          hashtags={["fightpandemics"]}
-        >
-          <TwitterIcon size={50} round />
-        </TwitterShareButton>
-        <WhatsappShareButton
-          title={post.title}
-          url={`https://fightpandemics.com/post/${post._id}`}
-        >
-          <WhatsappIcon size={50} round />
-        </WhatsappShareButton>
-      </div>
-    </Modal>
-  );
-
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -561,7 +485,14 @@ const Post = ({
               </Card.Body>
             )}
             {renderSocialIcons}
-            {renderShareModal}
+            <ShareModal
+              showSocial={showSocial}
+              setShowSocial={setShowSocial}
+              postId={postId}
+              id={post._id}
+              postTitle={post.title}
+              postContent={post.content}
+            />
             {renderComments}
             <WebModal
               title="Confirm"
@@ -634,7 +565,13 @@ const Post = ({
               <Card.Body className="view-more-wrapper" />
             ))}
           {renderSocialIcons}
-          {renderShareModal}
+          <ShareModal
+            showSocial={showSocial}
+            setShowSocial={setShowSocial}
+            id={post._id}
+            postTitle={post.title}
+            postContent={post.content}
+          />
           <WebModal
             title="Confirm"
             visible={
