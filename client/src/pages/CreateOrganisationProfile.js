@@ -92,7 +92,7 @@ const CreateOrgProfile = (props) => {
     createOrganisationFormDispatch,
   ] = useReducer(createOrganisationFormReducer, initialState);
 
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
@@ -154,7 +154,7 @@ const CreateOrgProfile = (props) => {
           return setError(
             "location",
             "required",
-            "Please select an address from the drop-down",
+            "Address is required. Please enter your address and select it from the drop-down",
           );
         }
         createOrganisationFormDispatch({ type: CREATE_Organisation });
