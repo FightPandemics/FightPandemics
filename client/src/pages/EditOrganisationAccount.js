@@ -93,7 +93,7 @@ function EditOrganisationAccount(props) {
       return setError(
         "location",
         "required",
-        "Please select an address from the drop-down",
+        "Address is required. Please enter your address and select it from the drop-down",
       );
     }
     Object.entries(NEEDS).map(([key, label]) => {

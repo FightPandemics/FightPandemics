@@ -204,7 +204,7 @@ const CreateProfile = ({ email, history }) => {
       return setError(
         "location",
         "required",
-        "Please select an address from the drop-down",
+        "Address is required. Please enter your address and select it from the drop-down",
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
