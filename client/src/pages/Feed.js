@@ -113,7 +113,7 @@ const SiderWrapper = styled(Sider)`
 
 const FiltersWrapper = styled.div`
   border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
-  margin: 0 2rem;
+  margin: 1.5rem 2rem 0;
   padding-top: 2rem;
   button {
     align-items: center;
