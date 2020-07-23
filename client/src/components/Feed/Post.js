@@ -5,6 +5,22 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailIcon,
+  FacebookIcon,
+  LinkedinIcon,
+  RedditIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -95,17 +111,12 @@ const Post = ({
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
-  const [copied, setCopied] = useState(false);
+  const [showSocial, setShowSocial] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
-
-  // mock API to test functionality
-  /* to be removed after full integration with user api */
-  const [shared, setShared] = useState(false);
-  const [fakeShares, setFakeShares] = useState(0);
 
   const setShowComments = () => {
     if (dispatchPostAction) {
@@ -437,19 +448,13 @@ const Post = ({
         handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
-        shared={shared}
         postId={postId}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
-        numShares={fakeShares}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
-        onCopyLink={() => {
-          if (!shared) setFakeShares(fakeShares + 1);
-          setShared(true);
-          return setCopied(!copied);
-        }}
+        setShowSocial={setShowSocial}
         id={post?._id}
       />
     </Card.Body>
@@ -457,15 +462,62 @@ const Post = ({
 
   const renderShareModal = (
     <Modal
-      onClose={() => setCopied(!copied)}
+      onClose={() => setShowSocial(false)}
       maskClosable={true}
       closable={true}
-      visible={copied}
+      visible={showSocial}
       transparent
     >
       <Heading level={4} className="h4">
-        Link Copied!
+        Share via...
       </Heading>
+
+      <div>
+        <EmailShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          title={post.title}
+          body={post.content}
+        >
+          <EmailIcon size={50} round />
+        </EmailShareButton>
+        <FacebookShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          hashtag={"#fightpandemics"}
+        >
+          <FacebookIcon size={50} round />
+        </FacebookShareButton>
+        <LinkedinShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          title={post.title}
+        >
+          <LinkedinIcon size={50} round />
+        </LinkedinShareButton>
+        <RedditShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          title={post.title}
+        >
+          <RedditIcon size={50} round />
+        </RedditShareButton>
+        <TelegramShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          title={post.title}
+        >
+          <TelegramIcon size={50} round />
+        </TelegramShareButton>
+        <TwitterShareButton
+          url={`https://fightpandemics.com/post/${post._id}`}
+          title={post.title}
+          hashtags={["fightpandemics"]}
+        >
+          <TwitterIcon size={50} round />
+        </TwitterShareButton>
+        <WhatsappShareButton
+          title={post.title}
+          url={`https://fightpandemics.com/post/${post._id}`}
+        >
+          <WhatsappIcon size={50} round />
+        </WhatsappShareButton>
+      </div>
     </Modal>
   );
 
@@ -614,4 +666,3 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
-

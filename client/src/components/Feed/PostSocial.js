@@ -26,7 +26,6 @@ const StyledSvg = styled(SvgIcon)`
 `;
 
 const StyledSpan = styled.span`
-  pointer-events: none;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -44,6 +43,7 @@ const PostSocial = ({
   onCopyLink,
   postId,
   setShowComments,
+  setShowSocial,
   id,
 }) => {
   useEffect(() => {
@@ -170,36 +170,18 @@ const PostSocial = ({
 
       <span></span>
 
-      {postId ? (
-        <div className="social-icon">
-          <CopyToClipboard
+      <div className="social-icon">
+        <span>
+          {renderShareIcon()}
+          <StyledSpan
             id={gtmTag("share", GTM.post.prefix)}
-            text={url}
-            onCopy={onCopyLink}
+            className="social-text"
+            onClick={() => setShowSocial(true)}
           >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
-        </div>
-      ) : (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.feed.prefix)}
-            text={window.location.href.replace(
-              window.location.pathname,
-              `/post/${id}`,
-            )}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
-        </div>
-      )}
+            Share
+          </StyledSpan>
+        </span>
+      </div>
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
