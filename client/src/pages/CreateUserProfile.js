@@ -235,9 +235,6 @@ const CreateProfile = ({ email, history }) => {
   return (
     <Container>
       <Flex className="image-container" direction="column">
-        <BrandLink to="/">
-          <Logo src={logo} alt="Fight Pandemics logo" />
-        </BrandLink>
         <img
           className="main-bg-image"
           src={PersonalDataImage}

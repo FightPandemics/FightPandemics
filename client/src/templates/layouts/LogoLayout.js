@@ -1,6 +1,5 @@
 import React from "react";
 import { NavBar } from "antd-mobile";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import logo from "assets/logo.svg";
@@ -33,9 +32,7 @@ const LogoLayout = (props) => {
     <>
       <NavBar mode="light" style={NavbarStyles}>
         <LogoContainer>
-          <Link to="/">
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </Link>
+          <Logo src={logo} alt="Fight Pandemics logo" />
         </LogoContainer>
       </NavBar>
       <div>

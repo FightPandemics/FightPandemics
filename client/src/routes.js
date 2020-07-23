@@ -192,7 +192,7 @@ const routes = [
   {
     path: "/create-profile",
     component: CreateUserProfile,
-    layout: "navless",
+    layout: "logo",
     props: {
       loggedInOnly: true,
     },

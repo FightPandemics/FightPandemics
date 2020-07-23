@@ -3,7 +3,6 @@ import { Redirect, Route } from "react-router-dom";
 
 import LogoLayout from "./layouts/LogoLayout";
 import NavigationLayout from "./layouts/NavigationLayout";
-import NavlessLayout from "./layouts/NavlessLayout";
 import { connect } from "react-redux";
 
 export const HOME = "/";
@@ -18,8 +17,6 @@ const getLayoutComponent = (layout) => {
   switch (layout) {
     case "logo":
       return LogoLayout;
-    case "navless":
-      return NavlessLayout;
     default:
       return NavigationLayout;
   }
