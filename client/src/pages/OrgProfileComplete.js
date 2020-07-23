@@ -31,7 +31,7 @@ const Heading = styled.h2`
   font-weight: bold;
 `;
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   width: 100%;
   display: block;
   width: 22%;
