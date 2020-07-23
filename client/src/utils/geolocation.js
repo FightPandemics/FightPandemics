@@ -7,7 +7,7 @@ export const asyncGetGeoLocation = () => {
       resolve({ lat: latitude, lng: longitude });
     };
     const onGeoError = () => {
-      reject(new Error("The acquisition of the geolocation failed because at least one internal source of position returned an internal error."));
+      reject(new Error(geolocationPositionErrorInstance.message));
     };
     navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
   });
