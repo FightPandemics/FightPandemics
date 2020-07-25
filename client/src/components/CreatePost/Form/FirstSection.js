@@ -4,8 +4,8 @@ import styled from "styled-components";
 import Head from "./Head";
 import { Section } from "../StyledModal";
 import { theme } from "constants/theme";
-const { black } = theme.colors;
 
+const { black } = theme.colors;
 const TitleInput = styled(Input)`
   .ant-modal-root .ant-modal-content .ant-modal-body & {
     font-size: 1.5rem;
@@ -37,7 +37,7 @@ const First = ({
         onChange={onChangeTitle}
         value={formData.title}
         placeholder="Title"
-        maxLength={35}
+        maxLength={60}
       />
       <TextInput
         onChange={onChangeDescription}
