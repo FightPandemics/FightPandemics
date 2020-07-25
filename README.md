@@ -164,6 +164,21 @@ We collaborate closely with the design and product team. The design team provide
     - Two pull requests must be opened for hotfixes: one PR to merge into `production` and one PR to merge into `staging`.
     - Hotfixes must be tested in the staging AWS environment before being merged to the `production` and `staging` branches. In order to deploy only the hotfix to the staging enviroment, create and push a git tag with a `hotfix-` prefix. This will trigger a deployment to the staging environment: `git tag -a hotfix-<GITHUB_ISSUE_NUMBER> && git push origin hotfix-<GITHUB_ISSUE_NUMBER>`.
 
+- All pull request merges to `staging` and `production` branches are done using the `Squash and Merge` strategy. This allows for a cleaner commit history by combining all commits in a branch into a single commit. The message for this squashed commit must use the following convention:
+```
+<GITHUB_TICKET_NUMBER(S)> - <BRIEF_TICKET_DESCRIPTION>
+
+- Additional comments if necessary, for more context
+```
+Example:
+```
+#1127/#1130 - Update Git Branching Model
+
+- Update Readme
+- Update Github workflows
+- Update PR template
+```
+
 ### Review branches
 
 Every time you push code up to this repository on a branch with the `feature/` or `hotfix/` prefix, a review build based off of your feature branch will be deployed to AWS. For the build to deploy successfully you must be a member of this organization (ask in Slack) and push to this repo. Pull requests are still welcome from forked repos, just omit the `feature/` or `hotfix/` prefix to skip this build step.
