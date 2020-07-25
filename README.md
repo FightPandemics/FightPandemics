@@ -105,7 +105,7 @@ while developing. This is a living document, so feel free to add any notes that 
 ### Development Workflow
 We collaborate closely with the design and product team. The design team provides us with designs of the application on Figma. While the product team provides us with MVP requirements on Notion.
 
-* Please be sure to often merge or rebase the latest from the master branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind master.
+* Please be sure to often merge or rebase the latest from the staging branch into your feature/working branches to minimize merge conflicts and so that it doesn't fall too far behind staging.
 * If possible, try to keep changes in pull requests small so that it'll be faster for reviewers to review and easier for contributors to make revisions. If you foresee there will be many changes, make sure to commit often. This will help break down a pull request more easily.
 
 ### Backend
@@ -150,11 +150,25 @@ We collaborate closely with the design and product team. The design team provide
 
 ## Deployment
 
+### Git Branching Model
+
+- When a Github issue is started, create a branch with the `feature/` prefix. Every push to branches with this prefix will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
+
+- After a pull request for a `feature/` branch is approved, it is merged into the `staging` branch. This will trigger an automatic deployment to the staging AWS environment. Note that changes may take several minutes to take effect. The staging app is accessible at http://staging.fightpandemics.work.
+
+- When we are ready to release to production, a pull request is opened to merge the `staging` branch to `production`. After this pull request is approved and merged, it will trigger an automatic deployment to the production AWS environment. Note that changes may take several minutes to take effect. The production app is accessible at http://fightpandemics.com
+
+- A `hotfix/` branch is created if there is a critical fix that needs to be deployed to production as soon as possible, but staging has untested code that is not safe to deploy to production.
+    - This branch must be created off the `production` branch.
+    - Every push to `hotfix/` branches will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
+    - Two pull requests must be opened for hotfixes: one PR to merge into `production` and one PR to merge into `staging`.
+    - Hotfixes must be tested in the staging AWS environment before being merged to the `production` and `staging` branches. In order to deploy only the hotfix to the staging enviroment, create and push a git tag with a `hotfix-` prefix. This will trigger a deployment to the staging environment: `git tag -a hotfix-<GITHUB_ISSUE_NUMBER> && git push origin hotfix-<GITHUB_ISSUE_NUMBER>`.
+
 ### Review branches
 
-Every time you push code up to this repository on a branch with the `feature/` prefix, a review build based off of your feature branch will be deployed to AWS. For the build to deploy successfully you must be a member of this organization (ask in Slack) and push to this repo. Pull requests are still welcome from forked repos, just omit the `feature/` prefix to skip this build step.
+Every time you push code up to this repository on a branch with the `feature/` or `hotfix/` prefix, a review build based off of your feature branch will be deployed to AWS. For the build to deploy successfully you must be a member of this organization (ask in Slack) and push to this repo. Pull requests are still welcome from forked repos, just omit the `feature/` or `hotfix/` prefix to skip this build step.
 
-You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `deploy_review` job in the workflow run for your build:
+You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, you can view the URL to which your app was deployed by clicking on the "Deployment URL" step in the `Deploy Review Build` job in the workflow run for your build:
 
 ![Deployment URL](images/deployment_url.png?raw=true)
 
@@ -162,8 +176,8 @@ Note that it may take a few minutes for the app to be accessible, or for changes
 
 ### Staging
 
-When a pull request is merged to master, it will automatically be deployed to the staging environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the staging app at http://staging.fightpandemics.work.
+When a pull request is merged to staging, it will automatically be deployed to the staging environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the staging app at http://staging.fightpandemics.work.
 
 ### Production
 
-https://fightpandemics.com/
+When a pull request is merged to production, it will automatically be deployed to the production environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the production app at https://fightpandemics.com.
