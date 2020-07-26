@@ -182,7 +182,7 @@ const CreateOrgProfile = (props) => {
       }
     }
   };
-  console.log(errors.name);
+
   return (
     <Main>
       <SvgContainer>

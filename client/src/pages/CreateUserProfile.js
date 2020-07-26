@@ -231,7 +231,7 @@ const CreateProfile = ({ email, history }) => {
     setLocation(location);
     clearError("location");
   };
-  console.log(errors.firstName);
+
   return (
     <Container>
       <Flex className="image-container" direction="column">
