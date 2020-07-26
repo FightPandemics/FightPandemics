@@ -441,7 +441,7 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
-    const limit = 5;
+    const limit = -1;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
@@ -559,28 +559,28 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scrollObserver = useCallback(
-    (node) => {
-      new IntersectionObserver((entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
-            await postsDispatch({ type: NEXT_PAGE });
-          }
-        });
-      }).observe(node);
-    },
-    [postsDispatch, loadMore, isLoading],
-  );
+  // const scrollObserver = useCallback(
+  //   (node) => {
+  //     new IntersectionObserver((entries) => {
+  //       entries.forEach(async (entry) => {
+  //         if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
+  //           await postsDispatch({ type: NEXT_PAGE });
+  //         }
+  //       });
+  //     }).observe(node);
+  //   },
+  //   [postsDispatch, loadMore, isLoading],
+  // );
 
-  useEffect(() => {
-    let observer;
-    if (bottomBoundaryRef.current) {
-      observer = scrollObserver(bottomBoundaryRef.current);
-    }
-    return () => {
-      observer && observer.disconnect();
-    };
-  }, [scrollObserver, bottomBoundaryRef]);
+  // useEffect(() => {
+  //   let observer;
+  //   if (bottomBoundaryRef.current) {
+  //     observer = scrollObserver(bottomBoundaryRef.current);
+  //   }
+  //   return () => {
+  //     observer && observer.disconnect();
+  //   };
+  // }, [scrollObserver, bottomBoundaryRef]);
 
   const postDelete = async (post) => {
     let deleteResponse;
