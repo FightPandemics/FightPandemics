@@ -154,17 +154,17 @@ We collaborate closely with the design and product team. The design team provide
 
 - When a Github issue is started, create a branch with the `feature/` prefix. Every push to branches with this prefix will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
 
-- After a pull request for a `feature/` branch is approved, it is merged into the `staging` branch. This will trigger an automatic deployment to the staging AWS environment. Note that changes may take several minutes to take effect. The staging app is accessible at http://staging.fightpandemics.work.
+- After a pull request for a `feature/` branch is approved, it is merged into the `staging` branch. This will trigger an automatic deployment to the staging AWS environment. Note that changes may take several minutes to take effect. The staging app is accessible at https://staging.fightpandemics.work.
 
-- When we are ready to release to production, a pull request is opened to merge the `staging` branch to `production`. After this pull request is approved and merged, it will trigger an automatic deployment to the production AWS environment. Note that changes may take several minutes to take effect. The production app is accessible at http://fightpandemics.com
+- When we are ready to release to production, a pull request is opened to merge the `staging` branch to `production`. After this pull request is approved and merged, it will trigger an automatic deployment to the production AWS environment. Note that changes may take several minutes to take effect. The production app is accessible at https://fightpandemics.com
 
 - A `hotfix/` branch is created if there is a critical fix that needs to be deployed to production as soon as possible, but staging has untested code that is not safe to deploy to production.
     - This branch must be created off the `production` branch.
     - Every push to `hotfix/` branches will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
-    - Two pull requests must be opened for hotfixes: one PR to merge into `production` and one PR to merge into `staging`.
+    - Two pull requests must be opened for hotfixes: one PR to merge into `production` and one PR to backmerge `production` into `staging` after the initial PR is merged to `production`.
     - Hotfixes must be tested in the staging AWS environment before being merged to the `production` and `staging` branches. In order to deploy only the hotfix to the staging enviroment, create and push a git tag with a `hotfix-` prefix. This will trigger a deployment to the staging environment: `git tag -a hotfix-<GITHUB_ISSUE_NUMBER> && git push origin hotfix-<GITHUB_ISSUE_NUMBER>`.
 
-- All pull request merges to `staging` and `production` branches are done using the `Squash and Merge` strategy. This allows for a cleaner commit history by combining all commits in a branch into a single commit. The message for this squashed commit must use the following convention:
+- All pull request merges to the `staging` branch, and all `hotfix/` merges to the `production` branch are done using the `Squash and Merge` strategy. This allows for a cleaner commit history by combining all commits in a branch into a single commit. The message for this squashed commit must use the following convention:
 ```
 <GITHUB_TICKET_NUMBER(S)> - <BRIEF_TICKET_DESCRIPTION>
 
@@ -178,6 +178,7 @@ Example:
 - Update Github workflows
 - Update PR template
 ```
+- When merging `staging` into `production`, and vice versa, the `Create a merge commit` merge method should be used to preserve commit history.
 
 ### Review branches
 
