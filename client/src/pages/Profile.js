@@ -284,8 +284,8 @@ const Profile = ({
             </HelpContainer>
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} {address && `• ${address}`}
+              {needHelp && "I need help • "}
+              {offerHelp && "I want to help • "} {address && ` ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -344,7 +344,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}
