@@ -182,7 +182,7 @@ const CreateOrgProfile = (props) => {
       }
     }
   };
-
+  console.log(errors.name);
   return (
     <Main>
       <SvgContainer>
@@ -208,11 +208,17 @@ const CreateOrgProfile = (props) => {
               placeholder=""
               onChange={(name) => name}
               style={styleInput}
-              ref={register({ required: true, minLength: 3 })}
+              ref={register({
+                required: "Organisation name is required",
+                minLength: 3,
+                maxLength: 60,
+              })}
               name="name"
             />
             <span style={errorStyles}>
-              {errors.name && "Organisation name is required"}
+              {errors.name?.type === "maxLength"
+                ? "Max character limit (60) is exceeded!"
+                : errors.name?.message}
             </span>
           </InputWrapper>
           <WhiteSpace />

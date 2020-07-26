@@ -231,7 +231,7 @@ const CreateProfile = ({ email, history }) => {
     setLocation(location);
     clearError("location");
   };
-
+  console.log(errors.firstName);
   return (
     <Container>
       <Flex className="image-container" direction="column">
@@ -289,11 +289,14 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.firstName && "has-error"}
                 ref={register({
                   required: "First name is required.",
+                  maxLength: 30,
                 })}
                 style={inputStyles}
               />
-              {errors.firstName && (
-                <InputError>{errors.firstName.message}</InputError>
+              {errors.firstName?.type === "maxLength" ? (
+                <InputError>Max character limit (30) is exceeded!</InputError>
+              ) : (
+                <InputError>{errors.firstName?.message}</InputError>
               )}
             </InputWrapper>
 
@@ -310,11 +313,14 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.lastName && "has-error"}
                 ref={register({
                   required: "Last name is required.",
+                  maxLength: 30,
                 })}
                 style={inputStyles}
               />
-              {errors.lastName && (
-                <InputError>{errors.lastName.message}</InputError>
+              {errors.lastName?.type === "maxLength" ? (
+                <InputError>Max character limit (30) is exceeded!</InputError>
+              ) : (
+                <InputError>{errors.lastName?.message}</InputError>
               )}
             </InputWrapper>
 
