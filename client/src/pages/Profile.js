@@ -344,7 +344,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}
