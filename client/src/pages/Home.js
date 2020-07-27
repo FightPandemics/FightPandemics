@@ -34,11 +34,18 @@ const StyledIntro = styled.div`
     width: 100%;
     height: 100%;
     padding: 16rem 7rem 16rem 5rem;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
 
   @media only screen and ${mq.desktop.medium.minWidth} {
     padding: 20rem 7rem 20rem 5rem;
+  }
+`;
+
+export const Title = styled(TextLabel)`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: block;
   }
 `;
 
@@ -155,13 +162,13 @@ const Home = (props) => {
     <MainContainer className="text-center home">
       <StyledIntro>
         <IntroText>
-          <TextLabel
+          <Title
             color="white"
             size={theme.typography.size.xlarge}
             weight="500"
           >
             FightPandemics
-          </TextLabel>
+          </Title>
 
           <StyledStrapline level={2} margin="none">
             A place to offer and request help
