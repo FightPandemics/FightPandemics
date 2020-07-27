@@ -30,10 +30,9 @@ const StyledSelect = styled(Select)`
   padding: 0;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: ${(props) => props.disabled ? darkGray : primary};
   box-shadow: none;
+  border-bottom-color: ${(props) => props.disabled ? darkGray : primary};
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
-  transition: 150ms border;
 
   &.has-error {
     border-bottom-color: ${red};

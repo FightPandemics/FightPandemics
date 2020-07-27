@@ -5,22 +5,28 @@ const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
 
 const BaseInput = styled.input`
   border: none;
-  border-bottom: ${(props) =>
-    props.disabled ? "1px solid " + darkGray : "1px solid " + primary};
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   box-shadow: none;
+  border-bottom-color: ${(props) => props.disabled ? darkGray : primary};
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
-  transition: 150ms border;
 
   &.has-error {
-    border-bottom: 1px solid ${red};
+    border-bottom-color: ${red};
     color: ${red};
   }
+
+  ${(props) =>
+  props.disabled ? `` :
+  `
   &:focus,
   &:hover,
   &:active {
-    border-bottom: ${(props) =>
-      props.disabled ? "1px solid " + darkGray : "2px solid " + royalBlue};
+    border-bottom-color: ${royalBlue};
+    box-shadow: 0 1px 0 0 ${royalBlue};
   }
+  `
+  };
 `;
 
 export default BaseInput;
