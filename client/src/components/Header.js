@@ -217,6 +217,7 @@ export default ({
             <button
               id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
+              style={{ paddingTop: 0 }}
             >
               <SvgIcon src={feedback} />
             </button>
