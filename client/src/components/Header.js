@@ -56,7 +56,6 @@ const NavLinks = styled.div`
     border: none;
     background: transparent;
     cursor: pointer;
-    padding-top: 0.4rem;
 
     img {
       margin-left: 1.5rem;
@@ -217,7 +216,6 @@ export default ({
             <button
               id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
-              style={{ paddingTop: 0 }}
             >
               <SvgIcon src={feedback} />
             </button>
