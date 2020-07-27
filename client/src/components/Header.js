@@ -7,7 +7,7 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
-import envelope from "assets/icons/envelope.svg";
+import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
@@ -56,7 +56,6 @@ const NavLinks = styled.div`
     border: none;
     background: transparent;
     cursor: pointer;
-    padding-top: 0.4rem;
 
     img {
       margin-left: 1.5rem;
@@ -147,9 +146,12 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
-      <Menu.Item 
-      id={GTM.nav.prefix + GTM.nav.feedback}
-      onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Item
+        id={GTM.nav.prefix + GTM.nav.feedback}
+        onClick={onFeedbackIconClick}
+      >
+        Feedback
+      </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
@@ -215,7 +217,7 @@ export default ({
               id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
             >
-              <SvgIcon src={envelope} />
+              <SvgIcon src={feedback} />
             </button>
           </>
         )}
