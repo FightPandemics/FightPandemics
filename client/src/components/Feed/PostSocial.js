@@ -25,6 +25,7 @@ const StyledSvg = styled(SvgIcon)`
 `;
 
 const StyledSpan = styled.span`
+  pointer-events: none;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -41,8 +42,10 @@ const PostSocial = ({
   numComments,
   onCopyLink,
   postId,
+  postTitle,
+  postContent,
   setShowComments,
-  setShowSocial,
+  setShowShareModal,
   id,
 }) => {
   useEffect(() => {
@@ -91,6 +94,22 @@ const PostSocial = ({
   };
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
+
+  const showNativeShareOrModal = () => {
+    if (navigator.canShare) {
+      navigator
+        .share({
+          title: postTitle,
+          text: postContent,
+          url: `${window.location.origin}/post/${id}`,
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") console.log(err);
+        });
+    } else {
+      setShowShareModal(true);
+    }
+  };
 
   const renderPostSocialIcons = (
     <>
@@ -170,16 +189,14 @@ const PostSocial = ({
       <span></span>
 
       <div className="social-icon">
-        <span>
+        <div
+          id={gtmTag("share", GTM.post.prefix)}
+          className="social-text"
+          onClick={showNativeShareOrModal}
+        >
           {renderShareIcon()}
-          <StyledSpan
-            id={gtmTag("share", GTM.post.prefix)}
-            className="social-text"
-            onClick={() => setShowSocial(true)}
-          >
-            Share
-          </StyledSpan>
-        </span>
+          <StyledSpan>Share</StyledSpan>
+        </div>
       </div>
     </>
   );

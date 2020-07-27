@@ -20,9 +20,8 @@ import {
 import Heading from "components/Typography/Heading";
 
 export const ShareModal = ({
-  showSocial,
-  setShowSocial,
-  postId,
+  showShareModal,
+  setShowShareModal,
   postTitle,
   postContent,
   id,
@@ -31,10 +30,10 @@ export const ShareModal = ({
   const postUrl = `${window.location.origin}/post/${id}`;
   return (
     <Modal
-      onClose={() => setShowSocial(false)}
+      onClose={() => setShowShareModal(false)}
       maskClosable={true}
       closable={true}
-      visible={showSocial}
+      visible={showShareModal}
       transparent
     >
       <Heading level={4} className="h4">

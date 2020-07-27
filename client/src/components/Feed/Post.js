@@ -96,7 +96,7 @@ const Post = ({
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
-  const [showSocial, setShowSocial] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
 
@@ -434,12 +434,14 @@ const Post = ({
         url={window.location.href}
         liked={post?.liked}
         postId={postId}
+        postTitle={post?.title}
+        postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
-        setShowSocial={setShowSocial}
+        setShowShareModal={setShowShareModal}
         id={post?._id}
       />
     </Card.Body>
@@ -486,9 +488,8 @@ const Post = ({
             )}
             {renderSocialIcons}
             <ShareModal
-              showSocial={showSocial}
-              setShowSocial={setShowSocial}
-              postId={postId}
+              showShareModal={showShareModal}
+              setShowShareModal={setShowShareModal}
               id={post._id}
               postTitle={post.title}
               postContent={post.content}
@@ -566,8 +567,8 @@ const Post = ({
             ))}
           {renderSocialIcons}
           <ShareModal
-            showSocial={showSocial}
-            setShowSocial={setShowSocial}
+            showShareModal={showShareModal}
+            setShowShareModal={setShowShareModal}
             id={post._id}
             postTitle={post.title}
             postContent={post.content}
