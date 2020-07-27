@@ -28,11 +28,7 @@ const TextLabel = styled(Text)`
     font-size: ${(props) => props.size || theme.typography.size.medium};
     font-weight: ${(props) => props.weight || "normal"};
     text-align: ${(props) => props.textAlign || "left"};
-    display: none;
-
-    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      display: block;
-    }
+    display: ${(props) => (!props.block ? "" : "block")};
   }
 `;
 export default TextLabel;
