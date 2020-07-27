@@ -6,17 +6,22 @@ const AddTagsWrapper = styled.div`
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 
-  p {
-    font-family: "Poppins";
+  .tags-info {
     font-size: 1.1rem;
     color: black;
+  }
+
+  .tags-selector {
+    margin-right: -0.3rem;
+    margin-left: -0.3rem;
   }
 `;
 
 const AddTags = ({ filters, addTag, selected = [] }) => {
   return (
     <AddTagsWrapper>
-      <p>Add tags to make your post more visible</p>
+      <p className="tags-info">Add tags to make your post more visible</p>
+      <div className="tags-selector">
       {filters.map((filter, idx) => (
         <ButtonTag
           className={
@@ -30,6 +35,7 @@ const AddTags = ({ filters, addTag, selected = [] }) => {
           {filter}
         </ButtonTag>
       ))}
+      </div>
     </AddTagsWrapper>
   );
 };
