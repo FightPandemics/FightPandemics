@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { mq, theme } from "constants/theme";
-const { primary } = theme.colors;
+const { royalBlue } = theme.colors;
 
 export const AboutUsContainer = styled.div`
   width: 100%;
@@ -108,6 +108,6 @@ export const SocialContainer = styled.div`
 `;
 
 export const AboutUsLink = styled.a`
-  color: ${primary};
+  color: ${royalBlue};
   display: inline-block;
 `;

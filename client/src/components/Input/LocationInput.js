@@ -13,7 +13,7 @@ import { asyncGetGeoLocation } from "utils/geolocation";
 import { theme } from "constants/theme";
 import GTM from "constants/gtm-tags";
 
-const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
+const { darkGray, darkerGray, royalBlue, red } = theme.colors;
 const { small, medium } = theme.typography.size;
 
 const StyledSelect = styled(Select)`
@@ -29,7 +29,7 @@ const StyledSelect = styled(Select)`
   width: 100%;
   padding: 0;
   border-bottom: ${(props) =>
-    props.disabled ? "1px solid " + darkGray : "1px solid " + primary};
+    props.disabled ? "1px solid " + darkGray : "1px solid " + royalBlue};
   box-shadow: none;
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
   transition: 150ms border;

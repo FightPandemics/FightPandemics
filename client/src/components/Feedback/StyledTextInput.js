@@ -21,7 +21,7 @@ const StyledTextInput = styled(TextInput)`
     input {
       ${theme.form.input}
       color: ${theme.colors.darkGray};
-      border-bottom: 0.1rem solid ${theme.colors.primary};
+      border-bottom: 0.1rem solid ${theme.colors.royalBlue};
       padding: 0.8rem;
       margin: 0.5rem 0;
     }
