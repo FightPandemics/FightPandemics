@@ -85,7 +85,9 @@ const CreateOrgProfile = (props) => {
     control,
     errors,
     setError,
-  } = useForm();
+  } = useForm({
+    mode: "change",
+  });
 
   const [
     createOrganisationFormState,
@@ -210,16 +212,14 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               ref={register({
                 required: "Organisation name is required",
-                minLength: 3,
-                maxLength: 60,
+                maxLength: {
+                  value: 60,
+                  message: "Max. 60 characters",
+                },
               })}
               name="name"
             />
-            <span style={errorStyles}>
-              {errors.name?.type === "maxLength"
-                ? "Max character limit (60) is exceeded!"
-                : errors.name?.message}
-            </span>
+            <span style={errorStyles}>{errors.name?.message}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
@@ -232,16 +232,14 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangeEmail}
               style={styleInput}
               name="email"
-              ref={register({ required: true, minLength: 3 })}
+              ref={register({ required: "Email is required" })}
             />
             {validEmail || email === "" ? (
               ""
             ) : (
               <InputError>Email is invalid</InputError>
             )}
-            <span style={errorStyles}>
-              {errors.email && "Email is required"}
-            </span>
+            <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
