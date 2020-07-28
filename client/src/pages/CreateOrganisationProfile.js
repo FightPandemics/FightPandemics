@@ -232,9 +232,15 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangeEmail}
               style={styleInput}
               name="email"
-              ref={register({ required: "Email is required" })}
+              ref={register({
+                required: "Email is required",
+                maxLength: {
+                  value: 30,
+                  message: "Max. 30 characters",
+                },
+              })}
             />
-            {validEmail || email === "" ? (
+            {validEmail || errors.email || email === "" ? (
               ""
             ) : (
               <InputError>Email is invalid</InputError>
