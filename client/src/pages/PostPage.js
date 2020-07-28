@@ -82,7 +82,7 @@ const StyledLink = styled(Link)`
   border-radius: 1rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   &:focus {
-    border: 1px solid ${theme.colors.primary};
+    border: 1px solid ${theme.colors.royalBlue};
     color: ${theme.colors.royalBlue};
   }
 `;

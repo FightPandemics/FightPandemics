@@ -76,7 +76,7 @@ const NavLinks = styled.div`
       margin-bottom: 0.2rem;
       align-self: center;
       .registerLink {
-        color: ${colors.primary};
+        color: ${colors.royalBlue};
       }
       .registerLink:hover {
         font-weight: 500;

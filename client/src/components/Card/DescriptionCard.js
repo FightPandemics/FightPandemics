@@ -7,7 +7,7 @@ import { theme } from "constants/theme";
 
 const { colors, typography } = theme;
 const {
-  primary,
+  royalBlue,
   orangeRed,
   mintGreen,
   lightGray,
@@ -44,7 +44,7 @@ const HospitalCard = styled(Card)`
   }
   .am-card-footer {
     font-weight: bold;
-    color: ${primary};
+    color: ${royalBlue};
     font-size: ${large};
     margin-right: 0;
   }
@@ -55,7 +55,7 @@ const HospitalCard = styled(Card)`
   }
   .am-card-footer-content {
     font-weight: 600;
-    color: ${primary};
+    color: ${royalBlue};
     margin-right: 0;
   }
   .am-card-footer-extra {
