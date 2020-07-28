@@ -69,7 +69,7 @@ a {
 .app-drawer .am-drawer-content {
 	position: relative;
 	min-height: 100vh;
-	padding-bottom: 7.1rem; // footer height
+	padding-bottom: 6rem; // footer height
 	overflow: hidden;
 }
 

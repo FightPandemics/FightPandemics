@@ -13,6 +13,7 @@ import Logo from "./Logo";
 
 import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
+
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -22,7 +23,7 @@ const BrandLink = styled(Link)`
   }
 `;
 const StyledNavBar = styled(NavBar)`
-  height: 7rem;
+  height: 6rem;
   margin-top: 0;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
@@ -49,9 +50,7 @@ const DesktopMenu = styled.div`
 `;
 const NavLinks = styled.div`
   align-self: flex-end;
-  padding-top: 1rem;
   white-space: nowrap;
-  padding-top: 2rem;
   button {
     border: none;
     background: transparent;
@@ -72,11 +71,11 @@ const NavLinks = styled.div`
       color: ${colors.royalBlue};
       border: 0.1rem solid ${colors.royalBlue};
       border-radius: 2rem;
-      padding: 0 0.8rem;
+      padding: 0rem 0.8rem;
       margin-bottom: 0.2rem;
       align-self: center;
       .registerLink {
-        color: ${colors.primary};
+        color: ${colors.royalBlue};
       }
       .registerLink:hover {
         font-weight: 500;
@@ -85,11 +84,11 @@ const NavLinks = styled.div`
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
-      padding: 0 1rem;
+      padding: 0rem 1rem;
       a:not(.registerLink) {
         color: ${colors.darkerGray};
         text-decoration: none;
-        padding: 1.2rem 1.4rem;
+        padding: 1.65rem 1.4rem;
         transition: all 0.2s;
         border-bottom: 0.3rem solid transparent;
       }
