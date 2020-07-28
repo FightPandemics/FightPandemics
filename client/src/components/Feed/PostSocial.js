@@ -1,6 +1,5 @@
 // Core
 import React, { useEffect } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -43,7 +42,10 @@ const PostSocial = ({
   numComments,
   onCopyLink,
   postId,
+  postTitle,
+  postContent,
   setShowComments,
+  setShowShareModal,
   id,
 }) => {
   useEffect(() => {
@@ -92,6 +94,22 @@ const PostSocial = ({
   };
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
+
+  const showNativeShareOrModal = () => {
+    if (navigator.canShare) {
+      navigator
+        .share({
+          title: postTitle,
+          text: postContent,
+          url: `${window.location.origin}/post/${id}`,
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") console.log(err);
+        });
+    } else {
+      setShowShareModal(true);
+    }
+  };
 
   const renderPostSocialIcons = (
     <>
@@ -170,36 +188,16 @@ const PostSocial = ({
 
       <span></span>
 
-      {postId ? (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.post.prefix)}
-            text={url}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
+      <div className="social-icon">
+        <div
+          id={gtmTag("share", GTM.post.prefix)}
+          className="social-text"
+          onClick={showNativeShareOrModal}
+        >
+          {renderShareIcon()}
+          <StyledSpan>Share</StyledSpan>
         </div>
-      ) : (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.feed.prefix)}
-            text={window.location.href.replace(
-              window.location.pathname,
-              `/post/${id}`,
-            )}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
-        </div>
-      )}
+      </div>
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
