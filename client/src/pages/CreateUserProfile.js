@@ -289,14 +289,15 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.firstName && "has-error"}
                 ref={register({
                   required: "First name is required.",
-                  maxLength: 30,
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
               />
-              {errors.firstName?.type === "maxLength" ? (
-                <InputError>Max character limit (30) is exceeded!</InputError>
-              ) : (
-                <InputError>{errors.firstName?.message}</InputError>
+              {errors.firstName && (
+                <InputError>{errors.firstName.message}</InputError>
               )}
             </InputWrapper>
 
@@ -313,14 +314,15 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.lastName && "has-error"}
                 ref={register({
                   required: "Last name is required.",
-                  maxLength: 30,
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
               />
-              {errors.lastName?.type === "maxLength" ? (
-                <InputError>Max character limit (30) is exceeded!</InputError>
-              ) : (
-                <InputError>{errors.lastName?.message}</InputError>
+              {errors.lastName && (
+                <InputError>{errors.lastName.message}</InputError>
               )}
             </InputWrapper>
 
