@@ -32,8 +32,8 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
+import { authorProfileLink, buildLocationString } from "./utils";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
@@ -347,20 +347,25 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post?.author?.name}
+      title={
+        <div className="title-wrapper">
+          <div className="author">{post?.author?.name}</div>
+          {post?.author?.location?.country ? (
+            <div className="location-status">
+              <SvgIcon src={statusIndicator} className="status-icon" />
+              {buildLocationString(post.author.location)}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      }
       thumb={
         post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
         )
-      }
-      extra={
-        <span>
-          <SvgIcon src={statusIndicator} className="status-icon" />
-          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
-          {post?.author?.location?.country ? post.author.location.country : ""}
-        </span>
       }
     />
   );

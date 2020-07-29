@@ -64,32 +64,38 @@ const PostCard = styled(Card)`
 
     .am-card-header {
       display: block;
-      flex: 1 1 auto;
       padding: 0;
-      margin-right: 1rem;
 
       .am-card-header-content {
         align-items: unset;
         font-size: ${medium};
+
+        .title-wrapper {
+          width: calc(100% - 4.7rem);
+        }
 
         img {
           margin-right: 0.7rem;
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
-          max-width: 100%;
         }
-      }
 
-      .am-card-header-extra {
-        text-align: unset;
-        font-size: ${xsmall};
-        margin-left: 4.7rem;
-        margin-top: -1.8rem;
+        .author {
+          font-size: ${medium};
+          height: auto;
+        }
 
-        .status-icon {
-          width: fit-content;
-          margin-right: 0.8rem;
+        .location-status {
+          height: 3rem;
+          margin-top: -1.2rem;
+          color: #888;
+          font-size: ${xsmall};
+
+          img {
+            width: 0.6rem;
+            margin-right: 0.8rem;
+          }
         }
       }
     }
