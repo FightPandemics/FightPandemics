@@ -170,3 +170,5 @@ https://fightpandemics.com/
 
 
 HOTFIX TEST COMMIT.
+
+HOTFIX TEST COMMIT 2.
