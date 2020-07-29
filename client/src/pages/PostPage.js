@@ -1,15 +1,20 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import axios from "axios";
+import isEmpty from 'lodash/isEmpty';
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
+import { ButtonsContainer } from "pages/OrgProfileComplete";
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
+import GTM from "constants/gtm-tags";
 
 // Constants
 import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
@@ -29,6 +34,58 @@ import {
   DELETE_MODAL_HIDE,
   DELETE_MODAL_COMMENT,
 } from "hooks/actions/feedActions";
+import { theme, mq } from "constants/theme";
+
+const { colors, typography } = theme;
+const { font, two, four } = theme.typography.heading;
+
+const Container = styled.div`
+  padding: 6rem;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  text-align: center;
+  font-family: ${typography.font.family.display};
+  font-size: ${typography.size.large};
+  font-weight: normal;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 3rem;
+  font-family: ${font};
+  font-weight: bold;
+  font-size: ${four};
+  line-height: 3rem;
+  text-align: center;
+  width: 100%;
+
+  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    font-size: ${two};
+  }
+`;
+
+const Body = styled.p`
+  margin-bottom: 3rem
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  margin: 0 auto;
+  font-weight: 500;
+  display: block;
+  text-align: center;
+  background-color: ${theme.colors.white};
+  font-size: ${theme.typography.size.large};
+  color: ${theme.colors.royalBlue};
+  line-height: 7rem;
+  height: 7rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  &:focus {
+    border: 1px solid ${theme.colors.royalBlue};
+    color: ${theme.colors.royalBlue};
+  }
+`;
 
 export const PostContext = React.createContext();
 
@@ -92,7 +149,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
             console.log({ error });
           }
         }
-
         if (response.data) {
           postDispatch({
             type: SET_LIKE,
@@ -260,10 +316,28 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     }
   };
 
+  const isPostDeleted = isEmpty(post.author) && post.status === SET_POST;
+ 
   useEffect(() => {
     loadPost(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if(isPostDeleted) return (
+    <Container>
+      <Title>Ahh... snap!</Title>
+      <Body>
+        The post you have been looking for has expired. Please check our Help Board for more such posts.
+      </Body>
+      <ButtonsContainer>
+        <StyledLink
+          id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
+          to="/feed"
+        >
+          Help Board
+        </StyledLink>
+      </ButtonsContainer>
+    </Container>
+  );
   return (
     <StyledPostPage>
       {postId && (

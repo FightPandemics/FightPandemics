@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { theme } from "constants/theme";
 
-const { darkGray, darkerGray, primary, red, royalBlue } = theme.colors;
+const { darkGray, darkerGray, royalBlue, red } = theme.colors;
 
 const BaseInput = styled.input`
   border: none;
   border-bottom-width: 1px;
   border-bottom-style: solid;
+  border-bottom-color: ${(props) => props.disabled ? darkGray : royalBlue};
   box-shadow: none;
-  border-bottom-color: ${(props) => props.disabled ? darkGray : primary};
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
 
   &.has-error {

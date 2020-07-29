@@ -3,13 +3,25 @@ import { Input } from "antd";
 import styled from "styled-components";
 import Head from "./Head";
 import { Section } from "../StyledModal";
+import { theme } from "constants/theme";
 
-const TitleInput = styled(Input)``;
+const { black } = theme.colors;
+const TitleInput = styled(Input)`
+  .ant-modal-root .ant-modal-content .ant-modal-body & {
+    font-size: 1.5rem;
+    color: ${black};
+  }
+`;
 const { TextArea } = Input;
 const TextInput = styled(TextArea)`
-  border-top: none;
-  resize: none;
-  overflow-y: scroll;
+  .ant-modal-root .ant-modal-content .ant-modal-body & {
+    color: ${black};
+    border-top: none;
+    font-size: 1.2rem;
+    resize: none;
+    overflow-y: scroll;
+    font-weight: 450;
+  }
 `;
 
 const First = ({
@@ -25,11 +37,12 @@ const First = ({
         onChange={onChangeTitle}
         value={formData.title}
         placeholder="Title"
+        maxLength={60}
       />
       <TextInput
         onChange={onChangeDescription}
         value={formData.description}
-        rows={4}
+        rows={7}
         placeholder="Write your post"
       />
       <span className="error-box">{renderError("description")}</span>

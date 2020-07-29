@@ -43,18 +43,18 @@ export const StyledButtonWizard = styled(StepWizard)`
 
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
+
+  const handleClick = () => {
+    if (history?.location?.state?.from?.state) {
+      history.goBack();
+    } else {
+      history.push(FEED);
+    }
+  };
+
   return (
     <StyledWizardNav>
-      <BackButton
-        onClick={() => {
-          if (history?.location?.state?.from) {
-            history.goBack();
-          } else {
-            history.push(FEED);
-          }
-        }}
-        id={gtmPrefix + GTM.wizardNav.back}
-      >
+      <BackButton onClick={handleClick} id={gtmPrefix + GTM.wizardNav.back}>
         <SvgIcon src={backArrow} title="Navigate to previous page or feed" />
         <BackText>Back</BackText>
       </BackButton>

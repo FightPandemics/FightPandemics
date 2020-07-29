@@ -66,6 +66,13 @@ a {
   padding: 0;
 }
 
+.app-drawer .am-drawer-content {
+	position: relative;
+	min-height: 100vh;
+	padding-bottom: 6rem; // footer height
+	overflow: hidden;
+}
+
 .text-light {
   font-weight: 500;
 }
