@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
@@ -158,6 +159,8 @@ const StyleLink = styled.p`
 `;
 
 const Home = (props) => {
+  const { t } = useTranslation();
+
   return (
     <MainContainer className="text-center home">
       <StyledIntro>

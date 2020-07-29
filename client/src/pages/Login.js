@@ -33,6 +33,7 @@ import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
 import { validateEmail, validatePassword } from "utils/validators";
+import { useTranslation } from 'react-i18next';
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -207,6 +208,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   );
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+  const { t } = useTranslation();
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -338,9 +340,9 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           <FormContainer>
             <Heading className="h4 text-center" level={4}>
               {isLoginForm
-                ? "Sign In"
+                ? t("Sign In")
                 : forgotPassword
-                ? "Recover Password"
+                ? t("Recover Password")
                 : "Join Now"}
             </Heading>
             {authFormState.error && (
@@ -352,7 +354,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <Label
                     htmlFor="email"
                     style={blockLabelStyles}
-                    label="Email"
+                    label={t("Email")}
                   />
                   <Input
                     type="email"
@@ -375,7 +377,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <Label
                     htmlFor="password"
                     style={blockLabelStyles}
-                    label="Password"
+                    label={t("Password")}
                   />
                   <Input
                     type={passwordType}
@@ -413,7 +415,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="confirmPassword"
                       style={blockLabelStyles}
-                      label="Confirm Password"
+                      label={t("Confirm Password")}
                     />
                     <Input
                       type={confirmPasswordType}
@@ -421,7 +423,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       id="confirmPassword"
                       className={errors.confirmPassword && "has-error"}
                       required
-                      placeholder="Confirm password"
+                      placeholder={t("Confirm password")}
                       ref={register({
                         maxLength: PASSWORD_MAX_LENGTH,
                         minLength: PASSWORD_MIN_LENGTH,
@@ -453,7 +455,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       : handleSubmit(onSignup)
                   }
                 >
-                  {isLoginForm ? "Sign In" : "Join Now"}
+                  {isLoginForm ? t("Sign In") : "Join Now"}
                 </SubmitButton>
               </form>
             ) : (
@@ -463,7 +465,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="email"
                       style={blockLabelStyles}
-                      label="Your Email"
+                      label={t("Your Email")}
                     />
                     <Input
                       type="email"
@@ -489,7 +491,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       disabled={!formState.isValid}
                       onClick={handleSubmit(onForgotPassword)}
                     >
-                      Email me a recovery link
+                      {t("Email me a recovery link")}
                     </SubmitButton>
                   </EmailButtonContainer>
                 </form>
@@ -503,7 +505,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <>
                     <p>
                       <AuthLink to="/auth/forgot-password">
-                        Forgot password?
+                        {t('Forgot Password')}
                       </AuthLink>
                     </p>
                     <p>

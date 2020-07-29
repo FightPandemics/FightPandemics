@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import {
   AboutUsContainer,
   TextContainer,
@@ -102,10 +103,12 @@ function LogosList(props) {
 }
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+
   return (
     <AboutUsContainer>
       <MissionAndVisionBannerContainer>
-        <h1 className="text-primary display-6">About Us</h1>
+        <h1 className="text-primary display-6">{t("About Us")}</h1>
         <WebViewBannerContainer
           src={DesktopBanner}
           alt="Desktop Mission and Vision Banner"

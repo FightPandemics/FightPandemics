@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
@@ -120,6 +121,8 @@ export default ({
   user,
   onFeedbackIconClick,
 }) => {
+  const { t } = useTranslation();
+  
   const menu = (
     <Menu>
       <Menu.Item>
@@ -167,7 +170,7 @@ export default ({
             activeStyle={activeStyles}
             to="/about-us"
           >
-            About Us
+            {t("About Us")}
           </NavLink>
         </li>
         <li>
@@ -187,7 +190,7 @@ export default ({
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  Profile
+                  {t("Profile")}
                 </a>
               </Dropdown>
             </li>
@@ -200,7 +203,7 @@ export default ({
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
-                Sign In
+                {t("Sign In")}
               </NavLink>
             </li>
             <li className="registerBtn">
