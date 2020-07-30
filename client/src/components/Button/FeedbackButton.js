@@ -17,6 +17,10 @@ const FeedbackButton = styled(Button)`
   }
   html body &.am-button {
     border: 0.2rem solid ${royalBlue};
+
+    &::before {
+      display: none;
+    }
   }
 `;
 

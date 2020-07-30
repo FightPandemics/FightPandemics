@@ -1,6 +1,5 @@
 // Core
 import React, { useEffect } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,12 +17,18 @@ import share from "assets/icons/share.svg";
 import shareGray from "assets/icons/share-gray.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
+// Constants
+import { mq } from "constants/theme";
+
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;
 `;
 
 const StyledSpan = styled.span`
   pointer-events: none;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
+  }
 `;
 
 const PostSocial = ({
@@ -37,7 +42,10 @@ const PostSocial = ({
   numComments,
   onCopyLink,
   postId,
+  postTitle,
+  postContent,
   setShowComments,
+  setShowShareModal,
   id,
 }) => {
   useEffect(() => {
@@ -74,7 +82,34 @@ const PostSocial = ({
     );
   };
 
+  const renderLabels = (label, labelCountProp) => {
+    return (
+      <>
+        <StyledSpan className="total-number">{labelCountProp}</StyledSpan>
+        <StyledSpan className="social-text">
+          {labelCountProp > 1 ? ` ${label}s` : ` ${label}`}
+        </StyledSpan>
+      </>
+    );
+  };
+
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
+
+  const showNativeShareOrModal = () => {
+    if (navigator.canShare) {
+      navigator
+        .share({
+          title: postTitle,
+          text: postContent,
+          url: `${window.location.origin}/post/${id}`,
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") console.log(err);
+        });
+    } else {
+      setShowShareModal(true);
+    }
+  };
 
   const renderPostSocialIcons = (
     <>
@@ -85,10 +120,7 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <StyledSpan className="total-number">{numLikes}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numLikes > 1 ? " Likes" : " Like"}
-          </StyledSpan>
+          {renderLabels("Like", numLikes)}
         </div>
       ) : (
         <div
@@ -97,10 +129,7 @@ const PostSocial = ({
           onClick={() => handlePostLike(id, liked, true)}
         >
           {renderLikeIcon()}
-          <StyledSpan className="total-number">{numLikes}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numLikes > 1 ? " Likes" : " Like"}
-          </StyledSpan>
+          {renderLabels("Like", numLikes)}
         </div>
       )}
       <span></span>
@@ -111,10 +140,7 @@ const PostSocial = ({
           onClick={setShowComments}
         >
           {renderCommentIcon()}
-          <StyledSpan className="total-number">{numComments}</StyledSpan>
-          <StyledSpan className="social-text">
-            {numComments > 1 ? " Comments" : " Comment"}
-          </StyledSpan>
+          {renderLabels("Comment", numComments)}
         </div>
       ) : (
         <>
@@ -135,16 +161,13 @@ const PostSocial = ({
                 onClick={setShowComments}
               >
                 {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
+                {renderLabels("Comment", numComments)}
               </div>
             </Link>
           ) : (
             <Link
               onClick={() =>
-                sessionStorage.setItem("postcomment", `/post/${id}`)
+                sessionStorage.setItem("postredirect", `/post/${id}`)
               }
               to={{
                 pathname: LOGIN,
@@ -156,10 +179,7 @@ const PostSocial = ({
                 className="social-icon"
               >
                 {renderCommentIcon()}
-                <StyledSpan className="total-number">{numComments}</StyledSpan>
-                <StyledSpan className="social-text">
-                  {numComments > 1 ? " Comments" : " Comment"}
-                </StyledSpan>
+                {renderLabels("Comment", numComments)}
               </div>
             </Link>
           )}
@@ -168,36 +188,16 @@ const PostSocial = ({
 
       <span></span>
 
-      {postId ? (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.post.prefix)}
-            text={url}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
+      <div className="social-icon">
+        <div
+          id={gtmTag("share", GTM.post.prefix)}
+          className="social-text"
+          onClick={showNativeShareOrModal}
+        >
+          {renderShareIcon()}
+          <StyledSpan>Share</StyledSpan>
         </div>
-      ) : (
-        <div className="social-icon">
-          <CopyToClipboard
-            id={gtmTag("share", GTM.feed.prefix)}
-            text={window.location.href.replace(
-              window.location.pathname,
-              `/post/${id}`,
-            )}
-            onCopy={onCopyLink}
-          >
-            <span>
-              {renderShareIcon()}
-              <StyledSpan className="social-text">Share</StyledSpan>
-            </span>
-          </CopyToClipboard>
-        </div>
-      )}
+      </div>
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;

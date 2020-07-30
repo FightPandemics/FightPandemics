@@ -31,7 +31,7 @@ const Heading = styled.h2`
   font-weight: bold;
 `;
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   width: 100%;
   display: block;
   width: 22%;
@@ -58,7 +58,7 @@ const StyledLink = styled(Link)`
   border-radius: 1rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   &:hover {
-    border: 1px solid ${theme.colors.primary};
+    border: 1px solid ${theme.colors.royalBlue};
     color: ${theme.colors.royalBlue};
   }
 `;

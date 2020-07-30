@@ -5,7 +5,6 @@ import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
-import UnderLineDescription from "components/Input/UnderlineDescription";
 import InputLabel from "components/Input/Label";
 import orgData from "../assets/data/createOrganisationProfile";
 import {
@@ -44,6 +43,7 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { validateEmail } from "../utils/validators";
 
 const errorStyles = {
   color: "#FF5656",
@@ -78,7 +78,9 @@ function EditOrganisationAccount(props) {
     errors,
     clearError,
     setError,
-  } = useForm();
+  } = useForm({
+    mode: "change",
+  });
   const { loading, organisation } = orgProfileState;
   const { name, email, global, needs } = organisation || {};
 
@@ -93,7 +95,7 @@ function EditOrganisationAccount(props) {
       return setError(
         "location",
         "required",
-        "Please select an address from the drop-down",
+        "Address is required. Please enter your address and select it from the drop-down",
       );
     }
     Object.entries(NEEDS).map(([key, label]) => {
@@ -136,8 +138,26 @@ function EditOrganisationAccount(props) {
 
   const organisationInfo = {
     // label name, variable name, value
-    "Organisation Name": ["name", name],
-    "Organisation Contact E-mail": ["email", email],
+    "Organisation Name": [
+      "name",
+      name,
+      "Organisation name is required",
+      false,
+      {
+        value: 60,
+        message: "Max. 60 characters",
+      },
+    ],
+    "Organisation Contact E-mail": [
+      "email",
+      email,
+      "Email is required",
+      true,
+      {
+        value: 30,
+        message: "Max. 30 characters",
+      },
+    ],
   };
 
   const renderNeedSection = () => {
@@ -180,13 +200,16 @@ function EditOrganisationAccount(props) {
             inputTitle={key}
             name={value[0]}
             defaultValue={value[1]}
-            ref={register({ required: true })}
-            error={!!errors[value[0]]}
+            ref={register({
+              required: value[2],
+              maxLength: value[4],
+              validate: value[3]
+                ? (email) => validateEmail(email) || "Invalid email"
+                : null,
+            })}
+            error={errors[value[0]]}
             onChange={(event) => event.target.value}
           />
-          <UnderLineDescription marginTop={"-1.5rem"}>
-            {value[2] || null}
-          </UnderLineDescription>
         </div>
       );
     });

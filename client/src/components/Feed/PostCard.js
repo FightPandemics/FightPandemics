@@ -12,8 +12,7 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  margin-left: 2rem;
-  margin-right 2rem;
+  padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -65,32 +64,38 @@ const PostCard = styled(Card)`
 
     .am-card-header {
       display: block;
-      flex: 1 1 auto;
       padding: 0;
-      margin-right: 1rem;
 
       .am-card-header-content {
         align-items: unset;
         font-size: ${medium};
+
+        .title-wrapper {
+          width: calc(100% - 4.7rem);
+        }
 
         img {
           margin-right: 0.7rem;
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
-          max-width: 100%;
         }
-      }
 
-      .am-card-header-extra {
-        text-align: unset;
-        font-size: ${xsmall};
-        margin-left: 4.7rem;
-        margin-top: -1.8rem;
+        .author {
+          font-size: ${medium};
+          height: auto;
+        }
 
-        .status-icon {
-          width: fit-content;
-          margin-right: 0.8rem;
+        .location-status {
+          height: 3rem;
+          margin-top: -1.2rem;
+          color: #888;
+          font-size: ${xsmall};
+
+          img {
+            width: 0.6rem;
+            margin-right: 0.8rem;
+          }
         }
       }
     }
@@ -103,6 +108,10 @@ const PostCard = styled(Card)`
 
       &::before {
         content: none;
+      }
+
+      .am-tag {
+        margin: 0.5rem 0.6rem 0.5rem 0rem;
       }
 
       h2 {
@@ -118,8 +127,9 @@ const PostCard = styled(Card)`
       }
 
       &.content-wrapper {
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          padding: 0 3.4rem;
+        .ant-typography {
+          margin: 0;
+          padding: 1rem 0;
         }
       }
 
@@ -127,7 +137,6 @@ const PostCard = styled(Card)`
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
           margin-bottom: 1.3rem;
-          padding: 0 3.4rem;
         }
       }
 

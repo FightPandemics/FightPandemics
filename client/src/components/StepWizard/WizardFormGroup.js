@@ -3,7 +3,7 @@ import { theme } from "constants/theme";
 
 const WizardFormGroup = styled.div`
   display: flex;
-  color: ${theme.colors.primary};
+  color: ${theme.colors.royalBlue};
   flex-flow: column wrap;
   box-sizing: border-box;
   align-items: center;

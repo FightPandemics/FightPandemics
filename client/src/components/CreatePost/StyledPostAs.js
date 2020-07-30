@@ -166,6 +166,10 @@ const StyledSvgIcon = styled(SvgIcon)`
   pointer-events: none;
 `;
 
+const OptionButtonWrapper = styled.div`
+  overflow: auto;
+`;
+
 const Option = ({ img, text, onClick, type, gtmTag }) => (
   <OptionWrapper
     id={gtmTag}
@@ -185,6 +189,7 @@ export {
   CreateOrgLink,
   TitleStep,
   OptionButton,
+  OptionButtonWrapper,
   BackButton,
   ViewPostButton,
 };

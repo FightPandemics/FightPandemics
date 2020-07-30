@@ -42,7 +42,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   LINKEDIN_URL,
@@ -182,9 +182,7 @@ const OrganisationProfile = () => {
     const endPoint = `/api/posts/${post._id}`;
     if (
       user &&
-      (user._id === post.author.id ||
-        user.id === post.author.id ||
-        isAuthorOrg(user.organisations, post.author))
+      (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -371,6 +369,7 @@ const OrganisationProfile = () => {
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={() => setModal(false)}
+                  loadPosts={fetchOrganisationPosts}
                   visible={modal}
                   user={user}
                 />

@@ -13,7 +13,7 @@ import NrMap from "../../pages/NrMap";
 import DescriptionCard from "../Card/DescriptionCard";
 
 const { colors, typography } = theme;
-const { darkerGray, white, primary, royalBlue } = colors;
+const { darkerGray, white, royalBlue } = colors;
 const { xxlarge } = typography.size;
 
 const HealthFacilitiesData = [
@@ -122,7 +122,7 @@ const SearchBarContainer = styled.div`
 const ShareLocation = styled.div`
   padding: 1rem;
   cursor: pointer;
-  color: ${primary};
+  color: ${royalBlue};
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     text-align: center;
   }

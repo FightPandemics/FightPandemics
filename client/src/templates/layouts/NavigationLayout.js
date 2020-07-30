@@ -330,6 +330,7 @@ const NavigationLayout = (props) => {
 
       if (res) {
         toggleModal("thanksModal");
+        setTimeout(() => dispatchAction(SET_VALUE, "thanksModal", false), 3000);
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
