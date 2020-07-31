@@ -1,0 +1,282 @@
+{
+  "headline": "A place to offer and request help",
+  "tagline": "Pandemics will continue to happen. We help communities prepare and respond",
+  "common": {
+    "getHelp": "Request Help",
+    "giveHelp": "Offer Help",
+    "viewFeed": "View Help Board",
+    "register": "Join Now",
+    "feedback": "Feedback",
+    "question": "Question",
+    "aboutUs": "About Us",
+    "profile": "Profile",
+    "addOrg": "Add Organisation",
+    "logout": "Sign Out"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Question",
+      "next": "Next",
+      "previous": "Back",
+      "submit": "Submit",
+      "skip": "Skip",
+      "whereLocated": "Where are you located?",
+      "relevantResults": "We want to show you the most relevant results",
+      "enterAddress": "Enter address, zip code, or city",
+      "shareLocation": "Share my Location",
+      "showAnywhere": "Show me postings from anywhere",
+      "whatEmail": "What is your email address?",
+      "respectPrivacy": "We respect your privacy. Please read our and <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
+      "enterEmail": "Enter your email address..."
+    },
+    "needHelp": {
+      "whatHelp": "What type of help do you need?",
+      "medical": "Medical",
+      "haveCovidSymptoms": "I have symptoms of COVID-19",
+      "other": "Other Help",
+      "otherDesc": "I need assistance getting groceries/medicine/etc."
+    },
+    "offerHelp": {
+      "howContribute": "How do you want to contribute?",
+      "volunteer": "As a Volunteer",
+      "donorInvestor": "As a Donor/Investor",
+      "organisation": "As an Organisation"
+    }
+  },
+  "feed": {
+    "title": "Help Board",
+    "all": "All posts",
+    "getHelp": "Requesting help",
+    "giveHelp": "Offering help",
+    "quit": "Quit filters",
+    "apply": "Apply filters",
+    "getOrGive": "Offer or request help",
+    "filters": {
+      "location": {
+        "label": "Location",
+        "enterAddress": "Enter address, zip code, or city",
+        "shareLocation": "Share my Location"
+      },
+      "providers": "Providers",
+      "providersList": [
+        "Individual",
+        "Startup",
+        "Company",
+        "Community",
+        "Government",
+        "Non-profit",
+        "University",
+        "Health care provider",
+        "Other"
+      ],
+      "types": "Types",
+      "typesList": [
+        "Medical Supplies",
+        "Groceries/Food",
+        "Business",
+        "Education",
+        "Legal",
+        "Wellbeing/Mental",
+        "Entertainment",
+        "Information",
+        "Funding",
+        "R&D",
+        "Tech",
+        "Other"
+      ]
+    }
+  },
+  "post": {
+    "create": "Create a post",
+    "continueAs": "Continue Posting As",
+    "individual": "Individual",
+    "organisation": "Organisation",
+    "givingHelp": "Offering Help",
+    "gettingHelp": "Requesting Help",
+    "writePostHere": "Write your post here",
+    "title": "Title",
+    "writePost": "Write your post",
+    "whatGiving": "What are you offering?",
+    "addTags": "Add tags to make your post more visible",
+    "whatVisibility": "What is the visibility of your post?",
+    "postVisible": "The post will be visible to",
+    "success": "Success",
+    "viewPost": "View Your Post",
+    "like": "Like",
+    "like_plural": "Likes",
+    "likeWithCount": "{{count}} Like",
+    "likeWithCount_plural": "{{count}} Likes",
+    "comment": "Comment",
+    "comment_plural": "Comments",
+    "commentWithCount": "{{count}} Comment",
+    "commentWithCount_plural": "{{count}} Comments",
+    "options": {
+      "shareWith": {
+        "city": "In my City",
+        "state": "In my State",
+        "worldwide": "Worldwide"
+      },
+      "expires": {
+        "forever": "Forever",
+        "month": "For a month",
+        "week": "For a week",
+        "day": "For a day"
+      },
+      "helpTypes": {
+        "request": "Looking for help",
+        "offer": "Offering to help"
+      }
+    }
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Account Information",
+      "profileInfo": "Profile Information",
+      "address": "Address",
+      "enterAddress": "Enter address, zip code, or city",
+      "agreePrivacy": "By signing up, I agree to the <1>Privacy Policy</1>",
+      "agreeTerms": "By signing up, I agree to the <1>Terms and Conditions</1>",
+      "createProfile": "Create Profile",
+      "saveChanges": "Save Changes",
+      "thankyou": "Thank you for joining our community!",
+      "viewProfile": "View my Profile",
+      "continuePosting": "Continue Posting",
+      "viewFeed": "View Help Board"
+    },
+    "individual": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "hideAddress": "Don't show my address",
+      "iWant": "I want to",
+      "volunteer": "Volunteer",
+      "donate": "Donate",
+      "shareInfo": "Share Information",
+      "iNeed": "I need",
+      "medical": "Medical Help",
+      "haveCovidSymptoms": "I have symptoms of COVID-19",
+      "other": "Other Help",
+      "otherDesc": "I need assistance getting groceries/medicine/etc.",
+      "intro": "Self-introduction",
+      "website": "Personal Website",
+      "urls": {
+        "facebook": "Facebook URL",
+        "linkedin": "LinkedIn URL",
+        "twitter": "Twitter URL",
+        "github": "Github URL"
+      }
+    },
+    "org": {
+      "name": "Organisation Name",
+      "email": "Organisation Contact Email",
+      "globalOrg": "We are a global organisation",
+      "seeking": "What are you looking for",
+      "volunteers": "Volunteers",
+      "donations": "Donations",
+      "staff": "Staff",
+      "other": "Other",
+      "typeAndIndustry": "Type and Industry",
+      "type": "Type",
+      "types": [
+        "Startup",
+        "Company",
+        "Community",
+        "Government",
+        "Non-Profit",
+        "University",
+        "Health Care Provider",
+        "Other"
+      ],
+      "industry": "Industry",
+      "industries": [
+        "Automobile",
+        "Architecture",
+        "Arts & Crafts",
+        "Banking",
+        "Biotechnology",
+        "Business Supplies and Equipment",
+        "Civic & Social Organisation",
+        "Events Services",
+        "Fund-raising",
+        "Government Relations",
+        "Health, Wellness, and Fitness",
+        "Hospital & Health Care",
+        "Industries",
+        "Information Technology and Services",
+        "Legal Services",
+        "Marketing and Advertising",
+        "Medical Devices",
+        "Non-Profit Organisation Management",
+        "Other",
+        "Philanthropy",
+        "Primary/Secondary Education",
+        "Professional Training & Coaching",
+        "Research",
+        "Think Tanks",
+        "Translation and Localization"
+      ],
+      "desc": "Organisation Description",
+      "lang": "Organisation Language",
+      "website": "Website",
+      "urls": {
+        "itunes": "Link to Apple Store",
+        "play": "Link to Google Play",
+        "twitter": "Twitter URL",
+        "linkedin": "LinkedIn URL"
+      }
+    }
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "joinNow": "Join Now",
+    "email": "Email",
+    "enterEmail": "Enter email address",
+    "password": "Password",
+    "enterPassword": "Enter password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot Password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "orSignIn": "OR SIGN IN WITH",
+    "orJoinNow": "OR JOIN NOW WITH",
+    "facebook": "Facebook",
+    "google": "Google",
+    "linkedin": "LinkedIn"
+  },
+  "verifyEmail": {
+    "checkInbox": "Check your inbox",
+    "forgotPass": "An email has been sent to {{email}} with further instructions on how to reset your password.",
+    "confirm": "We just emailed a link to {email}. Click the link to confirm your account and complete your profile.",
+    "checkSpam": "If you don't see a message within a few minutes please check spam, promotions or other incoming mail folders."
+  },
+  "aboutUs": {
+    "ourStory": "Our Story",
+    "story": "FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it. Telegram and WhatsApp groups were self-organizing in Manuel’s neighborhood, but without personally knowing anyone involved he could not ask them for assistance. Inspired by so many coming together, Manuel launched the project with one mission in mind: to ensure that others could connect in time.",
+    "ourCommunity": "Our Community",
+    "community": "We are built by a team of 450+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
+    "ourIdea": "Our Idea",
+    "followUs": "Follow us on social media",
+    "contactUs": "Or contact us at",
+    "contactEmail": "contact@fightpandemics.com"
+  },
+  "footer": {
+    "faq": "FAQ",
+    "blog": "Blog",
+    "termsConditions": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "cookiesPolicy": "Cookies Policy",
+    "copyright": "Copyright {{year}} FightPandemics. All rights reserved."
+  },
+  "faq": {
+    "general": [
+      [
+        "What is FightPandemics?",
+        "<0>FightPandemics is a platform created amid the COVID-19 outbreak with the aim to be a go-to place for people affected in many ways by the pandemic.</0> </1>Our main mission is to connect individuals and organisations offering and requesting help amid pandemic crisis, in a local and global level. No matter if you seek medical help, facial masks, legal help, groceries, someone to walk your dog or support with any other day-to-day activities, you can look for it here:</1> <2>https://fightpandemics.com/feed</2> <3>We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organisations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises.</3>"
+      ],
+      ["q2", "q2a"]
+    ]
+  },
+  "terms": {},
+  "privacy": {},
+  "cookies": {}
+}
