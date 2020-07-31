@@ -20,7 +20,6 @@ import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
-import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
 
 import {
@@ -441,7 +440,7 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
-    const limit = -1;
+    const limit = 5;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
@@ -559,6 +558,11 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const loadNextPage = useCallback(async () => {
+    if (!isLoading && loadMore) {
+      await postsDispatch({ type: NEXT_PAGE });
+    }
+  }, [postsDispatch, loadMore, isLoading]);
   // const scrollObserver = useCallback(
   //   (node) => {
   //     new IntersectionObserver((entries) => {
@@ -642,7 +646,7 @@ const Feed = (props) => {
             className="site-layout-background"
             width="29rem"
           >
-            <div>
+            <>
               <MenuWrapper
                 defaultSelectedKeys={["ALL"]}
                 selectedKeys={[selectedType]}
@@ -666,7 +670,7 @@ const Feed = (props) => {
                 </button>
                 <FiltersList />
               </FiltersWrapper>
-            </div>
+            </>
             <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
@@ -696,6 +700,9 @@ const Feed = (props) => {
               deleteModalVisibility={deleteModalVisibility}
               handlePostDelete={handlePostDelete}
               handleCancelPostDelete={handleCancelPostDelete}
+              isNextPageLoading={isLoading}
+              loadNextPage={loadNextPage}
+              hasNextPage={loadMore}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
@@ -727,7 +734,6 @@ const Feed = (props) => {
           visible={showCreatePostModal}
           user={user}
         />
-        {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>
     </FeedContext.Provider>
   );

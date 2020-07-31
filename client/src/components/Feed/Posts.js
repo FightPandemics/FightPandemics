@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { FixedSizeList as List } from "react-window";
+import InfiniteLoader from "react-window-infinite-loader";
+
 //Local
 import Post from "./Post";
+import Loader from "components/Feed/StyledLoader";
 
 // Constants
 import { mq } from "constants/theme";
 
-//TODO implement it again back
 const HorizontalRule = styled.hr`
   display: none;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -19,7 +21,6 @@ const HorizontalRule = styled.hr`
     max-width: 325px;
   }
 `;
-
 const Posts = ({
   isAuthenticated,
   filteredPosts,
@@ -30,20 +31,21 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
+  hasNextPage,
+  isNextPageLoading,
+  loadNextPage,
 }) => {
   const posts = Object.entries(filteredPosts);
-  return (
-    <div className="feed-posts">
-      <List
-        height={Math.max(
-          document.documentElement.clientHeight,
-          window.innerHeight || 0,
-        )}
-        itemCount={posts.length}
-        itemSize={400}
-        width="100%"
-      >
-        {({ index, style }) => (
+  const itemCount = hasNextPage ? posts.length + 1 : posts.length;
+  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const isItemLoaded = (index) => !hasNextPage || index < posts.length;
+  const postItem = ({ index, style }) => {
+    let content;
+    if (!isItemLoaded(index)) {
+      content = <Loader />;
+    } else {
+      content = (
+        <>
           <Post
             currentPost={posts[index][1]}
             includeProfileLink={true}
@@ -57,10 +59,36 @@ const Posts = ({
             key={index}
             deleteModalVisibility={deleteModalVisibility}
             onChange={handlePostDelete}
-            style={style}
           />
+          <HorizontalRule />
+        </>
+      );
+    }
+    return <div style={style}>{content}</div>;
+  };
+  return (
+    <div className="feed-posts">
+      <InfiniteLoader
+        isItemLoaded={isItemLoaded}
+        itemCount={itemCount}
+        loadMoreItems={loadMoreItems}
+      >
+        {({ onItemsRendered, ref }) => (
+          <List
+            height={Math.max(
+              document.documentElement.clientHeight,
+              window.innerHeight || 0,
+            )}
+            itemCount={itemCount}
+            itemSize={380}
+            width="100%"
+            onItemsRendered={onItemsRendered}
+            ref={ref}
+          >
+            {postItem}
+          </List>
         )}
-      </List>
+      </InfiniteLoader>
     </div>
   );
 };
