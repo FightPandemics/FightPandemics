@@ -1,7 +1,8 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Modal as WebModal } from "antd";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -71,6 +72,7 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  DELETE_MODAL_ORGANISATION,
 } from "hooks/actions/feedActions";
 import {
   postsReducer,
@@ -91,6 +93,8 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganisationProfile = () => {
+  const history = useHistory();
+
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
 
@@ -201,6 +205,13 @@ const OrganisationProfile = () => {
     }
   };
 
+  const handleOrgDelete = () => {
+    postsDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_ORGANISATION,
+    });
+  };
+
   const handlePostDelete = () => {
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
@@ -209,6 +220,7 @@ const OrganisationProfile = () => {
   };
 
   const handleCancelPostDelete = () => {
+    setDrawer(false);
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
@@ -258,6 +270,44 @@ const OrganisationProfile = () => {
         });
       }
     }
+  };
+
+  const orgDelete = async () => {
+    let deleteResponse;
+    const endPoint = `/api/organisations/${organisationId}`;
+    if (
+      true
+      // user &&
+      // (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
+    ) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          user.organisations = user.organisations.filter(
+            (org) => org._id !== organisationId,
+          );
+          userProfileDispatch(fetchUserSuccess(user));
+          history.push(`/profile/${user.id}`);
+          // const allPosts = {
+          //   ...postsState.posts,
+          // };
+          // delete allPosts[post._id];
+          // fetchOrganisationPosts();
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+    // if (deleteModalVisibility === DELETE_MODAL_POST) {
+    //   postDelete(post);
+    // } else if (deleteModalVisibility === DELETE_MODAL_COMMENT) {
+    //   deleteComment(comment);
+    // }
+
+    // setToDelete("");
+    handleCancelPostDelete();
   };
 
   const renderURL = () => {
@@ -395,8 +445,37 @@ const OrganisationProfile = () => {
                   Edit Profile{" "}
                 </Link>
               </DrawerHeader>
+              <DrawerHeader>
+                <div
+                  onClick={handleOrgDelete}
+                  style={{
+                    fontSize: "1.7rem",
+                    color: "#db1052",
+                  }}
+                >
+                  Delete Organisation
+                </div>
+              </DrawerHeader>
             </CustomDrawer>
           )}
+          <WebModal
+            title="Confirm"
+            visible={
+              !!deleteModalVisibility &&
+              deleteModalVisibility === DELETE_MODAL_ORGANISATION
+              // &&
+              // toDelete === post._id
+            }
+            onOk={() => orgDelete()}
+            onCancel={handleCancelPostDelete}
+            okText="Delete"
+            cancelText="Cancel"
+          >
+            <p>
+              Are you sure you want to delete the organisation and all
+              associated posts?
+            </p>
+          </WebModal>
         </>
       );
     }
