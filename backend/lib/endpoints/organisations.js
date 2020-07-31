@@ -37,6 +37,27 @@ async function routes(app) {
         req.log.error("User not allowed to delete this organisation");
         throw app.httpErrors.forbidden();
       }
+
+      const [postsErr, posts] = await app.to(
+        Post.find({ "author.id": org._id }),
+      );
+      for (post of posts) {
+        const postId = post._id;
+        const [deletePostErr, deletedCount] = await app.to(post.delete());
+        if (deletePostErr) {
+          req.log.error(deletePostErr, "Failed deleting post");
+          throw app.httpErrors.internalServerError();
+        }
+
+        const {
+          deletedCommentsCount,
+          ok: deleteCommentsOk,
+        } = await Comment.deleteMany({ postId });
+        if (deleteCommentsOk !== 1) {
+          app.log.error(`Failed removing comments for deleted post=${postId}`);
+        }
+      }
+
       const [deleteOrgErr, deletedOrganisation] = await app.to(org.delete());
       if (deleteOrgErr) {
         req.log.error(deleteOrgErr, "Failed deleting organisation");
@@ -158,7 +179,10 @@ async function routes(app) {
 
       if (newOrgErr) {
         req.log.error(newOrgErr, "Failed creating organisation");
-        if (newOrgErr.name === "ValidationError" || newOrgErr.name === "MongoError") {
+        if (
+          newOrgErr.name === "ValidationError" ||
+          newOrgErr.name === "MongoError"
+        ) {
           throw app.httpErrors.conflict(
             "Email address is already in use or email address cannot be validated!",
           );
