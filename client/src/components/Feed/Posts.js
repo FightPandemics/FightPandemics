@@ -14,7 +14,6 @@ import Loader from "components/Feed/StyledLoader";
 // Constants
 import { mq } from "constants/theme";
 
-//TODO implement it again back
 const HorizontalRule = styled.hr`
   display: none;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
