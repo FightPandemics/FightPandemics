@@ -384,7 +384,7 @@ const CreateProfile = ({ email, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label={t("profile.individual.shareInfo")}
+              label={t("profile.individual.shareInformation")}
               name="objectives.shareInformation"
               onChange={handleCheckboxChange}
             />

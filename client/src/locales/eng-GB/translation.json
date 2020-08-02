@@ -152,12 +152,13 @@
       "iWant": "I want to",
       "volunteer": "Volunteer",
       "donate": "Donate",
-      "shareInfo": "Share Information",
+      "shareInformation": "Share Information",
       "iNeed": "I need",
       "medical": "Medical Help",
       "haveCovidSymptoms": "I have symptoms of COVID-19",
       "other": "Other Help",
-      "otherDesc": "I need assistance getting groceries, medicine, etc.",
+      "otherDesc": "I need assistance getting groceries/medicine/etc.",
+      "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "urls": {
@@ -271,7 +272,7 @@
     "termsConditions": "Terms & Conditions",
     "privacyPolicy": "Privacy Policy",
     "cookiesPolicy": "Cookies Policy",
-    "copyright": "Copyright {{year}} FightPandemics. All rights reserved."
+    "copyright": "Copyright {{currentYear}} FightPandemics. All rights reserved."
   },
   "faq": {
     "general": [

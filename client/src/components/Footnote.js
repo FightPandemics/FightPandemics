@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { theme, mq } from "constants/theme";
 
@@ -61,24 +62,28 @@ const FooterALink = styled.a`
 
 export default () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
+
   return (
     <StyledFooter>
       <Copyright>
-        Copyright {currentYear} FightPandemics. All rights reserved.
+        <Trans i18nKey="footer.copyright" currentYear={currentYear}>
+          Copyright {{currentYear}} FightPandemics. All rights reserved.
+        </Trans>
       </Copyright>
       <Policies>
-        <FooterLink to={"/about-us"}>About Us</FooterLink> |{" "}
-        <FooterLink to={"/faq"}>FAQ</FooterLink> |{" "}
+        <FooterLink to={"/about-us"}>{t("common.aboutUs")}</FooterLink> |{" "}
+        <FooterLink to={"/faq"}>{t("footer.faq")}</FooterLink> |{" "}
         <FooterALink
           href="https://medium.com/@FightPandemics"
           target="_blank"
           alt="FightPandemics Blog Link"
         >
-          Blog
+          {t("footer.blog")}
         </FooterALink>
-        | <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
-        <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}
-        <FooterLink to={"/cookies-policy"}>Cookies Policy</FooterLink>
+  |     <FooterLink to={"/terms-conditions"}>{t("footer.termsConditions")}</FooterLink> |{" "}
+        <FooterLink to={"/privacy-policy"}>{t("footer.privacyPolicy")}</FooterLink> |{" "}
+        <FooterLink to={"/cookies-policy"}>{t("footer.cookiesPolicy")}</FooterLink>
       </Policies>
     </StyledFooter>
   );
