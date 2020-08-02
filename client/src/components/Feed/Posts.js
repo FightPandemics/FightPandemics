@@ -43,8 +43,10 @@ const Posts = ({
 }) => {
   const posts = Object.entries(filteredPosts);
   const itemCount = hasNextPage ? posts.length + 1 : posts.length;
+  const isItemLoaded = (index) => {
+    return !hasNextPage || !!posts[index];
+  };
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-  const isItemLoaded = (index) => !hasNextPage || index < posts.length;
 
   const postItem = ({ key, index, style }) => {
     let content;
@@ -85,29 +87,25 @@ const Posts = ({
       >
         {({ onRowsRendered, registerChild }) => (
           <WindowScroller>
-            {({ height, isScrolling, scrollTop, onChildScroll }) => {
-              return (
-                <AutoSizer disableHeight>
-                  {({ width }) => {
-                    return (
-                      <List
-                        autoHeight
-                        ref={registerChild}
-                        height={height}
-                        width={width}
-                        isScrolling={isScrolling}
-                        rowCount={itemCount}
-                        rowHeight={380}
-                        rowRenderer={postItem}
-                        scrollTop={scrollTop}
-                        onScroll={onChildScroll}
-                        onRowsRendered={onRowsRendered}
-                      />
-                    );
-                  }}
-                </AutoSizer>
-              );
-            }}
+            {({ height, isScrolling, scrollTop, onChildScroll }) => (
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <List
+                    autoHeight
+                    ref={registerChild}
+                    height={height}
+                    width={width}
+                    isScrolling={isScrolling}
+                    rowCount={itemCount}
+                    rowHeight={380}
+                    rowRenderer={postItem}
+                    scrollTop={scrollTop}
+                    onScroll={onChildScroll}
+                    onRowsRendered={onRowsRendered}
+                  />
+                )}
+              </AutoSizer>
+            )}
           </WindowScroller>
         )}
       </InfiniteLoader>
