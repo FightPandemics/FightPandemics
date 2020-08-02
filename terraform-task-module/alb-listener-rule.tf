@@ -17,8 +17,9 @@ resource "aws_alb_listener_rule" "main" {
     target_group_arn = aws_alb_target_group.app.arn
   }
   condition {
-    field  = "host-header"
-    values = [var.fp_context == "production" ? "fightpandemics.com" : "${var.subdomain}.*"]
+    host_header {
+      values = [var.fp_context == "production" ? "fightpandemics.com" : "${var.subdomain}.*"]
+    }
   }
 }
 
