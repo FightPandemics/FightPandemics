@@ -1,4 +1,4 @@
-name: review-delete
+name: Delete Review Build
 
 on:
   pull_request:

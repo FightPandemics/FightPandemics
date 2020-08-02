@@ -1,14 +1,17 @@
-name: staging
+name: Deploy to Staging
 
 on:
   push:
     branches:
-      - master
+      - staging
+    tags:
+      - hotfix-*
     paths:
       - backend/**
       - client/**
       - main.tf
       - .github/workflows/**
+      - terraform-task-module/**
 
 jobs:
   build_images:
