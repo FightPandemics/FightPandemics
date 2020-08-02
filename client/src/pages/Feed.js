@@ -249,7 +249,6 @@ const Feed = (props) => {
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
-
   const {
     filterModal,
     showCreatePostModal,
@@ -273,7 +272,6 @@ const Feed = (props) => {
   } = posts;
 
   const { history, isAuthenticated, user } = props;
-  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -558,11 +556,15 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const loadNextPage = useCallback(async () => {
-    if (!isLoading && loadMore) {
-      await postsDispatch({ type: NEXT_PAGE });
-    }
-  }, [postsDispatch, loadMore, isLoading]);
+  const loadNextPage = useCallback(
+    async ({ stopIndex }) => {
+      const lastPostIndex = Object.keys(postsList).length;
+      if (!isLoading && loadMore && !(stopIndex < lastPostIndex)) {
+        await postsDispatch({ type: NEXT_PAGE });
+      }
+    },
+    [postsDispatch, loadMore, isLoading, postsList],
+  );
   // const scrollObserver = useCallback(
   //   (node) => {
   //     new IntersectionObserver((entries) => {
