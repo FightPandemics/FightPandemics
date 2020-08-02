@@ -349,9 +349,7 @@ function EditOrganisationAccount(props) {
             <WhiteSpace />
             {renderSelectItems()}
             <Label>What are you looking for?</Label>
-            <HelpWrapper>
-              {renderNeedSection()}
-            </HelpWrapper>
+            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
               {loading ? "Saving Changes..." : "Save Changes"}
             </CustomSubmitButton>
