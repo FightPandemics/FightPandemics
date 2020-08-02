@@ -1,5 +1,6 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -168,6 +169,7 @@ const CreateProfile = ({ email, history }) => {
     createUserFormReducer,
     initialState,
   );
+  const { t } = useTranslation();
 
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.checked);
@@ -248,7 +250,7 @@ const CreateProfile = ({ email, history }) => {
         <WhiteSpace size="xl" />
         <ProfileFormGroup>
           <Heading className="text-center" level={4}>
-            Create your Profile
+            {t("profile.common.createProfile")}
           </Heading>
           {createUserFormState.error && (
             <ErrorAlert message={createUserFormState.error} type="error" />
@@ -258,7 +260,7 @@ const CreateProfile = ({ email, history }) => {
               <Label
                 htmlFor="email"
                 style={{ ...blockLabelStyles, color: theme.colors.darkGray }}
-                label="E-mail"
+                label={t("profile.individual.email")}
               />
               <Input
                 type="email"
@@ -280,7 +282,7 @@ const CreateProfile = ({ email, history }) => {
               <Label
                 htmlFor="firstName"
                 style={blockLabelStyles}
-                label="First name"
+                label={t("profile.individual.firstName")}
               />
               <Input
                 type="text"
@@ -305,7 +307,7 @@ const CreateProfile = ({ email, history }) => {
               <Label
                 htmlFor="lastName"
                 style={blockLabelStyles}
-                label="Last name"
+                label={t("profile.individual.lastName")}
               />
               <Input
                 type="text"
@@ -331,7 +333,7 @@ const CreateProfile = ({ email, history }) => {
                 htmlFor="location"
                 icon={Marker}
                 style={blockLabelStyles}
-                label="Address"
+                label={t("profile.common.address")}
               />
               <LocationInput
                 formError={errors.location}
@@ -349,7 +351,7 @@ const CreateProfile = ({ email, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Don't show my address"
+              label={t("profile.individual.hideAddress")}
               name="hide.address"
               onChange={handleCheckboxChange}
             />
@@ -360,13 +362,13 @@ const CreateProfile = ({ email, history }) => {
               size={theme.typography.size.large}
               weight={500}
             >
-              I want to
+              {t("profile.individual.iWant")}
             </TextLabel>
             <Controller
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Volunteer"
+              label={t("profile.individual.volunteer")}
               name="objectives.volunteer"
               onChange={handleCheckboxChange}
             />
@@ -374,7 +376,7 @@ const CreateProfile = ({ email, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Donate"
+              label={t("profile.individual.donate")}
               name="objectives.donate"
               onChange={handleCheckboxChange}
             />
@@ -382,7 +384,7 @@ const CreateProfile = ({ email, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Share Information"
+              label={t("profile.individual.shareInfo")}
               name="objectives.shareInformation"
               onChange={handleCheckboxChange}
             />
@@ -393,14 +395,14 @@ const CreateProfile = ({ email, history }) => {
               size={theme.typography.size.large}
               weight={500}
             >
-              I need
+              {t('profile.individual.iNeed')}
             </TextLabel>
             <Controller
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              description="I have symptoms of COVID-19"
-              label="Medical Help"
+              description={t('profile.individual.haveCovidSymptoms')}
+              label={t('profile.individual.medical')}
               name="needs.medicalHelp"
               onChange={handleCheckboxChange}
             />
@@ -408,8 +410,8 @@ const CreateProfile = ({ email, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              description="I need assistance getting groceries, medicine, etc."
-              label="Other Help"
+              description={t("profile.individual.otherDesc")}
+              label={t("profile.individual.other")}
               name="needs.otherHelp"
               onChange={handleCheckboxChange}
             />
@@ -420,10 +422,11 @@ const CreateProfile = ({ email, history }) => {
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
-                Privacy Policy
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreePrivacy">
+                <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
+                  Privacy Policy
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
             <WhiteSpace />
             <StyledCheckbox
@@ -431,10 +434,11 @@ const CreateProfile = ({ email, history }) => {
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showTermsConditionsModal}>
-                Terms and Conditions
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreeTerms">
+                <StyledUnderlineLink onClick={showTermsConditionsModal}>
+                  Terms and Conditions
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
           </InputWrapper>
           <InputGroup>

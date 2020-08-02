@@ -1,6 +1,7 @@
 {
   "headline": "A place to offer and request help",
-  "tagline": "Pandemics will continue to happen. We help communities prepare and respond",
+  "tagline1": "Pandemics will continue to happen.", 
+  "tagline2": "We help communities prepare and respond",
   "common": {
     "getHelp": "Request Help",
     "giveHelp": "Offer Help",
@@ -134,12 +135,12 @@
       "profileInfo": "Profile Information",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
-      "agreePrivacy": "By signing up, I agree to the <1>Privacy Policy</1>",
-      "agreeTerms": "By signing up, I agree to the <1>Terms and Conditions</1>",
-      "createProfile": "Create Profile",
+      "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
+      "agreeTerms": "By signing up, I agree to the <0>Terms and Conditions</0>",
+      "createProfile": "Create Your Profile",
       "saveChanges": "Save Changes",
       "thankyou": "Thank you for joining our community!",
-      "viewProfile": "View my Profile",
+      "viewProfile": "My Profile",
       "continuePosting": "Continue Posting",
       "viewFeed": "View Help Board"
     },
@@ -156,7 +157,7 @@
       "medical": "Medical Help",
       "haveCovidSymptoms": "I have symptoms of COVID-19",
       "other": "Other Help",
-      "otherDesc": "I need assistance getting groceries/medicine/etc.",
+      "otherDesc": "I need assistance getting groceries, medicine, etc.",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "urls": {
@@ -167,14 +168,16 @@
       }
     },
     "org": {
+      "title": "Create Organisation Profile",
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
+      "invalidEmail": "Email is invalid",
       "globalOrg": "We are a global organisation",
       "seeking": "What are you looking for",
       "volunteers": "Volunteers",
       "donations": "Donations",
       "staff": "Staff",
-      "other": "Other",
+      "others": "Others",
       "typeAndIndustry": "Type and Industry",
       "type": "Type",
       "types": [
@@ -215,6 +218,7 @@
         "Think Tanks",
         "Translation and Localization"
       ],
+      "typeIndustryError": "Please select organisation type and industry from dropdown",
       "desc": "Organisation Description",
       "lang": "Organisation Language",
       "website": "Website",
@@ -237,6 +241,7 @@
     "forgotPassword": "Forgot Password",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
+    "recoverLink": "Email me a recovery link",
     "orSignIn": "OR SIGN IN WITH",
     "orJoinNow": "OR JOIN NOW WITH",
     "facebook": "Facebook",
@@ -255,6 +260,7 @@
     "ourCommunity": "Our Community",
     "community": "We are built by a team of 450+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
     "ourIdea": "Our Idea",
+    "ourSupporters": "Our Supporters",
     "followUs": "Follow us on social media",
     "contactUs": "Or contact us at",
     "contactEmail": "contact@fightpandemics.com"
@@ -278,5 +284,16 @@
   },
   "terms": {},
   "privacy": {},
-  "cookies": {}
+  "cookies": {
+    "whatCookies": "WHAT ARE COOKIES?",
+    "whatCookiesContent": "<0>This Website uses ¨Cookies¨, and other similar mechanisms (hereinafter, Cookies). Cookies are files sent to a browser through a web server to record the activities of the User on a specific website or on all websites, apps and / or services on this website. The first purpose of Cookies is to provide the User with faster and more personalized access to the services offered. Cookies are associated only with an anonymous User and his/her computer and do not provide references that allow the deduction of the User's personal data.</0><1>The User may configure his/her browser to notify and reject the installation of Cookies sent by this website, without prejudice to the User's ability to access the Contents. However, we note that, in any case, the performance of the website may decrease. This website makes use of Web Bugs, which are tiny and transparent images inserted in the emails. When the User opens a newsletter of the Website, this image is downloaded along with the rest of the email content and allows to know if a specific email has been opened or not, as well as the IP address from which it was downloaded. FightPandemics uses this information to obtain statistics and carry out analytical studies on the reception of its emails by Users.</1>",
+    "typeCookies": "TYPE, PURPOSE AND FUNCTIONING OF COOKIES",
+    "typeCookiesBegin": "Cookies, depending on their permanence, can be divided into session or permanent Cookies. The first ones expire when the User closes the browser. The second ones expire depending on when the objective for which they serve is fulfilled or when they are manually deleted. Additionally, depending on your objective, the Cookies used by this Website can be classified as follows:",
+    "typeCookiesContent": "<0>Technical cookies: These allow the user to navigate through a web page, platform or application and use the different options or services that exist there, such as, for example, control traffic and data communication, identify the session, access restricted access parts, remember the elements that make up an order, make the purchase process of an order, make the request for registration or participation in an event, use security elements during navigation, store content for dissemination of videos or sound or share content through social networks.</0><1>Analysis cookies: Those that are processed by us or by third parties, which allow to quantify the number of users and thus perform the measurement and statistical analysis of the use made by users of the services offered. For this, your browsing on our website is analyzed in order to improve the offer of products or services that we offer.</1><2>Advertising cookies: Are those that are processed by us or by third parties, allowing us to manage in the most efficient way possible the offer of the advertising spaces that are on the website, adapting the content of the advertisement to the content of the requested service or to the use that you make from our website. For this we can analyze your browsing habits on the Internet, and we can show you advertising related to your browsing profile.</2><3>Behavioral advertising cookies: These allow the management, in the most efficient way possible, of the advertising spaces that, where appropriate, the editor has included in a web page, application or platform from which it provides the requested service. These cookies store information on the behavior of users obtained through the continuous observation of their browsing habits, which allows developing a specific profile to display advertising based on it.</3>",
+    "typeCookiesEnd": "The Website may use third-party services that may require the installation of Cookies on Users and that on behalf of FightPandemics, and will collect information for statistical purposes on the use of the Website by the user and for the provision of other services related to Website activity and other Internet services.",
+    "disableCookies": "HOW TO DISABLE COOKIES AND WEB BUGS IN THE MAIN BROWSERS?",
+    "disableCookiesContent": "It is normally possible to stop accepting browser cookies or stop accepting cookies from a particular service. All modern browsers allow you to change the configuration of Cookies. These settings are usually found in the ‘options’ or ‘Preferences’ of your browser menu. You can also configure your browser or email manager, as well as install free add-ons to prevent Web Bugs from downloading when opening an email. Use the following instructions according to your internet browser to change cookie preferences:",
+    "updateCookies": "UPDATE OF COOKIES POLICY",
+    "updateCookiesContent": "FightPandemics may modify this Cookies Policy based on legislative, regulatory requirements, or with the purpose of adapting said policy to the instructions issued by the Spanish Data Protection Agency, therefore Users are advised to periodically visit this page to know the changes suffered in them. When there are significant changes in this Cookies Policy, Users will be notified either through the web or through email to the Users registered in the newsletter service."
+  }
 }

@@ -174,10 +174,10 @@ const Home = (props) => {
           </Title>
 
           <StyledStrapline level={2} margin="none">
-            A place to offer and request help
+            {t("headline")}
           </StyledStrapline>
-          <StyledP>Pandemics will continue to happen.</StyledP>
-          <StyledP>We help communities prepare and respond.</StyledP>
+          <StyledP>{t("tagline1")}</StyledP>
+          <StyledP>{t("tagline2")}</StyledP>
         </IntroText>
       </StyledIntro>
 
@@ -191,7 +191,7 @@ const Home = (props) => {
               activeImg={needHelpActive}
               onClick={() => props.history.push("/need-help")}
             >
-              Request Help
+              {t("common.getHelp")}
             </ImageButton>
           </FlexChild>
           <FlexChild>
@@ -202,13 +202,13 @@ const Home = (props) => {
               activeImg={offerHelpActive}
               onClick={() => props.history.push("/offer-help")}
             >
-              Offer Help
+              {t("common.giveHelp")}
             </ImageButton>
           </FlexChild>
 
           <Link to="/feed">
             <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
-              View Help Board
+              {t("common.viewFeed")}
             </StyleLink>
           </Link>
         </OnboardingContainer>

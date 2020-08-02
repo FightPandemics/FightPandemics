@@ -108,7 +108,7 @@ const AboutUs = () => {
   return (
     <AboutUsContainer>
       <MissionAndVisionBannerContainer>
-        <h1 className="text-primary display-6">{t("About Us")}</h1>
+        <h1 className="text-primary display-6">{t("common.aboutUs")}</h1>
         <WebViewBannerContainer
           src={DesktopBanner}
           alt="Desktop Mission and Vision Banner"
@@ -120,35 +120,27 @@ const AboutUs = () => {
       </MissionAndVisionBannerContainer>
       <TextContainer>
         <br />
-        <h2 className="text-primary display-6">Our Story</h2>
+        <h2 className="text-primary display-6">{t("aboutUs.ourStory")}</h2>
         <p>
-          FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was
-          infected with COVID-19 in France. Upon returning home to Barcelona, he
-          found he was unable to get help even though there were people who
-          wanted to provide it. Telegram and WhatsApp groups were
-          self-organizing in Manuel’s neighborhood, but without personally
-          knowing anyone involved he could not ask them for assistance. Inspired
-          by so many coming together, Manuel launched the project with one
-          mission in mind: to ensure that others could connect in time.
+          {t("aboutUs.story")}
         </p>
         <br />
-        <h2 className="text-primary display-6">Our Community</h2>
+        <h2 className="text-primary display-6">{t("aboutUs.ourCommunity")}</h2>
         <p>
-          We are built by a team of 450+ volunteer developers, designers,
-          scientists, health experts, and product managers from around the world
+          {t("aboutUs.community")}
         </p>
         {/* Add FightPandemics Video */}
         {/* Add buttons for Join as Ambassador and Join as a Volunteer here*/}
         <br />
-        <h2 className="text-primary display-6">Our Idea</h2>
+        <h2 className="text-primary display-6">{t("aboutUs.ourIdea")}</h2>
         <OurIdeaImageContainer src={OurIdeaImage} alt="Our Idea Picture" />
       </TextContainer>
       <br />
-      <h2 className="text-primary display-6">Our Supporters</h2>
+      <h2 className="text-primary display-6">{t("aboutUs.ourSupporters")}</h2>
       <SupportersLogosContainer>
         <LogosList supporterLogos={supporterLogos} />
       </SupportersLogosContainer>
-      <h2 className="text-primary display-6">Follow us on social media</h2>
+      <h2 className="text-primary display-6">{t("followUs")}</h2>
       <SocialContainer>
         <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
           <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
@@ -163,7 +155,7 @@ const AboutUs = () => {
           <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
         </AboutUsLink>
         <p>
-          Or contact us at:{" "}
+          {t("aboutUs.contactUs")}:{" "}
           <AboutUsLink href="mailto:contact@fightpandemics.com">
             contact@fightpandemics.com
           </AboutUsLink>

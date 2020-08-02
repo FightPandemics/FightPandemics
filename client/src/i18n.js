@@ -13,8 +13,8 @@ export const Languages = {
 
 export function getLang() {
     const systemLang = navigator.language;
-    const primaryLang = Object.values(Languages).includes(systemLang) ? systemLang : Languages.en_US;
-    let res = Languages.en_US;
+    const primaryLang = Object.values(Languages).includes(systemLang) ? systemLang : Languages.en;
+    let res = Languages.en;
 
     const language = primaryLang;
     if (resources[language]) 

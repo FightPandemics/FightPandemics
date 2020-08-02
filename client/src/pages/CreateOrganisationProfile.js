@@ -2,6 +2,7 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import { Trans, useTranslation } from 'react-i18next';
 import createOrganisationProfile from "assets//data/createOrganisationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
@@ -99,6 +100,7 @@ const CreateOrgProfile = (props) => {
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
   const [email, setEmail] = useState("");
+  const { t } = useTranslation();
   const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
     false,
   );
@@ -192,7 +194,7 @@ const CreateOrgProfile = (props) => {
       </SvgContainer>
       <FormContainer>
         <Heading className="h4" level={4}>
-          Create Organisation Profile
+          {t("profile.org.title")}
         </Heading>
         {createOrganisationFormState.error && (
           <ErrorAlert
@@ -203,7 +205,7 @@ const CreateOrgProfile = (props) => {
         <WhiteSpace />
         <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
           <InputWrapper>
-            <Label style={styleLabel} label="* Organisation Name" />
+            <Label style={styleLabel} label={"* " + t("profile.org.name")} />
             <Input
               type="text"
               required
@@ -224,7 +226,7 @@ const CreateOrgProfile = (props) => {
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
-            <Label style={styleLabel} label="* Organisation Contact E-mail" />
+            <Label style={styleLabel} label={"* " + t("profile.org.email")} />
             <Input
               type="email"
               required
@@ -243,7 +245,7 @@ const CreateOrgProfile = (props) => {
             {validEmail || errors.email || email === "" ? (
               ""
             ) : (
-              <InputError>Email is invalid</InputError>
+              <InputError>{t("profile.org.invalidEmail")}</InputError>
             )}
             <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
@@ -254,7 +256,7 @@ const CreateOrgProfile = (props) => {
               style={styleLabel}
               htmlFor="location"
               icon={Marker}
-              label="Address"
+              label={t("profile.common.address")}
             />
             <LocationInput
               formError={errors.location}
@@ -271,14 +273,14 @@ const CreateOrgProfile = (props) => {
               control={control}
               onChange={([event]) => event.target.checked}
             />
-            <span style={globalText}>We are a global organisation</span>
+            <span style={globalText}>{t("profile.org.globalOrg")}</span>
             <InputGroup>
-              <Label style={styleLabel} label="* What are you looking for" />
+              <Label style={styleLabel} label={"* " + t("profile.org.seeking")} />
               <Controller
                 as={CheckboxGroup}
                 control={control}
                 defaultValue={false}
-                label="Volunteers"
+                label={t("profile.org.volunteers")}
                 name="needs.volunteers"
                 onChange={([event]) => event.target.checked}
               />
@@ -286,7 +288,7 @@ const CreateOrgProfile = (props) => {
                 as={CheckboxGroup}
                 control={control}
                 defaultValue={false}
-                label="Donations"
+                label={t("profile.org.donations")}
                 name="needs.donations"
                 onChange={([event]) => event.target.checked}
               />
@@ -294,7 +296,7 @@ const CreateOrgProfile = (props) => {
                 as={CheckboxGroup}
                 control={control}
                 defaultValue={false}
-                label="Staff"
+                label={t("profile.org.staff")}
                 name="needs.staff"
                 onChange={([event]) => event.target.checked}
               />
@@ -302,7 +304,7 @@ const CreateOrgProfile = (props) => {
                 as={CheckboxGroup}
                 control={control}
                 defaultValue={false}
-                label="Others"
+                label={t("profile.org.others")}
                 name="needs.other"
                 onChange={([event]) => event.target.checked}
               />
@@ -314,15 +316,15 @@ const CreateOrgProfile = (props) => {
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
-            <Label style={styleLabel} label="* Type and Industry" />
+            <Label style={styleLabel} label={"* " + t("profile.org.typeAndIndustry")} />
           </InputWrapper>
           <div className="settings">
             <Controller
               as={
-                <Select defaultValue="Type">
+                <Select defaultValue={t("profile.org.type")}>
                   {type.options.map((option, i) => (
                     <Select.Option key={i} value={option.text}>
-                      {option.text}
+                      {t("profile.org.types." + i)}
                     </Select.Option>
                   ))}
                 </Select>
@@ -334,10 +336,10 @@ const CreateOrgProfile = (props) => {
             />
             <Controller
               as={
-                <Select defaultValue="Industry">
+                <Select defaultValue={t("profile.org.industry")}>
                   {industry.options.map((option, i) => (
                     <Select.Option key={i} value={option.text}>
-                      {option.text}
+                      {t("profile.org.industries." + i)}
                     </Select.Option>
                   ))}
                 </Select>
@@ -349,7 +351,7 @@ const CreateOrgProfile = (props) => {
             />
             <span style={errorStyles}>
               {errors.type || errors.industry
-                ? "Please select organisation type and industry from dropdown"
+                ? t("profile.org.typeIndustryError")
                 : ""}
             </span>
             <WhiteSpace />
@@ -362,10 +364,11 @@ const CreateOrgProfile = (props) => {
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
-                Privacy Policy
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreePrivacy">
+                <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
+                  Privacy Policy
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
             <WhiteSpace />
             <Label style={styleLabel} label="" />
@@ -374,10 +377,11 @@ const CreateOrgProfile = (props) => {
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showTermsConditionsModal}>
-                Terms and Conditions
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreeTerms">
+                <StyledUnderlineLink onClick={showTermsConditionsModal}>
+                  Terms and Conditions
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
           </InputWrapper>
           <WhiteSpace />

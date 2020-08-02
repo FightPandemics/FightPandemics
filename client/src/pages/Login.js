@@ -340,10 +340,10 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           <FormContainer>
             <Heading className="h4 text-center" level={4}>
               {isLoginForm
-                ? t("Sign In")
+                ? t("auth.signIn")
                 : forgotPassword
-                ? t("Recover Password")
-                : "Join Now"}
+                ? t("auth.forgotPassword")
+                : t("auth.joinNow")}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -354,14 +354,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <Label
                     htmlFor="email"
                     style={blockLabelStyles}
-                    label={t("Email")}
+                    label={t("auth.email")}
                   />
                   <Input
                     type="email"
                     name="email"
                     id="email"
                     className={errors.email && "has-error"}
-                    placeholder="Enter email address"
+                    placeholder={t("auth.enterEmail")}
                     ref={register({
                       required: "Email is required.",
                       validate: (email) =>
@@ -377,14 +377,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <Label
                     htmlFor="password"
                     style={blockLabelStyles}
-                    label={t("Password")}
+                    label={t("auth.password")}
                   />
                   <Input
                     type={passwordType}
                     name="password"
                     id="password"
                     className={errors.password && "has-error"}
-                    placeholder="Enter password"
+                    placeholder={t("auth.enterPassword")}
                     ref={register({
                       maxLength: {
                         value: PASSWORD_MAX_LENGTH,
@@ -415,7 +415,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="confirmPassword"
                       style={blockLabelStyles}
-                      label={t("Confirm Password")}
+                      label={t("auth.confirmPassword")}
                     />
                     <Input
                       type={confirmPasswordType}
@@ -423,7 +423,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       id="confirmPassword"
                       className={errors.confirmPassword && "has-error"}
                       required
-                      placeholder={t("Confirm password")}
+                      placeholder={t("auth.confirmPassword")}
                       ref={register({
                         maxLength: PASSWORD_MAX_LENGTH,
                         minLength: PASSWORD_MIN_LENGTH,
@@ -455,7 +455,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       : handleSubmit(onSignup)
                   }
                 >
-                  {isLoginForm ? t("Sign In") : "Join Now"}
+                  {isLoginForm ? t("auth.signIn") : t("auth.joinNow")}
                 </SubmitButton>
               </form>
             ) : (
@@ -465,7 +465,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="email"
                       style={blockLabelStyles}
-                      label={t("Your Email")}
+                      label={t("auth.email")}
                     />
                     <Input
                       type="email"
@@ -491,7 +491,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       disabled={!formState.isValid}
                       onClick={handleSubmit(onForgotPassword)}
                     >
-                      {t("Email me a recovery link")}
+                      {t("auth.recoverLink")}
                     </SubmitButton>
                   </EmailButtonContainer>
                 </form>
@@ -505,7 +505,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <>
                     <p>
                       <AuthLink to="/auth/forgot-password">
-                        {t('Forgot Password')}
+                        {t('auth.forgotPassword')}
                       </AuthLink>
                     </p>
                     <p>
@@ -513,7 +513,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                         id={GTM.sign.inPrefix + GTM.sign.up}
                         to="/auth/signup"
                       >
-                        Don't have an account? <u>Join Now</u>
+                        {t('auth.noAccount')} <u>{t("auth.joinNow")}</u>
                       </AuthLink>
                     </p>
                   </>
@@ -523,7 +523,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       id={GTM.sign.upPrefix + GTM.sign.in}
                       to="/auth/login"
                     >
-                      Already have an account? <u>Sign In</u>
+                      {t("auth.haveAccount")} <u>{t("auth.signIn")}</u>
                     </AuthLink>
                   </p>
                 )}
@@ -538,7 +538,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-                {isLoginForm ? "Or Sign In with" : "Or Join Now with"}
+                {isLoginForm ? t("auth.orSignIn") : t("auth.orJoinNow")}
               </SectionDiv>
             )}
             <WhiteSpace />
@@ -555,7 +555,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
               >
-                <ButtonText>Facebook</ButtonText>
+                <ButtonText>{t("auth.facebook")}</ButtonText>
               </SocialButton>
               <SocialButton
                 id={
@@ -567,7 +567,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
               >
-                <ButtonText>Google</ButtonText>
+                <ButtonText>{t("auth.google")}</ButtonText>
               </SocialButton>
               {/** temporarily disable twitter for MVP v1
                <SocialButton
@@ -587,7 +587,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}
               >
-                <ButtonText>Linkedin</ButtonText>
+                <ButtonText>{t("auth.linkedin")}</ButtonText>
               </SocialButton>
             </FlexBox>
           )}

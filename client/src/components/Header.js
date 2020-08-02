@@ -126,7 +126,7 @@ export default ({
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/profile/${user?.id || user?._id}`}>My Profile</Link>
+        <Link to={`/profile/${user?.id || user?._id}`}>{t("profile.common.viewProfile")}</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
@@ -134,7 +134,7 @@ export default ({
           id={GTM.nav.prefix + GTM.nav.addOrg}
           to="/create-organisation-profile"
         >
-          Add Organisation
+          {t("common.addOrg")}
         </Link>
       </Menu.Item>
       <Menu.Divider />
@@ -152,11 +152,11 @@ export default ({
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
       >
-        Feedback
+        {t("common.feedback")}
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/auth/logout">Sign Out</Link>
+        <Link to="/auth/logout">{t("common.logout")}</Link>
       </Menu.Item>
     </Menu>
   );
@@ -170,7 +170,7 @@ export default ({
             activeStyle={activeStyles}
             to="/about-us"
           >
-            {t("About Us")}
+            {t("common.aboutUs")}
           </NavLink>
         </li>
         <li>
@@ -179,7 +179,7 @@ export default ({
             activeStyle={activeStyles}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -190,7 +190,7 @@ export default ({
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  {t("Profile")}
+                  {t("common.profile")}
                 </a>
               </Dropdown>
             </li>
@@ -203,7 +203,7 @@ export default ({
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
-                {t("Sign In")}
+                {t("auth.signIn")}
               </NavLink>
             </li>
             <li className="registerBtn">
@@ -212,7 +212,7 @@ export default ({
                 className="registerLink"
                 to="/auth/signup"
               >
-                Join Now
+                {t("auth.joinNow")}
               </NavLink>
             </li>
             <button
