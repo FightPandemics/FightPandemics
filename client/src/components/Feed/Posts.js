@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { FixedSizeList as List } from "react-window";
-import InfiniteLoader from "react-window-infinite-loader";
+// import { FixedSizeList as List } from "react-window";
+// import InfiniteLoader from "react-window-infinite-loader";
+import {
+  InfiniteLoader,
+  AutoSizer,
+  WindowScroller,
+  List,
+} from "react-virtualized";
 
 //Local
 import Post from "./Post";
@@ -39,7 +45,8 @@ const Posts = ({
   const itemCount = hasNextPage ? posts.length + 1 : posts.length;
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const isItemLoaded = (index) => !hasNextPage || index < posts.length;
-  const postItem = ({ index, style }) => {
+
+  const postItem = ({ key, index, style }) => {
     let content;
     if (!isItemLoaded(index)) {
       content = <Loader />;
@@ -56,7 +63,6 @@ const Posts = ({
             postDelete={postDelete}
             isAuthenticated={isAuthenticated}
             user={user}
-            key={index}
             deleteModalVisibility={deleteModalVisibility}
             onChange={handlePostDelete}
           />
@@ -64,29 +70,45 @@ const Posts = ({
         </>
       );
     }
-    return <div style={style}>{content}</div>;
+    return (
+      <div key={key} style={style}>
+        {content}
+      </div>
+    );
   };
   return (
     <div className="feed-posts">
       <InfiniteLoader
-        isItemLoaded={isItemLoaded}
-        itemCount={itemCount}
-        loadMoreItems={loadMoreItems}
+        isRowLoaded={isItemLoaded}
+        loadMoreRows={loadMoreItems}
+        rowCount={itemCount}
       >
-        {({ onItemsRendered, ref }) => (
-          <List
-            height={Math.max(
-              document.documentElement.clientHeight,
-              window.innerHeight || 0,
-            )}
-            itemCount={itemCount}
-            itemSize={380}
-            width="100%"
-            onItemsRendered={onItemsRendered}
-            ref={ref}
-          >
-            {postItem}
-          </List>
+        {({ onRowsRendered, registerChild }) => (
+          <WindowScroller>
+            {({ height, isScrolling, scrollTop, onChildScroll }) => {
+              return (
+                <AutoSizer disableHeight>
+                  {({ width }) => {
+                    return (
+                      <List
+                        autoHeight
+                        ref={registerChild}
+                        height={height}
+                        width={width}
+                        isScrolling={isScrolling}
+                        rowCount={itemCount}
+                        rowHeight={380}
+                        rowRenderer={postItem}
+                        scrollTop={scrollTop}
+                        onScroll={onChildScroll}
+                        onRowsRendered={onRowsRendered}
+                      />
+                    );
+                  }}
+                </AutoSizer>
+              );
+            }}
+          </WindowScroller>
         )}
       </InfiniteLoader>
     </div>
