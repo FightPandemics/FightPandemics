@@ -1,10 +1,4 @@
-import React, {
-  useReducer,
-  useEffect,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import React, { useReducer, useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -249,6 +243,7 @@ const Feed = (props) => {
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
+  const [trackStopIndex, setTrackStopIndex] = useState(0);
   const {
     filterModal,
     showCreatePostModal,
@@ -557,13 +552,18 @@ const Feed = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadNextPage = useCallback(
-    async ({ stopIndex }) => {
-      const lastPostIndex = Object.keys(postsList).length;
-      if (!isLoading && loadMore && !(stopIndex < lastPostIndex)) {
-        await postsDispatch({ type: NEXT_PAGE });
+    ({ stopIndex }) => {
+      //  console.log(stopIndex, "stopindex", trackStopIndex, "tarckstop")
+      if (stopIndex > trackStopIndex) {
+        if (!isLoading && loadMore) {
+          postsDispatch({ type: NEXT_PAGE });
+        }
+        setTrackStopIndex(stopIndex);
+      } else {
+        setTrackStopIndex(stopIndex);
       }
     },
-    [postsDispatch, loadMore, isLoading, postsList],
+    [trackStopIndex, isLoading, loadMore],
   );
   // const scrollObserver = useCallback(
   //   (node) => {
