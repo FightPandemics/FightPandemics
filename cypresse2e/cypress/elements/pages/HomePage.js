@@ -27,7 +27,6 @@ class HomePage{
     }
 
     getH1Heading(){
-        cy.log(this.h1Heading)
         return cy.get(this.h1Heading);
     }
 
