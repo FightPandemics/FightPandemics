@@ -1,21 +1,40 @@
+import HomePage from '../../../elements/pages/HomePage';
+
 describe('FightPandemics Home screen', () => {
+
+  var h1HeadingText = "A place to offer and request help";
+  var subHeading1Text = "Pandemics will continue to happen.";
+  var subHeading2Text = "We help communities prepare and respond.";
+  var requestHelpButtonText = 'Request Help'
+  var offerHelpButtonText = 'Offer Help'
+
+  const home = new HomePage();
+
     context('User opens Home screen ', () => {
         beforeEach(() => {
-            cy.visit('');
+          home.visit();
           });
   
-      it('Home screen greetings H1', () => {
-        cy.contains('h1', 'A place to offer and request help')
+      it('Home screen contains headings', () => {
+        home.getH1Heading().contains(h1HeadingText);
+        home.getSubHeading1().contains(subHeading1Text);
+        home.getSubHeading2().contains(subHeading2Text);
       });
 
-      it('Subheading', () => {
-        cy.contains('div > p:nth-child(3)', 'Pandemics will continue to happen.')
-        cy.contains('div > p:nth-child(4)', 'We help communities prepare and respond.')
+      it('Link to Help Board screen - View Help Board is visible', () => {
+        var linkToHelpBoard = home.getViewHelpBoardLink();
+        linkToHelpBoard.should('be.visible')
+        linkToHelpBoard.contains('a p', 'View Help Board')
       });
+    
 
-      it('Link to Feed screen - View comunity posting', () => {
-        cy.get('a[href^="/feed"]').should('be.visible').and('have.attr', 'href', '/feed')
-        cy.contains('a p', 'View Help Board')
+      it('Buttons Request Help and Offer help are visible', () => {
+        var requestHelpButton = home.getRequestHelpButton();
+        requestHelpButton.should('be.visible');
+        requestHelpButton.find('img').should('have.attr', 'alt',requestHelpButtonText);
+        var offerHelpButton = home.getOfferHelpButton();
+        offerHelpButton.should('be.visible');
+        offerHelpButton.find('img').should('have.attr', 'alt', offerHelpButtonText);     
       });
     });
 })
