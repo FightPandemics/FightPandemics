@@ -432,7 +432,7 @@ const OrganisationProfile = () => {
               closable={false}
               onClose={() => setDrawer(false)}
               visible={drawer}
-              height="150px"
+              height="175px"
               key="bottom"
             >
               <DrawerHeader>
@@ -450,7 +450,7 @@ const OrganisationProfile = () => {
                   onClick={handleOrgDelete}
                   style={{
                     fontSize: "1.7rem",
-                    color: "#db1052",
+                    color: "#FF5656",
                   }}
                 >
                   Delete Organisation
