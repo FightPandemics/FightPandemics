@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Checkbox from "components/Input/Checkbox";
 import { getInitialsFromFullName } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";

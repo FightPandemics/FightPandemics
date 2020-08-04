@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
 import {
@@ -81,6 +82,7 @@ function EditOrganisationProfile(props) {
     OrganisationContext,
   );
   const { register, handleSubmit, errors } = useForm();
+  const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
 
@@ -153,18 +155,18 @@ function EditOrganisationProfile(props) {
           <OptionDiv>
             <CustomLink>
               <Link to={`/edit-organisation-account/${organisationId}`}>
-                Account Information
+                {t("profile.common.accountInfo")}
               </Link>
             </CustomLink>
             <CustomLink isSelected>
               <Link to={`/edit-organisation-profile/${organisationId}`}>
-                Profile Information
+                {t("profile.common.profileInfo")}
               </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             <FormInput
-              inputTitle="Organisation Description"
+              inputTitle={t("profile.org.desc")}
               name="about"
               type="text"
               defaultValue={about}
@@ -177,7 +179,7 @@ function EditOrganisationProfile(props) {
               })}
             />
             <FormInput
-              inputTitle="Organisation Language"
+              inputTitle={t("profile.org.lang")}
               name="language"
               type="text"
               defaultValue={language}
@@ -188,7 +190,7 @@ function EditOrganisationProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={label}
+                  inputTitle={t("profile.org.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}
@@ -199,7 +201,7 @@ function EditOrganisationProfile(props) {
               ),
             )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? "Saving Changes..." : "Save Changes"}
+              {loading ? t("profile.common.saveChanges") + "..." : t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

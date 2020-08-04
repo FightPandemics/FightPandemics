@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useParams } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -227,6 +228,7 @@ const Feed = (props) => {
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
+  const { t } = useTranslation();
 
   const {
     filterModal,
@@ -621,7 +623,7 @@ const Feed = (props) => {
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
                   <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {HELP_TYPE[item]}
+                    {t("feed." + item.toLowerCase())}
                   </Menu.Item>
                 ))}
               </MenuWrapper>
@@ -633,7 +635,7 @@ const Feed = (props) => {
                   <span>
                     <FiltersIcon />
                   </span>
-                  Filters
+                  {t("feed.filters.title")}
                 </button>
                 <FiltersList />
               </FiltersWrapper>
@@ -642,12 +644,12 @@ const Feed = (props) => {
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper>
-              <h1>Help Board</h1>
+              <h1>{t("feed.title")}</h1>
               <button
                 id={gtmTag(GTM.post.createPost)}
                 onClick={handleCreatePost}
               >
-                Create a post
+                {t("post.create")}
                 <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}

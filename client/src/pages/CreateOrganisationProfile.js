@@ -304,7 +304,7 @@ const CreateOrgProfile = (props) => {
                 as={CheckboxGroup}
                 control={control}
                 defaultValue={false}
-                label={t("profile.org.others")}
+                label={t("profile.org.other")}
                 name="needs.other"
                 onChange={([event]) => event.target.checked}
               />

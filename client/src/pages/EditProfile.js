@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import ErrorAlert from "components/Alert/ErrorAlert";
@@ -104,6 +105,7 @@ function EditProfile(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
+  const { t } = useTranslation();
   const { firstName, lastName, urls = {}, about } = user || {};
 
   const onSubmit = async (formData) => {
@@ -142,7 +144,7 @@ function EditProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            Edit Profile
+            {t("profile.individual.editProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
@@ -156,16 +158,16 @@ function EditProfile(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to="/edit-account">Account Information</Link>
+              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to="/edit-profile">Profile Information</Link>
+              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
             <FormInput
-              inputTitle="Self-introduction"
+              inputTitle={t("profile.individual.intro")}
               name="about"
               type="text"
               defaultValue={about}
@@ -181,7 +183,7 @@ function EditProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={label}
+                  inputTitle={t("profile.individual.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}
@@ -196,7 +198,7 @@ function EditProfile(props) {
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
-              Save Changes
+              {t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

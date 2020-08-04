@@ -1,7 +1,6 @@
 {
   "headline": "A place to offer and request help",
-  "tagline1": "Pandemics will continue to happen.", 
-  "tagline2": "We help communities prepare and respond",
+  "tagline": "<0>Pandemics will continue to happen.</0><1>We help communities prepare and respond</1>", 
   "common": {
     "getHelp": "Request Help",
     "giveHelp": "Offer Help",
@@ -47,12 +46,13 @@
   "feed": {
     "title": "Help Board",
     "all": "All posts",
-    "getHelp": "Requesting help",
-    "giveHelp": "Offering help",
+    "request": "Requesting help",
+    "offer": "Offering help",
     "quit": "Quit filters",
     "apply": "Apply filters",
     "getOrGive": "Offer or request help",
     "filters": {
+      "title": "Filters",
       "location": {
         "label": "Location",
         "enterAddress": "Enter address, zip code, or city",
@@ -165,11 +165,13 @@
         "facebook": "Facebook URL",
         "linkedin": "LinkedIn URL",
         "twitter": "Twitter URL",
-        "github": "Github URL"
+        "github": "Github URL",
+        "website": "Personal Website"
       }
     },
     "org": {
       "title": "Create Organisation Profile",
+      "editOrgProfile": "Edit Organisation Profile",
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
       "invalidEmail": "Email is invalid",
@@ -178,7 +180,7 @@
       "volunteers": "Volunteers",
       "donations": "Donations",
       "staff": "Staff",
-      "others": "Others",
+      "other": "Other",
       "typeAndIndustry": "Type and Industry",
       "type": "Type",
       "types": [
@@ -224,10 +226,11 @@
       "lang": "Organisation Language",
       "website": "Website",
       "urls": {
-        "itunes": "Link to Apple Store",
-        "play": "Link to Google Play",
+        "appStore": "Link to Apple Store",
+        "playStore": "Link to Google Play",
         "twitter": "Twitter URL",
-        "linkedin": "LinkedIn URL"
+        "linkedin": "LinkedIn URL",
+        "website": "Website"
       }
     }
   },
@@ -275,12 +278,166 @@
     "copyright": "Copyright {{currentYear}} FightPandemics. All rights reserved."
   },
   "faq": {
+    "title": "About FightPandemics / General",
+    "offerRequestHelp": "Offering and Requesting Help",
+    "profileAccount": "Profile and Account",
+    "contects": "Contects",
     "general": [
       [
         "What is FightPandemics?",
-        "<0>FightPandemics is a platform created amid the COVID-19 outbreak with the aim to be a go-to place for people affected in many ways by the pandemic.</0> </1>Our main mission is to connect individuals and organisations offering and requesting help amid pandemic crisis, in a local and global level. No matter if you seek medical help, facial masks, legal help, groceries, someone to walk your dog or support with any other day-to-day activities, you can look for it here:</1> <2>https://fightpandemics.com/feed</2> <3>We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organisations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises.</3>"
+        "FightPandemics is a platform created amid the COVID-19 outbreak with the aim to be a go-to place for people affected in many ways by the pandemic.",
+        "Our main mission is to connect individuals and organisations offering and requesting help amid pandemic crisis, in a local and global level. No matter if you seek medical help, facial masks, legal help, groceries, someone to walk your dog or support with any other day-to-day activities, you can look for it here:",
+        "We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organisations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises."
       ],
-      ["q2", "q2a"]
+      [
+        "Who is FightPandemics?", 
+        "FightPandemics is an all-volunteer, global team with a mission to serve as a go-to place for help. Our team is made up of 150+ engaged volunteers from 70+ countries striving to make a difference. The platform was built in an innovative collaborative effort, bringing together a diverse group of problem solvers with a wide range of skills willing to co-create and learn with one another.",
+        "Do you want to join our initiative? Reach out to <0>hr@fightpandemics.com</0>"
+      ],
+      [
+        "In which cities does FightPandemics operate?",
+        "FightPandemics is a global platform. Our first version has launched English, but we have plans to add other languages soon."
+      ],
+      [
+        "Who is FightPandemics for?",
+        "Anyone needing or offering help is welcome to join our platform and connect with other individuals and organisations."
+      ],
+      [
+        "How can I post an offer or request for help on FightPandemics?",
+        "<0>When you join the community, you will have unlimited access to view and create posts and comments on FightPandemics platform.</0><1>To join the community as a user, click the \"Menu\" button and select the \"Join Now/Sign In\" option. There you will be able to join with your choice of email or social media credentials.</1><2>Once you have completed your profile, select the menu button, select view my profile and click on the plus bottom to create your first post.</2>"
+      ],
+      [
+        "How can I keep up to date with FightPandemics news?",
+        "Please follow us on social media! We post regular updates to <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2>, and <3>Instagram</3>."
+      ],
+      [
+        "Do I have to pay to use FightPandemics?",
+        "No, FightPandemics is a completely free platform run by volunteers."
+      ],
+      [
+        "What kind of help can I offer/ request on FightPandemics?",
+        "You're welcome to ask for and offer any type of help to support individuals and organisations cope during the COVID-19 pandemic. Here is a list with some examples of the type of help you can offer or request:",
+        "<0>Groceries</0><1>Medical supplies </1><2>Legal assistance</2><3>Tech support </3><4>Information</4><5>Funding</5><6>Events and activities</6><7>Education</7><8>Wellness</8><9>Research and development</9>"
+      ],
+      [
+        "How can I find help?",
+        "From the FightPandemics homepage, select \"Need help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
+      ],
+      [
+        "How can I offer help?",
+        "<0>You can offer help as an individual or as an organisation.</0><1>From the homepage, select \"Give help\" to see all the posts created by users asking for help and filter the results by location and type. You need to be signed in to reach out to them. You can also create your own postings describing the help you're able to offer.</1>"
+      ],
+      [
+        "Do I need to be signed in to view help requests and offers?",
+        "You do not need to be signed to view any of the postings on the help board, but you will need to sign in to comment or like a post."
+      ],
+      [
+        "Do I need to be signed in to create/edit posts?",
+        "Yes, you need to create an account and sign in if you want to create or edit posts."
+      ],
+      [
+        "Do I need to be signed up as an individual to create organisation profiles?",
+        "Yes, once you are signed up as an individual, you can create one or multiple organisational profile linked to your account."
+      ],
+      [
+        "Will my name/ organisation's name be displayed to other users?",
+        "When you create posts either offering or seeking help, your name/ your organisation's name is displayed to anyone viewing the help board."
+      ],
+      [
+        "How can I trust that the posts are reliable?",
+        "Unfortunately, we cannot ensure that all postings are reliable, since the posts are created by our users. However we make our best to keep the content relevant, by doing regular data cleansing and by deactivating posts after their expiration. If you have concerns about the content of a post please contact us at <0>support@fightpandemics.com</0>"
+      ],
+      [
+        "Can you help me with medical issues?",
+        "FightPandemics is not a medical care provider."
+      ],
+      [
+        "Do I need to share my current location? What if I don't want to share my location?",
+        "We use location to show you the most relevant results, however, you may also view all postings. Since FightPandemics has thousands of postings from all over, we suggest you enter a location near you to best tailor results."
+      ],
+      [
+        "There is no help listed in my area. What do I do?",
+        "Our community is always growing. You're welcome to be the first one on your area to create a post and ask for help. Please also take a look in the services that are accessible to anyone independently of their location."
+      ],
+      [
+        "I found a bug on the website. How do I report that?",
+        "Please submit feedback, or contact <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "I'm no longer permitted to use FightPandemics - what do I do?",
+        "Please reach out to us at <0>support@fightpandemics.com</0> and we will check what is the issue with your account."
+      ],
+      [
+        "What information do you store?",
+        "FightPandemics collects and processes users personal data only for the purposes described in our <0>privacy policy.</0> In no case we will provide access or share your personal data with any third party, except with the relevant persons set forth in this policy."
+      ],
+      [
+        "Can I give/receive help from my city or state? How long will the post be visible?",
+        "The post to give/receive help can be at a zip code, city, state or country level for a duration of a day, a week, a month or forever. By default, the posts will be set to city level for one month."
+      ],
+      [
+        "My question is not listed. Whom can I reach out to?",
+        "For general questions and other issues not listed here, reach out to <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "How do I join?",
+        "<0>To join the community as a user, click the \"Menu\" button and select the \"Join Now/Sign In\" option. There you will be able to join with your choice of email or social media credentials.</0><1>When you join the community, you will have unlimited access to view and create posts and comments on FightPandemics platform.</1>"
+      ],
+      [
+        "How can I change my individual profile to an organisation profile?",
+        "An organisational profile is tied to your individual profile. Once you create your individual profile, you can add as many organisational profiles as you'd like tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+      ],
+      [
+        "How can I change my organisation profile to an individual profile?",
+        "You cannot change your organisation profile to an individual profile. In order to create create an organisational profile, you are required to have an individual profile. Once you create your individual profile, you can add as many organisation profiles as you'd like, tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+      ],
+      [
+        "How can I reset my password?",
+        "Click on \"Sign In\" from the homepage and then click on \"Forgot password\" and follow the instructions"
+      ],
+      [
+        "Why is my password not valid?",
+        "Please check if your password has at least 8 letters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
+      ],
+      [
+        "I signed up and I didn't receive the confirmation email. What do I do?",
+        "If you haven't received a confirmation email please try the following options:",
+        "Check your Spam folder for the recovery email.",
+        "Try the \"Recover password\" process.",
+        "If the options above do not solve the problem, please feel free to reach out to our support team: <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "How do I delete/ cancel my account?",
+        "If you wish to delete your account, please reach out to us at <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "How can I update my profile information?",
+        "From the menu in the upper right-hand corner, select \"My Profile\", then click on the pen icon at the top of your profile. You will be taken to a screen where you will be able to edit your profile information, and select \"Save Changes\" when you are complete."
+      ],
+      [
+        "How can I report an incorrect or offensive post?",
+        "If you find a post that is incorrect or violates FightPandemics Code of Conduct, please email us at <0>support@fightpandemics.com.</0>"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "I want to become a partner or sponsor.",
+        "Please get in touch with our partnerships team at <0>partnerships@fightpandemics.com.</0>"
+      ],
+      [
+        "I am from the press/ media.",
+        "Please contact us at <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "I need technical support.",
+        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+      ],
+      [
+        "I want to reach out to FindPandemics for other reasons.",
+        "For general questions and other issues not listed here, please reach out to <0>contact@fightpandemics.com.</0>"
+      ]
     ]
   },
   "terms": {},

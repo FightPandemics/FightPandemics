@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
@@ -81,6 +82,7 @@ function EditOrganisationAccount(props) {
   } = useForm({
     mode: "change",
   });
+  const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, email, global, needs } = organisation || {};
 
@@ -173,7 +175,7 @@ function EditOrganisationAccount(props) {
                 control={control}
                 onChange={([event]) => event.target.checked}
               >
-                <Label inputColor="#000000">{label}</Label>
+                <Label inputColor="#000000">{t("profile.org." + key)}</Label>
               </Controller>
             </CheckBoxWrapper>
           ))}
@@ -189,7 +191,7 @@ function EditOrganisationAccount(props) {
     return Object.entries(organisationInfo).map(([key, value]) => {
       return (
         <div
-          key={key}
+          key={key == "Organisation Name" ? t("profile.org.name") : t("profile.org.eamil")}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -226,7 +228,7 @@ function EditOrganisationAccount(props) {
               control={control}
               onChange={([event]) => event.target.checked}
             >
-              <Label inputColor="#646464">We are a global organisation</Label>
+              <Label inputColor="#646464">{t("profile.org.globalOrg")}</Label>
             </Controller>
           </CheckBoxWrapper>
         </HelpWrapper>
@@ -243,7 +245,7 @@ function EditOrganisationAccount(props) {
               <StyledSelect>
                 {orgData.type.options.map((option, i) => (
                   <StyledSelect.Option key={i} value={option.text}>
-                    {option.text}
+                    {t("profile.org.types." + i)}
                   </StyledSelect.Option>
                 ))}
               </StyledSelect>
@@ -258,7 +260,7 @@ function EditOrganisationAccount(props) {
               <StyledSelect>
                 {orgData.industry.options.map((option, i) => (
                   <StyledSelect.Option key={i} value={option.text}>
-                    {option.text}
+                    {t("profile.org.industries." + i)}
                   </StyledSelect.Option>
                 ))}
               </StyledSelect>
@@ -283,7 +285,7 @@ function EditOrganisationAccount(props) {
     if (organisation) {
       return (
         <InputWrapper>
-          <InputLabel htmlFor="location" icon={Marker} label="Address" />
+          <InputLabel htmlFor="location" icon={Marker} label={t("profile.common.address")} />
           <LocationInput
             formError={errors.location}
             location={location}
@@ -318,11 +320,11 @@ function EditOrganisationAccount(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            Edit Organisation Profile
+            {t("profile.org.editOrgProfile")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
-              Account Information
+              {t("profile.common.accountInfo")}
             </CustomHeading>
           </ToggleHeading>
           <FillEmptySpace />
@@ -332,12 +334,12 @@ function EditOrganisationAccount(props) {
           <OptionDiv>
             <CustomLink isSelected>
               <Link to={`/edit-organisation-account/${organisationId}`}>
-                Account Information
+                {t("profile.common.accountInfo")}
               </Link>
             </CustomLink>
             <CustomLink>
               <Link to={`/edit-organisation-profile/${organisationId}`}>
-                Profile Information
+                {t("profile.common.profileInfo")}
               </Link>
             </CustomLink>
           </OptionDiv>
@@ -348,10 +350,10 @@ function EditOrganisationAccount(props) {
             <WhiteSpace />
             <WhiteSpace />
             {renderSelectItems()}
-            <Label>What are you looking for?</Label>
+            <Label>{t("profile.org.seeking")}</Label>
             <HelpWrapper>{renderNeedSection()}</HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? "Saving Changes..." : "Save Changes"}
+              {loading ? t("profile.common.saveChanges") + "..." : t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

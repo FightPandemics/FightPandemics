@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
@@ -176,8 +176,7 @@ const Home = (props) => {
           <StyledStrapline level={2} margin="none">
             {t("headline")}
           </StyledStrapline>
-          <StyledP>{t("tagline1")}</StyledP>
-          <StyledP>{t("tagline2")}</StyledP>
+          <Trans i18nKey="tagline" components={[<StyledP/>, <StyledP/>]}></Trans>
         </IntroText>
       </StyledIntro>
 
