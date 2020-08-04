@@ -67,7 +67,7 @@ const PostSocial = ({
   };
 
   const renderCommentIcon = () => {
-    return showComments || numComments > 0 ? (
+    return showComments && numComments > 0 ? (
       <StyledSvg src={comment} className="social-icon-svg" />
     ) : (
       <StyledSvg src={commentGray} className="social-icon-svg" />
@@ -133,7 +133,7 @@ const PostSocial = ({
         </div>
       )}
       <span></span>
-      {postId ? (
+      {postId && isAuthenticated ? (
         <div
           id={gtmTag("comment", GTM.post.prefix)}
           className="social-icon"
