@@ -7,10 +7,11 @@ RUN npm install --global mocha chai
 WORKDIR '/test'
 
 # Include package.json
-COPY package.json ./
+ADD package.json ./
 
-# Include test files
-COPY ./test/test.js /test/
+# Include mocha tests
+ADD ./test/sample /test/sample
+ADD ./test/01-auth /test/01-auth
 
-# Run tests
-RUN mocha /test
+# Run all mocha tests
+RUN mocha /test/*
