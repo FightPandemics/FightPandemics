@@ -1,10 +1,16 @@
-FROM library/node
+FROM node:latest
 
-# Install with npm globally
-RUN npm install --global mocha
+# Install dependencies
+RUN npm install --global mocha chai
 
 # Define the working directory
 WORKDIR '/test'
 
-# Run mocha
-RUN './node_modules/mocha/bin/mocha'
+# Include package.json
+COPY package.json ./
+
+# Include test files
+COPY ./test/test.js /test/
+
+# Run tests
+RUN mocha /test

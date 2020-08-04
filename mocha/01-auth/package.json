@@ -1,9 +1,9 @@
 {
   "name": "mocha",
   "version": "1.0.0",
-  "description": "Mocha tests",
+  "description": "Testing authentication login page",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha '/test/*.js"
   }
   "private": true,
   "devDependencies": {
