@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Mocha tests",
   "scripts": {
-    "test": "mocha '/test/*.js"
-  }
+    "test": "mocha /test/sample/*.js"
+  },
   "private": true,
   "devDependencies": {
-        "mocha: "^8.1.0"
-    }
+    "mocha": "^8.1.0"
+  }
 }
