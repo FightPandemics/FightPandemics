@@ -110,7 +110,6 @@ const Post = ({
   };
 
   const loadComments = async () => {
-    console.log(commentsCount);
     if (commentsCount !== 0) {
       dispatchPostAction(NEXT_PAGE);
       dispatchPostAction(NEXT_PAGE);
@@ -121,7 +120,6 @@ const Post = ({
     let response;
     let commentCountRes;
     let previousComments = [...comments];
-    console.log(previousComments);
     const skip = 0;
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
