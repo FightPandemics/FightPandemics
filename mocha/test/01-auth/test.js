@@ -1,12 +1,12 @@
 var should = require("should");
 var request = require("request");
 var expect = require("chai").expect;
-var baseUrl = 'https://localhost:8000';
+var baseUrl = 'https://staging.fightpandemics.work:443';
 var util = require("util");
 //setting up the test data
 const userCredentials = {
-    email: 'olhaobertas@gmail.com',
-    password: 'Testpassword123'
+    email: 'fptest20@pokemail.net',
+    password: 'TestTest!'
   }
   describe("Auth", function(){
     var token = null;

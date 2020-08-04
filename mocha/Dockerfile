@@ -1,7 +1,10 @@
 FROM node:latest
 
+# Install mocha
+RUN npm install --global mocha
+
 # Install dependencies
-RUN npm install --global mocha chai
+RUN npm install --save-dev should request chai
 
 # Define the working directory
 WORKDIR '/test'
