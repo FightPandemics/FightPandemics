@@ -1,6 +1,6 @@
 {
   "headline": "A place to offer and request help",
-  "tagline": "<0>Pandemics will continue to happen.</0><1>We help communities prepare and respond</1>", 
+  "tagline": "<0>Pandemics will continue to happen.</0><1>We help communities prepare and respond</1>",
   "common": {
     "getHelp": "Request Help",
     "giveHelp": "Offer Help",
@@ -290,7 +290,7 @@
         "We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organisations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises."
       ],
       [
-        "Who is FightPandemics?", 
+        "Who is FightPandemics?",
         "FightPandemics is an all-volunteer, global team with a mission to serve as a go-to place for help. Our team is made up of 150+ engaged volunteers from 70+ countries striving to make a difference. The platform was built in an innovative collaborative effort, bringing together a diverse group of problem solvers with a wide range of skills willing to co-create and learn with one another.",
         "Do you want to join our initiative? Reach out to <0>hr@fightpandemics.com</0>"
       ],
@@ -435,7 +435,7 @@
         "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
-        "I want to reach out to FindPandemics for other reasons.",
+        "I want to reach out to FightPandemics for other reasons.",
         "For general questions and other issues not listed here, please reach out to <0>contact@fightpandemics.com.</0>"
       ]
     ]
