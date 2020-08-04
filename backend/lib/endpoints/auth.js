@@ -137,7 +137,9 @@ async function routes(app) {
         throw app.httpErrors.unauthorized("Wrong email or password.");
       }
       req.log.error(err, "Error logging in");
-      throw app.httpErrors.internalServerError();
+      throw app.httpErrors.internalServerError(
+        "Maximum Login attempts exceeded.",
+      );
     }
   });
 
