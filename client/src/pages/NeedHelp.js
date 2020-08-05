@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
 import { withRouter, Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 import InputError from "components/Input/InputError";
 import LocationInput from "components/Input/LocationInput";
 import { validateEmail } from "utils/validators";
@@ -36,12 +37,13 @@ const Step1 = (props) => {
     props.update("helpType", answer);
     props.nextStep();
   };
+  const { t } = useTranslation();
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>What type of help do you need?</StepTitle>
+      <StepTitle>{t("onboarding.needHelp.whatHelp")}</StepTitle>
       <AnswerButton
         id={
           GTM.requestHelp.prefix +
@@ -51,7 +53,7 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("medical")}
       >
-        <strong>Medical:</strong> I have symptoms of COVID-19.
+        <strong>{t("onboarding.needHelp.medical")}:</strong> {t("onboarding.needHelp.haveCovidSymptoms")}
       </AnswerButton>
       <AnswerButton
         id={
@@ -62,8 +64,7 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("other")}
       >
-        <strong>Other Help:</strong> I need assistance getting
-        groceries/medicine/etc.
+        <strong>{t("onboarding.needHelp.other")}:</strong> {t("onboarding.needHelp.otherDesc")}
       </AnswerButton>
     </WizardStep>
   );
@@ -84,13 +85,14 @@ const Step2 = (props) => {
     props.update("location", null);
     props.nextStep();
   };
+  const { t } = useTranslation();
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>Where are you located?</StepTitle>
-      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <StepTitle>{t("onboarding.common.whereLocated")}</StepTitle>
+      <StepSubtitle>{t("onboarding.common.relevantResults")}</StepSubtitle>
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
@@ -112,7 +114,7 @@ const Step2 = (props) => {
           tertiary="true"
           onClick={rejectLocationDetection}
         >
-          Show me postings from anywhere
+          {t("onboarding.common.showAnywhere")}
         </ShowAnywhere>
       </WizardFormWrapper>
     </WizardStep>
@@ -122,6 +124,7 @@ const Step2 = (props) => {
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -139,13 +142,11 @@ const Step3 = (props) => {
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>What is your email address?</StepTitle>
+      <StepTitle>{t("onboarding.common.whatEmail")}</StepTitle>
       <StyledDiv>
-        We respect your privacy. Please read our{" "}
-        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
-        <Link to="/terms-conditions">Terms & Conditions.</Link>
+        <Trans i18nKey="onboarding.common.respectPrivacy" components={[<Link to="/privacy-policy"/>, <Link to="/terms-conditions"/>]}></Trans>
       </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
@@ -165,7 +166,7 @@ const Step3 = (props) => {
             value={email}
             required
           />
-          {!valid && <InputError>Email is invalid</InputError>}
+          {!valid && <InputError>{t("profile.org.invalidEmail")}</InputError>}
         </WizardFormGroup>
         <WizardSubmit
           id={
@@ -178,7 +179,7 @@ const Step3 = (props) => {
           primary="true"
           onClick={onSubmit}
         >
-          Submit
+          {t("onboarding.common.submit")}
         </WizardSubmit>
         <SkipLink
           id={
@@ -189,7 +190,7 @@ const Step3 = (props) => {
           }
           onClick={onSubmit}
         >
-          Skip
+          {t("onboarding.common.skip")}
         </SkipLink>
       </WizardFormWrapper>
     </WizardStep>

@@ -26,7 +26,7 @@
       "shareLocation": "Share my Location",
       "showAnywhere": "Show me postings from anywhere",
       "whatEmail": "What is your email address?",
-      "respectPrivacy": "We respect your privacy. Please read our and <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
+      "respectPrivacy": "We respect your privacy. Please read our and <0>Privacy Policy</0> and <1>Terms & Conditions.</1>",
       "enterEmail": "Enter your email address..."
     },
     "needHelp": {
