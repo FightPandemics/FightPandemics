@@ -4,7 +4,7 @@ FROM node:latest
 RUN npm install --global mocha
 
 # Install dependencies
-RUN npm install --save-dev should request chai
+RUN npm install --save-dev should request supertest chai
 
 # Define the working directory
 WORKDIR '/test'
