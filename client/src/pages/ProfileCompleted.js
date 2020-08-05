@@ -39,7 +39,9 @@ const ProfileCompleted = ({ user }) => {
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.continuePosting}
           >
-            Continue posting
+            {sessionStorage.getItem("createPostAttemptLoggedOut")
+              ? "Continue posting"
+              : "View Help Board"}
           </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>
