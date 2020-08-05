@@ -269,6 +269,13 @@
     "contactUs": "Or contact us at",
     "contactEmail": "contact@fightpandemics.com"
   },
+  "medical": {
+    "localNumber": "Your Local Emergency Number",
+    "call": "Please Call Your Local Emergency Number",
+    "nearestHospitals": "Nearest Hospitals",
+    "check": "Symptoms Check",
+    "findHelp": "Find Help"
+  },
   "footer": {
     "faq": "FAQ",
     "blog": "Blog",
