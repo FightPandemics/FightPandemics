@@ -141,6 +141,7 @@
       "saveChanges": "Save Changes",
       "thankyou": "Thank you for joining our community!",
       "viewProfile": "My Profile",
+      "viewMyProfile": "View my profile",
       "continuePosting": "Continue Posting",
       "viewFeed": "View Help Board"
     },
@@ -175,6 +176,9 @@
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
       "invalidEmail": "Email is invalid",
+      "about": "About",
+      "activity": "Activity",
+      "editAccount": "Edit Account Information",
       "globalOrg": "We are a global organisation",
       "seeking": "What are you looking for",
       "volunteers": "Volunteers",

@@ -2,6 +2,7 @@ import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useState, useEffect, useContext, useReducer } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -107,6 +108,8 @@ const OrganisationProfile = () => {
     userProfileState: { user },
     userProfileDispatch,
   } = useContext(UserContext);
+
+  const { t } = useTranslation();
 
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
@@ -336,16 +339,16 @@ const OrganisationProfile = () => {
           <div style={{ margin: "0 2.5rem" }}>
             <WhiteSpace />
             <DescriptionMobile>
-              <SectionHeader> About</SectionHeader>
+              <SectionHeader> {t("profile.org.about")}</SectionHeader>
               {about}
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              Activity
+              {t("profile.org.activity")}
               <PlaceholderIcon />
               {isOwner && (
                 <>
-                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
@@ -387,12 +390,12 @@ const OrganisationProfile = () => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Edit Account Information
+                  {t("profile.org.editAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Edit Profile{" "}
+                  {t("profile.individual.editProfile") + " "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

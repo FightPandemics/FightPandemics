@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { WhiteSpace } from "antd-mobile";
+import { useTranslation } from "react-i18next";
 import { theme, mq } from "../constants/theme";
 import smiley from "../assets/icons/smiley.svg";
 import { Link } from "react-router-dom";
@@ -64,6 +65,7 @@ const StyledLink = styled(Link)`
 `;
 
 const OrgProfileComplete = ({ history, refetchUser }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     refetchUser();
     // will only run once (on mount) to update navbar org list
@@ -76,7 +78,7 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
       </SvgContainer>
       <WhiteSpace />
       <WhiteSpace />
-      <Heading>Thank you for joining our community!</Heading>
+      <Heading>{t("profile.common.thankyou")}</Heading>
       <WhiteSpace />
       <WhiteSpace />
       <WhiteSpace />
@@ -86,7 +88,7 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
           id={GTM.organisation.completedPrefix + GTM.profile.viewProfile}
           to={`/organisation/${history.location.state.orgId}`}
         >
-          View my profile
+          {t("profile.common.viewMyProfile")}
         </StyledLink>
         <WhiteSpace />
         <WhiteSpace />
@@ -94,7 +96,7 @@ const OrgProfileComplete = ({ history, refetchUser }) => {
           id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
           to="/feed"
         >
-          Check the Help Board
+          {t("profile.common.viewFeed")}
         </StyledLink>
       </ButtonsContainer>
     </Container>
