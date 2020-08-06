@@ -104,6 +104,14 @@ async function routes(app) {
         Object.assign(org, req.body).save(),
       );
       if (updateErr) {
+        if (
+          updateErr.name === "ValidationError" ||
+          updateErr.name === "MongoError"
+        ) {
+          throw app.httpErrors.conflict(
+            "Email address is already in use or email address cannot be validated!",
+          );
+        }
         req.log.error(updateErr, "Failed updating organisation");
         throw app.httpErrors.internalServerError();
       }
@@ -158,7 +166,10 @@ async function routes(app) {
 
       if (newOrgErr) {
         req.log.error(newOrgErr, "Failed creating organisation");
-        if (newOrgErr.name === "ValidationError" || newOrgErr.name === "MongoError") {
+        if (
+          newOrgErr.name === "ValidationError" ||
+          newOrgErr.name === "MongoError"
+        ) {
           throw app.httpErrors.conflict(
             "Email address is already in use or email address cannot be validated!",
           );
