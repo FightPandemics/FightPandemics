@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { theme, mq } from "constants/theme";
 import Button from "components/Button/SubmitButton";
 import errorimage from "assets/404.svg";
@@ -68,12 +68,9 @@ const ErrorPage = () => {
       </ErrorImageContainer>
       <StyledHeading>Oops, page does not exist</StyledHeading>
       <Subtitle>Don't worry, you can head back to the help board.</Subtitle>
-      <StyledButton
-        primary="true"
-        // onClick={}
-      >
-        Help Board
-      </StyledButton>
+      <Link to="/feed">
+        <StyledButton primary="true">Help Board</StyledButton>
+      </Link>
     </ErrorContainer>
   );
 };
