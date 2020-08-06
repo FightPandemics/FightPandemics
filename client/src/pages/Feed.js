@@ -476,6 +476,16 @@ const Feed = (props) => {
   }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if(applyFilters){
+      try {
+        window.scroll(0,0)
+      }catch(error){
+        window.scrollTo(0,0)
+      }
+    }
+  }, [applyFilters])
+
+  useEffect(() => {
     // Onboarding
     if (props.history.location.state) {
       const handleOnboardingOptions = (option, label) => {
