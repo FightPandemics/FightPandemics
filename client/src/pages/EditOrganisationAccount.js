@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useReducer } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
@@ -46,7 +46,7 @@ import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateEmail } from "../utils/validators";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
 
 const errorStyles = {
   color: "#FF5656",
