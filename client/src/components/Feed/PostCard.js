@@ -20,8 +20,6 @@ const PostCard = styled(Card)`
   }
 
   &.am-card {
-    font-family: ${display};
-
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       border-top: unset;
     }
@@ -45,14 +43,17 @@ const PostCard = styled(Card)`
     .card-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
 
-      .card-submenu {
-        display: flex;
+      > a {
+        flex: 1 1 auto;
+        display: block;
+      }
+
+      > .card-submenu {
+        flex: 0 0 auto;
+        margin-left: 3rem;
         cursor: pointer;
-
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          display: block;
-        }
       }
 
       svg {
@@ -67,34 +68,48 @@ const PostCard = styled(Card)`
       padding: 0;
 
       .am-card-header-content {
-        align-items: unset;
+        position: relative;
+        display: block;
+        min-height: 4rem;
+        padding-left: 5rem;
         font-size: ${medium};
 
-        .title-wrapper {
-          width: calc(100% - 4.7rem);
+        > .ant-avatar-circle,
+        > img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin: 0;
         }
 
         img {
-          margin-right: 0.7rem;
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
         }
 
+        .author,
+        .location-status {
+          line-height: 2rem;
+        }
+
         .author {
           font-size: ${medium};
-          height: auto;
         }
 
         .location-status {
-          height: 3rem;
-          margin-top: -1.2rem;
-          color: #888;
+          position: relative;
+          padding-left: 1.4rem;
           font-size: ${xsmall};
+          color: #888;
 
           img {
+            position: absolute;
+            top: 0.7rem;
+            left: 0;
             width: 0.6rem;
-            margin-right: 0.8rem;
+            height: 0.6rem;
+            margin-right: 0;
           }
         }
       }
