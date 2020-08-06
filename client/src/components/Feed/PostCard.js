@@ -82,7 +82,7 @@ const PostCard = styled(Card)`
           margin: 0;
         }
 
-        > img {
+        img {
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
