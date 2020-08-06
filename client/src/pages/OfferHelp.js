@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
+import { Trans, useTranslation } from "react-i18next";
 import InputError from "components/Input/InputError";
 import { withRouter, Link } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
@@ -47,6 +48,7 @@ const STEP_1_STATE = {
 const Step1 = (props) => {
   const [state, updateState] = useState(STEP_1_STATE);
   const { answers, none } = state;
+  const { t } = useTranslation();
 
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -68,12 +70,21 @@ const Step1 = (props) => {
     }
   };
 
+  const getAnswer = (answer) => {
+    if (answer === "As a Volunteer")
+      return t("onboarding.offerHelp.volunteer");
+    else if (answer === "As a Donor/Investor")
+      return t("onboarding.offerHelp.donorInvestor");
+    else
+      return t("onboarding.offerHelp.organisation");
+  }
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>How do you want to contribute?</StepTitle>
+      <StepTitle>{t("onboarding.offerHelp.howContribute")}</StepTitle>
       <WizardFormWrapper>
         <WizardCheckboxWrapper>
           {Object.entries(answers).map(([answer, checked], i) => (
@@ -87,7 +98,7 @@ const Step1 = (props) => {
               }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
-              text={answer}
+              text={getAnswer(answer)}
             />
           ))}
         </WizardCheckboxWrapper>
@@ -97,6 +108,8 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
+  const { t } = useTranslation();
+
   const selectLocationDetection = (location) => {
     try {
       props.update("location", location);
@@ -115,10 +128,10 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>Where are you located?</StepTitle>
-      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <StepTitle>{t("onboarding.common.whereLocated")}</StepTitle>
+      <StepSubtitle>{t("onboarding.common.relevantResults")}</StepSubtitle>
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
@@ -140,7 +153,7 @@ const Step2 = (props) => {
             GTM.wizardNav.showAnywhere
           }
         >
-          Show me postings from anywhere
+          {t("onboarding.common.showAnywhere")}
         </ShowAnywhere>
       </WizardFormWrapper>
     </WizardStep>
@@ -149,6 +162,7 @@ const Step2 = (props) => {
 const Step3 = (props) => {
   const [email, setEmail] = useState("");
   const [valid, setValid] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const validated = !email || validateEmail(email);
@@ -166,13 +180,11 @@ const Step3 = (props) => {
   return (
     <WizardStep className="wizard-step">
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>What is your email address?</StepTitle>
+      <StepTitle>{t("onboarding.common.whatEmail")}</StepTitle>
       <StyledDiv>
-        We respect your privacy. Please read our{" "}
-        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
-        <Link to="/terms-conditions">Terms & Conditions.</Link>
+        <Trans i18nKey="onboarding.common.respectPrivacy" components={[<Link to="/privacy-policy"/>, <Link to="/terms-conditions"/>]}></Trans>
       </StyledDiv>
       <WizardFormWrapper>
         <WizardFormGroup controlId="userEmailGroup">
@@ -185,14 +197,14 @@ const Step3 = (props) => {
               GTM.wizardNav.enterEmail
             }
             name="email"
-            label="Email"
+            label={t("profile.individual.eamil")}
             className={!valid && "has-error"}
-            placeholder="Enter your email address..."
+            placeholder={t("onboarding.common.enterEmail")}
             onChange={onChange}
             value={email}
             required
           />
-          {!valid && <InputError>Email is invalid</InputError>}
+          {!valid && <InputError>{t("profile.org.invalidEmail")}</InputError>}
         </WizardFormGroup>
         <WizardSubmit
           disabled={email === "" || !valid}
@@ -205,7 +217,7 @@ const Step3 = (props) => {
           primary="true"
           onClick={onSubmit}
         >
-          Submit
+          {t("onboarding.common.submit")}
         </WizardSubmit>
         <SkipLink
           id={
@@ -224,7 +236,7 @@ const Step3 = (props) => {
             }
             onClick={onSubmit}
           >
-            Skip
+            {t("onboarding.common.skip")}
           </span>
         </SkipLink>
       </WizardFormWrapper>
