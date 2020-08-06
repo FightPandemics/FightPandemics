@@ -70,6 +70,7 @@ const PostCard = styled(Card)`
       .am-card-header-content {
         position: relative;
         display: block;
+        min-height: 4rem;
         padding-left: 5rem;
         font-size: ${medium};
 
@@ -81,26 +82,34 @@ const PostCard = styled(Card)`
           margin: 0;
         }
 
-        img {
+        > img {
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
         }
 
+        .author,
+        .location-status {
+          line-height: 2rem;
+        }
+
         .author {
           font-size: ${medium};
-          height: auto;
         }
 
         .location-status {
-          height: 3rem;
-          margin-top: -1.2rem;
-          color: #888;
+          position: relative;
+          padding-left: 1.4rem;
           font-size: ${xsmall};
+          color: #888;
 
           img {
+            position: absolute;
+            top: 0.7rem;
+            left: 0;
             width: 0.6rem;
-            margin-right: 0.8rem;
+            height: 0.6rem;
+            margin-right: 0;
           }
         }
       }
