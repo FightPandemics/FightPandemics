@@ -1,9 +1,11 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useReducer } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
+import { Alert } from "antd";
+import { MINT_GREEN, ORANGE_RED, WHITE } from "../constants/colors";
 import { Link } from "react-router-dom";
 import InputLabel from "components/Input/Label";
 import orgData from "../assets/data/createOrganisationProfile";
@@ -44,6 +46,7 @@ import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateEmail } from "../utils/validators";
+import { theme, mq } from "constants/theme";
 
 const errorStyles = {
   color: "#FF5656",
@@ -64,10 +67,44 @@ const NEEDS = {
   other: "Other",
 };
 
+const ErrorAlert = styled(Alert)`
+  background-color: ${ORANGE_RED};
+  margin: 3rem 9rem 0rem 0rem;
+  height: 6rem;
+
+  .ant-alert-message {
+    color: ${WHITE};
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    max-width: 100%;
+    margin: auto;
+    height: auto;
+  }
+`;
+
+const SuccessAlert = styled(Alert)`
+  background-color: ${MINT_GREEN};
+  margin: 2rem 2rem 0rem 2rem;
+  height: 6rem;
+
+  .ant-alert-message {
+    color: ${WHITE};
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    max-width: 100%;
+    margin: auto;
+    height: auto;
+  }
+`;
+
 function EditOrganisationAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
   const organisationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
+  const [isEmailUpdateSuccess, handleSuccess] = useState(false);
+  const [isEmailUpdateError, handleError] = useState(false);
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
@@ -108,10 +145,20 @@ function EditOrganisationAccount(props) {
         `/api/organisations/${organisationId}`,
         formData,
       );
-      orgProfileDispatch(updateOrganisationSuccess(res.data));
-      props.history.push(`/organisation/${res.data._id}`);
+      if (orgProfileState.organisation.email !== formData.email) {
+        orgProfileDispatch(updateOrganisationSuccess(res.data));
+        handleSuccess(true);
+        handleError(false);
+      } else {
+        orgProfileDispatch(updateOrganisationSuccess(res.data));
+        props.history.push(`/organisation/${res.data._id}`);
+      }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      if (err.response?.statusText === "Conflict") {
+        handleError(true);
+        orgProfileDispatch(updateOrganisationError(message));
+      }
       orgProfileDispatch(
         updateOrganisationError(
           `Failed updating organisation profile, reason: ${message}`,
@@ -320,6 +367,17 @@ function EditOrganisationAccount(props) {
           <CustomEditAccountHeader className="h4">
             Edit Organisation Profile
           </CustomEditAccountHeader>
+          {isEmailUpdateSuccess ? (
+            <>
+              <SuccessAlert message={"Email successfully updated"} />
+            </>
+          ) : isEmailUpdateError ? (
+            <>
+              <ErrorAlert message={orgProfileState.error} />
+            </>
+          ) : (
+            ""
+          )}
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
               Account Information
