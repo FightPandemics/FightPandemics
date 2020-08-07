@@ -243,7 +243,9 @@ const Feed = (props) => {
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
-  const [trackStopIndex, setTrackStopIndex] = useState(0);
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [loadedRows, setLoadedRows] = useState(true);
   const {
     filterModal,
     showCreatePostModal,
@@ -433,7 +435,7 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
-    const limit = 5;
+    const limit = 10;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
@@ -551,42 +553,39 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const loadNextPage = useCallback(
-    ({ stopIndex }) => {
-      //  console.log(stopIndex, "stopindex", trackStopIndex, "tarckstop")
-      if (stopIndex > trackStopIndex) {
-        if (!isLoading && loadMore) {
-          postsDispatch({ type: NEXT_PAGE });
-        }
-        setTrackStopIndex(stopIndex);
+  const isItemLoaded = useCallback(
+    (index) => {
+      const posts = Object.entries(postsList);
+      if (!!posts[index]) {
+        setLoadedRows(false);
       } else {
-        setTrackStopIndex(stopIndex);
+        setLoadedRows(true);
+      }
+      return !loadMore || !!posts[index];
+    },
+    [postsList, loadMore],
+  );
+
+  const loadNextPage = useCallback(
+    ({ startIndex, stopIndex }) => {
+      if (!isLoading && loadMore && loadedRows) {
+        return new Promise((resolve) =>
+          setTimeout(() => {
+            postsDispatch({ type: NEXT_PAGE });
+            resolve();
+          }, 500),
+        );
+      } else {
+        return Promise.resolve();
       }
     },
-    [trackStopIndex, isLoading, loadMore],
+    [loadedRows, isLoading, loadMore],
   );
-  // const scrollObserver = useCallback(
-  //   (node) => {
-  //     new IntersectionObserver((entries) => {
-  //       entries.forEach(async (entry) => {
-  //         if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
-  //           await postsDispatch({ type: NEXT_PAGE });
-  //         }
-  //       });
-  //     }).observe(node);
-  //   },
-  //   [postsDispatch, loadMore, isLoading],
-  // );
 
-  // useEffect(() => {
-  //   let observer;
-  //   if (bottomBoundaryRef.current) {
-  //     observer = scrollObserver(bottomBoundaryRef.current);
-  //   }
-  //   return () => {
-  //     observer && observer.disconnect();
-  //   };
-  // }, [scrollObserver, bottomBoundaryRef]);
+  useEffect(() => {
+    const posts = Object.entries(postsList);
+    setItemCount(loadMore ? posts.length + 1 : posts.length);
+  }, [loadMore, posts, postsList, setItemCount]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -705,6 +704,8 @@ const Feed = (props) => {
               isNextPageLoading={isLoading}
               loadNextPage={loadNextPage}
               hasNextPage={loadMore}
+              itemCount={itemCount}
+              isItemLoaded={isItemLoaded}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
