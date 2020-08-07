@@ -131,6 +131,9 @@ const OrganisationProfile = () => {
         orgProfileDispatch(
           fetchOrganisationError(`Failed loading profile, reason: ${message}`),
         );
+        if (user) {
+          history.push(`/profile/${user.id}`);
+        }
       }
     })();
 
@@ -146,7 +149,7 @@ const OrganisationProfile = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, userProfileDispatch, user?.id]);
 
   const fetchOrganisationPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
@@ -275,38 +278,12 @@ const OrganisationProfile = () => {
   const orgDelete = async () => {
     let deleteResponse;
     const endPoint = `/api/organisations/${organisationId}`;
-    if (
-      true
-      // user &&
-      // (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
-    ) {
-      try {
-        deleteResponse = await axios.delete(endPoint);
-        if (deleteResponse && deleteResponse.data.success === true) {
-          user.organisations = user.organisations.filter(
-            (org) => org._id !== organisationId,
-          );
-          userProfileDispatch(fetchUserSuccess(user));
-          history.push(`/profile/${user.id}`);
-          // const allPosts = {
-          //   ...postsState.posts,
-          // };
-          // delete allPosts[post._id];
-          // fetchOrganisationPosts();
-        }
-      } catch (error) {
-        console.log({
-          error,
-        });
+    if (user && user.organisations.some((org) => org._id === organisationId)) {
+      deleteResponse = await axios.delete(endPoint);
+      if (deleteResponse && deleteResponse.data.success === true) {
+        history.go(0);
       }
     }
-    // if (deleteModalVisibility === DELETE_MODAL_POST) {
-    //   postDelete(post);
-    // } else if (deleteModalVisibility === DELETE_MODAL_COMMENT) {
-    //   deleteComment(comment);
-    // }
-
-    // setToDelete("");
     handleCancelPostDelete();
   };
 
