@@ -1,4 +1,4 @@
-import Header from '../../../elements/pages/Header';
+import Header from '../../../elements/pages/header';
 
 describe('FightPandemics Navigation bar', () => {
 
