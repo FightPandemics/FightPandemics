@@ -3,16 +3,28 @@ import StyledSelector from "./StyledSelector";
 const { Option } = StyledSelector;
 
 const BaseSelector = (props) => {
-  const { options, key = "text", optionProps, onChange } = props;
+  const {
+    options,
+    key = "text",
+    optionProps,
+    onChange,
+    suffixIcon,
+    filterOptions,
+    defaultValue,
+  } = props;
+
   return (
-    <StyledSelector {...props} onChange={onChange}>
-      {options.map((item) => {
-        return (
-          <Option {...optionProps} key={item.value} value={item.value}>
-            {item[key]}
-          </Option>
-        );
-      })}
+    <StyledSelector
+      suffixIcon={suffixIcon}
+      defaultValue={defaultValue}
+      filterOptions={filterOptions}
+      onChange={onChange}
+    >
+      {options.map((item) => (
+        <Option {...optionProps} key={item.value} value={item.value}>
+          {item[key]}
+        </Option>
+      ))}
     </StyledSelector>
   );
 };
