@@ -18,8 +18,8 @@ export const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
-  margin: 0 auto 1rem;
+  padding: 1rem 0 2em;
+  margin: 0 auto;
   width: 35rem;
   max-width: 100%;
 
@@ -47,6 +47,9 @@ export const BackButton = styled(LeftRightIconButton)`
   height: 6.8rem;
   justify-content: center;
   width: 6.8rem;
+  margin: auto;
+  margin-right: 1rem;
+
 
   & span {
     display: none;
@@ -79,14 +82,16 @@ export const BackText = styled.span`
 `;
 
 const NextButton = styled(LeftRightIconButton)`
+  display: flex;
   background-color: ${royalBlue};
   color: ${white};
   cursor: pointer;
-  display: flex;
   height: 6.8rem;
   justify-content: center;
   align-items: center;
   width: 6.8rem;
+  margin: auto;
+  margin-left: 2rem;
 
   html body &.am-button {
     border: 0.2rem solid ${royalBlue};
@@ -132,8 +137,13 @@ const WizardNav = ({
   totalSteps,
   gtmPrefix,
 }) => (
+  <div>
+
   <StyledWizardNav>
-    {currentStep > 1 ? (
+
+  </StyledWizardNav>
+  <div className="buttonDiv">
+  {currentStep > 1 ? (
       <BackButton
         id={gtmPrefix + currentStep + GTM.wizardNav.back}
         onClick={previousStep}
@@ -153,7 +163,8 @@ const WizardNav = ({
         </BackButton>
       </Link>
     )}
-    {currentStep < totalSteps && (
+
+     {currentStep < totalSteps && (
       <NextButton
         id={gtmPrefix + currentStep + GTM.wizardNav.next}
         onClick={nextStep}
@@ -163,7 +174,8 @@ const WizardNav = ({
           style={{marginTop: "3rem"}}/>
       </NextButton>
     )}
-  </StyledWizardNav>
+    </div>
+  </div>
 );
 
 export default WizardNav;
