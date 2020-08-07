@@ -79,13 +79,13 @@ export const BackText = styled.span`
 `;
 
 const NextButton = styled(LeftRightIconButton)`
-  align-items: center;
   background-color: ${royalBlue};
   color: ${white};
   cursor: pointer;
   display: flex;
   height: 6.8rem;
   justify-content: center;
+  align-items: center;
   width: 6.8rem;
 
   html body &.am-button {
@@ -103,7 +103,11 @@ const NextButton = styled(LeftRightIconButton)`
     transition: all 0.1s;
 
     & span {
-      display: inline;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 3rem;
+
     }
 
     &:hover {
@@ -137,6 +141,7 @@ const WizardNav = ({
         <SvgIcon
           src={backArrow}
           title={`Navigate to step ${currentStep - 1}`}
+          style={{marginTop: "3rem"}}
         />
         <BackText>Back</BackText>
       </BackButton>
@@ -154,7 +159,8 @@ const WizardNav = ({
         onClick={nextStep}
       >
         <span>Next</span>
-        <SvgIcon src={nextArrow} />
+        <SvgIcon src={nextArrow} title={`Go to next step`}
+          style={{marginTop: "3rem"}}/>
       </NextButton>
     )}
   </StyledWizardNav>
