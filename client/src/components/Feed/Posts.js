@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-// import { FixedSizeList as List } from "react-window";
-// import InfiniteLoader from "react-window-infinite-loader";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -37,57 +35,68 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
-  hasNextPage,
   isNextPageLoading,
   loadNextPage,
+  itemCount,
+  isItemLoaded,
 }) => {
   const posts = Object.entries(filteredPosts);
-  const itemCount = hasNextPage ? posts.length + 1 : posts.length;
-  const isItemLoaded = (index) => {
-    return !hasNextPage || !!posts[index];
-  };
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-
-  const postItem = ({ key, index, style }) => {
-    let content;
-    if (!isItemLoaded(index)) {
-      content = <Loader />;
-    } else {
-      content = (
-        <>
-          <Post
-            currentPost={posts[index][1]}
-            includeProfileLink={true}
-            numComments={posts[index][1].commentsCount}
-            loadPosts={loadPosts}
-            handlePostLike={handlePostLike}
-            handleCancelPostDelete={handleCancelPostDelete}
-            postDelete={postDelete}
-            isAuthenticated={isAuthenticated}
-            user={user}
-            deleteModalVisibility={deleteModalVisibility}
-            onChange={handlePostDelete}
-          />
-          <HorizontalRule />
-        </>
+  const postItem = useCallback(
+    ({ key, index, style }) => {
+      let content;
+      if (!isItemLoaded(index)) {
+        content = <Loader />;
+      } else {
+        content = (
+          <>
+            <Post
+              currentPost={posts[index][1]}
+              includeProfileLink={true}
+              numComments={posts[index][1].commentsCount}
+              loadPosts={loadPosts}
+              handlePostLike={handlePostLike}
+              handleCancelPostDelete={handleCancelPostDelete}
+              postDelete={postDelete}
+              isAuthenticated={isAuthenticated}
+              user={user}
+              deleteModalVisibility={deleteModalVisibility}
+              onChange={handlePostDelete}
+            />
+            <HorizontalRule />
+          </>
+        );
+      }
+      return (
+        <div key={key} style={style}>
+          {content}
+        </div>
       );
-    }
-    return (
-      <div key={key} style={style}>
-        {content}
-      </div>
-    );
-  };
+    },
+    [
+      deleteModalVisibility,
+      handleCancelPostDelete,
+      handlePostDelete,
+      handlePostLike,
+      isAuthenticated,
+      isItemLoaded,
+      loadPosts,
+      postDelete,
+      posts,
+      user,
+    ],
+  );
+
   return (
     <div className="feed-posts">
-      <InfiniteLoader
-        isRowLoaded={isItemLoaded}
-        loadMoreRows={loadMoreItems}
-        rowCount={itemCount}
-      >
-        {({ onRowsRendered, registerChild }) => (
-          <WindowScroller>
-            {({ height, isScrolling, scrollTop, onChildScroll }) => (
+      <WindowScroller>
+        {({ height, isScrolling, scrollTop, onChildScroll }) => (
+          <InfiniteLoader
+            isRowLoaded={isItemLoaded}
+            loadMoreRows={loadMoreItems}
+            rowCount={100000}
+          >
+            {({ onRowsRendered, registerChild }) => (
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <List
@@ -96,19 +105,21 @@ const Posts = ({
                     height={height}
                     width={width}
                     isScrolling={isScrolling}
+                    onRowsRendered={onRowsRendered}
                     rowCount={itemCount}
                     rowHeight={380}
                     rowRenderer={postItem}
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
-                    onRowsRendered={onRowsRendered}
+                    overscanRowCount={10}
+                    scrollToAlignment={"start"}
                   />
                 )}
               </AutoSizer>
             )}
-          </WindowScroller>
+          </InfiniteLoader>
         )}
-      </InfiniteLoader>
+      </WindowScroller>
     </div>
   );
 };
