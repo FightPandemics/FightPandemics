@@ -160,12 +160,16 @@
       "email": "Email",
       "firstName": "First name",
       "lastName": "Last name",
+      "myActivity": "My Activity",
+      "userActivity": "User Activity",
       "hideAddress": "Don't show my address",
       "iWant": "I want to",
+      "wantHelp": "I want to help ",
       "volunteer": "Volunteer",
       "donate": "Donate",
       "shareInformation": "Share Information",
       "iNeed": "I need",
+      "needHelp": "I need help ",
       "medical": "Medical Help",
       "haveCovidSymptoms": "I have symptoms of COVID-19",
       "other": "Other Help",
@@ -270,7 +274,7 @@
   "verifyEmail": {
     "checkInbox": "Check your inbox",
     "forgotPass": "An email has been sent to {{email}} with further instructions on how to reset your password.",
-    "confirm": "We just emailed a link to {email}. Click the link to confirm your account and complete your profile.",
+    "confirm": "We just emailed a link to {{email}}. Click the link to confirm your account and complete your profile.",
     "checkSpam": "If you don't see a message within a few minutes please check spam, promotions or other incoming mail folders."
   },
   "aboutUs": {

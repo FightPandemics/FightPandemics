@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   PolicyContainer,
@@ -8,10 +9,12 @@ import {
 import PrivacyPolicyContent from "components/PolicyPages/PrivacyPolicyContent";
 
 const PrivacyPolicy = () => {
+  const { t } = useTranslation();
+
   return (
     <PolicyContainer>
       <TextContainer>
-        <h2 className="text-primary display-6">Privacy Policy</h2>
+        <h2 className="text-primary display-6">{t("footer.privacyPolicy")}</h2>
         <PrivacyPolicyContent />
       </TextContainer>
     </PolicyContainer>

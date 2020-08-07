@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 
 import {
@@ -14,13 +15,15 @@ import {
 import GTM from "constants/gtm-tags";
 
 const ProfileCompleted = ({ user }) => {
+  const { t } = useTranslation();
+
   return (
     <ProfileCompletedWrapper>
       <ProfileCompletedHeader>
         <ProfileCompletedHeadingWrapper>
           <HeadingIcon />
           <ProfileCompletedHeading>
-            Thank you for joining our community!
+            {t("profile.common.thankyou")}
           </ProfileCompletedHeading>
         </ProfileCompletedHeadingWrapper>
       </ProfileCompletedHeader>
@@ -31,7 +34,7 @@ const ProfileCompleted = ({ user }) => {
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.viewProfile}
           >
-            View my Profile
+            {t("profile.common.viewMyProfile")}
           </StyledButton>
         </Link>
         <Link to={FEED}>
@@ -39,7 +42,7 @@ const ProfileCompleted = ({ user }) => {
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.continuePosting}
           >
-            Continue posting
+            {t("profile.common.continuePosting")}
           </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>

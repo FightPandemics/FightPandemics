@@ -2,6 +2,7 @@ import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -93,6 +94,7 @@ const Profile = ({
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const { t } = useTranslation();
 
   const { error, loading, user } = userProfileState;
   const {
@@ -279,13 +281,13 @@ const Profile = ({
           )}
           <IconsContainer>
             <HelpContainer>
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help"}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")}
             </HelpContainer>
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} {address && `• ${address}`}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")} {address && `• ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -313,16 +315,16 @@ const Profile = ({
       <div style={{ margin: "0 2.5rem" }}>
         <WhiteSpace />
         <DescriptionMobile>
-          <SectionHeader> About</SectionHeader>
+          <SectionHeader> {t("profile.org.about")}</SectionHeader>
           {about}
         </DescriptionMobile>
         <WhiteSpace />
         <SectionHeader>
-          {ownUser ? "My Activity" : "User Activity"}
+          {ownUser ? t("profile.individual.myActivity") : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {ownUser && (
             <>
-              <CreatePostDiv>Create a post</CreatePostDiv>
+              <CreatePostDiv>{t("post.create")}</CreatePostDiv>
               <CreatePostIcon
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
@@ -363,10 +365,10 @@ const Profile = ({
           key="bottom"
         >
           <DrawerHeader>
-            <Link to="/edit-account">Edit Account Information</Link>
+            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-profile">Edit Profile </Link>
+            <Link to="/edit-profile">{t("profile.individual.editProfile")} </Link>
           </DrawerHeader>
         </CustomDrawer>
       )}
