@@ -1,33 +1,43 @@
-export default {
-  shareWith: {
-    type: "shareWith",
-    title: "Share with ...",
-    default: { text: "In my City", value: "City" },
+import i18n from "../../i18n";
+
+const POST_SETTINGS = {};
+
+function fill() {
+  POST_SETTINGS.shareWith = {
+    default: { text: i18n.t("post.options.shareWith.city"), value: "City" },
     options: [
-      { text: "In my City", value: "City" },
-      { text: "In my State", value: "State" },
-      { text: "In my Country", value: "Country" },
-      { text: "Worldwide", value: "Worldwide" },
+      { text: i18n.t("post.options.shareWith.city"), value: "City" },
+      { text: i18n.t("post.options.shareWith.state"), value: "State" },
+      { text: i18n.t("post.options.shareWith.country"), value: "Country" },
+      { text: i18n.t("post.options.shareWith.worldwide"), value: "Worldwide" },
     ],
-  },
-  expires: {
-    type: "expires",
-    title: "For how long do you want to keep your post?",
-    default: { text: "For a month", value: "Month" },
+  };
+
+  POST_SETTINGS.expires = {
+    default: { text: i18n.t("post.options.expires.month"), value: "Month" },
     options: [
-      { text: "Forever", value: "Forever" },
-      { text: "For a month", value: "Month" },
-      { text: "For a week", value: "Week" },
-      { text: "For a day", value: "Day" },
+      { text: i18n.t("post.options.expires.forever"), value: "Forever" },
+      { text: i18n.t("post.options.expires.month"), value: "Month" },
+      { text: i18n.t("post.options.expires.week"), value: "Week" },
+      { text: i18n.t("post.options.expires.day"), value: "Day" },
     ],
-  },
-  helpTypes: {
-    type: "helpTypes",
-    title: "",
+  };
+
+  POST_SETTINGS.helpTypes = {
     default: { text: "", value: "" },
     options: [
-      { text: "Looking for help", value: "request" },
-      { text: "Offering to help", value: "offer" },
+      { text: i18n.t("post.options.helpTypes.request"), value: "request" },
+      { text: i18n.t("post.options.expires.offer"), value: "offer" },
     ],
-  },
-};
+  };
+}
+
+// initial translation
+fill();
+
+// refill on langauge change
+i18n.on("languageChanged", () => {
+  fill();
+});
+
+export default POST_SETTINGS;

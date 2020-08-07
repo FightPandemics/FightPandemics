@@ -88,19 +88,23 @@
     }
   },
   "post": {
+    "post": "Post",
     "create": "Create a post",
     "continueAs": "Continue Posting As",
     "individual": "Individual",
     "organisation": "Organisation",
+    "postAsOrg": "Posting as an Organisation",
+    "createNew": "Create a new one",
     "givingHelp": "Offering Help",
     "gettingHelp": "Requesting Help",
     "writePostHere": "Write your post here",
     "title": "Title",
     "writePost": "Write your post",
     "whatGiving": "What are you offering?",
+    "whatNeed": "What do you need?",
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
-    "postVisible": "The post will be visible to",
+    "postVisible": "The post will be visible to people",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -111,10 +115,17 @@
     "comment_plural": "Comments",
     "commentWithCount": "{{count}} Comment",
     "commentWithCount_plural": "{{count}} Comments",
+    "errors": {
+      "title": "Please include a title for your post.",
+      "description": "Please include a description for your post.",
+      "help": "Please select a type of help.",
+      "tags": "Please add at least one tag."
+    },
     "options": {
       "shareWith": {
         "city": "In my City",
         "state": "In my State",
+        "country": "In my Country",
         "worldwide": "Worldwide"
       },
       "expires": {

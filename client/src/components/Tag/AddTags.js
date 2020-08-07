@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import ButtonTag from "./ButtonTag";
 
 const AddTagsWrapper = styled.div`
@@ -14,9 +15,10 @@ const AddTagsWrapper = styled.div`
 `;
 
 const AddTags = ({ filters, addTag, selected = [] }) => {
+  const { t } = useTranslation();
   return (
     <AddTagsWrapper>
-      <p>Add tags to make your post more visible</p>
+      <p>{t("post.addTags")}</p>
       {filters.map((filter, idx) => (
         <ButtonTag
           className={

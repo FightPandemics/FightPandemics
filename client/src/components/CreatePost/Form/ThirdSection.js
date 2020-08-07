@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Head from "./Head";
 import { SubTitle, Section, Selector } from "components/CreatePost/StyledModal";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -8,11 +10,12 @@ import createPostSettings from "assets/data/createPostSettings";
 const { shareWith, expires } = createPostSettings;
 
 const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
+  const { t } = useTranslation();
   return (
     <Section>
-      <Head number={3} title="What is the visibility of your post?" />
+      <Head number={3} title={t("post.whatVisibility")} />
       <div className="buttons">
-        <SubTitle>The post will be visible to</SubTitle>
+        <SubTitle>{t("post.postVisible")}</SubTitle>
         <Selector
           suffixIcon={
             <SvgIcon

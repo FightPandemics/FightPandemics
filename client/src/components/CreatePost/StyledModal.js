@@ -146,7 +146,7 @@ export const SubTitle = styled.p`
   font-weight: normal;
   font-size: 1.1rem;
   line-height: 140%;
-  margin: 0 3rem 2rem 2.8rem;
+  margin: 0 0 2rem 2.8rem;
 
   @media screen and (min-width: ${mq.phone.wide.minWidth}) {
     margin-bottom: 0;
