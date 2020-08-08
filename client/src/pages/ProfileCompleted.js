@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useLocation, withRouter } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 import { refetchUser } from "actions/authActions";
 
@@ -66,4 +66,4 @@ const mapDispatchToProps = {
   refetchUser,
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(ProfileCompleted));
+export default connect(null, mapDispatchToProps)(ProfileCompleted);
