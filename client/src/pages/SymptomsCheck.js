@@ -53,7 +53,7 @@ const ColoredButton = styled.div`
 `;
 
 const TransparentButton = styled.div`
-  background-color: ${colors.white};  
+  background-color: ${colors.white};
   width: 100%;
   color: ${colors.royalBlue};
   border-radius 5rem;

@@ -65,6 +65,16 @@ const GenericResponseStyle = styled.ul`
   }
 `;
 
+export const SymptomQuestions = [
+  'Who is this for?',
+  null,
+  'What is your/their age?',
+  'What are your/their symptoms?',
+  'Do you/they live in an area with COVID-19?',
+  'Have you/they travelled internationally in the last 14 days?',
+  'Do you/they live in a care facility?',
+  'Do you/they work in a medical facility?']
+
 export const ColoredMessage = ({ color, children }) => {
   return <ColoredMessageStyle color={color}>{children}</ColoredMessageStyle>;
 };
@@ -97,11 +107,19 @@ export const GenericMessage = ({ msg = [] }) => {
 };
 
 export const GenericResponse = ({ response = {} }) => {
+  console.log('response', response)
   return (
     <GenericResponseStyle>
-      {Object.keys(response).map((item, i) => (
-        <li key={i}>{response[item]}</li>
-      ))}
+      {Object.keys(response).map((item, i) => {
+        if(typeof Array.isArray(response[item]) && response[item].length === 0){
+          return <div>{SymptomQuestions[i]}<li key={i}>None</li></div>
+          }
+        if(typeof response[item] !==  "boolean"){
+          console.log(item)
+          return <div>{SymptomQuestions[i]}<li key={i}>{response[item]}</li></div>
+          }
+      }
+    )}
     </GenericResponseStyle>
   );
 };

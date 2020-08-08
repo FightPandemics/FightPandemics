@@ -18,7 +18,7 @@ const GenericMessageList = [
   ],
   [
     "Take Precautions to Protect Others",
-    "They may need to wear a mask to help protect themselve and those around them.",
+    "They may need to wear a mask to help protect themself and others around them.",
   ],
   [
     "Ask About Their Medications",
@@ -56,6 +56,7 @@ const ColoredButton = styled.div`
 `;
 
 const ResultsPage = (props) => {
+  console.log(props)
   return (
     <ResultsPageStyle>
       <SubtitleStyle>Results</SubtitleStyle>
