@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
+import { refetchUser } from "actions/authActions";
 
 import {
   ProfileCompletedButtonsWrapper,
@@ -12,8 +13,14 @@ import {
   StyledButton,
 } from "components/CompletedProfile/CompletedProfile";
 import GTM from "constants/gtm-tags";
+import { connect } from "react-redux";
 
-const ProfileCompleted = ({ user }) => {
+const ProfileCompleted = ({ user, refetchUser }) => {
+  const location = useLocation();
+  useEffect(() => {
+    refetchUser();
+    // will only run once (on mount) to update navbar org list
+  }, [refetchUser]);
   return (
     <ProfileCompletedWrapper>
       <ProfileCompletedHeader>
@@ -26,7 +33,13 @@ const ProfileCompleted = ({ user }) => {
       </ProfileCompletedHeader>
       <ProfileCompletedButtonsWrapper>
         {/* TODO: consistently return _id or id or both */}
-        <Link to={`${PROFILE}/${user?.id || user?._id}`}>
+        <Link
+          to={
+            location?.state?.orgId
+              ? `organisation/${location.state.orgId}`
+              : `${PROFILE}/${user?.id || user?._id}`
+          }
+        >
           <StyledButton
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.viewProfile}
@@ -39,7 +52,9 @@ const ProfileCompleted = ({ user }) => {
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.continuePosting}
           >
-            Continue posting
+            {sessionStorage.getItem("createPostAttemptLoggedOut")
+              ? "Continue posting"
+              : "View Help Board"}
           </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>
@@ -47,4 +62,8 @@ const ProfileCompleted = ({ user }) => {
   );
 };
 
-export default ProfileCompleted;
+const mapDispatchToProps = {
+  refetchUser,
+};
+
+export default connect(null, mapDispatchToProps)(ProfileCompleted);
