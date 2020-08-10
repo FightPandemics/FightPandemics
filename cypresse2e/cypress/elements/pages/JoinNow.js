@@ -1,21 +1,21 @@
 class JoinNow {
 
-    h4Heading = "h4";
-    image = ".SocialImageSVG";
-    emailField = "#email";
-    passwordField = "#password";
-    confirmPasswordField = "#confirmPassword";
-    joinNowButton = "#SU_JN";
-    signInLink = "#SU_SI";
-    joinNowFbButton = "#SU_FB";
-    joinNowGoogleButton = "#SU_GG";
-    joinNowLinkedinButton = "#SU_LN";
+    h4Heading = 'h4';
+    image = '.SocialImageSVG';
+    emailField = '#email';
+    passwordField = '#password';
+    confirmPasswordField = '#confirmPassword';
+    joinNowButton = '#SU_JN';
+    signInLink = '#SU_SI';
+    joinNowFbButton = '#SU_FB';
+    joinNowGoogleButton = '#SU_GG';
+    joinNowLinkedinButton = '#SU_LN';
 
 
     constructor() { }
 
     visit() {
-        cy.visit('');
+        cy.visit('auth/signup');
     }
 
     getH4Heading() {
