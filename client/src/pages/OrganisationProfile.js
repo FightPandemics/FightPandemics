@@ -120,6 +120,25 @@ const OrganisationProfile = () => {
   const { deleteModalVisibility } = postsState;
 
   useEffect(() => {
+    (async function fetchUserProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch(fetchUserSuccess(res.data));
+        const foundOrg = res.data.organisations.filter(
+          (org) => org._id === organisationId,
+        );
+        if (!foundOrg) {
+          history.push(`/profile/${user.id}`);
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        userProfileDispatch(
+          fetchUserError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -134,19 +153,6 @@ const OrganisationProfile = () => {
         if (user) {
           history.push(`/profile/${user.id}`);
         }
-      }
-    })();
-
-    (async function fetchUserProfile() {
-      userProfileDispatch(fetchUser());
-      try {
-        const res = await axios.get("/api/users/current");
-        userProfileDispatch(fetchUserSuccess(res.data));
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
-        );
       }
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch, user?.id]);
