@@ -40,27 +40,33 @@ data "aws_ssm_parameter" "auth_client_secret" {
 }
 
 data "aws_ssm_parameter" "google_maps_api_key" {
-  name = "/fp/googlemaps/key"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/googlemaps/key"
 }
 
 data "aws_ssm_parameter" "sendgrid_api_key" {
-  name = "/fp/sendgrid/key"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/sendgrid/key"
 }
 
 data "aws_ssm_parameter" "sendgrid_contact_list_id" {
-  name = "/fp/sendgrid/contact_list_id"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/sendgrid/contact_list_id"
 }
 
 data "aws_ssm_parameter" "sentry_dsn" {
-  name = "/fp/sentry/dsn"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/sentry/dsn"
 }
 
 data "aws_ssm_parameter" "logger_host" {
-  name = "/fp/logger/host"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/logger/host"
 }
 
 data "aws_ssm_parameter" "logger_port" {
-  name = "/fp/logger/port"
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/logger/port"
 }
 
 data "aws_ssm_parameter" "datadog_api_key" {
@@ -70,15 +76,17 @@ data "aws_ssm_parameter" "datadog_api_key" {
 
 locals {
   app_domain = {
-    review     = "fightpandemics.xyz"
-    staging    = "fightpandemics.work"
-    production = "fightpandemics.com"
+    review      = "fightpandemics.xyz"
+    staging     = "fightpandemics.work"
+    production  = "fightpandemics.com"
+    development = "fightpandemics.online"
   }
 
   auth_app_url = {
-    review     = "https://review.fightpandemics.xyz"
-    staging    = "https://staging.fightpandemics.work"
-    production = "https://production.fightpandemics.com"
+    review      = "https://review.fightpandemics.xyz"
+    staging     = "https://staging.fightpandemics.work"
+    production  = "https://production.fightpandemics.com"
+    development = "https://development.fightpandemics.online"
   }
 }
 
@@ -123,15 +131,15 @@ module "main" {
     },
     {
       name  = "GOOGLE_MAPS_API_KEY"
-      value = data.aws_ssm_parameter.google_maps_api_key.value
+      value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.google_maps_api_key[0].value
     },
     {
       name  = "SENDGRID_API_KEY"
-      value = data.aws_ssm_parameter.sendgrid_api_key.value
+      value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sendgrid_api_key[0].value
     },
     {
       name  = "SENDGRID_CONTACTS_LIST_ID"
-      value = data.aws_ssm_parameter.sendgrid_contact_list_id.value
+      value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sendgrid_contact_list_id[0].value
     },
     {
       name  = "NODE_ENV"
@@ -139,7 +147,7 @@ module "main" {
     },
     {
       name  = "SENTRY_DSN",
-      value = data.aws_ssm_parameter.sentry_dsn.value
+      value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sentry_dsn[0].value
     },
     {
       name  = "COMMIT_HASH",
@@ -151,11 +159,11 @@ module "main" {
     },
     {
       name  = "LOGGER_HOST",
-      value = data.aws_ssm_parameter.logger_host.value
+      value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_host[0].value
     },
     {
       name  = "LOGGER_PORT",
-      value = data.aws_ssm_parameter.logger_port.value
+      value = var.fp_context == "development" ? "1234" : data.aws_ssm_parameter.logger_port[0].value
     },
   ]
   datadog_env_variables = [

@@ -167,7 +167,13 @@ function EditAccount(props) {
               type="text"
               defaultValue={firstName}
               error={errors.firstName}
-              ref={register({})}
+              ref={register({
+                required: "First name is required.",
+                maxLength: {
+                  value: 30,
+                  message: "Max. 30 characters",
+                },
+              })}
             />
             <FormInput
               inputTitle="Last name"
@@ -175,7 +181,13 @@ function EditAccount(props) {
               type="text"
               defaultValue={lastName}
               error={errors.lastName}
-              ref={register({})}
+              ref={register({
+                required: "Last name is required.",
+                maxLength: {
+                  value: 30,
+                  message: "Max. 30 characters",
+                },
+              })}
             />
             <InputWrapper>
               <InputLabel

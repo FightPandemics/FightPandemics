@@ -289,6 +289,10 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.firstName && "has-error"}
                 ref={register({
                   required: "First name is required.",
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
               />
@@ -310,6 +314,10 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.lastName && "has-error"}
                 ref={register({
                   required: "Last name is required.",
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
               />

@@ -136,6 +136,15 @@ async function routes(app) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("Wrong email or password.");
       }
+      if (err.statusCode === 429) {
+        req.log.error(
+          err,
+          "Maximum number of sign in attempts exceeded. (10 times)",
+        );
+        throw app.httpErrors.tooManyRequests(
+          "Maximum number of sign in attempts exceeded.",
+        );
+      }
       req.log.error(err, "Error logging in");
       throw app.httpErrors.internalServerError();
     }

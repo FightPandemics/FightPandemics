@@ -1,5 +1,4 @@
 import {
-  PRIMARY,
   ROYAL_BLUE,
   DARK_GRAY,
   DARKER_GRAY,
@@ -49,7 +48,7 @@ const theme = {
       },
       skip: {
         textAlign: "center",
-        color: PRIMARY,
+        color: ROYAL_BLUE,
         marginTop: "1rem",
       },
     },
@@ -58,7 +57,6 @@ const theme = {
     primary: "linear-gradient(337.81deg, #425AF2 3.41%, #677CF2 98.66%)",
   },
   colors: {
-    primary: PRIMARY,
     royalBlue: ROYAL_BLUE,
     tropicalBlue: TROPICAL_BLUE,
     selago: SELAGO,
@@ -128,17 +126,17 @@ const theme = {
     },
   },
   icon: {
-    stroke: PRIMARY,
+    stroke: ROYAL_BLUE,
     light: {
       stroke: WHITE,
     },
     dark: {
-      stroke: PRIMARY,
+      stroke: ROYAL_BLUE,
     },
   },
   form: {
     label: {
-      color: PRIMARY,
+      color: ROYAL_BLUE,
       fontSize: "2rem",
       marginBottom: "0.5rem",
     },

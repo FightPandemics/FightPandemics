@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
+import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
 
 // Local
@@ -14,6 +14,7 @@ import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
+import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
 import WizardFormNav, {
   StyledButtonWizard,
@@ -31,8 +32,8 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
+import { authorProfileLink, buildLocationString } from "./utils";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { authorProfileLink } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
@@ -95,17 +96,12 @@ const Post = ({
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
-  const [copied, setCopied] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
-
-  // mock API to test functionality
-  /* to be removed after full integration with user api */
-  const [shared, setShared] = useState(false);
-  const [fakeShares, setFakeShares] = useState(0);
 
   const setShowComments = () => {
     if (dispatchPostAction) {
@@ -351,20 +347,25 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post?.author?.name}
+      title={
+        <div className="title-wrapper">
+          <div className="author">{post?.author?.name}</div>
+          {post?.author?.location?.country ? (
+            <div className="location-status">
+              <SvgIcon src={statusIndicator} className="status-icon" />
+              {buildLocationString(post.author.location)}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      }
       thumb={
         post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
         )
-      }
-      extra={
-        <span>
-          <SvgIcon src={statusIndicator} className="status-icon" />
-          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
-          {post?.author?.location?.country ? post.author.location.country : ""}
-        </span>
       }
     />
   );
@@ -437,36 +438,18 @@ const Post = ({
         handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
-        shared={shared}
         postId={postId}
+        postTitle={post?.title}
+        postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
-        numShares={fakeShares}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
-        onCopyLink={() => {
-          if (!shared) setFakeShares(fakeShares + 1);
-          setShared(true);
-          return setCopied(!copied);
-        }}
+        setShowShareModal={setShowShareModal}
         id={post?._id}
       />
     </Card.Body>
-  );
-
-  const renderShareModal = (
-    <Modal
-      onClose={() => setCopied(!copied)}
-      maskClosable={true}
-      closable={true}
-      visible={copied}
-      transparent
-    >
-      <Heading level={4} className="h4">
-        Link Copied!
-      </Heading>
-    </Modal>
   );
 
   return (
@@ -509,7 +492,13 @@ const Post = ({
               </Card.Body>
             )}
             {renderSocialIcons}
-            {renderShareModal}
+            <ShareModal
+              showShareModal={showShareModal}
+              setShowShareModal={setShowShareModal}
+              id={post._id}
+              postTitle={post.title}
+              postContent={post.content}
+            />
             {renderComments}
             <WebModal
               title="Confirm"
@@ -582,7 +571,13 @@ const Post = ({
               <Card.Body className="view-more-wrapper" />
             ))}
           {renderSocialIcons}
-          {renderShareModal}
+          <ShareModal
+            showShareModal={showShareModal}
+            setShowShareModal={setShowShareModal}
+            id={post._id}
+            postTitle={post.title}
+            postContent={post.content}
+          />
           <WebModal
             title="Confirm"
             visible={
@@ -614,4 +609,3 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
-

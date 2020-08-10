@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
 
   padding: 1rem 2rem;
   width: 100%;
-  height: 7.1rem;
+  height: 6rem;
 
   background: ${colors.selago};
   line-height: 2rem;
@@ -26,7 +26,7 @@ const StyledFooter = styled.footer`
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     font-size: 1.4rem;
-    height: 9rem;
+    height: 6rem;
   }
 `;
 
