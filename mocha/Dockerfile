@@ -1,21 +1,14 @@
-FROM node:latest
-
+FROM node:12-alpine as builder
+WORKDIR '/app'
+COPY package.json package-lock.json ./
 # Install mocha
 RUN npm install --global mocha
 
 # Install dependencies
-RUN npm install --save-dev should request supertest chai http-status
+RUN npm install --save-dev should supertest chai http-status
 
-# Define the working directory
-WORKDIR '/test'
-
-# Include package.json
-ADD package.json ./
-
-# Include mocha tests
-ADD ./test/sample /test/sample
-ADD ./test/01-auth /test/01-auth
-ADD ./test/02-posts /test/02-posts
-
-# Run all mocha tests
-RUN mocha /test/*
+#Add dockerize tool -------------------
+ENV DOCKERIZE_VERSION v0.6.0
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
