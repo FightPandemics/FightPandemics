@@ -125,27 +125,37 @@ const OrganisationProfile = () => {
       try {
         const res = await axios.get("/api/users/current");
         userProfileDispatch(fetchUserSuccess(res.data));
+
+        const foundOrg = res.data.organisations.filter(
+          (org) => org._id === organisationId,
+        );
+
+        if (foundOrg.length > 0) {
+          (async function fetchOrgProfile() {
+            orgProfileDispatch(fetchOrganisation());
+            try {
+              const res = await axios.get(
+                `/api/organisations/${organisationId}`,
+              );
+              orgProfileDispatch(fetchOrganisationSuccess(res.data));
+            } catch (err) {
+              console.log("org fetch erro");
+              const message = err.response?.data?.message || err.message;
+              orgProfileDispatch(
+                fetchOrganisationError(
+                  `Failed loading profile, reason: ${message}`,
+                ),
+              );
+            }
+          })();
+        } else {
+          history.push(`/profile/${res.data.id}`);
+        }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         userProfileDispatch(
           fetchUserError(`Failed loading profile, reason: ${message}`),
         );
-      }
-    })();
-
-    (async function fetchOrgProfile() {
-      orgProfileDispatch(fetchOrganisation());
-      try {
-        const res = await axios.get(`/api/organisations/${organisationId}`);
-        orgProfileDispatch(fetchOrganisationSuccess(res.data));
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
-        );
-        if (user) {
-          history.push(`/profile/${user.id}`);
-        }
       }
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch, user?.id]);
@@ -207,7 +217,8 @@ const OrganisationProfile = () => {
     }
   };
 
-  const handleOrgDelete = () => {
+  const handleOrgDelete = (e) => {
+    e.preventDefault();
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_ORGANISATION,
@@ -422,15 +433,14 @@ const OrganisationProfile = () => {
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
-                <div
+                <a
+                  href="#"
+                  role="button"
                   onClick={handleOrgDelete}
-                  style={{
-                    fontSize: "1.7rem",
-                    color: "#FF5656",
-                  }}
+                  className="color-danger"
                 >
                   Delete Organisation
-                </div>
+                </a>
               </DrawerHeader>
             </CustomDrawer>
           )}
