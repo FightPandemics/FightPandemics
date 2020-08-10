@@ -15,7 +15,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
-import ErrorPage from "./pages/ErrorPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -216,7 +216,7 @@ const routes = [
   },
   {
     path: "*",
-    component: ErrorPage,
+    component: NotFoundPage,
     exact: true,
   },
 ];

@@ -60,7 +60,7 @@ const StyledButton = styled(Button)`
   width: 19rem;
 `;
 
-const ErrorPage = () => {
+const NotFoundPage = () => {
   return (
     <ErrorContainer>
       <ErrorImageContainer>
@@ -75,4 +75,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default NotFoundPage;
