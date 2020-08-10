@@ -10,42 +10,58 @@ describe('FightPandemics Sign Up Page', () => {
     });
 
     it('Sign up page contains heading and image', () => {
-      joinNow.getH4Heading().should('be.visible').contains('Join Now');
+      var h4Heading = "Join Now";
+      joinNow.getH4Heading().should('be.visible').contains(h4Heading);
+
       joinNow.getImage().should('be.visible');
 
     });
 
     it('Email address field is visible and can be populated', () => {
-      joinNow.getEmailField().should('be.visible').and('have.attr', 'name', 'email');
+      var emailField = joinNow.getEmailField();
+      emailField.should('be.visible').and('have.attr', 'name', 'email');
 
     });
 
     it('Password field is visible and can be populated', () => {
-      joinNow.getPasswordField().should('be.visible').and('have.attr', 'name', 'password');
+      var passwordField = joinNow.getPasswordField();
+      passwordField.should('be.visible').and('have.attr', 'name', 'password');
 
     });
 
     it('Confirm password field is visible and can be populated', () => {
-      joinNow.getConfirmPasswordField().should('be.visible').and('have.attr', 'name', 'confirmPassword');
+      var confirmPasswordField = joinNow.getConfirmPasswordField();
+      confirmPasswordField.should('be.visible').and('have.attr', 'name', 'confirmPassword');
 
     });
 
     it('Join Now button is visible and clickable', () => {
-      joinNow.getJoinNowButton().should('be.visible').contains('span', 'Join Now');
+      var joinNowButton = joinNow.getJoinNowButton();
+      joinNowButton.should('be.visible');
+      joinNowButton.contains('span', 'Join Now');
 
     });
 
     it('Sign in link is visible and clickable', () => {
-      joinNow.getSignInLink().should('be.visible').contains('u', 'Sign In').click();
+      var signInLink = joinNow.getSignInLink();
+      signInLink.should('be.visible');
+      signInLink.contains('u', 'Sign In').click();
 
     });
 
     it('Social Media buttons for sign up are visible and clickable', () => {
-      joinNow.getJoinNowFbButton().should('be.visible').contains('span', 'Facebook').click();
-      joinNow.getJoinNowGoogleButton().should('be.visible').contains('span', 'Google').click();
-      joinNow.getJoinNowLinkedinButton().should('be.visible').contains('span', 'Linkedin').click();
+      var joinByFbButton = joinNow.getJoinNowFbButton();
+      joinByFbButton.should('be.visible')
+      joinByFbButton.contains('span', 'Facebook');
+
+      var joinByGoogleButton = joinNow.getJoinNowGoogleButton();
+      joinByGoogleButton.should('be.visible');
+      joinByGoogleButton.contains('span', 'Google');
+
+      var joinByLinkedinButton = joinNow.getJoinNowLinkedinButton();
+      joinByLinkedinButton.should('be.visible');
+      joinByLinkedinButton.contains('span', 'Linkedin');
 
     });
-
   });
 })
