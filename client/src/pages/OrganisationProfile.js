@@ -125,12 +125,6 @@ const OrganisationProfile = () => {
       try {
         const res = await axios.get("/api/users/current");
         userProfileDispatch(fetchUserSuccess(res.data));
-        const foundOrg = res.data.organisations.filter(
-          (org) => org._id === organisationId,
-        );
-        if (!foundOrg) {
-          history.push(`/profile/${user.id}`);
-        }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         userProfileDispatch(
@@ -141,7 +135,6 @@ const OrganisationProfile = () => {
 
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
-      userProfileDispatch(fetchUser());
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
