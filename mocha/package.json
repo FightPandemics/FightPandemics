@@ -1,9 +1,9 @@
 {
   "name": "mocha",
   "version": "1.0.0",
-  "description": "Mocha tests",
+  "description": "Mocha API integration tests",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha './mocha/test/**/*.js' --recursive --timeout 60000 --exit"
   },
   "private": true,
   "devDependencies": {
