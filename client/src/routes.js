@@ -14,6 +14,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -211,6 +212,11 @@ const routes = [
   {
     path: "/faq",
     component: Faq,
+  },
+  {
+    path: "*",
+    component: NotFoundPage,
+    exact: true,
   },
 ];
 
