@@ -123,8 +123,27 @@ const LocationInput = ({
       );
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
-    } catch {
-      setApiError("Failed sharing location, please input address");
+    } catch(error) {
+      if(error.code === 1) {
+        /*
+          Possible TODO
+
+          Right now the support link is hardcoded for Chrome. We may want to
+          try to do some browser detection to show relevant support links for how
+          to reset their location permissions. Really, this comes down to what
+          we're using for the flavor text here. 
+        */
+        setApiError(
+          [
+            'Permissions to access location were previously denied. Please follow the instructions ',
+            <a style={{textDecoration: "underline"}} target="_blank" href="https://support.google.com/chrome/answer/142065?hl=en">here</a>,
+            " to allow us to access location data."
+          ]
+        )
+      }
+      else {
+        setApiError(error.message || "Failed sharing location, please input address");
+      }
     } finally {
       setLoadingPlaceDetails(false);
     }
