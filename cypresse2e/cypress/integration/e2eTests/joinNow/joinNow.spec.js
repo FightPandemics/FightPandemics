@@ -1,4 +1,4 @@
-import JoinNow from '../../../elements/pages/JoinNow';
+import JoinNow from '../../../elements/pages/joinNow';
 
 describe('FightPandemics Sign Up Page', () => {
 

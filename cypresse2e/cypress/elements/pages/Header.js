@@ -1,5 +1,5 @@
 class Header{
-    fightPandemicsLogo = 'div .am-navbar-left img';
+    fightPandemicsLogo = 'div.am-navbar-left img';
     aboutUsLink = 'li #NAV_AU';
     helpBoardLink = 'li #NAV_HB';
     signInLink = 'li #NAV_SI';

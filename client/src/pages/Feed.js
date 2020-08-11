@@ -65,9 +65,12 @@ export const isAuthorOrg = (organisations, author) => {
 };
 
 export const isAuthorUser = (user, post) => {
-  return user?._id === post?.author?.id ||
-  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
-}
+  return (
+    user?._id === post?.author?.id ||
+    (user?.id === post?.author?.id &&
+      (user.ownUser === undefined || user.ownUser))
+  );
+};
 
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
@@ -309,7 +312,9 @@ const Feed = (props) => {
   const handleCreatePost = () => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
+      sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
+      sessionStorage.setItem("createPostAttemptLoggedOut", true);
       history.push(LOGIN);
     }
   };

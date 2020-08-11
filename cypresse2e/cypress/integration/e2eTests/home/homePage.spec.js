@@ -1,4 +1,4 @@
-import HomePage from '../../../elements/pages/HomePage';
+import HomePage from '../../../elements/pages/homePage';
 
 describe('FightPandemics Home screen', () => {
 

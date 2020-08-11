@@ -3,7 +3,6 @@ import NeedHelp from "./pages/NeedHelp";
 import OfferHelp from "./pages/OfferHelp";
 import AboutUs from "./pages/AboutUs";
 import CreateOrganisationProfile from "./pages/CreateOrganisationProfile";
-import OrgProfileComplete from "./pages/OrgProfileComplete";
 import OrganisationProfile from "./pages/OrganisationProfile";
 import EditOrganisationProfile from "./pages/EditOrganisationProfile";
 import EditOrganisationAccount from "./pages/EditOrganisationAccount";
@@ -15,6 +14,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -95,7 +95,7 @@ const routes = [
   },
   {
     path: "/create-organisation-complete",
-    component: OrgProfileComplete,
+    component: ProfileCompleted,
   },
   {
     path: "/organisation/:id",
@@ -212,6 +212,11 @@ const routes = [
   {
     path: "/faq",
     component: Faq,
+  },
+  {
+    path: "*",
+    component: NotFoundPage,
+    exact: true,
   },
 ];
 
