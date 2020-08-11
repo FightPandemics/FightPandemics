@@ -416,7 +416,7 @@ const Step4 = (props) => {
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
-        Have they traveled internationally in the last 14 days?
+        Have they travelled internationally in the last 14 days?
       </Heading>
       <AnswerButton onSelect={() => onSelectAnswer("yes")}>
         They have travelled internationally
@@ -612,6 +612,9 @@ const SymptomsCheck = () => {
   const updateAnswers = (key, value) => {
     setState({ ...state, [key]: value });
   };
+  const resetAnswers = (key, value) =>{
+    setState({});
+  }
   localStorage.setItem("symptomsCheckAnswers", JSON.stringify(state));
   console.log(state, " state++++");
   let displayMessage = [];
@@ -628,9 +631,11 @@ const SymptomsCheck = () => {
         <Link to="/feed">
           <ColoredButton>Done</ColoredButton>
         </Link>
-        <TransparentButton onClick={() => updateAnswers("age", null)}>
-          Retake the Test
-        </TransparentButton>
+        <Link to="/symptoms-check">
+          <TransparentButton onClick={() => updateAnswers("age", null)}>
+            Retake the Test
+          </TransparentButton>
+        </Link>
       </ModalStyle>
     );
   }
@@ -995,7 +1000,7 @@ const SymptomsCheck = () => {
           <Step6 hashKey={"Step6"} update={updateAnswers} />
           <Step7 hashKey={"Step7"} update={updateAnswers} />
           <Step8 hashKey={"Step8"} update={updateAnswers} />
-          <ResultsPage val={state} msg={displayMessage} />
+          <ResultsPage val={state} msg={displayMessage} update={resetAnswers}/>
         </StyledWizard>
       </ModalStyle>
       <ModalStyle visible={state.forWho && !state.confirmedStart}>

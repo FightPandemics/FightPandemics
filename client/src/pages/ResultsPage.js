@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StepTitle } from "components/StepWizard";
@@ -38,6 +38,19 @@ const SubtitleStyle = styled.h5`
   margin: 1.5rem 0;
 `;
 
+const TransparentButton = styled.div`
+  background-color: ${colors.white};
+  width: 10em;
+  color: ${colors.royalBlue};
+  border-radius 5rem;
+  padding: 1.5rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  margin: auto;
+`;
+
 const ResultsPageStyle = styled.div`
   & * {
     text-align: left !important;
@@ -56,7 +69,9 @@ const ColoredButton = styled.div`
 `;
 
 const ResultsPage = (props) => {
-  console.log(props)
+  const [state, setState] = useState(props)
+  const [openModal, setOpenModal] = useState(false);
+  console.log('props', props)
   return (
     <ResultsPageStyle>
       <SubtitleStyle>Results</SubtitleStyle>
@@ -71,6 +86,11 @@ const ResultsPage = (props) => {
       <GenericResponse response={props.val} />
       <Link to="/feed">
         <ColoredButton>Done</ColoredButton>
+      </Link>
+      <Link to="/symptoms-check#Step1">
+        <TransparentButton className='resetButton' onClick={() => props.update()}>
+            Retake the Test
+          </TransparentButton>
       </Link>
     </ResultsPageStyle>
   );

@@ -111,14 +111,17 @@ export const GenericResponse = ({ response = {} }) => {
   return (
     <GenericResponseStyle>
       {Object.keys(response).map((item, i) => {
-        if(typeof Array.isArray(response[item]) && response[item].length === 0){
-          return <div>{SymptomQuestions[i]}<li key={i}>None</li></div>
-          }
-        if(typeof response[item] !==  "boolean"){
-          console.log(item)
-          return <div>{SymptomQuestions[i]}<li key={i}>{response[item]}</li></div>
-          }
-      }
+        if(item && response[item] !== null){
+          console.log(response);
+          if(typeof Array.isArray(response[item]) && response[item].length === 0){
+            return <div>{SymptomQuestions[i]}<li key={i}>None</li></div>
+            }
+          if(typeof response[item] !==  "boolean"){
+            console.log(item)
+            return <div>{SymptomQuestions[i]}<li key={i}>{response[item]}</li></div>
+            }
+        }
+    }
     )}
     </GenericResponseStyle>
   );
