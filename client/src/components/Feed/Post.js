@@ -514,8 +514,8 @@ const Post = ({
               cancelText="Cancel"
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>Are you sure you want to delete the post?</p>
-              )) || <p>Are you sure you want to delete the comment?</p>}
+                <p>{t("post.deletePostConfirmation")}</p>
+              )) || <p>{t("post.deleteCommentConfirmation")}</p>}
             </WebModal>
           </StyledPostPagePostCard>
           <StyledButtonWizard
@@ -593,9 +593,9 @@ const Post = ({
             cancelText="Cancel"
           >
             {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>Are you sure you want to delete the post?</p>
+              <p>{t("post.deletePostConfirmation")}</p>
             ) : (
-              <p>Are you sure you want to delete the comment?</p>
+              <p>{t("post.deleteCommentConfirmation")}</p>
             )}
           </WebModal>
         </PostCard>
