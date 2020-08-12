@@ -162,7 +162,7 @@ describe('FightPandemics Sign Up Page', () => {
 
     it('Facebook button for sign up is visible', () => {
       var joinByFbButton = joinNow.getJoinNowFbButton();
-      joinByFbButton.should('be.visible')
+      joinByFbButton.should('be.visible');
       joinByFbButton.contains('span', 'Facebook');
 
     });
