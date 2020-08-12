@@ -9,6 +9,12 @@ describe('FightPandemics Sign Up Page', () => {
       joinNow.visit();
     });
 
+    it('FP logo is visible and clickable', () => {
+      var fpLogo = joinNow.getFpLogo();
+      fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+
+    });
+
     it('Sign up page contains heading and image', () => {
       var h4Heading = "Join Now";
       joinNow.getH4Heading().should('be.visible').contains(h4Heading);
@@ -47,6 +53,7 @@ describe('FightPandemics Sign Up Page', () => {
       var passwordField = joinNow.getPasswordField();
       passwordField.should('be.visible').and('have.attr', 'name', 'password');
       passwordField.type('Testing!');
+
     });
 
     it('Clicking the password eye displays the password entered', () => {
@@ -125,10 +132,24 @@ describe('FightPandemics Sign Up Page', () => {
 
     });
 
-    it('Join Now button is visible', () => {
+    it('Join Now button is disabled when required details are not entered', () => {
       var joinNowButton = joinNow.getJoinNowButton();
-      joinNowButton.should('be.visible');
-      joinNowButton.contains('span', 'Join Now');
+      joinNowButton.should('be.visible').and('have.attr', 'aria-disabled', 'true');
+
+    });
+
+    it('Join Now button is enabled when required details are entered', () => {
+      var emailField = joinNow.getEmailField();
+      emailField.should('be.visible').and('have.attr', 'name', 'email');
+      emailField.type('qa.test@gmail.com');
+      var passwordField = joinNow.getPasswordField();
+      passwordField.should('be.visible').and('have.attr', 'name', 'password');
+      passwordField.type('Testing!');
+      var confirmPasswordField = joinNow.getConfirmPasswordField();
+      confirmPasswordField.should('be.visible').and('have.attr', 'name', 'confirmPassword');
+      confirmPasswordField.type('Testing!');
+      var joinNowButton = joinNow.getJoinNowButton();
+      joinNowButton.should('be.visible').and('have.attr', 'aria-disabled', 'false');
 
     });
 

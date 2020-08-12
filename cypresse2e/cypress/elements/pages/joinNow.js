@@ -1,5 +1,6 @@
 class JoinNow {
 
+    fpLogo = '.am-navbar.am-navbar-light a img';
     h4Heading = 'h4';
     image = '.SocialImageSVG';
     emailField = '#email';
@@ -25,6 +26,10 @@ class JoinNow {
 
     visit() {
         cy.visit('auth/signup');
+    }
+
+    getFpLogo() {
+        return cy.get(this.fpLogo);
     }
 
     getH4Heading() {
