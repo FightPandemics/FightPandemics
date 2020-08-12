@@ -46,6 +46,7 @@
   "feed": {
     "title": "Help Board",
     "all": "All posts",
+    "filterBy": "Filter by",
     "request": "Requesting help",
     "offer": "Offering help",
     "quit": "Quit filters",
@@ -58,33 +59,41 @@
         "enterAddress": "Enter address, zip code, or city",
         "shareLocation": "Share my Location"
       },
-      "providers": "Providers",
-      "providersList": [
-        "Individual",
-        "Startup",
-        "Company",
-        "Community",
-        "Government",
-        "Non-profit",
-        "University",
-        "Health care provider",
-        "Other"
-      ],
-      "types": "Types",
-      "typesList": [
-        "Medical Supplies",
-        "Groceries/Food",
-        "Business",
-        "Education",
-        "Legal",
-        "Wellbeing/Mental",
-        "Entertainment",
-        "Information",
-        "Funding",
-        "R&D",
-        "Tech",
-        "Other"
-      ]
+      "labels": {
+        "location": "Location",
+        "providers": "Providers",
+        "type": "Types",
+        "lookingFor": "Offer or Request Help"
+      },
+      "providersOptions": {
+        "Individual": "Individual",
+        "Startup": "Startup",
+        "Company": "Company",
+        "Community": "Community",
+        "Government": "Government",
+        "Non-profit": "Non-Profit",
+        "University": "University",
+        "Health care provider": "Health Care Provider",
+        "Other": "Others"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Medical Supplies",
+        "Groceries/Food": "Groceries/Food",
+        "Business": "Business",
+        "Education": "Education",
+        "Legal": "Legal",
+        "Wellbeing/Mental": "Wellbeing/Mental",
+        "Entertainment": "Entertainment",
+        "Information": "Information",
+        "Funding": "Funding",
+        "R&D": "R&D",
+        "Tech": "Tech",
+        "Other": "Others"
+      },
+      "lookingForOptions": {
+        "Request Help": "Requesting Help",
+        "Offer Help": "Offering Help"
+      }
     }
   },
   "post": {
@@ -107,14 +116,13 @@
     "postVisible": "The post will be visible to people",
     "success": "Success",
     "viewPost": "View Your Post",
+    "viewLess": "View Less",
+    "viewMore": "View More",
     "like": "Like",
     "like_plural": "Likes",
     "likeWithCount": "{{count}} Like",
     "likeWithCount_plural": "{{count}} Likes",
-    "comment": "Comment",
-    "comment_plural": "Comments",
-    "commentWithCount": "{{count}} Comment",
-    "commentWithCount_plural": "{{count}} Comments",
+    "others": "Others",
     "errors": {
       "title": "Please include a title for your post.",
       "description": "Please include a description for your post.",
@@ -139,6 +147,19 @@
         "offer": "Offering to help"
       }
     }
+  },
+  "comment": {
+    "writeAComment": "Write a comment...",
+    "onlyAuthenticated": "Only logged in users can comment.",
+    "loading": "Loading...",
+    "showMore": "Show More Comments",
+    "comment": "Comment",
+    "comment_plural": "Comments",
+    "commentWithCount": "{{count}} Comment",
+    "commentWithCount_plural": "{{count}} Comments",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save"
   },
   "profile": {
     "common": {

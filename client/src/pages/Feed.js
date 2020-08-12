@@ -66,9 +66,12 @@ export const isAuthorOrg = (organisations, author) => {
 };
 
 export const isAuthorUser = (user, post) => {
-  return user?._id === post?.author?.id ||
-  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser))
-}
+  return (
+    user?._id === post?.author?.id ||
+    (user?.id === post?.author?.id &&
+      (user.ownUser === undefined || user.ownUser))
+  );
+};
 
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
@@ -393,11 +396,11 @@ const Feed = (props) => {
     const objectiveURL = () => {
       let objective = selectedType;
       if (
-        selectedOptions["offer or request help"] &&
-        selectedOptions["offer or request help"].length < 2
+        selectedOptions["lookingFor"] &&
+        selectedOptions["lookingFor"].length < 2
       ) {
         objective =
-          selectedOptions["offer or request help"][0] === "Request Help"
+          selectedOptions["lookingFor"][0] === "Request Help"
             ? "REQUEST"
             : "OFFER";
       }
@@ -412,7 +415,7 @@ const Feed = (props) => {
     };
     const filterURL = () => {
       const filterObj = { ...selectedOptions };
-      delete filterObj["offer or request help"];
+      delete filterObj["lookingFor"];
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""

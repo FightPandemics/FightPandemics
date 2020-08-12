@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -76,6 +77,7 @@ const Post = ({
   showComments,
   user,
 }) => {
+  const { t } = useTranslation();
   const { postId } = useParams();
   const limit = useRef(5);
   let post;
@@ -290,20 +292,20 @@ const Post = ({
           {!loadMorePost ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
-              <span className="view-more">View Less</span>
+              <span className="view-more">{t("post.viewLess")}</span>
             </>
           ) : (
             <span
               id={GTM.post.prefix + GTM.post.viewMore}
               className="view-more"
             >
-              View More
+              {t("post.viewMore")}
             </span>
           )}
         </div>
       ) : (
         <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
-          View More
+          {t("post.viewMore")}
         </span>
       )}
     </Card.Body>
@@ -401,13 +403,13 @@ const Post = ({
       {isAuthenticated ? (
         <AutoSize
           gtmTag={`${GTM.post.prefix}${GTM.post.writeComment}_${postId}`}
-          placeholder={"Write a comment..."}
+          placeholder={t("comment.writeAComment")}
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
         />
       ) : (
-        <div>Only logged in users can comment.</div>
+        <div>{t("comment.onlyAuthenticated")}</div>
       )}
       {isAuthenticated ? (
         <>
@@ -420,7 +422,7 @@ const Post = ({
           />
           {loadMoreComments && commentsCount >= 5 ? (
             <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
-              {isLoading ? "Loading..." : "Show More Comments"}
+              {isLoading ? t("comment.loading") : t("comment.showMore")}
             </StyledLoadMoreButton>
           ) : (
             <></>

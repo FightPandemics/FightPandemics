@@ -1,8 +1,8 @@
 // Core
 import React, { useContext } from "react";
 import styled from "styled-components";
-// Antd
 import { Drawer } from "antd";
+import { useTranslation } from "react-i18next";
 
 // Local
 import FilterAccordion from "./FilterAccordion";
@@ -80,6 +80,7 @@ const DrawerWrapper = styled(Drawer)`
 `;
 
 const FiltersSidebar = ({ gtmPrefix }) => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const { handleQuit, handleOnClose, showFilters } = feedContext;
 
@@ -116,7 +117,7 @@ const FiltersSidebar = ({ gtmPrefix }) => {
           style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
         >
-          Quit filters
+          {t("feed.quit")}
         </SubmitButton>
         <SubmitButton
           className="ok-button"
@@ -126,7 +127,7 @@ const FiltersSidebar = ({ gtmPrefix }) => {
           style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
         >
-          View result
+          {t("feed.apply")}
         </SubmitButton>
       </div>
     </DrawerWrapper>
