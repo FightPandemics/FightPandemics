@@ -319,6 +319,27 @@
     "check": "Symptoms Check",
     "findHelp": "Find Help"
   },
+  "feedback": {
+    "poorly": "Poorly",
+    "well": "Very well",
+    "howMeetNeeds": "How well does FightPandemics meet your needs?",
+    "almostFinished": "We are almost done!",
+    "howImpacted": "How has COVID-19 impacted you?",
+    "mostValuable": "Which features are the most valuable to you?",
+    "oneChange": "If you could change one thing about FightPandemics, what would it be?",
+    "otherFeedback": "Any other feedback for us?",
+    "thankYou": "Thank You!",
+    "thankYouEarly": "Thank you for being an early user of FightPandemics!",
+    "thankYouMessage": "Your input means a lot and helps us improve our services during and after the COVID-19 pandemic.",
+    "submitFeedback": "Submit Feedback",
+    "radio": {
+      "age": "What is your age",
+      "unaffected": "I go to work/school normally",
+      "quarantine": "I am a healthy but in a stay-at-home quarantine",
+      "symptomaticUntested": "I have mild symptoms but haven't been tested",
+      "diagnosed": "I am diagnosed with COVID-19"
+    }
+  },
   "footer": {
     "faq": "FAQ",
     "blog": "Blog",

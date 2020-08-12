@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
@@ -231,23 +232,23 @@ const RatingWrapper = styled.div`
   }
 `;
 
-const TEXT_FEEDBACK = [
-  {
-    stateKey: "mostValuableFeature",
-    label: "Which features are the most valuable to you?",
-  },
-  {
-    stateKey: "whatWouldChange",
-    label:
-      "If you could change one thing about FightPandemics, what would it be?",
-  },
-  { stateKey: "generalFeedback", label: "Any other feedback for us?" },
-];
-
 const NavigationLayout = (props) => {
+  const { t } = useTranslation();
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
+
+  const TEXT_FEEDBACK = [
+    {
+      stateKey: "mostValuableFeature",
+      label: t("feedback.mostValuable"),
+    },
+    {
+      stateKey: "whatWouldChange",
+      label: t("feedback.oneChange"),
+    },
+    { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
+  ];
 
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
@@ -348,11 +349,8 @@ const NavigationLayout = (props) => {
       transparent
       closable
     >
-      <h2 className="title">Thank you!</h2>
-      <p>
-        Your input means a lot and helps us improve our services during and
-        after the COVID-19 pandemic.
-      </p>
+      <h2 className="title">{t("feedback.thankYou")}</h2>
+      <p>{t("feedback.thankYouMessage")}</p>
       <Link to="/">
         <Logo src={logo} alt="FightPandemics logo" />
       </Link>
@@ -363,7 +361,7 @@ const NavigationLayout = (props) => {
     const inputLabelsText = [
       {
         stateKey: "age",
-        label: "What is your age?",
+        label: t("feedback.radio.age"),
         type: "number",
       },
     ];
@@ -371,19 +369,19 @@ const NavigationLayout = (props) => {
     const radioButtonOptions = [
       {
         stateKey: "covidImpact",
-        value: "I go to work/school normally",
+        value: t("feedback.radio.unaffected"),
       },
       {
         stateKey: "covidImpact",
-        value: "I am healthy but in a stay-at-home quarantine",
+        value: t("feedback.radio.quarantine"),
       },
       {
         stateKey: "covidImpact",
-        value: "I have mild symptoms but haven't been tested",
+        value: t("feedback.radio.symptomaticUntested"),
       },
       {
         stateKey: "covidImpact",
-        value: "I am diagnosed with Covid-19",
+        value: t("feedback.radio.diagnosed"),
       },
     ];
 
@@ -404,7 +402,7 @@ const NavigationLayout = (props) => {
         transparent
         closable
       >
-        <h2 className="title">We are almost done!</h2>
+        <h2 className="title">{t("feedback.almostFinished")}</h2>
         {inputLabelsText.map(({ label, stateKey, type }) => (
           <>
             <FormInput
@@ -415,11 +413,11 @@ const NavigationLayout = (props) => {
                 dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
               }
             />
-            <RadioGroupWithLabel label="How has COVID-19 impacted you?" />
+            <RadioGroupWithLabel label={t("feedback.howImpacted")} />
           </>
         ))}
         <FeedbackSubmitButton
-          title="Submit Feedback"
+          title={t("feedback.submitFeedback")}
           onClick={() => {
             toggleModal("radioModal");
             submitFeedbackForm();
@@ -442,9 +440,7 @@ const NavigationLayout = (props) => {
         transparent
         closable
       >
-        <h2 className="title">
-          Thank you for being an early user of FightPandemics!
-        </h2>
+        <h2 className="title">{t("feedback.thankYouEarly")}</h2>
         {TEXT_FEEDBACK.map(({ label, stateKey }) => (
           <FormInput
             key={stateKey}
@@ -455,7 +451,7 @@ const NavigationLayout = (props) => {
           />
         ))}
         <FeedbackSubmitButton
-          title="Next"
+          title={t("onboarding.common.next")}
           onClick={() => nextModal("textFeedbackModal", "radioModal")}
         />
       </TextFeedbackModal>
@@ -471,7 +467,7 @@ const NavigationLayout = (props) => {
         closable
         transparent
       >
-        <h3 className="title">How well does FightPandemics meet your needs?</h3>
+        <h3 className="title">{t("feedback.howMeetNeeds")}</h3>
         <div className="rectangle">
           {ratingScale.map((rating, index) => (
             <RatingWrapper
@@ -485,9 +481,9 @@ const NavigationLayout = (props) => {
           ))}
         </div>
         <div className="scale-text">
-          <div>Poorly</div>
+          <div>{t("feedback.poorly")}</div>
           <div className="spacer"></div>
-          <div>Very well</div>
+          <div>{t("feedback.well")}</div>
         </div>
       </RatingModal>
     );
@@ -509,7 +505,7 @@ const NavigationLayout = (props) => {
         <Link to={`/profile/${user?.id || user?._id}`}>Profile</Link>
       </NavItem>
       <NavItem>
-        Organisation
+        {t("post.organisation")}
         {user?.organisations?.length > 0
           ? user?.organisations?.map((organisation) => (
               <NavItemBrief history={history} key={organisation._id}>
@@ -524,7 +520,7 @@ const NavigationLayout = (props) => {
             id={GTM.nav.prefix + GTM.nav.addOrg}
             to="/create-organisation-profile"
           >
-            + Add Organisation
+            + {t("common.addOrg")}
           </Link>
         </NavItemBrief>
       </NavItem>
@@ -536,12 +532,12 @@ const NavigationLayout = (props) => {
             user,
           }}
         >
-          Help Board
+          {t("feed.title")}
         </Link>
       </NavItem>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
-          About Us
+          {t("common.aboutUs")}
         </Link>
       </NavItem>
       <Space height="10vh" limitMobileHeight />
@@ -553,10 +549,10 @@ const NavigationLayout = (props) => {
         }}
         size="small"
       >
-        Feedback
+        {t("common.feedback")}
       </FeedbackItem>
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Sign Out</BriefLink>
+        <BriefLink to="/auth/logout">{t("common.logout")}</BriefLink>
       </NavItem>
     </>
   );
@@ -566,12 +562,12 @@ const NavigationLayout = (props) => {
       <Space height="10rem" />
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-          Sign In / Join Now
+          {t("auth.signIn")} / {t("auth.joinNow")}
         </Link>
       </NavItem>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
-          About Us
+          {t("common.aboutUs")}
         </Link>
       </NavItem>
       <Space height="33vh" />
@@ -583,7 +579,7 @@ const NavigationLayout = (props) => {
         }}
         size="small"
       >
-        Feedback
+        {t("common.feedback")}
       </FeedbackItem>
     </>
   );
