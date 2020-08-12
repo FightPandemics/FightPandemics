@@ -5,7 +5,8 @@ import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Alert } from "antd";
-import { MINT_GREEN, ORANGE_RED, WHITE } from "../constants/colors";
+import SuccessAlert from "components/Alert/SuccessAlert";
+import { ORANGE_RED, WHITE } from "../constants/colors";
 import { Link } from "react-router-dom";
 import InputLabel from "components/Input/Label";
 import orgData from "../assets/data/createOrganisationProfile";
@@ -69,34 +70,27 @@ const NEEDS = {
 
 const ErrorAlert = styled(Alert)`
   background-color: ${ORANGE_RED};
-  margin: 3rem 9rem 0rem 0rem;
-  height: 6rem;
-
+  margin: 3rem 6rem 0rem 0rem;
+  z-index: 10;
+  position: absolute;
+  width: 30%;
+  right: 1rem;
+  border: none;
+  border-radius: 0.5rem;
   .ant-alert-message {
     color: ${WHITE};
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    max-width: 100%;
     margin: auto;
-    height: auto;
+    position: relative;
+    width: 100%;
+    right: 0rem;
   }
 `;
 
-const SuccessAlert = styled(Alert)`
-  background-color: ${MINT_GREEN};
-  margin: 2rem 2rem 0rem 2rem;
-  height: 6rem;
-
-  .ant-alert-message {
-    color: ${WHITE};
-  }
-
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    max-width: 100%;
-    margin: auto;
-    height: auto;
-  }
+const Container = styled.div`
+  margin-top: 5rem;
 `;
 
 function EditOrganisationAccount(props) {
@@ -126,6 +120,10 @@ function EditOrganisationAccount(props) {
     clearError("location");
   };
 
+  const handleSuccessClose = () => {
+    handleSuccess(false);
+  };
+
   const onSubmit = async (formData) => {
     if (!location?.address) {
       // all location objects should have address (+coordinates), others optional
@@ -148,6 +146,9 @@ function EditOrganisationAccount(props) {
       if (orgProfileState.organisation.email !== formData.email) {
         orgProfileDispatch(updateOrganisationSuccess(res.data));
         handleSuccess(true);
+        setTimeout(() => {
+          handleSuccess(false);
+        }, 10000);
         handleError(false);
       } else {
         orgProfileDispatch(updateOrganisationSuccess(res.data));
@@ -157,11 +158,12 @@ function EditOrganisationAccount(props) {
       const message = err.response?.data?.message || err.message;
       if (err.response?.statusText === "Conflict") {
         handleError(true);
+        handleSuccess(false);
         orgProfileDispatch(updateOrganisationError(message));
       }
       orgProfileDispatch(
         updateOrganisationError(
-          `Failed updating organisation profile, reason: ${message}`,
+          `Failed updating organisation profile. ${message}`,
         ),
       );
     }
@@ -362,58 +364,70 @@ function EditOrganisationAccount(props) {
   if (loading) return <div>"loading"</div>;
   return (
     <Background>
-      <EditLayout>
-        <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
-            Edit Organisation Profile
-          </CustomEditAccountHeader>
-          {isEmailUpdateSuccess ? (
-            <>
-              <SuccessAlert message={"Email successfully updated"} />
-            </>
-          ) : isEmailUpdateError ? (
-            <>
-              <ErrorAlert message={orgProfileState.error} />
-            </>
-          ) : (
-            ""
-          )}
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              Account Information
-            </CustomHeading>
-          </ToggleHeading>
-          <FillEmptySpace />
-          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
-        </TitlePictureWrapper>
-        <FormLayout>
-          <OptionDiv>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
+      {isEmailUpdateSuccess ? (
+        <>
+          <SuccessAlert
+            message={"Email successfully updated"}
+            closable
+            afterClose={handleSuccessClose}
+          />
+        </>
+      ) : isEmailUpdateError ? (
+        <>
+          <ErrorAlert message={orgProfileState.error} />
+        </>
+      ) : (
+        ""
+      )}
+      <Container>
+        <EditLayout>
+          <TitlePictureWrapper>
+            <CustomEditAccountHeader className="h4">
+              Edit Organisation Profile
+            </CustomEditAccountHeader>
+            <ToggleHeading>
+              <CustomHeading level={4} className="h4">
                 Account Information
-              </Link>
-            </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                Profile Information
-              </Link>
-            </CustomLink>
-          </OptionDiv>
-          <CustomForm>
-            {renderFormInputs()}
-            {renderAddressInput()}
-            {renderGlobalCheckBox()}
-            <WhiteSpace />
-            <WhiteSpace />
-            {renderSelectItems()}
-            <Label>What are you looking for?</Label>
-            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
-            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? "Saving Changes..." : "Save Changes"}
-            </CustomSubmitButton>
-          </CustomForm>
-        </FormLayout>
-      </EditLayout>
+              </CustomHeading>
+            </ToggleHeading>
+
+            <FillEmptySpace />
+
+            <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
+          </TitlePictureWrapper>
+
+          <FormLayout>
+            <OptionDiv>
+              <CustomLink isSelected>
+                <Link to={`/edit-organisation-account/${organisationId}`}>
+                  Account Information
+                </Link>
+              </CustomLink>
+              <CustomLink>
+                <Link to={`/edit-organisation-profile/${organisationId}`}>
+                  Profile Information
+                </Link>
+              </CustomLink>
+            </OptionDiv>
+            <CustomForm>
+              {renderFormInputs()}
+              {renderAddressInput()}
+              {renderGlobalCheckBox()}
+              <WhiteSpace />
+              <WhiteSpace />
+              {renderSelectItems()}
+              <Label>What are you looking for?</Label>
+              <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+              <CustomSubmitButton
+                primary="true"
+                onClick={handleSubmit(onSubmit)}
+              >
+                {loading ? "Saving Changes..." : "Save Changes"}
+              </CustomSubmitButton>
+            </CustomForm>
+          </FormLayout>
+        </EditLayout>
+      </Container>
     </Background>
   );
 }
