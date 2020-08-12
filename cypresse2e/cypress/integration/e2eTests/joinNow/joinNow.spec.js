@@ -160,15 +160,22 @@ describe('FightPandemics Sign Up Page', () => {
 
     });
 
-    it('Social Media buttons for sign up are visible', () => {
+    it('Facebook button for sign up is visible', () => {
       var joinByFbButton = joinNow.getJoinNowFbButton();
       joinByFbButton.should('be.visible')
       joinByFbButton.contains('span', 'Facebook');
 
+    });
+
+    it('Google button for sign up is visible', () => {
       var joinByGoogleButton = joinNow.getJoinNowGoogleButton();
       joinByGoogleButton.should('be.visible');
       joinByGoogleButton.contains('span', 'Google');
 
+    });
+
+
+    it('LinkedIn button for sign up is visible', () => {
       var joinByLinkedinButton = joinNow.getJoinNowLinkedinButton();
       joinByLinkedinButton.should('be.visible');
       joinByLinkedinButton.contains('span', 'Linkedin');
