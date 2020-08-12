@@ -17,6 +17,7 @@ const version = require("./endpoints/version");
 module.exports = function createApp(config) {
   const logger = {
     level: config.logger.level,
+    prettyPrint: config.env === "dev" ? { colorize: true } : false,
   };
   if (config.logger.host) {
     logger.stream = logStream(config.logger);
