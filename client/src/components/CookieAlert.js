@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Trans } from 'react-i18next';
 import { theme } from "constants/theme";
 
 // ICONS
@@ -53,14 +54,7 @@ export default () => {
   return (
     <CookieContainer style={{ display: active ? "" : "none" }}>
       <div>
-        This site uses cookies to deliver our service and to show you relevant
-        information. By using our site, you acknowledge that you have read and
-        understand our{" "}
-        <CookieLink href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
-        <CookieLink href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
-        <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
-        Your use of FightPandemics' Products is subject to these policies and
-        terms.
+        <Trans i18nKey="cookies.cookieAlert" components={[<CookieLink href="/cookies-policy"/>, <CookieLink href="/privacy-policy"/>, <CookieLink href="/terms-conditions"/>]}></Trans>
       </div>
       <ClosePointer>
         <SvgIcon src={closeX} onClick={hideMessage} />
