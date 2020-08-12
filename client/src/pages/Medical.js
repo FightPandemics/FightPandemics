@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 
 import ImageButton from "components/Button/ImageButton";
 import { theme } from "constants/theme";
@@ -52,7 +51,6 @@ const getGeoLocation = () => needHelpAnswers?.location;
 
 const Medical = (props) => {
   const [state, setState] = useState(INITIAL_STATE);
-  const { t } = useTranslation();
   //   console.log("render medical page", { props });
 
   const fetchNumber = () => {
@@ -94,14 +92,14 @@ const Medical = (props) => {
 
   return (
     <div className="text-center">
-      <h3>{t("medical.localNumber")}</h3>
+      <h3>Your Local Emergency Number</h3>
       <h1 className="text-primary display-4 font-weight-bolder">
         {state.loading
           ? "Loading..."
           : state.emergencyNumber || state.errorMessage}
       </h1>
       <StyledWelcome level={3} size="xlarge">
-        {t("medical.call")}
+        Please Call Your Local Emergency Number
       </StyledWelcome>
       <OnboardingContainer style={{ display: "flex", flexWrap: "wrap" }}>
         <FlexChild>
@@ -111,7 +109,7 @@ const Medical = (props) => {
             activeImg={nearestHospitalSelected}
             onClick={() => props.history.push("/nearest-hospital")}
           >
-            {t("medical.nearestHospitals")}
+            Nearest Hospitals
           </ImageButton>
         </FlexChild>
         <FlexChild>
@@ -121,7 +119,7 @@ const Medical = (props) => {
             activeImg={symptomsCheckSelected}
             onClick={() => props.history.push("/symptoms-check")}
           >
-            {t("medical.check")}
+            Symptoms Check
           </ImageButton>
         </FlexChild>
         <FlexChild>
@@ -131,7 +129,7 @@ const Medical = (props) => {
             activeImg={findHelpUnselected}
             onClick={() => props.history.push("/find-help")}
           >
-            {t("medical.findHelp")}
+            Find Help
           </ImageButton>
         </FlexChild>
       </OnboardingContainer>
