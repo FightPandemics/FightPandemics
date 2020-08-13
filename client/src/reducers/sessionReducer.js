@@ -13,6 +13,8 @@ const initialState = {
   authLoading: false,
   email: null,
   emailVerified: false,
+  firstName: null,
+  lastName: null,
   error: null,
   forgotPasswordRequested: false,
   user: null,
@@ -30,6 +32,8 @@ function sessionReducer(state = initialState, action) {
         ...state,
         emailVerified: action.payload.emailVerified,
         email: action.payload.email,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
         isAuthenticated: true,
         user: action.payload.user,
       };
