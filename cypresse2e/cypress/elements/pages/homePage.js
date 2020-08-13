@@ -7,6 +7,8 @@ class HomePage{
     h1Heading = "h1";
     subHeading1 = "div > p:nth-child(3)";
     subHeading2 = "div > p:nth-child(4)";
+    cookieBanner = "#cookie-banner-text";
+    cookieBannerClose = "#cookie-banner-close";
 
     constructor(){}
 
@@ -36,6 +38,14 @@ class HomePage{
 
     getSubHeading2(){
         return cy.get(this.subHeading2);
+    }
+
+    getCookieBanner() {
+        return cy.get(this.cookieBanner);
+    }
+
+    getCookieBannerClose() {
+        return cy.get(this.cookieBannerClose);
     }
 
 }
