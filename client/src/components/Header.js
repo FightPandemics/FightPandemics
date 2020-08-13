@@ -67,20 +67,24 @@ const NavLinks = styled.div`
     margin-bottom: 0rem;
     margin-right: 5rem;
     align-items: center;
+
     .registerBtn {
-      color: ${colors.royalBlue};
-      border: 0.1rem solid ${colors.royalBlue};
-      border-radius: 2rem;
-      padding: 0rem 0.8rem;
       margin-bottom: 0.2rem;
       align-self: center;
-      .registerLink {
-        color: ${colors.royalBlue};
-      }
-      .registerLink:hover {
-        font-weight: 500;
-      }
     }
+
+    .registerLink {
+      display: block;
+      border: 0.1rem solid ${colors.royalBlue};
+      border-radius: 2rem;
+      padding: 0 1rem;
+      color: ${colors.royalBlue};
+    }
+    .registerLink:hover {
+      background-color: ${colors.royalBlue};
+      color: ${colors.white};
+    }
+
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
@@ -93,7 +97,6 @@ const NavLinks = styled.div`
         border-bottom: 0.3rem solid transparent;
       }
       a:hover:not(.registerLink) {
-        font-weight: 600;
         color: ${colors.royalBlue};
         border-bottom: 0.3rem solid ${colors.royalBlue};
       }
