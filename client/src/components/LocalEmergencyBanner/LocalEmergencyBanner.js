@@ -44,7 +44,6 @@ const LocalEmergencyBanner = () => {
     } else {
         axios.get('https://extreme-ip-lookup.com/json/')
           .then(ipInfo => {
-            console.log('ipInfo', ipInfo)
             let localData = localEmergencyData.filter(location => {
               if(location.Country.includes(ipInfo.data.country)){
                 return location.Ambulance;
