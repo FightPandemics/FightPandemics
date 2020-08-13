@@ -18,6 +18,7 @@ import TextLabel from "components/Typography/TextLabel";
 import ResultsPage from "./ResultsPage.js";
 import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
+import LocalEmergencyBanner from "../components/LocalEmergencyBanner/LocalEmergencyBanner"
 
 const { typography, colors } = theme;
 
@@ -953,6 +954,7 @@ const SymptomsCheck = () => {
   const confirmToStart = () => updateAnswers("confirmedStart", true);
   return (
     <SymptomCheckerStyle>
+    <LocalEmergencyBanner />
       <Heading level={4} className="h4">
         COVID-19 Screening Tool
       </Heading>
