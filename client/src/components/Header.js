@@ -232,7 +232,7 @@ export default ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to="/">
+          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
             <Logo src={logo} alt="Fight Pandemics logo" />
           </BrandLink>
         }

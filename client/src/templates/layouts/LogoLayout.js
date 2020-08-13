@@ -33,7 +33,7 @@ const LogoLayout = (props) => {
     <>
       <NavBar mode="light" style={NavbarStyles}>
         <LogoContainer>
-          <Link to="/">
+          <Link to={props.isAuthenticated ? "/feed" : "/"}>
             <Logo src={logo} alt="Fight Pandemics logo" />
           </Link>
         </LogoContainer>
