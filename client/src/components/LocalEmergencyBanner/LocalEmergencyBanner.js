@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Icon } from "antd-mobile";
 import { theme } from "../../constants/theme";
+import localEmergencyData from './localEmergencyData';
 import axios from "axios"
 
 const { typography, colors } = theme;
@@ -33,6 +34,7 @@ const LocalEmergencyBannerStyle = styled.div`
 
 const LocalEmergencyBanner = () => {
   const [displayBanner, setDisplayBanner] = useState(true);
+  const [localEmergencyNumber, setLocalEmergencyNumber] = useState("")
 
   // Shows banner until client closes
   const bannerDisplay = () => {
@@ -40,27 +42,30 @@ const LocalEmergencyBanner = () => {
     if (!displayBanner){
       return <div></div>;
     } else {
-      // const countryName = async () => {
-      //   const data = await navigator.geolocation.getCurrentPosition(function(position) {
-      //       axios.get('http://ws.geonames.org/countryCode', {
-      //           lat: position.coords.latitude,
-      //           lng: position.coords.longitude,
-      //           type: 'JSON'
-      //       }, function(result) {
-      //           alert(result.countryName);
-      //       });
-      //   });
-      //   console.log('hiiiii')
-      //   console.log('country name', data)
-      //   return data
-      // }
+        axios.get('https://extreme-ip-lookup.com/json/')
+          .then(ipInfo => {
+            console.log('ipInfo', ipInfo)
+            let localData = localEmergencyData.filter(location => {
+              if(location.Country.includes(ipInfo.data.country)){
+                return location.Ambulance;
+              }
+            })
+            return localData[0];
+          })
+          .then(emergencyNumber => {
+            setLocalEmergencyNumber(emergencyNumber.Ambulance);
+          })
+          .catch(() => {
+            setLocalEmergencyNumber('Cannot location unavailable')
+          })
+
       return (
           <LocalEmergencyBannerStyle>
 
           <div className="localEmergencyNumber">
             <span>Local Emergency Number</span>
             <br />
-            <span>911</span>
+            <span>{localEmergencyNumber}</span>
           </div>
           
           <div className="close">
