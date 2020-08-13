@@ -40,6 +40,10 @@ export const Section = styled.section`
   .visibility-post--selector {
     margin-right: -0.5rem;
     margin-left: -0.5rem;
+
+    .ant-select > span:first-child {
+      display: none !important;
+    }
   }
 
   @media screen and (min-width: ${mq.phone.wide.minWidth}) {
