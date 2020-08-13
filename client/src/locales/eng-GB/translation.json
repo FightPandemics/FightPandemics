@@ -57,7 +57,12 @@
       "location": {
         "label": "Location",
         "enterAddress": "Enter address, zip code, or city",
-        "shareLocation": "Share my Location"
+        "shareLocation": "Share my Location",
+        "errors": {
+          "failedPredictions": "Failed getting predictions. Please retry.",
+          "failedLocation": "Failed sharing location, please input address.",
+          "failedLocationDetails": "Failed getting location details. Please retry."
+        }
       },
       "labels": {
         "location": "Location",
