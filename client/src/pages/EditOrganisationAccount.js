@@ -97,8 +97,9 @@ function EditOrganisationAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
   const organisationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
-  const [isEmailUpdateSuccess, handleSuccess] = useState(false);
+  const [isUpdateSuccess, handleSuccess] = useState(false);
   const [isEmailUpdateError, handleError] = useState(false);
+  const [isUpdateError, handleUpdateError] = useState(false);
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
@@ -143,29 +144,27 @@ function EditOrganisationAccount(props) {
         `/api/organisations/${organisationId}`,
         formData,
       );
-      if (orgProfileState.organisation.email !== formData.email) {
-        orgProfileDispatch(updateOrganisationSuccess(res.data));
-        handleSuccess(true);
-        setTimeout(() => {
-          handleSuccess(false);
-        }, 10000);
-        handleError(false);
-      } else {
-        orgProfileDispatch(updateOrganisationSuccess(res.data));
-        props.history.push(`/organisation/${res.data._id}`);
-      }
+      orgProfileDispatch(updateOrganisationSuccess(res.data));
+      handleSuccess(true);
+      setTimeout(() => {
+        handleSuccess(false);
+      }, 10000);
+      handleError(false);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       if (err.response?.statusText === "Conflict") {
         handleError(true);
         handleSuccess(false);
         orgProfileDispatch(updateOrganisationError(message));
+      } else {
+        handleUpdateError(true);
+        handleSuccess(false);
+        orgProfileDispatch(
+          updateOrganisationError(
+            `Failed updating organisation profile. ${message}`,
+          ),
+        );
       }
-      orgProfileDispatch(
-        updateOrganisationError(
-          `Failed updating organisation profile. ${message}`,
-        ),
-      );
     }
   };
 
@@ -364,15 +363,15 @@ function EditOrganisationAccount(props) {
   if (loading) return <div>"loading"</div>;
   return (
     <Background>
-      {isEmailUpdateSuccess ? (
+      {isUpdateSuccess ? (
         <>
           <SuccessAlert
-            message={"Email successfully updated"}
+            message={"organisation successfully updated"}
             closable
             afterClose={handleSuccessClose}
           />
         </>
-      ) : isEmailUpdateError ? (
+      ) : isEmailUpdateError || isUpdateError ? (
         <>
           <ErrorAlert message={orgProfileState.error} />
         </>
