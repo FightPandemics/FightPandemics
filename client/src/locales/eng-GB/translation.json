@@ -354,14 +354,14 @@
     "copyright": "Copyright {{currentYear}} FightPandemics. All rights reserved."
   },
   "relativeTime": {
-    "minute": "minute",
-    "minute_plural": "minutes",
-    "minuteWithCount": "{{count}} minute ago",
-    "minuteWithCount_plural": "{{count}} minutes ago",
     "second": "second",
     "second_plural": "seconds",
     "secondWithCount": "{{count}} second ago",
     "secondWithCount_plural": "{{count}} seconds ago",
+    "minute": "minute",
+    "minute_plural": "minutes",
+    "minuteWithCount": "{{count}} minute ago",
+    "minuteWithCount_plural": "{{count}} minutes ago",
     "hour": "hour",
     "hour_plural": "hours",
     "hourWithCount": "{{count}} hour ago",
