@@ -44,11 +44,11 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9.]*$/,
         message:
-          t("profile.individual.facebookError"),
+          "Invalid entry: only alphanumeric characters and . are allowed",
       },
       minLength: {
         value: 5,
-        message: t("profile.individual.minLength"),
+        message: "Min. length is 5 characters",
       },
     },
     FACEBOOK_URL,
@@ -59,7 +59,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9-]*$/,
         message:
-          t("profile.common.linkedinError"),
+          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       },
     },
     LINKEDIN_INDIVIDUAL_URL,
@@ -70,7 +70,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_]*$/,
         message:
-          t("profile.common.twitterError"),
+          "Invalid entry: only alphanumeric characters and _ are allowed",
       },
       maxLength: {
         value: 15,
@@ -85,7 +85,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_-]*$/,
         message:
-          t("profile.individual.githubError"),
+          "Invalid entry: only alphanumeric characters and _ are allowed",
       },
     },
     GITHUB_URL,
@@ -93,7 +93,7 @@ const URLS_CONFIG = {
   website: [
     "Personal Website",
     {
-      validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+      validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
   ],
 };

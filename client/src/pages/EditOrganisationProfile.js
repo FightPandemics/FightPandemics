@@ -49,7 +49,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_]*$/,
         message:
-          t("profile.common.twitterError"),
+          "Invalid entry: only alphanumeric characters and _ are allowed",
       },
     },
     TWITTER_URL,
@@ -60,7 +60,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_\-/]*$/,
         message:
-          t("profile.common.linkedinError"),
+          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       },
     },
     LINKEDIN_URL,
@@ -68,7 +68,7 @@ const URLS_CONFIG = {
   website: [
     "Website",
     {
-      validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+      validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
   ],
 };

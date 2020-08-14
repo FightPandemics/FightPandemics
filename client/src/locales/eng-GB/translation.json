@@ -189,7 +189,7 @@
       "addressRequire": "Address is required. Please enter your address and select it from the drop-down",
       "selectOption": "Please select at least one option",
       "twitterError": "Invalid entry: only alphanumeric characters and _ are allowed",
-      "linkedinError": "nvalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
+      "linkedinError": "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       "invalidURL": "Invalid URL"
     },
     "individual": {
@@ -224,7 +224,8 @@
       "lastNameRequire": "Last name is required.",
       "facebookError": "Invalid entry: only alphanumeric characters and . are allowed",
       "githubError": "Invalid entry: only alphanumeric characters and _ are allowed",
-      "minLength": "Min. length is 5 characters"
+      "FiveMinLength": "Min. length is 5 characters",
+      "fifteenMaxLength": "Max. length is 15 characters"
     },
     "org": {
       "title": "Create Organisation Profile",
