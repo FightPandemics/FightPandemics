@@ -180,7 +180,7 @@ function EditOrganisationAccount(props) {
             </CheckBoxWrapper>
           ))}
           <span style={errorStyles}>
-            {errors.needs ? "Please select at least one option" : ""}
+            {errors.needs ? t("profile.common.selectOption") : ""}
           </span>
         </div>
       );
@@ -206,7 +206,7 @@ function EditOrganisationAccount(props) {
               required: value[2],
               maxLength: value[4],
               validate: value[3]
-                ? (email) => validateEmail(email) || "Invalid email"
+                ? (email) => validateEmail(email) || t("profile.common.invalidEmail")
                 : null,
             })}
             error={errors[value[0]]}
@@ -273,7 +273,7 @@ function EditOrganisationAccount(props) {
           />
           <span style={errorStyles}>
             {errors.type || errors.industry
-              ? "Please select organisation type and industry from dropdown"
+              ? t("profile.org.typeIndustryError")
               : ""}
           </span>
         </div>
@@ -294,7 +294,7 @@ function EditOrganisationAccount(props) {
         </InputWrapper>
       );
     } else {
-      return <p>Loading...</p>;
+      return <p>{t("comment.loading")}</p>;
     }
   };
 
@@ -314,7 +314,7 @@ function EditOrganisationAccount(props) {
     }
   };
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>

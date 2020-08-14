@@ -92,7 +92,7 @@ function EditAccount(props) {
       return setError(
         "location",
         "required",
-        "Address is required. Please enter your address and select it from the drop-down",
+        t("profile.common.addressRequire"),
       );
     }
     userProfileDispatch(updateUser());
@@ -128,7 +128,7 @@ function EditAccount(props) {
     })();
   }, [userProfileDispatch]);
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
@@ -170,7 +170,7 @@ function EditAccount(props) {
               defaultValue={firstName}
               error={errors.firstName}
               ref={register({
-                required: "First name is required.",
+                required: t("profile.individual.firstNameRequire"),
                 maxLength: {
                   value: 30,
                   message: "Max. 30 characters",
@@ -184,7 +184,7 @@ function EditAccount(props) {
               defaultValue={lastName}
               error={errors.lastName}
               ref={register({
-                required: "Last name is required.",
+                required: t("profile.individual.lastNameRequire"),
                 maxLength: {
                   value: 30,
                   message: "Max. 30 characters",

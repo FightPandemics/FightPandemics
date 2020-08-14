@@ -183,7 +183,14 @@
       "viewProfile": "My Profile",
       "viewMyProfile": "View my profile",
       "continuePosting": "Continue Posting",
-      "viewFeed": "View Help Board"
+      "viewFeed": "View Help Board",
+      "loading": "loading",
+      "invalidEmail": "Invalid email",
+      "addressRequire": "Address is required. Please enter your address and select it from the drop-down",
+      "selectOption": "Please select at least one option",
+      "twitterError": "Invalid entry: only alphanumeric characters and _ are allowed",
+      "linkedinError": "nvalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
+      "invalidURL": "Invalid URL"
     },
     "individual": {
       "email": "Email",
@@ -212,11 +219,17 @@
         "twitter": "Twitter URL",
         "github": "Github URL",
         "website": "Personal Website"
-      }
+      },
+      "firstNameRequire": "First name is required.",
+      "lastNameRequire": "Last name is required.",
+      "facebookError": "Invalid entry: only alphanumeric characters and . are allowed",
+      "githubError": "Invalid entry: only alphanumeric characters and _ are allowed",
+      "minLength": "Min. length is 5 characters"
     },
     "org": {
       "title": "Create Organisation Profile",
       "editOrgProfile": "Edit Organisation Profile",
+      "completeOrgProfile": "Complete Organisation Profile",
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
       "invalidEmail": "Email is invalid",

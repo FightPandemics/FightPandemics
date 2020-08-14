@@ -44,11 +44,11 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9.]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and . are allowed",
+          t("profile.individual.facebookError"),
       },
       minLength: {
         value: 5,
-        message: "Min. length is 5 characters",
+        message: t("profile.individual.minLength"),
       },
     },
     FACEBOOK_URL,
@@ -59,7 +59,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9-]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and dashes are allowed",
+          t("profile.common.linkedinError"),
       },
     },
     LINKEDIN_INDIVIDUAL_URL,
@@ -70,7 +70,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
+          t("profile.common.twitterError"),
       },
       maxLength: {
         value: 15,
@@ -85,7 +85,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_-]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
+          t("profile.individual.githubError"),
       },
     },
     GITHUB_URL,
@@ -93,7 +93,7 @@ const URLS_CONFIG = {
   website: [
     "Personal Website",
     {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
+      validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
     },
   ],
 };
@@ -138,7 +138,7 @@ function EditProfile(props) {
     })();
   }, [userProfileDispatch]);
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>

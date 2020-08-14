@@ -49,7 +49,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
+          t("profile.common.twitterError"),
       },
     },
     TWITTER_URL,
@@ -60,7 +60,7 @@ const URLS_CONFIG = {
       pattern: {
         value: /^[a-zA-Z0-9_\-/]*$/,
         message:
-          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
+          t("profile.common.linkedinError"),
       },
     },
     LINKEDIN_URL,
@@ -68,7 +68,7 @@ const URLS_CONFIG = {
   website: [
     "Website",
     {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
+      validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
     },
   ],
 };
@@ -136,15 +136,15 @@ function EditOrganisationProfile(props) {
     }
   };
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
             {editProfile
-              ? "Edit Organisation Profile"
-              : "Complete Organisation Profile"}
+              ? t("profile.org.editOrgProfile")
+              : t("profile.org.completeOrgProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
