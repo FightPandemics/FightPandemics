@@ -18,18 +18,18 @@ export const StyledWizardNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0 2em;
+  padding: 1rem 0 .5em;
   margin: 0 auto;
-  width: 35rem;
+  width: 10rem;
   max-width: 100%;
 
   & + div {
     display: flex;
     flex-flow: row wrap;
-    max-height: calc(100% - 8rem); /* align-items: stretch; */
+    max-height: calc(60% - 8rem); /* align-items: stretch; */
 
     & > div {
-      min-height: 100%;
+      min-height: 60%;
     }
   }
 
@@ -49,6 +49,7 @@ export const BackButton = styled(LeftRightIconButton)`
   width: 6.8rem;
   margin: auto;
   margin-right: 1rem;
+  margin-top: 1rem;
 
 
   & span {
@@ -92,6 +93,7 @@ const NextButton = styled(LeftRightIconButton)`
   width: 6.8rem;
   margin: auto;
   margin-left: 2rem;
+  margin-top: 1rem;
 
   html body &.am-button {
     border: 0.2rem solid ${royalBlue};
@@ -137,45 +139,45 @@ const WizardNav = ({
   totalSteps,
   gtmPrefix,
 }) => (
+<div>
   <div>
-
   <StyledWizardNav>
+    {currentStep > 1 ? (
+        <BackButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.back}
+          onClick={previousStep}
 
-  </StyledWizardNav>
-  <div className="buttonDiv">
-  {currentStep > 1 ? (
-      <BackButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.back}
-        onClick={previousStep}
-      >
-        <SvgIcon
-          src={backArrow}
-          title={`Navigate to step ${currentStep - 1}`}
-          style={{marginTop: "3rem"}}
-        />
-        <BackText>Back</BackText>
-      </BackButton>
-    ) : (
-      <Link to={"/"}>
-        <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
-          <SvgIcon src={backArrow} title="Navigate to the homepage" />
+        >
+          <SvgIcon
+            src={backArrow}
+            title={`Navigate to step ${currentStep - 1}`}
+            style={{marginTop: "3rem"}}
+          />
           <BackText>Back</BackText>
         </BackButton>
-      </Link>
-    )}
+      ) : (
+        <Link to={"/"}>
+          <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
+            <SvgIcon src={backArrow} title="Navigate to the homepage" />
+            <BackText>Back</BackText>
+          </BackButton>
+        </Link>
+      )}
 
-     {currentStep < totalSteps && (
-      <NextButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.next}
-        onClick={nextStep}
-      >
-        <span>Next</span>
-        <SvgIcon src={nextArrow} title={`Go to next step`}
-          style={{marginTop: "3rem"}}/>
-      </NextButton>
-    )}
+      {currentStep < totalSteps && (
+        <NextButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.next}
+          onClick={nextStep}
+        >
+          <span>Next</span>
+          <SvgIcon src={nextArrow} title={`Go to next step`}
+            style={{marginTop: "3rem"}}/>
+        </NextButton>
+      )}
+    </StyledWizardNav>
     </div>
   </div>
+
 );
 
 export default WizardNav;

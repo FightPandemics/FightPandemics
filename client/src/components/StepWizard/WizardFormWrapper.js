@@ -4,7 +4,7 @@ const WizardFormWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   margin: 0;
-  width: 100%;
+  width: 60%;
 `;
 
 export default WizardFormWrapper;

@@ -53,7 +53,7 @@ const ColoredButton = styled.div`
 `;
 
 const TransparentButton = styled.div`
-  background-color: ${colors.white};  
+  background-color: ${colors.white};
   width: 100%;
   color: ${colors.royalBlue};
   border-radius 5rem;
@@ -66,20 +66,22 @@ const TransparentButton = styled.div`
 const ModalStyle = styled(Modal)`
   & .am-modal-body {
     flex-flow: row wrap;
-    align-content: flex-start;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100vw;
     height: 100vh;
-    top: 0;
-    left: 0;
-    padding: 2.9rem 2.5rem 2.4rem;
+
     background: ${colors.white};
     overflow: auto;
     z-index: 1;
     .ant-typography {
       &.block-text {
-        margin-bottom: 6rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 4rem;
+
       }
     }
     & img.warning-icon {
@@ -124,7 +126,7 @@ const AlertModalStyle = styled(Modal)`
   & .am-modal-content {
     padding-top: 3.9rem !important;
     & .am-modal-body {
-      padding: 0 4.4rem 4.4rem !important;
+      padding: 0 4.4rem .4rem !important;
     }
   }
 `;
@@ -140,7 +142,7 @@ const SubtitleStyle = styled.h5`
 `;
 
 const StyledUl = styled.ul`
-  text-align: left;
+  text-align: center;
   padding: 0 0 0 2.5rem;
   margin: 4rem 0;
   color: rgba(0, 0, 0, 0.85);
@@ -152,16 +154,16 @@ const AnswerStyles = styled.div`
   justify-content: space-between;
   background-color: ${colors.white};
   color: ${colors.black};
-  width: 100%;
+  width: 50%;
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: ${typography.size.large};
   border: 0.1rem solid ${colors.royalBlue};
   border-radius: 0.8rem;
   box-sizing: border-box;
   cursor: pointer;
-  padding: 2rem 2.5rem;
+  padding: 1rem 1rem;
   margin: 1.5rem 0rem;
-  text-align: left;
+  text-align: center;
   &:hover,
   &.selected {
     background-color: ${colors.royalBlue};
@@ -192,7 +194,7 @@ const AnswerStyles = styled.div`
   & h6 {
     color: ${colors.darkGray};
     margin: 0 !important;
-    text-align: left !important;
+    text-align: center !important;
   }
 `;
 
@@ -231,7 +233,7 @@ const Welcome = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>Is this an emergency?</h5>
       <h3>
         <TitleStyle>
@@ -270,7 +272,7 @@ const Step1 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -286,8 +288,14 @@ const Step1 = (props) => {
       <AnswerButton onSelect={() => onSelectAnswer("65 or older")}>
         65 or older
       </AnswerButton>
-    </WizardStep>
-  );
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
+      </WizardStep>
+      )
 };
 
 const STEP_2_ANSWERS = [
@@ -320,7 +328,7 @@ const Step2 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -340,6 +348,12 @@ const Step2 = (props) => {
         text={"None of these"}
         onSelect={toggleNone}
         checked={none}
+      />
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
       />
     </WizardStep>
   );
@@ -379,7 +393,7 @@ const Step3 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -400,6 +414,12 @@ const Step3 = (props) => {
         onSelect={toggleNone}
         checked={none}
       />
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -411,7 +431,7 @@ const Step4 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -426,6 +446,12 @@ const Step4 = (props) => {
           They have <b>not</b> travelled internationally
         </span>
       </AnswerButton>
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -469,7 +495,7 @@ const Step5 = (props) => {
   */
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -487,6 +513,12 @@ const Step5 = (props) => {
           checked={!none && checked}
         />
       ))}
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -519,7 +551,7 @@ const Step6 = (props) => {
   };
 */
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -536,6 +568,12 @@ const Step6 = (props) => {
           checked={!none && checked}
         />
       ))}
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -547,7 +585,7 @@ const Step7 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -564,6 +602,12 @@ const Step7 = (props) => {
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
         No, I don't live in a long-term care facility
       </AnswerButton>
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -575,7 +619,7 @@ const Step8 = (props) => {
   };
 
   return (
-    <WizardStep alignItems="flex-start">
+    <WizardStep alignItems="center">
       <h5>
         Question {props.currentStep - 1} / {props.totalSteps - 1}
       </h5>
@@ -603,6 +647,12 @@ const Step8 = (props) => {
       <AnswerButton onSelect={() => onSelectAnswer("no")}>
         No, they don’t work or plan to work in a care facility
       </AnswerButton>
+      <WizardNav currentStep={props.currentStep}
+        nextStep={props.nextStep}
+        previousStep={props.totalSteps}
+        totalSteps={props.totalSteps}
+        gtmPrefix="symptoms-check"
+      />
     </WizardStep>
   );
 };
@@ -985,7 +1035,7 @@ const SymptomsCheck = () => {
             <Icon type="cross" size="lg" />
           </button>
         </div>
-        <StyledWizard isHashEnabled nav={<WizardNav />}>
+        <StyledWizard isHashEnabled>
           <Welcome update={updateAnswers} />
           <Step1 hashKey={"Step1"} update={updateAnswers} />
           <Step2 hashKey={"Step2"} update={updateAnswers} />

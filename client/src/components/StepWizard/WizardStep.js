@@ -5,10 +5,12 @@ const { font } = theme.typography;
 
 const WizardStep = styled.div`
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   align-items: ${(props) => props.alignItems || "center"};
   box-sizing: border-box;
+  height: 100vh;
   width: 100%;
+  margin: auto;
 
   p {
     font-family: ${font.family.display};

@@ -13,8 +13,8 @@ const AnswerStyles = styled.div`
   box-sizing: border-box;
   color: ${royalBlue};
   cursor: pointer;
-  padding: 2rem 5rem;
-  margin: 1.5rem 0;
+  padding: 1rem 2rem;
+  margin: .5rem 0;
   width: 100%;
   &.selected,
   &:hover {

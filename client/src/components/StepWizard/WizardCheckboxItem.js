@@ -9,7 +9,7 @@ export const WizardCheckboxWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  width: 100%;
+  width: 50%;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     height: 21rem;
@@ -21,9 +21,9 @@ const CheckboxItemStyles = styled.div`
   font-family: ${theme.typography.font.family.display};
   font-size: ${theme.typography.size.large};
   background-color: ${white};
-  padding: 2rem;
+  padding: 1rem;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 50%;
   cursor: pointer;
 
   .am-list-line {

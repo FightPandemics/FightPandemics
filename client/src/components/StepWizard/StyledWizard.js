@@ -8,7 +8,7 @@ const StyledWizard = styled(StepWizard)`
   display: flex;
   flex-direction: column-reverse;
   align-self: flex-start;
-  transition: 0.5s; 
+  transition: 0.5s;
   opacity: ${({ status }) => {
     switch (status) {
       case "entering":
@@ -21,9 +21,9 @@ const StyledWizard = styled(StepWizard)`
         return '0'
     }
   }};
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
+  width: 50vw;
+  height: 100vh;
+  margin: 2rem auto 0;
   justify-content: space-between;
   @media screen and (min-width: ${tablet.narrow.minWidth}) {
     width: 40%;

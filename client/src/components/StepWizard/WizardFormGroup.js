@@ -7,7 +7,7 @@ const WizardFormGroup = styled.div`
   flex-flow: column wrap;
   box-sizing: border-box;
   align-items: center;
-  width: 100%;
+  width: 60%;
 
   label {
     ${theme.form.label}
