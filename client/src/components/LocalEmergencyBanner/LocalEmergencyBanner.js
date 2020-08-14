@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Icon } from "antd-mobile";
 import { theme } from "../../constants/theme";
-import localEmergencyData from './localEmergencyData';
+// import localEmergencyData from './localEmergencyData';
+import localEmergencyData from './emergency-numbers-by-code'
 import axios from "axios"
 
 const { typography, colors } = theme;
@@ -51,35 +52,36 @@ const LocalEmergencyBanner = () => {
     } else {
         axios.get('https://extreme-ip-lookup.com/json/')
           .then(ipInfo => {
-            let localData = localEmergencyData.filter(location => {
-              if(location.Country.includes(ipInfo.data.country)){
-                return location.Ambulance;
-              }
-            })
-            return localData[0];
+            let countryCode = localEmergencyData[ipInfo.data.countryCode];
+            if(countryCode.Ambulance === 0){
+              return '000'
+            } else if(typeof countryCode.Ambulance === "string"){
+              let updatedAmbulance = countryCode.Ambulance.replace(/[/]/g, " or ")
+              return updatedAmbulance
+            } else {
+              return countryCode.Ambulance
+            }
           })
           .then(emergencyNumber => {
-            setLocalEmergencyNumber(emergencyNumber.Ambulance);
+            setLocalEmergencyNumber(emergencyNumber);
           })
           .catch(() => {
-            setLocalEmergencyNumber('Cannot location unavailable')
+            setLocalEmergencyNumber('location unavailable')
           });
 
       return (
           <LocalEmergencyBannerStyle>
-
-          <div className="localEmergencyNumber">
-            <span className="emergencyNumberText">Local Emergency Number</span>
-            <br />
-            <span className="emergencyNumber">{localEmergencyNumber}</span>
-          </div>
-          
-          <div className="close">
-            <button onClick={() => setDisplayBanner(!displayBanner)}>
-              <Icon type="cross" size="lg" />
-            </button>
-          </div>
-
+            <div className="localEmergencyNumber">
+              <span className="emergencyNumberText">Local Emergency Number</span>
+              <br />
+              <span className="emergencyNumber">{localEmergencyNumber}</span>
+            </div>
+            
+            <div className="close">
+              <button onClick={() => setDisplayBanner(!displayBanner)}>
+                <Icon type="cross" size="lg" />
+              </button>
+            </div>
           </LocalEmergencyBannerStyle>
       );
     };
