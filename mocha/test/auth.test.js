@@ -6,7 +6,7 @@ const APP_URL = process.env.MOCHA_URL
 beforeEach(async () => {
 
   credentialsWithWrongPassword = {
-    email: 'userDontExists@gmail.com',
+    email: 'userDoesntExists@gmail.com',
     password: 'Test1234;'
   };
 });
@@ -17,7 +17,6 @@ beforeEach(async () => {
       .send(credentialsWithWrongPassword)
       .expect(httpStatus.UNAUTHORIZED)     
       .then((res) => {    
-        //console.log(res) 
         expect(res.body).to.have.a.property('error').to.be.equal('Unauthorized');
         expect(res.body).to.have.a.property('message').to.be.equal('Wrong email or password.');
       });
@@ -29,7 +28,6 @@ beforeEach(async () => {
       .send({ "email": "emailgmail.ua"})
       .expect(httpStatus.BAD_REQUEST)     
       .then((res) => {
-        //console.log(res)
         expect(res.body).to.have.a.property('error').to.be.equal('Bad Request');
         expect(res.body).to.have.a.property('message').to.be.equal('body.email should match format "email"');
       });
