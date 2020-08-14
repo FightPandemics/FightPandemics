@@ -62,10 +62,10 @@ const InputWrapper = styled.div`
 `;
 
 const NEEDS = {
-  volunteers: "Volunteers",
   donations: "Donations",
-  staff: "Staff",
   other: "Other",
+  staff: "Staff",
+  volunteers: "Volunteers",
 };
 
 const ErrorAlert = styled(Alert)`
@@ -93,12 +93,22 @@ const Container = styled.div`
   margin-top: 5rem;
 `;
 
+const isSame = (formData, organisation) => {
+  if (formData.global === undefined) formData.global = false;
+  for (let key in formData) {
+    if (typeof formData[key] === "object") {
+      if (JSON.stringify(formData[key]) !== JSON.stringify(organisation[key]))
+        return false;
+    } else if (formData[key] !== organisation[key]) return false;
+  }
+  return true;
+};
+
 function EditOrganisationAccount(props) {
   // TODO: integrate location w proper react-hook-forms use
   const organisationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
   const [isUpdateSuccess, handleSuccess] = useState(false);
-  const [isEmailUpdateError, handleError] = useState(false);
   const [isUpdateError, handleUpdateError] = useState(false);
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
@@ -138,25 +148,24 @@ function EditOrganisationAccount(props) {
       if (formData.needs[key] === undefined) formData.needs[key] = needs[key];
     });
     formData.location = location;
-    orgProfileDispatch(updateOrganisation());
-    try {
-      const res = await axios.patch(
-        `/api/organisations/${organisationId}`,
-        formData,
-      );
-      orgProfileDispatch(updateOrganisationSuccess(res.data));
-      handleSuccess(true);
-      setTimeout(() => {
-        handleSuccess(false);
-      }, 10000);
-      handleError(false);
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      if (err.response?.statusText === "Conflict") {
-        handleError(true);
-        handleSuccess(false);
-        orgProfileDispatch(updateOrganisationError(message));
-      } else {
+    if (isSame(formData, orgProfileState.organisation)) {
+      props.history.push(`/organisation/${orgProfileState.organisation._id}`);
+    } else {
+      formData.location = location;
+      orgProfileDispatch(updateOrganisation());
+      try {
+        const res = await axios.patch(
+          `/api/organisations/${organisationId}`,
+          formData,
+        );
+        orgProfileDispatch(updateOrganisationSuccess(res.data));
+        handleSuccess(true);
+        setTimeout(() => {
+          handleSuccess(false);
+        }, 10000);
+        handleUpdateError(false);
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
         handleUpdateError(true);
         handleSuccess(false);
         orgProfileDispatch(
@@ -371,7 +380,7 @@ function EditOrganisationAccount(props) {
             afterClose={handleSuccessClose}
           />
         </>
-      ) : isEmailUpdateError || isUpdateError ? (
+      ) : isUpdateError ? (
         <>
           <ErrorAlert message={orgProfileState.error} />
         </>
