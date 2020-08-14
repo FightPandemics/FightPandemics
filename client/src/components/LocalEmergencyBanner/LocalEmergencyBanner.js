@@ -10,7 +10,7 @@ const { typography, colors } = theme;
 const LocalEmergencyBannerStyle = styled.div`
   display: flex;
   justify-content: center;
-  background: ${colors.red};
+  background-color: #D1222C;
   color: ${colors.white};
   textAlign: ${typography.paragraph};
   & .close {
@@ -29,6 +29,13 @@ const LocalEmergencyBannerStyle = styled.div`
     justify-content: center;
     align-self: center;
     padding: 10px;
+  }
+  .emergencyNumberText{
+    font-size: 22px;
+  }
+  .emergencyNumber {
+    font-size: 22px;
+    font-weight: bold;
   }
 `;
 
@@ -56,15 +63,15 @@ const LocalEmergencyBanner = () => {
           })
           .catch(() => {
             setLocalEmergencyNumber('Cannot location unavailable')
-          })
+          });
 
       return (
           <LocalEmergencyBannerStyle>
 
           <div className="localEmergencyNumber">
-            <span>Local Emergency Number</span>
+            <span className="emergencyNumberText">Local Emergency Number</span>
             <br />
-            <span>{localEmergencyNumber}</span>
+            <span className="emergencyNumber">{localEmergencyNumber}</span>
           </div>
           
           <div className="close">
