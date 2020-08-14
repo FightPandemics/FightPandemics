@@ -5,6 +5,7 @@ import { Select, Spin } from "antd";
 import { WhiteSpace } from "antd-mobile";
 import { debounce } from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 import InputError from "components/Input/InputError";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -72,6 +73,7 @@ const LocationInput = ({
   includeNavigator = false,
   gtmPrefix = "",
 }) => {
+  const { t } = useTranslation();
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
@@ -102,7 +104,7 @@ const LocationInput = ({
             }));
             setPredictedAddresses(predictions);
           } catch {
-            setApiError("Failed getting predictions. Please retry.");
+            setApiError(t("feed.filters.location.errors.failedPredictions"));
           } finally {
             setLoadingPredictions(false);
           }
@@ -124,7 +126,7 @@ const LocationInput = ({
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
     } catch {
-      setApiError("Failed sharing location, please input address");
+      setApiError(t("feed.filters.location.errors.failedLocation"));
     } finally {
       setLoadingPlaceDetails(false);
     }
@@ -148,7 +150,7 @@ const LocationInput = ({
         setSelectedAddress(address);
         setPredictedAddresses([]);
       } catch {
-        setApiError("Failed getting location details. Please retry.");
+        setApiError(t("feed.filters.location.errors.failedLocationDetails"));
       } finally {
         setLoadingPlaceDetails(false);
       }
@@ -176,7 +178,7 @@ const LocationInput = ({
         ))}
       </StyledSelect>
       <SubLabel selected={selectedAddress.value}>
-        Enter address, zip code, or city
+        {t("feed.filters.location.enterAddress")}
       </SubLabel>
       {(apiError || formError) && (
         <InputError>{apiError || formError.message}</InputError>
@@ -194,7 +196,7 @@ const LocationInput = ({
               src={navigation}
               style={{ marginRight: "1rem", pointerEvents: "none" }}
             />
-            Share My Location
+            {t("feed.filters.location.shareLocation")}
           </div>
         </div>
       )}
