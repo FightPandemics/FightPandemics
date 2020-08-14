@@ -59,6 +59,11 @@ data "aws_ssm_parameter" "sentry_dsn" {
   name  = "/fp/sentry/dsn"
 }
 
+data "aws_ssm_parameter" "seo4ajax_api_key" {
+  count = contains(["staging", "review"], var.fp_context) ? 0 : 1
+  name  = "/fp/seo4ajax/api_key"
+}
+
 data "aws_ssm_parameter" "logger_host" {
   count = var.fp_context == "development" ? 0 : 1
   name  = "/fp/logger/host"
@@ -140,6 +145,10 @@ module "main" {
     {
       name  = "SENDGRID_CONTACTS_LIST_ID"
       value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sendgrid_contact_list_id[0].value
+    },
+    {
+      name  = "SEO4AJAX_API_KEY"
+      value = contains(["staging", "review"], var.fp_context) ? "" : data.aws_ssm_parameter.seo4ajax_api_key[0].value
     },
     {
       name  = "NODE_ENV"

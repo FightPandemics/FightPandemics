@@ -1,0 +1,57 @@
+server {
+  listen 80;
+
+  location / {
+    root /usr/share/nginx/html;
+    index index.html;
+    try_files $uri $uri/ @s4a_analyse;
+    include /etc/nginx/mime.types;
+  }
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root  /usr/share/nginx/html;
+  }
+
+  ### This location determines if a request comes from bots
+  location @s4a_analyse {
+    ### If the request comes from a bot, proxy the request through /s4a_proxy location
+    if ($http_user_agent ~* (google|bot|spider|pinterest|crawler|archiver|flipboardproxy|mediapartners|facebookexternalhit|insights|quora|whatsapp|slurp)) {
+        rewrite ^(.*)$ /s4a_proxy last;
+    }
+    ### Uncomment the 3 following lines to support the _escaped_fragment_= parameter (useful for testing purposes)
+    # if ($args ~ "_escaped_fragment_=") { 
+    #     rewrite  ^(.*)$  /s4a_proxy  last;
+    # }
+    if ($http_from ~* .+) {
+        rewrite ^(.*)$ /s4a_proxy last;
+    }
+    ### Otherwise serve /index.html
+    rewrite ^(.*)$ /index.html last;
+  }
+
+  location /api {
+    # Reject requests with unsupported HTTP method
+    if ($request_method !~ ^(GET|POST|HEAD|OPTIONS|PUT|PATCH|DELETE)$) {
+      return 405;
+    }
+
+    # Only requests matching the whitelist expectations will
+    # get sent to the application server
+    proxy_pass http://127.0.0.1:8000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_cache_bypass $http_upgrade;
+  }
+
+  ### This location proxy requests coming from bots to SEO4Ajax
+  ### You can update the resolver directive with your own DNS provider if needed
+  location /s4a_proxy {
+    set $s4a_domain "https://api.seo4ajax.com/${SEO4AJAX_API_KEY}";
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    resolver 8.8.8.8 8.8.4.4;
+    proxy_pass $s4a_domain$request_uri;
+  }
+}
