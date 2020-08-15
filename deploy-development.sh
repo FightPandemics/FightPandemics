@@ -9,6 +9,8 @@ terraform {
     region = "us-east-1"
     key = "development.tfstate"
   }
+
+  required_version = "~> 0.13"
 }
 EOF
 
