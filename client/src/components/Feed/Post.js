@@ -67,7 +67,6 @@ const Post = ({
   handlePostLike,
   includeProfileLink,
   isAuthenticated,
-  isMetaCrawler,
   loadMorePost,
   numComments,
   onClick,
@@ -544,8 +543,7 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {/* Meta crawler must see link to crawl post */}
-          {(isAuthenticated || isMetaCrawler) && post ? (
+          {post && isAuthenticated ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
@@ -560,7 +558,16 @@ const Post = ({
               {renderContent}
             </Link>
           ) : (
-            <>{renderContent}</>
+            <>
+              {/*
+                Include hidden link for meta crawler but not on
+                profiles to avoid duplicate crawling of same posts
+              */}
+              {includeProfileLink && (
+                <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+              )}
+              {renderContent}
+            </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
             (post?.content?.length > CONTENT_LENGTH ? (
