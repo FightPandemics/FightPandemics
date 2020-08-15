@@ -18,11 +18,9 @@ const PostMetaContainer = ({ post }) => {
       {/* Open Graph / Facebook */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={descriptionContent} />
-      <meta property="og:url" content={window.location.href} />
       {/* Twitter */}
       <meta property="twitter:description" content={descriptionContent} />
       <meta property="twitter:title" content={title} />
-      <meta property="twitter:url" content={window.location.href} />
     </Helmet>
   );
 };
