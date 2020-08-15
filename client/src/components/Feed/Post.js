@@ -67,6 +67,7 @@ const Post = ({
   handlePostLike,
   includeProfileLink,
   isAuthenticated,
+  isMetaCrawler,
   loadMorePost,
   numComments,
   onClick,
@@ -543,7 +544,8 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated && post ? (
+          {/* Meta crawler must see link to crawl post */}
+          {(isAuthenticated || isMetaCrawler) && post ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,

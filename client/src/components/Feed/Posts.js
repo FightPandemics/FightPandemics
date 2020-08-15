@@ -21,6 +21,7 @@ const HorizontalRule = styled.hr`
 
 const Posts = ({
   isAuthenticated,
+  isMetaCrawler,
   filteredPosts,
   handlePostLike,
   handleCancelPostDelete,
@@ -42,6 +43,7 @@ const Posts = ({
           handleCancelPostDelete={handleCancelPostDelete}
           postDelete={postDelete}
           isAuthenticated={isAuthenticated}
+          isMetaCrawler={isMetaCrawler}
           user={user}
           key={key}
           deleteModalVisibility={deleteModalVisibility}

@@ -57,6 +57,8 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 
+import { isMetaCrawler } from "utils/metaCrawler";
+
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
     (organisation) => organisation.name === author.name,
@@ -664,6 +666,7 @@ const Feed = (props) => {
             </div>
             <Posts
               isAuthenticated={isAuthenticated}
+              isMetaCrawler={isMetaCrawler()}
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
               loadPosts={loadPosts}
