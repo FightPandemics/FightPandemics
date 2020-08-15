@@ -147,10 +147,6 @@ module "main" {
       value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sendgrid_contact_list_id[0].value
     },
     {
-      name  = "SEO4AJAX_API_KEY"
-      value = contains(["staging", "review"], var.fp_context) ? "" : data.aws_ssm_parameter.seo4ajax_api_key[0].value
-    },
-    {
       name  = "NODE_ENV"
       value = var.env_name
     },
@@ -173,6 +169,12 @@ module "main" {
     {
       name  = "LOGGER_PORT",
       value = var.fp_context == "development" ? "1234" : data.aws_ssm_parameter.logger_port[0].value
+    },
+  ]
+  client_env_variables = [
+    {
+      name  = "SEO4AJAX_API_KEY"
+      value = contains(["staging", "review"], var.fp_context) ? "" : data.aws_ssm_parameter.seo4ajax_api_key[0].value
     },
   ]
   datadog_env_variables = [
