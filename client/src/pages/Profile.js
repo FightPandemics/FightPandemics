@@ -1,6 +1,12 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  useCallback,
+} from "react";
 import { Link } from "react-router-dom";
 
 import Activity from "components/Profile/Activity";
@@ -48,8 +54,13 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  SET_LOADING,
+  NEXT_PAGE,
+  RESET_PAGE,
+  ERROR_POSTS,
+  FETCH_POSTS,
+  SET_POSTS,
 } from "hooks/actions/feedActions";
-import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
   fetchUserError,
@@ -93,7 +104,10 @@ const Profile = ({
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
-
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [loadedRows, setLoadedRows] = useState(true);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -109,7 +123,16 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
-  const { deleteModalVisibility } = postsState;
+  const {
+    // error: postsError,
+    // filterType,
+    isLoading,
+    loadMore,
+    page,
+    posts: postsList,
+    // status,
+    deleteModalVisibility,
+  } = postsState;
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -126,24 +149,46 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]);
 
-  const fetchPosts = async () => {
-    postsDispatch({ type: FETCH_POSTS });
+  const fetchPosts = useCallback(async () => {
+    setToggleRefetch(false);
+    const limit = 10;
+    const skip = page * limit;
+    let response = {};
+
+    await postsDispatch({ type: FETCH_POSTS });
     try {
       if (userId) {
-        const res = await axios.get(
-          `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
-        );
-        const loadedPosts =
-          res?.data?.length &&
-          res.data.reduce((obj, item) => {
+        const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+        response = await axios.get(endpoint);
+        if (response && response.data && response.data.length) {
+          const loadedPosts = response.data.reduce((obj, item) => {
             obj[item._id] = item;
             return obj;
           }, {});
-
-        postsDispatch({
-          type: SET_POSTS,
-          posts: loadedPosts,
-        });
+          if (postsList) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList, ...loadedPosts },
+            });
+          } else {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...loadedPosts },
+            });
+          }
+        } else if (response && response.data) {
+          await postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsList },
+          });
+          await postsDispatch({
+            type: SET_LOADING,
+            isLoading: false,
+            loadMore: false,
+          });
+        } else {
+          await postsDispatch({ type: SET_LOADING });
+        }
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -152,11 +197,50 @@ const Profile = ({
         error: `Failed loading activity, reason: ${message}`,
       });
     }
+  }, [userId, postsList, page]);
+
+  const refetchPosts = () => {
+    postsDispatch({ type: RESET_PAGE });
+    setToggleRefetch(true);
   };
 
   useEffect(() => {
     fetchPosts();
-  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isItemLoaded = useCallback(
+    (index) => {
+      const userPosts = Object.entries(postsList);
+      if (!!userPosts[index]) {
+        setLoadedRows(false);
+      } else {
+        setLoadedRows(true);
+      }
+      return !!userPosts[index];
+    },
+    [postsList],
+  );
+
+  const loadNextPage = useCallback(
+    ({ startIndex, stopIndex }) => {
+      const userPosts = Object.entries(postsList);
+      if (!isLoading && loadMore && loadedRows) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          fetchPosts();
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [postsList, isLoading, loadMore, loadedRows, fetchPosts],
+  );
+
+  useEffect(() => {
+    const userPosts = Object.entries(postsList);
+    setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
+  }, [loadMore, postsList, setItemCount]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -166,10 +250,13 @@ const Profile = ({
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
-            ...postsState.posts,
+            ...postsList,
           };
           delete allPosts[post._id];
-          fetchPosts();
+          await postsDispatch({
+            type: SET_POSTS,
+            posts: allPosts,
+          });
         }
       } catch (error) {
         console.log({
@@ -209,7 +296,6 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
-
     const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
     let response = {};
 
@@ -333,7 +419,7 @@ const Profile = ({
         </SectionHeader>
         <FeedWrapper>
           <Activity
-            filteredPosts={postsState.posts}
+            filteredPosts={postsList}
             user={user}
             postDelete={postDelete}
             handlePostDelete={handlePostDelete}
@@ -341,11 +427,15 @@ const Profile = ({
             deleteModalVisibility={deleteModalVisibility}
             handleCancelPostDelete={handleCancelPostDelete}
             handlePostLike={handlePostLike}
+            loadNextPage={loadNextPage}
+            isNextPageLoading={isLoading}
+            itemCount={itemCount}
+            isItemLoaded={isItemLoaded}
           />
           {ownUser && (
             <CreatePost
               onCancel={() => setModal(false)}
-              loadPosts={fetchPosts}
+              loadPosts={refetchPosts}
               visible={modal}
               user={user}
               gtmPrefix={GTM.user.profilePrefix}
