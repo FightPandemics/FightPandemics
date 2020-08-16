@@ -4,29 +4,18 @@ server {
   location / {
     root /usr/share/nginx/html;
     index index.html;
-    try_files $uri $uri/ @s4a_analyse;
+
+    ### If the request comes from a bot, proxy the request through /s4a_proxy location
+    if ($http_user_agent ~* (google|bot|spider|pinterest|crawler|archiver|flipboardproxy|mediapartners|facebookexternalhit|insights|quora|whatsapp|slurp)) {
+        rewrite ^(.*)$ /s4a_proxy last;
+    }
+
+    try_files $uri $uri/ /index.html;
     include /etc/nginx/mime.types;
   }
   error_page 500 502 503 504 /50x.html;
   location = /50x.html {
     root  /usr/share/nginx/html;
-  }
-
-  ### This location determines if a request comes from bots
-  location @s4a_analyse {
-    ### If the request comes from a bot, proxy the request through /s4a_proxy location
-    if ($http_user_agent ~* (google|bot|spider|pinterest|crawler|archiver|flipboardproxy|mediapartners|facebookexternalhit|insights|quora|whatsapp|slurp)) {
-        rewrite ^(.*)$ /s4a_proxy last;
-    }
-    ### Uncomment the 3 following lines to support the _escaped_fragment_= parameter (useful for testing purposes)
-    # if ($args ~ "_escaped_fragment_=") { 
-    #     rewrite  ^(.*)$  /s4a_proxy  last;
-    # }
-    if ($http_from ~* .+) {
-        rewrite ^(.*)$ /s4a_proxy last;
-    }
-    ### Otherwise serve /index.html
-    rewrite ^(.*)$ /index.html last;
   }
 
   location /api {
