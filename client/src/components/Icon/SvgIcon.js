@@ -4,6 +4,7 @@ import styled from "styled-components";
 const StyledImg = styled.img`
   width: 2.2rem;
   height: 2.2rem;
+  margin: 0 !important;
   &.is-clickable {
     cursor: pointer;
   }
