@@ -522,6 +522,9 @@ const Post = ({
         </>
       ) : (
         //Post in feed.
+        // I added this container to capture the offsetHeight of the PostCard
+        // Because of react-virtualized behaivor it is useless and will be removed completely
+        //<div id={post?._id}>
         <PostCard>
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
@@ -606,6 +609,7 @@ const Post = ({
             )}
           </WebModal>
         </PostCard>
+        // </div>
       )}
     </>
   );
