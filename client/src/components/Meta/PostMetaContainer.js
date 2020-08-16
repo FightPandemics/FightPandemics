@@ -18,6 +18,7 @@ const PostMetaContainer = ({ post }) => {
       {/* Open Graph / Facebook */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={descriptionContent} />
+      <meta property="og:type" content="article" />
       {/* Twitter */}
       <meta property="twitter:description" content={descriptionContent} />
       <meta property="twitter:title" content={title} />

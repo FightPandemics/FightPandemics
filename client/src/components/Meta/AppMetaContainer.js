@@ -13,6 +13,7 @@ const AppMetaContainer = () => (
     {/* Open Graph / Facebook */}
     <meta property="og:title" content={TITLE} />
     <meta property="og:description" content={DESCRIPTION} />
+    <meta property="og:type" content="website" />
     {/* Twitter */}
     <meta property="twitter:title" content={TITLE} />
     <meta property="twitter:description" content={DESCRIPTION} />
