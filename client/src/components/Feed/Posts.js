@@ -25,12 +25,12 @@ const HorizontalRule = styled.hr`
     max-width: 325px;
   }
 `;
+
 const Posts = ({
   isAuthenticated,
   filteredPosts,
   handlePostLike,
   handleCancelPostDelete,
-  loadPosts,
   postDelete,
   user,
   deleteModalVisibility,
@@ -42,6 +42,20 @@ const Posts = ({
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+
+  //TODO: We have to use CellMeasurer and CellMEasurerCache for dynamich row height
+  //Below function won't because react-virtualized removing containers from the DOM.
+  //   const rowHeight = ({ index }) => {
+  // const FIXED_ROW_HEIGHT = 380;
+  //     if(!!posts[index]) {
+  //  const rowElement = document.getElementById(posts[index][1]._id);
+  // if(rowElement.offsetHeight !== "null") {
+  //   return rowElement.offsetHeight;
+  // }
+  //    return FIXED_ROW_HEIGHT;
+  //     }
+  //   }
+
   const postItem = useCallback(
     ({ key, index, style }) => {
       let content;
@@ -54,7 +68,6 @@ const Posts = ({
               currentPost={posts[index][1]}
               includeProfileLink={true}
               numComments={posts[index][1].commentsCount}
-              loadPosts={loadPosts}
               handlePostLike={handlePostLike}
               handleCancelPostDelete={handleCancelPostDelete}
               postDelete={postDelete}
@@ -80,7 +93,6 @@ const Posts = ({
       handlePostLike,
       isAuthenticated,
       isItemLoaded,
-      loadPosts,
       postDelete,
       posts,
       user,
@@ -107,7 +119,7 @@ const Posts = ({
                     isScrolling={isScrolling}
                     onRowsRendered={onRowsRendered}
                     rowCount={itemCount}
-                    rowHeight={380}
+                    rowHeight={360}
                     rowRenderer={postItem}
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}
