@@ -69,11 +69,11 @@ const Posts = ({
               includeProfileLink={true}
               numComments={posts[index][1].commentsCount}
               handlePostLike={handlePostLike}
-              handleCancelPostDelete={handleCancelPostDelete}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
               deleteModalVisibility={deleteModalVisibility}
+              handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
             />
             <HorizontalRule />

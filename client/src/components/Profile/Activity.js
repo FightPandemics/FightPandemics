@@ -36,13 +36,13 @@ const Activity = ({
             currentPost={posts[index][1]}
             updateComments={updateComments}
             numComments={posts[index][1].commentsCount}
+            handlePostLike={handlePostLike}
             postDelete={postDelete}
             user={user}
             deleteModalVisibility={deleteModalVisibility}
             onChange={handlePostDelete}
             handleCancelPostDelete={handleCancelPostDelete}
             onSelect={handleEditPost}
-            handlePostLike={handlePostLike}
           />
         );
       }
