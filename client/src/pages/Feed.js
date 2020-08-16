@@ -440,9 +440,6 @@ const Feed = (props) => {
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
     let response = {};
-    if (isLoading) {
-      return;
-    }
 
     await postsDispatch({ type: FETCH_POSTS });
 
@@ -457,7 +454,6 @@ const Feed = (props) => {
         obj[item._id] = item;
         return obj;
       }, {});
-
       if (postsList) {
         await postsDispatch({
           type: SET_POSTS,
@@ -482,7 +478,7 @@ const Feed = (props) => {
     } else {
       await postsDispatch({ type: SET_LOADING });
     }
-  }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
+  }, [page, location, selectedOptions, selectedType, postsList]);
 
   useEffect(() => {
     if (applyFilters) {
@@ -561,31 +557,32 @@ const Feed = (props) => {
       } else {
         setLoadedRows(true);
       }
-      return !loadMore || !!posts[index];
+      return !!posts[index];
     },
-    [postsList, loadMore],
+    [postsList],
   );
 
   const loadNextPage = useCallback(
     ({ startIndex, stopIndex }) => {
+      const userPosts = Object.entries(postsList);
+      dispatchAction(SET_VALUE, "applyFilters", false);
       if (!isLoading && loadMore && loadedRows) {
-        return new Promise((resolve) =>
-          setTimeout(() => {
-            postsDispatch({ type: NEXT_PAGE });
-            resolve();
-          }, 500),
-        );
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          loadPosts();
+          resolve();
+        });
       } else {
         return Promise.resolve();
       }
     },
-    [loadedRows, isLoading, loadMore],
+    [postsList, isLoading, loadMore, loadedRows, loadPosts],
   );
 
   useEffect(() => {
     const posts = Object.entries(postsList);
     setItemCount(loadMore ? posts.length + 1 : posts.length);
-  }, [loadMore, posts, postsList, setItemCount]);
+  }, [loadMore, postsList]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -703,7 +700,6 @@ const Feed = (props) => {
               handleCancelPostDelete={handleCancelPostDelete}
               isNextPageLoading={isLoading}
               loadNextPage={loadNextPage}
-              hasNextPage={loadMore}
               itemCount={itemCount}
               isItemLoaded={isItemLoaded}
             />
