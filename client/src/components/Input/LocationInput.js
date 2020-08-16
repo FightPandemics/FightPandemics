@@ -123,12 +123,12 @@ const LocationInput = ({
       );
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
-    } catch(error) {
+    } catch (error) {
       let errMessage = "Failed getting location. " + error.message + ". ";
-      if(error.code === 1) {
-        errMessage += "Please reset your browser's location permissions for this site or enter the address.";
-      }
-      else {
+      if (error.code === 1) {
+        errMessage +=
+          "Please reset your browser's location permissions for this site or enter the address.";
+      } else {
         errMessage += "Please enter the address or try again.";
       }
       setApiError(errMessage);
