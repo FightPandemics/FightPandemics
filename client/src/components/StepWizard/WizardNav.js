@@ -16,6 +16,8 @@ const { royalBlue, white } = theme.colors;
 
 export const StyledWizardNav = styled.div`
   display: flex;
+  position: relative;
+  top: ${props => props.lowerButton};
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
@@ -120,6 +122,16 @@ const NextButton = styled(LeftRightIconButton)`
     }
   }
 `;
+const MoveButtonPerAnswersLength = (currentStep) => {
+    switch(currentStep - 1) {
+      case 2:
+        return "4em";
+      case 3:
+        return "30em";
+      default: 
+        return "0em"
+    }
+}
 
 const WizardNav = ({
   currentStep,
@@ -128,7 +140,7 @@ const WizardNav = ({
   totalSteps,
   gtmPrefix,
 }) => (
-  <StyledWizardNav>
+  <StyledWizardNav lowerButton={MoveButtonPerAnswersLength(currentStep)}>
     {currentStep > 1 ? (
       <BackButton
         id={gtmPrefix + currentStep + GTM.wizardNav.back}

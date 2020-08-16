@@ -44,7 +44,7 @@ const ColoredButton = styled.div`
   background-color: ${colors.royalBlue};
   width: 100%;
   color: ${colors.white};
-  border-radius 5rem;
+  border-radius: 5rem;
   padding: 1.5rem;
   text-align: center;
   font-weight: bold;
@@ -56,7 +56,7 @@ const TransparentButton = styled.div`
   background-color: ${colors.white};  
   width: 100%;
   color: ${colors.royalBlue};
-  border-radius 5rem;
+  border-radius: 5rem;
   padding: 1.5rem;
   text-align: center;
   font-weight: bold;
@@ -1012,6 +1012,7 @@ const SymptomsCheck = () => {
           className="block-text"
           block="true"
           size={theme.typography.size.medium}
+          textAlign="center"
         >
           This service is provided in good faith for those who are otherwise
           unable to obtain help and resources during this unprecedented public

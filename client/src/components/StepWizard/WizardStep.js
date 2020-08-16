@@ -9,7 +9,6 @@ const WizardStep = styled.div`
   align-items: ${(props) => props.alignItems || "center"};
   box-sizing: border-box;
   width: 100%;
-
   p {
     font-family: ${font.family.display};
   }
