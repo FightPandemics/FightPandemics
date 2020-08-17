@@ -353,7 +353,7 @@ const NavigationLayout = (props) => {
         Your input means a lot and helps us improve our services during and
         after the COVID-19 pandemic.
       </p>
-      <Link to="/">
+      <Link to={isAuthenticated ? "/feed" : "/"}>
         <Logo src={logo} alt="FightPandemics logo" />
       </Link>
     </ThanksModal>
