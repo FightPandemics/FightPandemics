@@ -115,10 +115,10 @@ describe('FightPandemics Sign In Page', () => {
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test@gmail.com');
+            emailField.type('qa.test@test.com');
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type('WrongPW!wpw3');
+            passwordField.type('WrongPW!wpw3hi');
             var signInButton = signIn.getSignInButton();
             signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'false').click();
 
