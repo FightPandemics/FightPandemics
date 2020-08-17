@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "Mocha API integration tests",
   "scripts": {
-    "test": "mocha './mocha/test/**/*.js' --recursive --timeout 60000 --exit"
+    "test": "mocha './test/**/*.js' --recursive --timeout 60000 --exit"
   },
   "private": true,
   "devDependencies": {
-    "mocha": "^8.1.0"
+    "mocha": "^8.1.0",
+    "should": "^13.2.3",
+    "http-status": "^1.4.2",
+    "chai": "^4.2.0",
+    "supertest": "^4.0.2"
   }
 }
