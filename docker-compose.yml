@@ -87,7 +87,7 @@ services:
       MOCHA_URL: http://backend-service:8000
     command: dockerize -wait http://client:3000 -timeout 300s npm run test 
     volumes:
-      - ./mocha/test/:/app/mocha/test/
+      - ./mocha/test/:/app/test/
     working_dir: /app
     networks:
       - fp_network
