@@ -229,6 +229,10 @@
       "lastNameRequire": "Last name is required.",
       "facebookError": "Invalid entry: only alphanumeric characters and . are allowed",
       "githubError": "Invalid entry: only alphanumeric characters and _ are allowed",
+      "errors": {
+        "privacy": "You must agree to our privacy policy before proceeding",
+        "conditions": "You must agree to our terms and conditions before proceeding"
+      },
       "FiveMinLength": "Min. length is 5 characters",
       "fifteenMaxLength": "Max. length is 15 characters"
     },
