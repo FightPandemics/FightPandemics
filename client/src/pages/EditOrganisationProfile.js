@@ -40,38 +40,6 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-const URLS_CONFIG = {
-  appStore: ["Link to Apple Store", {}, APPSTORE_URL],
-  playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
-  twitter: [
-    "Twitter URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-    },
-    TWITTER_URL,
-  ],
-  linkedin: [
-    "LinkedIn URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_\-/]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
-      },
-    },
-    LINKEDIN_URL,
-  ],
-  website: [
-    "Website",
-    {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
-    },
-  ],
-};
 const ABOUT_MAX_LENGTH = 160;
 
 const editProfile = true;
@@ -85,6 +53,39 @@ function EditOrganisationProfile(props) {
   const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
+
+  const URLS_CONFIG = {
+    appStore: ["Link to Apple Store", {}, APPSTORE_URL],
+    playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
+    twitter: [
+      "Twitter URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_]*$/,
+          message:
+            t("profile.common.twitterError"),
+        },
+      },
+      TWITTER_URL,
+    ],
+    linkedin: [
+      "LinkedIn URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_\-/]*$/,
+          message:
+            t("profile.common.linkedinError"),
+        },
+      },
+      LINKEDIN_URL,
+    ],
+    website: [
+      "Website",
+      {
+        validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+      },
+    ],
+  };
 
   const onSubmit = async (formData) => {
     orgProfileDispatch(updateOrganisation());

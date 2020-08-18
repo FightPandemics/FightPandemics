@@ -97,7 +97,7 @@ function EditOrganisationAccount(props) {
       return setError(
         "location",
         "required",
-        "Address is required. Please enter your address and select it from the drop-down",
+        t("profile.common.addressRequire"),
       );
     }
     Object.entries(NEEDS).map(([key, label]) => {
@@ -143,21 +143,21 @@ function EditOrganisationAccount(props) {
     "Organisation Name": [
       "name",
       name,
-      "Organisation name is required",
+      t("profile.org.orgNameRequire"),
       false,
       {
         value: 60,
-        message: "Max. 60 characters",
+        message: t("profile.org.sixtyMaxLen"),
       },
     ],
     "Organisation Contact E-mail": [
       "email",
       email,
-      "Email is required",
+      t("profile.common.emailRequire"),
       true,
       {
         value: 30,
-        message: "Max. 30 characters",
+        message: t("profile.org.thirtyMaxLen"),
       },
     ],
   };

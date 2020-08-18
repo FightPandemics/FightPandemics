@@ -158,7 +158,7 @@ const CreateOrgProfile = (props) => {
           return setError(
             "location",
             "required",
-            "Address is required. Please enter your address and select it from the drop-down",
+            t("profile.common.addressRequire"),
           );
         }
         createOrganisationFormDispatch({ type: CREATE_Organisation });
@@ -213,10 +213,10 @@ const CreateOrgProfile = (props) => {
               onChange={(name) => name}
               style={styleInput}
               ref={register({
-                required: "Organisation name is required",
+                required: t("profile.org.orgNameRequire"),
                 maxLength: {
                   value: 60,
-                  message: "Max. 60 characters",
+                  message: t("profile.org.sixtyMaxLen"),
                 },
               })}
               name="name"
@@ -235,10 +235,10 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                required: "Email is required",
+                required: t("profile.common.emailRequire"),
                 maxLength: {
                   value: 30,
-                  message: "Max. 30 characters",
+                  message: t("profile.org.thirtyMaxLen"),
                 },
               })}
             />
@@ -396,8 +396,8 @@ const CreateOrgProfile = (props) => {
             }
           >
             {createOrganisationFormState.loading
-              ? "Creating Profile..."
-              : "Create Profile"}
+              ? t("profile.common.submitLoading") 
+              : t("profile.common.submit")}
           </SubmitButton>
         </StyledForm>
         <WhiteSpace />

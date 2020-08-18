@@ -180,17 +180,22 @@
       "createProfile": "Create Your Profile",
       "saveChanges": "Save Changes",
       "thankyou": "Thank you for joining our community!",
+      "submit": "Create Profile",
+      "submitLoading": "Creating Profile...",
       "viewProfile": "My Profile",
       "viewMyProfile": "View my profile",
       "continuePosting": "Continue Posting",
       "viewFeed": "View Help Board",
       "loading": "loading",
       "invalidEmail": "Invalid email",
+      "invalidPassword": "Password must contain at least 3 of these:  lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
       "addressRequire": "Address is required. Please enter your address and select it from the drop-down",
       "selectOption": "Please select at least one option",
       "twitterError": "Invalid entry: only alphanumeric characters and _ are allowed",
       "linkedinError": "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
-      "invalidURL": "Invalid URL"
+      "invalidURL": "Invalid URL",
+      "emailRequire": "Email is required",
+      "passwordRequire": "Password is required"
     },
     "individual": {
       "email": "Email",
@@ -234,6 +239,9 @@
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
       "invalidEmail": "Email is invalid",
+      "orgNameRequire": "Organisation name is required",
+      "sixtyMaxLen": "Max. 60 characters",
+      "thirtyMaxLen": "Max. 30 characters",
       "about": "About",
       "activity": "Activity",
       "editAccount": "Edit Account Information",
@@ -312,7 +320,9 @@
     "orJoinNow": "OR JOIN NOW WITH",
     "facebook": "Facebook",
     "google": "Google",
-    "linkedin": "LinkedIn"
+    "linkedin": "LinkedIn",
+    "back": "Back to Sign In screen",
+    "passwordConfirmationRequire": "Password confirmation is required."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",

@@ -363,9 +363,9 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     className={errors.email && "has-error"}
                     placeholder={t("auth.enterEmail")}
                     ref={register({
-                      required: "Email is required.",
+                      required: t("profile.common.emailRequire") + ".",
                       validate: (email) =>
-                        validateEmail(email) || "Invalid email",
+                        validateEmail(email) || t("profile.common.invalidEmail"),
                     })}
                     style={inputStyles}
                   />
@@ -394,11 +394,9 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                         value: PASSWORD_MIN_LENGTH,
                         message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
                       },
-                      required: "Password is required.",
+                      required: t("profile.common.passwordRequire") + ".",
                       validate: (password) =>
-                        validatePassword(password) ||
-                        "Password must contain at least 3 of these: " +
-                          "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+                        validatePassword(password) || t("profile.common.invalidPassword"),
                     })}
                     style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
@@ -427,7 +425,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       ref={register({
                         maxLength: PASSWORD_MAX_LENGTH,
                         minLength: PASSWORD_MIN_LENGTH,
-                        required: "Password confirmation is required.",
+                        required: t("auth.passwordConfirmationRequire"),
                         validate: comparePasswordConfirmation,
                       })}
                       style={{ ...inputStyles, paddingRight: "3.5rem" }}
@@ -472,11 +470,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       name="email"
                       id="email"
                       className={errors.email && "has-error"}
-                      placeholder="Enter email address"
+                      placeholder={t("auth.enterEmail")}
                       ref={register({
-                        required: "Email is required.",
+                        required: t("profile.common.emailRequire") + ".",
                         validate: (email) =>
-                          validateEmail(email) || "Invalid email",
+                          validateEmail(email) || t("profile.common.invalidEmail"),
                       })}
                       style={inputStyles}
                     />
@@ -531,7 +529,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
+                  <AuthLink to="/auth/login">{t("auth.back")}</AuthLink>
                 </div>
               </BackLinkContainer>
             )}

@@ -206,7 +206,7 @@ const CreateProfile = ({ email, history }) => {
       return setError(
         "location",
         "required",
-        "Address is required. Please enter your address and select it from the drop-down",
+        t("profile.common.addressRequire"),
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
@@ -269,8 +269,8 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-                  required: "Email is required.",
-                  validate: (email) => validateEmail(email) || "Invalid email",
+                  required: t("profile.common.emailRequire") + ".",
+                  validate: (email) => validateEmail(email) || t("profile.common.invalidURL"),
                 })}
                 style={inputStyles}
                 value={email}
@@ -290,10 +290,10 @@ const CreateProfile = ({ email, history }) => {
                 id="firstName"
                 className={errors.firstName && "has-error"}
                 ref={register({
-                  required: "First name is required.",
+                  required: t("profile.individual.firstNameRequire"),
                   maxLength: {
                     value: 30,
-                    message: "Max. 30 characters",
+                    message: t("profile.org.thirtyMaxLen"),
                   },
                 })}
                 style={inputStyles}
@@ -449,8 +449,8 @@ const CreateProfile = ({ email, history }) => {
               id={GTM.user.profilePrefix + GTM.profile.createProfile}
             >
               {createUserFormState.loading
-                ? "Creating Profile..."
-                : "Create Profile"}
+                ? t("profile.common.submitLoading") 
+                : t("profile.common.submit")}
             </Submit>
           </InputGroup>
         </ProfileFormGroup>

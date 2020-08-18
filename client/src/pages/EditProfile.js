@@ -37,66 +37,6 @@ import {
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 
-const URLS_CONFIG = {
-  facebook: [
-    "Facebook URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9.]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and . are allowed",
-      },
-      minLength: {
-        value: 5,
-        message: "Min. length is 5 characters",
-      },
-    },
-    FACEBOOK_URL,
-  ],
-  linkedin: [
-    "LinkedIn URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
-      },
-    },
-    LINKEDIN_INDIVIDUAL_URL,
-  ],
-  twitter: [
-    "Twitter URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-      maxLength: {
-        value: 15,
-        message: "Max. length is 15 characters",
-      },
-    },
-    TWITTER_URL,
-  ],
-  github: [
-    "Github URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-    },
-    GITHUB_URL,
-  ],
-  website: [
-    "Personal Website",
-    {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
-    },
-  ],
-};
 const ABOUT_MAX_LENGTH = 160;
 
 function EditProfile(props) {
@@ -107,6 +47,67 @@ function EditProfile(props) {
   const { error, loading, user } = userProfileState;
   const { t } = useTranslation();
   const { firstName, lastName, urls = {}, about } = user || {};
+
+  const URLS_CONFIG = {
+    facebook: [
+      "Facebook URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9.]*$/,
+          message:
+            t("profile.individual.facebookError"),
+        },
+        minLength: {
+          value: 5,
+          message: t("profile.individual.FiveMinLength"),
+        },
+      },
+      FACEBOOK_URL,
+    ],
+    linkedin: [
+      "LinkedIn URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9-]*$/,
+          message:
+            t("profile.common.linkedinError"),
+        },
+      },
+      LINKEDIN_INDIVIDUAL_URL,
+    ],
+    twitter: [
+      "Twitter URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_]*$/,
+          message:
+            t("profile.common.twitterError"),
+        },
+        maxLength: {
+          value: 15,
+          message: t("profile.individual.fifteenMaxLength"),
+        },
+      },
+      TWITTER_URL,
+    ],
+    github: [
+      "Github URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_-]*$/,
+          message:
+            t("profile.individual.githubError"),
+        },
+      },
+      GITHUB_URL,
+    ],
+    website: [
+      "Personal Website",
+      {
+        validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+      },
+    ],
+  };
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
