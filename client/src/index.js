@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import "antd/dist/antd.css";
@@ -24,8 +25,10 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <GlobalStyles />
-    <App />
+    <HelmetProvider>
+      <GlobalStyles />
+      <App />
+    </HelmetProvider>
   </Provider>,
   document.getElementById("root"),
 );

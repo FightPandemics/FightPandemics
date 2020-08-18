@@ -59,6 +59,11 @@ data "aws_ssm_parameter" "sentry_dsn" {
   name  = "/fp/sentry/dsn"
 }
 
+data "aws_ssm_parameter" "seo4ajax_api_key" {
+  count = contains(["staging", "review"], var.fp_context) ? 0 : 1
+  name  = "/fp/seo4ajax/api_key"
+}
+
 data "aws_ssm_parameter" "logger_host" {
   count = var.fp_context == "development" ? 0 : 1
   name  = "/fp/logger/host"
@@ -164,6 +169,12 @@ module "main" {
     {
       name  = "LOGGER_PORT",
       value = var.fp_context == "development" ? "1234" : data.aws_ssm_parameter.logger_port[0].value
+    },
+  ]
+  client_env_variables = [
+    {
+      name  = "SEO4AJAX_API_KEY"
+      value = contains(["staging", "review"], var.fp_context) ? "" : data.aws_ssm_parameter.seo4ajax_api_key[0].value
     },
   ]
   datadog_env_variables = [
