@@ -154,7 +154,9 @@
         "request": "Looking for help",
         "offer": "Offering to help"
       }
-    }
+    },
+    "expireTitle": "Ahh... snap!",
+    "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts."
   },
   "comment": {
     "writeAComment": "Write a comment...",

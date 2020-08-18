@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { mq, theme } from "constants/theme";
 import LeftRightIconButton from "components/Button/LeftRightIconButton";
 import GTM from "constants/gtm-tags";
@@ -127,37 +128,41 @@ const WizardNav = ({
   previousStep,
   totalSteps,
   gtmPrefix,
-}) => (
-  <StyledWizardNav>
-    {currentStep > 1 ? (
-      <BackButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.back}
-        onClick={previousStep}
-      >
-        <SvgIcon
-          src={backArrow}
-          title={`Navigate to step ${currentStep - 1}`}
-        />
-        <BackText>Back</BackText>
-      </BackButton>
-    ) : (
-      <Link to={"/"}>
-        <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
-          <SvgIcon src={backArrow} title="Navigate to the homepage" />
-          <BackText>Back</BackText>
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <StyledWizardNav>
+      {currentStep > 1 ? (
+        <BackButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.back}
+          onClick={previousStep}
+        >
+          <SvgIcon
+            src={backArrow}
+            title={`Navigate to step ${currentStep - 1}`}
+          />
+          <BackText>{t("onboarding.comment.previous")}</BackText>
         </BackButton>
-      </Link>
-    )}
-    {currentStep < totalSteps && (
-      <NextButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.next}
-        onClick={nextStep}
-      >
-        <span>Next</span>
-        <SvgIcon src={nextArrow} />
-      </NextButton>
-    )}
-  </StyledWizardNav>
-);
+      ) : (
+        <Link to={"/"}>
+          <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
+            <SvgIcon src={backArrow} title="Navigate to the homepage" />
+            <BackText>{t("onboarding.comment.previous")}</BackText>
+          </BackButton>
+        </Link>
+      )}
+      {currentStep < totalSteps && (
+        <NextButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.next}
+          onClick={nextStep}
+        >
+          <span>{t("onboarding.comment.next")}</span>
+          <SvgIcon src={nextArrow} />
+        </NextButton>
+      )}
+    </StyledWizardNav>
+  )
+};
 
 export default WizardNav;

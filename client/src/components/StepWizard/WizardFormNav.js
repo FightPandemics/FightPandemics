@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import backArrow from "assets/icons/back-arrow.svg";
 import { FEED } from "../../templates/RouteWithSubRoutes";
 import {
@@ -43,6 +44,7 @@ export const StyledButtonWizard = styled(StepWizard)`
 
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (history?.location?.state?.from?.state) {
@@ -56,7 +58,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     <StyledWizardNav>
       <BackButton onClick={handleClick} id={gtmPrefix + GTM.wizardNav.back}>
         <SvgIcon src={backArrow} title="Navigate to previous page or feed" />
-        <BackText>Back</BackText>
+        <BackText>{t("onboarding.common.previous")}</BackText>
       </BackButton>
     </StyledWizardNav>
   );
