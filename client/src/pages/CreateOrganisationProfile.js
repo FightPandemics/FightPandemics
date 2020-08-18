@@ -144,12 +144,12 @@ const CreateOrgProfile = (props) => {
     if (!privacy) {
       return createOrganisationFormDispatch({
         type: CREATE_Organisation_ERROR,
-        error: `You must agree to our privacy policy before proceeding`,
+        error: t("profile.common.errors.privacy"),
       });
     } else if (!conditions) {
       return createOrganisationFormDispatch({
         type: CREATE_Organisation_ERROR,
-        error: `You must agree to our terms and conditions before proceeding`,
+        error: t("profile.common.errors.conditions"),
       });
     } else {
       if (props.user) {
@@ -181,7 +181,7 @@ const CreateOrgProfile = (props) => {
       } else {
         return createOrganisationFormDispatch({
           type: CREATE_Organisation_ERROR,
-          error: `You must be logged in to create an organisation profile`,
+          error: t("profile.org.errors.login"),
         });
       }
     }

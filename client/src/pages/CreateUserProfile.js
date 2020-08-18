@@ -196,10 +196,10 @@ const CreateProfile = ({ email, history }) => {
 
   const onSubmit = async (formData) => {
     if (!privacy) {
-      alert(t("profile.individual.errors.privacy"));
+      alert(t("profile.common.errors.privacy"));
       return;
     } else if (!conditions) {
-      alert(t("profile.individual.errors.conditions"));
+      alert(t("profile.common.errors.conditions"));
       return;
     } else if (!location) {
       // all location objects should have address (+coordinates), others optional
