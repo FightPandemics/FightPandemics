@@ -159,9 +159,9 @@ const Step3 = (props) => {
             }
             type="email"
             name="email"
-            label="Email"
+            label={t("auth.email")}
             className={!valid && "has-error"}
-            placeholder="Enter your email address..."
+            placeholder={t("onboarding.common.enterEmail")}
             onChange={onChange}
             value={email}
             required
