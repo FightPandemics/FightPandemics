@@ -11,3 +11,7 @@ export const buildLocationString = ({ city = "", country }) => {
     return `${city.substring(0, MAX_LENGTH - 3)}..., ${country}`;
   return city ? `${city}, ${country}` : country;
 };
+
+export const buildTimestampString = () => {
+  
+}

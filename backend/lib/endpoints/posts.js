@@ -204,6 +204,7 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            createdAt: true,
           },
         },
       ];

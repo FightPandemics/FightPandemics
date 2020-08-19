@@ -354,6 +354,7 @@ const Post = ({
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
+              {console.log('post', post)}
             </div>
           ) : (
             ""
