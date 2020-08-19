@@ -87,7 +87,7 @@ const VerifyEmail = ({ forgotPasswordRequested, email }) => {
     <VerifyEmailContainer>
       <VerifyEmailLeftContainer>
         <EnvelopeImageContainer>
-          <img className="EnvelopeSVG" src={emailVerify} alt="envelope" />
+          <img className="EnvelopeSVG" src={emailVerify} alt={t("alt.envelope")} />
         </EnvelopeImageContainer>
       </VerifyEmailLeftContainer>
       <VerifyEmailRightContainer>

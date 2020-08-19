@@ -233,7 +233,7 @@ export default ({
         mode="light"
         leftContent={
           <BrandLink to="/">
-            <Logo src={logo} alt="Fight Pandemics logo" />
+            <Logo src={logo} alt={t("alt.logo")} />
           </BrandLink>
         }
         rightContent={

@@ -190,7 +190,7 @@ const CreateOrgProfile = (props) => {
   return (
     <Main>
       <SvgContainer>
-        <img src={createOrganisationSvg} alt="create organisation" />
+        <img src={createOrganisationSvg} alt={t("alt.createOrg")} />
       </SvgContainer>
       <FormContainer>
         <Heading className="h4" level={4}>

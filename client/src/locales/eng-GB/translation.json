@@ -591,5 +591,20 @@
     "disableCookiesContent": "It is normally possible to stop accepting browser cookies or stop accepting cookies from a particular service. All modern browsers allow you to change the configuration of Cookies. These settings are usually found in the ‘options’ or ‘Preferences’ of your browser menu. You can also configure your browser or email manager, as well as install free add-ons to prevent Web Bugs from downloading when opening an email. Use the following instructions according to your internet browser to change cookie preferences:",
     "updateCookies": "UPDATE OF COOKIES POLICY",
     "updateCookiesContent": "FightPandemics may modify this Cookies Policy based on legislative, regulatory requirements, or with the purpose of adapting said policy to the instructions issued by the Spanish Data Protection Agency, therefore Users are advised to periodically visit this page to know the changes suffered in them. When there are significant changes in this Cookies Policy, Users will be notified either through the web or through email to the Users registered in the newsletter service."
+  },
+  "alt": {
+    "logo": "Fight Pandemics logo",
+    "blogLink": "FightPandemics Blog Link",
+    "desktopBanner": "Desktop Mission and Vision Banner",
+    "mobileBanner": "Mobile Mission and Vision Banner",
+    "ideaImage": "Our Idea Picture",
+    "linkedinIcon": "FightPandemics LinkedIn Icon",
+    "facebookIcon": "FightPandemics Facebook Icon",
+    "insIcon": "FightPandemics Instagram Icon",
+    "twitterIcon": "FightPandemics Twitter Icon",
+    "createOrg": "create organisation",
+    "personalDataImage": "two people standing next to a list of personal items",
+    "envelope": "envelope",
+    "avatar": "avatar"
   }
 }

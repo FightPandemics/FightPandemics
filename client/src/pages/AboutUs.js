@@ -111,11 +111,11 @@ const AboutUs = () => {
         <h1 className="text-primary display-6">{t("common.aboutUs")}</h1>
         <WebViewBannerContainer
           src={DesktopBanner}
-          alt="Desktop Mission and Vision Banner"
+          alt={t("alt.desktopBanner")}
         />
         <MobileViewBannerContainer
           src={MobileBanner}
-          alt="Mobile Mission and Vision Banner"
+          alt={t("alt.mobileBanner")}
         />
       </MissionAndVisionBannerContainer>
       <TextContainer>
@@ -133,7 +133,7 @@ const AboutUs = () => {
         {/* Add buttons for Join as Ambassador and Join as a Volunteer here*/}
         <br />
         <h2 className="text-primary display-6">{t("aboutUs.ourIdea")}</h2>
-        <OurIdeaImageContainer src={OurIdeaImage} alt="Our Idea Picture" />
+        <OurIdeaImageContainer src={OurIdeaImage} alt={t("alt.ideaImage")} />
       </TextContainer>
       <br />
       <h2 className="text-primary display-6">{t("aboutUs.ourSupporters")}</h2>
@@ -143,16 +143,16 @@ const AboutUs = () => {
       <h2 className="text-primary display-6">{t("followUs")}</h2>
       <SocialContainer>
         <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
-          <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
+          <img src={linkedInLogo} alt={t("alt.linkedinIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://www.facebook.com/FightPandemics/">
-          <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+          <img src={facebookLogo} alt={t("alt.facebookIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-          <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
+          <img src={instagramLogo} alt={t("alt.insIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://twitter.com/FightPandemics">
-          <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+          <img src={twitterLogo} alt={t("alt.twitterIcon")} />
         </AboutUsLink>
         <p>
           {t("aboutUs.contactUs")}:{" "}

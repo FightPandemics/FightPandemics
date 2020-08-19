@@ -352,7 +352,7 @@ const NavigationLayout = (props) => {
       <h2 className="title">{t("feedback.thankYou")}</h2>
       <p>{t("feedback.thankYouMessage")}</p>
       <Link to="/">
-        <Logo src={logo} alt="FightPandemics logo" />
+        <Logo src={logo} alt={t("alt.logo")} />
       </Link>
     </ThanksModal>
   );
@@ -494,7 +494,7 @@ const NavigationLayout = (props) => {
       <WhiteSpace size="lg" />
       <AvatarContainer>
         <NavItem history={history}>
-          <TextAvatar size={80} alt="avatar">
+          <TextAvatar size={80} alt={t("alt.avatar")}>
             {displayInitials(user)}
           </TextAvatar>
         </NavItem>
