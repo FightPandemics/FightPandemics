@@ -1,8 +1,7 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Modal as WebModal } from "antd";
+import { Link } from "react-router-dom";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -72,7 +71,6 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  DELETE_MODAL_ORGANISATION,
 } from "hooks/actions/feedActions";
 import {
   postsReducer,
@@ -93,8 +91,6 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganisationProfile = () => {
-  const history = useHistory();
-
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
 
@@ -120,37 +116,25 @@ const OrganisationProfile = () => {
   const { deleteModalVisibility } = postsState;
 
   useEffect(() => {
+    (async function fetchOrgProfile() {
+      orgProfileDispatch(fetchOrganisation());
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get(`/api/organisations/${organisationId}`);
+        orgProfileDispatch(fetchOrganisationSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        orgProfileDispatch(
+          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+        );
+      }
+    })();
+
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
         userProfileDispatch(fetchUserSuccess(res.data));
-
-        const foundOrg = res.data.organisations.filter(
-          (org) => org._id === organisationId,
-        );
-
-        if (foundOrg.length > 0) {
-          (async function fetchOrgProfile() {
-            orgProfileDispatch(fetchOrganisation());
-            try {
-              const res = await axios.get(
-                `/api/organisations/${organisationId}`,
-              );
-              orgProfileDispatch(fetchOrganisationSuccess(res.data));
-            } catch (err) {
-              console.log("org fetch erro");
-              const message = err.response?.data?.message || err.message;
-              orgProfileDispatch(
-                fetchOrganisationError(
-                  `Failed loading profile, reason: ${message}`,
-                ),
-              );
-            }
-          })();
-        } else {
-          history.push(`/profile/${res.data.id}`);
-        }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         userProfileDispatch(
@@ -158,7 +142,7 @@ const OrganisationProfile = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch, user?.id]);
+  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
   const fetchOrganisationPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
@@ -217,14 +201,6 @@ const OrganisationProfile = () => {
     }
   };
 
-  const handleOrgDelete = (e) => {
-    e.preventDefault();
-    postsDispatch({
-      type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: DELETE_MODAL_ORGANISATION,
-    });
-  };
-
   const handlePostDelete = () => {
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
@@ -233,7 +209,6 @@ const OrganisationProfile = () => {
   };
 
   const handleCancelPostDelete = () => {
-    setDrawer(false);
     postsDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
@@ -283,18 +258,6 @@ const OrganisationProfile = () => {
         });
       }
     }
-  };
-
-  const orgDelete = async () => {
-    let deleteResponse;
-    const endPoint = `/api/organisations/${organisationId}`;
-    if (user && user.organisations.some((org) => org._id === organisationId)) {
-      deleteResponse = await axios.delete(endPoint);
-      if (deleteResponse && deleteResponse.data.success === true) {
-        history.go(0);
-      }
-    }
-    handleCancelPostDelete();
   };
 
   const renderURL = () => {
@@ -419,7 +382,7 @@ const OrganisationProfile = () => {
               closable={false}
               onClose={() => setDrawer(false)}
               visible={drawer}
-              height="175px"
+              height="150px"
               key="bottom"
             >
               <DrawerHeader>
@@ -432,36 +395,8 @@ const OrganisationProfile = () => {
                   Edit Profile{" "}
                 </Link>
               </DrawerHeader>
-              <DrawerHeader>
-                <a
-                  href="#"
-                  role="button"
-                  onClick={handleOrgDelete}
-                  className="color-danger"
-                >
-                  Delete Organisation
-                </a>
-              </DrawerHeader>
             </CustomDrawer>
           )}
-          <WebModal
-            title="Confirm"
-            visible={
-              !!deleteModalVisibility &&
-              deleteModalVisibility === DELETE_MODAL_ORGANISATION
-              // &&
-              // toDelete === post._id
-            }
-            onOk={() => orgDelete()}
-            onCancel={handleCancelPostDelete}
-            okText="Delete"
-            cancelText="Cancel"
-          >
-            <p>
-              Are you sure you want to delete the organisation and all
-              associated posts?
-            </p>
-          </WebModal>
         </>
       );
     }

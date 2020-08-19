@@ -21,9 +21,6 @@ export const DrawerHeader = styled.div`
     color: ${colors.black};
     font-size: 1.7rem;
   }
-  a[href].color-danger {
-    color: ${colors.red};
-  }
 `;
 
 export const SectionHeader = styled(Heading)`
