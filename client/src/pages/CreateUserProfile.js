@@ -141,8 +141,8 @@ const Submit = styled(SubmitButton)`
 
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
-const CreateProfile = ({ email, history }) => {
-  const [location, setLocation] = useState({});
+const CreateProfile = ({ email, firstName, lastName, history }) => {
+  const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
@@ -204,7 +204,7 @@ const CreateProfile = ({ email, history }) => {
       return setError(
         "location",
         "required",
-        "Please select an address from the drop-down",
+        "Address is required. Please enter your address and select it from the drop-down",
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
@@ -289,8 +289,13 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.firstName && "has-error"}
                 ref={register({
                   required: "First name is required.",
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
+                value={firstName}
               />
               {errors.firstName && (
                 <InputError>{errors.firstName.message}</InputError>
@@ -310,8 +315,13 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.lastName && "has-error"}
                 ref={register({
                   required: "Last name is required.",
+                  maxLength: {
+                    value: 30,
+                    message: "Max. 30 characters",
+                  },
                 })}
                 style={inputStyles}
+                value={lastName}
               />
               {errors.lastName && (
                 <InputError>{errors.lastName.message}</InputError>
@@ -463,6 +473,8 @@ const CreateProfile = ({ email, history }) => {
 
 const mapStateToProps = ({ session }) => ({
   email: session.email,
+  firstName: session.firstName,
+  lastName: session.lastName,
 });
 
 export default connect(mapStateToProps)(CreateProfile);

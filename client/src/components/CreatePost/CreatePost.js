@@ -6,6 +6,7 @@ import {
   Option,
   TitleStep,
   OptionButton,
+  OptionButtonWrapper,
   BackButton,
   CreateOrgLink,
   ViewPostButton,
@@ -79,20 +80,22 @@ const Step2 = ({ user, gtmPrefix }) => {
           src={back}
           onClick={() => setCurrentStep(1)}
         />
-        {user.organisations?.map((item) => {
-          const { _id: organisationId } = item;
-          return (
-            <OptionButton
-              key={organisationId}
-              onClick={() => {
-                setForm({ organisationId });
-                setCurrentStep(3);
-              }}
-            >
-              {item.name}
-            </OptionButton>
-          );
-        })}
+        <OptionButtonWrapper>
+          {user.organisations?.map((item) => {
+            const { _id: organisationId } = item;
+            return (
+              <OptionButton
+                key={organisationId}
+                onClick={() => {
+                  setForm({ organisationId });
+                  setCurrentStep(3);
+                }}
+              >
+                {item.name}
+              </OptionButton>
+            );
+          })}
+        </OptionButtonWrapper>
         <CreateOrgLink
           to={"/create-organisation-profile"}
           id={
@@ -179,13 +182,16 @@ const Step4 = () => {
   );
 };
 
-const CreatePost = ({ onCancel, ...props }) => {
+const CreatePost = ({ onCancel, loadPosts, ...props }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({});
   const [postId, setPostId] = useState("");
 
   const clearState = () => {
     onCancel();
+    if (currentStep === 4) {
+      loadPosts();
+    }
     // delay for modal close effect to complete before re-render
     setTimeout(() => {
       setCurrentStep(1);

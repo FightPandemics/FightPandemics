@@ -85,14 +85,16 @@ const CreateOrgProfile = (props) => {
     control,
     errors,
     setError,
-  } = useForm();
+  } = useForm({
+    mode: "change",
+  });
 
   const [
     createOrganisationFormState,
     createOrganisationFormDispatch,
   ] = useReducer(createOrganisationFormReducer, initialState);
 
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
   const [validEmail, setValid] = useState(false);
@@ -154,7 +156,7 @@ const CreateOrgProfile = (props) => {
           return setError(
             "location",
             "required",
-            "Please select an address from the drop-down",
+            "Address is required. Please enter your address and select it from the drop-down",
           );
         }
         createOrganisationFormDispatch({ type: CREATE_Organisation });
@@ -208,12 +210,16 @@ const CreateOrgProfile = (props) => {
               placeholder=""
               onChange={(name) => name}
               style={styleInput}
-              ref={register({ required: true, minLength: 3 })}
+              ref={register({
+                required: "Organisation name is required",
+                maxLength: {
+                  value: 60,
+                  message: "Max. 60 characters",
+                },
+              })}
               name="name"
             />
-            <span style={errorStyles}>
-              {errors.name && "Organisation name is required"}
-            </span>
+            <span style={errorStyles}>{errors.name?.message}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
@@ -226,16 +232,20 @@ const CreateOrgProfile = (props) => {
               onChange={handleInputChangeEmail}
               style={styleInput}
               name="email"
-              ref={register({ required: true, minLength: 3 })}
+              ref={register({
+                required: "Email is required",
+                maxLength: {
+                  value: 30,
+                  message: "Max. 30 characters",
+                },
+              })}
             />
-            {validEmail || email === "" ? (
+            {validEmail || errors.email || email === "" ? (
               ""
             ) : (
               <InputError>Email is invalid</InputError>
             )}
-            <span style={errorStyles}>
-              {errors.email && "Email is required"}
-            </span>
+            <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />

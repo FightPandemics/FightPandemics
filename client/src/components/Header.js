@@ -7,12 +7,13 @@ import styled from "styled-components";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
-import envelope from "assets/icons/envelope.svg";
+import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 
 import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
+
 const { colors, typography } = theme;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
@@ -22,7 +23,7 @@ const BrandLink = styled(Link)`
   }
 `;
 const StyledNavBar = styled(NavBar)`
-  height: 7rem;
+  height: 6rem;
   margin-top: 0;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
@@ -49,14 +50,11 @@ const DesktopMenu = styled.div`
 `;
 const NavLinks = styled.div`
   align-self: flex-end;
-  padding-top: 1rem;
   white-space: nowrap;
-  padding-top: 2rem;
   button {
     border: none;
     background: transparent;
     cursor: pointer;
-    padding-top: 0.4rem;
 
     img {
       margin-left: 1.5rem;
@@ -69,33 +67,36 @@ const NavLinks = styled.div`
     margin-bottom: 0rem;
     margin-right: 5rem;
     align-items: center;
+
     .registerBtn {
-      color: ${colors.royalBlue};
-      border: 0.1rem solid ${colors.royalBlue};
-      border-radius: 2rem;
-      padding: 0 0.8rem;
       margin-bottom: 0.2rem;
       align-self: center;
-      .registerLink {
-        color: ${colors.primary};
-      }
-      .registerLink:hover {
-        font-weight: 500;
-      }
     }
+
+    .registerLink {
+      display: block;
+      border: 0.1rem solid ${colors.royalBlue};
+      border-radius: 2rem;
+      padding: 0 1rem;
+      color: ${colors.royalBlue};
+    }
+    .registerLink:hover {
+      background-color: ${colors.royalBlue};
+      color: ${colors.white};
+    }
+
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
-      padding: 0 1rem;
+      padding: 0rem 1rem;
       a:not(.registerLink) {
         color: ${colors.darkerGray};
         text-decoration: none;
-        padding: 1.2rem 1.4rem;
+        padding: 1.65rem 1.4rem;
         transition: all 0.2s;
         border-bottom: 0.3rem solid transparent;
       }
       a:hover:not(.registerLink) {
-        font-weight: 600;
         color: ${colors.royalBlue};
         border-bottom: 0.3rem solid ${colors.royalBlue};
       }
@@ -147,9 +148,12 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
-      <Menu.Item 
-      id={GTM.nav.prefix + GTM.nav.feedback}
-      onClick={onFeedbackIconClick}>Feedback</Menu.Item>
+      <Menu.Item
+        id={GTM.nav.prefix + GTM.nav.feedback}
+        onClick={onFeedbackIconClick}
+      >
+        Feedback
+      </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
@@ -215,7 +219,7 @@ export default ({
               id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}
             >
-              <SvgIcon src={envelope} />
+              <SvgIcon src={feedback} />
             </button>
           </>
         )}
@@ -228,7 +232,7 @@ export default ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to="/">
+          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
             <Logo src={logo} alt="Fight Pandemics logo" />
           </BrandLink>
         }

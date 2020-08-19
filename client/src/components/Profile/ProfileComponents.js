@@ -153,7 +153,6 @@ export const DescriptionMobile = styled.div`
 export const ProfileLayout = styled.div`
   background-color: ${colors.lighterGray};
   max-height: 100%;
-  margin: 0 -2.5rem;
   flex-direction: row;
   flex-grow: 1;
   align-self: flex-start;

@@ -64,6 +64,14 @@ export const isAuthorOrg = (organisations, author) => {
   return isValid;
 };
 
+export const isAuthorUser = (user, post) => {
+  return (
+    user?._id === post?.author?.id ||
+    (user?.id === post?.author?.id &&
+      (user.ownUser === undefined || user.ownUser))
+  );
+};
+
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
   REQUEST: `_${GTM.requestHelp.prefix}`,
@@ -108,7 +116,7 @@ const SiderWrapper = styled(Sider)`
 
 const FiltersWrapper = styled.div`
   border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
-  margin: 0 2rem;
+  margin: 1.5rem 2rem 0;
   padding-top: 2rem;
   button {
     align-items: center;
@@ -262,8 +270,7 @@ const Feed = (props) => {
     // );
   };
 
-  const handleQuit = (e) => {
-    e.preventDefault();
+  const refetchPosts = () => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -276,6 +283,11 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "activePanel", null);
     postsDispatch({ type: RESET_PAGE, filterType: "" });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+  };
+
+  const handleQuit = (e) => {
+    e.preventDefault();
+    refetchPosts();
   };
 
   const handleLocation = (value) => {
@@ -300,7 +312,9 @@ const Feed = (props) => {
   const handleCreatePost = () => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
+      sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
+      sessionStorage.setItem("createPostAttemptLoggedOut", true);
       history.push(LOGIN);
     }
   };
@@ -555,9 +569,7 @@ const Feed = (props) => {
     if (
       isAuthenticated &&
       user &&
-      (user._id === post.author.id ||
-        user.id === post.author.id ||
-        isAuthorOrg(user.organisations, post.author))
+      (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
     ) {
       try {
         deleteResponse = await axios.delete(endPoint);
@@ -579,6 +591,7 @@ const Feed = (props) => {
       }
     }
   };
+
   return (
     <FeedContext.Provider
       value={{
@@ -675,6 +688,7 @@ const Feed = (props) => {
         <CreatePost
           gtmPrefix={GTM.feed.prefix}
           onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+          loadPosts={refetchPosts}
           visible={showCreatePostModal}
           user={user}
         />

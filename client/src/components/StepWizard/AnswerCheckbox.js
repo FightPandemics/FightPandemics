@@ -3,22 +3,22 @@ import React from "react";
 import { Checkbox } from "antd-mobile";
 import { theme } from "constants/theme";
 
-const { primary, white } = theme.colors;
+const { royalBlue, white } = theme.colors;
 
 const AnswerStyles = styled.div`
   align-items: center;
   display: flex;
-  border: 2px solid ${primary};
+  border: 2px solid ${royalBlue};
   border-radius: 0.8rem;
   box-sizing: border-box;
-  color: ${primary};
+  color: ${royalBlue};
   cursor: pointer;
   padding: 2rem 5rem;
   margin: 1.5rem 0;
   width: 100%;
   &.selected,
   &:hover {
-    background-color: ${primary};
+    background-color: ${royalBlue};
     color: ${white};
   }
   > .text {

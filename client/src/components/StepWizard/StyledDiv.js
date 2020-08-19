@@ -4,7 +4,7 @@ export default styled.div`
   font-size: 1.4rem;
   font-weight: 300;
   text-align: center;
-  bottom-padding: 5rem;
+  padding: 1.5rem 0;
   a {
     text-decoration: underline;
   }

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Modal, Card, WhiteSpace } from "antd-mobile";
+import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
 
 // Local
@@ -14,6 +14,7 @@ import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
+import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
 import WizardFormNav, {
   StyledButtonWizard,
@@ -31,8 +32,8 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
-import { isAuthorOrg } from "pages/Feed";
-import { authorProfileLink } from "./utils";
+import { authorProfileLink, buildLocationString } from "./utils";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
@@ -95,17 +96,12 @@ const Post = ({
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
-  const [copied, setCopied] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
-
-  // mock API to test functionality
-  /* to be removed after full integration with user api */
-  const [shared, setShared] = useState(false);
-  const [fakeShares, setFakeShares] = useState(0);
 
   const setShowComments = () => {
     if (dispatchPostAction) {
@@ -122,16 +118,19 @@ const Post = ({
     }
 
     let response;
+    let commentCountRes;
     let previousComments = [...comments];
     const skip = 0;
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
     }&skip=${skip}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
     dispatchPostAction(SET_LOADING);
 
     try {
       response = await axios.get(endPoint);
+      commentCountRes = await axios.get(totalCommentCountEndPoint);
     } catch (error) {
       console.log({ error });
       dispatchPostAction(RESET_LOADING);
@@ -157,7 +156,7 @@ const Post = ({
           "comments",
           allComments,
           "numComments",
-          allComments.length,
+          commentCountRes.data.numComments,
         );
       }
 
@@ -185,14 +184,17 @@ const Post = ({
   const handleComment = async (e) => {
     e.preventDefault();
     let response;
+    let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}`;
     const newComment = {
       content: comment,
     };
 
     try {
       response = await axios.post(endPoint, newComment);
+      commentCountRes = await axios.get(totalCommentCountEndPoint);
     } catch (error) {
       console.log({ error });
       setComment([]);
@@ -206,7 +208,7 @@ const Post = ({
         "comments",
         allComments,
         "numComments",
-        allComments.length,
+        commentCountRes.data.numComments,
       );
       setComment([]);
     }
@@ -235,13 +237,16 @@ const Post = ({
 
   const deleteComment = async (comment) => {
     let response;
+    let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
     if (isAuthenticated && comment.author.id === user.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
       try {
         response = await axios.delete(endPoint);
+        commentCountRes = await axios.get(totalCommentCountEndPoint);
       } catch (error) {
         console.log({ error });
       }
@@ -255,7 +260,7 @@ const Post = ({
           "comments",
           filterComments,
           "numComments",
-          filterComments.length,
+          commentCountRes.data.numComments,
         );
       }
     }
@@ -325,6 +330,9 @@ const Post = ({
           <ViewMore onClick={onClick} loadContent={loadMorePost} />
         ) : (
           <Link
+            onClick={() =>
+              sessionStorage.setItem("postredirect", `/post/${post._id}`)
+            }
             to={{
               pathname: LOGIN,
               state: { from: window.location.href },
@@ -339,20 +347,25 @@ const Post = ({
 
   const renderHeader = (
     <Card.Header
-      title={post?.author?.name}
+      title={
+        <div className="title-wrapper">
+          <div className="author">{post?.author?.name}</div>
+          {post?.author?.location?.country ? (
+            <div className="location-status">
+              <SvgIcon src={statusIndicator} className="status-icon" />
+              {buildLocationString(post.author.location)}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      }
       thumb={
         post?.author?.photo ? (
           post.author.photo
         ) : (
           <TextAvatar>{AvatarName}</TextAvatar>
         )
-      }
-      extra={
-        <span>
-          <SvgIcon src={statusIndicator} className="status-icon" />
-          {post?.author?.location?.city ? `${post.author.location.city}, ` : ""}
-          {post?.author?.location?.country ? post.author.location.country : ""}
-        </span>
       }
     />
   );
@@ -425,36 +438,18 @@ const Post = ({
         handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
-        shared={shared}
         postId={postId}
+        postTitle={post?.title}
+        postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
         numComments={numComments}
-        numShares={fakeShares}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
-        onCopyLink={() => {
-          if (!shared) setFakeShares(fakeShares + 1);
-          setShared(true);
-          return setCopied(!copied);
-        }}
+        setShowShareModal={setShowShareModal}
         id={post?._id}
       />
     </Card.Body>
-  );
-
-  const renderShareModal = (
-    <Modal
-      onClose={() => setCopied(!copied)}
-      maskClosable={true}
-      closable={true}
-      visible={copied}
-      transparent
-    >
-      <Heading level={4} className="h4">
-        Link Copied!
-      </Heading>
-    </Modal>
   );
 
   return (
@@ -468,8 +463,7 @@ const Post = ({
               <div className="card-submenu">
                 {isAuthenticated &&
                   user &&
-                  (user._id === post.author.id ||
-                    user.id === post.author.id ||
+                  (isAuthorUser(user, post) ||
                     (user.organisations &&
                       isAuthorOrg(user.organisations, post.author))) && (
                     <SubMenuButton
@@ -498,7 +492,13 @@ const Post = ({
               </Card.Body>
             )}
             {renderSocialIcons}
-            {renderShareModal}
+            <ShareModal
+              showShareModal={showShareModal}
+              setShowShareModal={setShowShareModal}
+              id={post._id}
+              postTitle={post.title}
+              postContent={post.content}
+            />
             {renderComments}
             <WebModal
               title="Confirm"
@@ -528,8 +528,7 @@ const Post = ({
             <div className="card-submenu">
               {isAuthenticated &&
                 user &&
-                (user?._id === post?.author?.id ||
-                  (user?.id === post?.author?.id && (user.ownUser === undefined || user.ownUser)) ||
+                (isAuthorUser(user, post) ||
                   isAuthorOrg(user.organisations, post.author)) && (
                   <SubMenuButton
                     onChange={handleDelete}
@@ -544,7 +543,7 @@ const Post = ({
           <WhiteSpace size="md" />
           {renderTags}
           <WhiteSpace />
-          {isAuthenticated && post ? (
+          {post && isAuthenticated ? (
             <Link
               to={{
                 pathname: `/post/${_id}`,
@@ -559,7 +558,16 @@ const Post = ({
               {renderContent}
             </Link>
           ) : (
-            <>{renderContent}</>
+            <>
+              {/*
+                Include hidden link for meta crawler but not on
+                profiles to avoid duplicate crawling of same posts
+              */}
+              {includeProfileLink && (
+                <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+              )}
+              {renderContent}
+            </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
             (post?.content?.length > CONTENT_LENGTH ? (
@@ -572,7 +580,13 @@ const Post = ({
               <Card.Body className="view-more-wrapper" />
             ))}
           {renderSocialIcons}
-          {renderShareModal}
+          <ShareModal
+            showShareModal={showShareModal}
+            setShowShareModal={setShowShareModal}
+            id={post._id}
+            postTitle={post.title}
+            postContent={post.content}
+          />
           <WebModal
             title="Confirm"
             visible={
@@ -604,4 +618,3 @@ const mapStateToProps = ({ session: { isAuthenticated } }) => {
 };
 
 export default connect(mapStateToProps)(Post);
-

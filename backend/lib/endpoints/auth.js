@@ -28,7 +28,12 @@ async function routes(app) {
       });
       reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
-      const { email, email_verified: emailVerified } = auth0User;
+      const {
+        email,
+        email_verified: emailVerified,
+        given_name: firstName,
+        family_name: lastName,
+      } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
       const dbUser = await User.findById(userId).populate("organisations");
@@ -43,7 +48,14 @@ async function routes(app) {
           organisations,
         };
       }
-      return { email, emailVerified, token, user };
+      return {
+        email,
+        emailVerified,
+        firstName,
+        lastName,
+        token,
+        user,
+      };
     } catch (err) {
       req.log.error(err, "OAuth error");
       throw app.httpErrors.internalServerError();
@@ -135,6 +147,15 @@ async function routes(app) {
     } catch (err) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("Wrong email or password.");
+      }
+      if (err.statusCode === 429) {
+        req.log.error(
+          err,
+          "Maximum number of sign in attempts exceeded. (10 times)",
+        );
+        throw app.httpErrors.tooManyRequests(
+          "Maximum number of sign in attempts exceeded.",
+        );
       }
       req.log.error(err, "Error logging in");
       throw app.httpErrors.internalServerError();

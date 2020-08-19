@@ -330,6 +330,7 @@ const NavigationLayout = (props) => {
 
       if (res) {
         toggleModal("thanksModal");
+        setTimeout(() => dispatchAction(SET_VALUE, "thanksModal", false), 3000);
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -352,7 +353,7 @@ const NavigationLayout = (props) => {
         Your input means a lot and helps us improve our services during and
         after the COVID-19 pandemic.
       </p>
-      <Link to="/">
+      <Link to={isAuthenticated ? "/feed" : "/"}>
         <Logo src={logo} alt="FightPandemics logo" />
       </Link>
     </ThanksModal>

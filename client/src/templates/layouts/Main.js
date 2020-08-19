@@ -8,13 +8,12 @@ const Main = styled.main`
   align-items: inherit;
   justify-content: center;
 
-  min-height: calc(100% - 119px);
-
+  min-height: calc(100vh - 119px); // mobile footer height
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: ${offWhite};
-    padding-top: 7rem;
+    padding-top: 6rem;
 
-    min-height: calc(100% - 9rem);
+    min-height: calc(100vh - 6rem); // footer height
   }
 `;
 

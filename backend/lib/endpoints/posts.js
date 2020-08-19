@@ -183,8 +183,8 @@ async function routes(app) {
             _id: true,
             "author.id": true,
             "author.location.city": true,
-            "author.location.state": true,
             "author.location.country": true,
+            "author.location.state": true,
             "author.name": true,
             "author.photo": true,
             "author.type": true,
@@ -320,52 +320,20 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      const [comment] = await app.to(Comment.findOne({ postId }));
+      /* eslint-disable sort-keys */
+      // Keys shouldn't be sorted here since this is a query, so order of the
+      // parameters is important to hit the right database index.
+      const [commentQueryErr, commentQuery] = await app.to(
+        Comment.find({
+          postId: mongoose.Types.ObjectId(postId),
+          parentId: null,
+        }).count(),
+      );
+      /* eslint-enable sort-keys */
 
-      let comments = [];
-      let numComments = 0;
-
-      if (comment) {
-        // TODO: add pagination
-        const [commentQueryErr, commentQuery] = await app.to(
-          Comment.aggregate([
-            {
-              $match: {
-                parentId: null,
-                postId: mongoose.Types.ObjectId(postId),
-              },
-            },
-            {
-              $lookup: {
-                as: "children",
-                foreignField: "parentId",
-                from: "comments",
-                localField: "_id",
-              },
-            },
-            {
-              $addFields: {
-                childCount: {
-                  $size: { $ifNull: ["$children", []] },
-                },
-              },
-            },
-            {
-              $group: {
-                _id: null,
-                comments: { $push: "$$ROOT" },
-                numComments: { $sum: { $add: ["$childCount", 1] } },
-              },
-            },
-          ]),
-        );
-        if (commentQueryErr) {
-          req.log.error(commentErr, "Failed retrieving comments");
-          throw app.httpErrors.internalServerError();
-        } else if (commentQuery) {
-          comments = commentQuery[0].comments;
-          numComments = commentQuery[0].comments;
-        }
+      if (commentQueryErr) {
+        req.log.error(commentQueryErr, "Failed retrieving comments");
+        throw app.httpErrors.internalServerError();
       }
 
       const projectedPost = {
@@ -375,8 +343,7 @@ async function routes(app) {
       };
 
       return {
-        comments,
-        numComments,
+        numComments: commentQuery || 0,
         post: projectedPost,
       };
     },
@@ -549,6 +516,12 @@ async function routes(app) {
             },
           },
           {
+            $skip: parseInt(skip, 10) || 0,
+          },
+          {
+            $limit: parseInt(limit, 10) || COMMENT_PAGE_SIZE,
+          },
+          {
             $lookup: {
               as: "children",
               foreignField: "parentId",
@@ -562,12 +535,6 @@ async function routes(app) {
                 $size: { $ifNull: ["$children", []] },
               },
             },
-          },
-          {
-            $skip: parseInt(skip) || 0,
-          },
-          {
-            $limit: parseInt(limit) || COMMENT_PAGE_SIZE,
           },
         ]).then((comments) => {
           comments.forEach((comment) => {

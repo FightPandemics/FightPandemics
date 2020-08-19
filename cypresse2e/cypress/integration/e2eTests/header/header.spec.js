@@ -1,15 +1,29 @@
+import Header from '../../../elements/pages/header';
+
 describe('FightPandemics Navigation bar', () => {
+
+  const header = new Header();
+
     context('When user is not logged in Register and Login button are visible', () => {
         beforeEach(() => {
-            cy.visit('');
+            header.visit();
           });
-  
-      it('Login button should be visible when user is not logged in', () => {
-        cy.get('a[href^="/auth/login"]').should('be.visible').and('have.attr', 'href', '/auth/login')
+ 
+      it('Logo is present and visible', () => {
+        header.getLogo().should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo');
+      });
+
+      it('Login and Registers buttons should be visible when user is not logged in', () => {
+        var signInLink = header.getSignInLink();
+        signInLink.should('be.visible').and('have.attr', 'href', '/auth/login');
+        var joinInLink = header.getJoinNowLink();
+        joinInLink.should('be.visible').and('have.attr', 'href', '/auth/signup');
       });
   
-      it('Register button should be visible when user is not logged in', () => {
-        cy.get('a.registerLink').should('be.visible').and('have.attr', 'href', '/auth/signup')
+      it('About us, Help Board and Feedback buttons are visible', () => {
+        header.getAboutUsLink().should('be.visible').and('have.attr', 'href', '/about-us');
+        header.getHelpBoardLink().should('be.visible').and('have.attr', 'href', '/feed');
+        header.getFeedbackButton().find('img').should('have.attr', 'alt','Icon')
       })
     });
 })

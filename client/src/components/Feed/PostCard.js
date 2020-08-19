@@ -12,8 +12,7 @@ const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
   margin-bottom: 4rem;
-  margin-left: 2rem;
-  margin-right 2rem;
+  padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -21,8 +20,6 @@ const PostCard = styled(Card)`
   }
 
   &.am-card {
-    font-family: ${display};
-
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       border-top: unset;
     }
@@ -46,14 +43,17 @@ const PostCard = styled(Card)`
     .card-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
 
-      .card-submenu {
-        display: flex;
+      > a {
+        flex: 1 1 auto;
+        display: block;
+      }
+
+      > .card-submenu {
+        flex: 0 0 auto;
+        margin-left: 3rem;
         cursor: pointer;
-
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          display: block;
-        }
       }
 
       svg {
@@ -65,32 +65,52 @@ const PostCard = styled(Card)`
 
     .am-card-header {
       display: block;
-      flex: 1 1 auto;
       padding: 0;
-      margin-right: 1rem;
 
       .am-card-header-content {
-        align-items: unset;
+        position: relative;
+        display: block;
+        min-height: 4rem;
+        padding-left: 5rem;
         font-size: ${medium};
 
+        > .ant-avatar-circle,
+        > img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin: 0;
+        }
+
         img {
-          margin-right: 0.7rem;
           border-radius: 4rem;
           width: 4rem;
           height: 4rem;
-          max-width: 100%;
         }
-      }
 
-      .am-card-header-extra {
-        text-align: unset;
-        font-size: ${xsmall};
-        margin-left: 4.7rem;
-        margin-top: -1.8rem;
+        .author,
+        .location-status {
+          line-height: 2rem;
+        }
 
-        .status-icon {
-          width: fit-content;
-          margin-right: 0.8rem;
+        .author {
+          font-size: ${medium};
+        }
+
+        .location-status {
+          position: relative;
+          padding-left: 1.4rem;
+          font-size: ${xsmall};
+          color: #888;
+
+          img {
+            position: absolute;
+            top: 0.7rem;
+            left: 0;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0;
+          }
         }
       }
     }
@@ -103,6 +123,10 @@ const PostCard = styled(Card)`
 
       &::before {
         content: none;
+      }
+
+      .am-tag {
+        margin: 0.5rem 0.6rem 0.5rem 0rem;
       }
 
       h2 {
@@ -118,8 +142,9 @@ const PostCard = styled(Card)`
       }
 
       &.content-wrapper {
-        @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          padding: 0 3.4rem;
+        .ant-typography {
+          margin: 0;
+          padding: 1rem 0;
         }
       }
 
@@ -127,7 +152,6 @@ const PostCard = styled(Card)`
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
           border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
           margin-bottom: 1.3rem;
-          padding: 0 3.4rem;
         }
       }
 
