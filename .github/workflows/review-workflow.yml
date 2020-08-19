@@ -63,6 +63,7 @@ jobs:
               region = "us-east-1"
               key = "${{ steps.get-branch-name-sanitized.outputs.branch }}.tfstate"
             }
+            required_version = "~> 0.13.0"
           }
           EOF
       - run: cat backend.tf
@@ -71,20 +72,20 @@ jobs:
         name: Get git commit
         shell: bash
         run: echo "::set-output name=hash::$GITHUB_SHA"
-      - name: 'Terraform Init'
+      - name: "Terraform Init"
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: latest
-          tf_actions_subcommand: 'init'
+          tf_actions_version: 0.13.0
+          tf_actions_subcommand: "init"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-      - name: 'Terraform Apply'
+      - name: "Terraform Apply"
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: latest
-          tf_actions_subcommand: 'apply'
+          tf_actions_version: 0.13.0
+          tf_actions_subcommand: "apply"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
@@ -100,5 +101,5 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
-      - name: 'Deployment URL'
+      - name: "Deployment URL"
         run: echo https://${{ steps.get-branch-name-sanitized.outputs.branch }}.fightpandemics.xyz

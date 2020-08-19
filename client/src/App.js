@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { initAuth } from "./actions/authActions";
 import routes from "./routes";
+import AppMetaContainer from "components/Meta/AppMetaContainer";
 import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 
@@ -14,6 +15,7 @@ const App = (props) => {
 
   return (
     <Router history={history}>
+      <AppMetaContainer />
       <Switch>
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
