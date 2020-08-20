@@ -1,4 +1,5 @@
 import SignIn from '../../../elements/pages/signIn';
+import {SAMPLE_EMAIL} from '../../constants';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -26,7 +27,7 @@ describe('FightPandemics Sign In Page', () => {
         it('Email address field is visible and can be populated', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test@gmail.com');
+            emailField.type(SAMPLE_EMAIL);
 
         });
 
@@ -101,26 +102,20 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Sign in button is enabled when required details are entered', () => {
-            var emailField = signIn.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test@gmail.com');
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type('Testing!');
+            signIn.getEmailField().type(SAMPLE_EMAIL);
+            signIn.getPasswordField().type('Testing!');
             var signInButton = signIn.getSignInButton();
             signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'false');
 
         });
 
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
-            var emailField = signIn.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test@test.com');
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type('WrongPW!wpw3hi');
-            var signInButton = signIn.getSignInButton();
-            signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'false').click();
+            signIn.getEmailField().type(SAMPLE_EMAIL);
+            signIn.getPasswordField().type('WrongPW!wpw3hi');
+            signIn.getSignInButton().click();
+            var loginFailAlert = signIn.getLoginFailAlert();
+            loginFailAlert.should('be.visible');
+            loginFailAlert.contains('Login failed, reason: Wrong email or password.');
 
         });
 
