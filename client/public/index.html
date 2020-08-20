@@ -20,9 +20,47 @@
       property="twitter:image"
       content="https://fightpandemics.com/Offer-Help-Request-Help.png"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   </head>
+  <style>
+    #invalid-browser-page {
+      position: absolute;
+      width: 98vw;
+      top: 15%;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    #invalid-browser-page-center-image {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      height: 200px;
+    }
+    .invalid-browser-page-browser-logo-size {
+      height: 100px;
+      widht: auto;
+    }
+  </style>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      function isIE() {
+        return (window.navigator.userAgent.match(/MSIE|Trident/) !== null);
+      }
+      if (isIE()) {
+        document.write("<div id='invalid-browser-page'>");
+        document.write("<img id='invalid-browser-page-center-image' src='logoIcon.svg'/>");
+        document.write("<h1>Your browser is not supported</h1>")
+        document.write("<p>FightPandemics works best on an up-to-date browser. " +
+                  "Please upgrade to one of the <br> following browsers" +
+                  " in order to enjoy a secure and pleasant experience.</p>");
+        document.write("<a href='https://google.com/chrome'><img class='invalid-browser-page-browser-logo-size' src='chrome-logo.png'></a>");
+        document.write("<a href='https://mozilla.org/'><img class='invalid-browser-page-browser-logo-size' src='firefox-logo.png'></a>");
+        document.write("<a href='https://microsoft.com/edge'><img class='invalid-browser-page-browser-logo-size' src='edge-logo.png'></a>");
+        document.write("<a href='https://apple.com/safari'><img class='invalid-browser-page-browser-logo-size' src='safari-logo.png'></a>");
+        document.write("</div>")
+      }
+    </script>
   </body>
 </html>
