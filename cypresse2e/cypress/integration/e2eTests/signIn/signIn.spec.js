@@ -1,5 +1,6 @@
 import SignIn from '../../../elements/pages/signIn';
-import {SAMPLE_EMAIL} from '../../constants';
+import {DUMMY_SAMPLE_EMAIL} from '../../constants';
+import {VALID_SAMPLE_EMAIL} from '../../constants';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -27,7 +28,7 @@ describe('FightPandemics Sign In Page', () => {
         it('Email address field is visible and can be populated', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(SAMPLE_EMAIL);
+            emailField.type(DUMMY_SAMPLE_EMAIL);
 
         });
 
@@ -102,7 +103,7 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Sign in button is enabled when required details are entered', () => {
-            signIn.getEmailField().type(SAMPLE_EMAIL);
+            signIn.getEmailField().type(DUMMY_SAMPLE_EMAIL);
             signIn.getPasswordField().type('Testing!');
             var signInButton = signIn.getSignInButton();
             signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'false');
@@ -110,12 +111,26 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
-            signIn.getEmailField().type(SAMPLE_EMAIL);
+            signIn.getEmailField().type(VALID_SAMPLE_EMAIL);
             signIn.getPasswordField().type('WrongPW!wpw3hi');
             signIn.getSignInButton().click();
             var loginFailAlert = signIn.getLoginFailAlert();
             loginFailAlert.should('be.visible');
             loginFailAlert.contains('Login failed, reason: Wrong email or password.');
+            signIn.getEmailField().clear().type(VALID_SAMPLE_EMAIL);
+            signIn.getPasswordField().clear().type('Testing1234!');
+            signIn.getSignInButton().click();
+        });
+
+        it('Login fail alert appears when maximum sign in attempts are exceeded', () => {
+            signIn.getEmailField().type(DUMMY_SAMPLE_EMAIL);
+            signIn.getPasswordField().type('WrongPW!wpw3hi');
+            for (var i = 0; i < 11; i++) {
+                signIn.getSignInButton().click();
+            };
+            var loginFailAlert = signIn.getLoginFailAlert();
+            loginFailAlert.should('be.visible');
+            loginFailAlert.contains('Login failed, reason: Maximum number of sign in attempts exceeded.');
 
         });
 
