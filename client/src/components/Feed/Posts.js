@@ -5,6 +5,8 @@ import {
   AutoSizer,
   WindowScroller,
   List,
+  CellMeasurer,
+  CellMeasurerCache,
 } from "react-virtualized";
 
 //Local
@@ -13,6 +15,11 @@ import Loader from "components/Feed/StyledLoader";
 
 // Constants
 import { mq } from "constants/theme";
+
+const cellMeasurerCache = new CellMeasurerCache({
+  fixedWidth: true,
+  defaultHeight: 380,
+});
 
 const HorizontalRule = styled.hr`
   display: none;
@@ -42,22 +49,9 @@ const Posts = ({
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-
-  //TODO: We have to use CellMeasurer and CellMEasurerCache for dynamich row height
-  //Below function won't because react-virtualized removing containers from the DOM.
-  //   const rowHeight = ({ index }) => {
-  // const FIXED_ROW_HEIGHT = 380;
-  //     if(!!posts[index]) {
-  //  const rowElement = document.getElementById(posts[index][1]._id);
-  // if(rowElement.offsetHeight !== "null") {
-  //   return rowElement.offsetHeight;
-  // }
-  //    return FIXED_ROW_HEIGHT;
-  //     }
-  //   }
-
+  console.log(posts.length);
   const postItem = useCallback(
-    ({ key, index, style }) => {
+    ({ key, index, style, parent }) => {
       let content;
       if (!isItemLoaded(index)) {
         content = <Loader />;
@@ -81,9 +75,19 @@ const Posts = ({
         );
       }
       return (
-        <div key={key} style={style}>
-          {content}
-        </div>
+        <CellMeasurer
+          key={key}
+          cache={cellMeasurerCache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          {({ measure, registerChild }) => (
+            <div key={key} ref={registerChild} onLoad={measure} style={style}>
+              {content}
+            </div>
+          )}
+        </CellMeasurer>
       );
     },
     [
@@ -113,13 +117,14 @@ const Posts = ({
                 {({ width }) => (
                   <List
                     autoHeight
-                    ref={registerChild}
+                    //ref={registerChild}
                     height={height}
                     width={width}
                     isScrolling={isScrolling}
                     onRowsRendered={onRowsRendered}
                     rowCount={itemCount}
-                    rowHeight={360}
+                    rowHeight={cellMeasurerCache.rowHeight}
+                    deferredMeasurementCache={cellMeasurerCache}
                     rowRenderer={postItem}
                     scrollTop={scrollTop}
                     onScroll={onChildScroll}

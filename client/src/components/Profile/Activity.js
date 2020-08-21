@@ -4,10 +4,16 @@ import {
   AutoSizer,
   WindowScroller,
   List,
+  CellMeasurer,
+  CellMeasurerCache,
 } from "react-virtualized";
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
 
+const cellMeasurerCache = new CellMeasurerCache({
+  fixedWidth: true,
+  defaultHeight: 380,
+});
 const Activity = ({
   filteredPosts,
   updateComments,
@@ -26,7 +32,7 @@ const Activity = ({
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const postItem = useCallback(
-    ({ key, index, style }) => {
+    ({ key, index, style, parent }) => {
       let content;
       if (!isItemLoaded(index)) {
         content = <Loader />;
@@ -47,9 +53,19 @@ const Activity = ({
         );
       }
       return (
-        <div key={key} style={style}>
-          {content}
-        </div>
+        <CellMeasurer
+          key={key}
+          cache={cellMeasurerCache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          {({ measure, registerChild }) => (
+            <div key={key} ref={registerChild} onLoad={measure} style={style}>
+              {content}
+            </div>
+          )}
+        </CellMeasurer>
       );
     },
     [
@@ -83,13 +99,14 @@ const Activity = ({
                   {({ width }) => (
                     <List
                       autoHeight
-                      ref={registerChild}
+                      // ref={registerChild}
                       height={height}
                       width={width}
                       isScrolling={isScrolling}
                       onRowsRendered={onRowsRendered}
                       rowCount={itemCount}
-                      rowHeight={380}
+                      rowHeight={cellMeasurerCache.rowHeight}
+                      deferredMeasurementCache={cellMeasurerCache}
                       rowRenderer={postItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}

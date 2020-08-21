@@ -566,6 +566,7 @@ const Feed = (props) => {
     ({ startIndex, stopIndex }) => {
       const userPosts = Object.entries(postsList);
       dispatchAction(SET_VALUE, "applyFilters", false);
+      console.log(!isLoading && loadMore && loadedRows);
       if (!isLoading && loadMore && loadedRows) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
