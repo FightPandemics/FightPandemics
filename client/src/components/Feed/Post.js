@@ -22,7 +22,10 @@ import WizardFormNav, {
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import { typeToTag } from "assets/data/formToPostMappings";
+import {
+  typeToTag,
+  translateISOTimeTitle,
+} from "assets/data/formToPostMappings";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -32,7 +35,11 @@ import {
   TOGGLE_SHOW_COMMENTS,
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
-import { authorProfileLink, buildLocationString } from "./utils";
+import {
+  authorProfileLink,
+  buildLocationString,
+  buildTimestampString,
+} from "./utils";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
@@ -354,7 +361,8 @@ const Post = ({
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
-              {console.log('post', post)}
+              {console.log(post.elapsedTimeText)}
+              &nbsp;&nbsp;{post?.elapsedTimeText ? post.elapsedTimeText : ""}
             </div>
           ) : (
             ""

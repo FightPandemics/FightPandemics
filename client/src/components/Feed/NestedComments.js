@@ -238,6 +238,7 @@ const NestedComments = ({
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
+                  {console.log("comment", comment)}
                   {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
                 </span>
               </Tooltip>

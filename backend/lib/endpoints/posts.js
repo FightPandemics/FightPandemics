@@ -205,12 +205,21 @@ async function routes(app) {
             types: true,
             visibility: true,
             createdAt: true,
+            elapsedTimeText: true,
           },
         },
       ];
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipeline),
+        Post.aggregate(aggregationPipeline).then((posts) => {
+          posts.forEach((post) => {
+            post.elapsedTimeText = setElapsedTimeText(
+              post.createdAt,
+              post.updatedAt,
+            );
+          });
+          return posts;
+        }),
       );
 
       if (postsErr) {
