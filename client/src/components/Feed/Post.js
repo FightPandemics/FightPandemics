@@ -22,10 +22,7 @@ import WizardFormNav, {
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import {
-  typeToTag,
-  translateISOTimeTitle,
-} from "assets/data/formToPostMappings";
+import { typeToTag } from "assets/data/formToPostMappings";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -361,8 +358,12 @@ const Post = ({
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
-              &nbsp;&nbsp;{buildTimestampString(post)}
             </div>
+          ) : (
+            ""
+          )}
+          {post?.createdAt ? (
+            <div className="timestamp">{buildTimestampString(post)}</div>
           ) : (
             ""
           )}
