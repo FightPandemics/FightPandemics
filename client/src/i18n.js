@@ -28,7 +28,7 @@ i18n.use(Backend)
   .use(initReactI18next)
   .init({
     resources,
-    lng: getLang(),
+    lng: navigator.language,
     fallbackLng: Languages.en,
     interpolation: {
       escapeValue: false,
