@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Icon } from "antd-mobile";
@@ -43,28 +43,31 @@ const LocalEmergencyBanner = () => {
   const [displayBanner, setDisplayBanner] = useState(true);
   const [localEmergencyNumber, setLocalEmergencyNumber] = useState("");
 
+  const getEmergencyNumber = async () => {
+    try {
+      const ipInfo = await axios.get("https://extreme-ip-lookup.com/json/");
+
+      const countryCode = localEmergencyData[ipInfo.data.countryCode];
+
+      if (!countryCode) throw Error();
+
+      if (typeof countryCode.Ambulance === "string") {
+        setLocalEmergencyNumber(countryCode.Ambulance.replace(/[/]/g, " or "));
+      } else {
+        setLocalEmergencyNumber(countryCode.Ambulance);
+      }
+    } catch {
+      setLocalEmergencyNumber("location unavailable");
+    }
+  };
+
+  useEffect(() => {
+    getEmergencyNumber();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // runs once on mount
+
   // Shows banner until client closes
   if (!displayBanner) return null;
-
-  axios
-    .get("https://extreme-ip-lookup.com/json/")
-    .then((ipInfo) => {
-      let countryCode = localEmergencyData[ipInfo.data.countryCode];
-      if (countryCode.Ambulance === 0) {
-        return "000";
-      } else if (typeof countryCode.Ambulance === "string") {
-        let updatedAmbulance = countryCode.Ambulance.replace(/[/]/g, " or ");
-        return updatedAmbulance;
-      } else {
-        return countryCode.Ambulance;
-      }
-    })
-    .then((emergencyNumber) => {
-      setLocalEmergencyNumber(emergencyNumber);
-    })
-    .catch(() => {
-      setLocalEmergencyNumber("location unavailable");
-    });
 
   return (
     <LocalEmergencyBannerStyle>
