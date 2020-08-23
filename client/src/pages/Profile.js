@@ -257,6 +257,7 @@ const Profile = ({
         )}
         <ProfilePic
           noPic={true}
+          newUpload={true}
           initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
         />
         <UserInfoDesktop>
@@ -344,7 +345,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}

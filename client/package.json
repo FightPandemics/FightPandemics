@@ -15,6 +15,7 @@
     "react-gtm-module": "^2.0.8",
     "react-helmet-async": "^1.0.6",
     "react-hook-form": "^5.7.2",
+    "react-image-crop": "^8.6.5",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
     "react-redux": "^7.2.0",

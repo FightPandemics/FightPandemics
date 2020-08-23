@@ -49,7 +49,7 @@ services:
     environment:
       BACKEND_SERVICE_URL: http://backend-service:8000
     ports:
-      - "3000:3000"
+      - "3001:3002"
     volumes:
       - ./client:/app
       - /app/node_modules/
