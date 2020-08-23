@@ -4,6 +4,8 @@ import { mq } from "constants/theme";
 import { CameraFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 import ReactCrop from "react-image-crop";
+import CancelButton from "../Button/SubmitButton";
+import SubmitButton from "../Button/BaseButton";
 import "react-image-crop/dist/ReactCrop.css";
 
 const ContainerDiv = styled.div`
@@ -24,6 +26,7 @@ const InitialDiv = styled.div`
   text-align: center;
   font-weight: 500;
   background-color: #f3f4fe;
+  margin-top: 2rem;
   @media screen and (min-width: ${(props) =>
       props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;
@@ -42,6 +45,12 @@ const UploadPicDiv = styled.div`
   right: 4rem;
   bottom: 2.12rem;
 `;
+
+const buttonStyles = {
+  color: "white",
+  backgroundColor: "#425AF2",
+  fontWeight: "500",
+};
 
 const ProfilePic = ({ newUpload, initials, resolution }) => {
   const [image, setImage] = useState();
@@ -116,6 +125,14 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
           destroyOnClose={true}
           closable={false}
           onCancel={() => setModalVisible(false)}
+          footer={[
+            <SubmitButton onClick={() => setModalVisible(false)}>
+              Cancel
+            </SubmitButton>,
+            <CancelButton type="primary" onClick={savePhoto}>
+              Submit
+            </CancelButton>,
+          ]}
         >
           <div
             style={{
