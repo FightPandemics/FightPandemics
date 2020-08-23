@@ -11,6 +11,7 @@ import { ProfileCompletedButtonsWrapper } from "components/CompletedProfile/Comp
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
+import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
@@ -359,6 +360,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         >
           {post && dispatchPostAction && postLength ? (
             <>
+              <PostMetaContainer post={post}></PostMetaContainer>
               <Post
                 currentPost={post}
                 deleteModalVisibility={deleteModalVisibility}
