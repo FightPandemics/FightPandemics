@@ -49,6 +49,7 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [croppedImageUrl, setCroppedImageUrl] = useState();
   const [crop, setCrop] = useState({
+    aspect: 4 / 4,
     unit: "px",
     height: 200,
     width: 200,
@@ -92,23 +93,35 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
 
   return (
     <ContainerDiv>
-      {croppedImageUrl ? (
-        <img src={croppedImageUrl} />
-      ) : (
-        <InitialDiv resolution={resolution}>{initials}</InitialDiv>
-      )}
+      <InitialDiv resolution={resolution}>
+        {croppedImageUrl ? (
+          <img
+            style={{
+              maxWidth: "100%",
+              borderRadius: "50%",
+            }}
+            src={croppedImageUrl}
+          />
+        ) : (
+          initials
+        )}
+      </InitialDiv>
       {modalVisible ? (
         <Modal
           visible={modalVisible}
-          height={"50%"}
-          width={"60%"}
+          height={"50rem"}
+          width={"50rem"}
           okText={"Save"}
           onOk={savePhoto}
           destroyOnClose={true}
           closable={false}
           onCancel={() => setModalVisible(false)}
         >
-          <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
             <ReactCrop
               src={photoURL}
               crop={crop}
