@@ -132,6 +132,7 @@ async function routes(app) {
 
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
+      /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
             {
@@ -150,7 +151,8 @@ async function routes(app) {
             { $sort: { distance: 1, _id: -1 } },
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
-
+      /* eslint-enable sort-keys */
+      /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
@@ -166,10 +168,10 @@ async function routes(app) {
                 $limit: limit || POST_PAGE_SIZE,
               },
             ];
+      /* eslint-enable sort-keys */
 
-      const aggregationPipeline = [
-        ...sortAndFilterSteps,
-        ...paginationSteps,
+      /* eslint-disable sort-keys */
+      const lookupSteps = [
         {
           $lookup: {
             as: "comments",
@@ -178,6 +180,11 @@ async function routes(app) {
             localField: "_id",
           },
         },
+      ];
+      /* eslint-enable sort-keys */
+
+      /* eslint-disable sort-keys */
+      const projectionSteps = [
         {
           $project: {
             _id: true,
@@ -207,19 +214,77 @@ async function routes(app) {
           },
         },
       ];
+      /* eslint-enable sort-keys */
+
+      /* eslint-disable sort-keys */
+      const facetStep = [
+        {
+          $facet: {
+            meta: [
+              { $count: "count" },
+              { $addFields: { skip } },
+              { $addFields: { limit } },
+            ],
+            data: [],
+          },
+        },
+      ];
+      /* eslint-enable sort-keys */
+
+      const aggregationPipelineFormattedOutputResults = [
+        ...sortAndFilterSteps,
+        ...paginationSteps,
+        ...lookupSteps,
+        ...projectionSteps,
+        ...facetStep,
+      ];
+
+      // New DB query to get the total results without pagination steps but with filtering aplyed
+      /* eslint-disable sort-keys */
+      const filteredResults = await Post.aggregate([
+        ...sortAndFilterSteps,
+        ...lookupSteps,
+        { $group: { _id: null, count: { $sum: 1 } } },
+      ]);
+      /* eslint-enable sort-keys */
+
+      const numberFilteredResults = filteredResults[0].count;
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipeline),
+        Post.aggregate(aggregationPipelineFormattedOutputResults),
       );
+
+      const totalDocuments = await Post.countDocuments();
+
+      /* eslint-disable sort-keys */
+      const emptyResponseData = [
+        {
+          meta: [
+            {
+              count: 0,
+              filtered: numberFilteredResults,
+              limit,
+              skip,
+              total: totalDocuments,
+            },
+          ],
+          data: [],
+        },
+      ];
+      /* eslint-enable sort-keys */
 
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
-      } else if (posts === null) {
-        return [];
+      } else if (posts[0].data === null) {
+        return emptyResponseData;
+      } else if (posts[0].data.length === 0) {
+        return emptyResponseData;
+      } else {
+        posts[0].meta[0].total = totalDocuments;
+        posts[0].meta[0].filtered = numberFilteredResults;
+        return posts;
       }
-
-      return posts;
     },
   );
 
