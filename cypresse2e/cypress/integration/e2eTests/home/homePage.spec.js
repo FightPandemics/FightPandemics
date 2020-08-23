@@ -51,5 +51,23 @@ describe('FightPandemics Home screen', () => {
         cookieBanner.should('not.be.visible');
       });
 
+      it('Can navigate to the cookies policy page via the cookie banner', () => {
+        var cookiesPolicyLink = home.getCookieBannerCookiesPolicy();
+        cookiesPolicyLink.click();
+        cy.location('pathname').should('eq', '/cookies-policy');
+      });
+
+      it('Can navigate to the privacy policy page via the cookie banner', () => {
+        var privacyPolicyLink = home.getCookieBannerPrivacyPolicy();
+        privacyPolicyLink.click();
+        cy.location('pathname').should('eq', '/privacy-policy');
+      });
+
+      it('Can navigate to the terms and conditions page via the cookie banner', () => {
+        var termsAndConditionsLink = home.getCookieBannerTermsAndConditions();
+        termsAndConditionsLink.click();
+        cy.location('pathname').should('eq', '/terms-conditions');
+      });
+
     });
 })

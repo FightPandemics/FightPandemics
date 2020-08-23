@@ -9,6 +9,9 @@ class HomePage{
     subHeading2 = "div > p:nth-child(4)";
     cookieBanner = "#cookie-banner-text";
     cookieBannerClose = "#cookie-banner-close";
+    cookieBannerCookiesPolicy = 'a[href*="cookies-policy"]'
+    cookieBannerPrivacyPolicy = 'a[href*="privacy-policy"]'
+    cookieBannerTermsAndConditions = 'a[href*="terms-conditions"]'
 
     constructor(){}
 
@@ -46,6 +49,18 @@ class HomePage{
 
     getCookieBannerClose() {
         return cy.get(this.cookieBannerClose);
+    }
+
+    getCookieBannerCookiesPolicy() {
+        return cy.get(this.cookieBannerCookiesPolicy);
+    }
+
+    getCookieBannerPrivacyPolicy() {
+        return cy.get(this.cookieBannerPrivacyPolicy);
+    }
+
+    getCookieBannerTermsAndConditions() {
+        return cy.get(this.cookieBannerTermsAndConditions);
     }
 
 }
