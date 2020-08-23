@@ -9,9 +9,9 @@ class HomePage{
     subHeading2 = "div > p:nth-child(4)";
     cookieBanner = "#cookie-banner-text";
     cookieBannerClose = "#cookie-banner-close";
-    cookieBannerCookiesPolicy = 'a[href*="cookies-policy"]'
-    cookieBannerPrivacyPolicy = 'a[href*="privacy-policy"]'
-    cookieBannerTermsAndConditions = 'a[href*="terms-conditions"]'
+    cookieBannerCookiesPolicy = "#cookie-banner-cookies-policy";
+    cookieBannerPrivacyPolicy = "#cookie-banner-privacy-policy";
+    cookieBannerTermsAndConditions = "#cookie-banner-terms-and-conditions";
 
     constructor(){}
 

@@ -56,9 +56,9 @@ export default () => {
         This site uses cookies to deliver our service and to show you relevant
         information. By using our site, you acknowledge that you have read and
         understand our{" "}
-        <CookieLink href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
-        <CookieLink href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
-        <CookieLink href="/terms-conditions">Terms & Conditions</CookieLink>.
+        <CookieLink id="cookie-banner-cookies-policy" href="/cookies-policy">Cookies Policy</CookieLink>,{" "}
+        <CookieLink id="cookie-banner-privacy-policy" href="/privacy-policy">Privacy Policy</CookieLink>, and our{" "}
+        <CookieLink id="cookie-banner-terms-and-conditions" href="/terms-conditions">Terms & Conditions</CookieLink>.
         Your use of FightPandemics' Products is subject to these policies and
         terms.
       </div>
