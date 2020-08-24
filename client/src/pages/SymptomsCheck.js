@@ -20,7 +20,7 @@ import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
 
 const { typography, colors } = theme;
-const { tablet, desktop } = mq;
+const { phone, tablet, desktop } = mq;
 
 const INITIAL_STATE = {};
 
@@ -153,7 +153,7 @@ const AnswerStyles = styled.div`
   justify-content: space-between;
   background-color: ${colors.white};
   color: ${colors.black};
-  width: 60%;
+  width: 100%;
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: ${typography.size.large};
   border: 0.1rem solid ${colors.royalBlue};
@@ -163,8 +163,23 @@ const AnswerStyles = styled.div`
   padding: 2rem 2.5rem;
   margin: 1.5rem 0rem;
   text-align: center;
-  @media screen and (max-width: ${tablet.narrow.maxWidth}) {
+  @media screen and (min-width: ${phone.narrow.minWidth}) {
     width: 100%;
+  }
+  @media screen and (min-width: ${phone.wide.minWidth}) {
+    width: 100%;
+  }
+  @media screen and (min-width: ${tablet.narrow.minWidth}) {
+    width: 80%;
+  }
+  @media screen and (min-width: ${tablet.wide.minWidth}) {
+    width: 80%;
+  }
+  @media screen and (min-width: ${desktop.small.minWidth}) {
+    width: 60%;
+  }
+  @media screen and (min-width: ${desktop.medium.minWidth}) {
+    width: 60%;
   }
   &:hover,
   &.selected {
@@ -264,10 +279,10 @@ const Welcome = (props) => {
         <li>Slurred speach of difficulty speaking (new or worsening)</li>
       </StyledUl>
       <AnswerButton onSelect={() => setOpenModal(true)}>
-        Yes I am experiencing atleast one of these symptoms
+        Yes I am experiencing at least one of these symptoms
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("yes")}>
-        No, they do not have any of these symptoms
+        No, I do not have any of these symptoms
       </AnswerButton>
       <AlertModalStyle basic transparent visible={openModal}>
         <h4>
