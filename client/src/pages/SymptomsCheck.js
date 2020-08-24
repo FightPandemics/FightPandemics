@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon, Checkbox, Modal } from "antd-mobile";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 import styled from "styled-components";
 import { DARK_GRAY } from "constants/colors";
 
@@ -20,6 +20,7 @@ import Under18 from "./CovidScreening/Under18";
 import Disclaimer from "assets/icons/disclaimer.svg";
 
 const { typography, colors } = theme;
+const { tablet, desktop } = mq;
 
 const INITIAL_STATE = {};
 
@@ -132,7 +133,7 @@ const AlertModalStyle = styled(Modal)`
 const TitleStyle = styled.div`
   font-weight: bold;
   margin: 1rem 0 1.5rem;
-  text-align: left;
+  text-align: center;
 `;
 
 const SubtitleStyle = styled.h5`
@@ -162,6 +163,9 @@ const AnswerStyles = styled.div`
   padding: 2rem 2.5rem;
   margin: 1.5rem 0rem;
   text-align: center;
+  @media screen and (max-width: ${tablet.narrow.maxWidth}) {
+    width: 100%;
+  }
   &:hover,
   &.selected {
     background-color: ${colors.royalBlue};
@@ -241,13 +245,12 @@ const Welcome = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <h5>Is this an emergency?</h5>
       <h3>
         <TitleStyle>
-          Stop or call your local emergency number 911 if you or anyone else
-          have any of these symptoms
+          Do you have any of these life-threatening symptoms?
         </TitleStyle>
       </h3>
       <StyledUl>
@@ -270,7 +273,7 @@ const Welcome = (props) => {
         <h4>
           Based on your reported symptoms, you should seek care immediately.
           <br />
-          Call the emergency number!
+          Call your local emergency number!
         </h4>
         <ColoredButton onClick={() => setOpenModal(false)}>Close</ColoredButton>
       </AlertModalStyle>
@@ -287,7 +290,7 @@ const Step1 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         How old are you?
@@ -337,7 +340,7 @@ const Step2 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         Are they experiencing any of these symptoms?
@@ -396,7 +399,7 @@ const Step3 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         Do any of these apply to them?
@@ -428,7 +431,7 @@ const Step4 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         Have they traveled internationally in the last 14 days?
@@ -486,7 +489,7 @@ const Step5 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         In the last 14 days, what was their exposure to others who are known to
@@ -536,7 +539,7 @@ const Step6 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         In the last 14 days, have they been in an area where COVID‑19 is
@@ -564,7 +567,7 @@ const Step7 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         Do they live in a care facility?
@@ -592,7 +595,7 @@ const Step8 = (props) => {
   return (
     <WizardStep alignItems="flex-start">
       <h5>
-        Question {props.currentStep - 1} / {props.totalSteps - 1}
+        Question {props.currentStep} / {props.totalSteps - 2}
       </h5>
       <Heading level={3} className="h2" textAlign="left">
         Do they work in a medical facility?
