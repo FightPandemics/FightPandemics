@@ -239,7 +239,7 @@ async function routes(app) {
         ...facetStep,
       ];
 
-      // New DB query to get the total results without pagination steps but with filtering aplyed
+      // Get the total results without pagination steps but with filtering aplyed - filtered
       /* eslint-disable sort-keys */
       const filteredResults = await Post.aggregate([
         ...sortAndFilterSteps,
@@ -254,8 +254,10 @@ async function routes(app) {
         Post.aggregate(aggregationPipelineFormattedOutputResults),
       );
 
+      // Total number of posts in db
       const totalDocuments = await Post.countDocuments();
 
+      // When no documents are found return the same format response
       /* eslint-disable sort-keys */
       const emptyResponseData = [
         {
@@ -276,9 +278,7 @@ async function routes(app) {
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
-      } else if (posts[0].data === null) {
-        return emptyResponseData;
-      } else if (posts[0].data.length === 0) {
+      } else if (posts[0].data === null || posts[0].data.length === 0) {
         return emptyResponseData;
       } else {
         posts[0].meta[0].total = totalDocuments;
