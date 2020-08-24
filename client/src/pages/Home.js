@@ -10,10 +10,10 @@ import GTM from "constants/gtm-tags";
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
 
-const needHelpInactive = require("assets/thermometer-unselected.svg");
-const needHelpActive = require("assets/thermometer-selected.svg");
-const offerHelpInactive = require("assets/help-gesture-unselected.svg");
-const offerHelpActive = require("assets/help-gesture-selected.svg");
+const needHelpInactive = require("assets/request-help-unselected.svg");
+const needHelpActive = require("assets/request-help-selected.svg");
+const offerHelpInactive = require("assets/offer-help-unselected.svg");
+const offerHelpActive = require("assets/offer-help-selected.svg");
 
 const FlexChild = styled.div`
   flex-grow: 1;
@@ -162,11 +162,7 @@ const Home = (props) => {
     <MainContainer className="text-center home">
       <StyledIntro>
         <IntroText>
-          <Title
-            color="white"
-            size={theme.typography.size.xlarge}
-            weight="500"
-          >
+          <Title color="white" size={theme.typography.size.xlarge} weight="500">
             FightPandemics
           </Title>
 
