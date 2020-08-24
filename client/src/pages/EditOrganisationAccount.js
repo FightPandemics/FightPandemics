@@ -5,7 +5,7 @@ import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Alert } from "antd";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import SuccessAlert from "components/Alert/SuccessAlert";
 import { ORANGE_RED, WHITE } from "../constants/colors";
 import { Link } from "react-router-dom";
@@ -444,7 +444,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
 }
 
 const mapDispatchToProps = {
-  refetchUser
-}
+  refetchUser,
+};
 
-export default connect(null, mapDispatchToProps)(withOrganisationContext(EditOrganisationAccount));
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withOrganisationContext(EditOrganisationAccount));
