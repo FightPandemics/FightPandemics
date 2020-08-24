@@ -147,12 +147,12 @@ const StyledUl = styled.ul`
 `;
 
 const AnswerStyles = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
   background-color: ${colors.white};
   color: ${colors.black};
-  width: 100%;
+  width: 60%;
   font-family: ${typography.font.family.display}, sans-serif;
   font-size: ${typography.size.large};
   border: 0.1rem solid ${colors.royalBlue};
@@ -161,7 +161,7 @@ const AnswerStyles = styled.div`
   cursor: pointer;
   padding: 2rem 2.5rem;
   margin: 1.5rem 0rem;
-  text-align: left;
+  text-align: center;
   &:hover,
   &.selected {
     background-color: ${colors.royalBlue};
@@ -230,8 +230,19 @@ const Welcome = (props) => {
     props.nextStep();
   };
 
+  console.log('propsIsActive', props.isActive);
+  if (props.isActive) {
+    props.setIsOnWelcome(true);
+  } else {
+    props.setIsOnWelcome(false);
+  }
+  
+  console.log('props in welcom', props)
   return (
     <WizardStep alignItems="flex-start">
+      <h5>
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
+      </h5>
       <h5>Is this an emergency?</h5>
       <h3>
         <TitleStyle>
@@ -241,12 +252,16 @@ const Welcome = (props) => {
       </h3>
       <StyledUl>
         <li>Severe, constant chest pain or pressure</li>
-        <li>Extreme difficulty breathing</li>
+        <li>Extreme difficulty breathing (such as gasping for air or being unable to talk without catching your breath)</li>
         <li>Severe, constant light headedness</li>
-        <li>Serious disorientation or unresponsiveness</li>
+        <li>New serious disorientation (acting confused)</li>
+        <li>Unconscoius or difficult to wake up</li>
+        <li>Seizures</li>
+        <li>Signs of low blood pressure (too weak to stand, light headed, feeling cold, pale, clammy skin)</li>
+        <li>Slurred speach of difficulty speaking (new or worsening)</li>
       </StyledUl>
       <AnswerButton onSelect={() => setOpenModal(true)}>
-        Yes, they are experiencing at least one of these symptoms
+        Yes I am experiencing atleast one of these symptoms
       </AnswerButton>
       <AnswerButton onSelect={() => onSelectAnswer("yes")}>
         No, they do not have any of these symptoms
@@ -609,6 +624,7 @@ const Step8 = (props) => {
 
 const SymptomsCheck = () => {
   const [state, setState] = useState(INITIAL_STATE);
+  const [isOnWelcome, setIsOnWelcome] = useState(false);
   const updateAnswers = (key, value) => {
     setState({ ...state, [key]: value });
   };
@@ -985,8 +1001,8 @@ const SymptomsCheck = () => {
             <Icon type="cross" size="lg" />
           </button>
         </div>
-        <StyledWizard isHashEnabled nav={<WizardNav />}>
-          <Welcome update={updateAnswers} />
+        <StyledWizard isHashEnabled nav={isOnWelcome ? null : <WizardNav />}>
+          <Welcome update={updateAnswers} setIsOnWelcome={setIsOnWelcome} />
           <Step1 hashKey={"Step1"} update={updateAnswers} />
           <Step2 hashKey={"Step2"} update={updateAnswers} />
           <Step3 hashKey={"Step3"} update={updateAnswers} />

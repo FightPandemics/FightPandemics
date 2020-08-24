@@ -6,7 +6,8 @@ const { font } = theme.typography;
 const WizardStep = styled.div`
   display: flex;
   flex-flow: column wrap;
-  align-items: ${(props) => props.alignItems || "center"};
+  ${'' /* align-items: ${(props) => props.alignItems || "center"}; */}
+  align-items: center;
   box-sizing: border-box;
   width: 100%;
 

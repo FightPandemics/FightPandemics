@@ -22,8 +22,10 @@ const StyledWizard = styled(StepWizard)`
     }
   }};
   width: 100%;
-  height: 100%;
+  ${'' /* removed below height to allow buttons to be fixed to the bottom, otherwise buttons are stuck in the middle of the screen */}
+  ${'' /* height: 100%; */}
   margin: 0 auto;
+  text-align: center;
   justify-content: space-between;
   @media screen and (min-width: ${tablet.narrow.minWidth}) {
     width: 40%;
