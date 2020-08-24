@@ -5,11 +5,13 @@ import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Alert } from "antd";
+import { connect } from 'react-redux';
 import SuccessAlert from "components/Alert/SuccessAlert";
 import { ORANGE_RED, WHITE } from "../constants/colors";
 import { Link } from "react-router-dom";
 import InputLabel from "components/Input/Label";
 import orgData from "../assets/data/createOrganisationProfile";
+import { refetchUser } from "actions/authActions";
 import {
   EditLayout,
   TitlePictureWrapper,
@@ -104,7 +106,7 @@ const isSame = (formData, organisation) => {
   return true;
 };
 
-function EditOrganisationAccount(props) {
+function EditOrganisationAccount({ refetchUser, history }) {
   // TODO: integrate location w proper react-hook-forms use
   const organisationId = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState({});
@@ -149,7 +151,7 @@ function EditOrganisationAccount(props) {
     });
     formData.location = location;
     if (isSame(formData, orgProfileState.organisation)) {
-      props.history.push(`/organisation/${orgProfileState.organisation._id}`);
+      history.push(`/organisation/${orgProfileState.organisation._id}`);
     } else {
       formData.location = location;
       orgProfileDispatch(updateOrganisation());
@@ -164,6 +166,7 @@ function EditOrganisationAccount(props) {
           handleSuccess(false);
         }, 10000);
         handleUpdateError(false);
+        refetchUser();
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         handleUpdateError(true);
@@ -440,4 +443,8 @@ function EditOrganisationAccount(props) {
   );
 }
 
-export default withOrganisationContext(EditOrganisationAccount);
+const mapDispatchToProps = {
+  refetchUser
+}
+
+export default connect(null, mapDispatchToProps)(withOrganisationContext(EditOrganisationAccount));
