@@ -4,7 +4,7 @@ class RecoverPassword{
     image = '.SocialImageSVG';
     recoverPasswordPageTitle = "h4";
     emailField = '#email';
-    recoveryPasswordButton = 'a[role=button]';
+    recoverPasswordButton = 'a[role=button]';
     backToSignInLink = 'a[href="/auth/login"]';
     errorMessageField = 'small';
 
@@ -14,24 +14,24 @@ class RecoverPassword{
         cy.visit('auth/forgot-password');
     }
 
-    getFpLogo() {
-        return cy.get(this.fpLogo);
+    getFpLogoLocator() {
+        return this.fpLogo;
     }
 
-    getRecoverPasswordPageTitle() {
-        return cy.get(this.recoverPasswordPageTitle);
+    getRecoverPasswordPageTitleLocator() {
+        return this.recoverPasswordPageTitle;
     }
 
-    getImage() {
-        return cy.get(this.image);
+    getImageLocator() {
+        return this.image;
     }
 
     getEmailField() {
         return cy.get(this.emailField);
     }   
 
-    getRecoveryPasswordButton() {
-        return cy.get(this.recoveryPasswordButton);
+    getRecoverPasswordButton() {
+        return cy.get(this.recoverPasswordButton);
     } 
 
     getBackToSignInLink() {
