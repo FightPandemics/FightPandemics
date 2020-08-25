@@ -3,6 +3,7 @@ import {VALID_SAMPLE_EMAIL} from '../../constants';
 import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
 import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
 
+
 describe('FightPandemics Recover Password Page', () => {
 
     const recoverPassword = new RecoverPassword();
@@ -15,39 +16,36 @@ describe('FightPandemics Recover Password Page', () => {
         });
 
         it('FP logo is visible and clickable', () => {
-            var fpLogo = recoverPassword.getFpLogo();
-            fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+            cy.checkFpLogoIsVisibleAndClickable(recoverPassword.getFpLogoLocator());
 
         });
         
         it('Recover Password page contains heading and image', () => {          
-            recoverPassword.getRecoverPasswordPageTitle().should('be.visible').contains(h4Heading);
-            recoverPassword.getImage().should('be.visible');
-
+            cy.pageContainsHeadingAndImage(recoverPassword.getRecoverPasswordPageTitleLocator(),h4Heading, recoverPassword.getImageLocator());
         });
 
         it('Recover Password button is disabled', () => {
-            checkRecoveryButtonIsDisabled(recoverPassword.getRecoveryPasswordButton());
+            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
         });
 
-        it('Leaving email field blank triggers error', () => {
+        it('Leaving email field blank triggers error and Recover Password Button is disabled', () => {
             var emailField = recoverPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequiredErrorMessage = recoverPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
-            checkRecoveryButtonIsDisabled(recoverPassword.getRecoveryPasswordButton());
+            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
 
         });
 
-        it('Entering invalid email triggers error', () => {
+        it('Entering invalid email triggers error and Recover Password Button is disabled', () => {
             var emailField = recoverPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type('qa.test.invalid@').focus().blur();
             var emailRequiredErrorMessage = recoverPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(INVALID_EMAIL_ERROR_MESSAGE);
-            checkRecoveryButtonIsDisabled(recoverPassword.getRecoveryPasswordButton());
+            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
 
         });
         
@@ -55,8 +53,8 @@ describe('FightPandemics Recover Password Page', () => {
             var emailField = recoverPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type(VALID_SAMPLE_EMAIL).focus().blur();           
-            var recoveryPasswordButton = recoverPassword.getRecoveryPasswordButton();
-            recoveryPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'false');
+            var recoverPasswordButton = recoverPassword.getRecoverPasswordButton();
+            recoverPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'false');
         });
 
         it('Back to Sign in screen link is visible and clickable', () => {
@@ -67,8 +65,8 @@ describe('FightPandemics Recover Password Page', () => {
         });
     });
 
-    function checkRecoveryButtonIsDisabled(recoveryPasswordButton){
-        recoveryPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'true')
+    function checkRecoverButtonIsDisabled(recoverPasswordButton){
+        recoverPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'true')
     }
 
 });
