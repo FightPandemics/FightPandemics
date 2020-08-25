@@ -186,6 +186,7 @@ const LayoutWrapper = styled(Layout)`
   }
 `;
 
+
 const ContentWrapper = styled(Content)`
   margin: 0 1rem;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -202,14 +203,21 @@ const HeaderWrapper = styled.div`
   }
   button {
     align-items: center;
-    background-color: transparent;
+    background-color: ${({empty}) => empty ? "rgba(255,255,0, .3)" :
+    "transparent"
+    };
     border: none;
     color: ${black};
     cursor: pointer;
     display: flex;
     font-family: ${theme.typography.font.family.display};
     font-size: ${theme.typography.size.large};
-    padding: 0;
+    padding: .2em;
+    border-radius: 3em;
+    height: 40%;
+    position: relative;
+    top: 1em;
+    right: 1em;
     img {
       margin-left: 1.2rem;
       pointer-events: none;
@@ -220,6 +228,23 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
   }
 `;
+
+const NoPosts = styled.div`
+    text-align: center;
+    position: relative;
+    top: 2em;
+    color: ${theme.colors.orangeRed};
+    font-size: 1.2em;
+`
+
+const buttonPulse = styled.button`
+  background-color: rgba(255,255,0, .4);
+  padding: 0 .2em;
+  border-radius: 3em;
+  height: 4em;
+  position: relative;
+  top: 1.3em;
+`
 
 const Feed = (props) => {
   const { id } = useParams();
@@ -562,6 +587,7 @@ const Feed = (props) => {
     };
   }, [scrollObserver, bottomBoundaryRef]);
 
+
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
@@ -591,6 +617,10 @@ const Feed = (props) => {
       }
     }
   };
+
+  const emptyFeed = () => {
+   return (Object.keys(postsList).length < 1 && !isLoading) 
+  }
 
   return (
     <FeedContext.Provider
@@ -646,7 +676,7 @@ const Feed = (props) => {
             <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
-            <HeaderWrapper>
+            <HeaderWrapper empty={emptyFeed()}>
               <h1>Help Board</h1>
               <button
                 id={gtmTag(GTM.post.createPost)}
@@ -677,12 +707,14 @@ const Feed = (props) => {
               <ErrorAlert message={postsError.message} />
             )}
             {isLoading ? <Loader /> : <></>}
+            {emptyFeed() ? <NoPosts>Sorry, there are currently no relevant posts available. Please try using a different filter search or create a post.</NoPosts>
+            : 
             <CreatePostIcon
               id={gtmTag(GTM.post.createPost)}
               src={creatPost}
               onClick={handleCreatePost}
               className="create-post"
-            />
+            />}
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
