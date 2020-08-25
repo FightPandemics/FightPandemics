@@ -17,7 +17,7 @@ export const validateEmail = (email) => {
   return isEmailValid ? validateTopLevelDomain(emailInput) : false;
 };
 
-const SPECIAL_CHARS = /[!@#$%^&*]/;
+const SPECIAL_CHARS = / |!|"|#|\$|%|&|'|\(|\)|\*|\+|,|-|\.|\/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|{|\||}|~/;
 const containsLowerCase = (str) => /[a-z]/.test(str);
 const containsUpperCase = (str) => /[A-Z]/.test(str);
 const containsNumber = (str) => /\d/.test(str);
