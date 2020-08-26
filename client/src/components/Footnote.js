@@ -41,7 +41,7 @@ const Copyright = styled.div`
   color: ${colors.darkerGray};
 `;
 
-const Policies = styled.div`
+const StyledDiv = styled.div`
   color: ${colors.darkGray};
   display: flex;
   flex-wrap: wrap;
@@ -53,16 +53,10 @@ const Policies = styled.div`
   }
 `;
 
-const FooterLink = styled(Link)`
-  color: ${colors.darkGray};
+const StyledSpan = styled.span`
   margin: 0 1rem;
   text-decoration-line: underline;
-`;
-
-const FooterALink = styled.a`
   color: ${colors.darkGray};
-  margin: 0 1rem;
-  text-decoration-line: underline;
 `;
 
 export default () => {
@@ -126,33 +120,44 @@ export default () => {
           Copyright {{ currentYear }} FightPandemics. All rights reserved.
         </Trans>
       </Copyright>
-      <Policies>
-        <FooterLink to={"/about-us"}>{t("common.aboutUs")}</FooterLink> |{" "}
-        <FooterLink to={"/faq"}>{t("footer.faq")}</FooterLink> |{" "}
-        <FooterALink
-          href="https://medium.com/@FightPandemics"
-          target="_blank"
-          alt={t("alt.blogLink")}
-        >
-          {t("footer.blog")}
-        </FooterALink>
-        |{" "}
-        <FooterLink to={"/terms-conditions"}>
-          {t("footer.termsConditions")}
-        </FooterLink>{" "}
-        |{" "}
-        <FooterLink to={"/privacy-policy"}>
-          {t("footer.privacyPolicy")}
-        </FooterLink>{" "}
-        |{" "}
-        <FooterLink to={"/cookies-policy"}>
-          {t("footer.cookiesPolicy")}
-        </FooterLink>{" "}
-        | <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-        <Dropdown overlay={menu} placement="topLeft">
-          <FooterLink>{langs[localization[i18n.language]].value}</FooterLink>
-        </Dropdown>
-      </Policies>
+      <StyledDiv>
+        <StyledSpan>
+          <Link to={"/about-us"}>{t("common.aboutUs")}</Link>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <Link to={"/faq"}>{t("footer.faq")}</Link>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <a
+            href="https://medium.com/@FightPandemics"
+            target="_blank"
+            alt={t("alt.blogLink")}
+          >
+            {t("footer.blog")}
+          </a>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <Link to={"/terms-conditions"}>{t("footer.termsConditions")}</Link>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <Link to={"/privacy-policy"}>{t("footer.privacyPolicy")}</Link>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <Link to={"/cookies-policy"}>{t("footer.cookiesPolicy")}</Link>
+        </StyledSpan>
+        |
+        <StyledSpan>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+          <Dropdown overlay={menu} placement="topLeft">
+            <Link>{langs[i18n.language].value}</Link>
+          </Dropdown>
+        </StyledSpan>
+      </StyledDiv>
     </StyledFooter>
   );
 };
