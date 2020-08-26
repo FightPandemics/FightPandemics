@@ -180,13 +180,13 @@
       "loading": "loading",
       "invalidEmail": "Invalid email",
       "invalidPassword": "Password must contain at least 3 of these:  lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
-      "addressRequire": "Address is required. Please enter your address and select it from the drop-down",
+      "addressRequired": "Address is required. Please enter your address and select it from the drop-down",
       "selectOption": "Please select at least one option",
       "twitterError": "Invalid entry: only alphanumeric characters and _ are allowed",
       "linkedinError": "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       "invalidURL": "Invalid URL",
-      "emailRequire": "Email is required",
-      "passwordRequire": "Password is required"
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required"
     },
     "individual": {
       "email": "Email",
@@ -216,11 +216,11 @@
         "github": "Github URL",
         "website": "Personal Website"
       },
-      "firstNameRequire": "First name is required.",
-      "lastNameRequire": "Last name is required.",
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
       "facebookError": "Invalid entry: only alphanumeric characters and . are allowed",
       "githubError": "Invalid entry: only alphanumeric characters and _ are allowed",
-      "FiveMinLength": "Min. length is 5 characters",
+      "fiveMinLength": "Min. length is 5 characters",
       "fifteenMaxLength": "Max. length is 15 characters"
     },
     "org": {
@@ -231,8 +231,8 @@
       "email": "Organisation Contact Email",
       "invalidEmail": "Email is invalid",
       "orgNameRequire": "Organisation name is required",
-      "sixtyMaxLen": "Max. 60 characters",
-      "thirtyMaxLen": "Max. 30 characters",
+      "sixtyMaxLength": "Max. 60 characters",
+      "thirtyMaxLength": "Max. 30 characters",
       "about": "About",
       "activity": "Activity",
       "editAccount": "Edit Account Information",
@@ -402,7 +402,7 @@
     "title": "About FightPandemics / General",
     "offerRequestHelp": "Offering and Requesting Help",
     "profileAccount": "Profile and Account",
-    "contects": "Contects",
+    "contacts": "Contacts",
     "general": [
       [
         "What is FightPandemics?",
@@ -542,7 +542,7 @@
         "If you find a post that is incorrect or violates FightPandemics Code of Conduct, please email us at <0>support@fightpandemics.com.</0>"
       ]
     ],
-    "contectsFAQ": [
+    "contactsFAQ": [
       [
         "I want to become a partner or sponsor.",
         "Please get in touch with our partnerships team at <0>partnerships@fightpandemics.com.</0>"
@@ -582,7 +582,7 @@
     "ideaImage": "Our Idea Picture",
     "linkedinIcon": "FightPandemics LinkedIn Icon",
     "facebookIcon": "FightPandemics Facebook Icon",
-    "insIcon": "FightPandemics Instagram Icon",
+    "instagramIcon": "FightPandemics Instagram Icon",
     "twitterIcon": "FightPandemics Twitter Icon",
     "createOrg": "create organisation",
     "personalDataImage": "two people standing next to a list of personal items",

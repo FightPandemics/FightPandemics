@@ -206,7 +206,7 @@ const CreateProfile = ({ email, history }) => {
       return setError(
         "location",
         "required",
-        t("profile.common.addressRequire"),
+        t("profile.common.addressRequired"),
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
@@ -273,7 +273,7 @@ const CreateProfile = ({ email, history }) => {
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-                  required: t("profile.common.emailRequire") + ".",
+                  required: t("profile.common.emailRequired") + ".",
                   validate: (email) =>
                     validateEmail(email) || t("profile.common.invalidURL"),
                 })}
@@ -295,10 +295,10 @@ const CreateProfile = ({ email, history }) => {
                 id="firstName"
                 className={errors.firstName && "has-error"}
                 ref={register({
-                  required: t("profile.individual.firstNameRequire"),
+                  required: t("profile.individual.firstNameRequired"),
                   maxLength: {
                     value: 30,
-                    message: t("profile.org.thirtyMaxLen"),
+                    message: t("profile.org.thirtyMaxLength"),
                   },
                 })}
                 style={inputStyles}

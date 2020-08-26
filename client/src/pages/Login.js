@@ -381,7 +381,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     className={errors.email && "has-error"}
                     placeholder={t("auth.enterEmail")}
                     ref={register({
-                      required: t("profile.common.emailRequire") + ".",
+                      required: t("profile.common.emailRequired") + ".",
                       validate: (email) =>
                         validateEmail(email) ||
                         t("profile.common.invalidEmail"),
@@ -413,7 +413,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                         value: PASSWORD_MIN_LENGTH,
                         message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
                       },
-                      required: t("profile.common.passwordRequire") + ".",
+                      required: t("profile.common.passwordRequired") + ".",
                       validate: (password) =>
                         validatePassword(password) ||
                         t("profile.common.invalidPassword"),
@@ -492,7 +492,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       className={errors.email && "has-error"}
                       placeholder={t("auth.enterEmail")}
                       ref={register({
-                        required: t("profile.common.emailRequire") + ".",
+                        required: t("profile.common.emailRequired") + ".",
                         validate: (email) =>
                           validateEmail(email) ||
                           t("profile.common.invalidEmail"),

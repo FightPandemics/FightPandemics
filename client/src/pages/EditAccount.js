@@ -92,7 +92,7 @@ function EditAccount(props) {
       return setError(
         "location",
         "required",
-        t("profile.common.addressRequire"),
+        t("profile.common.addressRequired"),
       );
     }
     userProfileDispatch(updateUser());
@@ -182,10 +182,10 @@ function EditAccount(props) {
               defaultValue={firstName}
               error={errors.firstName}
               ref={register({
-                required: t("profile.individual.firstNameRequire"),
+                required: t("profile.individual.firstNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: t("profile.org.thirtyMaxLen"),
+                  message: t("profile.org.thirtyMaxLength"),
                 },
               })}
             />
@@ -196,10 +196,10 @@ function EditAccount(props) {
               defaultValue={lastName}
               error={errors.lastName}
               ref={register({
-                required: t("profile.individual.lastNameRequire"),
+                required: t("profile.individual.lastNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: t("profile.org.thirtyMaxLen"),
+                  message: t("profile.org.thirtyMaxLength"),
                 },
               })}
             />

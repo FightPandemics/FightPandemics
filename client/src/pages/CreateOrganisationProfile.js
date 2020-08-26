@@ -158,7 +158,7 @@ const CreateOrgProfile = (props) => {
           return setError(
             "location",
             "required",
-            t("profile.common.addressRequire"),
+            t("profile.common.addressRequired"),
           );
         }
         createOrganisationFormDispatch({ type: CREATE_Organisation });
@@ -220,7 +220,7 @@ const CreateOrgProfile = (props) => {
                 required: t("profile.org.orgNameRequire"),
                 maxLength: {
                   value: 60,
-                  message: t("profile.org.sixtyMaxLen"),
+                  message: t("profile.org.sixtyMaxLength"),
                 },
               })}
               name="name"
@@ -239,10 +239,10 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                required: t("profile.common.emailRequire"),
+                required: t("profile.common.emailRequired"),
                 maxLength: {
                   value: 30,
-                  message: t("profile.org.thirtyMaxLen"),
+                  message: t("profile.org.thirtyMaxLength"),
                 },
               })}
             />

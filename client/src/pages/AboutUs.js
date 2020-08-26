@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import {
   AboutUsContainer,
   TextContainer,
@@ -121,14 +121,10 @@ const AboutUs = () => {
       <TextContainer>
         <br />
         <h2 className="text-primary display-6">{t("aboutUs.ourStory")}</h2>
-        <p>
-          {t("aboutUs.story")}
-        </p>
+        <p>{t("aboutUs.story")}</p>
         <br />
         <h2 className="text-primary display-6">{t("aboutUs.ourCommunity")}</h2>
-        <p>
-          {t("aboutUs.community")}
-        </p>
+        <p>{t("aboutUs.community")}</p>
         {/* Add FightPandemics Video */}
         {/* Add buttons for Join as Ambassador and Join as a Volunteer here*/}
         <br />
@@ -149,7 +145,7 @@ const AboutUs = () => {
           <img src={facebookLogo} alt={t("alt.facebookIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-          <img src={instagramLogo} alt={t("alt.insIcon")} />
+          <img src={instagramLogo} alt={t("alt.instagramIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://twitter.com/FightPandemics">
           <img src={twitterLogo} alt={t("alt.twitterIcon")} />

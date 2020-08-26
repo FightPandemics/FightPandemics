@@ -58,7 +58,7 @@ function EditProfile(props) {
         },
         minLength: {
           value: 5,
-          message: t("profile.individual.FiveMinLength"),
+          message: t("profile.individual.fiveMinLength"),
         },
       },
       FACEBOOK_URL,
