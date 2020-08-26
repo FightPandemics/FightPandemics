@@ -73,22 +73,22 @@ export default () => {
   };
 
   const langs = {
-    "ar": {value: "العربية", text: "Arabic (العربية)"},
-    "id": {value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)"},
-    "zh-TW": {value: "繁體中文", text: "Chinese Traditional (繁體中文)"},
-    "nl": {value: "Nederlands", text: "Dutch (Nederlands)"},
-    "en": {value: "English", text: "English (English)"},
-    "en-US": {value: "English", text: "English (American English)"},
-    "en-GB": {value: "English", text: "English (British English)"},
-    "fr": {value: "Français", text: "French (Français)"},
-    "de": {value: "Deutsch", text: "German (Deutsch)"},
-    "he": {value: "עברית", text: "Hebrew (עברית)"},
-    "it": {value: "Italiano", text: "Italian (Italiano)"},
-    "pt": {value: "Português", text: "Portuguese (Português)"},
-    "ru": {value: "русский", text: "Russian (русский)"},
-    "es": {value: "Español", text: "Spain (Español)"},
-    "tr": {value: "Türkçe", text: "Turkish (Türkçe)"},
-    "uk": {value: "Українська", text: "Ukrainian (Українська)"}
+    "ar": { value: "العربية", text: "Arabic (العربية)" },
+    "id": { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
+    "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
+    "nl": { value: "Nederlands", text: "Dutch (Nederlands)" },
+    "en": { value: "English", text: "English (English)" },
+    "en-US": { value: "English", text: "English (American English)" },
+    "en-GB": { value: "English", text: "English (British English)" },
+    "fr": { value: "Français", text: "French (Français)" },
+    "de": { value: "Deutsch", text: "German (Deutsch)" },
+    "he": { value: "עברית", text: "Hebrew (עברית)" },
+    "it": { value: "Italiano", text: "Italian (Italiano)" },
+    "pt": { value: "Português", text: "Portuguese (Português)" },
+    "ru": { value: "русский", text: "Russian (русский)" },
+    "es": { value: "Español", text: "Spain (Español)" },
+    "tr": { value: "Türkçe", text: "Turkish (Türkçe)" },
+    "uk": { value: "Українська", text: "Ukrainian (Українська)" }
   }
 
   const menu = (
@@ -105,7 +105,7 @@ export default () => {
     <StyledFooter>
       <Copyright>
         <Trans i18nKey="footer.copyright" currentYear={currentYear}>
-          Copyright {{currentYear}} FightPandemics. All rights reserved.
+          Copyright {{ currentYear }} FightPandemics. All rights reserved.
         </Trans>
       </Copyright>
       <Policies>
