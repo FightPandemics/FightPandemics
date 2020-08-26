@@ -47,6 +47,7 @@ async function routes(app) {
         objective,
         skip,
       } = query;
+      const includeMeta = req.query.includeMeta || false;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -152,6 +153,7 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
+
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
@@ -275,15 +277,23 @@ async function routes(app) {
       ];
       /* eslint-enable sort-keys */
 
+      const metaResponseHandler = (response) => {
+        if (includeMeta) {
+          return response;
+        } else {
+          return response[0].data;
+        }
+      };
+
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
       } else if (posts[0].data === null || posts[0].data.length === 0) {
-        return emptyResponseData;
+        return metaResponseHandler(emptyResponseData);
       } else {
         posts[0].meta[0].total = totalDocuments;
         posts[0].meta[0].filtered = numberFilteredResults;
-        return posts;
+        return metaResponseHandler(posts);
       }
     },
   );

@@ -10,4 +10,4 @@ RUN echo "{\"version\": \"$GIT_COMMIT\"}" > version.json
 FROM builder
 USER node
 COPY --from=builder --chown=node:node /app .
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
