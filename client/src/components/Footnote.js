@@ -74,7 +74,7 @@ export default () => {
 
   const langs = {
     "ar": {value: "العربية", text: "Arabic (العربية)"},
-    "id": {value: "Bahasa Indonesia", text: "Bahasa Indonesian (Bahasa Indonesia)"},
+    "id": {value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)"},
     "zh-TW": {value: "繁體中文", text: "Chinese Traditional (繁體中文)"},
     "nl": {value: "Nederlands", text: "Dutch (Nederlands)"},
     "en": {value: "English", text: "English (English)"},
