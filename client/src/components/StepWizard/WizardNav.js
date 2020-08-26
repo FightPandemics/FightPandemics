@@ -142,13 +142,13 @@ const WizardNav = ({
             src={backArrow}
             title={`Navigate to step ${currentStep - 1}`}
           />
-          <BackText>{t("onboarding.comment.previous")}</BackText>
+          <BackText>{t("onboarding.common.previous")}</BackText>
         </BackButton>
       ) : (
         <Link to={"/"}>
           <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
             <SvgIcon src={backArrow} title="Navigate to the homepage" />
-            <BackText>{t("onboarding.comment.previous")}</BackText>
+            <BackText>{t("onboarding.common.previous")}</BackText>
           </BackButton>
         </Link>
       )}
@@ -157,12 +157,12 @@ const WizardNav = ({
           id={gtmPrefix + currentStep + GTM.wizardNav.next}
           onClick={nextStep}
         >
-          <span>{t("onboarding.comment.next")}</span>
+          <span>{t("onboarding.common.next")}</span>
           <SvgIcon src={nextArrow} />
         </NextButton>
       )}
     </StyledWizardNav>
-  )
+  );
 };
 
 export default WizardNav;

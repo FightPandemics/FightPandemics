@@ -215,7 +215,7 @@ const NestedComments = ({
               ghost
               onClick={() => handleSubmit()}
             >
-              {t("post.save")}
+              {t("comment.save")}
             </StyledCommentButton>
           </Space>
         </>
