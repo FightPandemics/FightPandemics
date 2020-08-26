@@ -73,23 +73,23 @@ export default () => {
   };
 
   const langs = {
-    "ar": { value: "العربية", text: "Arabic (العربية)" },
-    "id": { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
+    ar: { value: "العربية", text: "Arabic (العربية)" },
+    id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
     "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
-    "nl": { value: "Nederlands", text: "Dutch (Nederlands)" },
-    "en": { value: "English", text: "English (English)" },
+    nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
+    en: { value: "English", text: "English (English)" },
     "en-US": { value: "English", text: "English (American English)" },
     "en-GB": { value: "English", text: "English (British English)" },
-    "fr": { value: "Français", text: "French (Français)" },
-    "de": { value: "Deutsch", text: "German (Deutsch)" },
-    "he": { value: "עברית", text: "Hebrew (עברית)" },
-    "it": { value: "Italiano", text: "Italian (Italiano)" },
-    "pt": { value: "Português", text: "Portuguese (Português)" },
-    "ru": { value: "русский", text: "Russian (русский)" },
-    "es": { value: "Español", text: "Spain (Español)" },
-    "tr": { value: "Türkçe", text: "Turkish (Türkçe)" },
-    "uk": { value: "Українська", text: "Ukrainian (Українська)" }
-  }
+    fr: { value: "Français", text: "French (Français)" },
+    de: { value: "Deutsch", text: "German (Deutsch)" },
+    he: { value: "עברית", text: "Hebrew (עברית)" },
+    it: { value: "Italiano", text: "Italian (Italiano)" },
+    pt: { value: "Português", text: "Portuguese (Português)" },
+    ru: { value: "русский", text: "Russian (русский)" },
+    es: { value: "Español", text: "Spain (Español)" },
+    tr: { value: "Türkçe", text: "Turkish (Türkçe)" },
+    uk: { value: "Українська", text: "Ukrainian (Українська)" },
+  };
 
   const menu = (
     <Menu>
@@ -118,10 +118,19 @@ export default () => {
         >
           {t("footer.blog")}
         </FooterALink>
-  |     <FooterLink to={"/terms-conditions"}>{t("footer.termsConditions")}</FooterLink> |{" "}
-        <FooterLink to={"/privacy-policy"}>{t("footer.privacyPolicy")}</FooterLink> |{" "}
-        <FooterLink to={"/cookies-policy"}>{t("footer.cookiesPolicy")}</FooterLink> |{" "}
-        <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+        |{" "}
+        <FooterLink to={"/terms-conditions"}>
+          {t("footer.termsConditions")}
+        </FooterLink>{" "}
+        |{" "}
+        <FooterLink to={"/privacy-policy"}>
+          {t("footer.privacyPolicy")}
+        </FooterLink>{" "}
+        |{" "}
+        <FooterLink to={"/cookies-policy"}>
+          {t("footer.cookiesPolicy")}
+        </FooterLink>{" "}
+        | <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
         <Dropdown overlay={menu} placement="topLeft">
           <FooterLink>{langs[i18n.language].value}</FooterLink>
         </Dropdown>
