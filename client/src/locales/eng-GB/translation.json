@@ -57,12 +57,7 @@
       "location": {
         "label": "Location",
         "enterAddress": "Enter address, zip code, or city",
-        "shareLocation": "Share my Location",
-        "errors": {
-          "failedPredictions": "Failed getting predictions. Please retry.",
-          "failedLocation": "Failed sharing location, please input address.",
-          "failedLocationDetails": "Failed getting location details. Please retry."
-        }
+        "shareLocation": "Share my Location"
       },
       "labels": {
         "location": "Location",
@@ -131,12 +126,6 @@
     "likeWithCount": "{{count}} Like",
     "likeWithCount_plural": "{{count}} Likes",
     "others": "Others",
-    "errors": {
-      "title": "Please include a title for your post.",
-      "description": "Please include a description for your post.",
-      "help": "Please select a type of help.",
-      "tags": "Please add at least one tag."
-    },
     "options": {
       "shareWith": {
         "city": "In my City",
@@ -197,11 +186,7 @@
       "linkedinError": "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       "invalidURL": "Invalid URL",
       "emailRequire": "Email is required",
-      "passwordRequire": "Password is required",
-      "errors": {
-        "privacy": "You must agree to our privacy policy before proceeding",
-        "conditions": "You must agree to our terms and conditions before proceeding"
-      }
+      "passwordRequire": "Password is required"
     },
     "individual": {
       "email": "Email",
@@ -307,9 +292,6 @@
         "twitter": "Twitter URL",
         "linkedin": "LinkedIn URL",
         "website": "Website"
-      },
-      "errors": {
-        "login": "You must be logged in to create an organisation profile"
       }
     }
   },
@@ -608,6 +590,16 @@
     "avatar": "avatar"
   },
   "error": {
+    "title": "Please include a title for your post.",
+    "description": "Please include a description for your post.",
+    "help": "Please select a type of help.",
+    "tags": "Please add at least one tag.",
+    "privacyPolicyRequired": "You must agree to our privacy policy before proceeding",
+    "termsConditionsRequired": "You must agree to our terms and conditions before proceeding",
+    "failedPredictions": "Failed getting predictions. Please retry.",
+    "failedLocation": "Failed sharing location, please input address.",
+    "failedLocationDetails": "Failed getting location details. Please retry.",
+    "loggedInToCreateOrgProfile": "You must be logged in to create an organisation profile",
     "selectOneOption": "Please select at least one option",
     "userExists": "User already exists",
     "invalidState": "Invalid state",

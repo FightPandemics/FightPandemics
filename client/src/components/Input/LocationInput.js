@@ -104,7 +104,7 @@ const LocationInput = ({
             }));
             setPredictedAddresses(predictions);
           } catch {
-            setApiError(t("feed.filters.location.errors.failedPredictions"));
+            setApiError(t("error.failedPredictions"));
           } finally {
             setLoadingPredictions(false);
           }
@@ -126,7 +126,7 @@ const LocationInput = ({
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
     } catch {
-      setApiError(t("feed.filters.location.errors.failedLocation"));
+      setApiError(t("error.failedLocation"));
     } finally {
       setLoadingPlaceDetails(false);
     }
@@ -150,7 +150,7 @@ const LocationInput = ({
         setSelectedAddress(address);
         setPredictedAddresses([]);
       } catch {
-        setApiError(t("feed.filters.location.errors.failedLocationDetails"));
+        setApiError(t("error.failedLocationDetails"));
       } finally {
         setLoadingPlaceDetails(false);
       }

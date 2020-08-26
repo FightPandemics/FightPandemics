@@ -144,12 +144,12 @@ const CreateOrgProfile = (props) => {
     if (!privacy) {
       return createOrganisationFormDispatch({
         type: CREATE_Organisation_ERROR,
-        error: t("profile.common.errors.privacy"),
+        error: t("error.privacyPolicyRequired"),
       });
     } else if (!conditions) {
       return createOrganisationFormDispatch({
         type: CREATE_Organisation_ERROR,
-        error: t("profile.common.errors.conditions"),
+        error: t("error.termsConditionsRequired"),
       });
     } else {
       if (props.user) {
@@ -185,7 +185,7 @@ const CreateOrgProfile = (props) => {
       } else {
         return createOrganisationFormDispatch({
           type: CREATE_Organisation_ERROR,
-          error: t("profile.org.errors.login"),
+          error: t("error.loggedInToCreateOrgProfile"),
         });
       }
     }
