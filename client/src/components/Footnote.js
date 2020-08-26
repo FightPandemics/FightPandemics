@@ -7,6 +7,8 @@ import { theme, mq } from "constants/theme";
 import styled from "styled-components";
 
 import i18n from "../i18n";
+import SvgIcon from "./Icon/SvgIcon";
+import globe from "assets/icons/globe.svg";
 
 const { colors } = theme;
 
@@ -72,7 +74,7 @@ export default () => {
 
   const langs = {
     "ar": {value: "العربية", text: "Arabic (العربية)"},
-    "id": {value: "Bahasa Indonesia", text: "Bahasa Indonesia (Bahasa Indonesia)"},
+    "id": {value: "Bahasa Indonesia", text: "Bahasa Indonesian (Bahasa Indonesia)"},
     "zh-TW": {value: "繁體中文", text: "Chinese Traditional (繁體中文)"},
     "nl": {value: "Nederlands", text: "Dutch (Nederlands)"},
     "en": {value: "English", text: "English (English)"},
@@ -117,6 +119,7 @@ export default () => {
   |     <FooterLink to={"/terms-conditions"}>{t("footer.termsConditions")}</FooterLink> |{" "}
         <FooterLink to={"/privacy-policy"}>{t("footer.privacyPolicy")}</FooterLink> |{" "}
         <FooterLink to={"/cookies-policy"}>{t("footer.cookiesPolicy")}</FooterLink> |{" "}
+        <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
         <Dropdown overlay={menu} placement="topLeft">
           <FooterLink>{langs[i18n.language].value}</FooterLink>
         </Dropdown>
