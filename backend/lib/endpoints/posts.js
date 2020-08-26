@@ -51,7 +51,6 @@ async function routes(app) {
       let user;
       let userErr;
 
-      throw app.httpErrors.internalServerError();
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {
