@@ -129,6 +129,18 @@ export default ({
         <Link to={`/profile/${user?.id || user?._id}`}>My Profile</Link>
       </Menu.Item>
       <Menu.Divider />
+      
+      <Menu.Item>
+        <Link to="/auth/logout">Sign Out</Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item
+        id={GTM.nav.prefix + GTM.nav.feedback}
+        onClick={onFeedbackIconClick}
+      >
+        Feedback
+      </Menu.Item>
+      <Menu.Divider />
       <Menu.Item>
         <Link
           id={GTM.nav.prefix + GTM.nav.addOrg}
@@ -148,16 +160,6 @@ export default ({
           ))
         : null}
       {user?.organisations?.length > 0 && <Menu.Divider />}
-      <Menu.Item
-        id={GTM.nav.prefix + GTM.nav.feedback}
-        onClick={onFeedbackIconClick}
-      >
-        Feedback
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item>
-        <Link to="/auth/logout">Sign Out</Link>
-      </Menu.Item>
     </Menu>
   );
   const renderNavLinkItems = () => {
