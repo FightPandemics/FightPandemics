@@ -7,10 +7,14 @@ const AddTagsWrapper = styled.div`
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 
-  p {
-    font-family: "Poppins";
+  .tags-info {
     font-size: 1.1rem;
     color: black;
+  }
+
+  .tags-selector {
+    margin-right: -0.3rem;
+    margin-left: -0.3rem;
   }
 `;
 
@@ -18,20 +22,24 @@ const AddTags = ({ filters, addTag, selected = [] }) => {
   const { t } = useTranslation();
   return (
     <AddTagsWrapper>
-      <p>{t("post.addTags")}</p>
-      {filters.map((filter, idx) => (
-        <ButtonTag
-          className={
-            "tag-selectable " +
-            (selected.length && selected.includes(filter) ? "tag-selected" : "")
-          }
-          onClick={addTag(filter)}
-          label={filter}
-          key={idx}
-        >
-          {filter}
-        </ButtonTag>
-      ))}
+      <p className="tags-info">{t("post.addTags")}</p>
+      <div className="tags-selector">
+        {filters.map((filter, idx) => (
+          <ButtonTag
+            className={
+              "tag-selectable " +
+              (selected.length && selected.includes(filter)
+                ? "tag-selected"
+                : "")
+            }
+            onClick={addTag(filter)}
+            label={filter}
+            key={idx}
+          >
+            {filter}
+          </ButtonTag>
+        ))}
+      </div>
     </AddTagsWrapper>
   );
 };

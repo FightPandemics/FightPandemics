@@ -357,7 +357,7 @@ const NavigationLayout = (props) => {
     >
       <h2 className="title">{t("feedback.thankYou")}</h2>
       <p>{t("feedback.thankYouMessage")}</p>
-      <Link to="/">
+      <Link to={isAuthenticated ? "/feed" : "/"}>
         <Logo src={logo} alt={t("alt.logo")} />
       </Link>
     </ThanksModal>

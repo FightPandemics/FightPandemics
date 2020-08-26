@@ -29,31 +29,38 @@ const StyledSelect = styled(Select)`
 
   width: 100%;
   padding: 0;
-  border-bottom: ${(props) =>
-    props.disabled ? "1px solid " + darkGray : "1px solid " + royalBlue};
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: ${(props) => (props.disabled ? darkGray : royalBlue)};
   box-shadow: none;
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
-  transition: 150ms border;
 
   &.has-error {
-    border-bottom: 1px solid ${red};
+    border-bottom-color: ${red};
     color: ${red};
   }
+
+  ${(props) =>
+    props.disabled
+      ? ``
+      : `
   &:focus,
   &:hover,
   &:active {
-    border-bottom: ${(props) =>
-      props.disabled ? "1px solid " + darkGray : "2px solid " + royalBlue};
+    border-bottom-color: ${royalBlue};
+    box-shadow: 0 1px 0 0 ${royalBlue};
   }
+  `};
 `;
 
 const { Option } = Select;
 
 const SubLabel = styled.small`
+  display: block;
+  margin-top: 5px;
+  font-size: ${small};
   color: ${(props) =>
     props.selected ? theme.colors.lightGray : theme.colors.green};
-  display: block;
-  font-size: ${small};
 `;
 
 const displaySelectedAddressFromLocation = (location) => {
@@ -125,8 +132,21 @@ const LocationInput = ({
       );
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
-    } catch {
-      setApiError(t("error.failedLocation"));
+    } catch (error) {
+      const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
+
+      const errMessage = `${t(
+        "error.failedLocation",
+      )} ${translatedErrorMessage}. ${
+        error.code === 1
+          ? t("error.resetBrowserLocationPermission")
+          : t("error.enterAddressAgain")
+      }`;
+      setApiError(errMessage);
     } finally {
       setLoadingPlaceDetails(false);
     }

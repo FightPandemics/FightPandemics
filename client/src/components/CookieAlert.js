@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Trans } from 'react-i18next';
+import { Trans } from "react-i18next";
 import { theme } from "constants/theme";
 
 // ICONS
@@ -54,10 +54,27 @@ export default () => {
   return (
     <CookieContainer style={{ display: active ? "" : "none" }}>
       <div>
-        <Trans i18nKey="cookies.cookieAlert" components={[<CookieLink href="/cookies-policy"/>, <CookieLink href="/privacy-policy"/>, <CookieLink href="/terms-conditions"/>]}></Trans>
+        <Trans
+          id="cookie-banner-text"
+          i18nKey="cookies.cookieAlert"
+          components={[
+            <CookieLink
+              id="cookie-banner-cookies-policy"
+              href="/cookies-policy"
+            />,
+            <CookieLink
+              id="cookie-banner-privacy-policy"
+              href="/privacy-policy"
+            />,
+            <CookieLink
+              id="cookie-banner-terms-and-conditions"
+              href="/terms-conditions"
+            />,
+          ]}
+        ></Trans>
       </div>
       <ClosePointer>
-        <SvgIcon src={closeX} onClick={hideMessage} />
+        <SvgIcon src={closeX} onClick={hideMessage} id="cookie-banner-close" />
       </ClosePointer>
     </CookieContainer>
   );

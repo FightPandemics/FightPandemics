@@ -53,8 +53,6 @@ a {
   background-color: ${WHITE} !important;
 }
 
-
-
 .app-drawer .am-drawer-sidebar {
   background-color: $white;
   overflow: auto;
@@ -71,6 +69,10 @@ a {
 	min-height: 100vh;
 	padding-bottom: 6rem; // footer height
 	overflow: hidden;
+}
+
+.am-drawer-sidebar {
+  position: fixed;
 }
 
 .text-light {

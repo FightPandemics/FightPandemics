@@ -36,6 +36,31 @@ export const Section = styled.section`
   .ant-input::placeholder {
     color: ${colors.darkGray};
   }
+
+  .visibility-post--selector {
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+
+    .ant-select > span:first-child {
+      display: none !important;
+    }
+  }
+
+  @media screen and (min-width: ${mq.phone.wide.minWidth}) {
+    .visibility-post {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .visibility-post--info {
+      margin-bottom: 0;
+    }
+    .visibility-post--selector {
+      display: flex;
+      justify-content: flex-start;
+      align-items: cener;
+    }
+  }
 `;
 
 export const HeadWrapper = styled.div`
@@ -141,17 +166,8 @@ export const ModalWrapper = styled(Modal)`
 `;
 
 export const SubTitle = styled.p`
-  font-family: ${typography.font.family.display};
-  font-style: normal;
-  font-weight: normal;
   font-size: 1.1rem;
   line-height: 140%;
-  margin: 0 0 2rem 2.8rem;
-
-  @media screen and (min-width: ${mq.phone.wide.minWidth}) {
-    margin-bottom: 0;
-    display: inline-block;
-  }
 `;
 
 export const Selector = styled(BaseSelector)``;

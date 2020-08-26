@@ -43,6 +43,7 @@ locals {
         awslogs-stream-prefix = var.fp_context
       }
     }
+    environment = var.client_env_variables
   }
   datadog_container_definition = {
     cpu               = 10

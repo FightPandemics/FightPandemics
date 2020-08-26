@@ -142,7 +142,7 @@ const Submit = styled(SubmitButton)`
 
 const handleCheckboxChange = ([evt]) => evt.target.checked;
 
-const CreateProfile = ({ email, history }) => {
+const CreateProfile = ({ email, firstName, lastName, history }) => {
   const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
@@ -302,6 +302,7 @@ const CreateProfile = ({ email, history }) => {
                   },
                 })}
                 style={inputStyles}
+                value={firstName}
               />
               {errors.firstName && (
                 <InputError>{errors.firstName.message}</InputError>
@@ -327,6 +328,7 @@ const CreateProfile = ({ email, history }) => {
                   },
                 })}
                 style={inputStyles}
+                value={lastName}
               />
               {errors.lastName && (
                 <InputError>{errors.lastName.message}</InputError>
@@ -480,6 +482,8 @@ const CreateProfile = ({ email, history }) => {
 
 const mapStateToProps = ({ session }) => ({
   email: session.email,
+  firstName: session.firstName,
+  lastName: session.lastName,
 });
 
 export default connect(mapStateToProps)(CreateProfile);

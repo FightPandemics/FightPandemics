@@ -6,8 +6,9 @@ export const asyncGetGeoLocation = () => {
       } = pos;
       resolve({ lat: latitude, lng: longitude });
     };
-    const onGeoError = () => {
-      reject(new Error("failed getting location"));
+    const onGeoError = (err) => {
+      // We expect this to be a GeolocationPositionError object
+      reject(err);
     };
     navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
   });

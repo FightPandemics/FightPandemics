@@ -76,6 +76,22 @@ services:
     networks:
       - fp_network
 
+  mocha-integration:
+    build: 
+      context: mocha
+      dockerfile: Dockerfile
+    container_name: mocha-integration
+    depends_on:
+      - client
+    environment:
+      MOCHA_URL: http://backend-service:8000
+    command: dockerize -wait http://client:3000 -timeout 300s npm run test 
+    volumes:
+      - ./mocha/test/:/app/test/
+    working_dir: /app
+    networks:
+      - fp_network
+
 networks:
   fp_network:
     driver: bridge

@@ -131,6 +131,8 @@ async function routes(app) {
       };
       /* eslint-enable sort-keys */
 
+      // _id starts with seconds timestamp so newer posts will sort together first
+      // then in a determinate order (required for proper pagination)
       const sortAndFilterSteps = location
         ? [
             {
@@ -146,8 +148,9 @@ async function routes(app) {
                 query: { $and: filters },
               },
             },
+            { $sort: { distance: 1, _id: -1 } },
           ]
-        : [{ $match: { $and: filters } }, { $sort: { createdAt: -1 } }];
+        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
 
       const paginationSteps =
         limit === -1

@@ -14,32 +14,38 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
   return (
     <Section>
       <Head number={3} title={t("post.whatVisibility")} />
-      <div className="buttons">
-        <SubTitle>{t("post.postVisible")}</SubTitle>
-        <Selector
-          suffixIcon={
-            <SvgIcon
-              src={downArrowSlim}
-              style={{ width: "1.5rem", height: "auto" }}
-            />
-          }
-          onChange={onShareWithChange}
-          defaultValue={formData ? formData.shareWith : shareWith.default.value}
-          filterOption={false}
-          options={shareWith.options}
-        />
-        <Selector
-          suffixIcon={
-            <SvgIcon
-              src={downArrowSlim}
-              style={{ width: "1.5rem", height: "auto" }}
-            />
-          }
-          onChange={onExpirationChange}
-          defaultValue={formData ? formData.expires : expires.default.value}
-          filterOption={false}
-          options={expires.options}
-        />
+      <div className="buttons visibility-post">
+        <SubTitle className="visibility-post--info">
+          {t("post.postVisible")}
+        </SubTitle>
+        <div className="visibility-post--selector">
+          <Selector
+            suffixIcon={
+              <SvgIcon
+                src={downArrowSlim}
+                style={{ width: "1.5rem", height: "auto" }}
+              />
+            }
+            onChange={onShareWithChange}
+            defaultValue={
+              formData ? formData.shareWith : shareWith.default.value
+            }
+            filterOption={false}
+            options={shareWith.options}
+          />
+          <Selector
+            suffixIcon={
+              <SvgIcon
+                src={downArrowSlim}
+                style={{ width: "1.5rem", height: "auto" }}
+              />
+            }
+            onChange={onExpirationChange}
+            defaultValue={formData ? formData.expires : expires.default.value}
+            filterOption={false}
+            options={expires.options}
+          />
+        </div>
       </div>
     </Section>
   );

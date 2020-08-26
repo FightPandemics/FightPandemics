@@ -31,12 +31,12 @@ const LogoContainer = styled.div`
 
 const LogoLayout = (props) => {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <NavBar mode="light" style={NavbarStyles}>
         <LogoContainer>
-          <Link to="/">
+          <Link to={props.isAuthenticated ? "/feed" : "/"}>
             <Logo src={logo} alt={t("alt.logo")} />
           </Link>
         </LogoContainer>
