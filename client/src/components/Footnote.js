@@ -154,7 +154,7 @@ export default () => {
         <StyledSpan>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
           <Dropdown overlay={menu} placement="topLeft">
-            <Link>{langs[i18n.language].value}</Link>
+            <Link>{langs[localization[i18n.language]].value}</Link>
           </Dropdown>
         </StyledSpan>
       </StyledDiv>
