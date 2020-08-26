@@ -73,9 +73,9 @@ export default {
   },
   AU: {
     Country: "Australia",
-    Police: 0,
-    Ambulance: 0,
-    Fire: 0,
+    Police: "000",
+    Ambulance: "000",
+    Fire: "000",
   },
   AW: {
     Country: "Aruba",
@@ -217,9 +217,9 @@ export default {
   },
   CC: {
     Country: "Cocos (Keeling) Islands",
-    Police: 0,
-    Ambulance: 0,
-    Fire: 0,
+    Police: "000",
+    Ambulance: "000",
+    Fire: "000",
   },
   CD: {
     Country: "Democratic Republic of the Congo",
@@ -301,9 +301,9 @@ export default {
   },
   CX: {
     Country: "Christmas Island",
-    Police: 0,
-    Ambulance: 0,
-    Fire: 0,
+    Police: "000",
+    Ambulance: "000",
+    Fire: "000",
   },
   CY: {
     Country: "Cyprus",

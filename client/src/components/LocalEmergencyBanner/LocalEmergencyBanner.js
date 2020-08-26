@@ -50,10 +50,8 @@ const LocalEmergencyBanner = () => {
       const countryCode = localEmergencyData[ipInfo.data.countryCode];
 
       if (!countryCode) throw Error();
-
-      if (countryCode.Ambulance === 0) {
-        setLocalEmergencyNumber("000");
-      } else if (typeof countryCode.Ambulance === "string") {
+      
+      if (typeof countryCode.Ambulance === "string") {
         setLocalEmergencyNumber(countryCode.Ambulance.replace(/[/]/g, " or "));
       } else {
         setLocalEmergencyNumber(countryCode.Ambulance);
