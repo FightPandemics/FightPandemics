@@ -28,15 +28,18 @@ const Activity = ({
   isNextPageLoading,
   itemCount,
   isItemLoaded,
+  hasNextPage,
 }) => {
   const posts = Object.entries(filteredPosts);
+
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  // console.log(loadMoreItems, "doesnt trigger?");
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
-      if (!isItemLoaded(index)) {
+      if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
-      } else {
+      } else if (posts[index]) {
         content = (
           <Post
             currentPost={posts[index][1]}
@@ -74,6 +77,7 @@ const Activity = ({
       handleEditPost,
       handlePostDelete,
       handlePostLike,
+      hasNextPage,
       isItemLoaded,
       postDelete,
       posts,
