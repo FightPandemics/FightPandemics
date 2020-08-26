@@ -396,55 +396,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
-<<<<<<< HEAD
-      <EditLayout>
-        <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
-            {t("profile.org.editOrgProfile")}
-          </CustomEditAccountHeader>
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              {t("profile.common.accountInfo")}
-            </CustomHeading>
-          </ToggleHeading>
-          <FillEmptySpace />
-          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
-        </TitlePictureWrapper>
-        <FormLayout>
-          <OptionDiv>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
-            </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
-            </CustomLink>
-          </OptionDiv>
-          <CustomForm>
-            {renderFormInputs()}
-            {renderAddressInput()}
-            {renderGlobalCheckBox()}
-            <WhiteSpace />
-            <WhiteSpace />
-            {renderSelectItems()}
-            <Label>{t("profile.org.seeking")}</Label>
-            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
-            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading
-                ? t("profile.common.saveChanges") + "..."
-                : t("profile.common.saveChanges")}
-            </CustomSubmitButton>
-          </CustomForm>
-        </FormLayout>
-      </EditLayout>
-=======
       {isUpdateSuccess ? (
         <>
           <SuccessAlert
-            message={"organisation successfully updated"}
+            message={t("profile.org.updateSuccess")}
             closable
             afterClose={handleSuccessClose}
           />
@@ -460,11 +415,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
         <EditLayout>
           <TitlePictureWrapper>
             <CustomEditAccountHeader className="h4">
-              Edit Organisation Profile
+              {t("profile.org.editOrgProfile")}
             </CustomEditAccountHeader>
             <ToggleHeading>
               <CustomHeading level={4} className="h4">
-                Account Information
+                {t("profile.common.accountInfo")}
               </CustomHeading>
             </ToggleHeading>
 
@@ -477,12 +432,12 @@ function EditOrganisationAccount({ refetchUser, history }) {
             <OptionDiv>
               <CustomLink isSelected>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Account Information
+                  {t("profile.common.accountInfo")}
                 </Link>
               </CustomLink>
               <CustomLink>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Profile Information
+                  {t("profile.common.profileInfo")}
                 </Link>
               </CustomLink>
             </OptionDiv>
@@ -493,19 +448,20 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <WhiteSpace />
               <WhiteSpace />
               {renderSelectItems()}
-              <Label>What are you looking for?</Label>
+              <Label>{t("profile.org.seeking")}</Label>
               <HelpWrapper>{renderNeedSection()}</HelpWrapper>
               <CustomSubmitButton
                 primary="true"
                 onClick={handleSubmit(onSubmit)}
               >
-                {loading ? "Saving Changes..." : "Save Changes"}
+                {loading
+                  ? t("profile.common.savingChanges")
+                  : t("profile.common.saveChanges")}
               </CustomSubmitButton>
             </CustomForm>
           </FormLayout>
         </EditLayout>
       </Container>
->>>>>>> staging
     </Background>
   );
 }

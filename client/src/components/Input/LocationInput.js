@@ -133,7 +133,7 @@ const LocationInput = ({
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
     } catch (error) {
-      const message = err.response?.data?.message || err.message;
+      const message = error.response?.data?.message || error.message;
       const translatedErrorMessage = t([
         `error.${message}`,
         `error.http.${message}`,

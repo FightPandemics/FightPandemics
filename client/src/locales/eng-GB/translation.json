@@ -170,6 +170,7 @@
       "agreeTerms": "By signing up, I agree to the <0>Terms and Conditions</0>",
       "createProfile": "Create Your Profile",
       "saveChanges": "Save Changes",
+      "savingChanges": "Saving Changes...",
       "thankyou": "Thank you for joining our community!",
       "submit": "Create Profile",
       "submitLoading": "Creating Profile...",
@@ -226,6 +227,7 @@
     "org": {
       "title": "Create Organisation Profile",
       "editOrgProfile": "Edit Organisation Profile",
+      "updateSuccess": "Organisation successfully updated",
       "completeOrgProfile": "Complete Organisation Profile",
       "name": "Organisation Name",
       "email": "Organisation Contact Email",
