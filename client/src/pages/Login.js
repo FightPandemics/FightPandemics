@@ -33,7 +33,7 @@ import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
 import { validateEmail, validatePassword } from "utils/validators";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -232,9 +232,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
+          const translatedErrorMessage = t([
+            `error.${message}`,
+            `error.http.${message}`,
+          ]);
           authFormDispatch({
             type: AUTH_FORM_SOCIAL_ERROR,
-            error: `Authentication failed, reason: ${message}`,
+            error: `${t(
+              "error.failedAuthentication",
+            )} ${translatedErrorMessage}`,
           });
         }
       };
@@ -258,9 +264,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_LOGIN_ERROR,
-        error: `Login failed, reason: ${message}`,
+        error: `${t("error.failedLogin")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -275,9 +285,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_SIGNUP_ERROR,
-        error: `Signup failed, reason: ${message}`,
+        error: `${t("error.failedSignup")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -292,9 +306,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_FORGOT_PASSWORD_ERROR,
-        error: `Forgot Password failed, reason: ${message}`,
+        error: `${t("error.failedPasswordRecovery")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -365,7 +383,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     ref={register({
                       required: t("profile.common.emailRequire") + ".",
                       validate: (email) =>
-                        validateEmail(email) || t("profile.common.invalidEmail"),
+                        validateEmail(email) ||
+                        t("profile.common.invalidEmail"),
                     })}
                     style={inputStyles}
                   />
@@ -396,7 +415,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       },
                       required: t("profile.common.passwordRequire") + ".",
                       validate: (password) =>
-                        validatePassword(password) || t("profile.common.invalidPassword"),
+                        validatePassword(password) ||
+                        t("profile.common.invalidPassword"),
                     })}
                     style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
@@ -474,7 +494,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       ref={register({
                         required: t("profile.common.emailRequire") + ".",
                         validate: (email) =>
-                          validateEmail(email) || t("profile.common.invalidEmail"),
+                          validateEmail(email) ||
+                          t("profile.common.invalidEmail"),
                       })}
                       style={inputStyles}
                     />
@@ -503,7 +524,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <>
                     <p>
                       <AuthLink to="/auth/forgot-password">
-                        {t('auth.forgotPassword')}
+                        {t("auth.forgotPassword")}
                       </AuthLink>
                     </p>
                     <p>
@@ -511,7 +532,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                         id={GTM.sign.inPrefix + GTM.sign.up}
                         to="/auth/signup"
                       >
-                        {t('auth.noAccount')} <u>{t("auth.joinNow")}</u>
+                        {t("auth.noAccount")} <u>{t("auth.joinNow")}</u>
                       </AuthLink>
                     </p>
                   </>

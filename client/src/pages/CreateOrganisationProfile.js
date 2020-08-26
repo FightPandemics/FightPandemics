@@ -2,7 +2,7 @@ import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from "react-i18next";
 import createOrganisationProfile from "assets//data/createOrganisationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
@@ -173,9 +173,13 @@ const CreateOrgProfile = (props) => {
           }
         } catch (err) {
           const message = err.response?.data?.message || err.message;
+          const translatedErrorMessage = t([
+            `error.${message}`,
+            `error.http.${message}`,
+          ]);
           createOrganisationFormDispatch({
             type: CREATE_Organisation_ERROR,
-            error: `Creating organisation failed, reason: ${message}`,
+            error: `${t("error.failedCreatingOrg")} ${translatedErrorMessage}`,
           });
         }
       } else {
@@ -275,7 +279,10 @@ const CreateOrgProfile = (props) => {
             />
             <span style={globalText}>{t("profile.org.globalOrg")}</span>
             <InputGroup>
-              <Label style={styleLabel} label={"* " + t("profile.org.seeking")} />
+              <Label
+                style={styleLabel}
+                label={"* " + t("profile.org.seeking")}
+              />
               <Controller
                 as={CheckboxGroup}
                 control={control}
@@ -310,13 +317,16 @@ const CreateOrgProfile = (props) => {
               />
             </InputGroup>
             <span style={errorStyles}>
-              {errors.needs && "Please select at least one option"}
+              {errors.needs && t("error.selectOneOption")}
             </span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
-            <Label style={styleLabel} label={"* " + t("profile.org.typeAndIndustry")} />
+            <Label
+              style={styleLabel}
+              label={"* " + t("profile.org.typeAndIndustry")}
+            />
           </InputWrapper>
           <div className="settings">
             <Controller
@@ -390,13 +400,12 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions && validEmail)}
             id={
               GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
             }
           >
             {createOrganisationFormState.loading
-              ? t("profile.common.submitLoading") 
+              ? t("profile.common.submitLoading")
               : t("profile.common.submit")}
           </SubmitButton>
         </StyledForm>

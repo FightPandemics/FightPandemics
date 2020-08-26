@@ -62,8 +62,7 @@ function EditOrganisationProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_]*$/,
-          message:
-            t("profile.common.twitterError"),
+          message: t("profile.common.twitterError"),
         },
       },
       TWITTER_URL,
@@ -73,8 +72,7 @@ function EditOrganisationProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_\-/]*$/,
-          message:
-            t("profile.common.linkedinError"),
+          message: t("profile.common.linkedinError"),
         },
       },
       LINKEDIN_URL,
@@ -82,7 +80,8 @@ function EditOrganisationProfile(props) {
     website: [
       "Website",
       {
-        validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+        validate: (str) =>
+          !str || validateURL(str) || t("profile.common.invalidURL"),
       },
     ],
   };
@@ -98,9 +97,13 @@ function EditOrganisationProfile(props) {
       props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       orgProfileDispatch(
         updateOrganisationError(
-          `Failed updating organisation profile, reason: ${message}`,
+          `${t("error.failedUpdatingOrgProfile")} ${translatedErrorMessage}`,
         ),
       );
     }
@@ -114,8 +117,14 @@ function EditOrganisationProfile(props) {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -202,7 +211,9 @@ function EditOrganisationProfile(props) {
               ),
             )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? t("profile.common.saveChanges") + "..." : t("profile.common.saveChanges")}
+              {loading
+                ? t("profile.common.saveChanges") + "..."
+                : t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

@@ -114,9 +114,13 @@ function EditOrganisationAccount(props) {
       props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       orgProfileDispatch(
         updateOrganisationError(
-          `Failed updating organisation profile, reason: ${message}`,
+          `${t("error.failedUpdatingOrgProfile")} ${translatedErrorMessage}`,
         ),
       );
     }
@@ -131,8 +135,14 @@ function EditOrganisationAccount(props) {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -191,7 +201,11 @@ function EditOrganisationAccount(props) {
     return Object.entries(organisationInfo).map(([key, value]) => {
       return (
         <div
-          key={key == "Organisation Name" ? t("profile.org.name") : t("profile.org.eamil")}
+          key={
+            key === "Organisation Name"
+              ? t("profile.org.name")
+              : t("profile.org.email")
+          }
           style={{
             display: "flex",
             flexDirection: "column",
@@ -206,7 +220,8 @@ function EditOrganisationAccount(props) {
               required: value[2],
               maxLength: value[4],
               validate: value[3]
-                ? (email) => validateEmail(email) || t("profile.common.invalidEmail")
+                ? (email) =>
+                    validateEmail(email) || t("profile.common.invalidEmail")
                 : null,
             })}
             error={errors[value[0]]}
@@ -285,7 +300,11 @@ function EditOrganisationAccount(props) {
     if (organisation) {
       return (
         <InputWrapper>
-          <InputLabel htmlFor="location" icon={Marker} label={t("profile.common.address")} />
+          <InputLabel
+            htmlFor="location"
+            icon={Marker}
+            label={t("profile.common.address")}
+          />
           <LocationInput
             formError={errors.location}
             location={location}
@@ -353,7 +372,9 @@ function EditOrganisationAccount(props) {
             <Label>{t("profile.org.seeking")}</Label>
             <HelpWrapper>{renderNeedSection()}</HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? t("profile.common.saveChanges") + "..." : t("profile.common.saveChanges")}
+              {loading
+                ? t("profile.common.saveChanges") + "..."
+                : t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

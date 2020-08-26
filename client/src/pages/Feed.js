@@ -435,7 +435,13 @@ const Feed = (props) => {
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      await postsDispatch({ error, type: ERROR_POSTS });
+      // console.log("asdf; ", error.response.data.message);
+      const message = error.response?.data?.message || error.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
+      await postsDispatch({ error: translatedErrorMessage, type: ERROR_POSTS });
     }
 
     if (response && response.data && response.data.length) {
@@ -673,9 +679,7 @@ const Feed = (props) => {
               handlePostDelete={handlePostDelete}
               handleCancelPostDelete={handleCancelPostDelete}
             />
-            {status === ERROR_POSTS && (
-              <ErrorAlert message={postsError.message} />
-            )}
+            {status === ERROR_POSTS && <ErrorAlert message={postsError} />}
             {isLoading ? <Loader /> : <></>}
             <CreatePostIcon
               id={gtmTag(GTM.post.createPost)}

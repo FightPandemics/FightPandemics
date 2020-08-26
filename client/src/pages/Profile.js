@@ -121,8 +121,12 @@ const Profile = ({
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(`${t("error.failedLoadingProfile")} ${translatedErrorMessage}`),
         );
       }
     })();
@@ -149,9 +153,13 @@ const Profile = ({
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       postsDispatch({
         type: ERROR_POSTS,
-        error: `Failed loading activity, reason: ${message}`,
+        error: `${t("error.failedLoadingActivity")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -287,7 +295,8 @@ const Profile = ({
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}
               {needHelp && t("profile.individual.needHelp")}
-              {offerHelp && t("profile.individual.wantHelp")} {address && `• ${address}`}
+              {offerHelp && t("profile.individual.wantHelp")}{" "}
+              {address && `• ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -320,7 +329,9 @@ const Profile = ({
         </DescriptionMobile>
         <WhiteSpace />
         <SectionHeader>
-          {ownUser ? t("profile.individual.myActivity") : t("profile.individual.userActivity")}
+          {ownUser
+            ? t("profile.individual.myActivity")
+            : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {ownUser && (
             <>
@@ -346,7 +357,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}
@@ -368,7 +379,9 @@ const Profile = ({
             <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-profile">{t("profile.individual.editProfile")} </Link>
+            <Link to="/edit-profile">
+              {t("profile.individual.editProfile")}{" "}
+            </Link>
           </DrawerHeader>
         </CustomDrawer>
       )}

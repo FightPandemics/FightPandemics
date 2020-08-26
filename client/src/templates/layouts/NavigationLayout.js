@@ -335,9 +335,15 @@ const NavigationLayout = (props) => {
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       feedbackFormDispatch({
         type: FEEDBACK_FORM_SUBMIT_ERROR,
-        error: `Could not submit feedback, reason: ${message}`,
+        error: `${t(
+          "error.failedSubmittingFeedback",
+        )} ${translatedErrorMessage}`,
       });
     }
   };

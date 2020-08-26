@@ -50,6 +50,8 @@ async function routes(app) {
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
+
+      throw app.httpErrors.internalServerError();
       if (userId) {
         [userErr, user] = await app.to(User.findById(userId));
         if (userErr) {

@@ -54,8 +54,7 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9.]*$/,
-          message:
-            t("profile.individual.facebookError"),
+          message: t("profile.individual.facebookError"),
         },
         minLength: {
           value: 5,
@@ -69,8 +68,7 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9-]*$/,
-          message:
-            t("profile.common.linkedinError"),
+          message: t("profile.common.linkedinError"),
         },
       },
       LINKEDIN_INDIVIDUAL_URL,
@@ -80,8 +78,7 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_]*$/,
-          message:
-            t("profile.common.twitterError"),
+          message: t("profile.common.twitterError"),
         },
         maxLength: {
           value: 15,
@@ -95,8 +92,7 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_-]*$/,
-          message:
-            t("profile.individual.githubError"),
+          message: t("profile.individual.githubError"),
         },
       },
       GITHUB_URL,
@@ -104,7 +100,8 @@ function EditProfile(props) {
     website: [
       "Personal Website",
       {
-        validate: (str) => !str || validateURL(str) || t("profile.common.invalidURL"),
+        validate: (str) =>
+          !str || validateURL(str) || t("profile.common.invalidURL"),
       },
     ],
   };
@@ -118,8 +115,14 @@ function EditProfile(props) {
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       userProfileDispatch(
-        updateUserError(`Failed updating profile, reason: ${message}`),
+        updateUserError(
+          `${t("error.failedUpdatingProfile")} ${translatedErrorMessage}`,
+        ),
       );
     }
   };
@@ -132,8 +135,14 @@ function EditProfile(props) {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();

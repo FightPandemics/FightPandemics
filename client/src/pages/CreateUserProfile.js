@@ -222,9 +222,13 @@ const CreateProfile = ({ email, history }) => {
       history.push("/profile-completed");
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       createUserFormDispatch({
         type: CREATE_USER_ERROR,
-        error: `Create user failed, reason: ${message}`,
+        error: `${t("error.failedCreatingUser")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -270,7 +274,8 @@ const CreateProfile = ({ email, history }) => {
                 disabled
                 ref={register({
                   required: t("profile.common.emailRequire") + ".",
-                  validate: (email) => validateEmail(email) || t("profile.common.invalidURL"),
+                  validate: (email) =>
+                    validateEmail(email) || t("profile.common.invalidURL"),
                 })}
                 style={inputStyles}
                 value={email}
@@ -395,14 +400,14 @@ const CreateProfile = ({ email, history }) => {
               size={theme.typography.size.large}
               weight={500}
             >
-              {t('profile.individual.iNeed')}
+              {t("profile.individual.iNeed")}
             </TextLabel>
             <Controller
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              description={t('profile.individual.haveCovidSymptoms')}
-              label={t('profile.individual.medical')}
+              description={t("profile.individual.haveCovidSymptoms")}
+              label={t("profile.individual.medical")}
               name="needs.medicalHelp"
               onChange={handleCheckboxChange}
             />
@@ -449,7 +454,7 @@ const CreateProfile = ({ email, history }) => {
               id={GTM.user.profilePrefix + GTM.profile.createProfile}
             >
               {createUserFormState.loading
-                ? t("profile.common.submitLoading") 
+                ? t("profile.common.submitLoading")
                 : t("profile.common.submit")}
             </Submit>
           </InputGroup>

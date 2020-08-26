@@ -106,8 +106,14 @@ function EditAccount(props) {
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       userProfileDispatch(
-        updateUserError(`Failed updating profile, reason: ${message}`),
+        updateUserError(
+          `${t("error.failedUpdatingProfile")} ${translatedErrorMessage}`,
+        ),
       );
     }
   };
@@ -121,8 +127,14 @@ function EditAccount(props) {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading account data, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -213,7 +225,9 @@ function EditAccount(props) {
                 onChange={([event]) => event.target.checked}
                 valueName="checked"
               >
-                <Label inputColor="#000000">{t("profile.individual.hideAddress")}</Label>
+                <Label inputColor="#000000">
+                  {t("profile.individual.hideAddress")}
+                </Label>
               </Controller>
             </CheckBoxWrapper>
             <Label>{t("profile.individual.iWant")}</Label>
@@ -228,7 +242,9 @@ function EditAccount(props) {
                     onChange={([event]) => event.target.checked}
                     valueName="checked"
                   >
-                    <Label inputColor="#000000">{t("profile.individual." + key)}</Label>
+                    <Label inputColor="#000000">
+                      {t("profile.individual." + key)}
+                    </Label>
                   </Controller>
                 </CheckBoxWrapper>
               ))}
@@ -245,8 +261,16 @@ function EditAccount(props) {
                     onChange={([event]) => event.target.checked}
                     valueName="checked"
                   >
-                    <Label inputColor="black">{label == "Medical Help" ? t("profile.individual.medical") : t("profile.individual.other")}</Label>
-                    <UnderLineDescription>{description == "I have symptoms of COVID-19" ? t("profile.individual.haveCovidSymptoms") : t("profile.individual.otherDesc")}</UnderLineDescription>
+                    <Label inputColor="black">
+                      {label === "Medical Help"
+                        ? t("profile.individual.medical")
+                        : t("profile.individual.other")}
+                    </Label>
+                    <UnderLineDescription>
+                      {description === "I have symptoms of COVID-19"
+                        ? t("profile.individual.haveCovidSymptoms")
+                        : t("profile.individual.otherDesc")}
+                    </UnderLineDescription>
                   </Controller>
                 </CheckBoxWrapper>
               ))}
