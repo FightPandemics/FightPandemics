@@ -108,6 +108,7 @@ const Profile = ({
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
   const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -161,6 +162,13 @@ const Profile = ({
         const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
         response = await axios.get(endpoint);
         if (response && response.data && response.data.length) {
+          console.log(response.data.length, "LENGTH");
+          if (response.data.length < limit) {
+            setHasNextPage(false);
+          } else {
+            setHasNextPage(true);
+          }
+
           const loadedPosts = response.data.reduce((obj, item) => {
             obj[item._id] = item;
             return obj;
@@ -221,21 +229,17 @@ const Profile = ({
     [postsList],
   );
 
-  const loadNextPage = useCallback(
-    ({ startIndex, stopIndex }) => {
-      const userPosts = Object.entries(postsList);
-      if (!isLoading && loadMore && loadedRows) {
-        return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
-          fetchPosts();
-          resolve();
-        });
-      } else {
-        return Promise.resolve();
-      }
-    },
-    [postsList, isLoading, loadMore, loadedRows, fetchPosts],
-  );
+  const loadNextPage = useCallback(() => {
+    if (!isLoading && loadMore && loadedRows) {
+      return new Promise((resolve) => {
+        postsDispatch({ type: NEXT_PAGE });
+        fetchPosts();
+        resolve();
+      });
+    } else {
+      return Promise.resolve();
+    }
+  }, [postsList, isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const userPosts = Object.entries(postsList);
@@ -431,6 +435,7 @@ const Profile = ({
             isNextPageLoading={isLoading}
             itemCount={itemCount}
             isItemLoaded={isItemLoaded}
+            hasNextPage={hasNextPage}
           />
           {ownUser && (
             <CreatePost
