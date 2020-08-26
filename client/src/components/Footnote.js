@@ -78,6 +78,8 @@ export default () => {
     "zh-TW": {value: "繁體中文", text: "Chinese Traditional (繁體中文)"},
     "nl": {value: "Nederlands", text: "Dutch (Nederlands)"},
     "en": {value: "English", text: "English (English)"},
+    "en-US": {value: "English", text: "English (American English)"},
+    "en-GB": {value: "English", text: "English (British English)"},
     "fr": {value: "Français", text: "French (Français)"},
     "de": {value: "Deutsch", text: "German (Deutsch)"},
     "he": {value: "עברית", text: "Hebrew (עברית)"},

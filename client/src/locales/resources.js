@@ -5,6 +5,12 @@ export const resources = {
   en: {
     translation: translationEN
   },
+  "en-US": {
+    translation: translationEN
+  },
+  "en-GB": {
+    translation: translationEN
+  },
   ru: {
     translation: translationRU
   }

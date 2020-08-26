@@ -11,18 +11,18 @@ export const Languages = {
   id: "id",
 };
 
-export function getLang() {
-  const systemLang = navigator.language;
-  const primaryLang = Object.values(Languages).includes(systemLang)
-    ? systemLang
-    : Languages.en;
-  let res = Languages.en;
+// export function getLang() {
+//   const systemLang = navigator.language;
+//   const primaryLang = Object.values(Languages).includes(systemLang)
+//     ? systemLang
+//     : Languages.en;
+//   let res = Languages.en;
 
-  const language = primaryLang;
-  if (resources[language]) res = language;
-  // window.localStorage.setItem('locale', res);
-  return res;
-}
+//   const language = primaryLang;
+//   if (resources[language]) res = language;
+//   // window.localStorage.setItem('locale', res);
+//   return res;
+// }
 
 i18n
   .use(Backend)
