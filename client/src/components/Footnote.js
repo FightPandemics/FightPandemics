@@ -72,12 +72,30 @@ export default () => {
     i18n.changeLanguage(lng);
   };
 
+  const localization = {
+    en: "en-US",
+    "en-US": "en-US",
+    "en-GB": "en-GB",
+    ar: "ar",
+    id: "id",
+    "zh-TW": "zh-TW",
+    nl: "nl",
+    fr: "fr",
+    de: "de",
+    he: "he",
+    it: "it",
+    pt: "pt",
+    ru: "ru",
+    es: "es",
+    tr: "tr",
+    uk: "uk",
+  };
+
   const langs = {
     ar: { value: "العربية", text: "Arabic (العربية)" },
     id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
     "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
     nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
-    en: { value: "English", text: "English (English)" },
     "en-US": { value: "English", text: "English (American English)" },
     "en-GB": { value: "English", text: "English (British English)" },
     fr: { value: "Français", text: "French (Français)" },
@@ -132,7 +150,7 @@ export default () => {
         </FooterLink>{" "}
         | <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
         <Dropdown overlay={menu} placement="topLeft">
-          <FooterLink>{langs[i18n.language].value}</FooterLink>
+          <FooterLink>{langs[localization[i18n.language]].value}</FooterLink>
         </Dropdown>
       </Policies>
     </StyledFooter>

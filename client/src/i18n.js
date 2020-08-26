@@ -4,13 +4,6 @@ import languageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import resources from "./locales/resources";
 
-export const Languages = {
-  en: "en",
-  en_US: "en",
-  ar: "ar",
-  id: "id",
-};
-
 // export function getLang() {
 //   const systemLang = navigator.language;
 //   const primaryLang = Object.values(Languages).includes(systemLang)
@@ -31,7 +24,7 @@ i18n
   .init({
     resources,
     lng: navigator.language,
-    fallbackLng: Languages.en,
+    fallbackLng: "en-US",
     interpolation: {
       escapeValue: false,
     },
