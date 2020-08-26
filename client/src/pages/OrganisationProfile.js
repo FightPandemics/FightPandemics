@@ -1,6 +1,12 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState, useEffect, useContext, useReducer } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+} from "react";
 import { Link } from "react-router-dom";
 
 // ICONS
@@ -68,6 +74,9 @@ import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_LIKE,
+  SET_LOADING,
+  NEXT_PAGE,
+  RESET_PAGE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
@@ -108,12 +117,27 @@ const OrganisationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
+  const [modal, setModal] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
+  const [loadedRows, setLoadedRows] = useState(true);
+  const [hasNextPage, setHasNextPage] = useState(false);
+
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
 
-  const { deleteModalVisibility } = postsState;
+  const {
+    // error: postsError,
+    // filterType,
+    isLoading,
+    loadMore,
+    page,
+    posts: postsList,
+    // status,
+    deleteModalVisibility,
+  } = postsState;
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -144,23 +168,51 @@ const OrganisationProfile = () => {
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
-  const fetchOrganisationPosts = async () => {
+  const fetchOrganisationPosts = useCallback(async () => {
+    const limit = 10;
+    const skip = page * limit;
+    let response = {};
+
     postsDispatch({ type: FETCH_POSTS });
     try {
-      const res = await axios.get(
-        `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
-      );
-      const loadedPosts =
-        res?.data?.length &&
-        res.data.reduce((obj, item) => {
+      const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+      response = await axios.get(endpoint);
+
+      if (response && response.data && response.data.length) {
+        if (response.data.length < limit) {
+          setHasNextPage(false);
+        } else {
+          setHasNextPage(true);
+        }
+
+        const loadedPosts = response.data.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
         }, {});
-
-      postsDispatch({
-        type: SET_POSTS,
-        posts: loadedPosts,
-      });
+        if (postsList) {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsList, ...loadedPosts },
+          });
+        } else {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...loadedPosts },
+          });
+        }
+      } else if (response && response.data) {
+        await postsDispatch({
+          type: SET_POSTS,
+          posts: { ...postsList },
+        });
+        await postsDispatch({
+          type: SET_LOADING,
+          isLoading: false,
+          loadMore: false,
+        });
+      } else {
+        await postsDispatch({ type: SET_LOADING });
+      }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       postsDispatch({
@@ -168,14 +220,47 @@ const OrganisationProfile = () => {
         error: `Failed loading activity, reason: ${message}`,
       });
     }
+  }, [organisationId, postsList, page]);
+
+  const refetchPosts = () => {
+    postsDispatch({ type: RESET_PAGE });
   };
 
   useEffect(() => {
     fetchOrganisationPosts();
-  }, [organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, itemCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [modal, setModal] = useState(false);
-  const [drawer, setDrawer] = useState(false);
+  const isItemLoaded = useCallback(
+    (index) => {
+      const organisationPosts = Object.entries(postsList);
+      if (!!organisationPosts[index]) {
+        setLoadedRows(false);
+      } else {
+        setLoadedRows(true);
+      }
+      return !!organisationPosts[index];
+    },
+    [postsList],
+  );
+
+  const loadNextPage = useCallback(() => {
+    if (!isLoading && loadMore && loadedRows) {
+      return new Promise((resolve) => {
+        postsDispatch({ type: NEXT_PAGE });
+        fetchOrganisationPosts();
+        resolve();
+      });
+    } else {
+      return Promise.resolve();
+    }
+  }, [isLoading, loadMore, loadedRows, fetchOrganisationPosts]);
+
+  useEffect(() => {
+    const organisationPosts = Object.entries(postsList);
+    setItemCount(
+      loadMore ? organisationPosts.length + 1 : organisationPosts.length,
+    );
+  }, [loadMore, postsList, setItemCount]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -188,10 +273,13 @@ const OrganisationProfile = () => {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
-            ...postsState.posts,
+            ...postsList,
           };
           delete allPosts[post._id];
-          fetchOrganisationPosts();
+          await postsDispatch({
+            type: SET_POSTS,
+            posts: allPosts,
+          });
         }
       } catch (error) {
         console.log({
@@ -356,7 +444,7 @@ const OrganisationProfile = () => {
             </SectionHeader>
             <FeedWrapper>
               <Activity
-                filteredPosts={postsState.posts}
+                filteredPosts={postsList}
                 user={user}
                 postDelete={postDelete}
                 handlePostDelete={handlePostDelete}
@@ -364,12 +452,17 @@ const OrganisationProfile = () => {
                 deleteModalVisibility={deleteModalVisibility}
                 handleCancelPostDelete={handleCancelPostDelete}
                 handlePostLike={handlePostLike}
+                loadNextPage={loadNextPage}
+                isNextPageLoading={isLoading}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={hasNextPage}
               />
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={() => setModal(false)}
-                  loadPosts={fetchOrganisationPosts}
+                  loadPosts={refetchPosts}
                   visible={modal}
                   user={user}
                 />
