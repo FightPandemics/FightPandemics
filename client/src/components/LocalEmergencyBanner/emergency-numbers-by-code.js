@@ -73,9 +73,9 @@ export default {
   },
   AU: {
     Country: "Australia",
-    Police: "000",
-    Ambulance: "000",
-    Fire: "000",
+    Police: 0,
+    Ambulance: 0,
+    Fire: 0,
   },
   AW: {
     Country: "Aruba",
@@ -217,9 +217,9 @@ export default {
   },
   CC: {
     Country: "Cocos (Keeling) Islands",
-    Police: "000",
-    Ambulance: "000",
-    Fire: "000",
+    Police: 0,
+    Ambulance: 0,
+    Fire: 0,
   },
   CD: {
     Country: "Democratic Republic of the Congo",
@@ -301,9 +301,9 @@ export default {
   },
   CX: {
     Country: "Christmas Island",
-    Police: "000",
-    Ambulance: "000",
-    Fire: "000",
+    Police: 0,
+    Ambulance: 0,
+    Fire: 0,
   },
   CY: {
     Country: "Cyprus",
@@ -481,9 +481,9 @@ export default {
   },
   GM: {
     Country: "The Gambia",
-    Police: 117,
-    Ambulance: 116,
-    Fire: 118,
+    Police: 17,
+    Ambulance: 16,
+    Fire: 18,
   },
   GN: {
     Country: "Guinea",
@@ -787,9 +787,9 @@ export default {
   },
   MD: {
     Country: "Moldova",
-    Police: 102,
-    Ambulance: 103,
-    Fire: 101,
+    Police: 112,
+    Ambulance: 112,
+    Fire: 112,
   },
   ME: {
     Country: "Montenegro",
@@ -853,9 +853,9 @@ export default {
   },
   MS: {
     Country: "Montserrat",
-    Police: 911,
-    Ambulance: 911,
-    Fire: 999,
+    Police: "911/999",
+    Ambulance: "911/999",
+    Fire: "911/999",
   },
   MT: {
     Country: "Malta",
@@ -905,32 +905,32 @@ export default {
     Ambulance: "",
     Fire: "",
   },
-  NAAbkhazia: {
-    Country: "NAAbkhazia",
+  GE: {
+    Country: "Abkhazia",
     Police: 102,
     Ambulance: 103,
     Fire: 101,
   },
-  "NAClipperton Island": {
-    Country: "NAClipperton Island",
+  PF: {
+    Country: "Clipperton Island",
     Police: 112,
     Ambulance: 112,
     Fire: 112,
   },
-  NAIreland: {
-    Country: "NAIreland",
+  IE: {
+    Country: "Ireland",
     Police: "112/999",
     Ambulance: "112/999",
     Fire: "112/999",
   },
-  "NANavassa Island": {
-    Country: "NANavassa Island",
+  UM: {
+    Country: "Navassa Island",
     Police: 911,
     Ambulance: 911,
     Fire: 911,
   },
-  "NANorthern Cyprus": {
-    Country: "NANorthern Cyprus",
+  CY: {
+    Country: "Northern Cyprus",
     Police: 112,
     Ambulance: 112,
     Fire: 112,
@@ -1034,7 +1034,7 @@ export default {
   PL: {
     Country: "Poland",
     Police: 997,
-    Ambulance: 999,
+    Ambulance: "999/112",
     Fire: 998,
   },
   PM: {
@@ -1238,7 +1238,7 @@ export default {
   TL: {
     Country: "Timor-Leste",
     Police: 112,
-    Ambulance: 112,
+    Ambulance: 115,
     Fire: 112,
   },
   TM: {
@@ -1328,7 +1328,7 @@ export default {
   VC: {
     Country: "Saint Vincent and the Grenadines",
     Police: 911,
-    Ambulance: 999,
+    Ambulance: "911/999",
     Fire: 911,
   },
   VE: {
@@ -1340,7 +1340,7 @@ export default {
   VG: {
     Country: "British Virgin Islands",
     Police: 911,
-    Ambulance: 911,
+    Ambulance: "911/999",
     Fire: 999,
   },
   VI: {
@@ -1387,9 +1387,9 @@ export default {
   },
   ZA: {
     Country: "South Africa",
-    Police: "10 111",
-    Ambulance: "10 177",
-    Fire: "10 177",
+    Police: 10111,
+    Ambulance: 10177,
+    Fire: 10177,
   },
   ZM: {
     Country: "Zambia",
