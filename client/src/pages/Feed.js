@@ -562,23 +562,18 @@ const Feed = (props) => {
     [postsList],
   );
 
-  const loadNextPage = useCallback(
-    ({ startIndex, stopIndex }) => {
-      const userPosts = Object.entries(postsList);
-      dispatchAction(SET_VALUE, "applyFilters", false);
-      console.log(!isLoading && loadMore && loadedRows);
-      if (!isLoading && loadMore && loadedRows) {
-        return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
-          loadPosts();
-          resolve();
-        });
-      } else {
-        return Promise.resolve();
-      }
-    },
-    [postsList, isLoading, loadMore, loadedRows, loadPosts],
-  );
+  const loadNextPage = useCallback(() => {
+    dispatchAction(SET_VALUE, "applyFilters", false);
+    if (!isLoading && loadMore && loadedRows) {
+      return new Promise((resolve) => {
+        postsDispatch({ type: NEXT_PAGE });
+        loadPosts();
+        resolve();
+      });
+    } else {
+      return Promise.resolve();
+    }
+  }, [postsList, isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const posts = Object.entries(postsList);
