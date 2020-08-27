@@ -15,6 +15,7 @@ import comment from "assets/icons/comment.svg";
 import commentGray from "assets/icons/comment-gray.svg";
 import share from "assets/icons/share.svg";
 import shareGray from "assets/icons/share-gray.svg";
+import mail from "assets/icons/mail.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants
@@ -81,6 +82,11 @@ const PostSocial = ({
       <StyledSvg src={shareGray} className="social-icon-svg" />
     );
   };
+
+  const renderMessageIcon = () => (
+    // NOTE: No gray mail icon within assets
+    <StyledSvg src={mail} className="social-icon-svg" />
+  );
 
   const renderLabels = (label, labelCountProp) => {
     return (
@@ -198,6 +204,59 @@ const PostSocial = ({
           <StyledSpan>Share</StyledSpan>
         </div>
       </div>
+
+      <span></span>
+      {postId ? (
+        <div
+          id={gtmTag("message", GTM.post.prefix)}
+          className="social-icon"
+          onClick={setShowComments}
+        >
+          {renderMessageIcon()}
+          {renderLabels("Message", numComments)}
+        </div>
+      ) : (
+        <>
+          {isAuthenticated ? (
+            // NOTE: Update pathname and state when message submission page story is ready
+            <Link
+              to={{
+                pathname: `/post/${id}`,
+                state: {
+                  postId: id,
+                  comments: true,
+                  from: window.location.href,
+                },
+              }}
+            >
+              <div
+                id={gtmTag("message", GTM.feed.prefix)}
+                className="social-icon"
+                onClick={setShowComments}
+              >
+                {renderMessageIcon()}
+                {renderLabels("Message")}
+              </div>
+            </Link>
+          ) : (
+            // NOTE: Update sessionStorage, if necessary
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postredirect", `/post/${id}`)
+              }
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
+            >
+              <div id={gtmTag("icon", GTM.feed.prefix)} className="social-icon">
+                {renderMessageIcon()}
+                {renderLabels("Message")}
+              </div>
+            </Link>
+          )}
+        </>
+      )}
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
