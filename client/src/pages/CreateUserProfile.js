@@ -268,6 +268,10 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 disabled
                 ref={register({
                   required: "Email is required.",
+                  maxLength: {
+                    value: 100,
+                    message: "Max. 100 characters",
+                  },
                   validate: (email) => validateEmail(email) || "Invalid email",
                 })}
                 style={inputStyles}
