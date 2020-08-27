@@ -160,6 +160,52 @@ async function routes(app) {
     },
     async (req) => {
       const { body, userId: ownerId } = req;
+
+      const ownerObjectId = app.mongo.base.Types.ObjectId(ownerId);
+      await Promise.all([
+        Organisation.findOne({
+          name: body.name,
+        }).exec(),
+        Organisation.findOne({
+          location: body.location,
+          ownerId: ownerObjectId,
+        }).exec(),
+        Organisation.findOne({
+          industry: body.industry,
+          ownerId: ownerObjectId,
+        }).exec(),
+        Organisation.findOne({
+          ownerId: ownerObjectId,
+          type: body.type,
+        }).exec(),
+      ])
+        .then((validations) => {
+          if (validations[0]) {
+            throw app.httpErrors.conflict(
+              "An organisation with the same name already exists",
+            );
+          }
+          if (validations[1]) {
+            throw app.httpErrors.conflict(
+              "You own an organisation with the same location",
+            );
+          }
+          if (validations[2]) {
+            throw app.httpErrors.conflict(
+              "You own an organisation of the same industry",
+            );
+          }
+          if (validations[3]) {
+            throw app.httpErrors.conflict(
+              "You own an organisation of the same type",
+            );
+          }
+        })
+        .catch((err) => {
+          req.log.error(err, "Failed creating organisation");
+          throw app.httpErrors.internalServerError();
+        });
+
       const [newOrgErr, newOrg] = await app.to(
         new Organisation({ ...body, ownerId }).save(),
       );
