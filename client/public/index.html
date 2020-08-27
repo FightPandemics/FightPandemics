@@ -24,7 +24,10 @@
       property="twitter:image"
       content="https://raw.githubusercontent.com/FightPandemics/FightPandemics/staging/images/Offer-Help-Request-Help.png"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <style>
     #invalid-browser-page {
@@ -32,7 +35,7 @@
       width: 98vw;
       top: 15%;
       text-align: center;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
     #invalid-browser-page-center-image {
       display: block;
@@ -50,24 +53,76 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script>
-    var banner = document.querySelector(".sc-pIJJz")?.style.display;
-    (function(){var s = document.createElement('script'),e = ! document.body ? document.querySelector('head') : document.body;s.src = 'https://acsbapp.com/apps/app/assets/js/acsb.js';s.async = s.defer = true;s.onload = function(){acsbJS.init({statementLink : '',feedbackLink : '',footerHtml : '',hideMobile : false,hideTrigger : false,language : 'en',position : 'right',leadColor : '#425af2',triggerColor : '#425af2',triggerRadius : '50%',triggerPositionX : `${banner === "none" ? "right" : "left"}`,triggerPositionY : 'bottom',triggerIcon : 'default',triggerSize : 'medium',triggerOffsetX : 20,triggerOffsetY : 20,mobile : {triggerSize : 'small',triggerPositionX : 'left',triggerPositionY : 'center',triggerOffsetX : 0,triggerOffsetY : 0,triggerRadius : '0'}});};e.appendChild(s);}());</script>
-    <script>
       function isIE() {
-        return (window.navigator.userAgent.match(/MSIE|Trident/) !== null);
+        return window.navigator.userAgent.match(/MSIE|Trident/) !== null;
       }
       if (isIE()) {
         document.write("<div id='invalid-browser-page'>");
-        document.write("<img id='invalid-browser-page-center-image' src='logoIcon.svg'/>");
-        document.write("<h1>Your browser is not supported</h1>")
-        document.write("<p>FightPandemics works best on an up-to-date browser. " +
-                  "Please upgrade to one of the <br> following browsers" +
-                  " in order to enjoy a secure and pleasant experience.</p>");
-        document.write("<a href='https://google.com/chrome'><img class='invalid-browser-page-browser-logo-size' src='chrome-logo.png'></a>");
-        document.write("<a href='https://mozilla.org/'><img class='invalid-browser-page-browser-logo-size' src='firefox-logo.png'></a>");
-        document.write("<a href='https://microsoft.com/edge'><img class='invalid-browser-page-browser-logo-size' src='edge-logo.png'></a>");
-        document.write("</div>")
+        document.write(
+          "<img id='invalid-browser-page-center-image' src='logoIcon.svg'/>",
+        );
+        document.write("<h1>Your browser is not supported</h1>");
+        document.write(
+          "<p>FightPandemics works best on an up-to-date browser. " +
+            "Please upgrade to one of the <br> following browsers" +
+            " in order to enjoy a secure and pleasant experience.</p>",
+        );
+        document.write(
+          "<a href='https://google.com/chrome'><img class='invalid-browser-page-browser-logo-size' src='chrome-logo.png'></a>",
+        );
+        document.write(
+          "<a href='https://mozilla.org/'><img class='invalid-browser-page-browser-logo-size' src='firefox-logo.png'></a>",
+        );
+        document.write(
+          "<a href='https://microsoft.com/edge'><img class='invalid-browser-page-browser-logo-size' src='edge-logo.png'></a>",
+        );
+        document.write("</div>");
       }
+    </script>
+    <script>
+      let bannerBtn;
+      let banner;
+      window.onload = function() {
+        banner = document.querySelector('#cookie-banner-close');
+        banner.onclick = function() {
+          bannerBtn = "close";
+        }
+      };
+      (function () {
+        var s = document.createElement("script"),
+          e = !document.body ? document.querySelector("head") : document.body;
+        s.src = "https://acsbapp.com/apps/app/assets/js/acsb.js";
+        s.async = s.defer = true;
+        s.onload = function () {
+          acsbJS.init({
+            statementLink: "",
+            feedbackLink: "",
+            footerHtml: "",
+            hideMobile: false,
+            hideTrigger: false,
+            language: "en",
+            position: `${bannerBtn === "close" ? "right" : "left"}`,
+            leadColor: "#425af2",
+            triggerColor: "#425af2",
+            triggerRadius: "50%",
+            triggerPositionX: `${bannerBtn === "close" ? "right" : "left"}`,
+            triggerPositionY: "bottom",
+            triggerIcon: "default",
+            triggerSize: "medium",
+            triggerOffsetX: 20,
+            triggerOffsetY: 20,
+            mobile: {
+              triggerSize: "small",
+              triggerPositionX: "left",
+              triggerPositionY: "center",
+              triggerOffsetX: 0,
+              triggerOffsetY: 0,
+              triggerRadius: "0",
+            },
+          });
+        };
+        e.appendChild(s);
+      })();
     </script>
   </body>
 </html>
