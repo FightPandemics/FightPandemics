@@ -36,8 +36,9 @@ const SOURCED_BY_FP_ORG_UPDATE = {
 };
 
 // simple slugify so we have unique email in Users collection
+// that can receive emails in a single account (helpboard+type)
 const slugifySourcedByFPOrgEmail = (orgType) => {
-  return `sourcedby-type-${orgType
+  return `helpboard+${orgType
     .replace(/\W/g, "-")
     .toLowerCase()}@fightpandemics.com`;
 };

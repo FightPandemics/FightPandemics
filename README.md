@@ -192,6 +192,8 @@ You can view the build logs in [GitHub Actions](https://github.com/FightPandemic
 
 Note that it may take a few minutes for the app to be accessible, or for changes to be reflected, since it takes time for AWS to spin up the Docker containers.
 
+Please note that review builds are shut down if no new commits are pushed to the branch in more than a day. This is controlled by an AWS Lambda function that runs every day at midnight PST. In order to revive the review build, simply push a new commit to the branch, merge or rebase from staging, or click the "Rerun all jobs" button on the review build page in Github Actions.
+
 ### Staging
 
 When a pull request is merged to staging, it will automatically be deployed to the staging environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the staging app at http://staging.fightpandemics.work.
