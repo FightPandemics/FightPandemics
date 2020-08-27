@@ -207,11 +207,8 @@ const PostSocial = ({
 
       <span></span>
       {postId ? (
-        <div
-          id={gtmTag("message", GTM.post.prefix)}
-          className="social-icon"
-          onClick={setShowComments}
-        >
+        // NOTE: May need new function to trigger message sending feature on click
+        <div id={gtmTag("message", GTM.post.prefix)} className="social-icon">
           {renderMessageIcon()}
           {renderLabels("Message", numComments)}
         </div>
@@ -229,10 +226,10 @@ const PostSocial = ({
                 },
               }}
             >
+              // NOTE: May need new function to trigger message sending feature on click
               <div
                 id={gtmTag("message", GTM.feed.prefix)}
                 className="social-icon"
-                onClick={setShowComments}
               >
                 {renderMessageIcon()}
                 {renderLabels("Message")}
