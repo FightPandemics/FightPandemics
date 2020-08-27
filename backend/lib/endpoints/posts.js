@@ -153,6 +153,7 @@ async function routes(app) {
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
+
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
@@ -217,82 +218,46 @@ async function routes(app) {
       ];
       /* eslint-enable sort-keys */
 
-      /* eslint-disable sort-keys */
-      const facetStep = [
-        {
-          $facet: {
-            meta: [
-              { $count: "count" },
-              { $addFields: { skip } },
-              { $addFields: { limit } },
-            ],
-            data: [],
-          },
-        },
-      ];
-      /* eslint-enable sort-keys */
-
-      const aggregationPipelineFormattedOutputResults = [
+      const aggregationPipelineResults = [
         ...sortAndFilterSteps,
         ...paginationSteps,
         ...lookupSteps,
         ...projectionSteps,
-        ...facetStep,
       ];
 
-      // Get the total results without pagination steps but with filtering aplyed - filtered
+      // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
-      const filteredResults = await Post.aggregate([
+      const totalResultsAggregationPipeline = await Post.aggregate([
         ...sortAndFilterSteps,
         ...lookupSteps,
         { $group: { _id: null, count: { $sum: 1 } } },
       ]);
       /* eslint-enable sort-keys */
 
-      const numberFilteredResults = filteredResults[0].count;
+      const totalResults = totalResultsAggregationPipeline[0].count;
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipelineFormattedOutputResults),
+        Post.aggregate(aggregationPipelineResults),
       );
 
-      // Total number of posts in db
-      const totalDocuments = await Post.countDocuments();
-
-      // When no documents are found return the same format response
-      /* eslint-disable sort-keys */
-      const emptyResponseData = [
-        {
-          meta: [
-            {
-              count: 0,
-              filtered: numberFilteredResults,
-              limit,
-              skip,
-              total: totalDocuments,
-            },
-          ],
-          data: [],
-        },
-      ];
-      /* eslint-enable sort-keys */
-
-      const metaResponseHandler = (response) => {
-        if (includeMeta) {
-          return response[0];
+      const responseHandler = (response) => {
+        if (!includeMeta) {
+          return response;
         } else {
-          return response[0].data;
+          const responseToReturn = { meta: { total: null }, data: null };
+          responseToReturn.data = response;
+          responseToReturn.meta.total = totalResults;
+          return responseToReturn;
         }
       };
 
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
-      } else if (posts[0].data === null || posts[0].data.length === 0) {
-        return metaResponseHandler(emptyResponseData);
+      } else if (posts === null) {
+        return responseHandler([]);
       } else {
-        posts[0].meta[0].total = totalDocuments;
-        posts[0].meta[0].filtered = numberFilteredResults;
-        return metaResponseHandler(posts);
+        return responseHandler(posts);
       }
     },
   );
