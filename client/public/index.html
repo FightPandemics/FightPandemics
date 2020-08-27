@@ -80,14 +80,6 @@
       }
     </script>
     <script>
-      let bannerBtn;
-      let banner;
-      window.onload = function() {
-        banner = document.querySelector('#cookie-banner-close');
-        banner.onclick = function() {
-          bannerBtn = "close";
-        }
-      };
       (function () {
         var s = document.createElement("script"),
           e = !document.body ? document.querySelector("head") : document.body;
@@ -101,12 +93,12 @@
             hideMobile: false,
             hideTrigger: false,
             language: "en",
-            position: `${bannerBtn === "close" ? "right" : "left"}`,
+            position: "right",
             leadColor: "#425af2",
             triggerColor: "#425af2",
             triggerRadius: "50%",
-            triggerPositionX: `${bannerBtn === "close" ? "right" : "left"}`,
-            triggerPositionY: "bottom",
+            triggerPositionX: "right",
+            triggerPositionY: "center",
             triggerIcon: "default",
             triggerSize: "medium",
             triggerOffsetX: 20,
