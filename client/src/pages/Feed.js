@@ -221,6 +221,26 @@ const HeaderWrapper = styled.div`
   }
 `;
 
+const NoPosts = styled.div`
+  text-align: center;
+  position: relative;
+  top: 2em;
+  color: ${theme.colors.orangeRed};
+  font-size: 1.2em;
+  a {
+    color: ${theme.colors.royalBlue};
+  }
+`;
+
+const buttonPulse = styled.button`
+  background-color: rgba(255, 255, 0, 0.4);
+  padding: 0 0.2em;
+  border-radius: 3em;
+  height: 4em;
+  position: relative;
+  top: 1.3em;
+`;
+
 const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
@@ -592,6 +612,10 @@ const Feed = (props) => {
     }
   };
 
+  const emptyFeed = () => {
+    return Object.keys(postsList).length < 1 && !isLoading;
+  };
+
   return (
     <FeedContext.Provider
       value={{
@@ -646,7 +670,7 @@ const Feed = (props) => {
             <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
-            <HeaderWrapper>
+            <HeaderWrapper empty={emptyFeed()}>
               <h1>Help Board</h1>
               <button
                 id={gtmTag(GTM.post.createPost)}
@@ -677,12 +701,23 @@ const Feed = (props) => {
               <ErrorAlert message={postsError.message} />
             )}
             {isLoading ? <Loader /> : <></>}
-            <CreatePostIcon
-              id={gtmTag(GTM.post.createPost)}
-              src={creatPost}
-              onClick={handleCreatePost}
-              className="create-post"
-            />
+            {emptyFeed() ? (
+              <NoPosts>
+                Sorry, there are currently no relevant posts available. Please
+                try using a different filter search or{" "}
+                <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
+                  create a post
+                </a>
+                .
+              </NoPosts>
+            ) : (
+              <CreatePostIcon
+                id={gtmTag(GTM.post.createPost)}
+                src={creatPost}
+                onClick={handleCreatePost}
+                className="create-post"
+              />
+            )}
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
