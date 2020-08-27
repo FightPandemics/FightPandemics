@@ -131,7 +131,6 @@ export default ({
       </Menu.Item>
       <Menu.Divider />
       <SubMenu title="Organisations">
-      <Menu.Divider />
           <Menu.Item>
             <Link
               id={GTM.nav.prefix + GTM.nav.addOrg}
@@ -150,7 +149,7 @@ export default ({
                 </Menu.Item>
               ))
             : null}
-          {user?.organisations?.length > 0 && <Menu.Divider />}
+          {user?.organisations?.length > 0}
         </SubMenu>
         <Menu.Divider />
       <Menu.Item
@@ -163,7 +162,6 @@ export default ({
       <Menu.Item>
         <Link to="/auth/logout">Sign Out</Link>
       </Menu.Item>
-      <Menu.Divider />
     </Menu>
   );
   const renderNavLinkItems = () => {
