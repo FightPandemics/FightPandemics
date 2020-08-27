@@ -206,16 +206,16 @@ const PostSocial = ({
       </div>
 
       <span></span>
+      {/* NOTE: May need new function to trigger message sending feature on click */}
       {postId ? (
-        // NOTE: May need new function to trigger message sending feature on click
         <div id={gtmTag("message", GTM.post.prefix)} className="social-icon">
           {renderMessageIcon()}
-          {renderLabels("Message", numComments)}
+          {renderLabels("Message")}
         </div>
       ) : (
         <>
+          {/* NOTE: Update pathname and state when message submission page story is ready */}
           {isAuthenticated ? (
-            // NOTE: Update pathname and state when message submission page story is ready
             <Link
               to={{
                 pathname: `/post/${id}`,
@@ -226,7 +226,7 @@ const PostSocial = ({
                 },
               }}
             >
-              // NOTE: May need new function to trigger message sending feature on click
+              {/* NOTE: May need new function to trigger message sending feature on click */}
               <div
                 id={gtmTag("message", GTM.feed.prefix)}
                 className="social-icon"
@@ -236,9 +236,9 @@ const PostSocial = ({
               </div>
             </Link>
           ) : (
-            // NOTE: Update sessionStorage, if necessary
             <Link
               onClick={() =>
+                // NOTE: Update sessionStorage, if necessary
                 sessionStorage.setItem("postredirect", `/post/${id}`)
               }
               to={{
