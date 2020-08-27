@@ -85,34 +85,33 @@ export default () => {
         </Trans>
       </Copyright>
       <StyledDiv>
-        <StyledSpan>
-          <Link to={"/about-us"}>{t("common.aboutUs")}</Link>
+        <StyledSpan as={Link} to={"/about-us"}>
+          {t("common.aboutUs")}
         </StyledSpan>
         |
-        <StyledSpan>
-          <Link to={"/faq"}>{t("footer.faq")}</Link>
+        <StyledSpan as={Link} to={"/faq"}>
+          {t("footer.faq")}
         </StyledSpan>
         |
-        <StyledSpan>
-          <a
-            href="https://medium.com/@FightPandemics"
-            target="_blank"
-            alt={t("alt.blogLink")}
-          >
-            {t("footer.blog")}
-          </a>
+        <StyledSpan
+          as="a"
+          href="https://medium.com/@FightPandemics"
+          target="_blank"
+          alt={t("alt.blogLink")}
+        >
+          {t("footer.blog")}
         </StyledSpan>
         |
-        <StyledSpan>
-          <Link to={"/terms-conditions"}>{t("footer.termsConditions")}</Link>
+        <StyledSpan as={Link} to={"/terms-conditions"}>
+          {t("footer.termsConditions")}
         </StyledSpan>
         |
-        <StyledSpan>
-          <Link to={"/privacy-policy"}>{t("footer.privacyPolicy")}</Link>
+        <StyledSpan as={Link} to={"/privacy-policy"}>
+          {t("footer.privacyPolicy")}
         </StyledSpan>
         |
-        <StyledSpan>
-          <Link to={"/cookies-policy"}>{t("footer.cookiesPolicy")}</Link>
+        <StyledSpan as={Link} to={"/cookies-policy"}>
+          {t("footer.cookiesPolicy")}
         </StyledSpan>
         |
         <StyledSpan>
