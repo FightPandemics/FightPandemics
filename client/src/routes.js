@@ -14,6 +14,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import DeleteAccount from "./pages/DeleteAccount";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
@@ -178,6 +179,13 @@ const routes = [
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/delete-account",
+    component: DeleteAccount,
     props: {
       loggedInOnly: true,
     },

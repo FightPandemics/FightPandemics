@@ -98,6 +98,16 @@ export const CustomSubmitButton = styled(SubmitButton)`
   }
 `;
 
+export const CustomDeleteButton = styled(CustomSubmitButton)`
+  background: ${theme.colors.red};
+  color: ${theme.colors.white};
+  &:hover {
+    background: transparent;
+    border: 1px solid ${theme.colors.red}!important;
+    color: ${theme.colors.red};
+  }
+`;
+
 export const OptionDiv = styled.div`
   display: none;
 

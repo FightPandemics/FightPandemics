@@ -73,6 +73,18 @@ const createUser = async (token, payload) => {
   }
 };
 
+const deleteUser = async (token, userId) => {
+  try {
+    const res = await axios.delete(
+      `${AUTH_DOMAIN}/api/v2/users/${userId}`,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
 const getUser = async (token) => {
   try {
     const res = await axios.get(
@@ -110,5 +122,6 @@ module.exports = {
   buildOauthUrl,
   changePassword,
   createUser,
+  deleteUser,
   getUser,
 };

@@ -368,6 +368,9 @@ const Profile = ({
           <DrawerHeader>
             <Link to="/edit-profile">Edit Profile </Link>
           </DrawerHeader>
+          <DrawerHeader>
+            <Link to="/delete-account">Delete Account</Link>
+          </DrawerHeader>
         </CustomDrawer>
       )}
       <WhiteSpace />

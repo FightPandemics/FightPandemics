@@ -12,6 +12,7 @@ const {
 async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const Organisation = app.mongo.model("OrganisationUser");
   const Post = app.mongo.model("Post");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
@@ -190,6 +191,26 @@ async function routes(app) {
       return new User(userData).save();
     },
   );
+
+  app.delete("/", { preValidation: [app.authenticate] }, async (req) => {
+    const { userId } = req;
+    // Insufficient scope to delete users on Auth0
+    // expected any of: delete:users,delete:current_user
+    // Please add any of the needed scopes and uncomment the line below
+    // await Auth0.deleteUser(getCookieToken(req), userId);
+    await Promise.all([
+      User.deleteMany({ _id: userId }),
+      Organisation.deleteMany({ ownerId: userId }),
+      Comment.deleteMany({ "author.id": userId }),
+      Post.deleteMany({ "author.id": userId }),
+    ]).catch((deleteErr) => {
+      req.log.error(deleteErr, "Failed deleting user's data");
+      throw app.httpErrors.internalServerError();
+    });
+    return {
+      success: true,
+    };
+  });
 }
 
 module.exports = routes;

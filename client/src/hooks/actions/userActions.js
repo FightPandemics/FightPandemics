@@ -20,3 +20,14 @@ export const updateUserSuccess = (user) => ({
   type: UPDATE_USER_SUCCESS,
   user,
 });
+
+export const DELETE_USER = "DELETE_USER";
+export const DELETE_USER_ERROR = "DELETE_USER_ERROR";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+
+export const deleteUser = () => ({ type: DELETE_USER });
+export const deleteUserError = (error) => ({ type: DELETE_USER_ERROR, error });
+export const deleteUserSuccess = (message) => ({
+  type: DELETE_USER_SUCCESS,
+  message,
+});

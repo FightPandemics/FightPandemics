@@ -158,6 +158,9 @@ function EditAccount(props) {
             <CustomLink>
               <Link to="/edit-profile">Profile Information</Link>
             </CustomLink>
+            <CustomLink>
+              <Link to="/delete-account">Delete Account</Link>
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
