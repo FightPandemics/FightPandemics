@@ -228,13 +228,10 @@ async function routes(app) {
       // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
       const totalResultsAggregationPipeline = await Post.aggregate([
-        ...sortAndFilterSteps,
-        ...lookupSteps,
+        { $match: { $and: filters } },
         { $group: { _id: null, count: { $sum: 1 } } },
       ]);
       /* eslint-enable sort-keys */
-
-      const totalResults = totalResultsAggregationPipeline[0].count;
 
       const [postsErr, posts] = await app.to(
         Post.aggregate(aggregationPipelineResults),
@@ -242,13 +239,16 @@ async function routes(app) {
 
       const responseHandler = (response) => {
         if (!includeMeta) {
-          return response;
-        } else {
-          const responseToReturn = { meta: { total: null }, data: null };
-          responseToReturn.data = response;
-          responseToReturn.meta.total = totalResults;
-          return responseToReturn;
+          return posts;
         }
+        return {
+          meta: {
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
+              : 0,
+          },
+          data: response,
+        };
       };
 
       if (postsErr) {
