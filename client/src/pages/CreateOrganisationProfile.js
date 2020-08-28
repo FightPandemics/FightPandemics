@@ -235,8 +235,8 @@ const CreateOrgProfile = (props) => {
               ref={register({
                 required: "Email is required",
                 maxLength: {
-                  value: 100,
-                  message: "Max. 100 characters",
+                  value: 200,
+                  message: "Max. 200 characters",
                 },
               })}
             />
