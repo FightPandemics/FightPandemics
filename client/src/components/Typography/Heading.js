@@ -33,6 +33,10 @@ const Heading = styled(Title)`
   }
   &.h4 {
     font-size: ${heading.four};
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      margin-top: 10%;
+      font-size: ${heading.three};
+    }
   }
 `;
 

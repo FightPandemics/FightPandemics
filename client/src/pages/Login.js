@@ -162,18 +162,11 @@ const VisibilityIconWrapper = styled.div`
 `;
 
 const BackLinkContainer = styled.div`
-  @media screen and (max-width: ${mq.phone.wide.minWidth}) {
-    position: fixed;
-    bottom: auto;
-    right: 27%;
-  }
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq
-      .phone.wide.minWidth}) {
-    position: absolute;
-    bottom: 30%;
-    right: 40%;
-  }
+    .phone.wide.minWidth}) {
+  position: relative;
+  bottom: 30%;
+}
 `;
 
 const ForgotPasswordContainer = styled.div`
@@ -190,8 +183,8 @@ const VisibilityButton = ({ onClick, type }) => {
       {type === "text" ? (
         <SvgIcon src={eyeMask} onClick={onClick} />
       ) : (
-        <SvgIcon src={eyeUnmask} onClick={onClick} />
-      )}
+          <SvgIcon src={eyeUnmask} onClick={onClick} />
+        )}
     </VisibilityIconWrapper>
   );
 };
@@ -340,8 +333,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               {isLoginForm
                 ? "Sign In"
                 : forgotPassword
-                ? "Recover Password"
-                : "Join Now"}
+                  ? "Recover Password"
+                  : "Join Now"}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -396,7 +389,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       validate: (password) =>
                         validatePassword(password) ||
                         "Password must contain at least 3 of these: " +
-                          "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+                        "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
                     })}
                     style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
@@ -457,44 +450,44 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 </SubmitButton>
               </form>
             ) : (
-              <ForgotPasswordContainer>
-                <form id="forgot-password">
-                  <InputWrapper>
-                    <Label
-                      htmlFor="email"
-                      style={blockLabelStyles}
-                      label="Your Email"
-                    />
-                    <Input
-                      type="email"
-                      name="email"
-                      id="email"
-                      className={errors.email && "has-error"}
-                      placeholder="Enter email address"
-                      ref={register({
-                        required: "Email is required.",
-                        validate: (email) =>
-                          validateEmail(email) || "Invalid email",
-                      })}
-                      style={inputStyles}
-                    />
-                    {errors.email && (
-                      <InputError>{errors.email.message}</InputError>
-                    )}
-                  </InputWrapper>
+                <ForgotPasswordContainer>
+                  <form id="forgot-password">
+                    <InputWrapper>
+                      <Label
+                        htmlFor="email"
+                        style={blockLabelStyles}
+                        label="Your Email"
+                      />
+                      <Input
+                        type="email"
+                        name="email"
+                        id="email"
+                        className={errors.email && "has-error"}
+                        placeholder="Enter email address"
+                        ref={register({
+                          required: "Email is required.",
+                          validate: (email) =>
+                            validateEmail(email) || "Invalid email",
+                        })}
+                        style={inputStyles}
+                      />
+                      {errors.email && (
+                        <InputError>{errors.email.message}</InputError>
+                      )}
+                    </InputWrapper>
 
-                  <EmailButtonContainer>
-                    <SubmitButton
-                      primary="true"
-                      disabled={!formState.isValid}
-                      onClick={handleSubmit(onForgotPassword)}
-                    >
-                      Email me a recovery link
+                    <EmailButtonContainer>
+                      <SubmitButton
+                        primary="true"
+                        disabled={!formState.isValid}
+                        onClick={handleSubmit(onForgotPassword)}
+                      >
+                        Email me a recovery link
                     </SubmitButton>
-                  </EmailButtonContainer>
-                </form>
-              </ForgotPasswordContainer>
-            )}
+                    </EmailButtonContainer>
+                  </form>
+                </ForgotPasswordContainer>
+              )}
             <WhiteSpace />
             <WhiteSpace />
             {!forgotPassword ? (
@@ -516,23 +509,23 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                   </>
                 ) : (
-                  <p>
-                    <AuthLink
-                      id={GTM.sign.upPrefix + GTM.sign.in}
-                      to="/auth/login"
-                    >
-                      Already have an account? <u>Sign In</u>
-                    </AuthLink>
-                  </p>
-                )}
+                    <p>
+                      <AuthLink
+                        id={GTM.sign.upPrefix + GTM.sign.in}
+                        to="/auth/login"
+                      >
+                        Already have an account? <u>Sign In</u>
+                      </AuthLink>
+                    </p>
+                  )}
               </div>
             ) : (
-              <BackLinkContainer>
-                <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
-                </div>
-              </BackLinkContainer>
-            )}
+                <BackLinkContainer>
+                  <div className="text-center">
+                    <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
+                  </div>
+                </BackLinkContainer>
+              )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
