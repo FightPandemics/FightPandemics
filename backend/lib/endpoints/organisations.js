@@ -179,6 +179,10 @@ async function routes(app) {
           type: body.type,
         }).exec(),
       ])
+        .catch((err) => {
+          req.log.error(err, "Failed creating organisation");
+          throw app.httpErrors.internalServerError();
+        })
         .then((validations) => {
           if (validations[0]) {
             throw app.httpErrors.conflict(
@@ -200,10 +204,6 @@ async function routes(app) {
               "You own an organisation of the same type",
             );
           }
-        })
-        .catch((err) => {
-          req.log.error(err, "Failed creating organisation");
-          throw app.httpErrors.internalServerError();
         });
 
       const [newOrgErr, newOrg] = await app.to(
