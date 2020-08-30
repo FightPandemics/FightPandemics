@@ -77,7 +77,7 @@ const MsgModal = styled(Modal)`
     border-bottom: none;
     font-size: 18px;
     padding: 1em 0;
-   }
+  }
   .ant-modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -88,30 +88,29 @@ const MsgModal = styled(Modal)`
     padding: 10px 5px;
 
     .ant-btn {
-        box-shadow: none;
-        height: 40px;
-        width: 121px;
-        font-size: 16px;
-        letter-spacing: .5px;
-        outline: none;
-        :first-child {
+      box-shadow: none;
+      height: 40px;
+      width: 121px;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      outline: none;
+      :first-child {
         border: none;
         border-radius: none;
         background-color: white;
         color: #425af2;
-        }
-        :last-child {
+      }
+      :last-child {
         border: 0.2rem solid #425af2;
         border-radius: 4.6rem;
         background-color: #425af2;
         color: white;
+      }
     }
-    }  
-}
-   }
+  }
   .ant-modal-body {
     padding: 0;
-  }  
+  }
   .ant-modal-content {
     height: 435px;
     width: 656px;
@@ -123,13 +122,13 @@ const MsgModal = styled(Modal)`
     border: 1px solid lightgrey;
     border-radius: 6px;
     height: 136px;
-    width: 592px;  
+    width: 592px;
     margin: 0 0 1em 0;
     padding: 1em;
     resize: none;
-    
+
     :focus {
-        border: 1px solid #425af2;
+      border: 1px solid #425af2;
     }
   }
 `;
