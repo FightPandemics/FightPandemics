@@ -259,7 +259,6 @@ const Feed = (props) => {
   const filters = Object.values(filterOptions);
   const {
     error: postsError,
-    filterType,
     isLoading,
     loadMore,
     page,
@@ -405,7 +404,6 @@ const Feed = (props) => {
       visibility: DELETE_MODAL_HIDE,
     });
   };
-
   const loadPosts = useCallback(async () => {
     const objectiveURL = () => {
       let objective = selectedType;
@@ -440,13 +438,11 @@ const Feed = (props) => {
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
     let response = {};
-
-    await postsDispatch({ type: FETCH_POSTS });
-
+    postsDispatch({ type: FETCH_POSTS });
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      await postsDispatch({ error, type: ERROR_POSTS });
+      postsDispatch({ error, type: ERROR_POSTS });
     }
 
     if (response && response.data && response.data.length) {
@@ -455,30 +451,31 @@ const Feed = (props) => {
         return obj;
       }, {});
       if (postsList) {
-        await postsDispatch({
+        postsDispatch({
           type: SET_POSTS,
           posts: { ...postsList, ...loadedPosts },
         });
       } else {
-        await postsDispatch({
+        postsDispatch({
           type: SET_POSTS,
           posts: { ...loadedPosts },
         });
       }
     } else if (response && response.data) {
-      await postsDispatch({
+      postsDispatch({
         type: SET_POSTS,
         posts: { ...postsList },
       });
-      await postsDispatch({
+      postsDispatch({
         type: SET_LOADING,
         isLoading: false,
         loadMore: false,
       });
     } else {
-      await postsDispatch({ type: SET_LOADING });
+      postsDispatch({ type: SET_LOADING });
     }
-  }, [page, location, selectedOptions, selectedType, postsList]);
+    dispatchAction(SET_VALUE, "applyFilters", true);
+  }, [location, page, postsList, selectedOptions, selectedType]);
 
   useEffect(() => {
     if (applyFilters) {
@@ -486,9 +483,8 @@ const Feed = (props) => {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
-      loadPosts();
     }
-  }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOptions, applyFilters, isOnboarding]);
 
   useEffect(() => {
     // Onboarding
@@ -573,7 +569,7 @@ const Feed = (props) => {
     } else {
       return Promise.resolve();
     }
-  }, [postsList, isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoading, loadMore, loadPosts, loadedRows]);
 
   useEffect(() => {
     const posts = Object.entries(postsList);
@@ -688,7 +684,6 @@ const Feed = (props) => {
               isAuthenticated={isAuthenticated}
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
-              loadPosts={loadPosts}
               postDelete={postDelete}
               user={user}
               deleteModalVisibility={deleteModalVisibility}
