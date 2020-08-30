@@ -14,6 +14,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
   TF_VAR_aws_region: us-east-1
+  TF_VAR_fp_context: review
 
 defaults:
   run:
@@ -28,7 +29,14 @@ jobs:
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.3
 
+      - name: Install NPM dependencies
+        run: npm install --production
+      - name: Create Lambda build zip
+        run: cd src && zip -r ../build.zip .
       - name: Create backend.tf
         run: |
           cat << EOF > ./deploy/backend.tf
@@ -44,3 +52,9 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init deploy
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan deploy
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
