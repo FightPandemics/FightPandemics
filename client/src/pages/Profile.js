@@ -1,8 +1,7 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
@@ -110,6 +109,7 @@ const Profile = ({
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
   const { deleteModalVisibility } = postsState;
+  const history = useHistory();
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -118,13 +118,14 @@ const Profile = ({
         const res = await axios.get(`/api/users/${pathUserId}`);
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
-        );
+        //uncoment the alert if you want to use it
+        // alert('Incorrect User')
+        history.push({
+          pathname: "../*",
+        });
       }
     })();
-  }, [pathUserId, userProfileDispatch]);
+  }, [history, pathUserId, userProfileDispatch]);
 
   const fetchPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });
@@ -344,7 +345,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}
