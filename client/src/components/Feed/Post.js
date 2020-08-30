@@ -438,6 +438,7 @@ const Post = ({
         handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
+        postAuthor={post.author.name}
         postId={postId}
         postTitle={post?.title}
         postContent={post?.content}

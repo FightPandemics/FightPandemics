@@ -19,6 +19,7 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants
 import { mq } from "constants/theme";
+import MessageModal from "./MessageModal";
 
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;
@@ -41,6 +42,7 @@ const PostSocial = ({
   numLikes,
   numComments,
   onCopyLink,
+  postAuthor,
   postId,
   postTitle,
   postContent,
@@ -197,6 +199,14 @@ const PostSocial = ({
           {renderShareIcon()}
           <StyledSpan>Share</StyledSpan>
         </div>
+      </div>
+      <div className="social-icon">
+        <MessageModal
+          isAuthenticated={isAuthenticated}
+          title={postTitle}
+          postContent={postContent}
+          postAuthor={postAuthor}
+        />
       </div>
     </>
   );

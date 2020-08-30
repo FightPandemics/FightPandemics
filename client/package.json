@@ -61,10 +61,12 @@
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",
     "dotenv": "^8.2.0",
+    "redux-devtools-extension": "^2.13.8",
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "remote-redux-devtools": "^0.5.16"
   },
   "husky": {
     "hooks": {

@@ -14,6 +14,7 @@ import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./reducers";
 import TagManager from "react-gtm-module";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
@@ -21,7 +22,10 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs);
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
 
 ReactDOM.render(
   <Provider store={store}>
