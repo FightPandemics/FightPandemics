@@ -269,7 +269,6 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   };
 
   const onSignup = async (formData) => {
-    let loggedInFlag;
     authFormDispatch({ type: AUTH_FORM_SIGNUP });
     try {
       const res = await axios.post("/api/auth/signup", formData);
