@@ -5,6 +5,8 @@ resource "aws_security_group" "notification_service" {
 
   ingress {
     protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
     cidr_blocks = [data.aws_vpc.main.cidr_block]
   }
 
