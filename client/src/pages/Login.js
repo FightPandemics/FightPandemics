@@ -197,6 +197,9 @@ const VisibilityButton = ({ onClick, type }) => {
 };
 
 const Login = ({ isLoginForm, forgotPassword }) => {
+  const savetosession = () => {
+    sessionStorage.setItem("loggedInFlag", true);
+  };
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -244,6 +247,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
 
     try {
+      let loggedInFlag;
       const res = await axios.post("/api/auth/login", formData);
       TagManager.dataLayer({
         dataLayer: {
@@ -254,6 +258,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         type: AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
+      savetosession();
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
@@ -264,6 +269,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   };
 
   const onSignup = async (formData) => {
+    let loggedInFlag;
     authFormDispatch({ type: AUTH_FORM_SIGNUP });
     try {
       const res = await axios.post("/api/auth/signup", formData);

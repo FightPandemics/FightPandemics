@@ -71,11 +71,21 @@ import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 
+//If user is logged in use the folloing constant else
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
   linkedin: [linkedinBlue, LINKEDIN_INDIVIDUAL_URL],
   twitter: [twitterBlue, TWITTER_URL],
+  website: [websiteIcon],
+};
+
+//If user is not logged in use the folloing constant
+const NOT_LOGGED_IN_URLS = {
+  github: [githubIcon, "********.***"],
+  facebook: [facebookIcon, "********.***"],
+  linkedin: [linkedinBlue, "********.***"],
+  twitter: [twitterBlue, "********.***"],
   website: [websiteIcon],
 };
 
@@ -289,22 +299,52 @@ const Profile = ({
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
-              return (
-                url && (
-                  <a
-                    href={
-                      name === "website"
-                        ? getHref(url)
-                        : `${URLS[name][1]}${url}`
-                    }
-                    key={name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <SocialIcon src={URLS[name][0]} />
-                  </a>
-                )
-              );
+              //checks if user is logged in or not befor displaing the data
+              //if user not logged in displays ******* insted of actual links
+              const getfromsession = () => {
+                let res = sessionStorage.getItem("loggedInFlag");
+                return res;
+              };
+
+              if (getfromsession()) {
+                //#region Logged in return
+                return (
+                  url && (
+                    <a
+                      href={
+                        name === "website"
+                          ? getHref(url)
+                          : `${URLS[name][1]}${url}`
+                      }
+                      key={name}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <SocialIcon src={URLS[name][0]} />
+                    </a>
+                  )
+                );
+                //#endregion
+              } else {
+                //#region Not logged in return
+                return (
+                  url && (
+                    <a
+                      href={
+                        name === "website"
+                          ? getHref(url)
+                          : `${NOT_LOGGED_IN_URLS[name][1]}${url}`
+                      }
+                      key={name}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <SocialIcon src={NOT_LOGGED_IN_URLS[name][0]} />
+                    </a>
+                  )
+                );
+                //#endregion
+              }
             })}
           </IconsContainer>
         </UserInfoDesktop>
@@ -344,7 +384,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel = {() => setModal(false)}
+              onCancel={() => setModal(false)}
               loadPosts={fetchPosts}
               visible={modal}
               user={user}
