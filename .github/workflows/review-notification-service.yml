@@ -51,10 +51,10 @@ jobs:
           EOF
       - name: Terraform Init
         id: init
-        run: terraform init deploy
+        run: terraform init -input=false deploy
       - name: Terraform Plan
         id: plan
-        run: terraform plan deploy
+        run: terraform plan -out=tfplan -input=false deploy
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve
+        run: terraform apply -input=false tfplan
