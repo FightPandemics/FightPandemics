@@ -1,0 +1,46 @@
+name: Deploy Notification Service to Review
+
+on:
+  push:
+    branches:
+      - feature/**
+      - hotfix/**
+    paths:
+      - services/notification/**
+      - .github/workflows/notification-service.yml
+
+env:
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.REVIEW_AWS_SECRET_ACCESS_KEY }}
+  TF_VAR_aws_region: us-east-1
+
+defaults:
+  run:
+    working-directory: ./services/notification
+
+jobs:
+  deploy_review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.0
+
+      - name: Create backend.tf
+        run: |
+          cat << EOF > ./deploy/backend.tf
+          terraform {
+            backend "s3" {
+              bucket = "fp-review-terraform-state"
+              region = "us-east-1"
+              key = "notification-service.tfstate"
+            }
+            required_version = "~> 0.13.0"
+          }
+          EOF
+      - name: Terraform Init
+        id: init
+        run: terraform init deploy
