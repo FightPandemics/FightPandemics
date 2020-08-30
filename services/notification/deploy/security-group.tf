@@ -1,5 +1,5 @@
 resource "aws_security_group" "notification_service" {
-  name        = var.subdomain
+  name        = "notification-service"
   description = "Allow inbound access from the VPC only"
   vpc_id      = data.aws_vpc.main.id
 
