@@ -7,7 +7,7 @@ on:
       - hotfix/**
     paths:
       - services/notification/**
-      - .github/workflows/notification-service.yml
+      - .github/workflows/review-notification-service.yml
 
 env:
   AWS_DEFAULT_REGION: us-east-1
