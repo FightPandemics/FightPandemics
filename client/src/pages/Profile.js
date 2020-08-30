@@ -107,7 +107,6 @@ const Profile = ({
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
-  const [toggleRefetch, setToggleRefetch] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
@@ -125,13 +124,10 @@ const Profile = ({
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
   const {
-    // error: postsError,
-    // filterType,
     isLoading,
     loadMore,
     page,
     posts: postsList,
-    // status,
     deleteModalVisibility,
   } = postsState;
 
@@ -151,7 +147,6 @@ const Profile = ({
   }, [pathUserId, userProfileDispatch]);
 
   const fetchPosts = useCallback(async () => {
-    setToggleRefetch(false);
     const limit = 10;
     const skip = page * limit;
     let response = {};
@@ -209,12 +204,11 @@ const Profile = ({
 
   const refetchPosts = () => {
     postsDispatch({ type: RESET_PAGE });
-    setToggleRefetch(true);
   };
 
   useEffect(() => {
     fetchPosts();
-  }, [userId, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, itemCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback(
     (index) => {
@@ -239,7 +233,7 @@ const Profile = ({
     } else {
       return Promise.resolve();
     }
-  }, [postsList, isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const userPosts = Object.entries(postsList);
