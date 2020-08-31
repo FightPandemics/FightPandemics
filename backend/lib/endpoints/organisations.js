@@ -184,26 +184,26 @@ async function routes(app) {
           throw app.httpErrors.internalServerError();
         })
         .then((validations) => {
+          let conflict_message = new String();
           if (validations[0]) {
-            throw app.httpErrors.conflict(
-              "An organisation with the same name already exists",
-            );
+            conflict_message +=
+              "An organisation with the same name already exists";
           }
-          if (validations[1]) {
-            throw app.httpErrors.conflict(
-              "You own an organisation with the same location",
-            );
+          if (validations[1] || validations[2] || validations[3]) {
+            if (validations[0]) conflict_message += ", and y";
+            else conflict_message += "Y";
+            conflict_message += "ou own an organization ";
+            const identical_fields = [];
+            if (validations[1]) identical_fields.push("in the same location");
+            if (validations[2]) identical_fields.push(" of the same industry");
+            if (validations[3]) identical_fields.push(" of the same type");
+            conflict_message += `${identical_fields.join(",")}.`;
+            conflict_message = conflict_message.replace(/,(?=[^,]*$)/, " and");
+          } else if (validations[0]) {
+            conflict_message += ".";
           }
-          if (validations[2]) {
-            throw app.httpErrors.conflict(
-              "You own an organisation of the same industry",
-            );
-          }
-          if (validations[3]) {
-            throw app.httpErrors.conflict(
-              "You own an organisation of the same type",
-            );
-          }
+          if (conflict_message != 0)
+            throw app.httpErrors.conflict(conflict_message);
         });
 
       const [newOrgErr, newOrg] = await app.to(
