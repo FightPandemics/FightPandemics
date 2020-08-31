@@ -1,0 +1,765 @@
+{
+  "headline": "Un luogo per offrire e richiedere aiuto",
+  "tagline": "Le pandemie continueranno a verificarsi.\nAiutiamo le comunità a prepararsi e affrontarle.",
+  "common": {
+    "getHelp": "Richiedi aiuto",
+    "giveHelp": "Offri aiuto",
+    "viewFeed": "Visualizza la bacheca",
+    "register": "Iscriviti ora",
+    "feedback": "Feedback",
+    "question": "Domanda",
+    "aboutUs": "Chi siamo",
+    "profile": "Profilo",
+    "addOrg": "Aggiungi organizzazione",
+    "logout": "Esci"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Domanda",
+      "next": "Avanti",
+      "previous": "Indietro",
+      "submit": "Invia",
+      "skip": "Salta",
+      "whereLocated": "Dove ti trovi?",
+      "relevantResults": "Vogliamo mostrarti i risultati più rilevanti",
+      "enterAddress": "Inserisci Indirizzo, Codice postale o Città",
+      "shareLocation": "Condividi la mia posizione",
+      "showAnywhere": "Mostrare pubblicazioni ovunque",
+      "whatEmail": "Qual è la tua email?",
+      "respectPrivacy": "Rispettiamo la tua privacy. Per favore leggi i nostri Termini e Condizioni",
+      "enterEmail": "Inserisci l'indirizzo email"
+    },
+    "needHelp": {
+      "whatHelp": "Di che tipo di aiuto hai bisogno?",
+      "medical": "Sanitario",
+      "haveCovidSymptoms": "Ho i sintomi di COVID-19",
+      "other": "Altro aiuto",
+      "otherDesc": "Ho bisogno di assistenza per ottenere generi alimentari / medicinali / etc."
+    },
+    "offerHelp": {
+      "howContribute": "Come vuoi contribuire?",
+      "volunteer": "Come Volontario",
+      "donorInvestor": "Come Donatore/Investitore",
+      "organisation": "Come Organizzazione"
+    }
+  },
+  "feed": {
+    "title": "Bacheca di aiuto",
+    "all": "Tutti i post",
+    "request": "Richiedo aiuto",
+    "offer": "Offro aiuto",
+    "quit": "Elimina filtri",
+    "apply": "Applica filtri",
+    "getOrGive": "Offri o richiedi aiuto",
+    "filters": {
+      "title": "Filtri",
+      "location": {
+        "label": "Posizione",
+        "enterAddress": "Inserisci Indirizzo, Codice postale o Città",
+        "shareLocation": "Condividi la mia posizione"
+      },
+      "providers": "Fornitori",
+      "providersList": [
+        "Individuo",
+        "Startup",
+        "Impresa",
+        "Comunità",
+        "Governo",
+        "No profit",
+        "Università",
+        "Fornitore di servizi sanitari",
+        "Altro"
+      ],
+      "types": "Tipi",
+      "typesList": [
+        "Materiale Sanitario",
+        "Spesa / Alimenti",
+        "Business",
+        "Educazione",
+        "Legale",
+        "Benessere / Salute Mentale",
+        "Intrattenimento",
+        "Informazioni",
+        "Finanziamento",
+        "Ricerca e Sviluppo",
+        "Tecnologia",
+        "Altro"
+      ],
+      "labels": {
+        "location": "Posizione",
+        "providers": "Fornitori",
+        "type": "Tipi",
+        "lookingFor": "Offri o richiedi aiuto"
+      },
+      "providersOptions": {
+        "Individual": "Individuo",
+        "Startup": "Startup",
+        "Company": "Impresa",
+        "Community": "Comunità",
+        "Government": "Governo",
+        "Non-profit": "No profit",
+        "University": "Università",
+        "Health care provider": "Fornitore di servizi sanitari",
+        "Other": "Altri"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Materiale Sanitario",
+        "Groceries/Food": "Generi alimentari / cibo",
+        "Business": "Attività commerciale",
+        "Education": "Educazione",
+        "Legal": "Legale",
+        "Wellbeing/Mental": "Benessere / Salute Mentale",
+        "Entertainment": "Intrattenimento",
+        "Information": "Informazione",
+        "Funding": "Finanziamento",
+        "R&D": "Ricerca e Sviluppo",
+        "Tech": "Tecnologia",
+        "Other": "Altri"
+      },
+      "lookingForOptions": {
+        "Request Help": "Richiesta di aiuto",
+        "Offer Help": "Offro aiuto"
+      }
+    },
+    "filterBy": "Fitra per"
+  },
+  "post": {
+    "create": "Creare una pubblicazione",
+    "continueAs": "Continua a pubblicare come",
+    "individual": "Individuo",
+    "organisation": "Organizzazione",
+    "givingHelp": "Offro aiuto",
+    "gettingHelp": "Chiedo aiuto",
+    "writePostHere": "Scrivi il tuo post qui",
+    "title": "Titolo",
+    "writePost": "Scrivi la tua pubblicazione",
+    "whatGiving": "Cosa stai offrendo?",
+    "addTags": "Aggiungi tag per rendere il tuo post più visibile",
+    "whatVisibility": "Qual è la visibilità del tuo post?",
+    "postVisible": "Il post sarà visibile a",
+    "success": "Operazione riuscita",
+    "viewPost": "Visualizza il tuo post",
+    "like": "Like",
+    "like_plural": "\"Mi piace\"",
+    "likeWithCount": "{{count}} mi piace",
+    "likeWithCount_plural": "{{count}} mi piace",
+    "comment": "Commento",
+    "comment_plural": "Commenti",
+    "commentWithCount": "{{count}} Commento",
+    "commentWithCount_plural": "{{count}} commenti",
+    "options": {
+      "shareWith": {
+        "city": "Nella mia città",
+        "state": "Il mio stato",
+        "worldwide": "Ovunque",
+        "country": "Il mio paese"
+      },
+      "expires": {
+        "forever": "Per sempre",
+        "month": "Per un mese",
+        "week": "Per una settimana",
+        "day": "Per un giorno"
+      },
+      "helpTypes": {
+        "request": "Cerco aiuto",
+        "offer": "Offro aiuto"
+      }
+    },
+    "post": "Pubblicare",
+    "postAsOrg": "Pubblica come Organizzazione",
+    "createNew": "Creare una Nuova Organizzazione",
+    "whatNeed": "Di cosa hai bisogno?",
+    "viewLess": "Visualizza di meno",
+    "viewMore": "Visualizza altro",
+    "deletePostConfirmation": "Sei sicuro di voler eliminare il post?",
+    "deleteCommentConfirmation": "Sei sicuro di voler eliminare il commento?",
+    "shareVia": "Condividere tramite...",
+    "others": "Altri",
+    "expireTitle": "Ahh... cavoli!",
+    "expire": "Il post che stavi cercando è scaduto. Si prega di controllare la nostra bacheca per ulteriori post di questo tipo."
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Informazioni account",
+      "profileInfo": "Informazioni sul profilo",
+      "address": "Quartiere",
+      "enterAddress": "Inserisci Indirizzo, Codice postale o Città",
+      "agreePrivacy": "Iscrivendomi, accetto la politica sulla privacy",
+      "agreeTerms": "Iscrivendomi, accetto i Termini e le Condizioni",
+      "createProfile": "Crea il tuo Profilo",
+      "saveChanges": "Salve modifiche",
+      "thankyou": "Grazie per esserti unito alla nostra comunità!",
+      "viewProfile": "Il mio profilo",
+      "continuePosting": "Continua a pubblicare",
+      "viewFeed": "Visualizza la bacheca",
+      "viewMyProfile": "Visualizza il mio profilo",
+      "loading": "Caricamento in corso",
+      "invalidEmail": "Email non valida",
+      "selectOption": "Si prega di selezionare almeno un'opzione",
+      "twitterError": "Inserimento non valido: sono ammessi solo caratteri alfanumerici e _",
+      "linkedinError": "Inserimento non valido: solo caratteri alfanumerici e caratteri speciali: _ - / sono ammessi",
+      "invalidURL": "URL non valido",
+      "savingChanges": "Salvataggio delle modifiche ...",
+      "submit": "Creare Profilo",
+      "submitLoading": "Creazione del profilo ...",
+      "invalidPassword": "La password deve contenere almeno 3 di questi: una lettera minuscola, una lettera maiuscola, un numero, un carattere speciale (come ! @ # $% ^ & *).",
+      "addressRequired": "L'indirizzo è richiesto. Inserisci il tuo indirizzo e selezionalo dal menu a tendina",
+      "emailRequired": "È richiesta l'email",
+      "passwordRequired": "È richiesta la password"
+    },
+    "individual": {
+      "email": "Email",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "hideAddress": "Non mostrare il mio indirizzo",
+      "iWant": "Voglio",
+      "volunteer": "Fare volontariato",
+      "donate": "Donare",
+      "shareInformation": "Condividere informazioni",
+      "iNeed": "Ho bisogno",
+      "medical": "Aiuto sanitario",
+      "haveCovidSymptoms": "Ho i sintomi di COVID-19",
+      "other": "Altro aiuto",
+      "otherDesc": "Ho bisogno di assistenza per ottenere generi alimentari / medicinali / etc.",
+      "editProfile": "Modificare profilo",
+      "intro": "Auto-presentazione",
+      "website": "Sito web personale",
+      "urls": {
+        "facebook": "URL Facebook",
+        "linkedin": "URL LinkedIn",
+        "twitter": "URL Twitter",
+        "github": "URL Github",
+        "website": "Sito web personale"
+      },
+      "myActivity": "Attività personali",
+      "userActivity": "Attività dell'utente",
+      "wantHelp": "Voglio aiutare",
+      "needHelp": "Ho bisogno di aiuto",
+      "facebookError": "Inserimento non valido: sono ammessi solo caratteri alfanumerici e _",
+      "githubError": "Inserimento non valido: sono ammessi solo caratteri alfanumerici e _",
+      "FiveMinLength": "La lunghezza minima è di 5 caratteri",
+      "fifteenMaxLength": "La lunghezza massima è di 15 caratteri",
+      "firstNameRequired": "Il nome è obbligatorio.",
+      "lastNameRequired": "Il cognome è obbligatorio.",
+      "fiveMinLength": "La lunghezza minima è di 5 caratteri"
+    },
+    "org": {
+      "title": "Creare un profilo Organizzazione",
+      "editOrgProfile": "Modifica Profilo Organizzazione",
+      "name": "Nome Organizzazione",
+      "email": "Contatto email Organizzazione",
+      "invalidEmail": "L'email non è valida",
+      "globalOrg": "Siamo un'organizzazione mondiale",
+      "seeking": "Stiamo cercando",
+      "volunteers": "Volontari",
+      "donations": "Donazioni",
+      "staff": "Staff",
+      "other": "Altro",
+      "typeAndIndustry": "Tipo e industria",
+      "type": "Tipo",
+      "types": [
+        "Startup",
+        "Impresa",
+        "Comunità",
+        "Governo",
+        "No profit",
+        "Università",
+        "Fornitore di servizi sanitari",
+        "Altro"
+      ],
+      "industry": "Industria",
+      "industries": [
+        "Automobile",
+        "Agricoltura",
+        "Allevamento",
+        "Apprendimento",
+        "Architettura",
+        "Forniture e attrezzature aziendali",
+        "Biotecnologia",
+        "Servizi eventi",
+        "Raccolta fondi",
+        "Relazioni governative",
+        "Salute, benessere e fitness",
+        "Ospedale e assistenza sanitaria",
+        "Industrie",
+        "Tecnologia e servizi dell'informazione",
+        "Servizi legali",
+        "Marketing e pubblicità",
+        "Dispositivi Sanitari",
+        "Gestione di organizzazioni senza scopo di lucro",
+        "Altro",
+        "Filantropia",
+        "Istruzione primaria / secondaria",
+        "Formazione professionale e coaching",
+        "Ricerca",
+        "Laboratori di idee",
+        "Traduzione e localizzazione"
+      ],
+      "typeIndustryError": "Seleziona il tipo di organizzazione e il settore dal menu a tendina",
+      "desc": "Descrizione Organizzazione",
+      "lang": "Lingua Organizzazione",
+      "website": "Sito web",
+      "urls": {
+        "appStore": "Collegamento a Apple Store",
+        "playStore": "Collegamento a Google Play",
+        "twitter": "URL Twitter",
+        "linkedin": "URL LinkedIn",
+        "website": "Sito web"
+      },
+      "completeOrgProfile": "Completa profilo Organizzazione",
+      "about": "Informazioni su",
+      "activity": "Attività",
+      "editAccount": "Modifica Informazioni Account",
+      "updateSuccess": "Organizzazione aggiornata con successo",
+      "orgNameRequire": "Nome dell'organizzazione obbligatorio",
+      "sixtyMaxLength": "La lunghezza massima è di 60 caratteri",
+      "thirtyMaxLength": "La lunghezza massima è di 30 caratteri"
+    }
+  },
+  "auth": {
+    "signIn": "Ti diamo il benvenuto",
+    "joinNow": "Iscriviti ora",
+    "email": "Email",
+    "enterEmail": "Inserisci l'indirizzo email",
+    "password": "Password",
+    "enterPassword": "Inserisci la password",
+    "confirmPassword": "Conferma Password",
+    "forgotPassword": "Password dimenticata",
+    "noAccount": "Non hai un account?",
+    "haveAccount": "Hai già un account?",
+    "recoverLink": "Inviare per email il link di recupero",
+    "orSignIn": "OPPURE ACCEDI CON",
+    "orJoinNow": "OPPURE INSCRIVITI ORA CON",
+    "facebook": "Facebook",
+    "google": "Google",
+    "linkedin": "Linkedin",
+    "back": "Torna alla schermata di accesso",
+    "passwordConfirmationRequire": "È richiesta la conferma della password."
+  },
+  "verifyEmail": {
+    "checkInbox": "Controlla la tua casella di posta",
+    "forgotPass": "È stata inviata un'email a {{email}} con ulteriori istruzioni su come reimpostare la password.",
+    "confirm": "Abbiamo appena inviato un link a {{email}}. Clicca sul link per confermare il tuo account e completa il tuo profilo.",
+    "checkSpam": "Se non vedi un messaggio entro pochi minuti, controlla lo spam, promozioni o altre cartelle di posta in arrivo."
+  },
+  "aboutUs": {
+    "ourStory": "La nostra storia",
+    "story": "FightPandemics nasce da un'idea di Manuel Gonzalez Alzuru, che è stato infettato da COVID-19 in Francia. Al suo ritorno a casa a Barcellona, ha scoperto di non essere in grado di ottenere aiuto anche se c'erano persone che volevano fornirlo. I gruppi di Telegram e WhatsApp si stavano autoorganizzando nel quartiere di Manuel, ma senza conoscere personalmente nessuno dei soggetti coinvolti non poteva chiedere loro assistenza. Ispirato da così tanti che si univano, Manuel ha lanciato il progetto con una missione in mente: garantire che gli altri potessero connettersi in tempo.",
+    "ourCommunity": "La nostra comunità",
+    "community": "Comunità",
+    "ourIdea": "La nostra idea",
+    "ourSupporters": "I nostri sostenitori",
+    "followUs": "Seguici sui social media",
+    "contactUs": "Oppure contattaci a",
+    "contactEmail": "contact@fightpandemics.com"
+  },
+  "footer": {
+    "faq": "FAQ",
+    "blog": "Blog",
+    "termsConditions": "Termini & Condizioni",
+    "privacyPolicy": "Informativa sulla privacy",
+    "cookiesPolicy": "Cookies Policy",
+    "copyright": "Copyright {{currentYear}} FightPandemics. Tutti i diritti riservati."
+  },
+  "faq": {
+    "title": "Informazioni su FightPandemics / Generale",
+    "offerRequestHelp": "Offerta e richiesta di aiuto",
+    "profileAccount": "Profilo e account",
+    "contects": "Contatti",
+    "general": [
+      [
+        "Cos'è FightPandemics?",
+        "FightPandemics è una piattaforma creata durante l'epidemia di COVID-19 con l'obiettivo di essere un punto di riferimento per le persone colpite in diversi modi dalla pandemia.",
+        "La nostra missione principale è cquella di connettere individui e organizzazioni che offrono e richiedono aiuto durante una crisi pandemica, a livello locale e globale. Non importa se cerchi aiuto medico, maschere facciali, assistenza legale, generi alimentari, qualcuno che porti a spasso il tuo cane o ti aiuti con qualsiasi altra attività quotidiana, puoi cercarlo qui:",
+        "Cerchiamo di raccogliere informazioni essenziali che siano altamente frammentate, collegando in una rete individui, comunità e organizzazioni che lavorano su questioni o progetti legati alla pandemia. La nostra visione è creare un mondo in cui tutti siano più resilienti alle emergenze, aiutando le comunità a rispondere più rapidamente ed efficacemente alle emergenze sanitarie e alle crisi umanitarie."
+      ],
+      [
+        "Chi è FightPandemics?",
+        "FightPandemics è un team globale di volontari con la missione di servire come punto di riferimento per ricevere aiuto. Il nostro team è composto da oltre 150 volontari impegnati da più di 70 paesi che cercano di fare la differenza. La piattaforma è stata costruita con uno sforzo collaborativo innovativo, riunendo un gruppo eterogeneo di risolutori di problemi con una vasta gamma di competenze, desiderose di co-creare e imparare tra di loro.",
+        "Vuoi aderire alla nostra iniziativa? Contatta <0>hr@fightpandemics.com</0>"
+      ],
+      [
+        "In quali città opera FightPandemics?",
+        "FightPandemics è una piattaforma globale. La nostra prima versione è stata lanciata in inglese, ma abbiamo in programma di aggiungere presto altre lingue."
+      ],
+      [
+        "A chi è rivolto FightPandemics?",
+        "Chiunque abbia bisogno o offra aiuto è benvenuto a registrarsi sulla nostra piattaforma e connettersi con altri individui e organizzazioni."
+      ],
+      [
+        "Come posso pubblicare un'offerta o una richiesta di aiuto su FightPandemics?",
+        "< 0 > Quando ti unisci alla comunità, avrai accesso illimitato per visualizzare e creare annunci/ post e commenti sulla piattaforma FightPandemics. < / 0 > < 1 > Per entrare a far parte della comunità come utente, fai clic sul pulsante \"Menu\" e seleziona l'opzione \"Registrati / Accedi\". Lì sarai in grado di unirti con la tua e-mail o credenziali di social media. < / 1 > < 2 > Una volta completato il profilo, seleziona il pulsante menu, seleziona Visualizza il mio profilo e fai clic sul segno \"più\" per creare il tuo primo annuncio/ post. < / 2 >"
+      ],
+      [
+        "Come posso tenermi aggiornato/a sulle notizie di FightPandemics?",
+        "Seguici sui social media! Pubblichiamo aggiornamenti regolari su < 0 > Facebook < / 0 > , < 1 > Twitter < / 1 > , < 2 > LinkedIn < / 2 > e < 3 > Instagram < / 3 > ."
+      ],
+      [
+        "Devo pagare per usare FightPandemics?",
+        "No, FightPandemics è una piattaforma completamente gratuita gestita da volontari."
+      ],
+      [
+        "Che tipo di aiuto posso offrire / richiedere su FightPandemics?",
+        "Puoi chiedere e offrire qualsiasi tipo di aiuto per supportare le persone e le organizzazioni a far fronte alla pandemia COVID-19. Ecco un elenco con alcuni esempi di aiuto che puoi offrire o richiedere:",
+        "< 0 > Generi alimentari < / 0 > < 1 > Forniture mediche < / 1 > < 2 > Assistenza legale < / 2 > < 3 > Supporto tecnico < / 3 > < 4 > Informazioni < / 4 > < 5 > Finanziamenti < / 5 > < 6 > Eventi e attività < / 6 > < 7 > Educazione < / 7 > < 8 > Benessere < / 8 > < 9 > Ricerca e sviluppo < / 9 >"
+      ],
+      [
+        "Come posso trovare aiuto?",
+        "Dalla home page di FightPandemics, seleziona \"Bisogno di aiuto\". Se scegli \"Altro aiuto\", inserirai la tua posizione e verrai indirizzato ad una pagina con le offerte di aiuto nell'area selezionata. Potrai quindi filtrare i messaggi che desideri visualizzare anche per fornitore e tipo. In alternativa, puoi selezionare \"Visualizzagli annunci della community\" dalla pagina principale per visualizzare tutti gli annunci e applicare i filtri desiderati."
+      ],
+      [
+        "Come posso offrire aiuto?",
+        "< 0 > Puoi offrire aiuto come individuo o come organizzazione. < / 0 > < 1 > Dalla home page, seleziona \"Dai aiuto\" per vedere tutti i post creati dagli utenti che chiedono aiuto e filtra i risultati per posizione e tipo. Devi essere registrato per metterti in contatto con loro. Puoi anche creare i tuoi messaggi descrivendo l'aiuto che sei in grado di offrire. < / 1 >"
+      ],
+      [
+        "Devo essere registrato per visualizzare le richieste di assistenza e le offerte?",
+        "Non è necessario essere registrati per visualizzare gli annunci sulla bacheca di aiuto, ma è necessario registrarsi per commentare o per mettere \"mi piace\" ad un post."
+      ],
+      [
+        "Devo essere registrato per creare / modificare i post?",
+        "Sì, devi creare un account e accedere se desideri creare o modificare i post."
+      ],
+      [
+        "Devo essere registrato come individuo per creare profili di organizzazione?",
+        "Sì, una volta registrato come individuo, puoi creare uno o più profili di organizzazione collegati al tuo account."
+      ],
+      [
+        "Il mio nome/nome dell'organizzazione verrà visualizzato agli altri utenti?",
+        "Quando crei post che offrono o cercano aiuto, il tuo nome / il nome della tua organizzazione viene mostrato a chiunque visualizzi la bacheca di aiuto."
+      ],
+      [
+        "Come posso fidarmi che i post siano affidabili?",
+        "Purtroppo non possiamo garantire che tutti i post siano affidabili, poiché i post sono creati dai nostri utenti. Tuttavia facciamo del nostro meglio per mantenere il contenuto rilevante, facendo una regolare pulizia dei dati e disattivando i post dopo la loro scadenza. Se hai dei dubbi sul contenuto di un post, contattaci all'indirizzo <0>support@fightpandemics.com</0>"
+      ],
+      [
+        "Potete aiutarmi con problemi medici?",
+        "FightPandemics non è un fornitore di cure mediche."
+      ],
+      [
+        "Devo condividere la mia posizione attuale? E se non voglio condividere la mia posizione?",
+        "Utilizziamo la posizione per mostrarti i risultati più pertinenti, tuttavia puoi anche visualizzare tutti i messaggi. Poiché FightPandemics ha migliaia di post da tutto il mondo, ti suggeriamo di inserire una località vicino a te per ottenere i migliori risultati su misura."
+      ],
+      [
+        "Non c'è nessun aiuto elencato nella mia zona. Cosa faccio?",
+        "La nostra comunità è in continua crescita. Puoi essere il primo nella tua zona a creare un post e chiedere aiuto. Si prega di dare un'occhiata anche ai servizi accessibili a chiunque indipendentemente dalla loro posizione."
+      ],
+      [
+        "Ho trovato un bug sul sito web. Come faccio a segnalarlo?",
+        "Invia feedback o contatta < 0 > support@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Non sono più autorizzato a utilizzare FightPandemics - cosa devo fare?",
+        "Contattaci a < 0 > support@fightpandemics.com < / 0 > e controlleremo qual è il problema con il tuo account."
+      ],
+      [
+        "Quali informazioni memorizzate?",
+        "FightPandemics raccoglie ed elabora i dati personali degli utenti solo per gli scopi descritti nella nostra <0> informativa sulla privacy. </0> In nessun caso forniremo l'accesso o condivideremo i tuoi dati personali con terze parti, ad eccezione delle persone rilevanti stabilite in questa informativa."
+      ],
+      [
+        "Posso dare / ricevere aiuto dalla mia città o stato? Per quanto tempo sarà visibile il post?",
+        "Il post per dare / ricevere aiuto può essere a livello di codice postale, città, stato o paese per la durata di un giorno, una settimana, un mese o per sempre. Per impostazione predefinita, i post verranno impostati a livello di città per un mese."
+      ],
+      [
+        "La mia domanda non è elencata. A chi posso rivolgermi?",
+        "Per domande generali e altre questioni non elencate qui, si prega di contattare <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "Come posso iscrivermi?",
+        "< 0 > Per unirti alla comunità come utente, fai clic sul pulsante \"Menu\" e selezionare l'opzione \"Partecipa ora / Accedi\". Lì sarai in grado di unirti con la tua e-mail o credenziali di social media. < / 0 > < 1 > Quando ti unisci alla comunità, avrai accesso illimitato per visualizzare e creare post e commenti sulla piattaforma FightPandemics. < / 1 >"
+      ],
+      [
+        "Come posso modificare il mio profilo individuale in un profilo di organizzazione?",
+        "Il profilo di un'organizzazione è legato al tuo profilo individuale. Dopo aver creato il tuo profilo individuale, puoi aggiungere tutti i profili di organizzazione che desideri collegare a quel profilo individuale. Le tue credenziali di accesso continueranno a essere l'email e la password che hai utilizzato per iscriverti al profilo individuale."
+      ],
+      [
+        "Come posso modificare il profilo della mia organizzazione in un profilo individuale?",
+        "Non è possibile modificare il profilo di un' organizzazione in un profilo individuale. Per creare un profilo per un' organizzazione, è necessario disporre di un profilo individuale. Dopo aver creato il tuo profilo individuale, puoi aggiungere tutti i profili di organizzazione che vuoi, legati a quel profilo individuale. Le tue credenziali di accesso continueranno ad essere l'email e la password che hai utilizzato per iscriverti al profilo individuale."
+      ],
+      [
+        "Come posso reimpostare la mia password?",
+        "Cliccare su \"Accedi\" dalla homepage e poi cliccare su \"Password dimenticata\" e seguire le istruzioni"
+      ],
+      [
+        "Perché la mia password non è valida?",
+        "Controlla se la tua password ha almeno 8 lettere. Se hai già un account ma hai dimenticato la password di accesso, fai clic su \"Accedi\" dalla home page e poi vai su \"Password dimenticata\"."
+      ],
+      [
+        "Mi sono registrato/a e non ho ricevuto l'email di conferma. Cosa faccio?",
+        "Se non hai ricevuto un'email di conferma, prova le seguenti opzioni:",
+        "Controlla la tua cartella Spam per l'e-mail di recupero.",
+        "Prova il processo \"Recupera password\".",
+        "Se le opzioni precedenti non risolvono il problema, non esitare a contattare il nostro team di supporto: <0> support@fightpandemics.com. </0>"
+      ],
+      [
+        "Come elimino / cancello il mio account?",
+        "Se desideri eliminare il tuo account, contattaci a <0> support@fightpandemics.com. </0>"
+      ],
+      [
+        "Come posso aggiornare le informazioni del mio profilo?",
+        "Dal menu nell'angolo in alto a destra, seleziona \"Il mio profilo\", quindi fai clic sull'icona della penna nella parte superiore del tuo profilo. Verrai indirizzato a una schermata in cui potrai modificare le informazioni del tuo profilo. Per finire selezionare \"Salva modifiche\"."
+      ],
+      [
+        "Come posso segnalare un post errato o offensivo?",
+        "Se trovi un post che non è corretto o viola il codice di condotta di FightPandemics, inviaci un'e-mail a < 0 > support@fightpandemics.com. < / 0 >"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "Voglio diventare un partner o uno sponsor.",
+        "Contatta il nostro team di partnership all'indirizzo < 0 > partnerships@fightpandemics.com. </0>"
+      ],
+      [
+        "Sono dalla stampa/media.",
+        "Contattaci all'indirizzo < 0 > pr@fightpandemics.com. </0>"
+      ],
+      [
+        "Ho bisogno di supporto tecnico.",
+        "Ci dispiace per questo. Inviaci un'e-mail a <0> help@fightpandemics.com. </0> Dato che siamo un team di soli volontari, aspettati almeno 48 ore per una risposta."
+      ],
+      [
+        "Voglio contattare FightPandemics per altri motivi.",
+        "Per domande generali e altre questioni non elencate qui, si prega di contattare <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "contacts": "Contatti",
+    "contactsFAQ": [
+      [
+        "Voglio diventare un partner o uno sponsor.",
+        "Contatta il nostro team di partnership all'indirizzo <0> partnerships@fightpandemics.com. </0>"
+      ],
+      [
+        "Sono dalla stampa/media.",
+        "Contattaci all'indirizzo <0> pr@fightpandemics.com. </0>"
+      ],
+      [
+        "Ho bisogno di supporto tecnico.",
+        "Ci dispiace per questo. Inviaci un'e-mail a <0> help@fightpandemics.com. </0> Dato che siamo un team di soli volontari, aspettati almeno 48 ore per una risposta."
+      ],
+      [
+        "Voglio contattare FightPandemics per altri motivi.",
+        "Per domande generali e altre questioni non elencate qui, si prega di contattare <0>contact@fightpandemics.com.</0>"
+      ]
+    ]
+  },
+  "cookies": {
+    "whatCookies": "COSA SONO I COOKIES?",
+    "whatCookiesContent": "<0>Questo sito web utilizza ¨Cookies¨, e altri meccanismi simili (di seguito, Cookies). I cookies sono file inviati ad un browser attraverso un server web per registrare le attività dell'Utente su un sito web specifico o su tutti i siti web, applicazioni e/o servizi di questo sito. Il primo scopo dei Cookies è quello di fornire all'Utente un accesso più rapido e personalizzato ai servizi offerti. I cookies sono associati solo ad un Utente anonimo e al suo computer e non forniscono riferimenti che consentano la deduzione dei dati personali dell'Utente.</0><1>L'Utente può configurare il proprio browser in modo da notificare e rifiutare l'installazione dei Cookies inviati da questo sito web, fatta salva la possibilità dell'Utente di accedere ai Contenuti. Tuttavia, si fa presente che, in ogni caso, le prestazioni del sito web possono diminuire. Questo sito web fa uso di Web Bugs, che sono immagini minuscole e trasparenti inserite nelle e-mail. Quando l'Utente apre una newsletter del Sito, questa immagine viene scaricata insieme al resto del contenuto della e-mail e permette di sapere se una specifica e-mail è stata aperta o meno, nonché l'indirizzo IP da cui è stata scaricata. FightPandemics utilizza queste informazioni per ottenere statistiche ed effettuare studi analitici sulla ricezione delle sue email da parte degli Utenti.</1>",
+    "typeCookies": "TIPOLOGIA, SCOPO E FUNZIONAMENTO DEI COOKIE",
+    "typeCookiesBegin": "I cookie, a seconda della loro permanenza, possono essere suddivisi in cookie di sessione o permanenti. I primi scadono quando l'Utente chiude il browser. I secondi scadono a seconda di quando l'obiettivo per il quale servono viene raggiunto o quando vengono cancellati manualmente. Inoltre, a seconda dell'obiettivo, i cookie utilizzati da questo sito Web possono essere classificati come segue:",
+    "typeCookiesContent": "<0>Cookies tecnici: Permettono all'utente di navigare attraverso una pagina web, una piattaforma o un'applicazione e di utilizzare le diverse opzioni o servizi che vi esistono, come, ad esempio, controllare il traffico e la comunicazione di dati, identificare la sessione, accedere a parti ad accesso limitato, ricordare gli elementi che compongono un ordine, effettuare il processo di acquisto di un ordine, effettuare la richiesta di registrazione o partecipazione ad un evento, utilizzare elementi di sicurezza durante la navigazione, memorizzare contenuti per la diffusione di video o audio o condividere contenuti attraverso i social network.</0><1>Cookies di analisi: Sono quelli che vengono elaborati da noi o da terzi, che permettono di quantificare il numero di utenti e quindi di effettuare la misurazione e l'analisi statistica dell'utilizzo che gli utenti fanno dei servizi offerti. Per questo motivo, la vostra navigazione sul nostro sito web viene analizzata al fine di migliorare l'offerta di prodotti o servizi che offriamo.</1><2>Cookies pubblicitari: Sono quelli che vengono elaborati da noi o da terzi, permettendoci di gestire nel modo più efficiente possibile l'offerta degli spazi pubblicitari che si trovano sul sito web, adattando il contenuto dell'annuncio pubblicitario al contenuto del servizio richiesto o all'utilizzo che si fa dal nostro sito web. Per questo possiamo analizzare le vostre abitudini di navigazione su Internet, e possiamo mostrarvi la pubblicità relativa al vostro profilo di navigazione.</2><3>Cookies pubblicitari comportamentali: Permettono la gestione, nel modo più efficiente possibile, degli spazi pubblicitari che, se nel caso, l'editore ha inserito in una pagina web, applicazione o piattaforma dalla quale fornisce il servizio richiesto. Questi cookie memorizzano informazioni sul comportamento degli utenti ottenute attraverso l'osservazione continua delle loro abitudini di navigazione, che permettono di sviluppare un profilo specifico per visualizzare la pubblicità in base ad esso.</3>",
+    "typeCookiesEnd": "Il Sito può utilizzare servizi di terze parti che possono richiedere l'installazione di Cookie sugli utenti e che per conto di FightPandemics, e raccoglierà informazioni a fini statistici sull'uso del Sito da parte dell'utente e per la fornitura di altri servizi relativi all'attività del Sito e ad altri servizi Internet.",
+    "disableCookies": "COME DISABILITARE I COOKIE E I WEB BUG NEI PRINCIPALI BROWSER?",
+    "disableCookiesContent": "Normalmente è possibile smettere di accettare i cookie del browser o smettere di accettare cookie da un particolare servizio. Tutti i browser moderni consentono di modificare la configurazione dei Cookies. Queste impostazioni si trovano di solito nelle \"opzioni\" o nelle \"Preferenze\" del menu del browser. È inoltre possibile configurare il browser o il gestore di posta elettronica, nonché installare componenti aggiuntivi gratuiti per impedire il download di Web Bugs all'apertura di un'e-mail. Utilizzate le seguenti istruzioni in base al vostro browser internet per modificare le preferenze dei cookie:",
+    "updateCookies": "AGGIORNAMENTO DELLA POLICY SULL'USO DEI COOKIE",
+    "updateCookiesContent": "FightPandemics può modificare la presente Policy sull'uso dei cookie in base a requisiti legislativi, normativi o con lo scopo di adattare detta policy alle istruzioni emesse dall'Agenzia Spagnola per la Protezione dei Dati, pertanto si consiglia agli utenti di visitare periodicamente questa pagina per conoscere i cambiamenti subiti in essa. In caso di modifiche significative nella presente Cookie Policy, gli Utenti verranno avvisati tramite web o tramite posta elettronica agli Utenti registrati al servizio di newsletter.",
+    "cookieAlert": "Questo sito utilizza i cookie per fornire il nostro servizio e per mostrarti informazioni rilevanti. Utilizzando il nostro sito, confermi di aver letto e compreso la nostra < 0 >Policy sull'uso dei Cookie  < / 0 > , < 1 > Informativa sulla privacy < / 1 > e i nostri < 2 > Termini e condizioni < / 2 > . L'utilizzo dei prodotti FightPandemics è soggetto a queste informative e termini."
+  },
+  "comment": {
+    "writeAComment": "Scrivi un commento",
+    "onlyAuthenticated": "Solo gli utenti registrati possono commentare.",
+    "loading": "Caricamento in corso",
+    "showMore": "Mostra altri commenti",
+    "comment": "Commento",
+    "comment_plural": "Commenti",
+    "commentWithCount": "{{count}} Commento",
+    "commentWithCount_plural": "{{count}} commenti",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "save": "Salva"
+  },
+  "medical": {
+    "localNumber": "Il tuo numero di emergenza locale",
+    "call": "Si prega di chiamare il numero di emergenza locale",
+    "nearestHospitals": "Ospedali più vicini",
+    "check": "Controllo dei sintomi",
+    "findHelp": "Trova aiuto"
+  },
+  "feedback": {
+    "poorly": "Male",
+    "well": "Molto bene",
+    "howMeetNeeds": "In che misura FightPandemics soddisfa le tue esigenze?",
+    "almostFinished": "Abbiamo quasi finito!",
+    "howImpacted": "Che impatto ha avuto COVID-19 su di te?",
+    "mostValuable": "Quali sono le caratteristiche più importanti per te?",
+    "oneChange": "Se potessi cambiare una cosa su FightPandemics, quale sarebbe?",
+    "otherFeedback": "Hai qualche ulteriore suggerimento per noi?",
+    "thankYou": "Grazie!",
+    "thankYouEarly": "Grazie per essere stato uno dei primi utenti di FightPandemics!",
+    "thankYouMessage": "Il tuo contributo significa molto e ci aiuta a migliorare i nostri servizi durante e dopo la pandemia COVID-19.",
+    "submitFeedback": "Invia feedback",
+    "radio": {
+      "age": "Quanti anni hai",
+      "unaffected": "Vado al lavoro/scuola normalmente",
+      "quarantine": "Sono sano, ma in quarantena a casa",
+      "symptomaticUntested": "Ho sintomi lievi ma non mi hanno fatto il test",
+      "diagnosed": "Mi è stato diagnosticato il COVID-19"
+    }
+  },
+  "relativeTime": {
+    "second": "secondo",
+    "second_plural": "secondi",
+    "secondWithCount": "{{count}} secondo fa",
+    "secondWithCount_plural": "{{count}} secondi fa",
+    "minute": "minuto",
+    "minute_plural": "minuti",
+    "minuteWithCount": "{{count}} minuto fa",
+    "minuteWithCount_plural": "{{count}} minuti fa",
+    "hour": "ora",
+    "hour_plural": "ore",
+    "hourWithCount": "{{count}} ora fa",
+    "hourWithCount_plural": "{{count}} ore fa",
+    "day": "giorno",
+    "day_plural": "giorni",
+    "dayWithCount": "{{count}} giorno fa",
+    "dayWithCount_plural": "{{count}} giorni fa",
+    "week": "settimana",
+    "week_plural": "settimane",
+    "weekWithCount": "{{count}} settimana fa",
+    "weekWithCount_plural": "{{count}} settimane fa",
+    "month": "mese",
+    "month_plural": "mesi",
+    "monthWithCount": "{{count}} mese fa",
+    "monthWithCount_plural": "{{count}} mesi fa",
+    "year": "anno",
+    "year_plural": "anni",
+    "yearWithCount": "{{count}} anno fa",
+    "yearWithCount_plural": "{{count}} anni fa"
+  },
+  "alt": {
+    "logo": "Logo FightPandemics",
+    "blogLink": "Link al blog di FightPandemics",
+    "desktopBanner": "Banner desktop di Mission e Vision",
+    "mobileBanner": "Banner mobile di Mission e Vision",
+    "ideaImage": "La nostra idea - Immagine",
+    "linkedinIcon": "Icona LinkedIn di FightPandemics",
+    "facebookIcon": "Icona Facebook di FightPandemics",
+    "instagramIcon": "Icona Instagram di FightPandemics",
+    "twitterIcon": "Icona Twitter di FightPandemics",
+    "createOrg": "creare organizzazione",
+    "personalDataImage": "due persone in piedi accanto a un elenco di oggetti personali",
+    "envelope": "busta",
+    "avatar": "avatar"
+  },
+  "error": {
+    "title": "Si prega di includere un titolo per il tuo post.",
+    "description": "Si prega di includere una descrizione per il tuo post.",
+    "help": "Si prega di selezionare un tipo di aiuto.",
+    "tags": "Si prega di selezionare almeno un'opzione",
+    "privacyPolicyRequired": "È necessario accettare la nostra politica sulla privacy prima di procedere",
+    "termsConditionsRequired": "È necessario accettare i nostri termini e condizioni prima di procedere",
+    "failedPredictions": "Recupero delle previsioni non riuscito. Riprovare.",
+    "failedLocation": "Recupero della posizione non riuscito.",
+    "failedLocationDetails": "Recupero dei dettagli della posizione non riuscito. Riprovare.",
+    "User denied Geolocation": "L'utente ha negato la geolocalizzazione.",
+    "resetBrowserLocationPermission": "Reimposta le autorizzazioni di localizzazione del tuo browser o inserisci l'indirizzo.",
+    "enterAddressAgain": "Inserisci l'indirizzo o riprova.",
+    "loggedInToCreateOrgProfile": "Devi effettuato l'accesso per creare un profilo dell'organizzazione",
+    "selectOneOption": "Si prega di selezionare almeno un'opzione",
+    "userExists": "Utente già esistente",
+    "invalidState": "Stato non valido",
+    "passwordsShouldMatch": "La password deve essere inserita esattamente due volte allo stesso modo",
+    "passwordWeak": "La password è troppo debole",
+    "wrongCredentials": "Email o password errata",
+    "failedChangePasswordEmail": "Errore durante la creazione dell'email di modifica della password",
+    "feedbackAlreadySubmitted": "Feedback già inviato",
+    "emailIssue": "L'email è già in uso o non può essere convalidata",
+    "emailUnverified": "L'e-mail non è verificata",
+    "maxSignInAttemptsExceeded": "Numero massimo di tentativi di accesso superato.",
+    "failedSubmittingFeedback": "Impossibile inviare il feedback, motivo:",
+    "failedCreatingUser": "Impossibile creare utente, motivo:",
+    "failedLoadingProfile": "Impossibile caricare profilo, motivo:",
+    "failedLoadingActivity": "Impossibile caricare attività, motivo:",
+    "failedCreatingOrgProfile": "Impossibile creare il profilo dell'organizzazione, motivo:",
+    "failedUpdatingOrgProfile": "Impossibile aggiornare il profilo dell'organizzazione, motivo:",
+    "failedUpdatingProfile": "Impossibile aggiornare il profilo, motivo:",
+    "failedAuthentication": "Autenticazione non riuscita, motivo:",
+    "failedLogin": "Accesso non riuscito, motivo:",
+    "failedSignup": "Registrazione non riuscita, motivo:",
+    "failedPasswordRecovery": "Recupero password non riuscito, motivo:",
+    "http": {
+      "Bad Request": "Richiesta errata",
+      "Unauthorized": "Non trovato",
+      "Payment Required": "Pagamento richiesto",
+      "Forbidden": "Vietato",
+      "Not Found": "Non trovato",
+      "Method Not Allowed": "Metodo non consentito",
+      "Not Acceptable": "Non accettabile",
+      "Proxy Authentication Required": "Autenticazione proxy richiesta",
+      "Request Timeout": "Richiesta scaduta",
+      "Conflict": "Conflitto",
+      "Gone": "Andato",
+      "Length Required": "Lunghezza richiesta",
+      "Precondition Failed": "Precondizione fallita",
+      "Payload Too Large": "Carico utile troppo grande",
+      "URI Too Long": "URI troppo lungo",
+      "Unsupported Media Type": "Media non supportato",
+      "Range Not Satisfiable": "Intervallo non soddisfatto",
+      "Expectation Failed": "Aspettativa fallita",
+      "I'm a teapot": "Sono una teiera",
+      "Misdirected Request": "Richiesta mal indirizzata",
+      "Unprocessable Entity": "Entità non elaborabile",
+      "Locked": "Bloccato",
+      "Failed Dependency": "Dipendenza non riuscita",
+      "Too Early": "Troppo presto",
+      "Upgrade Required": "Aggiornamento richiesto",
+      "Precondition Required": "Presupposto richiesto",
+      "Too Many Requests": "Troppe richieste",
+      "Request Header Fields Too Large": "Campi dell'intestazione della richiesta troppo grandi",
+      "Unavailable For Legal Reasons": "Non disponibile per motivi legali",
+      "Internal Server Error": "Errore interno del server",
+      "Not Implemented": "Non implementato",
+      "Bad Gateway": "Gateway non valido",
+      "Service Unavailable": "Servizio non disponibile",
+      "Gateway Timeout": "Gateway Timeout",
+      "HTTP Version Not Supported": "Versione HTTP non supportata",
+      "Variant Also Negotiates": "La variante negozia anche",
+      "Insufficient Storage": "Spazio insufficiente",
+      "Loop Detected": "Rilevato loop",
+      "Not Extended": "Non esteso",
+      "Network Authentication Required": "Autenticazione di rete richiesta"
+    }
+  },
+  "TEMP: We are not a provider of healthcare services": "Non forniamo servizi sanitari",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Questo servizio è fornito in buona fede per coloro che non riescono a ottenere aiuto e risorse durante questa emergenza di sanitàpubblica senza precedenti.",
+  "TEMP: Please consult your healthcare provider for medical advice": "Consultare un medico professionista per ricevere un parere medico",
+  "TEMP: I Understand": "Ho capito",
+  "TEMP: COVID-19 Screening Tool": "Strumento di Screening COVID-19",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Ti faremo domande riguardo sintomi, viaggi e contatti con altre persone",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Le tue risposte non verranno memorizzate o condivise. Questo è solamente un strumento per aiutare il mondo.",
+  "TEMP: For Myself": "Per me stesso",
+  "TEMP: For Someone Else": "Per qualcun altro",
+  "TEMP: Is this an emergency?": "Si tratta di un'emergenza?",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "Si, ho almeno uno di questi sintomi",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "Si, hanno almeno uno di questi sintomi",
+  "TEMP: No, I do not have any of these symptoms": "Non hai nessuno di questi sintomi",
+  "TEMP: No, they do not have any of these symptoms": "No, non hanno nessuno di questi sintomi",
+  "TEMP: Under 18": "Meno di 18",
+  "TEMP: Between 18 and 64": "Tra 18 e 64",
+  "TEMP: 65 or older": "65 o più",
+  "TEMP: Multiple options can be selected": "È possibile selezionare più opzioni",
+  "TEMP: Fever, chills, or sweating": "Febbre, brividi o sudore",
+  "TEMP: New or worsening cough": "Nuova tosse o peggioramento",
+  "TEMP: Sore throat": "Mal di gola",
+  "TEMP: Vomiting or diarrhea": "Vomito o diarrea",
+  "TEMP: Do you live in a care facility?": "Vivi o lavori in una struttura sanitaria?",
+  "TEMP: Do they live in a care facility?": "Vivono in una struttura sanitaria?",
+  "TEMP: This includes nursing homes or assisted living facilities.": "Ciò include case di riposo o residenze sanitarie assistenziali.",
+  "TEMP: No, I don’t live in a long-term care facility": "No, non vivo in una struttura sanitaria per cure a lungo termine.",
+  "TEMP: I live in a long-term care facility": "Vivo in una struttura sanitaria per cure a lungo termine. ",
+  "TEMP: No, they don’t live in a long-term care facility": "No, non vivono in una struttura di assistenza a lungo termine.",
+  "TEMP: They live in a long-term care facility": "Vivono in una struttura di assistenza a lungo termine",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "Ciò include ospedali, pronto soccorso, altri ambienti medici o struttura di assistenza a lungo termine. Selezionare tutte quelle che li riguardano.",
+  "TEMP: No, I don’t work or plan to work in a care facility": "No, non lavoro o ho intenzione di lavorare in una struttura sanitaria",
+  "TEMP: No, they don’t work or plan to work in a care facility": "No, non lavorano o hanno intenzione di lavorare in una struttura sanitaria.",
+  "TEMP: Do any of these apply to you?": "Alcuni di questi ti riguardano?",
+  "TEMP: Do any of these apply to them?": "Hanno una delle seguenti condizioni?",
+  "TEMP: Pregnancy": "Gravidanza",
+  "TEMP: None of the above": "Nessuno di questi",
+  "TEMP: Please consult a medical professional for advice": "Consultare un medico professionista per consiglio",
+  "TEMP: Done": "Fatto",
+  "TEMP: Retake the Test": "Compilare di nuovo il test",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "In base ai sintomi che hai riportato, dovresti cercare subito assistenza.\nChiama il numero di emergenza!",
+  "TEMP: Your Responses": "Le tue risposte"
+}
