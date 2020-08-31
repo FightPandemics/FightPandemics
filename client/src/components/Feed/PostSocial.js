@@ -208,7 +208,10 @@ const PostSocial = ({
       <span></span>
       {/* NOTE: May need new function to trigger message sending feature on click */}
       {postId ? (
-        <div id={gtmTag("message", GTM.post.prefix)} className="social-icon">
+        <div
+          id={gtmTag("message", GTM.post.prefix)}
+          className="social-icon hide-feature"
+        >
           {renderMessageIcon()}
           {renderLabels("Message")}
         </div>
@@ -229,7 +232,7 @@ const PostSocial = ({
               {/* NOTE: May need new function to trigger message sending feature on click */}
               <div
                 id={gtmTag("message", GTM.feed.prefix)}
-                className="social-icon"
+                className="social-icon hide-feature"
               >
                 {renderMessageIcon()}
                 {renderLabels("Message")}
@@ -246,7 +249,10 @@ const PostSocial = ({
                 state: { from: window.location.href },
               }}
             >
-              <div id={gtmTag("icon", GTM.feed.prefix)} className="social-icon">
+              <div
+                id={gtmTag("icon", GTM.feed.prefix)}
+                className="social-icon hide-feature"
+              >
                 {renderMessageIcon()}
                 {renderLabels("Message")}
               </div>
