@@ -53,7 +53,21 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
     @media screen and (max-width: 570px) {
       header > h3,
       .content {
-        width: 53%;
+        width: 70%;
+        max-width: 450px;
+      }
+    }
+    @media screen and (max-width: 450px) {
+      header > h3,
+      .content {
+        width: 60%;
+        max-width: 450px;
+      }
+    }
+    @media screen and (max-width: 321px) {
+      header > h3,
+      .content {
+        width: 50%;
         max-width: 450px;
       }
     }
@@ -156,11 +170,12 @@ const MsgModal = styled(Modal)`
     padding: 0;
   }
   .ant-modal-content {
+    position: relative;
+    right: 5em;
     height: 435px;
     width: 656px;
     border-radius: 10px;
     padding: 1.5em 2em;
-    opacity: 1;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       position: fixed;
       top: 0;
@@ -168,7 +183,6 @@ const MsgModal = styled(Modal)`
       width: 100%;
       height: 100vh;
       border-radius: 0;
-      opacity: 1;
       background-color: white;
     }
   }
@@ -216,10 +230,21 @@ const SuccessModal = styled(MsgModal)`
     width: 656px;
     border-radius: 10px;
     padding: 1.5em 2em;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      position: relative;
+      left: 1em;
+      height: 50%;
+      width: 90%;
+      border-radius: 10px;
+      padding: 1.5em 2em;
+    }
   }
   .ant-modal-footer > div {
     position: absolute;
     bottom: 30px;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      position: static;
+    }
   }
   .ant-btn:last-child {
     border: 0.2rem solid #425af2;
@@ -234,15 +259,19 @@ const MessageModal = ({ title, postContent, postAuthor, isAuthenticated }) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
-  const showModal = () => {
-    setVisible(true);
-  };
-  const handleOk = () => {
-    setConfirmLoading(true);
+  const showModal = async () => {
+    await setVisible(true);
+    document.querySelector(".ant-modal-root").style.opacity = 0;
     setTimeout(() => {
-      setConfirmLoading(false);
-      setVisible(false);
+      document.querySelector(".ant-modal-root").style.opacity = 1;
+    }, 400);
+  };
+  const handleOk = async () => {
+    await setConfirmLoading(true);
+    setTimeout(() => {
       setMsgSent(true);
+      setVisible(false);
+      setConfirmLoading(false);
     }, 2000);
   };
   const handleCancel = () => {
