@@ -149,7 +149,7 @@ function DeleteAccount(props) {
             <Text>
               By deleting your account, all your data will be permanently deleted,
               If you change your mind, you might not be able to recover it.
-              This includes your profile, organizations you own, comments, and posts.
+              This includes your profile, organizations you own, and comments and posts by you and all of your organizations.
             </Text>
             <FormInput
               inputTitle="Confirm Email"

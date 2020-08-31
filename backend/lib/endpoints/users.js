@@ -200,9 +200,34 @@ async function routes(app) {
     // await Auth0.deleteUser(getCookieToken(req), userId);
     await Promise.all([
       User.deleteMany({ _id: userId }),
-      Organisation.deleteMany({ ownerId: userId }),
       Comment.deleteMany({ "author.id": userId }),
-      Post.deleteMany({ "author.id": userId }),
+      Post.find({ "author.id": userId }, async (err, allUserPosts) => {
+        if (err) throw err;
+        for (const userPost of allUserPosts) {
+          await Promise.all([
+            Comment.deleteMany({ postId: userPost._id }),
+            userPost.delete(),
+          ]);
+        }
+      }),
+      Organisation.find({ ownerId: userId }, async (err, allUserOrgs) => {
+        if (err) throw err;
+        await allUserOrgs.forEach(async (org) => {
+          await Promise.all([
+            Comment.deleteMany({ "author.id": org._id }),
+            Post.find({ "author.id": org._id }, async (errP, allOrgPosts) => {
+              if (errP) throw errP;
+              for (const orgPost of allOrgPosts) {
+                await Promise.all([
+                  Comment.deleteMany({ postId: orgPost._id }),
+                  orgPost.delete(),
+                ]);
+              }
+            }),
+            org.delete(),
+          ]);
+        });
+      }),
     ]).catch((deleteErr) => {
       req.log.error(deleteErr, "Failed deleting user's data");
       throw app.httpErrors.internalServerError();
