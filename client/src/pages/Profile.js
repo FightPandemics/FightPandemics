@@ -1,7 +1,7 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -80,15 +80,6 @@ const URLS = {
   website: [websiteIcon],
 };
 
-//If user is not logged in use the folloing constant
-const NOT_LOGGED_IN_URLS = {
-  github: [githubIcon, "********.***"],
-  facebook: [facebookIcon, "********.***"],
-  linkedin: [linkedinBlue, "********.***"],
-  twitter: [twitterBlue, "********.***"],
-  website: [websiteIcon],
-};
-
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const Profile = ({
@@ -96,6 +87,7 @@ const Profile = ({
     params: { id: pathUserId },
   },
 }) => {
+  const history = useHistory();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
     postsReducer,
@@ -300,13 +292,14 @@ const Profile = ({
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
               //checks if user is logged in or not befor displaing the data
-              //if user not logged in displays ******* insted of actual links
+              //if user not logged in transfer to log in page
               const getfromsession = () => {
                 let res = sessionStorage.getItem("loggedInFlag");
+                sessionStorage.setItem("afterlogintarget", pathUserId);
                 return res;
               };
 
-              if (getfromsession()) {
+              if (getfromsession() != "false") {
                 //#region Logged in return
                 return (
                   url && (
@@ -327,22 +320,12 @@ const Profile = ({
                 //#endregion
               } else {
                 //#region Not logged in return
-                return (
-                  url && (
-                    <a
-                      href={
-                        name === "website"
-                          ? getHref(url)
-                          : `${NOT_LOGGED_IN_URLS[name][1]}${url}`
-                      }
-                      key={name}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SocialIcon src={NOT_LOGGED_IN_URLS[name][0]} />
-                    </a>
-                  )
-                );
+
+                history.push({
+                  //* Login page redirect
+                  pathname: "../auth/login",
+                });
+
                 //#endregion
               }
             })}

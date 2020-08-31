@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import GTM from "constants/gtm-tags";
 import TagManager from "react-gtm-module";
@@ -43,6 +43,8 @@ import socialmedia from "assets/social-media.svg";
 import socialmedia2 from "assets/social-media2.svg";
 import eyeUnmask from "assets/icons/eye-unmask.svg";
 import eyeMask from "assets/icons/eye-mask.svg";
+
+const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const { colors, typography } = theme;
 
@@ -200,6 +202,10 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   const savetosession = () => {
     sessionStorage.setItem("loggedInFlag", true);
   };
+  const getredirect = () => {
+    let redirect = sessionStorage.getItem("afterlogintarget");
+    return redirect;
+  };
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -213,7 +219,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
-
+  const history = useHistory();
   useEffect(() => {
     if (code && state) {
       const loadOAuth = async () => {
@@ -229,6 +235,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 userId: userId ? userId : -1,
               },
             });
+            savetosession();
+            if (getredirect() != null) {
+              history.push({
+                //* Login page redirect
+                pathname: "../profile/" + getredirect(),
+              });
+            }
           }
           dispatch({ type: AUTH_SUCCESS, payload: res.data });
         } catch (err) {
@@ -241,13 +254,12 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       };
       loadOAuth();
     }
-  }, [code, state, dispatch]);
+  }, [code, state, dispatch, history]);
 
   const onLoginWithEmail = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
 
     try {
-      let loggedInFlag;
       const res = await axios.post("/api/auth/login", formData);
       TagManager.dataLayer({
         dataLayer: {
@@ -259,6 +271,12 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         payload: { ...res.data, email: formData.email },
       });
       savetosession();
+      if (getredirect() != null) {
+        history.push({
+          //* Login page redirect
+          pathname: "../profile/" + getredirect(),
+        });
+      }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
@@ -276,6 +294,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         type: AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
+      savetosession();
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       authFormDispatch({
