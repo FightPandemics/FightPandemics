@@ -3,6 +3,7 @@ import { Modal, Button } from "antd";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
+import { mq } from "constants/theme";
 const OrgPostRef = ({ title, content, postAuthor }) => {
   const Container = styled.div`
     h4 {
@@ -17,6 +18,8 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
     width: 592px;
     border-radius: 6px;
     padding: 1.3em 1em 1.3em 0em;
+    z-index: 99999999999;
+    opacity: 1;
     header {
       .author {
         font-size: 12px;
@@ -39,6 +42,27 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
     }
     .content {
       font-size: 14px;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      header > h3,
+      .content {
+        width: 80%;
+        max-width: 450px;
+      }
+    }
+    @media screen and (max-width: 570px) {
+      header > h3,
+      .content {
+        width: 53%;
+        max-width: 450px;
+      }
+    }
+    @media screen and (max-width: 282px) {
+      header > h3,
+      .content {
+        width: 40%;
+        max-width: 450px;
+      }
     }
   `;
   const Avatar = getInitialsFromFullName(postAuthor);
@@ -72,6 +96,9 @@ const MsgModal = styled(Modal)`
   }
   .ant-modal-close-x {
     display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: block;
+    }
   }
   .ant-modal-header {
     border-bottom: none;
@@ -86,7 +113,6 @@ const MsgModal = styled(Modal)`
     width: 100%;
     border-radius: none;
     padding: 10px 5px;
-
     .ant-btn {
       box-shadow: none;
       height: 40px;
@@ -94,6 +120,8 @@ const MsgModal = styled(Modal)`
       font-size: 16px;
       letter-spacing: 0.5px;
       outline: none;
+      transition: none;
+      -webkit-transition: none;
       :first-child {
         border: none;
         border-radius: none;
@@ -107,6 +135,22 @@ const MsgModal = styled(Modal)`
         color: white;
       }
     }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border-radius: 0;
+      .ant-modal-close-x {
+        display: block;
+      }
+      button {
+        margin-left: 0;
+      }
+      .ant-btn:last-child,
+      div {
+        width: 100%;
+      }
+      .ant-btn:first-child {
+        display: none;
+      }
+    }
   }
   .ant-modal-body {
     padding: 0;
@@ -116,17 +160,39 @@ const MsgModal = styled(Modal)`
     width: 656px;
     border-radius: 10px;
     padding: 1.5em 2em;
+    opacity: 1;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+      opacity: 1;
+      background-color: white;
+    }
   }
 
   textarea {
     border: 1px solid lightgrey;
     border-radius: 6px;
     height: 136px;
-    width: 592px;
+    width: 100%;
     margin: 0 0 1em 0;
     padding: 1em;
     resize: none;
-
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      height: 51vh;
+      margin: 2.3em 0 0.5em 0;
+    }
+    @media screen and (max-width: 570px) {
+      height: 48vh;
+      margin: 2.3em 0 0.1em 0;
+    }
+    @media screen and (max-width: 282px) {
+      height: 51vh;
+      margin: 3.5em 0 0em 0;
+    }
     :focus {
       border: 1px solid #425af2;
     }
