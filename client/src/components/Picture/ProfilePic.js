@@ -1,31 +1,31 @@
-import React, { createContext, useRef, useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { mq } from "constants/theme";
-import { CameraFilled } from "@ant-design/icons";
+import UploadPic from "./UploadPic";
+import { mq, theme } from "constants/theme";
 import { Modal } from "antd";
 import ReactCrop from "react-image-crop";
-import CancelButton from "../Button/SubmitButton";
-import SubmitButton from "../Button/BaseButton";
+import BaseButton from "../Button/BaseButton";
 import "react-image-crop/dist/ReactCrop.css";
+const { colors } = theme;
 
 const ContainerDiv = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    position: relative;
     height: 15rem;
   }
 `;
+
 const InitialDiv = styled.div`
   margin: auto;
   margin-bottom: 1rem;
   border-radius: 50%;
-  border: 0.2rem solid #425af2;
-  color: #425af2;
+  border: 0.1rem solid ${colors.royalBlue};
+  color: ${colors.royalBlue};
   font-size: 3rem;
   line-height: 6rem;
   width: 7rem;
   text-align: center;
   font-weight: 500;
-  background-color: #f3f4fe;
+  background-color: ${colors.offWhite};
   margin-top: 2rem;
   @media screen and (min-width: ${(props) =>
       props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
@@ -39,29 +39,31 @@ const InitialDiv = styled.div`
 `;
 
 const UploadPicDiv = styled.div`
-  position: absolute;
-  z-index: 1;
   text-align: center;
-  right: 4rem;
-  bottom: 2.12rem;
+  @media screen and (min-width: ${(props) =>
+      props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
+    margin-right: 3rem;
+  }
 `;
 
-const buttonStyles = {
-  color: "white",
-  backgroundColor: "#425AF2",
-  fontWeight: "500",
-};
+const CustomSubmitButton = styled(BaseButton)`
+  background: ${colors.royalBlue};
+  color: ${colors.white};
+`;
 
-const ProfilePic = ({ newUpload, initials, resolution }) => {
+const CustomCancelButton = styled(BaseButton)``;
+
+const ProfilePic = ({ allowUpload, initials, resolution }) => {
   const [image, setImage] = useState();
   const [photoURL, setPhotoURL] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [croppedImageUrl, setCroppedImageUrl] = useState();
+  const [uploadError, setUploadError] = useState("");
   const [crop, setCrop] = useState({
-    aspect: 4 / 4,
+    aspect: 1 / 1,
     unit: "px",
-    height: 200,
-    width: 200,
+    height: 250,
+    width: 250,
   });
 
   const imageLoaded = (image) => {
@@ -100,6 +102,57 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
     setModalVisible(false);
   };
 
+  const closeModal = () => {
+    setUploadError("");
+    setModalVisible(false);
+  };
+  const cropModal = () => {
+    return (
+      <Modal
+        visible={modalVisible}
+        height={"50rem"}
+        width={"50rem"}
+        okText={"Save"}
+        onOk={savePhoto}
+        destroyOnClose={true}
+        closable={false}
+        onCancel={() => setModalVisible(false)}
+        footer={[
+          <CustomCancelButton key="cancel" onClick={closeModal}>
+            Cancel
+          </CustomCancelButton>,
+          !uploadError ? (
+            <CustomSubmitButton key="save" onClick={savePhoto}>
+              Submit
+            </CustomSubmitButton>
+          ) : (
+            <></>
+          ),
+        ]}
+      >
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          {uploadError ? (
+            <h1>{uploadError}</h1>
+          ) : (
+            <ReactCrop
+              src={photoURL}
+              crop={crop}
+              circularCrop={true}
+              ruleOfThirds
+              locked={true}
+              onImageLoaded={imageLoaded}
+              onChange={(newCrop) => setCrop(newCrop)}
+            />
+          )}
+        </div>
+      </Modal>
+    );
+  };
+
   return (
     <ContainerDiv>
       <InitialDiv resolution={resolution}>
@@ -108,6 +161,7 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
             style={{
               maxWidth: "100%",
               borderRadius: "50%",
+              paddingLeft: "1px",
             }}
             src={croppedImageUrl}
           />
@@ -115,92 +169,21 @@ const ProfilePic = ({ newUpload, initials, resolution }) => {
           initials
         )}
       </InitialDiv>
-      {modalVisible ? (
-        <Modal
-          visible={modalVisible}
-          height={"50rem"}
-          width={"50rem"}
-          okText={"Save"}
-          onOk={savePhoto}
-          destroyOnClose={true}
-          closable={false}
-          onCancel={() => setModalVisible(false)}
-          footer={[
-            <SubmitButton onClick={() => setModalVisible(false)}>
-              Cancel
-            </SubmitButton>,
-            <CancelButton type="primary" onClick={savePhoto}>
-              Submit
-            </CancelButton>,
-          ]}
-        >
-          <div
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <ReactCrop
-              src={photoURL}
-              crop={crop}
-              onImageLoaded={imageLoaded}
-              onChange={(newCrop) => setCrop(newCrop)}
-            />
-          </div>
-        </Modal>
-      ) : (
-        <></>
-      )}
-      {newUpload ? (
+      {modalVisible ? cropModal() : <></>}
+      {allowUpload ? (
         <UploadPicDiv>
           <UploadPic
-            fontSize={"22px"}
+            cameraIconSize={"22px"}
             color={"#425af2"}
             setPhotoURL={setPhotoURL}
             setModalVisible={setModalVisible}
+            setUploadError={setUploadError}
           />
         </UploadPicDiv>
       ) : (
         <></>
       )}
     </ContainerDiv>
-  );
-};
-
-const UploadPic = ({ fontSize, color, setPhotoURL, setModalVisible }) => {
-  const imgUpload = useRef(null);
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      setPhotoURL(fileReader.result);
-      setModalVisible(true);
-    };
-    if (file) {
-      fileReader.readAsDataURL(file);
-    }
-  };
-  return (
-    <div>
-      <input
-        ref={imgUpload}
-        onChange={handleImage}
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-      />
-      <button
-        onClick={() => imgUpload.current.click()}
-        style={{
-          border: 0,
-          borderColor: "hidden",
-          padding: "0.5rem",
-          borderRadius: "50%",
-          backgroundColor: "inherit",
-        }}
-      >
-        <CameraFilled style={{ fontSize: fontSize, color: color }} />
-      </button>
-    </div>
   );
 };
 
