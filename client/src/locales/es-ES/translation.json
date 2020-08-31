@@ -185,7 +185,7 @@
       "address": "Dirección",
       "enterAddress": "Ingresa tu Dirección, Código Postal, o Ciudad",
       "agreePrivacy": "Al registrarme, acepto la <0> Política de Privacidad <\/0>",
-      "agreeTerms": "Al registrarme, acepto los <0> Términos y Condiciones <\/0 >",
+      "agreeTerms": "Al registrarme, acepto los <0> Términos y Condiciones <\/0>",
       "createProfile": "Crear Tu Perfil",
       "saveChanges": "Guardar Cambios",
       "thankyou": "¡Gracias por unirte a nuestra comunidad!",
@@ -376,7 +376,7 @@
       [
         "¿Quién es FightPandemics?",
         "FightPandemics es un equipo global totalmente voluntario con la misión de servir como un lugar al que acudir en busca de ayuda. Nuestro equipo está formado por más de 150 voluntarios comprometidos de más de 70 países que se esfuerzan por marcar la diferencia. La plataforma se construyó en un esfuerzo colaborativo innovador, que reúne a un grupo diverso de solucionadores de problemas con una amplia gama de habilidades dispuestos a co-crear y aprender unos con otros.",
-        "¿Quieres unirte a nuestra iniciativa? Comunícate con < 0 > hr@fightpandemics.com < \/ 0 >"
+        "¿Quieres unirte a nuestra iniciativa? Comunícate con <0> hr@fightpandemics.com <\/0>"
       ],
       [
         "¿En qué ciudades opera FightPandemics?",
@@ -388,7 +388,7 @@
       ],
       [
         "¿Cómo puedo publicar una oferta o solicitud de ayuda en FightPandemics?",
-        "< 0 > Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. < \/ 0 > < 1 > Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora \/ Iniciar sesión\". Allí podras unirte con tu elección de correo electrónico o credenciales de redes sociales. < \/ 1 > < 2 > Una vez que hayas completado tu perfil, selecciona el botón de menú, selecciona ver mi perfil y haz clic en el signo de más en la parte inferior para crear tu primera publicación. < \/ 2 >"
+        "<0> Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. <\/0> <1> Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora \/ Iniciar sesión\". Allí podras unirte con tu elección de correo electrónico o credenciales de redes sociales. <\/1> <2> Una vez que hayas completado tu perfil, selecciona el botón de menú, selecciona ver mi perfil y haz clic en el signo de más en la parte inferior para crear tu primera publicación. <\/2>"
       ],
       [
         "¿Cómo puedo mantenerme al día con las noticias de FightPandemics?",
@@ -401,7 +401,7 @@
       [
         "¿Qué tipo de ayuda puedo ofrecer \/ solicitar en FightPandemics?",
         "Puedes solicitar y ofrecer cualquier tipo de ayuda para apoyar a las personas y organizaciones a hacer frente a la pandemia de COVID-19. A continuación se muestra una lista con algunos ejemplos del tipo de ayuda que puedes ofrecer o solicitar:",
-        "< 0 > Comestibles < \/ 0 > < 1 > Suministros médicos < \/ 1 > < 2 > Asistencia legal < \/ 2 > < 3 > Soporte técnico < \/ 3 > < 4 > Información < \/ 4 > < 5 > Financiamiento < \/ 5 > < 6 > Eventos y actividades < \/ 6 > < 7 > Educación < \/ 7 > < 8 > Bienestar < \/ 8 > < 9 > Investigación y desarrollo < \/ 9 >"
+        "<0> Comestibles <\/0> <1> Suministros médicos <\/1> <2> Asistencia legal <\/2> <3> Soporte técnico <\/3> <4> Información <\/4> <5> Financiamiento <\/5> <6> Eventos y actividades <\/6> <7> Educación <\/7> <8> Bienestar <\/8> <9> Investigación y desarrollo <\/9>"
       ],
       [
         "¿Cómo puedo encontrar ayuda?",
@@ -409,7 +409,7 @@
       ],
       [
         "¿Cómo puedo ofrecer ayuda?",
-        "< 0 > Puedes ofrecer ayuda como individuo o como organización. < \/ 0 > < 1 > Desde la página de inicio, selecciona \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puedes crear tus propias publicaciones que describan la ayuda que puedes ofrecer. < \/ 1 >"
+        "<0> Puedes ofrecer ayuda como individuo o como organización. <\/0> <1> Desde la página de inicio, selecciona \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puedes crear tus propias publicaciones que describan la ayuda que puedes ofrecer. <\/1>"
       ],
       [
         "¿Tengo que iniciar sesión para ver las solicitudes y ofertas de ayuda?",
@@ -429,7 +429,7 @@
       ],
       [
         "¿Cómo puedo saber si las publicaciones son confiables?",
-        "Desafortunadamente, no podemos asegurarnos de que todas las publicaciones sean confiables, ya que las publicaciones son creadas por nuestros usuarios. Sin embargo, hacemos todo lo posible para mantener el contenido relevante, realizando una limpieza de datos regular y desactivando las publicaciones después de su vencimiento. Si tienes inquietudes sobre el contenido de una publicación, comunícate con nosotros en < 0 > support@fightpandemics.com < \/ 0 >"
+        "Desafortunadamente, no podemos asegurarnos de que todas las publicaciones sean confiables, ya que las publicaciones son creadas por nuestros usuarios. Sin embargo, hacemos todo lo posible para mantener el contenido relevante, realizando una limpieza de datos regular y desactivando las publicaciones después de su vencimiento. Si tienes inquietudes sobre el contenido de una publicación, comunícate con nosotros en <0> support@fightpandemics.com <\/0>"
       ],
       [
         "¿Pueden ayudarme con problemas médicos?",
@@ -494,7 +494,7 @@
       ],
       [
         "¿Cómo puedo eliminar\/cancelar mi cuenta?",
-        "Si deseas eliminar tu cuenta, comunícate con nosotros con < 0 > support@fightpandemics.com< \/ 0 >"
+        "Si deseas eliminar tu cuenta, comunícate con nosotros con <0> support@fightpandemics.com<\/0>"
       ],
       [
         "¿Cómo puedo actualizar la información de mi perfil?",
