@@ -1,19 +1,35 @@
-import translationEN from './eng-GB/translation.json';
-import translationRU from './ru/translation.json';
+import translationEN_GB from "./en-GB/translation.json";
+import translationEN_US from "./en-US/translation.json";
+import translationDE from "./de/translation.json";
+import translationES_ES from "./es-ES/translation.json";
+import translationRU from "./ru/translation.json";
+import translationTH from "./th/translation.json";
 
 export const resources = {
   en: {
-    translation: translationEN
+    translation: translationEN_US,
   },
   "en-US": {
-    translation: translationEN
+    translation: translationEN_US,
   },
   "en-GB": {
-    translation: translationEN
+    translation: translationEN_GB,
+  },
+  de: {
+    translation: translationDE,
+  },
+  es: {
+    translation: translationES_ES,
+  },
+  "es-ES": {
+    translation: translationES_ES,
   },
   ru: {
-    translation: translationRU
-  }
-}
+    translation: translationRU,
+  },
+  th: {
+    translation: translationTH,
+  },
+};
 
 export default resources;
