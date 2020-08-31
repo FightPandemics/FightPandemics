@@ -1,7 +1,8 @@
 import { WhiteSpace } from "antd-mobile";
+import { message } from "antd";
 import axios from "axios";
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -91,6 +92,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const OrganisationProfile = () => {
+  const history = useHistory();
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
 
@@ -123,10 +125,18 @@ const OrganisationProfile = () => {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
-        );
+        const er_msg = err.response?.data?.message || err.message;
+        message
+          .error(
+            er_msg, //* Error msg to display can be changed depending on situation can even be a responce from server
+            2,
+          ) //* Duration of msg displayed before redirecting to 404 page
+          .then(() =>
+            history.push({
+              //* 404 page redirect
+              pathname: "../*",
+            }),
+          );
       }
     })();
 
@@ -136,13 +146,21 @@ const OrganisationProfile = () => {
         const res = await axios.get("/api/users/current");
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
-        );
+        const er_msg = err.response?.data?.message || err.message;
+        message
+          .error(
+            er_msg, //* Error msg to display can be changed depending on situation can even be a responce from server
+            2,
+          ) //* Duration of msg displayed before redirecting to 404 page
+          .then(() =>
+            history.push({
+              //* 404 page redirect
+              pathname: "../*",
+            }),
+          );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+  }, [history, orgProfileDispatch, organisationId, userProfileDispatch]);
 
   const fetchOrganisationPosts = async () => {
     postsDispatch({ type: FETCH_POSTS });

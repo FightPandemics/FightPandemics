@@ -1,4 +1,5 @@
 import { WhiteSpace } from "antd-mobile";
+import { message } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -118,11 +119,18 @@ const Profile = ({
         const res = await axios.get(`/api/users/${pathUserId}`);
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
-        //uncoment the alert if you want to use it
-        // alert('Incorrect User')
-        history.push({
-          pathname: "../*",
-        });
+        const er_msg = err.response?.data?.message || err.message;
+        message
+          .error(
+            er_msg, //* Error msg to display can be changed depending on situation can even be a responce from server
+            2,
+          ) //* Duration of msg displayed before redirecting to 404 page
+          .then(() =>
+            history.push({
+              //* 404 page redirect
+              pathname: "../*",
+            }),
+          );
       }
     })();
   }, [history, pathUserId, userProfileDispatch]);
