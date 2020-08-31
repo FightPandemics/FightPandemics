@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown } from "antd";
@@ -62,16 +62,28 @@ const StyledSpan = styled.span`
 
 export default () => {
   const currentYear = new Date().getFullYear();
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1279);
   const { t } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1279);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
+
   const menu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item>
-          <a onClick={() => changeLanguage(key)}>{label.text}</a>
+          <a onClick={() => changeLanguage(key)}>
+            {isDesktop ? label.text : label.value}
+          </a>
         </Menu.Item>
       ))}
     </Menu>
