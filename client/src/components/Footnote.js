@@ -21,7 +21,7 @@ const StyledFooter = styled.footer`
   font-family: Poppins;
   font-size: 1.1rem;
 
-  position: absolute;
+  position: fixed;
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {

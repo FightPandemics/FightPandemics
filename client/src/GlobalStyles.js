@@ -53,6 +53,10 @@ a {
   background-color: ${WHITE} !important;
 }
 
+.am-drawer, .app-drawer, .am-drawer-right {
+  min-height: 100% !important;
+}
+
 .app-drawer .am-drawer-sidebar {
   background-color: $white;
   overflow: auto;
