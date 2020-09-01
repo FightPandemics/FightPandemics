@@ -214,8 +214,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
       "Email is required",
       true,
       {
-        value: 30,
-        message: "Max. 30 characters",
+        value: 200,
+        message: "Max. 200 characters",
       },
     ],
   };
