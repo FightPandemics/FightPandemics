@@ -299,7 +299,7 @@ const Profile = ({
                 return res;
               };
 
-              if (getfromsession() != "false") {
+              if (getfromsession() == "true") {
                 //#region Logged in return
                 return (
                   url && (
