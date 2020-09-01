@@ -36,5 +36,38 @@ describe('FightPandemics Home screen', () => {
         offerHelpButton.should('be.visible');
         offerHelpButton.find('img').should('have.attr', 'alt', offerHelpButtonText);     
       });
+
+      it('Displays the cookie banner', () => {
+        var cookieBanner = home.getCookieBanner();
+        cookieBanner.should('be.visible')
+        cookieBanner.contains("This site uses cookies to deliver our service and to show you relevant information. By using our site, you acknowledge that you have read and understand our Cookies Policy, Privacy Policy, and our Terms & Conditions. Your use of FightPandemics' Products is subject to these policies and terms.");
+      });
+
+      it('Can close the cookie banner', () => {
+        var closeCookieBanner = home.getCookieBannerClose();
+        closeCookieBanner.should('be.visible');
+        closeCookieBanner.click();
+        var cookieBanner = home.getCookieBanner();
+        cookieBanner.should('not.be.visible');
+      });
+
+      it('Can navigate to the cookies policy page via the cookie banner', () => {
+        var cookiesPolicyLink = home.getCookieBannerCookiesPolicy();
+        cookiesPolicyLink.click();
+        cy.location('pathname').should('eq', '/cookies-policy');
+      });
+
+      it('Can navigate to the privacy policy page via the cookie banner', () => {
+        var privacyPolicyLink = home.getCookieBannerPrivacyPolicy();
+        privacyPolicyLink.click();
+        cy.location('pathname').should('eq', '/privacy-policy');
+      });
+
+      it('Can navigate to the terms and conditions page via the cookie banner', () => {
+        var termsAndConditionsLink = home.getCookieBannerTermsAndConditions();
+        termsAndConditionsLink.click();
+        cy.location('pathname').should('eq', '/terms-conditions');
+      });
+
     });
 })

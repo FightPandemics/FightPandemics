@@ -6,6 +6,8 @@ services:
     environment:
       MONGO_INITDB_DATABASE: fightpandemics
     restart: always
+    ports:
+      - "27017:27017"
     networks:
       - fp_network
 
