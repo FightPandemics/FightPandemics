@@ -24,6 +24,7 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
+import Inbox from "./pages/Inbox";
 
 const routes = [
   {
@@ -212,6 +213,10 @@ const routes = [
   {
     path: "/faq",
     component: Faq,
+  },
+  {
+    path: "/inbox",
+    component: Inbox,
   },
   {
     path: "*",

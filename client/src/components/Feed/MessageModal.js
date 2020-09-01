@@ -18,7 +18,7 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
     width: 592px;
     border-radius: 6px;
     padding: 1.3em 1em 1.3em 0em;
-    z-index: 99999999999;
+    z-index: 9999;
     opacity: 1;
     header {
       .author {
