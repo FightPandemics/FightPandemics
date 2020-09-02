@@ -1,3 +1,4 @@
+import translationAR from "./ar/translation.json";
 import translationEN_GB from "./en-GB/translation.json";
 import translationEN_US from "./en-US/translation.json";
 import translationDE from "./de/translation.json";
@@ -7,6 +8,9 @@ import translationRU from "./ru/translation.json";
 import translationTH from "./th/translation.json";
 
 export const resources = {
+  ar: {
+    translation: translationAR,
+  },
   en: {
     translation: translationEN_US,
   },
