@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { theme } from "constants/theme";
 import { StyledForm } from "../components/CreatePost/StyledCreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
+import { validateEmail } from "utils/validators";
 import {
   Main,
   SvgContainer,
@@ -238,6 +239,7 @@ const CreateOrgProfile = (props) => {
                   value: 200,
                   message: "Max. 200 characters",
                 },
+                validate: (email) => validateEmail(email) || "Invalid email",
               })}
             />
             {validEmail || errors.email || email === "" ? (
