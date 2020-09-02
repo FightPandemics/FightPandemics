@@ -1,7 +1,7 @@
 import RequestHelpQuestion from '../../../elements/pages/requestHelpQuestion';
 import { LOCATION } from '../../constants';
 
-describe('FightPandemics Request Help Questionnaire Page', () => {
+describe('FightPandemics Request Help Questionnaire', () => {
 
     const requestHelpQuestion = new RequestHelpQuestion();
 
@@ -10,7 +10,7 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
             requestHelpQuestion.visitRequestHelpOne();
         });
 
-        it('Question 1 of 2 text is visible', () => {
+        it('Question 1 of 2 heading is visible', () => {
             requestHelpQuestion.getQuestionNumber()
                 .should('be.visible')
                 .contains('Question ' + '1');
@@ -23,16 +23,16 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
         });
 
         it('Need medical help answer option is visible and clickable', () => {
-            var medicalAnswer = requestHelpQuestion.getMedicalAnswer();
-            medicalAnswer.should('be.visible');
-            medicalAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
+            var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
+            medicalHelpAnswer.should('be.visible');
+            medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
         });
 
         it('Need other help answer option is visible and clickable', () => {
-            var otherAnswer = requestHelpQuestion.getOtherAnswer();
-            otherAnswer.should('be.visible');
-            otherAnswer.contains('Other Help:' + ' I need assistance getting groceries/medicine/etc.');
-            otherAnswer.click({ force: true });
+            var otherHelpAnswer = requestHelpQuestion.getOtherHelpAnswer();
+            otherHelpAnswer.should('be.visible');
+            otherHelpAnswer.contains('Other Help:' + ' I need assistance getting groceries/medicine/etc.');
+            otherHelpAnswer.click({ force: true });
         });
 
         it('Back button is visible and clickable for question 1', () => {
@@ -42,7 +42,7 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
         });
 
         it('Next button is visible and clickable for question 1', () => {
-            var nextButton = requestHelpQuestion.getBackButtonOne();
+            var nextButton = requestHelpQuestion.getNextButtonOne();
             nextButton.should('be.visible');
             nextButton.find('img').click();
         });
@@ -54,34 +54,36 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
             requestHelpQuestion.visitRequestHelpTwo();
         });
 
-        it('Question 2 of 2 text is visible', () => {
+        it('Question 2 of 2 heading is visible', () => {
             requestHelpQuestion.getQuestionNumber()
-            .should('be.visible')
-            .contains('Question ' + '2');
+                .should('be.visible')
+                .contains('Question ' + '2');
         });
 
         it('Question 2 is visible', () => {
             requestHelpQuestion.getQuestion()
-            .should('be.visible')
-            .contains('Where are you located?');
+                .should('be.visible')
+                .contains('Where are you located?');
         });
 
         it('Question 2 subtext is visible', () => {
             requestHelpQuestion.getQuestionSubtext()
-            .should('be.visible')
-            .contains('We want to show you the most relevant results');
+                .should('be.visible')
+                .contains('We want to show you the most relevant results');
         });
 
-        it('User can type in location field and the location list appears', () => {
+        it('User can type in location field and select location from the list', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click();
-            locationField.type(LOCATION).and('have.attr', 'aria-expanded', 'true');
+            locationField.type(LOCATION)
+                .and('have.attr', 'aria-expanded', 'true')
+                .and('have.attr', 'aria-activedescendant', 'RES2_EAZ_list_0').click();
         });
 
         it('Location subtext is visible', () => {
             requestHelpQuestion.getLocationSubtext()
-            .should('be.visible')
-            .contains('Enter address, zip code, or city');
+                .should('be.visible')
+                .contains('Enter address, zip code, or city');
         });
 
         it('Share location link is visible and clickable', () => {
@@ -90,11 +92,11 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
             shareLocation.contains('Share My Location').click();
         });
 
-        it('Show postings from anywhere is visible and clickable', () => {
+        it('Show postings from anywhere link is visible and clickable', () => {
             var showPostings = requestHelpQuestion.getRhShowPostings();
             showPostings.should('be.visible');
             showPostings.contains('Show me postings from anywhere');
-            showPostings.click({force: true});
+            showPostings.click({ force: true });
         });
 
 
@@ -106,7 +108,7 @@ describe('FightPandemics Request Help Questionnaire Page', () => {
 
 
         it('Next button is visible and clickable for question 2', () => {
-            var nextButton = requestHelpQuestion.getBackButtonTwo();
+            var nextButton = requestHelpQuestion.getNextButtonTwo();
             nextButton.should('be.visible');
             nextButton.find('img').click();
         });

@@ -2,8 +2,8 @@ class RequestHelpQuestion {
 
     questionNumber = 'h5';
     question = 'h2';
-    medicalAnswer = '#RES1_MH';
-    otherAnswer = '#RES1_OH';
+    medicalHelpAnswer = '#RES1_MH';
+    otherHelpAnswer = '#RES1_OH';
     questionSubtext = 'p';
     rhLocationField = '#RES2_EAZ';
     locationSubtext = 'small';
@@ -32,12 +32,12 @@ class RequestHelpQuestion {
         return cy.get(this.question);
     }
 
-    getMedicalAnswer() {
-        return cy.get(this.medicalAnswer);
+    getMedicalHelpAnswer() {
+        return cy.get(this.medicalHelpAnswer);
     }
 
-    getOtherAnswer() {
-        return cy.get(this.otherAnswer);
+    getOtherHelpAnswer() {
+        return cy.get(this.otherHelpAnswer);
     }
 
     getQuestionSubtext() {
