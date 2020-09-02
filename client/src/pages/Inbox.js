@@ -159,7 +159,7 @@ const CurrentChat = () => {
         setShowMessage(!showMessage);
       };
       const OrgPost = styled(Recipient)`
-        height: ${(props) => (props.showMessage ? "10em" : "5.2em")};
+        height: ${(props) => (props.showMessage ? "25%" : "5.2em")};
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -171,11 +171,15 @@ const CurrentChat = () => {
         }
         svg {
           width: 150px;
+          cursor: pointer;
         }
       `;
 
       const ToggleShowMessage = () => {
-        const ToggleContainer = styled.div``;
+        const ToggleContainer = styled.div`
+          position: absolute;
+          right: -4em;
+        `;
         return (
           <ToggleContainer onClick={handleShowMessage}>
             {!showMessage ? (
@@ -256,7 +260,7 @@ const CurrentChat = () => {
       }
       svg {
         position: absolute;
-        right: 2em;
+        right: 2.5em;
         top: 25%;
       }
     `;
@@ -306,9 +310,70 @@ const CurrentChat = () => {
       </InputContainer>
     );
   };
+
+  const Messages = () => {
+    const MessagesContainer = styled.div`
+      position: relative;
+      width: 100%;
+      height: 60%;
+      min-height: 40%;
+      padding: 1em;
+      display: grid;
+      flex-direction: column;
+    `;
+    const Sender = () => {
+      const SenderBubble = styled.div`
+        /* position: relative;
+        left: 0; */
+        width: 50%;
+        height: ${(props) => props.children.length};
+        background-color: #425af2;
+        padding: 0.8em;
+        border-radius: 1em 1em 0em 1em;
+        color: #fff;
+        letter-spacing: 1px;
+        margin-top: 1em;
+      `;
+
+      return (
+        <SenderBubble>
+          Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
+          for free.
+        </SenderBubble>
+      );
+    };
+    const Recipient = () => {
+      const RecipientBubble = styled.div`
+        /* position: relative; */
+        width: 50%;
+        height: ${(props) => props.children.length};
+        background-color: #f6f7fb;
+        padding: 0.8em;
+        border-radius: 0em 1em 1em 1em;
+        letter-spacing: 1px;
+        margin-top: 1em;
+      `;
+      return (
+        <RecipientBubble>
+          Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
+          for free.
+        </RecipientBubble>
+      );
+    };
+    return (
+      <MessagesContainer>
+        <Recipient />
+        <Sender />
+        <Recipient />
+        <Sender />
+      </MessagesContainer>
+    );
+  };
+
   return (
     <CurrentChatContainer>
       <RecipientHeader />
+      <Messages />
       <InputBox />
     </CurrentChatContainer>
   );
