@@ -66,6 +66,7 @@ export default () => {
   const { t } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
   };
 
   const updateMedia = () => {
