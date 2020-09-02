@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://staging.fightpandemics.work/",
+    "baseUrl": "http://localhost:3000/",
     "video": false
     
 }
