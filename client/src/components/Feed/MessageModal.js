@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
+import Mail from "../../assets/icons/mail.svg";
 import { mq } from "constants/theme";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 const OrgPostRef = ({ title, content, postAuthor }) => {
   const Container = styled.div`
     h4 {
@@ -255,10 +258,30 @@ const SuccessModal = styled(MsgModal)`
   }
 `;
 
-const MessageModal = ({ title, postContent, postAuthor, isAuthenticated }) => {
+const MessageModal = ({
+  title,
+  postContent,
+  postAuthor,
+  isAuthenticated,
+  postId,
+}) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
+  const PrivateMessageContainer = styled.div`
+    margin-left: 3em;
+    :hover {
+      color: #939393;
+    }
+    svg {
+      position: relative;
+      top: 0.2em;
+    }
+    span {
+      position: relative;
+      left: 0.5em;
+    }
+  `;
   const showModal = async () => {
     await setVisible(true);
     document.querySelector(".ant-modal-root").style.opacity = 0;
@@ -280,13 +303,45 @@ const MessageModal = ({ title, postContent, postAuthor, isAuthenticated }) => {
   const handleDone = () => {
     setMsgSent(false);
   };
+  const navigateToInbox = () => {
+    // Needed to use this instead of a Link tag because Ant Design's modal button are packaged in the Modal component
+    window.location.href = "/inbox";
+  };
+  const MessageSVG = () => {
+    return (
+      <svg
+        width="22"
+        height="18"
+        viewBox="0 0 22 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 1H19C20.1 1 21 1.9 21 3V15C21 16.1 20.1 17 19 17H3C1.9 17 1 16.1 1 15V3C1 1.9 1.9 1 3 1Z"
+          fill="#425AF2"
+          stroke="#425AF2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M20 3L11 10L2 3"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    );
+  };
   return (
     <>
       {isAuthenticated ? (
         <div>
-          <div style={{ marginLeft: "3em" }} onClick={showModal}>
-            Private Message
-          </div>
+          <PrivateMessageContainer onClick={showModal}>
+            <MessageSVG />
+            <span>Message</span>
+          </PrivateMessageContainer>
           <MsgModal
             title="Send a message"
             visible={visible}
@@ -305,7 +360,7 @@ const MessageModal = ({ title, postContent, postAuthor, isAuthenticated }) => {
           <SuccessModal
             title="🎉 Your message was successfully sent"
             visible={msgSent}
-            // onOk={handleOk} This needs to send you to the main Private Message page
+            onOk={navigateToInbox}
             okText="View message"
             onCancel={handleDone}
             cancelText="Done"
@@ -316,7 +371,22 @@ const MessageModal = ({ title, postContent, postAuthor, isAuthenticated }) => {
             </p>
           </SuccessModal>
         </div>
-      ) : null}
+      ) : (
+        <Link
+          onClick={() =>
+            sessionStorage.setItem("postredirect", `/post/${postId}`)
+          }
+          to={{
+            pathname: LOGIN,
+            state: { from: window.location.href },
+          }}
+        >
+          <PrivateMessageContainer>
+            <MessageSVG />
+            <span>Message</span>
+          </PrivateMessageContainer>
+        </Link>
+      )}
     </>
   );
 };

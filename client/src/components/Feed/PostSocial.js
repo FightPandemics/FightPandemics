@@ -206,6 +206,7 @@ const PostSocial = ({
           title={postTitle}
           postContent={postContent}
           postAuthor={postAuthor}
+          postId={postId}
         />
       </div>
     </>
