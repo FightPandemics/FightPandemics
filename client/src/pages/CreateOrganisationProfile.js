@@ -388,7 +388,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions && validEmail)}
+            disabled={!(privacy && conditions && validateEmail(email))}
             id={
               GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
             }
