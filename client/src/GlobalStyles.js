@@ -115,13 +115,6 @@ a {
 .feed-filter-modal-wrap {
   transform: none;
 }
-
-
-/* global style to hide features not ready for the user experience */
-.hide-feature {
-  display: none;
-}
-
 `;
 
 export default globalStyles;

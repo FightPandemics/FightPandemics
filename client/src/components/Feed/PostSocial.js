@@ -6,6 +6,7 @@ import styled from "styled-components";
 // Local
 // import { FeedContext } from "pages/Feed.js";
 import GTM from "constants/gtm-tags";
+import HideFeature from "../HideFeature.js";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -191,9 +192,7 @@ const PostSocial = ({
           )}
         </>
       )}
-
       <span></span>
-
       <div className="social-icon">
         <div
           id={gtmTag("share", GTM.post.prefix)}
@@ -205,61 +204,65 @@ const PostSocial = ({
         </div>
       </div>
 
-      <span></span>
-      {/* NOTE: May need new function to trigger message sending feature on click */}
-      {postId ? (
-        <div
-          id={gtmTag("message", GTM.post.prefix)}
-          className="social-icon hide-feature"
-        >
-          {renderMessageIcon()}
-          {renderLabels("Message")}
-        </div>
-      ) : (
+      <HideFeature>
         <>
-          {/* NOTE: Update pathname and state when message submission page story is ready */}
-          {isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${id}`,
-                state: {
-                  postId: id,
-                  comments: true,
-                  from: window.location.href,
-                },
-              }}
+          <span></span>
+          {/* NOTE: May need new function to trigger message sending feature on click */}
+          {postId ? (
+            <div
+              id={gtmTag("message", GTM.post.prefix)}
+              className="social-icon"
             >
-              {/* NOTE: May need new function to trigger message sending feature on click */}
-              <div
-                id={gtmTag("message", GTM.feed.prefix)}
-                className="social-icon hide-feature"
-              >
-                {renderMessageIcon()}
-                {renderLabels("Message")}
-              </div>
-            </Link>
+              {renderMessageIcon()}
+              {renderLabels("Message")}
+            </div>
           ) : (
-            <Link
-              onClick={() =>
-                // NOTE: Update sessionStorage, if necessary
-                sessionStorage.setItem("postredirect", `/post/${id}`)
-              }
-              to={{
-                pathname: LOGIN,
-                state: { from: window.location.href },
-              }}
-            >
-              <div
-                id={gtmTag("icon", GTM.feed.prefix)}
-                className="social-icon hide-feature"
-              >
-                {renderMessageIcon()}
-                {renderLabels("Message")}
-              </div>
-            </Link>
+            <>
+              {/* NOTE: Update pathname and state when message submission page story is ready */}
+              {isAuthenticated ? (
+                <Link
+                  to={{
+                    pathname: `/post/${id}`,
+                    state: {
+                      postId: id,
+                      comments: true,
+                      from: window.location.href,
+                    },
+                  }}
+                >
+                  {/* NOTE: May need new function to trigger message sending feature on click */}
+                  <div
+                    id={gtmTag("message", GTM.feed.prefix)}
+                    className="social-icon"
+                  >
+                    {renderMessageIcon()}
+                    {renderLabels("Message")}
+                  </div>
+                </Link>
+              ) : (
+                <Link
+                  onClick={() =>
+                    // NOTE: Update sessionStorage, if necessary
+                    sessionStorage.setItem("postredirect", `/post/${id}`)
+                  }
+                  to={{
+                    pathname: LOGIN,
+                    state: { from: window.location.href },
+                  }}
+                >
+                  <div
+                    id={gtmTag("icon", GTM.feed.prefix)}
+                    className="social-icon"
+                  >
+                    {renderMessageIcon()}
+                    {renderLabels("Message")}
+                  </div>
+                </Link>
+              )}
+            </>
           )}
         </>
-      )}
+      </HideFeature>
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
