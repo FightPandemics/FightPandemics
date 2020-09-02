@@ -262,12 +262,11 @@ const CurrentChat = () => {
       width: 100%;
       position: absolute;
       bottom: 1em;
-      :focus {
-      }
       svg {
         position: absolute;
         right: 2.5em;
         top: 25%;
+        cursor: pointer;
       }
     `;
     const MessageInput = styled.input`
@@ -280,6 +279,9 @@ const CurrentChat = () => {
       ::placeholder {
         opacity: 0.7;
         letter-spacing: 0.8px;
+      }
+      :focus {
+        border: 1px solid rgba(66, 90, 242, 0.5);
       }
     `;
     const SendSvg = () => {
