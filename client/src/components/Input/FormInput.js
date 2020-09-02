@@ -13,6 +13,7 @@ const FormInput = styled.input`
   box-shadow: none;
   color: ${colors.black};
   flex-grow: 1;
+  overflow: auto;
   padding-bottom: 0.5rem;
 `;
 
@@ -56,25 +57,25 @@ export default forwardRef(
     },
     ref,
   ) => (
-    <OuterWrapper>
-      <Label
-        icon={icon}
-        htmlFor={name}
-        style={blockLabelStyles}
-        label={inputTitle}
-      />
-      <InputWrapper className={error && "has-error"}>
-        {prefix && <Prefix>{prefix}</Prefix>}
-        <FormInput
-          name={name}
-          id={name}
-          defaultValue={defaultValue}
-          ref={ref}
-          placeholder={placeholder}
-          {...props}
+      <OuterWrapper>
+        <Label
+          icon={icon}
+          htmlFor={name}
+          style={blockLabelStyles}
+          label={inputTitle}
         />
-      </InputWrapper>
-      {error && <InputError>{error.message}</InputError>}
-    </OuterWrapper>
-  ),
+        <InputWrapper className={error && "has-error"}>
+          {prefix && <Prefix>{prefix}</Prefix>}
+          <FormInput
+            name={name}
+            id={name}
+            defaultValue={defaultValue}
+            ref={ref}
+            placeholder={placeholder}
+            {...props}
+          />
+        </InputWrapper>
+        {error && <InputError>{error.message}</InputError>}
+      </OuterWrapper>
+    ),
 );
