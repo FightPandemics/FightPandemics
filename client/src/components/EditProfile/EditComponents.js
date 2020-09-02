@@ -108,6 +108,7 @@ export const OptionDiv = styled.div`
 `;
 
 export const FormLayout = styled.div`
+  width: 75vw,
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
     flex-direction: row;
