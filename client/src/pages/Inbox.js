@@ -159,7 +159,7 @@ const CurrentChat = () => {
         setShowMessage(!showMessage);
       };
       const OrgPost = styled(Recipient)`
-        height: ${(props) => (props.showMessage ? "25%" : "5.2em")};
+        height: ${(props) => (props.showMessage ? `200px` : "5.2em")};
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -168,6 +168,12 @@ const CurrentChat = () => {
         h3 {
           font-weight: 700;
           line-height: 1em;
+        }
+        div {
+          display: flex;
+        }
+        p {
+          margin-right: 1em;
         }
         svg {
           width: 150px;
@@ -221,7 +227,7 @@ const CurrentChat = () => {
       return (
         <OrgPost showMessage={showMessage}>
           <h3>Offering disinfecting clorox wipes</h3>
-          <div style={{ display: "flex" }}>
+          <div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -312,51 +318,61 @@ const CurrentChat = () => {
   };
 
   const Messages = () => {
+    const BubbleContainer = styled.div`
+      display: flex;
+      justify-content: flex-end;
+    `;
     const MessagesContainer = styled.div`
       position: relative;
       width: 100%;
-      height: 60%;
+      height: 80%;
       min-height: 40%;
       padding: 1em;
-      display: grid;
+      display: flex;
       flex-direction: column;
+      overflow: auto;
+      margin-bottom: 6em;
     `;
     const Sender = () => {
       const SenderBubble = styled.div`
-        /* position: relative;
-        left: 0; */
-        width: 50%;
-        height: ${(props) => props.children.length};
+        max-width: 75%;
         background-color: #425af2;
         padding: 0.8em;
         border-radius: 1em 1em 0em 1em;
-        color: #fff;
         letter-spacing: 1px;
         margin-top: 1em;
+        word-wrap: break-word;
+        color: #fff;
       `;
-
+      //style={{display:"flex", justifyContent: "flex-end"}}
       return (
-        <SenderBubble>
-          Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
-          for free.
-        </SenderBubble>
+        <BubbleContainer>
+          <SenderBubble>
+            Hasdf ;lkjasdfasdlkfj asdfasdfa asdfasdfasdf asdf;lkajdf alkj
+            asdf;laksjdf asdf;lakj asd;lfkj Hasdf ;lkjasdfasdlkfj asdfasdfa
+            asdfasdfasdf asdf;lkajdf alkj asdf;laksjdf asdf;lakj asd;lfkj Hasdf
+            ;lkjasdfasdlkfj asdfasdfa asdfasdfasdf asdf;lkajdf alkj asdf;laksjdf
+            asdf;lakj asd;lfkj
+          </SenderBubble>
+        </BubbleContainer>
       );
     };
     const Recipient = () => {
       const RecipientBubble = styled.div`
-        /* position: relative; */
-        width: 50%;
-        height: ${(props) => props.children.length};
+        width: 75%;
         background-color: #f6f7fb;
         padding: 0.8em;
         border-radius: 0em 1em 1em 1em;
         letter-spacing: 1px;
         margin-top: 1em;
+        word-wrap: break-word;
       `;
       return (
         <RecipientBubble>
           Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
-          for free.
+          for free.Hi Lily, I have 2 packs of disinfecting wipes and can give
+          them to you for free. Hi Lily, I have 2 packs of disinfecting wipes
+          and can give them to you for free.
         </RecipientBubble>
       );
     };
