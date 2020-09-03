@@ -167,6 +167,17 @@ postSchema.index({ "author.id": 1, createdAt: -1 });
 postSchema.index({ likes: 1 });
 /* eslint-enable */
 
+// index title and content for search
+postSchema.index(
+  {
+    content: "text",
+    title: "text",
+  },
+  {
+    language_override: "dummy",
+  },
+);
+
 // -- Model
 const Post = model("Post", postSchema);
 

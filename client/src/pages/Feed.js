@@ -22,6 +22,7 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
+import CategorySearch from "components/Input/CategorySearch";
 
 import {
   optionsReducer,
@@ -93,6 +94,12 @@ const HELP_TYPE = {
   OFFER: "Offering help",
 };
 
+const SEARCH_OPTIONS = [
+  {name: 'All Posts:', id: "ALL"},
+  {name: 'By Individuals:', id: "BY_INDIVIDUALS"},
+  {name: 'By organizations:', id: "BY_ORGS"}
+]
+
 const initialState = {
   selectedType: "ALL",
   showFilters: false,
@@ -101,6 +108,8 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
+  searchKeyword: null,
+  searchCategory: null
 };
 
 const SiderWrapper = styled(Sider)`
@@ -220,7 +229,10 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
   }
 `;
-
+const CategorySearchWrapper = styled(CategorySearch)`
+  flex-basis: 100%;
+  height: 0;
+`
 const NoPosts = styled.div`
   text-align: center;
   position: relative;
@@ -259,6 +271,8 @@ const Feed = (props) => {
     selectedType,
     applyFilters,
     showFilters,
+    searchKeyword,
+    searchCategory,
   } = feedState;
 
   const filters = Object.values(filterOptions);
@@ -309,6 +323,18 @@ const Feed = (props) => {
     e.preventDefault();
     refetchPosts();
   };
+
+  const handleSearchSubmit = (selectedValueId, inputValue) => {
+    dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+    dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
+    refetchPosts()
+  }
+
+  const handleSearchClear = () => {
+    dispatchAction(SET_VALUE, "searchKeyword", null);
+    dispatchAction(SET_VALUE, "searchCategory", null);
+    refetchPosts()
+  }
 
   const handleLocation = (value) => {
     if (applyFilters) {
@@ -441,10 +467,22 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
+    const searchURL = () => {
+      switch (searchCategory) {
+        case "ALL":
+          return `&keywords=${encodeURIComponent(searchKeyword)}`;
+        case "BY_INDIVIDUALS":
+          return `&provider=individuals&keywords=${encodeURIComponent(searchKeyword)}`;
+        case "BY_ORGS":
+          return `&provider=orgs&keywords=${encodeURIComponent(searchKeyword)}`;
+        default:
+          return "";
+      }
+    }
     const limit = 5;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     let response = {};
     if (isLoading) {
       return;
@@ -683,6 +721,13 @@ const Feed = (props) => {
                 />
               </button>
             </HeaderWrapper>
+            <CategorySearchWrapper 
+                options={SEARCH_OPTIONS}
+                displayValue="name"
+                placeholder={"Search"}
+                handleSubmit={handleSearchSubmit}
+                handleClear={handleSearchClear}
+            ></CategorySearchWrapper>
             <div>
               <FilterBox gtmPrefix={GTM.feed.prefix} />
             </div>

@@ -43,8 +43,10 @@ async function routes(app) {
         authorId,
         ignoreUserLocation,
         filter,
+        keywords,
         limit,
         objective,
+        provider,
         skip,
         includeMeta,
       } = query;
@@ -111,6 +113,19 @@ async function routes(app) {
       if (providers) {
         filters.push({ "author.type": { $in: providers } });
       }
+      // Conflict with 'providers' in filters query
+      if (provider) {
+        switch (provider) {
+          case "individuals":
+            filters.push({ "author.type": "Individual" });
+            break;
+          case "orgs":
+            filters.push({ "author.type": { $ne: "Individual" } });
+            break;
+          default:
+            break;
+        }
+      }
       if (type) {
         filters.push({ types: { $in: type } });
       }
@@ -134,24 +149,30 @@ async function routes(app) {
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
-      const sortAndFilterSteps = location
-        ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "author.location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
+      const sortAndFilterSteps =
+        location && !keywords // because cannot use $geoNear and $text at once
+          ? [
+              {
+                $geoNear: {
+                  distanceField: "distance",
+                  key: "author.location.coordinates",
+                  near: {
+                    $geometry: {
+                      coordinates: location.coordinates,
+                      type: "Point",
+                    },
                   },
+                  query: { $and: filters },
                 },
-                query: { $and: filters },
               },
-            },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
-        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+              { $sort: { distance: 1, _id: -1 } },
+            ]
+          : keywords
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $sort: { score: { $meta: "textScore" } } },
+            ]
+          : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
