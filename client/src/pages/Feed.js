@@ -437,7 +437,6 @@ const Feed = (props) => {
     try {
       response = await axios.get(endpoint);
     } catch (error) {
-      // console.log("asdf; ", error.response.data.message);
       const message = error.response?.data?.message || error.message;
       const translatedErrorMessage = t([
         `error.${message}`,
