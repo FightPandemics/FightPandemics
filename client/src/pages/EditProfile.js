@@ -20,6 +20,7 @@ import {
 } from "components/EditProfile/EditComponents";
 import {
   FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
   GITHUB_URL,
@@ -51,6 +52,17 @@ const URLS_CONFIG = {
       },
     },
     FACEBOOK_URL,
+  ],
+  instagram: [
+    "instagram URL",
+    {
+      pattern: {
+        value: /[a-z\d-_]{1,255}\s*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and dashes . or _ are allowed",
+      },
+    },
+    INSTAGRAM_URL,
   ],
   linkedin: [
     "LinkedIn URL",
