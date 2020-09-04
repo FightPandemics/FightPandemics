@@ -22,7 +22,7 @@ const InboxContainer = styled.div`
     min-width: 20em;
   }
 `;
-const ChatList = ({ empty }) => {
+const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
   const ChatListContainer = styled.div`
     position: relative;
     border-right: 1px solid rgba(232, 232, 232, 0.7);
@@ -31,7 +31,9 @@ const ChatList = ({ empty }) => {
     min-width: 22em;
     max-width: 24em;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      display: none;
+      display: ${toggleMobileChatList ? "block" : "none"};
+      width: ${toggleMobileChatList ? "100%" : "25%"};
+      max-width: ${toggleMobileChatList ? "100vw" : "22em"};
     }
   `;
   const ChatHeader = styled.div`
@@ -48,6 +50,9 @@ const ChatList = ({ empty }) => {
       height: 6em;
       align-items: center;
       cursor: pointer;
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        justify-content: ${toggleMobileChatList ? "center" : null};
+      }
       :hover {
         background: #f3f4fe;
       }
@@ -127,19 +132,26 @@ const ChatList = ({ empty }) => {
     <ChatListContainer>
       <ChatHeader>Messages</ChatHeader>
       <div style={{ overflow: "auto", height: "490px" }}>
-        {!empty && <SideChats />}
+        {!empty && (
+          <div onClick={() => setToggleMobileChatList(false)}>
+            <SideChats />
+          </div>
+        )}
       </div>
     </ChatListContainer>
   );
 };
 
-const CurrentChat = () => {
+const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
   const CurrentChatContainer = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: ${toggleMobileChatList ? "none" : "flex"};
+    }
   `;
   const RecipientHeader = () => {
     const Recipient = styled.div`
@@ -266,7 +278,12 @@ const CurrentChat = () => {
     return (
       <>
         <Recipient>
-          <img className="back-arrow" src={backarrow} alt="Back Arrow" />
+          <img
+            className="back-arrow"
+            onClick={() => setToggleMobileChatList(true)}
+            src={backarrow}
+            alt="Back Arrow"
+          />
           <TextAvatar>LL</TextAvatar>
           <h4>Lily Luke</h4>
         </Recipient>
@@ -489,6 +506,7 @@ const EmptyInbox = () => {
 
 const Inbox = () => {
   const [empty, setEmpty] = useState(false);
+  const [toggleMobileChatList, setToggleMobileChatList] = useState(false);
   return (
     <InboxContainer>
       {empty ? (
@@ -498,8 +516,15 @@ const Inbox = () => {
         </>
       ) : (
         <>
-          <ChatList empty={empty} />
-          <CurrentChat />
+          <ChatList
+            empty={empty}
+            toggleMobileChatList={toggleMobileChatList}
+            setToggleMobileChatList={setToggleMobileChatList}
+          />
+          <CurrentChat
+            toggleMobileChatList={toggleMobileChatList}
+            setToggleMobileChatList={setToggleMobileChatList}
+          />
         </>
       )}
     </InboxContainer>
