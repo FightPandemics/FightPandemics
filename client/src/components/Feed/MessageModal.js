@@ -222,7 +222,7 @@ const SuccessModal = styled(MsgModal)`
     display: flex;
     position: relative;
     justify-content: center;
-    top: 4.2em;
+    top: 2.5em;
   }
   .view-message-btn {
     border: 0.2rem solid #425af2;
