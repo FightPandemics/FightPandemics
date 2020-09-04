@@ -1,18 +1,28 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import TextAvatar from "components/TextAvatar";
+import Button from "components/Button/SubmitButton";
+import { mq } from "constants/theme";
+import emptyinbox from "assets/empty-inbox.svg";
+import backarrow from "assets/icons/blue-down-arrow.svg";
 
 const InboxContainer = styled.div`
   width: 93%;
-  min-width: 57em;
+  min-width: 50em;
   max-width: 96em;
   min-height: 37em;
   height: calc(100% - 12rem);
   position: absolute;
   background-color: white;
   display: flex;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 100vw;
+    min-width: 20em;
+  }
 `;
-const ChatList = () => {
+const ChatList = ({ empty }) => {
   const ChatListContainer = styled.div`
     position: relative;
     border-right: 1px solid rgba(232, 232, 232, 0.7);
@@ -20,6 +30,9 @@ const ChatList = () => {
     height: 100%;
     min-width: 22em;
     max-width: 24em;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
   `;
   const ChatHeader = styled.div`
     border-bottom: 1px solid rgba(232, 232, 232, 0.7);
@@ -114,9 +127,7 @@ const ChatList = () => {
     <ChatListContainer>
       <ChatHeader>Messages</ChatHeader>
       <div style={{ overflow: "auto", height: "490px" }}>
-        <SideChats />
-        <SideChats />
-        <SideChats />
+        {!empty && <SideChats />}
       </div>
     </ChatListContainer>
   );
@@ -140,6 +151,15 @@ const CurrentChat = () => {
       display: flex;
       align-items: center;
       padding-left: 1em;
+      .back-arrow {
+        display: none;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          display: inline;
+          transform: rotate(90deg);
+          padding-top: 1em;
+          cursor: pointer;
+        }
+      }
       .ant-avatar {
         width: 3.2rem;
         height: 3.2rem;
@@ -246,6 +266,7 @@ const CurrentChat = () => {
     return (
       <>
         <Recipient>
+          <img className="back-arrow" src={backarrow} alt="Back Arrow" />
           <TextAvatar>LL</TextAvatar>
           <h4>Lily Luke</h4>
         </Recipient>
@@ -346,7 +367,6 @@ const CurrentChat = () => {
         word-wrap: break-word;
         color: #fff;
       `;
-      //style={{display:"flex", justifyContent: "flex-end"}}
       return (
         <BubbleContainer>
           <SenderBubble>
@@ -397,11 +417,91 @@ const CurrentChat = () => {
   );
 };
 
+const EmptyInbox = () => {
+  const MsgHeader = styled.div`
+    display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: block;
+      position: absolute;
+      top: 0;
+      width: 100vw;
+      border-bottom: 1px solid rgba(232, 232, 232, 0.7);
+      padding: 1.6em 1.1em;
+      font-size: 16px;
+      font-weight: 700;
+      span {
+        position: absolute;
+        left: 1em;
+        bottom: 0.5em;
+      }
+    }
+  `;
+  const StyledButton = styled(Button)`
+    width: 19rem;
+    font-weight: 400;
+    font-size: 16px;
+    height: 44px;
+    margin-top: 0.5em;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      width: 18rem;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+  `;
+  const EmptyInboxContainer = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6em;
+    p:first-of-type {
+      margin-top: 2em;
+    }
+    p {
+      line-height: 1;
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        width: 80vw;
+        text-align: center;
+      }
+    }
+  `;
+
+  return (
+    <EmptyInboxContainer>
+      <MsgHeader>
+        <span>Messages</span>
+      </MsgHeader>
+      <img
+        className="empty-inbox-logo"
+        src={emptyinbox}
+        alt="Empty Inbox Page"
+      />
+      <p>You haven't recieved any messages yet.</p>
+      <p>Head back to Help Board to find offers or requests to respond to.</p>
+      <Link to="/feed">
+        <StyledButton primary="true">Go to Help Board</StyledButton>
+      </Link>
+    </EmptyInboxContainer>
+  );
+};
+
 const Inbox = () => {
+  const [empty, setEmpty] = useState(false);
   return (
     <InboxContainer>
-      <ChatList />
-      <CurrentChat />
+      {empty ? (
+        <>
+          <ChatList empty={empty} />
+          <EmptyInbox />
+        </>
+      ) : (
+        <>
+          <ChatList empty={empty} />
+          <CurrentChat />
+        </>
+      )}
     </InboxContainer>
   );
 };

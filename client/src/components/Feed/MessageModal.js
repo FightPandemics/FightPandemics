@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
-import Mail from "../../assets/icons/mail.svg";
 import { mq } from "constants/theme";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 const OrgPostRef = ({ title, content, postAuthor }) => {
@@ -217,6 +216,33 @@ const MsgModal = styled(Modal)`
 `;
 
 const SuccessModal = styled(MsgModal)`
+  .modal-footer-container {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    top: 4.2em;
+  }
+  .view-message-btn {
+    border: 0.2rem solid #425af2;
+    border-radius: 4.6rem;
+    background-color: #425af2;
+    color: white;
+    width: 198px;
+    height: 40px;
+    box-shadow: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0.9em;
+    z-index: 999;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      width: 90%;
+      position: static;
+    }
+  }
   p {
     padding-top: 1em;
     width: 100%;
@@ -245,16 +271,13 @@ const SuccessModal = styled(MsgModal)`
   .ant-modal-footer > div {
     position: absolute;
     bottom: 30px;
+    right: 95px;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       position: static;
     }
   }
   .ant-btn:last-child {
-    border: 0.2rem solid #425af2;
-    border-radius: 4.6rem;
-    background-color: #425af2;
-    color: white;
-    width: 198px;
+    visibility: hidden;
   }
 `;
 
@@ -302,10 +325,6 @@ const MessageModal = ({
   };
   const handleDone = () => {
     setMsgSent(false);
-  };
-  const navigateToInbox = () => {
-    // Needed to use this instead of a Link tag because Ant Design's modal button are packaged in the Modal component
-    window.location.href = "/inbox";
   };
   const MessageSVG = () => {
     return (
@@ -360,7 +379,6 @@ const MessageModal = ({
           <SuccessModal
             title="🎉 Your message was successfully sent"
             visible={msgSent}
-            onOk={navigateToInbox}
             okText="View message"
             onCancel={handleDone}
             cancelText="Done"
@@ -369,6 +387,11 @@ const MessageModal = ({
               Your message to {postAuthor} concerning the "{title}" was sent
               succesfully.
             </p>
+            <div className="modal-footer-container">
+              <Link className="view-message-btn" to="/inbox">
+                View Message
+              </Link>
+            </div>
           </SuccessModal>
         </div>
       ) : (
