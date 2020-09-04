@@ -94,6 +94,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
+  // toggleFetch: false,
 };
 
 const SiderWrapper = styled(Sider)`
@@ -246,6 +247,7 @@ const Feed = (props) => {
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
+  const [hasNextPage, setHasNextPage] = useState(false);
   const {
     filterModal,
     showCreatePostModal,
@@ -266,7 +268,7 @@ const Feed = (props) => {
     status,
     deleteModalVisibility,
   } = posts;
-
+  const feedPosts = Object.entries(postsList);
   const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
@@ -404,6 +406,7 @@ const Feed = (props) => {
       visibility: DELETE_MODAL_HIDE,
     });
   };
+
   const loadPosts = useCallback(async () => {
     const objectiveURL = () => {
       let objective = selectedType;
@@ -446,6 +449,11 @@ const Feed = (props) => {
     }
 
     if (response && response.data && response.data.length) {
+      if (response.data.length < limit) {
+        setHasNextPage(false);
+      } else {
+        setHasNextPage(true);
+      }
       const loadedPosts = response.data.reduce((obj, item) => {
         obj[item._id] = item;
         return obj;
@@ -547,15 +555,14 @@ const Feed = (props) => {
 
   const isItemLoaded = useCallback(
     (index) => {
-      const posts = Object.entries(postsList);
-      if (!!posts[index]) {
+      if (!!feedPosts[index]) {
         setLoadedRows(false);
       } else {
         setLoadedRows(true);
       }
-      return !!posts[index];
+      return !!feedPosts[index];
     },
-    [postsList],
+    [feedPosts],
   );
 
   const loadNextPage = useCallback(() => {
@@ -569,12 +576,11 @@ const Feed = (props) => {
     } else {
       return Promise.resolve();
     }
-  }, [isLoading, loadMore, loadPosts, loadedRows]);
+  }, [isLoading, loadMore, loadedRows, loadPosts]);
 
   useEffect(() => {
-    const posts = Object.entries(postsList);
-    setItemCount(loadMore ? posts.length + 1 : posts.length);
-  }, [loadMore, postsList]);
+    setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
+  }, [feedPosts.length, loadMore]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -693,11 +699,12 @@ const Feed = (props) => {
               loadNextPage={loadNextPage}
               itemCount={itemCount}
               isItemLoaded={isItemLoaded}
+              hasNextPage={hasNextPage}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
             )}
-            {isLoading ? <Loader /> : <></>}
+
             {emptyFeed() ? (
               <NoPosts>
                 Sorry, there are currently no relevant posts available. Please

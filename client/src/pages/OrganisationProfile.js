@@ -102,7 +102,6 @@ const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const OrganisationProfile = () => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
-
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
@@ -122,22 +121,20 @@ const OrganisationProfile = () => {
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
-
+  const [toggleRefetch, setToggleRefetch] = useState(false);
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
 
   const {
-    // error: postsError,
-    // filterType,
     isLoading,
     loadMore,
     page,
     posts: postsList,
-    // status,
     deleteModalVisibility,
   } = postsState;
+  const organisationPosts = Object.entries(postsList);
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -168,71 +165,72 @@ const OrganisationProfile = () => {
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
-  const fetchOrganisationPosts = useCallback(async () => {
-    const limit = 10;
-    const skip = page * limit;
-    let response = {};
+  useEffect(() => {
+    const fetchOrganisationPosts = async () => {
+      const limit = 10;
+      const skip = page * limit;
+      let response = {};
 
-    postsDispatch({ type: FETCH_POSTS });
-    try {
-      const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
-      response = await axios.get(endpoint);
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+        response = await axios.get(endpoint);
 
-      if (response && response.data && response.data.length) {
-        if (response.data.length < limit) {
-          setHasNextPage(false);
-        } else {
-          setHasNextPage(true);
-        }
+        if (response && response.data && response.data.length) {
+          if (response.data.length < limit) {
+            setHasNextPage(false);
+          } else {
+            setHasNextPage(true);
+          }
 
-        const loadedPosts = response.data.reduce((obj, item) => {
-          obj[item._id] = item;
-          return obj;
-        }, {});
-        if (postsList) {
-          postsDispatch({
+          const loadedPosts = response.data.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+          if (postsList) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList, ...loadedPosts },
+            });
+          } else {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...loadedPosts },
+            });
+          }
+        } else if (response && response.data) {
+          await postsDispatch({
             type: SET_POSTS,
-            posts: { ...postsList, ...loadedPosts },
+            posts: { ...postsList },
+          });
+          await postsDispatch({
+            type: SET_LOADING,
+            isLoading: false,
+            loadMore: false,
           });
         } else {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...loadedPosts },
-          });
+          await postsDispatch({ type: SET_LOADING });
         }
-      } else if (response && response.data) {
-        await postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList },
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
         });
-        await postsDispatch({
-          type: SET_LOADING,
-          isLoading: false,
-          loadMore: false,
-        });
-      } else {
-        await postsDispatch({ type: SET_LOADING });
       }
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      postsDispatch({
-        type: ERROR_POSTS,
-        error: `Failed loading activity, reason: ${message}`,
-      });
-    }
-  }, [organisationId, postsList, page]);
+    };
+    fetchOrganisationPosts();
+  }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = () => {
     postsDispatch({ type: RESET_PAGE });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
+    }
   };
-
-  useEffect(() => {
-    fetchOrganisationPosts();
-  }, [organisationId, itemCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback(
     (index) => {
-      const organisationPosts = Object.entries(postsList);
       if (!!organisationPosts[index]) {
         setLoadedRows(false);
       } else {
@@ -240,27 +238,25 @@ const OrganisationProfile = () => {
       }
       return !!organisationPosts[index];
     },
-    [postsList],
+    [organisationPosts],
   );
 
   const loadNextPage = useCallback(() => {
     if (!isLoading && loadMore && loadedRows) {
       return new Promise((resolve) => {
         postsDispatch({ type: NEXT_PAGE });
-        fetchOrganisationPosts();
         resolve();
       });
     } else {
       return Promise.resolve();
     }
-  }, [isLoading, loadMore, loadedRows, fetchOrganisationPosts]);
+  }, [isLoading, loadMore, loadedRows]);
 
   useEffect(() => {
-    const organisationPosts = Object.entries(postsList);
     setItemCount(
       loadMore ? organisationPosts.length + 1 : organisationPosts.length,
     );
-  }, [loadMore, postsList, setItemCount]);
+  }, [loadMore, organisationPosts.length]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -380,6 +376,8 @@ const OrganisationProfile = () => {
     }
   };
 
+  const onToggleDrawer = () => setDrawer(!drawer);
+  const onToggleCreatePostDrawer = () => setModal(!modal);
   const renderProfileData = () => {
     if (!organisation) {
       return <p>Loading...</p>;
@@ -392,7 +390,7 @@ const OrganisationProfile = () => {
               <EditIcon
                 src={edit}
                 id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                onClick={() => setDrawer(true)}
+                onClick={onToggleDrawer}
               />
             )}
             <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
@@ -404,7 +402,7 @@ const OrganisationProfile = () => {
                   <EditEmptyIcon
                     src={editEmpty}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                    onClick={() => setDrawer(true)}
+                    onClick={onToggleDrawer}
                   />
                 )}
               </NameDiv>
@@ -437,7 +435,7 @@ const OrganisationProfile = () => {
                   <CreatePostIcon
                     src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    onClick={() => setModal(!modal)}
+                    onClick={onToggleCreatePostDrawer}
                   />
                 </>
               )}
@@ -461,7 +459,7 @@ const OrganisationProfile = () => {
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={() => setModal(false)}
+                  onCancel={onToggleCreatePostDrawer}
                   loadPosts={refetchPosts}
                   visible={modal}
                   user={user}
@@ -473,7 +471,7 @@ const OrganisationProfile = () => {
             <CustomDrawer
               placement="bottom"
               closable={false}
-              onClose={() => setDrawer(false)}
+              onClose={onToggleDrawer}
               visible={drawer}
               height="150px"
               key="bottom"

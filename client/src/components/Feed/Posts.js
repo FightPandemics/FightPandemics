@@ -46,16 +46,16 @@ const Posts = ({
   loadNextPage,
   itemCount,
   isItemLoaded,
+  hasNextPage,
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-  console.log(posts.length);
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
-      if (!isItemLoaded(index)) {
+      if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
-      } else {
+      } else if (posts[index]) {
         content = (
           <>
             <Post
@@ -95,6 +95,7 @@ const Posts = ({
       handleCancelPostDelete,
       handlePostDelete,
       handlePostLike,
+      hasNextPage,
       isAuthenticated,
       isItemLoaded,
       postDelete,
@@ -112,12 +113,11 @@ const Posts = ({
             loadMoreRows={loadMoreItems}
             rowCount={100000}
           >
-            {({ onRowsRendered, registerChild }) => (
+            {({ onRowsRendered }) => (
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <List
                     autoHeight
-                    //ref={registerChild}
                     height={height}
                     width={width}
                     isScrolling={isScrolling}

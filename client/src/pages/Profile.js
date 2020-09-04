@@ -108,6 +108,7 @@ const Profile = ({
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -130,6 +131,7 @@ const Profile = ({
     posts: postsList,
     deleteModalVisibility,
   } = postsState;
+  const userPosts = Object.entries(postsList);
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -146,73 +148,73 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]);
 
-  const fetchPosts = useCallback(async () => {
-    const limit = 10;
-    const skip = page * limit;
-    let response = {};
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const limit = 10;
+      const skip = page * limit;
+      let response = {};
 
-    await postsDispatch({ type: FETCH_POSTS });
-    try {
-      if (userId) {
-        const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
-        response = await axios.get(endpoint);
-        if (response && response.data && response.data.length) {
-          console.log(response.data.length, "LENGTH");
-          if (response.data.length < limit) {
-            setHasNextPage(false);
-          } else {
-            setHasNextPage(true);
-          }
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        if (userId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+          response = await axios.get(endpoint);
+          if (response && response.data && response.data.length) {
+            if (response.data.length < limit) {
+              setHasNextPage(false);
+            } else {
+              setHasNextPage(true);
+            }
 
-          const loadedPosts = response.data.reduce((obj, item) => {
-            obj[item._id] = item;
-            return obj;
-          }, {});
-          if (postsList) {
+            const loadedPosts = response.data.reduce((obj, item) => {
+              obj[item._id] = item;
+              return obj;
+            }, {});
+            if (postsList) {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...postsList, ...loadedPosts },
+              });
+            } else {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...loadedPosts },
+              });
+            }
+          } else if (response && response.data) {
             postsDispatch({
               type: SET_POSTS,
-              posts: { ...postsList, ...loadedPosts },
+              posts: { ...postsList },
+            });
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: false,
+              loadMore: false,
             });
           } else {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...loadedPosts },
-            });
+            postsDispatch({ type: SET_LOADING });
           }
-        } else if (response && response.data) {
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: { ...postsList },
-          });
-          await postsDispatch({
-            type: SET_LOADING,
-            isLoading: false,
-            loadMore: false,
-          });
-        } else {
-          await postsDispatch({ type: SET_LOADING });
         }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
+        });
       }
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      postsDispatch({
-        type: ERROR_POSTS,
-        error: `Failed loading activity, reason: ${message}`,
-      });
-    }
-  }, [userId, postsList, page]);
+    };
+    fetchPosts();
+  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = () => {
     postsDispatch({ type: RESET_PAGE });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
+    }
   };
-
-  useEffect(() => {
-    fetchPosts();
-  }, [userId, itemCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback(
     (index) => {
-      const userPosts = Object.entries(postsList);
       if (!!userPosts[index]) {
         setLoadedRows(false);
       } else {
@@ -220,14 +222,13 @@ const Profile = ({
       }
       return !!userPosts[index];
     },
-    [postsList],
+    [userPosts],
   );
 
   const loadNextPage = useCallback(() => {
     if (!isLoading && loadMore && loadedRows) {
       return new Promise((resolve) => {
         postsDispatch({ type: NEXT_PAGE });
-        fetchPosts();
         resolve();
       });
     } else {
@@ -236,9 +237,8 @@ const Profile = ({
   }, [isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const userPosts = Object.entries(postsList);
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
-  }, [loadMore, postsList, setItemCount]);
+  }, [loadMore, userPosts.length]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -322,6 +322,9 @@ const Profile = ({
     }
   };
 
+  const onToggleDrawer = () => setDrawer(!drawer);
+  const onToggleCreatePostDrawer = () => setModal(!modal);
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -336,7 +339,7 @@ const Profile = ({
           <EditIcon
             src={edit}
             id={GTM.user.profilePrefix + GTM.profile.modify}
-            onClick={() => setDrawer(true)}
+            onClick={onToggleDrawer}
           />
         )}
         <ProfilePic
@@ -351,7 +354,7 @@ const Profile = ({
               <EditEmptyIcon
                 src={editEmpty}
                 id={GTM.user.profilePrefix + GTM.profile.modify}
-                onClick={() => setDrawer(true)}
+                onClick={onToggleDrawer}
               />
             )}
           </NameDiv>
@@ -410,7 +413,7 @@ const Profile = ({
               <CreatePostIcon
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
-                onClick={() => setModal(!modal)}
+                onClick={onToggleCreatePostDrawer}
               />
             </>
           )}
@@ -433,7 +436,7 @@ const Profile = ({
           />
           {ownUser && (
             <CreatePost
-              onCancel={() => setModal(false)}
+              onCancel={onToggleCreatePostDrawer}
               loadPosts={refetchPosts}
               visible={modal}
               user={user}
@@ -446,7 +449,7 @@ const Profile = ({
         <CustomDrawer
           placement="bottom"
           closable={false}
-          onClose={() => setDrawer(false)}
+          onClose={onToggleDrawer}
           visible={drawer}
           height="150px"
           key="bottom"
