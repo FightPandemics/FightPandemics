@@ -40,6 +40,7 @@ const individualUserSchema = new Schema(
     urls: {
       facebook: String,
       github: String,
+      instagram: String,
       linkedin: String,
       twitter: String,
       website: String,
