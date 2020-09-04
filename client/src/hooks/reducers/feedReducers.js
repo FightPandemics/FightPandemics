@@ -87,7 +87,11 @@ export const postsReducer = (state = postsState, action) => {
         isLoading: false,
       };
     case SET_LOADING:
-      return { ...state, isLoading: false, loadMore: false };
+      return {
+        ...state,
+        isLoading: false,
+        loadMore: false,
+      };
     case SET_DELETE_MODAL_VISIBILITY:
       return {
         ...state,

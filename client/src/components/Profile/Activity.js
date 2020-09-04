@@ -31,9 +31,7 @@ const Activity = ({
   hasNextPage,
 }) => {
   const posts = Object.entries(filteredPosts);
-
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-  // console.log(loadMoreItems, "doesnt trigger?");
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
@@ -98,12 +96,11 @@ const Activity = ({
               loadMoreRows={loadMoreItems}
               rowCount={10000}
             >
-              {({ onRowsRendered, registerChild }) => (
+              {({ onRowsRendered }) => (
                 <AutoSizer disableHeight>
                   {({ width }) => (
                     <List
                       autoHeight
-                      // ref={registerChild}
                       height={height}
                       width={width}
                       isScrolling={isScrolling}
