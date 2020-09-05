@@ -19,7 +19,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
 
-  padding: 1rem 2rem;
+  padding: 5rem 5rem;
   width: 100%;
   height: 6rem;
 
@@ -40,6 +40,10 @@ const StyledFooter = styled.footer`
 const Copyright = styled.div`
   font-weight: 500;
   color: ${colors.darkerGray};
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    font-size: 10px;
+  }
 `;
 
 const StyledDiv = styled.div`
