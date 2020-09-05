@@ -222,7 +222,7 @@ const SuccessModal = styled(MsgModal)`
     display: flex;
     position: relative;
     justify-content: center;
-    top: 2.5em;
+    top: 4.2em;
   }
   .view-message-btn {
     border: 0.2rem solid #425af2;
@@ -291,6 +291,7 @@ const MessageModal = ({
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
+  const [text, setText] = useState("");
   const PrivateMessageContainer = styled.div`
     margin-left: 3em;
     :hover {
@@ -325,6 +326,9 @@ const MessageModal = ({
   };
   const handleDone = () => {
     setMsgSent(false);
+  };
+  const handleTextChange = (e) => {
+    setText(e.target.value);
   };
   const MessageSVG = () => {
     return (
@@ -368,13 +372,17 @@ const MessageModal = ({
             okText="Send"
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
+            okButtonProps={{ disabled: !text }}
           >
             <OrgPostRef
               title={title}
               content={postContent}
               postAuthor={postAuthor}
             />
-            <textarea placeholder="Type a message..." maxLength="120" />
+            <textarea
+              placeholder="Type a message..."
+              onChange={handleTextChange}
+            />
           </MsgModal>
           <SuccessModal
             title="🎉 Your message was successfully sent"

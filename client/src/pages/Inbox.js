@@ -7,6 +7,8 @@ import Button from "components/Button/SubmitButton";
 import { mq } from "constants/theme";
 import emptyinbox from "assets/empty-inbox.svg";
 import backarrow from "assets/icons/blue-down-arrow.svg";
+import sendcomment from "assets/icons/send-paper.svg";
+import { divide } from "lodash";
 
 const InboxContainer = styled.div`
   width: 93%;
@@ -157,7 +159,8 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     const Recipient = styled.div`
       width: 100%;
       border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-      height: 3.5em;
+      height: 5.2em;
+      overflow: auto;
       position: relative;
       top: 0px;
       display: flex;
@@ -191,12 +194,14 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         setShowMessage(!showMessage);
       };
       const OrgPost = styled(Recipient)`
-        height: ${(props) => (props.showMessage ? `200px` : "5.2em")};
+        height: ${(props) => (props.showMessage ? `25%` : "5.2em")};
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         overflow: ${(props) => (props.showMessage ? "visible" : "hidden")};
-        padding: 1.5em;
+        overflow-y: ${(props) => (props.showMessage ? "auto" : "hidden")};
+        overflow-x: hidden;
+        padding: 1.5em 1.5em 0em 1.5em;
         h3 {
           font-weight: 700;
           line-height: 1em;
@@ -291,68 +296,55 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
       </>
     );
   };
+  const MessageInput = styled.input`
+    min-width: 3em;
+    width: 97%;
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #d7d7d7;
+    padding: 1em;
+    ::placeholder {
+      opacity: 0.7;
+      letter-spacing: 0.8px;
+    }
+    :focus {
+      border: 1px solid rgba(66, 90, 242, 0.5);
+    }
+  `;
 
-  const InputBox = () => {
-    const InputContainer = styled.div`
-      display: flex;
-      justify-content: center;
-      height: 48px;
-      width: 100%;
-      position: absolute;
-      bottom: 1em;
-      svg {
+  const InputContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    width: 100%;
+    position: absolute;
+    bottom: 1em;
+    a {
+      opacity: ${(props) => (props.text ? "1" : "0.4")};
+      img {
         position: absolute;
         right: 2.5em;
         top: 25%;
         cursor: pointer;
       }
-    `;
-    const MessageInput = styled.input`
-      min-width: 3em;
-      width: 97%;
-      height: 48px;
-      border-radius: 8px;
-      border: solid 1px #d7d7d7;
-      padding: 1em;
-      ::placeholder {
-        opacity: 0.7;
-        letter-spacing: 0.8px;
-      }
-      :focus {
-        border: 1px solid rgba(66, 90, 242, 0.5);
-      }
-    `;
-    const SendSvg = () => {
-      return (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22 2L15 22L11 13L2 9L22 2Z"
-            fill="#425AF2"
-            stroke="#425AF2"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M18 6L10 14"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      );
+    }
+  `;
+
+  const InputBox = () => {
+    const [text, setText] = useState("");
+    const handleChange = (e) => {
+      setText(e.target.value);
     };
     return (
-      <InputContainer>
-        <MessageInput placeholder="Type a message..." />
-        <SendSvg />
+      <InputContainer text={text}>
+        <MessageInput
+          type="text"
+          onChange={handleChange}
+          placeholder="Type a message..."
+        />
+        <a disabled={!text}>
+          <img className="send-comment" src={sendcomment} alt="Send Comment" />
+        </a>
       </InputContainer>
     );
   };
