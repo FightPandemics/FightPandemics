@@ -47,6 +47,7 @@ const Posts = ({
   itemCount,
   isItemLoaded,
   hasNextPage,
+  totalPostCount,
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
@@ -111,7 +112,7 @@ const Posts = ({
           <InfiniteLoader
             isRowLoaded={isItemLoaded}
             loadMoreRows={loadMoreItems}
-            rowCount={100000}
+            rowCount={totalPostCount}
           >
             {({ onRowsRendered }) => (
               <AutoSizer disableHeight>
