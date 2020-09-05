@@ -1,4 +1,10 @@
-import React, { useReducer, useEffect, useCallback, useState } from "react";
+import React, {
+  useReducer,
+  useEffect,
+  useCallback,
+  useState,
+  useRef,
+} from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -234,7 +240,8 @@ const buttonPulse = styled.button`
   position: relative;
   top: 1.3em;
 `;
-
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
@@ -248,6 +255,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const {
     filterModal,
     showCreatePostModal,
@@ -269,6 +277,16 @@ const Feed = (props) => {
     deleteModalVisibility,
   } = posts;
   const feedPosts = Object.entries(postsList);
+  const prevFeedPostsState = usePrevious(postsList);
+  let prevFeedPosts = [];
+  if (prevFeedPostsState) prevFeedPosts = Object.entries(prevFeedPostsState);
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
   const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
@@ -407,36 +425,62 @@ const Feed = (props) => {
     });
   };
 
+  const objectiveURL = useCallback(() => {
+    let objective = selectedType;
+    if (
+      selectedOptions["offer or request help"] &&
+      selectedOptions["offer or request help"].length < 2
+    ) {
+      objective =
+        selectedOptions["offer or request help"][0] === "Request Help"
+          ? "REQUEST"
+          : "OFFER";
+    }
+    switch (objective) {
+      case "REQUEST":
+        return "&objective=request";
+      case "OFFER":
+        return "&objective=offer";
+      default:
+        return "";
+    }
+  }, [selectedOptions, selectedType]);
+  const filterURL = useCallback(() => {
+    const filterObj = { ...selectedOptions };
+    delete filterObj["offer or request help"];
+    if (location) filterObj.location = location;
+    return Object.keys(filterObj).length === 0
+      ? ""
+      : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+  }, [location, selectedOptions]);
+
+  useEffect(() => {
+    const getTotalPostCount = async () => {
+      const baseURL = `/api/posts?includeMeta=${true}`;
+      let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+      let response = {};
+      try {
+        response = await axios.get(endpoint);
+        if (response && response.data && response.data.meta) {
+          settotalPostCount(response.data.meta.total);
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
+        });
+      }
+    };
+    if (prevFeedPosts.length < feedPosts.length && !prevFeedPosts.length) {
+      getTotalPostCount();
+    } else if (prevFeedPosts.length > feedPosts.length && feedPosts.length) {
+      getTotalPostCount();
+    }
+  }, [feedPosts.length, filterURL, objectiveURL, prevFeedPosts.length]);
+
   const loadPosts = useCallback(async () => {
-    const objectiveURL = () => {
-      let objective = selectedType;
-      if (
-        selectedOptions["offer or request help"] &&
-        selectedOptions["offer or request help"].length < 2
-      ) {
-        objective =
-          selectedOptions["offer or request help"][0] === "Request Help"
-            ? "REQUEST"
-            : "OFFER";
-      }
-      switch (objective) {
-        case "REQUEST":
-          return "&objective=request";
-        case "OFFER":
-          return "&objective=offer";
-        default:
-          return "";
-      }
-    };
-    const filterURL = () => {
-      const filterObj = { ...selectedOptions };
-      delete filterObj["offer or request help"];
-      if (location) filterObj.location = location;
-      return Object.keys(filterObj).length === 0
-        ? ""
-        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-    };
-    const limit = 10;
+    const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
@@ -447,7 +491,6 @@ const Feed = (props) => {
     } catch (error) {
       postsDispatch({ error, type: ERROR_POSTS });
     }
-
     if (response && response.data && response.data.length) {
       if (response.data.length < limit) {
         setHasNextPage(false);
@@ -483,7 +526,7 @@ const Feed = (props) => {
       postsDispatch({ type: SET_LOADING });
     }
     dispatchAction(SET_VALUE, "applyFilters", true);
-  }, [location, page, postsList, selectedOptions, selectedType]);
+  }, [filterURL, objectiveURL, page, postsList]);
 
   useEffect(() => {
     if (applyFilters) {
@@ -633,6 +676,7 @@ const Feed = (props) => {
         handleOnClose,
         showFilters,
         handlePostLike,
+        totalPostCount,
       }}
     >
       <FeedWrapper>
@@ -700,6 +744,7 @@ const Feed = (props) => {
               itemCount={itemCount}
               isItemLoaded={isItemLoaded}
               hasNextPage={hasNextPage}
+              totalPostCount={totalPostCount}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
