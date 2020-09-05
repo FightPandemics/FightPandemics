@@ -6,6 +6,7 @@ import React, {
   useContext,
   useReducer,
   useCallback,
+  useRef,
 } from "react";
 import { Link } from "react-router-dom";
 
@@ -98,7 +99,8 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = () => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -122,6 +124,7 @@ const OrganisationProfile = () => {
   const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
@@ -135,7 +138,16 @@ const OrganisationProfile = () => {
     deleteModalVisibility,
   } = postsState;
   const organisationPosts = Object.entries(postsList);
-
+  const prevOrgPostsState = usePrevious(postsList);
+  let prevOrgPosts = [];
+  if (prevOrgPostsState) prevOrgPosts = Object.entries(prevOrgPostsState);
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
@@ -166,50 +178,83 @@ const OrganisationProfile = () => {
   }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
   useEffect(() => {
+    const getTotalPostCount = async () => {
+      let response = {};
+      try {
+        if (organisationId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&authorId=${organisationId}`;
+          response = await axios.get(endpoint);
+          if (response && response.data && response.data.meta) {
+            settotalPostCount(response.data.meta.total);
+          }
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
+        });
+      }
+    };
+    if (
+      prevOrgPosts.length < organisationPosts.length &&
+      !prevOrgPosts.length
+    ) {
+      getTotalPostCount();
+    } else if (
+      prevOrgPosts.length > organisationPosts.length &&
+      organisationPosts.length
+    ) {
+      getTotalPostCount();
+    }
+  }, [prevOrgPosts.length, organisationId, organisationPosts.length]);
+  useEffect(() => {
     const fetchOrganisationPosts = async () => {
-      const limit = 10;
+      const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       let response = {};
 
       postsDispatch({ type: FETCH_POSTS });
       try {
-        const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
-        response = await axios.get(endpoint);
+        if (organisationId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+          response = await axios.get(endpoint);
 
-        if (response && response.data && response.data.length) {
-          if (response.data.length < limit) {
-            setHasNextPage(false);
-          } else {
-            setHasNextPage(true);
-          }
+          if (response && response.data && response.data.length) {
+            if (response.data.length < limit) {
+              setHasNextPage(false);
+            } else {
+              setHasNextPage(true);
+            }
 
-          const loadedPosts = response.data.reduce((obj, item) => {
-            obj[item._id] = item;
-            return obj;
-          }, {});
-          if (postsList) {
+            const loadedPosts = response.data.reduce((obj, item) => {
+              obj[item._id] = item;
+              return obj;
+            }, {});
+            if (postsList) {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...postsList, ...loadedPosts },
+              });
+            } else {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...loadedPosts },
+              });
+            }
+          } else if (response && response.data) {
             postsDispatch({
               type: SET_POSTS,
-              posts: { ...postsList, ...loadedPosts },
+              posts: { ...postsList },
+            });
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: false,
+              loadMore: false,
             });
           } else {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...loadedPosts },
-            });
+            postsDispatch({ type: SET_LOADING });
           }
-        } else if (response && response.data) {
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: { ...postsList },
-          });
-          await postsDispatch({
-            type: SET_LOADING,
-            isLoading: false,
-            loadMore: false,
-          });
-        } else {
-          await postsDispatch({ type: SET_LOADING });
         }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -455,6 +500,7 @@ const OrganisationProfile = () => {
                 itemCount={itemCount}
                 isItemLoaded={isItemLoaded}
                 hasNextPage={hasNextPage}
+                totalPostCount={totalPostCount}
               />
               {isOwner && (
                 <CreatePost

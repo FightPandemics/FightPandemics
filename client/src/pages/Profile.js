@@ -6,6 +6,7 @@ import React, {
   useReducer,
   useState,
   useCallback,
+  useRef,
 } from "react";
 import { Link } from "react-router-dom";
 
@@ -91,7 +92,8 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 const Profile = ({
   match: {
     params: { id: pathUserId },
@@ -109,6 +111,7 @@ const Profile = ({
   const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -131,7 +134,18 @@ const Profile = ({
     posts: postsList,
     deleteModalVisibility,
   } = postsState;
+
+  const prevUserPostsState = usePrevious(postsList);
   const userPosts = Object.entries(postsList);
+  let prevUserPosts = [];
+  if (prevUserPostsState) prevUserPosts = Object.entries(prevUserPostsState);
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -149,11 +163,36 @@ const Profile = ({
   }, [pathUserId, userProfileDispatch]);
 
   useEffect(() => {
+    const getTotalPostCount = async () => {
+      let response = {};
+      try {
+        if (userId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&authorId=${userId}`;
+          response = await axios.get(endpoint);
+          if (response && response.data && response.data.meta) {
+            settotalPostCount(response.data.meta.total);
+          }
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        postsDispatch({
+          type: ERROR_POSTS,
+          error: `Failed loading activity, reason: ${message}`,
+        });
+      }
+    };
+    if (prevUserPosts.length < userPosts.length && !prevUserPosts.length) {
+      getTotalPostCount();
+    } else if (prevUserPosts.length > userPosts.length && userPosts.length) {
+      getTotalPostCount();
+    }
+  }, [prevUserPosts.length, userId, userPosts.length]);
+
+  useEffect(() => {
     const fetchPosts = async () => {
-      const limit = 10;
+      const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       let response = {};
-
       postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
@@ -165,7 +204,6 @@ const Profile = ({
             } else {
               setHasNextPage(true);
             }
-
             const loadedPosts = response.data.reduce((obj, item) => {
               obj[item._id] = item;
               return obj;
@@ -251,7 +289,7 @@ const Profile = ({
             ...postsList,
           };
           delete allPosts[post._id];
-          await postsDispatch({
+          postsDispatch({
             type: SET_POSTS,
             posts: allPosts,
           });
@@ -296,7 +334,6 @@ const Profile = ({
     sessionStorage.removeItem("likePost");
     const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
     let response = {};
-
     if (user) {
       if (liked) {
         try {
@@ -433,6 +470,7 @@ const Profile = ({
             itemCount={itemCount}
             isItemLoaded={isItemLoaded}
             hasNextPage={hasNextPage}
+            totalPostCount={totalPostCount}
           />
           {ownUser && (
             <CreatePost
