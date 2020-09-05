@@ -46,7 +46,6 @@ async function routes(app) {
         keywords,
         limit,
         objective,
-        provider,
         skip,
         includeMeta,
       } = query;
@@ -63,6 +62,10 @@ async function routes(app) {
           throw app.httpErrors.forbidden();
         }
       }
+
+      // needs to be removed
+      // just for developement testing purposes
+      await Post.createIndexes();
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
@@ -112,19 +115,6 @@ async function routes(app) {
       }
       if (providers) {
         filters.push({ "author.type": { $in: providers } });
-      }
-      // Conflict with 'providers' in filters query
-      if (provider) {
-        switch (provider) {
-          case "individuals":
-            filters.push({ "author.type": "Individual" });
-            break;
-          case "orgs":
-            filters.push({ "author.type": { $ne: "Individual" } });
-            break;
-          default:
-            break;
-        }
       }
       if (type) {
         filters.push({ types: { $in: type } });

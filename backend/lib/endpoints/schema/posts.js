@@ -16,7 +16,6 @@ const getPostsSchema = {
     .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("limit", S.integer())
     .prop("objective", S.string().enum(POST_OBJECTIVES))
-    .prop("provider", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
 };

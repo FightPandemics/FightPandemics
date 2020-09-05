@@ -22,6 +22,7 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
+import Users from "components/Feed/Users";
 import CategorySearch from "components/Input/CategorySearch";
 
 import {
@@ -95,9 +96,9 @@ const HELP_TYPE = {
 };
 
 const SEARCH_OPTIONS = [
-  {name: 'All Posts:', id: "ALL"},
-  {name: 'By Individuals:', id: "BY_INDIVIDUALS"},
-  {name: 'By organizations:', id: "BY_ORGS"}
+  {name: 'Posts', id: "POSTS", default: true},
+  {name: 'Individuals', id: "INDIVIDUALS"},
+  {name: 'Organisations', id: "ORGANISATIONS"}
 ]
 
 const initialState = {
@@ -109,7 +110,8 @@ const initialState = {
   activePanel: null,
   location: null,
   searchKeyword: null,
-  searchCategory: null
+  searchCategory: null,
+  showSearchCategories: false,
 };
 
 const SiderWrapper = styled(Sider)`
@@ -229,7 +231,7 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
   }
 `;
-const CategorySearchWrapper = styled(CategorySearch)`
+const SearchWrapper = styled(CategorySearch)`
   flex-basis: 100%;
   height: 0;
 `
@@ -273,6 +275,7 @@ const Feed = (props) => {
     showFilters,
     searchKeyword,
     searchCategory,
+    showSearchCategories,
   } = feedState;
 
   const filters = Object.values(filterOptions);
@@ -324,16 +327,37 @@ const Feed = (props) => {
     refetchPosts();
   };
 
+  const changeHelpType = (selectedValue) => {
+    switch (selectedValue) {
+      case "POSTS":
+        HELP_TYPE.ALL = "All posts"
+        break;
+      case "INDIVIDUALS":
+        HELP_TYPE.ALL = "All individuals"
+        break;
+      case "ORGANISATIONS":
+        HELP_TYPE.ALL = "All organisations"
+        break;
+      default:
+        HELP_TYPE.ALL = "All posts"
+        break;
+    }
+  }
+
   const handleSearchSubmit = (selectedValueId, inputValue) => {
     dispatchAction(SET_VALUE, "searchKeyword", inputValue);
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
-    refetchPosts()
+    dispatchAction(SET_VALUE, "showSearchCategories", true);
+    changeHelpType(selectedValueId);
+    refetchPosts();
   }
 
   const handleSearchClear = () => {
     dispatchAction(SET_VALUE, "searchKeyword", null);
     dispatchAction(SET_VALUE, "searchCategory", null);
-    refetchPosts()
+    dispatchAction(SET_VALUE, "showSearchCategories", false);
+    changeHelpType(null);
+    refetchPosts();
   }
 
   const handleLocation = (value) => {
@@ -467,21 +491,28 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
+    
     const searchURL = () => {
-      switch (searchCategory) {
-        case "ALL":
-          return `&keywords=${encodeURIComponent(searchKeyword)}`;
-        case "BY_INDIVIDUALS":
-          return `&provider=individuals&keywords=${encodeURIComponent(searchKeyword)}`;
-        case "BY_ORGS":
-          return `&provider=orgs&keywords=${encodeURIComponent(searchKeyword)}`;
-        default:
+      if (searchKeyword) 
+          return `&keywords=${searchKeyword}`;
+      else
           return "";
-      }
     }
     const limit = 5;
     const skip = page * limit;
-    const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
+    let baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
+    switch (searchCategory) {
+      case "POSTS":
+        break;
+      case "INDIVIDUALS":
+        baseURL = `/api/users?limit=${limit}&skip=${skip}`
+        break
+      case "ORGANISATIONS":
+        baseURL = `/api/organisations/search?limit=${limit}&skip=${skip}`
+        break
+      default:
+        break;
+    }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     let response = {};
     if (isLoading) {
@@ -692,7 +723,7 @@ const Feed = (props) => {
                   </Menu.Item>
                 ))}
               </MenuWrapper>
-              <FiltersWrapper>
+              {(!searchCategory || searchCategory == "POSTS") && <FiltersWrapper>
                 <button
                   id={gtmTag(GTM.post.filterPost)}
                   onClick={handleShowFilters}
@@ -703,14 +734,14 @@ const Feed = (props) => {
                   Filters
                 </button>
                 <FiltersList />
-              </FiltersWrapper>
+              </FiltersWrapper>}
             </div>
             <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper empty={emptyFeed()}>
               <h1>Help Board</h1>
-              <button
+              {(!searchCategory || searchCategory == "POSTS") && <button
                 id={gtmTag(GTM.post.createPost)}
                 onClick={handleCreatePost}
               >
@@ -719,19 +750,20 @@ const Feed = (props) => {
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}
                 />
-              </button>
+              </button>}
             </HeaderWrapper>
-            <CategorySearchWrapper 
+            <SearchWrapper 
                 options={SEARCH_OPTIONS}
                 displayValue="name"
                 placeholder={"Search"}
                 handleSubmit={handleSearchSubmit}
                 handleClear={handleSearchClear}
-            ></CategorySearchWrapper>
-            <div>
+                showOptions={showSearchCategories}
+            ></SearchWrapper>
+            {(!searchCategory || searchCategory == "POSTS") && <div>
               <FilterBox gtmPrefix={GTM.feed.prefix} />
-            </div>
-            <Posts
+            </div>}
+            {(!searchCategory || searchCategory == "POSTS") ? <Posts
               isAuthenticated={isAuthenticated}
               filteredPosts={postsList}
               handlePostLike={handlePostLike}
@@ -741,14 +773,19 @@ const Feed = (props) => {
               deleteModalVisibility={deleteModalVisibility}
               handlePostDelete={handlePostDelete}
               handleCancelPostDelete={handleCancelPostDelete}
-            />
+            /> : <Users
+              isAuthenticated={isAuthenticated}
+              filteredUsers={postsList}
+              loadUsers={loadPosts}
+              user={user}
+            />}
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
             )}
             {isLoading ? <Loader /> : <></>}
             {emptyFeed() ? (
               <NoPosts>
-                Sorry, there are currently no relevant posts available. Please
+                Sorry, there are currently no relevant {searchCategory? searchCategory.toLowerCase() : 'posts'} available. Please
                 try using a different filter search or{" "}
                 <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
                   create a post
@@ -756,7 +793,7 @@ const Feed = (props) => {
                 .
               </NoPosts>
             ) : (
-              <CreatePostIcon
+              (!searchCategory || searchCategory == "POSTS") && <CreatePostIcon
                 id={gtmTag(GTM.post.createPost)}
                 src={creatPost}
                 onClick={handleCreatePost}

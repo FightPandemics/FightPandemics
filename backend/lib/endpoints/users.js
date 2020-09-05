@@ -2,6 +2,7 @@ const Auth0 = require("../components/Auth0");
 const { getCookieToken } = require("../utils");
 const {
   getUserByIdSchema,
+  getUsersSchema,
   createUserSchema,
   updateUserSchema,
 } = require("./schema/users");
@@ -13,6 +14,129 @@ async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
   const Post = app.mongo.model("Post");
+
+  const USERS_PAGE_SIZE = 10;
+
+  app.get(
+    "/",
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getUsersSchema,
+    },
+    async (req) => {
+      const { query, userId } = req;
+      const { filter, keywords, limit, objective, skip } = query;
+      const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
+      let user;
+      let userErr;
+      if (userId) {
+        [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          req.log.error(userErr, "Failed retrieving user");
+          throw app.httpErrors.internalServerError();
+        } else if (user === null) {
+          req.log.error(userErr, "User does not exist");
+          throw app.httpErrors.forbidden();
+        }
+      }
+
+      // needs to be removed
+      // just for developement testing purposes
+      await User.createIndexes();
+
+      /* eslint-disable sort-keys */
+      const filters = [{ type: "Individual" }];
+
+      if (userId) filters.push({ _id: { $ne: userId } });
+
+      if (objective) {
+        switch (objective) {
+          case "request":
+            filters.push({
+              $or: [{ "needs.medicalHelp": true }, { "needs.otherHelp": true }],
+            });
+            break;
+          case "offer":
+            filters.push({
+              $or: [
+                { "objectives.donate": true },
+                { "objectives.shareInformation": true },
+                { "objectives.volunteer": true },
+              ],
+            });
+            break;
+          default:
+            break;
+        }
+      }
+
+      /* eslint-disable sort-keys */
+      const sortAndFilterSteps = keywords
+        ? [
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $sort: { score: { $meta: "textScore" } } },
+          ]
+        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+
+      /* eslint-disable sort-keys */
+      const paginationSteps =
+        limit === -1
+          ? [
+              {
+                $skip: skip || 0,
+              },
+            ]
+          : [
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || USERS_PAGE_SIZE,
+              },
+            ];
+
+      /* eslint-disable sort-keys */
+      const projectionSteps = [
+        {
+          $project: {
+            _id: true,
+            about: true,
+            firstName: true,
+            lastName: true,
+            type: true,
+            "hide.address": true,
+            location: { $cond: ["$hide.address", null, "$location"] },
+            urls: true,
+            objectives: true,
+            needs: true,
+          },
+        },
+      ];
+      /* eslint-enable sort-keys */
+      const aggregationPipelineResults = [
+        ...sortAndFilterSteps,
+        ...paginationSteps,
+        ...projectionSteps,
+      ];
+
+      const [usersErr, users] = await app.to(
+        User.aggregate(aggregationPipelineResults),
+      );
+
+      const responseHandler = (response) => {
+        return response;
+      };
+
+      if (usersErr) {
+        req.log.error(usersErr, "Failed requesting users");
+        throw app.httpErrors.internalServerError();
+      } else if (users === null) {
+        return responseHandler([]);
+      } else {
+        return responseHandler(users);
+      }
+    },
+  );
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;

@@ -5,6 +5,7 @@ const {
   deleteOrganisationSchema,
   getOrganisationSchema,
   getOrganisationsSchema,
+  searchOrganisationsSchema,
   updateOrganisationSchema,
 } = require("./schema/organisations");
 
@@ -15,6 +16,127 @@ async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const Organisation = app.mongo.model("OrganisationUser");
   const Post = app.mongo.model("Post");
+  const User = app.mongo.model("IndividualUser");
+
+  const ORGS_PAGE_SIZE = 10;
+
+  app.get(
+    "/search",
+    {
+      preValidation: [app.authenticateOptional],
+      schema: searchOrganisationsSchema,
+    },
+    async (req) => {
+      const { query, userId } = req;
+      const { filter, keywords, limit, objective, skip } = query;
+      const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
+      let user;
+      let userErr;
+      if (userId) {
+        [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          req.log.error(userErr, "Failed retrieving user");
+          throw app.httpErrors.internalServerError();
+        } else if (user === null) {
+          req.log.error(userErr, "User does not exist");
+          throw app.httpErrors.forbidden();
+        }
+      }
+
+      // needs to be removed
+      // just for developement testing purposes
+      await Organisation.createIndexes();
+
+      /* eslint-disable sort-keys */
+      const filters = [{ type: { $ne: "Individual" } }];
+
+      // un-comment if user shouldnt find their owned organizations
+      // if (userId) filters.push({ ownerId: { $ne: userId } });
+
+      if (objective) {
+        switch (objective) {
+          case "request":
+            filters.push({
+              $or: [
+                { "needs.donations": true },
+                { "needs.other": true },
+                { "needs.staff": true },
+                { "needs.volunteers": true },
+              ],
+            });
+            break;
+          // to add more in case orgs become able to offer help
+          default:
+            break;
+        }
+      }
+
+      /* eslint-disable sort-keys */
+      const sortAndFilterSteps = keywords
+        ? [
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $sort: { score: { $meta: "textScore" } } },
+          ]
+        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+
+      /* eslint-disable sort-keys */
+      const paginationSteps =
+        limit === -1
+          ? [
+              {
+                $skip: skip || 0,
+              },
+            ]
+          : [
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || ORGS_PAGE_SIZE,
+              },
+            ];
+
+      /* eslint-disable sort-keys */
+      const projectionSteps = [
+        {
+          $project: {
+            _id: true,
+            about: true,
+            name: true,
+            type: true,
+            urls: true,
+            needs: true,
+            industry: true,
+            global: true,
+            location: true,
+          },
+        },
+      ];
+      /* eslint-enable sort-keys */
+      const aggregationPipelineResults = [
+        ...sortAndFilterSteps,
+        ...paginationSteps,
+        ...projectionSteps,
+      ];
+
+      const [organisationsErr, organisations] = await app.to(
+        Organisation.aggregate(aggregationPipelineResults),
+      );
+
+      const responseHandler = (response) => {
+        return response;
+      };
+
+      if (organisationsErr) {
+        req.log.error(organisationsErr, "Failed requesting users");
+        throw app.httpErrors.internalServerError();
+      } else if (organisations === null) {
+        return responseHandler([]);
+      } else {
+        return responseHandler(organisations);
+      }
+    },
+  );
 
   app.delete(
     "/:organisationId",

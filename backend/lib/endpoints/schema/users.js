@@ -59,6 +59,15 @@ const createUserSchema = {
     .required(["location"]),
 };
 
+const getUsersSchema = {
+  querystring: strictSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("limit", S.integer())
+    .prop("objective", S.string())
+    .prop("skip", S.integer()),
+};
+
 const getUserByIdSchema = {
   params: strictSchema().prop("userId", S.string().required()),
 };
@@ -79,5 +88,6 @@ const updateUserSchema = {
 module.exports = {
   createUserSchema,
   getUserByIdSchema,
+  getUsersSchema,
   updateUserSchema,
 };

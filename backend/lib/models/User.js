@@ -27,6 +27,24 @@ userSchema.index({
   ownerId: 1,
   createdAt: -1,
 });
+
+userSchema.index(
+  {
+    name: "text",
+    firstName: "text",
+    lastName: "text",
+    about: "text",
+  },
+  {
+    weights: {
+      name: 2,
+      firstName: 2,
+      lastName: 2,
+      about: 1,
+    },
+  },
+);
+
 /* eslint-enable */
 
 // Apply the uniqueValidator plugin to userSchema.
