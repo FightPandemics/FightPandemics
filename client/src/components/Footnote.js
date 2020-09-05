@@ -19,7 +19,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
 
-  padding: 3.5rem 0.5rem;
+  padding: 7rem 0.5rem;
   width: 100%;
   height: 6rem;
 
@@ -28,7 +28,6 @@ const StyledFooter = styled.footer`
   font-family: Poppins;
   font-size: 1.1rem;
 
-  position: absolute;
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
