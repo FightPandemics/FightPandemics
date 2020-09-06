@@ -19,7 +19,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
 
-  padding: 7rem 0.5rem;
+  padding: 4rem 0rem;
   width: 100%;
   height: 6rem;
 
@@ -32,6 +32,7 @@ const StyledFooter = styled.footer`
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    padding: 1rem 2rem;
     font-size: 1.4rem;
     height: 6rem;
   }
@@ -43,6 +44,7 @@ const Copyright = styled.div`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 10px;
+    margin-top: -4rem;
   }
 `;
 
