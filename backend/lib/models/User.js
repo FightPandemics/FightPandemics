@@ -45,6 +45,8 @@ userSchema.index(
   },
 );
 
+// To be removed (testing only)
+userSchema.createIndexes();
 /* eslint-enable */
 
 // Apply the uniqueValidator plugin to userSchema.
