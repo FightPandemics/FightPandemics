@@ -333,7 +333,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 htmlFor="location"
                 icon={Marker}
                 style={blockLabelStyles}
-                label="Address (Required)"
+                label="* Address"
               />
               <LocationInput
                 formError={errors.location}
@@ -422,7 +422,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
+              *By signing up, I agree to the{" "}
               <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
                 Privacy Policy
               </StyledUnderlineLink>
@@ -433,7 +433,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
             >
-              By signing up, I agree to the{" "}
+              *By signing up, I agree to the{" "}
               <StyledUnderlineLink onClick={showTermsConditionsModal}>
                 Terms and Conditions
               </StyledUnderlineLink>

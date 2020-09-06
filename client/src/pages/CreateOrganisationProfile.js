@@ -254,7 +254,7 @@ const CreateOrgProfile = (props) => {
               style={styleLabel}
               htmlFor="location"
               icon={Marker}
-              label="Address"
+              label="* Address"
             />
             <LocationInput
               formError={errors.location}
@@ -362,7 +362,7 @@ const CreateOrgProfile = (props) => {
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
+              *By signing up, I agree to the{" "}
               <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
                 Privacy Policy
               </StyledUnderlineLink>
@@ -374,7 +374,7 @@ const CreateOrgProfile = (props) => {
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
             >
-              By signing up, I agree to the{" "}
+              *By signing up, I agree to the{" "}
               <StyledUnderlineLink onClick={showTermsConditionsModal}>
                 Terms and Conditions
               </StyledUnderlineLink>
@@ -386,7 +386,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions && validEmail)}
+            disabled={!(privacy && conditions && validEmail && location)}
             id={
               GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
             }
