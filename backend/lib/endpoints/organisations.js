@@ -45,7 +45,7 @@ async function routes(app) {
 
       // needs to be removed
       // just for developement testing purposes
-      await Organisation.createIndexes();
+      await app.mongo.model("User").createIndexes();
 
       /* eslint-disable sort-keys */
       const filters = [{ type: { $ne: "Individual" } }];
