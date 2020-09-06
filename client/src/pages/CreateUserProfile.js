@@ -333,7 +333,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 htmlFor="location"
                 icon={Marker}
                 style={blockLabelStyles}
-                label="Address"
+                label="Address (Required)"
               />
               <LocationInput
                 formError={errors.location}
@@ -441,7 +441,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
           </InputWrapper>
           <InputGroup>
             <Submit
-              disabled={!formState.isValid || !(privacy && conditions)}
+              disabled={!formState.isValid || !(privacy && conditions && location)}
               primary="true"
               onClick={handleSubmit(onSubmit)}
               id={GTM.user.profilePrefix + GTM.profile.createProfile}
