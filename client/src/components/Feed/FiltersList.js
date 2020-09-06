@@ -14,7 +14,13 @@ const FiltersList = () => {
     handleOption,
     location,
     selectedOptions,
+    filters,
   } = feedContext;
+
+  const getOptionText = (filterOptions, filterLabel, option) =>
+    filterOptions
+      .filter(({ label }) => label === filterLabel)[0]
+      .options.filter(({ value }) => value === option)[0].text;
 
   return (
     <div>
@@ -35,7 +41,7 @@ const FiltersList = () => {
             onClick={handleOption(filter, option)}
             className="tag-closable"
           >
-            {option}
+            {getOptionText(filters, filter, option)}
           </ButtonTag>
         )),
       )}
