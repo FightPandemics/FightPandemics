@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Post from "../Feed/Post";
 
 const Activity = ({
@@ -13,10 +14,11 @@ const Activity = ({
   handlePostLike,
 }) => {
   const posts = Object.entries(filteredPosts);
+  const { t } = useTranslation();
   return (
     <div className="activity">
       {!posts.length
-        ? "No activity found"
+        ? t("post.noActivity")
         : posts.map(([key, post]) => (
             <Post
               currentPost={post}
