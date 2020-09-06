@@ -23,6 +23,7 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 6rem;
 
+  position: absolute;
   background: ${colors.selago};
   line-height: 2rem;
   font-family: Poppins;
