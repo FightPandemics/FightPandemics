@@ -13,6 +13,7 @@ const FormInput = styled.input`
   box-shadow: none;
   color: ${colors.black};
   flex-grow: 1;
+  overflow: auto;
   padding-bottom: 0.5rem;
 `;
 
