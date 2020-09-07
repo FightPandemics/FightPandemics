@@ -24,19 +24,19 @@ const AddTags = ({ filters, addTag, selected = [] }) => {
     <AddTagsWrapper>
       <p className="tags-info">{t("post.addTags")}</p>
       <div className="tags-selector">
-        {filters.map((filter, idx) => (
+        {filters.map(({ text, value }, idx) => (
           <ButtonTag
             className={
               "tag-selectable " +
-              (selected.length && selected.includes(filter)
+              (selected.length && selected.includes(value)
                 ? "tag-selected"
                 : "")
             }
-            onClick={addTag(filter)}
-            label={filter}
+            onClick={addTag(value)}
+            label={value}
             key={idx}
           >
-            {filter}
+            {text}
           </ButtonTag>
         ))}
       </div>
