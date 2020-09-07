@@ -108,10 +108,9 @@ const Profile = ({
   const [drawer, setDrawer] = useState(false);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
-  const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
-  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -133,12 +132,13 @@ const Profile = ({
     page,
     posts: postsList,
     deleteModalVisibility,
+    status,
+    error: postsError,
   } = postsState;
 
-  const prevUserPostsState = usePrevious(postsList);
+  const prevTotalPostCount = usePrevious(totalPostCount);
+
   const userPosts = Object.entries(postsList);
-  let prevUserPosts = [];
-  if (prevUserPostsState) prevUserPosts = Object.entries(prevUserPostsState);
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -163,48 +163,26 @@ const Profile = ({
   }, [pathUserId, userProfileDispatch]);
 
   useEffect(() => {
-    const getTotalPostCount = async () => {
-      let response = {};
-      try {
-        if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&authorId=${userId}`;
-          response = await axios.get(endpoint);
-          if (response && response.data && response.data.meta) {
-            settotalPostCount(response.data.meta.total);
-          }
-        }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
-        });
-      }
-    };
-    if (prevUserPosts.length < userPosts.length && !prevUserPosts.length) {
-      getTotalPostCount();
-    } else if (prevUserPosts.length > userPosts.length && userPosts.length) {
-      getTotalPostCount();
-    }
-  }, [prevUserPosts.length, userId, userPosts.length]);
-
-  useEffect(() => {
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      let response = {};
       postsDispatch({ type: FETCH_POSTS });
       try {
         if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
-          response = await axios.get(endpoint);
-          if (response && response.data && response.data.length) {
-            if (response.data.length < limit) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
+          if (posts.length && meta.total) {
+            if (prevTotalPostCount !== meta.total) {
+              setTotalPostCount(meta.total);
+            }
+            if (posts.length < limit) {
               setHasNextPage(false);
             } else {
               setHasNextPage(true);
             }
-            const loadedPosts = response.data.reduce((obj, item) => {
+            const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
               return obj;
             }, {});
@@ -219,7 +197,7 @@ const Profile = ({
                 posts: { ...loadedPosts },
               });
             }
-          } else if (response && response.data) {
+          } else if (posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -233,12 +211,8 @@ const Profile = ({
             postsDispatch({ type: SET_LOADING });
           }
         }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
-        });
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
       }
     };
     fetchPosts();
@@ -251,28 +225,21 @@ const Profile = ({
     }
   };
 
-  const isItemLoaded = useCallback(
-    (index) => {
-      if (!!userPosts[index]) {
-        setLoadedRows(false);
-      } else {
-        setLoadedRows(true);
-      }
-      return !!userPosts[index];
-    },
-    [userPosts],
-  );
+  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
-  const loadNextPage = useCallback(() => {
-    if (!isLoading && loadMore && loadedRows) {
-      return new Promise((resolve) => {
-        postsDispatch({ type: NEXT_PAGE });
-        resolve();
-      });
-    } else {
-      return Promise.resolve();
-    }
-  }, [isLoading, loadMore, loadedRows]); // eslint-disable-line react-hooks/exhaustive-deps
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (!isLoading && loadMore && stopIndex > userPosts.length) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [isLoading, loadMore, userPosts.length],
+  );
 
   useEffect(() => {
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
@@ -294,6 +261,7 @@ const Profile = ({
             posts: allPosts,
           });
         }
+        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -472,6 +440,9 @@ const Profile = ({
             hasNextPage={hasNextPage}
             totalPostCount={totalPostCount}
           />
+          {status === ERROR_POSTS && (
+            <ErrorAlert message={postsError.message} />
+          )}
           {ownUser && (
             <CreatePost
               onCancel={onToggleCreatePostDrawer}

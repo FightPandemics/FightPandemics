@@ -121,10 +121,9 @@ const OrganisationProfile = () => {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
-  const [loadedRows, setLoadedRows] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
-  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
@@ -136,11 +135,11 @@ const OrganisationProfile = () => {
     page,
     posts: postsList,
     deleteModalVisibility,
+    status,
+    error: postsError,
   } = postsState;
+  const prevTotalPostCount = usePrevious(totalPostCount);
   const organisationPosts = Object.entries(postsList);
-  const prevOrgPostsState = usePrevious(postsList);
-  let prevOrgPosts = [];
-  if (prevOrgPostsState) prevOrgPosts = Object.entries(prevOrgPostsState);
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -178,56 +177,26 @@ const OrganisationProfile = () => {
   }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
   useEffect(() => {
-    const getTotalPostCount = async () => {
-      let response = {};
-      try {
-        if (organisationId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&authorId=${organisationId}`;
-          response = await axios.get(endpoint);
-          if (response && response.data && response.data.meta) {
-            settotalPostCount(response.data.meta.total);
-          }
-        }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
-        });
-      }
-    };
-    if (
-      prevOrgPosts.length < organisationPosts.length &&
-      !prevOrgPosts.length
-    ) {
-      getTotalPostCount();
-    } else if (
-      prevOrgPosts.length > organisationPosts.length &&
-      organisationPosts.length
-    ) {
-      getTotalPostCount();
-    }
-  }, [prevOrgPosts.length, organisationId, organisationPosts.length]);
-  useEffect(() => {
     const fetchOrganisationPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      let response = {};
-
       postsDispatch({ type: FETCH_POSTS });
       try {
         if (organisationId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
-          response = await axios.get(endpoint);
-
-          if (response && response.data && response.data.length) {
-            if (response.data.length < limit) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
+          if (posts.length && meta.total) {
+            if (prevTotalPostCount !== meta.total) {
+              setTotalPostCount(meta.total);
+            }
+            if (posts.length < limit) {
               setHasNextPage(false);
             } else {
               setHasNextPage(true);
             }
-
-            const loadedPosts = response.data.reduce((obj, item) => {
+            const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
               return obj;
             }, {});
@@ -242,7 +211,7 @@ const OrganisationProfile = () => {
                 posts: { ...loadedPosts },
               });
             }
-          } else if (response && response.data) {
+          } else if (posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -256,12 +225,8 @@ const OrganisationProfile = () => {
             postsDispatch({ type: SET_LOADING });
           }
         }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
-        });
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
       }
     };
     fetchOrganisationPosts();
@@ -274,28 +239,23 @@ const OrganisationProfile = () => {
     }
   };
 
-  const isItemLoaded = useCallback(
-    (index) => {
-      if (!!organisationPosts[index]) {
-        setLoadedRows(false);
-      } else {
-        setLoadedRows(true);
-      }
-      return !!organisationPosts[index];
-    },
-    [organisationPosts],
-  );
+  const isItemLoaded = useCallback((index) => !!organisationPosts[index], [
+    organisationPosts,
+  ]);
 
-  const loadNextPage = useCallback(() => {
-    if (!isLoading && loadMore && loadedRows) {
-      return new Promise((resolve) => {
-        postsDispatch({ type: NEXT_PAGE });
-        resolve();
-      });
-    } else {
-      return Promise.resolve();
-    }
-  }, [isLoading, loadMore, loadedRows]);
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (!isLoading && loadMore && stopIndex > organisationPosts.length) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [isLoading, loadMore, organisationPosts.length],
+  );
 
   useEffect(() => {
     setItemCount(
@@ -322,6 +282,7 @@ const OrganisationProfile = () => {
             posts: allPosts,
           });
         }
+        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -502,6 +463,9 @@ const OrganisationProfile = () => {
                 hasNextPage={hasNextPage}
                 totalPostCount={totalPostCount}
               />
+              {status === ERROR_POSTS && (
+                <ErrorAlert message={postsError.message} />
+              )}
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}

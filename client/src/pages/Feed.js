@@ -253,9 +253,9 @@ const Feed = (props) => {
   const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
-  const [loadedRows, setLoadedRows] = useState(true);
+
   const [hasNextPage, setHasNextPage] = useState(false);
-  const [totalPostCount, settotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const {
     filterModal,
     showCreatePostModal,
@@ -265,7 +265,6 @@ const Feed = (props) => {
     applyFilters,
     showFilters,
   } = feedState;
-
   const filters = Object.values(filterOptions);
   const {
     error: postsError,
@@ -277,9 +276,8 @@ const Feed = (props) => {
     deleteModalVisibility,
   } = posts;
   const feedPosts = Object.entries(postsList);
-  const prevFeedPostsState = usePrevious(postsList);
-  let prevFeedPosts = [];
-  if (prevFeedPostsState) prevFeedPosts = Object.entries(prevFeedPostsState);
+  const prevTotalPostCount = usePrevious(totalPostCount);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -454,79 +452,58 @@ const Feed = (props) => {
       : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
   }, [location, selectedOptions]);
 
-  useEffect(() => {
-    const getTotalPostCount = async () => {
-      const baseURL = `/api/posts?includeMeta=${true}`;
-      let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-      let response = {};
-      try {
-        response = await axios.get(endpoint);
-        if (response && response.data && response.data.meta) {
-          settotalPostCount(response.data.meta.total);
-        }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        postsDispatch({
-          type: ERROR_POSTS,
-          error: `Failed loading activity, reason: ${message}`,
-        });
-      }
-    };
-    if (prevFeedPosts.length < feedPosts.length && !prevFeedPosts.length) {
-      getTotalPostCount();
-    } else if (prevFeedPosts.length > feedPosts.length && feedPosts.length) {
-      getTotalPostCount();
-    }
-  }, [feedPosts.length, filterURL, objectiveURL, prevFeedPosts.length]);
-
   const loadPosts = useCallback(async () => {
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
+    const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    let response = {};
     postsDispatch({ type: FETCH_POSTS });
     try {
-      response = await axios.get(endpoint);
+      const {
+        data: { data: posts, meta },
+      } = await axios.get(endpoint);
+      if (posts.length && meta.total) {
+        if (prevTotalPostCount !== meta.total) {
+          setTotalPostCount(meta.total);
+        }
+        if (posts.length < limit) {
+          setHasNextPage(false);
+        } else {
+          setHasNextPage(true);
+        }
+        const loadedPosts = posts.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+        if (postsList) {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsList, ...loadedPosts },
+          });
+        } else {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...loadedPosts },
+          });
+        }
+      } else if (posts) {
+        postsDispatch({
+          type: SET_POSTS,
+          posts: { ...postsList },
+        });
+        postsDispatch({
+          type: SET_LOADING,
+          isLoading: false,
+          loadMore: false,
+        });
+      } else {
+        postsDispatch({ type: SET_LOADING });
+      }
     } catch (error) {
       postsDispatch({ error, type: ERROR_POSTS });
     }
-    if (response && response.data && response.data.length) {
-      if (response.data.length < limit) {
-        setHasNextPage(false);
-      } else {
-        setHasNextPage(true);
-      }
-      const loadedPosts = response.data.reduce((obj, item) => {
-        obj[item._id] = item;
-        return obj;
-      }, {});
-      if (postsList) {
-        postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList, ...loadedPosts },
-        });
-      } else {
-        postsDispatch({
-          type: SET_POSTS,
-          posts: { ...loadedPosts },
-        });
-      }
-    } else if (response && response.data) {
-      postsDispatch({
-        type: SET_POSTS,
-        posts: { ...postsList },
-      });
-      postsDispatch({
-        type: SET_LOADING,
-        isLoading: false,
-        loadMore: false,
-      });
-    } else {
-      postsDispatch({ type: SET_LOADING });
-    }
     dispatchAction(SET_VALUE, "applyFilters", true);
-  }, [filterURL, objectiveURL, page, postsList]);
+  }, [filterURL, objectiveURL, page, postsList, prevTotalPostCount]);
 
   useEffect(() => {
     if (applyFilters) {
@@ -596,30 +573,23 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const isItemLoaded = useCallback(
-    (index) => {
-      if (!!feedPosts[index]) {
-        setLoadedRows(false);
-      } else {
-        setLoadedRows(true);
-      }
-      return !!feedPosts[index];
-    },
-    [feedPosts],
-  );
+  const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
-  const loadNextPage = useCallback(() => {
-    dispatchAction(SET_VALUE, "applyFilters", false);
-    if (!isLoading && loadMore && loadedRows) {
-      return new Promise((resolve) => {
-        postsDispatch({ type: NEXT_PAGE });
-        loadPosts();
-        resolve();
-      });
-    } else {
-      return Promise.resolve();
-    }
-  }, [isLoading, loadMore, loadedRows, loadPosts]);
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      dispatchAction(SET_VALUE, "applyFilters", false);
+      if (!isLoading && loadMore && stopIndex > feedPosts.length) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          loadPosts();
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [feedPosts.length, isLoading, loadMore, loadPosts],
+  );
 
   useEffect(() => {
     setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
@@ -647,6 +617,7 @@ const Feed = (props) => {
             posts: allPosts,
           });
         }
+        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
