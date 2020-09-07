@@ -196,7 +196,7 @@ function EditProfile(props) {
                   inputTitle={label}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
-                  prefix={prefix}
+                  placeholder={prefix}
                   defaultValue={urls[key]}
                   ref={register(validation)}
                   key={key}
