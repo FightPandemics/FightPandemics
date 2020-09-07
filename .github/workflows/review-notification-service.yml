@@ -29,9 +29,9 @@ jobs:
         with:
           node-version: 12.18.3
       - name: Install NPM dependencies
-        run: npm install
+        run: cd src && npm install
       - name: Run unit tests
-        run: npm run test
+        run: cd src && npm run test
 
   deploy_review:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           node-version: 12.18.3
 
       - name: Install NPM dependencies
-        run: npm install --production
+        run: cd src && npm install --production
       - name: Create Lambda build zip
         run: cd src && zip -r ../build.zip .
       - name: Create backend.tf
