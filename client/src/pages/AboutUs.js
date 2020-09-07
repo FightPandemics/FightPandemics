@@ -136,7 +136,7 @@ const AboutUs = () => {
       <SupportersLogosContainer>
         <LogosList supporterLogos={supporterLogos} />
       </SupportersLogosContainer>
-      <h2 className="text-primary display-6">{t("followUs")}</h2>
+      <h2 className="text-primary display-6">{t("aboutUs.followUs")}</h2>
       <SocialContainer>
         <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
           <img src={linkedInLogo} alt={t("alt.linkedinIcon")} />
