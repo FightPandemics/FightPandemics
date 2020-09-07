@@ -108,7 +108,7 @@ module "main" {
     },
     {
       name  = "MONGO_URI"
-      value = "mongodb+srv://${data.aws_ssm_parameter.db_user.value}:${data.aws_ssm_parameter.db_password.value}@${data.aws_ssm_parameter.db_host.value}/fightpandemics?retryWrites=true&w=majority"
+      value = "mongodb+srv://${data.aws_ssm_parameter.db_user.value}:${data.aws_ssm_parameter.db_password.value}@${data.aws_ssm_parameter.db_host.value}/${var.env_name}?retryWrites=true&w=majority"
     },
     {
       name  = "APP_DOMAIN"
