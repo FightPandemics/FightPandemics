@@ -40,6 +40,7 @@ import { validateURL } from "utils/validators";
 const URLS_CONFIG = {
   facebook: [
     "Facebook URL",
+    "Please enter the URL",
     {
       pattern: {
         value: /^[a-zA-Z0-9.]*$/,
@@ -55,6 +56,7 @@ const URLS_CONFIG = {
   ],
   instagram: [
     "instagram URL",
+    "Please enter the username",
     {
       pattern: {
         value: /[a-z\d-_]{1,255}\s*$/,
@@ -66,6 +68,7 @@ const URLS_CONFIG = {
   ],
   linkedin: [
     "LinkedIn URL",
+    "Please enter the URL",
     {
       pattern: {
         value: /^[a-zA-Z0-9-]*$/,
@@ -77,6 +80,7 @@ const URLS_CONFIG = {
   ],
   twitter: [
     "Twitter URL",
+    "Please enter the username",
     {
       pattern: {
         value: /^[a-zA-Z0-9_]*$/,
@@ -92,6 +96,7 @@ const URLS_CONFIG = {
   ],
   github: [
     "Github URL",
+    "Please enter the username",
     {
       pattern: {
         value: /^[a-zA-Z0-9_-]*$/,
@@ -103,6 +108,7 @@ const URLS_CONFIG = {
   ],
   website: [
     "Personal Website",
+    "Please enter the URL",
     {
       validate: (str) => !str || validateURL(str) || "Invalid URL",
     },
@@ -190,13 +196,13 @@ function EditProfile(props) {
               })}
             />
             {Object.entries(URLS_CONFIG).map(
-              ([key, [label, validation, prefix]]) => (
+              ([key, [label, placeholder, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
                   inputTitle={label}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
-                  placeholder={prefix}
+                  placeholder={placeholder}
                   defaultValue={urls[key]}
                   ref={register(validation)}
                   key={key}
