@@ -198,7 +198,7 @@ const PostSocial = ({
           onClick={showNativeShareOrModal}
         >
           {renderShareIcon()}
-          <StyledSpan>Share</StyledSpan>
+          <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
     </>
