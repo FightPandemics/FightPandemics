@@ -53,9 +53,8 @@ export default () => {
 
   return (
     <CookieContainer style={{ display: active ? "" : "none" }}>
-      <div>
+      <div id="cookie-banner-text">
         <Trans
-          id="cookie-banner-text"
           i18nKey="cookies.cookieAlert"
           components={[
             <CookieLink
