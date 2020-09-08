@@ -253,7 +253,6 @@ const Feed = (props) => {
   const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
-
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const {
@@ -452,58 +451,61 @@ const Feed = (props) => {
       : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
   }, [location, selectedOptions]);
 
-  const loadPosts = useCallback(async () => {
-    const limit = PAGINATION_LIMIT;
-    const skip = page * limit;
-    const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    postsDispatch({ type: FETCH_POSTS });
-    try {
-      const {
-        data: { data: posts, meta },
-      } = await axios.get(endpoint);
-      if (posts.length && meta.total) {
-        if (prevTotalPostCount !== meta.total) {
-          setTotalPostCount(meta.total);
-        }
-        if (posts.length < limit) {
-          setHasNextPage(false);
-        } else {
-          setHasNextPage(true);
-        }
-        const loadedPosts = posts.reduce((obj, item) => {
-          obj[item._id] = item;
-          return obj;
-        }, {});
-        if (postsList) {
+  useEffect(() => {
+    const loadPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
+      let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        const {
+          data: { data: posts, meta },
+        } = await axios.get(endpoint);
+        if (posts.length && meta.total) {
+          if (prevTotalPostCount !== meta.total) {
+            setTotalPostCount(meta.total);
+          }
+          if (posts.length < limit) {
+            setHasNextPage(false);
+          } else {
+            setHasNextPage(true);
+          }
+          const loadedPosts = posts.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+          if (postsList) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList, ...loadedPosts },
+            });
+          } else {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...loadedPosts },
+            });
+          }
+        } else if (posts) {
           postsDispatch({
             type: SET_POSTS,
-            posts: { ...postsList, ...loadedPosts },
+            posts: { ...postsList },
+          });
+          postsDispatch({
+            type: SET_LOADING,
+            isLoading: false,
+            loadMore: false,
           });
         } else {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...loadedPosts },
-          });
+          postsDispatch({ type: SET_LOADING });
         }
-      } else if (posts) {
-        postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList },
-        });
-        postsDispatch({
-          type: SET_LOADING,
-          isLoading: false,
-          loadMore: false,
-        });
-      } else {
-        postsDispatch({ type: SET_LOADING });
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
       }
-    } catch (error) {
-      postsDispatch({ error, type: ERROR_POSTS });
-    }
-    dispatchAction(SET_VALUE, "applyFilters", true);
-  }, [filterURL, objectiveURL, page, postsList, prevTotalPostCount]);
+      dispatchAction(SET_VALUE, "applyFilters", true);
+    };
+    loadPosts();
+  }, [filterURL, objectiveURL, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -581,14 +583,13 @@ const Feed = (props) => {
       if (!isLoading && loadMore && stopIndex > feedPosts.length) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
-          loadPosts();
           resolve();
         });
       } else {
         return Promise.resolve();
       }
     },
-    [feedPosts.length, isLoading, loadMore, loadPosts],
+    [feedPosts.length, isLoading, loadMore],
   );
 
   useEffect(() => {
