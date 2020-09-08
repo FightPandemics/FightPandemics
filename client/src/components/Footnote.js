@@ -87,7 +87,7 @@ export default () => {
   const menu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item>
+        <Menu.Item key={key}>
           <a onClick={() => changeLanguage(key)}>
             {isDesktop ? label.text : label.value}
           </a>
@@ -136,7 +136,7 @@ export default () => {
         <StyledSpan>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
           <Dropdown overlay={menu} placement="topLeft">
-            <Link>{languages[localization[i18n.language]].value}</Link>
+            <Link to="">{languages[localization[i18n.language]].value}</Link>
           </Dropdown>
         </StyledSpan>
       </StyledDiv>
