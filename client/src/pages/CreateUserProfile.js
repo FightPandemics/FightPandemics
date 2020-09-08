@@ -439,6 +439,9 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               </StyledUnderlineLink>
             </StyledCheckbox>
           </InputWrapper>
+          {createUserFormState.error && (
+            <ErrorAlert message={createUserFormState.error} type="error" />
+          )}
           <InputGroup>
             <Submit
               disabled={!formState.isValid || !(privacy && conditions && location)}

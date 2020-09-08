@@ -185,10 +185,6 @@ const CreateOrgProfile = (props) => {
     }
   };
 
-  if (createOrganisationFormState.error) {
-    window.scrollTo(0,0);
-  }
-
   return (
     <Main>
       <SvgContainer>
@@ -385,6 +381,12 @@ const CreateOrgProfile = (props) => {
             </StyledCheckbox>
           </InputWrapper>
           <WhiteSpace />
+          {createOrganisationFormState.error && (
+          <ErrorAlert
+            message={createOrganisationFormState.error}
+            type="error"
+          />
+          )}
           <WhiteSpace />
           <SubmitButton
             primary="true"
