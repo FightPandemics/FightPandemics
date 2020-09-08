@@ -390,7 +390,7 @@ const Post = ({
       {post?.types &&
         post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
-            {typeToTag(tag)}
+            {t(typeToTag(tag))}
           </FilterTag>
         ))}
     </Card.Body>
