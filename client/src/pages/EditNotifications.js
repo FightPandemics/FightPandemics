@@ -101,12 +101,14 @@ function EditNotifications(props) {
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
+             {/* Notification settings toggle button */}
+             Email notifications
+            <Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked />
+
+             Web Notifications
+            <Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked />
             {/* Button that saves changes */}
-            <Switch
-                  checkedChildren={<CheckOutlined />}
-                  unCheckedChildren={<CloseOutlined />}
-                  defaultChecked
-            />
+            
             <CustomSubmitButton
               disabled={!formState.isValid}
               primary="true"
