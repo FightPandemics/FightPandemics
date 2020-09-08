@@ -6,7 +6,7 @@ import resources from "./locales/resources";
 import { localization } from "./constants/languages";
 
 export function getLang() {
-  const systemLang = navigator.language;
+  const systemLang = navigator.userLanguage || navigator.language;
   const primaryLang = Object.keys(localization).includes(systemLang)
     ? localization[systemLang]
     : "en-US";
