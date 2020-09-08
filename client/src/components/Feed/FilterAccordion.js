@@ -118,7 +118,7 @@ const FilterAccord = ({ gtmPrefix }) => {
                       : "")
                   }
                 >
-                  {text}
+                  {t(text)}
                 </ButtonTag>
               );
             })}

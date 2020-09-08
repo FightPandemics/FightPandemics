@@ -1,5 +1,6 @@
 // Core
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 // Local
 import { FeedContext } from "pages/Feed.js";
@@ -7,7 +8,13 @@ import ButtonTag from "../Tag/ButtonTag.js";
 
 const LOCATION_DISPLAY_LENGTH_MAX = 30;
 
+const getOptionText = (filterOptions, filterLabel, option) =>
+  filterOptions
+    .filter(({ label }) => label === filterLabel)[0]
+    .options.filter(({ value }) => value === option)[0].text;
+
 const FiltersList = () => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
     handleLocation,
@@ -16,11 +23,6 @@ const FiltersList = () => {
     selectedOptions,
     filters,
   } = feedContext;
-
-  const getOptionText = (filterOptions, filterLabel, option) =>
-    filterOptions
-      .filter(({ label }) => label === filterLabel)[0]
-      .options.filter(({ value }) => value === option)[0].text;
 
   return (
     <div>
@@ -41,7 +43,7 @@ const FiltersList = () => {
             onClick={handleOption(filter, option)}
             className="tag-closable"
           >
-            {getOptionText(filters, filter, option)}
+            {t(getOptionText(filters, filter, option))}
           </ButtonTag>
         )),
       )}

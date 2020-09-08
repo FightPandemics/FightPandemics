@@ -36,7 +36,7 @@ const AddTags = ({ filters, addTag, selected = [] }) => {
             label={value}
             key={idx}
           >
-            {text}
+            {t(text)}
           </ButtonTag>
         ))}
       </div>
