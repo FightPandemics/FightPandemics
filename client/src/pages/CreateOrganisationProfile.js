@@ -86,7 +86,7 @@ const CreateOrgProfile = (props) => {
     errors,
     setError,
   } = useForm({
-    mode: "change",
+    mode: "onTouched",
   });
 
   const [
@@ -184,6 +184,10 @@ const CreateOrgProfile = (props) => {
       }
     }
   };
+
+  if (createOrganisationFormState.error) {
+    window.scrollTo(0,0);
+  }
 
   return (
     <Main>
