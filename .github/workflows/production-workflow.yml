@@ -8,7 +8,7 @@ on:
       - backend/**
       - client/**
       - main.tf
-      - .github/workflows/**
+      - .github/workflows/production-workflow.yml
       - terraform-task-module/**
 
 jobs:
