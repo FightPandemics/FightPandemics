@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { Switch } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
 import ErrorAlert from "components/Alert/ErrorAlert";
 import FormInput from "components/Input/FormInput";
@@ -18,12 +20,7 @@ import {
   FormLayout,
   Background,
 } from "components/EditProfile/EditComponents";
-import {
-  FACEBOOK_URL,
-  LINKEDIN_INDIVIDUAL_URL,
-  TWITTER_URL,
-  GITHUB_URL,
-} from "constants/urls";
+
 import { UserContext, withUserContext } from "context/UserContext";
 import {
   fetchUser,
@@ -34,71 +31,8 @@ import {
   updateUserSuccess,
 } from "hooks/actions/userActions";
 import { getInitialsFromFullName } from "utils/userInfo";
-import { validateURL } from "utils/validators";
 
-const URLS_CONFIG = {
-  facebook: [
-    "Facebook URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9.]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and . are allowed",
-      },
-      minLength: {
-        value: 5,
-        message: "Min. length is 5 characters",
-      },
-    },
-    FACEBOOK_URL,
-  ],
-  linkedin: [
-    "LinkedIn URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and dashes are allowed",
-      },
-    },
-    LINKEDIN_INDIVIDUAL_URL,
-  ],
-  twitter: [
-    "Twitter URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-      maxLength: {
-        value: 15,
-        message: "Max. length is 15 characters",
-      },
-    },
-    TWITTER_URL,
-  ],
-  github: [
-    "Github URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-    },
-    GITHUB_URL,
-  ],
-  website: [
-    "Personal Website",
-    {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
-    },
-  ],
-};
-const ABOUT_MAX_LENGTH = 160;
-
-function EditProfile(props) {
+function EditNotifications(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const { errors, formState, register, handleSubmit } = useForm({
     mode: "change",
@@ -158,42 +92,21 @@ function EditProfile(props) {
             <CustomLink>
               <Link to="/edit-account">Account Information</Link>
             </CustomLink>
-            <CustomLink isSelected>
+            <CustomLink >
               <Link to="/edit-profile">Profile Information</Link>
             </CustomLink>
-            <CustomLink >
-              <Link to="/edit-notifications">Notification Preferences</Link>
+            <CustomLink isSelected>
+              <Link to="/edit-notifications">Notification Settings</Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
-            <FormInput
-              inputTitle="Self-introduction"
-              name="about"
-              type="text"
-              defaultValue={about}
-              error={errors.about}
-              ref={register({
-                maxLength: {
-                  value: ABOUT_MAX_LENGTH,
-                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
-                },
-              })}
+            {/* Button that saves changes */}
+            <Switch
+                  checkedChildren={<CheckOutlined />}
+                  unCheckedChildren={<CloseOutlined />}
+                  defaultChecked
             />
-            {Object.entries(URLS_CONFIG).map(
-              ([key, [label, validation, prefix]]) => (
-                <FormInput
-                  type={prefix ? "text" : "url"}
-                  inputTitle={label}
-                  name={`urls.${key}`}
-                  error={errors.urls?.[key]}
-                  prefix={prefix}
-                  defaultValue={urls[key]}
-                  ref={register(validation)}
-                  key={key}
-                />
-              ),
-            )}
             <CustomSubmitButton
               disabled={!formState.isValid}
               primary="true"
@@ -208,4 +121,4 @@ function EditProfile(props) {
   );
 }
 
-export default withUserContext(EditProfile);
+export default withUserContext(EditNotifications);
