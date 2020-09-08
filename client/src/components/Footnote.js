@@ -19,17 +19,18 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
 
-  padding: 4.5rem 0.5rem;
+  padding: 4rem 0.5rem;
   width: 100%;
   height: 6rem;
 
-  position: absolute;
+  position: fixed;
   background: ${colors.selago};
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
 
   bottom: 0;
+  z-index: 999;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     padding: 1rem 2rem;
@@ -135,7 +136,11 @@ export default () => {
         |
         <StyledSpan>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          <Dropdown overlay={menu} placement="topLeft">
+          <Dropdown
+            overlay={menu}
+            placement="topLeft"
+            trigger={["click", "hover"]}
+          >
             <Link to="">{languages[localization[i18n.language]].value}</Link>
           </Dropdown>
         </StyledSpan>
