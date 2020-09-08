@@ -1,4 +1,4 @@
-// text prop are translation keys
+// text props are translation keys
 
 const FILTER_OPTIONS = {
   location: {

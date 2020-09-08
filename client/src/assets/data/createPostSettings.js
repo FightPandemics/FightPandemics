@@ -1,3 +1,5 @@
+// text props are translation keys
+
 const POST_SETTINGS = {
   shareWith: {
     default: { text: "post.options.shareWith.city", value: "City" },
