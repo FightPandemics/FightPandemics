@@ -11,6 +11,10 @@ const { shareWith, expires } = createPostSettings;
 
 const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
   const { t } = useTranslation();
+
+  const translateOptions = (options) =>
+    options.map(({ text, value }) => ({ text: t(text), value: value }));
+
   return (
     <Section>
       <Head number={3} title={t("post.whatVisibility")} />
@@ -31,7 +35,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
               formData ? formData.shareWith : shareWith.default.value
             }
             filterOption={false}
-            options={shareWith.options}
+            options={translateOptions(shareWith.options)}
           />
           <Selector
             suffixIcon={
@@ -43,7 +47,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             onChange={onExpirationChange}
             defaultValue={formData ? formData.expires : expires.default.value}
             filterOption={false}
-            options={expires.options}
+            options={translateOptions(expires.options)}
           />
         </div>
       </div>
