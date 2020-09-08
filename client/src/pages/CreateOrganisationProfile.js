@@ -87,7 +87,7 @@ const CreateOrgProfile = (props) => {
     errors,
     setError,
   } = useForm({
-    mode: "onTouched",
+    mode: "change",
   });
 
   const [
