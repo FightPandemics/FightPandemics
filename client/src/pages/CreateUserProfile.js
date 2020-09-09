@@ -250,9 +250,6 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
           <Heading className="text-center" level={4}>
             Create your Profile
           </Heading>
-          {createUserFormState.error && (
-            <ErrorAlert message={createUserFormState.error} type="error" />
-          )}
           <InputGroup>
             <InputWrapper>
               <Label

@@ -195,12 +195,6 @@ const CreateOrgProfile = (props) => {
         <Heading className="h4" level={4}>
           Create Organisation Profile
         </Heading>
-        {createOrganisationFormState.error && (
-          <ErrorAlert
-            message={createOrganisationFormState.error}
-            type="error"
-          />
-        )}
         <WhiteSpace />
         <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
           <InputWrapper>
