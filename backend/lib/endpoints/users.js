@@ -40,10 +40,6 @@ async function routes(app) {
         }
       }
 
-      // needs to be removed
-      // just for developement testing purposes
-      await app.mongo.model("User").createIndexes();
-
       /* eslint-disable sort-keys */
       const filters = [{ type: "Individual" }];
 

@@ -51,8 +51,6 @@ userSchema.index(
 userSchema.plugin(uniqueValidator);
 
 const User = model("User", userSchema);
-// To be removed (testing only)
-User.createIndexes();
 
 exports.schema = userSchema;
 exports.model = User;

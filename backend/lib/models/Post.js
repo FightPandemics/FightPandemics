@@ -170,11 +170,19 @@ postSchema.index({ likes: 1 });
 // index title and content for search
 postSchema.index(
   {
+    "author.name": "text",
     content: "text",
     title: "text",
+    types: "text",
   },
   {
     language_override: "dummy",
+    weights: {
+      "author.name": 1,
+      content: 3,
+      title: 3,
+      types: 2,
+    },
   },
 );
 
