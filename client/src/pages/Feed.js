@@ -89,7 +89,7 @@ export const FeedContext = React.createContext();
 const { Content, Sider } = Layout;
 
 // feed types
-const HELP_TYPE = {
+var HELP_TYPE = {
   ALL: "All posts",
   REQUEST: "Requesting help",
   OFFER: "Offering help",
@@ -329,17 +329,24 @@ const Feed = (props) => {
 
   const changeHelpType = (selectedValue) => {
     switch (selectedValue) {
-      case "POSTS":
-        HELP_TYPE.ALL = "All posts"
-        break;
       case "INDIVIDUALS":
-        HELP_TYPE.ALL = "All individuals"
+        HELP_TYPE = {
+          ALL: "All individuals",
+          REQUEST: "Requesting help",
+          OFFER: "Offering help",
+        };
         break;
       case "ORGANISATIONS":
-        HELP_TYPE.ALL = "All organisations"
+        HELP_TYPE = {
+          ALL: "All organisations",
+        };
         break;
       default:
-        HELP_TYPE.ALL = "All posts"
+        HELP_TYPE = {
+          ALL: "All posts",
+          REQUEST: "Requesting help",
+          OFFER: "Offering help",
+        };
         break;
     }
   }
