@@ -12,6 +12,11 @@ const notificationSchema = new Schema(
       ref: "User",
       required: true,
     },
+    action: {
+      type: String,
+      enum: ["like", "comment", "post", "share"],
+      required: true,
+    },
     post: {
       type: Schema.Types.ObjectId,
       ref: "Post",
@@ -22,7 +27,7 @@ const notificationSchema = new Schema(
       ref: "Post",
       required: true,
     },
-    read: { default: false, required: true, type: Boolean },
+    isRead: { default: false, required: true, type: Boolean },
   },
   { collection: "notifications", timestamps: true },
 );

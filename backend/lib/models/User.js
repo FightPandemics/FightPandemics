@@ -15,6 +15,10 @@ const userSchema = new Schema(
     },
     location: Object,
     photo: String,
+    notificationType: {
+      type: String,
+      enum: ["email", "sms", "push"],
+    },
   },
   { collection: "users", timestamps: true },
 );
