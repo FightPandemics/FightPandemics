@@ -1,86 +1,89 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import styled from "styled-components";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import { mq } from "constants/theme";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-const OrgPostRef = ({ title, content, postAuthor }) => {
-  const Container = styled.div`
-    h4 {
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.2);
-    }
-    margin-bottom: 1em;
-  `;
+import activeemail from "assets/icons/active-email.svg";
 
-  const RefPost = styled.div`
-    height: 106px;
-    width: 592px;
-    border-radius: 6px;
-    padding: 1.3em 1em 1.3em 0em;
-    z-index: 9999;
-    opacity: 1;
-    header {
-      .author {
-        font-size: 12px;
-        font-weight: 600;
-        position: relative;
-        bottom: 1em;
-      }
-      h3 {
-        font-size: 16px;
-        font-weight: 700;
-      }
-      .ant-avatar {
-        height: 1.8em;
-        line-height: 2.4rem;
-        margin-right: 0.7rem;
-        margin-left: 0.7rem;
-        width: 1.8em;
-        display: inline-block;
-      }
+// Styled Components for OrgPostRef
+const Container = styled.div`
+  h4 {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.2);
+  }
+  margin-bottom: 1em;
+`;
+
+const RefPost = styled.div`
+  height: 106px;
+  width: 592px;
+  border-radius: 6px;
+  padding: 1.3em 1em 1.3em 0em;
+  z-index: 9999;
+  opacity: 1;
+  header {
+    .author {
+      font-size: 12px;
+      font-weight: 600;
+      position: relative;
+      bottom: 1em;
     }
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .ant-avatar {
+      height: 1.8em;
+      line-height: 2.4rem;
+      margin-right: 0.7rem;
+      margin-left: 0.7rem;
+      width: 1.8em;
+      display: inline-block;
+    }
+  }
+  .content {
+    font-size: 14px;
+  }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    header > h3,
     .content {
-      font-size: 14px;
+      width: 80%;
+      max-width: 450px;
     }
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      header > h3,
-      .content {
-        width: 80%;
-        max-width: 450px;
-      }
+  }
+  @media screen and (max-width: 570px) {
+    header > h3,
+    .content {
+      width: 70%;
+      max-width: 450px;
     }
-    @media screen and (max-width: 570px) {
-      header > h3,
-      .content {
-        width: 70%;
-        max-width: 450px;
-      }
+  }
+  @media screen and (max-width: 450px) {
+    header > h3,
+    .content {
+      width: 60%;
+      max-width: 450px;
     }
-    @media screen and (max-width: 450px) {
-      header > h3,
-      .content {
-        width: 60%;
-        max-width: 450px;
-      }
+  }
+  @media screen and (max-width: 321px) {
+    header > h3,
+    .content {
+      width: 50%;
+      max-width: 450px;
     }
-    @media screen and (max-width: 321px) {
-      header > h3,
-      .content {
-        width: 50%;
-        max-width: 450px;
-      }
+  }
+  @media screen and (max-width: 282px) {
+    header > h3,
+    .content {
+      width: 40%;
+      max-width: 450px;
     }
-    @media screen and (max-width: 282px) {
-      header > h3,
-      .content {
-        width: 40%;
-        max-width: 450px;
-      }
-    }
-  `;
+  }
+`;
+const OrgPostRef = ({ title, content, postAuthor }) => {
   const Avatar = getInitialsFromFullName(postAuthor);
 
   return (
@@ -100,6 +103,7 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
   );
 };
 
+// Styled Components for MessageModal
 const MsgBtn = styled(Button)`
   color: white;
   margin-left: 20px;
@@ -173,7 +177,7 @@ const MsgModal = styled(Modal)`
   }
   .ant-modal-content {
     position: relative;
-    right: 5em;
+    right: 6em;
     height: 435px;
     width: 656px;
     border-radius: 10px;
@@ -261,7 +265,7 @@ const SuccessModal = styled(MsgModal)`
     padding: 1.5em 2em;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       position: relative;
-      left: 1em;
+      margin: auto;
       height: 50%;
       width: 90%;
       border-radius: 10px;
@@ -281,6 +285,47 @@ const SuccessModal = styled(MsgModal)`
   }
 `;
 
+const FailedModal = styled(SuccessModal)`
+  p {
+    font-size: 14px;
+    text-align: center;
+  }
+  .ant-modal-title {
+    padding-top: 0.5em;
+  }
+  .ant-modal-content {
+    height: 14em;
+    width: 50em;
+    padding: 0em 6em;
+    @media screen and (max-width: 767px) {
+      position: relative;
+      padding: 0em 2em;
+      margin: auto;
+      width: 90%;
+      height: 50%;
+    }
+  }
+  .ant-btn {
+    :first-child {
+      display: block !important;
+    }
+    :last-child {
+      display: none !important;
+    }
+  }
+  .ant-modal-footer > div {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 0.5em;
+    width: 100%;
+    right: 0;
+  }
+  .ant-modal-close-x {
+    display: none;
+  }
+`;
+
 const MessageModal = ({
   title,
   postContent,
@@ -292,6 +337,7 @@ const MessageModal = ({
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
+  const [msgRsp, setMsgRsp] = useState(true);
   const PrivateMessageContainer = styled.div`
     margin-left: 3em;
     :hover {
@@ -330,39 +376,12 @@ const MessageModal = ({
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
-  const MessageSVG = () => {
-    return (
-      <svg
-        width="22"
-        height="18"
-        viewBox="0 0 22 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 1H19C20.1 1 21 1.9 21 3V15C21 16.1 20.1 17 19 17H3C1.9 17 1 16.1 1 15V3C1 1.9 1.9 1 3 1Z"
-          fill="#425AF2"
-          stroke="#425AF2"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M20 3L11 10L2 3"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    );
-  };
   return (
     <>
       {isAuthenticated ? (
         <div>
           <PrivateMessageContainer onClick={showModal}>
-            <MessageSVG />
+            <img src={activeemail} />
             <span>Message</span>
           </PrivateMessageContainer>
           <MsgModal
@@ -384,23 +403,37 @@ const MessageModal = ({
               onChange={handleTextChange}
             />
           </MsgModal>
-          <SuccessModal
-            title="🎉 Your message was successfully sent"
-            visible={msgSent}
-            okText="View message"
-            onCancel={handleDone}
-            cancelText="Done"
-          >
-            <p>
-              Your message to {postAuthor} concerning the "{title}" was sent
-              succesfully.
-            </p>
-            <div className="modal-footer-container">
-              <Link className="view-message-btn" to="/inbox">
-                View Message
-              </Link>
-            </div>
-          </SuccessModal>
+          {!msgRsp ? (
+            <SuccessModal
+              title="🎉 Your message was successfully sent"
+              visible={msgSent}
+              okText="View message"
+              onCancel={handleDone}
+              cancelText="Done"
+            >
+              <p>
+                Your message to {postAuthor} concerning the "{title}" was sent
+                succesfully.
+              </p>
+              <div className="modal-footer-container">
+                <Link className="view-message-btn" to="/inbox">
+                  View Message
+                </Link>
+              </div>
+            </SuccessModal>
+          ) : (
+            <FailedModal
+              title="🚧  Oops, something went wrong"
+              visible={msgSent}
+              onCancel={handleDone}
+              cancelText="Close"
+            >
+              <p>
+                Your message to {postAuthor} concerning the "{title}" was not
+                sent succesfully. Please try again later.
+              </p>
+            </FailedModal>
+          )}
         </div>
       ) : (
         <Link
@@ -413,7 +446,7 @@ const MessageModal = ({
           }}
         >
           <PrivateMessageContainer>
-            <MessageSVG />
+            <img src={activeemail} />
             <span>Message</span>
           </PrivateMessageContainer>
         </Link>

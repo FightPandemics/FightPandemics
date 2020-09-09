@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import TextAvatar from "components/TextAvatar";
 import Button from "components/Button/SubmitButton";
 import { mq } from "constants/theme";
 import emptyinbox from "assets/empty-inbox.svg";
-import backarrow from "assets/icons/blue-down-arrow.svg";
+import arrow from "assets/icons/blue-down-arrow.svg";
 import sendcomment from "assets/icons/send-paper.svg";
-import { divide } from "lodash";
+import isonline from "assets/icons/is-online-dot.svg";
 
 const InboxContainer = styled.div`
   width: 93%;
@@ -24,6 +23,12 @@ const InboxContainer = styled.div`
     min-width: 20em;
   }
 `;
+const ChatHeader = styled.div`
+  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
+  padding: 1.6em 1.1em;
+  font-size: 16px;
+  font-weight: 700;
+`;
 const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
   const ChatListContainer = styled.div`
     position: relative;
@@ -37,12 +42,6 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
       width: ${toggleMobileChatList ? "100%" : "25%"};
       max-width: ${toggleMobileChatList ? "100vw" : "22em"};
     }
-  `;
-  const ChatHeader = styled.div`
-    border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-    padding: 1.6em 1.1em;
-    font-size: 16px;
-    font-weight: 700;
   `;
   const SideChats = () => {
     const SideChatContainer = styled.div`
@@ -108,15 +107,11 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
         <content>
           <header>
             <span>
-              <svg
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="4" cy="4" r="4" fill="#425AF2" />
-              </svg>
+              <img
+                className="is-online-dot"
+                src={isonline}
+                alt="Is Online Dot"
+              />
             </span>
             <h4>Lily Luke</h4>
             <h5>Aug 22</h5>
@@ -156,7 +151,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     }
   `;
   const RecipientHeader = () => {
-    const Recipient = styled.div`
+    const RecipientName = styled.div`
       width: 100%;
       border-bottom: 1px solid rgba(232, 232, 232, 0.7);
       height: 5.2em;
@@ -188,111 +183,78 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         font-weight: 600;
       }
     `;
-    const OrignalPost = () => {
-      const [showMessage, setShowMessage] = useState(false);
-      const handleShowMessage = () => {
-        setShowMessage(!showMessage);
-      };
-      const OrgPost = styled(Recipient)`
-        height: ${(props) => (props.showMessage ? `25%` : "5.2em")};
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        overflow: ${(props) => (props.showMessage ? "visible" : "hidden")};
-        overflow-y: ${(props) => (props.showMessage ? "auto" : "hidden")};
-        overflow-x: hidden;
-        padding: 1.5em 1.5em 0em 1.5em;
-        h3 {
-          font-weight: 700;
-          line-height: 1em;
-        }
-        div {
-          display: flex;
-        }
-        p {
-          margin-right: 1em;
-        }
-        svg {
-          width: 150px;
-          cursor: pointer;
-        }
-      `;
+    // const OrignalPost = () => {
+    //   const [showMessage, setShowMessage] = useState(false);
+    //   const handleShowMessage = () => {
+    //     setShowMessage(!showMessage);
+    //   };
+    //   const OrgPost = styled(Recipient)`
+    //     height: ${(props) => (props.showMessage ? `25%` : "5.2em")};
+    //     display: flex;
+    //     flex-direction: column;
+    //     align-items: flex-start;
+    //     overflow: ${(props) => (props.showMessage ? "visible" : "hidden")};
+    //     overflow-y: ${(props) => (props.showMessage ? "auto" : "hidden")};
+    //     overflow-x: hidden;
+    //     padding: 1.5em 1.5em 0em 1.5em;
+    //     h3 {
+    //       font-weight: 700;
+    //       line-height: 1em;
+    //     }
+    //     div {
+    //       display: flex;
+    //     }
+    //     p {
+    //       margin-right: 1em;
+    //     }
+    //     svg {
+    //       width: 150px;
+    //       cursor: pointer;
+    //     }
+    //   `;
 
-      const ToggleShowMessage = () => {
-        const ToggleContainer = styled.div`
-          position: absolute;
-          right: -4em;
-        `;
-        return (
-          <ToggleContainer onClick={handleShowMessage}>
-            {!showMessage ? (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 8L12 15L5 8"
-                  stroke="#425AF2"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            ) : (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 16L12 9L19 16"
-                  stroke="#425AF2"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            )}
-          </ToggleContainer>
-        );
-      };
-      return (
-        <OrgPost showMessage={showMessage}>
-          <h3>Offering disinfecting clorox wipes</h3>
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <ToggleShowMessage />
-          </div>
-        </OrgPost>
-      );
-    };
+    //   const ToggleShowMessage = () => {
+    //     const ToggleContainer = styled.div`
+    //       position: absolute;
+    //       right: -4em;
+    //     `;
+    //     return (
+    //       <ToggleContainer onClick={handleShowMessage}>
+    //       </ToggleContainer>
+    //     );
+    //   };
+    //   return (
+    //     <OrgPost showMessage={showMessage}>
+    //       <h3>Offering disinfecting clorox wipes</h3>
+    //       <div>
+    //         <p>
+    //           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    //           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+    //           enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    //           nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    //           reprehenderit in voluptate velit esse cillum dolore eu fugiat
+    //           nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+    //           sunt in culpa qui officia deserunt mollit anim id est laborum.
+    //         </p>
+    //         <ToggleShowMessage />
+    //       </div>
+    //     </OrgPost>
+    //   );
+    // };
 
     return (
       <>
-        <Recipient>
+        <RecipientName>
           <img
             className="back-arrow"
             onClick={() => setToggleMobileChatList(true)}
-            src={backarrow}
+            src={arrow}
             alt="Back Arrow"
           />
           <TextAvatar>LL</TextAvatar>
           <h4>Lily Luke</h4>
-        </Recipient>
-        <OrignalPost />
+        </RecipientName>
+        {/* <OrignalPost /> */}
       </>
     );
   };
