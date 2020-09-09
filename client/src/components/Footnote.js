@@ -23,14 +23,13 @@ const StyledFooter = styled.footer`
   width: 100%;
   height: 6rem;
 
-  position: fixed;
+  position: absolute;
   background: ${colors.selago};
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
 
   bottom: 0;
-  z-index: 999;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
     padding: 1rem 2rem;
