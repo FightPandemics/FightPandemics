@@ -37,6 +37,9 @@ const organisationSchema = new Schema(
     },
     urls: {
       appStore: String,
+      facebook: String,
+      github: String,
+      instagram: String,
       linkedin: String,
       playStore: String,
       twitter: String,

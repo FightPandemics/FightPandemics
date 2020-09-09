@@ -46,6 +46,7 @@ async function routes(app) {
         limit,
         objective,
         skip,
+        includeMeta,
       } = query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
@@ -132,6 +133,7 @@ async function routes(app) {
 
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
+      /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
             {
@@ -150,7 +152,9 @@ async function routes(app) {
             { $sort: { distance: 1, _id: -1 } },
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+      /* eslint-enable sort-keys */
 
+      /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
@@ -166,10 +170,10 @@ async function routes(app) {
                 $limit: limit || POST_PAGE_SIZE,
               },
             ];
+      /* eslint-enable sort-keys */
 
-      const aggregationPipeline = [
-        ...sortAndFilterSteps,
-        ...paginationSteps,
+      /* eslint-disable sort-keys */
+      const lookupSteps = [
         {
           $lookup: {
             as: "comments",
@@ -178,6 +182,11 @@ async function routes(app) {
             localField: "_id",
           },
         },
+      ];
+      /* eslint-enable sort-keys */
+
+      /* eslint-disable sort-keys */
+      const projectionSteps = [
         {
           $project: {
             _id: true,
@@ -207,19 +216,49 @@ async function routes(app) {
           },
         },
       ];
+      /* eslint-enable sort-keys */
+
+      const aggregationPipelineResults = [
+        ...sortAndFilterSteps,
+        ...paginationSteps,
+        ...lookupSteps,
+        ...projectionSteps,
+      ];
+
+      // Get the total results without pagination steps but with filtering aplyed - totalResults
+      /* eslint-disable sort-keys */
+      const totalResultsAggregationPipeline = await Post.aggregate([
+        { $match: { $and: filters } },
+        { $group: { _id: null, count: { $sum: 1 } } },
+      ]);
+      /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipeline),
+        Post.aggregate(aggregationPipelineResults),
       );
+
+      const responseHandler = (response) => {
+        if (!includeMeta) {
+          return posts;
+        }
+        return {
+          meta: {
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
+              : 0,
+          },
+          data: response,
+        };
+      };
 
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
         throw app.httpErrors.internalServerError();
       } else if (posts === null) {
-        return [];
+        return responseHandler([]);
+      } else {
+        return responseHandler(posts);
       }
-
-      return posts;
     },
   );
 
