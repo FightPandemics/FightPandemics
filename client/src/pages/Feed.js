@@ -773,11 +773,13 @@ const Feed = (props) => {
               deleteModalVisibility={deleteModalVisibility}
               handlePostDelete={handlePostDelete}
               handleCancelPostDelete={handleCancelPostDelete}
+              highlightWords={searchKeyword}
             /> : <Users
               isAuthenticated={isAuthenticated}
               filteredUsers={postsList}
               loadUsers={loadPosts}
               user={user}
+              highlightWords={searchKeyword}
             />}
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />

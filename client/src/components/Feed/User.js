@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card } from "antd-mobile";
 import styled from "styled-components";
+import { escapeRegExp } from "lodash"
 
 // Local
 import Heading from "components/Typography/Heading";
@@ -98,7 +99,7 @@ const Goals = styled.span`
   color: white;
   border-radius: 40px;
 `;
-const SendMessage = styled.a`
+const SendMessage = styled(Link)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     span {
       display: none;
@@ -123,6 +124,7 @@ const URLS = {
 
 const User = ({
   currentUser,
+  highlightWords,
   isAuthenticated,
   user,
 }) => {
@@ -150,10 +152,23 @@ const User = ({
 
   const AvatarName =
     (_user &&
-      getInitialsFromFullName(`${_user.firstName} ${_user.lastName}`)) ||
+      getInitialsFromFullName(`${firstName? firstName : name} ${lastName? lastName : ''}`)) ||
     "";
 
   const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+
+  const Highlight = ({text = '', highlight = ''}) => {
+    if (!highlight || !highlight.trim()) {
+      return text
+    }
+    const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi')
+    const parts = text.split(regex)
+    return (
+      parts.filter(part => part).map((part) => (
+        regex.test(part) ? <span className={'highlighted'}>{part}</span> : part
+      ))
+    )
+   }
 
   const renderExternalLinks = urls ? Object.entries(urls).map(([name, url]) => {
     return (
@@ -182,7 +197,7 @@ const User = ({
       title={
         <div className="title-wrapper">
           <UserName>
-            {`${firstName? firstName : name} ${lastName? lastName : ''}`}
+            <Highlight text={`${firstName? firstName : name} ${lastName? lastName : ''}`} highlight={highlightWords}/>
             <ProfileType>
               <SvgIcon
                 src={statusIndicator}
@@ -231,7 +246,7 @@ const User = ({
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {_user.about}
+        <Highlight text={_user.about} highlight={highlightWords}/>
       </Heading>
       {/*<p className="post-description">?</p>*/}
     </Card.Body>
@@ -246,7 +261,9 @@ const User = ({
           <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`} style={{ display: "none" }}></Link>
           {renderContent}
           <IconsContainer>
-            <SendMessage>
+            <SendMessage
+              to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}
+            >
               <SvgIcon src={envelopeBlue} />
               <span>Send Message</span>
             </SendMessage>

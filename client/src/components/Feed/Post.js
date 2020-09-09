@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import { escapeRegExp } from "lodash"
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -65,6 +66,7 @@ const Post = ({
   handleCancelPostDelete,
   handleCommentDelete,
   handlePostLike,
+  highlightWords,
   includeProfileLink,
   isAuthenticated,
   loadMorePost,
@@ -102,6 +104,19 @@ const Post = ({
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
+
+  const Highlight = ({text = '', highlight = ''}) => {
+    if (!highlight || !highlight.trim()) {
+      return text
+    }
+    const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi')
+    const parts = text.split(regex)
+    return (
+      parts.filter(part => part).map((part) => (
+        regex.test(part) ? <span className={'highlighted'}>{part}</span> : part
+      ))
+    )
+   }
 
   const setShowComments = () => {
     if (dispatchPostAction) {
@@ -349,7 +364,7 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <div className="author">{post?.author?.name}</div>
+          <Highlight className="author" text={post?.author?.name} highlight={highlightWords}/>
           {post?.author?.location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
@@ -377,9 +392,9 @@ const Post = ({
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {title}
+        <Highlight text={title} highlight={highlightWords}/>
       </Heading>
-      <p className="post-description">{content}</p>
+      <p className="post-description"><Highlight text={content} highlight={highlightWords}/></p>
     </Card.Body>
   );
 

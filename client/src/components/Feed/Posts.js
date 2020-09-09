@@ -29,6 +29,7 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
+  highlightWords,
 }) => (
   <div className="feed-posts">
     {Object.keys(filteredPosts).map((key) => (
@@ -46,6 +47,7 @@ const Posts = ({
           key={key}
           deleteModalVisibility={deleteModalVisibility}
           onChange={handlePostDelete}
+          highlightWords={highlightWords}
         />
         <HorizontalRule />
       </>

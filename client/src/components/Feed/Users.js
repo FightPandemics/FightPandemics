@@ -22,6 +22,7 @@ const HorizontalRule = styled.hr`
 const Users = ({
   isAuthenticated,
   filteredUsers,
+  highlightWords,
   loadUsers,
   user
 }) => (
@@ -35,6 +36,7 @@ const Users = ({
           isAuthenticated={isAuthenticated}
           user={user}
           key={key}
+          highlightWords={highlightWords}
         />
         <HorizontalRule />
       </>
