@@ -179,7 +179,10 @@
     "expireTitle": "Ahh... snap!",
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
-    "share": "Share"
+    "share": "Share",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "profile": {
     "common": {

@@ -507,15 +507,15 @@ const Post = ({
             />
             {renderComments}
             <WebModal
-              title="Confirm"
+              title={t("post.confirm")}
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
               }
               onOk={() => handleDeleteOk()}
               onCancel={handleCancelPostDelete}
-              okText="Delete"
-              cancelText="Cancel"
+              okText={t("post.delete")}
+              cancelText={t("post.cancel")}
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
