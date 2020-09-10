@@ -55,9 +55,9 @@ export const tagToType = (tag) => {
 
 export const typeToTag = (type) => {
   if (type === "Others") {
-    return getTextFromOption("Other");
+    return "Other";
   } else {
-    return getTextFromOption(type);
+    return type;
   }
 };
 

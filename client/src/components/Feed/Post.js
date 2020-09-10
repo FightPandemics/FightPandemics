@@ -24,6 +24,8 @@ import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
+import filterOptions from "assets/data/filterOptions";
+import { getOptionText } from "components/Feed/utils";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -56,6 +58,8 @@ const URLS = {
   website: [websiteIcon],
   email: [envelopeBlue],
 };
+
+const filters = Object.values(filterOptions);
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -390,7 +394,7 @@ const Post = ({
       {post?.types &&
         post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
-            {t(typeToTag(tag))}
+            {t(getOptionText(filters, "type", typeToTag(tag)))}
           </FilterTag>
         ))}
     </Card.Body>
