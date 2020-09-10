@@ -26,6 +26,7 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "regexify-string": "^1.0.5",
     "snyk": "^1.319.2",
     "styled-components": "^5.0.1",
     "super-tiny-icons": "^0.3.2",

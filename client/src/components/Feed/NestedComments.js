@@ -13,6 +13,7 @@ import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
+import Linkify from './Linkify';
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -224,7 +225,7 @@ const NestedComments = ({
 
   const renderCommentContent = (
     <Space direction="vertical">
-      <span>{editedComment}</span>
+      <span><Linkify text= {editedComment}/></span>
       {isAuthenticated && comment.author.id === user.id && (
         <span>{commentActions}</span>
       )}
