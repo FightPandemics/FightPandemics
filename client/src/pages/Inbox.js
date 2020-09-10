@@ -183,64 +183,6 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         font-weight: 600;
       }
     `;
-    // const OrignalPost = () => {
-    //   const [showMessage, setShowMessage] = useState(false);
-    //   const handleShowMessage = () => {
-    //     setShowMessage(!showMessage);
-    //   };
-    //   const OrgPost = styled(Recipient)`
-    //     height: ${(props) => (props.showMessage ? `25%` : "5.2em")};
-    //     display: flex;
-    //     flex-direction: column;
-    //     align-items: flex-start;
-    //     overflow: ${(props) => (props.showMessage ? "visible" : "hidden")};
-    //     overflow-y: ${(props) => (props.showMessage ? "auto" : "hidden")};
-    //     overflow-x: hidden;
-    //     padding: 1.5em 1.5em 0em 1.5em;
-    //     h3 {
-    //       font-weight: 700;
-    //       line-height: 1em;
-    //     }
-    //     div {
-    //       display: flex;
-    //     }
-    //     p {
-    //       margin-right: 1em;
-    //     }
-    //     svg {
-    //       width: 150px;
-    //       cursor: pointer;
-    //     }
-    //   `;
-
-    //   const ToggleShowMessage = () => {
-    //     const ToggleContainer = styled.div`
-    //       position: absolute;
-    //       right: -4em;
-    //     `;
-    //     return (
-    //       <ToggleContainer onClick={handleShowMessage}>
-    //       </ToggleContainer>
-    //     );
-    //   };
-    //   return (
-    //     <OrgPost showMessage={showMessage}>
-    //       <h3>Offering disinfecting clorox wipes</h3>
-    //       <div>
-    //         <p>
-    //           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    //           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    //           enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    //           nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-    //           reprehenderit in voluptate velit esse cillum dolore eu fugiat
-    //           nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-    //           sunt in culpa qui officia deserunt mollit anim id est laborum.
-    //         </p>
-    //         <ToggleShowMessage />
-    //       </div>
-    //     </OrgPost>
-    //   );
-    // };
 
     return (
       <>
@@ -254,7 +196,6 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
           <TextAvatar>LL</TextAvatar>
           <h4>Lily Luke</h4>
         </RecipientName>
-        {/* <OrignalPost /> */}
       </>
     );
   };
@@ -329,7 +270,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     `;
     const Sender = () => {
       const SenderBubble = styled.div`
-        max-width: 75%;
+        max-width: 60%;
         background-color: #425af2;
         padding: 0.8em;
         border-radius: 1em 1em 0em 1em;
@@ -337,6 +278,9 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         margin-top: 1em;
         word-wrap: break-word;
         color: #fff;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          width: 70%;
+        }
       `;
       return (
         <BubbleContainer>
@@ -350,18 +294,77 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         </BubbleContainer>
       );
     };
-    const Recipient = () => {
+    const Recipient = (props) => {
       const RecipientBubble = styled.div`
-        width: 75%;
+        width: 60%;
         background-color: #f6f7fb;
         padding: 0.8em;
         border-radius: 0em 1em 1em 1em;
         letter-spacing: 1px;
         margin-top: 1em;
         word-wrap: break-word;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          width: 70%;
+        }
+      `;
+      const OrgPost = styled.div`
+        display: ${(props) => (props.fromPost ? "block" : "none")};
+        padding: 0.8em;
+        background: #ffff;
+        border-radius: 1em;
+        color: #282828;
+        margin-bottom: 1em;
+        header {
+          display: flex;
+          font-size: 0.9em;
+          height: 2em;
+          .post-type {
+            margin-right: 0.5em;
+            font-weight: 500;
+          }
+          span {
+            font-size: 2em;
+            position: relative;
+            bottom: 0.6em;
+          }
+          .post-date {
+            margin-left: 0.5em;
+            opacity: 0.5;
+          }
+        }
+        .post-title {
+          font-size: 1.3em;
+          font-weight: 700;
+          margin: 0em 0em 0.2em 0em;
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            margin: 0.2em 0em 0.2em 0em;
+          }
+        }
+        .post-content {
+          letter-spacing: 1.3px;
+        }
       `;
       return (
         <RecipientBubble>
+          <OrgPost fromPost={props.fromPost}>
+            <header>
+              <div className="post-type">Offers</div>
+              <span>.</span>
+              <div className="post-date">Posted 14hrs ago</div>
+            </header>
+            <div className="post-title">Offering disinfecting clorox wipes</div>
+            <div className="post-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliquLorem
+              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+          </OrgPost>
           Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
           for free.Hi Lily, I have 2 packs of disinfecting wipes and can give
           them to you for free. Hi Lily, I have 2 packs of disinfecting wipes
@@ -371,7 +374,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     };
     return (
       <MessagesContainer>
-        <Recipient />
+        <Recipient fromPost />
         <Sender />
         <Recipient />
         <Sender />
