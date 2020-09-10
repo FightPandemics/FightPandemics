@@ -23,8 +23,11 @@ import { validateURL } from "utils/validators";
 import {
   APPSTORE_URL,
   PLAYSTORE_URL,
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_URL,
   TWITTER_URL,
+  GITHUB_URL,
 } from "constants/urls";
 import {
   fetchOrganisation,
@@ -57,12 +60,46 @@ function EditOrganisationProfile(props) {
   const URLS_CONFIG = {
     appStore: ["Link to Apple Store", {}, APPSTORE_URL],
     playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
+    facebook: [
+      "Facebook URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9.]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-z 0-9 .",
+          }),
+        },
+        minLength: {
+          value: 5,
+          message: t("profile.common.minCharacters", { minNum: 5 }),
+        },
+      },
+      FACEBOOK_URL,
+    ],
+    instagram: [
+      "Instagram URL",
+      {
+        pattern: {
+          value: /[a-z\d-_]{1,255}\s*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 . _ -",
+          }),
+        },
+      },
+      INSTAGRAM_URL,
+    ],
     twitter: [
       "Twitter URL",
       {
         pattern: {
           value: /^[a-zA-Z0-9_]*$/,
-          message: t("profile.common.twitterError"),
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+        maxLength: {
+          value: 15,
+          message: t("profile.common.maxCharacters", { maxNum: 15 }),
         },
       },
       TWITTER_URL,
@@ -72,10 +109,24 @@ function EditOrganisationProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_\-/]*$/,
-          message: t("profile.common.linkedinError"),
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _ - /",
+          }),
         },
       },
       LINKEDIN_URL,
+    ],
+    github: [
+      "Github URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_-]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+      },
+      GITHUB_URL,
     ],
     website: [
       "Website",
@@ -184,7 +235,9 @@ function EditOrganisationProfile(props) {
               ref={register({
                 maxLength: {
                   value: ABOUT_MAX_LENGTH,
-                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                  message: t("profile.common.maxCharacters", {
+                    maxNum: ABOUT_MAX_LENGTH,
+                  }),
                 },
               })}
             />
@@ -200,7 +253,7 @@ function EditOrganisationProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={t("profile.org.urls." + key)}
+                  inputTitle={t("profile.common.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}

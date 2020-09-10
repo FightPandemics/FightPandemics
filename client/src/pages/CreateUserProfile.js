@@ -298,7 +298,9 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                   required: t("profile.individual.firstNameRequired"),
                   maxLength: {
                     value: 30,
-                    message: t("profile.org.thirtyMaxLength"),
+                    message: t("profile.common.maxCharacters", {
+                      maxNum: 30,
+                    }),
                   },
                 })}
                 style={inputStyles}

@@ -16,6 +16,7 @@ import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;
+const { SubMenu } = Menu;
 const { large } = typography.size;
 const BrandLink = styled(Link)`
   display: inline-flex;
@@ -134,25 +135,28 @@ export default ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item>
-        <Link
-          id={GTM.nav.prefix + GTM.nav.addOrg}
-          to="/create-organisation-profile"
-        >
-          {t("common.addOrg")}
-        </Link>
-      </Menu.Item>
-      <Menu.Divider />
-      {user?.organisations?.length > 0
-        ? user?.organisations?.map((organisation) => (
-            <Menu.Item key={organisation._id}>
-              <Link to={`/organisation/${organisation._id}`}>
-                {organisation.name}
-              </Link>
-            </Menu.Item>
-          ))
-        : null}
-      {user?.organisations?.length > 0 && <Menu.Divider />}
+      <SubMenu title="Organisations">
+          <Menu.Item>
+            <Link
+              id={GTM.nav.prefix + GTM.nav.addOrg}
+              to="/create-organisation-profile"
+            >
+              {t("common.addOrg")}
+            </Link>
+          </Menu.Item>
+          <Menu.Divider />
+          {user?.organisations?.length > 0
+            ? user?.organisations?.map((organisation) => (
+                <Menu.Item key={organisation._id}>
+                  <Link to={`/organisation/${organisation._id}`}>
+                    {organisation.name}
+                  </Link>
+                </Menu.Item>
+              ))
+            : null}
+          {user?.organisations?.length > 0}
+        </SubMenu>
+        <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}

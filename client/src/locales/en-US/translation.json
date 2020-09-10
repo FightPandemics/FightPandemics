@@ -198,8 +198,6 @@
       "loading": "loading",
       "invalidEmail": "Invalid email",
       "selectOption": "Please select at least one option",
-      "twitterError": "Invalid entry: only alphanumeric characters and _ are allowed",
-      "linkedinError": "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
       "invalidURL": "Invalid URL",
       "savingChanges": "Saving Changes...",
       "submit": "Create Profile",
@@ -207,7 +205,20 @@
       "invalidPassword": "Password must contain at least 3 of these:  lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
       "addressRequired": "Address is required. Please enter your address and select it from the drop-down",
       "emailRequired": "Email is required",
-      "passwordRequired": "Password is required"
+      "passwordRequired": "Password is required",
+      "maxCharacters": "{{maxNum}} characters max.",
+      "minCharacters": "{{minNum}} characters minimum.",
+      "validCharacters": "Valid characters are: {{characters}}.",
+      "urls": {
+        "appStore": "Link to Apple Store",
+        "playStore": "Link to Google Play",
+        "twitter": "Twitter URL",
+        "facebook": "Facebook URL",
+        "instagram": "Instagram URL",
+        "github": "Github URL",
+        "linkedin": "LinkedIn URL",
+        "website": "Website"
+      }
     },
     "individual": {
       "email": "Email",
@@ -226,24 +237,12 @@
       "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
-      "urls": {
-        "facebook": "Facebook URL",
-        "linkedin": "LinkedIn URL",
-        "twitter": "Twitter URL",
-        "github": "Github URL",
-        "website": "Personal Website"
-      },
       "myActivity": "My Activity",
       "userActivity": "User Activity",
       "wantHelp": "I want to help ",
       "needHelp": "I need help ",
-      "facebookError": "Invalid entry: only alphanumeric characters and . are allowed",
-      "githubError": "Invalid entry: only alphanumeric characters and _ are allowed",
-      "FiveMinLength": "Min. length is 5 characters",
-      "fifteenMaxLength": "Max. length is 15 characters",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required.",
-      "fiveMinLength": "Min. length is 5 characters"
+      "lastNameRequired": "Last name is required."
     },
     "org": {
       "title": "Create Organisation Profile",
@@ -300,22 +299,13 @@
       "typeIndustryError": "Please select organisation type and industry from dropdown",
       "desc": "Organisation Description",
       "lang": "Organisation Language",
-      "website": "Website",
-      "urls": {
-        "appStore": "Link to Apple Store",
-        "playStore": "Link to Google Play",
-        "twitter": "Twitter URL",
-        "linkedin": "LinkedIn URL",
-        "website": "Website"
-      },
+
       "completeOrgProfile": "Complete Organisation Profile",
       "about": "About",
       "activity": "Activity",
       "editAccount": "Edit Account Information",
       "updateSuccess": "Organisation successfully updated",
-      "orgNameRequire": "Organisation name is required",
-      "sixtyMaxLength": "Max. 60 characters",
-      "thirtyMaxLength": "Max. 30 characters"
+      "orgNameRequire": "Organisation name is required"
     }
   },
   "auth": {

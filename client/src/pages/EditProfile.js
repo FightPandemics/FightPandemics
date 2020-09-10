@@ -21,6 +21,7 @@ import {
 } from "components/EditProfile/EditComponents";
 import {
   FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
   GITHUB_URL,
@@ -54,21 +55,37 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9.]*$/,
-          message: t("profile.individual.facebookError"),
+          message: t("profile.common.validCharacters", {
+            characters: "A-z 0-9 .",
+          }),
         },
         minLength: {
           value: 5,
-          message: t("profile.individual.fiveMinLength"),
+          message: t("profile.common.minCharacters", { minNum: 5 }),
         },
       },
       FACEBOOK_URL,
+    ],
+    instagram: [
+      "Instagram URL",
+      {
+        pattern: {
+          value: /[a-z\d-_]{1,255}\s*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 . _ -",
+          }),
+        },
+      },
+      INSTAGRAM_URL,
     ],
     linkedin: [
       "LinkedIn URL",
       {
         pattern: {
-          value: /^[a-zA-Z0-9-]*$/,
-          message: t("profile.common.linkedinError"),
+          value: /^[a-zA-Z0-9_\-/]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 -",
+          }),
         },
       },
       LINKEDIN_INDIVIDUAL_URL,
@@ -78,11 +95,13 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_]*$/,
-          message: t("profile.common.twitterError"),
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
         },
         maxLength: {
           value: 15,
-          message: t("profile.individual.fifteenMaxLength"),
+          message: t("profile.common.maxCharacters", { maxNum: 15 }),
         },
       },
       TWITTER_URL,
@@ -92,7 +111,9 @@ function EditProfile(props) {
       {
         pattern: {
           value: /^[a-zA-Z0-9_-]*$/,
-          message: t("profile.individual.githubError"),
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
         },
       },
       GITHUB_URL,
@@ -185,7 +206,9 @@ function EditProfile(props) {
               ref={register({
                 maxLength: {
                   value: ABOUT_MAX_LENGTH,
-                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                  message: t("profile.common.maxCharacters", {
+                    maxNum: ABOUT_MAX_LENGTH,
+                  }),
                 },
               })}
             />
@@ -193,7 +216,7 @@ function EditProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={t("profile.individual.urls." + key)}
+                  inputTitle={t("profile.common.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}

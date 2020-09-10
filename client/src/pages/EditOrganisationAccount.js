@@ -217,7 +217,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
       false,
       {
         value: 60,
-        message: t("profile.org.sixtyMaxLength"),
+        message: t("profile.common.maxCharacters", { maxNum: 60 }),
       },
     ],
     "Organisation Contact E-mail": [
@@ -226,8 +226,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
       t("profile.common.emailRequired"),
       true,
       {
-        value: 30,
-        message: t("profile.org.thirtyMaxLength"),
+        value: 50,
+        message: t("profile.common.maxCharacters", { maxNum: 50 }),
       },
     ],
   };

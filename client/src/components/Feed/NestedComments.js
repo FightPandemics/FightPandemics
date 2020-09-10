@@ -172,7 +172,8 @@ const NestedComments = ({
     }
   };
 
-  const handleDeleteComment = () => {
+  const handleDeleteComment = (e) => {
+    e.target.blur();
     deleteComment(comment);
   };
 
@@ -192,7 +193,7 @@ const NestedComments = ({
       <StyledCommentButton
         size="small"
         ghost
-        onClick={() => handleDeleteComment()}
+        onClick={(e) => handleDeleteComment(e)}
       >
         {t("comment.delete")}
       </StyledCommentButton>
@@ -254,8 +255,8 @@ const NestedComments = ({
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (
-        <Loader />
-      )}
+          <Loader />
+        )}
     </div>
   );
 };

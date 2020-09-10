@@ -185,7 +185,7 @@ function EditAccount(props) {
                 required: t("profile.individual.firstNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: t("profile.org.thirtyMaxLength"),
+                  message: t("profile.common.maxCharacters", { maxNum: 30 }),
                 },
               })}
             />
@@ -199,7 +199,7 @@ function EditAccount(props) {
                 required: t("profile.individual.lastNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: t("profile.org.thirtyMaxLength"),
+                  message: t("profile.common.maxCharacters", { maxNum: 30 }),
                 },
               })}
             />
