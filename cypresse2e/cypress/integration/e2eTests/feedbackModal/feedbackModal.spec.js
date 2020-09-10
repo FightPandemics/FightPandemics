@@ -9,7 +9,6 @@ describe('FightPandemics Feedback Modal', () => {
             feedback.visit();
         });
 
-
         it('Feedback icon on homepage is visible and clickable', () => {
             feedback.getFeedbackIcon()
                 .should('be.visible').click();
@@ -21,22 +20,57 @@ describe('FightPandemics Feedback Modal', () => {
                 .contains('How well does FightPandemics meet your needs?');
         });
 
-        // it('Feedback scale numbers are visible and clickable', () => {
-        //     feedback.getFeedbackScale()
-        //         .should('be.visible')
+        it('Feedback scale text is visible', () => {
+            feedback.getFeedbackScaleText()
+                .should('be.visible')
+                .contains('Poorly' + 'Very well');
+        });
 
-        //     var rating = feedback.getFeedbackScale().find('div');
-        //     console.log(rating);
-        //     for (let i = 0; i < rating.length; i++) {
-        //         describe('FightPandemics Feedback Modal', () => {
-        //             it('Choose rating', () => {
-        //                 rating[i].click()
-        //                 cy.wait(5000)
-        //             });
-        //         });
-        //     };
+        context('User chooses a rating on the scale', () => {
+            beforeEach(() => {
+                feedback.visit();
+                feedback.getFeedbackIcon()
+                    .should('be.visible').click();
+            });
 
-        // });
+            it('Choosing rating 1', () => {
+                feedback.getFeedbackScale().find('div').eq(0).click();
+            });
+            it('Choosing rating 2', () => {
+                feedback.getFeedbackScale().find('div').eq(1).click();
+            });
+            it('Choosing rating 3', () => {
+                feedback.getFeedbackScale().find('div').eq(2).click();
+            });
+            it('Choosing rating 4', () => {
+                feedback.getFeedbackScale().find('div').eq(3).click();
+            });
+            it('Choosing rating 5', () => {
+                feedback.getFeedbackScale().find('div').eq(4).click();
+            });
+
+
+            // it.skip('Feedback scale numbers are visible and clickable', () => {
+            //     feedback.getFeedbackScale()
+            //         .should('be.visible')
+            //     var rating = feedback.getFeedbackScale().find('div').click({ multiple: true });
+            //     for (let i = 0; i < rating.length; i++) {
+            //         rating[i]
+            //     };
+            //     cy.wait(5000)
+            // });
+
+            // it('Clicking Scale', () => {
+            //     var rating = feedback.getFeedbackScale().find('div')
+            //     rating.each((box, index, item) => {
+            //         cy.wrap(box).click()
+            //         cy.wait(5000)
+
+            //     })
+            // })
+
+        });
+
     });
 
 });
