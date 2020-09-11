@@ -37,6 +37,7 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
+import Linkify from "./Linkify";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -377,9 +378,11 @@ const Post = ({
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {title}
+        <Linkify text = {title}/>
       </Heading>
-      <p className="post-description">{content}</p>
+      <p className="post-description">
+        <Linkify text={content}/>
+      </p>
     </Card.Body>
   );
 
