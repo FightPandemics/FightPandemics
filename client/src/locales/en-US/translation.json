@@ -52,6 +52,7 @@
     "quit": "Quit filters",
     "apply": "Apply filters",
     "getOrGive": "Offer or request help",
+    "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
     "filters": {
       "title": "Filters",
       "location": {

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -709,12 +709,15 @@ const Feed = (props) => {
             {isLoading ? <Loader /> : <></>}
             {emptyFeed() ? (
               <NoPosts>
-                Sorry, there are currently no relevant posts available. Please
-                try using a different filter search or{" "}
-                <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
-                  create a post
-                </a>
-                .
+                <Trans
+                  i18nKey="feed.noResults"
+                  components={[
+                    <a
+                      id={gtmTag(GTM.post.createPost)}
+                      onClick={handleCreatePost}
+                    />,
+                  ]}
+                ></Trans>
               </NoPosts>
             ) : (
               <CreatePostIcon
