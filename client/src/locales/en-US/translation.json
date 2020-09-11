@@ -358,6 +358,7 @@
     "copyright": "Copyright {{currentYear}} FightPandemics. All rights reserved."
   },
   "faq": {
+    "faqTitle": "Frequently Asked Questions",
     "title": "About FightPandemics / General",
     "offerRequestHelp": "Offering and Requesting Help",
     "profileAccount": "Profile and Account",

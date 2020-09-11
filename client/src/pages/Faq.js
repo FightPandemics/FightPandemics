@@ -14,7 +14,7 @@ const Faq = () => {
   return (
     <FaqContainer>
       <QuestionsContainer>
-        <h1 className="text-primary display-6">Frequently Asked Questions</h1>
+        <h1 className="text-primary display-6">{t("faq.faqTitle")}</h1>
 
         <h2 className="text-primary display-5">{t("faq.title")}</h2>
         <AnswerContainer>
