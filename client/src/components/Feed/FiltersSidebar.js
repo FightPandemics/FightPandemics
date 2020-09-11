@@ -66,14 +66,19 @@ const DrawerWrapper = styled(Drawer)`
     font-size: ${theme.typography.size.small};
   }
   .confirm-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .am-button {
       font-size: ${theme.typography.size.large};
       padding: 0 1rem;
+      margin: 0.5rem 0;
+      font-weight: normal;
       &.close-button {
         flex: 0 0 auto;
       }
       &.ok-button {
-        flex: 0 0 13rem;
+        flex: 0 0 auto;
       }
     }
   }
@@ -101,20 +106,12 @@ const FiltersSidebar = ({ gtmPrefix }) => {
         </button>
         <FilterAccordion gtmPrefix={gtmPrefix} />
       </div>
-      <div
-        className="confirm-buttons"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "2rem 0",
-        }}
-      >
+      <div className="confirm-buttons">
         <SubmitButton
           className="close-button"
           inline
           tertiary="true"
           onClick={handleQuit}
-          style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
         >
           {t("feed.quit")}
@@ -124,7 +121,6 @@ const FiltersSidebar = ({ gtmPrefix }) => {
           inline
           primary="true"
           onClick={handleOnClose}
-          style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
         >
           {t("feed.apply")}
