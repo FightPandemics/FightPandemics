@@ -26,7 +26,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
             var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
             medicalHelpAnswer.should('be.visible');
             medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
-            
+
         });
 
         it('Need other help answer option is visible and clickable', () => {
@@ -69,12 +69,17 @@ describe('FightPandemics Request Help Questionnaire', () => {
                 .contains('We want to show you the most relevant results');
         });
 
-        it('User can type in location field and select location from the list', () => {
+        it('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click();
-            locationField.type(LOCATION)
-                .and('have.attr', 'aria-expanded', 'true')
-                .and('have.attr', 'aria-activedescendant', 'RES2_EAZ_list_0').click();
+            locationField.type(LOCATION);
+            cy.wait(10000);
+            var firstLocation = requestHelpQuestion.getRhLocationDropdown().eq(0)
+            var displayLocationDiv = firstLocation.eq(0)
+            displayLocationDiv.contains('New York, NY, USA');
+            firstLocation.click();
+            cy.wait(5000)
+            locationField.contains('span', 'New York, NY, USA');
         });
 
         it('Location subtext is visible', () => {

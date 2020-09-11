@@ -34,7 +34,7 @@ describe('FightPandemics Feedback Modal', () => {
             });
 
             it('Choosing rating 1', () => {
-                feedback.getFeedbackScale().find('div').eq(0).click();
+                clickRating().eq(0)
             });
             it('Choosing rating 2', () => {
                 feedback.getFeedbackScale().find('div').eq(1).click();
@@ -49,7 +49,7 @@ describe('FightPandemics Feedback Modal', () => {
                 feedback.getFeedbackScale().find('div').eq(4).click();
             });
 
-
+        
             // it.skip('Feedback scale numbers are visible and clickable', () => {
             //     feedback.getFeedbackScale()
             //         .should('be.visible')
@@ -72,5 +72,10 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
     });
+
+    function clickRating() {
+        feedback.getFeedbackScale().should('be.visible');
+        feedback.getFeedbackScale().find('div').click();
+    }
 
 });
