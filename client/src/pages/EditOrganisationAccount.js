@@ -208,29 +208,36 @@ function EditOrganisationAccount({ refetchUser, history }) {
     })();
   }, [orgProfileDispatch, organisationId]);
 
-  const organisationInfo = {
-    // label name, variable name, value
-    "Organisation Name": [
-      "name",
-      name,
-      t("profile.org.orgNameRequire"),
-      false,
-      {
-        value: 60,
-        message: t("profile.common.maxCharacters", { maxNum: 60 }),
-      },
-    ],
-    "Organisation Contact E-mail": [
-      "email",
-      email,
-      t("profile.common.emailRequired"),
-      true,
-      {
-        value: 50,
-        message: t("profile.common.maxCharacters", { maxNum: 50 }),
-      },
-    ],
+  const generateOrgInfoObject = () => {
+    const nameLabel = t("profile.org.name");
+    const emailLabel = t("profile.org.email");
+
+    return {
+      // label name, variable name, value
+      [nameLabel]: [
+        "name",
+        name,
+        t("profile.org.orgNameRequire"),
+        false,
+        {
+          value: 60,
+          message: t("profile.common.maxCharacters", { maxNum: 60 }),
+        },
+      ],
+      [emailLabel]: [
+        "email",
+        email,
+        t("profile.common.emailRequired"),
+        true,
+        {
+          value: 30,
+          message: t("profile.common.maxCharacters", { maxNum: 30 }),
+        },
+      ],
+    };
   };
+
+  const organisationInfo = generateOrgInfoObject();
 
   const renderNeedSection = () => {
     if (organisation) {
