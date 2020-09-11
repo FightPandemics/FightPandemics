@@ -321,6 +321,8 @@
     "enterPassword": "Enter password",
     "confirmPassword": "Confirm password",
     "forgotPassword": "Forgot Password",
+    "passwordMax": "Password must be at most {{num}} characters.",
+    "passwordMin": "Password must be at least {{num}} characters.",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
     "recoverLink": "Email me a recovery link",

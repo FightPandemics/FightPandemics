@@ -407,11 +407,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     ref={register({
                       maxLength: {
                         value: PASSWORD_MAX_LENGTH,
-                        message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
+                        message: t("auth.passwordMax", {
+                          num: PASSWORD_MAX_LENGTH,
+                        }),
                       },
                       minLength: {
                         value: PASSWORD_MIN_LENGTH,
-                        message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+                        message: t("auth.passwordMin", {
+                          num: PASSWORD_MIN_LENGTH,
+                        }),
                       },
                       required: t("profile.common.passwordRequired") + ".",
                       validate: (password) =>
