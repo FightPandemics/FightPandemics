@@ -717,7 +717,7 @@ const Feed = (props) => {
                       onClick={handleCreatePost}
                     />,
                   ]}
-                ></Trans>
+                />
               </NoPosts>
             ) : (
               <CreatePostIcon
