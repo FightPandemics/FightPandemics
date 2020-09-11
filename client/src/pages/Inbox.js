@@ -6,29 +6,10 @@ import Button from "components/Button/SubmitButton";
 import { mq } from "constants/theme";
 import emptyinbox from "assets/empty-inbox.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
-import sendcomment from "assets/icons/send-paper.svg";
 import isonline from "assets/icons/is-online-dot.svg";
+import { InboxContainer, ChatHeader } from "../components/Inbox/Container";
+import { InputBox } from "../components/Inbox/InputBox";
 
-const InboxContainer = styled.div`
-  width: 93%;
-  min-width: 50em;
-  max-width: 96em;
-  min-height: 37em;
-  height: calc(100% - 12rem);
-  position: absolute;
-  background-color: white;
-  display: flex;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 100vw;
-    min-width: 20em;
-  }
-`;
-const ChatHeader = styled.div`
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-  padding: 1.6em 1.1em;
-  font-size: 16px;
-  font-weight: 700;
-`;
 const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
   const ChatListContainer = styled.div`
     position: relative;
@@ -127,7 +108,9 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
 
   return (
     <ChatListContainer>
-      <ChatHeader>Messages</ChatHeader>
+      <ChatHeader>
+        Messages <span>1</span>
+      </ChatHeader>
       <div style={{ overflow: "auto", height: "490px" }}>
         {!empty && (
           <div onClick={() => setToggleMobileChatList(false)}>
@@ -154,7 +137,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     const RecipientName = styled.div`
       width: 100%;
       border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-      height: 5.2em;
+      height: 3.5em;
       overflow: auto;
       position: relative;
       top: 0px;
@@ -199,58 +182,6 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
       </>
     );
   };
-  const MessageInput = styled.input`
-    min-width: 3em;
-    width: 97%;
-    height: 48px;
-    border-radius: 8px;
-    border: solid 1px #d7d7d7;
-    padding: 1em;
-    ::placeholder {
-      opacity: 0.7;
-      letter-spacing: 0.8px;
-    }
-    :focus {
-      border: 1px solid rgba(66, 90, 242, 0.5);
-    }
-  `;
-
-  const InputContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    height: 48px;
-    width: 100%;
-    position: absolute;
-    bottom: 1em;
-    a {
-      opacity: ${(props) => (props.text ? "1" : "0.4")};
-      img {
-        position: absolute;
-        right: 2.5em;
-        top: 25%;
-        cursor: pointer;
-      }
-    }
-  `;
-
-  const InputBox = () => {
-    const [text, setText] = useState("");
-    const handleChange = (e) => {
-      setText(e.target.value);
-    };
-    return (
-      <InputContainer text={text}>
-        <MessageInput
-          type="text"
-          onChange={handleChange}
-          placeholder="Type a message..."
-        />
-        <a disabled={!text}>
-          <img className="send-comment" src={sendcomment} alt="Send Comment" />
-        </a>
-      </InputContainer>
-    );
-  };
 
   const Messages = () => {
     const BubbleContainer = styled.div`
@@ -262,47 +193,25 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
       width: 100%;
       height: 80%;
       min-height: 40%;
-      padding: 1em;
+      padding: 0em 1em 1em 1em;
       display: flex;
       flex-direction: column;
       overflow: auto;
       margin-bottom: 6em;
     `;
-    const Sender = () => {
+    const Sender = (props) => {
       const SenderBubble = styled.div`
-        max-width: 60%;
+        width: 60%;
         background-color: #425af2;
-        padding: 0.8em;
-        border-radius: 1em 1em 0em 1em;
+        padding: 0.8em 0.1em 0.8em 0.1em;
+        border-radius: 1em 1em 0.1em 1em;
         letter-spacing: 1px;
         margin-top: 1em;
         word-wrap: break-word;
         color: #fff;
-        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-          width: 70%;
+        .message-content {
+          margin: 0em 1em 0em 1em;
         }
-      `;
-      return (
-        <BubbleContainer>
-          <SenderBubble>
-            Hasdf ;lkjasdfasdlkfj asdfasdfa asdfasdfasdf asdf;lkajdf alkj
-            asdf;laksjdf asdf;lakj asd;lfkj Hasdf ;lkjasdfasdlkfj asdfasdfa
-            asdfasdfasdf asdf;lkajdf alkj asdf;laksjdf asdf;lakj asd;lfkj Hasdf
-            ;lkjasdfasdlkfj asdfasdfa asdfasdfasdf asdf;lkajdf alkj asdf;laksjdf
-            asdf;lakj asd;lfkj
-          </SenderBubble>
-        </BubbleContainer>
-      );
-    };
-    const Recipient = (props) => {
-      const RecipientBubble = styled.div`
-        width: 60%;
-        background-color: #f6f7fb;
-        padding: 0.8em;
-        border-radius: 0em 1em 1em 1em;
-        letter-spacing: 1px;
-        margin-top: 1em;
-        word-wrap: break-word;
         @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
           width: 70%;
         }
@@ -311,7 +220,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         display: ${(props) => (props.fromPost ? "block" : "none")};
         padding: 0.8em;
         background: #ffff;
-        border-radius: 1em;
+        border-radius: 1em 1em 0em 0em;
         color: #282828;
         margin-bottom: 1em;
         header {
@@ -325,7 +234,94 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
           span {
             font-size: 2em;
             position: relative;
-            bottom: 0.6em;
+            bottom: 0.7em;
+          }
+          .post-date {
+            margin-left: 0.5em;
+            opacity: 0.5;
+          }
+        }
+        .post-title {
+          font-size: 1.3em;
+          font-weight: 700;
+          margin: 0em 0em 0.2em 0em;
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            margin: 0.2em 0em 0.2em 0em;
+          }
+        }
+        .post-content {
+          letter-spacing: 1.3px;
+        }
+      `;
+      return (
+        <BubbleContainer>
+          <SenderBubble>
+            <OrgPost fromPost={props.fromPost}>
+              <header>
+                <div className="post-type">Offers</div>
+                <span>.</span>
+                <div className="post-date">Posted 14hrs ago</div>
+              </header>
+              <div className="post-title">
+                Offering disinfecting clorox wipes
+              </div>
+              <div className="post-content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliquLorem
+                ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </OrgPost>
+            <div className="message-content">
+              Hi Lily, I have 2 packs of disinfecting wipes and can give them to
+              you for free. Hi Lily, I have 2 packs of disinfecting wipes and
+              can give them to you for free. Hi Lily, I have 2 packs of
+              disinfecting wipes and can give them to you for free.
+            </div>
+          </SenderBubble>
+        </BubbleContainer>
+      );
+    };
+    const Recipient = (props) => {
+      const RecipientBubble = styled.div`
+        width: 60%;
+        background-color: #f6f7fb;
+        padding: 0.8em 0.1em 0.8em 0.1em;
+        border-radius: 0.1em 1em 1em 1em;
+        letter-spacing: 1px;
+        margin-top: 1em;
+        word-wrap: break-word;
+        .message-content {
+          margin: 0em 1em 0em 1em;
+        }
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          width: 70%;
+        }
+      `;
+      const OrgPost = styled.div`
+        display: ${(props) => (props.fromPost ? "block" : "none")};
+        padding: 0.8em;
+        background: #ffff;
+        border-radius: 1em 1em 0em 0em;
+        color: #282828;
+        margin-bottom: 1em;
+        header {
+          display: flex;
+          font-size: 0.9em;
+          height: 2em;
+          .post-type {
+            margin-right: 0.5em;
+            font-weight: 500;
+          }
+          span {
+            font-size: 2em;
+            position: relative;
+            bottom: 0.7em;
           }
           .post-date {
             margin-left: 0.5em;
@@ -365,10 +361,12 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </OrgPost>
-          Hi Lily, I have 2 packs of disinfecting wipes and can give them to you
-          for free.Hi Lily, I have 2 packs of disinfecting wipes and can give
-          them to you for free. Hi Lily, I have 2 packs of disinfecting wipes
-          and can give them to you for free.
+          <div className="message-content">
+            Hi Lily, I have 2 packs of disinfecting wipes and can give them to
+            you for free. Hi Lily, I have 2 packs of disinfecting wipes and can
+            give them to you for free. Hi Lily, I have 2 packs of disinfecting
+            wipes and can give them to you for free.
+          </div>
         </RecipientBubble>
       );
     };
@@ -377,7 +375,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         <Recipient fromPost />
         <Sender />
         <Recipient />
-        <Sender />
+        <Sender fromPost />
       </MessagesContainer>
     );
   };
