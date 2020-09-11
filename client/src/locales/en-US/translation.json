@@ -310,7 +310,7 @@
       "activity": "Activity",
       "editAccount": "Edit Account Information",
       "updateSuccess": "Organisation successfully updated",
-      "orgNameRequire": "Organisation name is required"
+      "orgNameRequired": "Organisation name is required"
     }
   },
   "auth": {
@@ -333,7 +333,7 @@
     "google": "Google",
     "linkedin": "LinkedIn",
     "back": "Back to Sign In screen",
-    "passwordConfirmationRequire": "Password confirmation is required."
+    "passwordConfirmationRequired": "Password confirmation is required."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",

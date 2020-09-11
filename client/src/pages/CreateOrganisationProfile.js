@@ -218,7 +218,7 @@ const CreateOrgProfile = (props) => {
               onChange={(name) => name}
               style={styleInput}
               ref={register({
-                required: t("profile.org.orgNameRequire"),
+                required: t("profile.org.orgNameRequired"),
                 maxLength: {
                   value: 60,
                   message: t("profile.common.maxCharacters", { maxNum: 60 }),

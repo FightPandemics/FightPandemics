@@ -449,7 +449,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       ref={register({
                         maxLength: PASSWORD_MAX_LENGTH,
                         minLength: PASSWORD_MIN_LENGTH,
-                        required: t("auth.passwordConfirmationRequire"),
+                        required: t("auth.passwordConfirmationRequired"),
                         validate: comparePasswordConfirmation,
                       })}
                       style={{ ...inputStyles, paddingRight: "3.5rem" }}

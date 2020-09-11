@@ -217,7 +217,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
       [nameLabel]: [
         "name",
         name,
-        t("profile.org.orgNameRequire"),
+        t("profile.org.orgNameRequired"),
         false,
         {
           value: 60,
