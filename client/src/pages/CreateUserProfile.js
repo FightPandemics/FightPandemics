@@ -323,10 +323,10 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 id="lastName"
                 className={errors.lastName && "has-error"}
                 ref={register({
-                  required: "Last name is required.",
+                  required: t("profile.individual.lastNameRequired"),
                   maxLength: {
                     value: 30,
-                    message: "Max. 30 characters",
+                    message: t("profile.common.maxCharacters", { maxNum: 30 }),
                   },
                 })}
                 style={inputStyles}
