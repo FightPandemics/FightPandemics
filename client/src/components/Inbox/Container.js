@@ -18,7 +18,7 @@ export const InboxContainer = styled.div`
 export const ChatHeader = styled.div`
   border-bottom: 1px solid rgba(232, 232, 232, 0.7);
   padding: 1.6em 1.1em;
-  font-size: 16px;
+  font-size: 1.143em;
   font-weight: 700;
   span {
     margin-left: 1em;

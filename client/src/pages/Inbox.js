@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import TextAvatar from "components/TextAvatar";
 import Button from "components/Button/SubmitButton";
-import { mq } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import emptyinbox from "assets/empty-inbox.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import isonline from "assets/icons/is-online-dot.svg";
@@ -18,6 +18,10 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
     height: 100%;
     min-width: 22em;
     max-width: 24em;
+    .chat-bucket {
+      overflow: auto;
+      height: 35em;
+    }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: ${toggleMobileChatList ? "block" : "none"};
       width: ${toggleMobileChatList ? "100%" : "25%"};
@@ -73,7 +77,7 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
         top: 0.9em;
         line-height: 1.5;
         .title {
-          font-size: 14px;
+          font-size: 1em;
           font-weight: 500;
         }
         .message {
@@ -111,7 +115,7 @@ const ChatList = ({ empty, toggleMobileChatList, setToggleMobileChatList }) => {
       <ChatHeader>
         Messages <span>1</span>
       </ChatHeader>
-      <div style={{ overflow: "auto", height: "490px" }}>
+      <div className="chat-bucket">
         {!empty && (
           <div onClick={() => setToggleMobileChatList(false)}>
             <SideChats />
@@ -157,12 +161,12 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
         width: 3.2rem;
         height: 3.2rem;
         line-height: 3.2rem;
-        font-size: 13px;
+        font-size: 0.929em;
       }
       h4 {
         position: relative;
         top: 0.2em;
-        font-size: 15px;
+        font-size: 1.071em;
         font-weight: 600;
       }
     `;
@@ -399,7 +403,7 @@ const EmptyInbox = () => {
       width: 100vw;
       border-bottom: 1px solid rgba(232, 232, 232, 0.7);
       padding: 1.6em 1.1em;
-      font-size: 16px;
+      font-size: 1.143em;
       font-weight: 700;
       span {
         position: absolute;
@@ -411,12 +415,12 @@ const EmptyInbox = () => {
   const StyledButton = styled(Button)`
     width: 19rem;
     font-weight: 400;
-    font-size: 16px;
-    height: 44px;
+    font-size: 1.143em;
+    height: 3em;
     margin-top: 0.5em;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       width: 18rem;
-      font-size: 14px;
+      font-size: 1em;
       letter-spacing: 0.5px;
     }
   `;
