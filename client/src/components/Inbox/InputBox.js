@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import sendcomment from "assets/icons/send-paper.svg";
+import { ChatContext } from "context/ChatContext";
 
 const MessageInput = styled.input`
   min-width: 3em;
@@ -37,9 +38,21 @@ const InputContainer = styled.div`
 `;
 
 export const InputBox = () => {
+  const { chat, setChat } = useContext(ChatContext);
   const [text, setText] = useState("");
-  const handleChange = (e) => {
-    setText(e.target.value);
+  const handleChange = async (e) => {
+    await setText(e.target.value);
+  };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    await setChat([...chat, text]);
+    await setText("");
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      setChat([...chat, text]);
+      setText("");
+    }
   };
   return (
     <InputContainer text={text}>
@@ -47,8 +60,10 @@ export const InputBox = () => {
         type="text"
         onChange={handleChange}
         placeholder="Type a message..."
+        value={text}
+        onKeyPress={handleKeyPress}
       />
-      <a disabled={!text}>
+      <a disabled={!text} onClick={handleClick}>
         <img className="send-comment" src={sendcomment} alt="Send Comment" />
       </a>
     </InputContainer>
