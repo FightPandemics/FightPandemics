@@ -41,13 +41,14 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     `;
     const Sender = ({ fromPost, message }) => {
       const SenderBubble = styled.div`
+        display: inline-block;
         max-width: 60%;
         background-color: #425af2;
         padding: 0.8em 0.1em 0.8em 0.1em;
         border-radius: 1em 1em 0.1em 1em;
         letter-spacing: 1px;
         margin-top: 1em;
-        word-wrap: break-word;
+        word-break: break-word;
         color: #fff;
         .message-content-sender {
           margin: 0em 1em 0em 1em;
@@ -73,13 +74,14 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
     };
     const Recipient = (fromPost) => {
       const RecipientBubble = styled.div`
+        display: inline-block;
         max-width: 60%;
         background-color: #f6f7fb;
         padding: 0.8em 0.1em 0.8em 0.1em;
         border-radius: 0.1em 1em 1em 1em;
         letter-spacing: 1px;
         margin-top: 1em;
-        word-wrap: break-word;
+        word-break: break-word;
         .message-content-recipient {
           margin: 0em 1em 0em 1em;
         }
@@ -93,7 +95,9 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
           {fromPost ? (
             <>
               <OrgPost />
-              <div className="message-content-recipient">{/* {message} */}</div>
+              <div className="message-content-recipient">
+                Hi here! I want to help!
+              </div>
             </>
           ) : (
             <div className="message-content-recipient">{/* {message} */}</div>
@@ -107,7 +111,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
           <>
             <Recipient fromPost />
             <Sender message={message} />
-            <Sender fromPost />
+            {/* <Sender fromPost /> */}
           </>
         ))}
       </MessagesContainer>
