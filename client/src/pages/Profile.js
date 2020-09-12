@@ -137,7 +137,6 @@ const Profile = ({
   } = postsState;
 
   const prevTotalPostCount = usePrevious(totalPostCount);
-
   const userPosts = Object.entries(postsList);
   function usePrevious(value) {
     const ref = useRef();
@@ -229,7 +228,7 @@ const Profile = ({
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      if (!isLoading && loadMore && stopIndex > userPosts.length) {
+      if (!isLoading && loadMore && stopIndex >= userPosts.length) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();

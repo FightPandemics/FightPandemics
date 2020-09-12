@@ -71,7 +71,6 @@ import {
   OrganisationContext,
   withOrganisationContext,
 } from "context/OrganisationContext";
-import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_LIKE,
@@ -81,6 +80,9 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  ERROR_POSTS,
+  SET_POSTS,
+  FETCH_POSTS,
 } from "hooks/actions/feedActions";
 import {
   postsReducer,
@@ -245,7 +247,7 @@ const OrganisationProfile = () => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      if (!isLoading && loadMore && stopIndex > organisationPosts.length) {
+      if (!isLoading && loadMore && stopIndex >= organisationPosts.length) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();

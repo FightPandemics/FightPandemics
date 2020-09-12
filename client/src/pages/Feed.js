@@ -580,7 +580,7 @@ const Feed = (props) => {
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       dispatchAction(SET_VALUE, "applyFilters", false);
-      if (!isLoading && loadMore && stopIndex > feedPosts.length) {
+      if (!isLoading && loadMore && stopIndex >= feedPosts.length) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
