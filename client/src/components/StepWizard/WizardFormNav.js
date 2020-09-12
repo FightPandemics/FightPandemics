@@ -34,7 +34,7 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 40rem;
+    width: 50rem;
   }
 
   @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {

@@ -35,7 +35,7 @@ export const StyledWizardNav = styled.div`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 40rem;
+    width: 50rem;
   }
 `;
 
@@ -55,7 +55,7 @@ export const BackButton = styled(LeftRightIconButton)`
 
   @media screen and (min-width: ${desktopBreakpoint}) {
     height: 4.8rem;
-    width: 19.2rem;
+    width: 25rem;
     transition: all 0.1s;
 
     & span {
