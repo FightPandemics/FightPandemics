@@ -514,7 +514,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       disabled={!formState.isValid}
                       onClick={handleSubmit(onForgotPassword)}
                     >
-                      {t("auth.recoverLink")}
+                      {t("onboarding.common.submit")}
                     </SubmitButton>
                   </EmailButtonContainer>
                 </form>

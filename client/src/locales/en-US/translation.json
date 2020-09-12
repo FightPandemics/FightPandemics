@@ -337,7 +337,7 @@
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
-    "forgotPass": "An email has been sent to {{email}} with further instructions on how to reset your password.",
+    "forgotPass": "If an account is associated with {{email}}, you will receive an email with further instructions on how to reset the password.",
     "confirm": "We just emailed a link to {{email}}. Click the link to confirm your account and complete your profile.",
     "checkSpam": "If you don't see a message within a few minutes please check spam, promotions or other incoming mail folders."
   },
