@@ -107,38 +107,42 @@ const Posts = ({
 
   return (
     <div className="feed-posts">
-      <WindowScroller>
-        {({ height, isScrolling, scrollTop, onChildScroll }) => (
-          <InfiniteLoader
-            isRowLoaded={isItemLoaded}
-            loadMoreRows={loadMoreItems}
-            rowCount={totalPostCount}
-            threshold={5}
-          >
-            {({ onRowsRendered }) => (
-              <AutoSizer disableHeight>
-                {({ width }) => (
-                  <List
-                    autoHeight
-                    height={height}
-                    width={width}
-                    isScrolling={isScrolling}
-                    onRowsRendered={onRowsRendered}
-                    rowCount={itemCount}
-                    rowHeight={cellMeasurerCache.rowHeight}
-                    deferredMeasurementCache={cellMeasurerCache}
-                    rowRenderer={postItem}
-                    scrollTop={scrollTop}
-                    onScroll={onChildScroll}
-                    overscanRowCount={10}
-                    scrollToAlignment={"start"}
-                  />
-                )}
-              </AutoSizer>
-            )}
-          </InfiniteLoader>
-        )}
-      </WindowScroller>
+      {!posts.length ? (
+        "No activity found"
+      ) : (
+        <WindowScroller>
+          {({ height, isScrolling, scrollTop, onChildScroll }) => (
+            <InfiniteLoader
+              isRowLoaded={isItemLoaded}
+              loadMoreRows={loadMoreItems}
+              rowCount={totalPostCount}
+              threshold={5}
+            >
+              {({ onRowsRendered }) => (
+                <AutoSizer disableHeight>
+                  {({ width }) => (
+                    <List
+                      autoHeight
+                      height={height}
+                      width={width}
+                      isScrolling={isScrolling}
+                      onRowsRendered={onRowsRendered}
+                      rowCount={itemCount}
+                      rowHeight={cellMeasurerCache.rowHeight}
+                      deferredMeasurementCache={cellMeasurerCache}
+                      rowRenderer={postItem}
+                      scrollTop={scrollTop}
+                      onScroll={onChildScroll}
+                      overscanRowCount={10}
+                      scrollToAlignment={"start"}
+                    />
+                  )}
+                </AutoSizer>
+              )}
+            </InfiniteLoader>
+          )}
+        </WindowScroller>
+      )}
     </div>
   );
 };
