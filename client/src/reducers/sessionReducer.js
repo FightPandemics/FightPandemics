@@ -5,6 +5,7 @@ import {
   FORGOT_PASSWORD_REQUEST_SUCCESS,
   SET_AUTH_LOADING,
   SET_USER,
+  SET_ORGANISATION_INDEX,
 } from "constants/action-types";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   error: null,
   forgotPasswordRequested: false,
   user: null,
+  organisationIndex: null,
 };
 
 function sessionReducer(state = initialState, action) {
@@ -63,6 +65,11 @@ function sessionReducer(state = initialState, action) {
     case AUTH_LOGOUT:
       return {
         ...initialState,
+      };
+    case SET_ORGANISATION_INDEX:
+      return {
+        ...state,
+        organisationIndex: action.payload,
       };
     default:
       return state;

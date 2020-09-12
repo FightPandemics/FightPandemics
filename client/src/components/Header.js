@@ -3,6 +3,8 @@ import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { setOrganisationIndex } from "../actions/profileActions";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
@@ -117,41 +119,51 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
-export default ({
+const Header = ({
   authLoading,
   onMenuClick,
+  organisationIndex,
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  setOrganisationIndex,
 }) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/profile/${user?.id || user?._id}`}>My Profile</Link>
+        <Link
+          to={`/profile/${user?.id || user?._id}`}
+          onClick={() => setOrganisationIndex(null)}
+        >
+          My Profile
+        </Link>
       </Menu.Item>
       <Menu.Divider />
       <SubMenu title="Organisations">
-          <Menu.Item>
-            <Link
-              id={GTM.nav.prefix + GTM.nav.addOrg}
-              to="/create-organisation-profile"
-            >
-              Add Organisation
-            </Link>
-          </Menu.Item>
-          <Menu.Divider />
-          {user?.organisations?.length > 0
-            ? user?.organisations?.map((organisation) => (
-                <Menu.Item key={organisation._id}>
-                  <Link to={`/organisation/${organisation._id}`}>
-                    {organisation.name}
-                  </Link>
-                </Menu.Item>
-              ))
-            : null}
-          {user?.organisations?.length > 0}
-        </SubMenu>
+        <Menu.Item>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            Add Organisation
+          </Link>
+        </Menu.Item>
         <Menu.Divider />
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation, i) => (
+              <Menu.Item key={organisation._id}>
+                <Link
+                  to={`/organisation/${organisation._id}`}
+                  onClick={() => setOrganisationIndex(i)}
+                >
+                  {organisation.name}
+                </Link>
+              </Menu.Item>
+            ))
+          : null}
+        {user?.organisations?.length > 0}
+      </SubMenu>
+      <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
@@ -194,7 +206,9 @@ export default ({
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  Profile
+                  {organisationIndex === null
+                    ? `${user?.firstName} ${user?.lastName}`
+                    : user?.organisations[organisationIndex]?.name}
                 </a>
               </Dropdown>
             </li>
@@ -258,3 +272,9 @@ export default ({
     </HeaderWrapper>
   );
 };
+
+const mapDispatchToProps = {
+  setOrganisationIndex,
+};
+
+export default connect(null, mapDispatchToProps)(Header);

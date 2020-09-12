@@ -245,7 +245,15 @@ const TEXT_FEEDBACK = [
 ];
 
 const NavigationLayout = (props) => {
-  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const {
+    authLoading,
+    mobiletabs,
+    tabIndex,
+    isAuthenticated,
+    user,
+    organisationIndex,
+  } = props;
+
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -621,6 +629,7 @@ const NavigationLayout = (props) => {
           onMenuClick={toggleDrawer}
           isAuthenticated={isAuthenticated}
           user={user}
+          organisationIndex={organisationIndex}
           onFeedbackIconClick={() =>
             dispatchAction(TOGGLE_STATE, "ratingModal")
           }
