@@ -96,6 +96,7 @@ const Activity = ({
               isRowLoaded={isItemLoaded}
               loadMoreRows={loadMoreItems}
               rowCount={totalPostCount}
+              threshold={5}
             >
               {({ onRowsRendered }) => (
                 <AutoSizer disableHeight>
