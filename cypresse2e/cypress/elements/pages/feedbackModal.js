@@ -6,12 +6,11 @@ class FeedbackModal {
     feedbackScaleText = '.scale-text';
     closeModal = '.am-modal-close';
     feedbackHeadingTwo = '.am-modal-body h2';
-    feebackQuestions = 'label';
-    feedbackInputOne = 'div > input:nth-child(1)';
-    feedbackInputTwo = 'div > input:nth-child(2)';
-    feedbackInputThree = 'div > input:nth-child(3)';
+    feedbackQuestions = 'label';
+    feedbackInputList = '.am-modal-body div > input';
     button = 'a span';
-    radioAnswers = '.ant-radio-wrapper';
+    radioAnswersList = '.ant-radio-wrapper';
+    radioAnswers = '.ant-radio-input';
 
 
 
@@ -49,20 +48,16 @@ class FeedbackModal {
         return cy.get(this.feedbackQuestions);
     }
 
-    getFeedbackInputOne() {
-        return cy.get(this.feedbackInputOne);
-    }
-
-    getFeedbackInputTwo() {
-        return cy.get(this.feedbackInputTwo);
-    }
-
-    getFeedbackInputThree() {
-        return cy.get(this.feedbackInputThree);
+    getFeedbackInputList() {
+        return cy.get(this.feedbackInputList);
     }
 
     getButton() {
         return cy.get(this.button);
+    }
+
+    getRadioAnswersList() {
+        return cy.get(this.radioAnswersList);
     }
 
     getRadioAnswers() {

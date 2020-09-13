@@ -73,13 +73,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click();
             locationField.type(LOCATION);
-            cy.wait(10000);
-            var firstLocation = requestHelpQuestion.getRhLocationDropdown().eq(0)
-            var displayLocationDiv = firstLocation.eq(0)
-            displayLocationDiv.contains('New York, NY, USA');
-            firstLocation.click();
-            cy.wait(5000)
-            locationField.contains('span', 'New York, NY, USA');
+            requestHelpQuestion.getRhLocationDropdown().should('be.visible');
         });
 
         it('Location subtext is visible', () => {
