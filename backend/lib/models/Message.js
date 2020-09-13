@@ -1,7 +1,7 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
-const { OBJECTIVES: POST_OBJECTIVES } = require("./Post");
+const { POST_OBJECTIVES: OBJECTIVES } = require("./Post");
 
 const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"]
 
@@ -33,7 +33,11 @@ const postRefSchema = new Schema(
 
 const messageSchema = new Schema(
   {
-    author: Object,
+    authorId: {
+      ref: "User",
+      required: true,
+      type: ObjectId,
+    },
     content: {
       required: true,
       trim: true,
@@ -50,6 +54,7 @@ const messageSchema = new Schema(
     },
     threadId: {
       ref: "Thread",
+      required: true,
       type: ObjectId,
     },
   },
@@ -70,6 +75,7 @@ messageSchema.index({
 const Message = model("Message", messageSchema);
 
 module.exports = {
+  MESSAGE_STATUS_OPTIONS,
   model: Message,
   schema: messageSchema,
 };
