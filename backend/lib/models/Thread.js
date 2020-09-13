@@ -1,5 +1,6 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
+const { USER_TYPES } = require("./Author");
 
 const CONVERSATION_STATUS_OPTIONS = [
   "accepted", "archived", "blocked", "pending"
@@ -13,7 +14,6 @@ const participantSchema = new Schema(
       required: true,
       type: ObjectId,
     },
-    location: locationSchema,
     name: {
       required: true,
       type: String,
