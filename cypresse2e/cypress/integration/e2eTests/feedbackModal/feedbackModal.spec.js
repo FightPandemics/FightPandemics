@@ -31,11 +31,6 @@ describe('FightPandemics Feedback Modal', () => {
                 .contains('Poorly' + 'Very well');
         });
 
-        it('Close icon on screen one is visible and clickable', () => {
-            feedback.getCloseModal()
-                .should('be.visible').click();
-        });
-
         it('Choose rating 1', () => {
             clickRating(0);
         });
@@ -62,6 +57,11 @@ describe('FightPandemics Feedback Modal', () => {
             it('Choose rating 5', () => {
                 clickRating(4);
 
+            });
+
+            it('Close icon is visible and clickable', () => {
+                feedback.getCloseModal()
+                    .should('be.visible').click();
             });
 
         });
@@ -149,7 +149,8 @@ describe('FightPandemics Feedback Modal', () => {
     function feedbackAnswer(index, answer) {
         feedback.getFeedbackInputList()
             .should('be.visible').eq(index).click()
-            .type(answer).blur();
+            .invoke('val', answer);
+          
     }
 
     function feedbackButton(buttonText) {
