@@ -52,6 +52,9 @@ const threadSchema = new Schema(
 
 // -- Indexes
 /* eslint-disable */
+// Index to ensure unique threads between users
+threadSchema.index({ "participants.id": 1 }, { "unique": true });
+
 // Index to get inbox sorted by most recent
 threadSchema.index({
   "participants.id": 1,
