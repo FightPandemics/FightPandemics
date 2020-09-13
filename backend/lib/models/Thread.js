@@ -14,6 +14,7 @@ const participantSchema = new Schema(
       required: true,
       type: ObjectId,
     },
+    lastAcess: Date,
     name: {
       required: true,
       type: String,
