@@ -1,6 +1,6 @@
 import SignIn from '../../../elements/pages/signIn';
-import { DUMMY_SAMPLE_EMAIL } from '../../constants';
-import { VALID_SAMPLE_EMAIL } from '../../constants';
+import {DUMMY_SAMPLE_EMAIL} from '../../constants';
+import {VALID_SAMPLE_EMAIL} from '../../constants';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -11,13 +11,13 @@ describe('FightPandemics Sign In Page', () => {
             signIn.visit();
         });
 
-        it.skip('FP logo is visible and clickable', () => {
+        it('FP logo is visible and clickable', () => {
             var fpLogo = signIn.getFpLogo();
             fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
 
         });
 
-        it.skip('Sign in page contains heading and image', () => {
+        it('Sign in page contains heading and image', () => {
             var h4Heading = "Sign In";
             signIn.getH4Heading().should('be.visible').contains(h4Heading);
 
@@ -25,14 +25,14 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Email address field is visible and can be populated', () => {
+        it('Email address field is visible and can be populated', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type(DUMMY_SAMPLE_EMAIL);
 
         });
 
-        it.skip('Leaving email field blank triggers error', () => {
+        it('Leaving email field blank triggers error', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequired = signIn.getEmailRequired();
@@ -41,7 +41,7 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Entering invalid email triggers error', () => {
+        it('Entering invalid email triggers error', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type('qa.test@').focus().blur();
@@ -51,14 +51,14 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Password field is visible and can be populated', () => {
+        it('Password field is visible and can be populated', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password');
             passwordField.type('Testing!');
 
         });
 
-        it.skip('Clicking the password eye displays the password entered', () => {
+        it('Clicking the password eye displays the password entered', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password');
             passwordField.type('Testing!');
@@ -67,7 +67,7 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Leaving password field blank triggers error', () => {
+        it('Leaving password field blank triggers error', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password').focus().blur();
             var passwordRequired = signIn.getPasswordRequired();
@@ -76,7 +76,7 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Password entered not meeting 8 characters triggers error', () => {
+        it('Password entered not meeting 8 characters triggers error', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible');
             passwordField.type('test');
@@ -86,7 +86,7 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Password entered not meeting special characters triggers error', () => {
+        it('Password entered not meeting special characters triggers error', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible');
             passwordField.type('testtest');
@@ -96,13 +96,13 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Sign in button is disabled when required details are not entered', () => {
+        it('Sign in button is disabled when required details are not entered', () => {
             var signInButton = signIn.getSignInButton();
             signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'true');
 
         });
 
-        it.skip('Sign in button is enabled when required details are entered', () => {
+        it('Sign in button is enabled when required details are entered', () => {
             signIn.getEmailField().type(DUMMY_SAMPLE_EMAIL);
             signIn.getPasswordField().type('Testing!');
             var signInButton = signIn.getSignInButton();
@@ -138,35 +138,35 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it.skip('Forgot password link is visible and clickable', () => {
+        it('Forgot password link is visible and clickable', () => {
             var forgotPasswordLink = signIn.getForgotPasswordLink();
             forgotPasswordLink.should('be.visible');
             forgotPasswordLink.contains('a', 'Forgot password?').click();
 
         });
 
-        it.skip('Join now link is visible and clickable', () => {
+        it('Join now link is visible and clickable', () => {
             var joinNowLink = signIn.getJoinNowLink();
             joinNowLink.should('be.visible');
             joinNowLink.contains('u', 'Join Now').click();
 
         });
 
-        it.skip('Facebook button for sign in is visible', () => {
+        it('Facebook button for sign in is visible', () => {
             var signInByFbButton = signIn.getSignInFbButton();
             signInByFbButton.should('be.visible');
             signInByFbButton.contains('span', 'Facebook');
 
         });
 
-        it.skip('Google button for sign in is visible', () => {
+        it('Google button for sign in is visible', () => {
             var signInByGoogleButton = signIn.getSignInGoogleButton();
             signInByGoogleButton.should('be.visible');
             signInByGoogleButton.contains('span', 'Google');
 
         });
 
-        it.skip('LinkedIn button for sign in is visible', () => {
+        it('LinkedIn button for sign in is visible', () => {
             var signInByLinkedinButton = signIn.getSignInLinkedinButton();
             signInByLinkedinButton.should('be.visible');
             signInByLinkedinButton.contains('span', 'Linkedin');
