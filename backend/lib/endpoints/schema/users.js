@@ -59,6 +59,11 @@ const createUserSchema = {
     .required(["location"]),
 };
 
+const createUserAvatarSchema = {
+  params: strictSchema().prop("userId", S.string().required()),
+  body: strictSchema().prop("file", S.required()),
+};
+
 const getUserByIdSchema = {
   params: strictSchema().prop("userId", S.string().required()),
 };
@@ -77,6 +82,7 @@ const updateUserSchema = {
 };
 
 module.exports = {
+  createUserAvatarSchema,
   createUserSchema,
   getUserByIdSchema,
   updateUserSchema,
