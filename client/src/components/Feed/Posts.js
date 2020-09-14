@@ -108,7 +108,7 @@ const Posts = ({
   return (
     <div className="feed-posts">
       {!posts.length ? (
-        "No activity found"
+        <Loader />
       ) : (
         <WindowScroller>
           {({ height, isScrolling, scrollTop, onChildScroll }) => (
