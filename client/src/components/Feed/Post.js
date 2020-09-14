@@ -182,35 +182,37 @@ const Post = ({
   };
 
   const handleComment = async (e) => {
-    e.preventDefault();
-    let response;
-    let commentCountRes;
-    const postId = post._id;
-    const endPoint = `/api/posts/${postId}/comments`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
-    const newComment = {
-      content: comment,
-    };
+    if (!e.shiftKey) {
+      e.preventDefault();
+      let response;
+      let commentCountRes;
+      const postId = post._id;
+      const endPoint = `/api/posts/${postId}/comments`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}`;
+      const newComment = {
+        content: comment,
+      };
 
-    try {
-      response = await axios.post(endPoint, newComment);
-      commentCountRes = await axios.get(totalCommentCountEndPoint);
-    } catch (error) {
-      console.log({ error });
-      setComment([]);
-    }
+      try {
+        response = await axios.post(endPoint, newComment);
+        commentCountRes = await axios.get(totalCommentCountEndPoint);
+      } catch (error) {
+        console.log({ error });
+        setComment([]);
+      }
 
-    if (response && response.data) {
-      const currentComment = response.data;
-      const allComments = [currentComment, ...comments];
-      await dispatchPostAction(
-        SET_COMMENTS,
-        "comments",
-        allComments,
-        "numComments",
-        commentCountRes.data.numComments,
-      );
-      setComment([]);
+      if (response && response.data) {
+        const currentComment = response.data;
+        const allComments = [currentComment, ...comments];
+        await dispatchPostAction(
+          SET_COMMENTS,
+          "comments",
+          allComments,
+          "numComments",
+          commentCountRes.data.numComments,
+        );
+        setComment([]);
+      }
     }
   };
 
