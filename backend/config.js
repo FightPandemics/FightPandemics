@@ -16,6 +16,10 @@ const configData = envSchema({
     .prop("AUTH_DOMAIN", S.string().required())
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
+    .prop("AWS_ACCESS_KEY_ID", S.string().default("dummy_access_key"))
+    .prop("AWS_SECRET_ACCESS_KEY_ID", S.string().default("dummy_secret_access_key"))
+    .prop("AWS_REGION", S.string().default("us-east-1"))
+    .prop("CDN_BASE_URL", S.string().default("http://localstack:4566"))
     .prop("COMMIT_HASH", S.string())
     .prop("GOOGLE_MAPS_API_KEY", S.string())
     .prop("LOGGER_HOST", S.string())
@@ -24,6 +28,7 @@ const configData = envSchema({
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
+    .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
@@ -43,6 +48,13 @@ const config = {
     jwtMongoIdKey: url.resolve(configData.AUTH_APP_URL, "mongo_id"),
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
+  },
+  cdn: {
+    awsAccessKeyId: configData.AWS_ACCESS_KEY_ID,
+    awsSecretAccessKeyId: configData.AWS_SECRET_ACCESS_KEY_ID,
+    awsRegion: configData.AWS_REGION,
+    baseUrl: configData.CDN_BASE_URL,
+    s3Bucket: configData.S3_CDN_BUCKET,
   },
   env: configData.NODE_ENV,
   errorNotifier: {
