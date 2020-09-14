@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { ConfigProvider } from "antd";
 
 import { initAuth } from "./actions/authActions";
 import routes from "./routes";
@@ -13,15 +14,30 @@ const App = (props) => {
     props.initAuth();
   }, [props]);
 
+  function getDirection() {
+    const systemLang = navigator.languages
+      ? navigator.languages[0]
+      : navigator.userLanguage || navigator.language;
+    if (systemLang == "ar" || systemLang == "he") return "rtl";
+    if (
+      window.localStorage.getItem("locale") == "ar" ||
+      window.localStorage.getItem("locale") == "he"
+    )
+      return "rtl";
+    return "ltr";
+  }
+
   return (
-    <Router history={history}>
-      <AppMetaContainer />
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-      </Switch>
-    </Router>
+    <ConfigProvider direction={getDirection()}>
+      <Router history={history}>
+        <AppMetaContainer />
+        <Switch>
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+        </Switch>
+      </Router>
+    </ConfigProvider>
   );
 };
 

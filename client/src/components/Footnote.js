@@ -8,6 +8,7 @@ import i18n from "../i18n";
 
 import { theme, mq } from "constants/theme";
 import { localization, languages } from "constants/languages";
+import { getLang } from "../i18n";
 import SvgIcon from "./Icon/SvgIcon";
 import globe from "assets/icons/globe.svg";
 
@@ -69,6 +70,7 @@ const StyledSpan = styled.span`
 export default () => {
   const currentYear = new Date().getFullYear();
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1279);
+  //const [language, setLanguage] = useState(getLang());
   const { t } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
