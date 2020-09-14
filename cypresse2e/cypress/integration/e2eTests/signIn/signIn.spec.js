@@ -1,6 +1,6 @@
 import SignIn from '../../../elements/pages/signIn';
-import {DUMMY_SAMPLE_EMAIL} from '../../constants';
-import {VALID_SAMPLE_EMAIL} from '../../constants';
+import { DUMMY_SAMPLE_EMAIL } from '../../constants';
+import { randomString } from '../../randomStringGenerator';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -110,15 +110,9 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
-        it('Login successfully when email & password are entered and submitted by user', () => {
-            signIn.getEmailField().clear().type(VALID_SAMPLE_EMAIL);
-            signIn.getPasswordField().clear().type('Testing1234!');
-            signIn.getSignInButton().click();
-        });
-
-
+        
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
-            signIn.getEmailField().type(VALID_SAMPLE_EMAIL);
+            signIn.getEmailField().type(randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com');
             signIn.getPasswordField().type('WrongPW!wpw3hi');
             signIn.getSignInButton().click();
             var loginFailAlert = signIn.getLoginFailAlert();
