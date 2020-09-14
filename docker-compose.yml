@@ -51,7 +51,7 @@ services:
     environment:
       BACKEND_SERVICE_URL: http://backend-service:8000
     ports:
-      - "3001:3002"
+      - "3000:3000"
     volumes:
       - ./client:/app
       - /app/node_modules/
@@ -62,7 +62,7 @@ services:
       - fp_network
 
   cypress-e2e:
-    build: 
+    build:
       context: cypresse2e
       dockerfile: Dockerfile
     container_name: cypress-e2e
@@ -79,7 +79,7 @@ services:
       - fp_network
 
   mocha-integration:
-    build: 
+    build:
       context: mocha
       dockerfile: Dockerfile
     container_name: mocha-integration
@@ -87,10 +87,26 @@ services:
       - client
     environment:
       MOCHA_URL: http://backend-service:8000
-    command: dockerize -wait http://client:3000 -timeout 300s npm run test 
+    command: dockerize -wait http://client:3000 -timeout 300s npm run test
     volumes:
       - ./mocha/test/:/app/test/
     working_dir: /app
+    networks:
+      - fp_network
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      HOSTNAME: localstack
+      DOCKER_HOST: unix:///var/run/docker.sock
+      DATA_DIR: /tmp/localstack/data
+      DEBUG: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./localstack:/docker-entrypoint-initaws.d
     networks:
       - fp_network
 
