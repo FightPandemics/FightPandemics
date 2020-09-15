@@ -13,8 +13,8 @@ const s3Config = {
 
 if (env === "dev") {
   awsConfig.accessKeyId = cdn.awsAccessKeyId;
-  awsConfig.secretAccessKey = cdn.secretAccessKey;
-  s3Config.endpoint = cdn.baseUrl;
+  awsConfig.secretAccessKey = cdn.awsSecretAccessKey;
+  s3Config.endpoint = cdn.awsEndpoint;
   s3Config.s3ForcePathStyle = true;
 }
 AWS.config.update(awsConfig);

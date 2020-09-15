@@ -17,9 +17,16 @@ const configData = envSchema({
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
     .prop("AWS_ACCESS_KEY_ID", S.string().default("dummy_access_key"))
-    .prop("AWS_SECRET_ACCESS_KEY_ID", S.string().default("dummy_secret_access_key"))
+    .prop("AWS_ENDPOINT_URL", S.string().default("http://localstack:4566"))
     .prop("AWS_REGION", S.string().default("us-east-1"))
-    .prop("CDN_BASE_URL", S.string().default("http://localstack:4566"))
+    .prop(
+      "AWS_SECRET_ACCESS_KEY",
+      S.string().default("dummy_secret_access_key"),
+    )
+    .prop(
+      "CDN_BASE_URL",
+      S.string().default("http://localhost:4566/fp-dev-cdn"),
+    )
     .prop("COMMIT_HASH", S.string())
     .prop("GOOGLE_MAPS_API_KEY", S.string())
     .prop("LOGGER_HOST", S.string())
@@ -51,8 +58,9 @@ const config = {
   },
   cdn: {
     awsAccessKeyId: configData.AWS_ACCESS_KEY_ID,
-    awsSecretAccessKeyId: configData.AWS_SECRET_ACCESS_KEY_ID,
+    awsEndpoint: configData.AWS_ENDPOINT_URL,
     awsRegion: configData.AWS_REGION,
+    awsSecretAccessKey: configData.AWS_SECRET_ACCESS_KEY,
     baseUrl: configData.CDN_BASE_URL,
     s3Bucket: configData.S3_CDN_BUCKET,
   },
