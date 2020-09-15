@@ -94,8 +94,18 @@ services:
     networks:
       - fp_network
 
+  awscli:
+    image: mesosphere/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID: dummy_id
+      AWS_SECRET_ACCESS_KEY: dummy_key
+      AWS_DEFAULT_REGION: us-east-1
+    networks:
+      - fp_network
+
   localstack:
     image: localstack/localstack
+    container_name: localstack
     ports:
       - "4566:4566"
     environment:
