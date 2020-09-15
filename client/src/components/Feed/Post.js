@@ -148,9 +148,10 @@ const Post = ({
         (comment1, index, self) =>
           index === self.findIndex((comment2) => comment2._id === comment1._id),
       );
-      if (previousComments.length === allComments.length) {
+      if (previousComments.length === allComments.length || allComments.length === commentsCount) {
         dispatchPostAction(TOGGLE_COMMENTS);
-      } else {
+      } 
+      if (previousComments.length !== allComments.length) {
         dispatchPostAction(
           SET_COMMENTS,
           "comments",
