@@ -96,7 +96,7 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
             <>
               <OrgPost />
               <div className="message-content-recipient">
-                Hi here! I want to help!
+                Hi here!I'd like to help out!
               </div>
             </>
           ) : (
@@ -109,9 +109,9 @@ const CurrentChat = ({ toggleMobileChatList, setToggleMobileChatList }) => {
       <MessagesContainer>
         {chat?.map((message) => (
           <>
-            <Recipient fromPost />
+            <Recipient />
             <Sender message={message} />
-            {/* <Sender fromPost /> */}
+            <Sender fromPost />
           </>
         ))}
       </MessagesContainer>
