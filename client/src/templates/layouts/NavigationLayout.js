@@ -245,11 +245,11 @@ const TEXT_FEEDBACK = [
 ];
 
 const StyledDrawer = styled(Drawer)`
-      .am-drawer-draghandle {
-        visibility: hidden;
-      }
-    `;
-    
+  .am-drawer-draghandle {
+    visibility: hidden;
+  }
+`;
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
