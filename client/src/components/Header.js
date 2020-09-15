@@ -29,6 +29,8 @@ const StyledNavBar = styled(NavBar)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
     margin-top: 0;
+    padding-left: 23px;
+    padding-top: 10px;
   }
   .am-navbar-title {
     display: none;
@@ -131,27 +133,27 @@ export default ({
       </Menu.Item>
       <Menu.Divider />
       <SubMenu title="Organisations">
-          <Menu.Item>
-            <Link
-              id={GTM.nav.prefix + GTM.nav.addOrg}
-              to="/create-organisation-profile"
-            >
-              Add Organisation
-            </Link>
-          </Menu.Item>
-          <Menu.Divider />
-          {user?.organisations?.length > 0
-            ? user?.organisations?.map((organisation) => (
-                <Menu.Item key={organisation._id}>
-                  <Link to={`/organisation/${organisation._id}`}>
-                    {organisation.name}
-                  </Link>
-                </Menu.Item>
-              ))
-            : null}
-          {user?.organisations?.length > 0}
-        </SubMenu>
+        <Menu.Item>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            Add Organisation
+          </Link>
+        </Menu.Item>
         <Menu.Divider />
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <Menu.Item key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
+                </Link>
+              </Menu.Item>
+            ))
+          : null}
+        {user?.organisations?.length > 0}
+      </SubMenu>
+      <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
