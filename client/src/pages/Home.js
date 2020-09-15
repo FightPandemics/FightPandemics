@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
@@ -52,6 +52,7 @@ export const Title = styled(TextLabel)`
 
 const MainContainer = styled.div`
   width: 100%;
+  direction: ${(props) => (props.direction ? props.direction : "ltr")};
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
@@ -162,7 +163,10 @@ const Home = (props) => {
   const { t } = useTranslation();
 
   return (
-    <MainContainer className="text-center home">
+    <MainContainer
+      style={{ direction: props.direction }}
+      className="text-center home"
+    >
       <StyledIntro>
         <IntroText>
           <Title color="white" size={theme.typography.size.xlarge} weight="500">
@@ -172,7 +176,10 @@ const Home = (props) => {
           <StyledStrapline level={2} margin="none">
             {t("headline")}
           </StyledStrapline>
-          <Trans i18nKey="tagline" components={[<StyledP/>, <StyledP/>]}></Trans>
+          <Trans
+            i18nKey="tagline"
+            components={[<StyledP />, <StyledP />]}
+          ></Trans>
         </IntroText>
       </StyledIntro>
 
