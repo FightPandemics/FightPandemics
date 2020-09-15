@@ -167,7 +167,7 @@ module "main" {
       value = "warn"
     },
     {
-      name  = "LOGGER_HOST",
+      name  = "LOGGER_HOST"
       value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_host[0].value
     },
     {
