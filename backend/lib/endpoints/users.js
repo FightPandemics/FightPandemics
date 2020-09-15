@@ -169,7 +169,7 @@ async function routes(app) {
     "/:userId/avatar",
     { preValidation: [app.authenticate], schema: createUserAvatarSchema },
     async (req) => {
-      const file = req.raw.files.file.data;
+      const file = req.raw.files.file;
       const userId = req.params.userId;
 
       const [err, user] = await app.to(User.findById(userId));
