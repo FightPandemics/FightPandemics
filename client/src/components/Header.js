@@ -10,7 +10,7 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
-
+import { NotificationDropDown } from "../components/Notifications/NotificationDropDown";
 import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
 
@@ -131,27 +131,27 @@ export default ({
       </Menu.Item>
       <Menu.Divider />
       <SubMenu title="Organisations">
-          <Menu.Item>
-            <Link
-              id={GTM.nav.prefix + GTM.nav.addOrg}
-              to="/create-organisation-profile"
-            >
-              Add Organisation
-            </Link>
-          </Menu.Item>
-          <Menu.Divider />
-          {user?.organisations?.length > 0
-            ? user?.organisations?.map((organisation) => (
-                <Menu.Item key={organisation._id}>
-                  <Link to={`/organisation/${organisation._id}`}>
-                    {organisation.name}
-                  </Link>
-                </Menu.Item>
-              ))
-            : null}
-          {user?.organisations?.length > 0}
-        </SubMenu>
+        <Menu.Item>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            Add Organisation
+          </Link>
+        </Menu.Item>
         <Menu.Divider />
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <Menu.Item key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
+                </Link>
+              </Menu.Item>
+            ))
+          : null}
+        {user?.organisations?.length > 0}
+      </SubMenu>
+      <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
@@ -197,6 +197,9 @@ export default ({
                   Profile
                 </a>
               </Dropdown>
+            </li>
+            <li>
+              <NotificationDropDown />
             </li>
           </>
         ) : (
