@@ -40,5 +40,3 @@ export const languages = {
   uk: { value: "Українська", text: "Ukrainian (Українська)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },
 };
-
-export const rtlLanguages = ["ar", "he"];
