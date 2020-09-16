@@ -93,6 +93,11 @@ const HELP_TYPE = {
   OFFER: "Offering help",
 };
 
+const HELP_OPTION_TYPE = {
+  REQUEST: "Request Help",
+  OFFER: "Offer Help",
+};
+
 const initialState = {
   selectedType: "ALL",
   showFilters: false,
@@ -528,6 +533,10 @@ const Feed = (props) => {
       if (postType === HELP_TYPE.REQUEST) {
         // requesting help
         handleChangeType({ key: value });
+        handleOnboardingOptions(
+          HELP_OPTION_TYPE.REQUEST,
+          "offer or request help",
+        );
         if (helpType === "medical") {
           let option = filters[2].options[0];
           handleOnboardingOptions(option, "type");
@@ -540,6 +549,10 @@ const Feed = (props) => {
       } else {
         // offering help
         handleChangeType({ key: value });
+        handleOnboardingOptions(
+          HELP_OPTION_TYPE.OFFER,
+          "offer or request help",
+        );
         if (providers) {
           let organisationFilter = providers.filter(
             (option) => option === "As an Organisation",
