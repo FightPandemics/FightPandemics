@@ -85,41 +85,6 @@ const Content = styled.div`
 const Online = styled.div`
   visibility: ${({ online }) => (online === true ? "visible" : "hidden")};
 `;
-const MenuItem = ({
-  path,
-  author,
-  action,
-  avatar,
-  actionAvatar,
-  createdAt,
-  online,
-}) => {
-  const now = Date.now();
-
-  return (
-    <ItemContainer href={path}>
-      <TextAvatar>{avatar}</TextAvatar>
-      <img src={actionAvatar} className="action-avatar" />
-      <Content>
-        <div>
-          <span>{author}</span> {action}
-        </div>
-        <div>{createdAt}</div>
-      </Content>
-      <Online online={online}>
-        <svg
-          width="8"
-          height="8"
-          viewBox="0 0 8 8"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="4" cy="4" r="4" fill="#22D9A2" />
-        </svg>
-      </Online>
-    </ItemContainer>
-  );
-};
 
 // Menu
 const StyledMenu = styled(Menu)`
@@ -155,6 +120,42 @@ const NoMoreNotifications = styled(ItemContainer)`
   justify-content: center;
   font-size: 0.8em;
 `;
+
+const MenuItem = ({
+  path,
+  author,
+  action,
+  avatar,
+  actionAvatar,
+  createdAt,
+  online,
+}) => {
+  const now = Date.now();
+
+  return (
+    <ItemContainer href={path}>
+      <TextAvatar>{avatar}</TextAvatar>
+      <img src={actionAvatar} className="action-avatar" />
+      <Content>
+        <div>
+          <span>{author}</span> {action}
+        </div>
+        <div>{createdAt}</div>
+      </Content>
+      <Online online={online}>
+        <svg
+          width="8"
+          height="8"
+          viewBox="0 0 8 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="4" cy="4" r="4" fill="#22D9A2" />
+        </svg>
+      </Online>
+    </ItemContainer>
+  );
+};
 
 const menu = (
   <StyledMenu style={{ ...menuStyle }}>
@@ -218,7 +219,7 @@ const menu = (
 export const NotificationDropDown = (props) => {
   return (
     <>
-      <Dropdown overlay={menu} visible placement="bottomRight">
+      <Dropdown overlay={menu} placement="bottomRight">
         <svg
           onClick={(e) => console.log(e)}
           style={{ position: "relative", top: "4px", cursor: "pointer" }}
