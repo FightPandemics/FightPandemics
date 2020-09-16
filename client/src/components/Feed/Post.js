@@ -170,6 +170,12 @@ const Post = ({
     limit.current = currentLimit * page;
   };
 
+  const showLessComments = () => {
+    comments.splice(5);
+    dispatchPostAction(RESET_PAGE);
+    dispatchPostAction(TOGGLE_COMMENTS);
+  };
+
   useEffect(() => {
     if (postId) {
       loadComments();
@@ -422,6 +428,13 @@ const Post = ({
           {loadMoreComments && commentsCount >= 5 ? (
             <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
               {isLoading ? "Loading..." : "Show More Comments"}
+            </StyledLoadMoreButton>
+          ) : (
+            <></>
+          )}
+          {!loadMoreComments && commentsCount > 5 ? (
+            <StyledLoadMoreButton disabled={isLoading} onClick={showLessComments}>
+              {"Show Less Comments"}
             </StyledLoadMoreButton>
           ) : (
             <></>
