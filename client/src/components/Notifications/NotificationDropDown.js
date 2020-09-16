@@ -136,7 +136,6 @@ const menuStyle = {
   width: "300px",
   height: "390px",
   borderRadius: "10px",
-  overflow: "hidden",
 };
 const Arrow = styled.div`
   width: 1.5em;
@@ -144,10 +143,12 @@ const Arrow = styled.div`
   background: #425af2;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  position: absolute;
-  right: 4.7em;
-  top: 3.3em;
+  position: relative;
+  left: 3.89em;
+  bottom: 0.9em;
 `;
 const NoMoreNotifications = styled(ItemContainer)`
   background-color: rgba(245, 246, 251, 0.8);
@@ -170,6 +171,7 @@ const menu = (
       }}
     >
       <a style={{ color: "white" }}>Notifications</a>
+      <Arrow />
       <Link
         to="/edit-account"
         style={{ color: "white", position: "relative", top: ".2em" }}
@@ -188,29 +190,37 @@ const menu = (
         </svg>
       </Link>
     </Menu.Item>
-    <div>
-      {DemoNotifications.map((each) => (
-        <MenuItem
-          path={each.path}
-          author={each.author}
-          action={each.action}
-          actionAvatar={each.actionAvatar}
-          createdAt={each.createdAt}
-          avatar={each.avatar}
-          online={each.online}
-        />
-      ))}
+    <div
+      style={{
+        overflow: "hidden",
+        borderRadius: "0 0 10px 10px",
+        height: "335px",
+      }}
+    >
+      <div>
+        {DemoNotifications.map((each) => (
+          <MenuItem
+            path={each.path}
+            author={each.author}
+            action={each.action}
+            actionAvatar={each.actionAvatar}
+            createdAt={each.createdAt}
+            avatar={each.avatar}
+            online={each.online}
+          />
+        ))}
+      </div>
+      <NoMoreNotifications>No more notifications</NoMoreNotifications>
     </div>
-    <NoMoreNotifications>No more notifications</NoMoreNotifications>
   </StyledMenu>
 );
 
 export const NotificationDropDown = (props) => {
   return (
     <>
-      <Arrow />
-      <Dropdown overlay={menu} placement="bottomRight">
+      <Dropdown overlay={menu} visible placement="bottomRight">
         <svg
+          onClick={(e) => console.log(e)}
           style={{ position: "relative", top: "4px", cursor: "pointer" }}
           width="19"
           height="19"
