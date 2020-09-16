@@ -108,8 +108,6 @@ const Arrow = styled.div`
   background: #425af2;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   position: relative;
   left: 3.89em;
