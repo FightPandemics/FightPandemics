@@ -1,39 +1,79 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Menu, Dropdown } from "antd";
 import TextAvatar from "../TextAvatar/index";
+import commentpost from "assets/icons/notification-icons/comment-post.svg";
+import cmntflwpost from "../../assets/icons/notification-icons/comment-following-post.svg";
+import likeheart from "../../assets/icons/notification-icons/like-heart.svg";
+import sharedpost from "../../assets/icons/notification-icons/shared-post.svg";
+const DemoNotifications = [
+  {
+    author: "April Qoo",
+    action: "commented on your post",
+    path: "/feed",
+    actionAvatar: commentpost,
+    createdAt: "30 minutes ago",
+    avatar: "AQ",
+    online: true,
+  },
+  {
+    author: "Kimi Rails",
+    action: "shared your post",
+    path: "/feed",
+    actionAvatar: sharedpost,
+    createdAt: "1 hour ago",
+    avatar: "KR",
+    online: true,
+  },
+  {
+    author: "Jeremy Pan",
+    action: "liked your post",
+    path: "/feed",
+    actionAvatar: likeheart,
+    createdAt: "14 hours ago",
+    avatar: "JP",
+    online: true,
+  },
+  {
+    author: "Sarah Sharp",
+    action: "commented on a post you're following",
+    path: "/feed",
+    actionAvatar: cmntflwpost,
+    createdAt: "Yesterday",
+    avatar: "SS",
+    online: false,
+  },
+];
 
 // Menu Item
-const HeartIcon = () => {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="9" cy="9" r="9" fill="#FF5656" />
-      <path
-        d="M14.0004 6.54527C13.5538 5.6286 12.2671 4.8786 10.7704 5.31527C10.0553 5.52185 9.43128 5.96486 9.00044 6.57193C8.56961 5.96486 7.94562 5.52185 7.23044 5.31527C5.73044 4.88527 4.44711 5.6286 4.00044 6.54527C3.37378 7.8286 3.63378 9.27193 4.77378 10.8353C5.66711 12.0586 6.94378 13.2986 8.79711 14.7386C8.85568 14.7843 8.92783 14.8091 9.00211 14.8091C9.07639 14.8091 9.14854 14.7843 9.20711 14.7386C11.0571 13.3019 12.3371 12.0719 13.2304 10.8353C14.3671 9.27193 14.6271 7.8286 14.0004 6.54527Z"
-        fill="white"
-      />
-    </svg>
-  );
-};
 const ItemContainer = styled.a`
+  position: relative;
   border-bottom: 1px solid rgba(225, 225, 225, 1);
-  height: 5em;
+  min-height: 5em;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  :hover {
+    background-color: rgba(243, 244, 254, 0.8);
+    color: inherit;
+  }
+  .action-avatar {
+    position: absolute;
+    top: 2.8em;
+    left: 3.5em;
+  }
 `;
 const Content = styled.div`
-  width: 70%;
+  width: 60%;
+  position: absolute;
+  top: 1.2em;
+  right: 3em;
   div:first-child {
     font-size: 0.85em;
     padding-bottom: 3px;
     font-weight: 500;
+    line-height: 1.3;
     > span {
       font-weight: 700;
     }
@@ -42,12 +82,14 @@ const Content = styled.div`
     font-size: 0.75em;
   }
 `;
-const Online = styled.div``;
+const Online = styled.div`
+  visibility: ${({ online }) => (online === true ? "visible" : "hidden")};
+`;
 const MenuItem = ({
   path,
   author,
-  avatar,
   action,
+  avatar,
   actionAvatar,
   createdAt,
   online,
@@ -56,10 +98,8 @@ const MenuItem = ({
 
   return (
     <ItemContainer href={path}>
-      <TextAvatar>
-        AQ
-        {actionAvatar}
-      </TextAvatar>
+      <TextAvatar>{avatar}</TextAvatar>
+      <img src={actionAvatar} className="action-avatar" />
       <Content>
         <div>
           <span>{author}</span> {action}
@@ -94,17 +134,25 @@ const StyledMenu = styled(Menu)`
 
 const menuStyle = {
   width: "300px",
-  height: "436px",
+  height: "390px",
   borderRadius: "10px",
+  overflow: "hidden",
 };
 const Arrow = styled.div`
   width: 1.5em;
   height: 2em;
   background: #425af2;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  position: relative;
-  left: 3.9em;
-  bottom: 0.8em;
+  position: absolute;
+  right: 4.7em;
+  top: 3.3em;
+`;
+const NoMoreNotifications = styled(ItemContainer)`
+  background-color: rgba(245, 246, 251, 0.8);
+  justify-content: center;
+  font-size: 0.8em;
 `;
 
 const menu = (
@@ -118,12 +166,12 @@ const menu = (
         position: "relative",
         bottom: "3.6px",
         color: "white",
+        boxShadow: "0 4px 5px rgba(0,0,0,0.22)",
       }}
     >
       <a style={{ color: "white" }}>Notifications</a>
-      <Arrow />
-      <a
-        href="/edit-account"
+      <Link
+        to="/edit-account"
         style={{ color: "white", position: "relative", top: ".2em" }}
       >
         <svg
@@ -138,47 +186,44 @@ const menu = (
             fill="white"
           />
         </svg>
-      </a>
+      </Link>
     </Menu.Item>
     <div>
-      <MenuItem
-        path="/feed"
-        author="April Qoo"
-        action="liked your post"
-        actionAvatar={HeartIcon}
-        createdAt="30 minutes ago"
-        avatar=""
-        online={true}
-      />
-      <MenuItem
-        path="/feed"
-        author="April Qoo"
-        action="commented on your post"
-        actionAvatar={HeartIcon}
-        createdAt="1 hour ago"
-        avatar=""
-        online={true}
-      />
+      {DemoNotifications.map((each) => (
+        <MenuItem
+          path={each.path}
+          author={each.author}
+          action={each.action}
+          actionAvatar={each.actionAvatar}
+          createdAt={each.createdAt}
+          avatar={each.avatar}
+          online={each.online}
+        />
+      ))}
     </div>
+    <NoMoreNotifications>No more notifications</NoMoreNotifications>
   </StyledMenu>
 );
 
-export const NotificationDropDown = () => {
+export const NotificationDropDown = (props) => {
   return (
-    <Dropdown overlay={menu} visible placement="bottomRight">
-      <svg
-        style={{ position: "relative", top: "4px", cursor: "pointer" }}
-        width="19"
-        height="19"
-        viewBox="0 0 19 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M9.33333 23.668C10.6167 23.668 11.6667 22.618 11.6667 21.3346H7C7 22.618 8.05 23.668 9.33333 23.668ZM16.3333 16.668V10.8346C16.3333 7.25297 14.4317 4.25464 11.0833 3.4613V2.66797C11.0833 1.69964 10.3017 0.917969 9.33333 0.917969C8.365 0.917969 7.58333 1.69964 7.58333 2.66797V3.4613C4.24667 4.25464 2.33333 7.2413 2.33333 10.8346V16.668L0 19.0013V20.168H18.6667V19.0013L16.3333 16.668ZM14 17.8346H4.66667V10.8346C4.66667 7.9413 6.42833 5.58464 9.33333 5.58464C12.2383 5.58464 14 7.9413 14 10.8346V17.8346Z"
-          fill="#425AF2"
-        />
-      </svg>
-    </Dropdown>
+    <>
+      <Arrow />
+      <Dropdown overlay={menu} placement="bottomRight">
+        <svg
+          style={{ position: "relative", top: "4px", cursor: "pointer" }}
+          width="19"
+          height="19"
+          viewBox="0 0 19 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.33333 23.668C10.6167 23.668 11.6667 22.618 11.6667 21.3346H7C7 22.618 8.05 23.668 9.33333 23.668ZM16.3333 16.668V10.8346C16.3333 7.25297 14.4317 4.25464 11.0833 3.4613V2.66797C11.0833 1.69964 10.3017 0.917969 9.33333 0.917969C8.365 0.917969 7.58333 1.69964 7.58333 2.66797V3.4613C4.24667 4.25464 2.33333 7.2413 2.33333 10.8346V16.668L0 19.0013V20.168H18.6667V19.0013L16.3333 16.668ZM14 17.8346H4.66667V10.8346C4.66667 7.9413 6.42833 5.58464 9.33333 5.58464C12.2383 5.58464 14 7.9413 14 10.8346V17.8346Z"
+            fill="#425AF2"
+          />
+        </svg>
+      </Dropdown>
+    </>
   );
 };
