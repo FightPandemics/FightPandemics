@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
 import { Trans, useTranslation } from "react-i18next";
 import InputError from "components/Input/InputError";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
-import { validateEmail } from "utils/validators";
 import axios from "axios";
 import GTM from "constants/gtm-tags";
 import {
@@ -32,7 +31,6 @@ const INITIAL_STATE = {
   postType: "Offering help",
   providers: [],
   location: "",
-  email: "",
 };
 
 const STEP_1_ANSWERS = [
@@ -71,13 +69,11 @@ const Step1 = (props) => {
   };
 
   const getAnswer = (answer) => {
-    if (answer === "As a Volunteer")
-      return t("onboarding.offerHelp.volunteer");
+    if (answer === "As a Volunteer") return t("onboarding.offerHelp.volunteer");
     else if (answer === "As a Donor/Investor")
       return t("onboarding.offerHelp.donorInvestor");
-    else
-      return t("onboarding.offerHelp.organisation");
-  }
+    else return t("onboarding.offerHelp.organisation");
+  };
 
   return (
     <WizardStep>
@@ -159,90 +155,6 @@ const Step2 = (props) => {
     </WizardStep>
   );
 };
-const Step3 = (props) => {
-  const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(false);
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const validated = !email || validateEmail(email);
-    setValid(validated);
-  }, [email]);
-
-  const onChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onSubmit = () => {
-    props.update("email", email);
-  };
-
-  return (
-    <WizardStep className="wizard-step">
-      <WizardProgress className="text-primary">
-        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
-      </WizardProgress>
-      <StepTitle>{t("onboarding.common.whatEmail")}</StepTitle>
-      <StyledDiv>
-        <Trans i18nKey="onboarding.common.respectPrivacy" components={[<Link to="/privacy-policy"/>, <Link to="/terms-conditions"/>]}></Trans>
-      </StyledDiv>
-      <WizardFormWrapper>
-        <WizardFormGroup controlId="userEmailGroup">
-          <StyledTextInput
-            type="email"
-            id={
-              GTM.offerHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.enterEmail
-            }
-            name="email"
-            label={t("profile.individual.eamil")}
-            className={!valid && "has-error"}
-            placeholder={t("onboarding.common.enterEmail")}
-            onChange={onChange}
-            value={email}
-            required
-          />
-          {!valid && <InputError>{t("profile.org.invalidEmail")}</InputError>}
-        </WizardFormGroup>
-        <WizardSubmit
-          disabled={email === "" || !valid}
-          id={
-            GTM.offerHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.submit
-          }
-          primary="true"
-          onClick={onSubmit}
-        >
-          {t("onboarding.common.submit")}
-        </WizardSubmit>
-        <SkipLink
-          id={
-            GTM.offerHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.skip
-          }
-        >
-          <span
-            id={
-              GTM.offerHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.skip
-            }
-            onClick={onSubmit}
-          >
-            {t("onboarding.common.skip")}
-          </span>
-        </SkipLink>
-      </WizardFormWrapper>
-    </WizardStep>
-  );
-};
 
 const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
@@ -255,15 +167,8 @@ const OfferHelp = withRouter((props) => {
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
-    if (key === "email") {
+    if (key === "location") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
-      if (value) {
-        try {
-          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-        } catch (err) {
-          console.log(err);
-        }
-      }
       props.history.push({
         pathname: "/feed",
         state: updatedAnswers,
@@ -281,7 +186,6 @@ const OfferHelp = withRouter((props) => {
           >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
         )}
       </Transition>

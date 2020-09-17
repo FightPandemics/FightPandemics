@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
-import { withRouter, Link } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
-import InputError from "components/Input/InputError";
+import { withRouter } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
-import { validateEmail } from "utils/validators";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 import {
   AnswerButton,
   ShowAnywhere,
@@ -15,13 +12,8 @@ import {
   WizardStep,
   WizardNav,
   StepTitle,
-  StyledTextInput,
   WizardProgress,
   WizardFormWrapper,
-  WizardFormGroup,
-  WizardSubmit,
-  SkipLink,
-  StyledDiv,
 } from "components/StepWizard";
 import GTM from "constants/gtm-tags";
 
@@ -29,7 +21,6 @@ const INITIAL_STATE = {
   postType: "Requesting help",
   helpType: "",
   location: "",
-  email: "",
 };
 
 const Step1 = (props) => {
@@ -53,7 +44,8 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("medical")}
       >
-        <strong>{t("onboarding.needHelp.medical")}:</strong> {t("onboarding.needHelp.haveCovidSymptoms")}
+        <strong>{t("onboarding.needHelp.medical")}:</strong>{" "}
+        {t("onboarding.needHelp.haveCovidSymptoms")}
       </AnswerButton>
       <AnswerButton
         id={
@@ -64,7 +56,8 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("other")}
       >
-        <strong>{t("onboarding.needHelp.other")}:</strong> {t("onboarding.needHelp.otherDesc")}
+        <strong>{t("onboarding.needHelp.other")}:</strong>{" "}
+        {t("onboarding.needHelp.otherDesc")}
       </AnswerButton>
     </WizardStep>
   );
@@ -121,82 +114,6 @@ const Step2 = (props) => {
   );
 };
 
-const Step3 = (props) => {
-  const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(false);
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const validated = !email || validateEmail(email);
-    setValid(validated);
-  }, [email]);
-
-  const onChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onSubmit = () => {
-    props.update("email", email);
-  };
-
-  return (
-    <WizardStep className="wizard-step">
-      <WizardProgress className="text-primary">
-        {t("common.question")} {props.currentStep}/{props.totalSteps}
-      </WizardProgress>
-      <StepTitle>{t("onboarding.common.whatEmail")}</StepTitle>
-      <StyledDiv>
-        <Trans i18nKey="onboarding.common.respectPrivacy" components={[<Link to="/privacy-policy"/>, <Link to="/terms-conditions"/>]}></Trans>
-      </StyledDiv>
-      <WizardFormWrapper>
-        <WizardFormGroup controlId="userEmailGroup">
-          <StyledTextInput
-            id={
-              GTM.requestHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.enterEmail
-            }
-            type="email"
-            name="email"
-            label={t("auth.email")}
-            className={!valid && "has-error"}
-            placeholder={t("onboarding.common.enterEmail")}
-            onChange={onChange}
-            value={email}
-            required
-          />
-          {!valid && <InputError>{t("profile.org.invalidEmail")}</InputError>}
-        </WizardFormGroup>
-        <WizardSubmit
-          id={
-            GTM.requestHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.submit
-          }
-          disabled={email === "" || !valid}
-          primary="true"
-          onClick={onSubmit}
-        >
-          {t("onboarding.common.submit")}
-        </WizardSubmit>
-        <SkipLink
-          id={
-            GTM.requestHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.skip
-          }
-          onClick={onSubmit}
-        >
-          {t("onboarding.common.skip")}
-        </SkipLink>
-      </WizardFormWrapper>
-    </WizardStep>
-  );
-};
-
 const NeedHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const [transition, setTransition] = useState(false);
@@ -208,15 +125,8 @@ const NeedHelp = withRouter((props) => {
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
-    if (key === "email") {
+    if (key === "location") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
-      if (value) {
-        try {
-          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-        } catch (err) {
-          console.log(err);
-        }
-      }
       props.history.push({
         pathname: "/feed",
         state: updatedAnswers,
@@ -234,7 +144,6 @@ const NeedHelp = withRouter((props) => {
           >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
         )}
       </Transition>
