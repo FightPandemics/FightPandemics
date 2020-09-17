@@ -26,7 +26,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
             var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
             medicalHelpAnswer.should('be.visible');
             medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
-            
+
         });
 
         it('Need other help answer option is visible and clickable', () => {
@@ -96,15 +96,10 @@ describe('FightPandemics Request Help Questionnaire', () => {
             showPostings.click({ force: true });
         });
 
-
         it('Back button is visible and clickable for question 2', () => {
             clickButton(requestHelpQuestion.getBackButtonTwo());
         });
 
-
-        it('Next button is visible and clickable for question 2', () => {
-            clickButton(requestHelpQuestion.getNextButtonTwo());
-        });
     });
 
     function clickButton(button) {
