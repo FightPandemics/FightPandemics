@@ -1,11 +1,15 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Typography } from "antd";
+import { Typography, Menu, Dropdown } from "antd";
 import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
+import i18n from "../../i18n";
+import { localization, languages } from "constants/languages";
+import globe from "assets/icons/globe.svg";
+import SvgIcon from "components/Icon/SvgIcon";
 import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
@@ -110,6 +114,29 @@ const FeedbackItem = styled(List.Item)`
 
   &.am-list-item-active {
     background: ${tropicalBlue};
+  }
+`;
+
+const LanguageSwitchItem = styled(List.Item)`
+  background: unset;
+  padding-left: 2.1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
+  font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    pointer-events: none;
+    & .am-list-content {
+      color: ${white};
+      pointer: none;
+      line-height: 6rem;
+      padding: 0;
+      margin: ${(props) =>
+        typeof props.margin != undefined ? props.margin : "inherit"};
+    }
   }
 `;
 
@@ -314,6 +341,21 @@ const NavigationLayout = (props) => {
     toggleModal(currentModal);
     toggleModal(nextModal);
   };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item key={key}>
+          <a onClick={() => changeLanguage(key)}>{label.value}</a>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
 
   const submitFeedbackForm = async () => {
     feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
@@ -547,6 +589,12 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <Space height="10vh" limitMobileHeight />
+      <Dropdown overlay={languageMenu} trigger={["click"]}>
+        <LanguageSwitchItem>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+          {languages[localization[i18n.language]].value}
+        </LanguageSwitchItem>
+      </Dropdown>
       <FeedbackItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
@@ -577,6 +625,12 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <Space height="33vh" />
+      <Dropdown overlay={languageMenu} trigger={["click"]}>
+        <LanguageSwitchItem>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+          {languages[localization[i18n.language]].value}
+        </LanguageSwitchItem>
+      </Dropdown>
       <FeedbackItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
