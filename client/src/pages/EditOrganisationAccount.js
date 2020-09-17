@@ -211,12 +211,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
     "Organisation Contact E-mail": [
       "email",
       email,
-      "Email is required",
+      "",
       true,
-      {
-        value: 50,
-        message: "Max. 50 characters",
-      },
     ],
   };
 
