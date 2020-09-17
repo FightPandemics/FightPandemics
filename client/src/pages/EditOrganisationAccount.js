@@ -260,7 +260,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
               required: value[2],
               maxLength: value[4],
               validate: value[3]
-                ? (email) => validateEmail(email) || "Invalid email"
+                ? (email) => validateEmail(email) || "`${validateEmail.errorMessage}`"
                 : null,
             })}
             error={errors[value[0]]}
