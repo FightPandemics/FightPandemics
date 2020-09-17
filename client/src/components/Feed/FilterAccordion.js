@@ -116,7 +116,7 @@ const FilterAccord = ({ gtmPrefix }) => {
                     "tag-selectable " +
                     ((selectedOptions[filter.label] &&
                       selectedOptions[filter.label].includes(option)) ||
-                    option.toLowerCase().includes(selectedType.toLowerCase())
+                    option.toLowerCase().includes(selectedType?.toLowerCase())
                       ? "tag-selected"
                       : "")
                   }
