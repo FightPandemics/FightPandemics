@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
@@ -128,7 +128,6 @@ export default ({
   user,
   onFeedbackIconClick,
 }) => {
-  const [isDesktop, setDesktop] = useState(window.innerWidth > 1279);
   const { t } = useTranslation();
 
   const changeLanguage = (lng) => {
@@ -136,22 +135,11 @@ export default ({
     window.localStorage.setItem("locale", lng);
   };
 
-  const updateMedia = () => {
-    setDesktop(window.innerWidth > 1279);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
-
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
-          <a onClick={() => changeLanguage(key)}>
-            {isDesktop ? label.text : label.value}
-          </a>
+          <a onClick={() => changeLanguage(key)}>{label.text}</a>
         </Menu.Item>
       ))}
     </Menu>
