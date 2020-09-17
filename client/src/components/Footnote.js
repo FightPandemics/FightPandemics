@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Menu, Dropdown } from "antd";
 import styled from "styled-components";
 
-import i18n from "../i18n";
-
 import { theme, mq } from "constants/theme";
-import { localization, languages } from "constants/languages";
-import SvgIcon from "./Icon/SvgIcon";
-import globe from "assets/icons/globe.svg";
 
 const { colors } = theme;
 
@@ -68,33 +62,7 @@ const StyledSpan = styled.span`
 
 export default () => {
   const currentYear = new Date().getFullYear();
-  const [isDesktop, setDesktop] = useState(window.innerWidth > 1279);
   const { t } = useTranslation();
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    window.localStorage.setItem("locale", lng);
-  };
-
-  const updateMedia = () => {
-    setDesktop(window.innerWidth > 1279);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
-
-  const menu = (
-    <Menu>
-      {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
-          <a onClick={() => changeLanguage(key)}>
-            {isDesktop ? label.text : label.value}
-          </a>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
 
   return (
     <StyledFooter>
@@ -131,17 +99,6 @@ export default () => {
         |
         <StyledSpan as={Link} to={"/cookies-policy"}>
           {t("footer.cookiesPolicy")}
-        </StyledSpan>
-        |
-        <StyledSpan>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          <Dropdown
-            overlay={menu}
-            placement="topLeft"
-            trigger={["click", "hover"]}
-          >
-            <Link to="">{languages[localization[i18n.language]].value}</Link>
-          </Dropdown>
         </StyledSpan>
       </StyledDiv>
     </StyledFooter>

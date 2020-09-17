@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
-
+import i18n from "../i18n";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+import globe from "assets/icons/globe.svg";
+import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
+import { localization, languages } from "constants/languages";
 import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;
@@ -125,7 +128,34 @@ export default ({
   user,
   onFeedbackIconClick,
 }) => {
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1279);
   const { t } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1279);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item key={key}>
+          <a onClick={() => changeLanguage(key)}>
+            {isDesktop ? label.text : label.value}
+          </a>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
 
   const menu = (
     <Menu>
@@ -190,6 +220,14 @@ export default ({
           >
             {t("feed.title")}
           </NavLink>
+        </li>
+        <li>
+          <Dropdown overlay={languageMenu} trigger={["click"]}>
+            <Link to="">
+              <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+              {languages[localization[i18n.language]].value} <DownOutlined />
+            </Link>
+          </Dropdown>
         </li>
         {isAuthenticated ? (
           <>
