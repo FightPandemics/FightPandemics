@@ -100,10 +100,6 @@ describe('FightPandemics Request Help Questionnaire', () => {
             clickButton(requestHelpQuestion.getBackButtonTwo());
         });
 
-
-        it('Next button is visible and clickable for question 2', () => {
-            clickButton(requestHelpQuestion.getNextButtonTwo());
-        });
     });
 
     function clickButton(button) {
