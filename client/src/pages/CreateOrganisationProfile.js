@@ -42,6 +42,7 @@ import {
   createOrganisationFormReducer,
   initialState,
 } from "hooks/reducers/organisationReducers";
+import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
@@ -235,9 +236,10 @@ const CreateOrgProfile = (props) => {
               name="email"
               ref={register({
                 required: "Email is required",
+                validate: (email) => validateEmail(email) || "Invalid email",
                 maxLength: {
-                  value: 200,
-                  message: "Max. 200 characters",
+                  value: 50,
+                  message: "Max. 50 characters",
                 },
                 validate: (email) => validateEmail(email) || "Invalid email",
               })}
@@ -245,8 +247,8 @@ const CreateOrgProfile = (props) => {
             {validEmail || errors.email || email === "" ? (
               ""
             ) : (
-              <InputError>Email is invalid</InputError>
-            )}
+                <InputError>Email is invalid</InputError>
+              )}
             <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
           <WhiteSpace />
@@ -388,7 +390,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions && validEmail)}
+            disabled={!(privacy && conditions && validateEmail(email))}
             id={
               GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
             }

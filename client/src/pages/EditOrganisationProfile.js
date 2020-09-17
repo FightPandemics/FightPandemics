@@ -22,8 +22,11 @@ import { validateURL } from "utils/validators";
 import {
   APPSTORE_URL,
   PLAYSTORE_URL,
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_URL,
   TWITTER_URL,
+  GITHUB_URL,
 } from "constants/urls";
 import {
   fetchOrganisation,
@@ -42,6 +45,32 @@ import {
 const URLS_CONFIG = {
   appStore: ["Link to Apple Store", {}, APPSTORE_URL],
   playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
+  facebook: [
+    "Facebook URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9.]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and . are allowed",
+      },
+      minLength: {
+        value: 5,
+        message: "Min. length is 5 characters",
+      },
+    },
+    FACEBOOK_URL,
+  ],
+  instagram: [
+    "instagram URL",
+    {
+      pattern: {
+        value: /[a-z\d-_]{1,255}\s*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and dashes . or _ are allowed",
+      },
+    },
+    INSTAGRAM_URL,
+  ],
   twitter: [
     "Twitter URL",
     {
@@ -63,6 +92,17 @@ const URLS_CONFIG = {
       },
     },
     LINKEDIN_URL,
+  ],
+  github: [
+    "Github URL",
+    {
+      pattern: {
+        value: /^[a-zA-Z0-9_-]*$/,
+        message:
+          "Invalid entry: only alphanumeric characters and _ are allowed",
+      },
+    },
+    GITHUB_URL,
   ],
   website: [
     "Website",

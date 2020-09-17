@@ -214,8 +214,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
       "Email is required",
       true,
       {
-        value: 200,
-        message: "Max. 200 characters",
+        value: 50,
+        message: "Max. 50 characters",
       },
     ],
   };
@@ -388,8 +388,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
           <ErrorAlert message={orgProfileState.error} />
         </>
       ) : (
-        ""
-      )}
+            ""
+          )}
       <Container>
         <EditLayout>
           <TitlePictureWrapper>

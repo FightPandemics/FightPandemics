@@ -244,6 +244,12 @@ const TEXT_FEEDBACK = [
   { stateKey: "generalFeedback", label: "Any other feedback for us?" },
 ];
 
+const StyledDrawer = styled(Drawer)`
+  .am-drawer-draghandle {
+    visibility: hidden;
+  }
+`;
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
@@ -601,54 +607,56 @@ const NavigationLayout = (props) => {
     </MenuContainer>
   );
 
-  const renderNavigationBar = () => (
-    <div>
-      <Drawer
-        style={{
-          minHeight: document.documentElement.clientHeight,
-          ...drawerStyles,
-        }}
-        enableDragHandle
-        open={drawerOpened}
-        onOpenChange={toggleDrawer}
-        position="right"
-        sidebar={DrawerMenu()}
-        sidebarStyle={sidebarStyle}
-        className="app-drawer"
-      >
-        <Header
-          authLoading={authLoading}
-          onMenuClick={toggleDrawer}
-          isAuthenticated={isAuthenticated}
-          user={user}
-          onFeedbackIconClick={() =>
-            dispatchAction(TOGGLE_STATE, "ratingModal")
-          }
-        />
+  const renderNavigationBar = () => {
+    return (
+      <div>
+        <StyledDrawer
+          style={{
+            minHeight: document.documentElement.clientHeight,
+            ...drawerStyles,
+          }}
+          enableDragHandle
+          open={drawerOpened}
+          onOpenChange={toggleDrawer}
+          position="right"
+          sidebar={DrawerMenu()}
+          sidebarStyle={sidebarStyle}
+          className="app-drawer"
+        >
+          <Header
+            authLoading={authLoading}
+            onMenuClick={toggleDrawer}
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onFeedbackIconClick={() =>
+              dispatchAction(TOGGLE_STATE, "ratingModal")
+            }
+          />
 
-        {mobiletabs ? (
-          <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
-        ) : null}
-        <Main>
-          <props.component {...props} />
-          {feedbackFormState.error && (
-            <ErrorAlert
-              message={feedbackFormState.error}
-              type="error"
-              closable={true}
-              fullWidthBanner={true}
-            />
-          )}
-          {renderRatingModal()}
-          {renderTextFeedbackModal()}
-          {renderRadioModal()}
-          {renderThanksModal()}
-        </Main>
-        <Footnote />
-        <CookieAlert />
-      </Drawer>
-    </div>
-  );
+          {mobiletabs ? (
+            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+          ) : null}
+          <Main>
+            <props.component {...props} />
+            {feedbackFormState.error && (
+              <ErrorAlert
+                message={feedbackFormState.error}
+                type="error"
+                closable={true}
+                fullWidthBanner={true}
+              />
+            )}
+            {renderRatingModal()}
+            {renderTextFeedbackModal()}
+            {renderRadioModal()}
+            {renderThanksModal()}
+          </Main>
+          <Footnote />
+          <CookieAlert />
+        </StyledDrawer>
+      </div>
+    );
+  };
 
   return <>{renderNavigationBar()}</>;
 };

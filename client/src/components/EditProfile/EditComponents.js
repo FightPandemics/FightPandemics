@@ -6,6 +6,7 @@ import SubmitButton from "../Button/SubmitButton";
 const { colors } = theme;
 
 export const Background = styled.div`
+  width: 95%;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: flex;
     padding: 3rem 0;

@@ -11,7 +11,7 @@ jobs:
       - id: get-branch-name-sanitized
         name: Sanitize branch name
         shell: bash
-        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | tr -cd '[a-zA-Z0-9]_-')"
+        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | tr -cd '[a-zA-Z0-9]-')"
       - name: Post Review Build URL
         if: startsWith(steps.get-branch-name-sanitized.outputs.branch, 'feature') || startsWith(steps.get-branch-name-sanitized.outputs.branch, 'hotfix')
         uses: unsplash/comment-on-pr@master
