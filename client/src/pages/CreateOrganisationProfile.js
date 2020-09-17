@@ -42,7 +42,6 @@ import {
   createOrganisationFormReducer,
   initialState,
 } from "hooks/reducers/organisationReducers";
-import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { inlineLabelStyles } from "constants/formStyles";
 import styled from "styled-components";
@@ -235,20 +234,10 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                required: "Email is required",
-                validate: (email) => validateEmail(email) || "Invalid email",
-                maxLength: {
-                  value: 50,
-                  message: "Max. 50 characters",
-                },
-                validate: (email) => validateEmail(email) || "Invalid email",
+                validate: validateEmail
               })}
             />
-            {validEmail || errors.email || email === "" ? (
-              ""
-            ) : (
-                <InputError>Email is invalid</InputError>
-              )}
+            {validEmail}
             <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
           <WhiteSpace />
