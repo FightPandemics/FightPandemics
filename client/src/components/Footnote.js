@@ -15,7 +15,6 @@ const StyledFooter = styled.footer`
 
   padding: 1rem 2rem;
   width: 100%;
-  height: 6rem;
 
   position: absolute;
   background: ${colors.selago};
