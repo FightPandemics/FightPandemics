@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
@@ -101,6 +101,8 @@ const StyledStrapline = styled(StyledWelcome)`
   @media only screen and ${mq.phone.narrow.max} {
     text-align: center;
     margin: 0 auto 1.5rem auto;
+    color: ${black};
+    font-size: ${typography.size.xlarge};
   }
 `;
 
@@ -172,7 +174,10 @@ const Home = (props) => {
           <StyledStrapline level={2} margin="none">
             {t("headline")}
           </StyledStrapline>
-          <Trans i18nKey="tagline" components={[<StyledP/>, <StyledP/>]}></Trans>
+          <Trans
+            i18nKey="tagline"
+            components={[<StyledP />, <StyledP />]}
+          ></Trans>
         </IntroText>
       </StyledIntro>
 
