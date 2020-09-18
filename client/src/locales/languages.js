@@ -1,3 +1,5 @@
+import resources from "./translations/index";
+
 export const localization = {
   en: "en-US",
   "en-US": "en-US",
@@ -19,7 +21,7 @@ export const localization = {
   th: "th",
 };
 
-export const languages = {
+export const MENU_MAP = {
   ar: { value: "العربية", text: "Arabic (العربية)" },
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
   "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
@@ -40,3 +42,11 @@ export const languages = {
   uk: { value: "Українська", text: "Ukrainian (Українська)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },
 };
+
+export const languages = Object.keys(resources).reduce(
+  (result, languageKey) => ({
+    ...result,
+    [languageKey]: MENU_MAP[languageKey],
+  }),
+  {},
+);

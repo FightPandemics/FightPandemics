@@ -15,7 +15,7 @@ import globe from "assets/icons/globe.svg";
 import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
-import { localization, languages } from "constants/languages";
+import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;

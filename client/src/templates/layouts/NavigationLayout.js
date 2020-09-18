@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import i18n from "../../i18n";
-import { localization, languages } from "constants/languages";
+import { localization, languages } from "locales/languages";
 import globe from "assets/icons/globe.svg";
 import SvgIcon from "components/Icon/SvgIcon";
 import TextAvatar from "components/TextAvatar";
