@@ -130,13 +130,8 @@ const Header = ({
 }) => {
   const menu = (
     <Menu>
-      <Menu.Item>
-        <Link
-          to={`/profile/${user?.id || user?._id}`}
-          onClick={() => setOrganisationIndex(null)}
-        >
-          My Profile
-        </Link>
+      <Menu.Item onClick={() => setOrganisationIndex(null)}>
+        {`${user?.firstName} ${user?.lastName}`}
       </Menu.Item>
       <Menu.Divider />
       <SubMenu title="Organisations">
@@ -151,18 +146,28 @@ const Header = ({
         <Menu.Divider />
         {user?.organisations?.length > 0
           ? user?.organisations?.map((organisation, i) => (
-              <Menu.Item key={organisation._id}>
-                <Link
-                  to={`/organisation/${organisation._id}`}
-                  onClick={() => setOrganisationIndex(i)}
-                >
-                  {organisation.name}
-                </Link>
+              <Menu.Item
+                key={organisation._id}
+                onClick={() => setOrganisationIndex(i)}
+              >
+                {organisation.name}
               </Menu.Item>
             ))
           : null}
         {user?.organisations?.length > 0}
       </SubMenu>
+      <Menu.Divider />
+      <Menu.Item>
+        <Link
+          to={
+            organisationIndex === null
+              ? `/profile/${user?.id || user?._id}`
+              : `/organisation/${user?.organisations[organisationIndex]?._id}`
+          }
+        >
+          Profile
+        </Link>
+      </Menu.Item>
       <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
