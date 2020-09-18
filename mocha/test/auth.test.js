@@ -2,11 +2,12 @@ const requestModule = require("supertest");
 const { expect } = require('chai');
 const httpStatus = require('http-status');
 const APP_URL = process.env.MOCHA_URL 
+const randomStringGenerator = require("../utils/randomStringGenerator");
 
 beforeEach(async () => {
 
   credentialsWithWrongPassword = {
-    email: 'userDoesntExists@gmail.com',
+    email: randomStringGenerator.randomString(8) + '.' + randomStringGenerator.randomString(8) + '@'  + randomStringGenerator.randomString(5) + '.com',
     password: 'Test1234;'
   };
 });
