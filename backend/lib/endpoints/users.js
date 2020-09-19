@@ -58,7 +58,7 @@ async function routes(app) {
         location = user.location;
       }
 
-      if (queryFilters.location) filters.push({ "location.hide": false });
+      if (queryFilters.location) filters.push({ "hide.address": false })
 
       if (userId) filters.push({ _id: { $ne: userId } });
 
