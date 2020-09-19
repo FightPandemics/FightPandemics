@@ -7,6 +7,7 @@ import commentpost from "assets/icons/notification-icons/comment-post.svg";
 import cmntflwpost from "../../assets/icons/notification-icons/comment-following-post.svg";
 import likeheart from "../../assets/icons/notification-icons/like-heart.svg";
 import sharedpost from "../../assets/icons/notification-icons/shared-post.svg";
+import { theme, mq } from "constants/theme";
 const DemoNotifications = [
   {
     author: "April Qoo",
@@ -44,6 +45,42 @@ const DemoNotifications = [
     avatar: "SS",
     online: false,
   },
+  {
+    author: "Jeremy Pan",
+    action: "liked your post",
+    path: "/feed",
+    actionAvatar: likeheart,
+    createdAt: "14 hours ago",
+    avatar: "JP",
+    online: true,
+  },
+  {
+    author: "Sarah Sharp",
+    action: "commented on a post you're following",
+    path: "/feed",
+    actionAvatar: cmntflwpost,
+    createdAt: "Yesterday",
+    avatar: "SS",
+    online: false,
+  },
+  {
+    author: "Jeremy Pan",
+    action: "liked your post",
+    path: "/feed",
+    actionAvatar: likeheart,
+    createdAt: "14 hours ago",
+    avatar: "JP",
+    online: true,
+  },
+  {
+    author: "Sarah Sharp",
+    action: "commented on a post you're following",
+    path: "/feed",
+    actionAvatar: cmntflwpost,
+    createdAt: "Yesterday",
+    avatar: "SS",
+    online: false,
+  },
 ];
 
 // Menu Item
@@ -60,26 +97,32 @@ const ItemContainer = styled.a`
   }
   .action-avatar {
     position: absolute;
-    top: 2.8em;
-    left: 3.5em;
+    top: 2.4em;
+    left: 2.6em;
+  }
+  .ant-avatar {
+    position: absolute;
+    top: 0.6em;
   }
 `;
 const Content = styled.div`
-  width: 60%;
-  position: absolute;
-  top: 1.2em;
-  right: 3em;
+  font-family: work sans;
+  width: 70%;
+  position: relative;
+  left: 1em;
+  margin: auto;
   div:first-child {
-    font-size: 0.85em;
+    font-size: 1em;
     padding-bottom: 3px;
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.2;
     > span {
       font-weight: 700;
     }
   }
   div:nth-child(2) {
     font-size: 0.75em;
+    letter-spacing: 0.7px;
   }
 `;
 const Online = styled.div`
@@ -88,20 +131,48 @@ const Online = styled.div`
 
 // Menu
 const StyledMenu = styled(Menu)`
-  position: relative;
-  left: 3em;
-  top: 1em;
+  position: fixed;
+  right: 2em;
+  top: 4.5em;
+  width: 300px;
+  height: 405px;
+  border-radius: 10px;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 2.9em;
+    left: 0;
+  }
   a {
-    padding: 1em 1.5em;
+    padding: 0.5em 1em;
     letter-spacing: 1px;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border-radius: 0px;
+    }
+  }
+  .notifications-container {
+    overflow: scroll;
+    scroll-padding: 0px;
+    scroll-margin: 0px;
+    border-radius: 0 0 10px 10px;
+    height: 352px;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border-radius: 0px !important;
+      overflow: auto;
+      height: 100%;
+    }
+  }
+  .ant-dropdown-menu-item {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border-radius: 0px !important;
+    }
   }
 `;
 
-const menuStyle = {
-  width: "300px",
-  height: "390px",
-  borderRadius: "10px",
-};
 const Arrow = styled.div`
   width: 1.5em;
   height: 2em;
@@ -111,12 +182,16 @@ const Arrow = styled.div`
   transform: rotate(45deg);
   position: relative;
   left: 3.89em;
-  bottom: 0.9em;
+  bottom: 1.3em;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
+  }
 `;
 const NoMoreNotifications = styled(ItemContainer)`
   background-color: rgba(245, 246, 251, 0.8);
   justify-content: center;
   font-size: 0.8em;
+  border-radius: 0px 0px 10px 10px;
 `;
 
 const MenuItem = ({
@@ -128,8 +203,6 @@ const MenuItem = ({
   createdAt,
   online,
 }) => {
-  const now = Date.now();
-
   return (
     <ItemContainer href={path}>
       <TextAvatar>{avatar}</TextAvatar>
@@ -156,7 +229,7 @@ const MenuItem = ({
 };
 
 const menu = (
-  <StyledMenu style={{ ...menuStyle }}>
+  <StyledMenu>
     <Menu.Item
       style={{
         display: "flex",
@@ -167,6 +240,7 @@ const menu = (
         bottom: "3.6px",
         color: "white",
         boxShadow: "0 4px 5px rgba(0,0,0,0.22)",
+        padding: ".75em 1.3em",
       }}
     >
       <a style={{ color: "white" }}>Notifications</a>
@@ -189,13 +263,7 @@ const menu = (
         </svg>
       </Link>
     </Menu.Item>
-    <div
-      style={{
-        overflow: "hidden",
-        borderRadius: "0 0 10px 10px",
-        height: "335px",
-      }}
-    >
+    <div className="notifications-container">
       <div>
         {DemoNotifications.map((each) => (
           <MenuItem
@@ -217,12 +285,32 @@ const menu = (
 export const NotificationDropDown = (props) => {
   return (
     <>
-      <Dropdown overlay={menu} placement="bottomRight">
+      <div
+        style={{
+          height: "17px",
+          width: "17px",
+          position: "absolute",
+          right: "6.8em",
+          bottom: "2.8em",
+          zIndex: "999",
+          fontSize: "10px",
+          letterSpacing: "1px",
+          backgroundColor: "#FF5656",
+          color: "white",
+          borderRadius: "100%",
+          padding: "1px",
+          fontWeight: "300",
+          textAlign: "center",
+        }}
+      >
+        8
+      </div>
+      <Dropdown overlay={menu} visible placement="bottomRight">
         <svg
           onClick={(e) => console.log(e)}
           style={{ position: "relative", top: "4px", cursor: "pointer" }}
-          width="19"
-          height="19"
+          width="20"
+          height="20"
           viewBox="0 0 19 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
