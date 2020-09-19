@@ -15,6 +15,7 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import { NoPosts } from "pages/Feed";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -70,6 +71,7 @@ import {
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
+import Loader from "components/Feed/StyledLoader";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -108,7 +110,6 @@ const Profile = ({
   const [drawer, setDrawer] = useState(false);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
@@ -177,9 +178,17 @@ const Profile = ({
               setTotalPostCount(meta.total);
             }
             if (posts.length < limit) {
-              setHasNextPage(false);
-            } else {
-              setHasNextPage(true);
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
+            } else if (meta.total === limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -217,8 +226,12 @@ const Profile = ({
     fetchPosts();
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const refetchPosts = () => {
-    postsDispatch({ type: RESET_PAGE });
+  const refetchPosts = (isLoading, loadMore) => {
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+    });
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -228,7 +241,10 @@ const Profile = ({
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      if (!isLoading && loadMore && stopIndex >= userPosts.length) {
+      if (
+        (!isLoading && loadMore && stopIndex >= userPosts.length,
+        userPosts.length)
+      ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
@@ -255,12 +271,15 @@ const Profile = ({
             ...postsList,
           };
           delete allPosts[post._id];
-          postsDispatch({
-            type: SET_POSTS,
-            posts: allPosts,
-          });
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
-        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -326,13 +345,15 @@ const Profile = ({
     }
   };
 
+  const gtmTag = (tag) => GTM.user.profilePrefix + tag;
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <Loader />;
   return (
     <ProfileLayout>
       <BackgroundHeader>
@@ -436,11 +457,24 @@ const Profile = ({
             isNextPageLoading={isLoading}
             itemCount={itemCount}
             isItemLoaded={isItemLoaded}
-            hasNextPage={hasNextPage}
+            hasNextPage={loadMore}
             totalPostCount={totalPostCount}
           />
           {status === ERROR_POSTS && (
             <ErrorAlert message={postsError.message} />
+          )}
+          {emptyFeed() && (
+            <NoPosts>
+              Sorry, there are currently no relevant posts available. Please try
+              using a different filter search or{" "}
+              <a
+                id={gtmTag(GTM.post.createPost)}
+                onClick={onToggleCreatePostDrawer}
+              >
+                create a post
+              </a>
+              .
+            </NoPosts>
           )}
           {ownUser && (
             <CreatePost

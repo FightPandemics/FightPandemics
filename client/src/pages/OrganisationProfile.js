@@ -26,6 +26,7 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -49,7 +50,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser, NoPosts } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   LINKEDIN_URL,
@@ -123,7 +124,6 @@ const OrganisationProfile = () => {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(false);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
@@ -194,9 +194,17 @@ const OrganisationProfile = () => {
               setTotalPostCount(meta.total);
             }
             if (posts.length < limit) {
-              setHasNextPage(false);
-            } else {
-              setHasNextPage(true);
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: false,
+                loadMore: false,
+              });
+            } else if (meta.total === limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -234,8 +242,12 @@ const OrganisationProfile = () => {
     fetchOrganisationPosts();
   }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const refetchPosts = () => {
-    postsDispatch({ type: RESET_PAGE });
+  const refetchPosts = (isLoading, loadMore) => {
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+    });
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -247,7 +259,10 @@ const OrganisationProfile = () => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      if (!isLoading && loadMore && stopIndex >= organisationPosts.length) {
+      if (
+        (!isLoading && loadMore && stopIndex >= organisationPosts.length,
+        organisationPosts.length)
+      ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
@@ -279,12 +294,15 @@ const OrganisationProfile = () => {
             ...postsList,
           };
           delete allPosts[post._id];
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: allPosts,
-          });
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
-        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -383,12 +401,13 @@ const OrganisationProfile = () => {
       }
     }
   };
-
+  const gtmTag = (tag) => GTM.organisation.orgPrefix + tag;
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
   const renderProfileData = () => {
     if (!organisation) {
-      return <p>Loading...</p>;
+      return <Loader />;
     } else {
       const { address } = location;
       return (
@@ -462,11 +481,24 @@ const OrganisationProfile = () => {
                 isNextPageLoading={isLoading}
                 itemCount={itemCount}
                 isItemLoaded={isItemLoaded}
-                hasNextPage={hasNextPage}
+                hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
               />
               {status === ERROR_POSTS && (
                 <ErrorAlert message={postsError.message} />
+              )}
+              {emptyFeed() && (
+                <NoPosts>
+                  Sorry, there are currently no relevant posts available. Please
+                  try using a different filter search or{" "}
+                  <a
+                    id={gtmTag(GTM.post.createPost)}
+                    onClick={onToggleCreatePostDrawer}
+                  >
+                    create a post
+                  </a>
+                  .
+                </NoPosts>
               )}
               {isOwner && (
                 <CreatePost
@@ -508,7 +540,7 @@ const OrganisationProfile = () => {
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <Loader />;
   return (
     <ProfileLayout>
       <BackgroundHeader>
