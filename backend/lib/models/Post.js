@@ -180,7 +180,7 @@ postSchema.index(
     weights: {
       "author.name": 1,
       content: 3,
-      title: 3,
+      title: 5,
       types: 2,
     },
   },

@@ -28,7 +28,14 @@ async function routes(app) {
     },
     async (req) => {
       const { query, userId } = req;
-      const { filter, keywords, limit, objective, skip } = query;
+      const {
+        ignoreUserLocation,
+        filter,
+        keywords,
+        limit,
+        objective,
+        skip,
+      } = query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
       let userErr;
@@ -49,26 +56,68 @@ async function routes(app) {
       // un-comment if user shouldnt find their owned organizations
       // if (userId) filters.push({ ownerId: { $ne: userId } });
 
-      if (objective) {
-        switch (objective) {
-          case "request":
-            filters.push({
-              $or: [
-                { "needs.donations": true },
-                { "needs.other": true },
-                { "needs.staff": true },
-                { "needs.volunteers": true },
-              ],
-            });
-            break;
-          // to add more in case orgs become able to offer help
-          default:
-            break;
-        }
+      // prefer location from query filters, then user if authenticated
+      let location;
+      if (queryFilters.location) {
+        location = queryFilters.location;
+      } else if (user && !ignoreUserLocation) {
+        location = user.location;
+      }
+
+      const objectives = {
+        request: {
+          $or: [
+            { "needs.donations": true },
+            { "needs.other": true },
+            { "needs.staff": true },
+            { "needs.volunteers": true },
+          ],
+        },
+        // to add more in case orgs become able to offer help
+      };
+
+      if (objective) filters.push(objectives[objective]);
+
+      // if location is defined, use simple regex text query, in order to use $geoNear
+      if (location && keywords) {
+        const keywordsRegex = new RegExp(
+          keywords
+            .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+            .split(/[ .\/,=$%#()-]|(and)/gi)
+            .filter((key) => key && key.length > 1)
+            .join("|"),
+          "ig",
+        );
+        filters.push({
+          $or: [
+            { name: keywordsRegex },
+            { firstName: keywordsRegex },
+            { lastName: keywordsRegex },
+            { about: keywordsRegex },
+            { type: keywordsRegex },
+          ],
+        });
       }
 
       /* eslint-disable sort-keys */
-      const sortAndFilterSteps = keywords
+      const sortAndFilterSteps = location
+        ? [
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: location.coordinates,
+                    type: "Point",
+                  },
+                },
+                query: { $and: filters },
+              },
+            },
+            { $sort: { distance: 1, _id: -1 } },
+          ]
+        : keywords
         ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },

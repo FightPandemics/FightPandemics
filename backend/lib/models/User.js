@@ -22,6 +22,8 @@ const userSchema = new Schema(
 // indices keys aren't meant to be sorted alphabetically. Please don't change
 // the keys' order unless you really intend to change indexing
 /* eslint-disable sort-keys */
+userSchema.index({ "location.coordinates": "2dsphere" });
+
 userSchema.index({
   type: 1,
   ownerId: 1,

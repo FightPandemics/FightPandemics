@@ -27,6 +27,11 @@ const SearchContainer = styled.span`
         width: calc(100% - 10rem);
       }
     }
+    &.error {
+      input {
+        color: #ff5c57;
+      }
+    }
     input {
         height: 100%;
         border: none;
@@ -65,6 +70,7 @@ export default class FeedNavSearch extends React.Component {
     super(props);
     this.state = {
       inputValue: '',
+      tooShort: false,
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
@@ -96,8 +102,15 @@ export default class FeedNavSearch extends React.Component {
   onKeyClick(e) {
     const { inputValue } = this.state;
     if (e.key === "Enter") {
+      if (inputValue?.length && inputValue.length < 3) {
+        this.setState({ tooShort: true });
+        return setTimeout(() => {
+          this.setState({ tooShort: false });
+        }, 500);
+      }
       if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
       this.props.handleSubmit(inputValue);
+      
     }
   }
 
@@ -110,17 +123,22 @@ export default class FeedNavSearch extends React.Component {
   }
 
   renderSearchContainer() {
-    const { inputValue } = this.state;
+    const { inputValue, tooShort } = this.state;
     const { placeholder, style, id, hidePlaceholder, showOptions } = this.props;
     return (
-      <SearchContainer className={`${inputValue?.length ? 'expanded' : ''}`} id={id || 'SearchContainer'}>
+      <SearchContainer className={`${inputValue?.length ? 'expanded' : ''} ${ tooShort ? 'error':''}`} id={id || 'SearchContainer'}>
         <SearchWrapper
           ref={this.searchWrapper}
         >
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (inputValue?.length == 0) return
+              if (inputValue?.length && inputValue.length < 3) {
+                this.setState({ tooShort: true });
+                return setTimeout(() => {
+                  this.setState({ tooShort: false });
+                }, 500);
+              }
               if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
               this.props.handleSubmit(inputValue);
             }}

@@ -135,7 +135,11 @@ async function routes(app) {
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
         const keywordsRegex = new RegExp(
-          keywords.split(/[ ,]+/).join("|"),
+          keywords
+            .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+            .split(/[ .\/,=$%#()-]|(and)/gi)
+            .filter((key) => key && key.length > 1)
+            .join("|"),
           "ig",
         );
         filters.push({

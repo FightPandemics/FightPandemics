@@ -363,8 +363,7 @@ const Feed = (props) => {
     }
   }
 
-  const handleSearchSubmit = (inputValue, selectedValueId) => {
-    dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+  const handleSearchSubmit = (selectedValueId) => {
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
@@ -386,7 +385,8 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (!searchKeywords || !searchKeywords.length) return handleSearchClear()
-    handleSearchSubmit(searchKeywords, searchCategory)
+    dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
+    handleSearchSubmit(searchCategory)
   }, [searchKeywords]);
 
   const handleLocation = (value) => {
