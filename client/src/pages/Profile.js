@@ -42,6 +42,7 @@ import {
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
   GITHUB_URL,
@@ -79,6 +80,7 @@ import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
 import facebookIcon from "assets/icons/social-facebook.svg";
+import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
 import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
@@ -86,10 +88,11 @@ import locationIcon from "assets/icons/location.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 
 const URLS = {
-  github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
+  instagram: [instagramIcon, INSTAGRAM_URL],
   linkedin: [linkedinBlue, LINKEDIN_INDIVIDUAL_URL],
   twitter: [twitterBlue, TWITTER_URL],
+  github: [githubIcon, GITHUB_URL],
   website: [websiteIcon],
 };
 
