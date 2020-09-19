@@ -40,6 +40,13 @@ const createOrganisationSchema = {
     .required(["location"]),
 };
 
+const createOrganisationAvatarSchema = {
+  params: strictSchema().prop("organisationId", S.string().required()),
+  body: strictSchema()
+    .prop("file", S.required())
+    .prop("userId", S.required()),
+};
+
 const getOrganisationSchema = {
   params: strictSchema().prop("organisationId", S.string().required()),
 };
@@ -72,6 +79,7 @@ const deleteOrganisationSchema = {
 };
 
 module.exports = {
+  createOrganisationAvatarSchema,
   createOrganisationSchema,
   deleteOrganisationSchema,
   getOrganisationSchema,
