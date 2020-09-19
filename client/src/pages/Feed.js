@@ -100,7 +100,6 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
-  // toggleFetch: false,
 };
 
 const SiderWrapper = styled(Sider)`
@@ -221,7 +220,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const NoPosts = styled.div`
+export const NoPosts = styled.div`
   text-align: center;
   position: relative;
   top: 2em;
@@ -253,8 +252,10 @@ const Feed = (props) => {
   const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(false);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [filterURL, setFilterURL] = useState("");
+  const [objectiveURL, setObjectiveURL] = useState("");
   const {
     filterModal,
     showCreatePostModal,
@@ -300,7 +301,7 @@ const Feed = (props) => {
     // );
   };
 
-  const refetchPosts = () => {
+  const refetchPosts = (isLoading, loadMore) => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -311,8 +312,16 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+      filterType: "",
+    });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
+    }
   };
 
   const handleQuit = (e) => {
@@ -368,6 +377,8 @@ const Feed = (props) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
     postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", true);
+
+    //setToggleRefetch(!toggleRefetch);
   };
 
   const handlePostLike = async (postId, liked, create) => {
@@ -422,33 +433,42 @@ const Feed = (props) => {
     });
   };
 
-  const objectiveURL = useCallback(() => {
-    let objective = selectedType;
-    if (
-      selectedOptions["offer or request help"] &&
-      selectedOptions["offer or request help"].length < 2
-    ) {
-      objective =
-        selectedOptions["offer or request help"][0] === "Request Help"
-          ? "REQUEST"
-          : "OFFER";
-    }
-    switch (objective) {
-      case "REQUEST":
-        return "&objective=request";
-      case "OFFER":
-        return "&objective=offer";
-      default:
-        return "";
-    }
+  useEffect(() => {
+    (() => {
+      let objective = selectedType;
+      if (
+        selectedOptions["offer or request help"] &&
+        selectedOptions["offer or request help"].length < 2
+      ) {
+        objective =
+          selectedOptions["offer or request help"][0] === "Request Help"
+            ? "REQUEST"
+            : "OFFER";
+      }
+      switch (objective) {
+        case "REQUEST":
+          setObjectiveURL("&objective=request");
+          break;
+        case "OFFER":
+          setObjectiveURL("&objective=offer");
+          break;
+        default:
+          setObjectiveURL("");
+      }
+    })();
   }, [selectedOptions, selectedType]);
-  const filterURL = useCallback(() => {
-    const filterObj = { ...selectedOptions };
-    delete filterObj["offer or request help"];
-    if (location) filterObj.location = location;
-    return Object.keys(filterObj).length === 0
-      ? ""
-      : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+
+  useEffect(() => {
+    (() => {
+      const filterObj = { ...selectedOptions };
+      delete filterObj["offer or request help"];
+      if (location) filterObj.location = location;
+      const getFilter =
+        Object.keys(filterObj).length === 0
+          ? ""
+          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+      setFilterURL(getFilter);
+    })();
   }, [location, selectedOptions]);
 
   useEffect(() => {
@@ -456,8 +476,9 @@ const Feed = (props) => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
-      let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+      let endpoint = `${baseURL}${objectiveURL}${filterURL}`;
       postsDispatch({ type: FETCH_POSTS });
+
       try {
         const {
           data: { data: posts, meta },
@@ -467,9 +488,17 @@ const Feed = (props) => {
             setTotalPostCount(meta.total);
           }
           if (posts.length < limit) {
-            setHasNextPage(false);
-          } else {
-            setHasNextPage(true);
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: true,
+              loadMore: false,
+            });
+          } else if (meta.total === limit) {
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: true,
+              loadMore: false,
+            });
           }
           const loadedPosts = posts.reduce((obj, item) => {
             obj[item._id] = item;
@@ -504,8 +533,11 @@ const Feed = (props) => {
       }
       dispatchAction(SET_VALUE, "applyFilters", true);
     };
-    loadPosts();
-  }, [filterURL, objectiveURL, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (!showFilters) {
+      loadPosts();
+    }
+  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -580,7 +612,12 @@ const Feed = (props) => {
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       dispatchAction(SET_VALUE, "applyFilters", false);
-      if (!isLoading && loadMore && stopIndex >= feedPosts.length) {
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= feedPosts.length &&
+        feedPosts.length
+      ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
@@ -613,10 +650,14 @@ const Feed = (props) => {
           };
           delete allPosts[post._id];
 
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: allPosts,
-          });
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount < 10) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
         setTotalPostCount(totalPostCount - 1);
       } catch (error) {
@@ -627,9 +668,7 @@ const Feed = (props) => {
     }
   };
 
-  const emptyFeed = () => {
-    return Object.keys(postsList).length < 1 && !isLoading;
-  };
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
     <FeedContext.Provider
@@ -715,7 +754,7 @@ const Feed = (props) => {
               loadNextPage={loadNextPage}
               itemCount={itemCount}
               isItemLoaded={isItemLoaded}
-              hasNextPage={hasNextPage}
+              hasNextPage={loadMore}
               totalPostCount={totalPostCount}
             />
             {status === ERROR_POSTS && (
