@@ -244,6 +244,12 @@ const TEXT_FEEDBACK = [
   { stateKey: "generalFeedback", label: "Any other feedback for us?" },
 ];
 
+const StyledDrawer = styled(Drawer)`
+  .am-drawer-draghandle {
+    visibility: hidden;
+  }
+`;
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, navSearch, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
@@ -610,9 +616,10 @@ const NavigationLayout = (props) => {
     </MenuContainer>
   );
 
-  const renderNavigationBar = () => (
+const renderNavigationBar = () => {
+  return (
     <div>
-      <Drawer
+      <StyledDrawer
         style={{
           minHeight: document.documentElement.clientHeight,
           ...drawerStyles,
@@ -658,9 +665,10 @@ const NavigationLayout = (props) => {
         </Main>
         <Footnote />
         <CookieAlert />
-      </Drawer>
+      </StyledDrawer>
     </div>
   );
+};
 
   return <>{renderNavigationBar()}</>;
 };
