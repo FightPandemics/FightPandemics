@@ -87,8 +87,8 @@ const Activity = ({
 
   return (
     <div className="activity">
-      {!posts.length ? (
-        "No activity found"
+      {!posts.length && isNextPageLoading ? (
+        <Loader />
       ) : (
         <WindowScroller>
           {({ height, isScrolling, scrollTop, onChildScroll }) => (
