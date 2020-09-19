@@ -14,15 +14,14 @@ const StyledIcon = styled(SvgIcon)`
 `;
 
 const SearchContainer = styled.span`
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      margin-top: 2rem;
-    }
     position: relative;
     text-align: left;
     width: 100%;
     display: block;
-    margin-bottom: 20px;
     transition: 0.4s;
+    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+      margin-left: 3rem;
+    }
     &.expanded  {
       input {
         width: calc(100% - 10rem);
@@ -34,6 +33,7 @@ const SearchContainer = styled.span`
         font-size: 1.8rem;
         background: transparent;
         width: calc(100% - 5rem);
+        color: black;
         &:focus {
             outline: none;
         }
@@ -47,52 +47,34 @@ const SearchWrapper = styled.div`
       margin: 0 auto;
     }
     border: 0.1rem solid rgba(0, 0, 0, 0.2);
+    &:focus-within, &:hover {
+      border: 0.1rem solid black;
+    }
     background: #fff;
     border-radius: 4rem;
     padding: 5px 0;
-    height: 5rem;
+    height: 4rem;
     width: 30rem;
     position: relative;
     z-index: 3;
+    transition: 0.4s;
 `
-const Chip = styled.a`
-    padding: 1rem 3rem;
-    display: inline-block;
-    color: #BDBDBD;
-    white-space: nowrap;
-    font-size: 1.6rem;
-    &.selected {
-      color: #425AF2;
-      background: #F3F4FE;
-    }
-    &:hover {
-      color: #425AF2;
-    }
-`
-export default class CategorySearch extends React.Component {
+
+export default class FeedNavSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: "",
-      options: props.options,
-      selectedValue: null,
-      showOptions: props.showOptions,
+      inputValue: '',
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.renderSearchContainer = this.renderSearchContainer.bind(this);
-    this.onSelectItem = this.onSelectItem.bind(this);
     this.listenerCallback = this.listenerCallback.bind(this);
-    this.resetSelectedValue = this.resetSelectedValue.bind(this);
     this.onKeyClick = this.onKeyClick.bind(this)
   }
 
 
-
-  resetSelectedValue() {
-    this.setState({ selectedValue: null });
-  }
 
   componentDidMount() {
     this.searchWrapper.current.addEventListener("click", this.listenerCallback);
@@ -112,61 +94,35 @@ export default class CategorySearch extends React.Component {
 
 
   onKeyClick(e) {
-    const { inputValue, selectedValue
-    } = this.state;
-    if (e.key === "Enter" && inputValue.length != 0) return this.props.handleSubmit((selectedValue?.id || null), inputValue)
-
+    const { inputValue } = this.state;
+    if (e.key === "Enter") {
+      if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
+      this.props.handleSubmit(inputValue);
+    }
   }
-
-  onSelectItem(item) {
-    const { selectedValue, inputValue } = this.state;
-    this.setState({ selectedValue: item });
-    if(inputValue.length) this.props.handleSubmit((item?.id || null), inputValue);
-  }
-
 
   closeClicked() {
-    const { unfilteredOptions } = this.state;
     this.setState({
       inputValue: '',
-      selectedValue: null,
-      options: unfilteredOptions,
-      filteredOptions: unfilteredOptions
     });
     this.searchBox.current.blur();
     this.props.handleClear()
   }
 
-
-  renderCategories() {
-    const { isObject = false, displayValue, options, showOptions } = this.props;
-    const { selectedValue } = this.state;
-    if (showOptions && !selectedValue) this.setState({ selectedValue: options.find(o => o.default) })
-    return options.map((value, index) => (
-      <Chip key={index}
-        onClick={() => this.onSelectItem(value)}
-        className={selectedValue && selectedValue.id == value.id ? 'selected' : ''}
-      >
-        {!isObject ? (value || '').toString() : value[displayValue]}
-      </Chip>
-    ));
-  }
-
-
-
   renderSearchContainer() {
-    const { inputValue, selectedValue } = this.state;
+    const { inputValue } = this.state;
     const { placeholder, style, id, hidePlaceholder, showOptions } = this.props;
     return (
-      <SearchContainer className={`${inputValue.length ? 'expanded' : ''}`} id={id || 'SearchContainer'}>
+      <SearchContainer className={`${inputValue?.length ? 'expanded' : ''}`} id={id || 'SearchContainer'}>
         <SearchWrapper
           ref={this.searchWrapper}
         >
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (inputValue.length == 0) return
-              this.props.handleSubmit((selectedValue?.id || null), inputValue);
+              if (inputValue?.length == 0) return
+              if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
+              this.props.handleSubmit(inputValue);
             }}
           />
           <input
@@ -185,8 +141,6 @@ export default class CategorySearch extends React.Component {
             onClick={() => { this.closeClicked() }}
           />}
         </SearchWrapper>
-        <br></br>
-        {showOptions && this.renderCategories()}
       </SearchContainer>
     );
   }
@@ -196,13 +150,7 @@ export default class CategorySearch extends React.Component {
   }
 }
 
-CategorySearch.defaultProps = {
-  options: [],
-  selectedValue: null,
-  showOptions: false,
-  isObject: true,
-  displayValue: "name",
-  selectionLimit: 1,
+FeedNavSearch.defaultProps = {
   placeholder: "Search",
   hidePlaceholder: false,
   style: {},

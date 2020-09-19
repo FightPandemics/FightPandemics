@@ -79,7 +79,7 @@ const DrawerWrapper = styled(Drawer)`
   }
 `;
 
-const FiltersSidebar = ({ gtmPrefix }) => {
+const FiltersSidebar = ({ gtmPrefix, locationOnly }) => {
   const feedContext = useContext(FeedContext);
   const { handleQuit, handleOnClose, showFilters } = feedContext;
 
@@ -98,7 +98,7 @@ const FiltersSidebar = ({ gtmPrefix }) => {
         <button onClick={handleOnClose}>
           <BackIcon />
         </button>
-        <FilterAccordion gtmPrefix={gtmPrefix} />
+        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
       </div>
       <div
         className="confirm-buttons"

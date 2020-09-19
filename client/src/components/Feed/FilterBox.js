@@ -11,7 +11,7 @@ import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
 import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "components/Icon/SvgIcon";
-import downArrow from "assets/icons/down-arrow.svg";
+import filtersIcon from "assets/icons/filters.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -51,19 +51,17 @@ const FilterBox = ({ gtmPrefix }) => {
     handleQuit,
   } = feedContext;
   const renderFilterOptions = (filters) => {
-    return filters.map((filter, idx) => (
+    return (
       <SelectWithIconButton
-        key={idx}
+        onClick={handleFilterModal}
         primarylight="true"
         righticon="true"
         size="small"
-        icon={<SvgIcon src={downArrow} />}
-        onClick={handleFilterModal}
-        id={gtmPrefix + gtmTagsMap[filter.label]}
+        icon={<SvgIcon src={filtersIcon} />}
       >
-        {capitalizeFirstLetter(filter.label)}
+        Filters
       </SelectWithIconButton>
-    ));
+    )
   };
   return (
     <FilterBoxWrapper className="filter-box">
@@ -72,7 +70,6 @@ const FilterBox = ({ gtmPrefix }) => {
         color={DARK_GRAY}
         size={theme.typography.size.medium}
       >
-        Filter by
       </TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper

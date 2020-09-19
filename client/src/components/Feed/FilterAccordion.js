@@ -57,7 +57,7 @@ const filterOps = (label, idx) => {
     : GTM.post.type + typeGtmTagsMap[idx];
 };
 
-const FilterAccord = ({ gtmPrefix }) => {
+const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   const feedContext = useContext(FeedContext);
   const {
     activePanel,
@@ -69,7 +69,6 @@ const FilterAccord = ({ gtmPrefix }) => {
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
-
   function capitalizeFirstLetter(header) {
     return header.charAt(0).toUpperCase() + header.slice(1);
   }
@@ -94,7 +93,7 @@ const FilterAccord = ({ gtmPrefix }) => {
             />
           </FilterAccordionPanel>
         );
-      } else {
+      } else if (!locationOnly) {
         return (
           <FilterAccordionPanel
             header={

@@ -109,7 +109,7 @@ const Post = ({
     if (!highlight || !highlight.trim()) {
       return text
     }
-    const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi')
+    const regex = new RegExp(`(${escapeRegExp(highlight).split(' ').join('|')})`, 'gi')
     const parts = text.split(regex)
     return (
       parts.filter(part => part).map((part) => (

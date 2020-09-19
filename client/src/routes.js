@@ -145,6 +145,7 @@ const routes = [
     component: Feed,
     props: {
       mobiletabs: true,
+      navSearch: true,
       tabIndex: 2,
     },
   },

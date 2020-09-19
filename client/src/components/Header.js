@@ -13,6 +13,7 @@ import Logo from "./Logo";
 
 import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
+import FeedSearch from "components/Input/FeedSearch";
 
 const { colors, typography } = theme;
 const { SubMenu } = Menu;
@@ -104,7 +105,11 @@ const NavLinks = styled.div`
     }
   }
 `;
-
+const NavSearch = styled.div`
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none!important;
+  }
+`;
 const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
@@ -123,6 +128,9 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  onSearchSubmit,
+  onSearchClear,
+  navSearch,
 }) => {
   const menu = (
     <Menu>
@@ -236,9 +244,18 @@ export default ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </BrandLink>
+          <>
+            <BrandLink to={isAuthenticated ? "/feed" : "/"}>
+              <Logo src={logo} alt="Fight Pandemics logo" />
+            </BrandLink>
+            <NavSearch>
+            {navSearch && <FeedSearch
+              handleSubmit={onSearchSubmit}
+              handleClear={onSearchClear}
+              placeholder={"Search"}
+            />}
+            </NavSearch>
+          </>
         }
         rightContent={
           <div>

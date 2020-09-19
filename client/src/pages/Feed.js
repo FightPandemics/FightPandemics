@@ -23,7 +23,8 @@ import FiltersList from "components/Feed/FiltersList";
 import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
 import Users from "components/Feed/Users";
-import CategorySearch from "components/Input/CategorySearch";
+import SearchCategories from "components/Input/SearchCategories";
+import FeedSearch from "components/Input/FeedSearch"
 
 import {
   optionsReducer,
@@ -109,7 +110,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
-  searchKeyword: null,
+  searchKeyword: '',
   searchCategory: null,
   showSearchCategories: false,
 };
@@ -231,10 +232,18 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
   }
 `;
-const SearchWrapper = styled(CategorySearch)`
+const TabsWrapper = styled(SearchCategories)`
   flex-basis: 100%;
   height: 0;
 `
+const MobileSearch = styled.div`
+  position: relative;  
+  z-index: 0;
+  margin: 2rem auto 1rem;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    display: none!important;
+  }
+`;
 const NoPosts = styled.div`
   text-align: center;
   position: relative;
@@ -290,7 +299,7 @@ const Feed = (props) => {
     deleteModalVisibility,
   } = posts;
 
-  const { history, isAuthenticated, user } = props;
+  const { history, isAuthenticated, user, searchKeywords } = props;
   let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
@@ -351,7 +360,7 @@ const Feed = (props) => {
     }
   }
 
-  const handleSearchSubmit = (selectedValueId, inputValue) => {
+  const handleSearchSubmit = (inputValue, selectedValueId) => {
     dispatchAction(SET_VALUE, "searchKeyword", inputValue);
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
@@ -360,12 +369,22 @@ const Feed = (props) => {
   }
 
   const handleSearchClear = () => {
-    dispatchAction(SET_VALUE, "searchKeyword", null);
+    dispatchAction(SET_VALUE, "searchKeyword", "");
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
     refetchPosts();
   }
+
+  const handleMobileSearchSubmit = (inputValue) => {
+    dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+    refetchPosts();
+  }
+
+  useEffect(() => {
+    if (!searchKeywords || !searchKeywords.length) return handleSearchClear()
+    handleSearchSubmit(searchKeywords, searchCategory)
+  }, [searchKeywords]);
 
   const handleLocation = (value) => {
     if (applyFilters) {
@@ -730,7 +749,7 @@ const Feed = (props) => {
                   </Menu.Item>
                 ))}
               </MenuWrapper>
-              {(!searchCategory || searchCategory == "POSTS") && <FiltersWrapper>
+              {<FiltersWrapper>
                 <button
                   id={gtmTag(GTM.post.filterPost)}
                   onClick={handleShowFilters}
@@ -743,14 +762,20 @@ const Feed = (props) => {
                 <FiltersList />
               </FiltersWrapper>}
             </div>
-            <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
+            <FiltersSidebar locationOnly={!(!searchCategory || searchCategory == "POSTS")} gtmPrefix={GTM.feed.prefix} />
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper empty={emptyFeed()}>
-              <h1>Help Board</h1>
+              <TabsWrapper
+                  options={SEARCH_OPTIONS}
+                  handleSubmit={handleSearchSubmit}
+                  showOptions={showSearchCategories}
+                  displayValue={"name"}
+              ></TabsWrapper>
               {(!searchCategory || searchCategory == "POSTS") && <button
                 id={gtmTag(GTM.post.createPost)}
                 onClick={handleCreatePost}
+                style={{margin:'1rem 0'}}
               >
                 Create a post
                 <CreatePostIcon
@@ -759,15 +784,15 @@ const Feed = (props) => {
                 />
               </button>}
             </HeaderWrapper>
-            <SearchWrapper 
-                options={SEARCH_OPTIONS}
-                displayValue="name"
-                placeholder={"Search"}
-                handleSubmit={handleSearchSubmit}
+            <MobileSearch>
+              <FeedSearch
+                isMobile={true}
+                handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
-                showOptions={showSearchCategories}
-            ></SearchWrapper>
-            {(!searchCategory || searchCategory == "POSTS") && <div>
+                placeholder={"Search"}
+            />
+            </MobileSearch>
+            {<div>
               <FilterBox gtmPrefix={GTM.feed.prefix} />
             </div>}
             {(!searchCategory || searchCategory == "POSTS") ? <Posts
