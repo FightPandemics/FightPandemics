@@ -107,7 +107,7 @@ const Posts = ({
 
   return (
     <div className="feed-posts">
-      {!posts.length ? (
+      {!posts.length && isNextPageLoading ? (
         <Loader />
       ) : (
         <WindowScroller>
