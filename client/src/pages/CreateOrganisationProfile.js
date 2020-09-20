@@ -234,7 +234,7 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                validate: validateEmail
+                validate: validateEmail,
               })}
             />
             {validEmail}

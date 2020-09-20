@@ -9,14 +9,6 @@ const validateTopLevelDomain = (string) => {
   return false;
 };
 
-const validateEmailLength = (string) => {
-  if (string <= 200) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
 export const validateEmail = (email) => {
   let errorMessage = "";
   const emailInput = String(email).toLowerCase();

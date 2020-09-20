@@ -268,8 +268,8 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-
-                  validate: (email) => validateEmail(email) || "`${validateEmail.errorMessage}`",
+                  validate: (email) =>
+                    validateEmail(email) || "`${validateEmail.errorMessage}`",
                 })}
                 style={inputStyles}
                 value={email}

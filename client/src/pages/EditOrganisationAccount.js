@@ -208,12 +208,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
         message: "Max. 60 characters",
       },
     ],
-    "Organisation Contact E-mail": [
-      "email",
-      email,
-      "",
-      true,
-    ],
+    "Organisation Contact E-mail": ["email", email, "", true],
   };
 
   const renderNeedSection = () => {
@@ -260,7 +255,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
               required: value[2],
               maxLength: value[4],
               validate: value[3]
-                ? (email) => validateEmail(email) || "`${validateEmail.errorMessage}`"
+                ? (email) =>
+                    validateEmail(email) || "`${validateEmail.errorMessage}`"
                 : null,
             })}
             error={errors[value[0]]}
@@ -384,8 +380,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
           <ErrorAlert message={orgProfileState.error} />
         </>
       ) : (
-            ""
-          )}
+        ""
+      )}
       <Container>
         <EditLayout>
           <TitlePictureWrapper>
