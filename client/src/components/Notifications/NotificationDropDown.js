@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown } from "antd";
@@ -142,12 +142,11 @@ const StyledMenu = styled(Menu)`
   right: -2.993em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
-    height: 100vh;
-    /* position: fixed;
-    top: 2.9em;
-    left: 0; */
     position: absolute;
-    right: -5.8em;
+    right: -5.67em;
+    border-radius: 0px;
+    top: 0.7em;
+    height: 96vh;
   }
   a {
     padding: 0.5em 1em;
@@ -167,8 +166,7 @@ const StyledMenu = styled(Menu)`
     }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       border-radius: 0px !important;
-      overflow: scroll;
-      height: 87vh;
+      height: 85.8vh;
     }
   }
   .ant-dropdown-menu-item {
@@ -298,10 +296,24 @@ export const StyledNum = styled.div`
 `;
 
 export const NotificationDropDown = (props) => {
+  const Visible = (e) => {
+    setTimeout(() => {
+      if (e && document.querySelector(".ant-dropdown-menu") !== null) {
+        return (document.querySelector(
+          ".ant-dropdown-menu",
+        ).parentElement.style.position = "fixed");
+      }
+    }, 100);
+  };
   return (
     <>
       <StyledNum>8</StyledNum>
-      <Dropdown overlay={menu} visible placement="bottomRight">
+      <Dropdown
+        overlay={menu}
+        trigger="click"
+        onClick={(e) => Visible(e)}
+        placement="bottomRight"
+      >
         <StyledImg src={bell} />
       </Dropdown>
     </>
