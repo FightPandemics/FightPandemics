@@ -3,7 +3,6 @@ import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
-
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
@@ -11,6 +10,7 @@ import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import { NotificationDropDown } from "../components/Notifications/NotificationDropDown";
+import bell from "assets/icons/notification-icons/header-bell.svg";
 import { theme, mq } from "../constants/theme";
 import GTM from "constants/gtm-tags";
 
@@ -32,6 +32,16 @@ const StyledNavBar = styled(NavBar)`
   }
   .am-navbar-title {
     display: none;
+  }
+  .mobile-notification-bell {
+    display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: block;
+      position: absolute;
+      top: 0.6em;
+      right: 6em;
+      cursor: pointer;
+    }
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -198,9 +208,6 @@ export default ({
                 </a>
               </Dropdown>
             </li>
-            <li>
-              <NotificationDropDown />
-            </li>
           </>
         ) : (
           <>
@@ -245,6 +252,7 @@ export default ({
         }
         rightContent={
           <div>
+            {isAuthenticated ? <NotificationDropDown /> : null}
             <MenuToggle
               src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
