@@ -521,6 +521,7 @@ const Post = ({
           />
         </>
       ) : (
+        //Post in feed.
         <PostCard>
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
