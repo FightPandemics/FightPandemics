@@ -5,8 +5,11 @@ function Linkify (props){
     const result = regexifyString({
         pattern: urlRegex,
         decorator:(match, index)=>{
-        console.log(match)
-        const htmlMatch = "//"+match;
+        if(!(/^(http|https|ftp):\/\//.test(match)))
+            {
+                const htmlMatch = "//"+match;
+            }
+        const htmlMatch = match
         return <a href={htmlMatch} target="_blank">{match}</a>
         },
         input: props.text
