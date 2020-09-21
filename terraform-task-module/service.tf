@@ -6,7 +6,7 @@ resource "aws_ecs_service" "app" {
   desired_count = var.fp_context == "production" ? 2 : 1
   launch_type   = "FARGATE"
   network_configuration {
-    subnets          = data.aws_subnet_ids.public.ids
+    subnets          = data.aws_subnet_ids.private.ids
     security_groups  = [aws_security_group.app.id, data.aws_security_group.default.id]
     assign_public_ip = true
   }

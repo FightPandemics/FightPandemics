@@ -682,6 +682,7 @@ const Feed = (props) => {
         location,
         dispatchAction,
         selectedOptions,
+        selectedType,
         handleShowFilters,
         handleOption,
         handleFilterModal,

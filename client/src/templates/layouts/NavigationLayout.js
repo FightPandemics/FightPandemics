@@ -244,6 +244,12 @@ const TEXT_FEEDBACK = [
   { stateKey: "generalFeedback", label: "Any other feedback for us?" },
 ];
 
+const StyledDrawer = styled(Drawer)`
+  .am-drawer-draghandle {
+    visibility: hidden;
+  }
+`;
+
 const NavigationLayout = (props) => {
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
@@ -602,11 +608,6 @@ const NavigationLayout = (props) => {
   );
 
   const renderNavigationBar = () => {
-    const StyledDrawer = styled(Drawer)`
-      .am-drawer-draghandle {
-        visibility: hidden;
-      }
-    `;
     return (
       <div>
         <StyledDrawer
