@@ -8,9 +8,9 @@ function Linkify (props){
         if(!(/^(http|https|ftp):\/\//.test(match)))
             {
                 const htmlMatch = "//"+match;
+                return <a href={htmlMatch} target="_blank">{match}</a>
             }
-        const htmlMatch = match
-        return <a href={htmlMatch} target="_blank">{match}</a>
+        return <a href={match} target="_blank">{match}</a>
         },
         input: props.text
     })
