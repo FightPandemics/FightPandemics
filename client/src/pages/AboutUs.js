@@ -172,7 +172,7 @@ const AboutUs = () => {
         <h2>Who is this for?</h2>
       </ImageContainer>
 
-      <ImageContainer img={WorldMap} width={"831.7px"} height={"425px"}>
+      <ImageContainer img={WorldMap} width={"831.7px"} height={"425px"} background-color={"#fbfbfd"} background-blend-mode={"multiply"}>
         <h1>Our Community</h1>
         <p>
           We are built by a team of 1100+ volunteer developers, designers,
@@ -210,7 +210,7 @@ const AboutUs = () => {
               <img
                 alt="help board"
                 src={HelpBoard}
-                style={{ width: "326px", height: "290px" }}
+                style={{ width: "32.6rem", height: "29rem" }}
               />
               <p>
                 A community platform for individuals and organizations to offer
@@ -222,7 +222,7 @@ const AboutUs = () => {
               <img
                 alt="local and global"
                 src={LocalGlobal}
-                style={{ width: "279.2px", height: "294.5px" }}
+                style={{ width: "27.9rem", height: "29.45rem" }}
               />
               <p>
                 Offer and request help within my community and around the world.
@@ -233,7 +233,7 @@ const AboutUs = () => {
               <img
                 alt="relevant-content"
                 src={RelevantContent}
-                style={{ width: "292.8px", height: "290px" }}
+                style={{ width: "29.28rem", height: "29rem" }}
               />
               <p>Expiration periods ensure the board is always up to date.</p>
             </Col>
@@ -272,21 +272,21 @@ const AboutUs = () => {
           <br />
           To learn more about how your business can become a supporter, please
           contact our partnerships team at{" "}
-          <AboutUsLink href="partnerships@fightpandamics.com">
+          <AboutUsLink href="partnerships@fightpandemics.com">
             {" "}
-            partnerships@fightpandamics.com
+            partnerships@fightpandemics.com
           </AboutUsLink>
           <br />
           <br />
           Click on the company logo below to go to the supporter's website.
         </p>
         <h3>Lifetime supporters</h3>
-        <SupportersLogosContainer wide={"25rem"}>
+        <SupportersLogosContainer wide={"30rem"}>
           <LogosList supporterLogos={supporterLogosLifetime} />
         </SupportersLogosContainer>
         <br />
         <h3>Current supporters</h3>
-        <SupportersLogosContainer wide={"20rem"}>
+        <SupportersLogosContainer wide={"25rem"}>
           <LogosList supporterLogos={supporterLogosCurrent} />
         </SupportersLogosContainer>
         <br />

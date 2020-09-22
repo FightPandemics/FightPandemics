@@ -11,7 +11,7 @@ const StyledContainer = styled.section`
   padding-top: 2.5rem;
   h4 {
     font-family: ${display};
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 600;
     font-stretch: normal;
     font-style: normal;
@@ -25,7 +25,7 @@ const StyledContainer = styled.section`
   p {
     width: 25rem;
     font-family: ${body};
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -82,7 +82,7 @@ const GetInvolvedButton = () => {
           >
             Join as Ambassador
           </LinkButton>
-          <h4 style={{ "margin-top": "60px" }}>Student Summer Program</h4>
+          <h4 style={{ "margin-top": "6rem" }}>Student Summer Program</h4>
           <p>For Students ages 14-18.</p>
           <LinkButton
             type="primary"

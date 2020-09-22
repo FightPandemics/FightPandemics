@@ -7,12 +7,12 @@ const { display } = theme.typography.font.family;
 const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
-  width: 23rem;
-  height: 5rem;
-  border-radius: 2.875rem;
+  width: 22.7rem;
+  height: 5.4rem;
+  border-radius: 4.6rem;
   border: solid 0 ${black};
   font-family: ${display};
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

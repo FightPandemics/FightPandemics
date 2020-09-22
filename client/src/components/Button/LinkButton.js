@@ -7,12 +7,12 @@ const { display } = theme.typography.font.family;
 const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
-  width: 30rem;
-  height: 5.5rem;
-  border-radius: 2.875rem;
+  width: 32.7rem;
+  height: 5.46rem;
+  border-radius: 4.6rem;
   border: solid 0 ${black};
   font-family: ${display};
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -22,6 +22,7 @@ const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  text-align:center;
 `;
 
 export default LinkButton;
