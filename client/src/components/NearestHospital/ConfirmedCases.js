@@ -67,16 +67,45 @@ const SearchBarContainer = styled.div`
 
 const NearestHealthFacilities = (props) => {
   //TO-DO: Pull location data.
-  const country = "US";
-  const local = "Miami";
-  const latitude = "25.00";
-  const longitude = "-80.00";
+  const userLocation = {
+    address: "Venice, Los Angeles, CA, USA",
+    city: "Los Angeles",
+    coordinates: [-118.4694832, 33.98504689999999],
+    country: "US",
+    neighborhood: "Venice",
+    state: "CA",
+  };
+      
+  //Fetch Country and Global Data
+  const [caseCountGlobal, setCaseCountGlobal] = useState(null);
+  const [caseCountCountry, setCaseCountCountry] = useState(null);
+  
+  useEffect(() => {
+    const casesUrl = `https://api.covid19api.com/summary`;
+    axios
+      .get(casesUrl)
+      .then((res) => {
+        const globalCount = res?.data?.Global?.TotalConfirmed;
+        const countryList = res?.data?.Countries;
+        const countryData = countryList.find((countryObject) => {
+          return countryObject.CountryCode === userLocation?.country;
+        });
+        const countryCount = countryData.TotalConfirmed;
+        setCaseCountGlobal(globalCount);
+        setCaseCountCountry(countryCount);
+      })
+      .catch((err) => console.error(err));
+  },[]);
 
+  //Fetch Local Data (city or state)
+  const [caseCountLocal, setCaseCountLocal] = useState(null);
+  const [localDesignation, setLocalDesignation] = useState(null);
+  
   const findBestLocationMatch = (locationList) => {
-    return locationList.map((location) => {
+    return locationList.map((fetchedLocation) => {
       return {
-        ...location,
-        distance: Math.abs(location?.latitude - latitude) + Math.abs(location?.longitude - longitude),
+        ...fetchedLocation,
+        distance: Math.abs(fetchedLocation.latitude - userLocation?.latitude) + Math.abs(fetchedLocation.longitude - userLocation?.longitude),
     };
   }).reduce((acc, cur) => {
       if (acc.distance < cur.distance) {
@@ -86,39 +115,28 @@ const NearestHealthFacilities = (props) => {
       };
     });
   };
-  
-  const [caseCountGlobal, setCaseCountGlobal] = useState(null);
-  const [caseCountCountry, setCaseCountCountry] = useState(null);
-  const [caseCountLocal, setCaseCountLocal] = useState(null);
 
-  useEffect(() => {
-    const casesUrl = `https://api.covid19api.com/summary`;
-    axios
-      .get(casesUrl)
-      .then((res) => {
-        const globalCount = res?.data?.Global?.TotalConfirmed;
-        const countryList = res?.data?.Countries;
-        const countryData = countryList.find((countryObject) => {
-          return countryObject.CountryCode === country;
-        });
-        const countryCount = countryData.TotalConfirmed;
-        setCaseCountGlobal(globalCount);
-        setCaseCountCountry(countryCount);
-      })
-      .catch((err) => console.error(err));
-  },[]);
-
-  useEffect(() => {
-    const casesUrl = `https://www.trackcorona.live/api/cities/${local}`;
+  const fetchLocalData = (target, tryAgain=true) => {
+    let casesUrl = `https://www.trackcorona.live/api/cities/${target}`;
+    setLocalDesignation(target);
     axios
       .get(casesUrl)
       .then((res) => {
         const localList = res?.data?.data;
-        const localData = findBestLocationMatch(localList);
-        const localCount = localData.confirmed;
-        setCaseCountLocal(localCount);
+        if (localList.length === 0 && tryAgain === true) {
+          fetchLocalData(userLocation?.state, false);
+        } else {
+          console.log(target, localList);
+          const localData = findBestLocationMatch(localList);
+          const localCount = localData.confirmed;
+          setCaseCountLocal(localCount);
+        }
       })
       .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchLocalData(userLocation?.city);
   },[]);
   
   const [searchValue, setSearchValue] = useState("");
@@ -143,11 +161,11 @@ const NearestHealthFacilities = (props) => {
       <ConfirmedCasesContent>
         <div>
           <h2>{caseCountLocal === null ? 'No data' : caseCountLocal.toLocaleString('en')}</h2>
-          <p>Confirmed cases in {local}</p>
+          <p>Confirmed cases in {localDesignation}</p>
         </div>
         <div>
           <h2>{caseCountCountry === null ? 'No data' : caseCountCountry.toLocaleString('en')}</h2>
-          <p>Confirmed cases in {country}</p>
+          <p>Confirmed cases in {userLocation.country}</p>
         </div>
         <div>
           <h2>{caseCountGlobal === null ? 'No data' : caseCountGlobal.toLocaleString('en')}</h2>
