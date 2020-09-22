@@ -6,6 +6,7 @@ class RequestHelpQuestion {
     otherHelpAnswer = '#RES1_OH';
     questionSubtext = 'p';
     rhLocationField = '#RES2_EAZ';
+    rhLocationDropdown = '.ant-select-item-option';
     locationSubtext = 'small';
     rhShareLocation = '#RES2_SL';
     rhShowPostings = '#RES2_SA';
@@ -46,6 +47,10 @@ class RequestHelpQuestion {
 
     getRhLocationField() {
         return cy.get(this.rhLocationField);
+    }
+
+    getRhLocationDropdown() {
+        return cy.get(this.rhLocationDropdown);
     }
 
     getLocationSubtext() {

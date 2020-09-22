@@ -90,6 +90,7 @@ services:
     command: dockerize -wait http://client:3000 -timeout 300s npm run test 
     volumes:
       - ./mocha/test/:/app/test/
+      - ./mocha/utils/:/app/utils/
     working_dir: /app
     networks:
       - fp_network
