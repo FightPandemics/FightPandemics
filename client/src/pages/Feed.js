@@ -790,7 +790,7 @@ const Feed = (props) => {
                 isMobile={true}
                 handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
-                placeholder={"Search Posts, Poeple & Orgs"}
+                placeholder={"Search Posts, People & Orgs"}
             />
             </MobileSearch>
             {<div>

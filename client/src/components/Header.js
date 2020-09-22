@@ -253,7 +253,7 @@ export default ({
             {navSearch && <FeedSearch
               handleSubmit={onSearchSubmit}
               handleClear={onSearchClear}
-              placeholder={"Search Posts, Poeple & Orgs"}
+              placeholder={"Search Posts, People & Orgs"}
             />}
             </NavSearch>
           </>
