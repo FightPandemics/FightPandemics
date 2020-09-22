@@ -68,12 +68,12 @@ const SearchBarContainer = styled.div`
 const NearestHealthFacilities = (props) => {
   //TO-DO: Pull location data.
   const userLocation = {
-    address: "Venice, Los Angeles, CA, USA",
-    city: "Los Angeles",
-    coordinates: [-118.4694832, 33.98504689999999],
+    address: "Venice Ave, Staten Island, NY 10304, USA",
+    coordinates: [-74.0927225, 40.6024931],
     country: "US",
-    neighborhood: "Venice",
-    state: "CA",
+    neighborhood: "Todt Hill",
+    state: "New York",
+    zip: "10304",
   };
       
   //Fetch Country and Global Data
@@ -102,10 +102,12 @@ const NearestHealthFacilities = (props) => {
   const [localDesignation, setLocalDesignation] = useState(null);
   
   const findBestLocationMatch = (locationList) => {
-    return locationList.map((fetchedLocation) => {
+    return locationList.filter((fetchedLocation) => {
+      return fetchedLocation.country_code === userLocation.country.toLowerCase();
+    }).map((fetchedLocation) => {
       return {
         ...fetchedLocation,
-        distance: Math.abs(fetchedLocation.latitude - userLocation?.latitude) + Math.abs(fetchedLocation.longitude - userLocation?.longitude),
+        distance: Math.abs(fetchedLocation.latitude - userLocation?.coordinates[1]) + Math.abs(fetchedLocation.longitude - userLocation?.coordinates[0]),
     };
   }).reduce((acc, cur) => {
       if (acc.distance < cur.distance) {
@@ -116,27 +118,22 @@ const NearestHealthFacilities = (props) => {
     });
   };
 
-  const fetchLocalData = (target, tryAgain=true) => {
+  const fetchLocalData = (target) => {
     let casesUrl = `https://www.trackcorona.live/api/cities/${target}`;
-    setLocalDesignation(target);
     axios
       .get(casesUrl)
       .then((res) => {
         const localList = res?.data?.data;
-        if (localList.length === 0 && tryAgain === true) {
-          fetchLocalData(userLocation?.state, false);
-        } else {
-          console.log(target, localList);
-          const localData = findBestLocationMatch(localList);
-          const localCount = localData.confirmed;
-          setCaseCountLocal(localCount);
-        }
+        const localData = findBestLocationMatch(localList);
+        const localCount = localData.confirmed;
+        setCaseCountLocal(localCount);
+        setLocalDesignation(localData.location);
       })
       .catch((err) => console.error(err));
   };
 
   useEffect(() => {
-    fetchLocalData(userLocation?.city);
+    fetchLocalData(userLocation?.state, false);
   },[]);
   
   const [searchValue, setSearchValue] = useState("");
