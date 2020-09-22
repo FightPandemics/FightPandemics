@@ -328,7 +328,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
 
-    if (tabSwitched || Object.keys(selectedOptions).length || location) {
+    if (tabSwitched|| Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({ type: RESET_PAGE, filterType: "" });
     } else {
@@ -439,7 +439,7 @@ const Feed = (props) => {
   const handleOnClose = () => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
-    if (tabSwitched || Object.keys(selectedOptions).length || location) {
+    if (Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({ type: RESET_PAGE, filterType: "" });
     } else {
