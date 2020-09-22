@@ -98,8 +98,8 @@ var HELP_TYPE = {
 
 const SEARCH_OPTIONS = [
   {name: 'Posts', id: "POSTS", default: true},
+  {name: 'Organisations', id: "ORGANISATIONS"},
   {name: 'People', id: "INDIVIDUALS"},
-  {name: 'Organisations', id: "ORGANISATIONS"}
 ]
 
 const initialState = {
