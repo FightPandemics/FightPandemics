@@ -327,7 +327,11 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-    dispatchAction(SET_VALUE, "applyFilters", true);
+
+    if (Object.keys(selectedOptions).length || location) {
+      dispatchAction(SET_VALUE, "applyFilters", true);
+    }
+
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     postsDispatch({ type: RESET_PAGE, filterType: "" });
@@ -434,7 +438,9 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
     postsDispatch({ type: RESET_PAGE, filterType: "" });
-    dispatchAction(SET_VALUE, "applyFilters", true);
+    if (Object.keys(selectedOptions).length || location) {
+      dispatchAction(SET_VALUE, "applyFilters", true);
+    }
   };
 
   const handlePostLike = async (postId, liked, create) => {
