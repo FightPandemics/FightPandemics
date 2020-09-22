@@ -330,11 +330,13 @@ const Feed = (props) => {
 
     if (Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
+      postsDispatch({ type: RESET_PAGE, filterType: "" });
+    } else {
+      postsDispatch({ filterType: "" });
     }
 
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
   };
 
@@ -437,9 +439,11 @@ const Feed = (props) => {
   const handleOnClose = () => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
     if (Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
+      postsDispatch({ type: RESET_PAGE, filterType: "" });
+    } else {
+      postsDispatch({ filterType: "" });
     }
   };
 
