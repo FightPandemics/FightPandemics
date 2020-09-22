@@ -42,9 +42,7 @@ const createOrganisationSchema = {
 
 const createOrganisationAvatarSchema = {
   params: strictSchema().prop("organisationId", S.string().required()),
-  body: strictSchema()
-    .prop("file", S.required())
-    .prop("userId", S.required()),
+  body: strictSchema().prop("file", S.required()),
 };
 
 const getOrganisationSchema = {
