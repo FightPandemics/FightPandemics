@@ -1,107 +1,102 @@
-import React, {useState} from "react";
-import { Modal, Button } from "antd";
+import React, { useState } from "react";
+import { Modal } from "antd";
 import LinkButton from "./LinkButton";
-import PopUpButton from "./PopUpButton";
 import styled from "styled-components";
+import { mq, theme } from "constants/theme";
+const { lighterBlack } = theme.colors;
+const { display, body } = theme.typography.font.family;
 
 const StyledContainer = styled.section`
-height: 28px;
-font-family: Poppins;
-font-size: 24px;
-font-weight: 600;
-font-stretch: normal;
-font-style: normal;
-line-height: 1.17;
-letter-spacing: normal;
-color: #1e1e1e;
-margin: 0 auto;
-display: flex;
-justify-content: center;
-`;
-
-const StyledContainer1 = styled.section`
-height: 28px;
-font-family: Poppins;
-font-size: 24px;
-font-weight: 600;
-font-stretch: normal;
-font-style: normal;
-line-height: 1.17;
-letter-spacing: normal;
-color: #1e1e1e;
-margin: 0 auto;
-display: flex;
-justify-content: center;
-margin-top: 60px;
-`;
-
-const StyledContainer2 = styled.section`
-  width: 304px;
-  height: 25px;
-  font-family: WorkSans;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  color: #1e1e1e;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  margin-top: 7.7px;
+  padding-bottom: 2.5rem;
+  padding-top: 2.5rem;
+  h4 {
+    font-family: ${display};
+    font-size: 24px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    color: ${lighterBlack};
+  }
+  p {
+    width: 25rem;
+    font-family: ${body};
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    margin: 0 auto;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    color: ${lighterBlack};
+  }
 `;
 
 const GetInvolvedButton = () => {
-    const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    const handleCancel = async (e) => {
-        setVisible(false);
-    };
+  const handleCancel = async e => {
+    setVisible(false);
+  };
 
-    const showPopUp = async (e) => {
-        setVisible(true);
-    };
+  const showPopUp = async e => {
+    setVisible(true);
+  };
 
-    return (
-        <>
-        <LinkButton type="primary" shape="round" onClick={showPopUp}>
+  return (
+    <>
+      <LinkButton type="primary" shape="round" onClick={showPopUp}>
         Get Involved
-        </LinkButton>
-        <Modal
+      </LinkButton>
+      <Modal
         visible={visible}
         width={564}
         footer={null}
         centered={true}
         onCancel={handleCancel}
-        style={{"height": "544px",
-                "max-width": "100%",
-                "max-height": "100%",           
-                "border-radius": "10px"
-               }}
-        bodyStyle={{"padding-bottom" : "56px", "padding-top": "56px",}}
-        >
-        <StyledContainer>Get Involved</StyledContainer>
-        <PopUpButton type="primary" shape="round"
-        href="https://apply.workable.com/fightpandemics" target="_blank">
-        Join as Volunteer
-        </PopUpButton>
-        <PopUpButton type="primary" shape="round" href="https://apply.workable.com/fightpandemics/j/46D6EF3B44/" target="_blank">
-        Join as Ambassador
-        </PopUpButton>
-         <StyledContainer1>
-        <p>Student Summer Program</p>
-        </StyledContainer1>
-        <StyledContainer2>
-        <p>For Students ages 14-18.</p>
-        </StyledContainer2>
-        <PopUpButton type="primary" shape="round" href="https://apply.workable.com/fightpandemics/j/58B157AAB2/" target="_blank">
-        Join Student Program
-        </PopUpButton>
-        </Modal>
-        </>
-        );
-
+      >
+        <StyledContainer>
+          <h4>Get Involved</h4>
+          <LinkButton
+            type="primary"
+            shape="round"
+            style={{ "margin-top": "4rem" }}
+            href="https://apply.workable.com/fightpandemics"
+            target="_blank"
+          >
+            Join as Volunteer
+          </LinkButton>
+          <LinkButton
+            type="primary"
+            shape="round"
+            style={{ "margin-top": "4rem" }}
+            href="https://apply.workable.com/fightpandemics/j/46D6EF3B44/"
+            target="_blank"
+          >
+            Join as Ambassador
+          </LinkButton>
+          <h4 style={{ "margin-top": "60px" }}>Student Summer Program</h4>
+          <p>For Students ages 14-18.</p>
+          <LinkButton
+            type="primary"
+            shape="round"
+            style={{ "margin-top": "4rem" }}
+            href="https://apply.workable.com/fightpandemics/j/58B157AAB2/"
+            target="_blank"
+          >
+            Join Student Program
+          </LinkButton>
+        </StyledContainer>
+      </Modal>
+    </>
+  );
 };
 
 export default GetInvolvedButton;

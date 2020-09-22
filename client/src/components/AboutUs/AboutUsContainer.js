@@ -1,59 +1,65 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { mq, theme } from "constants/theme";
-const { royalBlue } = theme.colors;
-
+const { royalBlue, offWhite, darkerGray, gray } = theme.colors;
+const { display, body } = theme.typography.font.family;
+const {font,one,two,three,four} = theme.typography.heading;
 
 export const AboutUsContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color:#282828;
-  margin: 0 auto;
-  
-  background-color:white;
-  h1 {
-    font-size: 4rem;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: normal;
-    color: var(--color-primary-text);
-  }
-  h2 {
-    text-align: center;
-    font-size: 2.2rem;
-    font-weight: bold;
-  }
-  p {
-    margin: 0 2rem;
-    font-size: 1.6rem;
-  }
-  .heading { 
-  text-align: center;  
-  height: 75.3px;
-  margin-left: 489px;
-  margin-right:493px;
-  margin-top: 15.3px;
-  font-family: Poppins;
-  font-size: 38px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;  
+  color:${darkerGray}
+  margin: 0 auto;  
+  background-color:${offWhite};
   letter-spacing: normal;
-  color: var(--color-primary-text);
+  font-style: normal;
+  font-stretch: normal;
+  h1 {
+    font-size: ${one};
+    text-align: center;
+    font-family: ${display};
+    font-weight: bold;   
+    line-height: normal
+    }
+  h2{
+    font-family: ${display};
+    font-size: 3.8rem;
+    font-weight: bold;
+    line-height: 1.23;
+    margin-top:3.125rem;
   }
-`;
+  h3{
+    font-family: ${display};
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.17;
+  }
+  h4{
+    font-family: ${display};
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+  p{
+    margin: 0 2rem;   
+    font-size: 20px;
+    font-family:${body};
+    color:${darkerGray};
+    font-weight: normal;        
+  }    
+  `;
 
 export const SupportersLogosContainer = styled.div`
   max-width: 100%;
   display: grid;
-  margin-left: 125px;
-  margin-right: 125px;
-  grid-template-columns: repeat(auto-fill, minmax(${(props) => props.wide}, 0.8fr));
+  margin-left: 9rem;
+  margin-right: 9rem;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(${props => props.wide}, 0.8fr)
+  );
   grid-gap: 2rem;
   grid-auto-rows: 0.8fr;
-  
   > div {
     display: grid;
     place-items: center;
@@ -61,12 +67,12 @@ export const SupportersLogosContainer = styled.div`
       // for apsect ratio
       display: block;
       padding-bottom: 100%;
-      grid-area: 1 / 1 / 2 / 2 ;
+      grid-area: 1 / 1 / 2 / 2;
     }
     img {
       width: 90%;
       max-height: 50%;
-      grid-area: 1 / 1/ 2 / 2 ;
+      grid-area: 1 / 1 / 2 / 2;
     }
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -77,7 +83,7 @@ export const SupportersLogosContainer = styled.div`
     > div {
       place-items: center;
       img {
-        width: 90%;
+        width: 60%;
         grid-area: 1/ 1 / 2 / 2;
         max-height: 50%;
       }
@@ -92,131 +98,82 @@ export const MissionAndVisionBannerContainer = styled.div`
 `;
 
 export const HeadingContainer = styled.div`
-  width: 881px;
-  height: 200.6px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   margin: 0 auto;
-  h1{
-    font-family: Poppins;
+  width: 87rem;
+  height: 20rem;
+  h2 {
     font-size: 38px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
     line-height: 1.23;
-    letter-spacing: normal;
-    color: var(--color-primary-text);
-    margin-top:48.6px;
+    margin-top: 4rem;
   }
-  p{
-    font-family: Poppins;
+  p {
     font-size: 22px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
     line-height: 1.36;
-    letter-spacing: normal;
-    color: var(--color-primary-text);
-  }`;
+  }
+`;
+
+export const HowDoesThisWorkContainer = styled.div`
+  margin-top: 18rem;
+  margin-left: 6rem;
+  margin-right: 5.625rem;
+  img {
+    object-fit: contain;
+  }
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  p {
+    width: 29rem;
+  }
+`;
+export const ConnectContainer = styled.div`
+  margin: 0 auto;
+  margin-top: 8rem;
+  margin-left: 12.5rem;
+  margin-right: 8rem;
+  img {
+    width: 266.6px;
+    height: 467.1px;
+    object-fit: contain;
+  }
+  h1 {
+    width: 46rem;
+    margin-top: 11rem;
+  }
+  p {
+    width: 45rem;
+  }
+`;
 
 export const OurStoryContainer = styled.div`
-h1 {
-width: 1031px;
-height: 66px;
-font-family: Poppins;
-align-items: center;
-justify-content: center;
-text-align: center;
-margin: 0 auto;
-marginLeft: 124px;
-marginRight: 126px;
-font-size: 44px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: normal;
-letter-spacing: normal;
-color: var(--color-primary-text);
-}
-h2 {
-  align-items: center;
-justify-content: center;
-text-align: center;
-margin: 0 auto;
-padding-top: 45.2px;
-padding-bottom: 13.2px;
-marginLeft: 675.2px;
-marginRight: 3382.2px;
-  width: 12.4x;
-  height: 16.6px;
-  background-color: var(--color-primary-brand-color);
-  color: #425af2;
-}
-h3 {
-  align-items: center;
-justify-content: center;
-text-align: center;
-margin: 0 auto;
-padding-top: 60px;
-margin-bottom: 50px;
-  width: 1030px;
-  height: 28px;
-  font-family: Poppins;
-  font-size: 24px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.17;
-  letter-spacing: normal;
-  color: var(--color-primary-text);
-}
-h4 {
-  align-items: center;
-justify-content: center;
-text-align: center;
-margin: 0 auto;
-margin-bottom: 50px;
-  width: 1031px;
-  height: 20px;
-  font-family: Poppins;
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.25;
-  letter-spacing: normal;
-  color: var(--color-primary-text);
-}
-p{
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  display: inline-block;
   margin: 0 auto;
-  padding-top: 40px;
-  marginLeft: 199px;
-  marginRight: 201px;
-  width: 881px;
-  height: 180px;
-  font-family: Poppins;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  color: var(--color-primary-text);
-}
-p span.text-style-1 {
-  color: #1e1e1e;
-}
-p span.text-style-2 {
-  font-weight: 500;
-  color: var(--color-primary-brand-color);
-  color: #425af2;
+  h1 {
+    marginleft: 7.75rem;
+    marginright: 7.875rem;
   }
-}
+  h3 {
+    color: ${royalBlue};
+    margin-top: 3.75rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+  p {
+    margin: 0 auto;
+    width: 881px;
+    color: ${darkerGray};
+    line-height: 1.5;
+  }
+  p span {
+    color: ${royalBlue};
+    font-weight: 500;
+  }
+  img {
+    width: 1031px;
+    height: 354px;
+    margin-bottom: 25rem;
+    margin-top: 8rem;
+  }
 `;
 
 export const WebViewBannerContainer = styled.img`
@@ -240,115 +197,90 @@ export const TextContainer = styled.div`
   padding-bottom: 2rem;
 `;
 
-export const OurIdeaImageContainer = styled.img`
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-`;
-
 export const OurCommunity = styled.img`
-  width: 831.7px;
-  height: 425px;
+  width: 51.9375rem
+  height: 26.5625rem;
   display: inline-block;
   text-align: center;
 `;
 
 export const ImageContainer = styled.div`
-
-   background-image: url(${(props) => props.img});
-   width: ${(props) => props.width};
-   height: ${(props) => props.height};
-   display: inline-block;
-   margin: 0 auto;
-   margin-bottom: 160px;
-   object-fit: contain;
-   align-items: center;
-   justify-content: center;
-   text-align: center;
-   h1 {
-    width: 1031px;
-    height: 66px;
-    font-family: Poppins;
-    font-size: 44px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    display: flex;
-    margin: 0 auto;
-    justify-content: center;
-    text-align: center;
-    letter-spacing: normal;
-    color: var(--color-primary-text);
-    margin-top: 54px;
-    padding-left: 122px;
-    padding-right: 328px;
-   }
-   p {
-    width: 530px;
-    height: 95px;
-    display: inline-block;  
-    font-family: Poppins;
-    font-size: 20px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
+  background-image: url(${props => props.img});
+  width: ${props => props.width};
+  height: ${props => props.height};
+  display: inline-block;
+  margin: 0 auto;
+  margin-bottom: 17rem;
+  h1 {
+    margin-top: 5rem;
+  }
+  h2 {
+    margin-top: 1rem;
+  }
+  p {
+    width: 58rem;
+    height: 10rem;
+    display: inline-block;
     line-height: 1.5;
-    letter-spacing: normal;
-    color: var(--color-primary-text);
-    margin-top: 20px;
-    margin-bottom: 40px;
-    margin-left: 150px;
-    margin-right: 151.7px;
+    margin-top: 1.25rem;
+    margin-bottom: 2.5rem;
+    margin-left: 10.75rem;
+    margin-right: 10.75rem;
   }
 `;
 
-export const Grid = styled.div`
+export const SupporterContainer = styled.div`
+  background-color: ${gray};
+  padding-bottom: 3.75rem;
+  padding-top: 3.75rem;
+  h3 {
+    padding-top: 3.75rem;
+    margin-bottom: 3.75rem;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.17;
+  }
+  p {
+    width: 88rem;
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    line-height: 1.5;
+  }
 `;
+
+export const Grid = styled.div``;
 export const Row = styled.div`
- display:flex;
+  display: flex;
 `;
 
 export const Col = styled.div`
- flex: ${(props) => props.size};
+  flex: ${props => props.size};
 `;
 
 export const SocialStyle = styled.div`
-margin-top: 113px;
-margin-bottom: 70px;
-
-h3{
-  width: 289px;
-  height: 27px;
-  margin-left: 200px;
-  font-family: Poppins;
-  font-size: 22px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: italic;
-  line-height: 1.21;
-  letter-spacing: normal;
-  color: var(--color-primary-text);
-}
-p span.text-style-2 {
-  color: #425af2;
-}
-p{ 
-  height: 20px;
-  font-family: Poppins;
-  font-size: 14px;
-  text-align: right;
-  margin-right: 127px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  color: var(--color-primary-text);
-}
+  margin-top: 11rem;
+  margin-bottom: 5rem;
+  margin-left: 11rem;
+  h3 {
+    width: 30rem;
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.21;
+  }
+  p {
+    font-size: 14px;
+    text-align: right;
+    margin-right: 11rem;
+    margin-bottom: 2rem;
+  }
+  p span {
+    color: ${royalBlue};
+  }
 `;
+
 export const SocialContainer = styled.div`
   text-align: left;
-  margin-left: 200px;
   img {
     margin: 1.5rem 1.5rem;
     width: 45.5px;
@@ -357,7 +289,9 @@ export const SocialContainer = styled.div`
   }
 `;
 
-export const AboutUsLink = styled.a`
+export const AboutUsLink = styled.a.attrs(props => ({
+  target: "_blank",
+}))`
   color: ${royalBlue};
   display: inline-block;
 `;

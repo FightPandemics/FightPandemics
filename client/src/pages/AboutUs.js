@@ -1,53 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LinkButton from "components/Button/LinkButton";
 import GetInvButton from "components/Button/GetInvolvedButton";
 import HelpBoardButton from "components/Button/HelpBoardButton";
-import GridCard from "components/Card/GridCard";
-import ConnectCard from "components/Card/ConnectPeopleCard";
 import {
   AboutUsContainer,
-  TextContainer,
-  MobileViewBannerContainer,
-  WebViewBannerContainer,
   ImageContainer,
-  OurCommunity,
   HeadingContainer,
+  HowDoesThisWorkContainer,
   OurStoryContainer,
-  MissionAndVisionBannerContainer,
+  ConnectContainer,
+  SupporterContainer,
   SupportersLogosContainer,
   SocialContainer,
   AboutUsLink,
-  Grid, Row, Col, SocialStyle
+  Grid,
+  Row,
+  Col,
+  SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
-import BlankImage from "assets/about-us-images/Blank.jpg"
-//import DesktopBanner from "assets/about-us-images/vision-and-mission.png";
-//import MobileBanner from "assets/about-us-images/vision-and-mission-mobile.png";
-
+import BlankImage from "assets/about-us-images/Blank.jpg";
 import Group from "assets/about-us-images/group.svg";
 import WorldMap from "assets/about-us-images/world-map.png";
-
-//import OurIdeaImage from "assets/about-us-images/our-idea.svg";
+import HelpBoard from "assets/how-does-work-images/Help-Board.gif";
+import LocalGlobal from "assets/how-does-work-images/Local&Global.gif";
+import RelevantContent from "assets/how-does-work-images/Relevant-content.gif";
+import ConnectImage from "assets/about-us-images/weConnectPeople.png";
 
 // company supporter logos import
 import airtableLogo from "assets/supporters-logos/airtable-logo.svg";
-//import akveoLogo from "assets/supporters-logos/akveoLogo.svg";
 import algoliaLogo from "assets/supporters-logos/algolia-logo.svg";
 import aut0Logo from "assets/supporters-logos/auth0-logo.svg";
-//import awsLogo from "assets/supporters-logos/awsLogo.svg";
 import calendlyLogo from "assets/supporters-logos/calendlyLogo2.png";
-//import datasauraiLogo from "assets/supporters-logos/datasaurai-logo.svg";
-//import figmaLogo from "assets/supporters-logos/figmaLogo.svg";
-//import googleMapsLogo from "assets/supporters-logos/googleMapsLogo.svg";
-//import githubLogo from "assets/supporters-logos/github-logo.svg";
 import gitkrakenLogo from "assets/supporters-logos/gitkraken-logo.png";
 import hackoladeLogo from "assets/supporters-logos/hackoladeLogo.png";
 import leypayLogo from "assets/supporters-logos/leypalLogo2.png";
 import miroLogo from "assets/supporters-logos/miro-logo.svg";
 import mongodbLogo from "assets/supporters-logos/mongodb-logo.png";
-//import newrelicLogo from "assets/supporters-logos/newrelic-logo.svg";
 import notionLogo from "assets/supporters-logos/notionLogo.svg";
-//import papertrailLogo from "assets/supporters-logos/papertrail-logo.svg";
 import sendgridLogo from "assets/supporters-logos/sendgrid-logo.svg";
 import sentryLogo from "assets/supporters-logos/sentry-logo.svg";
 import slackLogo from "assets/supporters-logos/slack-logo.svg";
@@ -57,7 +46,6 @@ import typeformLogo from "assets/supporters-logos/typeform-logo.png";
 import workableLogo from "assets/supporters-logos/workableLogo.png";
 import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
 import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
-//import datadogLogo from "assets/supporters-logos/datadog-logo.svg";
 import pagerdutyLogo from "assets/supporters-logos/pagerduty.png";
 import lokaliseLogo from "assets/supporters-logos/lokaliseLogos.png";
 import saucelabsLogos from "assets/supporters-logos/saucelabsLogo.png";
@@ -70,7 +58,6 @@ import figmaLogo from "assets/supporters-logos/figmaLogo.png";
 import googleMapsLogo from "assets/supporters-logos/googleMapsLogo.png";
 import awsLogo from "assets/supporters-logos/awsLogo.png";
 
-
 // social icons
 import instagramLogo from "assets/icons/social-instagram.png";
 import linkedInLogo from "assets/icons/social-linkedin.png";
@@ -78,8 +65,12 @@ import facebookLogo from "assets/icons/social-facebook.png";
 import twitterLogo from "assets/icons/social-twitter.png";
 import { size } from "lodash";
 
+const DemoBox = props => (
+  <p className={`height-${props.value}`}>{props.children}</p>
+);
+
 let LogosMap = new Map([
-  [algoliaLogo,"https://www.algolia.com/" ],
+  [algoliaLogo, "https://www.algolia.com/"],
   [hackoladeLogo, "https://hackolade.com/"],
   [lokaliseLogo, "https://lokalise.com"],
   [miroLogo, "http://www.miro.com"],
@@ -97,7 +88,7 @@ let LogosMap = new Map([
   [mongodbLogo, "https://www.mongodb.com"],
   [notionLogo, "https://www.notion.so"],
   [pagerdutyLogo, "https://www.pagerduty.com"],
-  [prowlyLogo,"https://prowly.com/en"],
+  [prowlyLogo, "https://prowly.com/en"],
   [sendgridLogo, "http://sendgrid.com"],
   [seo4ajaxLogo, "https://www.seo4ajax.com"],
   [slackLogo, "https://slack.com"],
@@ -120,7 +111,7 @@ const supporterLogosLifetime = [
   sentryLogo,
   socialbeeLogo,
   whitesourceLogo,
-]
+];
 const supporterLogosCurrent = [
   airtableLogo,
   awsLogo,
@@ -142,18 +133,15 @@ const supporterLogosCurrent = [
   zeplinLogo,
   zendeskLogo,
   workableLogo,
-]
-const supporterLogosPast = [
-  leypayLogo,
-  calendlyLogo,
-]
+];
+const supporterLogosPast = [leypayLogo, calendlyLogo];
 
 function LogoItem(props) {
   console.log(LogosMap.get(props.value));
   return (
     <div>
-      <a  href={LogosMap.get(props.value)} target="_blank">
-      <img src={props.value} alt="" />
+      <a href={LogosMap.get(props.value)} target="_blank">
+        <img src={props.value} alt="" />
       </a>
     </div>
   );
@@ -161,7 +149,7 @@ function LogoItem(props) {
 
 function LogosList(props) {
   const supporterLogos = props.supporterLogos;
-  const logoItems = supporterLogos.map((logo) => (
+  const logoItems = supporterLogos.map(logo => (
     <LogoItem key={logo.toString()} value={logo} />
   ));
   return logoItems;
@@ -170,113 +158,181 @@ function LogosList(props) {
 const AboutUs = () => {
   return (
     <AboutUsContainer>
-      <MissionAndVisionBannerContainer>
-        <div>
-       <HeadingContainer>
-         <h1>We want to create a world where humans are more resilient to emergencies</h1>
-         <p>By helping communities respond more quickly and effectively to crises.</p>
-        </HeadingContainer>
-        <br/>
-        </div>
-        <ImageContainer img={Group} width={"100%"}height={"501.8px"}>
-        <div className="heading">Who is this for?</div> 
-        </ImageContainer>
-      </MissionAndVisionBannerContainer>
-        <div>
-        <ImageContainer img={WorldMap} width={"831.7px"} height={"425px"}>
-      <h1>Our Community</h1>
+      <HeadingContainer>
+        <h2>
+          We want to create a world where humans are more resilient to
+          emergencies
+        </h2>
+        <p>
+          By helping communities respond more quickly and effectively to crises.
+        </p>
+      </HeadingContainer>
+
+      <ImageContainer img={Group} width={"100%"} height={"501.8px"}>
+        <h2>Who is this for?</h2>
+      </ImageContainer>
+
+      <ImageContainer img={WorldMap} width={"831.7px"} height={"425px"}>
+        <h1>Our Community</h1>
         <p>
           We are built by a team of 1100+ volunteer developers, designers,
-          scientists, health experts, and product managers from around the world.
+          scientists, health experts, and product managers from around the
+          world.
         </p>
         <GetInvButton />
-        </ImageContainer>
-        </div>
-        <div><ConnectCard/></div>
-        <div>
-        <h1 className="text-primary display-6">How does this work?</h1>
-        <GridCard/>
+      </ImageContainer>
+
+      <ConnectContainer>
+        <Row justify="space-around" align="middle">
+          <Col size={4}>
+            <DemoBox value={100}>
+              <img src={ConnectImage} />
+            </DemoBox>
+          </Col>
+          <Col size={4}>
+            <DemoBox value={50}>
+              <h1>We connect people</h1>
+              <p>
+                An altruistic platform to connect those who need help with those
+                who can provide it.
+              </p>
+            </DemoBox>
+          </Col>
+        </Row>
+      </ConnectContainer>
+
+      <HowDoesThisWorkContainer>
+        <h1>How does this work?</h1>
+        <Grid>
+          <Row>
+            <Col size={8}>
+              <h3>Help Board</h3>
+              <img
+                alt="help board"
+                src={HelpBoard}
+                style={{ width: "326px", height: "290px" }}
+              />
+              <p>
+                A community platform for individuals and organizations to offer
+                and request aid.
+              </p>
+            </Col>
+            <Col size={8}>
+              <h3>Local & Global</h3>
+              <img
+                alt="local and global"
+                src={LocalGlobal}
+                style={{ width: "279.2px", height: "294.5px" }}
+              />
+              <p>
+                Offer and request help within my community and around the world.
+              </p>
+            </Col>
+            <Col size={8}>
+              <h3>Relevant Content</h3>
+              <img
+                alt="relevant-content"
+                src={RelevantContent}
+                style={{ width: "292.8px", height: "290px" }}
+              />
+              <p>Expiration periods ensure the board is always up to date.</p>
+            </Col>
+          </Row>
+        </Grid>
         <HelpBoardButton type="primary">
-        <Link to="/feed" target="_blank">
-          Go to Help Board
-          </Link>
+          <Link to="/feed">Go to Help Board</Link>
         </HelpBoardButton>
-        </div>
-        <div>
-       <OurStoryContainer>
-        <h1 >Our Story</h1>
-        <h2>FightPandemics</h2>
+      </HowDoesThisWorkContainer>
+
+      <OurStoryContainer>
+        <h1>Our Story</h1>
+        <h3>FightPandemics</h3>
         <p>
-          is the brainchild of Manuel Gonzalez Alzuru, who was
-          infected with COVID-19 in France. Upon returning home to Barcelona, he
-          found he was unable to get help even though there were people who
-          wanted to provide it.<br/><br />
-          Inspired by so many coming together, Manuel launched the project with one
-          mission in mind: <span className="text-style-2">to ensure that others could connect in time.
-          </span>
-         </p>
-        <img src={BlankImage} alt="loading..." 
-        style={{ width: "1031px", height:"354px","margin-bottom": "260px","margin-top": "80px"}}
-        /> 
-         {/* Add FightPandemics Video */}
-        </OurStoryContainer>
-        </div>
-     <div>
-        <OurStoryContainer style={{backgroundColor: "#f6f7fb", "padding-bottom": "60px","padding-top": "60px" }}> 
-      <h1>Supporters</h1>
-      <p> Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.
-        <br/><br/>
-          To learn more about how your business can become a supporter, please contact our 
-        partnerships team at {" "}
-       <AboutUsLink href ="partnerships@fightpandamics.com">  partnerships@fightpandamics.com</AboutUsLink>
-       <br/><br/>
-      Click on the company logo below to go to the supporter's website.</p>
-      <h3>Lifetime supporters</h3>
-      <SupportersLogosContainer wide = {"30rem"}>
-        <LogosList supporterLogos={supporterLogosLifetime} />
-      </SupportersLogosContainer><br/>
-      <h3>Current supporters</h3>
-      <SupportersLogosContainer wide = {"25rem"}>    
-        <LogosList supporterLogos={supporterLogosCurrent} />
-      </SupportersLogosContainer><br/>
-      <h4>Past supporters</h4>
-      <SupportersLogosContainer wide = {"18rem"}>
-        <LogosList supporterLogos={supporterLogosPast} />
-      </SupportersLogosContainer>
+          is the brainchild of Manuel Gonzalez Alzuru, who was infected with
+          COVID-19 in France. Upon returning home to Barcelona, he found he was
+          unable to get help even though there were people who wanted to provide
+          it.
+          <br />
+          <br />
+          Inspired by so many coming together, Manuel launched the project with
+          one mission in mind:{" "}
+          <span>to ensure that others could connect in time.</span>
+        </p>
+        <img src={BlankImage} alt="loading..." />
+        {/* Add FightPandemics Video */}
       </OurStoryContainer>
-      </div>
-      <div>
-      {/* <p >Follow us on social media</p> */}
-     <SocialStyle>
-       <Grid>
-         <Row>
-           <Col size = {8}><h3>Follow us on social media</h3></Col>
-           <Col size = {8}><p><span className="text-style-2">#ForCommunitiesByCommunities</span></p></Col>
-         </Row>
-         <Row>
-           <Col size = {8}>
-      <SocialContainer>     
-     <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/" target="_blank">
-       <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
-     </AboutUsLink>
-     <AboutUsLink href="https://www.facebook.com/FightPandemics/" target="_blank">
-       <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
-     </AboutUsLink>
-     <AboutUsLink href="https://www.instagram.com/fightpandemics/" target="_blank">
-       <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
-     </AboutUsLink>
-     <AboutUsLink href="https://twitter.com/FightPandemics">
-       <img src={twitterLogo} alt="FightPandemics Twitter Icon" target="_blank"/>
-     </AboutUsLink>           
-        </SocialContainer>
-        </Col>
-        <Col size = {8}><p>
-          Contact us at:{" "}<AboutUsLink href="admin@fightpandemics.com">admin@fightpandemics.com</AboutUsLink>
-          </p></Col>
-         </Row>
-       </Grid>
-       </SocialStyle>
-      </div>
+
+      <SupporterContainer>
+        <h1>Supporters</h1>
+        <p>
+          {" "}
+          Thank You to our supporters, without them we would not be able to help
+          communities prepare and respond to pandemics.
+          <br />
+          <br />
+          To learn more about how your business can become a supporter, please
+          contact our partnerships team at{" "}
+          <AboutUsLink href="partnerships@fightpandamics.com">
+            {" "}
+            partnerships@fightpandamics.com
+          </AboutUsLink>
+          <br />
+          <br />
+          Click on the company logo below to go to the supporter's website.
+        </p>
+        <h3>Lifetime supporters</h3>
+        <SupportersLogosContainer wide={"25rem"}>
+          <LogosList supporterLogos={supporterLogosLifetime} />
+        </SupportersLogosContainer>
+        <br />
+        <h3>Current supporters</h3>
+        <SupportersLogosContainer wide={"20rem"}>
+          <LogosList supporterLogos={supporterLogosCurrent} />
+        </SupportersLogosContainer>
+        <br />
+        <h4>Past supporters</h4>
+        <SupportersLogosContainer wide={"18rem"}>
+          <LogosList supporterLogos={supporterLogosPast} />
+        </SupportersLogosContainer>
+      </SupporterContainer>
+
+      <SocialStyle>
+        <Grid>
+          <Row>
+            <Col size={8}>
+              <h3>Follow us on social media</h3>
+              <SocialContainer>
+                <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
+                  <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
+                </AboutUsLink>
+                <AboutUsLink href="https://www.facebook.com/FightPandemics/">
+                  <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+                </AboutUsLink>
+                <AboutUsLink href="https://www.instagram.com/fightpandemics/">
+                  <img
+                    src={instagramLogo}
+                    alt="FightPandemics Instagram Icon"
+                  />
+                </AboutUsLink>
+                <AboutUsLink href="https://twitter.com/FightPandemics">
+                  <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+                </AboutUsLink>
+              </SocialContainer>
+            </Col>
+            <Col size={8}>
+              <p>
+                <span>#ForCommunitiesByCommunities</span>
+              </p>
+              <p>
+                Contact us at:{" "}
+                <AboutUsLink href="admin@fightpandemics.com">
+                  admin@fightpandemics.com
+                </AboutUsLink>
+              </p>
+            </Col>
+          </Row>
+        </Grid>
+      </SocialStyle>
     </AboutUsContainer>
   );
 };
