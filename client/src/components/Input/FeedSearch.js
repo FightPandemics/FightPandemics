@@ -10,7 +10,7 @@ const StyledIcon = styled(SvgIcon)`
     line-height: 1.8rem;
     vertical-align: bottom;
     height: 100%;
-    margin: 0 1.4rem;
+    margin: 0 .7rem 0 1.4rem;
 `;
 
 const SearchContainer = styled.span`

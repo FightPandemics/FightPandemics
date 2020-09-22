@@ -98,7 +98,7 @@ var HELP_TYPE = {
 
 const SEARCH_OPTIONS = [
   {name: 'Posts', id: "POSTS", default: true},
-  {name: 'Individuals', id: "INDIVIDUALS"},
+  {name: 'People', id: "INDIVIDUALS"},
   {name: 'Organisations', id: "ORGANISATIONS"}
 ]
 
@@ -343,9 +343,7 @@ const Feed = (props) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
         HELP_TYPE = {
-          ALL: "All individuals",
-          REQUEST: "Requesting help",
-          OFFER: "Offering help",
+          ALL: "All People",
         };
         break;
       case "ORGANISATIONS":
@@ -792,7 +790,7 @@ const Feed = (props) => {
                 isMobile={true}
                 handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
-                placeholder={"Search"}
+                placeholder={"Search Posts, Poeple & Orgs"}
             />
             </MobileSearch>
             {<div>

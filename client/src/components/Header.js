@@ -109,6 +109,7 @@ const NavSearch = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none!important;
   }
+  margin-left: 5rem;
 `;
 const activeStyles = {
   fontWeight: "600",
@@ -252,7 +253,7 @@ export default ({
             {navSearch && <FeedSearch
               handleSubmit={onSearchSubmit}
               handleClear={onSearchClear}
-              placeholder={"Search"}
+              placeholder={"Search Posts, Poeple & Orgs"}
             />}
             </NavSearch>
           </>
