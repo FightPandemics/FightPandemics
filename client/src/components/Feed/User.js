@@ -162,7 +162,6 @@ const User = ({
       return text
     }
     const regex = new RegExp(`(${escapeRegExp(highlight).split(' ').filter(key=>key && key.length>1).join('|')})`, 'gi')
-    console.log(regex)
     const parts = text.split(regex)
     return (
       parts.filter(part => part).map((part) => (

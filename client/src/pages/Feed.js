@@ -368,6 +368,7 @@ const Feed = (props) => {
   }
 
   const handleSearchSubmit = (selectedValueId) => {
+    if (!selectedValueId || selectedValueId != "POSTS") handleChangeType({key: "ALL"});
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
@@ -375,6 +376,7 @@ const Feed = (props) => {
   }
 
   const handleSearchClear = () => {
+    handleChangeType({key: "ALL"});
     dispatchAction(SET_VALUE, "searchKeyword", "");
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
@@ -383,6 +385,7 @@ const Feed = (props) => {
   }
 
   const handleMobileSearchSubmit = (inputValue) => {
+    handleChangeType({key: "ALL"});
     dispatchAction(SET_VALUE, "searchKeyword", inputValue);
     refetchPosts(true);
   }
