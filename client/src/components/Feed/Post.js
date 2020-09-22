@@ -425,19 +425,16 @@ const Post = ({
             dispatchPostAction={dispatchPostAction}
             user={user}
           />
-          {loadMoreComments && commentsCount >= 5 ? (
-            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
-              {isLoading ? "Loading..." : "Show More Comments"}
-            </StyledLoadMoreButton>
-          ) : (
-            <></>
-          )}
-          {!loadMoreComments && commentsCount > 5 ? (
-            <StyledLoadMoreButton disabled={isLoading} onClick={showLessComments}>
-              {"Show Less Comments"}
-            </StyledLoadMoreButton>
-          ) : (
-            <></>
+          {commentsCount > 5 && (
+            loadMoreComments ? (
+              <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
+                {isLoading ? "Loading..." : "Show More Comments"}
+              </StyledLoadMoreButton>
+            ) : (
+              <StyledLoadMoreButton disabled={isLoading} onClick={showLessComments}>
+                {isLoading ? "Loading..." : "Show Less Comments"}
+              </StyledLoadMoreButton>
+            )
           )}
         </>
       ) : (
