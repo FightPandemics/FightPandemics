@@ -356,14 +356,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   />
                   <Input
                     type="email"
+                    required
                     name="email"
                     id="email"
                     className={errors.email && "has-error"}
                     placeholder="Enter email address"
                     ref={register({
-                      required: "Email is required.",
                       validate: (email) =>
-                        validateEmail(email) || "Invalid email",
+                        validateEmail(email) ||
+                        "`${validateEmail.errorMessage}`",
                     })}
                     style={inputStyles}
                   />
@@ -467,14 +468,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     />
                     <Input
                       type="email"
+                      required
                       name="email"
                       id="email"
                       className={errors.email && "has-error"}
                       placeholder="Enter email address"
                       ref={register({
-                        required: "Email is required.",
                         validate: (email) =>
-                          validateEmail(email) || "Invalid email",
+                          validateEmail(email) ||
+                          "`${validateEmail.errorMessage}`",
                       })}
                       style={inputStyles}
                     />
