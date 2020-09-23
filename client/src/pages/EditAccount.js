@@ -51,6 +51,7 @@ const OBJECTIVES = {
   donate: "Donate",
   shareInformation: "Share Information",
   volunteer: "Volunteer",
+  t:'t'
 };
 
 const NEEDS = {
