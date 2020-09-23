@@ -51,7 +51,6 @@ const OBJECTIVES = {
   donate: "Donate",
   shareInformation: "Share Information",
   volunteer: "Volunteer",
-  t:'t'
 };
 
 const NEEDS = {
@@ -144,7 +143,8 @@ function EditAccount(props) {
           <ProfilePicWrapper>
             <ProfilePic
               resolution={"7680px"}
-              noPic={true}
+              allowUpload={false}
+              user={user}
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             {/* hide this until backend API is available
