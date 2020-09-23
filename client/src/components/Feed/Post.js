@@ -112,7 +112,6 @@ const Post = ({
   const loadComments = async () => {
     if (commentsCount !== 0) {
       dispatchPostAction(NEXT_PAGE);
-      dispatchPostAction(NEXT_PAGE);
     } else {
       dispatchPostAction(NEXT_PAGE);
     }

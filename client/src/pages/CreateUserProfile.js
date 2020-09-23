@@ -263,12 +263,13 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               <Input
                 type="email"
                 name="email"
+                required
                 id="email"
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-                  required: "Email is required.",
-                  validate: (email) => validateEmail(email) || "Invalid email",
+                  validate: (email) =>
+                    validateEmail(email) || "`${validateEmail.errorMessage}`",
                 })}
                 style={inputStyles}
                 value={email}

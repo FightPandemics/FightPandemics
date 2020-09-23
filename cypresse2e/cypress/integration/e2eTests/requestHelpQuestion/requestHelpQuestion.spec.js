@@ -26,7 +26,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
             var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
             medicalHelpAnswer.should('be.visible');
             medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
-            
+
         });
 
         it('Need other help answer option is visible and clickable', () => {
@@ -69,12 +69,11 @@ describe('FightPandemics Request Help Questionnaire', () => {
                 .contains('We want to show you the most relevant results');
         });
 
-        it('User can type in location field and select location from the list', () => {
+        it('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click();
-            locationField.type(LOCATION)
-                .and('have.attr', 'aria-expanded', 'true')
-                .and('have.attr', 'aria-activedescendant', 'RES2_EAZ_list_0').click();
+            locationField.type(LOCATION);
+            requestHelpQuestion.getRhLocationDropdown().should('be.visible');
         });
 
         it('Location subtext is visible', () => {
@@ -101,10 +100,6 @@ describe('FightPandemics Request Help Questionnaire', () => {
             clickButton(requestHelpQuestion.getBackButtonTwo());
         });
 
-
-        it('Next button is visible and clickable for question 2', () => {
-            clickButton(requestHelpQuestion.getNextButtonTwo());
-        });
     });
 
     function clickButton(button) {

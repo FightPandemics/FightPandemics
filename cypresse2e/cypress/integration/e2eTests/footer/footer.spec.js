@@ -16,32 +16,32 @@ describe('FightPandemics Footer Section', () => {
 
         it('About Us link is visible and clickable', () => {
             var aboutUs = footer.getAboutUs();
-            aboutUs.should('be.visible').contains('About Us').click();
+            aboutUs.should('be.visible').contains('About Us').click({ force: true });
         });
 
         it('FAQ link is visible and clickable', () => {
             var faq = footer.getFaq();
-            faq.should('be.visible').contains('FAQ').click();
+            faq.should('be.visible').contains('FAQ').click({ force: true });
         });
 
         it('Blog link is visible and clickable', () => {
             var blog = footer.getBlog();
-            blog.should('be.visible').contains('Blog').click();
+            blog.should('be.visible').contains('Blog').click({ force: true });
         });
 
         it('Terms & Conditions link is visible and clickable', () => {
             var termsAndConditions = footer.getTermsAndConditions();
-            termsAndConditions.should('be.visible').contains('Terms & Conditions').click();
+            termsAndConditions.should('be.visible').contains('Terms & Conditions').click({ force: true });
         });
 
         it('Privacy Policy link is visible and clickable', () => {
             var privacyPolicy = footer.getPrivacyPolicy();
-            privacyPolicy.should('be.visible').contains('Privacy Policy').click();
+            privacyPolicy.should('be.visible').contains('Privacy Policy').click({ force: true });
         });
 
         it('Cookies Policy link is visible and clickable', () => {
             var cookiesPolicy = footer.getCookiesPolicy();
-            cookiesPolicy.should('be.visible').contains('Cookies Policy').click();
+            cookiesPolicy.should('be.visible').contains('Cookies Policy').click({ force: true });
         });
     });
 });
