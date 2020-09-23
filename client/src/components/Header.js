@@ -29,7 +29,7 @@ const StyledNavBar = styled(NavBar)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
     margin-top: 0;
-    padding-left: 23px;
+    padding-left: 18px;
     padding-top: 10px;
   }
   .am-navbar-title {
