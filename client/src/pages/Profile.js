@@ -259,8 +259,8 @@ const Profile = ({
           />
         )}
         <ProfilePic
-          noPic={true}
           allowUpload={true}
+          user={user}
           initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
         />
         <UserInfoDesktop>

@@ -318,7 +318,10 @@ const OrganisationProfile = () => {
                 onClick={() => setDrawer(true)}
               />
             )}
-            <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
+            <ProfilePic
+                allowUpload={true}
+                user={organisation}
+                initials={getInitialsFromFullName(name)} />
             <UserInfoDesktop>
               <NameDiv>
                 {name}

@@ -5,7 +5,6 @@ import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
-import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
 import Footnote from "components/Footnote";
@@ -35,6 +34,7 @@ import {
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
+import ProfilePic from "../../components/Picture/ProfilePic";
 
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
@@ -255,12 +255,13 @@ const NavigationLayout = (props) => {
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
-  const displayInitials = (user) => {
-    if (user?.firstName && user?.lastName) {
+  const displayAvatar = (user) => {
+    if (user?.photo || user?.firstName && user?.lastName) {
       return (
-        <AvatarInitials>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
-        </AvatarInitials>
+          <ProfilePic
+              user={user}
+              initials={getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
+          />
       );
     }
   };
@@ -503,11 +504,7 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-        <NavItem history={history}>
-          <TextAvatar size={80} alt="avatar">
-            {displayInitials(user)}
-          </TextAvatar>
-        </NavItem>
+            {displayAvatar(user)}
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />

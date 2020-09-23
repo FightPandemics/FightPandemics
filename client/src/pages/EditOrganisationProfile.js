@@ -164,7 +164,7 @@ function EditOrganisationProfile(props) {
         <ProfilePicWrapper>
           <ProfilePic
             resolution={"7680px"}
-            noPic={true}
+            user={organisation}
             initials={getInitialsFromFullName(name)}
           />
           {/* hide this until backend API is available
