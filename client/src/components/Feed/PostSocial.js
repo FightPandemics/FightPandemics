@@ -19,7 +19,7 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants
 import { mq } from "constants/theme";
-import MessageModal from "./MessageModal";
+import MessageModal from "./MessagesModal/MessageModal.js";
 
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;

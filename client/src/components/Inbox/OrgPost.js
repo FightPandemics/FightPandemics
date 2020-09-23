@@ -40,7 +40,7 @@ const Post = styled.div`
   }
 `;
 
-export const OrgPost = (props) => {
+export const OrgPost = () => {
   return (
     <Post>
       <header>
