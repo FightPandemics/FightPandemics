@@ -1,14 +1,22 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import { NoPosts } from "pages/Feed";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -50,8 +58,13 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  SET_LOADING,
+  NEXT_PAGE,
+  RESET_PAGE,
+  ERROR_POSTS,
+  FETCH_POSTS,
+  SET_POSTS,
 } from "hooks/actions/feedActions";
-import { ERROR_POSTS, FETCH_POSTS, SET_POSTS } from "hooks/actions/feedActions";
 import {
   fetchUser,
   fetchUserError,
@@ -60,6 +73,7 @@ import {
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
+import Loader from "components/Feed/StyledLoader";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -84,7 +98,8 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 const Profile = ({
   match: {
     params: { id: pathUserId },
@@ -98,7 +113,10 @@ const Profile = ({
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { t } = useTranslation();
-
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -114,7 +132,25 @@ const Profile = ({
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;
-  const { deleteModalVisibility } = postsState;
+  const {
+    isLoading,
+    loadMore,
+    page,
+    posts: postsList,
+    deleteModalVisibility,
+    status,
+    error: postsError,
+  } = postsState;
+
+  const prevTotalPostCount = usePrevious(totalPostCount);
+  const userPosts = Object.entries(postsList);
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   useEffect(() => {
     (async function fetchProfile() {
@@ -129,47 +165,111 @@ const Profile = ({
           `error.http.${message}`,
         ]);
         userProfileDispatch(
-          fetchUserError(`${t("error.failedLoadingProfile")} ${translatedErrorMessage}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
   }, [pathUserId, userProfileDispatch]);
 
-  const fetchPosts = async () => {
-    postsDispatch({ type: FETCH_POSTS });
-    try {
-      if (userId) {
-        const res = await axios.get(
-          `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${userId}`,
-        );
-        const loadedPosts =
-          res?.data?.length &&
-          res.data.reduce((obj, item) => {
-            obj[item._id] = item;
-            return obj;
-          }, {});
-
-        postsDispatch({
-          type: SET_POSTS,
-          posts: loadedPosts,
-        });
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        if (userId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
+          if (posts.length && meta.total) {
+            if (prevTotalPostCount !== meta.total) {
+              setTotalPostCount(meta.total);
+            }
+            if (posts.length < limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
+            } else if (meta.total === limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
+            }
+            const loadedPosts = posts.reduce((obj, item) => {
+              obj[item._id] = item;
+              return obj;
+            }, {});
+            if (postsList) {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...postsList, ...loadedPosts },
+              });
+            } else {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...loadedPosts },
+              });
+            }
+          } else if (posts) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList },
+            });
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: false,
+              loadMore: false,
+            });
+          } else {
+            postsDispatch({ type: SET_LOADING });
+          }
+        }
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
       }
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      const translatedErrorMessage = t([
-        `error.${message}`,
-        `error.http.${message}`,
-      ]);
-      postsDispatch({
-        type: ERROR_POSTS,
-        error: `${t("error.failedLoadingActivity")} ${translatedErrorMessage}`,
-      });
+    };
+    fetchPosts();
+  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const refetchPosts = (isLoading, loadMore) => {
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+    });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
     }
   };
 
+  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
+
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (
+        (!isLoading && loadMore && stopIndex >= userPosts.length,
+        userPosts.length)
+      ) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [isLoading, loadMore, userPosts.length],
+  );
+
   useEffect(() => {
-    fetchPosts();
-  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+    setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
+  }, [loadMore, userPosts.length]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -179,10 +279,17 @@ const Profile = ({
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
-            ...postsState.posts,
+            ...postsList,
           };
           delete allPosts[post._id];
-          fetchPosts();
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
       } catch (error) {
         console.log({
@@ -222,10 +329,8 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
-
     const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
     let response = {};
-
     if (user) {
       if (liked) {
         try {
@@ -251,10 +356,15 @@ const Profile = ({
     }
   };
 
+  const gtmTag = (tag) => GTM.user.profilePrefix + tag;
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const onToggleDrawer = () => setDrawer(!drawer);
+  const onToggleCreatePostDrawer = () => setModal(!modal);
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <Loader />;
   return (
     <ProfileLayout>
       <BackgroundHeader>
@@ -265,7 +375,7 @@ const Profile = ({
           <EditIcon
             src={edit}
             id={GTM.user.profilePrefix + GTM.profile.modify}
-            onClick={() => setDrawer(true)}
+            onClick={onToggleDrawer}
           />
         )}
         <ProfilePic
@@ -280,7 +390,7 @@ const Profile = ({
               <EditEmptyIcon
                 src={editEmpty}
                 id={GTM.user.profilePrefix + GTM.profile.modify}
-                onClick={() => setDrawer(true)}
+                onClick={onToggleDrawer}
               />
             )}
           </NameDiv>
@@ -342,14 +452,14 @@ const Profile = ({
               <CreatePostIcon
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
-                onClick={() => setModal(!modal)}
+                onClick={onToggleCreatePostDrawer}
               />
             </>
           )}
         </SectionHeader>
         <FeedWrapper>
           <Activity
-            filteredPosts={postsState.posts}
+            filteredPosts={postsList}
             user={user}
             postDelete={postDelete}
             handlePostDelete={handlePostDelete}
@@ -357,11 +467,38 @@ const Profile = ({
             deleteModalVisibility={deleteModalVisibility}
             handleCancelPostDelete={handleCancelPostDelete}
             handlePostLike={handlePostLike}
+            loadNextPage={loadNextPage}
+            isNextPageLoading={isLoading}
+            itemCount={itemCount}
+            isItemLoaded={isItemLoaded}
+            hasNextPage={loadMore}
+            totalPostCount={totalPostCount}
           />
+          {status === ERROR_POSTS && (
+            <ErrorAlert
+              message={t([
+                `error.${postsError.message}`,
+                `error.http.${postsError.message}`,
+              ])}
+            />
+          )}
+          {emptyFeed() && (
+            <NoPosts>
+              <Trans
+                i18nKey="feed.noResults"
+                components={[
+                  <a
+                    id={gtmTag(GTM.post.createPost)}
+                    onClick={onToggleCreatePostDrawer}
+                  />,
+                ]}
+              />{" "}
+            </NoPosts>
+          )}
           {ownUser && (
             <CreatePost
-              onCancel={() => setModal(false)}
-              loadPosts={fetchPosts}
+              onCancel={onToggleCreatePostDrawer}
+              loadPosts={refetchPosts}
               visible={modal}
               user={user}
               gtmPrefix={GTM.user.profilePrefix}
@@ -373,7 +510,7 @@ const Profile = ({
         <CustomDrawer
           placement="bottom"
           closable={false}
-          onClose={() => setDrawer(false)}
+          onClose={onToggleDrawer}
           visible={drawer}
           height="150px"
           key="bottom"

@@ -68,6 +68,7 @@ const FilterAccord = ({ gtmPrefix }) => {
     handleOption,
     location,
     selectedOptions,
+    selectedType,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;

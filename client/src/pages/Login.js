@@ -376,15 +376,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   />
                   <Input
                     type="email"
+                    required
                     name="email"
                     id="email"
                     className={errors.email && "has-error"}
                     placeholder={t("auth.enterEmail")}
                     ref={register({
-                      required: t("profile.common.emailRequired") + ".",
                       validate: (email) =>
                         validateEmail(email) ||
-                        t("profile.common.invalidEmail"),
+                        t(`profile.common.${validateEmail.errorMessage}`),
                     })}
                     style={inputStyles}
                   />
@@ -491,15 +491,15 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     />
                     <Input
                       type="email"
+                      required
                       name="email"
                       id="email"
                       className={errors.email && "has-error"}
                       placeholder={t("auth.enterEmail")}
                       ref={register({
-                        required: t("profile.common.emailRequired") + ".",
                         validate: (email) =>
                           validateEmail(email) ||
-                          t("profile.common.invalidEmail"),
+                          t(`profile.common.${validateEmail.errorMessage}`),
                       })}
                       style={inputStyles}
                     />

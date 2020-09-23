@@ -227,12 +227,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
       [emailLabel]: [
         "email",
         email,
-        t("profile.common.emailRequired"),
+        ""
         true,
-        {
-          value: 30,
-          message: t("profile.common.maxCharacters", { maxNum: 30 }),
-        },
       ],
     };
   };
@@ -288,7 +284,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
               maxLength: value[4],
               validate: value[3]
                 ? (email) =>
-                    validateEmail(email) || t("profile.common.invalidEmail")
+                    validateEmail(email) || t(`profile.common.${validateEmail.errorMessage}`)
+
                 : null,
             })}
             error={errors[value[0]]}
