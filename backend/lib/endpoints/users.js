@@ -41,6 +41,7 @@ async function routes(app) {
       objectives,
       organisations,
       urls,
+      photo,
     } = user;
     return {
       about,
@@ -53,6 +54,7 @@ async function routes(app) {
       needs,
       objectives,
       organisations,
+      photo,
       urls,
     };
   });
@@ -138,6 +140,7 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
+        photo,
         urls,
       } = user;
 
@@ -160,6 +163,7 @@ async function routes(app) {
         organisations,
         objectives,
         ownUser: authUserId !== null && authUserId.equals(user.id),
+        photo,
         urls,
       };
     },
@@ -169,8 +173,8 @@ async function routes(app) {
     "/:userId/avatar",
     { preValidation: [app.authenticate], schema: createUserAvatarSchema },
     async (req) => {
-      const file = req.raw.files.file;
-      const userId = req.params.userId;
+      const { file } = req.raw.files;
+      const { userId } = req.params;
 
       const [err, user] = await app.to(User.findById(userId));
       if (err) {
