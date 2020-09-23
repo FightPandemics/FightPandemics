@@ -206,7 +206,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId]);
+  }, [orgProfileDispatch, organisationId, t]);
 
   const generateOrgInfoObject = () => {
     const nameLabel = t("profile.org.name");
@@ -224,12 +224,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
           message: t("profile.common.maxCharacters", { maxNum: 60 }),
         },
       ],
-      [emailLabel]: [
-        "email",
-        email,
-        ""
-        true,
-      ],
+      [emailLabel]: ["email", email, "", true],
     };
   };
 
@@ -284,8 +279,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
               maxLength: value[4],
               validate: value[3]
                 ? (email) =>
-                    validateEmail(email) || t(`profile.common.${validateEmail.errorMessage}`)
-
+                    validateEmail(email) ||
+                    t(`profile.common.${validateEmail.errorMessage}`)
                 : null,
             })}
             error={errors[value[0]]}
