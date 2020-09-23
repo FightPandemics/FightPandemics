@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { theme } from "constants/theme";
 import { StyledForm } from "../components/CreatePost/StyledCreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
+import { validateEmail } from "utils/validators";
 import {
   Main,
   SvgContainer,
@@ -233,18 +234,10 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                required: "Email is required",
-                maxLength: {
-                  value: 30,
-                  message: "Max. 30 characters",
-                },
+                validate: validateEmail,
               })}
             />
-            {validEmail || errors.email || email === "" ? (
-              ""
-            ) : (
-              <InputError>Email is invalid</InputError>
-            )}
+            {validEmail}
             <span style={errorStyles}>{errors.email?.message}</span>
           </InputWrapper>
           <WhiteSpace />
@@ -386,7 +379,7 @@ const CreateOrgProfile = (props) => {
             primary="true"
             onClick={handleSubmit(onFormSubmit)}
             style={{ fontWeight: "normal" }}
-            disabled={!(privacy && conditions && validEmail)}
+            disabled={!(privacy && conditions && validateEmail(email))}
             id={
               GTM.organisation.createOrgProfPrefix + GTM.profile.createProfile
             }

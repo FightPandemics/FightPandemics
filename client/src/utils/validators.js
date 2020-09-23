@@ -10,11 +10,23 @@ const validateTopLevelDomain = (string) => {
 };
 
 export const validateEmail = (email) => {
-  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let errorMessage = "";
   const emailInput = String(email).toLowerCase();
-  const isEmailValid = re.test(emailInput);
-
-  return isEmailValid ? validateTopLevelDomain(emailInput) : false;
+  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (!email) {
+    errorMessage = "Email address is required";
+  } else if (email.length > 200) {
+    errorMessage = "Email address must not exceed 200 characters";
+  } else if (!re.test(emailInput)) {
+    errorMessage = "Email address is invalid";
+  } else if (!validateTopLevelDomain(emailInput)) {
+    errorMessage = "Email domain is invalid";
+  }
+  if (errorMessage.length != 0) {
+    return errorMessage;
+  } else {
+    return true;
+  }
 };
 
 const SPECIAL_CHARS = /[!@#$%^&*]/;
