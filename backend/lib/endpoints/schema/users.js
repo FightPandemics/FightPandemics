@@ -60,7 +60,6 @@ const createUserSchema = {
 };
 
 const createUserAvatarSchema = {
-  params: strictSchema().prop("userId", S.string().required()),
   body: strictSchema().prop("file", S.required()),
 };
 
