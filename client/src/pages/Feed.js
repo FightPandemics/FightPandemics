@@ -2,8 +2,8 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useRef,
   useState,
+  useRef,
 } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -20,11 +20,10 @@ import FeedWrapper from "components/Feed/FeedWrapper";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
-import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
 import Users from "components/Feed/Users";
 import SearchCategories from "components/Input/SearchCategories";
-import FeedSearch from "components/Input/FeedSearch"
+import FeedSearch from "components/Input/FeedSearch";
 
 import {
   optionsReducer,
@@ -97,10 +96,10 @@ var HELP_TYPE = {
 };
 
 const SEARCH_OPTIONS = [
-  {name: 'Posts', id: "POSTS", default: true},
-  {name: 'Organisations', id: "ORGANISATIONS"},
-  {name: 'People', id: "INDIVIDUALS"},
-]
+  { name: "Posts", id: "POSTS", default: true },
+  { name: "Organisations", id: "ORGANISATIONS" },
+  { name: "People", id: "INDIVIDUALS" },
+];
 
 const initialState = {
   selectedType: "ALL",
@@ -110,7 +109,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
-  searchKeyword: '',
+  searchKeyword: "",
   searchCategory: null,
   showSearchCategories: false,
 };
@@ -238,16 +237,16 @@ const HeaderWrapper = styled.div`
 const TabsWrapper = styled(SearchCategories)`
   flex-basis: 100%;
   height: 0;
-`
+`;
 const MobileSearch = styled.div`
-  position: relative;  
+  position: relative;
   z-index: 0;
   margin: 2rem auto 1rem;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
-    display: none!important;
+    display: none !important;
   }
 `;
-const NoPosts = styled.div`
+export const NoPosts = styled.div`
   text-align: center;
   position: relative;
   top: 2em;
@@ -266,7 +265,8 @@ const buttonPulse = styled.button`
   position: relative;
   top: 1.3em;
 `;
-
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 const Feed = (props) => {
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
@@ -276,7 +276,12 @@ const Feed = (props) => {
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
-
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [filterURL, setFilterURL] = useState("");
+  const [objectiveURL, setObjectiveURL] = useState("");
   const {
     filterModal,
     showCreatePostModal,
@@ -289,11 +294,9 @@ const Feed = (props) => {
     searchCategory,
     showSearchCategories,
   } = feedState;
-
   const filters = Object.values(filterOptions);
   const {
     error: postsError,
-    filterType,
     isLoading,
     loadMore,
     page,
@@ -301,9 +304,17 @@ const Feed = (props) => {
     status,
     deleteModalVisibility,
   } = posts;
+  const feedPosts = Object.entries(postsList);
+  const prevTotalPostCount = usePrevious(totalPostCount);
 
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
   const { history, isAuthenticated, user, searchKeywords } = props;
-  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -319,7 +330,7 @@ const Feed = (props) => {
     // );
   };
 
-  const refetchPosts = (softRefresh) => {
+  const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -337,12 +348,21 @@ const Feed = (props) => {
 
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+      filterType: "",
+    });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
+    }
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    refetchPosts(true);
+    refetchPosts(null, null, true);
   };
 
   const changeHelpType = (selectedValue) => {
@@ -365,35 +385,36 @@ const Feed = (props) => {
         };
         break;
     }
-  }
+  };
 
   const handleSearchSubmit = (selectedValueId) => {
-    if (!selectedValueId || selectedValueId != "POSTS") handleChangeType({key: "ALL"});
+    if (!selectedValueId || selectedValueId != "POSTS")
+      handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
     refetchPosts();
-  }
+  };
 
   const handleSearchClear = () => {
-    handleChangeType({key: "ALL"});
+    handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchKeyword", "");
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
     refetchPosts();
-  }
+  };
 
   const handleMobileSearchSubmit = (inputValue) => {
-    handleChangeType({key: "ALL"});
+    handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchKeyword", inputValue);
     refetchPosts();
-  }
+  };
 
   useEffect(() => {
-    if (!searchKeywords || !searchKeywords.length) return handleSearchClear()
+    if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
     dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
-    handleSearchSubmit(searchCategory)
+    handleSearchSubmit(searchCategory);
   }, [searchKeywords]);
 
   const handleLocation = (value) => {
@@ -446,6 +467,8 @@ const Feed = (props) => {
     if (Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({ type: RESET_PAGE, filterType: "" });
+
+      //setToggleRefetch(!toggleRefetch);
     } else {
       postsDispatch({ filterType: "" });
     }
@@ -503,8 +526,8 @@ const Feed = (props) => {
     });
   };
 
-  const loadPosts = useCallback(async () => {
-    const objectiveURL = () => {
+  useEffect(() => {
+    (() => {
       let objective = selectedType;
       if (
         selectedOptions["offer or request help"] &&
@@ -517,88 +540,126 @@ const Feed = (props) => {
       }
       switch (objective) {
         case "REQUEST":
-          return "&objective=request";
+          setObjectiveURL("&objective=request");
+          break;
         case "OFFER":
-          return "&objective=offer";
+          setObjectiveURL("&objective=offer");
+          break;
         default:
-          return "";
+          setObjectiveURL("");
       }
-    };
-    const filterURL = () => {
+    })();
+  }, [selectedOptions, selectedType]);
+
+  useEffect(() => {
+    (() => {
       const filterObj = { ...selectedOptions };
       delete filterObj["offer or request help"];
       if (location) filterObj.location = location;
-      return Object.keys(filterObj).length === 0
-        ? ""
-        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-    };
-    
-    const searchURL = () => {
-      if (searchKeyword) 
-          return `&keywords=${searchKeyword}`;
-      else
-          return "";
-    }
-    const limit = 5;
-    const skip = page * limit;
-    let baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
-    switch (searchCategory) {
-      case "POSTS":
-        break;
-      case "INDIVIDUALS":
-        baseURL = `/api/users?limit=${limit}&skip=${skip}`
-        break
-      case "ORGANISATIONS":
-        baseURL = `/api/organisations/search?limit=${limit}&skip=${skip}`
-        break
-      default:
-        break;
-    }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
-    let response = {};
-    if (isLoading) {
-      return;
-    }
+      const getFilter =
+        Object.keys(filterObj).length === 0
+          ? ""
+          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+      setFilterURL(getFilter);
+    })();
+  }, [location, selectedOptions]);
 
-    await postsDispatch({ type: FETCH_POSTS });
+  useEffect(() => {
+    (() => {
+      const filterObj = { ...selectedOptions };
+      delete filterObj["offer or request help"];
+      if (location) filterObj.location = location;
+      const getFilter =
+        Object.keys(filterObj).length === 0
+          ? ""
+          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+      setFilterURL(getFilter);
+    })();
+  }, [location, selectedOptions]);
 
-    try {
-      response = await axios.get(endpoint);
-    } catch (error) {
-      await postsDispatch({ error, type: ERROR_POSTS });
-    }
-
-    if (response && response.data && response.data.length) {
-      const loadedPosts = response.data.reduce((obj, item) => {
-        obj[item._id] = item;
-        return obj;
-      }, {});
-
-      if (postsList) {
-        await postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList, ...loadedPosts },
-        });
-      } else {
-        await postsDispatch({
-          type: SET_POSTS,
-          posts: { ...loadedPosts },
-        });
+  useEffect(() => {
+    const loadPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      const searchURL = () => {
+        if (searchKeyword) return `&keywords=${searchKeyword}`;
+        else return "";
+      };
+      let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+      switch (searchCategory) {
+        case "POSTS":
+          break;
+        case "INDIVIDUALS":
+          baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
+          break;
+        case "ORGANISATIONS":
+          baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+          break;
+        default:
+          break;
       }
-    } else if (response && response.data) {
-      await postsDispatch({
-        type: SET_POSTS,
-        posts: { ...postsList },
-      });
-      await postsDispatch({
-        type: SET_LOADING,
-        isLoading: false,
-        loadMore: false,
-      });
-    } else {
-      await postsDispatch({ type: SET_LOADING });
+      let endpoint = `${baseURL}${objectiveURL}${filterURL}${searchURL()}`;
+      postsDispatch({ type: FETCH_POSTS });
+
+      try {
+        const {
+          data: { data: posts, meta },
+        } = await axios.get(endpoint);
+        if (posts.length && meta.total) {
+          if (prevTotalPostCount !== meta.total) {
+            setTotalPostCount(meta.total);
+          }
+          if (posts.length < limit) {
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: true,
+              loadMore: false,
+            });
+          } else if (meta.total === limit) {
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: true,
+              loadMore: false,
+            });
+          }
+          const loadedPosts = posts.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+          if (postsList) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList, ...loadedPosts },
+            });
+          } else {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...loadedPosts },
+            });
+          }
+        } else if (posts) {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsList },
+          });
+          postsDispatch({
+            type: SET_LOADING,
+            isLoading: false,
+            loadMore: false,
+          });
+        } else {
+          postsDispatch({ type: SET_LOADING });
+        }
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
+      }
+      dispatchAction(SET_VALUE, "applyFilters", true);
+    };
+
+    if (!showFilters) {
+      loadPosts();
     }
-  }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
+  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -606,9 +667,8 @@ const Feed = (props) => {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
-      loadPosts();
     }
-  }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOptions, applyFilters, isOnboarding]);
 
   useEffect(() => {
     // Onboarding
@@ -669,28 +729,31 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scrollObserver = useCallback(
-    (node) => {
-      new IntersectionObserver((entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
-            await postsDispatch({ type: NEXT_PAGE });
-          }
+  const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
+
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      dispatchAction(SET_VALUE, "applyFilters", false);
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= feedPosts.length &&
+        feedPosts.length
+      ) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          resolve();
         });
-      }).observe(node);
+      } else {
+        return Promise.resolve();
+      }
     },
-    [postsDispatch, loadMore, isLoading],
+    [feedPosts.length, isLoading, loadMore],
   );
 
   useEffect(() => {
-    let observer;
-    if (bottomBoundaryRef.current) {
-      observer = scrollObserver(bottomBoundaryRef.current);
-    }
-    return () => {
-      observer && observer.disconnect();
-    };
-  }, [scrollObserver, bottomBoundaryRef]);
+    setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
+  }, [feedPosts.length, loadMore]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -709,11 +772,16 @@ const Feed = (props) => {
           };
           delete allPosts[post._id];
 
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: allPosts,
-          });
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount < 10) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
+        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -722,9 +790,7 @@ const Feed = (props) => {
     }
   };
 
-  const emptyFeed = () => {
-    return Object.keys(postsList).length < 1 && !isLoading;
-  };
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
     <FeedContext.Provider
@@ -735,6 +801,7 @@ const Feed = (props) => {
         location,
         dispatchAction,
         selectedOptions,
+        selectedType,
         handleShowFilters,
         handleOption,
         handleFilterModal,
@@ -743,6 +810,7 @@ const Feed = (props) => {
         handleOnClose,
         showFilters,
         handlePostLike,
+        totalPostCount,
       }}
     >
       <FeedWrapper>
@@ -752,7 +820,7 @@ const Feed = (props) => {
             className="site-layout-background"
             width="29rem"
           >
-            <div>
+            <>
               <MenuWrapper
                 defaultSelectedKeys={["ALL"]}
                 selectedKeys={[selectedType]}
@@ -764,7 +832,7 @@ const Feed = (props) => {
                   </Menu.Item>
                 ))}
               </MenuWrapper>
-              {<FiltersWrapper>
+              <FiltersWrapper>
                 <button
                   id={gtmTag(GTM.post.filterPost)}
                   onClick={handleShowFilters}
@@ -775,29 +843,34 @@ const Feed = (props) => {
                   Filters
                 </button>
                 <FiltersList />
-              </FiltersWrapper>}
-            </div>
-            <FiltersSidebar locationOnly={!(!searchCategory || searchCategory == "POSTS")} gtmPrefix={GTM.feed.prefix} />
+              </FiltersWrapper>
+            </>
+            <FiltersSidebar
+              locationOnly={!(!searchCategory || searchCategory == "POSTS")}
+              gtmPrefix={GTM.feed.prefix}
+            />
           </SiderWrapper>
           <ContentWrapper>
             <HeaderWrapper empty={emptyFeed()}>
               <TabsWrapper
-                  options={SEARCH_OPTIONS}
-                  handleSubmit={handleSearchSubmit}
-                  showOptions={showSearchCategories}
-                  displayValue={"name"}
+                options={SEARCH_OPTIONS}
+                handleSubmit={handleSearchSubmit}
+                showOptions={showSearchCategories}
+                displayValue={"name"}
               ></TabsWrapper>
-              {(!searchCategory || searchCategory == "POSTS") && <button
-                id={gtmTag(GTM.post.createPost)}
-                onClick={handleCreatePost}
-                style={{margin:'1rem 0'}}
-              >
-                Create a post
-                <CreatePostIcon
+              {(!searchCategory || searchCategory == "POSTS") && (
+                <button
                   id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                />
-              </button>}
+                  onClick={handleCreatePost}
+                  style={{ margin: "1rem 0" }}
+                >
+                  Create a post
+                  <CreatePostIcon
+                    id={gtmTag(GTM.post.createPost)}
+                    src={creatPost}
+                  />
+                </button>
+              )}
             </HeaderWrapper>
             <MobileSearch>
               <FeedSearch
@@ -805,49 +878,68 @@ const Feed = (props) => {
                 handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
                 placeholder={"Search Posts, People & Orgs"}
-            />
+              />
             </MobileSearch>
-            {<div>
-              <FilterBox gtmPrefix={GTM.feed.prefix} />
-            </div>}
-            {(!searchCategory || searchCategory == "POSTS") ? <Posts
-              isAuthenticated={isAuthenticated}
-              filteredPosts={postsList}
-              handlePostLike={handlePostLike}
-              loadPosts={loadPosts}
-              postDelete={postDelete}
-              user={user}
-              deleteModalVisibility={deleteModalVisibility}
-              handlePostDelete={handlePostDelete}
-              handleCancelPostDelete={handleCancelPostDelete}
-              highlightWords={searchKeyword}
-            /> : <Users
-              isAuthenticated={isAuthenticated}
-              filteredUsers={postsList}
-              loadUsers={loadPosts}
-              user={user}
-              highlightWords={searchKeyword}
-            />}
+            {
+              <div>
+                <FilterBox gtmPrefix={GTM.feed.prefix} />
+              </div>
+            }
+            {!searchCategory || searchCategory == "POSTS" ? (
+              <Posts
+                isAuthenticated={isAuthenticated}
+                filteredPosts={postsList}
+                handlePostLike={handlePostLike}
+                postDelete={postDelete}
+                user={user}
+                deleteModalVisibility={deleteModalVisibility}
+                handlePostDelete={handlePostDelete}
+                handleCancelPostDelete={handleCancelPostDelete}
+                isNextPageLoading={isLoading}
+                loadNextPage={loadNextPage}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalPostCount={totalPostCount}
+                highlightWords={searchKeyword}
+              />
+            ) : (
+              <Users
+                isAuthenticated={isAuthenticated}
+                filteredUsers={postsList}
+                user={user}
+                isNextPageLoading={isLoading}
+                loadNextPage={loadNextPage}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalUsersCount={totalPostCount}
+                highlightWords={searchKeyword}
+              />
+            )}
             {status === ERROR_POSTS && (
               <ErrorAlert message={postsError.message} />
             )}
-            {isLoading ? <Loader /> : <></>}
+
             {emptyFeed() ? (
               <NoPosts>
-                Sorry, there are currently no relevant {searchCategory? searchCategory.toLowerCase() : 'posts'} available. Please
-                try using a different filter search or{" "}
+                Sorry, there are currently no relevant{" "}
+                {searchCategory ? searchCategory.toLowerCase() : "posts"}{" "}
+                available. Please try using a different filter search or{" "}
                 <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
                   create a post
                 </a>
                 .
               </NoPosts>
             ) : (
-              (!searchCategory || searchCategory == "POSTS") && <CreatePostIcon
-                id={gtmTag(GTM.post.createPost)}
-                src={creatPost}
-                onClick={handleCreatePost}
-                className="create-post"
-              />
+              (!searchCategory || searchCategory == "POSTS") && (
+                <CreatePostIcon
+                  id={gtmTag(GTM.post.createPost)}
+                  src={creatPost}
+                  onClick={handleCreatePost}
+                  className="create-post"
+                />
+              )
             )}
           </ContentWrapper>
         </LayoutWrapper>
@@ -858,7 +950,6 @@ const Feed = (props) => {
           visible={showCreatePostModal}
           user={user}
         />
-        {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
       </FeedWrapper>
     </FeedContext.Provider>
   );
