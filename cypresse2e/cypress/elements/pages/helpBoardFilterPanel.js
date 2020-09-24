@@ -29,7 +29,11 @@ class helpBoardFilter {
         return cy.get(this.hbRequestHelp);
     }
 
-    getHbOfferHelp()
+    getHbOfferHelp() {
+        return cy.get(this.hbOfferHelp);
+    }
 
 
 }
+
+export default helpBoardFilter;
