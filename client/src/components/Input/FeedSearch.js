@@ -35,7 +35,7 @@ const SearchContainer = styled.span`
     input {
         height: 100%;
         border: none;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         background: transparent;
         width: calc(100% - 5rem);
         color: black;

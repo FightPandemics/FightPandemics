@@ -23,6 +23,7 @@ import {
   APPSTORE_URL,
   PLAYSTORE_URL
 } from "constants/urls";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -43,6 +44,14 @@ const UserCard = styled(PostCard)`
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      a {
+        &:hover {
+          color: inherit;
+        }
+      }
+      .am-card-header {
+        width: 100%
+      }
     }
     .title-wrapper {
       padding-left: 2.7rem;
@@ -80,7 +89,7 @@ const ProfileType = styled.span`
     display: none;
   }
   color: #425af2;
-  padding: 1rem 3rem 1rem 0.5rem;
+  padding: 0 0.5rem;
   font-size: 1.3rem;
   font-weight: 300;
 `;
@@ -105,8 +114,11 @@ const SendMessage = styled(Link)`
       display: none;
     }
   }
+  &:hover {
+    color: inherit;
+  }
   padding-left: 7.7rem;
-  color: #bdbdbd;
+  color: #939393;
   img {
     margin-right: 7px;
   }
@@ -173,14 +185,28 @@ const User = ({
   const renderExternalLinks = urls ? Object.entries(urls).map(([name, url]) => {
     return (
       url && (
-        <a
-          href={name === "website" ? getHref(url) : `${URLS[name][1]}${url}`}
-          key={name}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <SocialIcon src={URLS[name][0]} />
-        </a>
+        isAuthenticated ? (
+          <a
+            href={name === "website" ? getHref(url) : `${URLS[name][1]}${url}`}
+            key={name}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SocialIcon src={URLS[name][0]} />
+          </a>
+        ) : (
+          <Link
+            onClick={() =>
+              sessionStorage.setItem("postredirect", `/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`)
+            }
+            to={{
+              pathname: LOGIN,
+              state: { from: window.location.href },
+            }}
+          >
+            <SocialIcon src={URLS[name][0]} />
+          </Link>
+        )
       )
     );
   }) : '';
@@ -197,14 +223,16 @@ const User = ({
       title={
         <div className="title-wrapper">
           <UserName>
-            <Highlight text={`${firstName? firstName : name} ${lastName? lastName : ''}`} highlight={highlightWords}/>
+            <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}>
+              <Highlight text={`${firstName? firstName : name} ${lastName? lastName : ''}`} highlight={highlightWords}/>
+            </Link>
             <ProfileType>
               <SvgIcon
                 src={statusIndicator}
                 style={{ width: "4px", margin: "1px 10px" }}
               />
               {type}
-              {getUserGoals(needs, objectives).map((goal) => {
+              {type == "Individual" && getUserGoals(needs, objectives).map((goal) => {
                 return <Goals>{goal}</Goals>;
               })}
             </ProfileType>
@@ -233,14 +261,10 @@ const User = ({
         _user?.photo ? (
           _user.photo
         ) : (
-          <UserTextAvatar>{AvatarName}</UserTextAvatar>
+            <UserTextAvatar to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}>{AvatarName}</UserTextAvatar>
         )
       }
     />
-  );
-
-  const renderHeaderWithLink = (
-    <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}>{renderHeader}</Link>
   );
 
   const renderContent = (
@@ -257,16 +281,31 @@ const User = ({
       {
         //user in feed.
         <UserCard>
-          <div className="card-header">{renderHeaderWithLink}</div>
+          <div className="card-header">{renderHeader}</div>
           <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`} style={{ display: "none" }}></Link>
           {renderContent}
           <IconsContainer>
-            <SendMessage
-              to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}
-            >
-              <SvgIcon src={envelopeBlue} />
-              <span>Send Message</span>
-            </SendMessage>
+            {isAuthenticated ? (
+              <SendMessage
+                to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}
+              >
+                <SvgIcon src={envelopeBlue} />
+                <span>Send Message</span>
+              </SendMessage>
+            ) : (
+              <SendMessage
+                onClick={() =>
+                  sessionStorage.setItem("postredirect", `/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`)
+                }
+                to={{
+                  pathname: LOGIN,
+                  state: { from: window.location.href },
+                }}
+              >
+                <SvgIcon src={envelopeBlue} />
+                <span>Send Message</span>
+              </SendMessage>
+            )}
             <PlaceholderIcon />
             {renderExternalLinks}
           </IconsContainer>
