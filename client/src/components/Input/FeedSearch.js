@@ -4,7 +4,10 @@ import { theme, mq } from "../../constants/theme";
 import SvgIcon from "../Icon/SvgIcon";
 import SearchSvg from "../../assets/icons/search.svg";
 import CloseSvg from "../../assets/icons/close-btn.svg";
+import InputError from "./InputError";
 const { colors } = theme;
+
+const ERROR_DISPLAY_DELAY = 1500;
 
 const StyledIcon = styled(SvgIcon)`
     line-height: 1.8rem;
@@ -65,6 +68,13 @@ const SearchWrapper = styled.div`
     transition: 0.4s;
 `
 
+const StyledinputError = styled(InputError)`
+    position: absolute;
+    width: 30rem;
+    text-align: center;
+    margin-top: 2px;
+`
+
 export default class FeedNavSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -106,7 +116,7 @@ export default class FeedNavSearch extends React.Component {
         this.setState({ tooShort: true });
         return setTimeout(() => {
           this.setState({ tooShort: false });
-        }, 500);
+        }, ERROR_DISPLAY_DELAY);
       }
       if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
       this.props.handleSubmit(inputValue);
@@ -137,7 +147,7 @@ export default class FeedNavSearch extends React.Component {
                 this.setState({ tooShort: true });
                 return setTimeout(() => {
                   this.setState({ tooShort: false });
-                }, 500);
+                }, ERROR_DISPLAY_DELAY);
               }
               if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
               this.props.handleSubmit(inputValue);
@@ -159,6 +169,7 @@ export default class FeedNavSearch extends React.Component {
             onClick={() => { this.closeClicked() }}
           />}
         </SearchWrapper>
+        {tooShort && <StyledinputError>Min. 3 characters</StyledinputError>}
       </SearchContainer>
     );
   }
