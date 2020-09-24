@@ -4,15 +4,20 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { escapeRegExp } from "lodash"
+import { escapeRegExp } from "lodash";
 
 // Local
 import Heading from "components/Typography/Heading";
 import PostCard from "./PostCard";
+import FilterTag from "components/Tag/FilterTag";
 import TextAvatar from "components/TextAvatar";
 import { buildLocationString } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
-import { PlaceholderIcon, IconsContainer, SocialIcon } from "../Profile/ProfileComponents";
+import {
+  PlaceholderIcon,
+  IconsContainer,
+  SocialIcon,
+} from "../Profile/ProfileComponents";
 import { mq } from "constants/theme";
 import {
   FACEBOOK_URL,
@@ -21,7 +26,7 @@ import {
   TWITTER_URL,
   GITHUB_URL,
   APPSTORE_URL,
-  PLAYSTORE_URL
+  PLAYSTORE_URL,
 } from "constants/urls";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -37,7 +42,6 @@ import websiteIcon from "assets/icons/social-website-blue.svg";
 import playSotreIcon from "assets/icons/google-play.svg";
 import appSotreIcon from "assets/icons/apple-app-store.svg";
 
-
 const UserCard = styled(PostCard)`
   &.am-card {
     .card-header {
@@ -50,7 +54,7 @@ const UserCard = styled(PostCard)`
         }
       }
       .am-card-header {
-        width: 100%
+        width: 100%;
       }
     }
     .title-wrapper {
@@ -75,7 +79,7 @@ const UserCard = styled(PostCard)`
 `;
 
 const UserName = styled.div`
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
 `;
 const UserTextAvatar = styled(TextAvatar)`
@@ -96,6 +100,7 @@ const ProfileType = styled.span`
 
 const ProfileTypeMobile = styled(ProfileType)`
   display: none;
+  float: left;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block;
   }
@@ -112,6 +117,9 @@ const SendMessage = styled(Link)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     span {
       display: none;
+    }
+    img {
+      margin-top: -65%;
     }
   }
   &:hover {
@@ -131,15 +139,10 @@ const URLS = {
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
   appStore: [playSotreIcon, APPSTORE_URL],
-  playStore: [appSotreIcon, PLAYSTORE_URL]
+  playStore: [appSotreIcon, PLAYSTORE_URL],
 };
 
-const User = ({
-  currentUser,
-  highlightWords,
-  isAuthenticated,
-  user,
-}) => {
+const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
   let _user;
   if (currentUser) {
     _user = currentUser;
@@ -164,57 +167,77 @@ const User = ({
 
   const AvatarName =
     (_user &&
-      getInitialsFromFullName(`${firstName? firstName : name} ${lastName? lastName : ''}`)) ||
+      getInitialsFromFullName(
+        `${firstName ? firstName : name} ${lastName ? lastName : ""}`,
+      )) ||
     "";
 
   const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
-  const Highlight = ({text = '', highlight = ''}) => {
+  const Highlight = ({ text = "", highlight = "" }) => {
     if (!highlight || !highlight.trim()) {
-      return text
+      return text;
     }
-    const regex = new RegExp(`(${escapeRegExp(highlight).split(' ').filter(key=>key && key.length>1).join('|')})`, 'gi')
-    const parts = text.split(regex)
-    return (
-      parts.filter(part => part).map((part) => (
-        regex.test(part) ? <span className={'highlighted'}>{part}</span> : part
-      ))
-    )
-   }
-
-  const renderExternalLinks = urls ? Object.entries(urls).map(([name, url]) => {
-    return (
-      url && (
-        isAuthenticated ? (
-          <a
-            href={name === "website" ? getHref(url) : `${URLS[name][1]}${url}`}
-            key={name}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <SocialIcon src={URLS[name][0]} />
-          </a>
-        ) : (
-          <Link
-            onClick={() =>
-              sessionStorage.setItem("postredirect", `/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`)
-            }
-            to={{
-              pathname: LOGIN,
-              state: { from: window.location.href },
-            }}
-          >
-            <SocialIcon src={URLS[name][0]} />
-          </Link>
-        )
-      )
+    const regex = new RegExp(
+      `(${escapeRegExp(highlight)
+        .split(" ")
+        .filter((key) => key && key.length > 1)
+        .join("|")})`,
+      "gi",
     );
-  }) : '';
+    const parts = text.split(regex);
+    return parts
+      .filter((part) => part)
+      .map((part) =>
+        regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+      );
+  };
+
+  const renderExternalLinks = urls
+    ? Object.entries(urls).map(([name, url]) => {
+        return (
+          url &&
+          (isAuthenticated ? (
+            <a
+              href={
+                name === "website" ? getHref(url) : `${URLS[name][1]}${url}`
+              }
+              key={name}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SocialIcon src={URLS[name][0]} />
+            </a>
+          ) : (
+            <Link
+              onClick={() =>
+                sessionStorage.setItem(
+                  "postredirect",
+                  `/${
+                    type.toLowerCase() == "individual"
+                      ? "profile"
+                      : "organisation"
+                  }/${_id}`,
+                )
+              }
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
+            >
+              <SocialIcon src={URLS[name][0]} />
+            </Link>
+          ))
+        );
+      })
+    : "";
 
   const getUserGoals = (needs, objectives) => {
     const goals = [];
-    if (needs && Object.values(needs).includes(true)) goals.push("Requesting Help");
-    if (objectives && Object.values(objectives).includes(true)) goals.push("Offering Help");
+    if (needs && Object.values(needs).includes(true))
+      goals.push("Requesting Help");
+    if (objectives && Object.values(objectives).includes(true))
+      goals.push("Offering Help");
     return goals;
   };
 
@@ -223,8 +246,17 @@ const User = ({
       title={
         <div className="title-wrapper">
           <UserName>
-            <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}>
-              <Highlight text={`${firstName? firstName : name} ${lastName? lastName : ''}`} highlight={highlightWords}/>
+            <Link
+              to={`/${
+                type.toLowerCase() == "individual" ? "profile" : "organisation"
+              }/${_id}`}
+            >
+              <Highlight
+                text={`${firstName ? firstName : name} ${
+                  lastName ? lastName : ""
+                }`}
+                highlight={highlightWords}
+              />
             </Link>
             <ProfileType>
               <SvgIcon
@@ -232,28 +264,38 @@ const User = ({
                 style={{ width: "4px", margin: "1px 10px" }}
               />
               {type}
-              {type == "Individual" && getUserGoals(needs, objectives).map((goal) => {
-                return <Goals>{goal}</Goals>;
-              })}
+              {type == "Individual" &&
+                getUserGoals(needs, objectives).map((goal) => {
+                  return <Goals>{goal}</Goals>;
+                })}
             </ProfileType>
           </UserName>
 
-          {global? (
+          {global ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               Global
-          </div>
+            </div>
           ) : location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(_user.location)}
             </div>
-          ) :  ("") }
+          ) : (
+            ""
+          )}
           <ProfileTypeMobile>
-            {getUserGoals(needs, objectives).map((goal) => {
-              return <Goals style={{ float: "left" }}>{goal}</Goals>;
-            })}
-            <Goals style={{ float: "left" }}>{_user.type}</Goals>
+            {type == "Individual" &&
+              getUserGoals(needs, objectives).map((goal, idx) => {
+                return (
+                  <FilterTag key={idx} disabled={true} selected={false}>
+                    {goal}
+                  </FilterTag>
+                );
+              })}
+            <FilterTag disabled={true} selected={false}>
+              {type}
+            </FilterTag>
           </ProfileTypeMobile>
         </div>
       }
@@ -261,7 +303,13 @@ const User = ({
         _user?.photo ? (
           _user.photo
         ) : (
-            <UserTextAvatar to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}>{AvatarName}</UserTextAvatar>
+          <UserTextAvatar
+            to={`/${
+              type.toLowerCase() == "individual" ? "profile" : "organisation"
+            }/${_id}`}
+          >
+            {AvatarName}
+          </UserTextAvatar>
         )
       }
     />
@@ -270,7 +318,7 @@ const User = ({
   const renderContent = (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight text={_user.about} highlight={highlightWords}/>
+        <Highlight text={_user.about} highlight={highlightWords} />
       </Heading>
       {/*<p className="post-description">?</p>*/}
     </Card.Body>
@@ -282,12 +330,21 @@ const User = ({
         //user in feed.
         <UserCard>
           <div className="card-header">{renderHeader}</div>
-          <Link to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`} style={{ display: "none" }}></Link>
+          <Link
+            to={`/${
+              type.toLowerCase() == "individual" ? "profile" : "organisation"
+            }/${_id}`}
+            style={{ display: "none" }}
+          ></Link>
           {renderContent}
           <IconsContainer>
             {isAuthenticated ? (
               <SendMessage
-                to={`/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`}
+                to={`/${
+                  type.toLowerCase() == "individual"
+                    ? "profile"
+                    : "organisation"
+                }/${_id}`}
               >
                 <SvgIcon src={envelopeBlue} />
                 <span>Send Message</span>
@@ -295,7 +352,14 @@ const User = ({
             ) : (
               <SendMessage
                 onClick={() =>
-                  sessionStorage.setItem("postredirect", `/${type.toLowerCase() == "individual"? 'profile' : 'organisation'}/${_id}`)
+                  sessionStorage.setItem(
+                    "postredirect",
+                    `/${
+                      type.toLowerCase() == "individual"
+                        ? "profile"
+                        : "organisation"
+                    }/${_id}`,
+                  )
                 }
                 to={{
                   pathname: LOGIN,

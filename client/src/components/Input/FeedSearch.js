@@ -147,9 +147,6 @@ const OptionListContainer = styled.div`
     }
   }
 `;
-const CheckBox = styled.input`
-  margin-right: 10px;
-`;
 const StyledInputError = styled(InputError)`
   position: absolute;
   width: 30rem;
@@ -282,17 +279,9 @@ export default class FeedNavSearch extends React.Component {
   }
 
   renderNormalOption() {
-    const {
-      isObject = true,
-      displayValue,
-      showCheckbox,
-      singleSelect,
-      options,
-      unfilteredOptions,
-    } = this.props;
+    const { isObject = true, displayValue } = this.props;
     return this.state.options.map((option, i) => (
       <li key={`option${i}`} onClick={() => this.onSelectItem(option)}>
-        {showCheckbox && !singleSelect && <CheckBox type="checkbox" readOnly />}
         <span class={"option"}>
           {isObject ? option[displayValue] : (option || "").toString()}
         </span>
@@ -312,10 +301,7 @@ export default class FeedNavSearch extends React.Component {
     if (options.length === 0 && !selectedValue[0]) {
       this.onSelectItem(unfilteredOptions[0]);
       this.setState({ options: unfilteredOptions, inputValue });
-    } else if (
-      options.length === 1 &&
-      !selectedValue[0] /* && options[0][displayValue] === inputValue*/
-    ) {
+    } else if (options.length === 1 && !selectedValue[0]) {
       this.onSelectItem(options[0]);
     }
     return (
