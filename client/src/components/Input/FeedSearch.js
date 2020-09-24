@@ -11,87 +11,195 @@ const ERROR_DISPLAY_DELAY = 1500;
 const MIN_KEYWORD_CHARS = 4;
 
 const StyledIcon = styled(SvgIcon)`
-    line-height: 1.8rem;
-    vertical-align: bottom;
-    height: 100%;
-    margin: 0 .7rem 0 1.4rem;
+  line-height: 1.8rem;
+  vertical-align: bottom;
+  height: 100%;
+  margin: 0 0.7rem 0 1.4rem;
 `;
 
 const SearchContainer = styled.span`
-    position: relative;
-    text-align: left;
-    width: 100%;
-    display: block;
-    transition: 0.4s;
-    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
-      margin-left: 3rem;
-    }
-    &.expanded  {
-      input {
-        width: calc(100% - 10rem);
-      }
-    }
-    &.error {
-      input {
-        color: #ff5c57;
-      }
-    }
+  position: relative;
+  text-align: left;
+  width: 100%;
+  display: block;
+  transition: 0.4s;
+  z-index: 1;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    margin-left: 3rem;
+  }
+  &.expanded {
     input {
-        height: 100%;
-        border: none;
-        font-size: 1.6rem;
-        background: transparent;
-        width: calc(100% - 5rem);
-        color: black;
-        &:focus {
-            outline: none;
-        }
-        &::placeholder {
-            color: #BDBDBD;
-        }
+      width: calc(100% - 10rem);
     }
+  }
+  &.mobile-shrink {
+    input {
+      width: calc(100% - 17rem);
+    }
+  }
+  &.error {
+    input {
+      color: #ff5c57;
+    }
+  }
+  input {
+    height: 100%;
+    border: none;
+    font-size: 1.6rem;
+    background: transparent;
+    width: calc(100% - 5rem);
+    color: black;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: #bdbdbd;
+    }
+  }
 `;
 const SearchWrapper = styled.div`
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      margin: 0 auto;
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  &:focus-within,
+  &:hover {
+    border: 0.1rem solid black;
+  }
+  background: #fff;
+  border-radius: 4rem;
+  padding: 5px 0;
+  height: 4rem;
+  width: 30rem;
+  position: relative;
+  z-index: 1;
+  transition: 0.4s;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin: 0 auto;
+    position: revert;
+  }
+`;
+const Chip = styled.span`
+  padding: 2px 5px;
+  margin: 0 10px 0 0;
+  color: #425af2;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 13rem;
+  text-overflow: ellipsis;
+  .singleChip {
+    background: none;
+    border-radius: none;
+    color: inherit;
+    white-space: nowrap;
+    i {
+      display: none;
     }
-    border: 0.1rem solid rgba(0, 0, 0, 0.2);
-    &:focus-within, &:hover {
-      border: 0.1rem solid black;
-    }
-    background: #fff;
-    border-radius: 4rem;
+  }
+  &.disableSelection {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+`;
+const OptionListContainer = styled.div`
+  position: absolute;
+  width: calc(30rem - 2px);
+  margin-top: -2.4rem;
+  background: #fff;
+  border-radius: 4rem;
+  z-index: -1;
+  &.displayBlock {
+    display: block;
+  }
+  &.displayNone {
+    display: none;
+  }
+  ul {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.5rem;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 1px 1px 5px 0.1px rgba(0, 0, 0, 0.25);
+  }
+  li:first-child {
     padding: 5px 0;
-    height: 4rem;
-    width: 30rem;
-    position: relative;
-    z-index: 3;
-    transition: 0.4s;
-`
-
-const StyledinputError = styled(InputError)`
-    position: absolute;
-    width: 30rem;
-    text-align: center;
-    margin-top: 2px;
-`
-
+  }
+  li {
+    padding: 10px 10px;
+    color: #425af2;
+    background: #fff;
+    .keyword {
+      padding-left: 20px;
+      color: #bdbdbd;
+    }
+    .option {
+      padding: 4px 10px;
+      border-radius: 5px;
+      background: #f3f4fe;
+      margin-left: 15px;
+    }
+    &.disableSelection {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+`;
+const CheckBox = styled.input`
+  margin-right: 10px;
+`;
+const StyledInputError = styled(InputError)`
+  position: absolute;
+  width: 30rem;
+  text-align: center;
+  margin-top: 2px;
+`;
+const MobileInputError = styled.p`
+  width: 100%;
+  text-align: center;
+  color: red;
+  margin-top: 0.5rem;
+`;
+const Overlay = styled.div`
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.5;
+  z-index: -1;
+  transition: 0.7s;
+`;
 export default class FeedNavSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
+      inputValue: "",
       tooShort: false,
+      options: props.options,
+      filteredOptions: props.options,
+      unfilteredOptions: props.options,
+      selectedValue: Object.assign([], props.selectedValue),
+      toggleOptionsList: false,
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.renderSearchContainer = this.renderSearchContainer.bind(this);
     this.listenerCallback = this.listenerCallback.bind(this);
-    this.onKeyClick = this.onKeyClick.bind(this)
+    this.onKeyClick = this.onKeyClick.bind(this);
+    this.renderSelectedList = this.renderSelectedList.bind(this);
+    this.toggleOptionList = this.toggleOptionList.bind(this);
+    this.onSelectItem = this.onSelectItem.bind(this);
+    this.filterOptionsByInput = this.filterOptionsByInput.bind(this);
+    this.renderNormalOption = this.renderNormalOption.bind(this);
+    this.resetSelectedValue = this.resetSelectedValue.bind(this);
   }
-
-
 
   componentDidMount() {
     this.searchWrapper.current.addEventListener("click", this.listenerCallback);
@@ -102,16 +210,21 @@ export default class FeedNavSearch extends React.Component {
   }
 
   componentWillUnmount() {
-    this.searchWrapper.current.removeEventListener('click', this.listenerCallback);
+    this.searchWrapper.current.removeEventListener(
+      "click",
+      this.listenerCallback,
+    );
   }
 
   onChange(event) {
+    const { isMobile } = this.props;
     this.setState({ inputValue: event.target.value });
+    if (isMobile) this.filterOptionsByInput();
   }
 
-
   onKeyClick(e) {
-    const { inputValue } = this.state;
+    const { inputValue, selectedValue } = this.state;
+    const { isMobile } = this.props;
     if (e.key === "Enter") {
       if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
         this.setState({ tooShort: true });
@@ -119,28 +232,148 @@ export default class FeedNavSearch extends React.Component {
           this.setState({ tooShort: false });
         }, ERROR_DISPLAY_DELAY);
       }
-      if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
+      if (isMobile)
+        return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
       this.props.handleSubmit(inputValue);
-      
+    }
+    if (e.keyCode === 8 && !inputValue && selectedValue.length) {
+      this.setState({ toggleOptionsList: true });
+      this.resetSelectedValue();
     }
   }
 
   closeClicked() {
     this.setState({
-      inputValue: '',
+      inputValue: "",
     });
+    this.resetSelectedValue();
     this.searchBox.current.blur();
-    this.props.handleClear()
+    this.props.handleClear();
+  }
+
+  filterOptionsByInput() {
+    let { options, inputValue } = this.state;
+    const { isObject, displayValue } = this.props;
+    if (isObject) {
+      options = options.filter((i) =>
+        this.matchValues(i[displayValue], inputValue),
+      );
+    } else {
+      options = options.filter((i) => this.matchValues(i, inputValue));
+    }
+    this.setState({ options });
+  }
+
+  resetSelectedValue() {
+    const { unfilteredOptions } = this.state;
+    this.setState(
+      {
+        selectedValue: [],
+        options: unfilteredOptions,
+        filteredOptions: unfilteredOptions,
+        hidePlaceholder: false,
+      },
+      this.initialSetValue,
+    );
+  }
+
+  matchValues(value, search) {
+    return value.toLowerCase().startsWith(search.toLowerCase());
+  }
+
+  renderNormalOption() {
+    const {
+      isObject = true,
+      displayValue,
+      showCheckbox,
+      singleSelect,
+      options,
+      unfilteredOptions,
+    } = this.props;
+    return this.state.options.map((option, i) => (
+      <li key={`option${i}`} onClick={() => this.onSelectItem(option)}>
+        {showCheckbox && !singleSelect && <CheckBox type="checkbox" readOnly />}
+        <span class={"option"}>
+          {isObject ? option[displayValue] : (option || "").toString()}
+        </span>
+        <span class={"keyword"}>Keywords</span>
+      </li>
+    ));
+  }
+
+  renderOptionList() {
+    const {
+      options,
+      unfilteredOptions,
+      selectedValue,
+      inputValue,
+      displayValue,
+    } = this.state;
+    if (options.length === 0 && !selectedValue[0]) {
+      this.onSelectItem(unfilteredOptions[0]);
+      this.setState({ options: unfilteredOptions, inputValue });
+    } else if (
+      options.length === 1 &&
+      !selectedValue[0] /* && options[0][displayValue] === inputValue*/
+    ) {
+      this.onSelectItem(options[0]);
+    }
+    return (
+      <ul>
+        <li></li>
+        {this.renderNormalOption()}
+      </ul>
+    );
+  }
+
+  toggleOptionList(newVal) {
+    const { selectedValue } = this.state;
+    if (selectedValue[0]) return this.setState({ toggleOptionsList: false });
+    else this.setState({ toggleOptionsList: newVal });
+  }
+
+  onSelectItem(item) {
+    this.setState({
+      inputValue: "",
+      selectedValue: [item],
+      toggleOptionsList: false,
+      hidePlaceholder: true,
+    });
+    this.searchBox.current.focus();
+  }
+
+  renderSelectedList() {
+    const { isObject = true, displayValue } = this.props;
+    const { selectedValue } = this.state;
+    return selectedValue.map((value, index) => (
+      <Chip key={index} ref={this.chip}>
+        {!isObject
+          ? (value || "").toString()
+          : value["mobile_display"]
+          ? value["mobile_display"]
+          : value[displayValue]}
+      </Chip>
+    ));
   }
 
   renderSearchContainer() {
-    const { inputValue, tooShort } = this.state;
-    const { placeholder, style, id, hidePlaceholder, showOptions } = this.props;
+    const {
+      inputValue,
+      tooShort,
+      toggleOptionsList,
+      selectedValue,
+      hidePlaceholder = false,
+    } = this.state;
+    const { placeholder, id, isMobile } = this.props;
     return (
-      <SearchContainer className={`${inputValue?.length ? 'expanded' : ''} ${ tooShort ? 'error':''}`} id={id || 'SearchContainer'}>
-        <SearchWrapper
-          ref={this.searchWrapper}
-        >
+      <SearchContainer
+        className={`${inputValue?.length ? "expanded" : ""} ${
+          tooShort ? "error" : ""
+        } ${isMobile && selectedValue[0] ? "mobile-shrink" : ""}`}
+        id={id || "SearchContainer"}
+      >
+        {isMobile && toggleOptionsList && <Overlay id={"overlay"} />}
+        <SearchWrapper ref={this.searchWrapper}>
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
@@ -150,27 +383,59 @@ export default class FeedNavSearch extends React.Component {
                   this.setState({ tooShort: false });
                 }, ERROR_DISPLAY_DELAY);
               }
-              if (this.props.isMobile) return this.props.handleMobileSubmit(inputValue);
+              if (isMobile)
+                return this.props.handleMobileSubmit(
+                  inputValue,
+                  selectedValue[0].id,
+                );
               this.props.handleSubmit(inputValue);
             }}
           />
+          {isMobile && this.renderSelectedList()}
           <input
             type="text"
             ref={this.searchBox}
-            id={`${id || 'search'}_input`}
+            id={`${id || "search"}_input`}
             onChange={this.onChange}
             value={inputValue}
-            placeholder={hidePlaceholder ? '' : placeholder}
+            placeholder={hidePlaceholder ? "" : placeholder}
             onKeyDown={this.onKeyClick}
             autoComplete="off"
+            onFocus={() => this.props.isMobile && this.toggleOptionList(true)}
+            onBlur={() =>
+              this.props.isMobile &&
+              setTimeout(() => this.toggleOptionList(false), 100)
+            }
           />
-          {inputValue && <StyledIcon
-            src={CloseSvg}
-            style={{ filter: "invert(100%)", float: "right" }}
-            onClick={() => { this.closeClicked() }}
-          />}
+          {(inputValue || selectedValue[0]) && (
+            <StyledIcon
+              src={CloseSvg}
+              style={{ filter: "invert(100%)", float: "right" }}
+              onClick={() => {
+                this.closeClicked();
+              }}
+            />
+          )}
+          {isMobile && (
+            <OptionListContainer
+              className={`${
+                toggleOptionsList ? "displayBlock" : "displayNone"
+              }`}
+            >
+              {this.renderOptionList()}
+            </OptionListContainer>
+          )}
         </SearchWrapper>
-        {tooShort && <StyledinputError>Min. {MIN_KEYWORD_CHARS} characters</StyledinputError>}
+        {!isMobile && tooShort && (
+          <StyledInputError>
+            Min. {MIN_KEYWORD_CHARS} characters
+          </StyledInputError>
+        )}
+        {isMobile && tooShort && (
+          <MobileInputError>
+            Min. {MIN_KEYWORD_CHARS} characters
+          </MobileInputError>
+        )}
       </SearchContainer>
     );
   }
@@ -184,5 +449,5 @@ FeedNavSearch.defaultProps = {
   placeholder: "Search",
   hidePlaceholder: false,
   style: {},
-  id: '',
+  id: "",
 };

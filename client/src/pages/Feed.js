@@ -97,7 +97,7 @@ let HELP_TYPE = {
 
 const SEARCH_OPTIONS = [
   { name: "Posts", id: "POSTS", default: true },
-  { name: "Organisations", id: "ORGANISATIONS" },
+  { name: "Organisations", id: "ORGANISATIONS", mobile_display: "Orgs" },
   { name: "People", id: "INDIVIDUALS" },
 ];
 
@@ -240,7 +240,7 @@ const TabsWrapper = styled(SearchCategories)`
 `;
 const MobileSearch = styled.div`
   position: relative;
-  z-index: 0;
+  z-index: 1;
   margin: 2rem auto 1rem;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     display: none !important;
@@ -330,7 +330,7 @@ const Feed = (props) => {
     // );
   };
 
-  const refetchPosts = (isLoading, loadMore, softRefresh=false) => {
+  const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -404,17 +404,21 @@ const Feed = (props) => {
     refetchPosts();
   });
 
-  const handleMobileSearchSubmit = (inputValue) => {
-    handleChangeType({ key: "ALL" });
-    dispatchAction(SET_VALUE, "searchKeyword", inputValue);
-    refetchPosts();
-  };
+  const handleMobileSearchSubmit = useCallback(
+    (inputValue, selectedValueId) => {
+      if (!selectedValueId || selectedValueId != "POSTS")
+        handleChangeType({ key: "ALL" });
+      dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
+      dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+      refetchPosts();
+    },
+  );
 
   useEffect(() => {
     if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
     dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
     handleSearchSubmit(searchCategory);
-  }, [searchKeywords]);
+  }, [handleSearchClear, handleSearchSubmit, searchCategory, searchKeywords]);
 
   const handleLocation = (value) => {
     if (applyFilters) {
@@ -874,6 +878,9 @@ const Feed = (props) => {
             <MobileSearch>
               <FeedSearch
                 isMobile={true}
+                options={SEARCH_OPTIONS}
+                isObject={true}
+                displayValue={"name"}
                 handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
                 placeholder={"Search Posts, People & Orgs"}

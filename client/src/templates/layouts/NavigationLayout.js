@@ -251,18 +251,25 @@ const StyledDrawer = styled(Drawer)`
 `;
 
 const NavigationLayout = (props) => {
-  const { authLoading, mobiletabs, navSearch, tabIndex, isAuthenticated, user } = props;
+  const {
+    authLoading,
+    mobiletabs,
+    navSearch,
+    tabIndex,
+    isAuthenticated,
+    user,
+  } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [searchKeywords, setSearchKeywords] = useState(false);
 
   const handleSearchSubmit = (inputValue) => {
-    setSearchKeywords(inputValue)
-  }
+    setSearchKeywords(inputValue);
+  };
 
   const handleSearchClear = () => {
-    setSearchKeywords('')
-  }
+    setSearchKeywords("");
+  };
 
   const displayInitials = (user) => {
     if (user?.firstName && user?.lastName) {
@@ -585,6 +592,11 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
+        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/feed">
+          Help Board
+        </Link>
+      </NavItem>
+      <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
           About Us
         </Link>
@@ -616,59 +628,59 @@ const NavigationLayout = (props) => {
     </MenuContainer>
   );
 
-const renderNavigationBar = () => {
-  return (
-    <div>
-      <StyledDrawer
-        style={{
-          minHeight: document.documentElement.clientHeight,
-          ...drawerStyles,
-        }}
-        enableDragHandle
-        open={drawerOpened}
-        onOpenChange={toggleDrawer}
-        position="right"
-        sidebar={DrawerMenu()}
-        sidebarStyle={sidebarStyle}
-        className="app-drawer"
-      >
-        <Header
-          authLoading={authLoading}
-          onMenuClick={toggleDrawer}
-          isAuthenticated={isAuthenticated}
-          user={user}
-          onFeedbackIconClick={() =>
-            dispatchAction(TOGGLE_STATE, "ratingModal")
-          }
-          navSearch={navSearch}
-          onSearchSubmit={handleSearchSubmit}
-          onSearchClear={handleSearchClear}
-        />
+  const renderNavigationBar = () => {
+    return (
+      <div>
+        <StyledDrawer
+          style={{
+            minHeight: document.documentElement.clientHeight,
+            ...drawerStyles,
+          }}
+          enableDragHandle
+          open={drawerOpened}
+          onOpenChange={toggleDrawer}
+          position="right"
+          sidebar={DrawerMenu()}
+          sidebarStyle={sidebarStyle}
+          className="app-drawer"
+        >
+          <Header
+            authLoading={authLoading}
+            onMenuClick={toggleDrawer}
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onFeedbackIconClick={() =>
+              dispatchAction(TOGGLE_STATE, "ratingModal")
+            }
+            navSearch={navSearch}
+            onSearchSubmit={handleSearchSubmit}
+            onSearchClear={handleSearchClear}
+          />
 
-        {mobiletabs ? (
-          <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
-        ) : null}
-        <Main>
-          <props.component {...props} searchKeywords={searchKeywords} />
-          {feedbackFormState.error && (
-            <ErrorAlert
-              message={feedbackFormState.error}
-              type="error"
-              closable={true}
-              fullWidthBanner={true}
-            />
-          )}
-          {renderRatingModal()}
-          {renderTextFeedbackModal()}
-          {renderRadioModal()}
-          {renderThanksModal()}
-        </Main>
-        <Footnote />
-        <CookieAlert />
-      </StyledDrawer>
-    </div>
-  );
-};
+          {mobiletabs ? (
+            <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
+          ) : null}
+          <Main>
+            <props.component {...props} searchKeywords={searchKeywords} />
+            {feedbackFormState.error && (
+              <ErrorAlert
+                message={feedbackFormState.error}
+                type="error"
+                closable={true}
+                fullWidthBanner={true}
+              />
+            )}
+            {renderRatingModal()}
+            {renderTextFeedbackModal()}
+            {renderRadioModal()}
+            {renderThanksModal()}
+          </Main>
+          <Footnote />
+          <CookieAlert />
+        </StyledDrawer>
+      </div>
+    );
+  };
 
   return <>{renderNavigationBar()}</>;
 };
