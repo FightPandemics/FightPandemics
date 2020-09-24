@@ -1,6 +1,6 @@
 import React, {useRef, useState } from "react";
 import {Modal} from "antd";
-import {CameraFilled} from "@ant-design/icons";
+import {CameraOutlined} from "@ant-design/icons";
 import axios from 'axios';
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
@@ -203,13 +203,13 @@ const UploadPic = ({
                 style={{
                     border: 0,
                     borderColor: "hidden",
-                    padding: "0.5rem",
+                    padding: "0.6rem",
                     borderRadius: "50%",
-                    backgroundColor: "inherit",
+                    backgroundColor: colors.royalBlue,
                     cursor: 'pointer'
                 }}
             >
-                <CameraFilled style={{fontSize: 22 || cameraIconSize, color: colors.royalBlue || color}}/>
+                <CameraOutlined style={{ fontSize: 18 || cameraIconSize, color: colors.offWhite }}/>
             </button>
             {
                 cropModal()
