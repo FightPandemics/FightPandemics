@@ -35,6 +35,7 @@ async function routes(app) {
         limit,
         objective,
         skip,
+        includeMeta,
       } = query;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       let user;
@@ -164,12 +165,36 @@ async function routes(app) {
         ...projectionSteps,
       ];
 
+      // Get the total results without pagination steps but with filtering aplyed - totalResults
+      /* eslint-disable sort-keys */
+      const totalResultsAggregationPipeline = await Organisation.aggregate(
+        keywords && !location
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
+          : [
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+      );
+
       const [organisationsErr, organisations] = await app.to(
         Organisation.aggregate(aggregationPipelineResults),
       );
 
       const responseHandler = (response) => {
-        return response;
+        if (!includeMeta) {
+          return response;
+        }
+        return {
+          meta: {
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
+              : 0,
+          },
+          data: response,
+        };
       };
 
       if (organisationsErr) {

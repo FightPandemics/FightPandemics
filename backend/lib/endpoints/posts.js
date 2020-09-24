@@ -253,10 +253,17 @@ async function routes(app) {
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
-      const totalResultsAggregationPipeline = await Post.aggregate([
-        { $match: { $and: filters } },
-        { $group: { _id: null, count: { $sum: 1 } } },
-      ]);
+      const totalResultsAggregationPipeline = await Post.aggregate(
+        keywords && !location
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
+          : [
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+      );
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
