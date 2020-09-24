@@ -21,5 +21,15 @@ class helpBoardFilter {
         cy.visit('feed');
     }
 
+    getHbAllPosts() {
+        return cy.get(this.hbAllPosts);
+    }
+
+    getHbRequestHelp() {
+        return cy.get(this.hbRequestHelp);
+    }
+
+    getHbOfferHelp()
+
 
 }
