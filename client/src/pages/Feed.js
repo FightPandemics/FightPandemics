@@ -319,7 +319,7 @@ const Feed = (props) => {
     // );
   };
 
-  const refetchPosts = (tabSwitched) => {
+  const refetchPosts = (softRefresh) => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -328,7 +328,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
 
-    if (tabSwitched|| Object.keys(selectedOptions).length || location) {
+    if (!softRefresh || Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({ type: RESET_PAGE, filterType: "" });
     } else {
@@ -342,7 +342,7 @@ const Feed = (props) => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    refetchPosts();
+    refetchPosts(true);
   };
 
   const changeHelpType = (selectedValue) => {
@@ -372,7 +372,7 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
-    refetchPosts(true);
+    refetchPosts();
   }
 
   const handleSearchClear = () => {
@@ -381,13 +381,13 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
-    refetchPosts(true);
+    refetchPosts();
   }
 
   const handleMobileSearchSubmit = (inputValue) => {
     handleChangeType({key: "ALL"});
     dispatchAction(SET_VALUE, "searchKeyword", inputValue);
-    refetchPosts(true);
+    refetchPosts();
   }
 
   useEffect(() => {
@@ -430,6 +430,7 @@ const Feed = (props) => {
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", e.key);
       postsDispatch({ type: RESET_PAGE, filterType: value });
+      dispatchAction(SET_VALUE, "applyFilters", true);
     }
   };
 
