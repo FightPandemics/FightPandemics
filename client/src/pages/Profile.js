@@ -15,6 +15,8 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "../components/Picture/UploadPic";
+
 import { NoPosts } from "pages/Feed";
 import {
   ProfileLayout,
@@ -39,6 +41,7 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -371,9 +374,12 @@ const Profile = ({
           />
         )}
         <ProfilePic
-          noPic={true}
+          user={user}
           initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
         />
+        <PhotoUploadButton>
+          {ownUser && <UploadPic user={user} />}
+        </PhotoUploadButton>
         <UserInfoDesktop>
           <NameDiv>
             {firstName} {lastName}
