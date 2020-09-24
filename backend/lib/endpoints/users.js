@@ -191,10 +191,8 @@ async function routes(app) {
           req.log.error(updateErr, "Failed updating user");
           throw app.httpErrors.internalServerError();
         }
-        const currUser = await Auth0.getUser()
         return {
-          updatedUser,
-
+          updatedUser
         };
       } catch (error) {
         req.log.error(error, "Failed updating user avatar.");

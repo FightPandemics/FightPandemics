@@ -217,8 +217,7 @@ export const PhotoUploadButton = styled.div`
     bottom: 0;
     @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
     position: relative;
-  }
-    
+  }  
 `
 
 export const PlaceholderIcon = styled.div`
