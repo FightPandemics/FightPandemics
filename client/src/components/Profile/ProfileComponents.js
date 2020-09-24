@@ -1,12 +1,12 @@
-import { Drawer } from "antd";
+import {Drawer} from "antd";
 import styled from "styled-components";
 
 import Heading from "../Typography/Heading";
 import SvgIcon from "../Icon/SvgIcon";
 import TextLabel from "components/Typography/TextLabel";
-import { mq, theme } from "../../constants/theme";
+import {mq, theme} from "../../constants/theme";
 
-const { colors } = theme;
+const {colors} = theme;
 
 export const CustomDrawer = styled(Drawer)`
   .ant-drawer-content {
@@ -211,6 +211,15 @@ export const UserInfoContainer = styled.div`
     flex-direction: row;
   }
 `;
+
+export const PhotoUploadButton = styled.div`
+    position: absolute;
+    bottom: 0;
+    @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
+    position: relative;
+  }
+    
+`
 
 export const PlaceholderIcon = styled.div`
   flex: 1;
