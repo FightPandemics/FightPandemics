@@ -1,4 +1,4 @@
-import React, {useRef, useState, useContext} from "react";
+import React, {useRef, useState } from "react";
 import {Modal} from "antd";
 import {CameraFilled} from "@ant-design/icons";
 import axios from 'axios';
@@ -6,8 +6,6 @@ import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
 import styled from "styled-components";
 import {theme} from "../../constants/theme";
-import {updateUser} from "../../hooks/actions/userActions";
-import {UserContext} from "../../context/UserContext";
 
 const {colors} = theme;
 
@@ -18,12 +16,15 @@ const CustomSubmitButton = styled(BaseButton)`
 
 const CustomCancelButton = styled(BaseButton)``;
 
+function isImageFile(file) {
+    return file && file['type'].split('/')[0] === 'image';
+}
+
 const UploadPic = ({
                        cameraIconSize,
                        color,
                        user
                    }) => {
-    const { userProfileState, userProfileDispatch } = useContext(UserContext);
     const [modalVisible, setModalVisible] = useState(false);
     const [photoURL, setPhotoURL] = useState();
     const [uploadError, setUploadError] = useState();
@@ -41,9 +42,12 @@ const UploadPic = ({
     };
 
     const handleImage = (e) => {
+        setUploadError("");
         const file = e.target.files[0];
         if (file && file.size > 5001520) {
             setUploadError("Please upload an image of size less than 5 MB.");
+        } else if (!isImageFile(file)) {
+            setUploadError(`Sorry, ${file['type']} is not an image.`);
         } else {
             const fileReader = new FileReader();
             fileReader.onloadend = () => {
@@ -80,7 +84,7 @@ const UploadPic = ({
             let endPoint = `/api/users/current/avatar`;
             let formData = new FormData();
             formData.append("file", blob);
-            if(user.ownerId) {
+            if (user.ownerId) {
                 endPoint = `/api/organisations/${user._id}/avatar`;
             }
             reader.readAsDataURL(blob);
@@ -113,9 +117,15 @@ const UploadPic = ({
     };
 
     const closeModal = () => {
+        imgUpload.current.value = "";
         setUploadError("");
         setModalVisible(false);
     };
+
+    const retry = () => {
+        imgUpload.current.value = "";
+        imgUpload.current.click();
+    }
 
     const cropModal = () => {
         return (
@@ -128,6 +138,7 @@ const UploadPic = ({
                 destroyOnClose={true}
                 closable={false}
                 onCancel={() => setModalVisible(false)}
+                maskClosable={false}
                 footer={[
                     <CustomCancelButton key="cancel" onClick={closeModal}>
                         Cancel
@@ -137,7 +148,9 @@ const UploadPic = ({
                             Submit
                         </CustomSubmitButton>
                     ) : (
-                        <></>
+                        <CustomSubmitButton key="retry" onClick={retry}>
+                            Try Again
+                        </CustomSubmitButton>
                     ),
                 ]}
             >
@@ -170,15 +183,22 @@ const UploadPic = ({
     };
 
     return (
-        <div>
-            <input
+        <
+            div>
+            < input
                 ref={imgUpload}
                 onChange={handleImage}
                 type="file"
                 accept="image/*"
-                style={{display: "none"}}
+                style={
+                    {
+                        display: "none"
+                    }
+                }
             />
             <button
+                id="avatar-upload-button"
+                type="button"
                 onClick={() => imgUpload.current.click()}
                 style={{
                     border: 0,
@@ -186,11 +206,14 @@ const UploadPic = ({
                     padding: "0.5rem",
                     borderRadius: "50%",
                     backgroundColor: "inherit",
+                    cursor: 'pointer'
                 }}
             >
                 <CameraFilled style={{fontSize: 22 || cameraIconSize, color: colors.royalBlue || color}}/>
             </button>
-            {cropModal()}
+            {
+                cropModal()
+            }
         </div>
     );
 };
