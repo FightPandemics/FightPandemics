@@ -418,7 +418,7 @@ const Feed = (props) => {
     if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
     dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
     handleSearchSubmit(searchCategory);
-  }, [handleSearchClear, handleSearchSubmit, searchCategory, searchKeywords]);
+  }, [searchKeywords]);
 
   const handleLocation = (value) => {
     if (applyFilters) {
