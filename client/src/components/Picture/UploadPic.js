@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useContext} from "react";
 import {Modal} from "antd";
 import {CameraFilled} from "@ant-design/icons";
 import axios from 'axios';
@@ -6,6 +6,8 @@ import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
 import styled from "styled-components";
 import {theme} from "../../constants/theme";
+import {updateUser} from "../../hooks/actions/userActions";
+import {UserContext} from "../../context/UserContext";
 
 const {colors} = theme;
 
@@ -21,6 +23,7 @@ const UploadPic = ({
                        color,
                        user
                    }) => {
+    const { userProfileState, userProfileDispatch } = useContext(UserContext);
     const [modalVisible, setModalVisible] = useState(false);
     const [photoURL, setPhotoURL] = useState();
     const [uploadError, setUploadError] = useState();
@@ -74,7 +77,7 @@ const UploadPic = ({
         const reader = new FileReader();
         canvas.toBlob((blob) => {
             let uploadResponse;
-            let endPoint = `/api/users/${user.id}/avatar`;
+            let endPoint = `/api/users/current/avatar`;
             let formData = new FormData();
             formData.append("file", blob);
             if(user.ownerId) {
@@ -94,6 +97,8 @@ const UploadPic = ({
                         }
                     });
                     if (uploadResponse.status == 200) {
+                        setModalVisible(false);
+                        window.location.reload(false);
                         console.log("Success");
                     }
                 } catch (error) {

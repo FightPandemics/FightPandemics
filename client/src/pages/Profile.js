@@ -99,7 +99,6 @@ const Profile = ({
     );
     const [modal, setModal] = useState(false);
     const [drawer, setDrawer] = useState(false);
-
     const {error, loading, user} = userProfileState;
     const {
         id: userId,

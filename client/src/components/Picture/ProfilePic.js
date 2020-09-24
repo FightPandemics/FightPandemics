@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {mq, theme} from "constants/theme";
 import "react-image-crop/dist/ReactCrop.css";
+import {UserContext, withUserContext} from "context/UserContext";
 
 const {colors} = theme;
 
@@ -30,21 +31,26 @@ const InitialDiv = styled.div`
 
 const ProfilePic = ({initials, resolution, user}) => {
     return (
-        <InitialDiv resolution={resolution} hasPhoto={user && user.photo ? true : false}>
-            {user && user.photo ? (
-                <img
-                    style={{
-                        maxWidth: "100%",
-                        borderRadius: "50%",
-                    }}
-                    src={user.photo}
-                />
+        <UserContext.Consumer>
+            {
+                (UserContext) =>
+                <InitialDiv resolution={resolution} hasPhoto={user && user.photo ? true : false}>
+                    {user && user.photo ? (
+                        <img
+                            style={{
+                                maxWidth: "100%",
+                                borderRadius: "50%",
+                            }}
+                            src={user.photo}
+                        />
+                    ) : (
+                        initials
+                    )}
+                </InitialDiv>
+            }
+        </UserContext.Consumer>
 
-            ) : (
-                initials
-            )}
-        </InitialDiv>
     );
 };
 
-export default ProfilePic;
+export default withUserContext(ProfilePic);
