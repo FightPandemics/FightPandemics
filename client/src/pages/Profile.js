@@ -15,7 +15,6 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
-import { NoPosts } from "pages/Feed";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -197,6 +196,7 @@ const Profile = ({
               obj[item._id] = item;
               return obj;
             }, {});
+
             if (postsList) {
               postsDispatch({
                 type: SET_POSTS,
@@ -245,8 +245,10 @@ const Profile = ({
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
-        (!isLoading && loadMore && stopIndex >= userPosts.length,
-        userPosts.length)
+        !isLoading &&
+        loadMore &&
+        stopIndex >= userPosts.length &&
+        userPosts.length
       ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
@@ -337,7 +339,6 @@ const Profile = ({
           console.log({ error });
         }
       }
-
       if (response.data) {
         postsDispatch({
           type: SET_LIKE,
@@ -348,7 +349,6 @@ const Profile = ({
     }
   };
 
-  const gtmTag = (tag) => GTM.user.profilePrefix + tag;
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -466,19 +466,7 @@ const Profile = ({
           {status === ERROR_POSTS && (
             <ErrorAlert message={postsError.message} />
           )}
-          {emptyFeed() && (
-            <NoPosts>
-              Sorry, there are currently no relevant posts available. Please try
-              using a different filter search or{" "}
-              <a
-                id={gtmTag(GTM.post.createPost)}
-                onClick={onToggleCreatePostDrawer}
-              >
-                create a post
-              </a>
-              .
-            </NoPosts>
-          )}
+          {emptyFeed() && <></>}
           {ownUser && (
             <CreatePost
               onCancel={onToggleCreatePostDrawer}
