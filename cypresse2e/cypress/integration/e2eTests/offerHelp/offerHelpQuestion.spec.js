@@ -1,4 +1,5 @@
 import OfferHelpQuestionPage from '../../../elements/pages/offerHelpQuestionPage';
+import { LOCATION } from '../../constants';
 
 
 describe('Fight Pandemics Offer Help Questionnaire', () => {
@@ -13,7 +14,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
 
         it('Offer Help Question One page contains heading & question one', () => {
-            var questionNumberOne = "Question 1/3";
+            var questionNumberOne = "Question 1/2";
             var questionOne = "How do you want to contribute?"
             offerHelpQuestion.getQuestionNumberOne().should('be.visible').contains(questionNumberOne);
             offerHelpQuestion.getQuestionOne().should('be.visible').contains(questionOne);
@@ -23,9 +24,6 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             var checkboxOptionOne = "As a Volunteer";
             var checkboxOptionTwo = "As a Donor/Investor"
             var checkboxOptionThree = "As an Organisation"
-            var checkboxOne
-            var checkboxTwo
-            var checkboxThree
             offerHelpQuestion.getCheckboxOptionOne().should('be.visible').contains(checkboxOptionOne);
             offerHelpQuestion.getCheckboxOptionTwo().should('be.visible').contains(checkboxOptionTwo);
             offerHelpQuestion.getCheckboxOptionThree().should('be.visible').contains(checkboxOptionThree);
@@ -40,11 +38,11 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
         });
 
-
-        it('Offer Help Question One Next Button is visible and clickable and Offer Help Question Two Page loads successfully', () => {
+        it('Offer Help Question One Next Button is visible and clickable and Offer Help Question Two Page loads successfully', () => {
             var nextButton = offerHelpQuestion.getNextButtonOne();
             nextButton.should('be.visible').click();
         });
+
 
     });
 
@@ -54,7 +52,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
         });
 
         it('Offer Help Question Two Page contains heading & question two', () => {
-            var questionNumberTwo = "Question 2/3";
+            var questionNumberTwo = "Question 2/2";
             var questionTwo = "Where are you located?";
             var infoText = "We want to show you the most relevant results";
             offerHelpQuestion.getQuestionNumberTwo().should('be.visible').contains(questionNumberTwo);
@@ -63,12 +61,13 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
         });
 
-        it('Offer Help Question Two Page - location can be typed and chosen from a list of options from the typeahead dynamic dropdown', () => {
+        it('Offer Help Question Two Page - location can be typed and selected', () => {
             var locationInputLine = offerHelpQuestion.getLocationInputLine();
             locationInputLine.should('be.visible').click();
-            locationInputLine.type("Los")
-            offerHelpQuestion.getLocationDropDown().should('be.visible');
-            offerHelpQuestion.getLocationDropDown().find('div.ant-select-item-option').contains('Los Gatos, CA, USA').click();
+            locationInputLine.type(LOCATION)
+                .and('have.attr', 'aria-expanded', 'true')
+                .and('have.attr', 'aria-activedescendant', 'OFS2_EAZ_list_0').click();
+
         });
 
         it('Offer Help Question Two Page - location input line Information is visible', () => {
@@ -96,10 +95,6 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
         });
 
-        it('Offer Help Question One Next Button is visible and clickable', () => {
-            var nextButton = offerHelpQuestion.getNextButtonTwo();
-            nextButton.should('be.visible').click();
-        });
 
 
     })

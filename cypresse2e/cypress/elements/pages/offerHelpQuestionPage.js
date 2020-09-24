@@ -17,7 +17,6 @@ class OfferHelpQuestionPage {
     infoText = 'h2~p';
     locationInputLine = 'input.ant-select-selection-search-input';
     locationInputInfo = 'div small';
-    locationDropDown = 'div.ant-select-dropdown';
     shareMyLocationIcon = 'div#OFS2_SL img[alt = "Icon"]';
     shareMyLocationText = 'div#OFS2_SL';
     showMePostLink = 'a#OFS2_SA span';
@@ -93,11 +92,6 @@ class OfferHelpQuestionPage {
     getLocationInputInfo() {
         return cy.get(this.locationInputInfo);
     }
-
-    getLocationDropDown() {
-        return cy.get(this.locationDropDown);
-    }
-
 
     getShareMyLocationIcon() {
         return cy.get(this.shareMyLocationIcon);
