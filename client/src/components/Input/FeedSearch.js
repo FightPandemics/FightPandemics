@@ -8,6 +8,7 @@ import InputError from "./InputError";
 const { colors } = theme;
 
 const ERROR_DISPLAY_DELAY = 1500;
+const MIN_KEYWORD_CHARS = 4;
 
 const StyledIcon = styled(SvgIcon)`
     line-height: 1.8rem;
@@ -112,7 +113,7 @@ export default class FeedNavSearch extends React.Component {
   onKeyClick(e) {
     const { inputValue } = this.state;
     if (e.key === "Enter") {
-      if (inputValue?.length && inputValue.length < 3) {
+      if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
         this.setState({ tooShort: true });
         return setTimeout(() => {
           this.setState({ tooShort: false });
@@ -143,7 +144,7 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (inputValue?.length && inputValue.length < 3) {
+              if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
                 this.setState({ tooShort: true });
                 return setTimeout(() => {
                   this.setState({ tooShort: false });
@@ -169,7 +170,7 @@ export default class FeedNavSearch extends React.Component {
             onClick={() => { this.closeClicked() }}
           />}
         </SearchWrapper>
-        {tooShort && <StyledinputError>Min. 3 characters</StyledinputError>}
+        {tooShort && <StyledinputError>Min. {MIN_KEYWORD_CHARS} characters</StyledinputError>}
       </SearchContainer>
     );
   }

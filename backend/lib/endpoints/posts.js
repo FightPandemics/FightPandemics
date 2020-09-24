@@ -137,7 +137,7 @@ async function routes(app) {
         const keywordsRegex = new RegExp(
           keywords
             .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-            .split(/[ .\/,=$%#()-]|(and)/gi)
+            .split(/[ .\/,=$%#()-]/gi)
             .filter((key) => key && key.length > 1)
             .join("|"),
           "ig",
