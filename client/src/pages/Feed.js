@@ -89,7 +89,7 @@ export const FeedContext = React.createContext();
 const { Content, Sider } = Layout;
 
 // feed types
-var HELP_TYPE = {
+let HELP_TYPE = {
   ALL: "All posts",
   REQUEST: "Requesting help",
   OFFER: "Offering help",
@@ -341,19 +341,18 @@ const Feed = (props) => {
 
     if (!softRefresh || Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      postsDispatch({
+        type: RESET_PAGE,
+        isLoading,
+        loadMore,
+        filterType: "",
+      });
     } else {
       postsDispatch({ filterType: "" });
     }
 
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    postsDispatch({
-      type: RESET_PAGE,
-      isLoading,
-      loadMore,
-      filterType: "",
-    });
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
@@ -387,23 +386,23 @@ const Feed = (props) => {
     }
   };
 
-  const handleSearchSubmit = (selectedValueId) => {
+  const handleSearchSubmit = useCallback((selectedValueId) => {
     if (!selectedValueId || selectedValueId != "POSTS")
       handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
     refetchPosts();
-  };
+  });
 
-  const handleSearchClear = () => {
+  const handleSearchClear = useCallback(() => {
     handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchKeyword", "");
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
     refetchPosts();
-  };
+  });
 
   const handleMobileSearchSubmit = (inputValue) => {
     handleChangeType({ key: "ALL" });
@@ -415,7 +414,7 @@ const Feed = (props) => {
     if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
     dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
     handleSearchSubmit(searchCategory);
-  }, [searchKeywords]);
+  }, [handleSearchClear, handleSearchSubmit, searchCategory, searchKeywords]);
 
   const handleLocation = (value) => {
     if (applyFilters) {
