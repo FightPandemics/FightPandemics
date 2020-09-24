@@ -190,7 +190,7 @@ export const StyledSelect = styled(Select)`
   width: 35%;
   margin-right: 1.8rem;
   @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-    width: 60%;
+    width: 100%;
     margin-bottom: 1.8rem;
   }
 `;
