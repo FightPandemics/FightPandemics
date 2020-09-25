@@ -139,7 +139,16 @@ export default ({
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
-          <a onClick={() => changeLanguage(key)}>{label.text}</a>
+          <a
+            style={
+              i18n.language == key
+                ? { fontweight: "bold" }
+                : { fontweight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+          >
+            {label.text}
+          </a>
         </Menu.Item>
       ))}
     </Menu>
@@ -213,7 +222,7 @@ export default ({
           <Dropdown overlay={languageMenu} trigger={["click"]}>
             <Link to="">
               <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-              {languages[localization[i18n.language]].value} <DownOutlined />
+              <DownOutlined />
             </Link>
           </Dropdown>
         </li>
