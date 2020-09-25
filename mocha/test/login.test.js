@@ -18,10 +18,19 @@ describe('POST Login', function () {
     });
 
 
-    it('User is not able to log in with the wrong credentials', async function () {
+    it('Unauthorized error - when trying to log in with the wrong credentials', async function () {
         let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, credentialsWithWrongPassword);
         validator.validateStatusCodeErrorAndMessage(response, httpStatus.UNAUTHORIZED, 'Unauthorized', 'Wrong email or password.');
     });
+
+    it('Too Many Requests error - when maximum sign in attempts are exceeded', async function () {
+        let response ;
+        for (var i = 0; i < 11; i++) {
+            response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, credentialsWithWrongPassword);
+    };
+        validator.validateStatusCodeErrorAndMessage(response, httpStatus.TOO_MANY_REQUESTS, 'Too Many Requests', 'Maximum number of sign in attempts exceeded.');
+    });
+   
 
 });
 
