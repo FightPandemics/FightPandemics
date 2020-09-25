@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Input } from "antd";
 import styled from "styled-components";
 import Head from "./Head";
@@ -45,7 +45,12 @@ const First = ({
         rows={7}
         placeholder="Write your post"
       />
-      <span className="error-box">{renderError("description")}</span>
+      <div className="error-box" style={{ color: "red" }}>
+        {!formData.title ? renderError("title") : <Fragment />}
+      </div>
+      <div className="error-box" style={{ color: "red" }}>
+        {!formData.description ? renderError("description") : <Fragment />}
+      </div>
     </Section>
   );
 };

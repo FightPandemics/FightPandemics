@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import AddTags from "components/Tag/AddTags";
 import Head from "./Head";
 import { Section } from "components/CreatePost/StyledModal";
@@ -13,7 +13,9 @@ const Second = ({ addTag, selectedTags, title, renderError }) => {
       <div className="tags">
         <AddTags addTag={addTag} filters={types} selected={selectedTags} />
       </div>
-      <span className="error-box">{renderError("tags")}</span>
+      <span className="error-box" style={{ color: "red" }}>
+        {!selectedTags.length ? renderError("tags") : <Fragment />}
+      </span>
     </Section>
   );
 };

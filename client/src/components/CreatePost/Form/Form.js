@@ -38,7 +38,6 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
 
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
-
     if (errors.includes(field) && formData[field]) {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
@@ -53,7 +52,8 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
 
   const renderError = (field) => {
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
-      return errorMsg[field];
+      console.log(errorMsg[field]);
+    return errorMsg[field];
   };
 
   const addTag = (tag) => (e) => {
