@@ -472,8 +472,6 @@ const Feed = (props) => {
     if (Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({ type: RESET_PAGE, filterType: "" });
-
-      //setToggleRefetch(!toggleRefetch);
     } else {
       postsDispatch({ filterType: "" });
     }
@@ -661,7 +659,7 @@ const Feed = (props) => {
       dispatchAction(SET_VALUE, "applyFilters", true);
     };
 
-    if (!showFilters) {
+    if (!showFilters || !filterModal) {
       loadPosts();
     }
   }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps

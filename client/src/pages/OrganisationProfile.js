@@ -55,7 +55,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg, isAuthorUser, NoPosts } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   FACEBOOK_URL,
@@ -152,6 +152,7 @@ const OrganisationProfile = () => {
     error: postsError,
   } = postsState;
   const prevTotalPostCount = usePrevious(totalPostCount);
+  const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   function usePrevious(value) {
     const ref = useRef();
@@ -174,7 +175,6 @@ const OrganisationProfile = () => {
         );
       }
     })();
-
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -200,6 +200,13 @@ const OrganisationProfile = () => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+
+          if (prevOrgId !== organisationId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
@@ -207,7 +214,7 @@ const OrganisationProfile = () => {
             if (posts.length < limit) {
               postsDispatch({
                 type: SET_LOADING,
-                isLoading: false,
+                isLoading: true,
                 loadMore: false,
               });
             } else if (meta.total === limit) {
@@ -221,7 +228,8 @@ const OrganisationProfile = () => {
               obj[item._id] = item;
               return obj;
             }, {});
-            if (postsList) {
+
+            if (prevOrgId === organisationId && postsList) {
               postsDispatch({
                 type: SET_POSTS,
                 posts: { ...postsList, ...loadedPosts },
@@ -232,7 +240,7 @@ const OrganisationProfile = () => {
                 posts: { ...loadedPosts },
               });
             }
-          } else if (posts) {
+          } else if (prevOrgId === organisationId && posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -271,8 +279,10 @@ const OrganisationProfile = () => {
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
-        (!isLoading && loadMore && stopIndex >= organisationPosts.length,
-        organisationPosts.length)
+        !isLoading &&
+        loadMore &&
+        stopIndex >= organisationPosts.length &&
+        organisationPosts.length
       ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
@@ -412,7 +422,7 @@ const OrganisationProfile = () => {
       }
     }
   };
-  const gtmTag = (tag) => GTM.organisation.orgPrefix + tag;
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -498,19 +508,7 @@ const OrganisationProfile = () => {
               {status === ERROR_POSTS && (
                 <ErrorAlert message={postsError.message} />
               )}
-              {emptyFeed() && (
-                <NoPosts>
-                  Sorry, there are currently no relevant posts available. Please
-                  try using a different filter search or{" "}
-                  <a
-                    id={gtmTag(GTM.post.createPost)}
-                    onClick={onToggleCreatePostDrawer}
-                  >
-                    create a post
-                  </a>
-                  .
-                </NoPosts>
-              )}
+              {emptyFeed() && <></>}
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
