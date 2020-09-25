@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { mq, theme } from "constants/theme";
 import "react-image-crop/dist/ReactCrop.css";
-import { UserContext, withUserContext } from "context/UserContext";
 
 const { colors } = theme;
 
@@ -51,4 +50,4 @@ const ProfilePic = ({ initials, resolution, user }) => {
   );
 };
 
-export default withUserContext(ProfilePic);
+export default ProfilePic;
