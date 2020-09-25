@@ -326,7 +326,10 @@ const CreateOrgProfile = (props) => {
           <div className="settings">
             <Controller
               as={
-                <Select defaultValue={t("profile.org.type")}>
+                <Select
+                  style={{ width: "100%" }}
+                  defaultValue={t("profile.org.type")}
+                >
                   {type.options.map((option, i) => (
                     <Select.Option key={i} value={option.text}>
                       {t("profile.org.types." + i)}
@@ -341,7 +344,10 @@ const CreateOrgProfile = (props) => {
             />
             <Controller
               as={
-                <Select defaultValue={t("profile.org.industry")}>
+                <Select
+                  style={{ width: "100%" }}
+                  defaultValue={t("profile.org.industry")}
+                >
                   {industry.options.map((option, i) => (
                     <Select.Option key={i} value={option.text}>
                       {t("profile.org.industries." + i)}
