@@ -562,7 +562,11 @@ const NavigationLayout = (props) => {
         {t("post.organisation")}
         {user?.organisations?.length > 0
           ? user?.organisations?.map((organisation) => (
-              <NavItemBrief history={history} key={organisation._id}>
+              <NavItemBrief
+                history={history}
+                key={organisation._id}
+                onClick={toggleDrawer}
+              >
                 <Link to={`/organisation/${organisation._id}`}>
                   {organisation.name}
                 </Link>

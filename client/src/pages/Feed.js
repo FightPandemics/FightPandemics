@@ -383,8 +383,6 @@ const Feed = (props) => {
     dispatchAction(TOGGLE_STATE, "showFilters");
     postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", true);
-
-    //setToggleRefetch(!toggleRefetch);
   };
 
   const handlePostLike = async (postId, liked, create) => {
@@ -540,7 +538,7 @@ const Feed = (props) => {
       dispatchAction(SET_VALUE, "applyFilters", true);
     };
 
-    if (!showFilters) {
+    if (!showFilters || !filterModal) {
       loadPosts();
     }
   }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
