@@ -142,8 +142,8 @@ export default ({
           <a
             style={
               i18n.language == key
-                ? { fontweight: "bold" }
-                : { fontweight: "normal" }
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
             }
             onClick={() => changeLanguage(key)}
           >
