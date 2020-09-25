@@ -14,7 +14,10 @@ const organisation = {
     .prop("volunteers", S.boolean().required().default(false))
     .prop("donations", S.boolean().required().default(false))
     .prop("staff", S.boolean().required().default(false))
-    .prop("other", S.boolean().required().default(false)),
+    .prop("information", S.boolean().required().default(false))
+    .prop("resources", S.boolean().required().default(false))
+    .prop("other", S.boolean().required().default(false))
+    .prop("othersDetails", S.string().maxLength(60).required().default(false)),
   ownerId: S.string(),
   type: S.string(),
   urls: S.object()
