@@ -23,7 +23,6 @@ const SearchContainer = styled.span`
   width: 100%;
   display: block;
   transition: 0.4s;
-  z-index: 1;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     margin-left: 3rem;
   }
@@ -73,7 +72,6 @@ const SearchWrapper = styled.div`
   transition: 0.4s;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin: 0 auto;
-    position: revert;
   }
 `;
 const Chip = styled.span`
@@ -105,10 +103,12 @@ const Chip = styled.span`
 const OptionListContainer = styled.div`
   position: absolute;
   width: calc(30rem - 2px);
-  margin-top: -2.4rem;
+  top: 2.2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
   background: #fff;
   border-radius: 4rem;
-  z-index: -1;
+  z-index: 0;
   &.displayBlock {
     display: block;
   }
@@ -123,9 +123,6 @@ const OptionListContainer = styled.div`
     max-height: 250px;
     overflow-y: auto;
     box-shadow: 1px 1px 5px 0.1px rgba(0, 0, 0, 0.25);
-  }
-  li:first-child {
-    padding: 5px 0;
   }
   li {
     padding: 10px 10px;
@@ -145,6 +142,12 @@ const OptionListContainer = styled.div`
       pointer-events: none;
       opacity: 0.5;
     }
+  }
+  li:first-child {
+    padding: 0;
+  }
+  li:last-child {
+    padding-bottom: 15px;
   }
 `;
 const StyledInputError = styled(InputError)`
@@ -169,7 +172,7 @@ const Overlay = styled.div`
   height: 100%;
   background: black;
   opacity: 0.5;
-  z-index: -1;
+  z-index: -2;
   transition: 0.7s;
 `;
 export default class FeedNavSearch extends React.Component {
@@ -402,16 +405,14 @@ export default class FeedNavSearch extends React.Component {
               }}
             />
           )}
-          {isMobile && (
-            <OptionListContainer
-              className={`${
-                toggleOptionsList ? "displayBlock" : "displayNone"
-              }`}
-            >
-              {this.renderOptionList()}
-            </OptionListContainer>
-          )}
         </SearchWrapper>
+        {isMobile && (
+          <OptionListContainer
+            className={`${toggleOptionsList ? "displayBlock" : "displayNone"}`}
+          >
+            {this.renderOptionList()}
+          </OptionListContainer>
+        )}
         {!isMobile && tooShort && (
           <StyledInputError>
             Min. {MIN_KEYWORD_CHARS} characters
