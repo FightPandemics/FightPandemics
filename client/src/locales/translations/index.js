@@ -1,8 +1,8 @@
 // import translationAR from "./ar.json";
-import translationEN_GB from "./en-GB.json";
-import translationEN_US from "./en-US.json";
+import translationEN_GB from "./en_GB.json";
+import translationEN_US from "./en_US.json";
 // import translationDE from "./de.json";
-// import translationES_ES from "./es-ES.json";
+// import translationES_ES from "./es_ES.json";
 // import translationIT from "./it.json";
 import translationRU from "./ru.json";
 // import translationTH from "./th.json";
