@@ -55,7 +55,7 @@ import {
   DrawerHeader,
   CustomDrawer,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg, isAuthorUser, NoPosts } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   FACEBOOK_URL,
@@ -422,7 +422,7 @@ const OrganisationProfile = () => {
       }
     }
   };
-  const gtmTag = (tag) => GTM.organisation.orgPrefix + tag;
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -508,19 +508,7 @@ const OrganisationProfile = () => {
               {status === ERROR_POSTS && (
                 <ErrorAlert message={postsError.message} />
               )}
-              {emptyFeed() && (
-                <NoPosts>
-                  Sorry, there are currently no relevant posts available. Please
-                  try using a different filter search or{" "}
-                  <a
-                    id={gtmTag(GTM.post.createPost)}
-                    onClick={onToggleCreatePostDrawer}
-                  >
-                    create a post
-                  </a>
-                  .
-                </NoPosts>
-              )}
+              {emptyFeed() && <></>}
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
