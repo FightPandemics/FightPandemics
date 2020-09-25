@@ -274,13 +274,16 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-                  validate: (email) =>
-                    validateEmail(email) || t(`profile.common.${validateEmail.errorMessage}`),
+                  validate: (email) => validateEmail(email),
                 })}
                 style={inputStyles}
                 value={email}
               />
-              {errors.email && <InputError>{errors.email.message}</InputError>}
+              {errors.email && (
+                <InputError>
+                  {t(`profile.common.${errors.email.message}`)}
+                </InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>

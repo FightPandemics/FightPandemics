@@ -240,13 +240,13 @@ const CreateOrgProfile = (props) => {
               style={styleInput}
               name="email"
               ref={register({
-                validate: (email) =>
-                  validateEmail(email) ||
-                  t(`profile.common.${validateEmail.errorMessage}`),
+                validate: (email) => validateEmail(email),
               })}
             />
             {validEmail}
-            <span style={errorStyles}>{errors.email?.message}</span>
+            <span style={errorStyles}>
+              {errors.email && t(`profile.common.${errors.email.message}`)}
+            </span>
           </InputWrapper>
           <WhiteSpace />
           <WhiteSpace />

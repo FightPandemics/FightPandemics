@@ -255,6 +255,15 @@ function EditOrganisationAccount({ refetchUser, history }) {
     }
   };
 
+  const injectTranslationsIfEmailError = (error) => {
+    if (error === undefined || Object.keys(error).length === 0) return "";
+    if (!error.message.startsWith("email")) return error;
+    return {
+      ...error,
+      message: t(`profile.common.${error.message}`),
+    };
+  };
+
   const renderFormInputs = () => {
     return Object.entries(organisationInfo).map(([key, value]) => {
       return (
@@ -277,13 +286,9 @@ function EditOrganisationAccount({ refetchUser, history }) {
             ref={register({
               required: value[2],
               maxLength: value[4],
-              validate: value[3]
-                ? (email) =>
-                    validateEmail(email) ||
-                    t(`profile.common.${validateEmail.errorMessage}`)
-                : null,
+              validate: value[3] ? (email) => validateEmail(email) : null,
             })}
-            error={errors[value[0]]}
+            error={injectTranslationsIfEmailError(errors[value[0]])}
             onChange={(event) => event.target.value}
           />
         </div>

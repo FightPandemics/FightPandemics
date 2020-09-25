@@ -246,7 +246,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       };
       loadOAuth();
     }
-  }, [code, state, dispatch]);
+  }, [code, state, dispatch, t]);
 
   const onLoginWithEmail = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
@@ -382,14 +382,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     className={errors.email && "has-error"}
                     placeholder={t("auth.enterEmail")}
                     ref={register({
-                      validate: (email) =>
-                        validateEmail(email) ||
-                        t(`profile.common.${validateEmail.errorMessage}`),
+                      validate: (email) => validateEmail(email),
                     })}
                     style={inputStyles}
                   />
                   {errors.email && (
-                    <InputError>{errors.email.message}</InputError>
+                    <InputError>
+                      {t(`profile.common.${errors.email.message}`)}
+                    </InputError>
                   )}
                 </InputWrapper>
                 <InputWrapper>
@@ -497,14 +497,14 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       className={errors.email && "has-error"}
                       placeholder={t("auth.enterEmail")}
                       ref={register({
-                        validate: (email) =>
-                          validateEmail(email) ||
-                          t(`profile.common.${validateEmail.errorMessage}`),
+                        validate: (email) => validateEmail(email),
                       })}
                       style={inputStyles}
                     />
                     {errors.email && (
-                      <InputError>{errors.email.message}</InputError>
+                      <InputError>
+                        {t(`profile.common.${errors.email.message}`)}
+                      </InputError>
                     )}
                   </InputWrapper>
 
