@@ -141,6 +141,7 @@ const Profile = ({
 
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
+  const prevUserId = usePrevious(userId);
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -175,6 +176,13 @@ const Profile = ({
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+
+          if (prevUserId !== userId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
@@ -197,7 +205,7 @@ const Profile = ({
               return obj;
             }, {});
 
-            if (postsList) {
+            if (prevUserId === userId && postsList) {
               postsDispatch({
                 type: SET_POSTS,
                 posts: { ...postsList, ...loadedPosts },
@@ -208,7 +216,7 @@ const Profile = ({
                 posts: { ...loadedPosts },
               });
             }
-          } else if (posts) {
+          } else if (prevUserId === userId && posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
