@@ -20,7 +20,7 @@ function isImageFile(file) {
   return file && file["type"].split("/")[0] === "image";
 }
 
-const UploadPic = ({ cameraIconSize, color, user }) => {
+const UploadPic = ({ cameraIconSize, user }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [photoURL, setPhotoURL] = useState();
   const [uploadError, setUploadError] = useState();
@@ -43,7 +43,7 @@ const UploadPic = ({ cameraIconSize, color, user }) => {
     if (file && file.size > 5001520) {
       setUploadError("Please upload an image of size less than 5 MB.");
     } else if (!isImageFile(file)) {
-      setUploadError(`Sorry, ${file["type"]} is not an image.`);
+      setUploadError(`Sorry, we only support image files.`);
     } else {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
