@@ -410,7 +410,7 @@ const Feed = (props) => {
         handleChangeType({ key: "ALL" });
       dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
       dispatchAction(SET_VALUE, "searchKeyword", inputValue);
-      refetchPosts(); // eslint-disable-line react-hooks/exhaustive-deps
+      refetchPosts();
     },
   );
 
@@ -418,7 +418,7 @@ const Feed = (props) => {
     if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
     dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
     handleSearchSubmit(searchCategory);
-  }, [handleSearchClear, handleSearchSubmit, searchCategory, searchKeywords]);
+  }, [searchKeywords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLocation = (value) => {
     if (applyFilters) {
