@@ -396,12 +396,14 @@ const Feed = (props) => {
   });
 
   const handleSearchClear = useCallback(() => {
+    let needRefetch =
+      searchKeyword || (searchCategory && searchCategory != "POSTS");
     handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchKeyword", "");
     dispatchAction(SET_VALUE, "searchCategory", null);
     dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
-    refetchPosts();
+    if (needRefetch) refetchPosts();
   });
 
   const handleMobileSearchSubmit = useCallback(
@@ -888,7 +890,10 @@ const Feed = (props) => {
             </MobileSearch>
             {
               <div>
-                <FilterBox gtmPrefix={GTM.feed.prefix} />
+                <FilterBox
+                  locationOnly={!(!searchCategory || searchCategory == "POSTS")}
+                  gtmPrefix={GTM.feed.prefix}
+                />
               </div>
             }
             {!searchCategory || searchCategory == "POSTS" ? (

@@ -27,6 +27,14 @@ const ModalWrapper = styled(Modal)`
     display: none;
   }
 `;
+
+const StyledSelectWithIconButton = styled(SelectWithIconButton)`
+ &:active, &:focus, &:hover {
+    img {
+      filter: brightness(10);
+    }
+`;
+
 function capitalizeFirstLetter(header) {
   // capitalize first letter and show providers if  header is fromWhom
   if (header === "fromWhom") {
@@ -41,7 +49,7 @@ const gtmTagsMap = {
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
-const FilterBox = ({ gtmPrefix }) => {
+const FilterBox = ({ gtmPrefix, locationOnly }) => {
   const feedContext = useContext(FeedContext);
   const {
     filters,
@@ -52,7 +60,7 @@ const FilterBox = ({ gtmPrefix }) => {
   } = feedContext;
   const renderFilterOptions = (filters) => {
     return (
-      <SelectWithIconButton
+      <StyledSelectWithIconButton
         onClick={handleFilterModal}
         primarylight="true"
         righticon="true"
@@ -60,8 +68,8 @@ const FilterBox = ({ gtmPrefix }) => {
         icon={<SvgIcon src={filtersIcon} />}
       >
         Filters
-      </SelectWithIconButton>
-    )
+      </StyledSelectWithIconButton>
+    );
   };
   return (
     <FilterBoxWrapper className="filter-box">
@@ -69,8 +77,7 @@ const FilterBox = ({ gtmPrefix }) => {
         block="true"
         color={DARK_GRAY}
         size={theme.typography.size.medium}
-      >
-      </TextLabel>
+      ></TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper
         popup
@@ -79,7 +86,7 @@ const FilterBox = ({ gtmPrefix }) => {
         onClose={handleOnClose}
         animationType="slide-up"
       >
-        <FilterAccordion gtmPrefix={gtmPrefix} />
+        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
         <div
           className="confirm-buttons"
           style={{
