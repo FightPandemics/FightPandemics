@@ -359,7 +359,7 @@ const NavigationLayout = (props) => {
         <Menu.Item key={key}>
           <a
             style={
-              i18n.language == key
+              i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
