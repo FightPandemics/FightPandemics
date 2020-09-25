@@ -592,7 +592,7 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
-        <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/feed">
+        <Link id={GTM.nav.prefix + GTM.nav.feed} to="/feed">
           Help Board
         </Link>
       </NavItem>
@@ -601,7 +601,7 @@ const NavigationLayout = (props) => {
           About Us
         </Link>
       </NavItem>
-      <Space height="33vh" />
+      <Space height="24vh" />
       <FeedbackItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
