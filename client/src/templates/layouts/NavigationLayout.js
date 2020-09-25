@@ -357,7 +357,16 @@ const NavigationLayout = (props) => {
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
-          <a onClick={() => changeLanguage(key)}>{label.value}</a>
+          <a
+            style={
+              i18n.language == key
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+          >
+            {label.text}
+          </a>
         </Menu.Item>
       ))}
     </Menu>
