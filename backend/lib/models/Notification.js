@@ -2,32 +2,61 @@ const { Schema, model } = require("mongoose");
 
 const notificationSchema = new Schema(
   {
-    creator: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    action: {
+      enum: ["like", "comment", "post"],
       required: true,
+      type: String,
+    },
+    oneOf: {
+      CommentNotification: new Schema({
+        action: String,
+        id: {
+          ref: "Comment",
+          type: Schema.Types.ObjectId,
+        },
+        type: String,
+      }),
+      MessageNotification: new Schema({
+        action: String,
+        id: {
+          ref: "Post",
+          type: Schema.Types.ObjectId,
+        },
+        type: String,
+      }),
+      OrganizationNotification: new Schema({
+        action: String,
+        id: {
+          ref: "Post",
+          type: Schema.Types.ObjectId,
+        },
+        type: String,
+      }),
+      PostNotification: new Schema({
+        action: String,
+        id: {
+          ref: "Post",
+          type: Schema.Types.ObjectId,
+        },
+        type: String,
+      }),
     },
     receiver: {
-      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      type: Schema.Types.ObjectId,
     },
-    action: {
+    seenAt: Date,
+    sentAt: Date,
+    triggeredBy: {
+      id: {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      },
+      name: String,
+      photo: String,
       type: String,
-      enum: ["like", "comment", "post", "share"],
-      required: true,
     },
-    post: {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
-    comment: {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
-    isRead: { default: false, required: true, type: Boolean },
   },
   { collection: "notifications", timestamps: true },
 );
