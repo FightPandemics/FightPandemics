@@ -214,6 +214,28 @@ async function routes(app) {
           req.log.error(updateErr, "Failed updating organisation");
           throw app.httpErrors.internalServerError();
         }
+
+        // -- Update Author photo references if needed
+        const updateOps = {
+          "author.photo": updatedOrg.photo,
+        };
+        const [postErr] = await app.to(
+          Post.updateMany({ "author.id": updatedOrg._id }, { $set: updateOps }),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author photo refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedOrg._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author photo refs at comments");
+        }
+
         return updatedOrg;
       } catch (error) {
         req.log.error(error, "Failed updating organisation avatar.");
