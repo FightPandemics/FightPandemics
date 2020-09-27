@@ -14,6 +14,7 @@ import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./reducers";
 import TagManager from "react-gtm-module";
+import SocketManager from './context/WebsocketContext';
 
 const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
@@ -27,7 +28,9 @@ ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>
       <GlobalStyles />
-      <App />
+      <SocketManager store={store}>
+        <App />
+      </SocketManager>
     </HelmetProvider>
   </Provider>,
   document.getElementById("root"),

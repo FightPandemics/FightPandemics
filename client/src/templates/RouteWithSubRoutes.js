@@ -38,6 +38,8 @@ export const RouteWithSubRoutes = (route) => {
     path,
     props = {},
     user,
+    isIdentified,
+    ws,
   } = route;
   const {
     loggedInOnly,
@@ -53,7 +55,6 @@ export const RouteWithSubRoutes = (route) => {
       render={({ layout, location, ...rest }) => {
         const Layout = getLayoutComponent(route.layout);
         let redirect;
-
         if (!authLoading) {
           // don't apply redirect if authLoading
           if (authError && location.pathname !== LOGOUT) {
@@ -111,6 +112,8 @@ export const RouteWithSubRoutes = (route) => {
             routes={route.routes}
             mobiletabs={mobiletabs}
             tabIndex={tabIndex}
+            ws={ws}
+            isIdentified={isIdentified}
           />
         );
       }}
@@ -119,13 +122,15 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ session }) => ({
+const mapStateToProps = ({ session, ws }) => ({
   authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
+  isIdentified: ws.isIdentified,
+  ws: ws,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

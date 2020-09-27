@@ -439,6 +439,7 @@ const Post = ({
         url={window.location.href}
         liked={post?.liked}
         postAuthor={post.author.name}
+        authorId={post.author.id}
         postId={postId}
         postTitle={post?.title}
         postContent={post?.content}
@@ -449,6 +450,7 @@ const Post = ({
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        user={user}
       />
     </Card.Body>
   );

@@ -37,7 +37,7 @@ const InputContainer = styled.div`
   }
 `;
 
-export const InputBox = () => {
+export const InputBox = ({ receiverId, sendMessage}) => {
   const { chat, setChat } = useContext(ChatContext);
   const [text, setText] = useState("");
   const inputRef = useRef(null);
@@ -49,17 +49,26 @@ export const InputBox = () => {
   const handleChange = async (e) => {
     await setText(e.target.value);
   };
-  const handleClick = (e) => {
+
+
+  const handleSendMgessage = async () => {
+    let confirmation = await sendMessage({
+      receiverId: receiverId,
+      content: text
+    })
+    if (confirmation) {
+      setText("");
+      inputRef.current.focus();
+    }
+  }
+
+  const handleClick = async (e) => {
     e.preventDefault();
-    setChat([...chat, text]);
-    setText("");
-    inputRef.current.focus();
+    handleSendMgessage()
   };
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && text.length > 0) {
-      setChat([...chat, text]);
-      setText("");
-      inputRef.current.focus();
+      handleSendMgessage()
     }
   };
   return (

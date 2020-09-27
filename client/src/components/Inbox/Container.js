@@ -76,7 +76,7 @@ export const SideChatContainer = styled.div`
   :hover {
     background: #f3f4fe;
   }
-  :focus {
+  :focus, &.selected {
     border-left: 3px solid #425af2;
     background: #f3f4fe;
   }

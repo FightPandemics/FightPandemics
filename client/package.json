@@ -27,6 +27,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "snyk": "^1.319.2",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",
     "super-tiny-icons": "^0.3.2",
     "tlds": "^1.207.0",

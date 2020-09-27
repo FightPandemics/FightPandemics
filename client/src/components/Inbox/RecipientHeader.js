@@ -38,7 +38,7 @@ const RecipientName = styled.div`
   }
 `;
 
-export const RecipientHeader = () => {
+export const RecipientHeader = ({name}) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
   return (
     <>
@@ -49,8 +49,8 @@ export const RecipientHeader = () => {
           src={arrow}
           alt="Back Arrow"
         />
-        <TextAvatar>LL</TextAvatar>
-        <h4>Lily Luke</h4>
+        {name && <TextAvatar>LL</TextAvatar>}
+        <h4>{name}</h4>
       </RecipientName>
     </>
   );

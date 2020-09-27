@@ -35,7 +35,9 @@ const StyledSpan = styled.span`
 const PostSocial = ({
   handlePostLike,
   isAuthenticated,
+  authorId,
   url,
+  user,
   liked,
   shared,
   showComments,
@@ -200,15 +202,17 @@ const PostSocial = ({
           <StyledSpan>Share</StyledSpan>
         </div>
       </div>
+      {(user?.id != authorId) &&
       <div className="social-icon">
         <MessageModal
           isAuthenticated={isAuthenticated}
           title={postTitle}
           postContent={postContent}
           postAuthor={postAuthor}
+          authorId={authorId}
           postId={postId}
         />
-      </div>
+      </div>}
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;

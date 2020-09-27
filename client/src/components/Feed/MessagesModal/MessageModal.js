@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
@@ -12,6 +12,7 @@ import {
 } from "./MessagesContainer";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/active-email.svg";
+import { WebSocketContext } from "context/WebsocketContext";
 
 const OrgPostRef = ({ title, content, postAuthor }) => {
   const Avatar = getInitialsFromFullName(postAuthor);
@@ -37,6 +38,7 @@ const MessageModal = ({
   title,
   postContent,
   postAuthor,
+  authorId,
   isAuthenticated,
   postId,
 }) => {
@@ -45,6 +47,10 @@ const MessageModal = ({
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
   const [msgRsp, setMsgRsp] = useState(true);
+  const { sendMessage, joinRoom } = useContext(
+    WebSocketContext,
+  );
+
   const showModal = async () => {
     await setVisible(true);
     document.querySelector(".ant-modal-root").style.opacity = 0;
@@ -54,11 +60,24 @@ const MessageModal = ({
   };
   const handleOk = async () => {
     await setConfirmLoading(true);
-    setTimeout(() => {
-      setMsgSent(true);
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+      let createThread = await joinRoom({
+        receiverId: authorId,
+      })
+      let confirmation = await sendMessage({
+        receiverId: authorId,
+        content: text
+      })
+      if (confirmation) {
+        setMsgSent(true);
+        setMsgRsp(true);
+        setVisible(false);
+      } else {
+        setMsgSent(true);
+        setMsgRsp(false);
+        setVisible(false);
+      }
+    setConfirmLoading(false);
+
   };
   const handleCancel = () => {
     setVisible(false);

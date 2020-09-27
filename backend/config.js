@@ -24,6 +24,8 @@ const configData = envSchema({
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
+    .prop("REDIS_HOST", S.string().default("localhost").required())
+    .prop("REDIS_PORT", S.number().default(6379).required())
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
@@ -79,6 +81,15 @@ const config = {
   server: {
     port: configData.PORT,
   },
+  socket: {
+    options: {
+      pingInterval: 10000,
+    },
+    redis: {
+      host: configData.REDIS_HOST,
+      port: configData.REDIS_PORT
+    }
+  }
 };
 
 module.exports = { config };

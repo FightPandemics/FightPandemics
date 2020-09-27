@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import isonline from "assets/icons/is-online-dot.svg";
 import TextAvatar from "components/TextAvatar";
 import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
@@ -7,12 +7,30 @@ export const ChatList = ({
   empty,
   toggleMobileChatList,
   setToggleMobileChatList,
+  rooms,
+  joinRoom,
+  room,
+  user
 }) => {
   const SideChats = () => {
+
+    const getReceiverName = (participants) => {
+      return participants.filter(p=>p.id!=user.id)[0].name
+    }
+    const getReceiverId = (participants) => {
+      return participants.filter(p=>p.id!=user.id)[0].id
+    }
     return (
+      <>
+      {rooms.map((_room) => (
       <SideChatContainer
+        className={`${ _room._id==room?._id ?'selected':''}`}
+        key={_room._id}
         toggleMobileChatList={toggleMobileChatList}
         tabIndex="1"
+        onClick={()=>joinRoom({
+          receiverId: getReceiverId(_room.participants),
+        })}
       >
         <TextAvatar>LL</TextAvatar>
         <content>
@@ -24,15 +42,18 @@ export const ChatList = ({
                 alt="Is Online Dot"
               />
             </span>
-            <h4>Lily Luke</h4>
+            <h4>{getReceiverName(_room.participants)}</h4>
             <h5>Aug 22</h5>
           </header>
           <div className="content">
-            <div className="title">Offering disinfecting clorox...</div>
-            <p className="message">Let me know if you still need...</p>
+            <div className="title">Topic....</div>
+            <p className="message">LastMessage....</p>
           </div>
         </content>
-      </SideChatContainer>
+      </SideChatContainer>)
+      )}
+      </>
+
     );
   };
 

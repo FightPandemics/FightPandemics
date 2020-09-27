@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   InboxContainer,
   CurrentChatContainer,
@@ -15,9 +15,29 @@ import { RecipientHeader } from "../components/Inbox/RecipientHeader";
 import { EmptyInbox } from "../components/Inbox/EmptyInbox";
 import { ChatContextProvider } from "../context/ChatContext";
 import { ChatContext } from "context/ChatContext";
+import { WebSocketContext } from "../context/WebsocketContext";
 import { OrgPost } from "../components/Inbox/OrgPost";
 
-const CurrentChat = ({ toggleMobileChatList }) => {
+const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, newMessage, sendMessage, user }) => {
+
+  const getReceiverId = (participants) => {
+    return participants.filter(p=>p.id!=user.id)[0].id
+  }
+  const getReceiverName = (participants) => {
+    return participants.filter(p=>p.id!=user.id)[0].name
+  }
+
+  useEffect(()=>{
+    if (room) getChatLog({
+      receiverId: getReceiverId(room.participants)
+    })
+  }, [room])
+
+  useEffect(()=>{
+    console.log(newMessage)
+
+  }, [newMessage])
+
   const Messages = () => {
     const { chat } = useContext(ChatContext);
     const Sender = ({ fromPost, message }) => {
@@ -36,47 +56,64 @@ const CurrentChat = ({ toggleMobileChatList }) => {
         </BubbleContainer>
       );
     };
-    const Recipient = (fromPost) => {
+    const Recipient = ({fromPost, message}) => {
       return (
         <RecipientBubble>
           {fromPost ? (
             <>
               <OrgPost />
               <div className="message-content-recipient">
-                Hi here! I'd like to help out!
+              {message}
               </div>
             </>
           ) : (
-            <div className="message-content-recipient">{/* {message} */}</div>
+            <div className="message-content-recipient">{message}</div>
           )}
         </RecipientBubble>
       );
     };
     return (
       <MessagesContainer>
-        {chat?.map((message) => (
+        {chatLog?.map((message) => (
           <>
-            {/* <Recipient /> */}
-            <Sender message={message} />
+          { message.authorId != user.id ? (
+            <Recipient key={message._id} message={message.content} />
+          ):(
+            <Sender key={message._id} message={message.content} />
+          )
+          }
           </>
-        ))}
+      ))}
       </MessagesContainer>
     );
   };
 
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
-      <RecipientHeader />
+      <RecipientHeader name={room?getReceiverName(room.participants):null}/>
       <Messages />
-      <InputBox />
+      {room && <InputBox receiverId={room?getReceiverId(room.participants):null} sendMessage={sendMessage} />}
     </CurrentChatContainer>
   );
 };
 
-const Inbox = () => {
+
+const Inbox = (props) => {
   const { empty, toggleMobileChatList, setToggleMobileChatList } = useContext(
     ChatContext,
   );
+  const { sendMessage, joinRoom, getChatLog, getUserRooms } = useContext(
+    WebSocketContext,
+  );
+
+  const { isIdentified, user } = props
+  const { room, rooms, chatLog } = props.ws
+
+  useEffect(()=>{
+    if (isIdentified) getUserRooms()
+  },[isIdentified])
+
+
   return (
     <InboxContainer>
       {empty ? (
@@ -88,10 +125,19 @@ const Inbox = () => {
         <>
           <ChatList
             empty={empty}
+            rooms={rooms}
+            room={room}
+            user={user}
+            joinRoom={joinRoom}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
           />
           <CurrentChat
+            room={room}
+            user={user}
+            getChatLog={getChatLog}
+            chatLog={chatLog}
+            sendMessage={sendMessage}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
           />
@@ -101,10 +147,10 @@ const Inbox = () => {
   );
 };
 
-const InboxPage = () => {
+const InboxPage = (props) => {
   return (
     <ChatContextProvider>
-      <Inbox />
+      <Inbox  {...props}/>
     </ChatContextProvider>
   );
 };
