@@ -585,7 +585,8 @@ const Feed = (props) => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       const searchURL = () => {
-        if (searchKeyword) return `&keywords=${searchKeyword}`;
+        if (searchKeyword)
+          return `&keywords=${encodeURIComponent(searchKeyword)}`;
         else return "";
       };
       let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
@@ -934,11 +935,19 @@ const Feed = (props) => {
               <NoPosts>
                 Sorry, there are currently no relevant{" "}
                 {searchCategory ? searchCategory.toLowerCase() : "posts"}{" "}
-                available. Please try using a different filter search or{" "}
-                <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
-                  create a post
-                </a>
-                .
+                available.
+                {(!searchCategory || searchCategory == "POSTS") && (
+                  <>
+                    Please try using a different filter search or{" "}
+                    <a
+                      id={gtmTag(GTM.post.createPost)}
+                      onClick={handleCreatePost}
+                    >
+                      create a post
+                    </a>
+                    .
+                  </>
+                )}
               </NoPosts>
             ) : (
               (!searchCategory || searchCategory == "POSTS") && (
