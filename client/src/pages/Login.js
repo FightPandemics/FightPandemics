@@ -339,7 +339,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
 
   const comparePasswordConfirmation = (confirmPassword) => {
     const { password } = getValues();
-    return password === confirmPassword || "Passwords don't match";
+    return password === confirmPassword || t("auth.passwordNotMatch");
   };
 
   return (
