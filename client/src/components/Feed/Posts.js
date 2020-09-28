@@ -11,7 +11,8 @@ import {
 
 //Local
 import Post from "./Post";
-import Loader from "components/Feed/StyledLoader";
+/*import Loader from "components/Feed/StyledLoader";*/
+import Loader from './Loader';
 
 // Constants
 import { mq } from "constants/theme";
@@ -53,7 +54,7 @@ const Posts = ({
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
-      let content;
+      let content 
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
       } else if (posts[index]) {
