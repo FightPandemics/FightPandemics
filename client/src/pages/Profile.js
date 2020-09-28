@@ -38,6 +38,7 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  HelpIcon,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -85,7 +86,8 @@ import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
 import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
-
+import offeringHelp from "assets/offer-help-unselected.svg";
+import requestHelp from "assets/request-help-unselected.svg";
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
   instagram: [instagramIcon, INSTAGRAM_URL],
@@ -402,13 +404,24 @@ const Profile = ({
           )}
           <IconsContainer>
             <HelpContainer>
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help"}
+              {needHelp && (
+                <HelpIcon src={requestHelp} alt={"Requesting Help"} />
+              )}
+              {offerHelp && (
+                <HelpIcon src={offeringHelp} alt={"Offering Help"} />
+              )}
             </HelpContainer>
             <LocationDesktopDiv>
-              {address && <LocationIcon src={locationIcon} />}
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} {address && `• ${address}`}
+              {address && <LocationIcon src={locationIcon} />}{" "}
+              {address && `• ${address}`}
+              {address && <br />}
+              {address && <br />}
+              {needHelp && (
+                <HelpIcon src={requestHelp} alt={"Requesting Help"} />
+              )}
+              {offerHelp && (
+                <HelpIcon src={offeringHelp} alt={"Offering Help"} />
+              )}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
