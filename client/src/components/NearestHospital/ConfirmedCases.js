@@ -70,7 +70,7 @@ const NearestHealthFacilities = (props) => {
   const userLocation = {
     address: "Venice Ave, Staten Island, NY 10304, USA",
     coordinates: [-74.0927225, 40.6024931],
-    country: "US",
+    country: "IT",
     neighborhood: "Todt Hill",
     state: "New York",
     zip: "10304",
@@ -78,7 +78,7 @@ const NearestHealthFacilities = (props) => {
       
   //Fetch Country and Global Data
   const [caseCountGlobal, setCaseCountGlobal] = useState(null);
-  const [caseCountCountry, setCaseCountCountry] = useState(null);
+  const [caseCountryData, setCaseCountryData] = useState(null);
   
   useEffect(() => {
     const casesUrl = `https://api.covid19api.com/summary`;
@@ -91,49 +91,11 @@ const NearestHealthFacilities = (props) => {
           return countryObject.CountryCode === userLocation?.country;
         });
         const countryCount = countryData.TotalConfirmed;
+        const countryName = countryData.Country;
         setCaseCountGlobal(globalCount);
-        setCaseCountCountry(countryCount);
+        setCaseCountryData([countryCount,countryName]);
       })
       .catch((err) => console.error(err));
-  },[]);
-
-  //Fetch Local Data (city or state)
-  const [caseCountLocal, setCaseCountLocal] = useState(null);
-  const [localDesignation, setLocalDesignation] = useState(null);
-  
-  const findBestLocationMatch = (locationList) => {
-    return locationList.filter((fetchedLocation) => {
-      return fetchedLocation.country_code === userLocation.country.toLowerCase();
-    }).map((fetchedLocation) => {
-      return {
-        ...fetchedLocation,
-        distance: Math.abs(fetchedLocation.latitude - userLocation?.coordinates[1]) + Math.abs(fetchedLocation.longitude - userLocation?.coordinates[0]),
-    };
-  }).reduce((acc, cur) => {
-      if (acc.distance < cur.distance) {
-        return acc;
-      } else {
-        return cur;
-      };
-    });
-  };
-
-  const fetchLocalData = (target) => {
-    let casesUrl = `https://www.trackcorona.live/api/cities/${target}`;
-    axios
-      .get(casesUrl)
-      .then((res) => {
-        const localList = res?.data?.data;
-        const localData = findBestLocationMatch(localList);
-        const localCount = localData.confirmed;
-        setCaseCountLocal(localCount);
-        setLocalDesignation(localData.location);
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchLocalData(userLocation?.state, false);
   },[]);
   
   const [searchValue, setSearchValue] = useState("");
@@ -157,12 +119,8 @@ const NearestHealthFacilities = (props) => {
       </SearchBarContainer>
       <ConfirmedCasesContent>
         <div>
-          <h2>{caseCountLocal === null ? 'No data' : caseCountLocal.toLocaleString('en')}</h2>
-          <p>Confirmed cases in {localDesignation}</p>
-        </div>
-        <div>
-          <h2>{caseCountCountry === null ? 'No data' : caseCountCountry.toLocaleString('en')}</h2>
-          <p>Confirmed cases in {userLocation.country}</p>
+          <h2>{caseCountryData === null ? 'No data' : caseCountryData[0].toLocaleString('en')}</h2>
+          <p>Confirmed cases in {caseCountryData === null ? '' : caseCountryData[1]}</p>
         </div>
         <div>
           <h2>{caseCountGlobal === null ? 'No data' : caseCountGlobal.toLocaleString('en')}</h2>
