@@ -19,6 +19,15 @@ const organisationSchema = new Schema(
       resources: { default: false, required: true, type: Boolean },
       othersDetail: { default: false, required: true, type: String },
     },
+    offers: {
+      donations: { default: false, required: true, type: Boolean },
+      other: { default: false, required: true, type: Boolean },
+      staff: { default: false, required: true, type: Boolean },
+      volunteers: { default: false, required: true, type: Boolean },
+      information: { default: false, required: true, type: Boolean },
+      resources: { default: false, required: true, type: Boolean },
+      othersDetail: { default: false, required: true, type: String },
+    },
     ownerId: {
       ref: "IndividualUser",
       required: true,

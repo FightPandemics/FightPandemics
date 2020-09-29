@@ -18,6 +18,14 @@ const organisation = {
     .prop("resources", S.boolean().required().default(false))
     .prop("other", S.boolean().required().default(false))
     .prop("othersDetails", S.string().maxLength(60).required().default(false)),
+  offers: S.object()
+    .prop("volunteers", S.boolean().required().default(false))
+    .prop("donations", S.boolean().required().default(false))
+    .prop("staff", S.boolean().required().default(false))
+    .prop("information", S.boolean().required().default(false))
+    .prop("resources", S.boolean().required().default(false))
+    .prop("other", S.boolean().required().default(false))
+    .prop("othersDetails", S.string().maxLength(60).required().default(false)),
   ownerId: S.string(),
   type: S.string(),
   urls: S.object()
@@ -38,6 +46,7 @@ const createOrganisationSchema = {
     .prop("location", organisation.location)
     .prop("name", organisation.name.required())
     .prop("needs", organisation.needs)
+    .prop("offers", organisation.requests)
     .prop("type", organisation.type.required())
     .prop("urls", organisation.urls)
     .required(["location"]),
@@ -65,6 +74,7 @@ const updateOrganisationSchema = {
     .prop("location", organisation.location)
     .prop("name", organisation.name)
     .prop("needs", organisation.needs)
+    .prop("offers", organisation.requests)
     .prop("type", organisation.type)
     .prop("urls", organisation.urls),
   params: strictSchema().prop("organisationId", S.string().required()),
