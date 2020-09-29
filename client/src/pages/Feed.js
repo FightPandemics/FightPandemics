@@ -556,7 +556,10 @@ const Feed = (props) => {
     // Onboarding
     if (props.history.location.state) {
       const handleOnboardingOptions = (option, label) => {
-        optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
+        optionsDispatch({
+          type: ADD_OPTION,
+          payload: { option: option.value, label },
+        });
       };
 
       const {
