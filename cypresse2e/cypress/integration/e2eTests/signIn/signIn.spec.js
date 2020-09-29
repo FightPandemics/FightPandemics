@@ -1,5 +1,7 @@
 import SignIn from '../../../elements/pages/signIn';
 import { DUMMY_SAMPLE_EMAIL } from '../../constants';
+import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
+import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -36,7 +38,7 @@ describe('FightPandemics Sign In Page', () => {
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequired = signIn.getEmailRequired();
             emailRequired.should('be.visible');
-            emailRequired.contains('Email is required.');
+            emailRequired.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
 
         });
 
@@ -46,7 +48,7 @@ describe('FightPandemics Sign In Page', () => {
             emailField.type('qa.test@').focus().blur();
             var validEmailRequired = signIn.getValidEmailRequired();
             validEmailRequired.should('be.visible');
-            validEmailRequired.contains('Invalid email');
+            validEmailRequired.contains(INVALID_EMAIL_ERROR_MESSAGE);
 
         });
 
