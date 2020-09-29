@@ -107,6 +107,8 @@ const CreateOrgProfile = (props) => {
     termsConditionsModalVisible,
     setTermsConditionsModalVisible,
   ] = useState(false);
+  const [needsOtherCheckbox, setNeedsOtherCheckbox] = useState(false);
+  const [offersOtherCheckbox, setOffersOtherCheckbox] = useState(false);
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -358,8 +360,32 @@ const CreateOrgProfile = (props) => {
                   defaultValue={false}
                   label="Others"
                   name="needs.other"
-                  onChange={([event]) => event.target.checked}
+                  onChange={([event]) => {
+                    event.target.checked = true;
+                    setNeedsOtherCheckbox(!needsOtherCheckbox);
+                  }}
                 />
+                { needsOtherCheckbox &&
+                  <InputWrapper>
+                    <Label style={styleLabel} label="" />
+                    <Input
+                      type="text"
+                      required
+                      placeholder="Please type"
+                      onChange={(otherNeeds) => otherNeeds}
+                      style={styleInput}
+                      ref={register({
+                        required: "Please specify",
+                        maxLength: {
+                          value: 60,
+                          message: "Max. 60 characters",
+                        },
+                      })}
+                      name="otherNeeds"
+                    />
+                    <span style={errorStyles}>{errors.otherNeeds?.message}</span>
+                  </InputWrapper>
+                }
               </InputGroup>
               <span style={errorStyles}>
                 {errors.needs && "Please select at least one option"}
@@ -414,14 +440,37 @@ const CreateOrgProfile = (props) => {
                   defaultValue={false}
                   label="Others"
                   name="offers.other"
-                  onChange={([event]) => event.target.checked}
+                  onChange={([event]) => {
+                    event.target.checked = true;
+                    setOffersOtherCheckbox(!offersOtherCheckbox);
+                  }}
                 />
+                { offersOtherCheckbox &&
+                  <InputWrapper>
+                    <Label style={styleLabel} label="" />
+                    <Input
+                      type="text"
+                      required
+                      placeholder="Please type"
+                      onChange={(otherOffers) => otherOffers}
+                      style={styleInput}
+                      ref={register({
+                        required: "Please specify",
+                        maxLength: {
+                          value: 60,
+                          message: "Max. 60 characters",
+                        },
+                      })}
+                      name="otherOffers"
+                    />
+                    <span style={errorStyles}>{errors.otherOffers?.message}</span>
+                  </InputWrapper>
+                }
               </InputGroup>
               <span style={errorStyles}>
                 {errors.offers && "Please select at least one option"}
               </span>
             </InputWrapper>
-            
           </Flex>
           <InputWrapper>
             <Label style={styleLabel} label="" />
