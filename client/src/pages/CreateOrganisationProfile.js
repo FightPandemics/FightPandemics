@@ -256,7 +256,6 @@ const CreateOrgProfile = (props) => {
             />
           </InputWrapper>
           <WhiteSpace />
-          <WhiteSpace />
           <InputWrapper>
             <Controller
               as={StyledCheckbox}
@@ -265,51 +264,12 @@ const CreateOrgProfile = (props) => {
               onChange={([event]) => event.target.checked}
             />
             <span style={globalText}>We are a global organisation</span>
-            <InputGroup>
-              <Label style={styleLabel} label="* What are you looking for" />
-              <Controller
-                as={CheckboxGroup}
-                control={control}
-                defaultValue={false}
-                label="Volunteers"
-                name="needs.volunteers"
-                onChange={([event]) => event.target.checked}
-              />
-              <Controller
-                as={CheckboxGroup}
-                control={control}
-                defaultValue={false}
-                label="Donations"
-                name="needs.donations"
-                onChange={([event]) => event.target.checked}
-              />
-              <Controller
-                as={CheckboxGroup}
-                control={control}
-                defaultValue={false}
-                label="Staff"
-                name="needs.staff"
-                onChange={([event]) => event.target.checked}
-              />
-              <Controller
-                as={CheckboxGroup}
-                control={control}
-                defaultValue={false}
-                label="Others"
-                name="needs.other"
-                onChange={([event]) => event.target.checked}
-              />
-            </InputGroup>
-            <span style={errorStyles}>
-              {errors.needs && "Please select at least one option"}
-            </span>
           </InputWrapper>
-          <WhiteSpace />
           <WhiteSpace />
           <InputWrapper>
             <Label style={styleLabel} label="* Type and Industry" />
           </InputWrapper>
-          <div className="settings">
+          <div>
             <Controller
               as={
                 <Select defaultValue="Type">
@@ -348,6 +308,121 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
+          <Flex direction="column" align="start">
+            <InputWrapper>
+              <InputGroup>
+                <Label style={styleLabel} label="* We are here to request" />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Donations"
+                  name="needs.donations"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Volunteers"
+                  name="needs.volunteers"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Staff"
+                  name="needs.staff"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Information"
+                  name="needs.information"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Resources/Tools"
+                  name="needs.resources"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Others"
+                  name="needs.other"
+                  onChange={([event]) => event.target.checked}
+                />
+              </InputGroup>
+              <span style={errorStyles}>
+                {errors.needs && "Please select at least one option"}
+              </span>
+            </InputWrapper>
+            <InputWrapper>
+              <InputGroup>
+                <Label style={styleLabel} label="* We are here to offer" />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Donations"
+                  name="offers.donations"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Volunteers"
+                  name="offers.volunteers"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Staff"
+                  name="offers.staff"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Information"
+                  name="offers.information"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Resources/Tools"
+                  name="offers.resources"
+                  onChange={([event]) => event.target.checked}
+                />
+                <Controller
+                  as={CheckboxGroup}
+                  control={control}
+                  defaultValue={false}
+                  label="Others"
+                  name="offers.other"
+                  onChange={([event]) => event.target.checked}
+                />
+              </InputGroup>
+              <span style={errorStyles}>
+                {errors.offers && "Please select at least one option"}
+              </span>
+            </InputWrapper>
+            
+          </Flex>
           <InputWrapper>
             <Label style={styleLabel} label="" />
             <StyledCheckbox
