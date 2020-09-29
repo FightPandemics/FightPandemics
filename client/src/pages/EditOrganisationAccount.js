@@ -82,17 +82,12 @@ const ErrorAlert = styled(Alert)`
   .ant-alert-message {
     color: ${WHITE};
   }
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin: auto;
     position: relative;
     width: 100%;
     right: 0rem;
   }
-`;
-
-const Container = styled.div`
-  margin-top: 5rem;
 `;
 
 const isSame = (formData, organisation) => {
@@ -351,15 +346,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
   const renderProfilePicture = () => {
     if (organisation) {
       return (
-        <ProfilePicWrapper>
-          <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
-            initials={getInitialsFromFullName(name)}
-          />
-          {/* hide this until backend API is available
-          <ChangePicButton>Change</ChangePicButton> */}
-        </ProfilePicWrapper>
+        <ProfilePic
+          resolution={"7680px"}
+          user={organisation}
+          initials={getInitialsFromFullName(name)}
+        />
       );
     }
   };
@@ -382,55 +373,47 @@ function EditOrganisationAccount({ refetchUser, history }) {
       ) : (
         ""
       )}
-      <Container>
-        <EditLayout>
-          <TitlePictureWrapper>
-            <CustomEditAccountHeader className="h4">
-              Edit Organisation Profile
-            </CustomEditAccountHeader>
-            <ToggleHeading>
-              <CustomHeading level={4} className="h4">
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomEditAccountHeader className="h4">
+            Edit Organisation Profile
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              Account Information
+            </CustomHeading>
+          </ToggleHeading>
+          <FillEmptySpace />
+          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
+        </TitlePictureWrapper>
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink isSelected>
+              <Link to={`/edit-organisation-account/${organisationId}`}>
                 Account Information
-              </CustomHeading>
-            </ToggleHeading>
-
-            <FillEmptySpace />
-
-            <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
-          </TitlePictureWrapper>
-
-          <FormLayout>
-            <OptionDiv>
-              <CustomLink isSelected>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Account Information
-                </Link>
-              </CustomLink>
-              <CustomLink>
-                <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Profile Information
-                </Link>
-              </CustomLink>
-            </OptionDiv>
-            <CustomForm>
-              {renderFormInputs()}
-              {renderAddressInput()}
-              {renderGlobalCheckBox()}
-              <WhiteSpace />
-              <WhiteSpace />
-              {renderSelectItems()}
-              <Label>What are you looking for?</Label>
-              <HelpWrapper>{renderNeedSection()}</HelpWrapper>
-              <CustomSubmitButton
-                primary="true"
-                onClick={handleSubmit(onSubmit)}
-              >
-                {loading ? "Saving Changes..." : "Save Changes"}
-              </CustomSubmitButton>
-            </CustomForm>
-          </FormLayout>
-        </EditLayout>
-      </Container>
+              </Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to={`/edit-organisation-profile/${organisationId}`}>
+                Profile Information
+              </Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            {renderFormInputs()}
+            {renderAddressInput()}
+            {renderGlobalCheckBox()}
+            <WhiteSpace />
+            <WhiteSpace />
+            {renderSelectItems()}
+            <Label>What are you looking for?</Label>
+            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              {loading ? "Saving Changes..." : "Save Changes"}
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
     </Background>
   );
 }

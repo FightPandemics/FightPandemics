@@ -40,13 +40,25 @@ const UploadPic = ({ cameraIconSize, user }) => {
   const handleImage = (e) => {
     setUploadError("");
     const file = e.target.files[0];
-    if (file && file.size > 5001520) {
-      setUploadError("Please upload an image of size less than 5 MB.");
-    } else if (!isImageFile(file)) {
+    if (!isImageFile(file)) {
       setUploadError(`Sorry, we only support image files.`);
+      return;
+    } else if (file && file.size > 5001520) {
+      setUploadError("Please upload an image of size less than 5 MB.");
+      return;
     } else {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
+        const image = new Image();
+        image.src = fileReader.result;
+        image.onload = () => {
+          if (image.height < 250 || image.width < 250) {
+            setUploadError(
+              "Please upload an image that is atleast 250 pixels tall and 250 pixels wide.",
+            );
+            return;
+          }
+        };
         setPhotoURL(fileReader.result);
       };
       if (file) {
@@ -77,8 +89,8 @@ const UploadPic = ({ cameraIconSize, user }) => {
     const reader = new FileReader();
     canvas.toBlob((blob) => {
       let uploadResponse;
-      let endPoint = `/api/users/current/avatar`;
-      let formData = new FormData();
+      let endPoint = "/api/users/current/avatar";
+      const formData = new FormData();
       formData.append("file", blob);
       if (user.ownerId) {
         endPoint = `/api/organisations/${user._id}/avatar`;
@@ -92,7 +104,6 @@ const UploadPic = ({ cameraIconSize, user }) => {
             data: formData,
             headers: {
               accept: "application/json",
-              "Accept-Language": "en-US,en;q=0.8",
               "Content-Type": `multipart/form-data`,
             },
           });
