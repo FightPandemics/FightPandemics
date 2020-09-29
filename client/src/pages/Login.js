@@ -578,7 +578,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={facebook} />}
                 onClick={() => handleSocialLogin("facebook")}
               >
-                <ButtonText>{t("auth.facebook")}</ButtonText>
+                <ButtonText>Facebook</ButtonText>
               </SocialButton>
               <SocialButton
                 id={
@@ -590,7 +590,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={google} />}
                 onClick={() => handleSocialLogin("google")}
               >
-                <ButtonText>{t("auth.google")}</ButtonText>
+                <ButtonText>Google</ButtonText>
               </SocialButton>
               {/** temporarily disable twitter for MVP v1
                <SocialButton
@@ -610,7 +610,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}
               >
-                <ButtonText>{t("auth.linkedin")}</ButtonText>
+                <ButtonText>LinkedIn</ButtonText>
               </SocialButton>
             </FlexBox>
           )}
