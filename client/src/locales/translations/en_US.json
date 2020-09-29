@@ -561,14 +561,14 @@
     "onlyAuthenticated": "Only logged in users can comment.",
     "loading": "Loading...",
     "showMore": "Show More Comments",
-    "showLess": "Show Less Comments",
     "comment": "Comment",
     "comment_plural": "Comments",
     "commentWithCount": "{{count}} Comment",
     "commentWithCount_plural": "{{count}} Comments",
     "edit": "Edit",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "showLess": "Show Less Comments"
   },
   "medical": {
     "localNumber": "Your Local Emergency Number",
