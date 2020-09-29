@@ -198,7 +198,8 @@ const UploadPic = ({ cameraIconSize, user }) => {
         }}
       />
       <button
-        id="avatar-upload-button"
+        id="PR-UA"
+        name="avatar-upload-button"
         type="button"
         onClick={() => imgUpload.current.click()}
         style={{
