@@ -153,9 +153,13 @@ const Post = ({
         (comment1, index, self) =>
           index === self.findIndex((comment2) => comment2._id === comment1._id),
       );
-      if (previousComments.length === allComments.length) {
+      if (
+        previousComments.length === allComments.length ||
+        allComments.length === commentsCount
+      ) {
         dispatchPostAction(TOGGLE_COMMENTS);
-      } else {
+      }
+      if (previousComments.length !== allComments.length) {
         dispatchPostAction(
           SET_COMMENTS,
           "comments",
@@ -172,6 +176,12 @@ const Post = ({
     }
     const currentLimit = limit.current;
     limit.current = currentLimit * page;
+  };
+
+  const showLessComments = () => {
+    comments.splice(5);
+    dispatchPostAction(RESET_PAGE);
+    dispatchPostAction(TOGGLE_COMMENTS);
   };
 
   useEffect(() => {
@@ -423,13 +433,19 @@ const Post = ({
             dispatchPostAction={dispatchPostAction}
             user={user}
           />
-          {loadMoreComments && commentsCount >= 5 ? (
-            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
-              {isLoading ? t("comment.loading") : t("comment.showMore")}
-            </StyledLoadMoreButton>
-          ) : (
-            <></>
-          )}
+          {commentsCount > 5 &&
+            (loadMoreComments ? (
+              <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
+                {isLoading ? t("comment.loading") : t("comment.showMore")}
+              </StyledLoadMoreButton>
+            ) : (
+              <StyledLoadMoreButton
+                disabled={isLoading}
+                onClick={showLessComments}
+              >
+                {isLoading ? t("comment.loading") : t("comment.showLess")}
+              </StyledLoadMoreButton>
+            ))}
         </>
       ) : (
         ""
