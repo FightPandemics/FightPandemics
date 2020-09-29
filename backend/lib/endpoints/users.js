@@ -191,8 +191,33 @@ async function routes(app) {
           req.log.error(updateErr, "Failed updating user");
           throw app.httpErrors.internalServerError();
         }
+
+        // -- Update Author photo references if needed
+        const updateOps = {
+          "author.photo": updatedUser.photo,
+        };
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author photo refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author photo refs at comments");
+        }
+
         return {
-          updatedUser
+          updatedUser,
         };
       } catch (error) {
         req.log.error(error, "Failed updating user avatar.");

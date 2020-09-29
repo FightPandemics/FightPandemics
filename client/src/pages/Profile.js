@@ -15,9 +15,10 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
-import UploadPic from "../components/Picture/UploadPic";
 
+import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
+
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -145,6 +146,7 @@ const Profile = ({
 
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
+  const prevUserId = usePrevious(userId);
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -179,6 +181,13 @@ const Profile = ({
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+
+          if (prevUserId !== userId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
@@ -200,7 +209,8 @@ const Profile = ({
               obj[item._id] = item;
               return obj;
             }, {});
-            if (postsList) {
+
+            if (prevUserId === userId && postsList) {
               postsDispatch({
                 type: SET_POSTS,
                 posts: { ...postsList, ...loadedPosts },
@@ -211,7 +221,7 @@ const Profile = ({
                 posts: { ...loadedPosts },
               });
             }
-          } else if (posts) {
+          } else if (prevUserId === userId && posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -248,8 +258,10 @@ const Profile = ({
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
-        (!isLoading && loadMore && stopIndex >= userPosts.length,
-        userPosts.length)
+        !isLoading &&
+        loadMore &&
+        stopIndex >= userPosts.length &&
+        userPosts.length
       ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
@@ -340,7 +352,6 @@ const Profile = ({
           console.log({ error });
         }
       }
-
       if (response.data) {
         postsDispatch({
           type: SET_LIKE,
@@ -351,7 +362,6 @@ const Profile = ({
     }
   };
 
-  const gtmTag = (tag) => GTM.user.profilePrefix + tag;
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -472,19 +482,7 @@ const Profile = ({
           {status === ERROR_POSTS && (
             <ErrorAlert message={postsError.message} />
           )}
-          {emptyFeed() && (
-            <NoPosts>
-              Sorry, there are currently no relevant posts available. Please try
-              using a different filter search or{" "}
-              <a
-                id={gtmTag(GTM.post.createPost)}
-                onClick={onToggleCreatePostDrawer}
-              >
-                create a post
-              </a>
-              .
-            </NoPosts>
-          )}
+          {emptyFeed() && <></>}
           {ownUser && (
             <CreatePost
               onCancel={onToggleCreatePostDrawer}
