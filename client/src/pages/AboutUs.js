@@ -46,6 +46,7 @@ import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
 import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
 import datadogLogo from "assets/supporters-logos/datadog-logo.svg";
 import pagerdutyLogo from "assets/supporters-logos/pagerduty.svg";
+import seo4AjaxLogo from "assets/supporters-logos/seo4ajax-logo.svg";
 
 // social icons
 import instagramLogo from "assets/icons/social-instagram-unfilled.svg";
@@ -83,6 +84,7 @@ const supporterLogos = [
   workableLogo,
   zendeskLogo,
   zeplinLogo,
+  seo4AjaxLogo,
 ];
 
 function LogoItem(props) {
