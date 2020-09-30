@@ -77,6 +77,7 @@ const supporterLogos = [
   papertrailLogo,
   sendgridLogo,
   sentryLogo,
+  seo4AjaxLogo,
   slackLogo,
   socialbeeLogo,
   twilioLogo,
@@ -84,7 +85,6 @@ const supporterLogos = [
   workableLogo,
   zendeskLogo,
   zeplinLogo,
-  seo4AjaxLogo,
 ];
 
 function LogoItem(props) {
