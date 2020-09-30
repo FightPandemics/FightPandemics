@@ -1,6 +1,6 @@
 {
   "headline": "Un lugar para ofrecer y solicitar ayuda",
-  "tagline": "<0>Las pandemias seguirán ocurriendo.</0><1>Ayudamos a las comunidades a prepararse y responder</1>",
+  "tagline": "<0>Las pandemias seguirán ocurriendo.<\/0><1>Ayudamos a las comunidades a prepararse y responder<\/1>",
   "common": {
     "getHelp": "Solicitar ayuda",
     "giveHelp": "Ofrecer Ayuda",
@@ -27,7 +27,7 @@
       "shareLocation": "Comparte mi ubicación",
       "showAnywhere": "Muéstrame publicaciones desde cualquier lugar",
       "whatEmail": "¿Cuál es tu dirección de correo electrónico?",
-      "respectPrivacy": "Respetamos tu privacidad. Lee nuestros y <1> Política de privacidad </1> y <3> Términos y condiciones. </3>",
+      "respectPrivacy": "Respetamos tu privacidad. Lee nuestros y <1> Política de privacidad <\/1> y <3> Términos y condiciones. <\/3>",
       "enterEmail": "Introduce tu dirección de correo electrónico..."
     },
     "needHelp": {
@@ -35,12 +35,12 @@
       "medical": "Médico",
       "haveCovidSymptoms": "Tengo síntomas de COVID-19",
       "other": "Otro tipo de ayuda",
-      "otherDesc": "Necesito ayuda para conseguir comida/medicina/etc."
+      "otherDesc": "Necesito ayuda para conseguir comida\/medicina\/etc."
     },
     "offerHelp": {
       "howContribute": "¿Cómo quieres contribuir?",
       "volunteer": "Como un Voluntario",
-      "donorInvestor": "Como un Donante/Inversionista",
+      "donorInvestor": "Como un Donante\/Inversionista",
       "organisation": "Como una organización"
     }
   },
@@ -74,11 +74,11 @@
       "types": "Tipos",
       "typesList": [
         "Provisiones Médicas",
-        "Comestibles / Comida",
+        "Comestibles \/ Comida",
         "Empresas",
         "Educación",
         "Legal",
-        "Bienestar/Mental",
+        "Bienestar\/Mental",
         "Entretenimiento",
         "Información",
         "Financiamiento",
@@ -105,11 +105,11 @@
       },
       "typesOptions": {
         "Medical Supplies": "Suministros Médicos",
-        "Groceries/Food": "Abarrotes/Alimentos",
+        "Groceries\/Food": "Abarrotes\/Alimentos",
         "Business": "Negocios",
         "Education": "Educación",
         "Legal": "Legal",
-        "Wellbeing/Mental": "Bienestar/Mental",
+        "Wellbeing\/Mental": "Bienestar\/Mental",
         "Entertainment": "Entretenimiento",
         "Information": "Información",
         "Funding": "Financiación",
@@ -123,7 +123,7 @@
       }
     },
     "filterBy": "Filtrar por",
-    "noResults": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0> crea una publicación </0>"
+    "noResults": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0> crea una publicación <\/0>"
   },
   "post": {
     "create": "Crear una publicación",
@@ -191,8 +191,8 @@
       "profileInfo": "Perfil",
       "address": "Dirección",
       "enterAddress": "Ingresa tu Dirección, Código Postal, o Ciudad",
-      "agreePrivacy": "Al registrarme, acepto la <0> Política de Privacidad </0>",
-      "agreeTerms": "Al registrarme, acepto los <0> Términos y Condiciones </0>",
+      "agreePrivacy": "Al registrarme, acepto la <0> Política de Privacidad <\/0>",
+      "agreeTerms": "Al registrarme, acepto los <0> Términos y Condiciones <\/0>",
       "createProfile": "Crear Tu Perfil",
       "saveChanges": "Guardar Cambios",
       "thankyou": "¡Gracias por unirte a nuestra comunidad!",
@@ -241,7 +241,7 @@
       "medical": "Ayuda Médica",
       "haveCovidSymptoms": "Tengo síntomas de COVID-19",
       "other": "Otra ayuda",
-      "otherDesc": "Necesito ayuda para conseguir comida/medicina/etc.",
+      "otherDesc": "Necesito ayuda para conseguir comida\/medicina\/etc.",
       "editProfile": "Editar Perfil",
       "intro": "Presentación individual",
       "website": "Página Web Personal",
@@ -298,7 +298,7 @@
         "Organización sin fines de lucro",
         "Otros",
         "Filantropía",
-        "Educación Primaria/Secundaria",
+        "Educación Primaria\/Secundaria",
         "Formación y Coaching Profesional",
         "Investigación",
         "Grupo de Expertos",
@@ -319,7 +319,7 @@
     "signIn": "Iniciar sesión",
     "joinNow": "Únete ahora",
     "email": "Correo Electrónico",
-    "enterEmail": "Introduzca la contraseña",
+    "enterEmail": "Introduzca la dirección de correo electrónico",
     "password": "Contraseña",
     "enterPassword": "Introducir la contraseña",
     "confirmPassword": "Confirmar Contraseña",
@@ -333,7 +333,7 @@
     "passwordMax": "La contraseña debe tener como máximo {{num}} caracteres",
     "passwordMin": "La contraseña debe tener al menos {{num}} caracteres",
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Las contraseñas no coinciden"
   },
   "verifyEmail": {
     "checkInbox": "Revisa tu correo",
@@ -361,7 +361,7 @@
     "copyright": "Copyright {{currentYear}} FightPandemics. Todos los derechos reservados"
   },
   "faq": {
-    "title": "Acerca de FightPandemics / General",
+    "title": "Acerca de FightPandemics \/ General",
     "offerRequestHelp": "Ofrecer y solicitar ayuda",
     "profileAccount": "Perfil y cuenta",
     "contects": "Contactos",
@@ -375,7 +375,7 @@
       [
         "¿Quién es FightPandemics?",
         "FightPandemics es un equipo global totalmente voluntario con la misión de servir como un lugar al que acudir en busca de ayuda. Nuestro equipo está formado por más de 150 voluntarios comprometidos de más de 70 países que se esfuerzan por marcar la diferencia. La plataforma se construyó en un esfuerzo colaborativo innovador, que reúne a un grupo diverso de solucionadores de problemas con una amplia gama de habilidades dispuestos a co-crear y aprender unos con otros.",
-        "¿Quieres unirte a nuestra iniciativa? Comunícate con <0> hr@fightpandemics.com </0>"
+        "¿Quieres unirte a nuestra iniciativa? Comunícate con <0> hr@fightpandemics.com <\/0>"
       ],
       [
         "¿En qué ciudades opera FightPandemics?",
@@ -387,20 +387,20 @@
       ],
       [
         "¿Cómo puedo publicar una oferta o solicitud de ayuda en FightPandemics?",
-        "<0> Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. </0> <1> Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora / Iniciar sesión\". Allí podras unirte con tu elección de correo electrónico o credenciales de redes sociales. </1> <2> Una vez que hayas completado tu perfil, selecciona el botón de menú, selecciona ver mi perfil y haz clic en el signo de más en la parte inferior para crear tu primera publicación. </2>"
+        "<0> Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. <\/0> <1> Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora \/ Iniciar sesión\". Allí podras unirte con tu elección de correo electrónico o credenciales de redes sociales. <\/1> <2> Una vez que hayas completado tu perfil, selecciona el botón de menú, selecciona ver mi perfil y haz clic en el signo de más en la parte inferior para crear tu primera publicación. <\/2>"
       ],
       [
         "¿Cómo puedo mantenerme al día con las noticias de FightPandemics?",
-        "Por favor, síguenos en las redes sociales! Publicamos actualizaciones regulares en <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2> y <3>Instagram</3>."
+        "Por favor, síguenos en las redes sociales! Publicamos actualizaciones regulares en <0>Facebook<\/0>, <1>Twitter<\/1>, <2>LinkedIn<\/2> y <3>Instagram<\/3>."
       ],
       [
         "¿Tengo que pagar para usar FightPandemics?",
         "No, FightPandemics es una plataforma completamente gratuita dirigida por voluntarios."
       ],
       [
-        "¿Qué tipo de ayuda puedo ofrecer / solicitar en FightPandemics?",
+        "¿Qué tipo de ayuda puedo ofrecer \/ solicitar en FightPandemics?",
         "Puedes solicitar y ofrecer cualquier tipo de ayuda para apoyar a las personas y organizaciones a hacer frente a la pandemia de COVID-19. A continuación se muestra una lista con algunos ejemplos del tipo de ayuda que puedes ofrecer o solicitar:",
-        "<0> Comestibles </0> <1> Suministros médicos </1> <2> Asistencia legal </2> <3> Soporte técnico </3> <4> Información </4> <5> Financiamiento </5> <6> Eventos y actividades </6> <7> Educación </7> <8> Bienestar </8> <9> Investigación y desarrollo </9>"
+        "<0> Comestibles <\/0> <1> Suministros médicos <\/1> <2> Asistencia legal <\/2> <3> Soporte técnico <\/3> <4> Información <\/4> <5> Financiamiento <\/5> <6> Eventos y actividades <\/6> <7> Educación <\/7> <8> Bienestar <\/8> <9> Investigación y desarrollo <\/9>"
       ],
       [
         "¿Cómo puedo encontrar ayuda?",
@@ -408,14 +408,14 @@
       ],
       [
         "¿Cómo puedo ofrecer ayuda?",
-        "<0> Puedes ofrecer ayuda como individuo o como organización. </0> <1> Desde la página de inicio, selecciona \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puedes crear tus propias publicaciones que describan la ayuda que puedes ofrecer. </1>"
+        "<0> Puedes ofrecer ayuda como individuo o como organización. <\/0> <1> Desde la página de inicio, selecciona \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puedes crear tus propias publicaciones que describan la ayuda que puedes ofrecer. <\/1>"
       ],
       [
         "¿Tengo que iniciar sesión para ver las solicitudes y ofertas de ayuda?",
         "No es necesario que inicies sesión para ver las publicaciones en el panel de ayuda, pero deberás iniciar sesión para comentar o dar me gusta a una publicación."
       ],
       [
-        "¿Necesito iniciar sesión para crear / editar publicaciones?",
+        "¿Necesito iniciar sesión para crear \/ editar publicaciones?",
         "Sí, debes crear una cuenta e iniciar sesión si quieres crear o editar publicaciones."
       ],
       [
@@ -424,11 +424,11 @@
       ],
       [
         "¿Se mostrará mi nombre o el de mi organización a otros usuarios?",
-        "Cuando creas publicaciones ofreciendo o buscando ayuda, tu nombre / el nombre de tu organización se muestra a cualquiera que vea el panel de ayuda."
+        "Cuando creas publicaciones ofreciendo o buscando ayuda, tu nombre \/ el nombre de tu organización se muestra a cualquiera que vea el panel de ayuda."
       ],
       [
         "¿Cómo puedo saber si las publicaciones son confiables?",
-        "Desafortunadamente, no podemos asegurarnos de que todas las publicaciones sean confiables, ya que las publicaciones son creadas por nuestros usuarios. Sin embargo, hacemos todo lo posible para mantener el contenido relevante, realizando una limpieza de datos regular y desactivando las publicaciones después de su vencimiento. Si tienes inquietudes sobre el contenido de una publicación, comunícate con nosotros en <0> support@fightpandemics.com </0>"
+        "Desafortunadamente, no podemos asegurarnos de que todas las publicaciones sean confiables, ya que las publicaciones son creadas por nuestros usuarios. Sin embargo, hacemos todo lo posible para mantener el contenido relevante, realizando una limpieza de datos regular y desactivando las publicaciones después de su vencimiento. Si tienes inquietudes sobre el contenido de una publicación, comunícate con nosotros en <0> support@fightpandemics.com <\/0>"
       ],
       [
         "¿Pueden ayudarme con problemas médicos?",
@@ -444,29 +444,29 @@
       ],
       [
         "Encontré un error en el sitio web. ¿Cómo lo reporto?",
-        "Por favor, envía tus comentarios o contacta a <0>support@fightpandemics.com.</0>"
+        "Por favor, envía tus comentarios o contacta a <0>support@fightpandemics.com.<\/0>"
       ],
       [
         "Ya no se me permite usar FightPandemics, ¿qué hago?",
-        "Por favor, comunícate con nosotros a <0>support@fightpandemics.com</0> y comprobaremos cuál es el problema con tu cuenta"
+        "Por favor, comunícate con nosotros a <0>support@fightpandemics.com<\/0> y comprobaremos cuál es el problema con tu cuenta"
       ],
       [
         "¿Qué información almacena?",
-        "FightPandemics recopila y procesa los datos personales de los usuarios solo para los fines descritos en nuestra <0>política de privacidad.</0> En ningún caso proporcionaremos acceso o compartiremos sus datos personales con ningún tercero, excepto con las personas relevantes establecidas en esta política"
+        "FightPandemics recopila y procesa los datos personales de los usuarios solo para los fines descritos en nuestra <0>política de privacidad.<\/0> En ningún caso proporcionaremos acceso o compartiremos sus datos personales con ningún tercero, excepto con las personas relevantes establecidas en esta política"
       ],
       [
-        "¿Puedo dar/recibir ayuda de mi ciudad o estado? ¿Cuánto tiempo estará visible el puesto?",
-        "La publicación para dar / recibir ayuda puede ser en cuanto a código postal, ciudad, estado o país por una duración de un día, una semana, un mes o para siempre. De forma predeterminada, las publicaciones se establecerán en cuanto a ciudad durante un mes"
+        "¿Puedo dar\/recibir ayuda de mi ciudad o estado? ¿Cuánto tiempo estará visible el puesto?",
+        "La publicación para dar \/ recibir ayuda puede ser en cuanto a código postal, ciudad, estado o país por una duración de un día, una semana, un mes o para siempre. De forma predeterminada, las publicaciones se establecerán en cuanto a ciudad durante un mes"
       ],
       [
         "Mi pregunta no está en la lista. ¿A quién puedo contactar?",
-        "Para preguntas generales y otras cuestiones no enumeradas aquí, dirígete a <0>contact@fightpandemics.com.</0>"
+        "Para preguntas generales y otras cuestiones no enumeradas aquí, dirígete a <0>contact@fightpandemics.com.<\/0>"
       ]
     ],
     "accountFAQ": [
       [
         "¿Cómo me uno?",
-        "<0>Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora/Iniciar sesión\". Allí podrás unirte con tu elección de correo electrónico o credenciales de medios sociales.</0><1>Cuando te unas a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics.</1>"
+        "<0>Para unirte a la comunidad como usuario, haz clic en el botón \"Menú\" y selecciona la opción \"Unirse ahora\/Iniciar sesión\". Allí podrás unirte con tu elección de correo electrónico o credenciales de medios sociales.<\/0><1>Cuando te unas a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics.<\/1>"
       ],
       [
         "¿Cómo puedo cambiar mi perfil individual a un perfil de organización?",
@@ -489,11 +489,11 @@
         "Si no has recibido un correo electrónico de confirmación, por favor intenta las siguientes opciones:",
         "Verifica que el correo de recuperación no se encuentre en la carpeta de correo no deseado",
         "Intenta el proceso de \"Recuperar la contraseña\".",
-        "Si las opciones anteriores no resuelven el problema, por favor, no dudes en contactar con nuestro equipo de apoyo: <0>support@fightpandemics.com</0>"
+        "Si las opciones anteriores no resuelven el problema, por favor, no dudes en contactar con nuestro equipo de apoyo: <0>support@fightpandemics.com<\/0>"
       ],
       [
-        "¿Cómo puedo eliminar/cancelar mi cuenta?",
-        "Si deseas eliminar tu cuenta, comunícate con nosotros con <0> support@fightpandemics.com</0>"
+        "¿Cómo puedo eliminar\/cancelar mi cuenta?",
+        "Si deseas eliminar tu cuenta, comunícate con nosotros con <0> support@fightpandemics.com<\/0>"
       ],
       [
         "¿Cómo puedo actualizar la información de mi perfil?",
@@ -501,60 +501,60 @@
       ],
       [
         "¿Cómo puedo denunciar un mensaje incorrecto u ofensivo?",
-        "Si encuentras una publicación incorrecta o que infringe el Código de Conducta de FightPandemics, envíanos un correo electrónico a <0>support@fightpandemics.com</0>"
+        "Si encuentras una publicación incorrecta o que infringe el Código de Conducta de FightPandemics, envíanos un correo electrónico a <0>support@fightpandemics.com<\/0>"
       ]
     ],
     "contectsFAQ": [
       [
         "Quiero convertirme en socio o patrocinador",
-        "Por favor, póngase en contacto con nuestro equipo de socios en <0>partnerships@fightpandemics.com.</0>"
+        "Por favor, póngase en contacto con nuestro equipo de socios en <0>partnerships@fightpandemics.com.<\/0>"
       ],
       [
-        "Soy de la prensa/medios de comunicación.",
-        "Póngase en contacto con nosotros en <0>pr@fightpandemics.com.</0>"
+        "Soy de la prensa\/medios de comunicación.",
+        "Póngase en contacto con nosotros en <0>pr@fightpandemics.com.<\/0>"
       ],
       [
         "Necesito soporte técnico.",
-        "Lo lamentamos. Envíenos un correo electrónico a <0>help@fightpandemics.com.</0> Dado que somos un equipo voluntario, por favor espere al menos 48 horas para una respuesta."
+        "Lo lamentamos. Envíenos un correo electrónico a <0>help@fightpandemics.com.<\/0> Dado que somos un equipo voluntario, por favor espere al menos 48 horas para una respuesta."
       ],
       [
         "Quiero contactar a FightPandemics por otras razones.",
-        "Para preguntas generales y otras cuestiones no enumeradas aquí, por favor, ponte en contacto con <0>contact@fightpandemics.com.</0>"
+        "Para preguntas generales y otras cuestiones no enumeradas aquí, por favor, ponte en contacto con <0>contact@fightpandemics.com.<\/0>"
       ]
     ],
     "contacts": "Contactos",
     "contactsFAQ": [
       [
         "Quiero convertirme en socio o patrocinador",
-        "Póngase en contacto con nuestro equipo de asociaciones en <0>partnership@fightpandemics.com.</0>"
+        "Póngase en contacto con nuestro equipo de asociaciones en <0>partnership@fightpandemics.com.<\/0>"
       ],
       [
-        "Soy de la prensa/medios de comunicación",
-        "Por favor contáctenos en <0>pr@fightpandemics.com.</0>"
+        "Soy de la prensa\/medios de comunicación",
+        "Por favor contáctenos en <0>pr@fightpandemics.com.<\/0>"
       ],
       [
         "Necesito apoyo técnico.",
-        "Mil disculpas por ello. Envíanos un correo electrónico a <0>help@fightpandemics.com.</0> Ya que somos un equipo de voluntarios, por favor espera al menos 48 horas para una respuesta."
+        "Mil disculpas por ello. Envíanos un correo electrónico a <0>help@fightpandemics.com.<\/0> Ya que somos un equipo de voluntarios, por favor espera al menos 48 horas para una respuesta."
       ],
       [
         "Quiero contactar a FightPandemics por otras razones.",
-        "Para preguntas generales y otros problemas que no se enumeran aquí, comuníquese con <0>contact@fightpandemics.com.</0>"
+        "Para preguntas generales y otros problemas que no se enumeran aquí, comuníquese con <0>contact@fightpandemics.com.<\/0>"
       ]
     ],
     "faqTitle": "Preguntas frecuentes"
   },
   "cookies": {
     "whatCookies": "¿QUE SON LAS COOKIES?",
-    "whatCookiesContent": "<0>Este sitio web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son ficheros enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y/o servicios de este sitio web. La primera finalidad de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las Cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir datos personales del Usuario.</0><1>El Usuario tiene la posibilidad de configurar su navegador para que notifique y rechace la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. No obstante, se advierte que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son pequeñas y transparentes imágenes insertadas en los correos electrónicos. Cuando el Usuario abre un boletín de noticias del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si un correo electrónico específico ha sido abierto o no, así como la dirección IP desde la cual fue descargado. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios.</1>",
+    "whatCookiesContent": "<0>Este sitio web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son ficheros enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y\/o servicios de este sitio web. La primera finalidad de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las Cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir datos personales del Usuario.<\/0><1>El Usuario tiene la posibilidad de configurar su navegador para que notifique y rechace la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. No obstante, se advierte que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son pequeñas y transparentes imágenes insertadas en los correos electrónicos. Cuando el Usuario abre un boletín de noticias del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si un correo electrónico específico ha sido abierto o no, así como la dirección IP desde la cual fue descargado. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios.<\/1>",
     "typeCookies": "TIPO, PROPÓSITO Y FUNCIONAMIENTO DE LAS COOKIES",
     "typeCookiesBegin": "Las cookies, dependiendo de su permanencia, pueden dividirse en cookies de sesión o permanentes. Las primeras caducan cuando el usuario cierra el navegador. Las segundas expiran dependiendo de cuando se cumple el objetivo para el que sirven o cuando se eliminan manualmente. Adicionalmente, dependiendo de su objetivo, las Cookies utilizadas por este sitio web pueden clasificarse de la siguiente manera:",
-    "typeCookiesContent": "<0>Cookies técnicas: Permiten al usuario navegar por una página web, plataforma o aplicación y utilizar las diferentes opciones o servicios que allí existen, como por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a las partes de acceso restringido, recordar los elementos que componen un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de videos o sonido o compartir contenidos a través de redes sociales.</0><1>Cookies de análisis: Aquellas que son procesadas por nosotros o por terceros, que permiten cuantificar el número de usuarios y así realizar la medición y el análisis estadístico del uso que hacen los usuarios de los servicios ofrecidos. Para ello, se analiza su navegación en nuestro sitio web con el fin de mejorar la oferta de productos o servicios que ofrecemos.</1><2>Cookies de publicidad: Son aquellas que son procesadas por nosotros o por terceros, permitiéndonos gestionar de la forma más eficiente posible la oferta de los espacios publicitarios que se encuentran en el sitio web, adaptando el contenido del anuncio al contenido del servicio solicitado o al uso que usted haga de nuestro sitio web. Para ello podemos analizar sus hábitos de navegación en Internet, y podemos mostrarle publicidad relacionada con su perfil de navegación.</2><3>Cookies de comportamiento publicitario: Permiten gestionar de la forma más eficiente posible los espacios publicitarios que, en su caso, el editor haya incluido en una página web, aplicación o plataforma desde la que presta el servicio solicitado. Estas cookies almacenan información sobre el comportamiento de los usuarios obtenida a través de la observación continua de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar la publicidad basada en ella.</3>",
+    "typeCookiesContent": "<0>Cookies técnicas: Permiten al usuario navegar por una página web, plataforma o aplicación y utilizar las diferentes opciones o servicios que allí existen, como por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a las partes de acceso restringido, recordar los elementos que componen un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de videos o sonido o compartir contenidos a través de redes sociales.<\/0><1>Cookies de análisis: Aquellas que son procesadas por nosotros o por terceros, que permiten cuantificar el número de usuarios y así realizar la medición y el análisis estadístico del uso que hacen los usuarios de los servicios ofrecidos. Para ello, se analiza su navegación en nuestro sitio web con el fin de mejorar la oferta de productos o servicios que ofrecemos.<\/1><2>Cookies de publicidad: Son aquellas que son procesadas por nosotros o por terceros, permitiéndonos gestionar de la forma más eficiente posible la oferta de los espacios publicitarios que se encuentran en el sitio web, adaptando el contenido del anuncio al contenido del servicio solicitado o al uso que usted haga de nuestro sitio web. Para ello podemos analizar sus hábitos de navegación en Internet, y podemos mostrarle publicidad relacionada con su perfil de navegación.<\/2><3>Cookies de comportamiento publicitario: Permiten gestionar de la forma más eficiente posible los espacios publicitarios que, en su caso, el editor haya incluido en una página web, aplicación o plataforma desde la que presta el servicio solicitado. Estas cookies almacenan información sobre el comportamiento de los usuarios obtenida a través de la observación continua de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar la publicidad basada en ella.<\/3>",
     "typeCookiesEnd": "El pagina web pueden utilizar servicios de terceros que requieren la instalación de Cookies en los Usuarios y en nombre de FightPandemics, y será colectado únicamente con los fines estadísticos en el uso de la pagina por parte del usuario y para la disposición de otros servicios relacionados con la actividad de la pagina web y otros servicios de Internet.",
     "disableCookies": "¿CÓMO DESHABILITAR LAS COOKIES Y LOS WEB BUGS EN LOS PRINCIPALES NAVEGADORES?",
     "disableCookiesContent": "Normalmente es posible dejar de aceptar las cookies del navegador o dejar de aceptar las cookies de un servicio en particular. Todos los navegadores modernos permiten cambiar la configuración de las Cookies. Estas configuraciones se encuentran normalmente en las \"opciones\" o \"Preferencias\" del menú del navegador. También puedes configurar tu navegador o el administrador de correo electrónico, así como instalar complementos gratuitos para evitar que se descarguen los Web Bugs al abrir un correo electrónico. Utiliza las siguientes instrucciones según tu navegador de Internet para cambiar las preferencias de las cookies:",
     "updateCookies": "ACTUALIZACIÓN DE LA POLÍTICA DE COOKIES",
     "updateCookiesContent": "FightPandemics podrá modificar la presente Política sobre Cookies en función de exigencias legislativas, reglamentarias o con la finalidad de adaptar dicha política a las instrucciones dictadas por la Agencia Española de Protección de Datos, por lo que se aconseja a los Usuarios que visiten periódicamente esta página para conocer los cambios sufridos en las mismas. Cuando se produzcan cambios significativos en esta Política de Cookies, se notificará a los Usuarios a través de la web o por correo electrónico a los Usuarios registrados en el servicio de newsletter.",
-    "cookieAlert": "Este sitio utiliza cookies para ofrecer nuestro servicio y para mostrar información relevante. Al utilizar nuestro sitio, usted reconoce que ha leído y comprendido nuestra <0>Política de Cookies</0>, nuestra <1>Política de Privacidad</1> y nuestros <2>Términos y Condiciones</2>. El uso de los productos de FightPandemics está sujeto a estas políticas y condiciones"
+    "cookieAlert": "Este sitio utiliza cookies para ofrecer nuestro servicio y para mostrar información relevante. Al utilizar nuestro sitio, usted reconoce que ha leído y comprendido nuestra <0>Política de Cookies<\/0>, nuestra <1>Política de Privacidad<\/1> y nuestros <2>Términos y Condiciones<\/2>. El uso de los productos de FightPandemics está sujeto a estas políticas y condiciones"
   },
   "comment": {
     "writeAComment": "Escribir un comentario...",
@@ -568,7 +568,7 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "save": "Guardar",
-    "showLess": "Show Less Comments"
+    "showLess": "Mostrar menos comentarios"
   },
   "medical": {
     "localNumber": "Tu Número de Emergencia Local",
@@ -592,7 +592,7 @@
     "submitFeedback": "Enviar comentarios",
     "radio": {
       "age": "Cuántos años tienes",
-      "unaffected": "Voy al trabajo/escuela normalmente",
+      "unaffected": "Voy al trabajo\/escuela normalmente",
       "quarantine": "Estoy sano pero en cuarentena en casa",
       "symptomaticUntested": "Tengo síntomas leves pero no me he hecho la prueba.",
       "diagnosed": "Me han diagnosticado COVID-19"
