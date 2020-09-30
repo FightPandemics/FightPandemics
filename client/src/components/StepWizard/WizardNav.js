@@ -76,7 +76,7 @@ export const BackButton = styled(LeftRightIconButton)`
 `;
 
 export const BackText = styled.span`
-  margin-left: 3rem;
+  margin-left: 1.5rem;
 `;
 
 const NextButton = styled(LeftRightIconButton)`
@@ -102,6 +102,10 @@ const NextButton = styled(LeftRightIconButton)`
     height: 4.8rem;
     width: 19.2rem;
     transition: all 0.1s;
+
+    &.am-button > span {
+      margin-right: 1.5rem;
+    }
 
     & span {
       display: inline;
