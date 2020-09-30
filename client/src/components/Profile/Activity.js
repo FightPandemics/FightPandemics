@@ -32,7 +32,6 @@ const Activity = ({
   totalPostCount,
 }) => {
   const posts = Object.entries(filteredPosts);
-
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
