@@ -17,7 +17,12 @@ const CustomSubmitButton = styled(BaseButton)`
 const CustomCancelButton = styled(BaseButton)``;
 
 function isImageFile(file) {
-  return file && file["type"].split("/")[0] === "image";
+  let splitImgType = file["type"].split("/");
+  return (
+    (file && splitImgType[0] === "image" && splitImgType[1].includes("jpg")) ||
+    splitImgType[1].includes("jpeg") ||
+    splitImgType[1].includes("png")
+  );
 }
 
 const UploadPic = ({ cameraIconSize, user }) => {
@@ -41,11 +46,11 @@ const UploadPic = ({ cameraIconSize, user }) => {
     setUploadError("");
     const file = e.target.files[0];
     if (!isImageFile(file)) {
-      setUploadError(`Sorry, we only support image files.`);
-      return;
+      setUploadError(
+        `Sorry, we only support image files of type jp(e)g and png.`,
+      );
     } else if (file && file.size > 5001520) {
       setUploadError("Please upload an image of size less than 5 MB.");
-      return;
     } else {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -54,9 +59,8 @@ const UploadPic = ({ cameraIconSize, user }) => {
         image.onload = () => {
           if (image.height < 250 || image.width < 250) {
             setUploadError(
-              "Please upload an image that is atleast 250 pixels tall and 250 pixels wide.",
+              "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
             );
-            return;
           }
         };
         setPhotoURL(fileReader.result);
@@ -192,7 +196,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
         ref={imgUpload}
         onChange={handleImage}
         type="file"
-        accept="image/*"
+        accept="image/x-png,image/jpeg"
         style={{
           display: "none",
         }}
@@ -203,9 +207,10 @@ const UploadPic = ({ cameraIconSize, user }) => {
         type="button"
         onClick={() => imgUpload.current.click()}
         style={{
-          border: 0,
+          border: "0",
           borderColor: "hidden",
-          padding: "0.6rem",
+          paddingTop: "0.3rem",
+          paddingBottom: "0.3rem",
           borderRadius: "50%",
           backgroundColor: colors.royalBlue,
           cursor: "pointer",

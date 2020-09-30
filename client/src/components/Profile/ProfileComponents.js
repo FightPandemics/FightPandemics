@@ -1,12 +1,12 @@
-import {Drawer} from "antd";
+import { Drawer } from "antd";
 import styled from "styled-components";
 
 import Heading from "../Typography/Heading";
 import SvgIcon from "../Icon/SvgIcon";
 import TextLabel from "components/Typography/TextLabel";
-import {mq, theme} from "../../constants/theme";
+import { mq, theme } from "../../constants/theme";
 
-const {colors} = theme;
+const { colors } = theme;
 
 export const CustomDrawer = styled(Drawer)`
   .ant-drawer-content {
@@ -88,10 +88,22 @@ export const NameDiv = styled(TextLabel)`
     display: flex;
     width: 100%;
     align-self: flex-start;
+    overflow-wrap: break-word;
     &.ant-typography {
       font-size: 3rem;
       font-weight: bold;
     }
+  }
+`;
+
+export const NamePara = styled.p`
+  overflow-wrap: break-word;
+  text-align: center;
+  max-width: 25rem;
+  margin: auto;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    text-align: left;
+    max-width: 90%;
   }
 `;
 export const LocationMobileDiv = styled(TextLabel)`
@@ -212,13 +224,14 @@ export const UserInfoContainer = styled.div`
   }
 `;
 
-export const PhotoUploadButton = styled.div`
+export const AvatarPhotoContainer = styled.fieldset`
+  position: relative;
+`;
+export const PhotoUploadButton = styled.legend`
     position: absolute;
     bottom: 0;
-    @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-    position: relative;
   }  
-`
+`;
 
 export const PlaceholderIcon = styled.div`
   flex: 1;
