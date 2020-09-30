@@ -1,6 +1,7 @@
 import SignIn from '../../../elements/pages/signIn';
-import {DUMMY_SAMPLE_EMAIL} from '../../constants';
-import {VALID_SAMPLE_EMAIL} from '../../constants';
+import { DUMMY_SAMPLE_EMAIL } from '../../constants';
+import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
+import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
 
 describe('FightPandemics Sign In Page', () => {
 
@@ -37,7 +38,7 @@ describe('FightPandemics Sign In Page', () => {
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequired = signIn.getEmailRequired();
             emailRequired.should('be.visible');
-            emailRequired.contains('Email is required.');
+            emailRequired.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
 
         });
 
@@ -47,7 +48,7 @@ describe('FightPandemics Sign In Page', () => {
             emailField.type('qa.test@').focus().blur();
             var validEmailRequired = signIn.getValidEmailRequired();
             validEmailRequired.should('be.visible');
-            validEmailRequired.contains('Invalid email');
+            validEmailRequired.contains(INVALID_EMAIL_ERROR_MESSAGE);
 
         });
 
@@ -64,7 +65,6 @@ describe('FightPandemics Sign In Page', () => {
             passwordField.type('Testing!');
             var passwordEye = signIn.getPasswordEye();
             passwordEye.should('be.visible').and('have.attr', 'alt', 'Icon').click();
-
         });
 
         it('Leaving password field blank triggers error', () => {
@@ -110,16 +110,16 @@ describe('FightPandemics Sign In Page', () => {
 
         });
 
+
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
-            signIn.getEmailField().type(VALID_SAMPLE_EMAIL);
+            cy.generateRandomEmail().then((email) => {
+                signIn.getEmailField().type(email);
+            });
             signIn.getPasswordField().type('WrongPW!wpw3hi');
             signIn.getSignInButton().click();
             var loginFailAlert = signIn.getLoginFailAlert();
             loginFailAlert.should('be.visible');
             loginFailAlert.contains('Login failed, reason: Wrong email or password.');
-            signIn.getEmailField().clear().type(VALID_SAMPLE_EMAIL);
-            signIn.getPasswordField().clear().type('Testing1234!');
-            signIn.getSignInButton().click();
         });
 
         it('Login fail alert appears when maximum sign in attempts are exceeded', () => {

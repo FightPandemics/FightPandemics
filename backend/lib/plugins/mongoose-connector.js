@@ -9,6 +9,7 @@ require("../models/IndividualUser");
 require("../models/Message");
 require("../models/OrganisationUser");
 require("../models/Post");
+require("../models/Thread");
 require("../models/User");
 require("../models/Thread");
 
@@ -19,6 +20,7 @@ async function syncIndexes(mongo) {
   mongo.model("Location").syncIndexes();
   mongo.model("Message").syncIndexes();
   mongo.model("Post").syncIndexes();
+  mongo.model("Thread").syncIndexes();
   mongo.model("User").syncIndexes();
   mongo.model("Thread").syncIndexes();
 

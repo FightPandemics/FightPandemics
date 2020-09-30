@@ -8,12 +8,11 @@ const globalStyles = createGlobalStyle`
 }
 
 ::-webkit-scrollbar{
-  width: 5px;
+  width: 10px;
   background-color: ${WHITE};
 }
 
 ::-webkit-scrollbar-thumb{
-  width: 5px;
   background-color: grey;
 }
 

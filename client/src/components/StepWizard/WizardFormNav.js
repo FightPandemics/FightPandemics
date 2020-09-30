@@ -45,7 +45,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
 
   const handleClick = () => {
-    if (history?.location?.state?.from?.state) {
+    if (history?.location?.state?.from) {
       history.goBack();
     } else {
       history.push(FEED);
