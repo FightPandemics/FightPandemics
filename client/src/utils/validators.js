@@ -1,4 +1,5 @@
 import tlds from "tlds";
+import _isEmail from "validator/lib/isEmail";
 
 const validateTopLevelDomain = (string) => {
   for (const tld of tlds) {
@@ -9,26 +10,28 @@ const validateTopLevelDomain = (string) => {
   return false;
 };
 
-const validateEmailLength = (string) => {
-  if (string <= 200) {
-    return true;
-  } else {
+export function isEmail(email, strictValidation = false) {
+  if (typeof email !== "string") {
     return false;
   }
-};
+  const trimmed = email.trim;
+  return strictValidation
+    ? _isEmail(email)
+    : trimmed.indexOf("@") >= 0 &&
+        trimmed.indexOf(".") >= 0 &&
+        trimmed.indexOf(" ") === -1;
+}
 
 export const validateEmail = (email) => {
   let errorMessage = "";
-  const emailInput = String(email).toLowerCase();
-  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!email) {
     errorMessage = "Email address is required";
-  } else if (email.length > 200) {
-    errorMessage = "Email address must not exceed 200 characters";
-  } else if (!re.test(emailInput)) {
+  } else if (email.length > 254) {
+    errorMessage = "Email address must not exceed 254 characters";
+  } else if (!isEmail(email)) {
     errorMessage = "Email address is invalid";
-  } else if (!validateTopLevelDomain(emailInput)) {
-    errorMessage = "Email domain is invalid";
+  } else if (!validateTopLevelDomain(email)) {
+    errorMessage = "Email address is invalid";
   }
   if (errorMessage.length != 0) {
     return errorMessage;
