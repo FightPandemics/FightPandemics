@@ -3,8 +3,6 @@ import {
   IDENTIFY_ERROR,
   JOIN_ROOM_SUCCESS,
   JOIN_ROOM_ERROR,
-  SEND_MESSAGE,
-  MESSAGE_SEEN,
   GET_ROOMS_ERROR,
   GET_ROOMS_SUCCESS,
   RECEIVED_MESSAGE,
@@ -33,9 +31,12 @@ function wsReducer(state = initialState, action) {
         isIdentified: false
       }
     case JOIN_ROOM_SUCCESS:
+      var index = state.rooms.findIndex(r => r._id == action.payload._id);
+      if (index!=-1) state.rooms[index] = action.payload
       return {
         ...state,
-        room: action.payload
+        room: action.payload,
+        rooms: state.rooms,
       }
     case JOIN_ROOM_ERROR:
       return {
@@ -45,7 +46,7 @@ function wsReducer(state = initialState, action) {
     case GET_ROOMS_SUCCESS:
       return {
         ...state,
-        rooms: action.payload
+        rooms: action.payload.sort((a, b)=> { return new Date(b.lastMessage?.createdAt) - new Date(a.lastMessage?.createdAt) })
       }
     case GET_ROOMS_ERROR:
       return {
@@ -65,7 +66,7 @@ function wsReducer(state = initialState, action) {
     case UPDATE_MESSAGES_HISTORY:
       return {
         ...state,
-        chatLog: action.payload
+        chatLog: action.payload.reverse()
       }
     case UPDATE_MESSAGES_HISTORY_ERROR:
       return {

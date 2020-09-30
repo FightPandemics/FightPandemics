@@ -1,7 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import isonline from "assets/icons/is-online-dot.svg";
 import TextAvatar from "components/TextAvatar";
 import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
+import styled from "styled-components";
+import { getInitialsFromFullName } from "utils/userInfo";
+import getRelativeTime from "utils/relativeTime";
+
+const UserName = styled.h4`
+  line-height: 2;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: -0.3em;
+`;
 
 export const ChatList = ({
   empty,
@@ -10,16 +21,34 @@ export const ChatList = ({
   rooms,
   joinRoom,
   room,
-  user
+  user,
+  getUserStatus,
 }) => {
+
+  const [usersStatus, setUsersStatus] = useState({})
+
+  const getReceiver = (participants) => {
+    return participants.filter(p=>p.id!=user.id)[0]
+  }
+
+  const getSender = (participants) => {
+    return participants.filter(p=>p.id==user.id)[0]
+  }
+
+  useEffect(()=>{
+    rooms.forEach(async _room => {
+      let status = await getUserStatus(getReceiver(_room.participants).id)
+      setUsersStatus(prevState => {
+        let newObj = Object.assign({}, prevState)
+        newObj[_room._id] = status
+        return newObj
+      });
+    })
+  }, [rooms])
+
+
   const SideChats = () => {
 
-    const getReceiverName = (participants) => {
-      return participants.filter(p=>p.id!=user.id)[0].name
-    }
-    const getReceiverId = (participants) => {
-      return participants.filter(p=>p.id!=user.id)[0].id
-    }
     return (
       <>
       {rooms.map((_room) => (
@@ -29,43 +58,43 @@ export const ChatList = ({
         toggleMobileChatList={toggleMobileChatList}
         tabIndex="1"
         onClick={()=>joinRoom({
-          receiverId: getReceiverId(_room.participants),
+          receiverId: getReceiver(_room.participants).id,
         })}
       >
-        <TextAvatar>LL</TextAvatar>
+        <TextAvatar src={getReceiver(_room.participants).photo}>{getInitialsFromFullName(getReceiver(_room.participants).name)}</TextAvatar>
         <content>
           <header>
             <span>
               <img
-                className="is-online-dot"
+                className={`is-online-dot ${usersStatus[_room._id]}`}
                 src={isonline}
                 alt="Is Online Dot"
+                
               />
             </span>
-            <h4>{getReceiverName(_room.participants)}</h4>
-            <h5>Aug 22</h5>
+            <UserName>{getReceiver(_room.participants).name}</UserName>
+          <h5>{_room.lastMessage? getRelativeTime(_room.lastMessage.createdAt) : getRelativeTime(_room.createdAt)}</h5>
           </header>
           <div className="content">
-            <div className="title">Topic....</div>
-            <p className="message">LastMessage....</p>
+            {<div className="title">Topic....</div>}
+            <p className="message">{_room.lastMessage?.content?.substring(0,20)}...</p>
           </div>
         </content>
       </SideChatContainer>)
       )}
       </>
-
     );
   };
-
+  
   return (
     <ChatListContainer toggleMobileChatList={toggleMobileChatList}>
       <ChatHeader>
-        Messages <span>1</span>
+        Messages <span>{rooms.map(_room=> getSender(_room.participants).newMessages? 1:0).reduce((a,b)=>a+b,0)}</span>
       </ChatHeader>
       <div className="chat-bucket">
         {!empty && (
           <div onClick={() => setToggleMobileChatList(false)}>
-            <SideChats />
+            <SideChats/>
           </div>
         )}
       </div>

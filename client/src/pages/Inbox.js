@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   InboxContainer,
   CurrentChatContainer,
@@ -18,27 +18,30 @@ import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
 import { OrgPost } from "../components/Inbox/OrgPost";
 
-const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, newMessage, sendMessage, user }) => {
+const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMessage, user }) => {
 
-  const getReceiverId = (participants) => {
-    return participants.filter(p=>p.id!=user.id)[0].id
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView()
   }
-  const getReceiverName = (participants) => {
-    return participants.filter(p=>p.id!=user.id)[0].name
+
+  const getReceiver = (participants) => {
+    return participants.filter(p=>p.id!=user.id)[0]
   }
 
   useEffect(()=>{
     if (room) getChatLog({
-      receiverId: getReceiverId(room.participants)
+      receiverId: getReceiver(room.participants).id,
     })
   }, [room])
 
-  useEffect(()=>{
-    console.log(newMessage)
-
-  }, [newMessage])
-
   const Messages = () => {
+
+    useEffect(()=>{
+      scrollToBottom()
+    }, [chatLog])
+
     const { chat } = useContext(ChatContext);
     const Sender = ({ fromPost, message }) => {
       return (
@@ -46,7 +49,7 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, newMessa
           <SenderBubble>
             {fromPost ? (
               <>
-                <OrgPost />
+                {<OrgPost />}
                 <div className="message-content-sender">{message}</div>
               </>
             ) : (
@@ -62,9 +65,7 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, newMessa
           {fromPost ? (
             <>
               <OrgPost />
-              <div className="message-content-recipient">
-              {message}
-              </div>
+              <div className="message-content-recipient">{message}</div>
             </>
           ) : (
             <div className="message-content-recipient">{message}</div>
@@ -84,15 +85,19 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, newMessa
           }
           </>
       ))}
+      <div id={'messages-bottom'} ref={messagesEndRef}></div>
       </MessagesContainer>
     );
   };
 
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
-      <RecipientHeader name={room?getReceiverName(room.participants):null}/>
+      <RecipientHeader 
+        name={room?getReceiver(room.participants).name:null} 
+        lastAccess={room?getReceiver(room.participants).lastAccess:null}
+      />
       <Messages />
-      {room && <InputBox receiverId={room?getReceiverId(room.participants):null} sendMessage={sendMessage} />}
+      {room && <InputBox receiverId={room?getReceiver(room.participants).id:null} sendMessage={sendMessage} />}
     </CurrentChatContainer>
   );
 };
@@ -102,17 +107,15 @@ const Inbox = (props) => {
   const { empty, toggleMobileChatList, setToggleMobileChatList } = useContext(
     ChatContext,
   );
-  const { sendMessage, joinRoom, getChatLog, getUserRooms } = useContext(
+  const { sendMessage, joinRoom, getChatLog, getUserRooms, getUserStatus } = useContext(
     WebSocketContext,
   );
-
   const { isIdentified, user } = props
   const { room, rooms, chatLog } = props.ws
 
   useEffect(()=>{
     if (isIdentified) getUserRooms()
   },[isIdentified])
-
 
   return (
     <InboxContainer>
@@ -129,6 +132,7 @@ const Inbox = (props) => {
             room={room}
             user={user}
             joinRoom={joinRoom}
+            getUserStatus={getUserStatus}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
           />

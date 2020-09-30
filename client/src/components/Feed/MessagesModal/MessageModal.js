@@ -71,6 +71,7 @@ const MessageModal = ({
         setMsgSent(true);
         setMsgRsp(true);
         setVisible(false);
+        setText("")
       } else {
         setMsgSent(true);
         setMsgRsp(false);

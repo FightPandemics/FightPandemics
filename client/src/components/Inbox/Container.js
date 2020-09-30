@@ -84,13 +84,22 @@ export const SideChatContainer = styled.div`
     width: 3.8rem;
     height: 3.8rem;
     line-height: 3.8rem;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
   header {
     display: flex;
-    line-height: 0.4;
+    line-height: 0;
     span {
       position: relative;
       right: 3.8em;
+      img {
+        &.offline {
+          filter: grayscale(1);
+        }
+      }
     }
     h4 {
       position: relative;
@@ -98,9 +107,9 @@ export const SideChatContainer = styled.div`
       font-weight: 600;
     }
     h5 {
-      position: relative;
-      left: 11em;
-      top: 0.1em;
+      position: absolute;
+      right: 0em;
+      top: 0em;
       color: gray;
       font-weight: 300;
       letter-spacing: 0.3px;
@@ -110,6 +119,7 @@ export const SideChatContainer = styled.div`
     position: relative;
     top: 0.9em;
     line-height: 1.5;
+    width: calc(100% - 5.5rem);
     .title {
       font-size: 1em;
       font-weight: 500;

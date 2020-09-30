@@ -37,7 +37,7 @@ const InputContainer = styled.div`
   }
 `;
 
-export const InputBox = ({ receiverId, sendMessage}) => {
+export const InputBox = ({ receiverId, sendMessage }) => {
   const { chat, setChat } = useContext(ChatContext);
   const [text, setText] = useState("");
   const inputRef = useRef(null);
@@ -49,7 +49,6 @@ export const InputBox = ({ receiverId, sendMessage}) => {
   const handleChange = async (e) => {
     await setText(e.target.value);
   };
-
 
   const handleSendMgessage = async () => {
     let confirmation = await sendMessage({
@@ -82,7 +81,7 @@ export const InputBox = ({ receiverId, sendMessage}) => {
         ref={inputRef}
       />
       <a disabled={!text} onClick={handleClick}>
-        <img className="send-comment" src={sendcomment} alt="Send Comment" />
+        <img className="send-comment" src={sendcomment} alt="Send Message" />
       </a>
     </InputContainer>
   );

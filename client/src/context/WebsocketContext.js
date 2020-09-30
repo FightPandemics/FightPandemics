@@ -69,7 +69,7 @@ export default class SocketManager extends React.Component {
     return new Promise((resolve) => {
       this.socket.emit("SEND_MESSAGE", messageData, (response) => {
         if (response.code == 200) return resolve(true)
-        console.log(response)
+        console.log(response) // debuging
         resolve(false)
       });
     })
@@ -84,7 +84,7 @@ export default class SocketManager extends React.Component {
           return resolve(true)
         }
         else this.props.store.dispatch(joinRoomError());
-        console.log(response)
+        console.log(response) // debuging
         resolve(false)
       });
     })
@@ -102,6 +102,16 @@ export default class SocketManager extends React.Component {
       if (response.code == 200) this.props.store.dispatch(getChatLogSuccess(response.data));
       else this.props.store.dispatch(getChatLogError());
     });
+  };
+
+
+  getUserStatus = (userId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("GET_USER_STATUS", userId, (response) => {
+        if (response.code == 200) return resolve(response.data) // online/offline
+        resolve(false)
+      });
+    })
   };
 
   messageSeen = () => {
@@ -122,7 +132,8 @@ export default class SocketManager extends React.Component {
         sendMessage: this.sendMessage,
         joinRoom: this.joinRoom,
         getChatLog: this.getChatLog,
-        getUserRooms: this.getUserRooms
+        getUserRooms: this.getUserRooms,
+        getUserStatus: this.getUserStatus,
     }
     return (
       <WebSocketContext.Provider value={value}>
