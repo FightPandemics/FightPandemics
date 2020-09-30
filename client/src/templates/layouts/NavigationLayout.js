@@ -480,7 +480,7 @@ const NavigationLayout = (props) => {
           </>
         ))}
         <FeedbackSubmitButton
-          title={t("feedback.submitFeedback")}
+          title={t("onboarding.common.submit")}
           onClick={() => {
             toggleModal("radioModal");
             submitFeedbackForm();
