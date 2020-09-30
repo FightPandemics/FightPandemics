@@ -4,7 +4,7 @@ import translationEN_US from "./translations/en_US.json";
 // import translationDE from "./translations/de.json";
 import translationES_ES from "./translations/es_ES.json";
 // import translationIT from "./translations/it.json";
-import translationRU from "./translations/ru.json";
+// import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
 // import translationTH from "./translations/th.json";
 import translationZH_TW from "./translations/zh_TW.json";
@@ -36,9 +36,9 @@ export const index = {
   // it: {
   //   translation: translationIT,
   // },
-  ru: {
-    translation: translationRU,
-  },
+  // ru: {
+  //   translation: translationRU,
+  // },
   es: {
     translation: translationES_ES,
   },
