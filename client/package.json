@@ -62,7 +62,6 @@
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",
-    "@types/validator": "^13.1.0",
     "dotenv": "^8.2.0",
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
