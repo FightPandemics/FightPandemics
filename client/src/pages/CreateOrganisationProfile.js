@@ -381,7 +381,7 @@ const CreateOrgProfile = (props) => {
                           message: "Max. 60 characters",
                         },
                       })}
-                      name="otherNeeds"
+                      name="needs.othersDetails"
                     />
                     <span style={errorStyles}>{errors.otherNeeds?.message}</span>
                   </InputWrapper>
@@ -461,7 +461,7 @@ const CreateOrgProfile = (props) => {
                           message: "Max. 60 characters",
                         },
                       })}
-                      name="otherOffers"
+                      name="offers.othersDetails"
                     />
                     <span style={errorStyles}>{errors.otherOffers?.message}</span>
                   </InputWrapper>

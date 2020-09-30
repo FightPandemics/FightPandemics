@@ -17,7 +17,7 @@ const organisation = {
     .prop("information", S.boolean().required().default(false))
     .prop("resources", S.boolean().required().default(false))
     .prop("other", S.boolean().required().default(false))
-    .prop("othersDetails", S.string().maxLength(60).required().default(false)),
+    .prop("othersDetails", S.string().maxLength(60)),
   offers: S.object()
     .prop("volunteers", S.boolean().required().default(false))
     .prop("donations", S.boolean().required().default(false))
@@ -25,7 +25,7 @@ const organisation = {
     .prop("information", S.boolean().required().default(false))
     .prop("resources", S.boolean().required().default(false))
     .prop("other", S.boolean().required().default(false))
-    .prop("othersDetails", S.string().maxLength(60).required().default(false)),
+    .prop("othersDetails", S.string().maxLength(60)),
   ownerId: S.string(),
   type: S.string(),
   urls: S.object()
