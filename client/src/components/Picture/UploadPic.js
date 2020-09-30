@@ -16,6 +16,18 @@ const CustomSubmitButton = styled(BaseButton)`
 
 const CustomCancelButton = styled(BaseButton)``;
 
+const CameraButtonUpload = styled.button`
+  border: 0;
+  border-color: hidden;
+  padding-top: 0.1rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 50%;
+  background-color: ${colors.royalBlue};
+  cursor: pointer;
+`;
+
 function isImageFile(file) {
   let splitImgType = file["type"].split("/");
   return (
@@ -201,25 +213,16 @@ const UploadPic = ({ cameraIconSize, user }) => {
           display: "none",
         }}
       />
-      <button
+      <CameraButtonUpload
         id="PR-UA"
         name="avatar-upload-button"
         type="button"
         onClick={() => imgUpload.current.click()}
-        style={{
-          border: "0",
-          borderColor: "hidden",
-          paddingTop: "0.3rem",
-          paddingBottom: "0.3rem",
-          borderRadius: "50%",
-          backgroundColor: colors.royalBlue,
-          cursor: "pointer",
-        }}
       >
         <CameraOutlined
           style={{ fontSize: 18 || cameraIconSize, color: colors.offWhite }}
         />
-      </button>
+      </CameraButtonUpload>
       {cropModal()}
     </div>
   );
