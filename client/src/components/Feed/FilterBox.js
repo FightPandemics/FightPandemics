@@ -22,13 +22,16 @@ const FilterBoxWrapper = styled.div`
 
 const ModalWrapper = styled(Modal)`
   .filter-4 .am-button {
-    padding: 0 4.2rem;
+    padding: 0 1rem;
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
 `;
 
+const StyledSubmitButton = styled(SubmitButton)`
+  font-size: 1.7rem;
+`;
 const gtmTagsMap = {
   lookingFor: GTM.post.requestOffer,
   type: GTM.post.type,
@@ -87,7 +90,7 @@ const FilterBox = ({ gtmPrefix }) => {
             padding: "1rem 0",
           }}
         >
-          <SubmitButton
+          <StyledSubmitButton
             inline
             secondary="true"
             onClick={handleQuit}
@@ -95,8 +98,8 @@ const FilterBox = ({ gtmPrefix }) => {
             id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
           >
             {t("feed.quit")}
-          </SubmitButton>
-          <SubmitButton
+          </StyledSubmitButton>
+          <StyledSubmitButton
             inline
             primary="true"
             onClick={handleOnClose}
@@ -104,7 +107,7 @@ const FilterBox = ({ gtmPrefix }) => {
             id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
           >
             {t("feed.apply")}
-          </SubmitButton>
+          </StyledSubmitButton>
         </div>
       </ModalWrapper>
     </FilterBoxWrapper>
