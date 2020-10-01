@@ -37,6 +37,11 @@ export const ChatList = ({
 
   useEffect(()=>{
     rooms.forEach(async _room => {
+      if (_room.userStatus) return setUsersStatus(prevState => {
+        let newObj = Object.assign({}, prevState)
+        newObj[_room._id] = status
+        return newObj
+      });
       let status = await getUserStatus(getReceiver(_room.participants).id)
       setUsersStatus(prevState => {
         let newObj = Object.assign({}, prevState)
@@ -66,7 +71,7 @@ export const ChatList = ({
           <header>
             <span>
               <img
-                className={`is-online-dot ${usersStatus[_room._id]}`}
+                className={`is-online-dot ${_room.userStatus || usersStatus[_room._id]}`}
                 src={isonline}
                 alt="Is Online Dot"
                 

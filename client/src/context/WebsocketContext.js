@@ -10,6 +10,7 @@ import {
   identifySuccess,
   getRoomsSuccess,
   getRoomsError,
+  userStatusUpdate,
 } from "../actions/wsActions";
 
 const WebSocketContext = createContext();
@@ -28,7 +29,8 @@ export default class SocketManager extends React.Component {
         const newState = props.store.getState()
         if (this.state.user != newState.session.user){
             this.state.user = newState.session.user
-            if (newState.session.isAuthenticated) this.identify(this.state.user)
+            if (newState.session.isAuthenticated) this.identify(this.state.user);
+            else this.socket.disconnect();
         }
     });
     this.socket = io.connect('localhost:8000');
@@ -51,6 +53,10 @@ export default class SocketManager extends React.Component {
     this.socket.on("NEW_MESSAGE", (messageData) => {
         this.props.store.dispatch(receivedMessage(messageData));
     });
+
+    this.socket.on("USER_STATUS_UPDATE", (data) => {
+      this.props.store.dispatch(userStatusUpdate(data));
+    })
 
   }
 

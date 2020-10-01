@@ -14,6 +14,7 @@ export const MESSAGE_SEEN = "MESSAGE_SEEN"
 export const UPDATE_MESSAGES_HISTORY = "UPDATE_MESSAGES_HISTORY"
 export const UPDATE_MESSAGES_HISTORY_ERROR = "UPDATE_MESSAGES_HISTORY_ERROR"
 
+export const USER_STATUS_UPDATE = "USER_STATUS_UPDATE"
 
 export function identifySuccess(){
     return {
@@ -84,5 +85,12 @@ export function getChatLogSuccess(payload){
 export function getChatLogError(){
     return {
         type: UPDATE_MESSAGES_HISTORY_ERROR,
+    }
+}
+
+export function userStatusUpdate(userId){
+    return { 
+        type: USER_STATUS_UPDATE,
+        payload: userId
     }
 }

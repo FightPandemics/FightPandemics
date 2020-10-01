@@ -97,7 +97,7 @@ export const SideChatContainer = styled.div`
       right: 3.8em;
       img {
         &.offline {
-          filter: grayscale(1);
+          opacity: 0;
         }
       }
     }

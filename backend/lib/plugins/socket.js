@@ -16,11 +16,17 @@ function onSocketConnect(socket) {
       return res({ code: 404, message: "User not found" });
     }
     socket.userId = data.id;
+
+    this.io.emit("USER_STATUS_UPDATE", {id: socket.userId, status: "online"})
     socket.on("disconnect", () => {
       console.log("[ws] user disconnected");
       for (let room in socket.rooms) {
         socket.leave(room);
       }
+      setTimeout(() => { // the user maybe is just changing/reloading the page, wait to make sure they completely disconnected
+        const stillOnline = getSocketByUserId(this, socket.userId);
+        if (!stillOnline) this.io.emit("USER_STATUS_UPDATE", {id: socket.userId, status: "offline"})
+      }, 1000);
     });
     res({ code: 200, message: "Success" });
   });

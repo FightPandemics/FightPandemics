@@ -8,6 +8,7 @@ import {
   RECEIVED_MESSAGE,
   UPDATE_MESSAGES_HISTORY,
   UPDATE_MESSAGES_HISTORY_ERROR,
+  USER_STATUS_UPDATE,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -71,7 +72,14 @@ function wsReducer(state = initialState, action) {
     case UPDATE_MESSAGES_HISTORY_ERROR:
       return {
         ...state,
-        rooms: []
+        chatLog: []
+      }
+    case USER_STATUS_UPDATE:
+      var index = state.rooms.findIndex(r => r.participants.find(p=>p.id==action.payload.id));
+      if (index != -1) state.rooms[index].userStatus = action.payload.status
+      else return state
+      return {
+        ...state,
       }
   }
   return state;
