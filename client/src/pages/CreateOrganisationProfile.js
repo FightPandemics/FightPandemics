@@ -1,12 +1,10 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
-import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import createOrganisationProfile from "assets//data/createOrganisationProfile";
 import Marker from "assets/create-profile-images/location-marker.svg";
 import Heading from "components/Typography/Heading";
 import Input from "components/Input/BaseInput";
-import InputError from "components/Input/InputError";
 import Select from "components/Input/Select";
 import SubmitButton from "components/Button/SubmitButton";
 import Label from "components/Input/Label";
@@ -361,8 +359,8 @@ const CreateOrgProfile = (props) => {
                   label="Others"
                   name="needs.other"
                   onChange={([event]) => {
-                    event.target.checked = true;
                     setNeedsOtherCheckbox(!needsOtherCheckbox);
+                    return event.target.checked;
                   }}
                 />
                 { needsOtherCheckbox &&
@@ -372,7 +370,7 @@ const CreateOrgProfile = (props) => {
                       type="text"
                       required
                       placeholder="Please type"
-                      onChange={(otherNeeds) => otherNeeds}
+                      onChange={(othersDetails) => othersDetails}
                       style={styleInput}
                       ref={register({
                         required: "Please specify",
@@ -381,9 +379,9 @@ const CreateOrgProfile = (props) => {
                           message: "Max. 60 characters",
                         },
                       })}
-                      name="needs.othersDetails"
+                      name="needs.othersDetail"
                     />
-                    <span style={errorStyles}>{errors.otherNeeds?.message}</span>
+                    <span style={errorStyles}>{errors.needs?.othersDetails?.message}</span>
                   </InputWrapper>
                 }
               </InputGroup>
@@ -441,8 +439,8 @@ const CreateOrgProfile = (props) => {
                   label="Others"
                   name="offers.other"
                   onChange={([event]) => {
-                    event.target.checked = true;
                     setOffersOtherCheckbox(!offersOtherCheckbox);
+                    return event.target.checked;
                   }}
                 />
                 { offersOtherCheckbox &&
@@ -452,7 +450,7 @@ const CreateOrgProfile = (props) => {
                       type="text"
                       required
                       placeholder="Please type"
-                      onChange={(otherOffers) => otherOffers}
+                      onChange={(othersDetails) => othersDetails}
                       style={styleInput}
                       ref={register({
                         required: "Please specify",
@@ -461,9 +459,9 @@ const CreateOrgProfile = (props) => {
                           message: "Max. 60 characters",
                         },
                       })}
-                      name="offers.othersDetails"
+                      name="offers.othersDetail"
                     />
-                    <span style={errorStyles}>{errors.otherOffers?.message}</span>
+                    <span style={errorStyles}>{errors.offers?.othersDetails?.message}</span>
                   </InputWrapper>
                 }
               </InputGroup>
