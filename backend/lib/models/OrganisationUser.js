@@ -17,7 +17,7 @@ const organisationSchema = new Schema(
       volunteers: { default: false, required: true, type: Boolean },
       information: { default: false, required: true, type: Boolean },
       resources: { default: false, required: true, type: Boolean },
-      othersDetail: { default: false, required: true, type: String },
+      othersDetail: { type: String },
     },
     offers: {
       donations: { default: false, required: true, type: Boolean },
@@ -26,7 +26,7 @@ const organisationSchema = new Schema(
       volunteers: { default: false, required: true, type: Boolean },
       information: { default: false, required: true, type: Boolean },
       resources: { default: false, required: true, type: Boolean },
-      othersDetail: { default: false, required: true, type: String },
+      othersDetail: { type: String },
     },
     ownerId: {
       ref: "IndividualUser",

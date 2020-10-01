@@ -46,7 +46,7 @@ const createOrganisationSchema = {
     .prop("location", organisation.location)
     .prop("name", organisation.name.required())
     .prop("needs", organisation.needs)
-    .prop("offers", organisation.requests)
+    .prop("offers", organisation.offers)
     .prop("type", organisation.type.required())
     .prop("urls", organisation.urls)
     .required(["location"]),
@@ -74,7 +74,7 @@ const updateOrganisationSchema = {
     .prop("location", organisation.location)
     .prop("name", organisation.name)
     .prop("needs", organisation.needs)
-    .prop("offers", organisation.requests)
+    .prop("offers", organisation.offers)
     .prop("type", organisation.type)
     .prop("urls", organisation.urls),
   params: strictSchema().prop("organisationId", S.string().required()),
