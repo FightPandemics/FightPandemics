@@ -160,6 +160,7 @@ const UserName = styled(Typography.Text)`
   font-size: 1.6rem;
   font-weight: 500;
   font-stretch: normal;
+  text-align: center;
   font-style: normal;
   line-height: normal;
   letter-spacing: 0.4px;
@@ -256,12 +257,14 @@ const NavigationLayout = (props) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
 
   const displayAvatar = (user) => {
-    if (user?.photo || user?.firstName && user?.lastName) {
+    if (user?.photo || (user?.firstName && user?.lastName)) {
       return (
-          <ProfilePic
-              user={user}
-              initials={getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
-          />
+        <ProfilePic
+          user={user}
+          initials={getInitialsFromFullName(
+            `${user.firstName} ${user.lastName}`,
+          )}
+        />
       );
     }
   };
@@ -504,7 +507,7 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-            {displayAvatar(user)}
+        {displayAvatar(user)}
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />

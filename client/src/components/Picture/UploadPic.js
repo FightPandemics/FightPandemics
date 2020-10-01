@@ -73,6 +73,10 @@ const UploadPic = ({ cameraIconSize, user }) => {
             setUploadError(
               "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
             );
+          } else if (image.height / image.width < 0.5) {
+            setUploadError(
+              "Please upload a image of proportions more than or equal to 1/2.",
+            );
           }
         };
         setPhotoURL(fileReader.result);
@@ -154,8 +158,6 @@ const UploadPic = ({ cameraIconSize, user }) => {
     return (
       <Modal
         visible={modalVisible}
-        height={"50rem"}
-        width={"50rem"}
         okText={"Save"}
         onOk={savePhoto}
         destroyOnClose={true}
