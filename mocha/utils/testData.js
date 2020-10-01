@@ -44,6 +44,7 @@ exports.userCredentialsWithMismatchedPassword = {
     confirmPassword: 'Password'
 }
 
+
 function generateRandomEmail() {
     return randomStringGenerator.randomString(8) + '.' + randomStringGenerator.randomString(8) + '@' + randomStringGenerator.randomString(5) + '.com';
 }

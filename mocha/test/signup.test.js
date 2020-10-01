@@ -28,6 +28,11 @@ let userCredentialsWithPasswordsNotMatched = {}
 Object.assign(userCredentialsWithPasswordsNotMatched, testData.userCredentialsWithRandomEmailAndRandomPassword)
 Object.assign(userCredentialsWithPasswordsNotMatched, { confirmPassword: userCredentialsWithMismatchedPassword.confirmPassword });
 
+let userCredentialsWithEmptyPassword = {}
+Object.assign(userCredentialsWithEmptyPassword, testData.userCredentialsWithEmptyPassword)
+Object.assign(userCredentialsWithEmptyPassword, { confirmPassword: userCredentialsWithEmptyPassword.password });
+
+
 describe('POST Sign Up endpoint tests for unregistered user', () => {
 
     describe('User enters incorrect email data', () => {
@@ -42,7 +47,7 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
-        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead.
+        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
         it('Email local part has more than 64 characters triggers Internal Server error', async () => {
             let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExceeding64Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
@@ -57,10 +62,17 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
 
     describe('User enters incorrect password data', () => {
 
-        it('Mismatched password and confirm password triggers Bad Request error', async () => {
+        it('Mismatched password and confirm password trigger Bad Request error', async () => {
             let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithPasswordsNotMatched);
-            validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'Password should be entered twice exactly the same');
+            validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'PasswordsShouldMatch');
         });
+
+        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
+        it('Empty password and confirm password trigger Bad Request error', async () => {
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmptyPassword);
+            validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'Passwords should be populated.');
+        });
+
 
     });
 
