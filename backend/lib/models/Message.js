@@ -8,7 +8,6 @@ const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"]
 // -- Schema
 const postRefSchema = new Schema(
   {
-    author: Object,
     content: {
       required: true,
       type: String,
@@ -27,7 +26,8 @@ const postRefSchema = new Schema(
     title: {
       required: true,
       type: String,
-    }
+    },
+    createdAt: Date,
   }
 )
 

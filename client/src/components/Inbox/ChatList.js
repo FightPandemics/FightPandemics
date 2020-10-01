@@ -39,7 +39,7 @@ export const ChatList = ({
     rooms.forEach(async _room => {
       if (_room.userStatus) return setUsersStatus(prevState => {
         let newObj = Object.assign({}, prevState)
-        newObj[_room._id] = status
+        newObj[_room._id] = _room.userStatus
         return newObj
       });
       let status = await getUserStatus(getReceiver(_room.participants).id)

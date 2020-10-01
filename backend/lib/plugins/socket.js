@@ -199,10 +199,29 @@ function onSocketConnect(socket) {
     let newMessage = {
       authorId: userId,
       content: data.content.substring(0, 2048),
-      postRef: null, // later
+      postRef: null,
       status: "sent", // later
       threadId: thread._id,
     };
+
+    // add postRef
+    if (data.postId) {
+      const Post = this.mongo.model("Post");
+      var [postErr, post] = await this.to(
+        //shouldn't be doing this, will change for prod.
+        Post.findOne({_id: data.postId}),
+      );
+      if (threadErr) return res({ code: 500, message: "Internal server error" });
+      console.log(post)
+      if (post) newMessage.postRef = {
+        content: post.content,
+        id: post._id,
+        objective: post.objective,
+        title: post.title,
+        createdAt: post.createdAt,
+      }
+    }
+
     [messageErr, message] = await this.to(
       this.mongo.model("Message")(newMessage).save(),
     );

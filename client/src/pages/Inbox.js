@@ -43,33 +43,21 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
     }, [chatLog])
 
     const { chat } = useContext(ChatContext);
-    const Sender = ({ fromPost, message }) => {
+    const Sender = ({ postRef, message }) => {
       return (
         <BubbleContainer>
           <SenderBubble>
-            {fromPost ? (
-              <>
-                {<OrgPost />}
-                <div className="message-content-sender">{message}</div>
-              </>
-            ) : (
-              <div className="message-content-sender">{message}</div>
-            )}
+            {postRef && <OrgPost postRef={postRef}/>}
+            <div className="message-content-sender">{message}</div>
           </SenderBubble>
         </BubbleContainer>
       );
     };
-    const Recipient = ({fromPost, message}) => {
+    const Recipient = ({postRef, message}) => {
       return (
         <RecipientBubble>
-          {fromPost ? (
-            <>
-              <OrgPost />
-              <div className="message-content-recipient">{message}</div>
-            </>
-          ) : (
-            <div className="message-content-recipient">{message}</div>
-          )}
+          {postRef && <OrgPost postRef={postRef}/>}
+          <div className="message-content-recipient">{message}</div>
         </RecipientBubble>
       );
     };
@@ -78,9 +66,9 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
         {chatLog?.map((message) => (
           <>
           { message.authorId != user.id ? (
-            <Recipient key={message._id} message={message.content} />
+            <Recipient key={message._id} message={message.content} postRef={message.postRef}/>
           ):(
-            <Sender key={message._id} message={message.content} />
+            <Sender key={message._id} message={message.content} postRef={message.postRef}/>
           )
           }
           </>

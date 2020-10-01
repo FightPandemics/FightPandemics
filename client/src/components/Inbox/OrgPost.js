@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
+import getRelativeTime from "utils/relativeTime";
+import { Link } from "react-router-dom";
 
 const Post = styled.div`
   display: block;
@@ -9,6 +11,9 @@ const Post = styled.div`
   border-radius: 1em 1em 0em 0em;
   color: #282828;
   margin-bottom: 1em;
+  margin-top: -0.7em;
+  max-height: 340px;
+  overflow: hidden;
   header {
     display: flex;
     font-size: 0.9em;
@@ -37,21 +42,28 @@ const Post = styled.div`
   }
   .post-content {
     letter-spacing: 1.3px;
+    white-space: break-spaces;  
+  }
+  a {
+    &:hover {
+      color: inherit;
+    }
   }
 `;
 
-export const OrgPost = () => {
+export const OrgPost = ({postRef}) => {
   return (
     <Post>
       <header>
-        <div className="post-type">Offers</div>
+        <div className="post-type">{postRef.objective}</div>
         <span>.</span>
-        <div className="post-date">Posted 14hrs ago</div>
+        <div className="post-date">{getRelativeTime(postRef.createdAt)}</div>
       </header>
-      <div className="post-title">Offering disinfecting clorox wipes</div>
+      <Link to={`/post/${postRef.id}`}>
+        <div className="post-title">{postRef.title}</div>
+      </Link>
       <div className="post-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliquLorem
+        {postRef.content.substring(0,250)}{postRef.content.length>250 && "..."}
       </div>
     </Post>
   );

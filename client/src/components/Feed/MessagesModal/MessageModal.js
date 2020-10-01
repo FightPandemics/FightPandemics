@@ -65,7 +65,8 @@ const MessageModal = ({
       })
       let confirmation = await sendMessage({
         receiverId: authorId,
-        content: text
+        content: text,
+        postId: postId,
       })
       if (confirmation) {
         setMsgSent(true);
