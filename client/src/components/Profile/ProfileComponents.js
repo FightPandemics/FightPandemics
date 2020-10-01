@@ -81,6 +81,15 @@ export const HelpIcon = styled(SvgIcon)`
   }
 `;
 
+export const HelpIconMobile = styled(SvgIcon)`
+  width: 50%;
+  height: 4rem;
+  float: left;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
   width: 2rem;
@@ -107,6 +116,8 @@ export const NameDiv = styled(TextLabel)`
 export const LocationMobileDiv = styled(TextLabel)`
   align-self: center;
   color: ${colors.darkGray};
+  display: table;
+  clear: both;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }

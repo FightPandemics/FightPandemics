@@ -29,7 +29,6 @@ import {
   LocationDesktopDiv,
   LocationMobileDiv,
   IconsContainer,
-  HelpContainer,
   LocationIcon,
   SocialIcon,
   DescriptionMobile,
@@ -39,6 +38,7 @@ import {
   DrawerHeader,
   CustomDrawer,
   HelpIcon,
+  HelpIconMobile,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -398,19 +398,28 @@ const Profile = ({
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
           {address ? (
-            <LocationMobileDiv>{address}</LocationMobileDiv>
-          ) : (
-            <WhiteSpace />
-          )}
-          <IconsContainer>
-            <HelpContainer>
+            <LocationMobileDiv>
+              {address}
+              {address && <br />}
+              {address && <br />}
               {needHelp && (
-                <HelpIcon src={requestHelp} alt={"Requesting Help"} />
+                <HelpIconMobile src={requestHelp} alt={"Requesting Help"} />
               )}
               {offerHelp && (
-                <HelpIcon src={offeringHelp} alt={"Offering Help"} />
+                <HelpIconMobile src={offeringHelp} alt={"Offering Help"} />
               )}
-            </HelpContainer>
+            </LocationMobileDiv>
+          ) : (
+            <LocationMobileDiv>
+              {needHelp && (
+                <HelpIconMobile src={requestHelp} alt={"Requesting Help"} />
+              )}
+              {offerHelp && (
+                <HelpIconMobile src={offeringHelp} alt={"Offering Help"} />
+              )}
+            </LocationMobileDiv>
+          )}
+          <IconsContainer>
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}{" "}
               {address && `• ${address}`}
