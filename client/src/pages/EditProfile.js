@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import ErrorAlert from "components/Alert/ErrorAlert";
@@ -37,77 +38,6 @@ import {
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
 
-const URLS_CONFIG = {
-  facebook: [
-    "Facebook URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9.]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and . are allowed",
-      },
-      minLength: {
-        value: 5,
-        message: "Min. length is 5 characters",
-      },
-    },
-    FACEBOOK_URL,
-  ],
-  instagram: [
-    "instagram URL",
-    {
-      pattern: {
-        value: /[a-z\d-_]{1,255}\s*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and dashes . or _ are allowed",
-      },
-    },
-    INSTAGRAM_URL,
-  ],
-  linkedin: [
-    "LinkedIn URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and dashes are allowed",
-      },
-    },
-    LINKEDIN_INDIVIDUAL_URL,
-  ],
-  twitter: [
-    "Twitter URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-      maxLength: {
-        value: 15,
-        message: "Max. length is 15 characters",
-      },
-    },
-    TWITTER_URL,
-  ],
-  github: [
-    "Github URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_-]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-    },
-    GITHUB_URL,
-  ],
-  website: [
-    "Personal Website",
-    {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
-    },
-  ],
-};
 const ABOUT_MAX_LENGTH = 160;
 
 function EditProfile(props) {
@@ -116,7 +46,86 @@ function EditProfile(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
+  const { t } = useTranslation();
   const { firstName, lastName, urls = {}, about } = user || {};
+
+  const URLS_CONFIG = {
+    facebook: [
+      "Facebook URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9.]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-z 0-9 .",
+          }),
+        },
+        minLength: {
+          value: 5,
+          message: t("profile.common.minCharacters", { minNum: 5 }),
+        },
+      },
+      FACEBOOK_URL,
+    ],
+    instagram: [
+      "Instagram URL",
+      {
+        pattern: {
+          value: /[a-z\d-_]{1,255}\s*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 . _ -",
+          }),
+        },
+      },
+      INSTAGRAM_URL,
+    ],
+    linkedin: [
+      "LinkedIn URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_\-/]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 -",
+          }),
+        },
+      },
+      LINKEDIN_INDIVIDUAL_URL,
+    ],
+    twitter: [
+      "Twitter URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+        maxLength: {
+          value: 15,
+          message: t("profile.common.maxCharacters", { maxNum: 15 }),
+        },
+      },
+      TWITTER_URL,
+    ],
+    github: [
+      "Github URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_-]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+      },
+      GITHUB_URL,
+    ],
+    website: [
+      "Personal Website",
+      {
+        validate: (str) =>
+          !str || validateURL(str) || t("profile.common.invalidURL"),
+      },
+    ],
+  };
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
@@ -127,8 +136,14 @@ function EditProfile(props) {
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       userProfileDispatch(
-        updateUserError(`Failed updating profile, reason: ${message}`),
+        updateUserError(
+          `${t("error.failedUpdatingProfile")} ${translatedErrorMessage}`,
+        ),
       );
     }
   };
@@ -141,20 +156,26 @@ function EditProfile(props) {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
   }, [userProfileDispatch]);
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            Edit Profile
+            {t("profile.individual.editProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
@@ -168,16 +189,16 @@ function EditProfile(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to="/edit-account">Account Information</Link>
+              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to="/edit-profile">Profile Information</Link>
+              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
             <FormInput
-              inputTitle="Self-introduction"
+              inputTitle={t("profile.individual.intro")}
               name="about"
               type="text"
               defaultValue={about}
@@ -185,7 +206,9 @@ function EditProfile(props) {
               ref={register({
                 maxLength: {
                   value: ABOUT_MAX_LENGTH,
-                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                  message: t("profile.common.maxCharacters", {
+                    maxNum: ABOUT_MAX_LENGTH,
+                  }),
                 },
               })}
             />
@@ -193,7 +216,7 @@ function EditProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={label}
+                  inputTitle={t("profile.common.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}
@@ -208,7 +231,7 @@ function EditProfile(props) {
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
-              Save Changes
+              {t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

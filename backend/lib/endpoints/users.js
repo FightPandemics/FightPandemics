@@ -170,7 +170,7 @@ async function routes(app) {
       const user = await Auth0.getUser(getCookieToken(req));
       const { email, email_verified: emailVerified } = user;
       if (!emailVerified) {
-        throw app.httpErrors.forbidden("Email address not verified");
+        throw app.httpErrors.forbidden("emailUnverified");
       }
       if (!req.userId) {
         req.log.error(
@@ -179,7 +179,7 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
       if (await User.findById(req.userId)) {
-        throw app.httpErrors.conflict("User exists");
+        throw app.httpErrors.conflict("userExists");
       }
       const userData = {
         ...req.body,
