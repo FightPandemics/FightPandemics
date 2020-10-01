@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 // Local
 // import { FeedContext } from "pages/Feed.js";
@@ -52,6 +53,7 @@ const PostSocial = ({
   setShowShareModal,
   id,
 }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     const likePost = sessionStorage.getItem("likePost");
 
@@ -86,12 +88,13 @@ const PostSocial = ({
     );
   };
 
-  const renderLabels = (label, labelCountProp) => {
+  const renderLabels = (label, count) => {
     return (
       <>
-        <StyledSpan className="total-number">{labelCountProp}</StyledSpan>
-        <StyledSpan className="social-text">
-          {labelCountProp > 1 ? ` ${label}s` : ` ${label}`}
+        <StyledSpan className="total-number">
+          {label === "Comment"
+            ? t("comment.commentWithCount", { count })
+            : t("post.likeWithCount", { count })}
         </StyledSpan>
       </>
     );
@@ -199,7 +202,7 @@ const PostSocial = ({
           onClick={showNativeShareOrModal}
         >
           {renderShareIcon()}
-          <StyledSpan>Share</StyledSpan>
+          <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
       {(user?.id != authorId) &&
