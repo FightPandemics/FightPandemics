@@ -10,6 +10,11 @@ Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading
     pageImage.should('be.visible');
 });
 
+Cypress.Commands.add('pageContainsHeading', (pageHeadingLocator, heading) => {
+    var pageHeading = cy.get(pageHeadingLocator);
+    pageHeading.should('be.visible').contains(heading);
+});
+
 export const randomString = (length) => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
