@@ -176,7 +176,7 @@ postSchema.index(
     types: "text",
   },
   {
-    language: "none",
+    default_language: "none",
     weights: {
       "author.name": 1,
       content: 3,
