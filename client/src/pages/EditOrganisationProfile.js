@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import FormInput from "components/Input/FormInput";
 import { Link } from "react-router-dom";
 import {
@@ -22,8 +23,11 @@ import { validateURL } from "utils/validators";
 import {
   APPSTORE_URL,
   PLAYSTORE_URL,
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_URL,
   TWITTER_URL,
+  GITHUB_URL,
 } from "constants/urls";
 import {
   fetchOrganisation,
@@ -39,38 +43,6 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-const URLS_CONFIG = {
-  appStore: ["Link to Apple Store", {}, APPSTORE_URL],
-  playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
-  twitter: [
-    "Twitter URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and _ are allowed",
-      },
-    },
-    TWITTER_URL,
-  ],
-  linkedin: [
-    "LinkedIn URL",
-    {
-      pattern: {
-        value: /^[a-zA-Z0-9_\-/]*$/,
-        message:
-          "Invalid entry: only alphanumeric characters and special characters: _ - /  are allowed",
-      },
-    },
-    LINKEDIN_URL,
-  ],
-  website: [
-    "Website",
-    {
-      validate: (str) => !str || validateURL(str) || "Invalid URL",
-    },
-  ],
-};
 const ABOUT_MAX_LENGTH = 160;
 
 const editProfile = true;
@@ -81,8 +53,89 @@ function EditOrganisationProfile(props) {
     OrganisationContext,
   );
   const { register, handleSubmit, errors } = useForm();
+  const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
+
+  const URLS_CONFIG = {
+    appStore: ["Link to Apple Store", {}, APPSTORE_URL],
+    playStore: ["Link to Google Play", {}, PLAYSTORE_URL],
+    facebook: [
+      "Facebook URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9.]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-z 0-9 .",
+          }),
+        },
+        minLength: {
+          value: 5,
+          message: t("profile.common.minCharacters", { minNum: 5 }),
+        },
+      },
+      FACEBOOK_URL,
+    ],
+    instagram: [
+      "Instagram URL",
+      {
+        pattern: {
+          value: /[a-z\d-_]{1,255}\s*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 . _ -",
+          }),
+        },
+      },
+      INSTAGRAM_URL,
+    ],
+    twitter: [
+      "Twitter URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+        maxLength: {
+          value: 15,
+          message: t("profile.common.maxCharacters", { maxNum: 15 }),
+        },
+      },
+      TWITTER_URL,
+    ],
+    linkedin: [
+      "LinkedIn URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_\-/]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _ - /",
+          }),
+        },
+      },
+      LINKEDIN_URL,
+    ],
+    github: [
+      "Github URL",
+      {
+        pattern: {
+          value: /^[a-zA-Z0-9_-]*$/,
+          message: t("profile.common.validCharacters", {
+            characters: "A-Z a-z 0-9 _",
+          }),
+        },
+      },
+      GITHUB_URL,
+    ],
+    website: [
+      "Website",
+      {
+        validate: (str) =>
+          !str || validateURL(str) || t("profile.common.invalidURL"),
+      },
+    ],
+  };
 
   const onSubmit = async (formData) => {
     orgProfileDispatch(updateOrganisation());
@@ -95,9 +148,13 @@ function EditOrganisationProfile(props) {
       props.history.push(`/organisation/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       orgProfileDispatch(
         updateOrganisationError(
-          `Failed updating organisation profile, reason: ${message}`,
+          `${t("error.failedUpdatingOrgProfile")} ${translatedErrorMessage}`,
         ),
       );
     }
@@ -111,8 +168,14 @@ function EditOrganisationProfile(props) {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -134,15 +197,15 @@ function EditOrganisationProfile(props) {
     }
   };
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
             {editProfile
-              ? "Edit Organisation Profile"
-              : "Complete Organisation Profile"}
+              ? t("profile.org.editOrgProfile")
+              : t("profile.org.completeOrgProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
@@ -153,18 +216,18 @@ function EditOrganisationProfile(props) {
           <OptionDiv>
             <CustomLink>
               <Link to={`/edit-organisation-account/${organisationId}`}>
-                Account Information
+                {t("profile.common.accountInfo")}
               </Link>
             </CustomLink>
             <CustomLink isSelected>
               <Link to={`/edit-organisation-profile/${organisationId}`}>
-                Profile Information
+                {t("profile.common.profileInfo")}
               </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             <FormInput
-              inputTitle="Organisation Description"
+              inputTitle={t("profile.org.desc")}
               name="about"
               type="text"
               defaultValue={about}
@@ -172,12 +235,14 @@ function EditOrganisationProfile(props) {
               ref={register({
                 maxLength: {
                   value: ABOUT_MAX_LENGTH,
-                  message: `Max. ${ABOUT_MAX_LENGTH} characters`,
+                  message: t("profile.common.maxCharacters", {
+                    maxNum: ABOUT_MAX_LENGTH,
+                  }),
                 },
               })}
             />
             <FormInput
-              inputTitle="Organisation Language"
+              inputTitle={t("profile.org.lang")}
               name="language"
               type="text"
               defaultValue={language}
@@ -188,7 +253,7 @@ function EditOrganisationProfile(props) {
               ([key, [label, validation, prefix]]) => (
                 <FormInput
                   type={prefix ? "text" : "url"}
-                  inputTitle={label}
+                  inputTitle={t("profile.common.urls." + key)}
                   name={`urls.${key}`}
                   error={errors.urls?.[key]}
                   prefix={prefix}
@@ -199,7 +264,9 @@ function EditOrganisationProfile(props) {
               ),
             )}
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              {loading ? "Saving Changes..." : "Save Changes"}
+              {loading
+                ? t("profile.common.saveChanges") + "..."
+                : t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

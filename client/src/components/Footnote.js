@@ -1,8 +1,9 @@
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { theme, mq } from "constants/theme";
-
 import styled from "styled-components";
+
+import { theme, mq } from "constants/theme";
 
 const { colors } = theme;
 
@@ -14,17 +15,17 @@ const StyledFooter = styled.footer`
 
   padding: 1rem 2rem;
   width: 100%;
-  height: 6rem;
 
+  position: absolute;
   background: ${colors.selago};
   line-height: 2rem;
   font-family: Poppins;
   font-size: 1.1rem;
 
-  position: fixed;
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+    padding: 1rem 2rem;
     font-size: 1.4rem;
     height: 6rem;
   }
@@ -35,7 +36,7 @@ const Copyright = styled.div`
   color: ${colors.darkerGray};
 `;
 
-const Policies = styled.div`
+const StyledDiv = styled.div`
   color: ${colors.darkGray};
   display: flex;
   flex-wrap: wrap;
@@ -47,39 +48,53 @@ const Policies = styled.div`
   }
 `;
 
-const FooterLink = styled(Link)`
-  color: ${colors.darkGray};
+const StyledSpan = styled.span`
   margin: 0 1rem;
   text-decoration-line: underline;
-`;
-
-const FooterALink = styled.a`
   color: ${colors.darkGray};
-  margin: 0 1rem;
-  text-decoration-line: underline;
 `;
 
 export default () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
+
   return (
     <StyledFooter>
       <Copyright>
-        Copyright {currentYear} FightPandemics. All rights reserved.
+        <Trans i18nKey="footer.copyright" currentYear={currentYear}>
+          Copyright {{ currentYear }} FightPandemics. All rights reserved.
+        </Trans>
       </Copyright>
-      <Policies>
-        <FooterLink to={"/about-us"}>About Us</FooterLink> |{" "}
-        <FooterLink to={"/faq"}>FAQ</FooterLink> |{" "}
-        <FooterALink
+      <StyledDiv>
+        <StyledSpan as={Link} to={"/about-us"}>
+          {t("common.aboutUs")}
+        </StyledSpan>
+        |
+        <StyledSpan as={Link} to={"/faq"}>
+          {t("footer.faq")}
+        </StyledSpan>
+        |
+        <StyledSpan
+          as="a"
           href="https://medium.com/@FightPandemics"
           target="_blank"
-          alt="FightPandemics Blog Link"
+          alt={t("alt.blogLink")}
         >
-          Blog
-        </FooterALink>
-        | <FooterLink to={"/terms-conditions"}>Terms & Conditions</FooterLink> |{" "}
-        <FooterLink to={"/privacy-policy"}>Privacy Policy</FooterLink> |{" "}
-        <FooterLink to={"/cookies-policy"}>Cookies Policy</FooterLink>
-      </Policies>
+          {t("footer.blog")}
+        </StyledSpan>
+        |
+        <StyledSpan as={Link} to={"/terms-conditions"}>
+          {t("footer.termsConditions")}
+        </StyledSpan>
+        |
+        <StyledSpan as={Link} to={"/privacy-policy"}>
+          {t("footer.privacyPolicy")}
+        </StyledSpan>
+        |
+        <StyledSpan as={Link} to={"/cookies-policy"}>
+          {t("footer.cookiesPolicy")}
+        </StyledSpan>
+      </StyledDiv>
     </StyledFooter>
   );
 };

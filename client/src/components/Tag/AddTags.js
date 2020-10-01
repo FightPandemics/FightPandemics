@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import ButtonTag from "./ButtonTag";
 
 const AddTagsWrapper = styled.div`
@@ -18,23 +19,26 @@ const AddTagsWrapper = styled.div`
 `;
 
 const AddTags = ({ filters, addTag, selected = [] }) => {
+  const { t } = useTranslation();
   return (
     <AddTagsWrapper>
-      <p className="tags-info">Add tags to make your post more visible</p>
+      <p className="tags-info">{t("post.addTags")}</p>
       <div className="tags-selector">
-      {filters.map((filter, idx) => (
-        <ButtonTag
-          className={
-            "tag-selectable " +
-            (selected.length && selected.includes(filter) ? "tag-selected" : "")
-          }
-          onClick={addTag(filter)}
-          label={filter}
-          key={idx}
-        >
-          {filter}
-        </ButtonTag>
-      ))}
+        {filters.map(({ text, value }, idx) => (
+          <ButtonTag
+            className={
+              "tag-selectable " +
+              (selected.length && selected.includes(value)
+                ? "tag-selected"
+                : "")
+            }
+            onClick={addTag(value)}
+            label={value}
+            key={idx}
+          >
+            {t(text)}
+          </ButtonTag>
+        ))}
       </div>
     </AddTagsWrapper>
   );

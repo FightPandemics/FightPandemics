@@ -11,3 +11,8 @@ export const buildLocationString = ({ city = "", country }) => {
     return `${city.substring(0, MAX_LENGTH - 3)}..., ${country}`;
   return city ? `${city}, ${country}` : country;
 };
+
+export const getOptionText = (filterOptions, filterLabel, option) =>
+  filterOptions
+    .filter(({ label }) => label === filterLabel)[0]
+    .options.filter(({ value }) => value === option)[0].text;

@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
@@ -10,13 +12,6 @@ import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
 
 const { shareWith, expires, helpTypes } = createPostSettings;
-
-const errorMsg = {
-  title: "Please include a title for your post.",
-  description: "Please include a description for your post.",
-  help: "Please select a type of help.",
-  tags: "Please add at least one tag.",
-};
 
 const initialState = {
   formData: {
@@ -31,10 +26,18 @@ const initialState = {
 };
 
 const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
+  const { t } = useTranslation();
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
   formData.help = type;
+
+  const errorMsg = {
+    title: t("post.title"),
+    description: t("post.description"),
+    help: t("post.help"),
+    tags: t("post.tags"),
+  };
 
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
@@ -125,7 +128,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
           }
           id={gtmPrefix + GTM.post.button}
         >
-          Post
+          {t("post.post")}
         </Submit>
       </Footer>
     </>

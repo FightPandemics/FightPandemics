@@ -15,6 +15,7 @@ import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./reducers";
 import TagManager from "react-gtm-module";
 import SocketManager from './context/WebsocketContext';
+import "./i18n";
 
 const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
