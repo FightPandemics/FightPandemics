@@ -9,8 +9,8 @@ let userCredentialsWithRandomEmailAndRandomPassword = testData.userCredentialsWi
 let userCredentialsWithRandomEmail = testData.userCredentialsWithRandomEmail;
 let userCredentialsWithEmptyEmail = testData.userCredentialsWithEmptyEmail;
 let userCredentialsWithInvalidEmailNoDomainSpecified = testData.userCredentialsWithInvalidEmailNoDomainSpecified;
-let userCredentialsWithEmailDomainExeeding64Characters = testData.userCredentialsWithEmailDomainExeeding64Characters;
-let userCredentialsWithEmailExeeding254Characters = testData.userCredentialsWithEmailExeeding254Characters;
+let userCredentialsWithEmailDomainExceeding64Characters = testData.userCredentialsWithEmailDomainExceeding64Characters;
+let userCredentialsWithEmailExceeding254Characters = testData.userCredentialsWithEmailExceeding254Characters;
 
 
 describe('POST Login endpoint tests for user that is NOT signed in', function () {
@@ -48,14 +48,14 @@ describe('POST Login endpoint tests for user that is NOT signed in', function ()
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
-        it('Email local part bigger then 64 characters triggers Bad request error', async function () {
-            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExeeding64Characters);
+        it('Email local part bigger than 64 characters triggers Bad request error', async function () {
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExceeding64Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.UNAUTHORIZED, 'Unauthorized', 'Wrong email or password.');
         });
 
         //following the rules that Auth0 are using the email needs to have 64max for the local part and an overall max of 254 chars
-        it('Email domain part bigger then 189 characters. Total bigger then 254 characters triggers Bad request error', async function () {
-            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailExeeding254Characters);
+        it('Email domain part bigger than 189 characters. Total bigger than 254 characters triggers Bad request error', async function () {
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailExceeding254Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
