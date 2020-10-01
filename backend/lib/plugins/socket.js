@@ -211,7 +211,6 @@ function onSocketConnect(socket) {
         Post.findOne({_id: data.postId}),
       );
       if (threadErr) return res({ code: 500, message: "Internal server error" });
-      console.log(post)
       if (post) newMessage.postRef = {
         content: post.content,
         id: post._id,

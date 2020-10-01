@@ -48,7 +48,6 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
       text.split(/(\s+)/).forEach((word) => {
         output.push(urlify(word))
       })
-      console.log(output)
       return output
     }
 
