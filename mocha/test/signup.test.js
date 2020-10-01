@@ -26,11 +26,11 @@ Object.assign(userCredentialsWithEmailExceeding254Characters, { confirmPassword:
 
 let userCredentialsWithPasswordsNotMatched = {}
 Object.assign(userCredentialsWithPasswordsNotMatched, testData.userCredentialsWithRandomEmailAndRandomPassword)
-Object.assign(userCredentialsWithPasswordsNotMatched, { confirmPassword: userCredentialsWithMismatchedPassword.confirmPassword });
+Object.assign(userCredentialsWithPasswordsNotMatched, { confirmPassword: testData.userCredentialsWithMismatchedPassword.confirmPassword });
 
-let userCredentialsWithEmptyPassword = {}
-Object.assign(userCredentialsWithEmptyPassword, testData.userCredentialsWithEmptyPassword)
-Object.assign(userCredentialsWithEmptyPassword, { confirmPassword: userCredentialsWithEmptyPassword.password });
+let userCredentialsWithEmptyPasswords = {}
+Object.assign(userCredentialsWithEmptyPasswords, testData.userCredentialsWithEmptyPassword)
+Object.assign(userCredentialsWithEmptyPasswords, { confirmPassword: userCredentialsWithEmptyPasswords.password });
 
 
 describe('POST Sign Up endpoint tests for unregistered user', () => {
@@ -48,12 +48,12 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
         });
 
         //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
-        it('Email local part has more than 64 characters triggers Internal Server error', async () => {
+        it('Email local part has more than 64 characters triggers Bad Request error', async () => {
             let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExceeding64Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
-        it('Email domain part has more than 189 characters. Total bigger than 254 characters triggers Bad Request error', async () => {
+        it('Email domain part has more than 189 characters. Total more than 254 characters triggers Bad Request error', async () => {
             let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailExceeding254Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
@@ -69,7 +69,7 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
 
         //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
         it('Empty password and confirm password trigger Bad Request error', async () => {
-            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmptyPassword);
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmptyPasswords);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'Passwords should be populated.');
         });
 
