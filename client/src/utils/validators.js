@@ -10,25 +10,13 @@ const validateTopLevelDomain = (string) => {
   return false;
 };
 
-export function isEmail(email, strictValidation = false) {
-  if (typeof email !== "string") {
-    return false;
-  }
-  const trimmed = email.trim;
-  return strictValidation
-    ? _isEmail(email)
-    : trimmed.indexOf("@") >= 0 &&
-        trimmed.indexOf(".") >= 0 &&
-        trimmed.indexOf(" ") === -1;
-}
-
 export const validateEmail = (email) => {
   let errorMessage = "";
   if (!email) {
     errorMessage = "Email address is required";
   } else if (email.length > 254) {
     errorMessage = "Email address must not exceed 254 characters";
-  } else if (!isEmail(email)) {
+  } else if (!_isEmail(email)) {
     errorMessage = "Email address is invalid";
   } else if (!validateTopLevelDomain(email)) {
     errorMessage = "Email address is invalid";
