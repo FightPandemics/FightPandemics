@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import backArrow from "assets/icons/back-arrow.svg";
 import { FEED } from "../../templates/RouteWithSubRoutes";
 import {
@@ -33,7 +34,7 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 40rem;
+    width: 50rem;
   }
 
   @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
@@ -43,6 +44,7 @@ export const StyledButtonWizard = styled(StepWizard)`
 
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (history?.location?.state?.from) {
@@ -56,7 +58,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     <StyledWizardNav>
       <BackButton onClick={handleClick} id={gtmPrefix + GTM.wizardNav.back}>
         <SvgIcon src={backArrow} title="Navigate to previous page or feed" />
-        <BackText>Back</BackText>
+        <BackText>{t("onboarding.common.previous")}</BackText>
       </BackButton>
     </StyledWizardNav>
   );

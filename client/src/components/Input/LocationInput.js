@@ -5,6 +5,7 @@ import { Select, Spin } from "antd";
 import { WhiteSpace } from "antd-mobile";
 import { debounce } from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 import InputError from "components/Input/InputError";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -30,7 +31,7 @@ const StyledSelect = styled(Select)`
   padding: 0;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: ${(props) => props.disabled ? darkGray : royalBlue};
+  border-bottom-color: ${(props) => (props.disabled ? darkGray : royalBlue)};
   box-shadow: none;
   color: ${(props) => (props.disabled ? darkGray : darkerGray)};
 
@@ -40,16 +41,16 @@ const StyledSelect = styled(Select)`
   }
 
   ${(props) =>
-  props.disabled ? `` :
-  `
+    props.disabled
+      ? ``
+      : `
   &:focus,
   &:hover,
   &:active {
     border-bottom-color: ${royalBlue};
     box-shadow: 0 1px 0 0 ${royalBlue};
   }
-  `
-  };
+  `};
 `;
 
 const { Option } = Select;
@@ -58,7 +59,8 @@ const SubLabel = styled.small`
   display: block;
   margin-top: 5px;
   font-size: ${small};
-  color: ${(props) => props.selected ? theme.colors.lightGray : theme.colors.green};
+  color: ${(props) =>
+    props.selected ? theme.colors.lightGray : theme.colors.green};
 `;
 
 const displaySelectedAddressFromLocation = (location) => {
@@ -78,6 +80,7 @@ const LocationInput = ({
   includeNavigator = false,
   gtmPrefix = "",
 }) => {
+  const { t } = useTranslation();
   // sessiontoken for combining autocomplete & place details into single usage
   // see: https://developers.google.com/maps/billing/gmp-billing#ac-with-details-session
   const [geoSessionToken, setGeoSessionToken] = useState(uuidv4());
@@ -108,7 +111,7 @@ const LocationInput = ({
             }));
             setPredictedAddresses(predictions);
           } catch {
-            setApiError("Failed getting predictions. Please retry.");
+            setApiError(t("error.failedPredictions"));
           } finally {
             setLoadingPredictions(false);
           }
@@ -130,13 +133,19 @@ const LocationInput = ({
       onLocationChange(data.location);
       setSelectedAddress(displaySelectedAddressFromLocation(data.location));
     } catch (error) {
-      let errMessage = "Failed getting location. " + error.message + ". ";
-      if (error.code === 1) {
-        errMessage +=
-          "Please reset your browser's location permissions for this site or enter the address.";
-      } else {
-        errMessage += "Please enter the address or try again.";
-      }
+      const message = error.response?.data?.message || error.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
+
+      const errMessage = `${t(
+        "error.failedLocation",
+      )} ${translatedErrorMessage}. ${
+        error.code === 1
+          ? t("error.resetBrowserLocationPermission")
+          : t("error.enterAddressAgain")
+      }`;
       setApiError(errMessage);
     } finally {
       setLoadingPlaceDetails(false);
@@ -161,7 +170,7 @@ const LocationInput = ({
         setSelectedAddress(address);
         setPredictedAddresses([]);
       } catch {
-        setApiError("Failed getting location details. Please retry.");
+        setApiError(t("error.failedLocationDetails"));
       } finally {
         setLoadingPlaceDetails(false);
       }
@@ -189,7 +198,7 @@ const LocationInput = ({
         ))}
       </StyledSelect>
       <SubLabel selected={selectedAddress.value}>
-        Enter address, zip code, or city
+        {t("feed.filters.location.enterAddress")}
       </SubLabel>
       {(apiError || formError) && (
         <InputError>{apiError || formError.message}</InputError>
@@ -207,7 +216,7 @@ const LocationInput = ({
               src={navigation}
               style={{ marginRight: "1rem", pointerEvents: "none" }}
             />
-            Share My Location
+            {t("feed.filters.location.shareLocation")}
           </div>
         </div>
       )}
