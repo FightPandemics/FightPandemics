@@ -21,7 +21,7 @@ class HelpBoard{
     }
 
     getAddPostButton(){
-        return cy.get(addPostButton);
+        return cy.get(this.addPostButton);
     }
 
 }
