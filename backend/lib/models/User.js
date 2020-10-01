@@ -38,6 +38,8 @@ userSchema.index(
     about: "text",
   },
   {
+    default_language: "none",
+    language_override: "dummy",
     weights: {
       name: 2,
       firstName: 2,
