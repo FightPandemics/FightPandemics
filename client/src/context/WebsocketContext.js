@@ -55,6 +55,7 @@ export default class SocketManager extends React.Component {
     });
 
     this.socket.on("USER_STATUS_UPDATE", (data) => {
+      if (!this.state.user || data.id == this.state.user.id) return
       this.props.store.dispatch(userStatusUpdate(data));
     })
 
@@ -75,7 +76,6 @@ export default class SocketManager extends React.Component {
     return new Promise((resolve) => {
       this.socket.emit("SEND_MESSAGE", messageData, (response) => {
         if (response.code == 200) return resolve(true)
-        console.log(response) // debuging
         resolve(false)
       });
     })
@@ -90,7 +90,6 @@ export default class SocketManager extends React.Component {
           return resolve(true)
         }
         else this.props.store.dispatch(joinRoomError());
-        console.log(response) // debuging
         resolve(false)
       });
     })

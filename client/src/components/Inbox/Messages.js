@@ -15,6 +15,13 @@ export const MessagesContainer = styled.div`
   flex-direction: column;
   overflow: auto;
   margin-bottom: 6em;
+  a {
+    text-decoration: underline;
+    &:hover {
+      color: inherit;
+      opacity: 0.7; 
+    }
+  }
 `;
 
 export const SenderBubble = styled.div`

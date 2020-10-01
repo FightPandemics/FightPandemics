@@ -208,7 +208,6 @@ function onSocketConnect(socket) {
     if (data.postId) {
       const Post = this.mongo.model("Post");
       var [postErr, post] = await this.to(
-        //shouldn't be doing this, will change for prod.
         Post.findOne({_id: data.postId}),
       );
       if (threadErr) return res({ code: 500, message: "Internal server error" });

@@ -38,6 +38,20 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
 
   const Messages = () => {
 
+    const linkify = (text) => {
+      var urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      function urlify(text) {
+        if (urlRegex.test(text)) return <a target="_blank" href={`//${text}`}>{text}</a>
+        else return text
+      }
+      let output = [];
+      text.split(/(\s+)/).forEach((word) => {
+        output.push(urlify(word))
+      })
+      console.log(output)
+      return output
+    }
+
     useEffect(()=>{
       scrollToBottom()
     }, [chatLog])
@@ -48,7 +62,7 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
         <BubbleContainer>
           <SenderBubble>
             {postRef && <OrgPost postRef={postRef}/>}
-            <div className="message-content-sender">{message}</div>
+            <div className="message-content-sender">{linkify(message)}</div>
           </SenderBubble>
         </BubbleContainer>
       );
@@ -57,7 +71,7 @@ const CurrentChat = ({ toggleMobileChatList, room, getChatLog, chatLog, sendMess
       return (
         <RecipientBubble>
           {postRef && <OrgPost postRef={postRef}/>}
-          <div className="message-content-recipient">{message}</div>
+          <div className="message-content-recipient">{linkify(message)}</div>
         </RecipientBubble>
       );
     };
