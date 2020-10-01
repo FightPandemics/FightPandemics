@@ -1,19 +1,23 @@
 // Core
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 // Local
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag.js";
+import { getOptionText } from "components/Feed/utils";
 
 const LOCATION_DISPLAY_LENGTH_MAX = 30;
 
 const FiltersList = () => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
     handleLocation,
     handleOption,
     location,
     selectedOptions,
+    filters,
   } = feedContext;
 
   return (
@@ -35,7 +39,13 @@ const FiltersList = () => {
             onClick={handleOption(filter, option)}
             className="tag-closable"
           >
-            {option}
+            {t(
+              getOptionText(
+                filters,
+                filter,
+                option.value ? option.value : option,
+              ),
+            )}
           </ButtonTag>
         )),
       )}

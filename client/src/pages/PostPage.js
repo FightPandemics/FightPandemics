@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import isEmpty from "lodash/isEmpty";
@@ -94,6 +95,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
+  const { t } = useTranslation();
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -326,17 +328,14 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   if (isPostDeleted)
     return (
       <Container>
-        <Title>Ahh... snap!</Title>
-        <Body>
-          The post you have been looking for has expired. Please check our Help
-          Board for more such posts.
-        </Body>
+        <Title>{t("post.expireTitle")}</Title>
+        <Body>{t("post.expire")}</Body>
         <ProfileCompletedButtonsWrapper>
           <StyledLink
             id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </StyledLink>
         </ProfileCompletedButtonsWrapper>
       </Container>
