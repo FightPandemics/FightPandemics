@@ -13,13 +13,13 @@ const validateTopLevelDomain = (string) => {
 export const validateEmail = (email) => {
   let errorMessage = "";
   if (!email) {
-    errorMessage = "Email address is required";
+    errorMessage = "emailRequired";
   } else if (email.length > 254) {
-    errorMessage = "Email address must not exceed 254 characters";
+    errorMessage = "emailMaxLength";
   } else if (!_isEmail(email)) {
-    errorMessage = "Email address is invalid";
+    errorMessage = "emailInvalid";
   } else if (!validateTopLevelDomain(email)) {
-    errorMessage = "Email address is invalid";
+    errorMessage = "emailDomainInvalid";
   }
   if (errorMessage.length != 0) {
     return errorMessage;
