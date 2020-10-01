@@ -75,7 +75,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
             );
           } else if (image.height / image.width < 0.5) {
             setUploadError(
-              "Please upload a image of proportions more than or equal to 1/2.",
+              "Please upload an image of aspect ratio 2:1 or better.",
             );
           }
         };
