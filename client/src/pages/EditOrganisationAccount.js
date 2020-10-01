@@ -65,9 +65,11 @@ const InputWrapper = styled.div`
 
 const NEEDS = {
   donations: "Donations",
-  other: "Other",
   staff: "Staff",
   volunteers: "Volunteers",
+  information: "Information",
+  resources: "Resources/Tools",
+  other: "Others",
 };
 
 const ErrorAlert = styled(Alert)`
@@ -112,6 +114,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
   const [location, setLocation] = useState({});
   const [isUpdateSuccess, handleSuccess] = useState(false);
   const [isUpdateError, handleUpdateError] = useState(false);
+  const [needsOtherCheckbox, setNeedsOtherCheckbox] = useState(false);
+  const [offersOtherCheckbox, setOffersOtherCheckbox] = useState(false);
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
@@ -222,7 +226,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={([event]) => event.target.checked}
+                onChange={([event]) => { 
+                  setNeedsOtherCheckbox(!needsOtherCheckbox);  
+                  return event.target.checked}
+                }
               >
                 <Label inputColor="#000000">{label}</Label>
               </Controller>
@@ -231,6 +238,26 @@ function EditOrganisationAccount({ refetchUser, history }) {
           <span style={errorStyles}>
             {errors.needs ? "Please select at least one option" : ""}
           </span>
+          { needs && needs.other && needsOtherCheckbox &&
+            <InputWrapper>
+              <FormInput
+                defaultValue={needs.othersDetail}
+                type="text"
+                required
+                placeholder="Please type"
+                onChange={(othersDetails) => othersDetails}
+                ref={register({
+                  required: "Please specify",
+                  maxLength: {
+                    value: 60,
+                    message: "Max. 60 characters",
+                  },
+                })}
+                name="needs.othersDetail"
+              />
+              <span style={errorStyles}>{errors.needs?.othersDetails?.message}</span>
+            </InputWrapper>
+          }
         </div>
       );
     }
