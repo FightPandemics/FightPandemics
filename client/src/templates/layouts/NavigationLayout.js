@@ -659,7 +659,7 @@ const NavigationLayout = (props) => {
           {t("common.aboutUs")}
         </Link>
       </NavItem>
-      <Space height="24vh" />
+      <Space height="10vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
