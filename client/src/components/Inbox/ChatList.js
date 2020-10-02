@@ -62,9 +62,12 @@ export const ChatList = ({
         key={_room._id}
         toggleMobileChatList={toggleMobileChatList}
         tabIndex="1"
-        onClick={()=>joinRoom({
-          threadId: _room._id,
-        })}
+        onClick={()=> {
+          if (!room || room._id != _room._id) joinRoom({
+            threadId: _room._id,
+          })
+        }
+      }
       >
         <TextAvatar src={getReceiver(_room.participants).photo}>{getInitialsFromFullName(getReceiver(_room.participants).name)}</TextAvatar>
         <content>
