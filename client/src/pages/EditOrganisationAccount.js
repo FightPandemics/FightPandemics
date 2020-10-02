@@ -191,6 +191,8 @@ function EditOrganisationAccount({ refetchUser, history }) {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         setLocation(res.data.location);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        const organisation = res.data;
+        setNeedsOtherCheckbox(organisation.needs.other);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
@@ -226,8 +228,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 defaultChecked={needs[key]}
                 name={`needs.${key}`}
                 control={control}
-                onChange={([event]) => { 
-                  setNeedsOtherCheckbox(!needsOtherCheckbox);  
+                onChange={([event]) => {
+                  if(key==="other") {
+                    setNeedsOtherCheckbox(!needsOtherCheckbox);  
+                  }
                   return event.target.checked}
                 }
               >
@@ -238,7 +242,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
           <span style={errorStyles}>
             {errors.needs ? "Please select at least one option" : ""}
           </span>
-          { needs && needs.other && needsOtherCheckbox &&
+          { needsOtherCheckbox &&
             <InputWrapper>
               <FormInput
                 defaultValue={needs.othersDetail}
