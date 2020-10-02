@@ -11,8 +11,10 @@ export const SEND_MESSAGE = "SEND_MESSAGE"
 export const RECEIVED_MESSAGE = "RECEIVED_MESSAGE"
 export const MESSAGE_SEEN = "MESSAGE_SEEN"
 
-export const UPDATE_MESSAGES_HISTORY = "UPDATE_MESSAGES_HISTORY"
-export const UPDATE_MESSAGES_HISTORY_ERROR = "UPDATE_MESSAGES_HISTORY_ERROR"
+export const GET_MESSAGES_HISTORY = "GET_MESSAGES_HISTORY"
+export const GET_MESSAGES_HISTORY_ERROR = "GET_MESSAGES_HISTORY_ERROR"
+
+export const GET_MORE_MESSAGES_HISTORY = "GET_MORE_MESSAGES_HISTORY"
 
 export const USER_STATUS_UPDATE = "USER_STATUS_UPDATE"
 
@@ -77,14 +79,14 @@ export function receivedMessage(payload){
 
 export function getChatLogSuccess(payload){
     return {
-        type: UPDATE_MESSAGES_HISTORY,
+        type: GET_MESSAGES_HISTORY,
         payload
     }
 }
 
 export function getChatLogError(){
     return {
-        type: UPDATE_MESSAGES_HISTORY_ERROR,
+        type: GET_MESSAGES_HISTORY_ERROR,
     }
 }
 
@@ -92,5 +94,12 @@ export function userStatusUpdate(userId){
     return { 
         type: USER_STATUS_UPDATE,
         payload: userId
+    }
+}
+
+export function loadMoreSuccess(payload){
+    return {
+        type: GET_MORE_MESSAGES_HISTORY,
+        payload
     }
 }

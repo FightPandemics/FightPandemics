@@ -17,15 +17,20 @@ function onSocketConnect(socket) {
     }
     socket.userId = data.id;
 
-    this.io.emit("USER_STATUS_UPDATE", {id: socket.userId, status: "online"})
+    this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
     socket.on("disconnect", () => {
       console.log("[ws] user disconnected");
       for (let room in socket.rooms) {
         socket.leave(room);
       }
-      setTimeout(() => { // the user maybe is just changing/reloading the page, wait to make sure they completely disconnected
+      setTimeout(() => {
+        // the user maybe is just changing/reloading the page, wait to make sure they completely disconnected
         const stillOnline = getSocketByUserId(this, socket.userId);
-        if (!stillOnline) this.io.emit("USER_STATUS_UPDATE", {id: socket.userId, status: "offline"})
+        if (!stillOnline)
+          this.io.emit("USER_STATUS_UPDATE", {
+            id: socket.userId,
+            status: "offline",
+          });
       }, 1000);
     });
     res({ code: 200, message: "Success" });
@@ -36,18 +41,32 @@ function onSocketConnect(socket) {
     const User = this.mongo.model("User");
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-    const roomId = getUniqueRoomId([{ id: data.receiverId }, { id: userId }]);
-    let userInRoom = await isUserInRoom(this, roomId, socket.id);
-    var [threadErr, thread] = await this.to(
-      Thread.findOne({
-        $and: [
-          { "participants.id": userId },
-          { "participants.id": data.receiverId },
-        ],
-      }),
-    );
+
+    let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
+    var threadErr, thread;
+    if (data.threadId) {
+      // joining from inbox
+      [threadErr, thread] = await this.to(
+        Thread.findOne({
+          _id: data.threadId,
+          "participants.id": userId,
+        }),
+      );
+    } else if (data.receiverId) {
+      // joining from feed
+      [threadErr, thread] = await this.to(
+        Thread.findOne({
+          $and: [
+            { "participants.id": userId },
+            { "participants.id": data.receiverId },
+          ],
+        }),
+      );
+    } else return res({ code: 401, message: "Unauthorized" });
     if (threadErr) return res({ code: 500, message: "Internal server error" });
-    if (!thread) {
+
+    // first time joining, creating new thread.
+    if (!thread && data.receiverId) {
       const [senderErr, sender] = await this.to(User.findById(userId));
       const [receiverErr, receiver] = await this.to(
         User.findById(data.receiverId),
@@ -71,10 +90,10 @@ function onSocketConnect(socket) {
       [threadErr, thread] = await this.to(new Thread(newThread).save());
       if (threadErr)
         return res({ code: 500, message: "Internal server error" });
-    }
+    } else if (!thread) return res({ code: 401, message: "Unauthorized" });
 
     // update participant.lastAccess, and mark messages as read.
-    [updateThreadErr, thread] = await this.to(
+    [threadErr, thread] = await this.to(
       Thread.findOneAndUpdate(
         { _id: thread._id, "participants.id": userId },
         {
@@ -101,7 +120,7 @@ function onSocketConnect(socket) {
       for (let room in socket.rooms) {
         await socket.leave(room);
       }
-      socket.join(roomId);
+      socket.join(threadWithLastMessage._id);
     }
     res({ code: 200, data: threadWithLastMessage });
   });
@@ -140,29 +159,34 @@ function onSocketConnect(socket) {
   socket.on("GET_CHAT_LOG", async (data, res) => {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-    let userInRoom = await isUserInRoom(
-      this,
-      getUniqueRoomId([{ id: data.receiverId }, { id: userId }]),
-      socket.id,
-    );
+    let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
-    const Thread = this.mongo.model("Thread");
-    var [threadErr, thread] = await this.to(
-      Thread.findOne({
-        $and: [
-          { "participants.id": userId },
-          { "participants.id": data.receiverId },
-        ],
-      }),
-    );
-    if (threadErr) return res({ code: 500, message: "Internal server error" });
-    if (!thread) return res({ code: 404, message: "Thread not found" }); // user didn't join room, or sending bad receiverId
 
     const [messagesErr, messages] = await this.to(
       this.mongo
         .model("Message")
-        .find({ threadId: thread._id })
+        .find({ threadId: data.threadId })
         .limit(20)
+        .sort({ createdAt: -1 }),
+    );
+
+    if (messagesErr)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, data: messages });
+  });
+
+  socket.on("GET_CHAT_LOG_MORE", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
+    let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
+    if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
+
+    const [messagesErr, messages] = await this.to(
+      this.mongo
+        .model("Message")
+        .find({ threadId: data.threadId })
+        .limit(20)
+        .skip(data.skip)
         .sort({ createdAt: -1 }),
     );
 
@@ -174,28 +198,29 @@ function onSocketConnect(socket) {
   socket.on("SEND_MESSAGE", async (data, res) => {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-    const roomId = getUniqueRoomId([{ id: data.receiverId }, { id: userId }]);
-    let userInRoom = await isUserInRoom(this, roomId, socket.id);
-    if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
+    let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
+    console.log(data, userInRoom);
+    if (!data.threadId && !userInRoom)
+      return res({ code: 401, message: "Unauthorized" });
     const Thread = this.mongo.model("Thread");
     var [threadErr, thread] = await this.to(
-      //shouldn't be doing this, will change for prod.
       Thread.findOne({
-        $and: [
-          { "participants.id": userId },
-          { "participants.id": data.receiverId },
-        ],
+        _id: data.threadId,
+        "participants.id": userId,
       }),
     );
     if (threadErr) return res({ code: 500, message: "Internal server error" });
+    if (!thread) return res({ code: 401, message: "Unauthorized" });
 
     // add unread mark to receiver
     const [updateThreadErr, updateThread] = await this.to(
       Thread.findOneAndUpdate(
-        { _id: thread._id, "participants.id": data.receiverId },
-        { $set: { "participants.$.newMessages": true } },
+        { _id: thread._id },
+        { $set: { "participants.$[userToUpdate].newMessages": true } },
+        { arrayFilters: [{ userToUpdate: { $ne: { id: userId } } }] },
       ),
     );
+
     let newMessage = {
       authorId: userId,
       content: data.content.substring(0, 2048),
@@ -207,29 +232,29 @@ function onSocketConnect(socket) {
     // add postRef
     if (data.postId) {
       const Post = this.mongo.model("Post");
-      var [postErr, post] = await this.to(
-        Post.findOne({_id: data.postId}),
-      );
-      if (threadErr) return res({ code: 500, message: "Internal server error" });
-      if (post) newMessage.postRef = {
-        content: post.content,
-        id: post._id,
-        objective: post.objective,
-        title: post.title,
-        createdAt: post.createdAt,
-      }
+      var [postErr, post] = await this.to(Post.findOne({ _id: data.postId }));
+      if (threadErr)
+        return res({ code: 500, message: "Internal server error" });
+      if (post)
+        newMessage.postRef = {
+          content: post.content,
+          id: post._id,
+          objective: post.objective,
+          title: post.title,
+          createdAt: post.createdAt,
+        };
     }
-
     [messageErr, message] = await this.to(
       this.mongo.model("Message")(newMessage).save(),
     );
     if (messageErr) return res({ code: 500, message: "Internal server error" });
-    this.io.to(roomId).emit("NEW_MESSAGE", message);
+    this.io.to(data.threadId).emit("NEW_MESSAGE", message);
     res({ code: 200, message: "Success" });
   });
 }
 
-function getSocketByUserId(app, userId) { // usefull to send notifications outside socket context, or get online status
+function getSocketByUserId(app, userId) {
+  // usefull to send notifications outside socket context, or get online status
   return (
     Object.values(app.io.of("/").connected).find(
       (socket) => socket.userId == userId,
@@ -237,23 +262,14 @@ function getSocketByUserId(app, userId) { // usefull to send notifications outsi
   );
 }
 
-function isUserInRoom(app, uniqueRoomId, socketId) {
+function isUserInRoom(app, threadId, socketId) {
   return new Promise((resolve) => {
     app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
       if (err) return resolve(false);
-      if (!rooms.includes(uniqueRoomId)) return resolve(false);
+      if (!rooms.includes(threadId)) return resolve(false);
       else resolve(true);
     });
   });
-}
-
-// this is different from thread._id, this is not stored in db
-// this only used to differentiate socket.io rooms, not actual threads.
-function getUniqueRoomId(participants) {
-  return participants
-    .map((p) => p.id.toString().substring(0, 8))
-    .sort()
-    .join("-");
 }
 
 function fastifySocketIo(app, config, next) {

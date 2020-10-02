@@ -6,8 +6,9 @@ import {
   GET_ROOMS_ERROR,
   GET_ROOMS_SUCCESS,
   RECEIVED_MESSAGE,
-  UPDATE_MESSAGES_HISTORY,
-  UPDATE_MESSAGES_HISTORY_ERROR,
+  GET_MESSAGES_HISTORY,
+  GET_MESSAGES_HISTORY_ERROR,
+  GET_MORE_MESSAGES_HISTORY,
   USER_STATUS_UPDATE,
 } from "../actions/wsActions";
 
@@ -64,15 +65,20 @@ function wsReducer(state = initialState, action) {
         ...state,
         newMessage: null
       }*/
-    case UPDATE_MESSAGES_HISTORY:
+    case GET_MESSAGES_HISTORY:
       return {
         ...state,
         chatLog: action.payload.reverse()
       }
-    case UPDATE_MESSAGES_HISTORY_ERROR:
+    case GET_MESSAGES_HISTORY_ERROR:
       return {
         ...state,
         chatLog: []
+      }
+    case GET_MORE_MESSAGES_HISTORY:
+      return {
+        ...state,
+        chatLog: [...action.payload.reverse(), state.chatLog]
       }
     case USER_STATUS_UPDATE:
       var index = state.rooms.findIndex(r => r.participants.find(p=>p.id==action.payload.id));

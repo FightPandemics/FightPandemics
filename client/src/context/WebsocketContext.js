@@ -11,6 +11,7 @@ import {
   getRoomsSuccess,
   getRoomsError,
   userStatusUpdate,
+  loadMoreSuccess,
 } from "../actions/wsActions";
 
 const WebSocketContext = createContext();
@@ -75,6 +76,7 @@ export default class SocketManager extends React.Component {
   sendMessage = async (messageData) => {
     return new Promise((resolve) => {
       this.socket.emit("SEND_MESSAGE", messageData, (response) => {
+        console.log(response)
         if (response.code == 200) return resolve(true)
         resolve(false)
       });
@@ -85,9 +87,10 @@ export default class SocketManager extends React.Component {
   joinRoom = (data) => {
     return new Promise((resolve) => {
       this.socket.emit("JOIN_ROOM", data, (response) => {
+        console.log(response)
         if (response.code == 200) {
           this.props.store.dispatch(joinRoomSuccess(response.data));
-          return resolve(true)
+          return resolve(response.data)
         }
         else this.props.store.dispatch(joinRoomError());
         resolve(false)
@@ -109,6 +112,11 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  loadMore = (data) => {
+    this.socket.emit("GET_CHAT_LOG_MORE", data, (response) => {
+      if (response.code == 200) this.props.store.dispatch(loadMoreSuccess(response.data));
+    });
+  };
 
   getUserStatus = (userId) => {
     return new Promise((resolve) => {

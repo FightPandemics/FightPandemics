@@ -62,9 +62,10 @@ const MessageModal = ({
     await setConfirmLoading(true);
       let createThread = await joinRoom({
         receiverId: authorId,
+        threadId: null,
       })
       let confirmation = await sendMessage({
-        receiverId: authorId,
+        threadId: createThread?._id || null,
         content: text,
         postId: postId,
       })

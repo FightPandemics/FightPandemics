@@ -37,7 +37,7 @@ const InputContainer = styled.div`
   }
 `;
 
-export const InputBox = ({ receiverId, sendMessage }) => {
+export const InputBox = ({ threadId, sendMessage }) => {
   const { chat, setChat } = useContext(ChatContext);
   const [text, setText] = useState("");
   const inputRef = useRef(null);
@@ -52,7 +52,7 @@ export const InputBox = ({ receiverId, sendMessage }) => {
 
   const handleSendMgessage = async () => {
     let confirmation = await sendMessage({
-      receiverId: receiverId,
+      threadId: threadId,
       content: text
     })
     if (confirmation) {
