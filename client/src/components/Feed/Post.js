@@ -72,9 +72,7 @@ const Post = ({
   handlePostLike,
   includeProfileLink,
   isAuthenticated,
-  loadMorePost,
   numComments,
-  onClick,
   onSelect,
   onChange,
   postDelete,
@@ -126,9 +124,8 @@ const Post = ({
     let commentCountRes;
     let previousComments = [...comments];
     const skip = 0;
-    const endPoint = `/api/posts/${postId}/comments?limit=${
-      limit.current * page
-    }&skip=${skip}`;
+    const endPoint = `/api/posts/${postId}/comments?limit=${limit.current * page
+      }&skip=${skip}`;
     const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
     dispatchPostAction(SET_LOADING);
@@ -298,33 +295,33 @@ const Post = ({
     });
   };
 
-  const ViewMore = ({ onClick }) => (
+  const ViewMore = () => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
-        <div onClick={onClick}>
-          {!loadMorePost ? (
+        <div onClick={() => setShowComplete(!showComplete)}>
+          {showComplete ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
               <span className="view-more">{t("post.viewLess")}</span>
             </>
           ) : (
-            <span
-              id={GTM.post.prefix + GTM.post.viewMore}
-              className="view-more"
-            >
-              {t("post.viewMore")}
-            </span>
-          )}
+              <span
+                id={GTM.post.prefix + GTM.post.viewMore}
+                className="view-more"
+              >
+                {t("post.viewMore")}
+              </span>
+            )}
         </div>
       ) : (
-        <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
-          {t("post.viewMore")}
-        </span>
-      )}
+          <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
+            {t("post.viewMore")}
+          </span>
+        )}
     </Card.Body>
   );
 
-  const RenderViewMore = ({ onClick }) => {
+  const RenderViewMore = () => {
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
@@ -340,24 +337,24 @@ const Post = ({
         <ViewMore />
       </Link>
     ) : (
-      <>
-        {isAuthenticated ? (
-          <ViewMore onClick={onClick} loadContent={loadMorePost} />
-        ) : (
-          <Link
-            onClick={() =>
-              sessionStorage.setItem("postredirect", `/post/${post._id}`)
-            }
-            to={{
-              pathname: LOGIN,
-              state: { from: window.location.href },
-            }}
-          >
-            <ViewMore loadContent={loadMorePost} />
-          </Link>
-        )}
-      </>
-    );
+        <>
+          {isAuthenticated ? (
+            <ViewMore loadContent={showComplete} />
+          ) : (
+              <Link
+                onClick={() =>
+                  sessionStorage.setItem("postredirect", `/post/${post._id}`)
+                }
+                to={{
+                  pathname: LOGIN,
+                  state: { from: window.location.href },
+                }}
+              >
+                <ViewMore loadContent={showComplete} />
+              </Link>
+            )}
+        </>
+      );
   };
 
   const renderHeader = (
@@ -371,31 +368,22 @@ const Post = ({
               {buildLocationString(post.author.location)}
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       }
       thumb={
         post?.author?.photo ? (
           post.author.photo
         ) : (
-          <TextAvatar>{AvatarName}</TextAvatar>
-        )
+            <TextAvatar>{AvatarName}</TextAvatar>
+          )
       }
     />
   );
 
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
-  );
-
-  const renderContent = (
-    <Card.Body className="content-wrapper">
-      <Heading level={4} className="h4">
-        {title}
-      </Heading>
-      <p className="post-description">{content}</p>
-    </Card.Body>
   );
 
   const renderTags = (
@@ -422,8 +410,8 @@ const Post = ({
           value={typeof comment === "string" && comment}
         />
       ) : (
-        <div>{t("comment.onlyAuthenticated")}</div>
-      )}
+          <div>{t("comment.onlyAuthenticated")}</div>
+        )}
       {isAuthenticated ? (
         <>
           <Comments
@@ -439,17 +427,17 @@ const Post = ({
                 {isLoading ? t("comment.loading") : t("comment.showMore")}
               </StyledLoadMoreButton>
             ) : (
-              <StyledLoadMoreButton
-                disabled={isLoading}
-                onClick={showLessComments}
-              >
-                {isLoading ? t("comment.loading") : t("comment.showLess")}
-              </StyledLoadMoreButton>
-            ))}
+                <StyledLoadMoreButton
+                  disabled={isLoading}
+                  onClick={showLessComments}
+                >
+                  {isLoading ? t("comment.loading") : t("comment.showLess")}
+                </StyledLoadMoreButton>
+              ))}
         </>
       ) : (
-        ""
-      )}
+          ""
+        )}
     </Card.Body>
   );
 
@@ -472,6 +460,8 @@ const Post = ({
       />
     </Card.Body>
   );
+
+  const [showComplete, setShowComplete] = useState(true);
 
   return (
     <>
@@ -500,18 +490,14 @@ const Post = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderContent}
+            {renderContent(title, content, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
-              <Card.Body className="view-more-wrapper">
-                {renderExternalLinks()}
-              </Card.Body>
-            )}
+                <Card.Body className="view-more-wrapper">
+                  {renderExternalLinks()}
+                </Card.Body>
+              )}
             {renderSocialIcons}
             <ShareModal
               showShareModal={showShareModal}
@@ -542,94 +528,105 @@ const Post = ({
           />
         </>
       ) : (
-        //Post in feed.
-        <PostCard>
-          <div className="card-header">
-            {includeProfileLink ? renderHeaderWithLink : renderHeader}
-            <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (isAuthorUser(user, post) ||
-                  isAuthorOrg(user.organisations, post.author)) && (
-                  <SubMenuButton
-                    onChange={handleDelete}
-                    onSelect={onSelect}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                  />
-                )}
+          //Post in feed.
+          <PostCard>
+            <div className="card-header">
+              {includeProfileLink ? renderHeaderWithLink : renderHeader}
+              <div className="card-submenu">
+                {isAuthenticated &&
+                  user &&
+                  (isAuthorUser(user, post) ||
+                    isAuthorOrg(user.organisations, post.author)) && (
+                    <SubMenuButton
+                      onChange={handleDelete}
+                      onSelect={onSelect}
+                      post={post}
+                      user={user}
+                      postId={postId}
+                    />
+                  )}
+              </div>
             </div>
-          </div>
-          <WhiteSpace size="md" />
-          {renderTags}
-          <WhiteSpace />
-          {post && isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${_id}`,
-                state: {
-                  post: post,
-                  postId: _id,
-                  from: window.location.href,
-                  user,
-                },
-              }}
-            >
-              {renderContent}
-            </Link>
-          ) : (
-            <>
-              {/*
+            <WhiteSpace size="md" />
+            {renderTags}
+            <WhiteSpace />
+            {post && isAuthenticated ? (
+              <Link
+                to={{
+                  pathname: `/post/${_id}`,
+                  state: {
+                    post: post,
+                    postId: _id,
+                    from: window.location.href,
+                    user,
+                  },
+                }}
+              >
+                {renderContent(title, content, showComplete)}
+              </Link>
+            ) : (
+                <>
+                  {/*
                 Include hidden link for meta crawler but not on
                 profiles to avoid duplicate crawling of same posts
               */}
-              {includeProfileLink && (
-                <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+                  {includeProfileLink && (
+                    <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+                  )}
+                  {renderContent(title, content, showComplete)}
+                </>
               )}
-              {renderContent}
-            </>
-          )}
-          {fullPostLength > CONTENT_LENGTH ||
-            (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
-            ) : (
-              <Card.Body className="view-more-wrapper" />
-            ))}
-          {renderSocialIcons}
-          <ShareModal
-            showShareModal={showShareModal}
-            setShowShareModal={setShowShareModal}
-            id={post._id}
-            postTitle={post.title}
-            postContent={post.content}
-          />
-          <WebModal
-            title={t("post.confirm")}
-            visible={
-              !!deleteModalVisibility &&
-              deleteModalVisibility !== DELETE_MODAL_HIDE &&
-              toDelete === post._id
-            }
-            onOk={() => handleDeleteOk()}
-            onCancel={handleCancelPostDelete}
-            okText={t("post.delete")}
-            cancelText={t("post.cancel")}
-          >
-            {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>{t("post.deletePostConfirmation")}</p>
-            ) : (
-              <p>{t("post.deleteCommentConfirmation")}</p>
-            )}
-          </WebModal>
-        </PostCard>
-      )}
+            {fullPostLength > CONTENT_LENGTH ||
+              (post?.content?.length > CONTENT_LENGTH ? (
+                <RenderViewMore />
+              ) : (
+                  <Card.Body className="view-more-wrapper" />
+                ))}
+            {renderSocialIcons}
+            <ShareModal
+              showShareModal={showShareModal}
+              setShowShareModal={setShowShareModal}
+              id={post._id}
+              postTitle={post.title}
+              postContent={post.content}
+            />
+            <WebModal
+              title={t("post.confirm")}
+              visible={
+                !!deleteModalVisibility &&
+                deleteModalVisibility !== DELETE_MODAL_HIDE &&
+                toDelete === post._id
+              }
+              onOk={() => handleDeleteOk()}
+              onCancel={handleCancelPostDelete}
+              okText={t("post.delete")}
+              cancelText={t("post.cancel")}
+            >
+              {deleteModalVisibility === DELETE_MODAL_POST ? (
+                <p>{t("post.deletePostConfirmation")}</p>
+              ) : (
+                  <p>{t("post.deleteCommentConfirmation")}</p>
+                )}
+            </WebModal>
+          </PostCard>
+        )}
     </>
   );
+};
+
+const renderContent = (title, content, showComplete) => {
+  let finalContent = content
+  if (finalContent.length > CONTENT_LENGTH && !showComplete) {
+    finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
+  }
+  return (
+    <Card.Body className="content-wrapper">
+      <Heading level={4} className="h4">
+        {title}
+      </Heading>
+      <p className="post-description">{finalContent}</p>
+    </Card.Body>
+  )
 };
 
 const mapStateToProps = ({ session: { isAuthenticated } }) => {
