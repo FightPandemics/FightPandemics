@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -215,6 +216,7 @@ const HeaderWrapper = styled.div`
     margin-top: 0;
   }
   button {
+    flex-direction: column;
     align-items: center;
     background-color: transparent;
     border: none;
@@ -268,6 +270,7 @@ const buttonPulse = styled.button`
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const Feed = (props) => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -533,11 +536,11 @@ const Feed = (props) => {
     (() => {
       let objective = selectedType;
       if (
-        selectedOptions["offer or request help"] &&
-        selectedOptions["offer or request help"].length < 2
+        selectedOptions["lookingFor"] &&
+        selectedOptions["lookingFor"].length < 2
       ) {
         objective =
-          selectedOptions["offer or request help"][0] === "Request Help"
+          selectedOptions["lookingFor"][0] === "Request Help"
             ? "REQUEST"
             : "OFFER";
       }
@@ -557,7 +560,7 @@ const Feed = (props) => {
   useEffect(() => {
     (() => {
       const filterObj = { ...selectedOptions };
-      delete filterObj["offer or request help"];
+      delete filterObj["lookingFor"];
       if (location) filterObj.location = location;
       const getFilter =
         Object.keys(filterObj).length === 0
@@ -678,7 +681,10 @@ const Feed = (props) => {
     // Onboarding
     if (props.history.location.state) {
       const handleOnboardingOptions = (option, label) => {
-        optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
+        optionsDispatch({
+          type: ADD_OPTION,
+          payload: { option: option.value, label },
+        });
       };
 
       const {
@@ -832,7 +838,7 @@ const Feed = (props) => {
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
                   <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {HELP_TYPE[item]}
+                    {t("feed." + item.toLowerCase())}
                   </Menu.Item>
                 ))}
               </MenuWrapper>
@@ -844,7 +850,7 @@ const Feed = (props) => {
                   <span>
                     <FiltersIcon />
                   </span>
-                  Filters
+                  {t("feed.filters.title")}
                 </button>
                 <FiltersList />
               </FiltersWrapper>
@@ -861,19 +867,18 @@ const Feed = (props) => {
                 handleSubmit={handleSearchSubmit}
                 showOptions={showSearchCategories}
                 displayValue={"name"}
-              ></TabsWrapper>
+              />
               {(!searchCategory || searchCategory == "POSTS") && (
                 <button
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
-                  style={{ margin: "1rem 0" }}
                 >
-                  Create a post
-                  <CreatePostIcon
-                    id={gtmTag(GTM.post.createPost)}
-                    src={creatPost}
-                  />
-                </button>
+                {t("post.create")}
+                <CreatePostIcon
+                  id={gtmTag(GTM.post.createPost)}
+                  src={creatPost}
+                />
+              </button>
               )}
             </HeaderWrapper>
             <MobileSearch>
@@ -928,26 +933,25 @@ const Feed = (props) => {
               />
             )}
             {status === ERROR_POSTS && (
-              <ErrorAlert message={postsError.message} />
+              <ErrorAlert
+                message={t([
+                  `error.${postsError.message}`,
+                  `error.http.${postsError.message}`,
+                ])}
+              />
             )}
 
             {emptyFeed() ? (
               <NoPosts>
-                Sorry, there are currently no relevant{" "}
-                {searchCategory ? searchCategory.toLowerCase() : "posts"}{" "}
-                available.
-                {(!searchCategory || searchCategory == "POSTS") && (
-                  <>
-                    Please try using a different filter search or{" "}
+                <Trans
+                  i18nKey="feed.noResults"
+                  components={[
                     <a
                       id={gtmTag(GTM.post.createPost)}
                       onClick={handleCreatePost}
-                    >
-                      create a post
-                    </a>
-                    .
-                  </>
-                )}
+                    />,
+                  ]}
+                />
               </NoPosts>
             ) : (
               (!searchCategory || searchCategory == "POSTS") && (
