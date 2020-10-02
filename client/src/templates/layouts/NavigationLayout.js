@@ -651,7 +651,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.feed} to="/feed">
-          Help Board
+          {t("feed.title")}
         </Link>
       </NavItem>
       <NavItem history={history}>

@@ -89,18 +89,12 @@ export const FeedContext = React.createContext();
 
 const { Content, Sider } = Layout;
 
-// feed types
 let HELP_TYPE = {
   ALL: "All posts",
   REQUEST: "Requesting help",
   OFFER: "Offering help",
 };
 
-const SEARCH_OPTIONS = [
-  { name: "Posts", id: "POSTS", default: true },
-  { name: "Organisations", id: "ORGANISATIONS", mobile_display: "Orgs" },
-  { name: "People", id: "INDIVIDUALS" },
-];
 
 const initialState = {
   selectedType: "ALL",
@@ -310,6 +304,12 @@ const Feed = (props) => {
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
 
+  const SEARCH_OPTIONS = [
+    { name: t("feed.search.options.posts"), id: "POSTS", default: true },
+    { name: t("feed.search.options.orgs"), id: "ORGANISATIONS", mobile_display: t("feed.search.options.orgsShort") },
+    { name: t("feed.search.options.people"), id: "INDIVIDUALS" },
+  ];
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -371,19 +371,19 @@ const Feed = (props) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
         HELP_TYPE = {
-          ALL: "All People",
+          ALL:  t("feed.allPeople")
         };
         break;
       case "ORGANISATIONS":
         HELP_TYPE = {
-          ALL: "All organisations",
+          ALL: t("feed.allOrgs",)
         };
         break;
       default:
         HELP_TYPE = {
-          ALL: "All posts",
-          REQUEST: "Requesting help",
-          OFFER: "Offering help",
+          ALL: t("feed.allPosts"),
+          REQUEST: t("feed.request"),
+          OFFER: t("feed.offer"),
         };
         break;
     }
@@ -838,7 +838,7 @@ const Feed = (props) => {
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
                   <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {t("feed." + item.toLowerCase())}
+                    {HELP_TYPE[item]}
                   </Menu.Item>
                 ))}
               </MenuWrapper>
@@ -889,7 +889,8 @@ const Feed = (props) => {
                 displayValue={"name"}
                 handleMobileSubmit={handleMobileSearchSubmit}
                 handleClear={handleSearchClear}
-                placeholder={"Search Posts, People & Orgs"}
+                placeholder={t("feed.search.placeholder")}
+                t={t}
               />
             </MobileSearch>
             {
@@ -944,7 +945,9 @@ const Feed = (props) => {
             {emptyFeed() ? (
               <NoPosts>
                 <Trans
-                  i18nKey="feed.noResults"
+                   i18nKey={(!searchCategory || searchCategory == "POSTS") ? 
+                    "feed.noResultsPosts": searchCategory == "INDIVIDUALS" ?
+                    "feed.noResultsPeople" : "feed.noResultsOrgs"}
                   components={[
                     <a
                       id={gtmTag(GTM.post.createPost)}

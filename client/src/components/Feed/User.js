@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Card } from "antd-mobile";
 import styled from "styled-components";
 import { escapeRegExp } from "lodash";
+import { useTranslation } from "react-i18next";
 
 // Local
 import Heading from "components/Typography/Heading";
@@ -143,6 +144,7 @@ const URLS = {
 };
 
 const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
+  const { t } = useTranslation();
   let _user;
   if (currentUser) {
     _user = currentUser;
@@ -235,9 +237,9 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
   const getUserGoals = (needs, objectives) => {
     const goals = [];
     if (needs && Object.values(needs).includes(true))
-      goals.push("Requesting Help");
+      goals.push(t("post.options.helpTypes.request"));
     if (objectives && Object.values(objectives).includes(true))
-      goals.push("Offering Help");
+      goals.push(t("post.options.helpTypes.offer"));
     return goals;
   };
 
@@ -263,7 +265,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 src={statusIndicator}
                 style={{ width: "4px", margin: "1px 10px" }}
               />
-              {type}
+              {t("feed.filters.providersOptions." + type)}
               {type == "Individual" &&
                 getUserGoals(needs, objectives).map((goal) => {
                   return <Goals>{goal}</Goals>;
@@ -274,7 +276,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
           {global ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
-              Global
+              {t("profile.org.global")}
             </div>
           ) : location?.country ? (
             <div className="location-status">
@@ -294,7 +296,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 );
               })}
             <FilterTag disabled={true} selected={false}>
-              {type}
+            {t("feed.filters.providersOptions." + type)}
             </FilterTag>
           </ProfileTypeMobile>
         </div>
@@ -347,7 +349,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 }/${_id}`}
               >
                 <SvgIcon src={envelopeBlue} />
-                <span>Send Message</span>
+                <span>{t("profile.common.sendMessage")}</span>
               </SendMessage>
             ) : (
               <SendMessage
@@ -367,7 +369,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 }}
               >
                 <SvgIcon src={envelopeBlue} />
-                <span>Send Message</span>
+                <span>{t("profile.common.sendMessage")}</span>
               </SendMessage>
             )}
             <PlaceholderIcon />

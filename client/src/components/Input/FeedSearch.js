@@ -7,7 +7,6 @@ import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
 const { colors } = theme;
 
-const ERROR_DISPLAY_DELAY = 1500;
 const MIN_KEYWORD_CHARS = 4;
 
 const StyledIcon = styled(SvgIcon)`
@@ -218,7 +217,9 @@ export default class FeedNavSearch extends React.Component {
 
   onChange(event) {
     const { isMobile } = this.props;
+    const { tooShort } = this.state;
     this.setState({ inputValue: event.target.value });
+    if (tooShort && (event.target.value.length >= MIN_KEYWORD_CHARS || !event.target.value.length)) this.setState({ tooShort: false });
     if (isMobile) this.filterOptionsByInput();
   }
 
@@ -228,9 +229,6 @@ export default class FeedNavSearch extends React.Component {
     if (e.key === "Enter") {
       if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
         this.setState({ tooShort: true });
-        return setTimeout(() => {
-          this.setState({ tooShort: false });
-        }, ERROR_DISPLAY_DELAY);
       }
       if (isMobile)
         return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
@@ -247,6 +245,7 @@ export default class FeedNavSearch extends React.Component {
       inputValue: "",
     });
     this.resetSelectedValue();
+    this.setState({ tooShort: false });
     this.searchBox.current.blur();
     this.props.handleClear();
   }
@@ -288,7 +287,7 @@ export default class FeedNavSearch extends React.Component {
         <span class={"option"}>
           {isObject ? option[displayValue] : (option || "").toString()}
         </span>
-        <span class={"keyword"}>Keywords</span>
+        <span class={"keyword"}>{this.props.t("feed.search.keywords")}</span>
       </li>
     ));
   }
@@ -368,9 +367,6 @@ export default class FeedNavSearch extends React.Component {
             onClick={() => {
               if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
                 this.setState({ tooShort: true });
-                return setTimeout(() => {
-                  this.setState({ tooShort: false });
-                }, ERROR_DISPLAY_DELAY);
               }
               if (isMobile)
                 return this.props.handleMobileSubmit(
@@ -415,12 +411,12 @@ export default class FeedNavSearch extends React.Component {
         )}
         {!isMobile && tooShort && (
           <StyledInputError>
-            Min. {MIN_KEYWORD_CHARS} characters
+            {this.props.t("feed.search.error", {length: MIN_KEYWORD_CHARS})}
           </StyledInputError>
         )}
         {isMobile && tooShort && (
           <MobileInputError>
-            Min. {MIN_KEYWORD_CHARS} characters
+            {this.props.t("feed.search.error", {length: MIN_KEYWORD_CHARS})}
           </MobileInputError>
         )}
       </SearchContainer>

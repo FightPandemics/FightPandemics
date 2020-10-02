@@ -46,7 +46,9 @@
   },
   "feed": {
     "title": "Help Board",
-    "all": "All posts",
+    "allPosts": "All posts",
+    "allPeople": "All people",
+    "allOrgs": "All organizations",
     "request": "Requesting help",
     "offer": "Offering help",
     "quit": "Quit filters",
@@ -123,7 +125,20 @@
       }
     },
     "filterBy": "Filter by",
-    "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>."
+    "noResultsPosts": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
+    "noResultsPeople": "Sorry, there are currently no relevant Individuals available. Please try using a different filter search.",
+    "noResultsOrgs": "Sorry, there are currently no relevant organizations available. Please try using a different filter search.",
+    "search": {
+      "placeholder": "Search Posts, People & Orgs",
+      "keywords": "keywords",
+      "error": "Min. {{length}} characters",
+      "options": {
+        "posts": "Posts",
+        "people": "People",
+        "orgs": "Organizations",
+        "orgsShort": "Orgs"
+      }
+    }
   },
   "post": {
     "create": "Create a post",
@@ -214,6 +229,7 @@
       "maxCharacters": "{{maxNum}} characters max.",
       "minCharacters": "{{minNum}} characters minimum.",
       "validCharacters": "Valid characters are: {{characters}}.",
+      "sendMessage": "Send Message",
       "urls": {
         "appStore": "Link to Apple Store",
         "playStore": "Link to Google Play",
@@ -259,6 +275,7 @@
       "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
       "globalOrg": "We are a global organization",
+      "global": "Global",
       "seeking": "What are you looking for",
       "volunteers": "Volunteers",
       "donations": "Donations",

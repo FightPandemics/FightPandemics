@@ -69,7 +69,7 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
         id={gtmPrefix + gtmTagsMap[filter.label]}
         value={filter.label}
       >
-        {t(`feed.filters.labels.${filter.label}`)}
+        {t(`feed.filterBy`)}
       </StyledSelectWithIconButton>
     );
   };
@@ -80,7 +80,6 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
         color={DARK_GRAY}
         size={theme.typography.size.medium}
       >
-        {t("feed.filterBy")}
       </TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper
