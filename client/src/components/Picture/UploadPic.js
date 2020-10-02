@@ -75,7 +75,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
             );
           } else if (image.height / image.width < 0.5) {
             setUploadError(
-              "Please upload an image of aspect ratio 2:1 or better.",
+              "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
             );
           }
         };
