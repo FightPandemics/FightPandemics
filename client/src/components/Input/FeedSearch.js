@@ -228,7 +228,7 @@ export default class FeedNavSearch extends React.Component {
     const { isMobile } = this.props;
     if (e.key === "Enter") {
       if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
-        this.setState({ tooShort: true });
+        return this.setState({ tooShort: true });
       }
       if (isMobile)
         return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
