@@ -263,7 +263,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
             </CheckBoxWrapper>
           ))}
           <span style={errorStyles}>
-            {errors.needs ? t("profile.common.selectOption") : ""}
+            {errors.needs ? t("error.selectOneOption") : ""}
           </span>
           { needsOtherCheckbox &&
             <InputWrapper>
@@ -271,13 +271,13 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 defaultValue={needs.othersDetail}
                 type="text"
                 required
-                placeholder="Please type"
+                placeholder={t("profile.org.otherDetails")}
                 onChange={(othersDetails) => othersDetails}
                 ref={register({
-                  required: "Please specify",
+                  required: t("profile.org.otherDetails"),
                   maxLength: {
                     value: 60,
-                    message: "Max. 60 characters",
+                    message: t("profile.common.maxCharacters", {maxNum: 60}),
                   },
                 })}
                 name="needs.othersDetail"
@@ -308,12 +308,12 @@ function EditOrganisationAccount({ refetchUser, history }) {
                   return event.target.checked}
                 }
               >
-                <Label inputColor="#000000">{label}</Label>
+                <Label inputColor="#000000">{t("profile.org." + key)}</Label>
               </Controller>
             </CheckBoxWrapper>
           ))}
           <span style={errorStyles}>
-            {errors.offers ? "Please select at least one option" : ""}
+            {errors.offers ? t("error.selectOneOption") : ""}
           </span>
           { offersOtherCheckbox &&
             <InputWrapper>
@@ -321,13 +321,13 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 defaultValue={offers.othersDetail}
                 type="text"
                 required
-                placeholder="Please type"
+                placeholder={t("profile.org.otherDetails")}
                 onChange={(othersDetails) => othersDetails}
                 ref={register({
-                  required: "Please specify",
+                  required: t("profile.org.otherDetails"),
                   maxLength: {
                     value: 60,
-                    message: "Max. 60 characters",
+                    message: t("profile.common.maxCharacters", {maxNum: 60}),
                   },
                 })}
                 name="offers.othersDetail"
@@ -540,7 +540,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <Label>{t("profile.org.seeking")}</Label>
               <HelpWrapper>{renderNeedSection()}</HelpWrapper>
               <WhiteSpace />
-              <Label>What are here to offer?</Label>
+              <Label>{t("profile.org.offering")}</Label>
               <HelpWrapper>{renderOfferSection()}</HelpWrapper>
               <CustomSubmitButton
                 primary="true"

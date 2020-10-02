@@ -360,7 +360,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Information"
+                  label={t("profile.org.information")}
                   name="needs.information"
                   onChange={([event]) => event.target.checked}
                 />
@@ -368,7 +368,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Resources/Tools"
+                  label={t("profile.org.resources")}
                   name="needs.resources"
                   onChange={([event]) => event.target.checked}
                 />
@@ -389,14 +389,14 @@ const CreateOrgProfile = (props) => {
                     <Input
                       type="text"
                       required
-                      placeholder="Please type"
+                      placeholder={t("profile.org.otherDetails")}
                       onChange={(othersDetails) => othersDetails}
                       style={styleInput}
                       ref={register({
-                        required: "Please specify",
+                        required: t("profile.org.otherDetails"),
                         maxLength: {
                           value: 60,
-                          message: "Max. 60 characters",
+                          message: t("profile.common.maxCharacters", {maxNum: 60}),
                         },
                       })}
                       name="needs.othersDetail"
@@ -406,12 +406,15 @@ const CreateOrgProfile = (props) => {
                 }
               </InputGroup>
               <span style={errorStyles}>
-                {errors.needs && "Please select at least one option"}
+                {errors.needs && t("error.selectOneOption")}
               </span>
             </InputWrapper>
             <InputWrapper>
               <InputGroup>
-                <Label style={styleLabel} label="* We are here to offer" />
+                <Label
+                  style={styleLabel}
+                  label={"* " + t("profile.org.offering")}
+                />
                 <Controller
                   as={CheckboxGroup}
                   control={control}
@@ -469,14 +472,14 @@ const CreateOrgProfile = (props) => {
                     <Input
                       type="text"
                       required
-                      placeholder="Please type"
+                      placeholder={t("profile.org.otherDetails")}
                       onChange={(othersDetails) => othersDetails}
                       style={styleInput}
                       ref={register({
-                        required: "Please specify",
+                        required: t("profile.org.otherDetails"),
                         maxLength: {
                           value: 60,
-                          message: "Max. 60 characters",
+                          message: t("profile.common.maxCharacters", {maxNum: 60}),
                         },
                       })}
                       name="offers.othersDetail"
@@ -486,7 +489,7 @@ const CreateOrgProfile = (props) => {
                 }
               </InputGroup>
               <span style={errorStyles}>
-                {errors.offers && "Please select at least one option"}
+                {errors.offers && t("error.selectOneOption")}
               </span>
             </InputWrapper>
           </Flex>
