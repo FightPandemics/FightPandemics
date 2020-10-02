@@ -16,6 +16,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+import { useTranslation } from "react-i18next";
 
 import Heading from "components/Typography/Heading";
 
@@ -26,6 +27,7 @@ export const ShareModal = ({
   postContent,
   id,
 }) => {
+  const { t } = useTranslation();
   const ICON_SIZE_PIXEL = "50";
   const postUrl = `${window.location.origin}/post/${id}`;
   return (
@@ -37,7 +39,7 @@ export const ShareModal = ({
       transparent
     >
       <Heading level={4} className="h4">
-        Share via...
+        {t("post.shareVia")}
       </Heading>
 
       <div>

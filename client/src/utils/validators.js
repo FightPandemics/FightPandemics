@@ -14,13 +14,13 @@ export const validateEmail = (email) => {
   const emailInput = String(email).toLowerCase();
   const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!email) {
-    errorMessage = "Email address is required";
+    errorMessage = "emailRequired";
   } else if (email.length > 200) {
-    errorMessage = "Email address must not exceed 200 characters";
+    errorMessage = "emailMaxLength";
   } else if (!re.test(emailInput)) {
-    errorMessage = "Email address is invalid";
+    errorMessage = "emailInvalid";
   } else if (!validateTopLevelDomain(emailInput)) {
-    errorMessage = "Email domain is invalid";
+    errorMessage = "emailDomainInvalid";
   }
   if (errorMessage.length != 0) {
     return errorMessage;
