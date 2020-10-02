@@ -130,7 +130,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
     mode: "change",
   });
   const { loading, organisation } = orgProfileState;
-  const { name, email, global, needs } = organisation || {};
+  const { name, email, global, needs, offers } = organisation || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -152,6 +152,9 @@ function EditOrganisationAccount({ refetchUser, history }) {
     }
     Object.entries(NEEDS).map(([key, label]) => {
       if (formData.needs[key] === undefined) formData.needs[key] = needs[key];
+    });
+    Object.entries(NEEDS).map(([key, label]) => {
+      if (formData.offers[key] === undefined) formData.offers[key] = offers[key];
     });
     formData.location = location;
     if (isSame(formData, orgProfileState.organisation)) {
@@ -193,6 +196,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
         const organisation = res.data;
         setNeedsOtherCheckbox(organisation.needs.other);
+        setOffersOtherCheckbox(organisation.offers.other);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         orgProfileDispatch(
@@ -260,6 +264,56 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 name="needs.othersDetail"
               />
               <span style={errorStyles}>{errors.needs?.othersDetails?.message}</span>
+            </InputWrapper>
+          }
+        </div>
+      );
+    }
+  };
+
+  const renderOfferSection = () => {
+    if (organisation) {
+      return (
+        <div>
+          {Object.entries(NEEDS).map(([key, label]) => (
+            <CheckBoxWrapper key={key}>
+              <Controller
+                as={Checkbox}
+                defaultChecked={offers[key]}
+                name={`offers.${key}`}
+                control={control}
+                onChange={([event]) => {
+                  if(key==="other") {
+                    setOffersOtherCheckbox(!offersOtherCheckbox);  
+                  }
+                  return event.target.checked}
+                }
+              >
+                <Label inputColor="#000000">{label}</Label>
+              </Controller>
+            </CheckBoxWrapper>
+          ))}
+          <span style={errorStyles}>
+            {errors.offers ? "Please select at least one option" : ""}
+          </span>
+          { offersOtherCheckbox &&
+            <InputWrapper>
+              <FormInput
+                defaultValue={offers.othersDetail}
+                type="text"
+                required
+                placeholder="Please type"
+                onChange={(othersDetails) => othersDetails}
+                ref={register({
+                  required: "Please specify",
+                  maxLength: {
+                    value: 60,
+                    message: "Max. 60 characters",
+                  },
+                })}
+                name="offers.othersDetail"
+              />
+              <span style={errorStyles}>{errors.offers?.othersDetails?.message}</span>
             </InputWrapper>
           }
         </div>
@@ -450,8 +504,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <WhiteSpace />
               <WhiteSpace />
               {renderSelectItems()}
-              <Label>What are you looking for?</Label>
+              <Label>What are here to request?</Label>
               <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+              <WhiteSpace />
+              <Label>What are here to offer?</Label>
+              <HelpWrapper>{renderOfferSection()}</HelpWrapper>
               <CustomSubmitButton
                 primary="true"
                 onClick={handleSubmit(onSubmit)}
