@@ -18,9 +18,7 @@ import {
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
 } from "../actions/postActions";
-import {
-  DELETE_MODAL_HIDE,
-} from "../actions/feedActions";
+import { DELETE_MODAL_HIDE } from "../actions/feedActions";
 
 export const postState = {
   status: SET_POST,
