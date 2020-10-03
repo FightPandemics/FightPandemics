@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, Dropdown } from "antd";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 
 const SubMenuButton = ({ onSelect, onChange, postId, user, post }) => {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const ref = useRef(false);
@@ -36,10 +38,10 @@ const SubMenuButton = ({ onSelect, onChange, postId, user, post }) => {
   const menu = postId ? (
     <Menu onClick={handleMenuItemClick}>
       <Menu.Item onClick={onSelect} key="edit">
-        Edit
+        {t("comment.edit")}
       </Menu.Item>
       <Menu.Item onClick={onChange} key="delete">
-        Delete
+        {t("comment.delete")}
       </Menu.Item>
     </Menu>
   ) : (
@@ -57,11 +59,11 @@ const SubMenuButton = ({ onSelect, onChange, postId, user, post }) => {
             },
           }}
         >
-          Edit
+          {t("comment.edit")}
         </Link>
       </Menu.Item>
       <Menu.Item onClick={onChange} key="delete">
-        Delete
+        {t("comment.delete")}
       </Menu.Item>
     </Menu>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   AboutUsContainer,
   TextContainer,
@@ -102,65 +103,55 @@ function LogosList(props) {
 }
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+
   return (
     <AboutUsContainer>
       <MissionAndVisionBannerContainer>
-        <h1 className="text-primary display-6">About Us</h1>
+        <h1 className="text-primary display-6">{t("common.aboutUs")}</h1>
         <WebViewBannerContainer
           src={DesktopBanner}
-          alt="Desktop Mission and Vision Banner"
+          alt={t("alt.desktopBanner")}
         />
         <MobileViewBannerContainer
           src={MobileBanner}
-          alt="Mobile Mission and Vision Banner"
+          alt={t("alt.mobileBanner")}
         />
       </MissionAndVisionBannerContainer>
       <TextContainer>
         <br />
-        <h2 className="text-primary display-6">Our Story</h2>
-        <p>
-          FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was
-          infected with COVID-19 in France. Upon returning home to Barcelona, he
-          found he was unable to get help even though there were people who
-          wanted to provide it. Telegram and WhatsApp groups were
-          self-organizing in Manuel’s neighborhood, but without personally
-          knowing anyone involved he could not ask them for assistance. Inspired
-          by so many coming together, Manuel launched the project with one
-          mission in mind: to ensure that others could connect in time.
-        </p>
+        <h2 className="text-primary display-6">{t("aboutUs.ourStory")}</h2>
+        <p>{t("aboutUs.story")}</p>
         <br />
-        <h2 className="text-primary display-6">Our Community</h2>
-        <p>
-          We are built by a team of 450+ volunteer developers, designers,
-          scientists, health experts, and product managers from around the world
-        </p>
+        <h2 className="text-primary display-6">{t("aboutUs.ourCommunity")}</h2>
+        <p>{t("aboutUs.community")}</p>
         {/* Add FightPandemics Video */}
         {/* Add buttons for Join as Ambassador and Join as a Volunteer here*/}
         <br />
-        <h2 className="text-primary display-6">Our Idea</h2>
-        <OurIdeaImageContainer src={OurIdeaImage} alt="Our Idea Picture" />
+        <h2 className="text-primary display-6">{t("aboutUs.ourIdea")}</h2>
+        <OurIdeaImageContainer src={OurIdeaImage} alt={t("alt.ideaImage")} />
       </TextContainer>
       <br />
-      <h2 className="text-primary display-6">Our Supporters</h2>
+      <h2 className="text-primary display-6">{t("aboutUs.ourSupporters")}</h2>
       <SupportersLogosContainer>
         <LogosList supporterLogos={supporterLogos} />
       </SupportersLogosContainer>
-      <h2 className="text-primary display-6">Follow us on social media</h2>
+      <h2 className="text-primary display-6">{t("aboutUs.followUs")}</h2>
       <SocialContainer>
         <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
-          <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
+          <img src={linkedInLogo} alt={t("alt.linkedinIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://www.facebook.com/FightPandemics/">
-          <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+          <img src={facebookLogo} alt={t("alt.facebookIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-          <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
+          <img src={instagramLogo} alt={t("alt.instagramIcon")} />
         </AboutUsLink>
         <AboutUsLink href="https://twitter.com/FightPandemics">
-          <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+          <img src={twitterLogo} alt={t("alt.twitterIcon")} />
         </AboutUsLink>
         <p>
-          Or contact us at:{" "}
+          {t("aboutUs.contactUs")}:{" "}
           <AboutUsLink href="mailto:contact@fightpandemics.com">
             contact@fightpandemics.com
           </AboutUsLink>

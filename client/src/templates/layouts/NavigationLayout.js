@@ -1,10 +1,16 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Typography } from "antd";
+import { Typography, Menu, Dropdown } from "antd";
 import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
+import i18n from "../../i18n";
+import { localization, languages } from "locales/languages";
+import globe from "assets/icons/globe.svg";
+import SvgIcon from "components/Icon/SvgIcon";
+import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
 import Footnote from "components/Footnote";
@@ -109,6 +115,29 @@ const FeedbackItem = styled(List.Item)`
 
   &.am-list-item-active {
     background: ${tropicalBlue};
+  }
+`;
+
+const LanguageSwitchItem = styled(List.Item)`
+  background: unset;
+  padding-left: 2.1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
+  font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
+  & .am-list-line {
+    border-bottom: 0;
+    &:after {
+      height: 0 !important;
+    }
+    pointer-events: none;
+    & .am-list-content {
+      color: ${white};
+      pointer: none;
+      line-height: 6rem;
+      padding: 0;
+      margin: ${(props) =>
+        typeof props.margin != undefined ? props.margin : "inherit"};
+    }
   }
 `;
 
@@ -232,19 +261,6 @@ const RatingWrapper = styled.div`
   }
 `;
 
-const TEXT_FEEDBACK = [
-  {
-    stateKey: "mostValuableFeature",
-    label: "Which features are the most valuable to you?",
-  },
-  {
-    stateKey: "whatWouldChange",
-    label:
-      "If you could change one thing about FightPandemics, what would it be?",
-  },
-  { stateKey: "generalFeedback", label: "Any other feedback for us?" },
-];
-
 const StyledDrawer = styled(Drawer)`
   .am-drawer-draghandle {
     visibility: hidden;
@@ -252,9 +268,22 @@ const StyledDrawer = styled(Drawer)`
 `;
 
 const NavigationLayout = (props) => {
+  const { t } = useTranslation();
   const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
+
+  const TEXT_FEEDBACK = [
+    {
+      stateKey: "mostValuableFeature",
+      label: t("feedback.mostValuable"),
+    },
+    {
+      stateKey: "whatWouldChange",
+      label: t("feedback.oneChange"),
+    },
+    { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
+  ];
 
   const displayAvatar = (user) => {
     if (user?.photo || (user?.firstName && user?.lastName)) {
@@ -324,6 +353,30 @@ const NavigationLayout = (props) => {
     toggleModal(nextModal);
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item key={key}>
+          <a
+            style={
+              i18n.language === key
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+          >
+            {label.text}
+          </a>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   const submitFeedbackForm = async () => {
     feedbackFormDispatch({ type: FEEDBACK_FORM_SUBMIT });
 
@@ -344,9 +397,15 @@ const NavigationLayout = (props) => {
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       feedbackFormDispatch({
         type: FEEDBACK_FORM_SUBMIT_ERROR,
-        error: `Could not submit feedback, reason: ${message}`,
+        error: `${t(
+          "error.failedSubmittingFeedback",
+        )} ${translatedErrorMessage}`,
       });
     }
   };
@@ -358,13 +417,10 @@ const NavigationLayout = (props) => {
       transparent
       closable
     >
-      <h2 className="title">Thank you!</h2>
-      <p>
-        Your input means a lot and helps us improve our services during and
-        after the COVID-19 pandemic.
-      </p>
+      <h2 className="title">{t("feedback.thankYou")}</h2>
+      <p>{t("feedback.thankYouMessage")}</p>
       <Link to={isAuthenticated ? "/feed" : "/"}>
-        <Logo src={logo} alt="FightPandemics logo" />
+        <Logo src={logo} alt={t("alt.logo")} />
       </Link>
     </ThanksModal>
   );
@@ -373,7 +429,7 @@ const NavigationLayout = (props) => {
     const inputLabelsText = [
       {
         stateKey: "age",
-        label: "What is your age?",
+        label: t("feedback.radio.age"),
         type: "number",
       },
     ];
@@ -381,19 +437,19 @@ const NavigationLayout = (props) => {
     const radioButtonOptions = [
       {
         stateKey: "covidImpact",
-        value: "I go to work/school normally",
+        value: t("feedback.radio.unaffected"),
       },
       {
         stateKey: "covidImpact",
-        value: "I am healthy but in a stay-at-home quarantine",
+        value: t("feedback.radio.quarantine"),
       },
       {
         stateKey: "covidImpact",
-        value: "I have mild symptoms but haven't been tested",
+        value: t("feedback.radio.symptomaticUntested"),
       },
       {
         stateKey: "covidImpact",
-        value: "I am diagnosed with Covid-19",
+        value: t("feedback.radio.diagnosed"),
       },
     ];
 
@@ -414,7 +470,7 @@ const NavigationLayout = (props) => {
         transparent
         closable
       >
-        <h2 className="title">We are almost done!</h2>
+        <h2 className="title">{t("feedback.almostFinished")}</h2>
         {inputLabelsText.map(({ label, stateKey, type }) => (
           <>
             <FormInput
@@ -425,11 +481,11 @@ const NavigationLayout = (props) => {
                 dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
               }
             />
-            <RadioGroupWithLabel label="How has COVID-19 impacted you?" />
+            <RadioGroupWithLabel label={t("feedback.howImpacted")} />
           </>
         ))}
         <FeedbackSubmitButton
-          title="Submit Feedback"
+          title={t("onboarding.common.submit")}
           onClick={() => {
             toggleModal("radioModal");
             submitFeedbackForm();
@@ -452,9 +508,7 @@ const NavigationLayout = (props) => {
         transparent
         closable
       >
-        <h2 className="title">
-          Thank you for being an early user of FightPandemics!
-        </h2>
+        <h2 className="title">{t("feedback.thankYouEarly")}</h2>
         {TEXT_FEEDBACK.map(({ label, stateKey }) => (
           <FormInput
             key={stateKey}
@@ -465,7 +519,7 @@ const NavigationLayout = (props) => {
           />
         ))}
         <FeedbackSubmitButton
-          title="Next"
+          title={t("onboarding.common.next")}
           onClick={() => nextModal("textFeedbackModal", "radioModal")}
         />
       </TextFeedbackModal>
@@ -481,7 +535,7 @@ const NavigationLayout = (props) => {
         closable
         transparent
       >
-        <h3 className="title">How well does FightPandemics meet your needs?</h3>
+        <h3 className="title">{t("feedback.howMeetNeeds")}</h3>
         <div className="rectangle">
           {ratingScale.map((rating, index) => (
             <RatingWrapper
@@ -495,9 +549,9 @@ const NavigationLayout = (props) => {
           ))}
         </div>
         <div className="scale-text">
-          <div>Poorly</div>
+          <div>{t("feedback.poorly")}</div>
           <div className="spacer"></div>
-          <div>Very well</div>
+          <div>{t("feedback.well")}</div>
         </div>
       </RatingModal>
     );
@@ -507,15 +561,21 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-        {displayAvatar(user)}
+        <NavItem history={history}>
+          <TextAvatar size={80} alt={t("alt.avatar")}>
+            {displayAvatar(user)}
+          </TextAvatar>
+        </NavItem>
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />
       <NavItem history={history}>
-        <Link to={`/profile/${user?.id || user?._id}`}>Profile</Link>
+        <Link to={`/profile/${user?.id || user?._id}`}>
+          {t("common.profile")}
+        </Link>
       </NavItem>
       <NavItem>
-        Organisation
+        {t("post.organisation")}
         {user?.organisations?.length > 0
           ? user?.organisations?.map((organisation) => (
               <NavItemBrief
@@ -534,7 +594,7 @@ const NavigationLayout = (props) => {
             id={GTM.nav.prefix + GTM.nav.addOrg}
             to="/create-organisation-profile"
           >
-            + Add Organisation
+            + {t("common.addOrg")}
           </Link>
         </NavItemBrief>
       </NavItem>
@@ -546,15 +606,21 @@ const NavigationLayout = (props) => {
             user,
           }}
         >
-          Help Board
+          {t("feed.title")}
         </Link>
       </NavItem>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
-          About Us
+          {t("common.aboutUs")}
         </Link>
       </NavItem>
       <Space height="10vh" limitMobileHeight />
+      <Dropdown overlay={languageMenu} trigger={["click"]}>
+        <LanguageSwitchItem>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+          {languages[localization[i18n.language]].value}
+        </LanguageSwitchItem>
+      </Dropdown>
       <FeedbackItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
@@ -563,10 +629,10 @@ const NavigationLayout = (props) => {
         }}
         size="small"
       >
-        Feedback
+        {t("common.feedback")}
       </FeedbackItem>
       <NavItem history={history}>
-        <BriefLink to="/auth/logout">Sign Out</BriefLink>
+        <BriefLink to="/auth/logout">{t("common.logout")}</BriefLink>
       </NavItem>
     </>
   );
@@ -576,15 +642,21 @@ const NavigationLayout = (props) => {
       <Space height="10rem" />
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-          Sign In / Join Now
+          {t("auth.signIn")} / {t("auth.joinNow")}
         </Link>
       </NavItem>
       <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
-          About Us
+          {t("common.aboutUs")}
         </Link>
       </NavItem>
       <Space height="33vh" />
+      <Dropdown overlay={languageMenu} trigger={["click"]}>
+        <LanguageSwitchItem>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+          {languages[localization[i18n.language]].value}
+        </LanguageSwitchItem>
+      </Dropdown>
       <FeedbackItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={() => {
@@ -593,7 +665,7 @@ const NavigationLayout = (props) => {
         }}
         size="small"
       >
-        Feedback
+        {t("common.feedback")}
       </FeedbackItem>
     </>
   );

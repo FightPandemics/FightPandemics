@@ -1,8 +1,8 @@
 // Core
 import React, { useContext } from "react";
 import styled from "styled-components";
-// Antd
 import { Drawer } from "antd";
+import { useTranslation } from "react-i18next";
 
 // Local
 import FilterAccordion from "./FilterAccordion";
@@ -66,20 +66,26 @@ const DrawerWrapper = styled(Drawer)`
     font-size: ${theme.typography.size.small};
   }
   .confirm-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .am-button {
       font-size: ${theme.typography.size.large};
       padding: 0 1rem;
+      margin: 0.5rem 0;
+      font-weight: normal;
       &.close-button {
         flex: 0 0 auto;
       }
       &.ok-button {
-        flex: 0 0 13rem;
+        flex: 0 0 auto;
       }
     }
   }
 `;
 
 const FiltersSidebar = ({ gtmPrefix }) => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const { handleQuit, handleOnClose, showFilters } = feedContext;
 
@@ -100,33 +106,24 @@ const FiltersSidebar = ({ gtmPrefix }) => {
         </button>
         <FilterAccordion gtmPrefix={gtmPrefix} />
       </div>
-      <div
-        className="confirm-buttons"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "2rem 0",
-        }}
-      >
+      <div className="confirm-buttons">
         <SubmitButton
           className="close-button"
           inline
           tertiary="true"
           onClick={handleQuit}
-          style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
         >
-          Quit filters
+          {t("feed.quit")}
         </SubmitButton>
         <SubmitButton
           className="ok-button"
           inline
           primary="true"
           onClick={handleOnClose}
-          style={{ fontWeight: "normal" }}
           id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
         >
-          View result
+          {t("feed.apply")}
         </SubmitButton>
       </div>
     </DrawerWrapper>

@@ -171,9 +171,7 @@ async function routes(app) {
           newOrgErr.name === "ValidationError" ||
           newOrgErr.name === "MongoError"
         ) {
-          throw app.httpErrors.conflict(
-            "Email address is already in use or email address cannot be validated!",
-          );
+          throw app.httpErrors.conflict("emailIssue");
         } else {
           throw app.httpErrors.internalServerError();
         }

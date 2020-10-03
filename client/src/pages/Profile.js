@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -117,6 +118,7 @@ const Profile = ({
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const { t } = useTranslation();
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -166,12 +168,18 @@ const Profile = ({
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [pathUserId, userProfileDispatch]);
+  }, [pathUserId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -420,13 +428,14 @@ const Profile = ({
           )}
           <IconsContainer>
             <HelpContainer>
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help"}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")}
             </HelpContainer>
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} {address && `• ${address}`}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")}{" "}
+              {address && `• ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -454,16 +463,18 @@ const Profile = ({
       <div style={{ margin: "0 2.5rem" }}>
         <WhiteSpace />
         <DescriptionMobile>
-          <SectionHeader> About</SectionHeader>
+          <SectionHeader> {t("profile.org.about")}</SectionHeader>
           {about}
         </DescriptionMobile>
         <WhiteSpace />
         <SectionHeader>
-          {ownUser ? "My Activity" : "User Activity"}
+          {ownUser
+            ? t("profile.individual.myActivity")
+            : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {ownUser && (
             <>
-              <CreatePostDiv>Create a post</CreatePostDiv>
+              <CreatePostDiv>{t("post.create")}</CreatePostDiv>
               <CreatePostIcon
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
@@ -490,7 +501,12 @@ const Profile = ({
             totalPostCount={totalPostCount}
           />
           {status === ERROR_POSTS && (
-            <ErrorAlert message={postsError.message} />
+            <ErrorAlert
+              message={t([
+                `error.${postsError.message}`,
+                `error.http.${postsError.message}`,
+              ])}
+            />
           )}
           {emptyFeed() && <></>}
           {ownUser && (
@@ -514,10 +530,12 @@ const Profile = ({
           key="bottom"
         >
           <DrawerHeader>
-            <Link to="/edit-account">Edit Account Information</Link>
+            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-profile">Edit Profile </Link>
+            <Link to="/edit-profile">
+              {t("profile.individual.editProfile")}{" "}
+            </Link>
           </DrawerHeader>
         </CustomDrawer>
       )}

@@ -154,6 +154,12 @@ We collaborate closely with the design and product team. The design team provide
 * For new pages, create a new route in `client/src/routes.js` and import a page component from `client/src/pages`
 * Refrain from making the Redux state too big as it will affect speed performance. React’s Context API is ONLY helpful for avoiding nested prop threading so stick with Redux where Context fails.
 
+#### Internationalization
+
+- We are using [i18next](https://www.i18next.com/overview/api) to manage localization on our platform. If you need to add text or change existing text, please do so in the `src/locales/translations/en_US` file. [Lokalise](https://lokalise.com/) is the tool we use to manage our translations. It is configured to automatically pull changes in `en_US` from `staging` branch and edit or add new keys on the Lokalise platform so our volunteers can go and translate the new changes.
+
+ - In order to not bottleneck development, keys that have not been translated in a language will be filled with the English translation. Once translations are completed on Lokalise, it will then initiate a PR to merge the translations into `staging`
+
 ## Deployment
 
 ### Git Branching Model

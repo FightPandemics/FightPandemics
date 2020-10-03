@@ -1,0 +1,766 @@
+{
+  "headline": "一個提供和尋求幫助的地方",
+  "tagline": "<0>大流行將繼續發生。 </0><1>我們幫助社區做好準備並應對危機</1>",
+  "common": {
+    "getHelp": "請求幫助",
+    "giveHelp": "提供幫助",
+    "viewFeed": "查看幫助板",
+    "register": "現在加入",
+    "feedback": "反饋",
+    "question": "問題",
+    "aboutUs": "關於我們",
+    "profile": "資料信息",
+    "addOrg": "添加組織",
+    "logout": "登出",
+    "organisations": "組織機構"
+  },
+  "onboarding": {
+    "common": {
+      "question": "問題",
+      "next": "下一個",
+      "previous": "返回",
+      "submit": "上传",
+      "skip": "跳过",
+      "whereLocated": "你的位置？",
+      "relevantResults": "我們想向您展示最相關的結果",
+      "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+      "shareLocation": "分享我的位置",
+      "showAnywhere": "向我顯示來自任何地方的帖子",
+      "whatEmail": "您的電子郵件是什麼？",
+      "respectPrivacy": "我們尊重您的隱私。請閱讀我們的<1>隱私政策</1>和<3>條款和條件。</3>",
+      "enterEmail": "輸入您的電子郵件地址..."
+    },
+    "needHelp": {
+      "whatHelp": "你需要什麼類型的協助？",
+      "medical": "醫療類",
+      "haveCovidSymptoms": "我有COVID-19的症狀",
+      "other": "其它幫助",
+      "otherDesc": "我需要協助獲得食品雜貨/藥品/等。"
+    },
+    "offerHelp": {
+      "howContribute": "你希望以什么身份提供帮助？",
+      "volunteer": "志愿者",
+      "donorInvestor": "捐赠者",
+      "organisation": "组织机构"
+    }
+  },
+  "feed": {
+    "title": "幫助板",
+    "all": "所有帖子",
+    "request": "尋求幫助",
+    "offer": "提供幫助",
+    "quit": "退出篩選器",
+    "apply": "套用篩選器",
+    "getOrGive": "提供或請求幫助",
+    "filters": {
+      "title": "篩選器",
+      "location": {
+        "label": "位置",
+        "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+        "shareLocation": "分享我的位置"
+      },
+      "providers": "供應商",
+      "providersList": [
+        "個人",
+        "創業公司",
+        "公司",
+        "社區",
+        "政府",
+        "非營利組織",
+        "大學",
+        "醫療服務提供方",
+        "其它"
+      ],
+      "types": "種類",
+      "typesList": [
+        "醫療用品",
+        "雜貨/食品",
+        "商業",
+        "教育",
+        "法律援助",
+        "健康/心理",
+        "娛樂",
+        "信息",
+        "資金",
+        "研發部",
+        "科技類",
+        "其它"
+      ],
+      "labels": {
+        "location": "位置",
+        "providers": "供應商",
+        "type": "種類",
+        "lookingFor": "提供或請求幫助"
+      },
+      "providersOptions": {
+        "Individual": "個人",
+        "Startup": "創業公司",
+        "Company": "公司",
+        "Community": "社區",
+        "Government": "政府",
+        "Non-profit": "非營利",
+        "University": "大學",
+        "Health care provider": "衛生保健提供者",
+        "Other": "其它"
+      },
+      "typesOptions": {
+        "Medical Supplies": "醫療用品",
+        "Groceries/Food": "雜貨/食品",
+        "Business": "商業",
+        "Education": "教育",
+        "Legal": "法律援助",
+        "Wellbeing/Mental": "健康/心理",
+        "Entertainment": "娛樂",
+        "Information": "信息",
+        "Funding": "資金",
+        "R&D": "研發部",
+        "Tech": "科技類",
+        "Other": "其它"
+      },
+      "lookingForOptions": {
+        "Request Help": "尋求幫助",
+        "Offer Help": "提供幫助"
+      }
+    },
+    "filterBy": "過濾",
+    "noResults": "抱歉，目前沒有相關帖子。請嘗試使用其他過濾器搜索或<0>創建帖子</0> 。"
+  },
+  "post": {
+    "create": "創建帖子",
+    "continueAs": "繼續發佈為",
+    "individual": "個人",
+    "organisation": "組織",
+    "givingHelp": "提供幫助",
+    "gettingHelp": "尋求幫助",
+    "writePostHere": "在這裡寫你的帖子",
+    "title": "標題",
+    "writePost": "寫你的帖子",
+    "whatGiving": "您提供什麼？",
+    "addTags": "添加標籤以使您的帖子更加可見",
+    "whatVisibility": "您的帖子的可見性是多少？",
+    "postVisible": "該帖子將顯示給",
+    "success": "成功",
+    "viewPost": "查看您的帖子",
+    "like": "喜歡",
+    "like_plural": "喜歡",
+    "likeWithCount": "{{count}}喜歡",
+    "likeWithCount_plural": "{{count}}喜欢",
+    "comment": "評論",
+    "comment_plural": "評論",
+    "commentWithCount": "{{count}}評論",
+    "commentWithCount_plural": "{{count}}評論",
+    "options": {
+      "shareWith": {
+        "city": "在我的城市",
+        "state": "在我的州",
+        "worldwide": "全世界",
+        "country": "在我的國家"
+      },
+      "expires": {
+        "forever": "永遠",
+        "month": "一個月",
+        "week": "一個星期",
+        "day": "一天"
+      },
+      "helpTypes": {
+        "request": "尋求幫助",
+        "offer": "提供幫助"
+      }
+    },
+    "post": "發布",
+    "postAsOrg": "將以組織的身份發布",
+    "createNew": "創建一個新的",
+    "whatNeed": "你需要什麼？",
+    "viewLess": "查看較少",
+    "viewMore": "查看更多",
+    "deletePostConfirmation": "您確定要刪除該帖子嗎？",
+    "deleteCommentConfirmation": "您確定要刪除評論嗎？",
+    "shareVia": "通過...分享",
+    "others": "其它",
+    "expireTitle": "啊...快點！",
+    "expire": "您一直在尋找的帖子已過期。請查看我們的Help Board以獲取更多此類帖子。",
+    "noActivity": "未找到活動",
+    "share": "分享",
+    "delete": "刪除",
+    "cancel": "取消",
+    "confirm": "確認"
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "帳戶信息",
+      "profileInfo": "資料信息",
+      "address": "地址",
+      "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+      "agreePrivacy": "註冊即表示我同意<0>隱私政策</0>",
+      "agreeTerms": "註冊即表示我同意<0>條款</0>",
+      "createProfile": "建立你的個人資料",
+      "saveChanges": "保存更改",
+      "thankyou": "感謝您加入我們的社區！",
+      "viewProfile": "我的个人资料",
+      "continuePosting": "繼續發布",
+      "viewFeed": "查看幫助板",
+      "viewMyProfile": "查看我的個人資料",
+      "loading": "加载",
+      "invalidEmail": "不合規電郵",
+      "selectOption": "請至少選擇一個選項",
+      "invalidURL": "無效的網址",
+      "savingChanges": "正在保存更改...",
+      "submit": "創建個人資料",
+      "submitLoading": "正在創建個人資料...",
+      "invalidPassword": "密碼必須包含以下至少三個：小寫字母，大寫字母，數字，特殊字符（例如!@＃$％^＆*）。",
+      "addressRequired": "地址為必填項。請輸入您的地址並從下拉列表中選擇",
+      "emailRequired": "電子郵件為必填項",
+      "passwordRequired": "密碼是必需的",
+      "maxCharacters": "最多{{maxNum}}字符。",
+      "minCharacters": "至少{{minNum}}字符。",
+      "validCharacters": "有效字符為：{{characters}}。",
+      "urls": {
+        "appStore": "鏈接到Apple Store",
+        "playStore": "鏈接到Google Play",
+        "twitter": "Twitter網址",
+        "facebook": "Facebook網址",
+        "instagram": "Instagram網址",
+        "github": "Github網址",
+        "linkedin": "LinkedIn網址",
+        "website": "網站"
+      },
+      "emailMaxLength": "電子郵件地址不得超過254個字符",
+      "emailInvalid": "電子郵箱地址不可用",
+      "emailDomainInvalid": "電子郵件域無效"
+    },
+    "individual": {
+      "email": "電子郵件",
+      "firstName": "名字",
+      "lastName": "姓氏",
+      "hideAddress": "不要顯示我的地址",
+      "iWant": "我想要",
+      "volunteer": "志願者",
+      "donate": "捐贈",
+      "shareInformation": "分享資訊",
+      "iNeed": "我需要",
+      "medical": "醫療幫助",
+      "haveCovidSymptoms": "我有COVID-19的症狀",
+      "other": "其它幫助",
+      "otherDesc": "我需要協助獲得食品雜貨/藥品/等。",
+      "editProfile": "編輯個人資料",
+      "intro": "自我介紹",
+      "website": "個人網站",
+      "myActivity": "我的活動",
+      "userActivity": "用戶活動",
+      "wantHelp": "我想幫忙",
+      "needHelp": "我需要幫助",
+      "firstNameRequired": "必須輸入名字。",
+      "lastNameRequired": "必須輸入姓氏。"
+    },
+    "org": {
+      "title": "創建組織資料",
+      "editOrgProfile": "編輯組織資料",
+      "name": "機構名稱",
+      "email": "組織聯繫電子郵件",
+      "invalidEmail": "電郵無效",
+      "globalOrg": "我們是全球性組織",
+      "seeking": "你需要什麼？",
+      "volunteers": "志愿者",
+      "donations": "捐獻",
+      "staff": "員工",
+      "other": "其它",
+      "typeAndIndustry": "類型和行業",
+      "type": "類型",
+      "types": [
+        "創業公司",
+        "公司",
+        "社區",
+        "政府",
+        "非營利",
+        "大學",
+        "醫療服務提供方",
+        "其它"
+      ],
+      "industry": "行業",
+      "industries": [
+        "汽車",
+        "建築",
+        "工藝品",
+        "銀行業",
+        "生物技術",
+        "商業用品和設備",
+        "公民與社會組織",
+        "活動服務",
+        "籌款",
+        "政府關係",
+        "健康，保健和健身",
+        "醫院與衛生保健",
+        "產業領域",
+        "資訊科技及服務",
+        "法律服務",
+        "市場營銷和廣告",
+        "醫療設備",
+        "非營利組織管理",
+        "其它",
+        "慈善事業",
+        "小學/中學教育",
+        "專業培訓與輔導",
+        "研究",
+        "智庫",
+        "翻譯和本地化"
+      ],
+      "typeIndustryError": "請從下拉菜單中選擇組織類型和行業",
+      "desc": "組織描述",
+      "lang": "組織語言",
+      "completeOrgProfile": "完整的組織資料",
+      "about": "關於",
+      "activity": "活動",
+      "editAccount": "編輯帳戶信息",
+      "updateSuccess": "組織已成功更新",
+      "orgNameRequired": "機構名稱為必填項"
+    }
+  },
+  "auth": {
+    "signIn": "登入",
+    "joinNow": "現在加入",
+    "email": "電子郵件",
+    "enterEmail": "輸入電郵地址",
+    "password": "密碼",
+    "enterPassword": "輸入密碼",
+    "confirmPassword": "確認密碼",
+    "forgotPassword": "忘記密碼",
+    "noAccount": "還沒有帳號？",
+    "haveAccount": "已經有帳號了？",
+    "recoverLink": "給我發電子郵件恢復鏈接",
+    "orSignIn": "或登錄",
+    "orJoinNow": "或現在加入",
+    "back": "返回登錄屏幕",
+    "passwordMax": "密碼不得超過{{num}}字符。",
+    "passwordMin": "密碼必須至少為{{num}}字符。",
+    "passwordConfirmationRequired": "需要密碼確認。",
+    "passwordNotMatch": "密碼不匹配"
+  },
+  "verifyEmail": {
+    "checkInbox": "檢查你的收件箱",
+    "forgotPass": "一封電子郵件已發送至{{email}}，其中包含有關如何重設密碼的進一步說明。",
+    "confirm": "我們已經通過電子郵件發送了一個鏈接到{{email}}，單擊鏈接以確認您的帳戶並完成您的個人資料。",
+    "checkSpam": "如果您幾分鐘後仍看不到郵件，請檢查垃圾郵件，促銷或其他傳入郵件文件夾。"
+  },
+  "aboutUs": {
+    "ourStory": "我們的故事",
+    "story": "FightPandemics是Manuel Gonzalez Alzuru的創意，他在法國感染了COVID-19。回到巴塞羅那後，他發現即使有人願意提供幫助，他也無法獲得幫助。 Telegram和WhatsApp團體在曼努埃爾附近進行自我組織，但由於不認識參與人員，他無法向他們尋求幫助。受到眾多人的啟發，Manuel在啟動該項目時懷著一個使命：確保其他人可以及時聯繫。",
+    "ourCommunity": "我們的社區",
+    "community": "我們是由來自世界各地的450多名志願者開發師，設計師，科學家，健康專家和產品經理組成的團隊",
+    "ourIdea": "我們的想法",
+    "ourSupporters": "我們的支持者",
+    "followUs": "在社交媒體上關注我們",
+    "contactUs": "或通過以下方式與我們聯繫",
+    "contactEmail": "contact@fightpandemics.com"
+  },
+  "footer": {
+    "faq": "常問問題",
+    "blog": "博客",
+    "termsConditions": "條款及細則",
+    "privacyPolicy": "隱私政策",
+    "cookiesPolicy": "Cookies政策",
+    "copyright": "版權{{currentYear}} FightPandemics。版權所有。"
+  },
+  "faq": {
+    "title": "關於FightPandemics /常規",
+    "offerRequestHelp": "提供和請求幫助",
+    "profileAccount": "個人資料和帳戶",
+    "contects": "聯繫信息",
+    "general": [
+      [
+        "什麼是FandPandemics？",
+        "FightPandemics是在COVID-19爆發期間創建的一個平台，旨在成為一個受到大流行影響的人們互相幫助的地方。",
+        "我們的主要任務是在本地和全球範圍內，在大流行危機中聯繫提供和請求幫助的個人和組織。無論您是尋求醫療幫助，口罩，法律幫助，食品雜貨，遛狗的人還是其他日常活動的支持者，都可以在這裡查找：",
+        "我們努力收集高度分散的基本信息，將從事大流行相關問題或項目的個人，社區和組織連接到一個網絡中。我們的願景是通過幫助社區更快，更有效地應對突發衛生事件和人道主義危機，創建一個每個人都對突發事件更具抵抗力的世界。"
+      ],
+      [
+        "誰是PandPandemics？",
+        "FightPandemics是一支由志願人員組成的全球團隊，其使命是提供幫助。我們的團隊由來自70多個國家/地區的150多名敬業的志願者組成，他們努力工作來有所作為。該平台是在創新協作的基礎上構建的，該平台將各種問題解決者聚集在一起，他們具有廣泛的技能，願意彼此共同創造和學習。",
+        "您想加入我們的倡議嗎？請通過電子郵件聯繫我們<0>hr@fightpandemics.com</0>"
+      ],
+      [
+        "FightPandemics在哪些城市開展業務？",
+        "FightPandemics是一個全球平台。我們的第一個版本已以英語發布，但我們計劃很快添加其它語言。"
+      ],
+      [
+        "FightPandemics是為誰製作的？",
+        "歡迎任何需要幫助的人加入我們的平台，並與其他個人和組織建立聯繫。"
+      ],
+      [
+        "如何在FightPandemics上發布要約或尋求幫助？",
+        "<0>加入社區後，您將擁有在FightPandemics平台上查看，創建帖子和評論的無限訪問權限。</0><1>要以用戶身份加入社區，請單擊“菜單”按鈕，然後選擇“立即加入/登錄”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據。</1><2>完成個人資料後，選擇菜單按鈕，選擇查看我的個人資料，然後單擊加號按鈕以創建您的第一篇文章。</2>"
+      ],
+      [
+        "我該如何了解FightPandemics新聞？",
+        "請在社交媒體上關注我們！我們定期發布對<0>Facebook</0>，<1>Twitter</1>，<2>LinkedIn</2>和<3>Instagram</3>定期更新。"
+      ],
+      [
+        "我需要付費才能使用FightPandemics嗎？",
+        "不，FightPandemics是由志願者運行的完全免費的平台。"
+      ],
+      [
+        "我可以在FightPandemics上提供/請求什麼樣的幫助？",
+        "歡迎您要求並提供任何類型的幫助，以支持個人和組織在COVID-19大流行期間應對。這是一個列表，其中包含一些您可以提供或請求的幫助類型的示例：",
+        "<0>雜貨</0><1>醫療用品</1><2>法律援助</2><3>技術支持</3><4>信息</4><5>資金</5><6>事件和活動</6><7>教育</7><8>健康</8><9>研究與開發</9>"
+      ],
+      [
+        "我如何尋求幫助？",
+        "從FightPandemics主頁中，選擇“需要幫助”。如果選擇“其他幫助”，則將輸入您的位置，並被定向到一個包含所選區域中的幫助內容的頁面。然後，您可以按提供者和類型過濾要查看的帖子。或者，您可以從主頁上選擇“查看社區帖子”以查看所有帖子並應用所需的過濾器。"
+      ],
+      [
+        "我該如何提供幫助？",
+        "<0>您可以作為個人或組織提供幫助。</0><1>在主頁上，選擇“提供幫助”以查看用戶創建的所有尋求幫助的帖子，並按位置和類型篩選結果。您需要登錄才能與他們聯繫。您還可以創建自己的帖子，描述您能夠提供的幫助。</1>"
+      ],
+      [
+        "我是否需要登錄才能查看幫助請求和報價？",
+        "您無需登錄即可查看幫助板上的任何帖子，但需要登錄後才能發表評論或點贊。"
+      ],
+      [
+        "我需要登錄才能創建/編輯帖子嗎？",
+        "是的，如果您要創建或編輯帖子，則需要創建一個帳戶並登錄。"
+      ],
+      [
+        "是否需要以個人身份註冊才能創建組織資料？",
+        "是的，以個人身份註冊後，您可以創建一個或多個鏈接到您帳戶的組織資料。"
+      ],
+      [
+        "我的名字/組織的名字會顯示給其他用戶嗎？",
+        "當您創建提供或尋求幫助的帖子時，您的名字/您的組織的名字會顯示給查看幫助面板的任何人。"
+      ],
+      [
+        "我怎麼能相信這些帖子是可靠的？",
+        "不幸的是，由於帖子是由我們的用戶創建的，因此我們不能確保所有帖子都是可靠的。但是，我們會通過定期清除數據並在帖子過期後停用它們來保持內容的相關性。如果您對帖子的內容有疑問，請通過<0>support@fightpandemics.com</0>與我們聯繫。"
+      ],
+      [
+        "您能幫我解決醫療問題嗎？",
+        "FightPandemics不是醫療服務提供者。"
+      ],
+      [
+        "我需要分享我的當前位置嗎？如果我不想分享自己的位置怎麼辦？",
+        "我們使用位置來顯示最相關的結果，但是，您也可以查看所有帖子。由於FightPandemics各地都有成千上萬的帖子，因此我們建議您輸入附近的位置，以最佳地定制結果。"
+      ],
+      [
+        "我所在的區域沒有任何幫助。我該怎麼辦？",
+        "我們的社區一直在增長。歡迎您成為您所在地區的第一個創建帖子並尋求幫助的人。還請查看任何人都可以訪問的服務，而無論他們身在何處。"
+      ],
+      [
+        "我在網站上發現了一個錯誤。我該如何舉報？",
+        "請提交反饋，或聯繫<0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "我不再被允許使用FightPandemics - 我該怎麼辦？",
+        "請通過<0>support@fightpandemics.com</0>與我們聯繫，我們將檢查您的帳戶有什麼問題。"
+      ],
+      [
+        "您存儲什麼信息？",
+        "FightPandemics僅出於我們的<0>隱私政策</0>中所述的目的收集和處理用戶的個人數據。 在任何情況下，我們均不與任何第三方提供訪問權限或共享您的個人數據，但本政策中規定的相關人員除外。"
+      ],
+      [
+        "我可以向我所在的城市或州提供幫助嗎？該帖子顯示多長時間？",
+        "提供/接收幫助的帖子可以是郵政編碼，城市，州或國家/地區級別，持續時間為一天，一周，一個月或永遠。默認情況下，帖子將設置為城市級別一個月。"
+      ],
+      [
+        "我的問題未列出。我可以聯繫誰？",
+        "對於此處未列出的一般性問題和其他問題，請聯繫<0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "我該如何加入？",
+        "<0>要以用戶身份加入社區，請單擊“菜單”按鈕，然後選擇“立即加入/登錄”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據。 </0><1>加入社區後，您將擁有無限制的訪問權限，可以在FightPandemics平台上查看和創建帖子和評論。 </1>"
+      ],
+      [
+        "如何將個人資料更改為組織資料？",
+        "組織資料與您的個人資料相關聯。創建個人資料後，您可以根據需要添加任意數量的組織資料。您的登錄憑據將繼續是您用於個人資料的電子郵件和密碼。"
+      ],
+      [
+        "如何將我的組織資料更改為個人資料？",
+        "您不能將組織資料更改為個人資料。為了創建組織資料，您需要擁有一個個人資料。創建個人資料後，您可以根據自己的意願添加任意數量的組織資料。您的登錄憑據將繼續是您用於個人資料的電子郵件和密碼。"
+      ],
+      [
+        "如何重設密碼？",
+        "從主頁上單擊“登錄”，然後單擊“忘記密碼”並按照說明進行操作"
+      ],
+      [
+        "為什麼我的密碼無效？",
+        "請檢查您的密碼是否至少包含8個字母。如果您已經有一個帳戶但忘記了登錄密碼，請從主頁上單擊“登錄”，然後轉到“忘記密碼”。"
+      ],
+      [
+        "我註冊了，但沒有收到確認電子郵件。那該怎麼辦？",
+        "如果您尚未收到確認電子郵件，請嘗試以下方法：",
+        "檢查您的Spam文件夾中的恢復電子郵件。",
+        "請嘗試“恢復密碼”過程。",
+        "如果上述選項不能解決問題，請隨時與我們的支持團隊聯繫： <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "如何刪除/取消我的帳戶？",
+        "如果您希望刪除帳戶，請通過<0>support@fightpandemics.com與我們聯繫</0>"
+      ],
+      [
+        "如何更新我的個人資料信息？",
+        "從右上角的菜單中，選擇“我的個人資料”，然後單擊個人資料頂部的筆圖標。您將被帶到一個屏幕，您可以在其中編輯個人資料信息，並在完成後選擇“保存更改”。"
+      ],
+      [
+        "如何舉報不正確或令人反感的帖子？",
+        "如果發現帖子不正確或違反《 FightPandemics行為準則》，請通過<0> support@fightpandemics.com給我們發送電子郵件</0>"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "我想成為合作夥伴或贊助商。",
+        "請通過<0>partnerships@fightpandemics.com與我們的合作夥伴團隊聯繫</0>"
+      ],
+      [
+        "我來自媒體。",
+        "請通過<0>pr@fightpandemics.com與我們聯繫</0>"
+      ],
+      [
+        "我需要技術支持。",
+        "我們為此抱歉。請給我們發送電子郵件，地址為<0>help@fightpandemics.com.</0>由於我們是一群志願者團體，因此請至少等待48小時後再給你答复。"
+      ],
+      [
+        "由於其他原因，我想聯繫FightPandemics。",
+        "對於此處未列出的一般性問題和其他問題，請聯繫<0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "contacts": "聯繫信息",
+    "contactsFAQ": [
+      [
+        "我想成為合作夥伴或贊助商。",
+        "請通過<0>partnerships@fightpandemics.com.</0>與我們的合作夥伴團隊聯繫。"
+      ],
+      [
+        "我來自媒體。",
+        "請通過<0>pr@fightpandemics.com.</0>與我們聯繫。"
+      ],
+      [
+        "我需要技術支持。",
+        "我們為此抱歉。請給我們發送電子郵件，地址為<0>help@fightpandemics.com.</0>由於我們是一群志願者團體，因此請至少等待48小時後再給你答复。"
+      ],
+      [
+        "由於其他原因，我想聯繫FightPandemics。",
+        "對於此處未列出的一般性問題和其他問題，請聯繫 <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "faqTitle": "常見問題"
+  },
+  "cookies": {
+    "whatCookies": "什麼是Cookie？",
+    "whatCookiesContent": "<0>本網站使用“ Cookies”和其他類似機制（以下稱為Cookie）。 Cookies是通過網絡服務器發送到瀏覽器的文件，用於記錄用戶在特定網站或該網站上所有網站，應用程序和/或服務上的活動。 Cookies的首要目的是為用戶提供對所提供服務的更快，更個性化的訪問。 Cookies僅與匿名用戶及其計算機關聯，並且不提供允許推斷用戶個人數據的參考。</0><1>用戶可以配置他/她的瀏覽器以通知和拒絕安裝本網站發送的Cookies，而不會影響用戶訪問內容的能力。但是，我們注意到，無論如何，網站的性能可能會下降。該網站利用Web Bug，它們是在電子郵件中插入的微小透明圖像。當用戶打開網站的新聞通訊時，該圖像將與其餘電子郵件內容一起下載，並允許知道是否已打開特定電子郵件以及從中下載的IP地址。 FightPandemics使用此信息來獲取統計信息，並對用戶接收其電子郵件進行分析研究。</1>",
+    "typeCookies": "Cookie的類型，用途和功能",
+    "typeCookiesBegin": "Cookies取決於其持久性，可以分為會話Cookies或永久Cookies。當用戶關閉瀏覽器時，第一個過期。第二個過期取決於完成它們所服務的目標的時間或何時將它們手動刪除。另外，根據您的目標，本網站使用的Cookies可以分類如下：",
+    "typeCookiesContent": "<0>技術cookie：這些cookie允許用戶瀏覽網頁，平台或應用程序，並使用其中存在的不同選項或服務，例如控制流量和數據通信，識別會話，訪問受限訪問零件，記住組成訂單的元素，進行訂單的購買過程，進行註冊或參加活動的請求，在導航過程中使用安全元素，存儲用於傳播視頻或聲音的內容或通過社交網絡共享內容。</0><1>分析cookie：由我們或第三方處理的cookie，它們可以量化用戶數量，從而對所提供服務的用戶使用情況進行度量和統計分析。為此，將分析您在我們網站上的瀏覽，以改善我們提供的產品或服務的提供。</1><2>廣告cookie：由我們或第三方處理的cookie，使我們能夠以最有效的方式管理網站上廣告空間的提供，以適應廣告的內容所請求服務的內容或您在我們網站上進行的使用。為此，我們可以分析您在Internet上的瀏覽習慣，並且可以向您顯示與您的瀏覽配置文件相關的廣告。</2><3>行為廣告Cookie：這些行為允許以最有效的方式管理廣告空間，在適當的情況下，編輯者已將其包含在網頁，應用程序或平台中，從該廣告空間提供所請求的廣告服務。這些cookie存儲有關用戶行為的信息，這些信息是通過持續觀察他們的瀏覽習慣而獲得的，從而允許開發特定的配置文件以基於其顯示廣告。</3>",
+    "typeCookiesEnd": "本網站可能使用第三方服務，可能需要在用戶身上或代表FightPandemics安裝Cookies，並會出於統計目的收集用戶使用本網站以及提供與本網站相關的其他服務的信息，活動和其他互聯網服務。",
+    "disableCookies": "如何在主要瀏覽器中禁用Cookie和Web錯誤？",
+    "disableCookiesContent": "通常可以停止接受瀏覽器cookie或停止接受來自特定服務的cookie。所有現代的瀏覽器都允許您更改Cookies的配置。這些設置通常在瀏覽器菜單的“Options”或“Preferences”中找到。您還可以配置瀏覽器或電子郵件管理器，以及安裝免費的附件，以防止在打開電子郵件時下載Web Bug。根據您的Internet瀏覽器使用以下說明來更改Cookie偏好設置：",
+    "updateCookies": "更新Cookie政策",
+    "updateCookiesContent": "FightPandemics可能會根據法律，法規要求或為了使該政策適應西班牙數據保護局發布的指示而修改本Cookies政策，因此建議用戶定期訪問此頁面以了解其中的更改。當此Cookies政策發生重大變化時，將通過網絡或通過電子郵件將用戶通知給在新聞通訊服務中註冊的用戶。",
+    "cookieAlert": "本網站使用cookie來提供我們的服務並向您顯示相關信息。通過使用我們的網站，您承認您已閱讀並理解我們的<0>Cookies政策</0>，<1>隱私政策</1>和我們的<2>條款和條件</2>。您對FightPandemics產品的使用受這些政策和條款的約束。"
+  },
+  "comment": {
+    "writeAComment": "寫個評論...",
+    "onlyAuthenticated": "只有登錄的用戶可以發表評論。",
+    "loading": "載入中...",
+    "showMore": "顯示更多評論",
+    "comment": "評論",
+    "comment_plural": "評論",
+    "commentWithCount": "{{count}}評論",
+    "commentWithCount_plural": "{{count}}評論",
+    "edit": "編輯",
+    "delete": "刪除",
+    "save": "保存",
+    "showLess": "顯示較少的評論"
+  },
+  "medical": {
+    "localNumber": "您當地的緊急電話號碼",
+    "call": "請撥打您當地的緊急電話",
+    "nearestHospitals": "最近的醫院",
+    "check": "症狀檢查",
+    "findHelp": "尋找幫助"
+  },
+  "feedback": {
+    "poorly": "不良",
+    "well": "很好",
+    "howMeetNeeds": "FightPandemics滿足到您的需求了嗎？",
+    "almostFinished": "我們快完成了！",
+    "howImpacted": "COVID-19對您有何影響？",
+    "mostValuable": "哪些功能對您最有價值？",
+    "oneChange": "如果您能改善有關FightPandemics的一項目，那會是什麼？",
+    "otherFeedback": "還有其他反饋意見嗎？",
+    "thankYou": "謝謝！",
+    "thankYouEarly": "感謝您在早期使用FightPandemics！",
+    "thankYouMessage": "您的意見很重要，可以幫助我們在COVID-19大流行期間和之後改善我們的服務。",
+    "submitFeedback": "提交反饋",
+    "radio": {
+      "age": "您幾歲",
+      "unaffected": "我正常上班/上學",
+      "quarantine": "我很健康，但在家中隔離",
+      "symptomaticUntested": "我有輕度症狀，但未經檢查",
+      "diagnosed": "我被診斷出有冠狀病毒"
+    }
+  },
+  "relativeTime": {
+    "second": "一秒",
+    "second_plural": "秒",
+    "secondWithCount": "{{count}}一秒前",
+    "secondWithCount_plural": "{{count}}幾秒前",
+    "minute": "分鐘",
+    "minute_plural": "分鐘",
+    "minuteWithCount": "{{count}}一分鐘前",
+    "minuteWithCount_plural": "{{count}}幾分鐘前",
+    "hour": "小時",
+    "hour_plural": "小時",
+    "hourWithCount": "{{count}}一小時前",
+    "hourWithCount_plural": "{{count}}幾小時前",
+    "day": "一天",
+    "day_plural": "天",
+    "dayWithCount": "{{count}}一天前",
+    "dayWithCount_plural": "{{count}}幾天前",
+    "week": "週",
+    "week_plural": "星期",
+    "weekWithCount": "{{count}}一週前",
+    "weekWithCount_plural": "{{count}}幾週前",
+    "month": "月",
+    "month_plural": "月份",
+    "monthWithCount": "{{count}}一個月前",
+    "monthWithCount_plural": "{{count}}幾個月前",
+    "year": "年",
+    "year_plural": "年份",
+    "yearWithCount": "{{count}}一年前",
+    "yearWithCount_plural": "{{count}}幾年前"
+  },
+  "alt": {
+    "logo": "FightPandemics標誌",
+    "blogLink": "FightPandemics博客鏈接",
+    "desktopBanner": "桌面任務和願景橫幅",
+    "mobileBanner": "移動任務和願景横幅",
+    "ideaImage": "我們的想法圖片",
+    "linkedinIcon": "FightPandemics LinkedIn圖標",
+    "facebookIcon": "FightPandemics Facebook圖標",
+    "instagramIcon": "FightPandemics Instagram圖標",
+    "twitterIcon": "FightPandemics Twitter圖標",
+    "createOrg": "建立組織",
+    "personalDataImage": "兩個人站在個人物品清單旁邊",
+    "envelope": "信封",
+    "avatar": "頭像"
+  },
+  "error": {
+    "title": "請為您的帖子添加標題。",
+    "description": "請提供帖子的描述。",
+    "help": "請選擇幫助類型。",
+    "tags": "請添加至少一個標籤。",
+    "privacyPolicyRequired": "您必須先同意我們的隱私政策，然後才能繼續",
+    "termsConditionsRequired": "您必須先同意我們的條款和條件，然後才能繼續",
+    "failedPredictions": "無法獲得預測。請重試。",
+    "failedLocation": "獲取位置失敗。",
+    "failedLocationDetails": "無法獲取位置詳細信息。請重試。",
+    "User denied Geolocation": "用戶拒絕地理位置。",
+    "resetBrowserLocationPermission": "請重設瀏覽器的位置權限或輸入地址。",
+    "enterAddressAgain": "請輸入地址或重試。",
+    "loggedInToCreateOrgProfile": "您必須登錄才能創建組織簡介",
+    "selectOneOption": "請選擇一個選項",
+    "userExists": "用戶已存在",
+    "invalidState": "無效狀態",
+    "passwordsShouldMatch": "應輸入兩次完全相同的密碼",
+    "passwordWeak": "密碼太弱",
+    "wrongCredentials": "錯誤的郵件地址或密碼",
+    "failedChangePasswordEmail": "更改電子郵件密碼出錯",
+    "feedbackAlreadySubmitted": "反饋已提交",
+    "emailIssue": "電子郵件已被使用或無法驗證",
+    "emailUnverified": "電子郵件未驗證",
+    "maxSignInAttemptsExceeded": "超過最高登錄嘗試次數。",
+    "failedSubmittingFeedback": "提交反饋失敗，原因：",
+    "failedCreatingUser": "創建用戶失敗，原因：",
+    "failedLoadingProfile": "加載個人資料失敗，原因：",
+    "failedLoadingActivity": "加載活動失敗，原因：",
+    "failedCreatingOrgProfile": "創建組織資料失敗，原因：",
+    "failedUpdatingOrgProfile": "更新組織資料失敗，原因：",
+    "failedUpdatingProfile": "更新配置文件失敗，原因：",
+    "failedAuthentication": "認證失敗，原因：",
+    "failedLogin": "登錄失敗，原因：",
+    "failedSignup": "註冊失敗，原因：",
+    "failedPasswordRecovery": "密碼恢復失敗，原因：",
+    "http": {
+      "Bad Request": "錯誤的請求",
+      "Unauthorized": "未找到",
+      "Payment Required": "需要付款",
+      "Forbidden": "禁止",
+      "Not Found": "未找到",
+      "Method Not Allowed": "不允許的方法",
+      "Not Acceptable": "不可接受",
+      "Proxy Authentication Required": "需要代理身份驗證",
+      "Request Timeout": "請求超時",
+      "Conflict": "衝突",
+      "Gone": "不在這裡",
+      "Length Required": "所需長度",
+      "Precondition Failed": "前提條件失敗",
+      "Payload Too Large": "有效負載過大",
+      "URI Too Long": "URI太長",
+      "Unsupported Media Type": "不支持的媒體類型",
+      "Range Not Satisfiable": "範圍無法滿足",
+      "Expectation Failed": "預期失敗",
+      "I'm a teapot": "我是茶壺",
+      "Misdirected Request": "錯誤請求",
+      "Unprocessable Entity": "不可處理實體",
+      "Locked": "已鎖定",
+      "Failed Dependency": "依賴失敗",
+      "Too Early": "太早",
+      "Upgrade Required": "需要升級",
+      "Precondition Required": "前提條件",
+      "Too Many Requests": "太多請求",
+      "Request Header Fields Too Large": "請求標頭字段太大",
+      "Unavailable For Legal Reasons": "由於法律原因而無法使用",
+      "Internal Server Error": "內部服務器錯誤",
+      "Not Implemented": "未實現",
+      "Bad Gateway": "錯誤的網關",
+      "Service Unavailable": "暫停服務",
+      "Gateway Timeout": "網關超時",
+      "HTTP Version Not Supported": "不支持HTTP版本",
+      "Variant Also Negotiates": "變體也可協商",
+      "Insufficient Storage": "存儲空間不足",
+      "Loop Detected": "檢測到循環",
+      "Not Extended": "不擴展",
+      "Network Authentication Required": "需要網絡驗證"
+    }
+  },
+  "TEMP: We are not a provider of healthcare services": "我們不是醫療保健服務提供商",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "這項服務本是為那些在這次公共衛生緊急情況下無法獲得幫助和資源的人提供的。",
+  "TEMP: Please consult your healthcare provider for medical advice": "請諮詢您的醫療保健提供者以尋求醫療建議",
+  "TEMP: I Understand": "我理解",
+  "TEMP: COVID-19 Screening Tool": "COVID-19检测工具",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "我們将問您一些關于您的症状，出行和與接触他人的问题",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "您的回答不會被儲存或共享。這只是幫助世界的工具。",
+  "TEMP: For Myself": "對于我",
+  "TEMP: For Someone Else": "對於他人",
+  "TEMP: Is this an emergency?": "這是緊急情況嗎？",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "是的，我有至少一種症状",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "是的，他們有至少一種症状",
+  "TEMP: No, I do not have any of these symptoms": "没有，我没有任何症状",
+  "TEMP: No, they do not have any of these symptoms": "没有，他们没有任何症状",
+  "TEMP: Under 18": "未滿18歲",
+  "TEMP: Between 18 and 64": "在18至64歲之間",
+  "TEMP: 65 or older": "65歲以上",
+  "TEMP: Multiple options can be selected": "可多選",
+  "TEMP: Fever, chills, or sweating": "发烧，发冷，或出汗",
+  "TEMP: New or worsening cough": "新出现或已经恶化的咳嗽",
+  "TEMP: Sore throat": "喉咙痛",
+  "TEMP: Vomiting or diarrhea": "呕吐或腹泻",
+  "TEMP: Do you live in a care facility?": "您住在護理機構中嗎？",
+  "TEMP: Do they live in a care facility?": "他們住在護理機構中嗎？",
+  "TEMP: This includes nursing homes or assisted living facilities.": "這包括療養院或者辅助生活設施",
+  "TEMP: No, I don’t live in a long-term care facility": "不，我沒有住在長期護理機構",
+  "TEMP: I live in a long-term care facility": "我住在長期護理機構",
+  "TEMP: No, they don’t live in a long-term care facility": "不，他們不住在長期護理機構中",
+  "TEMP: They live in a long-term care facility": "他們住在長期護理機構",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "這包括醫院，急診室，其它醫療場所，還有長期護理設施。請選擇所有適用的情况。",
+  "TEMP: No, I don’t work or plan to work in a care facility": "不，我没有也不計劃在醫療機構工作",
+  "TEMP: No, they don’t work or plan to work in a care facility": "不，他們没有也不計劃在醫療機構工作",
+  "TEMP: Do any of these apply to you?": "以下情形是否适用于您？",
+  "TEMP: Do any of these apply to them?": "以下情形适用于他们吗？",
+  "TEMP: Pregnancy": "怀孕",
+  "TEMP: None of the above": "以上皆不是",
+  "TEMP: Please consult a medical professional for advice": "請諮詢醫學專家以獲取建議",
+  "TEMP: Done": "完成",
+  "TEMP: Retake the Test": "重新參加測試",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "根据您的报告症状，應該立即尋求治療。\n請撥打緊急電話！",
+  "TEMP: Your Responses": "您的回應"
+}

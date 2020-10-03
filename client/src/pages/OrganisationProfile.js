@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -137,6 +138,7 @@ const OrganisationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
@@ -177,8 +179,14 @@ const OrganisationProfile = () => {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -189,12 +197,18 @@ const OrganisationProfile = () => {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
@@ -487,16 +501,16 @@ const OrganisationProfile = () => {
           <div style={{ margin: "0 2.5rem" }}>
             <WhiteSpace />
             <DescriptionMobile>
-              <SectionHeader> About</SectionHeader>
+              <SectionHeader> {t("profile.org.about")}</SectionHeader>
               {about}
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              Activity
+              {t("profile.org.activity")}
               <PlaceholderIcon />
               {isOwner && (
                 <>
-                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
@@ -523,7 +537,12 @@ const OrganisationProfile = () => {
                 totalPostCount={totalPostCount}
               />
               {status === ERROR_POSTS && (
-                <ErrorAlert message={postsError.message} />
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
               )}
               {emptyFeed() && <></>}
               {isOwner && (
@@ -548,12 +567,12 @@ const OrganisationProfile = () => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Edit Account Information
+                  {t("profile.org.editAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Edit Profile{" "}
+                  {t("profile.individual.editProfile") + " "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>
