@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { FeedContext } from "pages/Feed.js";
 import ButtonTag from "../Tag/ButtonTag";
 import LocationInput from "components/Input/LocationInput";
@@ -42,14 +43,14 @@ const requestOrOffer = {
 };
 
 const gtmTagsMap = {
-  "offer or request help": GTM.post.requestOffer,
+  lookingFor: GTM.post.requestOffer,
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
 
 const filterOps = (label, idx) => {
-  if (label === "offer or request help") {
+  if (label === "lookingFor") {
     return `_${requestOrOffer[idx]}`;
   }
   return label === "providers"
@@ -58,6 +59,7 @@ const filterOps = (label, idx) => {
 };
 
 const FilterAccord = ({ gtmPrefix }) => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
     activePanel,
@@ -66,13 +68,11 @@ const FilterAccord = ({ gtmPrefix }) => {
     handleOption,
     location,
     selectedOptions,
+    selectedType,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
 
-  function capitalizeFirstLetter(header) {
-    return header.charAt(0).toUpperCase() + header.slice(1);
-  }
   const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "location") {
@@ -80,7 +80,7 @@ const FilterAccord = ({ gtmPrefix }) => {
           <FilterAccordionPanel
             header={
               <AccordionHeader id={gtmTag(GTM.post.location)}>
-                {capitalizeFirstLetter(filter.label)}
+                {t(`feed.filters.labels.${filter.label}`)}
               </AccordionHeader>
             }
             className={filter.className}
@@ -99,27 +99,27 @@ const FilterAccord = ({ gtmPrefix }) => {
           <FilterAccordionPanel
             header={
               <AccordionHeader id={gtmTag(gtmTagsMap[filter.label])}>
-                {capitalizeFirstLetter(filter.label)}
+                {t(`feed.filters.labels.${filter.label}`)}
               </AccordionHeader>
             }
             className={filter.className}
             key={idx}
           >
-            {Object.values(filter.options).map((option, idx) => {
+            {Object.values(filter.options).map(({ text, value }, idx) => {
               return (
                 <ButtonTag
                   id={gtmPrefix + filterOps(filter.label, idx)}
                   key={idx}
-                  onClick={handleOption(filter.label, option)}
+                  onClick={handleOption(filter.label, value)}
                   className={
                     "tag-selectable " +
                     (selectedOptions[filter.label] &&
-                    selectedOptions[filter.label].includes(option)
+                    selectedOptions[filter.label].includes(value)
                       ? "tag-selected"
                       : "")
                   }
                 >
-                  {option}
+                  {t(text)}
                 </ButtonTag>
               );
             })}

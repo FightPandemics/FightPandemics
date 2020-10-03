@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import BaseButton from "./BaseButton";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 const { royalBlue, white, black } = theme.colors;
 const { display } = theme.typography.font.family;
 
@@ -19,11 +19,15 @@ const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
   letter-spacing: normal;
   color: ${white};
   background-color: ${royalBlue};
-  margin: 0 auto;
-  margin-top: 4rem;
-  margin-bottom: 24rem;
+  margin: 5rem auto 24rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 2.5rem;
+    margin-bottom: 16rem;
+  }
 `;
 
 export default HelpBoardButton;

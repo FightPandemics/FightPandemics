@@ -1,92 +1,85 @@
 import styled, { css } from "styled-components";
 import { mq, theme } from "constants/theme";
-const { royalBlue, offWhite, darkerGray, gray } = theme.colors;
+const { royalBlue, white, darkerGray, gray } = theme.colors;
 const { display, body } = theme.typography.font.family;
-const {font,one,two,three,four} = theme.typography.heading;
+const { font, one, two, three, four } = theme.typography.heading;
 
 export const AboutUsContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color:${darkerGray}
-  margin: 0 auto;  
-  background-color:${offWhite};
+  color: ${darkerGray};
+  margin: 0 auto;
+  background-color: ${white};
   letter-spacing: normal;
   font-style: normal;
   font-stretch: normal;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding: 0 3rem;
+  }
   h1 {
     font-size: ${one};
     text-align: center;
     font-family: ${display};
-    font-weight: bold;   
-    line-height: normal
+    font-weight: bold;
+    line-height: normal;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 2.6rem;
+      line-height: 2.8rem;
     }
-  h2{
+  }
+  h2 {
     font-family: ${display};
     font-size: 3.8rem;
     font-weight: bold;
     line-height: 1.23;
-    margin-top:3.125rem;
+    margin-top: 3.125rem;
   }
-  h3{
+  h3 {
     font-family: ${display};
     font-size: 2.2rem;
     font-weight: 600;
     line-height: 1.17;
   }
-  h4{
+  h4 {
     font-family: ${display};
     font-size: 1.75rem;
     line-height: 1.25;
   }
-  p{
-    margin: 0 2rem;   
+  p {
+    margin: 0 2rem;
     font-size: 2rem;
-    font-family:${body};
-    color:${darkerGray};
-    font-weight: normal;        
-  }    
-  `;
+    font-family: ${body};
+    color: ${darkerGray};
+    font-weight: normal;
 
-export const SupportersLogosContainer = styled.div`
-  max-width: 100%;
-  display: grid;
-  margin-left: 9rem;
-  margin-right: 9rem;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(${props => props.wide}, 0.8fr)
-  );
-  grid-gap: 1rem;
-  grid-auto-rows: 0.8fr;
-  > div {
-    display: grid;
-    place-items: center;
-    &::before {
-      // for apsect ratio
-      display: block;
-      padding-bottom: 100%;
-      grid-area: 1 / 1 / 2 / 2;
-    }
-    img {
-      width: 60%;
-      max-height: 50%;
-      grid-area: 1 / 1 / 2 / 2;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 1.8rem;
+      line-height: 3rem;
     }
   }
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    max-width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(11rem, 0.5fr));
-    grid-gap: 0.5rem;
-    display: grid;
-    > div {
-      place-items: center;
-      img {
-        width: 90%;
-        grid-area: 1/ 1 / 2 / 2;
-        max-height: 50%;
-      }
+`;
+
+export const SupportersLogosContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  > div {
+    max-width: 20rem;
+    margin-right: 2.5rem;
+    margin-bottom: 5rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      max-width: 10rem;
+      margin-bottom: 2.5rem;
+    }
+
+    img {
+      max-width: 100%;
     }
   }
 `;
@@ -99,31 +92,47 @@ export const MissionAndVisionBannerContainer = styled.div`
 
 export const HeadingContainer = styled.div`
   margin: 0 auto;
-  width:88.1rem;
+  max-width: 88.1rem;
   height: 20rem;
+
   h2 {
     font-size: 3.8rem;
     line-height: 1.23;
-    margin-top: 4rem;
+    margin-top: 4.9rem;
+    margin-bottom: 1rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 2.2rem;
+      line-height: normal;
+    }
   }
   p {
     font-size: 2.2rem;
     line-height: 1.36;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 1.7rem;
+      line-height: 1.76;
+      letter-spacing: -0.077rem;
+      margin: 0;
+    }
   }
 `;
 
 export const HowDoesThisWorkContainer = styled.div`
   margin-top: 18rem;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 16rem;
+  }
+
   img {
-    margin-left:7.2rem;
-    margin-right:6rem;
     object-fit: contain;
+    height: 29rem;
   }
   h3 {
     font-size: 2.4rem;
     font-weight: 600;
-    margin-left: 10.7rem;
-    margin-right: 9.1rem;
   }
   p {
     width: 29rem;
@@ -132,26 +141,39 @@ export const HowDoesThisWorkContainer = styled.div`
   }
 `;
 export const ConnectContainer = styled.div`
-  margin: 0 auto;
-  margin-top: 8rem;
-  margin-left: 12.5rem;
-  margin-right: 8rem;
+  max-width: 120rem;
+  margin: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    flex-direction: column-reverse;
+  }
+
   img {
-    width: 26.6;
+    width: 26.6rem;
     height: 46.7rem;
     object-fit: contain;
   }
   h1 {
-    width: 46rem;
-    margin-top: 11rem;
+    max-width: 46rem;
   }
   p {
-    width: 45rem;
+    max-width: 45rem;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      margin: 0;
+      margin-bottom: 4.5rem;
+    }
   }
 `;
 
 export const OurStoryContainer = styled.div`
-  margin: 0 auto;  
+  margin: 0 auto;
+  margin-bottom: 26rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-bottom: 13rem;
+  }
   h3 {
     color: ${royalBlue};
     margin-top: 3.75rem;
@@ -160,7 +182,7 @@ export const OurStoryContainer = styled.div`
   }
   p {
     margin: 0 auto;
-    width: 88.1rem;
+    max-width: 88.1rem;
     color: ${darkerGray};
     line-height: 1.5;
   }
@@ -169,7 +191,7 @@ export const OurStoryContainer = styled.div`
     font-weight: 500;
   }
   img {
-    width: 103.1rem;
+    max-width: 103.1rem;
     height: 35.4rem;
     margin-bottom: 25rem;
     margin-top: 8rem;
@@ -198,27 +220,45 @@ export const TextContainer = styled.div`
 `;
 
 export const OurCommunity = styled.img`
-  width: 51.9375rem
+  width: 51.9375rem;
   height: 26.5625rem;
   display: inline-block;
   text-align: center;
 `;
 
 export const ImageContainer = styled.div`
-  background-image: url(${props => props.img});
-  width: ${props => props.width};
-  height: ${props => props.height};
-  display: inline-block;
+  background-image: url(${(props) => props.img});
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   margin: 0 auto;
   margin-bottom: 16rem;
-  h1 {
-    margin-top: 5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: ${(props) => props?.flexDirection || "column"};
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: ${(props) => props.mobileHeight};
+    background-position-x: -7.2rem;
+    margin-bottom: 8rem;
+    position: relative;
+    left: -3rem;
+    width: calc(100% + 6rem);
+    padding: 0 3rem;
   }
+
   h2 {
     margin-top: 1rem;
+    align-self: flex-start;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
   }
   p {
-    width: 53rem;
+    max-width: 53rem;
     height: 9.5rem;
     display: inline-block;
     line-height: 1.5;
@@ -226,13 +266,46 @@ export const ImageContainer = styled.div`
     margin-bottom: 2.5rem;
     margin-left: 15rem;
     margin-right: 15.1rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      line-height: 2.3rem;
+      letter-spacing: 0.063rem;
+      margin: 0 0 5.6rem;
+    }
+  }
+`;
+
+export const MobileContentContainer = styled.div`
+  display: none;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: block;
+    margin-bottom: 8rem;
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    p {
+      font-size: 1.8rem;
+      line-height: 2.3rem;
+      letter-spacing: 0.063rem;
+    }
   }
 `;
 
 export const SupporterContainer = styled.div`
   background-color: ${gray};
-  padding-bottom: 3.75rem;
-  padding-top: 3.75rem;
+  padding: 3.4rem 12.5rem;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    position: relative;
+    left: -3rem;
+    width: calc(100% + 6rem);
+    padding: 3.4rem 1.5rem;
+  }
+
   h3 {
     padding-top: 3.75rem;
     margin-bottom: 3.75rem;
@@ -241,26 +314,43 @@ export const SupporterContainer = styled.div`
     line-height: 1.17;
   }
   p {
-    width: 88rem;
+    max-width: 88rem;
     margin: 0 auto;
     margin-bottom: 4rem;
     line-height: 1.5;
   }
+
+  h4 {
+    margin-bottom: 4rem;
+  }
 `;
 
 export const Grid = styled.div``;
-export const Row = styled.div`
+export const FlexBox = styled.div`
   display: flex;
+  flex-direction: ${(props) => props?.direction || "row"};
+  justify-content: ${(props) => props?.justify || "flex-start"};
+  align-items: ${(props) => props?.align || "flex-start"};
+  flex-wrap: ${(props) => props?.wrap || "wrap"};
 `;
 
 export const Col = styled.div`
-  flex: ${props => props.size};
+  flex: ${(props) => props.size};
 `;
 
 export const SocialStyle = styled.div`
-  margin-top: 11rem;
-  margin-bottom: 2rem;
-  margin-left: 11rem;
+  margin: 11.3rem 12.4rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin: 0;
+    margin-top: 4.5rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   h3 {
     width: 30rem;
     font-size: 2.2rem;
@@ -269,10 +359,25 @@ export const SocialStyle = styled.div`
     line-height: 1.21;
   }
   p {
+    width: 100%;
     font-size: 1.4rem;
     text-align: right;
-    margin-right: 11rem;
-    margin-bottom: 2rem;
+    margin: 0;
+    &:first-child {
+      margin-bottom: 2rem;
+    }
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      text-align: center;
+      font-size: 1.5rem;
+
+      &:first-child {
+        margin-top: 3rem;
+        margin-bottom: 1.3rem;
+        font-size: 1.9rem;
+        font-weight: 500;
+      }
+    }
   }
   p span {
     color: ${royalBlue};
@@ -289,7 +394,7 @@ export const SocialContainer = styled.div`
   }
 `;
 
-export const AboutUsLink = styled.a.attrs(props => ({
+export const AboutUsLink = styled.a.attrs((props) => ({
   target: "_blank",
 }))`
   color: ${royalBlue};

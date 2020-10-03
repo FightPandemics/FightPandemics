@@ -8,7 +8,7 @@ const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
   width: 32.7rem;
-  height: 5.46rem;
+  height: 5.4rem;
   border-radius: 4.6rem;
   border: solid 0 ${black};
   font-family: ${display};
@@ -22,7 +22,7 @@ const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  text-align:center;
+  align-items: center;
 `;
 
 export default LinkButton;

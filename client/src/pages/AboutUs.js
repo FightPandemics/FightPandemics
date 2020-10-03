@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import GetInvButton from "components/Button/GetInvolvedButton";
 import HelpBoardButton from "components/Button/HelpBoardButton";
 import {
   AboutUsContainer,
   ImageContainer,
+  MobileContentContainer,
   HeadingContainer,
   HowDoesThisWorkContainer,
   OurStoryContainer,
@@ -14,7 +16,7 @@ import {
   SocialContainer,
   AboutUsLink,
   Grid,
-  Row,
+  FlexBox,
   Col,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
@@ -65,7 +67,7 @@ import facebookLogo from "assets/icons/social-facebook.png";
 import twitterLogo from "assets/icons/social-twitter.png";
 import { size } from "lodash";
 
-const DemoBox = props => (
+const DemoBox = (props) => (
   <p className={`height-${props.value}`}>{props.children}</p>
 );
 
@@ -149,13 +151,15 @@ function LogoItem(props) {
 
 function LogosList(props) {
   const supporterLogos = props.supporterLogos;
-  const logoItems = supporterLogos.map(logo => (
+  const logoItems = supporterLogos.map((logo) => (
     <LogoItem key={logo.toString()} value={logo} />
   ));
   return logoItems;
 }
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+
   return (
     <AboutUsContainer>
       <HeadingContainer>
@@ -168,11 +172,31 @@ const AboutUs = () => {
         </p>
       </HeadingContainer>
 
-      <ImageContainer img={Group} width={"100%"} height={"501.8px"}>
+      <ImageContainer
+        img={Group}
+        width={"100%"}
+        height={"50rem"}
+        mobileHeight={"40rem"}
+        flexDirection={"row"}
+      >
         <h2>Who is this for?</h2>
       </ImageContainer>
 
-      <ImageContainer img={WorldMap} width={"831.7px"} height={"425px"} background-color={"#fbfbfd"} background-blend-mode={"multiply"}>
+      <MobileContentContainer>
+        <h2>Who is this for?</h2>
+        <p>
+          Anyone or any type of business, community group, government, or health
+          care organisation who needs or wants to provide help.
+        </p>
+      </MobileContentContainer>
+
+      <ImageContainer
+        img={WorldMap}
+        width={"831.7px"}
+        height={"42.5rem"}
+        background-color={"#fbfbfd"}
+        background-blend-mode={"multiply"}
+      >
         <h1>Our Community</h1>
         <p>
           We are built by a team of 1100+ volunteer developers, designers,
@@ -183,65 +207,63 @@ const AboutUs = () => {
       </ImageContainer>
 
       <ConnectContainer>
-        <Row justify="space-around" align="middle">
-          <Col size={4}>
-            <DemoBox value={100}>
-              <img src={ConnectImage} />
-            </DemoBox>
-          </Col>
-          <Col size={4}>
-            <DemoBox value={50}>
-              <h1>We connect people</h1>
-              <p>
-                An altruistic platform to connect those who need help with those
-                who can provide it.
-              </p>
-            </DemoBox>
-          </Col>
-        </Row>
+        <FlexBox justify="center">
+          <img src={ConnectImage} />
+        </FlexBox>
+        <FlexBox direction="column" justify="center" align="center">
+          <h1>We connect people</h1>
+          <p>
+            An altruistic platform to connect those who need help with those who
+            can provide it.
+          </p>
+        </FlexBox>
       </ConnectContainer>
 
       <HowDoesThisWorkContainer>
         <h1>How does this work?</h1>
-        <Grid>
-          <Row>
-            <Col size={8}>
+        <>
+          <FlexBox justify="center" wrap={"wrap"}>
+            <FlexBox
+              direction="column"
+              align="center"
+              style={{ marginTop: "3rem" }}
+            >
               <h3>Help Board</h3>
-              <img
-                alt="help board"
-                src={HelpBoard}
-                style={{ width: "32.6rem", height: "29rem" }}
-              />
+              <img alt="help board" src={HelpBoard} />
               <p>
                 A community platform for individuals and organizations to offer
                 and request aid.
               </p>
-            </Col>
-            <Col size={8}>
-              <h3>Local & Global</h3>
-              <img
-                alt="local and global"
-                src={LocalGlobal}
-                style={{ width: "27.9rem", height: "29.45rem" }}
-              />
+            </FlexBox>
+            <FlexBox
+              direction="column"
+              align="center"
+              style={{ marginTop: "3rem" }}
+            >
+              <h3>Local &amp; Global</h3>
+              <img alt="local and global" src={LocalGlobal} />
               <p>
                 Offer and request help within my community and around the world.
               </p>
-            </Col>
-            <Col size={8}>
+            </FlexBox>
+            <FlexBox
+              direction="column"
+              align="center"
+              style={{ marginTop: "3rem" }}
+            >
               <h3>Relevant Content</h3>
               <img
+                style={{ objectPosition: "30px" }}
                 alt="relevant-content"
                 src={RelevantContent}
-                style={{ width: "29.28rem", height: "29rem" }}
               />
               <p>Expiration periods ensure the board is always up to date.</p>
-            </Col>
-          </Row>
-        </Grid>
-        <HelpBoardButton type="primary">
-          <Link to="/feed">Go to Help Board</Link>
-        </HelpBoardButton>
+            </FlexBox>
+          </FlexBox>
+          <HelpBoardButton type="primary">
+            <Link to="/feed">Go to Help Board</Link>
+          </HelpBoardButton>
+        </>
       </HowDoesThisWorkContainer>
 
       <OurStoryContainer>
@@ -252,27 +274,27 @@ const AboutUs = () => {
           COVID-19 in France. Upon returning home to Barcelona, he found he was
           unable to get help even though there were people who wanted to provide
           it.
-          <br />
-          <br />
+        </p>
+        <br />
+        <p>
           Inspired by so many coming together, Manuel launched the project with
           one mission in mind:{" "}
           <span>to ensure that others could connect in time.</span>
         </p>
-        <img src={BlankImage} alt="loading..." />
-        {/* Add FightPandemics Video */}
+        {/* TODO Add FightPandemics Video */}
+        {/* <img src={BlankImage} alt="loading..." /> */}
       </OurStoryContainer>
 
       <SupporterContainer>
         <h1>Supporters</h1>
         <p>
-          {" "}
           Thank You to our supporters, without them we would not be able to help
           communities prepare and respond to pandemics.
           <br />
           <br />
           To learn more about how your business can become a supporter, please
           contact our partnerships team at{" "}
-          <AboutUsLink href="partnerships@fightpandemics.com">
+          <AboutUsLink href="mailto:partnerships@fightpandemics.com">
             {" "}
             partnerships@fightpandemics.com
           </AboutUsLink>
@@ -297,41 +319,34 @@ const AboutUs = () => {
       </SupporterContainer>
 
       <SocialStyle>
-        <Grid>
-          <Row>
-            <Col size={8}>
-              <h3>Follow us on social media</h3>
-              <SocialContainer>
-                <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
-                  <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
-                </AboutUsLink>
-                <AboutUsLink href="https://www.facebook.com/FightPandemics/">
-                  <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
-                </AboutUsLink>
-                <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-                  <img
-                    src={instagramLogo}
-                    alt="FightPandemics Instagram Icon"
-                  />
-                </AboutUsLink>
-                <AboutUsLink href="https://twitter.com/FightPandemics">
-                  <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
-                </AboutUsLink>
-              </SocialContainer>
-            </Col>
-            <Col size={8}>
-              <p>
-                <span>#ForCommunitiesByCommunities</span>
-              </p>
-              <p>
-                Contact us at:{" "}
-                <AboutUsLink href="admin@fightpandemics.com">
-                  admin@fightpandemics.com
-                </AboutUsLink>
-              </p>
-            </Col>
-          </Row>
-        </Grid>
+        <FlexBox direction="column">
+          <h3>Follow us on social media</h3>
+          <SocialContainer>
+            <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
+              <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
+            </AboutUsLink>
+            <AboutUsLink href="https://www.facebook.com/FightPandemics/">
+              <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+            </AboutUsLink>
+            <AboutUsLink href="https://www.instagram.com/fightpandemics/">
+              <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
+            </AboutUsLink>
+            <AboutUsLink href="https://twitter.com/FightPandemics">
+              <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+            </AboutUsLink>
+          </SocialContainer>
+        </FlexBox>
+        <FlexBox direction="column">
+          <p>
+            <span>#ForCommunitiesByCommunities</span>
+          </p>
+          <p>
+            Contact us at:
+            <AboutUsLink href="mailto:admin@fightpandemics.com">
+              admin@fightpandemics.com
+            </AboutUsLink>
+          </p>
+        </FlexBox>
       </SocialStyle>
     </AboutUsContainer>
   );

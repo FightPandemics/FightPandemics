@@ -5,6 +5,7 @@ import { Avatar, Input, Tooltip, Space } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -44,6 +45,7 @@ const NestedComments = ({
   dispatchPostAction,
   deleteComment,
 }) => {
+  const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
   const [fakeNumReplies, setFakeNumReplies] = useState(0);
@@ -186,14 +188,14 @@ const NestedComments = ({
         ghost
         onClick={() => toggleEditComment()}
       >
-        Edit
+        {t("comment.edit")}
       </StyledCommentButton>
       <StyledCommentButton
         size="small"
         ghost
         onClick={(e) => handleDeleteComment(e)}
       >
-        Delete
+        {t("comment.delete")}
       </StyledCommentButton>
     </Space>,
   ];
@@ -214,7 +216,7 @@ const NestedComments = ({
               ghost
               onClick={() => handleSubmit()}
             >
-              Save
+              {t("comment.save")}
             </StyledCommentButton>
           </Space>
         </>
@@ -239,7 +241,9 @@ const NestedComments = ({
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
-                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
+                  {t(`relativeTime.${comment?.elapsedTimeText.unit}WithCount`, {
+                    count: comment?.elapsedTimeText.count,
+                  })}
                 </span>
               </Tooltip>
             </>
@@ -251,8 +255,8 @@ const NestedComments = ({
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (
-          <Loader />
-        )}
+        <Loader />
+      )}
     </div>
   );
 };
