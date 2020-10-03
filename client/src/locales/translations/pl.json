@@ -224,7 +224,7 @@
         "linkedin": "LinkedIn URL",
         "website": "Strona internetowa"
       },
-      "emailMaxLength": "Adres e-mail nie może przekraczać 200 znaków",
+      "emailMaxLength": "Adres e-mail nie może przekraczać 254 znaków",
       "emailInvalid": "Adres e-mail jest nieprawidłowy",
       "emailDomainInvalid": "Domena poczty e-mail jest nieprawidłowa"
     },
