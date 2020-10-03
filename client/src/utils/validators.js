@@ -14,12 +14,8 @@ export const validateEmail = (email) => {
   let errorMessage = "";
   if (!email) {
     errorMessage = "emailRequired";
-  } else if (email.length > 254) {
-    errorMessage = "emailMaxLength";
-  } else if (!_isEmail(email)) {
+  } else if (!_isEmail(email) || !validateTopLevelDomain(email)) {
     errorMessage = "emailInvalid";
-  } else if (!validateTopLevelDomain(email)) {
-    errorMessage = "emailDomainInvalid";
   }
   if (errorMessage.length != 0) {
     return errorMessage;
