@@ -7,23 +7,22 @@ const { lighterBlack } = theme.colors;
 const { display, body } = theme.typography.font.family;
 
 const StyledContainer = styled.section`
-  padding-bottom: 2.5rem;
-  padding-top: 2.5rem;
+  padding: 2.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   h4 {
     font-family: ${display};
     font-size: 2.4rem;
     font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
     line-height: 1.17;
-    letter-spacing: normal;
+    text-align: center;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
     color: ${lighterBlack};
   }
   p {
-    width: 25rem;
+    width: 100%;
     font-family: ${body};
     font-size: 2rem;
     font-weight: normal;
@@ -42,11 +41,11 @@ const StyledContainer = styled.section`
 const GetInvolvedButton = () => {
   const [visible, setVisible] = useState(false);
 
-  const handleCancel = async e => {
+  const handleCancel = async (e) => {
     setVisible(false);
   };
 
-  const showPopUp = async e => {
+  const showPopUp = async (e) => {
     setVisible(true);
   };
 

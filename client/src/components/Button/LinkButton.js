@@ -7,7 +7,8 @@ const { display } = theme.typography.font.family;
 const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
-  width: 32.7rem;
+  max-width: 32.7rem;
+  width: 100%;
   height: 5.4rem;
   border-radius: 4.6rem;
   border: solid 0 ${black};
