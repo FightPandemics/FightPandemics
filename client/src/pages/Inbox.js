@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   InboxContainer,
   CurrentChatContainer,
@@ -25,17 +25,37 @@ const CurrentChat = ({
   chatLog,
   loadMore,
   sendMessage,
+  leaveAllRooms,
   user,
 }) => {
   const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView();
+    messagesEndRef.current.scrollIntoView({block: "start"});
   };
 
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const onLoadMoreClick = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    let loadMoreSuccess = await loadMore({
+      threadId: room._id,
+      skip: chatLog.length,
+    })
+    if (loadMoreSuccess) setIsLoading(false)
+  }
 
   useEffect(() => {
     if (room)
@@ -50,7 +70,7 @@ const CurrentChat = ({
       function urlify(text) {
         if (urlRegex.test(text))
           return (
-            <a target="_blank" href={`//${text}`}>
+            <a target="_blank" key={Math.random().toString(36)} href={`//${text}`}>
               {text}
             </a>
           );
@@ -63,14 +83,15 @@ const CurrentChat = ({
       return output;
     };
 
+    const prevChatLogLength = usePrevious(chatLog.length);
     useEffect(() => {
-      scrollToBottom();
-    }, [chatLog]);
+      if (!isLoading && chatLog.length != prevChatLogLength) scrollToBottom();
+    }, [chatLog.length]);
 
     const { chat } = useContext(ChatContext);
     const Sender = ({ postRef, message }) => {
       return (
-        <BubbleContainer>
+        <BubbleContainer key={'b-'+message._id}>
           <SenderBubble>
             {postRef && <OrgPost postRef={postRef} />}
             <div className="message-content-sender">{linkify(message)}</div>
@@ -80,7 +101,7 @@ const CurrentChat = ({
     };
     const Recipient = ({ postRef, message }) => {
       return (
-        <RecipientBubble>
+        <RecipientBubble key={'b-'+message._id}>
           {postRef && <OrgPost postRef={postRef} />}
           <div className="message-content-recipient">{linkify(message)}</div>
         </RecipientBubble>
@@ -88,6 +109,9 @@ const CurrentChat = ({
     };
     return (
       <MessagesContainer>
+          {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && 
+            <button onClick={onLoadMoreClick} id={"messages-top"}>load more</button> // to be styled, or changed to infinte scroller
+          }
           {chatLog?.map((message) => (
             <>
               {message.authorId != user.id ? (
@@ -115,6 +139,7 @@ const CurrentChat = ({
       <RecipientHeader
         name={room ? getReceiver(room.participants).name : null}
         lastAccess={room ? getReceiver(room.participants).lastAccess : null}
+        onMobileBackClick={leaveAllRooms}
       />
       <Messages />
       {room && <InputBox threadId={room._id} sendMessage={sendMessage} />}
@@ -132,6 +157,7 @@ const Inbox = (props) => {
     getChatLog,
     loadMore,
     getUserRooms,
+    leaveAllRooms,
     getUserStatus,
   } = useContext(WebSocketContext);
   const { isIdentified, user } = props;
@@ -141,15 +167,15 @@ const Inbox = (props) => {
     if (isIdentified) getUserRooms();
   }, [isIdentified]);
 
+  useEffect(()=>{
+    // join the first room if not on mobile
+    if (!toggleMobileChatList && !room && rooms[0]) joinRoom({
+      threadId: rooms[0]._id
+    })
+  },[rooms])
+
   return (
     <InboxContainer>
-      {empty ? (
-        <>
-          <ChatList empty={empty} />
-          <EmptyInbox />
-        </>
-      ) : (
-        <>
           <ChatList
             empty={empty}
             rooms={rooms}
@@ -167,11 +193,10 @@ const Inbox = (props) => {
             chatLog={chatLog}
             loadMore={loadMore}
             sendMessage={sendMessage}
+            leaveAllRooms={leaveAllRooms}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
           />
-        </>
-      )}
     </InboxContainer>
   );
 };

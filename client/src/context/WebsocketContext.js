@@ -76,7 +76,6 @@ export default class SocketManager extends React.Component {
   sendMessage = async (messageData) => {
     return new Promise((resolve) => {
       this.socket.emit("SEND_MESSAGE", messageData, (response) => {
-        console.log(response)
         if (response.code == 200) return resolve(true)
         resolve(false)
       });
@@ -87,7 +86,6 @@ export default class SocketManager extends React.Component {
   joinRoom = (data) => {
     return new Promise((resolve) => {
       this.socket.emit("JOIN_ROOM", data, (response) => {
-        console.log(response)
         if (response.code == 200) {
           this.props.store.dispatch(joinRoomSuccess(response.data));
           return resolve(response.data)
@@ -97,6 +95,10 @@ export default class SocketManager extends React.Component {
       });
     })
   };
+
+  leaveAllRooms = () => {
+    this.joinRoom({})
+  }
 
   getUserRooms = () => {
     this.socket.emit("GET_USER_THREADS", null, (response) => {
@@ -113,9 +115,16 @@ export default class SocketManager extends React.Component {
   };
 
   loadMore = (data) => {
-    this.socket.emit("GET_CHAT_LOG_MORE", data, (response) => {
-      if (response.code == 200) this.props.store.dispatch(loadMoreSuccess(response.data));
-    });
+    return new Promise((resolve) => {
+      this.socket.emit("GET_CHAT_LOG_MORE", data, (response) => {
+        if (response.code == 200) {
+          this.props.store.dispatch(loadMoreSuccess(response.data));
+          return resolve(true)
+        }
+        resolve(false)
+      });
+    })
+
   };
 
   getUserStatus = (userId) => {
@@ -145,8 +154,10 @@ export default class SocketManager extends React.Component {
         sendMessage: this.sendMessage,
         joinRoom: this.joinRoom,
         getChatLog: this.getChatLog,
+        loadMore: this.loadMore,
         getUserRooms: this.getUserRooms,
         getUserStatus: this.getUserStatus,
+        leaveAllRooms: this.leaveAllRooms,
     }
     return (
       <WebSocketContext.Provider value={value}>

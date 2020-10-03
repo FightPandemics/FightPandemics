@@ -62,7 +62,13 @@ function onSocketConnect(socket) {
           ],
         }),
       );
-    } else return res({ code: 401, message: "Unauthorized" });
+    } else {
+      // user called joinRoom({}) inside leaveAllRooms()
+      for (let room in socket.rooms) {
+        await socket.leave(room);
+      }
+      return res({ code: 401, message: "Unauthorized" });
+    }
     if (threadErr) return res({ code: 500, message: "Internal server error" });
 
     // first time joining, creating new thread.
@@ -115,7 +121,7 @@ function onSocketConnect(socket) {
     if (lastMessage) threadWithLastMessage.lastMessage = lastMessage;
 
     if (!userInRoom) {
-      // unser not already in that room
+      // user not already in that room
       // leave any other room
       for (let room in socket.rooms) {
         await socket.leave(room);
@@ -199,7 +205,6 @@ function onSocketConnect(socket) {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
-    console.log(data, userInRoom);
     if (!data.threadId && !userInRoom)
       return res({ code: 401, message: "Unauthorized" });
     const Thread = this.mongo.model("Thread");

@@ -37,19 +37,23 @@ const RecipientName = styled.div`
     top: 0.2em;
     font-size: 1.071em;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
   }
 `;
 const LastSeen = styled.small`
   margin-left: 10px; 
 `
-export const RecipientHeader = ({name, lastAccess}) => {
+export const RecipientHeader = ({name, lastAccess, onMobileBackClick}) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
   return (
     <>
       {name &&<RecipientName>
         <img
           className="back-arrow"
-          onClick={() => setToggleMobileChatList(true)}
+          onClick={() => {setToggleMobileChatList(true); onMobileBackClick()}}
           src={arrow}
           alt="Back Arrow"
         />

@@ -76,9 +76,10 @@ function wsReducer(state = initialState, action) {
         chatLog: []
       }
     case GET_MORE_MESSAGES_HISTORY:
+      if (!action.payload.length) state.room.loadedAll = true;
       return {
         ...state,
-        chatLog: [...action.payload.reverse(), state.chatLog]
+        chatLog: [...action.payload.reverse(), ...state.chatLog]
       }
     case USER_STATUS_UPDATE:
       var index = state.rooms.findIndex(r => r.participants.find(p=>p.id==action.payload.id));
