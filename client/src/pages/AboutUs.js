@@ -139,7 +139,6 @@ const supporterLogosCurrent = [
 const supporterLogosPast = [leypayLogo, calendlyLogo];
 
 function LogoItem(props) {
-  console.log(LogosMap.get(props.value));
   return (
     <div>
       <a href={LogosMap.get(props.value)} target="_blank">
@@ -157,19 +156,19 @@ function LogosList(props) {
   return logoItems;
 }
 
+const i18nSCOPE = "aboutUs";
+
 const AboutUs = () => {
-  const { t } = useTranslation();
+  const { t: i18n } = useTranslation();
+  const t = React.useCallback((id, absolute = false) =>
+    i18n(absolute ? id : `${i18nSCOPE}.${id}`),
+  );
 
   return (
     <AboutUsContainer>
       <HeadingContainer>
-        <h2>
-          We want to create a world where humans are more resilient to
-          emergencies
-        </h2>
-        <p>
-          By helping communities respond more quickly and effectively to crises.
-        </p>
+        <h2>{t("heading")}</h2>
+        <p>{t("subHeading")}</p>
       </HeadingContainer>
 
       <ImageContainer
@@ -179,15 +178,12 @@ const AboutUs = () => {
         mobileHeight={"40rem"}
         flexDirection={"row"}
       >
-        <h2>Who is this for?</h2>
+        <h2>{t("forWhoHeading")}</h2>
       </ImageContainer>
 
       <MobileContentContainer>
-        <h2>Who is this for?</h2>
-        <p>
-          Anyone or any type of business, community group, government, or health
-          care organisation who needs or wants to provide help.
-        </p>
+        <h2>{t("forWhoHeading")}</h2>
+        <p>{t("forWho")}</p>
       </MobileContentContainer>
 
       <ImageContainer
@@ -197,12 +193,8 @@ const AboutUs = () => {
         background-color={"#fbfbfd"}
         background-blend-mode={"multiply"}
       >
-        <h1>Our Community</h1>
-        <p>
-          We are built by a team of 1100+ volunteer developers, designers,
-          scientists, health experts, and product managers from around the
-          world.
-        </p>
+        <h1>{t("ourCommunity")}</h1>
+        <p>{t("community")}</p>
         <GetInvButton />
       </ImageContainer>
 
@@ -211,16 +203,13 @@ const AboutUs = () => {
           <img src={ConnectImage} />
         </FlexBox>
         <FlexBox direction="column" justify="center" align="center">
-          <h1>We connect people</h1>
-          <p>
-            An altruistic platform to connect those who need help with those who
-            can provide it.
-          </p>
+          <h1>{t("connectPeople")}</h1>
+          <p>{t("connect")}</p>
         </FlexBox>
       </ConnectContainer>
 
       <HowDoesThisWorkContainer>
-        <h1>How does this work?</h1>
+        <h1>{t("howWork")}</h1>
         <>
           <FlexBox justify="center" wrap={"wrap"}>
             <FlexBox
@@ -228,91 +217,75 @@ const AboutUs = () => {
               align="center"
               style={{ marginTop: "3rem" }}
             >
-              <h3>Help Board</h3>
-              <img alt="help board" src={HelpBoard} />
-              <p>
-                A community platform for individuals and organizations to offer
-                and request aid.
-              </p>
+              <h3>{t("helpBoard")}</h3>
+              <img alt={t("helpBoard")} src={HelpBoard} />
+              <p>{t("helpBoardDetail")}</p>
             </FlexBox>
             <FlexBox
               direction="column"
               align="center"
               style={{ marginTop: "3rem" }}
             >
-              <h3>Local &amp; Global</h3>
-              <img alt="local and global" src={LocalGlobal} />
-              <p>
-                Offer and request help within my community and around the world.
-              </p>
+              <h3>{t("localGlobal")}</h3>
+              <img alt={t("localGlobal")} src={LocalGlobal} />
+              <p>{t("localGlobalDetail")}</p>
             </FlexBox>
             <FlexBox
               direction="column"
               align="center"
               style={{ marginTop: "3rem" }}
             >
-              <h3>Relevant Content</h3>
+              <h3>{t("relevantContent")}</h3>
               <img
                 style={{ objectPosition: "30px" }}
-                alt="relevant-content"
+                alt={t("relevantContent")}
                 src={RelevantContent}
               />
-              <p>Expiration periods ensure the board is always up to date.</p>
+              <p>{t("relevantContentDetail")}</p>
             </FlexBox>
           </FlexBox>
           <HelpBoardButton type="primary">
-            <Link to="/feed">Go to Help Board</Link>
+            <Link to="/feed">{t("goToHelpBoard")}</Link>
           </HelpBoardButton>
         </>
       </HowDoesThisWorkContainer>
 
       <OurStoryContainer>
-        <h1>Our Story</h1>
-        <h3>FightPandemics</h3>
-        <p>
-          is the brainchild of Manuel Gonzalez Alzuru, who was infected with
-          COVID-19 in France. Upon returning home to Barcelona, he found he was
-          unable to get help even though there were people who wanted to provide
-          it.
-        </p>
+        <h1>{t("ourStory")}</h1>
+        <h3>{t("FightPandemics")}</h3>
+        <p>{t("story")}</p>
         <br />
-        <p>
-          Inspired by so many coming together, Manuel launched the project with
-          one mission in mind:{" "}
-          <span>to ensure that others could connect in time.</span>
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: t("storyInspired") }}></p>
         {/* TODO Add FightPandemics Video */}
         {/* <img src={BlankImage} alt="loading..." /> */}
       </OurStoryContainer>
 
       <SupporterContainer>
-        <h1>Supporters</h1>
+        <h1>{t("supporters")}</h1>
         <p>
-          Thank You to our supporters, without them we would not be able to help
-          communities prepare and respond to pandemics.
+          {t("thanksSupporters")}
           <br />
           <br />
-          To learn more about how your business can become a supporter, please
-          contact our partnerships team at{" "}
+          {t("becomeSupporter")}
           <AboutUsLink href="mailto:partnerships@fightpandemics.com">
             {" "}
-            partnerships@fightpandemics.com
+            {t("becomePartnerEmail")}
           </AboutUsLink>
           <br />
           <br />
-          Click on the company logo below to go to the supporter's website.
+          {t("companyLogoInfo")}
         </p>
-        <h3>Lifetime supporters</h3>
+        <h3>{t("lifetimeSupporters")}</h3>
         <SupportersLogosContainer wide={"30rem"}>
           <LogosList supporterLogos={supporterLogosLifetime} />
         </SupportersLogosContainer>
         <br />
-        <h3>Current supporters</h3>
+        <h3>{t("currentSupporters")}</h3>
         <SupportersLogosContainer wide={"25rem"}>
           <LogosList supporterLogos={supporterLogosCurrent} />
         </SupportersLogosContainer>
         <br />
-        <h4>Past supporters</h4>
+        <h4>{t("pastSupporters")}</h4>
         <SupportersLogosContainer wide={"18rem"}>
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
@@ -320,7 +293,7 @@ const AboutUs = () => {
 
       <SocialStyle>
         <FlexBox direction="column">
-          <h3>Follow us on social media</h3>
+          <h3>{t("followUs")}</h3>
           <SocialContainer>
             <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
               <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
@@ -338,12 +311,12 @@ const AboutUs = () => {
         </FlexBox>
         <FlexBox direction="column">
           <p>
-            <span>#ForCommunitiesByCommunities</span>
+            <span>{t("hashtag")}</span>
           </p>
           <p>
-            Contact us at:
+            {t("contactUs")}
             <AboutUsLink href="mailto:admin@fightpandemics.com">
-              admin@fightpandemics.com
+              {t("contactEmail")}
             </AboutUsLink>
           </p>
         </FlexBox>
