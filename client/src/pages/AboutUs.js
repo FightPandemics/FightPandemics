@@ -142,7 +142,7 @@ function LogoItem(props) {
   return (
     <div>
       <a href={LogosMap.get(props.value)} target="_blank">
-        <img src={props.value} alt="" />
+        <img loading="lazy" src={props.value} alt="" />
       </a>
     </div>
   );
@@ -218,7 +218,7 @@ const AboutUs = () => {
               style={{ marginTop: "3rem" }}
             >
               <h3>{t("helpBoard")}</h3>
-              <img alt={t("helpBoard")} src={HelpBoard} />
+              <img loading="lazy" alt={t("helpBoard")} src={HelpBoard} />
               <p>{t("helpBoardDetail")}</p>
             </FlexBox>
             <FlexBox
@@ -227,7 +227,7 @@ const AboutUs = () => {
               style={{ marginTop: "3rem" }}
             >
               <h3>{t("localGlobal")}</h3>
-              <img alt={t("localGlobal")} src={LocalGlobal} />
+              <img loading="lazy" alt={t("localGlobal")} src={LocalGlobal} />
               <p>{t("localGlobalDetail")}</p>
             </FlexBox>
             <FlexBox
@@ -237,6 +237,7 @@ const AboutUs = () => {
             >
               <h3>{t("relevantContent")}</h3>
               <img
+                loading="lazy"
                 style={{ objectPosition: "3rem" }}
                 alt={t("relevantContent")}
                 src={RelevantContent}
@@ -297,16 +298,32 @@ const AboutUs = () => {
           <h3>{t("followUs")}</h3>
           <SocialContainer>
             <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
-              <img src={linkedInLogo} alt="FightPandemics LinkedIn Icon" />
+              <img
+                loading="lazy"
+                src={linkedInLogo}
+                alt="FightPandemics LinkedIn Icon"
+              />
             </AboutUsLink>
             <AboutUsLink href="https://www.facebook.com/FightPandemics/">
-              <img src={facebookLogo} alt="FightPandemics Facebook Icon" />
+              <img
+                loading="lazy"
+                src={facebookLogo}
+                alt="FightPandemics Facebook Icon"
+              />
             </AboutUsLink>
             <AboutUsLink href="https://www.instagram.com/fightpandemics/">
-              <img src={instagramLogo} alt="FightPandemics Instagram Icon" />
+              <img
+                loading="lazy"
+                src={instagramLogo}
+                alt="FightPandemics Instagram Icon"
+              />
             </AboutUsLink>
             <AboutUsLink href="https://twitter.com/FightPandemics">
-              <img src={twitterLogo} alt="FightPandemics Twitter Icon" />
+              <img
+                loading="lazy"
+                src={twitterLogo}
+                alt="FightPandemics Twitter Icon"
+              />
             </AboutUsLink>
           </SocialContainer>
         </FlexBox>
