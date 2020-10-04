@@ -79,6 +79,10 @@ data "aws_ssm_parameter" "datadog_api_key" {
   name  = "/fp/datadog/key"
 }
 
+data "aws_ssm_parameter" "redis_host" {
+  name  = "/fp/redis/host"
+}
+
 locals {
   app_domain = {
     review      = "fightpandemics.xyz"
@@ -170,6 +174,14 @@ module "main" {
       name  = "LOGGER_PORT",
       value = var.fp_context == "development" ? "1234" : data.aws_ssm_parameter.logger_port[0].value
     },
+    {
+      name  = "REDIS_HOST"
+      value = data.aws_ssm_parameter.redis_host.value
+    },
+    {
+      name  = "REDIS_PORT"
+      value = "6379"
+    }
   ]
   client_env_variables = [
     {
