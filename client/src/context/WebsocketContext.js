@@ -14,6 +14,14 @@ import {
   loadMoreSuccess,
 } from "../actions/wsActions";
 
+const isLocalhost = Boolean(
+  window.location.hostname === "localhost" ||
+    window.location.hostname === "[::1]" ||
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
+    ),
+);
+
 const WebSocketContext = createContext();
 
 export { WebSocketContext };
@@ -34,8 +42,7 @@ export default class SocketManager extends React.Component {
         else this.socket.disconnect();
       }
     });
-    // for local testing, io.connect('localhost:8000')
-    this.socket = io.connect();
+    this.socket = io.connect(isLocalhost ? "localhost:8000" : null);
     this.socket.on("connect", () => {
       this.socket.connected = true;
       console.log(`[WS]: Connected`);
