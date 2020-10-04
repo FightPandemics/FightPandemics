@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Modal } from "antd";
 import { CameraOutlined } from "@ant-design/icons";
-import axios from "axios";
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
 import styled from "styled-components";
 import { theme } from "../../constants/theme";
+import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const { colors } = theme;
 
@@ -38,6 +39,7 @@ function isImageFile(file) {
 }
 
 const UploadPic = ({ cameraIconSize, user }) => {
+  const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [photoURL, setPhotoURL] = useState();
   const [uploadError, setUploadError] = useState();
@@ -59,10 +61,12 @@ const UploadPic = ({ cameraIconSize, user }) => {
     const file = e.target.files[0];
     if (!isImageFile(file)) {
       setUploadError(
-        `Sorry, we only support image files of type jp(e)g and png.`,
+        t("error.avatar.fileTypeNotSupported"),
       );
     } else if (file && file.size > 5001520) {
-      setUploadError("Please upload an image of size less than 5 MB.");
+      setUploadError(
+          t("error.avatar.fileSizeTooLarge")
+      );
     } else {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -71,11 +75,11 @@ const UploadPic = ({ cameraIconSize, user }) => {
         image.onload = () => {
           if (image.height < 250 || image.width < 250) {
             setUploadError(
-              "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
+                t("error.avatar.imageDimensionTooSmall")
             );
           } else if (image.height / image.width < 0.5) {
             setUploadError(
-              "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
+              t("error.avatar.imageDimensionTooWide")
             );
           }
         };
@@ -133,7 +137,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
             console.log("Success");
           }
         } catch (error) {
-          setUploadError("Sorry, some network error occurred.");
+          setUploadError("error.avatar.networkError");
           console.log({
             error,
           });
