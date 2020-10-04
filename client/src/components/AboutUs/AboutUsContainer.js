@@ -62,20 +62,22 @@ export const AboutUsContainer = styled.div`
 `;
 
 export const SupportersLogosContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
   margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
 
   > div {
-    max-width: 20rem;
-    margin-right: 2.5rem;
-    margin-bottom: 5rem;
+    max-width: 12rem;
+    margin: auto;
+    padding-bottom: 5rem;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      max-width: 10rem;
-      margin-bottom: 2.5rem;
+      max-width: 8rem;
+      padding-bottom: 2.5rem;
     }
 
     img {
