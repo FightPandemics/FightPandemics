@@ -10,7 +10,6 @@ import i18n from "../../i18n";
 import { localization, languages } from "locales/languages";
 import globe from "assets/icons/globe.svg";
 import SvgIcon from "components/Icon/SvgIcon";
-import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
 import Footnote from "components/Footnote";
@@ -245,14 +244,6 @@ const DividerLine = styled.div`
   background-color: ${white};
   margin-left: 1rem;
   margin-bottom: 1rem;
-`;
-
-const AvatarInitials = styled(Typography.Text)`
-  font-family: Poppins;
-  font-size: 3.29rem;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
 `;
 
 const RatingWrapper = styled.div`
@@ -561,11 +552,7 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-        <NavItem history={history}>
-          <TextAvatar size={80} alt={t("alt.avatar")}>
-            {displayAvatar(user)}
-          </TextAvatar>
-        </NavItem>
+        {displayAvatar(user)}
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />
