@@ -224,7 +224,7 @@
         "linkedin": "URL de LinkedIn",
         "website": "Página web"
       },
-      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 200 caracteres",
+      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 254 caracteres",
       "emailInvalid": "La dirección de correo electrónico es inválida",
       "emailDomainInvalid": "El dominio de correo electrónico es inválido"
     },
