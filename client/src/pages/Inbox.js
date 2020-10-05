@@ -118,7 +118,7 @@ const CurrentChat = ({
     const prevChatLogLength = usePrevious(chatLog.length);
     useEffect(() => {
       if (!isLoading && chatLog.length != prevChatLogLength) scrollToBottom();
-    }, [prevChatLogLength]);
+    }, [chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const { chat } = useContext(ChatContext);
     const Sender = ({ postRef, message }) => {
@@ -218,7 +218,7 @@ const Inbox = (props) => {
       joinRoom({
         threadId: rooms[0]._id,
       });
-  }, [joinRoom, room, rooms, toggleMobileChatList]);
+  }, [rooms]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <InboxContainer>
