@@ -19,7 +19,7 @@ export const MessagesContainer = styled.div`
     text-decoration: underline;
     &:hover {
       color: inherit;
-      opacity: 0.7; 
+      opacity: 0.7;
     }
   }
 `;
@@ -56,5 +56,16 @@ export const RecipientBubble = styled.div`
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     max-width: 70%;
+  }
+`;
+
+export const TimeStamp = styled.small`
+  color: #969292;
+  padding: 2px 1rem;
+  &.left {
+    text-align: left;
+  }
+  &.right {
+    text-align: right;
   }
 `;

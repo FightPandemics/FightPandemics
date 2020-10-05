@@ -9,6 +9,7 @@ import {
   MessagesContainer,
   SenderBubble,
   RecipientBubble,
+  TimeStamp,
 } from "../components/Inbox/Messages";
 import { ChatList } from "../components/Inbox/ChatList";
 import { RecipientHeader } from "../components/Inbox/RecipientHeader";
@@ -17,6 +18,10 @@ import { ChatContextProvider } from "../context/ChatContext";
 import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
 import { OrgPost } from "../components/Inbox/OrgPost";
+import getRelativeTime from "utils/relativeTime";
+import moment from "moment";
+
+const GROUP_MESSAGES_TIME_FRAME = 15; // minutes
 
 const CurrentChat = ({
   toggleMobileChatList,
@@ -32,7 +37,7 @@ const CurrentChat = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({block: "start"});
+    messagesEndRef.current.scrollIntoView({ block: "start" });
   };
 
   const getReceiver = (participants) => {
@@ -53,24 +58,28 @@ const CurrentChat = ({
     let loadMoreSuccess = await loadMore({
       threadId: room._id,
       skip: chatLog.length,
-    })
-    if (loadMoreSuccess) setIsLoading(false)
-  }
+    });
+    if (loadMoreSuccess) setIsLoading(false);
+  };
 
   useEffect(() => {
     if (room)
       getChatLog({
         threadId: room._id,
       });
-  }, [room]);
+  }, [getChatLog, room]);
 
   const Messages = () => {
     const linkify = (text) => {
-      var urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      let urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
       function urlify(text) {
         if (urlRegex.test(text))
           return (
-            <a target="_blank" key={Math.random().toString(36)} href={`//${text}`}>
+            <a
+              target="_blank"
+              key={Math.random().toString(36)}
+              href={`//${text}`}
+            >
               {text}
             </a>
           );
@@ -83,15 +92,38 @@ const CurrentChat = ({
       return output;
     };
 
+    const shouldShowTime = (messageIndex) => {
+      // this order is important
+      if (chatLog.length == 1) return true;
+      if (
+        !chatLog[messageIndex + 1] &&
+        moment().diff(chatLog[messageIndex].createdAt, "minutes") <=
+          GROUP_MESSAGES_TIME_FRAME
+      )
+        return false;
+      if (chatLog[messageIndex].authorId != chatLog[messageIndex + 1]?.authorId)
+        return true;
+      return (
+        moment(chatLog[messageIndex + 1].createdAt).diff(
+          chatLog[messageIndex].createdAt,
+          "minutes",
+        ) >= GROUP_MESSAGES_TIME_FRAME
+      );
+    };
+
+    const isToday = (date) => {
+      return moment(date).isSame(moment(), "day");
+    };
+
     const prevChatLogLength = usePrevious(chatLog.length);
     useEffect(() => {
       if (!isLoading && chatLog.length != prevChatLogLength) scrollToBottom();
-    }, [chatLog.length]);
+    }, [prevChatLogLength]);
 
     const { chat } = useContext(ChatContext);
     const Sender = ({ postRef, message }) => {
       return (
-        <BubbleContainer key={'b-'+message._id}>
+        <BubbleContainer key={"b-" + message._id}>
           <SenderBubble>
             {postRef && <OrgPost postRef={postRef} />}
             <div className="message-content-sender">{linkify(message)}</div>
@@ -101,7 +133,7 @@ const CurrentChat = ({
     };
     const Recipient = ({ postRef, message }) => {
       return (
-        <RecipientBubble key={'b-'+message._id}>
+        <RecipientBubble key={"b-" + message._id}>
           {postRef && <OrgPost postRef={postRef} />}
           <div className="message-content-recipient">{linkify(message)}</div>
         </RecipientBubble>
@@ -109,27 +141,40 @@ const CurrentChat = ({
     };
     return (
       <MessagesContainer>
-          {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && 
-            <button onClick={onLoadMoreClick} id={"messages-top"}>load more</button> // to be styled, or changed to infinte scroller
-          }
-          {chatLog?.map((message) => (
-            <>
-              {message.authorId != user.id ? (
-                <Recipient
-                  key={message._id}
-                  message={message.content}
-                  postRef={message.postRef}
-                />
-              ) : (
-                <Sender
-                  key={message._id}
-                  message={message.content}
-                  postRef={message.postRef}
-                />
-              )}
-            </>
-          ))}
-          <div id={"messages-bottom"} ref={messagesEndRef}></div>
+        {
+          !isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
+            <button onClick={onLoadMoreClick} id={"messages-top"}>
+              load more
+            </button>
+          ) // to be styled, or changed to infinte scroller
+        }
+        {chatLog?.map((message, i) => (
+          <>
+            {message.authorId != user.id ? (
+              <Recipient
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+              />
+            ) : (
+              <Sender
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+              />
+            )}
+            {shouldShowTime(i) && (
+              <TimeStamp
+                className={message.authorId != user.id ? "left" : "right"}
+              >
+                {isToday(message.createdAt)
+                  ? getRelativeTime(message.createdAt)
+                  : moment(message.createdAt).format("MMM. DD")}
+              </TimeStamp>
+            )}
+          </>
+        ))}
+        <div id={"messages-bottom"} ref={messagesEndRef}></div>
       </MessagesContainer>
     );
   };
@@ -165,38 +210,39 @@ const Inbox = (props) => {
 
   useEffect(() => {
     if (isIdentified) getUserRooms();
-  }, [isIdentified]);
+  }, [getUserRooms, isIdentified]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // join the first room if not on mobile
-    if (!toggleMobileChatList && !room && rooms[0]) joinRoom({
-      threadId: rooms[0]._id
-    })
-  },[rooms])
+    if (!toggleMobileChatList && !room && rooms[0])
+      joinRoom({
+        threadId: rooms[0]._id,
+      });
+  }, [joinRoom, room, rooms, toggleMobileChatList]);
 
   return (
     <InboxContainer>
-          <ChatList
-            empty={empty}
-            rooms={rooms}
-            room={room}
-            user={user}
-            joinRoom={joinRoom}
-            getUserStatus={getUserStatus}
-            toggleMobileChatList={toggleMobileChatList}
-            setToggleMobileChatList={setToggleMobileChatList}
-          />
-          <CurrentChat
-            room={room}
-            user={user}
-            getChatLog={getChatLog}
-            chatLog={chatLog}
-            loadMore={loadMore}
-            sendMessage={sendMessage}
-            leaveAllRooms={leaveAllRooms}
-            toggleMobileChatList={toggleMobileChatList}
-            setToggleMobileChatList={setToggleMobileChatList}
-          />
+      <ChatList
+        empty={empty}
+        rooms={rooms}
+        room={room}
+        user={user}
+        joinRoom={joinRoom}
+        getUserStatus={getUserStatus}
+        toggleMobileChatList={toggleMobileChatList}
+        setToggleMobileChatList={setToggleMobileChatList}
+      />
+      <CurrentChat
+        room={room}
+        user={user}
+        getChatLog={getChatLog}
+        chatLog={chatLog}
+        loadMore={loadMore}
+        sendMessage={sendMessage}
+        leaveAllRooms={leaveAllRooms}
+        toggleMobileChatList={toggleMobileChatList}
+        setToggleMobileChatList={setToggleMobileChatList}
+      />
     </InboxContainer>
   );
 };
