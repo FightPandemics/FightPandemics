@@ -211,7 +211,7 @@ const AboutUs = () => {
       <HowDoesThisWorkContainer>
         <h1>{t("howWork")}</h1>
         <>
-          <FlexBox justify="center" wrap={"wrap"}>
+          <FlexBox justify="space-around" wrap={"wrap"}>
             <FlexBox
               direction="column"
               align="center"
