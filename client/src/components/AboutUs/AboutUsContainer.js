@@ -122,10 +122,10 @@ export const HeadingContainer = styled.div`
 `;
 
 export const HowDoesThisWorkContainer = styled.div`
-  margin-top: 18rem;
+  margin-top: 10rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin-top: 16rem;
+    margin-top: 5rem;
   }
 
   img {
@@ -137,9 +137,7 @@ export const HowDoesThisWorkContainer = styled.div`
     font-weight: 600;
   }
   p {
-    width: 29rem;
-    margin-left: 10.9rem;
-    margin-right: 9.4rem;
+    max-width: 29rem;
   }
 `;
 export const ConnectContainer = styled.div`
@@ -172,9 +170,9 @@ export const ConnectContainer = styled.div`
 
 export const OurStoryContainer = styled.div`
   margin: 0 auto;
-  margin-bottom: 26rem;
+  margin-bottom: 13rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin-bottom: 13rem;
+    margin-bottom: 6.5rem;
   }
   h3 {
     color: ${royalBlue};
@@ -233,7 +231,7 @@ export const ImageContainer = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   margin: 0 auto;
-  margin-bottom: 16rem;
+  margin-bottom: 8rem;
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -244,7 +242,7 @@ export const ImageContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: ${(props) => props.mobileHeight};
     background-position-x: -7.2rem;
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
     position: relative;
     left: -3rem;
     width: calc(100% + 6rem);
@@ -282,7 +280,7 @@ export const MobileContentContainer = styled.div`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block;
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
 
     h2 {
       font-size: 2.2rem;
@@ -341,7 +339,7 @@ export const Col = styled.div`
 `;
 
 export const SocialStyle = styled.div`
-  margin: 11.3rem 12.4rem 3.5rem;
+  margin: 7rem 12.4rem 3.5rem;
   display: flex;
   justify-content: space-between;
 

@@ -19,14 +19,14 @@ const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
   letter-spacing: normal;
   color: ${white};
   background-color: ${royalBlue};
-  margin: 5rem auto 24rem;
+  margin: 5rem auto 16rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-top: 2.5rem;
-    margin-bottom: 16rem;
+    margin-bottom: 8rem;
   }
 `;
 
