@@ -1,7 +1,7 @@
 // import translationAR from "./translations/ar.json";
 import translationEN_GB from "./translations/en_GB.json";
 import translationEN_US from "./translations/en_US.json";
-// import translationDE from "./translations/de.json";
+import translationDE from "./translations/de.json";
 import translationES_ES from "./translations/es_ES.json";
 // import translationIT from "./translations/it.json";
 // import translationRU from "./translations/ru.json";
@@ -26,10 +26,9 @@ export const index = {
   "en-GB": {
     translation: translationEN_GB,
   },
-  // de: {
-  //   translation: translationDE,
-  // },
-
+  de: {
+    translation: translationDE,
+  },
   pl: {
     translation: translationPL,
   },
