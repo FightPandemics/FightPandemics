@@ -10,7 +10,7 @@
     "question": "Question",
     "aboutUs": "About Us",
     "profile": "Profile",
-    "addOrg": "Add Organisation",
+    "addOrg": "Add Organization",
     "logout": "Sign Out",
     "organisations": "Organizations"
   },
@@ -41,7 +41,7 @@
       "howContribute": "How do you want to contribute?",
       "volunteer": "As a Volunteer",
       "donorInvestor": "As a Donor/Investor",
-      "organisation": "As an Organisation"
+      "organisation": "As an Organization"
     }
   },
   "feed": {
@@ -129,7 +129,7 @@
     "create": "Create a post",
     "continueAs": "Continue Posting As",
     "individual": "Individual",
-    "organisation": "Organisation",
+    "organisation": "Organization",
     "givingHelp": "Offering Help",
     "gettingHelp": "Requesting Help",
     "writePostHere": "Write your post here",
@@ -251,7 +251,7 @@
       "lastNameRequired": "Last name is required."
     },
     "org": {
-      "title": "Create Organisation Profile",
+      "title": "Create Organization Profile",
       "editOrgProfile": "Edit Organization Profile",
       "name": "Organization Name",
       "email": "Organization Contact Email",
