@@ -6,7 +6,6 @@ const validator = require('../utils/validators');
 const testData = require('../utils/testData');
 
 let apiEndPoint = apiEndPoints.signUpApiEndpoint;
-let userCredentialsWithMismatchedPassword = testData.userCredentialsWithMismatchedPassword;
 
 let userCredentialsWithEmptyEmail = {}
 Object.assign(userCredentialsWithEmptyEmail, testData.userCredentialsWithEmptyEmail)
@@ -16,13 +15,17 @@ let userCredentialsWithInvalidEmailNoDomainSpecified = {}
 Object.assign(userCredentialsWithInvalidEmailNoDomainSpecified, testData.userCredentialsWithInvalidEmailNoDomainSpecified)
 Object.assign(userCredentialsWithInvalidEmailNoDomainSpecified, { confirmPassword: userCredentialsWithInvalidEmailNoDomainSpecified.password });
 
-let userCredentialsWithEmailDomainExceeding64Characters = {}
-Object.assign(userCredentialsWithEmailDomainExceeding64Characters, testData.userCredentialsWithEmailDomainExceeding64Characters)
-Object.assign(userCredentialsWithEmailDomainExceeding64Characters, { confirmPassword: userCredentialsWithEmailDomainExceeding64Characters.password });
+let userCredentialsWithEmailLocalExceeding64Characters = {}
+Object.assign(userCredentialsWithEmailLocalExceeding64Characters, testData.userCredentialsWithEmailLocalExceeding64Characters)
+Object.assign(userCredentialsWithEmailLocalExceeding64Characters, { confirmPassword: userCredentialsWithEmailLocalExceeding64Characters.password });
 
-let userCredentialsWithEmailExceeding254Characters = {}
-Object.assign(userCredentialsWithEmailExceeding254Characters, testData.userCredentialsWithEmailExceeding254Characters)
-Object.assign(userCredentialsWithEmailExceeding254Characters, { confirmPassword: userCredentialsWithEmailExceeding254Characters.password });
+let userCredentialsWithEmailDomainExceeding63Characters = {}
+Object.assign(userCredentialsWithEmailDomainExceeding63Characters, testData.userCredentialsWithEmailDomainExceeding63Characters)
+Object.assign(userCredentialsWithEmailDomainExceeding63Characters, { confirmPassword: userCredentialsWithEmailDomainExceeding63Characters.password });
+
+let userCredentialsWithEmailInvalidTopLevelDomain = {}
+Object.assign(userCredentialsWithEmailInvalidTopLevelDomain, testData.userCredentialsWithEmailInvalidTopLevelDomain)
+Object.assign(userCredentialsWithEmailInvalidTopLevelDomain, { confirmPassword: userCredentialsWithEmailInvalidTopLevelDomain.password });
 
 let userCredentialsWithPasswordsNotMatched = {}
 Object.assign(userCredentialsWithPasswordsNotMatched, testData.userCredentialsWithRandomEmailAndRandomPassword)
@@ -47,14 +50,19 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
-        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
+        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket has been submitted.
         it('Email local part has more than 64 characters triggers Bad Request error', async () => {
-            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExceeding64Characters);
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailLocalExceeding64Characters);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
-        it('Email domain part has more than 189 characters. Total more than 254 characters triggers Bad Request error', async () => {
-            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailExceeding254Characters);
+        it('Email domain part has more than 63 characters triggers Bad Request error', async () => {
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailDomainExceeding63Characters);
+            validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
+        });
+
+        it('Email invalid top level domain triggers Bad Request error', async () => {
+            let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmailInvalidTopLevelDomain);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'body.email should match format "email"');
         });
 
@@ -67,7 +75,7 @@ describe('POST Sign Up endpoint tests for unregistered user', () => {
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'PasswordsShouldMatch');
         });
 
-        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket will be submitted.
+        //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket has been submitted.
         it('Empty password and confirm password trigger Bad Request error', async () => {
             let response = await apiHelper.sendPOSTRequest(APP_URL, apiEndPoint, userCredentialsWithEmptyPasswords);
             validator.validateStatusCodeErrorAndMessage(response, httpStatus.BAD_REQUEST, 'Bad Request', 'Passwords should be populated.');
