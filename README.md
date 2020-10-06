@@ -39,6 +39,8 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
 
 If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
 
+**Note:** running `npm install` from project root, will install sub projects dependencies (client and backend).
+
 #### MongoDB
 
 Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
@@ -207,3 +209,11 @@ When a pull request is merged to staging, it will automatically be deployed to t
 ### Production
 
 When a pull request is merged to production, it will automatically be deployed to the production environment. You can view the build logs in [GitHub Actions](https://github.com/FightPandemics/FightPandemics/actions). After the build successfully completes, wait a few minutes for the changes to be reflected, and then access the production app at https://fightpandemics.com.
+
+## Know Issues
+
+### VSCode Source Control, Nvm, Husky Issue
+
+If you prefer to use nvm for managing multiples Node versions, and you use control source integreated VSCode tool to commit changes. Husky, one of our our dependencies, may raise an error related to Node version not being met, as Husky does not use nvm automatically. Please see fllow this link for the fix and more information
+
+https://github.com/typicode/husky/issues/438#issuecomment-700647847
