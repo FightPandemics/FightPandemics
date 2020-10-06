@@ -1,4 +1,6 @@
 const moment = require("moment");
+const tlds = require("tlds");
+const { _isEmail } = require("validator/lib/isEmail");
 
 const generateUUID = ({ range }) => {
   const chars =
@@ -17,8 +19,37 @@ const bool = (env) => env == "true";
 
 const getCookieToken = (req) => req.cookies.token;
 
-const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-const isValidEmail = (email) => emailRegEx.test(email);
+// email validation code from front-end 'src\utils\validators'
+const validateTopLevelDomain = (string) => {
+  for (const tld of tlds) {
+    if (string.endsWith("." + tld)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const isValidEmail = (email) => {
+  return _isEmail(email) && validateTopLevelDomain(email);
+};
+
+// password validation code from front-end 'src\utils\validators'
+const SPECIAL_CHARS = /[!@#$%^&*]/;
+const containsLowerCase = (str) => /[a-z]/.test(str);
+const containsUpperCase = (str) => /[A-Z]/.test(str);
+const containsNumber = (str) => /\d/.test(str);
+const containsSpecialChars = (str) => SPECIAL_CHARS.test(str);
+
+const isValidPassword = (password) => {
+  const results = [
+    containsLowerCase(password),
+    containsUpperCase(password),
+    containsNumber(password),
+    containsSpecialChars(password),
+  ];
+
+  return results.filter((res) => res).length >= 3;
+};
 
 const relativeTimeObject = (number, unit) => ({
   count: number,
@@ -66,5 +97,6 @@ module.exports = {
   generateUUID,
   getCookieToken,
   isValidEmail,
+  isValidPassword,
   setElapsedTimeText,
 };
