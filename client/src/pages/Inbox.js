@@ -182,8 +182,7 @@ const CurrentChat = ({
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
       <RecipientHeader
-        name={room ? getReceiver(room.participants).name : null}
-        lastAccess={room ? getReceiver(room.participants).lastAccess : null}
+        participant={room ? getReceiver(room.participants) : null}
         onMobileBackClick={leaveAllRooms}
       />
       <Messages />

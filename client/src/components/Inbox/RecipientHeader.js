@@ -44,24 +44,35 @@ const RecipientName = styled.div`
   }
 `;
 const LastSeen = styled.small`
-  margin-left: 10px; 
-`
-export const RecipientHeader = ({name, lastAccess, onMobileBackClick}) => {
+  margin-left: 10px;
+`;
+export const RecipientHeader = ({ participant, onMobileBackClick }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
   return (
     <>
-      {name &&<RecipientName>
-        <img
-          className="back-arrow"
-          onClick={() => {setToggleMobileChatList(true); onMobileBackClick()}}
-          src={arrow}
-          alt="Back Arrow"
-        />
-        <TextAvatar>{getInitialsFromFullName(name)}</TextAvatar>
-        <h4>{name}</h4>
-      <LastSeen>Last seen: {lastAccess? getRelativeTime(lastAccess) :'never'}</LastSeen>
-      </RecipientName>
-      }
+      {participant && (
+        <RecipientName>
+          <img
+            className="back-arrow"
+            onClick={() => {
+              setToggleMobileChatList(true);
+              onMobileBackClick();
+            }}
+            src={arrow}
+            alt="Back Arrow"
+          />
+          <TextAvatar src={participant.photo}>
+            {getInitialsFromFullName(participant.name)}
+          </TextAvatar>
+          <h4>{participant.name}</h4>
+          <LastSeen>
+            Last seen:{" "}
+            {participant.lastAccess
+              ? getRelativeTime(participant.lastAccess)
+              : "never"}
+          </LastSeen>
+        </RecipientName>
+      )}
     </>
   );
 };
