@@ -37,6 +37,12 @@ const StyledNavBar = styled(NavBar)`
   .am-navbar-title {
     display: none;
   }
+  .am-navbar-left {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      padding-left: 23px;
+      padding-top: 1rem;
+    }
+  }
 `;
 const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
