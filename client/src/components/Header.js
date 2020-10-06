@@ -39,7 +39,7 @@ const StyledNavBar = styled(NavBar)`
   }
   .am-navbar-left {
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      padding-left: 23px;
+      padding-left: 2.3rem;
       padding-top: 1rem;
     }
   }
