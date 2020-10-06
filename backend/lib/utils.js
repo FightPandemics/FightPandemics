@@ -21,12 +21,7 @@ const getCookieToken = (req) => req.cookies.token;
 
 // email validation code from front-end 'src\utils\validators'
 const validateTopLevelDomain = (string) => {
-  for (const tld of tlds) {
-    if (string.endsWith("." + tld)) {
-      return true;
-    }
-  }
-  return false;
+tlds.some(tld => string.endsWith("." + tld))
 };
 
 const isValidEmail = (email) => {
