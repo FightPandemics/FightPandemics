@@ -131,13 +131,25 @@ export const HowDoesThisWorkContainer = styled.div`
   img {
     object-fit: contain;
     height: 29rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      order: 0;
+    }
   }
   h3 {
     font-size: 2.4rem;
     font-weight: 600;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      order: 1;
+    }
   }
   p {
     max-width: 29rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      order: 2;
+    }
   }
 `;
 export const ConnectContainer = styled.div`
