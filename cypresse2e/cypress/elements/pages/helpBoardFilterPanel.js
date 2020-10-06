@@ -62,7 +62,7 @@ class HelpBoardFilter {
     }
 
     getHbTypeHeading () {
-        return cy.get(this.hbTypeHeading)
+        return cy.get(this.hbTypeHeading);
     }
 
     getHbProvidersAndType () {
