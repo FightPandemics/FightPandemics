@@ -67,6 +67,7 @@ export const MsgModal = styled(Modal)`
       }
       .ant-btn:last-child,
       div {
+        right: 0;
         width: 100%;
       }
       .ant-btn:first-child {
@@ -122,45 +123,11 @@ export const MsgModal = styled(Modal)`
 `;
 
 export const SuccessModal = styled(MsgModal)`
-  .modal-footer-container {
-    width: 100%;
-    height: 2.857em;
-    display: flex;
-    position: absolute;
-    bottom: 1.7em;
-    right: 3em;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: relative;
-      justify-content: center;
-      top: 4.2em;
-      right: 0em;
-    }
-  }
-  .view-message-btn {
-    border: 0.2rem solid #425af2;
-    border-radius: 4.6rem;
-    background-color: #425af2;
-    color: white;
-    width: 14.143em;
-    height: 2.857em;
-    box-shadow: none;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 0.9em;
-    z-index: 999;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      width: 90%;
-      position: static;
-    }
-  }
   p {
     padding-top: 1em;
     width: 100%;
     font-size: 1.143em;
   }
-
   .ant-modal-title {
     text-align: center;
     padding-top: 1em;
@@ -189,7 +156,18 @@ export const SuccessModal = styled(MsgModal)`
     }
   }
   .ant-btn:last-child {
-    visibility: hidden;
+    border: 0.2rem solid #425af2;
+    border-radius: 4.6rem;
+    background-color: #425af2;
+    color: white;
+    width: 14.143em;
+    box-shadow: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0.9em;
+    z-index: 999;
   }
 `;
 

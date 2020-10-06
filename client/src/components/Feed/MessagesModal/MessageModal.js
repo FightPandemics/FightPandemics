@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import { Container, RefPost } from "./OrgPostRef";
@@ -47,9 +47,8 @@ const MessageModal = ({
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
   const [msgRsp, setMsgRsp] = useState(true);
-  const { sendMessage, joinRoom } = useContext(
-    WebSocketContext,
-  );
+  const { sendMessage, joinRoom } = useContext(WebSocketContext);
+  let history = useHistory();
 
   const showModal = async () => {
     await setVisible(true);
@@ -60,27 +59,26 @@ const MessageModal = ({
   };
   const handleOk = async () => {
     await setConfirmLoading(true);
-      let createThread = await joinRoom({
-        receiverId: authorId,
-        threadId: null,
-      })
-      let confirmation = await sendMessage({
-        threadId: createThread?._id || null,
-        content: text,
-        postId: postId,
-      })
-      if (confirmation) {
-        setMsgSent(true);
-        setMsgRsp(true);
-        setVisible(false);
-        setText("")
-      } else {
-        setMsgSent(true);
-        setMsgRsp(false);
-        setVisible(false);
-      }
+    let createThread = await joinRoom({
+      receiverId: authorId,
+      threadId: null,
+    });
+    let confirmation = await sendMessage({
+      threadId: createThread?._id || null,
+      content: text,
+      postId: postId,
+    });
+    if (confirmation) {
+      setMsgSent(true);
+      setMsgRsp(true);
+      setVisible(false);
+      setText("");
+    } else {
+      setMsgSent(true);
+      setMsgRsp(false);
+      setVisible(false);
+    }
     setConfirmLoading(false);
-
   };
   const handleCancel = () => {
     setVisible(false);
@@ -124,17 +122,13 @@ const MessageModal = ({
               visible={msgSent}
               okText="View message"
               onCancel={handleDone}
+              onOk={() => history.push("/inbox")}
               cancelText="Done"
             >
               <p>
                 Your message to {postAuthor} concerning the "{title}" was sent
                 succesfully.
               </p>
-              <div className="modal-footer-container">
-                <Link className="view-message-btn" to="/inbox">
-                  View Message
-                </Link>
-              </div>
             </SuccessModal>
           ) : (
             <FailedModal
