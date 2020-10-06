@@ -2,6 +2,36 @@
   "name": "fight-pandemics-client",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix src",
+    "pretty": "prettier --write src",
+    "install-docker": "docker-compose run client npm install",
+    "snyk-protect": "snyk protect",
+    "precommit": "lint-staged"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "snyk": true,
   "dependencies": {
     "antd": "^4.2.0",
     "antd-mobile": "^2.3.1",
@@ -38,48 +68,13 @@
     "uuid": "^8.1.0",
     "validator": "^13.1.17"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --fix src",
-    "pretty": "prettier --write src",
-    "install-docker": "docker-compose run client npm install",
-    "snyk-protect": "snyk protect"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",
     "dotenv": "^8.2.0",
     "http-proxy-middleware": "^1.0.3",
-    "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
     "prettier": "^2.0.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "snyk": true
+  }
 }

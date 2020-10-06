@@ -2,7 +2,7 @@
   "name": "fightpandemics",
   "version": "1.0.0",
   "private": true,
-  "description": "Help to to fight global pandemics",
+  "description": "Help to fight global pandemics",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,12 +10,8 @@
     "test": "jest",
     "lint": "eslint . --fix",
     "import-posts": "node ./scripts/import-posts",
-    "install-docker": "docker-compose run backend-service npm install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "install-docker": "docker-compose run backend-service npm install",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
@@ -60,7 +56,6 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-utils": "^2.0.0",
-    "husky": "^4.2.3",
     "lint-staged": "^10.1.1",
     "mocha": "^7.2.0",
     "nock": "^12.0.3",
