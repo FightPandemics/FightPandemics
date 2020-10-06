@@ -20,7 +20,7 @@ const bool = (env) => env == "true";
 const getCookieToken = (req) => req.cookies.token;
 
 // email validation code from front-end 'src\utils\validators'
-const validateTopLevelDomain = (string) => {
+const isValidTopLevelDomain = (string) => {
 tlds.some(tld => string.endsWith("." + tld))
 };
 
