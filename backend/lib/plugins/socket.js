@@ -100,15 +100,15 @@ function onSocketConnect(socket) {
 
     // update participant.lastAccess, and mark messages as read.
     [threadErr, thread] = await this.to(
-      Thread.findOneAndUpdate(
-        { _id: thread._id, "participants.id": userId },
+      Thread.findByIdAndUpdate(
+        thread._id,
         {
           $set: {
-            "participants.$.lastAccess": new Date(),
-            "participants.$.newMessages": false,
+            "participants.$[userToUpdate].lastAccess": new Date(),
+            "participants.$[userToUpdate].newMessages": false,
           },
         },
-        { new: true },
+        { new: true, arrayFilters: [{ "userToUpdate.id": userId }] },
       ),
     );
     let threadWithLastMessage = thread.toObject();
@@ -217,14 +217,25 @@ function onSocketConnect(socket) {
     if (threadErr) return res({ code: 500, message: "Internal server error" });
     if (!thread) return res({ code: 401, message: "Unauthorized" });
 
-    // add unread mark to receiver
-    const [updateThreadErr, updateThread] = await this.to(
-      Thread.findOneAndUpdate(
-        { _id: thread._id },
-        { $set: { "participants.$[userToUpdate].newMessages": true } },
-        { arrayFilters: [{ userToUpdate: { $ne: { id: userId } } }] },
-      ),
-    );
+    // add unread mark to recipient(s)
+    // if not ( online && in the same room)
+    let recipients = thread.participants.filter(p => p.id != userId).map(r=>r.id);
+
+    for (const recipient of recipients) {
+      let recipientSocket = getSocketByUserId(this, recipient)
+      let isInSameRoom = recipientSocket? await isUserInRoom(this, thread._id.toString(), recipientSocket.id) : false
+      if (!recipientSocket || (recipientSocket && !isInSameRoom)){
+        // equivalent to (!online || (online && !inSameRoom))
+        const [updateThreadErr, updateThread] = await this.to(
+          Thread.findByIdAndUpdate(
+            thread._id,
+            { $set: { "participants.$[userToUpdate].newMessages": true } },
+            { arrayFilters: [{ 'userToUpdate.id' : { $ne: userId } }] },
+          ),
+        );
+      }
+    }
+
 
     let newMessage = {
       authorId: userId,
