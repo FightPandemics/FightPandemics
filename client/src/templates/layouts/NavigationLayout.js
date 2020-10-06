@@ -613,7 +613,7 @@ const NavigationLayout = (props) => {
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem
@@ -649,7 +649,7 @@ const NavigationLayout = (props) => {
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem

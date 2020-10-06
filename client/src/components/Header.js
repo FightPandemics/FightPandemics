@@ -258,11 +258,9 @@ export default ({
             </button>
           </>
         )}
-        <li>
-          <Dropdown overlay={languageMenu} trigger={["click"]}>
-            <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          </Dropdown>
-        </li>
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+        </Dropdown>
       </>
     );
   };
