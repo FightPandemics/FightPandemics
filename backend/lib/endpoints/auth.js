@@ -1,4 +1,5 @@
 const Auth0 = require("../components/Auth0");
+const { isValidEmail, isValidPassword } = require("../utils");
 const {
   changePasswordSchema,
   loginSchema,
@@ -80,7 +81,16 @@ async function routes(app) {
     async (req) => {
       const { body, token } = req;
       const { email, password, confirmPassword } = body;
-      if (password !== confirmPassword) {
+      if (!email) {
+        throw app.httpErrors.badRequest("EmailAddressIsRequired");
+      } else if (!isValidEmail(email)) {
+        throw app.httpErrors.badRequest("EmailAddressIsInvalid");
+      }
+      if (!password) {
+        throw app.httpErrors.badRequest("PasswordIsRequired");
+      } else if (!isValidPassword(password)) {
+        throw app.httpErrors.badRequest("PasswordIsInvalid");
+      } else if (password !== confirmPassword) {
         throw app.httpErrors.badRequest("PasswordsShouldMatch");
       }
       const payload = {
