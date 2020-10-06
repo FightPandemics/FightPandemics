@@ -1,5 +1,6 @@
 import { Flex, WhiteSpace } from "antd-mobile";
 import React, { useReducer, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -168,6 +169,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
     createUserFormReducer,
     initialState,
   );
+  const { t } = useTranslation();
 
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.checked);
@@ -194,17 +196,17 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
 
   const onSubmit = async (formData) => {
     if (!privacy) {
-      alert("You must agree to our privacy policy before proceeding");
+      alert(t("error.privacyPolicyRequired"));
       return;
     } else if (!conditions) {
-      alert("You must agree to our terms and conditions before proceeding");
+      alert(t("error.termsConditionsRequired"));
       return;
     } else if (!location) {
       // all location objects should have address (+coordinates), others optional
       return setError(
         "location",
         "required",
-        "Address is required. Please enter your address and select it from the drop-down",
+        t("profile.common.addressRequired"),
       );
     }
     createUserFormDispatch({ type: CREATE_USER });
@@ -220,9 +222,13 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
       history.push("/profile-completed");
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       createUserFormDispatch({
         type: CREATE_USER_ERROR,
-        error: `Create user failed, reason: ${message}`,
+        error: `${t("error.failedCreatingUser")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -236,19 +242,19 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
     <Container>
       <Flex className="image-container" direction="column">
         <BrandLink to="/">
-          <Logo src={logo} alt="Fight Pandemics logo" />
+          <Logo src={logo} alt={t("alt.logo")} />
         </BrandLink>
         <img
           className="main-bg-image"
           src={PersonalDataImage}
-          alt="two people standing next to a list of personal items"
+          alt={t("alt.personalDataImage")}
         />
       </Flex>
       <Flex className="form-container" direction="column">
         <WhiteSpace size="xl" />
         <ProfileFormGroup>
           <Heading className="text-center" level={4}>
-            Create your Profile
+            {t("profile.common.createProfile")}
           </Heading>
           {createUserFormState.error && (
             <ErrorAlert message={createUserFormState.error} type="error" />
@@ -258,7 +264,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               <Label
                 htmlFor="email"
                 style={{ ...blockLabelStyles, color: theme.colors.darkGray }}
-                label="E-mail"
+                label={t("profile.individual.email")}
               />
               <Input
                 type="email"
@@ -268,20 +274,23 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 className={errors.email && "has-error"}
                 disabled
                 ref={register({
-                  validate: (email) =>
-                    validateEmail(email) || "`${validateEmail.errorMessage}`",
+                  validate: (email) => validateEmail(email),
                 })}
                 style={inputStyles}
                 value={email}
               />
-              {errors.email && <InputError>{errors.email.message}</InputError>}
+              {errors.email && (
+                <InputError>
+                  {t(`profile.common.${errors.email.message}`)}
+                </InputError>
+              )}
             </InputWrapper>
 
             <InputWrapper>
               <Label
                 htmlFor="firstName"
                 style={blockLabelStyles}
-                label="First name"
+                label={t("profile.individual.firstName")}
               />
               <Input
                 type="text"
@@ -289,10 +298,12 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 id="firstName"
                 className={errors.firstName && "has-error"}
                 ref={register({
-                  required: "First name is required.",
+                  required: t("profile.individual.firstNameRequired"),
                   maxLength: {
                     value: 30,
-                    message: "Max. 30 characters",
+                    message: t("profile.common.maxCharacters", {
+                      maxNum: 30,
+                    }),
                   },
                 })}
                 style={inputStyles}
@@ -307,7 +318,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               <Label
                 htmlFor="lastName"
                 style={blockLabelStyles}
-                label="Last name"
+                label={t("profile.individual.lastName")}
               />
               <Input
                 type="text"
@@ -315,10 +326,10 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 id="lastName"
                 className={errors.lastName && "has-error"}
                 ref={register({
-                  required: "Last name is required.",
+                  required: t("profile.individual.lastNameRequired"),
                   maxLength: {
                     value: 30,
-                    message: "Max. 30 characters",
+                    message: t("profile.common.maxCharacters", { maxNum: 30 }),
                   },
                 })}
                 style={inputStyles}
@@ -334,7 +345,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
                 htmlFor="location"
                 icon={Marker}
                 style={blockLabelStyles}
-                label="Address"
+                label={t("profile.common.address")}
               />
               <LocationInput
                 formError={errors.location}
@@ -352,7 +363,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Don't show my address"
+              label={t("profile.individual.hideAddress")}
               name="hide.address"
               onChange={handleCheckboxChange}
             />
@@ -363,13 +374,13 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               size={theme.typography.size.large}
               weight={500}
             >
-              I want to
+              {t("profile.individual.iWant")}
             </TextLabel>
             <Controller
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Volunteer"
+              label={t("profile.individual.volunteer")}
               name="objectives.volunteer"
               onChange={handleCheckboxChange}
             />
@@ -377,7 +388,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Donate"
+              label={t("profile.individual.donate")}
               name="objectives.donate"
               onChange={handleCheckboxChange}
             />
@@ -385,7 +396,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              label="Share Information"
+              label={t("profile.individual.shareInformation")}
               name="objectives.shareInformation"
               onChange={handleCheckboxChange}
             />
@@ -396,14 +407,14 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               size={theme.typography.size.large}
               weight={500}
             >
-              I need
+              {t("profile.individual.iNeed")}
             </TextLabel>
             <Controller
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              description="I have symptoms of COVID-19"
-              label="Medical Help"
+              description={t("profile.individual.haveCovidSymptoms")}
+              label={t("profile.individual.medical")}
               name="needs.medicalHelp"
               onChange={handleCheckboxChange}
             />
@@ -411,8 +422,8 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               as={CheckboxGroup}
               control={control}
               defaultValue={false}
-              description="I need assistance getting groceries, medicine, etc."
-              label="Other Help"
+              description={t("profile.individual.otherDesc")}
+              label={t("profile.individual.other")}
               name="needs.otherHelp"
               onChange={handleCheckboxChange}
             />
@@ -423,10 +434,11 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               value="I agree to the Privacy Policy"
               onChange={handleInputChangePrivacy}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
-                Privacy Policy
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreePrivacy">
+                <StyledUnderlineLink onClick={showPrivacyPolicyModal}>
+                  Privacy Policy
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
             <WhiteSpace />
             <StyledCheckbox
@@ -434,10 +446,11 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               value="I agree to the Terms and Conditions"
               onChange={handleInputChangeConditions}
             >
-              By signing up, I agree to the{" "}
-              <StyledUnderlineLink onClick={showTermsConditionsModal}>
-                Terms and Conditions
-              </StyledUnderlineLink>
+              <Trans i18nKey="profile.common.agreeTerms">
+                <StyledUnderlineLink onClick={showTermsConditionsModal}>
+                  Terms and Conditions
+                </StyledUnderlineLink>
+              </Trans>
             </StyledCheckbox>
           </InputWrapper>
           <InputGroup>
@@ -448,8 +461,8 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
               id={GTM.user.profilePrefix + GTM.profile.createProfile}
             >
               {createUserFormState.loading
-                ? "Creating Profile..."
-                : "Create Profile"}
+                ? t("profile.common.submitLoading")
+                : t("profile.common.submit")}
             </Submit>
           </InputGroup>
         </ProfileFormGroup>

@@ -1,6 +1,8 @@
 import React, { useState, createContext, useContext } from "react";
 import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import {
   Container,
   Option,
@@ -25,12 +27,13 @@ const { typography } = theme;
 export const CreatePostContext = createContext();
 
 const Step1 = ({ gtmPrefix }) => {
+  const { t } = useTranslation();
   const createPostContext = useContext(CreatePostContext);
   const { currentStep, setCurrentStep } = createPostContext;
   return (
     currentStep === 1 && (
       <>
-        <TitleStep>Continue Posting As</TitleStep>
+        <TitleStep>{t("post.continueAs")}</TitleStep>
         <Row gutter={14} justify="center">
           <Col span={12}>
             <Option
@@ -41,7 +44,7 @@ const Step1 = ({ gtmPrefix }) => {
                 GTM.post.individualBtn
               }
               img={person}
-              text="Individual"
+              text={t("post.individual")}
               onClick={() => setCurrentStep(3)}
             />
           </Col>
@@ -51,7 +54,7 @@ const Step1 = ({ gtmPrefix }) => {
                 gtmPrefix + GTM.post.createPost + currentStep + GTM.post.orgBtn
               }
               img={organisation}
-              text="Organisation"
+              text={t("post.organisation")}
               onClick={() => setCurrentStep(2)}
             />
           </Col>
@@ -62,13 +65,14 @@ const Step1 = ({ gtmPrefix }) => {
 };
 
 const Step2 = ({ user, gtmPrefix }) => {
+  const { t } = useTranslation();
   const createPostContext = useContext(CreatePostContext);
   const { setForm, currentStep, setCurrentStep } = createPostContext;
 
   return (
     currentStep === 2 && (
       <>
-        <TitleStep>Posting as an Organisation</TitleStep>
+        <TitleStep>{t("post.postAsOrg")}</TitleStep>
         <BackButton
           id={
             gtmPrefix +
@@ -106,7 +110,7 @@ const Step2 = ({ user, gtmPrefix }) => {
             GTM.organisation.createNew
           }
         >
-          Create new one
+          {t("post.createNew")}
         </CreateOrgLink>
       </>
     )
@@ -160,6 +164,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
 };
 
 const Step4 = () => {
+  const { t } = useTranslation();
   const createPostContext = useContext(CreatePostContext);
   const { currentStep, postId } = createPostContext;
 
@@ -167,7 +172,7 @@ const Step4 = () => {
     currentStep === 4 && (
       <>
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
-          Success
+          {t("post.success")}
         </TitleStep>
         <Link
           to={{
@@ -175,7 +180,7 @@ const Step4 = () => {
             state: { from: window.location.href },
           }}
         >
-          <ViewPostButton primary>View Your Post</ViewPostButton>
+          <ViewPostButton primary>{t("post.viewPost")}</ViewPostButton>
         </Link>
       </>
     )
