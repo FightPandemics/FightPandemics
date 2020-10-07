@@ -340,7 +340,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
           ></Link>
           {renderContent}
           <IconsContainer>
-            {isAuthenticated ? (
+            {isAuthenticated && type.toLowerCase() != "individual" ? (
               <SendMessage
                 to={`/${
                   type.toLowerCase() == "individual"
