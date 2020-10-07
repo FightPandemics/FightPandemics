@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import {
   joinRoomSuccess,
   joinRoomError,
+  leaveAllRoomsSuccess,
   receivedMessage,
   getChatLogSuccess,
   getChatLogError,
@@ -102,6 +103,7 @@ export default class SocketManager extends React.Component {
 
   leaveAllRooms = () => {
     this.joinRoom({});
+    this.props.store.dispatch(leaveAllRoomsSuccess());
   };
 
   getUserRooms = () => {
