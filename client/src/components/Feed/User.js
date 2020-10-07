@@ -351,7 +351,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 <SvgIcon src={envelopeBlue} />
                 <span>{t("profile.common.sendMessage")}</span>
               </SendMessage>
-            ) : (
+            ) : type.toLowerCase() != "individual" && (
               <SendMessage
                 onClick={() =>
                   sessionStorage.setItem(
