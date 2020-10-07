@@ -22,6 +22,7 @@ import {
 import { mq } from "constants/theme";
 import {
   FACEBOOK_URL,
+  INSTAGRAM_URL,
   LINKEDIN_URL,
   LINKEDIN_INDIVIDUAL_URL,
   TWITTER_URL,
@@ -36,6 +37,8 @@ import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import envelopeBlue from "assets/icons/mail.svg";
 import facebookIcon from "assets/icons/social-facebook-unfilled.svg";
+import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
+
 import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-unfilled.svg";
 import twitterBlue from "assets/icons/social-twitter-unfilled.svg";
@@ -136,6 +139,7 @@ const SendMessage = styled(Link)`
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
+  instagram: [instagramIcon, INSTAGRAM_URL],
   linkedin: [linkedinBlue, LINKEDIN_INDIVIDUAL_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
@@ -296,7 +300,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 );
               })}
             <FilterTag disabled={true} selected={false}>
-            {t("feed.filters.providersOptions." + type)}
+              {t("feed.filters.providersOptions." + type)}
             </FilterTag>
           </ProfileTypeMobile>
         </div>
@@ -351,26 +355,28 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 <SvgIcon src={envelopeBlue} />
                 <span>{t("profile.common.sendMessage")}</span>
               </SendMessage>
-            ) : type.toLowerCase() != "individual" && (
-              <SendMessage
-                onClick={() =>
-                  sessionStorage.setItem(
-                    "postredirect",
-                    `/${
-                      type.toLowerCase() == "individual"
-                        ? "profile"
-                        : "organisation"
-                    }/${_id}`,
-                  )
-                }
-                to={{
-                  pathname: LOGIN,
-                  state: { from: window.location.href },
-                }}
-              >
-                <SvgIcon src={envelopeBlue} />
-                <span>{t("profile.common.sendMessage")}</span>
-              </SendMessage>
+            ) : (
+              type.toLowerCase() != "individual" && (
+                <SendMessage
+                  onClick={() =>
+                    sessionStorage.setItem(
+                      "postredirect",
+                      `/${
+                        type.toLowerCase() == "individual"
+                          ? "profile"
+                          : "organisation"
+                      }/${_id}`,
+                    )
+                  }
+                  to={{
+                    pathname: LOGIN,
+                    state: { from: window.location.href },
+                  }}
+                >
+                  <SvgIcon src={envelopeBlue} />
+                  <span>{t("profile.common.sendMessage")}</span>
+                </SendMessage>
+              )
             )}
             <PlaceholderIcon />
             {renderExternalLinks}
