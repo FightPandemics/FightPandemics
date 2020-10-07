@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import i18n from "../../i18n";
 import { localization, languages } from "locales/languages";
-import globe from "assets/icons/globe.svg";
+import globe from "assets/icons/globe-white.svg";
 import SvgIcon from "components/Icon/SvgIcon";
 import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
