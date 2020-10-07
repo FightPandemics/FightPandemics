@@ -82,16 +82,16 @@ async function routes(app) {
       const { body, token } = req;
       const { email, password, confirmPassword } = body;
       if (!email) {
-        throw app.httpErrors.badRequest("EmailAddressIsRequired");
+        throw app.httpErrors.badRequest("emailRequired");
       } else if (!isValidEmail(email)) {
-        throw app.httpErrors.badRequest("EmailAddressIsInvalid");
+        throw app.httpErrors.badRequest("invalidEmail");
       }
       if (!password) {
-        throw app.httpErrors.badRequest("PasswordIsRequired");
+        throw app.httpErrors.badRequest("passwordRequired");
       } else if (!isValidPassword(password)) {
-        throw app.httpErrors.badRequest("PasswordIsInvalid");
+        throw app.httpErrors.badRequest("invalidPassword");
       } else if (password !== confirmPassword) {
-        throw app.httpErrors.badRequest("PasswordsShouldMatch");
+        throw app.httpErrors.badRequest("passwordNotMatch");
       }
       const payload = {
         connection: "Username-Password-Authentication",
