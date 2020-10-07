@@ -38,7 +38,6 @@ import statusIndicator from "assets/icons/status-indicator.svg";
 import envelopeBlue from "assets/icons/mail.svg";
 import facebookIcon from "assets/icons/social-facebook-unfilled.svg";
 import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
-
 import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-unfilled.svg";
 import twitterBlue from "assets/icons/social-twitter-unfilled.svg";
