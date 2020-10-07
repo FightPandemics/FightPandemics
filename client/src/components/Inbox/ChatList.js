@@ -79,7 +79,7 @@ export const ChatList = ({
           <header>
             <UserName>{getReceiver(_room.participants).name}</UserName>
             <h5>{_room.lastMessage? getRelativeTime(_room.lastMessage.createdAt) : getRelativeTime(_room.createdAt)}</h5>
-            {getSender(_room.participants).newMessages && <span className="unread-indicator">{getSender(_room.participants).newMessages}</span>}
+            {getSender(_room.participants).newMessages != 0 && <span className="unread-indicator">{getSender(_room.participants).newMessages}</span>}
           </header>
           <div className="content">
             {<div className="title">Topic....</div>}
