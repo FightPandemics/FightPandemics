@@ -147,6 +147,10 @@ export const SuccessModal = styled(MsgModal)`
       padding: 1.5em 2em;
     }
   }
+  .ant-modal-footer {
+    display: block;
+    text-align: center;
+  }
   .ant-modal-footer > div {
     position: absolute;
     bottom: 2.143em;
@@ -162,11 +166,11 @@ export const SuccessModal = styled(MsgModal)`
     color: white;
     width: 14.143em;
     box-shadow: none;
-    position: absolute;
+    position: relative;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 0.9em;
     z-index: 999;
   }
 `;
