@@ -34,11 +34,13 @@ function wsReducer(state = initialState, action) {
         isIdentified: false,
       };
     case JOIN_ROOM_SUCCESS:
+      // update the room in [rooms], but keep the user status
       var index = state.rooms.findIndex((r) => r._id == action.payload._id);
-      if (index != -1) state.rooms[index] = action.payload;
+      if (index != -1) state.rooms[index] = {...action.payload, userStatus: state.rooms[index].userStatus};
       return {
         ...state,
-        room: action.payload,
+        // update the room, but not the user status, to avoid status flickering
+        room: {...action.payload, userStatus: state.rooms[index].userStatus},
         rooms: state.rooms,
       };
     case JOIN_ROOM_ERROR:

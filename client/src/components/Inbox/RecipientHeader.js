@@ -63,6 +63,7 @@ const LastSeen = styled.small`
   display: block;
   font-weight: 400;
   line-height: 1.2;
+  color: #969292;
 `;
 export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);

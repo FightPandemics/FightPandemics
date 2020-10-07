@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Badge } from 'antd';
 import TextAvatar from "components/TextAvatar";
 import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
@@ -24,8 +25,7 @@ export const ChatList = ({
   user,
   getUserStatus,
 }) => {
-
-  const [usersStatus, setUsersStatus] = useState({})
+  const dispatch = useDispatch()
 
   const getReceiver = (participants) => {
     return participants.filter(p=>p.id!=user.id)[0]
@@ -37,18 +37,9 @@ export const ChatList = ({
 
   useEffect(()=>{
     rooms.forEach(async _room => {
-      if (_room.userStatus) return setUsersStatus(prevState => {
-        let newObj = Object.assign({}, prevState)
-        newObj[_room._id] = _room.userStatus
-        return newObj
-      });
+      if (_room.userStatus) return dispatch({type: "USER_STATUS_UPDATE", payload: { id: getReceiver(_room.participants).id, status: _room.userStatus} })
       let status = await getUserStatus(getReceiver(_room.participants).id)
-      setUsersStatus(prevState => {
-        let newObj = Object.assign({}, prevState)
-        newObj[_room._id] = status
-        _room.userStatus = status
-        return newObj
-      });
+      dispatch({type: "USER_STATUS_UPDATE", payload: { id: getReceiver(_room.participants).id, status: status} })
     })
   }, [rooms])
 
@@ -74,7 +65,7 @@ export const ChatList = ({
           <TextAvatar src={getReceiver(_room.participants).photo}>
             {getInitialsFromFullName(getReceiver(_room.participants).name)}
           </TextAvatar>
-          <span className={`status-indicator ${_room.userStatus || usersStatus[_room._id]}`}></span>
+          <span className={`status-indicator ${_room.userStatus}`}></span>
         </Badge>
         <content>
           <header>
