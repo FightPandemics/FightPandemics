@@ -81,14 +81,15 @@ function onSocketConnect(socket) {
         return res({ code: 500, message: "Internal server error" });
       if (!sender || !receiver)
         return res({ code: 404, message: "User not found" });
-      let newThread = { participants: [], status: "pending" };
+      let newThread = { participants: [] };
       [sender, receiver].forEach((participant) => {
         newThread.participants.push({
           id: participant._id,
           lastAccess: participant == sender ? new Date() : null,
           name: participant.name,
-          newMessages: participant == receiver ? true : false,
+          newMessages: participant == receiver ? 1 : 0,
           photo: participant.photo,
+          status: participant == sender ? "accepted" : "pending",
           type: participant.type,
         });
       });
@@ -105,7 +106,7 @@ function onSocketConnect(socket) {
         {
           $set: {
             "participants.$[userToUpdate].lastAccess": new Date(),
-            "participants.$[userToUpdate].newMessages": false,
+            "participants.$[userToUpdate].newMessages": 0,
           },
         },
         { new: true, arrayFilters: [{ "userToUpdate.id": userId }] },
@@ -219,23 +220,26 @@ function onSocketConnect(socket) {
 
     // add unread mark to recipient(s)
     // if not ( online && in the same room)
-    let recipients = thread.participants.filter(p => p.id != userId).map(r=>r.id);
+    let recipients = thread.participants
+      .filter((p) => p.id != userId)
+      .map((r) => r.id);
 
     for (const recipient of recipients) {
-      let recipientSocket = getSocketByUserId(this, recipient)
-      let isInSameRoom = recipientSocket? await isUserInRoom(this, thread._id.toString(), recipientSocket.id) : false
-      if (!recipientSocket || (recipientSocket && !isInSameRoom)){
+      let recipientSocket = getSocketByUserId(this, recipient);
+      let isInSameRoom = recipientSocket
+        ? await isUserInRoom(this, thread._id.toString(), recipientSocket.id)
+        : false;
+      if (!recipientSocket || (recipientSocket && !isInSameRoom)) {
         // equivalent to (!online || (online && !inSameRoom))
         const [updateThreadErr, updateThread] = await this.to(
           Thread.findByIdAndUpdate(
             thread._id,
-            { $set: { "participants.$[userToUpdate].newMessages": true } },
-            { arrayFilters: [{ 'userToUpdate.id' : { $ne: userId } }] },
+            { $inc: { "participants.$[userToUpdate].newMessages": 1 } },
+            { arrayFilters: [{ "userToUpdate.id": recipient }] },
           ),
         );
       }
     }
-
 
     let newMessage = {
       authorId: userId,

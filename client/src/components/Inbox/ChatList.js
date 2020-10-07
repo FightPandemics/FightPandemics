@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import isonline from "assets/icons/is-online-dot.svg";
+import { Badge } from 'antd';
 import TextAvatar from "components/TextAvatar";
 import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
 import styled from "styled-components";
@@ -69,19 +69,17 @@ export const ChatList = ({
         }
       }
       >
-        <TextAvatar src={getReceiver(_room.participants).photo}>{getInitialsFromFullName(getReceiver(_room.participants).name)}</TextAvatar>
+        <Badge>
+          <TextAvatar src={getReceiver(_room.participants).photo}>
+            {getInitialsFromFullName(getReceiver(_room.participants).name)}
+          </TextAvatar>
+          <span className={`status-indicator ${_room.userStatus || usersStatus[_room._id]}`}></span>
+        </Badge>
         <content>
           <header>
-            <span>
-              <img
-                className={`is-online-dot ${_room.userStatus || usersStatus[_room._id]}`}
-                src={isonline}
-                alt="Is Online Dot"
-                
-              />
-            </span>
             <UserName>{getReceiver(_room.participants).name}</UserName>
-          <h5>{_room.lastMessage? getRelativeTime(_room.lastMessage.createdAt) : getRelativeTime(_room.createdAt)}</h5>
+            <h5>{_room.lastMessage? getRelativeTime(_room.lastMessage.createdAt) : getRelativeTime(_room.createdAt)}</h5>
+            {getSender(_room.participants).newMessages && <span className="unread-indicator">{getSender(_room.participants).newMessages}</span>}
           </header>
           <div className="content">
             {<div className="title">Topic....</div>}
@@ -97,7 +95,7 @@ export const ChatList = ({
   return (
     <ChatListContainer toggleMobileChatList={toggleMobileChatList}>
       <ChatHeader>
-        Messages <span>{rooms.map(_room=> getSender(_room.participants).newMessages? 1:0).reduce((a,b)=>a+b,0)}</span>
+        Messages <span>{rooms.map(_room=> getSender(_room.participants).newMessages?1:0).reduce((a,b)=>a+b,0)}</span>
       </ChatHeader>
       <div className="chat-bucket">
         {!empty && (

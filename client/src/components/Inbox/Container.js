@@ -84,26 +84,32 @@ export const SideChatContainer = styled.div`
     width: 3.8rem;
     height: 3.8rem;
     line-height: 3.8rem;
+    overflow: visible;
     img {
       width: 100%;
       height: 100%;
     }
   }
+  .status-indicator{
+    position: absolute;
+    left: 2.5rem;
+    margin-top: -1rem;
+    background: #cecece;
+    border-radius: 100%;
+    height: 1rem;
+    width: 1rem;
+    border: 1px solid #5f5f5f;
+    &.online {
+      background: lightgreen;
+      border: 1px solid #01a501;
+
+    }
+  }
   header {
     display: flex;
     line-height: 0;
-    span {
-      position: relative;
-      right: 3.8em;
-      img {
-        &.offline {
-          opacity: 0;
-        }
-      }
-    }
     h4 {
       position: relative;
-      right: 0.6em;
       font-weight: 600;
     }
     h5 {
@@ -113,6 +119,18 @@ export const SideChatContainer = styled.div`
       color: gray;
       font-weight: 300;
       letter-spacing: 0.3px;
+    }
+    .unread-indicator {
+      position: absolute;
+      right: -1rem;
+      top: calc(50% - 2rem);
+      background: #425af2;
+      color: #f3f4fe;
+      height: 2rem;
+      width: 2rem;
+      border-radius: 100%;
+      text-align: center;
+      line-height: 2rem;
     }
   }
   content {
