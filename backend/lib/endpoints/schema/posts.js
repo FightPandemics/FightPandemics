@@ -10,6 +10,7 @@ const {
 
 const getPostsSchema = {
   querystring: strictSchema()
+    .prop("actorId", S.string())
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
     .prop("ignoreUserLocation", S.boolean().default(false))
@@ -21,6 +22,7 @@ const getPostsSchema = {
 
 const createPostSchema = {
   body: strictSchema()
+    .prop("actorId", S.string())
     .prop("content", S.string().required())
     .prop("expireAt", S.string().enum(EXPIRATION_OPTIONS).required())
     .prop(
@@ -33,7 +35,6 @@ const createPostSchema = {
     )
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES).required())
-    .prop("organisationId", S.string())
     .prop("title", S.string().required())
     .prop(
       "types",
@@ -43,7 +44,7 @@ const createPostSchema = {
 };
 
 const getPostByIdSchema = {
-  querystring: S.object().prop("skip", S.integer()).prop("limit", S.integer()),
+  querystring: S.object().prop("actorId", S.string()),
 };
 
 const updatePostSchema = {
@@ -68,15 +69,15 @@ const updatePostSchema = {
 
 const likeUnlikePostSchema = {
   params: strictSchema()
-    .prop("postId", S.string().required())
-    .prop("userId", S.string().required()),
+    .prop("actorId", S.string().required())
+    .prop("postId", S.string().required()),
 };
 
 const likeUnlikeCommentSchema = {
   params: strictSchema()
+    .prop("actorId", S.string().required())
     .prop("postId", S.string().required())
-    .prop("commentId", S.string().required())
-    .prop("userId", S.string().required()),
+    .prop("commentId", S.string().required()),
 };
 
 const deletePostSchema = {
@@ -85,6 +86,7 @@ const deletePostSchema = {
 
 const createCommentSchema = {
   body: strictSchema()
+    .prop("actorId", S.string())
     .prop("content", S.string().required())
     .prop("parentId", S.string()),
   params: strictSchema().prop("postId", S.string().required()),

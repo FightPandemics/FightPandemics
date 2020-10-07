@@ -85,7 +85,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
     populateErrors();
 
     const payload = formDataToPost(formData);
-    if (form.organisationId) payload.organisationId = form.organisationId;
+    if (form.organisationId) payload.actorId = form.organisationId;
 
     if (!errors.length) {
       try {
