@@ -21,6 +21,7 @@ const getPostsSchema = {
 
 const createPostSchema = {
   body: strictSchema()
+    .prop("authorId", S.string())
     .prop("content", S.string().required())
     .prop("expireAt", S.string().enum(EXPIRATION_OPTIONS).required())
     .prop(
@@ -33,7 +34,6 @@ const createPostSchema = {
     )
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES).required())
-    .prop("organisationId", S.string())
     .prop("title", S.string().required())
     .prop(
       "types",
@@ -68,15 +68,15 @@ const updatePostSchema = {
 
 const likeUnlikePostSchema = {
   params: strictSchema()
-    .prop("postId", S.string().required())
-    .prop("userId", S.string().required()),
+    .prop("authorId", S.string().required())
+    .prop("postId", S.string().required()),
 };
 
 const likeUnlikeCommentSchema = {
   params: strictSchema()
+    .prop("authorId", S.string().required())
     .prop("postId", S.string().required())
-    .prop("commentId", S.string().required())
-    .prop("userId", S.string().required()),
+    .prop("commentId", S.string().required()),
 };
 
 const deletePostSchema = {
@@ -85,6 +85,7 @@ const deletePostSchema = {
 
 const createCommentSchema = {
   body: strictSchema()
+    .prop("authorId", S.string())
     .prop("content", S.string().required())
     .prop("parentId", S.string()),
   params: strictSchema().prop("postId", S.string().required()),

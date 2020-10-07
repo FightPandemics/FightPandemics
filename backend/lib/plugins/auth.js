@@ -96,6 +96,44 @@ const authPlugin = async (app) => {
     }
   });
 
+  // checks that authenticated user can be desired author & sets to req
+  app.decorate("setAuthor", async (req, reply) => {
+    const { userId } = req;
+
+    // check for authorId in body props OR path params
+    const body = req.body || {};
+    const params = req.params || {};
+
+    // set to req user otherwise
+    const authorId = body.authorId || params.authorId || userId;
+
+    // author can be organisation or individual (self)
+    const User = app.mongo.model("User");
+
+    const [authorErr, author] = await app.to(User.findById(authorId));
+    if (authorErr) {
+      req.log.error(err, "Failed retrieving author");
+      throw app.httpErrors.internalServerError();
+    } else if (author === null) {
+      req.log.error("Author does not exist");
+      throw app.httpErrors.notFound();
+      // In future iterations we will implement a more fine grained policy
+      // based on a user's role within the organisation (besides owner)
+    } else if (!userId.equals(authorId) && !userId.equals(author.ownerId)) {
+      req.log.error(
+        `Not authorized to act as ${author.owner ? "organisation" : "user"}`,
+      );
+      throw app.httpErrors.forbidden();
+    }
+
+    // delete body param so not used in mongo update
+    if (req.body && req.body.authorId) {
+      delete req.body.authorId;
+    }
+
+    req.author = author;
+  }, ["authenticate"]);
+
   // eslint-disable-next-line func-names
   app.decorateReply("setAuthCookies", function (token) {
     this.setCookie(TOKEN_COOKIE, token, authSetCookieOptions());

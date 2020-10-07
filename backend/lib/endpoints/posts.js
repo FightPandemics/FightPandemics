@@ -266,42 +266,11 @@ async function routes(app) {
   app.post(
     "/",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setAuthor],
       schema: createPostSchema,
     },
     async (req, reply) => {
-      const { userId, body: postProps } = req;
-      // return postProps;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        req.log.error(userErr, "Failed retrieving user");
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        req.log.error(userErr, "User does not exist");
-        throw app.httpErrors.forbidden();
-      }
-
-      // Author defaults to user unless organisationId set
-      let author = user;
-      const { organisationId } = postProps;
-      if (organisationId) {
-        const [orgErr, org] = await app.to(User.findById(organisationId));
-        if (orgErr) {
-          req.log.error(userErr, "Failed retrieving organisation");
-          throw app.httpErrors.internalServerError();
-        } else if (org === null) {
-          req.log.error(userErr, "Organisation does not exist");
-          throw app.httpErrors.forbidden();
-        } else if (org.ownerId.toString() !== userId.toString()) {
-          req.log.error(
-            userErr,
-            "User not allowed to post as this organisation",
-          );
-          throw app.httpErrors.forbidden();
-        }
-        author = org;
-        delete postProps.organisationId;
-      }
+      const { author, body: postProps } = req;
 
       // Creates embedded author document
       postProps.author = {
@@ -472,22 +441,21 @@ async function routes(app) {
   );
 
   app.put(
-    "/:postId/likes/:userId",
+    "/:postId/likes/:authorId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setAuthor],
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-
-      const { postId, userId } = req.params;
+      const {
+        author,
+        params: { postId },
+      } = req;
 
       const [updateErr, updatedPost] = await app.to(
         Post.findOneAndUpdate(
           { _id: postId },
-          { $addToSet: { likes: userId } },
+          { $addToSet: { likes: author._id } },
           { new: true },
         ),
       );
@@ -506,21 +474,21 @@ async function routes(app) {
   );
 
   app.delete(
-    "/:postId/likes/:userId",
+    "/:postId/likes/:authorId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setAuthor],
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { postId, userId } = req.params;
+      const {
+        author,
+        params: { postId },
+      } = req;
 
       const [updateErr, updatedPost] = await app.to(
         Post.findOneAndUpdate(
           { _id: postId },
-          { $pull: { likes: userId } },
+          { $pull: { likes: author._id } },
           { new: true },
         ),
       );
@@ -597,18 +565,16 @@ async function routes(app) {
 
   app.post(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: createCommentSchema },
+    {
+      preValidation: [app.authenticate, app.setAuthor],
+      schema: createCommentSchema,
+    },
     async (req, reply) => {
-      const { userId, body: commentProps, params } = req;
-      const { postId } = params;
-
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        req.log.error(userErr, "Failed retrieving user");
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        throw app.httpErrors.notFound();
-      }
+      const {
+        author,
+        body: commentProps,
+        params: { postId },
+      } = req;
 
       // Assign postId and parent comment id (if present)
       commentProps.postId = mongoose.Types.ObjectId(postId);
@@ -618,10 +584,10 @@ async function routes(app) {
 
       // Creates embedded author document
       commentProps.author = {
-        id: mongoose.Types.ObjectId(user.id),
-        name: user.name,
-        photo: user.photo,
-        type: user.type,
+        id: mongoose.Types.ObjectId(author.id),
+        name: author.name,
+        photo: author.photo,
+        type: author.type,
       };
 
       // Initial empty likes array
@@ -705,19 +671,21 @@ async function routes(app) {
   );
 
   app.put(
-    "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    "/:postId/comments/:commentId/likes/:authorId",
+    {
+      preValidation: [app.authenticate, app.setAuthor],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { userId } = req;
-      const { commentId } = req.params;
+      const {
+        author,
+        params: { commentId },
+      } = req;
 
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
           { _id: commentId },
-          { $addToSet: { likes: userId } },
+          { $addToSet: { likes: author._id } },
           { new: true },
         ),
       );
@@ -734,19 +702,21 @@ async function routes(app) {
   );
 
   app.delete(
-    "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    "/:postId/comments/:commentId/likes/:authorId",
+    {
+      preValidation: [app.authenticate, app.setAuthor],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { userId } = req;
-      const { commentId } = req.params;
+      const {
+        author,
+        params: { commentId },
+      } = req;
 
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
           { _id: commentId },
-          { $pull: { likes: userId } },
+          { $pull: { likes: author._id } },
           { new: true },
         ),
       );
