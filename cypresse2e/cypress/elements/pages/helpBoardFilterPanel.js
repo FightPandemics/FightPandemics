@@ -7,13 +7,16 @@ class HelpBoardFilter {
     backButton = '';
     expandWidget = '.arrow';
     hbLocationHeading = '#HB_LO';
-    hbLocationInput = '#HB_LO_EAZ';
+    hbLocationInput = '.ant-select-selection-item';
+    // hbLocationDropdown = 'HB_LO_EAZ_list_0';
+    hbLocationSubtext = 'small';
     hbShareLocation = '#HB_LO_SL';
     hbProvidersHeading = '#HB_PV';
     hbTypeHeading = '#HB_TP';
     hbProvidersAndType = '.am-accordion-content-box a';
     quitFiltersButton = '#HB_FI_QF';
     viewResultsButton = '#HB_FI_VR';
+    cookieBanner = '#cookie-banner-close';
 
     constructor() {}
 
@@ -53,6 +56,14 @@ class HelpBoardFilter {
         return cy.get(this.hbLocationInput);
     }
 
+    // hetHbLocationDropdown () {
+    //     return cy.get(this.hbLocationDropdown);
+    // }
+
+    getHbLocationSubtext () {
+        return cy.get(this.hbLocationSubtext);
+    }
+
     getHbShareLocation () {
         return cy.get(this.hbShareLocation);
     }
@@ -75,6 +86,10 @@ class HelpBoardFilter {
 
     getViewResultsButton () {
         return cy.get(this.viewResultsButton);
+    }
+
+    getCookieBanner () {
+        return cy.get(this.cookieBanner);
     }
 }
 
