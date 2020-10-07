@@ -61,8 +61,6 @@ async function routes(app) {
 
       if (queryFilters.location) filters.push({ "hide.address": false });
 
-      if (userId) filters.push({ _id: { $ne: userId } });
-
       const objectives = {
         request: {
           $or: [{ "needs.medicalHelp": true }, { "needs.otherHelp": true }],
