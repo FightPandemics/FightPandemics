@@ -7,6 +7,7 @@ module.exports = {
     addOrg: "_ADO",
     feed: "_HB",
     feedback: "_FDB",
+    inbox: "_IBX"
   },
   homePage: {
     prefix: "HP",

@@ -77,6 +77,7 @@ export default class SocketManager extends React.Component {
     this.socket.emit("IDENTIFY", userData, (response) => {
       if (response.code == 200) {
         console.log(`[WS]: ${userData.id} Identified`);
+        this.getUserRooms()
         this.props.store.dispatch(identifySuccess());
       } else this.props.store.dispatch(identifyError(response));
     });

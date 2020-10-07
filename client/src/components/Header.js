@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Badge } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import i18n from "../i18n";
@@ -12,6 +12,7 @@ import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import globe from "assets/icons/globe.svg";
+import mail from "assets/icons/mail.svg";
 import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
@@ -127,8 +128,10 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  ws
 }) => {
   const { t } = useTranslation();
+  const { rooms } = ws;
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -228,6 +231,17 @@ export default ({
         </li>
         {isAuthenticated ? (
           <>
+            <li>
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.inbox}
+                activeStyle={activeStyles}
+                to="/inbox"
+              >
+                <Badge count={rooms.map(_room=> _room.participants.find(p=>p.id == user.id.toString())?.newMessages || 0).reduce((a,b)=>a+b,0)}>
+                  <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
+                </Badge>
+              </NavLink>
+            </li>
             <li>
               <Dropdown overlay={menu} trigger={["click"]}>
                 <a

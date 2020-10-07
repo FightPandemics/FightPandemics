@@ -267,7 +267,7 @@ const StyledDrawer = styled(Drawer)`
 
 const NavigationLayout = (props) => {
   const { t } = useTranslation();
-  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user, ws } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -699,6 +699,7 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
+            ws={ws}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
