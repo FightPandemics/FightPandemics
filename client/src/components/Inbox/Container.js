@@ -121,11 +121,11 @@ export const SideChatContainer = styled.div`
     .unread-indicator {
       position: absolute;
       right: -1rem;
-      top: calc(50% - 2rem);
+      top: calc(50% - 1.5rem);
       background: #425af2;
       color: #f3f4fe;
-      height: 2rem;
-      width: 2rem;
+      height: 1rem;
+      width: 1rem;
       border-radius: 100%;
       text-align: center;
       line-height: 2rem;
