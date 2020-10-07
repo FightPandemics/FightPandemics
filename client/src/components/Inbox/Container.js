@@ -84,7 +84,6 @@ export const SideChatContainer = styled.div`
     width: 3.8rem;
     height: 3.8rem;
     line-height: 3.8rem;
-    overflow: visible;
     img {
       width: 100%;
       height: 100%;
@@ -92,17 +91,15 @@ export const SideChatContainer = styled.div`
   }
   .status-indicator{
     position: absolute;
-    left: 2.5rem;
-    margin-top: -1rem;
+    left: 2.3rem;
+    margin-top: -1.2rem;
     background: #cecece;
     border-radius: 100%;
-    height: 1rem;
-    width: 1rem;
-    border: 1px solid #5f5f5f;
+    height: 1.4rem;
+    width: 1.4rem;
+    border: 2px solid #fff;
     &.online {
       background: lightgreen;
-      border: 1px solid #01a501;
-
     }
   }
   header {

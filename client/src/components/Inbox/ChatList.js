@@ -46,6 +46,7 @@ export const ChatList = ({
       setUsersStatus(prevState => {
         let newObj = Object.assign({}, prevState)
         newObj[_room._id] = status
+        _room.userStatus = status
         return newObj
       });
     })

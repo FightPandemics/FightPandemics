@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Badge } from "antd";
 import styled from "styled-components";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import { theme, mq } from "constants/theme";
@@ -15,6 +16,7 @@ const RecipientName = styled.div`
   position: relative;
   top: 0px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding-left: 1em;
   .back-arrow {
@@ -32,6 +34,19 @@ const RecipientName = styled.div`
     line-height: 3.2rem;
     font-size: 0.929em;
   }
+  .status-indicator{
+    position: absolute;
+    left: 2.1rem;
+    margin-top: -1.1rem;
+    background: #cecece;
+    border-radius: 100%;
+    height: 1.2rem;
+    width: 1.2rem;
+    border: 2px solid #fff;
+    &.online {
+      background: lightgreen;
+    }
+  }
   h4 {
     position: relative;
     top: 0.2em;
@@ -41,12 +56,15 @@ const RecipientName = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 50%;
+    line-height: 1.1;
   }
 `;
 const LastSeen = styled.small`
-  margin-left: 10px;
+  display: block;
+  font-weight: 400;
+  line-height: 1.2;
 `;
-export const RecipientHeader = ({ participant, onMobileBackClick }) => {
+export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
   return (
     <>
@@ -61,16 +79,23 @@ export const RecipientHeader = ({ participant, onMobileBackClick }) => {
             src={arrow}
             alt="Back Arrow"
           />
-          <TextAvatar src={participant.photo}>
-            {getInitialsFromFullName(participant.name)}
-          </TextAvatar>
-          <h4>{participant.name}</h4>
+          <Badge>
+            <TextAvatar src={participant.photo}>
+              {getInitialsFromFullName(participant.name)}
+            </TextAvatar>
+            <span className={`status-indicator ${status}`}></span>
+          </Badge>
+          <h4>{participant.name}
           <LastSeen>
+            {status == "online" ? "Active Now" :
+            <>
             Last seen:{" "}
             {participant.lastAccess
               ? getRelativeTime(participant.lastAccess)
               : "never"}
-          </LastSeen>
+            </>
+            }
+          </LastSeen></h4>
         </RecipientName>
       )}
     </>

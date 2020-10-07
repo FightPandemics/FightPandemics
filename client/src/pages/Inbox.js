@@ -182,6 +182,7 @@ const CurrentChat = ({
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
       <RecipientHeader
+        status={room?.userStatus || null}
         participant={room ? getReceiver(room.participants) : null}
         onMobileBackClick={leaveAllRooms}
       />
