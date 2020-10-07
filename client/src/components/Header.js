@@ -12,7 +12,6 @@ import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import globe from "assets/icons/globe.svg";
-import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
@@ -224,14 +223,6 @@ export default ({
             {t("feed.title")}
           </NavLink>
         </li>
-        <li>
-          <Dropdown overlay={languageMenu} trigger={["click"]}>
-            <Link to="">
-              <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-              <DownOutlined />
-            </Link>
-          </Dropdown>
-        </li>
         {isAuthenticated ? (
           <>
             <li>
@@ -273,6 +264,9 @@ export default ({
             </button>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+        </Dropdown>
       </>
     );
   };

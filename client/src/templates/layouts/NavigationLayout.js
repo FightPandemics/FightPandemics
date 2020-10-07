@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import i18n from "../../i18n";
 import { localization, languages } from "locales/languages";
-import globe from "assets/icons/globe.svg";
+import globe from "assets/icons/globe-white.svg";
 import SvgIcon from "components/Icon/SvgIcon";
 import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
@@ -52,6 +52,10 @@ const drawerStyles = {
 const sidebarStyle = {
   background: `${royalBlue}`,
 };
+
+const GlobeIcon = styled(SvgIcon)`
+  vertical-align: baseline;
+`;
 
 const MenuContainer = styled.div`
   width: 63vw !important;
@@ -122,7 +126,6 @@ const LanguageSwitchItem = styled(List.Item)`
   padding-left: 2.1rem;
   font-family: "Poppins", sans-serif;
   font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
-  font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -612,8 +615,8 @@ const NavigationLayout = (props) => {
       <Space height="10vh" limitMobileHeight />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem
@@ -648,8 +651,8 @@ const NavigationLayout = (props) => {
       <Space height="33vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem
