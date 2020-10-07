@@ -11,6 +11,7 @@ import {
   GET_MESSAGES_HISTORY_ERROR,
   GET_MORE_MESSAGES_HISTORY,
   USER_STATUS_UPDATE,
+  SET_LAST_MESSAGE,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -34,11 +35,12 @@ function wsReducer(state = initialState, action) {
         isIdentified: false,
       };
     case JOIN_ROOM_SUCCESS:
-      // update the room in [rooms], but keep the user status, to avoid status flickering
+      // update the room in [rooms], but keep the user status (to avoid status flickering) and keep topic
       var index = state.rooms.findIndex((r) => r._id == action.payload._id);
       if (index != -1) {
-        state.rooms[index] = {...action.payload, userStatus: state.rooms[index].userStatus};
+        state.rooms[index] = {...action.payload, userStatus: state.rooms[index].userStatus, topic: state.rooms[index].topic};
         action.payload.userStatus = state.rooms[index].userStatus
+        action.payload.topic = state.rooms[index].topic
       }
       return {
         ...state,
@@ -77,11 +79,21 @@ function wsReducer(state = initialState, action) {
         ...state,
         chatLog: [...state.chatLog, action.payload],
       };
-    /*case MESSAGE_SEEN:
+    case SET_LAST_MESSAGE:
+      var index = state.rooms.findIndex((r) => r._id == action.payload.threadId);
+      if (index != -1) {
+        state.rooms[index].lastMessage = action.payload
+        if (action.payload.postRef) state.rooms[index].topic = action.payload.postRef.title
+      }
+      state.rooms.sort((a, b) => {
+        return (
+          new Date(b.lastMessage?.createdAt) -
+          new Date(a.lastMessage?.createdAt)
+        );
+      })
       return {
-        ...state,
-        newMessage: null
-      }*/
+        ...state
+      };
     case GET_MESSAGES_HISTORY:
       return {
         ...state,

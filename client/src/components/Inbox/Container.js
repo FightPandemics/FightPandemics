@@ -108,6 +108,7 @@ export const SideChatContainer = styled.div`
     h4 {
       position: relative;
       font-weight: 600;
+      max-width: 80%;
     }
     h5 {
       position: absolute;
@@ -138,8 +139,15 @@ export const SideChatContainer = styled.div`
     .title {
       font-size: 1em;
       font-weight: 500;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .message {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #085fff;
       opacity: 0.7;
       letter-spacing: 0.4px;
     }

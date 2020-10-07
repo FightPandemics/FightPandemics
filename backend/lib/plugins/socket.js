@@ -143,7 +143,7 @@ function onSocketConnect(socket) {
     );
     if (threadsErr) return res({ code: 500, message: "Internal server error" });
 
-    const threadsRich = []; // Rich because will have lastMessage, topic (in the futur)
+    const threadsRich = []; // Rich because will have lastMessage, and topic
     for (let i = 0; i < threads.length; i++) {
       const thread = threads[i].toObject();
       const [lastMessageErr, lastMessage] = await this.to(
@@ -152,7 +152,15 @@ function onSocketConnect(socket) {
           .findOne({ threadId: thread._id })
           .sort({ createdAt: -1 }),
       );
+      const [lastEmbedMessageErr, lastEmbedMessage] = await this.to(
+        this.mongo
+          .model("Message")
+          .findOne({ threadId: thread._id, postRef: { $ne: null } })
+          .sort({ createdAt: -1 }),
+      );
+
       if (lastMessage) thread.lastMessage = lastMessage;
+      if (lastEmbedMessage) thread.topic = lastEmbedMessage.postRef.title;
       threadsRich.push(thread);
     }
     res({ code: 200, data: threadsRich });

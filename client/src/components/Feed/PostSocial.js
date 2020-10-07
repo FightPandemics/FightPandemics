@@ -205,7 +205,7 @@ const PostSocial = ({
           <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
-      {(user?.id != authorId) &&
+      {(user?.id != authorId) && !/Sourced by FightPandemics\ \(.*?\)/.test(postAuthor) &&
       <div className="social-icon">
         <MessageModal
           isAuthenticated={isAuthenticated}

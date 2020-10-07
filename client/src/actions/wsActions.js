@@ -19,6 +19,8 @@ export const GET_MORE_MESSAGES_HISTORY = "GET_MORE_MESSAGES_HISTORY";
 
 export const USER_STATUS_UPDATE = "USER_STATUS_UPDATE";
 
+export const SET_LAST_MESSAGE = "SET_LAST_MESSAGE";
+
 export function identifySuccess() {
   return {
     type: IDENTIFY_SUCCESS,
@@ -107,6 +109,13 @@ export function userStatusUpdate(userId) {
 export function loadMoreSuccess(payload) {
   return {
     type: GET_MORE_MESSAGES_HISTORY,
+    payload,
+  };
+}
+
+export function setLastMessage(payload) {
+  return {
+    type: SET_LAST_MESSAGE,
     payload,
   };
 }

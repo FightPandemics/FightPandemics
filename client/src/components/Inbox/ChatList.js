@@ -5,7 +5,7 @@ import TextAvatar from "components/TextAvatar";
 import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
-import getRelativeTime from "utils/relativeTime";
+import moment from "moment";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -70,12 +70,12 @@ export const ChatList = ({
         <content>
           <header>
             <UserName>{getReceiver(_room.participants).name}</UserName>
-            <h5>{_room.lastMessage? getRelativeTime(_room.lastMessage.createdAt) : getRelativeTime(_room.createdAt)}</h5>
+            <h5>{_room.lastMessage? moment(_room.lastMessage.createdAt).format("MMM. DD") : moment(_room.createdAt).format("MMM. DD")}</h5>
             {getSender(_room.participants).newMessages != 0 && <span className="unread-indicator">{getSender(_room.participants).newMessages}</span>}
           </header>
           <div className="content">
-            {<div className="title">Topic....</div>}
-            <p className="message">{_room.lastMessage?.content?.substring(0,20)}...</p>
+            {<div className="title">{_room.topic}</div>}
+            <p className="message">{_room.lastMessage?.content}</p>
           </div>
         </content>
       </SideChatContainer>)

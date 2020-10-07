@@ -13,6 +13,7 @@ import {
   getRoomsError,
   userStatusUpdate,
   loadMoreSuccess,
+  setLastMessage,
 } from "../actions/wsActions";
 
 const isLocalhost = Boolean(
@@ -62,6 +63,7 @@ export default class SocketManager extends React.Component {
 
     this.socket.on("NEW_MESSAGE", (messageData) => {
       this.props.store.dispatch(receivedMessage(messageData));
+      this.props.store.dispatch(setLastMessage(messageData));
     });
 
     this.socket.on("USER_STATUS_UPDATE", (data) => {

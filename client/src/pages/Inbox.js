@@ -232,7 +232,7 @@ const Inbox = (props) => {
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />
-      <CurrentChat
+      {room && <CurrentChat
         room={room}
         user={user}
         getChatLog={getChatLog}
@@ -242,7 +242,7 @@ const Inbox = (props) => {
         leaveAllRooms={leaveAllRooms}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
-      />
+      /> || <EmptyInbox/>}
     </InboxContainer>
   );
 };
