@@ -70,7 +70,11 @@ const CheckboxGroup = ({
         onChange={onChange}
       />
       <Flex direction="column" align="start">
-        <Label htmlFor={name} style={inlineLabelStyles} label={label} />
+        <Label
+          htmlFor={name}
+          style={{...inlineLabelStyles, fontSize: theme.typography.size.medium}}
+          label={label}
+        />
         {description && <span>{description}</span>}
       </Flex>
     </CheckboxContainer>
@@ -325,12 +329,22 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
-          <Flex direction="column" align="start">
+          <Flex
+            direction="row"
+            align="start"
+            justify="between"
+          >
             <InputWrapper>
               <InputGroup>
                 <Label
                   style={styleLabel}
-                  label={"* " + t("profile.org.seeking")}
+                  label={
+                    <Trans i18nKey="profile.org.seeking">
+                      <b>
+                        request
+                      </b>
+                    </Trans>
+                  }
                 />
                 <Controller
                   as={CheckboxGroup}
@@ -413,7 +427,13 @@ const CreateOrgProfile = (props) => {
               <InputGroup>
                 <Label
                   style={styleLabel}
-                  label={"* " + t("profile.org.offering")}
+                  label={
+                    <Trans i18nKey="profile.org.offering">
+                      <b>
+                        offer
+                      </b>
+                    </Trans>
+                  }
                 />
                 <Controller
                   as={CheckboxGroup}

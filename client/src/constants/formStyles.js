@@ -10,7 +10,7 @@ export const inputStyles = {
 };
 
 export const labelStyles = {
-  fontSize: "1.6rem",
+  fontSize: theme.typography.size.large,
   lineHeight: "1.5rem",
 };
 
