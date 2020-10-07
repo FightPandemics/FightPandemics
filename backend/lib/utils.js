@@ -1,6 +1,6 @@
 const moment = require("moment");
 const tlds = require("tlds");
-const { _isEmail } = require("validator/lib/isEmail");
+const _isEmail = require("validator/lib/isEmail");
 
 const generateUUID = ({ range }) => {
   const chars =
@@ -21,15 +21,15 @@ const getCookieToken = (req) => req.cookies.token;
 
 // email validation code from front-end 'src\utils\validators'
 const isValidTopLevelDomain = (string) => {
-tlds.some(tld => string.endsWith("." + tld))
+  return tlds.some(tld => string.endsWith("." + tld));
 };
 
 const isValidEmail = (email) => {
-  return _isEmail(email) && validateTopLevelDomain(email);
+  return _isEmail(email) && isValidTopLevelDomain(email);
 };
 
 // password validation code from front-end 'src\utils\validators'
-const SPECIAL_CHARS = /[!@#$%^&*]/;
+const SPECIAL_CHARS = /[!@#$%^&*.;]/;
 const containsLowerCase = (str) => /[a-z]/.test(str);
 const containsUpperCase = (str) => /[A-Z]/.test(str);
 const containsNumber = (str) => /\d/.test(str);
