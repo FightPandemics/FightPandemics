@@ -15,7 +15,7 @@ import heartGray from "assets/icons/heart-gray.svg";
 import comment from "assets/icons/comment.svg";
 import commentGray from "assets/icons/comment-gray.svg";
 import share from "assets/icons/share.svg";
-import shareGray from "assets/icons/share-gray.svg";
+import shareGray from "assets/icons/share.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants

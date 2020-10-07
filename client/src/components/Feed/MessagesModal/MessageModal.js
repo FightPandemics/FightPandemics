@@ -11,7 +11,7 @@ import {
   PrivateMessageContainer,
 } from "./MessagesContainer";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-import activeemail from "assets/icons/active-email.svg";
+import activeemail from "assets/icons/mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
 
 const OrgPostRef = ({ title, content, postAuthor }) => {
