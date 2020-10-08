@@ -65,7 +65,7 @@ function onSocketConnect(socket) {
     } else {
       // user called joinRoom({}) inside leaveAllRooms()
       for (let room in socket.rooms) {
-        await socket.leave(room);
+        if (room != socket.id) await socket.leave(room);
       }
       return res({ code: 401, message: "Unauthorized" });
     }
@@ -123,9 +123,9 @@ function onSocketConnect(socket) {
 
     if (!userInRoom) {
       // user not already in that room
-      // leave any other room
+      // leave any other room, EXCEPT the unique socket room (socket.id)
       for (let room in socket.rooms) {
-        await socket.leave(room);
+        if (room != socket.id) await socket.leave(room);
       }
       socket.join(threadWithLastMessage._id);
     }
@@ -275,15 +275,14 @@ function onSocketConnect(socket) {
             { arrayFilters: [{ "userToUpdate.id": recipient }] },
           ),
         );
-      } 
 
-      // send message notification
-      if (recipientSocket && !isInSameRoom) {
-        // equivalent to (online && !inSameRoom))
-        this.io.to(recipientSocket.id).emit("NEW_MESSAGE_NOTIFICATION", message);
+        // send message web notification
+        if (recipientSocket && !isInSameRoom) {
+          // equivalent to (online && !inSameRoom))
+          this.io.to(recipientSocket.id).emit("NEW_MESSAGE_NOTIFICATION", message);
+        }
       }
     }
-
 
     this.io.to(data.threadId).emit("NEW_MESSAGE", message);
     res({ code: 200, message: "Success" });
