@@ -5,7 +5,10 @@ class HelpBoard{
     addPostButton = 'button > img#HB_CP'
     noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
     addPostLink = 'a#HB_CP';
-
+    firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)'
+    helpBoard = 'div.feed-posts'
+    likeButton = 'div[id^="HB_LK"]';
+    commentButton = 'div[id^="HB_CM"]';
 
     constructor() { }
 
@@ -39,6 +42,26 @@ class HelpBoard{
     
     getNoPostsAvailableTextElement(){
         return cy.xpath(this.noPostsAvailableTextElement);
+    }
+
+    getFirstPostOnHelpBoard(){
+        return cy.get(this.getFirstPostOnHelpBoard);
+    }
+
+    getFirstPostOnHelpBoardSelector(){
+        return this.firstPostOnHelpBoard;
+    }
+
+    getHelpBoardSelector(){
+        return this.helpBoard;
+    }
+
+    getLikeButtonSelector(){
+        return this.likeButton;
+    }
+
+    getCommentButtonSelector(){
+        return this.commentButton;
     }
 }
 
