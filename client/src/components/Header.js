@@ -264,8 +264,8 @@ export default ({
             </button>
           </>
         )}
-        <Dropdown id={GTM.nav.prefix + GTM.nav.language} overlay={languageMenu} trigger={["click"]}>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} className="globe-icon-svg"></SvgIcon>
         </Dropdown>
       </>
     );
