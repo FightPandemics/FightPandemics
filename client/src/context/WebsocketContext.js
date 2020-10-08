@@ -66,6 +66,11 @@ export default class SocketManager extends React.Component {
       this.props.store.dispatch(setLastMessage(messageData));
     });
 
+    this.socket.on("NEW_MESSAGE_NOTIFICATION", (messageData) => {
+      this.props.store.dispatch(receivedMessage(messageData, true));
+      // isNotification == true, because user is online but is not in same room 
+    });
+
     this.socket.on("USER_STATUS_UPDATE", (data) => {
       if (!this.state.user || data.id == this.state.user.id) return;
       this.props.store.dispatch(userStatusUpdate(data));

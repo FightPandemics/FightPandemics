@@ -75,9 +75,22 @@ function wsReducer(state = initialState, action) {
         rooms: [],
       };
     case RECEIVED_MESSAGE:
+      if (action.isNotification) {
+        var index = state.rooms.findIndex((r) => r._id == action.payload.threadId);
+        if (index != -1) {
+          state.rooms[index].lastMessage = action.payload;
+          if (action.payload.postRef) state.rooms[index].topic = action.payload.postRef.title;
+          for (const participant of state.rooms[index].participants) {
+            // since we don't have access to logged-in user.id we will just apply this to all participants
+            // because it doesn't matter, and we will only user the one that maches user.id at the end
+            participant.newMessages++
+          }
+        }
+      } else {
+        state.chatLog = [...state.chatLog, action.payload];
+      }
       return {
         ...state,
-        chatLog: [...state.chatLog, action.payload],
       };
     case SET_LAST_MESSAGE:
       var index = state.rooms.findIndex((r) => r._id == action.payload.threadId);

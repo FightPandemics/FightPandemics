@@ -79,10 +79,11 @@ export function messageSeen() {
   };
 }
 
-export function receivedMessage(payload) {
+export function receivedMessage(payload, isNotification) {
   return {
     type: RECEIVED_MESSAGE,
     payload,
+    isNotification,
   };
 }
 

@@ -226,29 +226,6 @@ function onSocketConnect(socket) {
     if (threadErr) return res({ code: 500, message: "Internal server error" });
     if (!thread) return res({ code: 401, message: "Unauthorized" });
 
-    // add unread mark to recipient(s)
-    // if not ( online && in the same room)
-    let recipients = thread.participants
-      .filter((p) => p.id != userId)
-      .map((r) => r.id);
-
-    for (const recipient of recipients) {
-      let recipientSocket = getSocketByUserId(this, recipient);
-      let isInSameRoom = recipientSocket
-        ? await isUserInRoom(this, thread._id.toString(), recipientSocket.id)
-        : false;
-      if (!recipientSocket || (recipientSocket && !isInSameRoom)) {
-        // equivalent to (!online || (online && !inSameRoom))
-        const [updateThreadErr, updateThread] = await this.to(
-          Thread.findByIdAndUpdate(
-            thread._id,
-            { $inc: { "participants.$[userToUpdate].newMessages": 1 } },
-            { arrayFilters: [{ "userToUpdate.id": recipient }] },
-          ),
-        );
-      }
-    }
-
     let newMessage = {
       authorId: userId,
       content: data.content.substring(0, 2048),
@@ -261,7 +238,7 @@ function onSocketConnect(socket) {
     if (data.postId) {
       const Post = this.mongo.model("Post");
       var [postErr, post] = await this.to(Post.findOne({ _id: data.postId }));
-      if (threadErr)
+      if (postErr)
         return res({ code: 500, message: "Internal server error" });
       if (post)
         newMessage.postRef = {
@@ -276,6 +253,38 @@ function onSocketConnect(socket) {
       this.mongo.model("Message")(newMessage).save(),
     );
     if (messageErr) return res({ code: 500, message: "Internal server error" });
+
+        // add unread mark to recipient(s)
+    // if not ( online && in the same room)
+    let recipients = thread.participants
+      .filter((p) => p.id != userId)
+      .map((r) => r.id);
+
+    for (const recipient of recipients) {
+      let recipientSocket = getSocketByUserId(this, recipient);
+      let isInSameRoom = recipientSocket
+        ? await isUserInRoom(this, thread._id.toString(), recipientSocket.id)
+        : false;
+
+      if (!recipientSocket || (recipientSocket && !isInSameRoom)) {
+        // equivalent to (!online || (online && !inSameRoom))
+        const [updateThreadErr, updateThread] = await this.to(
+          Thread.findByIdAndUpdate(
+            thread._id,
+            { $inc: { "participants.$[userToUpdate].newMessages": 1 } },
+            { arrayFilters: [{ "userToUpdate.id": recipient }] },
+          ),
+        );
+      } 
+
+      // send message notification
+      if (recipientSocket && !isInSameRoom) {
+        // equivalent to (online && !inSameRoom))
+        this.io.to(recipientSocket.id).emit("NEW_MESSAGE_NOTIFICATION", message);
+      }
+    }
+
+
     this.io.to(data.threadId).emit("NEW_MESSAGE", message);
     res({ code: 200, message: "Success" });
   });
