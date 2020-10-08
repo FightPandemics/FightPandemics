@@ -1,11 +1,11 @@
 {
-  "headline": "Miejsce do zaoferowania i poproszenia o pomoc",
-  "tagline": "<0>Pandemie nadal będą się zdarzać.</0><1>Pomagamy społecznościom przygotować się i zareagować</1>",
+  "headline": "Miejsce, gdzie możesz zaoferować i poprosić o pomoc",
+  "tagline": "<0>Pandemie nadal będą się zdarzały.</0><1>Pomagamy społecznościom przygotować się na nie i zareagować</1>",
   "common": {
     "getHelp": "Poproś o pomoc",
-    "giveHelp": "Zaoferuj Pomoc",
-    "viewFeed": "Wyświetl tablicę pomocy",
-    "register": "Przyłącz się",
+    "giveHelp": "Zaoferuj pomoc",
+    "viewFeed": "Wyświetl forum pomocy",
+    "register": "Dołącz",
     "feedback": "Opinie",
     "question": "Pytanie",
     "aboutUs": "O nas",
@@ -47,8 +47,8 @@
   "feed": {
     "title": "Forum pomocy",
     "all": "Wszystkie posty",
-    "request": "Prośba o pomoc",
-    "offer": "Oferują pomoc",
+    "request": "Prośby o pomoc",
+    "offer": "Oferty pomocy",
     "quit": "Wyczyść filtry",
     "apply": "Zastosuj filtry",
     "getOrGive": "Zaoferuj lub poproś o pomoc",
@@ -113,17 +113,17 @@
         "Entertainment": "Rozrywka",
         "Information": "Informacja",
         "Funding": "Finansowanie",
-        "R&D": "BADANIA I ROZWÓJ",
+        "R&D": "Badanie i Rozwój",
         "Tech": "Techniczne",
         "Other": "Inne"
       },
       "lookingForOptions": {
-        "Request Help": "Potrzebują pomocy",
-        "Offer Help": "Oferują pomoc"
+        "Request Help": "Potrzebuję pomocy",
+        "Offer Help": "Oferuję pomoc"
       }
     },
     "filterBy": "Filtruj według",
-    "noResults": "Przepraszam, nie ma obecnie odpowiednich stanowisk. Proszę spróbować użyć innego filtru lub <0>utworzyć post</0>."
+    "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć post</0>"
   },
   "post": {
     "create": "Utwórz wpis",
@@ -138,7 +138,7 @@
     "whatGiving": "Co oferujesz?",
     "addTags": "Dodaj tagi, aby Twój post był bardziej widoczny",
     "whatVisibility": "Jaka jest widoczność Twojego posta?",
-    "postVisible": "Wpis będzie widoczny dla",
+    "postVisible": "Wpis będzie widoczny",
     "success": "Sukces",
     "viewPost": "Wyświetl swój post",
     "like": "Polub",
@@ -159,7 +159,7 @@
       "expires": {
         "forever": "Zawsze",
         "month": "na miesiąc",
-        "week": "Na tydzień",
+        "week": "na tydzień",
         "day": "Za jeden dzień"
       },
       "helpTypes": {
@@ -167,7 +167,7 @@
         "offer": "Oferuję pomoc"
       }
     },
-    "post": "utwórz wpis",
+    "post": "Utwórz wpis",
     "postAsOrg": "Dodaj wpis jako organizacja",
     "createNew": "Utwórz nowy",
     "whatNeed": "Czego potrzebujesz?",
@@ -177,11 +177,11 @@
     "deleteCommentConfirmation": "Jesteś pewien, że chcesz usunąć ten komentarz?",
     "shareVia": "Udostępnij przez...",
     "others": "Inne",
-    "expireTitle": "Ups... cholerka!",
+    "expireTitle": "Ups...",
     "expire": "Post, którego szukasz, wygasł. Więcej takich postów można znaleźć na naszej tablicy pomocy.",
     "noActivity": "Nie znaleziono żadnej aktywności",
     "share": "Udostępnij",
-    "delete": "usuń",
+    "delete": "Usuń",
     "cancel": "Anuluj",
     "confirm": "Potwierdź"
   },
@@ -198,9 +198,9 @@
       "thankyou": "Dziękujemy za dołączenie do naszej społeczności!",
       "viewProfile": "Mój profil",
       "continuePosting": "Kontynuuj pisanie posta",
-      "viewFeed": "Wyświetl tablicę pomocy",
+      "viewFeed": "Wyświetl forum pomocy",
       "viewMyProfile": "Mój profil",
-      "loading": "trwa ładowanie",
+      "loading": "Trwa ładowanie",
       "invalidEmail": "Niepoprawny e-mail",
       "selectOption": "Proszę wybrać co najmniej jedną opcję",
       "invalidURL": "Nieprawidłowy adres URL",
@@ -208,25 +208,25 @@
       "submit": "Utwórz profil",
       "submitLoading": "Tworzenie profilu ...",
       "invalidPassword": "Hasło musi zawierać co najmniej 3 z nich: małą literę, dużą literę, cyfrę, znak specjalny (np.! @ # $% ^ & *).",
-      "addressRequired": "Adres jest wymagany. Proszę wpisać swój adres i wybrać go z rozwijanej listy.",
+      "addressRequired": "Adres jest wymagany. Proszę wpisać swój adres i wybrać go z listy.",
       "emailRequired": "Wymagany jest adres e-mail",
       "passwordRequired": "Wymagane jest hasło",
-      "maxCharacters": "Maksymalnie {{maxNum}} znaków",
-      "minCharacters": "minimum to {{minNum}} znaków",
-      "validCharacters": "Prawidłowe znaki to: {{characters}}.",
+      "maxCharacters": "Maksymalna ilość znaków to: {{maxNum}} ",
+      "minCharacters": "Minimalna ilość znaków to: {{minNum}} ",
+      "validCharacters": "Prawidłowe znaki to: {{characters}}",
       "urls": {
         "appStore": "Link do Apple Store",
         "playStore": "Link do Google Play",
-        "twitter": "Adres URL Twittera",
-        "facebook": "Adres URL Facebooka",
-        "instagram": "Adres URL Instagrama",
+        "twitter": "Twittera URL",
+        "facebook": "Facebooka URL",
+        "instagram": "Instagram URL",
         "github": "Github URL",
         "linkedin": "LinkedIn URL",
         "website": "Strona internetowa"
       },
       "emailMaxLength": "Adres e-mail nie może przekraczać 200 znaków",
       "emailInvalid": "Adres e-mail jest nieprawidłowy",
-      "emailDomainInvalid": "Domena poczty e-mail jest nieprawidłowa"
+      "emailDomainInvalid": "Domena e-mail jest nieprawidłowa"
     },
     "individual": {
       "email": "E-mail",
@@ -308,8 +308,8 @@
       "desc": "Opis organizacji",
       "lang": "Język organizacji",
       "completeOrgProfile": "Uzupełnij profil swojej organizacji",
-      "about": "o nas",
-      "activity": "aktywność",
+      "about": "O nas",
+      "activity": "Aktywność",
       "editAccount": "Edytuj informacje o koncie",
       "updateSuccess": "Organizacja została pomyślnie zaktualizowana",
       "orgNameRequired": "Nazwa organizacji jest wymagana"
@@ -317,11 +317,11 @@
   },
   "auth": {
     "signIn": "Zaloguj się",
-    "joinNow": "Przyłącz się",
+    "joinNow": "Dołącz",
     "email": "E-mail",
-    "enterEmail": "Wprowadź adres e-mail",
+    "enterEmail": "Podaj adres e-mail",
     "password": "Hasło",
-    "enterPassword": "Wprowadź hasło",
+    "enterPassword": "Podaj hasło",
     "confirmPassword": "Potwierdź hasło",
     "forgotPassword": "Nie pamiętasz hasła",
     "noAccount": "Nie posiadasz konta?",
@@ -330,20 +330,20 @@
     "orSignIn": "LUB ZALOGUJ SIĘ PRZEZ",
     "orJoinNow": "LUB DOŁĄCZ TERAZ Z",
     "back": "Powrót do ekranu logowania",
-    "passwordMax": "Hasło nie może zawierać więcej niż {{num}} znaków.",
-    "passwordMin": "Hasło musi zawierać co najmniej {{num}} znaki.",
-    "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła.",
-    "passwordNotMatch": "Hasła nie są takie same"
+    "passwordMax": "Hasło nie może zawierać więcej niż {{num}} znaków",
+    "passwordMin": "Hasło musi zawierać co najmniej {{num}} znaków",
+    "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła",
+    "passwordNotMatch": "Podane hasła nie pasują do siebie"
   },
   "verifyEmail": {
     "checkInbox": "Sprawdź swoją skrzynkę odbiorczą",
     "forgotPass": "Jeśli konto jest powiązane z {{email}}, otrzymasz wiadomość e-mail z dalszymi instrukcjami dotyczącymi resetowania hasła.",
-    "confirm": "Wysłaliśmy link do {{email}}. Kliknij link, aby potwierdzić swoje konto i wypełnić swój profil.",
+    "confirm": "Wysłaliśmy link do {{email}}. Kliknij link, aby potwierdzić swoje konto i uzupełnić swój profil.",
     "checkSpam": "Jeśli nie zobaczysz wiadomości w ciągu kilku minut, sprawdź spam, promocje lub inne foldery poczty przychodzącej."
   },
   "aboutUs": {
     "ourStory": "Nasza historia",
-    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który został zarażony COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić. Grupy Telegram i WhatsApp samoorganizowały się w sąsiedztwie Manuela, ale nie znając osobiście nikogo zaangażowanego, nie mógł poprosić ich o pomoc. Zainspirowany tak wielu chętnymi, Manuel rozpoczął projekt z myślą o jednej misji: zapewnić innym możliwość połączenia na czas.",
+    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który zaraził się COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić. Grupy Telegram i WhatsApp samoorganizowały się w sąsiedztwie Manuela, ale nie znając osobiście nikogo zaangażowanego, nie udało mu się poprosić o pomoc. Zainspirowany tak wielu chętnymi do pomocy, Manuel rozpoczął projekt z myślą o jednej misji: zapewnić innym możliwość współpracy.",
     "ourCommunity": "Nasza społeczność",
     "community": "Nasz zespół składa się z ponad 450 wolontariuszy: programistów, projektantów, naukowców, ekspertów w dziedzinie zdrowia i menedżerów produktów z całego świata",
     "ourIdea": "Nasz pomysł",
@@ -387,7 +387,7 @@
       ],
       [
         "Jak mogę zamieścić ofertę lub prośbę o pomoc w FightPandemics?",
-        "<0> Kiedy dołączysz do społeczności, będziesz mieć nieograniczony dostęp do przeglądania i tworzenia postów i komentarzy na platformie FightPandemics. </0> <1> Aby dołączyć do społeczności jako użytkownik, kliknij przycisk „Menu” i wybierz opcję „Dołącz teraz / Zaloguj się”. Tam będziesz mógł dołączyć, wybierając dane logowania do poczty e-mail lub mediów społecznościowych. </1> <2> Po uzupełnieniu profilu wybierz przycisk menu, wybierz opcję Wyświetl mój profil i kliknij przycisk plus, aby utworzyć swój pierwszy post. </2>"
+        "<0> Kiedy dołączysz do społeczności, będziesz mieć nieograniczony dostęp do przeglądania i tworzenia postów i komentarzy na platformie FightPandemics. </0> <1> Aby dołączyć do społeczności jako użytkownik, wybierz opcję „Dołącz teraz / Zaloguj się”. Tam będziesz mógł dołączyć, wybierając dane logowania do poczty e-mail lub mediów społecznościowych. </1> <2> Po uzupełnieniu profilu wybierz przycisk menu, wybierz opcję Wyświetl mój profil i kliknij przycisk plus, aby utworzyć swój pierwszy post. </2>"
       ],
       [
         "Jak mogę być na bieżąco z wiadomościami o FightPandemics?",
@@ -398,21 +398,21 @@
         "Nie, FightPandemics to całkowicie darmowa platforma prowadzona przez wolontariuszy."
       ],
       [
-        "Jaki rodzaj pomocy mogę zaoferować / poprosić o pomoc w FightPandemics?",
+        "Jaki rodzaj pomocy mogę zaoferować lub o jaką pomoc mogę poprosić w FightPandemics?",
         "Możesz prosić i oferować wszelkiego rodzaju pomoc, aby wesprzeć osoby i organizacje w walce z pandemią COVID-19. Oto lista z przykładami rodzajów pomocy, które możesz zaoferować lub o które możesz poprosić:",
         "<0> Artykuły spożywcze </0> <1> Artykuły medyczne </1> <2> Pomoc prawna </2> <3> Pomoc techniczna </3> <4> Informacje </4> <5> Finansowanie </5> <6> Wydarzenia i działania </6> <7> Edukacja </7> <8> Wellness </8> <9> Badania i rozwój </9>"
       ],
       [
         "Jak mogę znaleźć pomoc?",
-        "Na stronie głównej FightPandemics wybierz „Potrzebuję pomocy”. Jeśli wybierzesz opcję „Inna pomoc”, wpisz swoją lokalizację i zostaniesz przekierowany na stronę z ofertami pomocy w wybranym obszarze. Następnie możesz filtrować ogłoszenia, które chcesz zobaczyć, także według dostawcy i typu. Alternatywnie możesz wybrać opcję „Wyświetl posty w społeczności” na stronie głównej, aby wyświetlić wszystkie posty i zastosować żądane filtry."
+        "Na stronie głównej FightPandemics wybierz „Poproś o pomocy”. Jeśli wybierzesz opcję „Inna pomoc”, wpisz swoją lokalizację i zostaniesz przekierowany na stronę z ofertami pomocy w wybranym obszarze. Następnie możesz filtrować ogłoszenia, które chcesz zobaczyć, także według dostawcy i typu. Alternatywnie możesz wybrać opcję „Wyświetl posty w społeczności” na stronie głównej, aby wyświetlić wszystkie posty i zastosować żądane filtry."
       ],
       [
         "Jak mogę zaoferować pomoc?",
-        "<0> Możesz zaoferować pomoc jako osoba indywidualna lub jako organizacja. </0> <1> Na stronie głównej wybierz opcję „Udziel pomocy”, aby wyświetlić wszystkie posty utworzone przez użytkowników proszących o pomoc oraz przefiltrować wyniki według lokalizacji i typu. Aby się z nimi skontaktować, musisz się zalogować. Możesz także tworzyć własne posty opisujące pomoc, jaką jesteś w stanie zaoferować. </1>"
+        "<0> Możesz zaoferować pomoc jako osoba indywidualna lub jako organizacja. </0> <1> Na stronie głównej wybierz opcję „Zaoferuj pomoc”, aby wyświetlić wszystkie posty utworzone przez użytkowników proszących o pomoc oraz przefiltrować wyniki według lokalizacji i typu. Aby się z nimi skontaktować, musisz się zalogować. Możesz także tworzyć własne posty opisujące pomoc, jaką jesteś w stanie zaoferować. </1>"
       ],
       [
         "Czy muszę się zalogować, aby zobaczyć prośby o pomoc i oferty?",
-        "Nie musisz być zalogowany, aby zobaczyć któryś z postów na forum pomocy, ale będziesz musiał się zalogować, aby komentować lub polubić post."
+        "Nie musisz być zalogowany, aby zobaczyć któryś z postów na forum, ale będziesz musiał się zalogować, aby komentować lub polubić post."
       ],
       [
         "Czy muszę być zalogowany, aby tworzyć / edytować posty?",
@@ -424,7 +424,7 @@
       ],
       [
         "Czy moje imię i nazwisko / nazwa organizacji będą wyświetlane innym użytkownikom?",
-        "Podczas tworzenia postów oferujących lub szukających pomocy, Twoje imię i nazwisko lub nazwa organizacji są wyświetlane każdemu, kto przegląda tablicę pomocy."
+        "Podczas tworzenia postów oferujących lub szukających pomocy, Twoje imię i nazwisko lub nazwa organizacji są wyświetlane każdemu, kto przegląda forum pomocy."
       ],
       [
         "Skąd mogę wiedzieć, że posty są wiarygodne?",
@@ -455,8 +455,8 @@
         "FightPandemics gromadzi i przetwarza dane osobowe użytkowników wyłącznie w celach opisanych w naszej <0> polityce prywatności. </0> W żadnym przypadku nie zapewnimy dostępu ani nie udostępnimy Twoich danych osobowych żadnym stronom trzecim, z wyjątkiem odpowiednich osób określonych w niniejszych zasadach."
       ],
       [
-        "Czy mogę udzielić / otrzymać pomoc z mojego miasta lub stanu? Jak długo post będzie widoczny?",
-        "Post służący do udzielania / otrzymywania pomocy może być umieszczany na poziomie kodu pocztowego, miasta, stanu lub kraju i może trwać dzień, tydzień, miesiąc lub na zawsze. Domyślnie posty będą ustawiane na poziomie miasta przez jeden miesiąc."
+        "Czy mogę udzielić / otrzymać pomoc z mojego miasta lub województwa? Jak długo post będzie widoczny?",
+        "Post służący do udzielania / otrzymywania pomocy może być umieszczany na poziomie kodu pocztowego, miasta, stanu lub kraju i może być wyświetlony dzień, tydzień, miesiąc lub zawsze. Domyślnie posty będą ustawiane na poziomie miasta przez jeden miesiąc."
       ],
       [
         "Moje pytanie nie jest wymienione. Do kogo mogę się zwrócić?",
@@ -466,11 +466,11 @@
     "accountFAQ": [
       [
         "Jak dołączyć?",
-        "<0> Aby dołączyć do społeczności jako użytkownik, kliknij przycisk „Menu” i wybierz opcję „Dołącz teraz / Zaloguj się”. Tam będziesz mógł dołączyć, wybierając dane logowania do poczty e-mail lub mediów społecznościowych. </0> <1> Kiedy dołączysz do społeczności, będziesz mieć nieograniczony dostęp do przeglądania i tworzenia postów i komentarzy na platformie FightPandemics. </1>"
+        "<0> Aby dołączyć do społeczności jako użytkownik, wybierz opcję „Dołącz”. Tam będziesz mógł podać dane logowania do poczty e-mail lub mediów społecznościowych. </0> <1> Kiedy dołączysz do społeczności, będziesz mieć nieograniczony dostęp do przeglądania i tworzenia postów oraz komentarzy na platformie FightPandemics. </1>"
       ],
       [
         "Jak mogę zmienić swój indywidualny profil na profil organizacji?",
-        "Profil organizacyjny jest powiązany z Twoim profilem indywidualnym. Po utworzeniu profilu indywidualnego możesz dodać dowolną liczbę profili organizacyjnych, ile chcesz powiązać z tym profilem indywidualnym. Twoje dane logowania nadal będą adresem e-mail i hasłem, których użyłeś do dołączenia do indywidualnego profilu."
+        "Profil organizacyjny jest powiązany z Twoim profilem indywidualnym. Po utworzeniu profilu indywidualnego możesz dodać dowolną liczbę profili organizacyjnych, które są  powiązane z tym profilem indywidualnym. Twoje dane logowania nadal będą adresem e-mail i hasłem, których użyłeś przy tworzeniu indywidualnego profilu."
       ],
       [
         "Jak mogę zmienić profil organizacji na profil indywidualny?",
@@ -497,7 +497,7 @@
       ],
       [
         "Jak mogę zaktualizować informacje w moim profilu?",
-        "Z menu w prawym górnym rogu wybierz „Mój profil”, a następnie kliknij ikonę pióra u góry swojego profilu. Zostaniesz przeniesiony do ekranu, na którym będziesz mógł edytować informacje w swoim profilu, a po zakończeniu wybierz opcję „Zapisz zmiany”."
+        "Z menu w prawym górnym rogu wybierz „Mój profil”, a następnie kliknij ikonę pióra u góry swojego profilu. Zostaniesz przeniesiony do ekranu, na którym będziesz mógł edytować informacje o swoim profilu, a po zakończeniu wybierz opcję „Zapisz zmiany”."
       ],
       [
         "Jak zgłosić nieprawidłowy lub obraźliwy post?",
@@ -541,7 +541,7 @@
         "W przypadku pytań ogólnych i innych problemów, które nie zostały tutaj wymienione, prosimy o kontakt pod adresem <0> contact@fightpandemics.com. </0>"
       ]
     ],
-    "faqTitle": "Często Zadawane Pytania"
+    "faqTitle": "Najczęściej zadawane pytania"
   },
   "cookies": {
     "whatCookies": "CZYM SĄ PLIKI COOKIE?",
@@ -549,24 +549,24 @@
     "typeCookies": "RODZAJ, CEL I FUNKCJE PLIKÓW COOKIE",
     "typeCookiesBegin": "W zależności od ich trwałości, pliki cookies można podzielić na sesyjne lub stałe. Te pierwsze wygasają, gdy Użytkownik zamyka przeglądarkę. Drugie wygasają w zależności od tego, kiedy cel, któremu służą, zostanie osiągnięty lub kiedy zostaną ręcznie usunięte. Co więcej, w zależności od celu, pliki cookie używane przez tę Witrynę można sklasyfikować w następujący sposób:",
     "typeCookiesContent": "<0>Techniczne pliki cookie: umożliwiają użytkownikowi poruszanie się po stronie internetowej, platformie lub aplikacji i korzystanie z różnych opcji lub usług tam istniejących, takich jak na przykład kontrolowanie ruchu i komunikacji danych, identyfikacja sesji, dostęp do części o ograniczonym dostępie, zapamiętanie zawartości koszyka, dokonanie zakupu zamówienia, złożenie prośby o rejestrację lub udział w wydarzeniu, wykorzystanie elementów bezpieczeństwa podczas nawigacji, przechowywanie treści w celu rozpowszechniania wideo lub dźwięku, albo udostępniania treści za pośrednictwem sieci społecznościowych. </0> <1> Analityczne pliki cookie: te, które są przetwarzane przez nas lub przez osoby trzecie, które pozwalają na ilościowe określenie liczby użytkowników, a tym samym dokonują pomiarów i analizy statystycznej korzystania przez użytkowników z oferowanych usług. W tym celu przeglądanie naszej strony internetowej jest analizowane w celu ulepszenia oferty produktów lub usług, które oferujemy. </1> <2> Reklamowe pliki cookie: to te, które są przetwarzane przez nas lub przez osoby trzecie, co pozwala nam na możliwie najbardziej efektywne zarządzanie ofertą powierzchni reklamowych znajdujących się na stronie, dostosowywanie treści reklamy do treści żądanej usługi, lub korzystania z naszej strony internetowej. W tym celu możemy analizować Twoje nawyki przeglądania w Internecie i możemy wyświetlać reklamy związane z Twoim profilem przeglądania. </2> <3> Behawioralne reklamowe pliki cookie: Umożliwiają one zarządzanie w możliwie najbardziej efektywny sposób przestrzenią reklamową, którą w stosownych przypadkach redaktor umieścił na stronie internetowej, aplikacji lub platformie, z której udostępnia żądane usługi. Te pliki cookies przechowują informacje o zachowaniu użytkowników uzyskane dzięki ciągłemu obserwowaniu ich zwyczajów przeglądania, co umożliwia opracowanie na ich podstawie określonego profilu do wyświetlania reklam. </3>",
-    "typeCookiesEnd": "Serwis może korzystać z usług podmiotów zewnętrznych, które mogą wymagać od Użytkowników instalacji plików Cookies, również w imieniu FightPandemics, a także będzie zbierać informacje do celów statystycznych na temat korzystania z Serwisu przez użytkownika oraz świadczenia innych usług związanych z Serwisem i przez inne usługi internetowe.",
+    "typeCookiesEnd": "Serwis może korzystać z usług podmiotów zewnętrznych, które mogą wymagać od Użytkowników instalacji plików Cookies, również w imieniu FightPandemics. Może również zbierać informacje do celów statystycznych na temat korzystania z serwisu przez użytkownika oraz świadczenia innych usług związanych z Serwisem oraz przez inne usługi internetowe.",
     "disableCookies": "JAK WYŁĄCZYĆ OBSŁUGĘ PLIKÓW COOKIE I BŁĘDÓW INTERNETOWYCH W GŁÓWNYCH PRZEGLĄDARKACH?",
-    "disableCookiesContent": "Zwykle można zrezygnować z akceptowania plików cookie przeglądarki lub przestać akceptować pliki cookie z określonej usługi. Wszystkie nowoczesne przeglądarki umożliwiają zmianę konfiguracji plików Cookies. Te ustawienia są zwykle dostępne w „opcjach” lub „preferencjach” w menu przeglądarki. Możesz także skonfigurować przeglądarkę lub menedżera poczty e-mail, a także zainstalować bezpłatne dodatki, aby zapobiec pobieraniu błędów podczas otwierania wiadomości e-mail. Aby zmienić preferencje dotyczące plików cookie, postępuj zgodnie z poniższymi instrukcjami w zależności od przeglądarki internetowej:",
+    "disableCookiesContent": "Zwykle można zrezygnować z akceptowania plików cookie lub przestać akceptować pliki cookie z określonej usługi. Wszystkie nowoczesne przeglądarki umożliwiają zmianę konfiguracji plików cookies. Te ustawienia są zwykle dostępne w „opcjach” lub „preferencjach” w menu przeglądarki. Możesz także skonfigurować przeglądarkę lub menedżera poczty e-mail, a także zainstalować bezpłatne dodatki, aby zapobiec pobieraniu Web Bugs podczas otwierania wiadomości e-mail. Aby zmienić preferencje dotyczące plików cookie, postępuj zgodnie z poniższymi instrukcjami w zależności od przeglądarki internetowej:",
     "updateCookies": "AKTUALIZACJA POLITYKI DOTYCZĄCEJ PLIKÓW COOKIE",
-    "updateCookiesContent": "FightPandemics może modyfikować niniejszą Politykę plików cookie w oparciu o wymogi prawne, regulacyjne lub w celu dostosowania tej polityki do instrukcji wydanych przez Hiszpańską Agencję Ochrony Danych, dlatego zaleca się, aby użytkownicy okresowo odwiedzali tę stronę, aby poznać zmiany, które zostały na nich wprowadzone. O istotnych zmianach w niniejszej Polityce Cookies Użytkownicy zostaną powiadomieni poprzez stronę internetową lub pocztą elektroniczną do Użytkowników zarejestrowanych w usłudze newsletter.",
-    "cookieAlert": "Ta strona wykorzystuje pliki cookie w celu świadczenia naszych usług i wyświetlania odpowiednich informacji. Korzystając z naszej witryny, potwierdzasz, że przeczytałeś i zrozumiałeś naszą <0> Politykę plików cookie </0> , <1> Politykę prywatności </1> oraz nasze <2> Warunki i zasady </2> . Korzystanie z produktów FightPandemics podlega tym zasadom i warunkom."
+    "updateCookiesContent": "FightPandemics może modyfikować niniejszą Politykę plików cookie w oparciu o wymogi prawne, regulacyjne lub w celu dostosowania tej polityki do instrukcji wydanych przez hiszpańską Agencję Ochrony Danych, dlatego zaleca się, aby użytkownicy okresowo odwiedzali tę stronę, aby poznać zmiany, które zostały wprowadzone. O istotnych zmianach w niniejszej Polityce Cookies Użytkownicy zostaną powiadomieni poprzez stronę internetową lub pocztą elektroniczną do Użytkowników zarejestrowanych w usłudze newsletter.",
+    "cookieAlert": "Ta strona wykorzystuje pliki cookie w celu świadczenia usług i wyświetlania odpowiednich informacji. Korzystając z naszej witryny, potwierdzasz, że przeczytałeś i zrozumiałeś naszą <0> Politykę plików cookie </0> , <1> Politykę prywatności </1> oraz nasze <2> Warunki i zasady </2> . Korzystanie z produktów FightPandemics podlega tym zasadom i warunkom."
   },
   "comment": {
     "writeAComment": "Napisz komentarz...",
     "onlyAuthenticated": "Tylko zalogowani użytkownicy mogą komentować.",
-    "loading": "trwa ładowanie",
+    "loading": "Trwa ładowanie",
     "showMore": "Pokaż więcej komentarzy",
     "comment": "Skomentuj",
     "comment_plural": "Komentarze",
     "commentWithCount": "{{count}} Komentarz",
     "commentWithCount_plural": "{{count}} Komentarze",
     "edit": "Edytuj",
-    "delete": "usuń",
+    "delete": "Usuń",
     "save": "Zapisz",
     "showLess": "Pokaż mniej komentarzy"
   },
@@ -581,19 +581,19 @@
     "poorly": "Słabo",
     "well": "Bardzo dobrze",
     "howMeetNeeds": "Jak dobrze FightPandemics spełnia Twoje potrzeby?",
-    "almostFinished": "Jesteśmy prawie gotowe!",
+    "almostFinished": "Jesteśmy prawie gotowi!",
     "howImpacted": "Jak COVID-19 wpłynął na Ciebie?",
     "mostValuable": "Które funkcje uważasz za najbardziej wartościowe?",
     "oneChange": "Gdybyś mógł zmienić jedną rzecz w FightPandemics, co by to było?",
     "otherFeedback": "Czy masz dla nas jakieś inne uwagi?",
-    "thankYou": "Dziękujemy!\nDzięki!",
+    "thankYou": "Dziękujemy!",
     "thankYouEarly": "Dziękujemy za to, że jesteś jednym z pierwszych użytkowników FightPandemics!",
     "thankYouMessage": "Twój wkład wiele znaczy i pomaga nam udoskonalić nasze usługi zarówno podczas, jak i po pandemii COVID-19.",
     "submitFeedback": "Prześlij opinię",
     "radio": {
       "age": "Twój wiek to",
       "unaffected": "Normalnie chodzę do pracy/szkoły",
-      "quarantine": "Jestem zdrowy, ale w kwarantannie domowej",
+      "quarantine": "Jestem zdrowy, ale na kwarantannie domowej",
       "symptomaticUntested": "Mam łagodne objawy, ale nie byłam badana",
       "diagnosed": "Zostałem zdiagnozowany z Covid-19"
     }
@@ -633,29 +633,29 @@
     "blogLink": "Link do bloga FightPandemics",
     "desktopBanner": "Baner misji i wizji na komputery stacjonarne",
     "mobileBanner": "Mobilny baner misji i wizji",
-    "ideaImage": "Obraz naszego pomysłu",
+    "ideaImage": "Obraz odzwierciedlający nasz pomysł",
     "linkedinIcon": "Ikona FightPandemics na LinkedIn",
     "facebookIcon": "Ikona FightPandemics na Facebooku",
     "instagramIcon": "Ikona FightPandemics na Instagramie",
     "twitterIcon": "Ikona FightPandemics na Twitterze",
     "createOrg": "Utwórz profil organizacji",
-    "personalDataImage": "dwie osoby stojące obok listy przedmiotów osobistych",
-    "envelope": "koperta",
+    "personalDataImage": "Dwie osoby stojące obok listy przedmiotów osobistych",
+    "envelope": "Koperta",
     "avatar": "avatar"
   },
   "error": {
     "title": "Proszę dołączyć tytuł dla swojego posta.",
-    "description": "Prosimy o dołączenie opisu swojego posta.",
+    "description": "Prosimy o dołączenie opisu do swojego posta.",
     "help": "Wybierz rodzaj pomocy.",
     "tags": "Proszę dodać co najmniej jeden znacznik.",
-    "privacyPolicyRequired": "Musisz wyrazić zgodę na naszą politykę prywatności, aby kontynuować",
+    "privacyPolicyRequired": "Aby kontynuować, musisz wyrazić zgodę na naszą politykę prywatności",
     "termsConditionsRequired": "Aby kontynuować, musisz zaakceptować nasze warunki",
     "failedPredictions": "Nie powiodło się uzyskanie prognoz. Ponów próbę.",
-    "failedLocation": "Nie udało się ustalić lokalizacji.",
-    "failedLocationDetails": "Nie udało się pobrać szczegółów lokalizacji. Spróbuj ponownie.",
-    "User denied Geolocation": "Użytkownik odmówił geolokalizacji.",
+    "failedLocation": "Nie udało się ustalić lokalizacji",
+    "failedLocationDetails": "Nie udało się uzyskać szczegółów lokalizacji. Spróbuj ponownie.",
+    "User denied Geolocation": "Użytkownik odmówił geolokalizacji",
     "resetBrowserLocationPermission": "Zresetuj uprawnienia dotyczące lokalizacji w przeglądarce lub wprowadź adres.",
-    "enterAddressAgain": "Wprowadź adres lub spróbuj ponownie.",
+    "enterAddressAgain": "Wprowadź adres lub spróbuj ponownie",
     "loggedInToCreateOrgProfile": "Aby utworzyć profil organizacji, musisz być zalogowany",
     "selectOneOption": "Proszę wybrać co najmniej jedną opcję",
     "userExists": "Użytkownik już istnieje",
@@ -680,7 +680,7 @@
     "failedSignup": "Rejestracja nie powiodła się, powód:",
     "failedPasswordRecovery": "Odzyskiwanie hasła nie powiodło się, powód:",
     "http": {
-      "Bad Request": "błędne żądanie",
+      "Bad Request": "Błędne żądanie",
       "Unauthorized": "Operacja nieautoryzowana",
       "Payment Required": "Wymagana płatność",
       "Forbidden": "Zakazane",
@@ -693,13 +693,13 @@
       "Gone": "Zniknęła",
       "Length Required": "Wymagana długość",
       "Precondition Failed": "Nie udało się spełnić warunku wstępnego",
-      "Payload Too Large": "Za duży ładunek",
+      "Payload Too Large": "Za duży payload",
       "URI Too Long": "Identyfikator URI za długi",
       "Unsupported Media Type": "Nieobsługiwany typ nośnika",
       "Range Not Satisfiable": "Zakres niezadowalający",
       "Expectation Failed": "Oczekiwanie nie powiodło się",
-      "I'm a teapot": "Jestem czajniczkiem",
-      "Misdirected Request": "Błędnie skierowany wniosek",
+      "I'm a teapot": "Błąd HTTP 418",
+      "Misdirected Request": "Błędnie skierowane żądanie",
       "Unprocessable Entity": "Podmiot nieprzetwarzalny",
       "Locked": "Zablokowany",
       "Failed Dependency": "Zależność nie powiodła się",
@@ -709,13 +709,13 @@
       "Too Many Requests": "Zbyt wiele żądań",
       "Request Header Fields Too Large": "Zbyt duże pola nagłówka żądania",
       "Unavailable For Legal Reasons": "Niedostępne ze względów prawnych",
-      "Internal Server Error": "Błąd serwera wewnętrznego",
+      "Internal Server Error": "Błąd serwera",
       "Not Implemented": "Nie wdrożono",
       "Bad Gateway": "Bad Gateway",
       "Service Unavailable": "Usługa niedostępna",
       "Gateway Timeout": "Limit czasu wczytywania",
       "HTTP Version Not Supported": "Wersja HTTP nie jest obsługiwana",
-      "Variant Also Negotiates": "Niewłaściwy wariant negocjacji serwera",
+      "Variant Also Negotiates": "Niewłaściwy wariant serwera",
       "Insufficient Storage": "Niewystarczająca ilość pamięci",
       "Loop Detected": "Wykryto pętlę",
       "Not Extended": "Nierozszerzony",
@@ -728,7 +728,7 @@
   "TEMP: I Understand": "Rozumiem",
   "TEMP: COVID-19 Screening Tool": "Narzędzie do badań przesiewowych COVID-19",
   "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Zadamy Ci kilka pytań dotyczących Twoich objawów, podróży i kontaktów z innymi",
-  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Twoje odpowiedzi nie będą przechowywane ani udostępniane. To tylko narzędzie, które pomaga światu.",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Twoje odpowiedzi nie będą przechowywane ani udostępniane. To tylko narzędzie, które ma ci pomóc.",
   "TEMP: For Myself": "Dla siebie",
   "TEMP: For Someone Else": "Dla kogoś innego",
   "TEMP: Is this an emergency?": "Czy jest to sytuacja nadzwyczajna?",
