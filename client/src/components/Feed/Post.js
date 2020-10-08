@@ -72,9 +72,7 @@ const Post = ({
   handlePostLike,
   includeProfileLink,
   isAuthenticated,
-  loadMorePost,
   numComments,
-  onClick,
   onSelect,
   onChange,
   postDelete,
@@ -298,11 +296,11 @@ const Post = ({
     });
   };
 
-  const ViewMore = ({ onClick }) => (
+  const ViewMore = () => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
-        <div onClick={onClick}>
-          {!loadMorePost ? (
+        <div onClick={() => setShowComplete(!showComplete)}>
+          {showComplete ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
               <span className="view-more">{t("post.viewLess")}</span>
@@ -324,7 +322,7 @@ const Post = ({
     </Card.Body>
   );
 
-  const RenderViewMore = ({ onClick }) => {
+  const RenderViewMore = () => {
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
@@ -342,7 +340,7 @@ const Post = ({
     ) : (
       <>
         {isAuthenticated ? (
-          <ViewMore onClick={onClick} loadContent={loadMorePost} />
+          <ViewMore loadContent={showComplete} />
         ) : (
           <Link
             onClick={() =>
@@ -353,7 +351,7 @@ const Post = ({
               state: { from: window.location.href },
             }}
           >
-            <ViewMore loadContent={loadMorePost} />
+            <ViewMore loadContent={showComplete} />
           </Link>
         )}
       </>
@@ -387,15 +385,6 @@ const Post = ({
 
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
-  );
-
-  const renderContent = (
-    <Card.Body className="content-wrapper">
-      <Heading level={4} className="h4">
-        {title}
-      </Heading>
-      <p className="post-description">{content}</p>
-    </Card.Body>
   );
 
   const renderTags = (
@@ -476,6 +465,8 @@ const Post = ({
     </Card.Body>
   );
 
+  const [showComplete, setShowComplete] = useState(true);
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -503,13 +494,9 @@ const Post = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderContent}
+            {renderContent(title, content, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper">
                 {renderExternalLinks()}
@@ -579,7 +566,7 @@ const Post = ({
                 },
               }}
             >
-              {renderContent}
+              {renderContent(title, content, showComplete)}
             </Link>
           ) : (
             <>
@@ -590,16 +577,12 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent}
+              {renderContent(title, content, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
             (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper" />
             ))}
@@ -632,6 +615,21 @@ const Post = ({
         </PostCard>
       )}
     </>
+  );
+};
+
+const renderContent = (title, content, showComplete) => {
+  let finalContent = content;
+  if (finalContent.length > CONTENT_LENGTH && !showComplete) {
+    finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
+  }
+  return (
+    <Card.Body className="content-wrapper">
+      <Heading level={4} className="h4">
+        {title}
+      </Heading>
+      <p className="post-description">{finalContent}</p>
+    </Card.Body>
   );
 };
 

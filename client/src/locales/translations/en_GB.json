@@ -224,7 +224,7 @@
         "linkedin": "LinkedIn URL",
         "website": "Website"
       },
-      "emailMaxLength": "Email address must not exceed 200 characters",
+      "emailMaxLength": "Email address must not exceed 254 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid"
     },
