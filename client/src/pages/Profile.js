@@ -16,7 +16,6 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
-
 import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
 

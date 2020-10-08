@@ -380,7 +380,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
     if (organisation) {
       return (
         <ProfilePic
-          resolution={"7680px"}
+          resolution={"768rem"}
           user={organisation}
           initials={getInitialsFromFullName(name)}
         />

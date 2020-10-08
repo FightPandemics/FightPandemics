@@ -641,6 +641,11 @@
     "envelope": "envelope",
     "avatar": "avatar"
   },
+  "avatar": {
+    "submitBtn": "Submit",
+    "cancelBtn": "Cancel",
+    "tryAgainBtn": "Try Again"
+  },
   "error": {
     "title": "Please include a title for your post.",
     "description": "Please include a description for your post.",

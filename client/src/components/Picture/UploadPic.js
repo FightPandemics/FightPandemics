@@ -134,10 +134,11 @@ const UploadPic = ({ cameraIconSize, user }) => {
           if (uploadResponse.status == 200) {
             setModalVisible(false);
             window.location.reload(false);
-            console.log("Success");
           }
         } catch (error) {
-          setUploadError("error.avatar.networkError");
+          setUploadError(
+              t("error.avatar.networkError")
+          );
           console.log({
             error,
           });
@@ -170,15 +171,15 @@ const UploadPic = ({ cameraIconSize, user }) => {
         maskClosable={false}
         footer={[
           <CustomCancelButton key="cancel" onClick={closeModal}>
-            Cancel
+            {t("avatar.cancelBtn")}
           </CustomCancelButton>,
           !uploadError ? (
             <CustomSubmitButton key="save" onClick={savePhoto}>
-              Submit
+              {t("avatar.submitBtn")}
             </CustomSubmitButton>
           ) : (
             <CustomSubmitButton key="retry" onClick={retry}>
-              Try Again
+              {t("avatar.tryAgainBtn")}
             </CustomSubmitButton>
           ),
         ]}
