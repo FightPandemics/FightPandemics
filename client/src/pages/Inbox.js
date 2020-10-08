@@ -213,14 +213,6 @@ const Inbox = (props) => {
     if (isIdentified) getUserRooms();
   }, [getUserRooms, isIdentified]);
 
-  useEffect(() => {
-    // join the first room if not on mobile
-    if (!toggleMobileChatList && !room && rooms[0])
-      joinRoom({
-        threadId: rooms[0]._id,
-      });
-  }, [rooms]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <InboxContainer>
       <ChatList
@@ -233,9 +225,9 @@ const Inbox = (props) => {
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />
-      {!toggleMobileChatList && !rooms.length
+      {!rooms.length
         ? <EmptyInbox/> 
-        : !toggleMobileChatList && !room && <SelectRoom/> ||
+        : !room && <SelectRoom/> ||
       room && <CurrentChat
         room={room}
         user={user}
