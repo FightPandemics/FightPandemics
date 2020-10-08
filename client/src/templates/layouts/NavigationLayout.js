@@ -617,12 +617,8 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="10vh" limitMobileHeight />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
-          <GlobeIcon
-            id={GTM.nav.prefix + GTM.nav.language}
-            src={globe}
-            className="globe-icon-svg"
-          ></GlobeIcon>
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
           {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
@@ -657,12 +653,8 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="33vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
-          <GlobeIcon
-            id={GTM.nav.prefix + GTM.nav.language}
-            src={globe}
-            className="globe-icon-svg"
-          ></GlobeIcon>
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
           {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
