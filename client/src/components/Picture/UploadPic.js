@@ -38,18 +38,20 @@ function isImageFile(file) {
   );
 }
 
+const INITIAL_CROP_STATE = {
+  aspect: 1 / 1,
+  unit: "px",
+  height: 250,
+  width: 250,
+}
+
 const UploadPic = ({ cameraIconSize, user }) => {
   const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [photoURL, setPhotoURL] = useState();
   const [uploadError, setUploadError] = useState();
   const [image, setImage] = useState();
-  const [crop, setCrop] = useState({
-    aspect: 1 / 1,
-    unit: "px",
-    height: 250,
-    width: 250,
-  });
+  const [crop, setCrop] = useState(INITIAL_CROP_STATE);
   const imgUpload = useRef(null);
 
   const imageLoaded = (image) => {
@@ -152,6 +154,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
     imgUpload.current.value = "";
     setUploadError("");
     setModalVisible(false);
+    setCrop(INITIAL_CROP_STATE);
   };
 
   const retry = () => {
@@ -163,11 +166,9 @@ const UploadPic = ({ cameraIconSize, user }) => {
     return (
       <Modal
         visible={modalVisible}
-        okText={"Save"}
         onOk={savePhoto}
         destroyOnClose={true}
         closable={false}
-        onCancel={() => setModalVisible(false)}
         maskClosable={false}
         footer={[
           <CustomCancelButton key="cancel" onClick={closeModal}>
