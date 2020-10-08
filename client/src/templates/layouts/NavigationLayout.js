@@ -359,7 +359,10 @@ const NavigationLayout = (props) => {
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
+        <Menu.Item
+          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          key={key}
+        >
           <a
             style={
               i18n.language === key
@@ -614,7 +617,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="10vh" limitMobileHeight />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
           <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
           {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
@@ -650,7 +653,7 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="33vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
           <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
           {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
