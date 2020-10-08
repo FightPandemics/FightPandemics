@@ -14,6 +14,7 @@ import {
 import { ChatList } from "../components/Inbox/ChatList";
 import { RecipientHeader } from "../components/Inbox/RecipientHeader";
 import { EmptyInbox } from "../components/Inbox/EmptyInbox";
+import { SelectRoom } from "../components/Inbox/SelectRoom";
 import { ChatContextProvider } from "../context/ChatContext";
 import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
@@ -232,7 +233,8 @@ const Inbox = (props) => {
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />
-      {room && <CurrentChat
+      {!rooms.length? <EmptyInbox/> : !room && <SelectRoom/> ||
+      room && <CurrentChat
         room={room}
         user={user}
         getChatLog={getChatLog}
@@ -242,7 +244,7 @@ const Inbox = (props) => {
         leaveAllRooms={leaveAllRooms}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
-      /> || <EmptyInbox/>}
+      />}
     </InboxContainer>
   );
 };
