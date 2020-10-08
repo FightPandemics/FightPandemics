@@ -334,15 +334,13 @@ const CreateOrgProfile = (props) => {
             align="start"
             justify="between"
           >
-            <InputWrapper>
+            <InputWrapper> 
               <InputGroup>
                 <Label
                   style={styleLabel}
                   label={
                     <Trans i18nKey="profile.org.seeking">
-                      <b>
-                        request
-                      </b>
+                      <b>request</b>
                     </Trans>
                   }
                 />
@@ -405,7 +403,7 @@ const CreateOrgProfile = (props) => {
                       required
                       placeholder={t("profile.org.otherDetails")}
                       onChange={(othersDetails) => othersDetails}
-                      style={styleInput}
+                      style={{...styleInput, width: '80%'}}
                       ref={register({
                         required: t("profile.org.otherDetails"),
                         maxLength: {
@@ -429,9 +427,7 @@ const CreateOrgProfile = (props) => {
                   style={styleLabel}
                   label={
                     <Trans i18nKey="profile.org.offering">
-                      <b>
-                        offer
-                      </b>
+                      <b>offer</b>
                     </Trans>
                   }
                 />
@@ -494,7 +490,7 @@ const CreateOrgProfile = (props) => {
                       required
                       placeholder={t("profile.org.otherDetails")}
                       onChange={(othersDetails) => othersDetails}
-                      style={styleInput}
+                      style={{...styleInput, width: '80%'}}
                       ref={register({
                         required: t("profile.org.otherDetails"),
                         maxLength: {
