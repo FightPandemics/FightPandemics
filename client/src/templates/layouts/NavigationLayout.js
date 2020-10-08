@@ -1,5 +1,5 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Typography, Menu, Dropdown } from "antd";
+import { Typography, Menu, Dropdown, Badge } from "antd";
 import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -570,6 +570,12 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to={`/profile/${user?.id || user?._id}`}>
           {t("common.profile")}
+        </Link>
+      </NavItem>
+      <NavItem>
+        <Link to={"/inbox"}>
+          Inbox {" "}
+          <Badge count={ws.rooms.map(_room=> _room.participants.find(p=>p.id == user.id.toString())?.newMessages || 0).reduce((a,b)=>a+b,0)}/>
         </Link>
       </NavItem>
       <NavItem>

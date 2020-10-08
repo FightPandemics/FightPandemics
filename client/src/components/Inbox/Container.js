@@ -97,7 +97,7 @@ export const SideChatContainer = styled.div`
     border-radius: 100%;
     height: 1.4rem;
     width: 1.4rem;
-    border: 2px solid #fff;
+    border: 0.25rem solid #fff;
     &.online {
       background: lightgreen;
     }

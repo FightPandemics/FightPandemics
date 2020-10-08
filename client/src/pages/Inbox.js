@@ -233,7 +233,9 @@ const Inbox = (props) => {
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />
-      {!rooms.length? <EmptyInbox/> : !room && <SelectRoom/> ||
+      {!toggleMobileChatList && !rooms.length
+        ? <EmptyInbox/> 
+        : !toggleMobileChatList && !room && <SelectRoom/> ||
       room && <CurrentChat
         room={room}
         user={user}
