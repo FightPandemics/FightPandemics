@@ -224,7 +224,7 @@
         "linkedin": "LinkedIn網址",
         "website": "網站"
       },
-      "emailMaxLength": "電子郵件地址不得超過200個字符",
+      "emailMaxLength": "電子郵件地址不得超過254個字符",
       "emailInvalid": "電子郵箱地址不可用",
       "emailDomainInvalid": "電子郵件域無效"
     },
