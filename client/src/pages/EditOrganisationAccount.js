@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import Checkbox from "components/Input/Checkbox";
 import { WhiteSpace } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
@@ -354,7 +354,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
       return (
         <div
           key={
-            key === "Organisation Name"
+            value[0] === "name"
               ? t("profile.org.name")
               : t("profile.org.email")
           }
@@ -537,10 +537,18 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <WhiteSpace />
               <WhiteSpace />
               {renderSelectItems()}
-              <Label>{t("profile.org.seeking")}</Label>
+              <Label>
+                <Trans i18nKey="profile.org.seeking">
+                  <b>request</b>
+                </Trans>
+              </Label>
               <HelpWrapper>{renderNeedSection()}</HelpWrapper>
               <WhiteSpace />
-              <Label>{t("profile.org.offering")}</Label>
+              <Label>
+                <Trans i18nKey="profile.org.offering">
+                  <b>offer</b>
+                </Trans>
+              </Label>
               <HelpWrapper>{renderOfferSection()}</HelpWrapper>
               <CustomSubmitButton
                 primary="true"
