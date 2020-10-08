@@ -143,7 +143,7 @@ export default ({
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
+        <Menu.Item id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]} key={key}>
           <a
             style={
               i18n.language === key
@@ -264,7 +264,7 @@ export default ({
             </button>
           </>
         )}
-        <Dropdown overlay={languageMenu} trigger={["click"]}>
+        <Dropdown id={GTM.nav.prefix + GTM.nav.language} overlay={languageMenu} trigger={["click"]}>
           <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
         </Dropdown>
       </>
