@@ -92,7 +92,7 @@ describe('FightPandemics Sign In Page', () => {
             passwordField.type('testtest');
             var passwordCharacterRequired = signIn.getPasswordCharacterRequired();
             passwordCharacterRequired.should('be.visible');
-            passwordCharacterRequired.contains('Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
+            passwordCharacterRequired.contains('Password must contain at least 3 of these: lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
 
         });
 
@@ -119,7 +119,7 @@ describe('FightPandemics Sign In Page', () => {
             signIn.getSignInButton().click();
             var loginFailAlert = signIn.getLoginFailAlert();
             loginFailAlert.should('be.visible');
-            loginFailAlert.contains('Login failed, reason: Wrong email or password.');
+            loginFailAlert.contains('Login failed, reason: Wrong email or password');
         });
 
         it('Login fail alert appears when maximum sign in attempts are exceeded', () => {
@@ -165,7 +165,7 @@ describe('FightPandemics Sign In Page', () => {
         it('LinkedIn button for sign in is visible', () => {
             var signInByLinkedinButton = signIn.getSignInLinkedinButton();
             signInByLinkedinButton.should('be.visible');
-            signInByLinkedinButton.contains('span', 'Linkedin');
+            signInByLinkedinButton.contains('span', 'LinkedIn');
 
         });
     });
