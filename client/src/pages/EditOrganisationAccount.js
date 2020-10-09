@@ -11,6 +11,7 @@ import SuccessAlert from "components/Alert/SuccessAlert";
 import { ORANGE_RED, WHITE } from "../constants/colors";
 import { Link } from "react-router-dom";
 import InputLabel from "components/Input/Label";
+import Select from "components/Input/Select";
 import orgData from "../assets/data/createOrganisationProfile";
 import { refetchUser } from "actions/authActions";
 import {
@@ -28,7 +29,6 @@ import {
   HelpWrapper,
   ToggleHeading,
   ProfilePicWrapper,
-  StyledSelect,
   CustomEditAccountHeader,
   Background,
 } from "../components/EditProfile/EditComponents";
@@ -321,13 +321,15 @@ function EditOrganisationAccount({ refetchUser, history }) {
         <div>
           <Controller
             as={
-              <StyledSelect>
+              <Select
+                style={{ width: "100%" }}
+              >
                 {orgData.type.options.map((option, i) => (
-                  <StyledSelect.Option key={i} value={option.text}>
+                  <Select.Option key={i} value={option.text}>
                     {t("profile.org.types." + i)}
-                  </StyledSelect.Option>
+                  </Select.Option>
                 ))}
-              </StyledSelect>
+              </Select>
             }
             defaultValue={organisation.type}
             control={control}
@@ -336,13 +338,15 @@ function EditOrganisationAccount({ refetchUser, history }) {
           />
           <Controller
             as={
-              <StyledSelect>
+              <Select
+                style={{ width: "100%" }}
+              >
                 {orgData.industry.options.map((option, i) => (
-                  <StyledSelect.Option key={i} value={option.text}>
+                  <Select.Option key={i} value={option.text}>
                     {t("profile.org.industries." + i)}
-                  </StyledSelect.Option>
+                  </Select.Option>
                 ))}
-              </StyledSelect>
+              </Select>
             }
             defaultValue={organisation.industry}
             rules={{ required: true }}
