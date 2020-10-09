@@ -174,7 +174,7 @@ const AboutUs = () => {
       <ImageContainer
         img={Group}
         width={"100%"}
-        height={"50rem"}
+        height={"calc(100vw / 2.5411)"}
         mobileHeight={"40rem"}
         flexDirection={"row"}
       >
@@ -227,7 +227,15 @@ const AboutUs = () => {
               style={{ marginTop: "3rem" }}
             >
               <h3>{t("localGlobal")}</h3>
-              <img loading="lazy" alt={t("localGlobal")} src={LocalGlobal} />
+              <img
+                style={{
+                  marginBottom: "3rem",
+                  height: "26rem",
+                }}
+                loading="lazy"
+                alt={t("localGlobal")}
+                src={LocalGlobal}
+              />
               <p>{t("localGlobalDetail")}</p>
             </FlexBox>
             <FlexBox

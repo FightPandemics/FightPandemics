@@ -49,7 +49,7 @@ export const AboutUsContainer = styled.div`
   }
   p {
     margin: 0 2rem;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-family: ${body};
     color: ${darkerGray};
     font-weight: normal;
