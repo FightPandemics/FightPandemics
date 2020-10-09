@@ -7,7 +7,8 @@ module.exports = {
     addOrg: "_ADO",
     feed: "_HB",
     feedback: "_FDB",
-    inbox: "_IBX"
+    inbox: "_IBX",
+    language: "_LS",
   },
   homePage: {
     prefix: "HP",
@@ -115,5 +116,13 @@ module.exports = {
     researchAndDevelopment: "_RD",
     tech: "_TC",
     other: "_OT",
+  },
+  language: {
+    "en-US": "_EN_US",
+    "en-GB": "_EN_GB",
+    pl: "_PL",
+    "es-ES": "_ES_ES",
+    "zh-TW": "_ZH_TW",
+    de: "_DE",
   },
 };
