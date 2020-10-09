@@ -23,3 +23,13 @@ export const randomString = (length) => {
 Cypress.Commands.add('generateRandomEmail', () => {
     return randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com';
 });
+
+Cypress.Commands.overwrite('visit', (visit, url) => {
+        return visit(url, {
+        onBeforeLoad (win) {
+          Object.defineProperty(win.navigator, 'language', {
+            value: 'en_US'
+          })
+        }
+      })
+});
