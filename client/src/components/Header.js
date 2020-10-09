@@ -234,7 +234,12 @@ export default ({
                 activeStyle={activeStyles}
                 to="/inbox"
               >
-                <Badge count={rooms.map(_room=> _room.participants.find(p=>p.id == user.id.toString())?.newMessages || 0).reduce((a,b)=>a+b,0)}>
+                <Badge
+                  count={rooms.map((_room) =>
+                          _room.participants.find((p) => p.id == user.id.toString())?.newMessages
+                          ? 1:0 // remove "? 1:0" to show total messages
+                          || 0).reduce((a, b) => a + b, 0)}
+                >
                   <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
                 </Badge>
               </NavLink>
