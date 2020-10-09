@@ -92,7 +92,7 @@ describe('FightPandemics Sign Up Page', () => {
       passwordField.type('testtest');
       var passwordCharacterRequired = joinNow.getPasswordCharacterRequired();
       passwordCharacterRequired.should('be.visible');
-      passwordCharacterRequired.contains('small', 'Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
+      passwordCharacterRequired.contains('small', 'Password must contain at least 3 of these: lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
 
     });
 
@@ -180,7 +180,7 @@ describe('FightPandemics Sign Up Page', () => {
     it('LinkedIn button for sign up is visible', () => {
       var joinByLinkedinButton = joinNow.getJoinNowLinkedinButton();
       joinByLinkedinButton.should('be.visible');
-      joinByLinkedinButton.contains('span', 'Linkedin');
+      joinByLinkedinButton.contains('span', 'LinkedIn');
 
     });
   });
