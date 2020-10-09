@@ -147,7 +147,7 @@ const CurrentChat = ({
       </Menu>
     );
 
-    const Sender = ({ postRef, message, messageId, isDeleted }) => {
+    const Sender = ({ postRef, message, messageId, isDeleted, isEdited }) => {
       return (
         <BubbleContainer
           className={`${editingMessageId == messageId ? "is-editing" : ""}`}
@@ -169,6 +169,7 @@ const CurrentChat = ({
               {!isDeleted && message
                 ? linkify(message)
                 : "This message was deleted"}
+              {isEdited && <small> (edited)</small>}
             </div>
             {editingMessageId == messageId && (
               <textarea ref={editTextArea} defaultValue={message}></textarea>
@@ -188,7 +189,13 @@ const CurrentChat = ({
         </BubbleContainer>
       );
     };
-    const Recipient = ({ postRef, message, messageId, isDeleted }) => {
+    const Recipient = ({
+      postRef,
+      message,
+      messageId,
+      isDeleted,
+      isEdited,
+    }) => {
       return (
         <RecipientBubble
           key={"b-" + messageId}
@@ -199,6 +206,7 @@ const CurrentChat = ({
             {!isDeleted && message
               ? linkify(message)
               : "This message was deleted"}
+            {isEdited && <small> (edited)</small>}
           </div>
         </RecipientBubble>
       );
@@ -224,6 +232,7 @@ const CurrentChat = ({
                 postRef={message.postRef}
                 messageId={message._id}
                 isDeleted={message.status == "deleted"}
+                isEdited={message.status == "edited"}
               />
             ) : (
               <Sender
@@ -232,6 +241,7 @@ const CurrentChat = ({
                 postRef={message.postRef}
                 messageId={message._id}
                 isDeleted={message.status == "deleted"}
+                isEdited={message.status == "edited"}
               />
             )}
             {shouldShowTime(i) && (

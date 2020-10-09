@@ -50,6 +50,9 @@ export const MessagesContainer = styled.div`
     padding: 5px;
     cursor: pointer;
   }
+  small {
+    opacity: 0.7;
+  }
 `;
 
 export const SenderBubble = styled.div`
@@ -114,6 +117,7 @@ export const TimeStamp = styled.small`
   color: #969292;
   padding: 2px 1rem;
   text-align: center;
+  opacity: 1 !important;
 `;
 
 export const MessageMenu = styled.div`
