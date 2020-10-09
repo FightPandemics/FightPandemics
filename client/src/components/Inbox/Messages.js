@@ -4,6 +4,27 @@ import { theme, mq } from "constants/theme";
 export const BubbleContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  &.is-editing {
+    margin-bottom: 3rem;
+  }
+  .edit-controls {
+    position: absolute;
+    bottom: -2.7rem;
+    button {
+      font-size: 1.3rem;
+      background: none;
+      color: #425af2;
+      border: 1px solid #425af2;
+      border-radius: 1.1rem;
+      padding: 0.3rem 1rem;
+      margin: 0 0.2rem;
+      &.save {
+        color: #fff;
+        background: #425af2;
+      }
+    }
+  }
 `;
 export const MessagesContainer = styled.div`
   position: relative;
@@ -49,6 +70,18 @@ export const SenderBubble = styled.div`
   .message-content-sender {
     margin: 0em 1em 0em 1em;
   }
+  textarea {
+    position: absolute;
+    resize: none;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 1em 1em 0.1em 1em;
+    padding: 0.8em 1.1em 0.8em 1.1em;
+    overflow: hidden;
+    color: black;
+  }
   &.deleted {
     opacity: 0.7;
   }
@@ -80,12 +113,7 @@ export const RecipientBubble = styled.div`
 export const TimeStamp = styled.small`
   color: #969292;
   padding: 2px 1rem;
-  &.left {
-    text-align: left;
-  }
-  &.right {
-    text-align: right;
-  }
+  text-align: center;
 `;
 
 export const MessageMenu = styled.div`

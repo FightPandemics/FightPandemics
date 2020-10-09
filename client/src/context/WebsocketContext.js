@@ -15,6 +15,7 @@ import {
   loadMoreSuccess,
   setLastMessage,
   messageDeleted,
+  messageEdited,
 } from "../actions/wsActions";
 
 const isLocalhost = Boolean(
@@ -62,13 +63,17 @@ export default class SocketManager extends React.Component {
       }, 500);
     });
 
-    this.socket.on("NEW_MESSAGE", (messageData) => {
+    this.socket.on("MESSAGE_RECEIVED", (messageData) => {
       this.props.store.dispatch(receivedMessage(messageData));
       this.props.store.dispatch(setLastMessage(messageData));
     });
 
     this.socket.on("MESSAGE_DELETED", (messageId) => {
       this.props.store.dispatch(messageDeleted(messageId));
+    });
+
+    this.socket.on("MESSAGE_EDITED", (newMessage) => {
+      this.props.store.dispatch(messageEdited(newMessage));
     });
 
     this.socket.on("NEW_MESSAGE_NOTIFICATION", (messageData) => {
@@ -104,6 +109,10 @@ export default class SocketManager extends React.Component {
 
   deleteMessage = (messageId) => {
     this.socket.emit("DELETE_MESSAGE", messageId);
+  };
+
+  editMessage = (data) => {
+    this.socket.emit("EDIT_MESSAGE", data);
   };
 
   joinRoom = (data) => {
@@ -177,6 +186,7 @@ export default class SocketManager extends React.Component {
       identify: this.identify,
       sendMessage: this.sendMessage,
       deleteMessage: this.deleteMessage,
+      editMessage: this.editMessage,
       joinRoom: this.joinRoom,
       getChatLog: this.getChatLog,
       loadMore: this.loadMore,

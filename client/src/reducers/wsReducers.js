@@ -6,13 +6,14 @@ import {
   LEAVE_ALL_ROOMS,
   GET_ROOMS_ERROR,
   GET_ROOMS_SUCCESS,
-  RECEIVED_MESSAGE,
+  MESSAGE_RECEIVED,
   MESSAGE_DELETED,
   GET_MESSAGES_HISTORY,
   GET_MESSAGES_HISTORY_ERROR,
   GET_MORE_MESSAGES_HISTORY,
   USER_STATUS_UPDATE,
   SET_LAST_MESSAGE,
+  MESSAGE_EDITED,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -79,7 +80,7 @@ function wsReducer(state = initialState, action) {
         ...state,
         rooms: [],
       };
-    case RECEIVED_MESSAGE:
+    case MESSAGE_RECEIVED:
       if (action.isNotification) {
         var index = state.rooms.findIndex(
           (r) => r._id == action.payload.threadId,
@@ -135,6 +136,16 @@ function wsReducer(state = initialState, action) {
           status: "deleted",
           postRef: null,
         };
+      }
+      return {
+        ...state,
+      };
+    case MESSAGE_EDITED:
+      var messageIndex = state.chatLog.findIndex(
+        (m) => m._id == action.payload._id,
+      );
+      if (messageIndex != -1) {
+        state.chatLog[messageIndex] = action.payload;
       }
       return {
         ...state,

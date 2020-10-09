@@ -11,9 +11,7 @@ function onSocketConnect(socket) {
   const Message = this.mongo.model("Message");
 
   socket.on("IDENTIFY", async (data, res) => {
-    const [userErr, user] = await this.to(
-      User.findById(data.id),
-    );
+    const [userErr, user] = await this.to(User.findById(data.id));
     if (userErr) {
       return res({ code: 500, message: "Internal server error" });
     } else if (user === null) {
@@ -135,8 +133,7 @@ function onSocketConnect(socket) {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     const [threadsErr, threads] = await this.to(
-      Thread.find({ "participants.id": userId })
-        .sort({ updatedAt: 1 }),
+      Thread.find({ "participants.id": userId }).sort({ updatedAt: 1 }),
     );
     if (threadsErr) return res({ code: 500, message: "Internal server error" });
 
@@ -144,12 +141,12 @@ function onSocketConnect(socket) {
     for (let i = 0; i < threads.length; i++) {
       const thread = threads[i].toObject();
       const [lastMessageErr, lastMessage] = await this.to(
-        Message.findOne({ threadId: thread._id })
-          .sort({ createdAt: -1 }),
+        Message.findOne({ threadId: thread._id }).sort({ createdAt: -1 }),
       );
       const [lastEmbedMessageErr, lastEmbedMessage] = await this.to(
-        Message.findOne({ threadId: thread._id, postRef: { $ne: null } })
-          .sort({ createdAt: -1 }),
+        Message.findOne({ threadId: thread._id, postRef: { $ne: null } }).sort({
+          createdAt: -1,
+        }),
       );
 
       if (lastMessage) thread.lastMessage = lastMessage;
@@ -225,8 +222,7 @@ function onSocketConnect(socket) {
     // add postRef
     if (data.postId) {
       var [postErr, post] = await this.to(Post.findOne({ _id: data.postId }));
-      if (postErr)
-        return res({ code: 500, message: "Internal server error" });
+      if (postErr) return res({ code: 500, message: "Internal server error" });
       if (post)
         newMessage.postRef = {
           content: post.content,
@@ -236,12 +232,10 @@ function onSocketConnect(socket) {
           createdAt: post.createdAt,
         };
     }
-    [messageErr, message] = await this.to(
-      Message(newMessage).save(),
-    );
+    [messageErr, message] = await this.to(Message(newMessage).save());
     if (messageErr) return res({ code: 500, message: "Internal server error" });
 
-        // add unread mark to recipient(s)
+    // add unread mark to recipient(s)
     // if not ( online && in the same room)
     let recipients = thread.participants
       .filter((p) => p.id != userId)
@@ -266,29 +260,51 @@ function onSocketConnect(socket) {
         // send message web notification
         if (recipientSocket && !isInSameRoom) {
           // equivalent to (online && !inSameRoom))
-          this.io.to(recipientSocket.id).emit("NEW_MESSAGE_NOTIFICATION", message);
+          this.io
+            .to(recipientSocket.id)
+            .emit("NEW_MESSAGE_NOTIFICATION", message);
         }
       }
     }
 
-    this.io.to(data.threadId).emit("NEW_MESSAGE", message);
+    this.io.to(data.threadId).emit("MESSAGE_RECEIVED", message);
     res({ code: 200, message: "Success" });
   });
 
   socket.on("DELETE_MESSAGE", async (messageId) => {
     userId = socket.userId;
-    if (!userId) return //user did not IDENTIFY
+    if (!userId) return; //user did not IDENTIFY
     var [messageDeletedErr, messageDeleted] = await this.to(
-      Message.findOneAndUpdate({
-        _id: messageId,
-        authorId: userId,
-        status: { $ne: "deleted" },
-      }, {status: "deleted", content: null, postRef: null}),
+      Message.findOneAndUpdate(
+        {
+          _id: messageId,
+          authorId: userId,
+          status: { $ne: "deleted" },
+        },
+        { status: "deleted", content: null, postRef: null },
+      ),
     );
     if (messageDeletedErr || !messageDeleted) return;
     this.io.to(messageDeleted.threadId).emit("MESSAGE_DELETED", messageId);
-  })
+  });
 
+  socket.on("EDIT_MESSAGE", async (data) => {
+    userId = socket.userId;
+    if (!userId) return; //user did not IDENTIFY
+    var [messageEditedErr, messageEdited] = await this.to(
+      Message.findOneAndUpdate(
+        {
+          _id: data.messageId,
+          authorId: userId,
+          status: { $ne: "deleted" },
+        },
+        { status: "edited", content: data.newContent },
+        { new: true },
+      ),
+    );
+    if (messageEditedErr || !messageEdited) return;
+    this.io.to(messageEdited.threadId).emit("MESSAGE_EDITED", messageEdited);
+  });
 }
 
 function getSocketByUserId(app, userId) {
