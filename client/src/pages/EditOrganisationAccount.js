@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import Checkbox from "components/Input/Checkbox";
-import { WhiteSpace } from "antd-mobile";
+import { WhiteSpace, Flex } from "antd-mobile";
 import FormInput from "components/Input/FormInput";
 import { Alert } from "antd";
 import { connect } from "react-redux";
@@ -537,19 +537,29 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <WhiteSpace />
               <WhiteSpace />
               {renderSelectItems()}
-              <Label>
-                <Trans i18nKey="profile.org.seeking">
-                  <b>request</b>
-                </Trans>
-              </Label>
-              <HelpWrapper>{renderNeedSection()}</HelpWrapper>
-              <WhiteSpace />
-              <Label>
-                <Trans i18nKey="profile.org.offering">
-                  <b>offer</b>
-                </Trans>
-              </Label>
-              <HelpWrapper>{renderOfferSection()}</HelpWrapper>
+              <Flex
+                direction="row"
+                align="start"
+                justify="between"
+              >
+                <InputWrapper>
+                  <Label>
+                    <Trans i18nKey="profile.org.seeking">
+                      <b>request</b>
+                    </Trans>
+                  </Label>
+                  <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+                </InputWrapper>
+                <WhiteSpace />
+                <InputWrapper>
+                  <Label>
+                    <Trans i18nKey="profile.org.offering">
+                      <b>offer</b>
+                    </Trans>
+                  </Label>
+                  <HelpWrapper>{renderOfferSection()}</HelpWrapper>
+                </InputWrapper>
+              </Flex>
               <CustomSubmitButton
                 primary="true"
                 onClick={handleSubmit(onSubmit)}
