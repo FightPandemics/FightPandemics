@@ -7,6 +7,7 @@ import {
   GET_ROOMS_ERROR,
   GET_ROOMS_SUCCESS,
   RECEIVED_MESSAGE,
+  MESSAGE_DELETED,
   GET_MESSAGES_HISTORY,
   GET_MESSAGES_HISTORY_ERROR,
   GET_MORE_MESSAGES_HISTORY,
@@ -38,9 +39,13 @@ function wsReducer(state = initialState, action) {
       // update the room in [rooms], but keep the user status (to avoid status flickering) and keep topic
       var index = state.rooms.findIndex((r) => r._id == action.payload._id);
       if (index != -1) {
-        state.rooms[index] = {...action.payload, userStatus: state.rooms[index].userStatus, topic: state.rooms[index].topic};
-        action.payload.userStatus = state.rooms[index].userStatus
-        action.payload.topic = state.rooms[index].topic
+        state.rooms[index] = {
+          ...action.payload,
+          userStatus: state.rooms[index].userStatus,
+          topic: state.rooms[index].topic,
+        };
+        action.payload.userStatus = state.rooms[index].userStatus;
+        action.payload.topic = state.rooms[index].topic;
       }
       return {
         ...state,
@@ -76,15 +81,18 @@ function wsReducer(state = initialState, action) {
       };
     case RECEIVED_MESSAGE:
       if (action.isNotification) {
-        var index = state.rooms.findIndex((r) => r._id == action.payload.threadId);
+        var index = state.rooms.findIndex(
+          (r) => r._id == action.payload.threadId,
+        );
         if (index != -1) {
           state.rooms[index].lastMessage = action.payload;
-          if (action.payload.postRef) state.rooms[index].topic = action.payload.postRef.title;
-            for (const participant of state.rooms[index].participants) {
-              // since we don't have access to logged-in user.id we will just apply this to all participants
-              // because it doesn't matter, and we will only user the one that maches user.id at the end
-              participant.newMessages++
-            }
+          if (action.payload.postRef)
+            state.rooms[index].topic = action.payload.postRef.title;
+          for (const participant of state.rooms[index].participants) {
+            // since we don't have access to logged-in user.id we will just apply this to all participants
+            // because it doesn't matter, and we will only user the one that maches user.id at the end
+            participant.newMessages++;
+          }
         }
       } else {
         state.chatLog = [...state.chatLog, action.payload];
@@ -94,24 +102,42 @@ function wsReducer(state = initialState, action) {
           new Date(b.lastMessage?.createdAt) -
           new Date(a.lastMessage?.createdAt)
         );
-      })
+      });
       return {
         ...state,
       };
     case SET_LAST_MESSAGE:
-      var index = state.rooms.findIndex((r) => r._id == action.payload.threadId);
+      var index = state.rooms.findIndex(
+        (r) => r._id == action.payload.threadId,
+      );
       if (index != -1) {
-        state.rooms[index].lastMessage = action.payload
-        if (action.payload.postRef) state.rooms[index].topic = action.payload.postRef.title
+        state.rooms[index].lastMessage = action.payload;
+        if (action.payload.postRef)
+          state.rooms[index].topic = action.payload.postRef.title;
       }
       state.rooms.sort((a, b) => {
         return (
           new Date(b.lastMessage?.createdAt) -
           new Date(a.lastMessage?.createdAt)
         );
-      })
+      });
       return {
-        ...state
+        ...state,
+      };
+    case MESSAGE_DELETED:
+      var messageIndex = state.chatLog.findIndex(
+        (m) => m._id == action.payload,
+      );
+      if (messageIndex != -1) {
+        state.chatLog[messageIndex] = {
+          ...state.chatLog[messageIndex],
+          content: null,
+          status: "deleted",
+          postRef: null,
+        };
+      }
+      return {
+        ...state,
       };
     case GET_MESSAGES_HISTORY:
       return {

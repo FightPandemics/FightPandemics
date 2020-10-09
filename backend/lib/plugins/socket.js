@@ -5,10 +5,14 @@ const redisAdapter = require("socket.io-redis");
 
 function onSocketConnect(socket) {
   console.log("[ws] user connected");
+  const Thread = this.mongo.model("Thread");
+  const User = this.mongo.model("User");
+  const Post = this.mongo.model("Post");
+  const Message = this.mongo.model("Message");
 
   socket.on("IDENTIFY", async (data, res) => {
     const [userErr, user] = await this.to(
-      this.mongo.model("User").findById(data.id),
+      User.findById(data.id),
     );
     if (userErr) {
       return res({ code: 500, message: "Internal server error" });
@@ -37,8 +41,6 @@ function onSocketConnect(socket) {
   });
 
   socket.on("JOIN_ROOM", async (data, res) => {
-    const Thread = this.mongo.model("Thread");
-    const User = this.mongo.model("User");
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
 
@@ -114,10 +116,7 @@ function onSocketConnect(socket) {
     );
     let threadWithLastMessage = thread.toObject();
     const [lastMessageErr, lastMessage] = await this.to(
-      this.mongo
-        .model("Message")
-        .findOne({ threadId: thread._id })
-        .sort({ updatedAt: -1 }),
+      Message.findOne({ threadId: thread._id }).sort({ updatedAt: -1 }),
     );
     if (lastMessage) threadWithLastMessage.lastMessage = lastMessage;
 
@@ -136,9 +135,7 @@ function onSocketConnect(socket) {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     const [threadsErr, threads] = await this.to(
-      this.mongo
-        .model("Thread")
-        .find({ "participants.id": userId })
+      Thread.find({ "participants.id": userId })
         .sort({ updatedAt: 1 }),
     );
     if (threadsErr) return res({ code: 500, message: "Internal server error" });
@@ -147,15 +144,11 @@ function onSocketConnect(socket) {
     for (let i = 0; i < threads.length; i++) {
       const thread = threads[i].toObject();
       const [lastMessageErr, lastMessage] = await this.to(
-        this.mongo
-          .model("Message")
-          .findOne({ threadId: thread._id })
+        Message.findOne({ threadId: thread._id })
           .sort({ createdAt: -1 }),
       );
       const [lastEmbedMessageErr, lastEmbedMessage] = await this.to(
-        this.mongo
-          .model("Message")
-          .findOne({ threadId: thread._id, postRef: { $ne: null } })
+        Message.findOne({ threadId: thread._id, postRef: { $ne: null } })
           .sort({ createdAt: -1 }),
       );
 
@@ -178,9 +171,7 @@ function onSocketConnect(socket) {
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
     const [messagesErr, messages] = await this.to(
-      this.mongo
-        .model("Message")
-        .find({ threadId: data.threadId })
+      Message.find({ threadId: data.threadId })
         .limit(20)
         .sort({ createdAt: -1 }),
     );
@@ -197,9 +188,7 @@ function onSocketConnect(socket) {
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
     const [messagesErr, messages] = await this.to(
-      this.mongo
-        .model("Message")
-        .find({ threadId: data.threadId })
+      Message.find({ threadId: data.threadId })
         .limit(20)
         .skip(data.skip)
         .sort({ createdAt: -1 }),
@@ -216,7 +205,6 @@ function onSocketConnect(socket) {
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!data.threadId && !userInRoom)
       return res({ code: 401, message: "Unauthorized" });
-    const Thread = this.mongo.model("Thread");
     var [threadErr, thread] = await this.to(
       Thread.findOne({
         _id: data.threadId,
@@ -236,7 +224,6 @@ function onSocketConnect(socket) {
 
     // add postRef
     if (data.postId) {
-      const Post = this.mongo.model("Post");
       var [postErr, post] = await this.to(Post.findOne({ _id: data.postId }));
       if (postErr)
         return res({ code: 500, message: "Internal server error" });
@@ -250,7 +237,7 @@ function onSocketConnect(socket) {
         };
     }
     [messageErr, message] = await this.to(
-      this.mongo.model("Message")(newMessage).save(),
+      Message(newMessage).save(),
     );
     if (messageErr) return res({ code: 500, message: "Internal server error" });
 
@@ -287,6 +274,21 @@ function onSocketConnect(socket) {
     this.io.to(data.threadId).emit("NEW_MESSAGE", message);
     res({ code: 200, message: "Success" });
   });
+
+  socket.on("DELETE_MESSAGE", async (messageId) => {
+    userId = socket.userId;
+    if (!userId) return //user did not IDENTIFY
+    var [messageDeletedErr, messageDeleted] = await this.to(
+      Message.findOneAndUpdate({
+        _id: messageId,
+        authorId: userId,
+        status: { $ne: "deleted" },
+      }, {status: "deleted", content: null, postRef: null}),
+    );
+    if (messageDeletedErr || !messageDeleted) return;
+    this.io.to(messageDeleted.threadId).emit("MESSAGE_DELETED", messageId);
+  })
+
 }
 
 function getSocketByUserId(app, userId) {

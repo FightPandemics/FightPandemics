@@ -10,7 +10,7 @@ export const GET_ROOMS_ERROR = "GET_ROOMS_ERROR";
 
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const RECEIVED_MESSAGE = "RECEIVED_MESSAGE";
-export const MESSAGE_SEEN = "MESSAGE_SEEN";
+export const MESSAGE_DELETED = "MESSAGE_DELETED";
 
 export const GET_MESSAGES_HISTORY = "GET_MESSAGES_HISTORY";
 export const GET_MESSAGES_HISTORY_ERROR = "GET_MESSAGES_HISTORY_ERROR";
@@ -73,12 +73,6 @@ export function sendMessage(payload) {
   };
 }
 
-export function messageSeen() {
-  return {
-    type: MESSAGE_SEEN,
-  };
-}
-
 export function receivedMessage(payload, isNotification) {
   return {
     type: RECEIVED_MESSAGE,
@@ -117,6 +111,13 @@ export function loadMoreSuccess(payload) {
 export function setLastMessage(payload) {
   return {
     type: SET_LAST_MESSAGE,
+    payload,
+  };
+}
+
+export function messageDeleted(payload) {
+  return {
+    type: MESSAGE_DELETED,
     payload,
   };
 }

@@ -14,6 +14,7 @@ import {
   userStatusUpdate,
   loadMoreSuccess,
   setLastMessage,
+  messageDeleted,
 } from "../actions/wsActions";
 
 const isLocalhost = Boolean(
@@ -66,9 +67,13 @@ export default class SocketManager extends React.Component {
       this.props.store.dispatch(setLastMessage(messageData));
     });
 
+    this.socket.on("MESSAGE_DELETED", (messageId) => {
+      this.props.store.dispatch(messageDeleted(messageId));
+    });
+
     this.socket.on("NEW_MESSAGE_NOTIFICATION", (messageData) => {
       this.props.store.dispatch(receivedMessage(messageData, true));
-      // isNotification == true, because user is online but is not in same room 
+      // isNotification == true, because user is online but is not in same room
     });
 
     this.socket.on("USER_STATUS_UPDATE", (data) => {
@@ -82,7 +87,7 @@ export default class SocketManager extends React.Component {
     this.socket.emit("IDENTIFY", userData, (response) => {
       if (response.code == 200) {
         console.log(`[WS]: ${userData.id} Identified`);
-        this.getUserRooms()
+        this.getUserRooms();
         this.props.store.dispatch(identifySuccess());
       } else this.props.store.dispatch(identifyError(response));
     });
@@ -95,6 +100,10 @@ export default class SocketManager extends React.Component {
         resolve(false);
       });
     });
+  };
+
+  deleteMessage = (messageId) => {
+    this.socket.emit("DELETE_MESSAGE", messageId);
   };
 
   joinRoom = (data) => {
@@ -167,6 +176,7 @@ export default class SocketManager extends React.Component {
     const value = {
       identify: this.identify,
       sendMessage: this.sendMessage,
+      deleteMessage: this.deleteMessage,
       joinRoom: this.joinRoom,
       getChatLog: this.getChatLog,
       loadMore: this.loadMore,

@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { Menu, Dropdown } from "antd";
+import { Modal } from "antd-mobile";
 import {
   InboxContainer,
   CurrentChatContainer,
@@ -7,6 +9,7 @@ import { InputBox } from "../components/Inbox/InputBox";
 import {
   BubbleContainer,
   MessagesContainer,
+  MessageMenu,
   SenderBubble,
   RecipientBubble,
   TimeStamp,
@@ -21,6 +24,7 @@ import { WebSocketContext } from "../context/WebsocketContext";
 import { OrgPost } from "../components/Inbox/OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
+import subMenuIcon from "assets/icons/submenu.svg";
 
 const GROUP_MESSAGES_TIME_FRAME = 1; // minutes
 
@@ -31,6 +35,7 @@ const CurrentChat = ({
   chatLog,
   loadMore,
   sendMessage,
+  deleteMessage,
   leaveAllRooms,
   user,
 }) => {
@@ -44,14 +49,6 @@ const CurrentChat = ({
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
-
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
 
   const onLoadMoreClick = async () => {
     if (isLoading) return;
@@ -116,27 +113,66 @@ const CurrentChat = ({
       return moment(date).isSame(moment(), "day");
     };
 
-    const prevChatLogLength = usePrevious(chatLog.length);
     useEffect(() => {
-      if (!isLoading && chatLog.length != prevChatLogLength) scrollToBottom();
+      if (!isLoading) scrollToBottom();
     }, [chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    function showDeleteConfirm(messageId) {
+      Modal.alert(
+        "Delete the message?",
+        "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
+        [
+          { text: "Delete", onPress: () => deleteMessage(messageId) },
+          { text: "Cancel", onPress: () => null },
+        ],
+      );
+    }
+
+    const menu = (messageId) => (
+      <Menu>
+        {/*<Menu.Item>
+            Edit
+        </Menu.Item>*/}
+        <Menu.Item onClick={() => showDeleteConfirm(messageId)} danger>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
+
     const { chat } = useContext(ChatContext);
-    const Sender = ({ postRef, message }) => {
+    const Sender = ({ postRef, message, messageId, isDeleted }) => {
       return (
-        <BubbleContainer key={"b-" + message._id}>
-          <SenderBubble>
+        <BubbleContainer key={"b-" + messageId}>
+          <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
+            {!isDeleted && (
+              <Dropdown overlay={menu(messageId)} placement="bottomRight">
+                <MessageMenu>
+                  <img src={subMenuIcon} />
+                </MessageMenu>
+              </Dropdown>
+            )}
             {postRef && <OrgPost postRef={postRef} />}
-            <div className="message-content-sender">{linkify(message)}</div>
+            <div className="message-content-sender">
+              {!isDeleted && message
+                ? linkify(message)
+                : "This message was deleted"}
+            </div>
           </SenderBubble>
         </BubbleContainer>
       );
     };
-    const Recipient = ({ postRef, message }) => {
+    const Recipient = ({ postRef, message, messageId, isDeleted }) => {
       return (
-        <RecipientBubble key={"b-" + message._id}>
+        <RecipientBubble
+          key={"b-" + messageId}
+          className={`${isDeleted ? "deleted" : ""}`}
+        >
           {postRef && <OrgPost postRef={postRef} />}
-          <div className="message-content-recipient">{linkify(message)}</div>
+          <div className="message-content-recipient">
+            {!isDeleted && message
+              ? linkify(message)
+              : "This message was deleted"}
+          </div>
         </RecipientBubble>
       );
     };
@@ -144,7 +180,7 @@ const CurrentChat = ({
       <MessagesContainer>
         {
           !isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
-            <button onClick={onLoadMoreClick} id={"messages-top"}>
+            <button onClick={onLoadMoreClick} className={"load-more-btn"}>
               load more
             </button>
           ) // to be styled, or changed to infinte scroller
@@ -156,12 +192,16 @@ const CurrentChat = ({
                 key={message._id}
                 message={message.content}
                 postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status == "deleted"}
               />
             ) : (
               <Sender
                 key={message._id}
                 message={message.content}
                 postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status == "deleted"}
               />
             )}
             {shouldShowTime(i) && (
@@ -199,6 +239,7 @@ const Inbox = (props) => {
   );
   const {
     sendMessage,
+    deleteMessage,
     joinRoom,
     getChatLog,
     loadMore,
@@ -225,20 +266,25 @@ const Inbox = (props) => {
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />
-      {!rooms.length
-        ? <EmptyInbox/> 
-        : !room && <SelectRoom/> ||
-      room && <CurrentChat
-        room={room}
-        user={user}
-        getChatLog={getChatLog}
-        chatLog={chatLog}
-        loadMore={loadMore}
-        sendMessage={sendMessage}
-        leaveAllRooms={leaveAllRooms}
-        toggleMobileChatList={toggleMobileChatList}
-        setToggleMobileChatList={setToggleMobileChatList}
-      />}
+      {!rooms.length ? (
+        <EmptyInbox />
+      ) : (
+        (!room && <SelectRoom />) ||
+        (room && (
+          <CurrentChat
+            room={room}
+            user={user}
+            getChatLog={getChatLog}
+            chatLog={chatLog}
+            loadMore={loadMore}
+            sendMessage={sendMessage}
+            deleteMessage={deleteMessage}
+            leaveAllRooms={leaveAllRooms}
+            toggleMobileChatList={toggleMobileChatList}
+            setToggleMobileChatList={setToggleMobileChatList}
+          />
+        ))
+      )}
     </InboxContainer>
   );
 };

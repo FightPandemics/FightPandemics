@@ -22,9 +22,17 @@ export const MessagesContainer = styled.div`
       opacity: 0.7;
     }
   }
+  .load-more-btn {
+    border: none;
+    background: transparent;
+    color: #425af2;
+    padding: 5px;
+    cursor: pointer;
+  }
 `;
 
 export const SenderBubble = styled.div`
+  position: relative;
   display: inline-block;
   max-width: 60%;
   background-color: #425af2;
@@ -34,8 +42,15 @@ export const SenderBubble = styled.div`
   margin-top: 1em;
   word-break: break-word;
   color: #fff;
+  &:hover div:first-child,
+  .ant-dropdown-open {
+    display: block;
+  }
   .message-content-sender {
     margin: 0em 1em 0em 1em;
+  }
+  &.deleted {
+    opacity: 0.7;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     max-width: 70%;
@@ -54,6 +69,9 @@ export const RecipientBubble = styled.div`
   .message-content-recipient {
     margin: 0em 1em 0em 1em;
   }
+  &.deleted {
+    opacity: 0.7;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     max-width: 70%;
   }
@@ -67,5 +85,26 @@ export const TimeStamp = styled.small`
   }
   &.right {
     text-align: right;
+  }
+`;
+
+export const MessageMenu = styled.div`
+  position: absolute;
+  display: none;
+  background: #ffffff;
+  width: 3.5rem;
+  height: 1.75rem;
+  right: 0.8rem;
+  top: -0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px 0 #0000002e;
+  img {
+    width: 70%;
+    opacity: 0.4;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
