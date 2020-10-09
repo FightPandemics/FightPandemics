@@ -22,7 +22,7 @@ import { OrgPost } from "../components/Inbox/OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
 
-const GROUP_MESSAGES_TIME_FRAME = 15; // minutes
+const GROUP_MESSAGES_TIME_FRAME = 1; // minutes
 
 const CurrentChat = ({
   toggleMobileChatList,
@@ -170,7 +170,7 @@ const CurrentChat = ({
               >
                 {isToday(message.createdAt)
                   ? getRelativeTime(message.createdAt)
-                  : moment(message.createdAt).format("MMM. DD")}
+                  : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
               </TimeStamp>
             )}
           </>
