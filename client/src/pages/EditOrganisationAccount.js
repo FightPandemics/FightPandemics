@@ -262,9 +262,6 @@ function EditOrganisationAccount({ refetchUser, history }) {
               </Controller>
             </CheckBoxWrapper>
           ))}
-          <span style={errorStyles}>
-            {errors.needs ? t("error.selectOneOption") : ""}
-          </span>
           { needsOtherCheckbox &&
             <InputWrapper>
               <FormInput
@@ -282,7 +279,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 })}
                 name="needs.othersDetail"
               />
-              <span style={errorStyles}>{errors.needs?.othersDetails?.message}</span>
+              <span style={errorStyles}>{errors.needs?.othersDetail?.message}</span>
             </InputWrapper>
           }
         </div>
@@ -312,9 +309,6 @@ function EditOrganisationAccount({ refetchUser, history }) {
               </Controller>
             </CheckBoxWrapper>
           ))}
-          <span style={errorStyles}>
-            {errors.offers ? t("error.selectOneOption") : ""}
-          </span>
           { offersOtherCheckbox &&
             <InputWrapper>
               <FormInput
@@ -332,7 +326,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 })}
                 name="offers.othersDetail"
               />
-              <span style={errorStyles}>{errors.offers?.othersDetails?.message}</span>
+              <span style={errorStyles}>{errors.offers?.othersDetail?.message}</span>
             </InputWrapper>
           }
         </div>
