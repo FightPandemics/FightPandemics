@@ -63,7 +63,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
         it('Offer Help Question Two Page - location can be typed and selected', () => {
             var locationInputLine = offerHelpQuestion.getLocationInputLine();
-            locationInputLine.should('be.visible').click();
+            locationInputLine.should('be.visible').click({ force: true });
             locationInputLine.type(LOCATION)
                 .and('have.attr', 'aria-expanded', 'true')
                 .and('have.attr', 'aria-activedescendant', 'OFS2_EAZ_list_0').click();
@@ -76,8 +76,8 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             offerHelpQuestion.getLocationInputInfo().contains(locationInputInfo);
         });
 
-        it('Offer Help Question Two Page - Share My Location Icon and Text is visible and clickable', () => {
-            var shareMyLocationText = "Share My Location";
+        it('Offer Help Question Two Page - Share my Location Icon and Text is visible and clickable', () => {
+            var shareMyLocationText = "Share my Location";
             var shareMyLocationIcon = offerHelpQuestion.getShareMyLocationIcon();
             shareMyLocationIcon.should('be.visible').click({ force: true });
             offerHelpQuestion.getShareMyLocationText().should('be.visible').contains(shareMyLocationText).click({ force: true });
