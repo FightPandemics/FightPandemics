@@ -1,6 +1,6 @@
 Cypress.Commands.add('checkFpLogoIsVisibleAndClickable', (fpLogoLocator) => {
     var fpLogo = cy.get(fpLogoLocator);
-    fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+    fpLogo.should('be.visible').and('have.attr', 'alt', 'FightPandemics logo').click();
 });
 
 Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading, pageImageLocator) => {

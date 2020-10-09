@@ -14,7 +14,7 @@ describe('FightPandemics Sign In Page', () => {
 
         it('FP logo is visible and clickable', () => {
             var fpLogo = signIn.getFpLogo();
-            fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+            cy.checkFpLogoIsVisibleAndClickable(signIn.getFpLogoLocator());
 
         });
 
