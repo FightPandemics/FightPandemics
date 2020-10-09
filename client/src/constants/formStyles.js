@@ -25,4 +25,5 @@ export const inlineLabelStyles = {
   ...labelStyles,
   color: theme.colors.darkerGray,
   lineHeight: "2rem",
+  cursor: "pointer"
 };

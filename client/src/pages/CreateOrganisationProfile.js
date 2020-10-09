@@ -348,7 +348,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Donations"
+                  name="needs.donations"
                   label={t("profile.org.donations")}
                   onChange={([event]) => event.target.checked}
                 />
@@ -356,7 +356,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Volunteers"
+                  name="needs.volunteers"
                   label={t("profile.org.volunteers")}
                   onChange={([event]) => event.target.checked}
                 />
@@ -364,7 +364,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Staff"
+                  name="needs.staff"
                   label={t("profile.org.staff")}
                   onChange={([event]) => event.target.checked}
                 />
@@ -388,7 +388,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Others"
+                  name="needs.other"
                   label={t("profile.org.other")}
                   onChange={([event]) => {
                     setNeedsOtherCheckbox(!needsOtherCheckbox);
@@ -413,7 +413,7 @@ const CreateOrgProfile = (props) => {
                       })}
                       name="needs.othersDetail"
                     />
-                    <span style={errorStyles}>{errors.needs?.othersDetails?.message}</span>
+                    <div style={errorStyles}>{errors.needs && errors.needs.othersDetail && errors.needs.othersDetail.message}</div>
                   </InputWrapper>
                 }
               </InputGroup>
@@ -500,7 +500,7 @@ const CreateOrgProfile = (props) => {
                       })}
                       name="offers.othersDetail"
                     />
-                    <span style={errorStyles}>{errors.offers?.othersDetails?.message}</span>
+                    <div style={errorStyles}>{errors.offers && errors.offers.othersDetail && errors.offers.othersDetail.message}</div>
                   </InputWrapper>
                 }
               </InputGroup>
