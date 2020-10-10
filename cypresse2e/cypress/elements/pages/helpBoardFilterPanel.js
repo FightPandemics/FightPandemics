@@ -4,21 +4,22 @@ class HelpBoardFilter {
     hbRequestHelp = '#HB_RE';
     hbOfferHelp = '#HB_OF';
     filterButton = '#HB_FI';
-    backButton = '';
-    expandWidget = '.arrow';
-    hbLocationHeading = '#HB_LO';
+    backButton = 'button > svg';
+    hbLocationHeading = '.filter-1 .am-accordion-header';
     hbLocationInput = '.ant-select-selection-item';
     // hbLocationDropdown = 'HB_LO_EAZ_list_0';
     hbLocationSubtext = 'small';
     hbShareLocation = '#HB_LO_SL';
-    hbProvidersHeading = '#HB_PV';
-    hbTypeHeading = '#HB_TP';
+    hbProvidersHeading = '.filter-2 .am-accordion-header';
+    hbProvidersTags = '.filter-2 a';
+    hbTypeHeading = '.filter-3 .am-accordion-header';
+    hbTypeTags = '.filter-3 a';
     hbProvidersAndType = '.am-accordion-content-box a';
     quitFiltersButton = '#HB_FI_QF';
     viewResultsButton = '#HB_FI_VR';
     cookieBanner = '#cookie-banner-close';
 
-    constructor() {}
+    constructor() { }
 
     visit() {
         cy.visit('feed');
@@ -36,23 +37,19 @@ class HelpBoardFilter {
         return cy.get(this.hbOfferHelp);
     }
 
-    getFilterButton () {
+    getFilterButton() {
         return cy.get(this.filterButton);
     }
 
-    getBackButton () {
+    getBackButton() {
         return cy.get(this.backButton);
     }
 
-    getExpandWidget () {
-        return cy.get(this.expandWidget);
-    }
-
-    getHbLocationHeading () {
+    getHbLocationHeading() {
         return cy.get(this.hbLocationHeading);
     }
 
-    getHbLocationInput () {
+    getHbLocationInput() {
         return cy.get(this.hbLocationInput);
     }
 
@@ -60,35 +57,43 @@ class HelpBoardFilter {
     //     return cy.get(this.hbLocationDropdown);
     // }
 
-    getHbLocationSubtext () {
+    getHbLocationSubtext() {
         return cy.get(this.hbLocationSubtext);
     }
 
-    getHbShareLocation () {
+    getHbShareLocation() {
         return cy.get(this.hbShareLocation);
     }
 
-    getHbProvidersHeading () {
+    getHbProvidersHeading() {
         return cy.get(this.hbProvidersHeading);
     }
 
-    getHbTypeHeading () {
+    getHbProvidersTags() {
+        return cy.get(this.hbProvidersTags);
+    }
+
+    getHbTypeHeading() {
         return cy.get(this.hbTypeHeading);
     }
 
-    getHbProvidersAndType () {
+    getHbTypeTags() {
+        return cy.get(this.hbTypeTags);
+    }
+
+    getHbProvidersAndType() {
         return cy.get(this.hbProvidersAndType);
     }
 
-    getQuitFiltersButton () {
+    getQuitFiltersButton() {
         return cy.get(this.quitFiltersButton);
     }
 
-    getViewResultsButton () {
+    getViewResultsButton() {
         return cy.get(this.viewResultsButton);
     }
 
-    getCookieBanner () {
+    getCookieBanner() {
         return cy.get(this.cookieBanner);
     }
 }
