@@ -83,17 +83,12 @@ const ErrorAlert = styled(Alert)`
   .ant-alert-message {
     color: ${WHITE};
   }
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin: auto;
     position: relative;
     width: 100%;
     right: 0rem;
   }
-`;
-
-const Container = styled.div`
-  margin-top: 5rem;
 `;
 
 const isSame = (formData, organisation) => {
@@ -388,15 +383,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
   const renderProfilePicture = () => {
     if (organisation) {
       return (
-        <ProfilePicWrapper>
-          <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
-            initials={getInitialsFromFullName(name)}
-          />
-          {/* hide this until backend API is available
-          <ChangePicButton>Change</ChangePicButton> */}
-        </ProfilePicWrapper>
+        <ProfilePic
+          resolution={"768rem"}
+          user={organisation}
+          initials={getInitialsFromFullName(name)}
+        />
       );
     }
   };
@@ -419,57 +410,52 @@ function EditOrganisationAccount({ refetchUser, history }) {
       ) : (
         ""
       )}
-      <Container>
-        <EditLayout>
-          <TitlePictureWrapper>
-            <CustomEditAccountHeader className="h4">
-              {t("profile.org.editOrgProfile")}
-            </CustomEditAccountHeader>
-            <ToggleHeading>
-              <CustomHeading level={4} className="h4">
+      <EditLayout>
+        <TitlePictureWrapper>
+          <CustomEditAccountHeader className="h4">
+            {t("profile.org.editOrgProfile")}
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.accountInfo")}
+            </CustomHeading>
+          </ToggleHeading>
+
+          <FillEmptySpace />
+
+          <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
+        </TitlePictureWrapper>
+
+        <FormLayout>
+          <OptionDiv>
+            <CustomLink isSelected>
+              <Link to={`/edit-organisation-account/${organisationId}`}>
                 {t("profile.common.accountInfo")}
-              </CustomHeading>
-            </ToggleHeading>
-
-            <FillEmptySpace />
-
-            <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
-          </TitlePictureWrapper>
-
-          <FormLayout>
-            <OptionDiv>
-              <CustomLink isSelected>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.common.accountInfo")}
-                </Link>
-              </CustomLink>
-              <CustomLink>
-                <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.common.profileInfo")}
-                </Link>
-              </CustomLink>
-            </OptionDiv>
-            <CustomForm>
-              {renderFormInputs()}
-              {renderAddressInput()}
-              {renderGlobalCheckBox()}
-              <WhiteSpace />
-              <WhiteSpace />
-              {renderSelectItems()}
-              <Label>{t("profile.org.seeking")}</Label>
-              <HelpWrapper>{renderNeedSection()}</HelpWrapper>
-              <CustomSubmitButton
-                primary="true"
-                onClick={handleSubmit(onSubmit)}
-              >
-                {loading
-                  ? t("profile.common.savingChanges")
-                  : t("profile.common.saveChanges")}
-              </CustomSubmitButton>
-            </CustomForm>
-          </FormLayout>
-        </EditLayout>
-      </Container>
+              </Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to={`/edit-organisation-profile/${organisationId}`}>
+                {t("profile.common.profileInfo")}
+              </Link>
+            </CustomLink>
+          </OptionDiv>
+          <CustomForm>
+            {renderFormInputs()}
+            {renderAddressInput()}
+            {renderGlobalCheckBox()}
+            <WhiteSpace />
+            <WhiteSpace />
+            {renderSelectItems()}
+            <Label>{t("profile.org.seeking")}</Label>
+            <HelpWrapper>{renderNeedSection()}</HelpWrapper>
+            <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+              {loading
+                ? t("profile.common.savingChanges")
+                : t("profile.common.saveChanges")}
+            </CustomSubmitButton>
+          </CustomForm>
+        </FormLayout>
+      </EditLayout>
     </Background>
   );
 }

@@ -56,7 +56,11 @@ const NestedComments = ({
 
   const renderAvatar = (
     <Avatar
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
+      src={
+        comment.author.photo
+          ? comment.author.photo
+          : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
+      }
       alt={`${comment.author.name}`}
     />
   );
@@ -255,8 +259,8 @@ const NestedComments = ({
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (
-          <Loader />
-        )}
+        <Loader />
+      )}
     </div>
   );
 };
