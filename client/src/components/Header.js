@@ -12,7 +12,6 @@ import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import globe from "assets/icons/globe.svg";
-import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
@@ -153,7 +152,7 @@ export default ({
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
+        <Menu.Item id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]} key={key}>
           <a
             style={
               i18n.language === key
@@ -233,14 +232,6 @@ export default ({
             {t("feed.title")}
           </NavLink>
         </li>
-        <li>
-          <Dropdown overlay={languageMenu} trigger={["click"]}>
-            <Link to="">
-              <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-              <DownOutlined />
-            </Link>
-          </Dropdown>
-        </li>
         {isAuthenticated ? (
           <>
             <li>
@@ -282,6 +273,9 @@ export default ({
             </button>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} className="globe-icon-svg"></SvgIcon>
+        </Dropdown>
       </>
     );
   };

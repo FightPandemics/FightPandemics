@@ -132,13 +132,14 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations } = dbUser;
+        const { firstName, lastName, organisations, photo } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
           organisations,
+          photo
         };
       }
       return { email, emailVerified, token, user };

@@ -67,7 +67,10 @@ const getUsersSchema = {
     .prop("objective", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
+};
 
+const createUserAvatarSchema = {
+  body: strictSchema().prop("file", S.required()),
 };
 
 const getUserByIdSchema = {
@@ -88,6 +91,7 @@ const updateUserSchema = {
 };
 
 module.exports = {
+  createUserAvatarSchema,
   createUserSchema,
   getUserByIdSchema,
   getUsersSchema,

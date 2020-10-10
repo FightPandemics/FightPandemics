@@ -1,8 +1,10 @@
 const Auth0 = require("../components/Auth0");
+const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken } = require("../utils");
 const {
   getUserByIdSchema,
   getUsersSchema,
+  createUserAvatarSchema,
   createUserSchema,
   updateUserSchema,
 } = require("./schema/users");
@@ -230,6 +232,7 @@ async function routes(app) {
       objectives,
       organisations,
       urls,
+      photo,
     } = user;
     return {
       about,
@@ -242,6 +245,7 @@ async function routes(app) {
       needs,
       objectives,
       organisations,
+      photo,
       urls,
     };
   });
@@ -327,6 +331,7 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
+        photo,
         urls,
       } = user;
 
@@ -349,8 +354,66 @@ async function routes(app) {
         organisations,
         objectives,
         ownUser: authUserId !== null && authUserId.equals(user.id),
+        photo,
         urls,
       };
+    },
+  );
+
+  app.post(
+    "/current/avatar",
+    { preValidation: [app.authenticate], schema: createUserAvatarSchema },
+    async (req) => {
+      const { file } = req.raw.files;
+      const { userId } = req;
+
+      const [err, user] = await app.to(User.findById(userId));
+      if (err) {
+        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+      try {
+        const avatarUrl = await uploadUserAvatar(userId, file);
+        user.photo = avatarUrl;
+        const [updateErr, updatedUser] = await app.to(user.save());
+        if (updateErr) {
+          req.log.error(updateErr, "Failed updating user");
+          throw app.httpErrors.internalServerError();
+        }
+
+        // -- Update Author photo references if needed
+        const updateOps = {
+          "author.photo": updatedUser.photo,
+        };
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author photo refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author photo refs at comments");
+        }
+
+        return {
+          updatedUser,
+        };
+      } catch (error) {
+        req.log.error(error, "Failed updating user avatar.");
+        throw app.httpErrors.internalServerError();
+      }
     },
   );
 
