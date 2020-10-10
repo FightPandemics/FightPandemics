@@ -6,14 +6,14 @@ export const InboxContainer = styled.div`
   min-width: 50em;
   max-width: 96em;
   min-height: 37em;
-  height: calc(100% - 12rem);
+  height: calc(100% - 7rem);
   position: absolute;
   background-color: white;
   display: flex;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
     min-width: 20em;
-    height: calc(100% - 6rem);
+    height: calc(100% - 5rem);
     position: fixed;
     bottom: 0;
   }

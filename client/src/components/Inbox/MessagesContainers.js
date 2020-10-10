@@ -34,14 +34,17 @@ export const MessagesContainer = styled.div`
   width: 100%;
   height: 80%;
   min-height: 40%;
-  padding: 0em 1em 1em 1em;
+  padding: 0em 1em;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  margin-bottom: 6em;
+  margin-bottom: 0em;
   white-space: pre-wrap;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 4rem;
+  }
   &.input-expanded {
-    margin-bottom: 9em;
+    margin-bottom: 8em;
   }
   a {
     text-decoration: underline;

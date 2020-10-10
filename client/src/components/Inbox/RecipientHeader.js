@@ -19,6 +19,12 @@ const RecipientName = styled.div`
   flex-wrap: wrap;
   align-items: center;
   padding-left: 1em;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+  }
   .back-arrow {
     display: none;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -34,7 +40,7 @@ const RecipientName = styled.div`
     line-height: 3.2rem;
     font-size: 0.929em;
   }
-  .status-indicator{
+  .status-indicator {
     position: absolute;
     left: 2.1rem;
     margin-top: -1.1rem;
@@ -86,17 +92,21 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
             </TextAvatar>
             <span className={`status-indicator ${status}`}></span>
           </Badge>
-          <h4>{participant.name}
-          <LastSeen>
-            {status == "online" ? "Active Now" :
-            <>
-            Last seen:{" "}
-            {participant.lastAccess
-              ? getRelativeTime(participant.lastAccess)
-              : "never"}
-            </>
-            }
-          </LastSeen></h4>
+          <h4>
+            {participant.name}
+            <LastSeen>
+              {status == "online" ? (
+                "Active Now"
+              ) : (
+                <>
+                  Last seen:{" "}
+                  {participant.lastAccess
+                    ? getRelativeTime(participant.lastAccess)
+                    : "never"}
+                </>
+              )}
+            </LastSeen>
+          </h4>
         </RecipientName>
       )}
     </>
