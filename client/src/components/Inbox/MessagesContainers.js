@@ -39,6 +39,10 @@ export const MessagesContainer = styled.div`
   flex-direction: column;
   overflow: auto;
   margin-bottom: 6em;
+  white-space: pre-wrap;
+  &.input-expanded {
+    margin-bottom: 9em;
+  }
   a {
     text-decoration: underline;
     &:hover {

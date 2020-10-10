@@ -23,6 +23,8 @@ const CurrentChat = ({
     setIsLoading,
     editingMessageId,
     setEditingMessageId,
+    inputExpanded,
+    setInputExpanded,
   } = useContext(ChatContext);
 
   const getReceiver = (participants) => {
@@ -64,8 +66,16 @@ const CurrentChat = ({
         editingMessageId={editingMessageId}
         setEditingMessageId={setEditingMessageId}
         isLoading={isLoading}
+        inputExpanded={inputExpanded}
       />
-      {room && <InputBox threadId={room._id} sendMessage={sendMessage} />}
+      {room && (
+        <InputBox
+          threadId={room._id}
+          sendMessage={sendMessage}
+          inputExpanded={inputExpanded}
+          setInputExpanded={setInputExpanded}
+        />
+      )}
     </CurrentChatContainer>
   );
 };

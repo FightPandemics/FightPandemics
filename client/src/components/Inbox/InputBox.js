@@ -3,13 +3,14 @@ import styled from "styled-components";
 import sendcomment from "assets/icons/send-paper.svg";
 import { theme, mq } from "constants/theme";
 
-const MessageInput = styled.input`
+const MessageInput = styled.textarea`
   min-width: 3em;
   width: 97%;
   height: 3.429em;
   border-radius: 8px;
   border: solid 1px #d7d7d7;
   padding: 1em 5rem 1em 1em;
+  resize: none;
   ::placeholder {
     opacity: 0.7;
     letter-spacing: 0.8px;
@@ -26,12 +27,19 @@ const InputContainer = styled.div`
   width: 100%;
   position: absolute;
   bottom: 1em;
+  &.expanded {
+    height: 6.858em;
+    textarea {
+      height: 6.858em;
+    }
+  }
   a {
     opacity: ${(props) => (props.text ? "1" : "0.4")};
     img {
       position: absolute;
-      right: 1.3em;
-      top: 25%;
+      right: 2em;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         right: 1.5em;
@@ -40,7 +48,12 @@ const InputContainer = styled.div`
   }
 `;
 
-export const InputBox = ({ threadId, sendMessage }) => {
+export const InputBox = ({
+  threadId,
+  sendMessage,
+  inputExpanded,
+  setInputExpanded,
+}) => {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
 
@@ -51,6 +64,14 @@ export const InputBox = ({ threadId, sendMessage }) => {
   const handleChange = async (e) => {
     await setText(e.target.value);
   };
+
+  useEffect(() => {
+    if (inputExpanded && text) return;
+    if (inputRef.current.clientHeight < inputRef.current.scrollHeight)
+      return setInputExpanded(true);
+    if ((text.match(/\n/g) || []).length) setInputExpanded(true);
+    else setInputExpanded(false);
+  }, [inputExpanded, setInputExpanded, text]);
 
   const handleSendMgessage = async () => {
     let confirmation = await sendMessage({
@@ -68,12 +89,16 @@ export const InputBox = ({ threadId, sendMessage }) => {
     handleSendMgessage();
   };
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && text.length > 0) {
+    if (e.key === "Enter" && !e.shiftKey) e.preventDefault();
+    if (e.key === "Enter" && !e.shiftKey && text.length > 0) {
       handleSendMgessage();
     }
   };
   return (
-    <InputContainer text={text}>
+    <InputContainer
+      className={`${inputExpanded ? "expanded" : ""}`}
+      text={text}
+    >
       <MessageInput
         type="text"
         onChange={handleChange}

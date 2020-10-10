@@ -26,6 +26,7 @@ const Messages = ({
   editingMessageId,
   setEditingMessageId,
   isLoading,
+  inputExpanded,
 }) => {
   const messagesEndRef = useRef(null);
   const editTextArea = useRef();
@@ -187,7 +188,7 @@ const Messages = ({
   }, [room, chatLog.length, isLoading]);
 
   return (
-    <MessagesContainer>
+    <MessagesContainer className={`${inputExpanded ? "input-expanded" : ""}`}>
       {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
         <button onClick={onLoadMoreClick} className={"load-more-btn"}>
           load more
