@@ -270,7 +270,15 @@ const StyledDrawer = styled(Drawer)`
 
 const NavigationLayout = (props) => {
   const { t } = useTranslation();
-  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user, ws } = props;
+  const {
+    authLoading,
+    hideFooter,
+    mobiletabs,
+    tabIndex,
+    isAuthenticated,
+    user,
+    ws,
+  } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -577,11 +585,17 @@ const NavigationLayout = (props) => {
       </NavItem>
       <NavItem>
         <Link to={"/inbox"}>
-          Inbox {" "}
-          <Badge count={ws.rooms.map((_room) =>
-                          _room.participants.find((p) => p.id == user.id.toString())?.newMessages
-                          ? 1:0 // remove "? 1:0" to show total messages
-                          || 0).reduce((a, b) => a + b, 0)}
+          Inbox{" "}
+          <Badge
+            count={ws.rooms
+              .map((_room) =>
+                _room.participants.find((p) => p.id == user.id.toString())
+                  ?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0,
+              )
+              .reduce((a, b) => a + b, 0)}
           />
         </Link>
       </NavItem>
@@ -739,7 +753,7 @@ const NavigationLayout = (props) => {
             {renderRadioModal()}
             {renderThanksModal()}
           </Main>
-          <Footnote />
+          {!hideFooter && <Footnote />}
           <CookieAlert />
         </StyledDrawer>
       </div>

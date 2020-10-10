@@ -170,8 +170,11 @@ function wsReducer(state = initialState, action) {
       var index = state.rooms.findIndex((r) =>
         r.participants.find((p) => p.id == action.payload.id),
       );
-      if (index != -1) state.rooms[index].userStatus = action.payload.status;
-      else return state;
+      if (index != -1) {
+        state.rooms[index].userStatus = action.payload.status;
+        if (state.room && state.room._id == state.rooms[index]._id)
+          state.room.userStatus = action.payload.status;
+      } else return state;
       return {
         ...state,
       };

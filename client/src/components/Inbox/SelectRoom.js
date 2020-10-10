@@ -48,10 +48,9 @@ const EmptyInboxContainer = styled.div`
   }
   p {
     line-height: 1;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      width: 80vw;
-      text-align: center;
-    }
+  }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none;
   }
 `;
 

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { InboxContainer } from "../components/Inbox/Container";
 import { ChatList } from "../components/Inbox/ChatList";
 import CurrentChat from "../components/Inbox/CurrentChat";
@@ -9,7 +10,7 @@ import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
 
 const Inbox = (props) => {
-  const { empty, toggleMobileChatList, setToggleMobileChatList } = useContext(
+  const { toggleMobileChatList, setToggleMobileChatList } = useContext(
     ChatContext,
   );
   const {
@@ -25,20 +26,48 @@ const Inbox = (props) => {
   } = useContext(WebSocketContext);
   const { isIdentified, user } = props;
   const { room, rooms, chatLog } = props.ws;
+  const dispatch = useDispatch();
+
+  const getReceiver = (participants) => {
+    return participants.filter((p) => p.id != user.id)[0];
+  };
 
   useEffect(() => {
     if (isIdentified) getUserRooms();
   }, [getUserRooms, isIdentified]);
 
+  useEffect(() => {
+    if (room)
+      getChatLog({
+        threadId: room._id,
+      });
+  }, [getChatLog, room]);
+
+  useEffect(() => {
+    rooms.forEach(async (_room) => {
+      if (_room.userStatus)
+        return dispatch({
+          type: "USER_STATUS_UPDATE",
+          payload: {
+            id: getReceiver(_room.participants).id,
+            status: _room.userStatus,
+          },
+        });
+      let status = await getUserStatus(getReceiver(_room.participants).id);
+      dispatch({
+        type: "USER_STATUS_UPDATE",
+        payload: { id: getReceiver(_room.participants).id, status: status },
+      });
+    });
+  }, [dispatch, getReceiver, getUserStatus, rooms]);
+
   return (
     <InboxContainer>
       <ChatList
-        empty={empty}
         rooms={rooms}
         room={room}
         user={user}
         joinRoom={joinRoom}
-        getUserStatus={getUserStatus}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
       />

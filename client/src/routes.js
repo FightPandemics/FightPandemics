@@ -217,9 +217,10 @@ const routes = [
   {
     path: "/inbox",
     component: Inbox,
-    // props: {
-    //   loggedInOnly: true,
-    // },
+    props: {
+      loggedInOnly: true,
+      hideFooter: true,
+    },
   },
   {
     path: "*",

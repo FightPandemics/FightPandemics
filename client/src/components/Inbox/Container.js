@@ -13,6 +13,9 @@ export const InboxContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
     min-width: 20em;
+    height: calc(100% - 6rem);
+    position: fixed;
+    bottom: 0;
   }
 `;
 export const ChatHeader = styled.div`
@@ -76,7 +79,8 @@ export const SideChatContainer = styled.div`
   :hover {
     background: #f3f4fe;
   }
-  :focus, &.selected {
+  :focus,
+  &.selected {
     border-left: 3px solid #425af2;
     background: #f3f4fe;
   }
@@ -89,7 +93,7 @@ export const SideChatContainer = styled.div`
       height: 100%;
     }
   }
-  .status-indicator{
+  .status-indicator {
     position: absolute;
     left: 2.3rem;
     margin-top: -1.2rem;

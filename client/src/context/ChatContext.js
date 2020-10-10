@@ -2,15 +2,16 @@ import React, { useState } from "react";
 const ChatContext = React.createContext();
 
 const ChatContextProvider = (props) => {
-  const [chat, setChat] = useState([]);
-  const [empty, setEmpty] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [toggleMobileChatList, setToggleMobileChatList] = useState(true);
+  const [editingMessageId, setEditingMessageId] = useState(null);
   return (
     <ChatContext.Provider
       value={{
-        chat,
-        setChat,
-        empty,
+        isLoading,
+        setIsLoading,
+        editingMessageId,
+        setEditingMessageId,
         toggleMobileChatList,
         setToggleMobileChatList,
       }}
