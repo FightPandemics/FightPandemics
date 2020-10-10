@@ -32,6 +32,8 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "components/Picture/UploadPic";
+
 import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
@@ -55,6 +57,9 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -156,6 +161,7 @@ const OrganisationProfile = () => {
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -163,6 +169,7 @@ const OrganisationProfile = () => {
     });
     return ref.current;
   }
+
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
@@ -455,10 +462,20 @@ const OrganisationProfile = () => {
                 onClick={onToggleDrawer}
               />
             )}
-            <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
+            <div>
+              <AvatarPhotoContainer>
+                <ProfilePic
+                  user={organisation}
+                  initials={getInitialsFromFullName(name)}
+                />
+                <PhotoUploadButton>
+                  {isOwner && <UploadPic user={organisation} />}
+                </PhotoUploadButton>
+              </AvatarPhotoContainer>
+            </div>
             <UserInfoDesktop>
               <NameDiv>
-                {name}
+                <NamePara>{name}</NamePara>
                 <PlaceholderIcon />
                 {isOwner && (
                   <EditEmptyIcon

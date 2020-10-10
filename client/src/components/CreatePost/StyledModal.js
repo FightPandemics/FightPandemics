@@ -58,7 +58,7 @@ export const Section = styled.section`
     .visibility-post--selector {
       display: flex;
       justify-content: flex-start;
-      align-items: cener;
+      align-items: center;
     }
   }
 `;

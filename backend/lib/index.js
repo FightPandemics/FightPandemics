@@ -3,6 +3,7 @@
 const Ajv = require("ajv");
 const cors = require("cors");
 const fastify = require("fastify");
+const fileUpload = require("fastify-file-upload");
 const logStream = require("./logger");
 
 const auth = require("./endpoints/auth");
@@ -17,10 +18,13 @@ const version = require("./endpoints/version");
 module.exports = function createApp(config) {
   const logger = {
     level: config.logger.level,
-    prettyPrint: config.env === "dev" ? {
-      colorize: true,
-      translateTime: "SYS:standard", 
-    } : false,
+    prettyPrint:
+      config.env === "dev"
+        ? {
+            colorize: true,
+            translateTime: "SYS:standard",
+          }
+        : false,
   };
   if (config.logger.host) {
     logger.stream = logStream(config.logger);
@@ -38,6 +42,7 @@ module.exports = function createApp(config) {
   });
 
   app.register(require("./plugins/error-handler"), config.errorNotifier);
+  app.register(fileUpload);
   app.register(
     require("fastify-sensible"),
     { errorHandler: false }, // Set errorHandler to false so we can use our custom error handler above.

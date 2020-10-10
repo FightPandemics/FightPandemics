@@ -16,6 +16,9 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "../components/Picture/UploadPic";
+import { NoPosts } from "pages/Feed";
+
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -39,6 +42,9 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -144,6 +150,7 @@ const Profile = ({
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -386,13 +393,23 @@ const Profile = ({
             onClick={onToggleDrawer}
           />
         )}
-        <ProfilePic
-          noPic={true}
-          initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
-        />
+        <div>
+          <AvatarPhotoContainer>
+            <ProfilePic
+              user={user}
+              initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
+            />
+            <PhotoUploadButton>
+              {ownUser && <UploadPic user={user} />}
+            </PhotoUploadButton>
+          </AvatarPhotoContainer>
+        </div>
         <UserInfoDesktop>
           <NameDiv>
-            {firstName} {lastName}
+            <NamePara>
+              {firstName} {lastName}
+            </NamePara>
+
             <PlaceholderIcon />
             {ownUser && (
               <EditEmptyIcon

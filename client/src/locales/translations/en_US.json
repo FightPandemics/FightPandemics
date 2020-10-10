@@ -641,6 +641,11 @@
     "envelope": "envelope",
     "avatar": "avatar"
   },
+  "avatar": {
+    "submitBtn": "Submit",
+    "cancelBtn": "Cancel",
+    "tryAgainBtn": "Try Again"
+  },
   "error": {
     "title": "Please include a title for your post.",
     "description": "Please include a description for your post.",
@@ -718,6 +723,13 @@
       "Loop Detected": "Loop Detected",
       "Not Extended": "Not Extended",
       "Network Authentication Required": "Network Authentication Required"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
+      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
+      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
+      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
+      "networkError": "Sorry, some network error occurred."
     }
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",

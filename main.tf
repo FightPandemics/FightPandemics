@@ -83,6 +83,10 @@ data "aws_ssm_parameter" "redis_host" {
   name  = "/fp/redis/host"
 }
 
+data "aws_ssm_parameter" "cdn_base_url" {
+  name = "/fp/cdn/base_url"
+}
+
 locals {
   app_domain = {
     review      = "fightpandemics.xyz"
@@ -155,23 +159,23 @@ module "main" {
       value = var.env_name
     },
     {
-      name  = "SENTRY_DSN",
+      name  = "SENTRY_DSN"
       value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sentry_dsn[0].value
     },
     {
-      name  = "COMMIT_HASH",
+      name  = "COMMIT_HASH"
       value = var.commit_hash
     },
     {
-      name  = "LOGGER_LEVEL",
+      name  = "LOGGER_LEVEL"
       value = "warn"
     },
     {
-      name  = "LOGGER_HOST",
+      name  = "LOGGER_HOST"
       value = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_host[0].value
     },
     {
-      name  = "LOGGER_PORT",
+      name  = "LOGGER_PORT"
       value = var.fp_context == "development" ? "1234" : data.aws_ssm_parameter.logger_port[0].value
     },
     {
@@ -181,6 +185,17 @@ module "main" {
     {
       name  = "REDIS_PORT"
       value = "6379"
+    },
+      name  = "S3_CDN_BUCKET"
+      value = "fp-${var.fp_context}-cdn"
+    },
+    {
+      name  = "CDN_BASE_URL"
+      value = data.aws_ssm_parameter.cdn_base_url.value
+    },
+    {
+      name  = "AWS_REGION"
+      value = var.aws_region
     }
   ]
   client_env_variables = [
@@ -191,15 +206,15 @@ module "main" {
   ]
   datadog_env_variables = [
     {
-      name  = "DD_API_KEY",
+      name  = "DD_API_KEY"
       value = var.fp_context == "production" ? data.aws_ssm_parameter.datadog_api_key[0].value : ""
     },
     {
-      name  = "DD_SITE",
+      name  = "DD_SITE"
       value = "datadoghq.eu"
     },
     {
-      name  = "ECS_FARGATE",
+      name  = "ECS_FARGATE"
       value = "true"
     }
   ]
