@@ -19,7 +19,7 @@ export const AboutUsContainer = styled.div`
     padding: 0 3rem;
   }
   h1 {
-    font-size: ${one};
+    font-size: 3.8rem;
     text-align: center;
     font-family: ${display};
     font-weight: bold;
@@ -31,16 +31,22 @@ export const AboutUsContainer = styled.div`
   }
   h2 {
     font-family: ${display};
-    font-size: 3.8rem;
+    font-size: 3.2rem;
     font-weight: bold;
     line-height: 1.23;
     margin-top: 3.125rem;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 2.2rem;
+    }
   }
   h3 {
     font-family: ${display};
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 600;
     line-height: 1.17;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 2rem;
+    }
   }
   h4 {
     font-family: ${display};
@@ -98,22 +104,18 @@ export const HeadingContainer = styled.div`
   height: 20rem;
 
   h2 {
-    font-size: 3.8rem;
     line-height: 1.23;
     margin-top: 4.9rem;
     margin-bottom: 1rem;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: 2.2rem;
       line-height: normal;
     }
   }
   p {
-    font-size: 2.2rem;
     line-height: 1.36;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      font-size: 1.7rem;
       line-height: 1.76;
       letter-spacing: -0.077rem;
       margin: 0;
@@ -137,7 +139,6 @@ export const HowDoesThisWorkContainer = styled.div`
     }
   }
   h3 {
-    font-size: 2.4rem;
     font-weight: 600;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -295,12 +296,10 @@ export const MobileContentContainer = styled.div`
     margin-bottom: 6rem;
 
     h2 {
-      font-size: 2.2rem;
       margin-bottom: 1.8rem;
     }
 
     p {
-      font-size: 1.8rem;
       line-height: 2.3rem;
       letter-spacing: 0.063rem;
     }
@@ -321,7 +320,6 @@ export const SupporterContainer = styled.div`
   h3 {
     padding-top: 3.75rem;
     margin-bottom: 3.75rem;
-    font-size: 2.4rem;
     font-weight: 600;
     line-height: 1.17;
   }
@@ -364,8 +362,6 @@ export const SocialStyle = styled.div`
   }
 
   h3 {
-    width: 30rem;
-    font-size: 2.2rem;
     font-weight: 500;
     font-style: italic;
     line-height: 1.21;

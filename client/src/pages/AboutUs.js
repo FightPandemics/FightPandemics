@@ -302,7 +302,7 @@ const AboutUs = () => {
       </SupporterContainer>
 
       <SocialStyle>
-        <FlexBox direction="column">
+        <FlexBox direction="column" align="center">
           <h3>{t("followUs")}</h3>
           <SocialContainer>
             <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
