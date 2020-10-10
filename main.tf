@@ -186,6 +186,7 @@ module "main" {
       name  = "REDIS_PORT"
       value = "6379"
     },
+    {
       name  = "S3_CDN_BUCKET"
       value = "fp-${var.fp_context}-cdn"
     },
