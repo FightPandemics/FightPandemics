@@ -59,7 +59,7 @@ const Inbox = (props) => {
         payload: { id: getReceiver(_room.participants).id, status: status },
       });
     });
-  }, [dispatch, getReceiver, getUserStatus, rooms]);
+  }, [rooms]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <InboxContainer>
