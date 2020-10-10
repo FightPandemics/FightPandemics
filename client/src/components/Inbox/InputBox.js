@@ -58,7 +58,8 @@ export const InputBox = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (window.screen.width >= parseInt(mq.phone.wide.maxWidth))
+      inputRef.current.focus();
   }, []);
 
   const handleChange = async (e) => {
