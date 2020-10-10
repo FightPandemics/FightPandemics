@@ -323,7 +323,7 @@
     "password": "Hasło",
     "enterPassword": "Podaj hasło",
     "confirmPassword": "Potwierdź hasło",
-    "forgotPassword": "Nie pamiętasz hasła",
+    "forgotPassword": "Nie pamiętasz hasła?",
     "noAccount": "Nie posiadasz konta?",
     "haveAccount": "Posiadasz już konto?",
     "recoverLink": "Wyślij mi e-mail z linkiem do odzyskiwania konta",
@@ -591,7 +591,7 @@
     "thankYouMessage": "Twój wkład wiele znaczy i pomaga nam udoskonalić nasze usługi zarówno podczas, jak i po pandemii COVID-19.",
     "submitFeedback": "Prześlij opinię",
     "radio": {
-      "age": "Twój wiek to",
+      "age": "Twój wiek to?",
       "unaffected": "Normalnie chodzę do pracy/szkoły",
       "quarantine": "Jestem zdrowy, ale na kwarantannie domowej",
       "symptomaticUntested": "Mam łagodne objawy, ale nie byłam badana",
