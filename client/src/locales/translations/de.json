@@ -323,7 +323,7 @@
     "password": "Passwort",
     "enterPassword": "Passwort eingeben",
     "confirmPassword": "Passwort bestätigen",
-    "forgotPassword": "Passwort vergessen",
+    "forgotPassword": "Passwort vergessen?",
     "noAccount": "Du hast noch keinen Account?",
     "haveAccount": "Du hast bereits ein Konto?",
     "recoverLink": "Link zum Wiederherstellen per E-Mail senden",

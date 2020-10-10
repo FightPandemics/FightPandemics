@@ -323,7 +323,7 @@
     "password": "密碼",
     "enterPassword": "輸入密碼",
     "confirmPassword": "確認密碼",
-    "forgotPassword": "忘記密碼",
+    "forgotPassword": "忘記密碼?",
     "noAccount": "還沒有帳號？",
     "haveAccount": "已經有帳號了？",
     "recoverLink": "給我發電子郵件恢復鏈接",
@@ -591,7 +591,7 @@
     "thankYouMessage": "您的意見很重要，可以幫助我們在COVID-19大流行期間和之後改善我們的服務。",
     "submitFeedback": "提交反饋",
     "radio": {
-      "age": "您幾歲",
+      "age": "您幾歲?",
       "unaffected": "我正常上班/上學",
       "quarantine": "我很健康，但在家中隔離",
       "symptomaticUntested": "我有輕度症狀，但未經檢查",
