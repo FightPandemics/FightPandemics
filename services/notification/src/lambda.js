@@ -1,15 +1,13 @@
-// TODO remove/replace with actual code
-const tempFunction = async (event, context) => {
-  /* eslint-disable no-console */
-  console.log(event);
-  /* eslint-disable no-console */
-  console.log(context);
-};
+const { config } = require("./config");
+const { NotificationService } = require("./service");
 
 exports.handler = async (event, context) => {
   try {
-    // TODO replace this with actual function to call
-    await tempFunction(event, context);
+    // TODO if processing daily, weekly, bi-weekly digests, may need multiple cron jobs. Probably should pass in
+    // frequency into the event payload
+    // const event = event.frequency;
+    // const service = new NotificationService(config);
+    // await service.process(frequency);
     return {
       body: JSON.stringify("Hello world!"),
       statusCode: 200,
