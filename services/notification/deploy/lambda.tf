@@ -17,10 +17,10 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
-      NODE_ENV              = var.fp_context
-      AWS_REGION            = data.aws_ssm_parameter.aws_ses_region.value
-      AWS_ACCESS_KEY_ID     = data.aws_ssm_parameter.aws_ses_access_key_id.value
-      AWS_SECRET_ACCESS_KEY = data.aws_ssm_parameter.aws_ses_secret_access_key.value
+      NODE_ENV                  = var.fp_context
+      SES_AWS_REGION            = data.aws_ssm_parameter.aws_ses_region.value
+      SES_AWS_ACCESS_KEY_ID     = data.aws_ssm_parameter.aws_ses_access_key_id.value
+      SES_AWS_SECRET_ACCESS_KEY = data.aws_ssm_parameter.aws_ses_secret_access_key.value
     }
   }
 }
