@@ -58,20 +58,20 @@ describe('FightPandemics Help Board Filters', () => {
 
         it('Type in location field and see a list of available locations', () => {
             var locationField = helpBoardFilter.getHbLocationInput();
-            locationField.should('be.visible').click();
-            locationField.type(LOCATION)
-            // .and('have.attr', 'aria-activedescendant', 'HB_LO_EAZ_list_0');
+            locationField.should('be.visible').click({force:true});
+            locationField.type(LOCATION);
+            helpBoardFilter.getHbLocationDropdown().should('be.visible');
+            locationField.click({force:true});
         });
 
         it('Location subtext is visible', () => {
             helpBoardFilter.getHbLocationSubtext()
-                .should('be.visible')
-                .contains('Enter address, zip code, or city');
+                .should('be.visible').contains('Enter address, zip code, or city');
         });
 
         it('Share location link is visible and clickable', () => {
             var shareLocation = helpBoardFilter.getHbShareLocation();
-            shareLocation.should('be.visible').contains('Share my Location');
+            shareLocation.should('be.visible').contains('Share My Location');
             shareLocation.click({ force: true });
         });
 

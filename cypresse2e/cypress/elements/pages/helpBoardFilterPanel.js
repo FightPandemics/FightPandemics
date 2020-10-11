@@ -7,14 +7,13 @@ class HelpBoardFilter {
     backButton = 'button > svg';
     hbLocationHeading = '.filter-1 .am-accordion-header';
     hbLocationInput = '.ant-select-selection-item';
-    // hbLocationDropdown = 'HB_LO_EAZ_list_0';
+    hbLocationDropdown = '.ant-select-dropdown';
     hbLocationSubtext = 'small';
     hbShareLocation = '#HB_LO_SL';
     hbProvidersHeading = '.filter-2 .am-accordion-header';
     hbProvidersTags = '.filter-2 a';
     hbTypeHeading = '.filter-3 .am-accordion-header';
     hbTypeTags = '.filter-3 a';
-    hbProvidersAndType = '.am-accordion-content-box a';
     quitFiltersButton = '#HB_FI_QF';
     viewResultsButton = '#HB_FI_VR';
     cookieBanner = '#cookie-banner-close';
@@ -53,9 +52,9 @@ class HelpBoardFilter {
         return cy.get(this.hbLocationInput);
     }
 
-    // hetHbLocationDropdown () {
-    //     return cy.get(this.hbLocationDropdown);
-    // }
+    getHbLocationDropdown () {
+        return cy.get(this.hbLocationDropdown);
+    }
 
     getHbLocationSubtext() {
         return cy.get(this.hbLocationSubtext);
@@ -79,10 +78,6 @@ class HelpBoardFilter {
 
     getHbTypeTags() {
         return cy.get(this.hbTypeTags);
-    }
-
-    getHbProvidersAndType() {
-        return cy.get(this.hbProvidersAndType);
     }
 
     getQuitFiltersButton() {
