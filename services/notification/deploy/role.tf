@@ -69,10 +69,9 @@ resource "aws_iam_role_policy_attachment" "policy_attachment" {
   policy_arn = aws_iam_policy.policy.arn
 }
 
-# TODO no† sure if necessary; remove if it isn't
-resource "aws_iam_role" "api_gateway_role" {
-  name        = "notification-service-api-gateway-role"
-  description = "Role for API Gateway to invoke notification-service Lambda"
+resource "aws_iam_role" "events_role" {
+  name        = "notification-service-events-role"
+  description = "Role for Cloudwatch Events to invoke notification-service Lambda"
 
   assume_role_policy = <<EOF
 {
@@ -81,7 +80,7 @@ resource "aws_iam_role" "api_gateway_role" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": ["apigateway.amazonaws.com"]
+        "Service": ["events.amazonaws.com"]
       },
       "Effect": "Allow",
       "Sid": ""
@@ -111,6 +110,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "api_gateway_lambda_invoke_policy_attachment" {
-  role       = aws_iam_role.api_gateway_role.name
+  role       = aws_iam_role.events_role.name
   policy_arn = aws_iam_policy.lambda_invoke_policy.arn
 }
