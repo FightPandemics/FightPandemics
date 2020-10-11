@@ -183,7 +183,7 @@
     "share": "Share",
     "delete": "Delete",
     "cancel": "Cancel",
-    "confirm": "Confirm\n"
+    "confirm": "Confirm"
   },
   "profile": {
     "common": {
@@ -247,8 +247,8 @@
       "website": "Personal Website",
       "myActivity": "My Activity",
       "userActivity": "User Activity",
-      "wantHelp": "I want to help ",
-      "needHelp": "I need help ",
+      "wantHelp": "I want to help",
+      "needHelp": "I need help",
       "firstNameRequired": "First name is required.",
       "lastNameRequired": "Last name is required."
     },
@@ -681,7 +681,7 @@
     "failedPasswordRecovery": "Password recovery failed, reason:",
     "http": {
       "Bad Request": "Bad Request",
-      "Unauthorized": "Not found",
+      "Unauthorized": "Unauthorized",
       "Payment Required": "Payment Required",
       "Forbidden": "Forbidden",
       "Not Found": "Not Found",

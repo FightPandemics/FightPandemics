@@ -722,11 +722,11 @@
       "Network Authentication Required": "Wymagane uwierzytelnienie sieciowe"
     },
     "avatar": {
-      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
-      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
-      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
-      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
-      "networkError": "Sorry, some network error occurred."
+      "fileTypeNotSupported": "Przepraszamy, obsługujemy tylko pliki graficzne typu jp(e)g oraz png.",
+      "fileSizeTooLarge": "Prześlij obraz o rozmiarze mniejszym niż 5 MB.",
+      "imageDimensionTooSmall": "Prześlij obraz, który ma co najmniej 250 pikseli wysokości i 250 pikseli szerokości.",
+      "imageDimensionTooWide": "Przepraszamy, obraz jest zbyt szeroki. Spróbuj ponownie z obrazem, którego szerokość jest mniejsza niż dwukrotna wysokość.",
+      "networkError": "Przepraszamy, wystąpił błąd sieci."
     }
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
@@ -773,6 +773,6 @@
   "avatar": {
     "submitBtn": "Prześlij",
     "cancelBtn": "Anuluj",
-    "tryAgainBtn": "Try Again"
+    "tryAgainBtn": "Spróbuj ponownie"
   }
 }
