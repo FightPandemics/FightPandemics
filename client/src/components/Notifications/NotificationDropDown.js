@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Badge } from "antd";
 import TextAvatar from "../TextAvatar/index";
 import commentpost from "assets/icons/notification-icons/comment-post.svg";
 import cmntflwpost from "../../assets/icons/notification-icons/comment-following-post.svg";
@@ -262,16 +262,15 @@ const menu = (
     </div>
   </StyledMenu>
 );
-
-export const StyledImg = styled.img`
+const StyledBadge = styled(Badge)`
   position: absolute;
   cursor: pointer;
-  right: 3.2em;
-  top: 1.2em;
+  right: 3.5em;
+  top: 1.4em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: absolute;
-    right: 5em;
-    top: 0.6em;
+    right: 4em;
+    top: 1.1em;
   }
 `;
 export const StyledNum = styled.div`
@@ -307,14 +306,15 @@ export const NotificationDropDown = (props) => {
   };
   return (
     <>
-      <StyledNum>8</StyledNum>
       <Dropdown
         overlay={menu}
         trigger="click"
         onClick={(e) => Visible(e)}
         placement="bottomRight"
       >
-        <StyledImg src={bell} />
+        <StyledBadge count={8}>
+          <img src={bell} />
+        </StyledBadge>
       </Dropdown>
     </>
   );

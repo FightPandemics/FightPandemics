@@ -309,6 +309,7 @@ export default ({
             className="globe-icon-svg"
           ></SvgIcon>
         </Dropdown>
+        <li>{/* here goes notifications icon with absolute positioning */}</li>
       </>
     );
   };
