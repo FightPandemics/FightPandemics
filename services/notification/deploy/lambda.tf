@@ -8,7 +8,7 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = filebase64sha256("build.zip")
 
   runtime = "nodejs12.x"
-  timeout = 300
+  timeout = 900
 
   vpc_config {
     subnet_ids = data.aws_subnet_ids.private.ids
