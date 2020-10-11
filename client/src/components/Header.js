@@ -188,7 +188,6 @@ const Header = ({
                 onClick={() => setOrganisationIndex(i)}
               >
                 {organisation.name}
-                  {organisation.name}
               </Menu.Item>
             ))
           : null}
