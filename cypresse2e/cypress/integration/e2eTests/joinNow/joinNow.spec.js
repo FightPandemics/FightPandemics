@@ -92,7 +92,7 @@ describe('FightPandemics Sign Up Page', () => {
       passwordField.type('testtest');
       var passwordCharacterRequired = joinNow.getPasswordCharacterRequired();
       passwordCharacterRequired.should('be.visible');
-      passwordCharacterRequired.contains('small', 'Password must contain at least 3 of these: lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
+      passwordCharacterRequired.contains('small', 'Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
 
     });
 

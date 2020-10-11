@@ -4,7 +4,7 @@ describe('FightPandemics Home screen', () => {
 
   var h1HeadingText = "A place to offer and request help";
   var subHeading1Text = "Pandemics will continue to happen.";
-  var subHeading2Text = "We help communities prepare and respond";
+  var subHeading2Text = "We help communities prepare and respond.";
   var requestHelpButtonText = 'Request Help'
   var offerHelpButtonText = 'Offer Help'
 

@@ -23,7 +23,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
         it('Offer Help Question One page contains answer options & checkboxes to select option/options for question one', () => {
             var checkboxOptionOne = "As a Volunteer";
             var checkboxOptionTwo = "As a Donor/Investor"
-            var checkboxOptionThree = "As an Organisation"
+            var checkboxOptionThree = "As an Organization"
             offerHelpQuestion.getCheckboxOptionOne().should('be.visible').contains(checkboxOptionOne);
             offerHelpQuestion.getCheckboxOptionTwo().should('be.visible').contains(checkboxOptionTwo);
             offerHelpQuestion.getCheckboxOptionThree().should('be.visible').contains(checkboxOptionThree);
@@ -61,12 +61,11 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
 
         });
 
-        it('Offer Help Question Two Page - location can be typed and selected', () => {
+        it('Offer Help Question Two Page - location can be typed and see list of locations', () => {
             var locationInputLine = offerHelpQuestion.getLocationInputLine();
             locationInputLine.should('be.visible').click({ force: true });
-            locationInputLine.type(LOCATION)
-                .and('have.attr', 'aria-expanded', 'true')
-                .and('have.attr', 'aria-activedescendant', 'OFS2_EAZ_list_0').click();
+            locationInputLine.type(LOCATION);
+            offerHelpQuestion.getLocationDropdown().should('be.visible');    
 
         });
 
@@ -76,8 +75,8 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             offerHelpQuestion.getLocationInputInfo().contains(locationInputInfo);
         });
 
-        it('Offer Help Question Two Page - Share my Location Icon and Text is visible and clickable', () => {
-            var shareMyLocationText = "Share my Location";
+        it('Offer Help Question Two Page - Share My Location Icon and Text is visible and clickable', () => {
+            var shareMyLocationText = "Share My Location";
             var shareMyLocationIcon = offerHelpQuestion.getShareMyLocationIcon();
             shareMyLocationIcon.should('be.visible').click({ force: true });
             offerHelpQuestion.getShareMyLocationText().should('be.visible').contains(shareMyLocationText).click({ force: true });

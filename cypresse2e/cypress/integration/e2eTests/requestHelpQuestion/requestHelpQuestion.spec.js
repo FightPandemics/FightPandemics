@@ -25,7 +25,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
         it('Need medical help answer option is visible and clickable', () => {
             var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
             medicalHelpAnswer.should('be.visible');
-            medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19').click();
+            medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
 
         });
 
@@ -72,9 +72,8 @@ describe('FightPandemics Request Help Questionnaire', () => {
         it('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click({ force: true });
-            locationField.type(LOCATION)
-            .and('have.attr', 'aria-expanded', 'true')
-            .and('have.attr', 'aria-activedescendant', 'RES2_EAZ_list_0').click();
+            locationField.type(LOCATION);
+            requestHelpQuestion.getRhLocationDropdown().should('be.visible');
         });
 
         it('Location subtext is visible', () => {
@@ -86,7 +85,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
         it('Share location link is visible and clickable', () => {
             var shareLocation = requestHelpQuestion.getRhShareLocation();
             shareLocation.should('be.visible');
-            shareLocation.contains('Share my Location').click();
+            shareLocation.contains('Share My Location').click();
         });
 
         it('Show postings from anywhere link is visible and clickable', () => {
