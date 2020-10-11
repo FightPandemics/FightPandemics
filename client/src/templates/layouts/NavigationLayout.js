@@ -705,7 +705,7 @@ const NavigationLayout = (props) => {
       <div>
         <StyledDrawer
           style={{
-            minHeight: document.documentElement.clientHeight,
+            // minHeight: document.documentElement.clientHeight, --Causing extra padding at the bottom of the page when page is adjusted
             ...drawerStyles,
           }}
           enableDragHandle
@@ -726,7 +726,6 @@ const NavigationLayout = (props) => {
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
           />
-
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}

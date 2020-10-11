@@ -11,9 +11,10 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+import { NotificationDropDown } from "../components/Notifications/NotificationDropDown";
 import globe from "assets/icons/globe.svg";
 import mail from "assets/icons/mail.svg";
-
+import bell from "assets/icons/notification-icons/header-bell.svg";
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
@@ -41,6 +42,16 @@ const StyledNavBar = styled(NavBar)`
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       padding-left: 2.3rem;
       padding-top: 1rem;
+    }
+  }
+  .mobile-notification-bell {
+    display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: block;
+      position: absolute;
+      top: 0.6em;
+      right: 6em;
+      cursor: pointer;
     }
   }
 `;
@@ -133,7 +144,7 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
-  ws
+  ws,
 }) => {
   const { t } = useTranslation();
   const { rooms } = ws;
@@ -146,7 +157,10 @@ export default ({
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]} key={key}>
+        <Menu.Item
+          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          key={key}
+        >
           <a
             style={
               i18n.language === key
@@ -235,10 +249,15 @@ export default ({
                 to="/inbox"
               >
                 <Badge
-                  count={rooms.map((_room) =>
-                          _room.participants.find((p) => p.id == user.id.toString())?.newMessages
-                          ? 1:0 // remove "? 1:0" to show total messages
-                          || 0).reduce((a, b) => a + b, 0)}
+                  count={rooms
+                    .map((_room) =>
+                      _room.participants.find((p) => p.id == user.id.toString())
+                        ?.newMessages
+                        ? 1
+                        : 0 || // remove "? 1:0" to show total messages
+                          0,
+                    )
+                    .reduce((a, b) => a + b, 0)}
                 >
                   <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
                 </Badge>
@@ -284,7 +303,11 @@ export default ({
           </>
         )}
         <Dropdown overlay={languageMenu} trigger={["click"]}>
-          <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} className="globe-icon-svg"></SvgIcon>
+          <SvgIcon
+            id={GTM.nav.prefix + GTM.nav.language}
+            src={globe}
+            className="globe-icon-svg"
+          ></SvgIcon>
         </Dropdown>
       </>
     );
@@ -301,6 +324,7 @@ export default ({
         }
         rightContent={
           <div>
+            {isAuthenticated ? <NotificationDropDown /> : null}
             <MenuToggle
               src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
