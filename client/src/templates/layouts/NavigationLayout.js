@@ -10,7 +10,6 @@ import i18n from "../../i18n";
 import { localization, languages } from "locales/languages";
 import globe from "assets/icons/globe-white.svg";
 import SvgIcon from "components/Icon/SvgIcon";
-import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
 import Footnote from "components/Footnote";
@@ -40,6 +39,7 @@ import {
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
+import ProfilePic from "../../components/Picture/ProfilePic";
 
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
@@ -191,6 +191,7 @@ const UserName = styled(Typography.Text)`
   font-size: 1.6rem;
   font-weight: 500;
   font-stretch: normal;
+  text-align: center;
   font-style: normal;
   line-height: normal;
   letter-spacing: 0.4px;
@@ -248,14 +249,6 @@ const DividerLine = styled.div`
   margin-bottom: 1rem;
 `;
 
-const AvatarInitials = styled(Typography.Text)`
-  font-family: Poppins;
-  font-size: 3.29rem;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-`;
-
 const RatingWrapper = styled.div`
   &:hover {
     cursor: pointer;
@@ -286,12 +279,15 @@ const NavigationLayout = (props) => {
     { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
   ];
 
-  const displayInitials = (user) => {
-    if (user?.firstName && user?.lastName) {
+  const displayAvatar = (user) => {
+    if (user?.photo || (user?.firstName && user?.lastName)) {
       return (
-        <AvatarInitials>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
-        </AvatarInitials>
+        <ProfilePic
+          user={user}
+          initials={getInitialsFromFullName(
+            `${user.firstName} ${user.lastName}`,
+          )}
+        />
       );
     }
   };
@@ -562,11 +558,7 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-        <NavItem history={history}>
-          <TextAvatar size={80} alt={t("alt.avatar")}>
-            {displayInitials(user)}
-          </TextAvatar>
-        </NavItem>
+        {displayAvatar(user)}
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />

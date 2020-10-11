@@ -179,8 +179,9 @@ function EditProfile(props) {
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
+            resolution={"768rem"}
+            allowUpload={false}
+            user={user}
             initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
           />
         </TitlePictureWrapper>

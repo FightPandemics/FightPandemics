@@ -1,6 +1,6 @@
 {
   "headline": "一個提供和尋求幫助的地方",
-  "tagline": "<0>大流行將繼續發生。 </0><1>我們幫助社區做好準備並應對危機</1>",
+  "tagline": "<0>大流行將繼續發生。 </0><1>我們幫助社區做好準備並應對危機。</1>",
   "common": {
     "getHelp": "請求幫助",
     "giveHelp": "提供幫助",
@@ -224,7 +224,7 @@
         "linkedin": "LinkedIn網址",
         "website": "網站"
       },
-      "emailMaxLength": "電子郵件地址不得超過254個字符",
+      "emailMaxLength": "電子郵件地址不得超過200個字符",
       "emailInvalid": "電子郵箱地址不可用",
       "emailDomainInvalid": "電子郵件域無效"
     },
@@ -323,7 +323,7 @@
     "password": "密碼",
     "enterPassword": "輸入密碼",
     "confirmPassword": "確認密碼",
-    "forgotPassword": "忘記密碼",
+    "forgotPassword": "忘記密碼?",
     "noAccount": "還沒有帳號？",
     "haveAccount": "已經有帳號了？",
     "recoverLink": "給我發電子郵件恢復鏈接",
@@ -591,7 +591,7 @@
     "thankYouMessage": "您的意見很重要，可以幫助我們在COVID-19大流行期間和之後改善我們的服務。",
     "submitFeedback": "提交反饋",
     "radio": {
-      "age": "您幾歲",
+      "age": "您幾歲?",
       "unaffected": "我正常上班/上學",
       "quarantine": "我很健康，但在家中隔離",
       "symptomaticUntested": "我有輕度症狀，但未經檢查",
@@ -681,7 +681,7 @@
     "failedPasswordRecovery": "密碼恢復失敗，原因：",
     "http": {
       "Bad Request": "錯誤的請求",
-      "Unauthorized": "未找到",
+      "Unauthorized": "未經授權",
       "Payment Required": "需要付款",
       "Forbidden": "禁止",
       "Not Found": "未找到",
@@ -720,6 +720,13 @@
       "Loop Detected": "檢測到循環",
       "Not Extended": "不擴展",
       "Network Authentication Required": "需要網絡驗證"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
+      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
+      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
+      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
+      "networkError": "Sorry, some network error occurred."
     }
   },
   "TEMP: We are not a provider of healthcare services": "我們不是醫療保健服務提供商",
@@ -762,5 +769,10 @@
   "TEMP: Done": "完成",
   "TEMP: Retake the Test": "重新參加測試",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "根据您的报告症状，應該立即尋求治療。\n請撥打緊急電話！",
-  "TEMP: Your Responses": "您的回應"
+  "TEMP: Your Responses": "您的回應",
+  "avatar": {
+    "submitBtn": "上传",
+    "cancelBtn": "取消",
+    "tryAgainBtn": "Try Again"
+  }
 }

@@ -39,6 +39,12 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
 
 If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
 
+Also note that features that require the [Localstack](https://github.com/localstack/localstack) Docker container to be running will not work. The following features will not work with local setup:
+
+- Avatar upload
+
+In order to test these features, please deploy to the review environment; see the [Review branches](#review-branches) section for more details.
+
 #### MongoDB
 
 Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
