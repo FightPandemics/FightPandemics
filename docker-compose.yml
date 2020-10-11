@@ -39,6 +39,7 @@ services:
     working_dir: /app
     depends_on:
       - mongo
+      - redis
     networks:
       - fp_network
 
@@ -121,6 +122,20 @@ services:
     networks:
       - fp_network
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "26379:6379"
+    volumes:
+      - redis-volume:/data
+    networks:
+      - fp_network
+
 networks:
   fp_network:
     driver: bridge
+
+volumes:
+  redis-volume:

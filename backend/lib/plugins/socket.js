@@ -25,9 +25,9 @@ function onSocketConnect(socket) {
       for (let room in socket.rooms) {
         socket.leave(room);
       }
-      setTimeout(() => {
+      setTimeout(async () => {
         // the user maybe is just changing/reloading the page, wait to make sure they completely disconnected
-        const stillOnline = getSocketByUserId(this, socket.userId);
+        const stillOnline = await getSocketIdByUserId(this, socket.userId);
         if (!stillOnline)
           this.io.emit("USER_STATUS_UPDATE", {
             id: socket.userId,
@@ -157,7 +157,7 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = getSocketByUserId(this, id) ? "online" : "offline";
+    const status = await getSocketIdByUserId(this, id) ? "online" : "offline";
     res({ code: 200, data: status });
   });
 
@@ -242,12 +242,12 @@ function onSocketConnect(socket) {
       .map((r) => r.id);
 
     for (const recipient of recipients) {
-      let recipientSocket = getSocketByUserId(this, recipient);
-      let isInSameRoom = recipientSocket
-        ? await isUserInRoom(this, thread._id.toString(), recipientSocket.id)
+      let recipientSocketId = await getSocketIdByUserId(this, recipient);
+      let isInSameRoom = recipientSocketId
+        ? await isUserInRoom(this, thread._id.toString(), recipientSocketId)
         : false;
 
-      if (!recipientSocket || (recipientSocket && !isInSameRoom)) {
+      if (!recipientSocketId || (recipientSocketId && !isInSameRoom)) {
         // equivalent to (!online || (online && !inSameRoom))
         const [updateThreadErr, updateThread] = await this.to(
           Thread.findByIdAndUpdate(
@@ -258,10 +258,10 @@ function onSocketConnect(socket) {
         );
 
         // send message web notification
-        if (recipientSocket && !isInSameRoom) {
+        if (recipientSocketId && !isInSameRoom) {
           // equivalent to (online && !inSameRoom))
           this.io
-            .to(recipientSocket.id)
+            .to(recipientSocketId)
             .emit("NEW_MESSAGE_NOTIFICATION", message);
         }
       }
@@ -307,13 +307,16 @@ function onSocketConnect(socket) {
   });
 }
 
-function getSocketByUserId(app, userId) {
-  // usefull to send notifications outside socket context, or get online status
-  return (
-    Object.values(app.io.of("/").connected).find(
-      (socket) => socket.userId == userId,
-    ) || null
-  );
+// usefull to send notifications outside socket context, or get online status
+function getSocketIdByUserId(app, userId) {
+  return new Promise((resolve) => {
+    app.io.of("/").adapter.customRequest({type:'getSocketIdByUserId', userId: userId},(err, replies) => {
+        // replies is an array of element pushed by cb(element) on individual socket.io server
+        // remove empty replies
+        const filtered = replies.filter(reply => reply != null)
+        resolve(filtered[0])
+    })
+  });
 }
 
 function isUserInRoom(app, threadId, socketId) {
@@ -332,6 +335,19 @@ function fastifySocketIo(app, config, next) {
     io.adapter(redisAdapter(config.redis));
     io.on("connect", onSocketConnect.bind(app));
     app.decorate("io", io);
+
+    // customHook, to run a request on every node
+    // every socket.io server executes below code, when customRequest is called
+    io.of('/').adapter.customHook = (request, cb) => {
+      if (request.type == 'getSocketIdByUserId') {
+          let userSocket = Object.values(io.of("/").connected).find(
+            (socket) => socket.userId == request.userId,
+          ) || null;
+          cb(userSocket? userSocket.id : null)
+      }
+      // add more request types if you need something that runs on all nodes
+      cb()
+    }
 
     next();
   } catch (error) {
