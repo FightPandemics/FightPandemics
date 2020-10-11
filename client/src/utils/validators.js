@@ -1,4 +1,5 @@
 import tlds from "tlds";
+import _isEmail from "validator/lib/isEmail";
 
 const validateTopLevelDomain = (string) => {
   for (const tld of tlds) {
@@ -10,11 +11,17 @@ const validateTopLevelDomain = (string) => {
 };
 
 export const validateEmail = (email) => {
-  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const emailInput = String(email).toLowerCase();
-  const isEmailValid = re.test(emailInput);
-
-  return isEmailValid ? validateTopLevelDomain(emailInput) : false;
+  let errorMessage = "";
+  if (!email) {
+    errorMessage = "emailRequired";
+  } else if (!_isEmail(email) || !validateTopLevelDomain(email)) {
+    errorMessage = "emailInvalid";
+  }
+  if (errorMessage.length != 0) {
+    return errorMessage;
+  } else {
+    return true;
+  }
 };
 
 const SPECIAL_CHARS = /[!@#$%^&*]/;

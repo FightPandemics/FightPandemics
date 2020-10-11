@@ -11,7 +11,7 @@ const StyledSelect = styled(Select)`
   margin-top: 2rem;
   width: 42%;
   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
-    width: 50%;
+    width: 100%;
   }
   .ant-select-selector {
     border: none;

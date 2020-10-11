@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -29,12 +30,14 @@ const LogoContainer = styled.div`
 `;
 
 const LogoLayout = (props) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <NavBar mode="light" style={NavbarStyles}>
         <LogoContainer>
           <Link to={props.isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt="Fight Pandemics logo" />
+            <Logo src={logo} alt={t("alt.logo")} />
           </Link>
         </LogoContainer>
       </NavBar>

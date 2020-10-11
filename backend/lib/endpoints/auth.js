@@ -20,7 +20,7 @@ async function routes(app) {
     try {
       const { code, state } = req.body;
       if (decodeURIComponent(state) !== authConfig.state) {
-        throw app.httpErrors.unauthorized("Invalid state");
+        throw app.httpErrors.unauthorized("invalidState");
       }
       const token = await Auth0.authenticate("authorization_code", {
         code,
@@ -81,9 +81,7 @@ async function routes(app) {
       const { body, token } = req;
       const { email, password, confirmPassword } = body;
       if (password !== confirmPassword) {
-        throw app.httpErrors.badRequest(
-          "Password should be entered twice exactly the same",
-        );
+        throw app.httpErrors.badRequest("PasswordsShouldMatch");
       }
       const payload = {
         connection: "Username-Password-Authentication",
@@ -96,11 +94,11 @@ async function routes(app) {
         req.log.info(`User created successfully email=${email}`);
       } catch (err) {
         if (err.statusCode === 409) {
-          throw app.httpErrors.conflict("User already exists");
+          throw app.httpErrors.conflict("userExists");
         } else if (
           err.message === "PasswordStrengthError: Password is too weak"
         ) {
-          throw app.httpErrors.badRequest("Password is too weak");
+          throw app.httpErrors.badRequest("passwordWeak");
         }
         req.log.error(err, "Error creating user");
         throw app.httpErrors.internalServerError();
@@ -134,28 +132,27 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations } = dbUser;
+        const { firstName, lastName, organisations, photo } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
           organisations,
+          photo
         };
       }
       return { email, emailVerified, token, user };
     } catch (err) {
       if (err.statusCode === 403) {
-        throw app.httpErrors.unauthorized("Wrong email or password.");
+        throw app.httpErrors.unauthorized("wrongCredentials");
       }
       if (err.statusCode === 429) {
         req.log.error(
           err,
           "Maximum number of sign in attempts exceeded. (10 times)",
         );
-        throw app.httpErrors.tooManyRequests(
-          "Maximum number of sign in attempts exceeded.",
-        );
+        throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
       }
       req.log.error(err, "Error logging in");
       throw app.httpErrors.internalServerError();
@@ -177,9 +174,7 @@ async function routes(app) {
         return { email, responseMessage };
       } catch (err) {
         req.log.error(err, "Error creating change password email");
-        throw app.httpErrors.internalServerError(
-          `Error creating change password email=${email}`,
-        );
+        throw app.httpErrors.internalServerError("failedChangePasswordEmail");
       }
     },
   );

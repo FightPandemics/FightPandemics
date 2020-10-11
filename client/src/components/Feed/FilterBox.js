@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
+import { useTranslation } from "react-i18next";
+
 import SubmitButton from "components/Button/SubmitButton";
 import TextLabel from "components/Typography/TextLabel";
-import { theme, mq } from "constants/theme";
-import GTM from "constants/gtm-tags";
-
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
+import { theme, mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "components/Icon/SvgIcon";
 import downArrow from "assets/icons/down-arrow.svg";
@@ -21,27 +22,24 @@ const FilterBoxWrapper = styled.div`
 
 const ModalWrapper = styled(Modal)`
   .filter-4 .am-button {
-    padding: 0 4.2rem;
+    padding: 0 1rem;
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
 `;
-function capitalizeFirstLetter(header) {
-  // capitalize first letter and show providers if  header is fromWhom
-  if (header === "fromWhom") {
-    header = "providers";
-  }
-  return header.charAt(0).toUpperCase() + header.slice(1);
-}
 
+const StyledSubmitButton = styled(SubmitButton)`
+  font-size: 1.7rem;
+`;
 const gtmTagsMap = {
-  "offer or request help": GTM.post.requestOffer,
+  lookingFor: GTM.post.requestOffer,
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
 const FilterBox = ({ gtmPrefix }) => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
     filters,
@@ -60,8 +58,9 @@ const FilterBox = ({ gtmPrefix }) => {
         icon={<SvgIcon src={downArrow} />}
         onClick={handleFilterModal}
         id={gtmPrefix + gtmTagsMap[filter.label]}
+        value={filter.label}
       >
-        {capitalizeFirstLetter(filter.label)}
+        {t(`feed.filters.labels.${filter.label}`)}
       </SelectWithIconButton>
     ));
   };
@@ -72,7 +71,7 @@ const FilterBox = ({ gtmPrefix }) => {
         color={DARK_GRAY}
         size={theme.typography.size.medium}
       >
-        Filter by
+        {t("feed.filterBy")}
       </TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper
@@ -91,24 +90,24 @@ const FilterBox = ({ gtmPrefix }) => {
             padding: "1rem 0",
           }}
         >
-          <SubmitButton
+          <StyledSubmitButton
             inline
             secondary="true"
             onClick={handleQuit}
             style={{ fontWeight: "normal" }}
             id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
           >
-            Quit filters
-          </SubmitButton>
-          <SubmitButton
+            {t("feed.quit")}
+          </StyledSubmitButton>
+          <StyledSubmitButton
             inline
             primary="true"
             onClick={handleOnClose}
             style={{ fontWeight: "normal" }}
             id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
           >
-            Apply filters
-          </SubmitButton>
+            {t("feed.apply")}
+          </StyledSubmitButton>
         </div>
       </ModalWrapper>
     </FilterBoxWrapper>

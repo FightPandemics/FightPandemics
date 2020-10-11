@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import isEmpty from "lodash/isEmpty";
@@ -25,7 +26,6 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_SHORT_CONTENT,
-  RESET_LOADMORE,
   SET_LOADMORE,
   SET_FULL_CONTENT,
   SET_LIKE,
@@ -94,6 +94,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
+  const { t } = useTranslation();
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -115,7 +116,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     partialContent: postSubstring,
     editPostModalVisibility,
     deleteModalVisibility,
-    loadMorePost,
     commentsCount,
     showComments,
   } = post;
@@ -185,24 +185,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: false,
     });
-  };
-
-  const toggleViewContent = async () => {
-    if (!loadMorePost) {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: postSubstring,
-      });
-      dispatchPostAction(SET_LOADMORE);
-    } else {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: fullContent,
-      });
-      dispatchPostAction(RESET_LOADMORE);
-    }
   };
 
   const handlePostDelete = () => {
@@ -326,17 +308,14 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   if (isPostDeleted)
     return (
       <Container>
-        <Title>Ahh... snap!</Title>
-        <Body>
-          The post you have been looking for has expired. Please check our Help
-          Board for more such posts.
-        </Body>
+        <Title>{t("post.expireTitle")}</Title>
+        <Body>{t("post.expire")}</Body>
         <ProfileCompletedButtonsWrapper>
           <StyledLink
             id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </StyledLink>
         </ProfileCompletedButtonsWrapper>
       </Container>
@@ -348,7 +327,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
           value={{
             user,
             fullContent,
-            loadMorePost,
             updateComments,
             isAuthenticated,
             handlePostLike,
@@ -367,8 +345,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
-                onClick={toggleViewContent}
-                loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
                 showComments={showComments}
                 numComments={commentsCount}

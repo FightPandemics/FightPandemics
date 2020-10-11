@@ -1,10 +1,13 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
+
 import { setOrganisationIndex } from "../actions/profileActions";
+import i18n from "../i18n";
 
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
@@ -12,8 +15,10 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+import globe from "assets/icons/globe.svg";
 
 import { theme, mq } from "../constants/theme";
+import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;
@@ -34,6 +39,12 @@ const StyledNavBar = styled(NavBar)`
   }
   .am-navbar-title {
     display: none;
+  }
+  .am-navbar-left {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      padding-left: 2.3rem;
+      padding-top: 1rem;
+    }
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -128,19 +139,45 @@ const Header = ({
   onFeedbackIconClick,
   setOrganisationIndex,
 }) => {
+  const { t } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]} key={key}>
+          <a
+            style={
+              i18n.language === key
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+          >
+            {label.text}
+          </a>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   const menu = (
     <Menu>
       <Menu.Item onClick={() => setOrganisationIndex(null)}>
         {`${user?.firstName} ${user?.lastName}`}
       </Menu.Item>
       <Menu.Divider />
-      <SubMenu title="Organisations">
+      <SubMenu title={t("common.organisations")}>
         <Menu.Item>
           <Link
             id={GTM.nav.prefix + GTM.nav.addOrg}
             to="/create-organisation-profile"
           >
-            Add Organisation
+            {t("common.addOrg")}
           </Link>
         </Menu.Item>
         <Menu.Divider />
@@ -151,10 +188,10 @@ const Header = ({
                 onClick={() => setOrganisationIndex(i)}
               >
                 {organisation.name}
+                  {organisation.name}
               </Menu.Item>
             ))
           : null}
-        {user?.organisations?.length > 0}
       </SubMenu>
       <Menu.Divider />
       <Menu.Item>
@@ -165,7 +202,7 @@ const Header = ({
               : `/organisation/${user?.organisations[organisationIndex]?._id}`
           }
         >
-          Profile
+          {t("common.profile")}
         </Link>
       </Menu.Item>
       <Menu.Divider />
@@ -173,11 +210,11 @@ const Header = ({
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
       >
-        Feedback
+        {t("common.feedback")}
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/auth/logout">Sign Out</Link>
+        <Link to="/auth/logout">{t("common.logout")}</Link>
       </Menu.Item>
     </Menu>
   );
@@ -191,7 +228,7 @@ const Header = ({
             activeStyle={activeStyles}
             to="/about-us"
           >
-            About Us
+            {t("common.aboutUs")}
           </NavLink>
         </li>
         <li>
@@ -200,7 +237,7 @@ const Header = ({
             activeStyle={activeStyles}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -226,7 +263,7 @@ const Header = ({
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
-                Sign In
+                {t("auth.signIn")}
               </NavLink>
             </li>
             <li className="registerBtn">
@@ -235,7 +272,7 @@ const Header = ({
                 className="registerLink"
                 to="/auth/signup"
               >
-                Join Now
+                {t("auth.joinNow")}
               </NavLink>
             </li>
             <button
@@ -246,6 +283,9 @@ const Header = ({
             </button>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} className="globe-icon-svg"></SvgIcon>
+        </Dropdown>
       </>
     );
   };
@@ -256,7 +296,7 @@ const Header = ({
         mode="light"
         leftContent={
           <BrandLink to={isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt="Fight Pandemics logo" />
+            <Logo src={logo} alt={t("alt.logo")} />
           </BrandLink>
         }
         rightContent={
