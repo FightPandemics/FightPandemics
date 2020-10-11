@@ -35,7 +35,6 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
         it('Offer Help Question One Back Button is visible and clickable', () => {
             var backButton = offerHelpQuestion.getBackButtonOne();
             backButton.should('be.visible').click();
-
         });
 
         it('Offer Help Question One Next Button is visible and clickable and Offer Help Question Two Page loads successfully', () => {
@@ -58,15 +57,13 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             offerHelpQuestion.getQuestionNumberTwo().should('be.visible').contains(questionNumberTwo);
             offerHelpQuestion.getQuestionTwo().should('be.visible').contains(questionTwo);
             offerHelpQuestion.getInfoText().should('be.visible').contains(infoText);
-
         });
 
         it('Offer Help Question Two Page - location can be typed and see list of locations', () => {
             var locationInputLine = offerHelpQuestion.getLocationInputLine();
             locationInputLine.should('be.visible').click({ force: true });
             locationInputLine.type(LOCATION);
-            offerHelpQuestion.getLocationDropdown().should('be.visible');    
-
+            offerHelpQuestion.getLocationDropdown().should('be.visible');
         });
 
         it('Offer Help Question Two Page - location input line Information is visible', () => {
@@ -80,7 +77,6 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             var shareMyLocationIcon = offerHelpQuestion.getShareMyLocationIcon();
             shareMyLocationIcon.should('be.visible').click({ force: true });
             offerHelpQuestion.getShareMyLocationText().should('be.visible').contains(shareMyLocationText).click({ force: true });
-
         });
 
         it('Offer Help Question Two Page - Show Postings Link is visible and clickable', () => {
@@ -91,10 +87,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
         it('Offer Help Question Two Back Button is visible and clickable', () => {
             var backButton = offerHelpQuestion.getBackButtonTwo();
             backButton.should('be.visible').click();
-
         });
-
-
 
     })
 
