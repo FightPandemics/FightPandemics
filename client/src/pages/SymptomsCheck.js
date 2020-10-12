@@ -263,7 +263,7 @@ const Welcome = (props) => {
   );
 };
 
-const Step1 = (props) => {
+const AgeStep = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("age", answer);
     props.nextStep();
@@ -290,7 +290,7 @@ const Step1 = (props) => {
   );
 };
 
-const STEP_2_ANSWERS = [
+const CURRENT_SYMPTOMS_ANSWERS = [
   "Fever, chills, or sweating",
   "Difficulty breathing (not severe)",
   "New or worsening cough",
@@ -299,13 +299,13 @@ const STEP_2_ANSWERS = [
   "Vomiting or diarrhea",
 ];
 
-const STEP_2_STATE = {
-  answers: getAnswersMap(STEP_2_ANSWERS),
+const CURRENT_SYMPTOMS_STATE = {
+  answers: getAnswersMap(CURRENT_SYMPTOMS_ANSWERS),
   none: false,
 };
 
-const Step2 = (props) => {
-  const [state, updateState] = useState(STEP_2_STATE);
+const CurrentSymptomsStep = (props) => {
+  const [state, updateState] = useState(CURRENT_SYMPTOMS_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -345,7 +345,27 @@ const Step2 = (props) => {
   );
 };
 
-const STEP_3_ANSWERS = [
+const FeelingIllStep = (props) => {
+  const onSelectAnswer = (answer) => {
+    props.update("feelingIll", answer);
+    props.nextStep();
+  };
+
+  return (
+    <WizardStep alignItems="flex-start">
+      <h5>
+        Question {props.currentStep - 1} / {props.totalSteps - 1}
+      </h5>
+      <Heading level={3} className="h2" textAlign="left">
+        Are you feeling ill?
+      </Heading>
+      <AnswerButton onSelect={() => onSelectAnswer(true)}>Yes</AnswerButton>
+      <AnswerButton onSelect={() => onSelectAnswer(false)}>No</AnswerButton>
+    </WizardStep>
+  );
+};
+
+const EXISTING_CONDITIONS_ANSWERS = [
   "Moderate to severe asthma or chronic lung disease",
   "Cancer treatment or medicines causing immune suppression",
   "Inherited immune system definicies or HIV",
@@ -358,13 +378,13 @@ const STEP_3_ANSWERS = [
   "Pregnancy",
 ];
 
-const STEP_3_STATE = {
-  answers: getAnswersMap(STEP_3_ANSWERS),
+const EXISTING_CONDITIONS_STATE = {
+  answers: getAnswersMap(EXISTING_CONDITIONS_ANSWERS),
   none: false,
 };
 
-const Step3 = (props) => {
-  const [state, updateState] = useState(STEP_3_STATE);
+const ExistingConditionsStep = (props) => {
+  const [state, updateState] = useState(EXISTING_CONDITIONS_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -404,7 +424,7 @@ const Step3 = (props) => {
   );
 };
 
-const Step4 = (props) => {
+const InternationalTravelStep = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("traveledLast14Days", answer);
     props.nextStep();
@@ -430,7 +450,7 @@ const Step4 = (props) => {
   );
 };
 
-const STEP_5_ANSWERS = [
+const EXPOSURE_ANSWERS = [
   ["They live with someone who has COVID-19"],
   [
     "They’ve had close contact with someone who has COVID-19",
@@ -446,13 +466,13 @@ const STEP_5_ANSWERS = [
   ],
 ];
 
-const STEP_5_STATE = {
-  answers: getAnswersMap(STEP_5_ANSWERS),
+const EXPOSURE_STATE = {
+  answers: getAnswersMap(EXPOSURE_ANSWERS),
   none: false,
 };
 
-const Step5 = (props) => {
-  const [state, updateState] = useState(STEP_5_STATE);
+const ExposureStep = (props) => {
+  const [state, updateState] = useState(EXPOSURE_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -481,8 +501,8 @@ const Step5 = (props) => {
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
           key={i}
-          text={STEP_5_ANSWERS[i][0]}
-          content={STEP_5_ANSWERS[i][1]}
+          text={EXPOSURE_ANSWERS[i][0]}
+          content={EXPOSURE_ANSWERS[i][1]}
           onSelect={() => toggleAnswer(answer)}
           checked={!none && checked}
         />
@@ -491,19 +511,19 @@ const Step5 = (props) => {
   );
 };
 
-const STEP_6_ANSWERS = [
+const AREA_SPREAD_ANSWERS = [
   "They live in an area where COVID-19 is widespread",
   "They have visited an area where COVID-19 is widespread",
   "I’m not sure",
 ];
 
-const STEP_6_STATE = {
-  answers: getAnswersMap(STEP_6_ANSWERS),
+const AREA_SPREAD_STATE = {
+  answers: getAnswersMap(AREA_SPREAD_ANSWERS),
   none: false,
 };
 
-const Step6 = (props) => {
-  const [state, updateState] = useState(STEP_6_STATE);
+const AreaSpreadStep = (props) => {
+  const [state, updateState] = useState(AREA_SPREAD_STATE);
   const { answers, none } = state;
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -531,7 +551,7 @@ const Step6 = (props) => {
       {Object.entries(answers).map(([answer, checked], i) => (
         <AnswerCheckbox
           key={i}
-          text={STEP_6_ANSWERS[i]}
+          text={AREA_SPREAD_ANSWERS[i]}
           onSelect={() => toggleAnswer(answer)}
           checked={!none && checked}
         />
@@ -540,7 +560,7 @@ const Step6 = (props) => {
   );
 };
 
-const Step7 = (props) => {
+const CareFacilityStep = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("careFacility", answer);
     props.nextStep();
@@ -568,7 +588,7 @@ const Step7 = (props) => {
   );
 };
 
-const Step8 = (props) => {
+const MedicalFacilityStep = (props) => {
   const onSelectAnswer = (answer) => {
     props.update("medicalFacility", answer);
     props.nextStep();
@@ -613,7 +633,7 @@ const SymptomsCheck = () => {
     setState({ ...state, [key]: value });
   };
   localStorage.setItem("symptomsCheckAnswers", JSON.stringify(state));
-  console.log(state, " state++++");
+  console.log("current state: ", state);
   let displayMessage = [];
   if (state.age === "Under 18") {
     return (
@@ -889,6 +909,7 @@ const SymptomsCheck = () => {
   /**
    * 1: how old are you state.age
    * 2: Are you experiencing any of these symptoms state.symptoms
+   * 3: Are you feeling ill? yes/no
    * 3:pre-existing  medical conditions (Do any of these apply to you) state.conditions
    * 4: last 14 days travel state.traveledLast14Days==="yes"
    * 5: last 14 days exposure  state.exposureLast14Days==="live with" state.exposureLast14Days: "near someone 6ft" state.exposureLast14Days: "close contact"
@@ -951,6 +972,7 @@ const SymptomsCheck = () => {
   }
   const forWho = (answer) => updateAnswers("forWho", answer);
   const confirmToStart = () => updateAnswers("confirmedStart", true);
+
   return (
     <SymptomCheckerStyle>
       <Heading level={4} className="h4">
@@ -987,14 +1009,15 @@ const SymptomsCheck = () => {
         </div>
         <StyledWizard isHashEnabled nav={<WizardNav />}>
           <Welcome update={updateAnswers} />
-          <Step1 hashKey={"Step1"} update={updateAnswers} />
-          <Step2 hashKey={"Step2"} update={updateAnswers} />
-          <Step3 hashKey={"Step3"} update={updateAnswers} />
-          <Step4 hashKey={"Step4"} update={updateAnswers} />
-          <Step5 hashKey={"Step5"} update={updateAnswers} />
-          <Step6 hashKey={"Step6"} update={updateAnswers} />
-          <Step7 hashKey={"Step7"} update={updateAnswers} />
-          <Step8 hashKey={"Step8"} update={updateAnswers} />
+          <AgeStep hashKey={"Step1"} update={updateAnswers} />
+          <CurrentSymptomsStep hashKey={"Step2"} update={updateAnswers} />
+          <FeelingIllStep hashKey={"Step3"} update={updateAnswers} />
+          <ExistingConditionsStep hashKey={"Step4"} update={updateAnswers} />
+          <InternationalTravelStep hashKey={"Step5"} update={updateAnswers} />
+          <ExposureStep hashKey={"Step6"} update={updateAnswers} />
+          <AreaSpreadStep hashKey={"Step7"} update={updateAnswers} />
+          <CareFacilityStep hashKey={"Step8"} update={updateAnswers} />
+          <MedicalFacilityStep hashKey={"Step9"} update={updateAnswers} />
           <ResultsPage val={state} msg={displayMessage} />
         </StyledWizard>
       </ModalStyle>
