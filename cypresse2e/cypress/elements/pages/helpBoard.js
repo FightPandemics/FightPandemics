@@ -7,8 +7,7 @@ class HelpBoard{
     addPostLink = 'a#HB_CP';
     firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)'
     helpBoard = 'div.feed-posts'
-    likeButton = 'div[id^="HB_LK"]';
-    commentButton = 'div[id^="HB_CM"]';
+
 
     constructor() { }
 
@@ -56,13 +55,6 @@ class HelpBoard{
         return this.helpBoard;
     }
 
-    getLikeButtonSelector(){
-        return this.likeButton;
-    }
-
-    getCommentButtonSelector(){
-        return this.commentButton;
-    }
 }
 
 export default HelpBoard;

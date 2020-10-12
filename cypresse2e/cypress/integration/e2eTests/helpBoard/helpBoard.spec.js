@@ -24,7 +24,7 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
         it('Unauthorized user is redirected to SignIn page when cliking Add Post Button', () => {          
             var addPostButton = helpBoard.getAddPostButton();
             addPostButton.click({ force: true });
-            validateSignInScreenIsOpen();
+            cy.validateNewScreenIsOpen("auth/login");
         });
 
         it('Unauthorized user sees a message that posts are not available - Help Board is empty', () => {     
@@ -34,43 +34,14 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
                     helpBoard.getNoPostsAvailableTextElement().contains(noPostsAvailableText);
                     var addPostLink = helpBoard.getaddPostLinkElement();
                     addPostLink.click({ force: true });
-                    validateSignInScreenIsOpen();  
+                    cy.validateNewScreenIsOpen("auth/login");
                 }else{
                     cy.log("THERE IS A POST ON THE HELP BOARD");
                 
                 }
             });              
           });
-
-        it('Unauthorized user is redirected to SignIn page when clicking on Like button', () => {     
-            //there is a post on the Help Board     
-            cy.get("body").then($body => {
-                if ($body.find(helpBoard.getHelpBoardSelector()).length > 0) {   
-                    cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
-                        cy.get(helpBoard.getLikeButtonSelector()).click();
-                        validateSignInScreenIsOpen();
-                    })                                  
-                }
-            });          
-        });
-
-        it('Unauthorized user is redirected to SignIn page when clicking on Comment button', () => {     
-        //there is a post on the Help Board     
-            cy.get("body").then($body => {
-                if ($body.find(helpBoard.getHelpBoardSelector()).length > 0) {   
-                    cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
-                        cy.get(helpBoard.getCommentButtonSelector()).click();
-                        validateSignInScreenIsOpen();
-                    })                              
-                }  
-            });
-      });
 });
 
-    function validateSignInScreenIsOpen(){
-        cy.on("url:changed", (newUrl) => {
-            expect(newUrl).to.contain("auth/login")
-          })
-    }
 
 });
