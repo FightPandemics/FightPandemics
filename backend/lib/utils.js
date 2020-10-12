@@ -52,11 +52,14 @@ const translateISOtoRelativeTime = (ISODate) => {
 
 const setElapsedTimeText = (createdAt, updatedAt) => {
   if (createdAt < updatedAt) {
-    return `${translateISOtoRelativeTime(
-      createdAt,
-    )} · edited  ${translateISOtoRelativeTime(updatedAt)}`;
+    return {
+      created: translateISOtoRelativeTime(createdAt),
+      edited: translateISOtoRelativeTime(updatedAt),
+    };
   } else {
-    return translateISOtoRelativeTime(createdAt);
+    return {
+      created: translateISOtoRelativeTime(createdAt),
+    };
   }
 };
 

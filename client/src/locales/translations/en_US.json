@@ -149,6 +149,7 @@
     "comment_plural": "Comments",
     "commentWithCount": "{{count}} Comment",
     "commentWithCount_plural": "{{count}} Comments",
+    "edited": "edited",
     "options": {
       "shareWith": {
         "city": "In my City",
