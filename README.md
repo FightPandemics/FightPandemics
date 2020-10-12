@@ -13,7 +13,7 @@ Before getting started please be familiar with the stack below. Additionally it 
 - **Frontend**
     - React Hooks, Ant Design, Ant Design Mobile,  styled-components
 - **Backend**
-    - Fastify, MongoDB, Mongoose
+    - Fastify, MongoDB, Mongoose, Redis, Socket.io
     - Auth0, Google Maps API
 - **DevOps**
     - Docker, Terraform, Nginx, AWS
@@ -49,6 +49,17 @@ In order to test these features, please deploy to the review environment; see th
 
 Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
 
+#### Redis
+Follow the Redis installation instructions for your operating system.
+##### Linux
+
+- ubuntu: Follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04) to install redis server on ubuntu. 
+- other: Follow these [installation instructions](https://redis.io/topics/quickstart).
+##### windows
+Follow the [installation instructions](https://redislabs.com/blog/redis-on-windows-8-1-and-previous-versions/) for windows.
+##### mac
+Follow [this guide](https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebrew-eb8df9a4f298) to install Redis on Mac OS via Homebrew.
+
 #### Client
 
 1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
@@ -60,6 +71,7 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 #### Backend
 
 1. If not already installed, [install MongoDB](https://docs.mongodb.com/manual/installation/).
+1. If not already installed, [install Redis](#Redis).
 1. If not already installed, install nvm and Node 12.16.2 (see steps 1 and 2 in the Client section above).
 1. Enter the `backend` directory and run `npm install`.
 1. Copy the `.env.example_local` in the `backend` directory to `.env`.
