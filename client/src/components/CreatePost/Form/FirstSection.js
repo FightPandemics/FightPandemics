@@ -29,6 +29,7 @@ const First = ({
   onChangeDescription,
   renderError,
   formData,
+  post,
 }) => {
   return (
     <Section>
@@ -36,20 +37,24 @@ const First = ({
       <TitleInput
         onChange={onChangeTitle}
         value={formData.title}
-        placeholder="Title"
+        placeholder="Title*"
         maxLength={60}
       />
       <TextInput
         onChange={onChangeDescription}
         value={formData.description}
         rows={7}
-        placeholder="Write your post"
+        placeholder="Write your post*"
       />
       <div className="error-box" style={{ color: "red" }}>
-        {!formData.title ? renderError("title") : <Fragment />}
+        {post && !formData.title ? renderError("title") : <Fragment />}
       </div>
       <div className="error-box" style={{ color: "red" }}>
-        {!formData.description ? renderError("description") : <Fragment />}
+        {post && !formData.description ? (
+          renderError("description")
+        ) : (
+          <Fragment />
+        )}
       </div>
     </Section>
   );

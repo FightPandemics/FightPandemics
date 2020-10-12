@@ -6,7 +6,7 @@ import filterOptions from "assets/data/filterOptions";
 
 const types = Object.values(filterOptions)[2].options;
 
-const Second = ({ addTag, selectedTags, title, renderError }) => {
+const Second = ({ addTag, selectedTags, title, renderError, post }) => {
   return (
     <Section>
       <Head number={2} title={title} />
@@ -14,7 +14,7 @@ const Second = ({ addTag, selectedTags, title, renderError }) => {
         <AddTags addTag={addTag} filters={types} selected={selectedTags} />
       </div>
       <span className="error-box" style={{ color: "red" }}>
-        {!selectedTags.length ? renderError("tags") : <Fragment />}
+        {post && !selectedTags.length ? renderError("tags") : <Fragment />}
       </span>
     </Section>
   );

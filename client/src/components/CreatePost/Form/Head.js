@@ -8,6 +8,7 @@ const Head = ({ number, title }) => {
         <span>{number}</span>
       </Badge>
       <Title>{title}</Title>
+      <span>*</span>
     </HeadWrapper>
   );
 };

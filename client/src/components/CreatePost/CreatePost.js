@@ -175,7 +175,7 @@ const Step4 = () => {
             state: { from: window.location.href },
           }}
         >
-          <ViewPostButton primary>View Your Post</ViewPostButton>
+          <ViewPostButton primary="true">View Your Post</ViewPostButton>
         </Link>
       </>
     )

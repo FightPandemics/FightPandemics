@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
@@ -8,13 +8,14 @@ import createPostSettings from "assets/data/createPostSettings";
 import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
+import { errorStyles } from "components/OrganisationProfile/CreateProfileComponents";
 
 const { shareWith, expires, helpTypes } = createPostSettings;
 
 const errorMsg = {
   title: "Please include a title for your post.",
   description: "Please include a description for your post.",
-  help: "Please select a type of help.",
+  // help: "Please select a type of help.",
   tags: "Please add at least one tag.",
 };
 
@@ -28,16 +29,30 @@ const initialState = {
     help: helpTypes.default.value,
   },
   errors: [],
+  postForm: false,
 };
 
 const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
+  const [postForm, setPostForm] = useState(initialState.postForm);
   formData.help = type;
+
+  useEffect(() => {
+    populateErrors();
+  }, [populateErrors]);
 
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
+    if (errors.includes(field) && formData[field]) {
+      const newErrors = errors.filter((error) => error !== field);
+      setErrors(newErrors);
+    }
+  };
+
+  const handleTagData = (field) => {
+    setFormData({ ...formData, [field]: "tags" });
     if (errors.includes(field) && formData[field]) {
       const newErrors = errors.filter((error) => error !== field);
       setErrors(newErrors);
@@ -52,11 +67,11 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
 
   const renderError = (field) => {
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
-      console.log(errorMsg[field]);
-    return errorMsg[field];
+      return errorMsg[field];
   };
 
   const addTag = (tag) => (e) => {
+    handleTagData("tags");
     const hasTag = formData.tags.includes(tag);
     if (hasTag) {
       const tags = formData.tags.filter((t) => t !== tag);
@@ -77,18 +92,17 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   };
 
   const handleSubmit = async (e) => {
-    setCurrentStep(4);
+    setPostForm(true);
     e.preventDefault();
-    populateErrors();
-
     const payload = formDataToPost(formData);
     if (form.organisationId) payload.organisationId = form.organisationId;
-
     if (!errors.length) {
       try {
         const res = await axios.post("/api/posts", payload);
         setPostId(res.data._id);
         cleanForm();
+        setPostForm(false);
+        setCurrentStep(4);
       } catch (error) {
         console.log(error);
       }
@@ -101,12 +115,14 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
         onChangeTitle={handleFormData("title")}
         onChangeDescription={handleFormData("description")}
         formData={formData}
+        post={postForm}
         renderError={renderError}
       />
       <Second
         addTag={addTag}
         selectedTags={formData.tags}
         renderError={renderError}
+        post={postForm}
         title={textData.question}
       />
       <Third
@@ -118,11 +134,6 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
         <Submit
           primary="true"
           onClick={handleSubmit}
-          disabled={
-            !formData.title ||
-            !formData.description ||
-            formData.tags.length === 0
-          }
           id={gtmPrefix + GTM.post.button}
         >
           Post
