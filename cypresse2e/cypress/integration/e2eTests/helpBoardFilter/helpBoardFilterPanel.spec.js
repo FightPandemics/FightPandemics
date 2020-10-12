@@ -40,7 +40,7 @@ describe('FightPandemics Help Board Filters', () => {
 
     });
 
-    context('Filtering posts by type and location on Help Board', () => {
+    context('Filtering posts by provider, type and location on Help Board', () => {
         before(() => {
             helpBoardFilter.visit();
         });
@@ -56,7 +56,7 @@ describe('FightPandemics Help Board Filters', () => {
             toggleFilterHeadingOpen(helpBoardFilter.getHbLocationHeading(), 'Location');
         });
 
-        it('Type in location field and see a list of available locations', () => {
+        it('Type in location field and see the list of locations', () => {
             var locationField = helpBoardFilter.getHbLocationInput();
             locationField.should('be.visible').click({force:true});
             locationField.type(LOCATION);
