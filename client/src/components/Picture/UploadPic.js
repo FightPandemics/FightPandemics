@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { theme } from "../../constants/theme";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 
 const { colors } = theme;
 
@@ -43,9 +44,9 @@ const INITIAL_CROP_STATE = {
   unit: "px",
   height: 250,
   width: 250,
-}
+};
 
-const UploadPic = ({ cameraIconSize, user }) => {
+const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [photoURL, setPhotoURL] = useState();
@@ -62,13 +63,9 @@ const UploadPic = ({ cameraIconSize, user }) => {
     setUploadError("");
     const file = e.target.files[0];
     if (!isImageFile(file)) {
-      setUploadError(
-        t("error.avatar.fileTypeNotSupported"),
-      );
+      setUploadError(t("error.avatar.fileTypeNotSupported"));
     } else if (file && file.size > 5001520) {
-      setUploadError(
-          t("error.avatar.fileSizeTooLarge")
-      );
+      setUploadError(t("error.avatar.fileSizeTooLarge"));
     } else {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -76,13 +73,9 @@ const UploadPic = ({ cameraIconSize, user }) => {
         image.src = fileReader.result;
         image.onload = () => {
           if (image.height < 250 || image.width < 250) {
-            setUploadError(
-                t("error.avatar.imageDimensionTooSmall")
-            );
+            setUploadError(t("error.avatar.imageDimensionTooSmall"));
           } else if (image.height / image.width < 0.5) {
-            setUploadError(
-              t("error.avatar.imageDimensionTooWide")
-            );
+            setUploadError(t("error.avatar.imageDimensionTooWide"));
           }
         };
         setPhotoURL(fileReader.result);
@@ -138,9 +131,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
             window.location.reload(false);
           }
         } catch (error) {
-          setUploadError(
-              t("error.avatar.networkError")
-          );
+          setUploadError(t("error.avatar.networkError"));
           console.log({
             error,
           });
@@ -213,6 +204,7 @@ const UploadPic = ({ cameraIconSize, user }) => {
   return (
     <div>
       <input
+        id={gtmPrefix + GTM.profile.uploadAvatar}
         ref={imgUpload}
         onChange={handleImage}
         type="file"
@@ -222,7 +214,6 @@ const UploadPic = ({ cameraIconSize, user }) => {
         }}
       />
       <CameraButtonUpload
-        id="PR-UA"
         name="avatar-upload-button"
         type="button"
         onClick={() => imgUpload.current.click()}
