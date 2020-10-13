@@ -143,20 +143,18 @@ export default ({
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item
-          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
-          key={key}
-          onClick={() => changeLanguage(key)}
-        >
-          <span
+        <Menu.Item key={key}>
+          <div
             style={
               i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
+            onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
           >
             {label.text}
-          </span>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
