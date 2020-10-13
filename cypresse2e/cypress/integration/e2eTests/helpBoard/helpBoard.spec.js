@@ -30,9 +30,9 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
         it('Unauthorized user sees a message that posts are not available - Help Board is empty', () => {     
             //there is no post on the Help Board
             cy.get("body").then($body => {
-                if ($body.find(helpBoard.getaddPostLink()).length > 0) {   
+                if ($body.find(helpBoard.getAddPostLink()).length > 0) {   
                     helpBoard.getNoPostsAvailableTextElement().contains(noPostsAvailableText);
-                    var addPostLink = helpBoard.getaddPostLinkElement();
+                    var addPostLink = helpBoard.getAddPostLinkElement();
                     addPostLink.click({ force: true });
                     cy.validateNewScreenIsOpen("auth/login");
                 }else{
