@@ -158,7 +158,7 @@ const PostSocial = ({
               }}
             >
               <div id={gtmTag("like", GTM.feed.prefix)} className="social-icon">
-                {renderCommentIcon()}
+                {renderLikeIcon()}
                 {renderLabels("Like", numLikes)}
               </div>
             </Link>
