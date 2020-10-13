@@ -198,10 +198,7 @@ const LocationInput = ({
           <Option key={pa.value}>{pa.text}</Option>
         ))}
       </StyledSelect>
-      <SubLabel
-        selected={selectedAddress.value}
-        id={gtmPrefix + GTM.locationInput.enterAddress}
-      >
+      <SubLabel selected={selectedAddress.value}>
         {t("feed.filters.location.enterAddress")}
       </SubLabel>
       {(apiError || formError) && (
