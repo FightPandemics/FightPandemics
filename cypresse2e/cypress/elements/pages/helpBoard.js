@@ -31,11 +31,11 @@ class HelpBoard{
         return this.noPostsAvailableTextElement;
     }
 
-    getaddPostLink(){
+    getAddPostLink(){
         return this.addPostLink;
     }
 
-    getaddPostLinkElement(){
+    getAddPostLinkElement(){
         return cy.get(this.addPostLink);
     }
     

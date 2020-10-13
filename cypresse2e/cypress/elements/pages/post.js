@@ -13,7 +13,7 @@ class Post{
     modalWindowTelegramButton = 'button[aria-label="telegram"]';
     modalWindowTwitterButton = 'button[aria-label="twitter"]';
     modalWindowWhatsappButton = 'button[aria-label="whatsapp"]';
-    modalWindowSharingUrlInput = 'input[type="text"]';
+    modalWindowSharingUrlInput = 'div > input[type=text]';
 
     constructor() { }
 
