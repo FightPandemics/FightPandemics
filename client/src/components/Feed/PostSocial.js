@@ -126,14 +126,44 @@ const PostSocial = ({
           {renderLabels("Like", numLikes)}
         </div>
       ) : (
-        <div
-          id={gtmTag("like", GTM.feed.prefix)}
-          className="social-icon"
-          onClick={() => handlePostLike(id, liked, true)}
-        >
-          {renderLikeIcon()}
-          {renderLabels("Like", numLikes)}
-        </div>
+        <>
+          {isAuthenticated ? (
+            <Link
+              to={{
+                pathname: `/post/${id}`,
+                state: {
+                  postId: id,
+                  comments: true,
+                  from: window.location.href,
+                },
+              }}
+            >
+              <div
+                id={gtmTag("like", GTM.feed.prefix)}
+                className="social-icon"
+                onClick={() => handlePostLike(id, liked, true)}
+              >
+                {renderLikeIcon()}
+                {renderLabels("Like", numLikes)}
+              </div>
+            </Link>
+          ) : (
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postredirect", `/post/${id}`)
+              }
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
+            >
+              <div id={gtmTag("like", GTM.feed.prefix)} className="social-icon">
+                {renderCommentIcon()}
+                {renderLabels("Like", numLikes)}
+              </div>
+            </Link>
+          )}
+        </>
       )}
       <span></span>
       {postId ? (
