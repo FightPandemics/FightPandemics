@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { InboxContainer } from "../components/Inbox/Container";
 import { ChatList } from "../components/Inbox/ChatList";
 import CurrentChat from "../components/Inbox/CurrentChat";
+import Settings from "../components/Inbox/Settings";
 import { EmptyInbox } from "../components/Inbox/EmptyInbox";
 import { SelectRoom } from "../components/Inbox/SelectRoom";
 import { ChatContextProvider } from "../context/ChatContext";
@@ -10,9 +11,14 @@ import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
 
 const Inbox = (props) => {
-  const { toggleMobileChatList, setToggleMobileChatList } = useContext(
-    ChatContext,
-  );
+  const {
+    toggleMobileChatList,
+    setToggleMobileChatList,
+    isSettingsOpen,
+    setIsSettingsOpen,
+    setSettingsTab,
+    selectedSettingsTab,
+  } = useContext(ChatContext);
   const {
     sendMessage,
     deleteMessage,
@@ -30,6 +36,11 @@ const Inbox = (props) => {
 
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
+  };
+
+  const toggleSettings = () => {
+    if (!isSettingsOpen) setSettingsTab("BLOCKED");
+    setIsSettingsOpen(!isSettingsOpen);
   };
 
   useEffect(() => {
@@ -70,12 +81,23 @@ const Inbox = (props) => {
         joinRoom={joinRoom}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
+        isSettingsOpen={isSettingsOpen}
+        toggleSettings={toggleSettings}
+        setSettingsTab={setSettingsTab}
+        selectedSettingsTab={selectedSettingsTab}
       />
-      {!rooms.length ? (
+      {isSettingsOpen && (
+        <Settings
+          selectedSettingsTab={selectedSettingsTab}
+          rooms={rooms}
+          user={user}
+        />
+      )}
+      {!isSettingsOpen && !rooms.length ? (
         <EmptyInbox />
       ) : (
-        (!room && <SelectRoom />) ||
-        (room && (
+        (!isSettingsOpen && !room && <SelectRoom />) ||
+        (!isSettingsOpen && room && (
           <CurrentChat
             room={room}
             user={user}

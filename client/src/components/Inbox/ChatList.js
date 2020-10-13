@@ -5,6 +5,8 @@ import { ChatHeader, ChatListContainer, SideChatContainer } from "./Container";
 import styled from "styled-components";
 import { getInitialsFromFullName } from "utils/userInfo";
 import moment from "moment";
+import gearIcon from "assets/icons/settings-blue.svg";
+import arrow from "assets/icons/blue-down-arrow.svg";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -12,6 +14,28 @@ const UserName = styled.h4`
   overflow-x: hidden;
   text-overflow: ellipsis;
   margin-bottom: -0.3em;
+`;
+const SettingsIcon = styled.img`
+  position: absolute;
+  width: 2.1rem;
+  right: 1.5rem;
+  cursor: pointer;
+`;
+const SettingsBackArrow = styled.img`
+  transform: rotate(90deg);
+  padding-top: 1em;
+  cursor: pointer;
+`;
+const SettingsNextArrow = styled.img`
+  transform: rotate(-90deg);
+  padding-top: 1em;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+`;
+const SettingsTabsSelector = styled(SideChatContainer)`
+  padding: 0.4em;
+  height: 4em;
 `;
 
 export const ChatList = ({
@@ -22,6 +46,10 @@ export const ChatList = ({
   joinRoom,
   room,
   user,
+  isSettingsOpen,
+  toggleSettings,
+  setSettingsTab,
+  selectedSettingsTab,
 }) => {
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
@@ -76,23 +104,73 @@ export const ChatList = ({
     );
   };
 
+  const SettingsSelector = () => {
+    return (
+      <>
+        <ChatHeader>
+          <SettingsBackArrow
+            onClick={() => {
+              toggleSettings();
+            }}
+            src={arrow}
+            alt="Back Arrow"
+          />{" "}
+          Messages Settings
+        </ChatHeader>
+        <div onClick={() => setToggleMobileChatList(false)}>
+          <SettingsTabsSelector
+            className={`${selectedSettingsTab == "BLOCKED" ? "selected" : ""}`}
+            onClick={() => setSettingsTab("BLOCKED")}
+          >
+            Blocked Accounts
+            <SettingsNextArrow
+              src={arrow}
+              alt="next Arrow"
+            />
+          </SettingsTabsSelector>
+          <SettingsTabsSelector
+            className={`${selectedSettingsTab == "ARCHIVED" ? "selected" : ""}`}
+            onClick={() => setSettingsTab("ARCHIVED")}
+          >
+            Archived Conversations
+            <SettingsNextArrow
+              src={arrow}
+              alt="next Arrow"
+            />
+          </SettingsTabsSelector>
+        </div>
+      </>
+    );
+  };
+
   return (
-    <ChatListContainer toggleMobileChatList={toggleMobileChatList}>
-      <ChatHeader>
-        Messages{" "}
-        <span>
-          {rooms
-            .map((_room) => (getSender(_room.participants).newMessages ? 1 : 0))
-            .reduce((a, b) => a + b, 0)}
-        </span>
-      </ChatHeader>
-      <div className="chat-bucket">
-        {!empty && (
-          <div onClick={() => setToggleMobileChatList(false)}>
-            <SideChats />
+    <ChatListContainer
+      toggleMobileChatList={toggleMobileChatList}
+    >
+      {!isSettingsOpen ? (
+        <>
+          <ChatHeader>
+            Messages{" "}
+            <span>
+              {rooms
+                .map((_room) =>
+                  getSender(_room.participants).newMessages ? 1 : 0,
+                )
+                .reduce((a, b) => a + b, 0)}
+            </span>
+            <SettingsIcon onClick={() => toggleSettings()} src={gearIcon} />
+          </ChatHeader>
+          <div className="chat-bucket">
+            {!empty && (
+              <div onClick={() => setToggleMobileChatList(false)}>
+                <SideChats />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      ) : (
+        <SettingsSelector />
+      )}
     </ChatListContainer>
   );
 };

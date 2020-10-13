@@ -59,7 +59,7 @@ export const ChatListContainer = styled.div`
     height: 35em;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: ${(props) => (props.toggleMobileChatList ? "block" : "none")};
+    display: ${(props) => (props.toggleMobileChatList || props.toggleSettingstList? "block" : "none")};
     width: ${(props) => (props.toggleMobileChatList ? "100%" : "25%")};
     max-width: ${(props) => (props.toggleMobileChatList ? "100vw" : "22em")};
   }

@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
-import { Badge } from "antd";
+import { Badge, Menu, Dropdown, Typography } from "antd";
+import { Modal } from "antd-mobile";
 import styled from "styled-components";
 import arrow from "assets/icons/blue-down-arrow.svg";
+import subMenuIcon from "assets/icons/submenu.svg";
 import { theme, mq } from "constants/theme";
 import TextAvatar from "components/TextAvatar";
 import { ChatContext } from "context/ChatContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
+const { Text } = Typography;
 
 const RecipientName = styled.div`
   width: 100%;
@@ -71,8 +74,56 @@ const LastSeen = styled.small`
   line-height: 1.2;
   color: #969292;
 `;
+const ThreadMenu = styled.img`
+  opacity: 0.5;
+  position: absolute;
+  right: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  cursor: pointer;
+  padding: 1rem;
+  background: #f6f7fb;
+  border-radius: 100%;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    right: 1rem;
+  }
+`;
 export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
+
+  function showBlockConfirm() {
+    Modal.alert(
+      `Block the connversation from ${participant.name}?`,
+      `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
+      [
+        { text: <Text type="danger">Block</Text>, onPress: () =>  alert('Block') },
+        { text: "Cancel", onPress: () => null },
+      ],
+    );
+  }
+
+  function showArchiveConfirm() {
+    Modal.alert(
+      "Archive the conversation?",
+      "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+      [
+        { text:  <Text type="danger">Archive</Text>, onPress: () =>  alert('Archive') },
+        { text: "Cancel", onPress: () => null },
+      ],
+    );
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={() => showArchiveConfirm()}>
+        Archive
+      </Menu.Item>
+      <Menu.Item onClick={() => showBlockConfirm()} danger>
+        Block
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       {participant && (
@@ -107,6 +158,12 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
               )}
             </LastSeen>
           </h4>
+          <Dropdown
+            overlay={menu}
+            placement="bottomRight"
+          >
+              <ThreadMenu src={subMenuIcon} />
+          </Dropdown>
         </RecipientName>
       )}
     </>

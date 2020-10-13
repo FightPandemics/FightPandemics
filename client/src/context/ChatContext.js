@@ -6,6 +6,8 @@ const ChatContextProvider = (props) => {
   const [toggleMobileChatList, setToggleMobileChatList] = useState(true);
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [inputExpanded, setInputExpanded] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [selectedSettingsTab, setSettingsTab] = useState(null)
   return (
     <ChatContext.Provider
       value={{
@@ -17,6 +19,10 @@ const ChatContextProvider = (props) => {
         setToggleMobileChatList,
         inputExpanded,
         setInputExpanded,
+        isSettingsOpen, 
+        setIsSettingsOpen,
+        setSettingsTab,
+        selectedSettingsTab,
       }}
     >
       {props.children}

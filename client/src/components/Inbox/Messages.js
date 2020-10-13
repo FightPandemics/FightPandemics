@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useLayoutEffect, useContext } from "react";
-import { Menu, Dropdown } from "antd";
+import React, { useRef, useLayoutEffect } from "react";
+import { Menu, Dropdown, Typography } from "antd";
 import { Modal } from "antd-mobile";
 import {
   BubbleContainer,
@@ -13,6 +13,7 @@ import { OrgPost } from "./OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
 import subMenuIcon from "assets/icons/submenu.svg";
+const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
 
@@ -86,7 +87,7 @@ const Messages = ({
       "Delete the message?",
       "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
       [
-        { text: "Delete", onPress: () => deleteMessage(messageId) },
+        { text: <Text type="danger">Delete</Text>, onPress: () => deleteMessage(messageId) },
         { text: "Cancel", onPress: () => null },
       ],
     );
