@@ -183,7 +183,8 @@
     "share": "Teilen",
     "delete": "Löschen",
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "edited": "bearbeitet"
   },
   "profile": {
     "common": {
@@ -722,11 +723,11 @@
       "Network Authentication Required": "Netzwerkauthentifizierung erforderlich"
     },
     "avatar": {
-      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
-      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
-      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
-      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
-      "networkError": "Sorry, some network error occurred."
+      "fileTypeNotSupported": "Leider unterstützen wir nur Bilddateien vom Typ jp(e)g und png.",
+      "fileSizeTooLarge": "Bitte wähle ein Bild mit einer Größe von weniger als 5 MB.",
+      "imageDimensionTooSmall": "Bitte lade ein Bild hoch, das wenigstens 250 Pixel hoch und 250 Pixel breit ist.",
+      "imageDimensionTooWide": "Das Bild ist leider zu breit. Bitte versuche es erneut mit einem Bild mit einer Breite von weniger als der doppelten Höhe.",
+      "networkError": "Ein Netzwerkfehler ist aufgetreten."
     }
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
@@ -773,6 +774,6 @@
   "avatar": {
     "submitBtn": "Weiter",
     "cancelBtn": "Abbrechen",
-    "tryAgainBtn": "Try Again"
+    "tryAgainBtn": "Erneut versuchen"
   }
 }
