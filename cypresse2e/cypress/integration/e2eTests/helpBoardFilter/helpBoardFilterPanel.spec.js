@@ -11,31 +11,39 @@ describe('FightPandemics Help Board Filters', () => {
         });
 
         it('Offering Help filter on Help Board is visible and clickable', () => {
-            postCategory(helpBoardFilter.getHbOfferHelp());
+            seeAndClickElement(helpBoardFilter.getHbOfferHelp());
         });
 
         it('Requesting Help filter on Help Board is visible and clickable', () => {
-            postCategory(helpBoardFilter.getHbRequestHelp());
+            seeAndClickElement(helpBoardFilter.getHbRequestHelp());
         });
 
         it('All Posts filter on Help Board is visible and clickable', () => {
-            postCategory(helpBoardFilter.getHbAllPosts());
+            seeAndClickElement(helpBoardFilter.getHbAllPosts());
+        });
+
+        it('Filters button on Help Board is visible and clickable', () => {
+            seeAndClickElement(helpBoardFilter.getFilterButton());
         });
 
         it('Quit Filters button is visible and clickable', () => {
-            helpBoardFilter.getFilterButton()
-                .should('be.visible').click();
-            helpBoardFilter.getCookieBanner()
-                .should('be.visible').click({ force: true });
-            helpBoardFilter.getQuitFiltersButton()
-                .should('be.visible').click();
+            seeAndClickElement(helpBoardFilter.getFilterButton());
+            closeCookieBanner();
+            seeAndClickElement(helpBoardFilter.getQuitFiltersButton());
         });
 
         it('Back button is visible and clickable', () => {
-            helpBoardFilter.getFilterButton()
-                .should('be.visible').click();
-            helpBoardFilter.getBackButton()
-                .should('be.visible').click();
+            seeAndClickElement(helpBoardFilter.getFilterButton());
+            seeAndClickElement(helpBoardFilter.getBackButton());
+        });
+
+        it('Remove selected tags from first filter panel', () => {
+            seeAndClickElement(helpBoardFilter.getFilterButton());
+            toggleFilterHeadingOpen(helpBoardFilter.getHbProvidersHeading(), 'Providers');
+            selectFilterTags(helpBoardFilter.getHbProvidersTags());
+            closeCookieBanner();
+            seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
+            unselectFilterTags(helpBoardFilter.getCloseSelectedTags());
         });
 
     });
@@ -43,11 +51,7 @@ describe('FightPandemics Help Board Filters', () => {
     context('Filtering posts by provider, type and location on Help Board', () => {
         before(() => {
             helpBoardFilter.visit();
-        });
-
-        it('Filters button on Help Board is visible and clickable', () => {
-            helpBoardFilter.getFilterButton()
-                .should('be.visible').click();
+            seeAndClickElement(helpBoardFilter.getFilterButton());
         });
 
         it('Location filter is expandable and collapsible', () => {
@@ -58,10 +62,10 @@ describe('FightPandemics Help Board Filters', () => {
 
         it('Type in location field and see the list of locations', () => {
             var locationField = helpBoardFilter.getHbLocationInput();
-            locationField.should('be.visible').click({force:true});
+            locationField.should('be.visible').click({ force: true });
             locationField.type(LOCATION);
             helpBoardFilter.getHbLocationDropdown().should('be.visible');
-            locationField.click({force:true});
+            locationField.click({ force: true });
         });
 
         it('Location subtext is visible', () => {
@@ -98,20 +102,19 @@ describe('FightPandemics Help Board Filters', () => {
         });
 
         it('View Results button is visible and clickable', () => {
-            helpBoardFilter.getCookieBanner()
-                .should('be.visible').click({ force: true });
-            helpBoardFilter.getViewResultsButton()
-                .should('be.visible').click();
+            closeCookieBanner();
+            seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
         });
 
     });
 
-    function postCategory(getMethod) {
+    function seeAndClickElement(getMethod) {
         (getMethod).should('be.visible').click();
     }
 
     function selectFilterTags(getMethod) {
         (getMethod).should('be.visible').click({ multiple: true, force: true })
+        //checks tag is visually filled when selected
         getMethod.each(($tag, index, $list) => {
             cy.wrap($tag).should('have.class', 'tag-selected')
         });
@@ -129,6 +132,11 @@ describe('FightPandemics Help Board Filters', () => {
     function toggleFilterHeadingClose(getMethod) {
         (getMethod).should('be.visible')
             .click().should('have.attr', 'aria-expanded', 'false');
+    }
+
+    function closeCookieBanner() {
+        helpBoardFilter.getCookieBanner()
+            .should('be.visible').click({ force: true });
     }
 
 });

@@ -15,7 +15,8 @@ class HelpBoardFilter {
     hbTypeHeading = '.filter-3 .am-accordion-header';
     hbTypeTags = '.filter-3 a';
     quitFiltersButton = '#HB_FI_QF';
-    viewResultsButton = '#HB_FI_VR';
+    applyFiltersButton = '#HB_FI_VR';
+    closeSelectedTags = 'div a.am-button.tag-closable';
     cookieBanner = '#cookie-banner-close';
 
     constructor() { }
@@ -52,7 +53,7 @@ class HelpBoardFilter {
         return cy.get(this.hbLocationInput);
     }
 
-    getHbLocationDropdown () {
+    getHbLocationDropdown() {
         return cy.get(this.hbLocationDropdown);
     }
 
@@ -84,8 +85,12 @@ class HelpBoardFilter {
         return cy.get(this.quitFiltersButton);
     }
 
-    getViewResultsButton() {
-        return cy.get(this.viewResultsButton);
+    getApplyFiltersButton() {
+        return cy.get(this.applyFiltersButton);
+    }
+
+    getCloseSelectedTags() {
+        return cy.get(this.closeSelectedTags);
     }
 
     getCookieBanner() {
