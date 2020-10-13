@@ -441,7 +441,15 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} alt={name} />
+                <SocialIcon
+                  src={URLS[name][0]}
+                  alt={name}
+                  id={
+                    name == "email"
+                      ? GTM.organisation.orgPrefix + GTM.organisation.email
+                      : ""
+                  }
+                />
               </a>
             )
           );
@@ -477,7 +485,12 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                   initials={getInitialsFromFullName(name)}
                 />
                 <PhotoUploadButton>
-                  {isOwner && <UploadPic user={organisation} />}
+                  {isOwner && (
+                    <UploadPic
+                      gtmPrefix={GTM.organisation.orgPrefix}
+                      user={organisation}
+                    />
+                  )}
                 </PhotoUploadButton>
               </AvatarPhotoContainer>
             </div>
