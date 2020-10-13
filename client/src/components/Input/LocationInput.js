@@ -92,7 +92,9 @@ const LocationInput = ({
 
   useEffect(() => {
     setSelectedAddress(displaySelectedAddressFromLocation(location));
-  }, [location, setSelectedAddress]);
+    document.querySelector(".ant-select-selection-item").id =
+      gtmPrefix + GTM.locationInput.enterAddress;
+  }, [location, setSelectedAddress, gtmPrefix]);
 
   const fetchAddressPredictions = useRef(
     debounce(
@@ -180,7 +182,6 @@ const LocationInput = ({
   return (
     <div>
       <StyledSelect
-        id={gtmPrefix + GTM.locationInput.enterAddress}
         showArrow={false}
         showSearch
         allowClear={selectedAddress.value}
@@ -197,7 +198,10 @@ const LocationInput = ({
           <Option key={pa.value}>{pa.text}</Option>
         ))}
       </StyledSelect>
-      <SubLabel selected={selectedAddress.value}>
+      <SubLabel
+        selected={selectedAddress.value}
+        id={gtmPrefix + GTM.locationInput.enterAddress}
+      >
         {t("feed.filters.location.enterAddress")}
       </SubLabel>
       {(apiError || formError) && (
