@@ -16,26 +16,32 @@ describe('FightPandemics Post for unauthorized user', () => {
         it('Unauthorized user is redirected to SignIn page when clicking on Like button', () => {        
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
                 cy.get(post.getLikeButtonSelector()).click();
-                cy.validateNewScreenIsOpen("auth/login");
+                cy.validateCorrectScreenIsOpen("auth/login");
             })                                                      
         });
 
         it('Unauthorized user is redirected to SignIn page when clicking on Comment button', () => {     
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
                 cy.get(post.getCommentButtonSelector()).click();
-                cy.validateNewScreenIsOpen("auth/login");
+                cy.validateCorrectScreenIsOpen("auth/login");
             })                                          
         });
 
-        it('Unauthorized user can share a post. Share via... modal window is diplayed.', () => {    
+        it('Unauthorized user can share a post. Share via... modal window is displayed.', () => {  
+            var postTitle;  
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
+                var postTitleElmenet = post.getPostTitle();
+                postTitleElmenet.invoke('text').then((text => {
+                    postTitle = text.toString();
+                }));
                 post.getShareButton().click();
             })  
             cy.get(post.getModalWindowShareViaSelector()).within(($modalWindow) => { 
+                cy.log(postTitle);
                 var modalWindowTitle = post.getModalWindowShareViaH4Title();
                 modalWindowTitle.should('be.visible').contains(shareViaModalWindowTitle);
                 var modalWindowEmailButton = post.getModalWindowOrgPostButton();
-                modalWindowEmailButton.should('have.attr', 'title', 'Org post').and('be.visible'); 
+                modalWindowEmailButton.should('have.attr', 'title', postTitle).and('be.visible'); 
                 var modalWindowFacebookButton = post.getModalWindowFacebookButton();
                 modalWindowFacebookButton.should('have.attr', 'aria-label', 'facebook').and('be.visible'); 
                 var modalWindowLinkedinButton = post.getModalWindowLinkedinButton();
@@ -61,7 +67,7 @@ describe('FightPandemics Post for unauthorized user', () => {
         it('Unauthorized user can click on a post header and is redirected to the post\'s author screen', () => {     
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
                 post.getPostHeader().click();
-                cy.validateNewScreenIsOpen("organisation");
+                cy.validateCorrectScreenIsOpen("organisation");
             })                                          
         });
 });

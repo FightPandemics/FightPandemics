@@ -24,7 +24,7 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
         it('Unauthorized user is redirected to SignIn page when cliking Add Post Button', () => {          
             var addPostButton = helpBoard.getAddPostButton();
             addPostButton.click({ force: true });
-            cy.validateNewScreenIsOpen("auth/login");
+            cy.validateCorrectScreenIsOpen("auth/login");
         });
 
         it('Unauthorized user sees a message that posts are not available - Help Board is empty', () => {     
@@ -34,7 +34,7 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
                     helpBoard.getNoPostsAvailableTextElement().contains(noPostsAvailableText);
                     var addPostLink = helpBoard.getAddPostLinkElement();
                     addPostLink.click({ force: true });
-                    cy.validateNewScreenIsOpen("auth/login");
+                    cy.validateCorrectScreenIsOpen("auth/login");
                 }else{
                     cy.log("THERE IS A POST ON THE HELP BOARD");
                 

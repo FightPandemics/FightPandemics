@@ -29,12 +29,12 @@ Cypress.Commands.add('generateRandomEmail', () => {
     return randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com';
 });
 
-Cypress.Commands.add('validateNewScreenIsOpen', (url) => {
-    cy.on("url:changed", (newUrl) => {
-        expect(newUrl).to.contain(url)
-      })
-});
-Cypress.Commands.overwrite('visit', (visit, url) => {
+Cypress.Commands.add('validateCorrectScreenIsOpen', (string) => {
+    cy.url().then(url => {
+        cy.url().should('contain', string);
+      });
+
+});Cypress.Commands.overwrite('visit', (visit, url) => {
         return visit(url, {
         onBeforeLoad (win) {
           Object.defineProperty(win.navigator, 'language', {

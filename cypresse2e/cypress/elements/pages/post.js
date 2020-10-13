@@ -4,6 +4,7 @@ class Post{
     commentButton = 'div[id^="HB_CM"]';
     shareButton = 'div[id^="PO_SH"]';
     postHeader = 'div.card-header';
+    postTitle = 'h4';
     modalWindowShareVia = 'div[role="document"]';
     modalWindowShareViaH4Title = 'div.am-modal-body h4';
     modalWindowCloseButton = 'span.am-modal-close-x';
@@ -39,6 +40,10 @@ class Post{
         return cy.get(this.postHeader);
     }
 
+    getPostTitle(){
+        return cy.get(this.postTitle);
+    }
+    
     getModalWindowShareViaSelector(){
         return this.modalWindowShareVia;
     }
