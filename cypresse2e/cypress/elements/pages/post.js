@@ -3,6 +3,7 @@ class Post{
     likeButton = 'div[id^="HB_LK"]';
     commentButton = 'div[id^="HB_CM"]';
     shareButton = 'div[id^="PO_SH"]';
+    postHeader = 'div.card-header';
     modalWindowShareVia = 'div[role="document"]';
     modalWindowShareViaH4Title = 'div.am-modal-body h4';
     modalWindowCloseButton = 'span.am-modal-close-x';
@@ -14,6 +15,7 @@ class Post{
     modalWindowTwitterButton = 'button[aria-label="twitter"]';
     modalWindowWhatsappButton = 'button[aria-label="whatsapp"]';
     modalWindowSharingUrlInput = 'div > input[type=text]';
+
 
     constructor() { }
 
@@ -32,6 +34,11 @@ class Post{
     getShareButton(){
         return cy.get(this.shareButton);
     }
+
+    getPostHeader(){
+        return cy.get(this.postHeader);
+    }
+
     getModalWindowShareViaSelector(){
         return this.modalWindowShareVia;
     }

@@ -26,7 +26,8 @@ describe('FightPandemics Post for unauthorized user', () => {
                 cy.validateNewScreenIsOpen("auth/login");
             })                                          
         });
-        it('Unauthorized user can share post', () => {    
+
+        it('Unauthorized user can share a post. Share via... modal window is diplayed.', () => {    
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
                 post.getShareButton().click();
             })  
@@ -34,19 +35,19 @@ describe('FightPandemics Post for unauthorized user', () => {
                 var modalWindowTitle = post.getModalWindowShareViaH4Title();
                 modalWindowTitle.should('be.visible').contains(shareViaModalWindowTitle);
                 var modalWindowEmailButton = post.getModalWindowOrgPostButton();
-                modalWindowEmailButton.should('have.attr', 'title', 'Org post'); 
+                modalWindowEmailButton.should('have.attr', 'title', 'Org post').and('be.visible'); 
                 var modalWindowFacebookButton = post.getModalWindowFacebookButton();
-                modalWindowFacebookButton.should('have.attr', 'aria-label', 'facebook'); 
+                modalWindowFacebookButton.should('have.attr', 'aria-label', 'facebook').and('be.visible'); 
                 var modalWindowLinkedinButton = post.getModalWindowLinkedinButton();
-                modalWindowLinkedinButton.should('have.attr', 'aria-label', 'linkedin');
+                modalWindowLinkedinButton.should('have.attr', 'aria-label', 'linkedin').and('be.visible');
                 var modalWindowRedditButton = post.getModalWindowRedditButton();
-                modalWindowRedditButton.should('have.attr', 'aria-label', 'reddit')
+                modalWindowRedditButton.should('have.attr', 'aria-label', 'reddit').and('be.visible');
                 var modalWindowTelegramButton = post.getModalWindowTelegramButton();
-                modalWindowTelegramButton.should('have.attr', 'aria-label', 'telegram')
+                modalWindowTelegramButton.should('have.attr', 'aria-label', 'telegram').and('be.visible');
                 var modalWindowTwitterButton = post.getModalWindowTwitterButton();
-                modalWindowTwitterButton.should('have.attr', 'aria-label', 'twitter')
+                modalWindowTwitterButton.should('have.attr', 'aria-label', 'twitter').and('be.visible');
                 var modalWindowWhatsappButton = post.getModalWindowWhatsappButton();
-                modalWindowWhatsappButton.should('have.attr', 'aria-label', 'whatsapp')
+                modalWindowWhatsappButton.should('have.attr', 'aria-label', 'whatsapp').and('be.visible');
                 var sharingPostLink = post.getModalWindowSharingUrlInput();
                 sharingPostLink.should('have.attr', 'value').and('contain', "/post/");
                 var closeModalWindowButton = post.getModalWindowCloseButton();
@@ -57,6 +58,12 @@ describe('FightPandemics Post for unauthorized user', () => {
             post.getModalWindowShareVia().should('not.exist');                                                       
         });
 
+        it('Unauthorized user can click on a post header and is redirected to the post\'s author screen', () => {     
+            cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
+                post.getPostHeader().click();
+                cy.validateNewScreenIsOpen("organisation");
+            })                                          
+        });
 });
 
 });
