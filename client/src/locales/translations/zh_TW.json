@@ -183,7 +183,8 @@
     "share": "分享",
     "delete": "刪除",
     "cancel": "取消",
-    "confirm": "確認"
+    "confirm": "確認",
+    "edited": "已編輯"
   },
   "profile": {
     "common": {
@@ -722,11 +723,11 @@
       "Network Authentication Required": "需要網絡驗證"
     },
     "avatar": {
-      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
-      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
-      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
-      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
-      "networkError": "Sorry, some network error occurred."
+      "fileTypeNotSupported": "抱歉，我們僅支持jp(e)g和png類型的圖像文件。",
+      "fileSizeTooLarge": "請上傳小於5MB的圖片。",
+      "imageDimensionTooSmall": "請上傳至少250像素高和250像素寬的圖像。",
+      "imageDimensionTooWide": "抱歉，圖像太寬。請使用寬度小於高度兩倍的圖像重試。",
+      "networkError": "抱歉，發生了一些網絡錯誤。"
     }
   },
   "TEMP: We are not a provider of healthcare services": "我們不是醫療保健服務提供商",
@@ -773,6 +774,6 @@
   "avatar": {
     "submitBtn": "上传",
     "cancelBtn": "取消",
-    "tryAgainBtn": "Try Again"
+    "tryAgainBtn": "再試一次"
   }
 }
