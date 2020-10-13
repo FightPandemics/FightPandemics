@@ -88,7 +88,15 @@ const ThreadMenu = styled.img`
     right: 1rem;
   }
 `;
-export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
+export const RecipientHeader = ({
+  threadId,
+  participant,
+  onMobileBackClick,
+  status,
+  blockThread,
+  unblockThread,
+  blockStatus,
+}) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
 
   function showBlockConfirm() {
@@ -96,7 +104,10 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
       `Block the connversation from ${participant.name}?`,
       `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
       [
-        { text: <Text type="danger">Block</Text>, onPress: () =>  alert('Block') },
+        {
+          text: <Text type="danger">Block</Text>,
+          onPress: () =>  blockThread(threadId),
+        },
         { text: "Cancel", onPress: () => null },
       ],
     );
@@ -107,7 +118,10 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
       "Archive the conversation?",
       "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
       [
-        { text:  <Text type="danger">Archive</Text>, onPress: () =>  alert('Archive') },
+        {
+          text: <Text type="danger">Archive</Text>,
+          onPress: () => alert("Archive"),
+        },
         { text: "Cancel", onPress: () => null },
       ],
     );
@@ -115,12 +129,10 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => showArchiveConfirm()}>
-        Archive
-      </Menu.Item>
-      <Menu.Item onClick={() => showBlockConfirm()} danger>
+      <Menu.Item onClick={() => showArchiveConfirm()}>Archive</Menu.Item>
+      {!blockStatus && <Menu.Item onClick={() => showBlockConfirm()} danger>
         Block
-      </Menu.Item>
+      </Menu.Item>}
     </Menu>
   );
 
@@ -158,12 +170,10 @@ export const RecipientHeader = ({ participant, onMobileBackClick, status }) => {
               )}
             </LastSeen>
           </h4>
-          <Dropdown
-            overlay={menu}
-            placement="bottomRight"
-          >
-              <ThreadMenu src={subMenuIcon} />
-          </Dropdown>
+          {(!blockStatus || blockStatus == "was-blocked") &&
+          <Dropdown overlay={menu} placement="bottomRight">
+            <ThreadMenu src={subMenuIcon} />
+          </Dropdown>}
         </RecipientName>
       )}
     </>

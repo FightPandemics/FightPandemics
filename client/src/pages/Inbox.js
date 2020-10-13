@@ -29,6 +29,8 @@ const Inbox = (props) => {
     getUserRooms,
     leaveAllRooms,
     getUserStatus,
+    unblockThread,
+    blockThread,
   } = useContext(WebSocketContext);
   const { isIdentified, user } = props;
   const { room, rooms, chatLog } = props.ws;
@@ -39,8 +41,11 @@ const Inbox = (props) => {
   };
 
   const toggleSettings = () => {
-    if (!isSettingsOpen) setSettingsTab("BLOCKED");
-    setIsSettingsOpen(!isSettingsOpen);
+    if (!isSettingsOpen) {
+      setSettingsTab("BLOCKED");
+      leaveAllRooms()
+    }
+      setIsSettingsOpen(!isSettingsOpen);
   };
 
   useEffect(() => {
@@ -79,6 +84,7 @@ const Inbox = (props) => {
         room={room}
         user={user}
         joinRoom={joinRoom}
+        leaveAllRooms={leaveAllRooms}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
         isSettingsOpen={isSettingsOpen}
@@ -91,6 +97,7 @@ const Inbox = (props) => {
           selectedSettingsTab={selectedSettingsTab}
           rooms={rooms}
           user={user}
+          unblockThread={unblockThread}
         />
       )}
       {!isSettingsOpen && !rooms.length ? (
@@ -110,6 +117,8 @@ const Inbox = (props) => {
             leaveAllRooms={leaveAllRooms}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
+            blockThread={blockThread}
+            unblockThread={unblockThread}
           />
         ))
       )}

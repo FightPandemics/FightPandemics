@@ -85,6 +85,12 @@ export default class SocketManager extends React.Component {
       if (!this.state.user || data.id == this.state.user.id) return;
       this.props.store.dispatch(userStatusUpdate(data));
     });
+
+    // user was blocked while online.
+    this.socket.on("FORCE_ROOM_UPDATE", (threadId) => {
+      console.log(threadId)
+      this.joinRoom({threadId});
+    })
   }
 
   identify = (userData) => {
@@ -169,8 +175,29 @@ export default class SocketManager extends React.Component {
     });
   };
 
-  messageSeen = () => {
-    // later
+  blockThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("BLOCK_THREAD", threadId, (response) => {
+        if (response.code == 200) {
+          this.joinRoom({threadId}) // refresh room only
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
+  unblockThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("UNBLOCK_THREAD", threadId, (response) => {
+        if (response.code == 200) {
+          this.getUserRooms() // refresh rooms
+          this.joinRoom({threadId}) // refresh room
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
   };
 
   componentWillUnmount() {
@@ -193,6 +220,8 @@ export default class SocketManager extends React.Component {
       getUserRooms: this.getUserRooms,
       getUserStatus: this.getUserStatus,
       leaveAllRooms: this.leaveAllRooms,
+      blockThread: this.blockThread,
+      unblockThread: this.unblockThread,
     };
     return (
       <WebSocketContext.Provider value={value}>

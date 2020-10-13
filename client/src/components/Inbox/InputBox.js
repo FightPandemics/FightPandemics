@@ -47,18 +47,41 @@ const InputContainer = styled.div`
     }
   }
 `;
-
+const ChatDisabled = styled.p`
+  width: 100%;
+  padding: 1rem;
+  background: #fff;
+  .unblock-btn {
+    display: block;
+    border: 1px solid #425af2 !important;
+    font-weight: 500;
+    color: #425af2;
+    padding: 1rem 2.5rem;
+    background: #fff;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+`
 export const InputBox = ({
-  threadId,
+  user,
+  room,
   sendMessage,
   inputExpanded,
   setInputExpanded,
+  blockStatus,
+  unblockThread,
 }) => {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
 
+  const getReceiver = (participants) => {
+    return participants.filter((p) => p.id != user.id)[0];
+  };
+
   useEffect(() => {
-    if (window.screen.width >= parseInt(mq.phone.wide.maxWidth))
+    if (inputRef.current && window.screen.width >= parseInt(mq.phone.wide.maxWidth))
       inputRef.current.focus();
   }, []);
 
@@ -67,7 +90,7 @@ export const InputBox = ({
   };
 
   useEffect(() => {
-    if (inputExpanded && text) return;
+    if (!inputRef.current || (inputExpanded && text)) return;
     if (inputRef.current.clientHeight < inputRef.current.scrollHeight)
       return setInputExpanded(true);
     if ((text.match(/\n/g) || []).length) setInputExpanded(true);
@@ -76,7 +99,7 @@ export const InputBox = ({
 
   const handleSendMgessage = async () => {
     let confirmation = await sendMessage({
-      threadId: threadId,
+      threadId: room._id,
       content: text,
     });
     if (confirmation) {
@@ -97,20 +120,37 @@ export const InputBox = ({
   };
   return (
     <InputContainer
-      className={`${inputExpanded ? "expanded" : ""}`}
+      className={`${inputExpanded || blockStatus? "expanded" : ""}`}
       text={text}
     >
-      <MessageInput
-        type="text"
-        onChange={handleChange}
-        placeholder="Type a message..."
-        value={text}
-        onKeyPress={handleKeyPress}
-        ref={inputRef}
-      />
-      <a disabled={!text} onClick={handleClick}>
-        <img className="send-comment" src={sendcomment} alt="Send Message" />
-      </a>
+      {blockStatus == "did-block" &&
+        <ChatDisabled>
+          You've bocked {getReceiver(room.participants).name}. unblock to receive messages from them again.
+          <button className={"unblock-btn"} onClick={() => unblockThread(room._id)}>
+            Unblock
+          </button>
+        </ChatDisabled>}
+        {blockStatus == "was-blocked" &&
+        <ChatDisabled>
+          You've been bocked by {getReceiver(room.participants).name}. you can no longer message them.
+        </ChatDisabled>}
+        {!blockStatus && <>
+          <MessageInput
+            type="text"
+            onChange={handleChange}
+            placeholder="Type a message..."
+            value={text}
+            onKeyPress={handleKeyPress}
+            ref={inputRef}
+          />
+          <a disabled={!text} onClick={handleClick}>
+            <img
+              className="send-comment"
+              src={sendcomment}
+              alt="Send Message"
+            />
+          </a>
+        </>}
     </InputContainer>
   );
 };

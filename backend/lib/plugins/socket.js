@@ -305,6 +305,46 @@ function onSocketConnect(socket) {
     if (messageEditedErr || !messageEdited) return;
     this.io.to(messageEdited.threadId).emit("MESSAGE_EDITED", messageEdited);
   });
+
+  socket.on("BLOCK_THREAD", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return; //user did not IDENTIFY
+    var [blockThreadErr, blockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "blocked",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (blockThreadErr || !blockThread) return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(this, blockThread.participants.find(p=>p.id != userId).id)
+    if (recipientSocketId) this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
+
+  socket.on("UNBLOCK_THREAD", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return; //user did not IDENTIFY
+    var [unblockThreadErr, unblockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "accepted",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (unblockThreadErr || !unblockThread) return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(this, unblockThread.participants.find(p=>p.id != userId).id)
+    if (recipientSocketId) this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
 }
 
 // usefull to send notifications outside socket context, or get online status

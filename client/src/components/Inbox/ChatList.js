@@ -62,7 +62,7 @@ export const ChatList = ({
   const SideChats = () => {
     return (
       <>
-        {rooms.map((_room) => (
+        {rooms.filter(r=>getSender(r.participants).status == "accepted").map((_room) => (
           <SideChatContainer
             className={`${_room._id == room?._id ? "selected" : ""}`}
             key={_room._id}
