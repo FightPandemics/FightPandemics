@@ -205,3 +205,13 @@ export const PlusIcon = styled.img`
   transform: translate(-50%, -50%);
   position: absolute;
 `;
+
+export const ServicesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+    flex-direction: column;
+  }
+`;

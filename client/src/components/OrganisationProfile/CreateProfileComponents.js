@@ -40,6 +40,16 @@ export const FormContainer = styled.div`
   }
 `;
 
+export const ServicesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+    flex-direction: column;
+  }
+`;
+
 export const InputWrapper = styled.div`
   width: 100%;
 `;

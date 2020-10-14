@@ -32,6 +32,7 @@ import {
   styleInput,
   globalText,
   errorStyles,
+  ServicesContainer
 } from "components/OrganisationProfile/CreateProfileComponents";
 import {
   CREATE_Organisation,
@@ -329,11 +330,7 @@ const CreateOrgProfile = (props) => {
             <WhiteSpace />
             <WhiteSpace />
           </div>
-          <Flex
-            direction="row"
-            align="start"
-            justify="between"
-          >
+          <ServicesContainer>
             <InputWrapper> 
               <InputGroup>
                 <Label
@@ -417,9 +414,6 @@ const CreateOrgProfile = (props) => {
                   </InputWrapper>
                 }
               </InputGroup>
-              <span style={errorStyles}>
-                {errors.needs && t("error.selectOneOption")}
-              </span>
             </InputWrapper>
             <InputWrapper>
               <InputGroup>
@@ -435,7 +429,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Donations"
+                  label={t("profile.org.donations")}
                   name="offers.donations"
                   onChange={([event]) => event.target.checked}
                 />
@@ -443,7 +437,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Volunteers"
+                  label={t("profile.org.volunteers")}
                   name="offers.volunteers"
                   onChange={([event]) => event.target.checked}
                 />
@@ -451,7 +445,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Staff"
+                  label={t("profile.org.staff")}
                   name="offers.staff"
                   onChange={([event]) => event.target.checked}
                 />
@@ -459,7 +453,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Information"
+                  label={t("profile.org.information")}
                   name="offers.information"
                   onChange={([event]) => event.target.checked}
                 />
@@ -467,7 +461,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Resources/Tools"
+                  label={t("profile.org.resources")}
                   name="offers.resources"
                   onChange={([event]) => event.target.checked}
                 />
@@ -475,7 +469,7 @@ const CreateOrgProfile = (props) => {
                   as={CheckboxGroup}
                   control={control}
                   defaultValue={false}
-                  label="Others"
+                  label={t("profile.org.other")}
                   name="offers.other"
                   onChange={([event]) => {
                     setOffersOtherCheckbox(!offersOtherCheckbox);
@@ -504,11 +498,8 @@ const CreateOrgProfile = (props) => {
                   </InputWrapper>
                 }
               </InputGroup>
-              <span style={errorStyles}>
-                {errors.offers && t("error.selectOneOption")}
-              </span>
             </InputWrapper>
-          </Flex>
+          </ServicesContainer>
           <InputWrapper>
             <Label style={styleLabel} label="" />
             <StyledCheckbox

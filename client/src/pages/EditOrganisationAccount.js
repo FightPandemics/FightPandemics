@@ -31,6 +31,7 @@ import {
   ProfilePicWrapper,
   CustomEditAccountHeader,
   Background,
+  ServicesContainer
 } from "../components/EditProfile/EditComponents";
 import {
   fetchOrganisation,
@@ -50,7 +51,8 @@ import LocationInput from "../components/Input/LocationInput";
 import ProfilePic from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateEmail } from "../utils/validators";
-import { mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
+import { inlineLabelStyles } from "../constants/formStyles";
 
 const errorStyles = {
   color: "#FF5656",
@@ -253,7 +255,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
                   return event.target.checked}
                 }
               >
-                <Label inputColor="#000000">{t("profile.org." + key)}</Label>
+                <InputLabel
+                  htmlFor={`needs.${key}`}
+                  style={{...inlineLabelStyles, fontSize: theme.typography.size.medium}}
+                  label={t("profile.org." + key)}
+                />
               </Controller>
             </CheckBoxWrapper>
           ))}
@@ -300,7 +306,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
                   return event.target.checked}
                 }
               >
-                <Label inputColor="#000000">{t("profile.org." + key)}</Label>
+                <InputLabel
+                  htmlFor={`offers.${key}`}
+                  style={{...inlineLabelStyles, fontSize: theme.typography.size.medium}}
+                  label={t("profile.org." + key)} />
               </Controller>
             </CheckBoxWrapper>
           ))}
@@ -524,11 +533,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
               <WhiteSpace />
               <WhiteSpace />
               {renderSelectItems()}
-              <Flex
-                direction="row"
-                align="start"
-                justify="between"
-              >
+              <ServicesContainer>
                 <InputWrapper>
                   <Label>
                     <Trans i18nKey="profile.org.seeking">
@@ -546,7 +551,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
                   </Label>
                   <HelpWrapper>{renderOfferSection()}</HelpWrapper>
                 </InputWrapper>
-              </Flex>
+              </ServicesContainer>
               <CustomSubmitButton
                 primary="true"
                 onClick={handleSubmit(onSubmit)}
