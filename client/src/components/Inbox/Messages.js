@@ -87,7 +87,10 @@ const Messages = ({
       "Delete the message?",
       "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
       [
-        { text: <Text type="danger">Delete</Text>, onPress: () => deleteMessage(messageId) },
+        {
+          text: <Text type="danger">Delete</Text>,
+          onPress: () => deleteMessage(messageId),
+        },
         { text: "Cancel", onPress: () => null },
       ],
     );
@@ -127,6 +130,7 @@ const Messages = ({
         className={`${editingMessageId == messageId ? "is-editing" : ""}`}
         key={"b-" + messageId}
       >
+        {isEdited && <small>Edited</small>}
         <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
           {!isDeleted && editingMessageId != messageId && (
             <Dropdown
@@ -142,8 +146,7 @@ const Messages = ({
           <div className="message-content-sender">
             {!isDeleted && message
               ? linkify(message)
-              : "This message was deleted"}
-            {isEdited && <small> (edited)</small>}
+              : "You deleted this message."}
           </div>
           {editingMessageId == messageId && (
             <textarea
@@ -169,18 +172,20 @@ const Messages = ({
   };
   const Recipient = ({ postRef, message, messageId, isDeleted, isEdited }) => {
     return (
-      <RecipientBubble
-        key={"b-" + messageId}
-        className={`${isDeleted ? "deleted" : ""}`}
-      >
-        {postRef && <OrgPost postRef={postRef} />}
-        <div className="message-content-recipient">
-          {!isDeleted && message
-            ? linkify(message)
-            : "This message was deleted"}
-          {isEdited && <small> (edited)</small>}
-        </div>
-      </RecipientBubble>
+      <BubbleContainer className={"recipient"} key={"b-" + messageId}>
+        <RecipientBubble
+          key={"b-" + messageId}
+          className={`${isDeleted ? "deleted" : ""}`}
+        >
+          {postRef && <OrgPost postRef={postRef} />}
+          <div className="message-content-recipient">
+            {!isDeleted && message
+              ? linkify(message)
+              : "This message was deleted."}
+          </div>
+        </RecipientBubble>
+        {isEdited && <small>Edited</small>}
+      </BubbleContainer>
     );
   };
 

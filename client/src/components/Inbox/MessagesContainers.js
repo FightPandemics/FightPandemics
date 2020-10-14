@@ -5,6 +5,15 @@ export const BubbleContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   position: relative;
+  &.recipient {
+    justify-content: flex-start;
+  }
+  small {
+    position: relative;
+    margin: 0 10px;
+    top: 50%;
+    font-style: italic;
+  }
   &.is-editing {
     margin-bottom: 3rem;
     div {
@@ -71,7 +80,7 @@ export const SenderBubble = styled.div`
   max-width: 60%;
   background-color: #425af2;
   padding: 0.8em 0.1em 0.8em 0.1em;
-  border-radius: 1em 1em 0.1em 1em;
+  border-radius: 2em 2em 0.1em 2em;
   letter-spacing: 1px;
   margin-top: 1em;
   word-break: break-word;
@@ -97,6 +106,10 @@ export const SenderBubble = styled.div`
   }
   &.deleted {
     opacity: 0.7;
+    background: #fff;
+    color: #969292;
+    font-style: italic;
+    border: 1px solid #969292;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     max-width: 70%;
@@ -106,9 +119,9 @@ export const SenderBubble = styled.div`
 export const RecipientBubble = styled.div`
   display: inline-block;
   max-width: 60%;
-  background-color: #f6f7fb;
+  background-color: #e6e4e6;
   padding: 0.8em 0.1em 0.8em 0.1em;
-  border-radius: 0.1em 1em 1em 1em;
+  border-radius: 0.1em 2em 2em 2em;
   letter-spacing: 1px;
   margin-top: 1em;
   word-break: break-word;
@@ -117,6 +130,10 @@ export const RecipientBubble = styled.div`
   }
   &.deleted {
     opacity: 0.7;
+    background: #fff;
+    color: #969292;
+    font-style: italic;
+    border: 1px solid #969292;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     max-width: 70%;
