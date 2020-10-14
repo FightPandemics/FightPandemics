@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
@@ -22,6 +23,7 @@ import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
+import { selectOrganisationId } from "reducers/session";
 
 import {
   optionsReducer,
@@ -244,8 +246,10 @@ const buttonPulse = styled.button`
   position: relative;
   top: 1.3em;
 `;
+
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const Feed = (props) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -253,6 +257,7 @@ const Feed = (props) => {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
+  const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
   const [isOnboarding, setOnboarding] = useState(true);
@@ -297,14 +302,8 @@ const Feed = (props) => {
     feedDispatch({ type, key, value });
 
   const handleFilterModal = () => {
-    // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(SET_VALUE, "applyFilters", false);
-    // dispatchAction(
-    //   SET_VALUE,
-    //   "activePanel",
-    //   panelIdx > -1 ? `${panelIdx}` : null,
-    // );
   };
 
   const refetchPosts = (isLoading, loadMore) => {
@@ -788,13 +787,13 @@ const Feed = (props) => {
                 />
               </NoPosts>
             ) : (
-              <CreatePostIcon
-                id={gtmTag(GTM.post.createPost)}
-                src={creatPost}
-                onClick={handleCreatePost}
-                className="create-post"
-              />
-            )}
+                <CreatePostIcon
+                  id={gtmTag(GTM.post.createPost)}
+                  src={creatPost}
+                  onClick={handleCreatePost}
+                  className="create-post"
+                />
+              )}
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
