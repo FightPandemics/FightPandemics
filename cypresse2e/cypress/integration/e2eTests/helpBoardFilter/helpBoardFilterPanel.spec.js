@@ -91,7 +91,7 @@ describe('FightPandemics Help Board Filters', () => {
             unselectFilterTags(helpBoardFilter.getHbTypeTags());
         });
 
-        it('View Results button is visible and clickable', () => {
+        it('Apply Filters button is visible and clickable', () => {
             closeCookieBanner();
             seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
         });
