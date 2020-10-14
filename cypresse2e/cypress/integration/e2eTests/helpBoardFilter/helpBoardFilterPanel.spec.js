@@ -54,49 +54,39 @@ describe('FightPandemics Help Board Filters', () => {
             seeAndClickElement(helpBoardFilter.getFilterButton());
         });
 
-        it('Location filter is expandable and collapsible', () => {
+        it('Location filter is expandable and collapsible, user can type location and see list, location subtext is visible, share location is visible and clickable', () => {
             toggleFilterHeadingOpen(helpBoardFilter.getHbLocationHeading(), 'Location');
             toggleFilterHeadingClose(helpBoardFilter.getHbLocationHeading());
             toggleFilterHeadingOpen(helpBoardFilter.getHbLocationHeading(), 'Location');
-        });
 
-        it('Type in location field and see the list of locations', () => {
             var locationField = helpBoardFilter.getHbLocationInput();
             locationField.should('be.visible').click({ force: true });
             locationField.type(LOCATION);
             helpBoardFilter.getHbLocationDropdown().should('be.visible');
             locationField.click({ force: true });
-        });
 
-        it('Location subtext is visible', () => {
             helpBoardFilter.getHbLocationSubtext()
                 .should('be.visible').contains('Enter address, zip code, or city');
-        });
 
-        it('Share location link is visible and clickable', () => {
             var shareLocation = helpBoardFilter.getHbShareLocation();
             shareLocation.should('be.visible').contains('Share My Location');
             shareLocation.click({ force: true });
         });
 
-        it('Providers filter is expandable and collapsible', () => {
+        it('Providers filter is expandable and collapsible, select and unselect Provider tags ', () => {
             toggleFilterHeadingOpen(helpBoardFilter.getHbProvidersHeading(), 'Providers');
             toggleFilterHeadingClose(helpBoardFilter.getHbProvidersHeading());
             toggleFilterHeadingOpen(helpBoardFilter.getHbProvidersHeading(), 'Providers');
-        });
 
-        it('Select and unselect Provider tags', () => {
             selectFilterTags(helpBoardFilter.getHbProvidersTags());
             unselectFilterTags(helpBoardFilter.getHbProvidersTags());
         });
 
-        it('Type filter is expandable and collapsible', () => {
+        it('Type filter is expandable and collapsible, select and unselect Type tags', () => {
             toggleFilterHeadingOpen(helpBoardFilter.getHbTypeHeading(), 'Type');
             toggleFilterHeadingClose(helpBoardFilter.getHbTypeHeading());
             toggleFilterHeadingOpen(helpBoardFilter.getHbTypeHeading(), 'Type');
-        });
 
-        it('Select and unselect Type tags', () => {
             selectFilterTags(helpBoardFilter.getHbTypeTags());
             unselectFilterTags(helpBoardFilter.getHbTypeTags());
         });
