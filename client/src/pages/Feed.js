@@ -277,8 +277,6 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [filterURL, setFilterURL] = useState("");
-  const [objectiveURL, setObjectiveURL] = useState("");
   const {
     filterModal,
     showCreatePostModal,
@@ -532,8 +530,17 @@ const Feed = (props) => {
     });
   };
 
-  useEffect(() => {
-    (() => {
+  const loadPosts = useCallback(async () => {
+    const filterURL = () => {
+      const filterObj = { ...selectedOptions };
+      delete filterObj["lookingFor"];
+      if (location) filterObj.location = location;
+      return Object.keys(filterObj).length === 0
+        ? ""
+        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+    };
+
+    const objectiveURL = () => {
       let objective = selectedType;
       if (
         selectedOptions["lookingFor"] &&
@@ -546,127 +553,91 @@ const Feed = (props) => {
       }
       switch (objective) {
         case "REQUEST":
-          setObjectiveURL("&objective=request");
-          break;
+          return "&objective=request";
         case "OFFER":
-          setObjectiveURL("&objective=offer");
-          break;
+          return "&objective=offer";
         default:
-          setObjectiveURL("");
+          return "";
       }
-    })();
-  }, [selectedOptions, selectedType]);
+    }
 
-  useEffect(() => {
-    (() => {
-      const filterObj = { ...selectedOptions };
-      delete filterObj["lookingFor"];
-      if (location) filterObj.location = location;
-      const getFilter =
-        Object.keys(filterObj).length === 0
-          ? ""
-          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-      setFilterURL(getFilter);
-    })();
-  }, [location, selectedOptions]);
-
-  useEffect(() => {
-    (() => {
-      const filterObj = { ...selectedOptions };
-      delete filterObj["offer or request help"];
-      if (location) filterObj.location = location;
-      const getFilter =
-        Object.keys(filterObj).length === 0
-          ? ""
-          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-      setFilterURL(getFilter);
-    })();
-  }, [location, selectedOptions]);
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      const limit = PAGINATION_LIMIT;
-      const skip = page * limit;
-      const searchURL = () => {
-        if (searchKeyword)
-          return `&keywords=${encodeURIComponent(searchKeyword)}`;
-        else return "";
-      };
-      let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
-      switch (searchCategory) {
-        case "POSTS":
-          break;
-        case "INDIVIDUALS":
-          baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
-          break;
-        case "ORGANISATIONS":
-          baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
-          break;
-        default:
-          break;
-      }
-      let endpoint = `${baseURL}${objectiveURL}${filterURL}${searchURL()}`;
-      postsDispatch({ type: FETCH_POSTS });
-
-      try {
-        const {
-          data: { data: posts, meta },
-        } = await axios.get(endpoint);
-        if (posts.length && meta.total) {
-          if (prevTotalPostCount !== meta.total) {
-            setTotalPostCount(meta.total);
-          }
-          if (posts.length < limit) {
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: true,
-              loadMore: false,
-            });
-          } else if (meta.total === limit) {
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: true,
-              loadMore: false,
-            });
-          }
-          const loadedPosts = posts.reduce((obj, item) => {
-            obj[item._id] = item;
-            return obj;
-          }, {});
-          if (postsList) {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...postsList, ...loadedPosts },
-            });
-          } else {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...loadedPosts },
-            });
-          }
-        } else if (posts) {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...postsList },
-          });
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: false,
-            loadMore: false,
-          });
-        } else {
-          postsDispatch({ type: SET_LOADING });
-        }
-      } catch (error) {
-        postsDispatch({ error, type: ERROR_POSTS });
-      }
-      dispatchAction(SET_VALUE, "applyFilters", true);
+    const searchURL = () => {
+      if (searchKeyword)
+        return `&keywords=${encodeURIComponent(searchKeyword)}`;
+      else return "";
     };
 
-    if (!showFilters || !filterModal) {
-      loadPosts();
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+    switch (searchCategory) {
+      case "POSTS":
+        break;
+      case "INDIVIDUALS":
+        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
+        break;
+      case "ORGANISATIONS":
+        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+        break;
+      default:
+        break;
     }
-  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
+    postsDispatch({ type: FETCH_POSTS });
+    try {
+      const {
+        data: { data: posts, meta },
+      } = await axios.get(endpoint);
+      if (posts.length && meta.total) {
+        if (prevTotalPostCount !== meta.total) {
+          setTotalPostCount(meta.total);
+        }
+        if (posts.length < limit) {
+          postsDispatch({
+            type: SET_LOADING,
+            isLoading: true,
+            loadMore: false,
+          });
+        } else if (meta.total === limit) {
+          postsDispatch({
+            type: SET_LOADING,
+            isLoading: true,
+            loadMore: false,
+          });
+        }
+        const loadedPosts = posts.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+        if (postsList) {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsList, ...loadedPosts },
+          });
+        } else {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...loadedPosts },
+          });
+        }
+      } else if (posts) {
+        postsDispatch({
+          type: SET_POSTS,
+          posts: { ...postsList },
+        });
+        postsDispatch({
+          type: SET_LOADING,
+          isLoading: false,
+          loadMore: false,
+        });
+      } else {
+        postsDispatch({ type: SET_LOADING });
+      }
+    } catch (error) {
+      postsDispatch({ error, type: ERROR_POSTS });
+    }
+  }, [page, selectedOptions, location, selectedType, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -674,9 +645,9 @@ const Feed = (props) => {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
+      loadPosts();
     }
-  }, [selectedOptions, applyFilters, isOnboarding]);
-
+  }, [selectedOptions, applyFilters, loadPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Onboarding
     if (props.history.location.state) {
@@ -743,7 +714,6 @@ const Feed = (props) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      dispatchAction(SET_VALUE, "applyFilters", false);
       if (
         !isLoading &&
         loadMore &&
@@ -758,7 +728,7 @@ const Feed = (props) => {
         return Promise.resolve();
       }
     },
-    [feedPosts.length, isLoading, loadMore],
+    [feedPosts.length, isLoading, loadMore], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {

@@ -364,20 +364,18 @@ const NavigationLayout = (props) => {
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item
-          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
-          key={key}
-        >
-          <a
+        <Menu.Item key={key}>
+          <div
             style={
               i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
             onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
           >
             {label.text}
-          </a>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
