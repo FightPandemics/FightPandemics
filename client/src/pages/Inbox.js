@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { InboxContainer } from "../components/Inbox/Container";
 import { ChatList } from "../components/Inbox/ChatList";
 import CurrentChat from "../components/Inbox/CurrentChat";
@@ -35,9 +36,14 @@ const Inbox = (props) => {
     blockThread,
     archiveThread,
   } = useContext(WebSocketContext);
-  const { isIdentified, user } = props;
+  const { isIdentified, user, history } = props;
   const { room, rooms, chatLog } = props.ws;
   const dispatch = useDispatch();
+
+  const unlisten = history.listen(() => {
+    leaveAllRooms();
+    unlisten();
+  });
 
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
@@ -139,5 +145,4 @@ const InboxPage = (props) => {
     </ChatContextProvider>
   );
 };
-
-export default InboxPage;
+export default withRouter(InboxPage);
