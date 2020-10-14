@@ -1,7 +1,7 @@
-import { SET_ORGANISATION_INDEX } from "constants/action-types";
+import { SESSION_ACTIONS } from "reducers/session";
 
 export const setOrganisationIndex = (index) => {
   return (dispatch) => {
-    dispatch({ type: SET_ORGANISATION_INDEX, payload: index });
+    dispatch({ type: SESSION_ACTIONS.SET_ORGANISATION_INDEX, payload: index });
   };
 };
