@@ -36,7 +36,7 @@ export const MENU_MAP = {
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
   it: { value: "Italiano", text: "Italian (Italiano)" },
   nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
-  pl: { value: "Polskie", text: "Polish (Polskie)" },
+  pl: { value: "Polski", text: "Polish (Polski)" },
   pt: { value: "Português", text: "Portuguese (Português)" },
   ru: { value: "русский", text: "Russian (русский)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },

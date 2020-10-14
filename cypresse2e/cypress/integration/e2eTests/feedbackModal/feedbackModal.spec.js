@@ -124,7 +124,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Submit Feedback button on feedback screen three is visible and clickable', () => {
-            feedbackButton('Submit Feedback');
+            feedbackButton('Submit');
         });
 
     });

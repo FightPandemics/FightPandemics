@@ -16,6 +16,7 @@
     "react-gtm-module": "^2.0.8",
     "react-helmet-async": "^1.0.6",
     "react-hook-form": "^5.7.2",
+    "react-image-crop": "^8.6.5",
     "react-i18next": "^11.7.0",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
@@ -35,7 +36,8 @@
     "tlds": "^1.207.0",
     "typeface-poppins": "^0.0.72",
     "typeface-work-sans": "^0.0.72",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "validator": "^13.1.17"
   },
   "scripts": {
     "start": "react-scripts start",

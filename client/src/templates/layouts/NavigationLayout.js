@@ -8,9 +8,8 @@ import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import i18n from "../../i18n";
 import { localization, languages } from "locales/languages";
-import globe from "assets/icons/globe.svg";
+import globe from "assets/icons/globe-white.svg";
 import SvgIcon from "components/Icon/SvgIcon";
-import TextAvatar from "components/TextAvatar";
 import CookieAlert from "components/CookieAlert";
 import FeedbackSubmitButton from "components/Button/FeedbackModalButton";
 import Footnote from "components/Footnote";
@@ -40,6 +39,7 @@ import {
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
+import ProfilePic from "../../components/Picture/ProfilePic";
 
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
@@ -52,6 +52,10 @@ const drawerStyles = {
 const sidebarStyle = {
   background: `${royalBlue}`,
 };
+
+const GlobeIcon = styled(SvgIcon)`
+  vertical-align: baseline;
+`;
 
 const MenuContainer = styled.div`
   width: 63vw !important;
@@ -122,7 +126,6 @@ const LanguageSwitchItem = styled(List.Item)`
   padding-left: 2.1rem;
   font-family: "Poppins", sans-serif;
   font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
-  font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
   & .am-list-line {
     border-bottom: 0;
     &:after {
@@ -188,6 +191,7 @@ const UserName = styled(Typography.Text)`
   font-size: 1.6rem;
   font-weight: 500;
   font-stretch: normal;
+  text-align: center;
   font-style: normal;
   line-height: normal;
   letter-spacing: 0.4px;
@@ -245,14 +249,6 @@ const DividerLine = styled.div`
   margin-bottom: 1rem;
 `;
 
-const AvatarInitials = styled(Typography.Text)`
-  font-family: Poppins;
-  font-size: 3.29rem;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-`;
-
 const RatingWrapper = styled.div`
   &:hover {
     cursor: pointer;
@@ -283,12 +279,15 @@ const NavigationLayout = (props) => {
     { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
   ];
 
-  const displayInitials = (user) => {
-    if (user?.firstName && user?.lastName) {
+  const displayAvatar = (user) => {
+    if (user?.photo || (user?.firstName && user?.lastName)) {
       return (
-        <AvatarInitials>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName}`)}
-        </AvatarInitials>
+        <ProfilePic
+          user={user}
+          initials={getInitialsFromFullName(
+            `${user.firstName} ${user.lastName}`,
+          )}
+        />
       );
     }
   };
@@ -357,16 +356,17 @@ const NavigationLayout = (props) => {
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
-          <a
+          <div
             style={
               i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
             onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
           >
             {label.text}
-          </a>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
@@ -556,11 +556,7 @@ const NavigationLayout = (props) => {
     <>
       <WhiteSpace size="lg" />
       <AvatarContainer>
-        <NavItem history={history}>
-          <TextAvatar size={80} alt={t("alt.avatar")}>
-            {displayInitials(user)}
-          </TextAvatar>
-        </NavItem>
+        {displayAvatar(user)}
         <UserName>{displayFullName(user)}</UserName>
       </AvatarContainer>
       <DividerLine />
@@ -611,9 +607,9 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="10vh" limitMobileHeight />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem
@@ -647,9 +643,9 @@ const NavigationLayout = (props) => {
       </NavItem>
       <Space height="33vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
-        <LanguageSwitchItem>
-          <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-          {languages[localization[i18n.language]].value}
+        <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
+          <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
+          {" " + languages[localization[i18n.language]].value}
         </LanguageSwitchItem>
       </Dropdown>
       <FeedbackItem

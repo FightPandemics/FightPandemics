@@ -12,7 +12,6 @@ import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
 import globe from "assets/icons/globe.svg";
-import { DownOutlined } from "@ant-design/icons";
 
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
@@ -36,6 +35,12 @@ const StyledNavBar = styled(NavBar)`
   }
   .am-navbar-title {
     display: none;
+  }
+  .am-navbar-left {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      padding-left: 2.3rem;
+      padding-top: 1rem;
+    }
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -139,16 +144,17 @@ export default ({
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
-          <a
+          <div
             style={
               i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
             onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
           >
             {label.text}
-          </a>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
@@ -218,14 +224,6 @@ export default ({
             {t("feed.title")}
           </NavLink>
         </li>
-        <li>
-          <Dropdown overlay={languageMenu} trigger={["click"]}>
-            <Link to="">
-              <SvgIcon src={globe} className="globe-icon-svg"></SvgIcon>
-              <DownOutlined />
-            </Link>
-          </Dropdown>
-        </li>
         {isAuthenticated ? (
           <>
             <li>
@@ -267,6 +265,13 @@ export default ({
             </button>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon
+            id={GTM.nav.prefix + GTM.nav.language}
+            src={globe}
+            className="globe-icon-svg"
+          ></SvgIcon>
+        </Dropdown>
       </>
     );
   };

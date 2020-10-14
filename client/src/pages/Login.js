@@ -296,6 +296,12 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     }
   };
 
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      isLoginForm ? handleSubmit(onLoginWithEmail)() : handleSubmit(onSignup)();
+    }
+  };
+
   const onForgotPassword = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_FORGOT_PASSWORD });
     try {
@@ -355,7 +361,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       </LoginLeftContainer>
       <LoginRightContainer>
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
-          <FormContainer>
+          <FormContainer onKeyPress={handleEnterKeyPress}>
             <Heading className="h4 text-center" level={4}>
               {isLoginForm
                 ? t("auth.signIn")
