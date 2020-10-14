@@ -39,17 +39,19 @@ const SettingsTabsSelector = styled(SideChatContainer)`
 `;
 
 export const ChatList = ({
-  empty,
   toggleMobileChatList,
   setToggleMobileChatList,
   rooms,
   joinRoom,
   room,
   user,
+  leaveAllRooms,
   isSettingsOpen,
   toggleSettings,
   setSettingsTab,
   selectedSettingsTab,
+  toggleViewRequests,
+  setToggleViewRequests,
 }) => {
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
@@ -59,10 +61,18 @@ export const ChatList = ({
     return participants.filter((p) => p.id == user.id)[0];
   };
 
+  const pendingRooms = rooms.filter(
+    (r) => getSender(r.participants).status == "pending",
+  );
+  const acceptedRooms = rooms.filter(
+    (r) => getSender(r.participants).status == "accepted",
+  );
+
   const SideChats = () => {
+    let roomsToShow = toggleViewRequests ? pendingRooms : acceptedRooms;
     return (
       <>
-        {rooms.filter(r=>getSender(r.participants).status == "accepted").map((_room) => (
+        {roomsToShow.map((_room) => (
           <SideChatContainer
             className={`${_room._id == room?._id ? "selected" : ""}`}
             key={_room._id}
@@ -123,20 +133,14 @@ export const ChatList = ({
             onClick={() => setSettingsTab("BLOCKED")}
           >
             Blocked Accounts
-            <SettingsNextArrow
-              src={arrow}
-              alt="next Arrow"
-            />
+            <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
           <SettingsTabsSelector
             className={`${selectedSettingsTab == "ARCHIVED" ? "selected" : ""}`}
             onClick={() => setSettingsTab("ARCHIVED")}
           >
             Archived Conversations
-            <SettingsNextArrow
-              src={arrow}
-              alt="next Arrow"
-            />
+            <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
         </div>
       </>
@@ -144,28 +148,49 @@ export const ChatList = ({
   };
 
   return (
-    <ChatListContainer
-      toggleMobileChatList={toggleMobileChatList}
-    >
+    <ChatListContainer toggleMobileChatList={toggleMobileChatList}>
       {!isSettingsOpen ? (
         <>
-          <ChatHeader>
-            Messages{" "}
-            <span>
-              {rooms
-                .map((_room) =>
-                  getSender(_room.participants).newMessages ? 1 : 0,
-                )
-                .reduce((a, b) => a + b, 0)}
-            </span>
-            <SettingsIcon onClick={() => toggleSettings()} src={gearIcon} />
-          </ChatHeader>
+          {!toggleViewRequests && (
+            <ChatHeader>
+              Messages{" "}
+              <span>
+                {acceptedRooms
+                  .map((_room) =>
+                    getSender(_room.participants).newMessages ? 1 : 0,
+                  )
+                  .reduce((a, b) => a + b, 0)}
+              </span>
+              <SettingsIcon onClick={() => toggleSettings()} src={gearIcon} />
+            </ChatHeader>
+          )}
+          {(pendingRooms.length > 0 || toggleViewRequests) && (
+            <ChatHeader
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                if (!toggleViewRequests) leaveAllRooms();
+                setToggleViewRequests(!toggleViewRequests);
+              }}
+            >
+              {toggleViewRequests && (
+                <SettingsBackArrow
+                  src={arrow}
+                  style={{ transform: "rotate(90deg)" }}
+                />
+              )}
+              Message requests <span>{pendingRooms.length}</span>
+              {!toggleViewRequests && (
+                <SettingsIcon
+                  src={arrow}
+                  style={{ transform: "rotate(-90deg)" }}
+                />
+              )}
+            </ChatHeader>
+          )}
           <div className="chat-bucket">
-            {!empty && (
-              <div onClick={() => setToggleMobileChatList(false)}>
-                <SideChats />
-              </div>
-            )}
+            <div onClick={() => setToggleMobileChatList(false)}>
+              <SideChats />
+            </div>
           </div>
         </>
       ) : (

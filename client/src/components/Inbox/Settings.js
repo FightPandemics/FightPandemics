@@ -140,7 +140,9 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                   <p className="message">{_room.lastMessage?.content}</p>
                 </div>
               </content>
-              <StyledButton>Unarchive</StyledButton>
+              <StyledButton onClick={() => unblockThread(_room._id)}>
+                Unarchive
+              </StyledButton>
             </ThreadContainer>
           ))}
         {!rooms.filter((r) => getSender(r.participants).status == "archived")
@@ -169,7 +171,10 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                 <header>
                   <UserName>{getReceiver(_room.participants).name}</UserName>
                 </header>
-                <StyledButton className={"for-blocked"} onClick={() => unblockThread(_room._id)}>
+                <StyledButton
+                  className={"for-blocked"}
+                  onClick={() => unblockThread(_room._id)}
+                >
                   Unblock
                 </StyledButton>
               </content>

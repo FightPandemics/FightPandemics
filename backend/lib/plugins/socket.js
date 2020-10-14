@@ -157,7 +157,7 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = await getSocketIdByUserId(this, id) ? "online" : "offline";
+    const status = (await getSocketIdByUserId(this, id)) ? "online" : "offline";
     res({ code: 200, data: status });
   });
 
@@ -320,12 +320,43 @@ function onSocketConnect(socket) {
         { arrayFilters: [{ "userToUpdate.id": userId }] },
       ),
     );
-    if (blockThreadErr || !blockThread) return res({ code: 500, message: "Internal server error" });
+    if (blockThreadErr || !blockThread)
+      return res({ code: 500, message: "Internal server error" });
     res({ code: 200, message: "Success" });
-    const recipientSocketId = await getSocketIdByUserId(this, blockThread.participants.find(p=>p.id != userId).id)
-    if (recipientSocketId) this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      blockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
   });
 
+  socket.on("ARCHIVE_THREAD", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return; //user did not IDENTIFY
+    var [blockThreadErr, blockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "archived",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (blockThreadErr || !blockThread)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      blockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
+
+  // used for unblock, accept, and unarchive (because it sets status to "accepted")
   socket.on("UNBLOCK_THREAD", async (data, res) => {
     userId = socket.userId;
     if (!userId) return; //user did not IDENTIFY
@@ -340,22 +371,32 @@ function onSocketConnect(socket) {
         { arrayFilters: [{ "userToUpdate.id": userId }] },
       ),
     );
-    if (unblockThreadErr || !unblockThread) return res({ code: 500, message: "Internal server error" });
+    if (unblockThreadErr || !unblockThread)
+      return res({ code: 500, message: "Internal server error" });
     res({ code: 200, message: "Success" });
-    const recipientSocketId = await getSocketIdByUserId(this, unblockThread.participants.find(p=>p.id != userId).id)
-    if (recipientSocketId) this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      unblockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
   });
 }
 
 // usefull to send notifications outside socket context, or get online status
 function getSocketIdByUserId(app, userId) {
   return new Promise((resolve) => {
-    app.io.of("/").adapter.customRequest({type:'getSocketIdByUserId', userId: userId},(err, replies) => {
-        // replies is an array of element pushed by cb(element) on individual socket.io server
-        // remove empty replies
-        const filtered = replies.filter(reply => reply != null)
-        resolve(filtered[0])
-    })
+    app.io
+      .of("/")
+      .adapter.customRequest(
+        { type: "getSocketIdByUserId", userId: userId },
+        (err, replies) => {
+          // replies is an array of element pushed by cb(element) on individual socket.io server
+          // remove empty replies
+          const filtered = replies.filter((reply) => reply != null);
+          resolve(filtered[0]);
+        },
+      );
   });
 }
 
@@ -378,16 +419,17 @@ function fastifySocketIo(app, config, next) {
 
     // customHook, to run a request on every node
     // every socket.io server executes below code, when customRequest is called
-    io.of('/').adapter.customHook = (request, cb) => {
-      if (request.type == 'getSocketIdByUserId') {
-          let userSocket = Object.values(io.of("/").connected).find(
+    io.of("/").adapter.customHook = (request, cb) => {
+      if (request.type == "getSocketIdByUserId") {
+        let userSocket =
+          Object.values(io.of("/").connected).find(
             (socket) => socket.userId == request.userId,
           ) || null;
-          cb(userSocket? userSocket.id : null)
+        cb(userSocket ? userSocket.id : null);
       }
       // add more request types if you need something that runs on all nodes
-      cb()
-    }
+      cb();
+    };
 
     next();
   } catch (error) {

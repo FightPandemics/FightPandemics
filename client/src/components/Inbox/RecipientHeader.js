@@ -95,6 +95,7 @@ export const RecipientHeader = ({
   status,
   blockThread,
   unblockThread,
+  archiveThread,
   blockStatus,
 }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
@@ -106,7 +107,7 @@ export const RecipientHeader = ({
       [
         {
           text: <Text type="danger">Block</Text>,
-          onPress: () =>  blockThread(threadId),
+          onPress: () => blockThread(threadId),
         },
         { text: "Cancel", onPress: () => null },
       ],
@@ -120,7 +121,7 @@ export const RecipientHeader = ({
       [
         {
           text: <Text type="danger">Archive</Text>,
-          onPress: () => alert("Archive"),
+          onPress: () => archiveThread(threadId),
         },
         { text: "Cancel", onPress: () => null },
       ],
@@ -130,9 +131,11 @@ export const RecipientHeader = ({
   const menu = (
     <Menu>
       <Menu.Item onClick={() => showArchiveConfirm()}>Archive</Menu.Item>
-      {!blockStatus && <Menu.Item onClick={() => showBlockConfirm()} danger>
-        Block
-      </Menu.Item>}
+      {!blockStatus && (
+        <Menu.Item onClick={() => showBlockConfirm()} danger>
+          Block
+        </Menu.Item>
+      )}
     </Menu>
   );
 
@@ -170,10 +173,11 @@ export const RecipientHeader = ({
               )}
             </LastSeen>
           </h4>
-          {(!blockStatus || blockStatus == "was-blocked") &&
-          <Dropdown overlay={menu} placement="bottomRight">
-            <ThreadMenu src={subMenuIcon} />
-          </Dropdown>}
+          {(!blockStatus || blockStatus == "was-blocked") && (
+            <Dropdown overlay={menu} placement="bottomRight">
+              <ThreadMenu src={subMenuIcon} />
+            </Dropdown>
+          )}
         </RecipientName>
       )}
     </>

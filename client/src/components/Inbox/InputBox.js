@@ -30,7 +30,7 @@ const InputContainer = styled.div`
   &.expanded {
     height: 6.858em;
     textarea {
-      height: 6.858em;
+      height: 6em;
     }
   }
   a {
@@ -63,7 +63,28 @@ const ChatDisabled = styled.p`
     cursor: pointer;
     margin-top: 0.5rem;
   }
-`
+  .request-btns {
+    display: inline;
+    border: 1px solid #425af2 !important;
+    font-weight: 500;
+    color: #425af2;
+    padding: 1rem 2.5rem;
+    background: #fff;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    &.ingore-btn {
+      color: red;
+      border: 1px solid red !important;
+    }
+    &.block-btn {
+      float: right;
+      color: black;
+      border: 1px solid black !important;
+    }
+  }
+`;
 export const InputBox = ({
   user,
   room,
@@ -71,7 +92,11 @@ export const InputBox = ({
   inputExpanded,
   setInputExpanded,
   blockStatus,
+  leaveAllRooms,
   unblockThread,
+  blockThread,
+  archiveThread,
+  setToggleViewRequests,
 }) => {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
@@ -80,8 +105,15 @@ export const InputBox = ({
     return participants.filter((p) => p.id != user.id)[0];
   };
 
+  const getSender = (participants) => {
+    return participants.filter((p) => p.id == user.id)[0];
+  };
+
   useEffect(() => {
-    if (inputRef.current && window.screen.width >= parseInt(mq.phone.wide.maxWidth))
+    if (
+      inputRef.current &&
+      window.screen.width >= parseInt(mq.phone.wide.maxWidth)
+    )
       inputRef.current.focus();
   }, []);
 
@@ -120,21 +152,63 @@ export const InputBox = ({
   };
   return (
     <InputContainer
-      className={`${inputExpanded || blockStatus? "expanded" : ""}`}
+      className={`${inputExpanded || blockStatus ? "expanded" : ""}`}
       text={text}
     >
-      {blockStatus == "did-block" &&
+      {blockStatus == "did-block" && (
         <ChatDisabled>
-          You've bocked {getReceiver(room.participants).name}. unblock to receive messages from them again.
-          <button className={"unblock-btn"} onClick={() => unblockThread(room._id)}>
+          You've bocked {getReceiver(room.participants).name}. unblock to
+          receive messages from them again.
+          <button
+            className={"unblock-btn"}
+            onClick={() => unblockThread(room._id)}
+          >
             Unblock
           </button>
-        </ChatDisabled>}
-        {blockStatus == "was-blocked" &&
+        </ChatDisabled>
+      )}
+      {blockStatus == "was-blocked" && (
         <ChatDisabled>
-          You've been bocked by {getReceiver(room.participants).name}. you can no longer message them.
-        </ChatDisabled>}
-        {!blockStatus && <>
+          You've been bocked by {getReceiver(room.participants).name}. you can
+          no longer message them.
+        </ChatDisabled>
+      )}
+      {!blockStatus && getSender(room.participants).status == "pending" && (
+        <ChatDisabled>
+          Do want to accept the message request?. you cannot reply until you
+          accept the request.
+          <div>
+            <button
+              className={"request-btns accept-btn"}
+              onClick={() => {
+                unblockThread(
+                  room._id,
+                ); /* even if not blocked, it will mark it as "accepted" */
+                setToggleViewRequests(false);
+              }}
+            >
+              Accept
+            </button>
+            <button
+              className={"request-btns ingore-btn"}
+              onClick={() => archiveThread(room._id)}
+            >
+              ignore
+            </button>
+            <button
+              className={"request-btns block-btn"}
+              onClick={async () => {
+                await blockThread(room._id);
+                leaveAllRooms();
+              }}
+            >
+              Block
+            </button>
+          </div>
+        </ChatDisabled>
+      )}
+      {!blockStatus && getSender(room.participants).status == "accepted" && (
+        <>
           <MessageInput
             type="text"
             onChange={handleChange}
@@ -150,7 +224,8 @@ export const InputBox = ({
               alt="Send Message"
             />
           </a>
-        </>}
+        </>
+      )}
     </InputContainer>
   );
 };

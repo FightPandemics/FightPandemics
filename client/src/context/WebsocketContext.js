@@ -88,9 +88,9 @@ export default class SocketManager extends React.Component {
 
     // user was blocked while online.
     this.socket.on("FORCE_ROOM_UPDATE", (threadId) => {
-      console.log(threadId)
-      this.joinRoom({threadId});
-    })
+      console.log(threadId);
+      this.joinRoom({ threadId });
+    });
   }
 
   identify = (userData) => {
@@ -179,7 +179,7 @@ export default class SocketManager extends React.Component {
     return new Promise((resolve) => {
       this.socket.emit("BLOCK_THREAD", threadId, (response) => {
         if (response.code == 200) {
-          this.joinRoom({threadId}) // refresh room only
+          this.joinRoom({ threadId }); // refresh room only
           return resolve(true);
         }
         resolve(false);
@@ -187,12 +187,26 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  archiveThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("ARCHIVE_THREAD", threadId, async (response) => {
+        if (response.code == 200) {
+          await this.joinRoom({ threadId }); // await refresh room
+          this.leaveAllRooms(); // then leave it
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
+  // used to unblock, but also used to unarchive and accept requests.
   unblockThread = (threadId) => {
     return new Promise((resolve) => {
       this.socket.emit("UNBLOCK_THREAD", threadId, (response) => {
         if (response.code == 200) {
-          this.getUserRooms() // refresh rooms
-          this.joinRoom({threadId}) // refresh room
+          this.getUserRooms(); // refresh rooms
+          this.joinRoom({ threadId }); // refresh room
           return resolve(true);
         }
         resolve(false);
@@ -221,6 +235,7 @@ export default class SocketManager extends React.Component {
       getUserStatus: this.getUserStatus,
       leaveAllRooms: this.leaveAllRooms,
       blockThread: this.blockThread,
+      archiveThread: this.archiveThread,
       unblockThread: this.unblockThread,
     };
     return (

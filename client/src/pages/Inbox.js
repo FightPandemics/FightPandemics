@@ -18,6 +18,8 @@ const Inbox = (props) => {
     setIsSettingsOpen,
     setSettingsTab,
     selectedSettingsTab,
+    toggleViewRequests,
+    setToggleViewRequests,
   } = useContext(ChatContext);
   const {
     sendMessage,
@@ -31,6 +33,7 @@ const Inbox = (props) => {
     getUserStatus,
     unblockThread,
     blockThread,
+    archiveThread,
   } = useContext(WebSocketContext);
   const { isIdentified, user } = props;
   const { room, rooms, chatLog } = props.ws;
@@ -43,9 +46,9 @@ const Inbox = (props) => {
   const toggleSettings = () => {
     if (!isSettingsOpen) {
       setSettingsTab("BLOCKED");
-      leaveAllRooms()
+      leaveAllRooms();
     }
-      setIsSettingsOpen(!isSettingsOpen);
+    setIsSettingsOpen(!isSettingsOpen);
   };
 
   useEffect(() => {
@@ -91,6 +94,8 @@ const Inbox = (props) => {
         toggleSettings={toggleSettings}
         setSettingsTab={setSettingsTab}
         selectedSettingsTab={selectedSettingsTab}
+        toggleViewRequests={toggleViewRequests}
+        setToggleViewRequests={setToggleViewRequests}
       />
       {isSettingsOpen && (
         <Settings
@@ -119,6 +124,7 @@ const Inbox = (props) => {
             setToggleMobileChatList={setToggleMobileChatList}
             blockThread={blockThread}
             unblockThread={unblockThread}
+            archiveThread={archiveThread}
           />
         ))
       )}

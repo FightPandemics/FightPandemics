@@ -16,6 +16,7 @@ const CurrentChat = ({
   editMessage,
   leaveAllRooms,
   blockThread,
+  archiveThread,
   unblockThread,
   user,
 }) => {
@@ -27,6 +28,7 @@ const CurrentChat = ({
     setEditingMessageId,
     inputExpanded,
     setInputExpanded,
+    setToggleViewRequests,
   } = useContext(ChatContext);
 
   const getSender = (participants) => {
@@ -57,9 +59,10 @@ const CurrentChat = ({
 
   const getThreadBlockStatus = () => {
     if (getSender(room.participants).status == "blocked") return "did-block";
-    if (getReceiver(room.participants).status == "blocked") return "was-blocked";
-    else return null
-  }
+    if (getReceiver(room.participants).status == "blocked")
+      return "was-blocked";
+    else return null;
+  };
 
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
@@ -71,6 +74,7 @@ const CurrentChat = ({
         blockThread={blockThread}
         unblockThread={unblockThread}
         blockStatus={getThreadBlockStatus()}
+        archiveThread={archiveThread}
       />
       <Messages
         user={user}
@@ -92,7 +96,11 @@ const CurrentChat = ({
           inputExpanded={inputExpanded}
           setInputExpanded={setInputExpanded}
           blockStatus={getThreadBlockStatus()}
+          leaveAllRooms={leaveAllRooms}
           unblockThread={unblockThread}
+          blockThread={blockThread}
+          archiveThread={archiveThread}
+          setToggleViewRequests={setToggleViewRequests}
         />
       )}
     </CurrentChatContainer>
