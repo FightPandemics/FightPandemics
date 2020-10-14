@@ -41,6 +41,7 @@ const MessageModal = ({
   authorId,
   isAuthenticated,
   postId,
+  isFromProfile,
 }) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -95,7 +96,7 @@ const MessageModal = ({
         <div>
           <PrivateMessageContainer onClick={showModal}>
             <img src={activeemail} />
-            <span>Message</span>
+            {!isFromProfile && <span>Message</span>}
           </PrivateMessageContainer>
           <MsgModal
             title="Send a message"
@@ -105,12 +106,15 @@ const MessageModal = ({
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !text }}
+            isFromProfile={isFromProfile}
           >
-            <OrgPostRef
-              title={title}
-              content={postContent}
-              postAuthor={postAuthor}
-            />
+            {!isFromProfile && (
+              <OrgPostRef
+                title={title}
+                content={postContent}
+                postAuthor={postAuthor}
+              />
+            )}
             <textarea
               placeholder="Type a message..."
               onChange={handleTextChange}

@@ -81,7 +81,7 @@ export const MsgModal = styled(Modal)`
   .ant-modal-content {
     position: relative;
     right: 6em;
-    height: 31.071em;
+    height: ${(props) => (props.isFromProfile ? "22em" : "31.071em")};
     width: 46.857em;
     border-radius: 0.714em;
     padding: 1.5em 2em;
@@ -218,6 +218,7 @@ export const FailedModal = styled(SuccessModal)`
 
 export const PrivateMessageContainer = styled.div`
   margin-left: 3em;
+  cursor: pointer;
   :hover {
     color: #939393;
   }
@@ -228,5 +229,8 @@ export const PrivateMessageContainer = styled.div`
   span {
     position: relative;
     left: 0.5em;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
   }
 `;
