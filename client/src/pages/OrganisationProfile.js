@@ -1,7 +1,15 @@
 import { WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import React, { useState, useEffect, useContext, useReducer } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+  useRef,
+} from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -24,6 +32,9 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "components/Picture/UploadPic";
+
+import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -46,6 +57,9 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -72,13 +86,18 @@ import {
   OrganisationContext,
   withOrganisationContext,
 } from "context/OrganisationContext";
-import { ERROR_POSTS, SET_POSTS, FETCH_POSTS } from "hooks/actions/feedActions";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_LIKE,
+  SET_LOADING,
+  NEXT_PAGE,
+  RESET_PAGE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  ERROR_POSTS,
+  SET_POSTS,
+  FETCH_POSTS,
 } from "hooks/actions/feedActions";
 import {
   postsReducer,
@@ -86,6 +105,7 @@ import {
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -100,11 +120,11 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-
-const OrganisationProfile = () => {
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
+const OrganisationProfile = ({ history, isAuthenticated }) => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
-
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
@@ -119,12 +139,37 @@ const OrganisationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
+  const { t } = useTranslation();
+  const [modal, setModal] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
 
-  const { deleteModalVisibility } = postsState;
+  const {
+    isLoading,
+    loadMore,
+    page,
+    posts: postsList,
+    deleteModalVisibility,
+    status,
+    error: postsError,
+  } = postsState;
+  const prevTotalPostCount = usePrevious(totalPostCount);
+  const prevOrgId = usePrevious(organisationId);
+  const organisationPosts = Object.entries(postsList);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -135,12 +180,17 @@ const OrganisationProfile = () => {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -148,45 +198,130 @@ const OrganisationProfile = () => {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, t, userProfileDispatch]);
 
-  const fetchOrganisationPosts = async () => {
-    postsDispatch({ type: FETCH_POSTS });
-    try {
-      const res = await axios.get(
-        `/api/posts?ignoreUserLocation=true&limit=-1&authorId=${organisationId}`,
-      );
-      const loadedPosts =
-        res?.data?.length &&
-        res.data.reduce((obj, item) => {
-          obj[item._id] = item;
-          return obj;
-        }, {});
+  useEffect(() => {
+    const fetchOrganisationPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      postsDispatch({ type: FETCH_POSTS });
+      try {
+        if (organisationId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
 
-      postsDispatch({
-        type: SET_POSTS,
-        posts: loadedPosts,
-      });
-    } catch (err) {
-      const message = err.response?.data?.message || err.message;
-      postsDispatch({
-        type: ERROR_POSTS,
-        error: `Failed loading activity, reason: ${message}`,
-      });
+          if (prevOrgId !== organisationId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
+          if (posts.length && meta.total) {
+            if (prevTotalPostCount !== meta.total) {
+              setTotalPostCount(meta.total);
+            }
+            if (posts.length < limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
+            } else if (meta.total === limit) {
+              postsDispatch({
+                type: SET_LOADING,
+                isLoading: true,
+                loadMore: false,
+              });
+            }
+            const loadedPosts = posts.reduce((obj, item) => {
+              obj[item._id] = item;
+              return obj;
+            }, {});
+
+            if (prevOrgId === organisationId && postsList) {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...postsList, ...loadedPosts },
+              });
+            } else {
+              postsDispatch({
+                type: SET_POSTS,
+                posts: { ...loadedPosts },
+              });
+            }
+          } else if (prevOrgId === organisationId && posts) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: { ...postsList },
+            });
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: false,
+              loadMore: false,
+            });
+          } else {
+            postsDispatch({ type: SET_LOADING });
+          }
+        }
+      } catch (error) {
+        postsDispatch({ error, type: ERROR_POSTS });
+      }
+    };
+    fetchOrganisationPosts();
+  }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const refetchPosts = (isLoading, loadMore) => {
+    postsDispatch({
+      type: RESET_PAGE,
+      isLoading,
+      loadMore,
+    });
+    if (page === 0) {
+      setToggleRefetch(!toggleRefetch);
     }
   };
 
-  useEffect(() => {
-    fetchOrganisationPosts();
-  }, [organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const isItemLoaded = useCallback((index) => !!organisationPosts[index], [
+    organisationPosts,
+  ]);
 
-  const [modal, setModal] = useState(false);
-  const [drawer, setDrawer] = useState(false);
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= organisationPosts.length &&
+        organisationPosts.length
+      ) {
+        return new Promise((resolve) => {
+          postsDispatch({ type: NEXT_PAGE });
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [isLoading, loadMore, organisationPosts.length],
+  );
+
+  useEffect(() => {
+    setItemCount(
+      loadMore ? organisationPosts.length + 1 : organisationPosts.length,
+    );
+  }, [loadMore, organisationPosts.length]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -199,10 +334,17 @@ const OrganisationProfile = () => {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
-            ...postsState.posts,
+            ...postsList,
           };
           delete allPosts[post._id];
-          fetchOrganisationPosts();
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
       } catch (error) {
         console.log({
@@ -243,30 +385,37 @@ const OrganisationProfile = () => {
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
-    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-    let response = {};
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      let response = {};
 
-    if (user) {
-      if (liked) {
-        try {
-          response = await axios.delete(endPoint);
-        } catch (error) {
-          console.log({ error });
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
         }
-      } else {
-        try {
-          response = await axios.put(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
-
-      if (response.data) {
-        postsDispatch({
-          type: SET_LIKE,
-          postId,
-          count: response.data.likesCount,
-        });
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
       }
     }
   };
@@ -292,7 +441,15 @@ const OrganisationProfile = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} alt={name} />
+                <SocialIcon
+                  src={URLS[name][0]}
+                  alt={name}
+                  id={
+                    name == "email"
+                      ? GTM.organisation.orgPrefix + GTM.organisation.email
+                      : ""
+                  }
+                />
               </a>
             )
           );
@@ -303,9 +460,12 @@ const OrganisationProfile = () => {
     }
   };
 
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const onToggleDrawer = () => setDrawer(!drawer);
+  const onToggleCreatePostDrawer = () => setModal(!modal);
   const renderProfileData = () => {
     if (!organisation) {
-      return <p>Loading...</p>;
+      return <Loader />;
     } else {
       const { address } = location;
       return (
@@ -315,19 +475,34 @@ const OrganisationProfile = () => {
               <EditIcon
                 src={edit}
                 id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                onClick={() => setDrawer(true)}
+                onClick={onToggleDrawer}
               />
             )}
-            <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
+            <div>
+              <AvatarPhotoContainer>
+                <ProfilePic
+                  user={organisation}
+                  initials={getInitialsFromFullName(name)}
+                />
+                <PhotoUploadButton>
+                  {isOwner && (
+                    <UploadPic
+                      gtmPrefix={GTM.organisation.orgPrefix}
+                      user={organisation}
+                    />
+                  )}
+                </PhotoUploadButton>
+              </AvatarPhotoContainer>
+            </div>
             <UserInfoDesktop>
               <NameDiv>
-                {name}
+                <NamePara>{name}</NamePara>
                 <PlaceholderIcon />
                 {isOwner && (
                   <EditEmptyIcon
                     src={editEmpty}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                    onClick={() => setDrawer(true)}
+                    onClick={onToggleDrawer}
                   />
                 )}
               </NameDiv>
@@ -347,27 +522,27 @@ const OrganisationProfile = () => {
           <div style={{ margin: "0 2.5rem" }}>
             <WhiteSpace />
             <DescriptionMobile>
-              <SectionHeader> About</SectionHeader>
+              <SectionHeader> {t("profile.org.about")}</SectionHeader>
               {about}
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              Activity
+              {t("profile.org.activity")}
               <PlaceholderIcon />
               {isOwner && (
                 <>
-                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    onClick={() => setModal(!modal)}
+                    onClick={onToggleCreatePostDrawer}
                   />
                 </>
               )}
             </SectionHeader>
             <FeedWrapper>
               <Activity
-                filteredPosts={postsState.posts}
+                filteredPosts={postsList}
                 user={user}
                 postDelete={postDelete}
                 handlePostDelete={handlePostDelete}
@@ -375,12 +550,27 @@ const OrganisationProfile = () => {
                 deleteModalVisibility={deleteModalVisibility}
                 handleCancelPostDelete={handleCancelPostDelete}
                 handlePostLike={handlePostLike}
+                loadNextPage={loadNextPage}
+                isNextPageLoading={isLoading}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalPostCount={totalPostCount}
               />
+              {status === ERROR_POSTS && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+              {emptyFeed() && <></>}
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={() => setModal(false)}
-                  loadPosts={fetchOrganisationPosts}
+                  onCancel={onToggleCreatePostDrawer}
+                  loadPosts={refetchPosts}
                   visible={modal}
                   user={user}
                 />
@@ -391,19 +581,19 @@ const OrganisationProfile = () => {
             <CustomDrawer
               placement="bottom"
               closable={false}
-              onClose={() => setDrawer(false)}
+              onClose={onToggleDrawer}
               visible={drawer}
               height="150px"
               key="bottom"
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Edit Account Information
+                  {t("profile.org.editAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Edit Profile{" "}
+                  {t("profile.individual.editProfile") + " "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>
@@ -416,7 +606,7 @@ const OrganisationProfile = () => {
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <Loader />;
   return (
     <ProfileLayout>
       <BackgroundHeader>

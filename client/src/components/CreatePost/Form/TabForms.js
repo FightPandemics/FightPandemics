@@ -1,24 +1,12 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
+import { useTranslation } from "react-i18next";
 import { Divider, ModalWrapper } from "components/CreatePost/StyledModal";
 import Form from "components/CreatePost/Form/Form";
 import EditForm from "components/CreatePost/Form/EditForm";
 import GTM from "constants/gtm-tags";
 
 const { TabPane } = Tabs;
-
-const tabs = [
-  {
-    key: "offer",
-    title: "Offering Help",
-    question: "What are you offering?",
-  },
-  {
-    key: "request",
-    title: "Requesting Help",
-    question: "What do you need?",
-  },
-];
 
 const ModalComponent = ({
   isAuthenticated,
@@ -38,6 +26,20 @@ const ModalComponent = ({
   user,
   gtmTagPrefix,
 }) => {
+  const { t } = useTranslation();
+  const tabs = [
+    {
+      key: "offer",
+      title: t("post.givingHelp"),
+      question: t("post.whatGiving"),
+    },
+    {
+      key: "request",
+      title: t("post.gettingHelp"),
+      question: t("post.whatNeed"),
+    },
+  ];
+
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
 

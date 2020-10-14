@@ -31,6 +31,10 @@ class JoinNow {
     getFpLogo() {
         return cy.get(this.fpLogo);
     }
+    
+    getFpLogoLocator() {
+        return this.fpLogo;
+    }
 
     getH4Heading() {
         return cy.get(this.h4Heading);

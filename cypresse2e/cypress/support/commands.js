@@ -1,11 +1,35 @@
-Cypress.Commands.add('checkFpLogoIsVisibleAndClickable', (fpLogoLocator) => { 
+Cypress.Commands.add('checkFpLogoIsVisibleAndClickable', (fpLogoLocator) => {
     var fpLogo = cy.get(fpLogoLocator);
-    fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+    fpLogo.should('be.visible').and('have.attr', 'alt', 'FightPandemics logo').click();
 });
 
-Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading, pageImageLocator) => { 
+Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading, pageImageLocator) => {
     var pageHeading = cy.get(pageHeadingLocator);
     pageHeading.should('be.visible').contains(heading);
     var pageImage = cy.get(pageImageLocator);
     pageImage.should('be.visible');
+});
+
+export const randomString = (length) => {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+};
+
+Cypress.Commands.add('generateRandomEmail', () => {
+    return randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com';
+});
+
+Cypress.Commands.overwrite('visit', (visit, url) => {
+        return visit(url, {
+        onBeforeLoad (win) {
+          Object.defineProperty(win.navigator, 'language', {
+            value: 'en_US'
+          })
+        }
+      })
 });

@@ -1,4 +1,6 @@
 import JoinNow from '../../../elements/pages/joinNow';
+import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
+import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
 
 describe('FightPandemics Sign Up Page', () => {
 
@@ -11,7 +13,7 @@ describe('FightPandemics Sign Up Page', () => {
 
     it('FP logo is visible and clickable', () => {
       var fpLogo = joinNow.getFpLogo();
-      fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+      cy.checkFpLogoIsVisibleAndClickable(joinNow.getFpLogoLocator());
 
     });
 
@@ -35,7 +37,7 @@ describe('FightPandemics Sign Up Page', () => {
       emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
       var emailRequired = joinNow.getEmailRequired();
       emailRequired.should('be.visible');
-      emailRequired.contains('small', 'Email is required.');
+      emailRequired.contains('small', REQUIRED_EMAIL_ERROR_MESSAGE);
 
     });
 
@@ -45,7 +47,7 @@ describe('FightPandemics Sign Up Page', () => {
       emailField.type('qa.test@').focus().blur();
       var validEmailRequired = joinNow.getValidEmailRequired();
       validEmailRequired.should('be.visible');
-      validEmailRequired.contains('small', 'Invalid email');
+      validEmailRequired.contains('small', INVALID_EMAIL_ERROR_MESSAGE);
 
     });
 
@@ -178,7 +180,7 @@ describe('FightPandemics Sign Up Page', () => {
     it('LinkedIn button for sign up is visible', () => {
       var joinByLinkedinButton = joinNow.getJoinNowLinkedinButton();
       joinByLinkedinButton.should('be.visible');
-      joinByLinkedinButton.contains('span', 'Linkedin');
+      joinByLinkedinButton.contains('span', 'LinkedIn');
 
     });
   });

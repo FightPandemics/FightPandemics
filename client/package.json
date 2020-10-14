@@ -7,6 +7,7 @@
     "antd-mobile": "^2.3.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
+    "i18next": "^19.6.3",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "polished": "^3.6.2",
@@ -15,6 +16,8 @@
     "react-gtm-module": "^2.0.8",
     "react-helmet-async": "^1.0.6",
     "react-hook-form": "^5.7.2",
+    "react-image-crop": "^8.6.5",
+    "react-i18next": "^11.7.0",
     "react-load-script": "0.0.6",
     "react-moment": "^0.9.7",
     "react-redux": "^7.2.0",
@@ -24,6 +27,7 @@
     "react-share": "^4.2.1",
     "react-step-wizard": "^5.3.2",
     "react-transition-group": "^4.4.1",
+    "react-virtualized": "^9.21.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "snyk": "^1.319.2",
@@ -32,7 +36,8 @@
     "tlds": "^1.207.0",
     "typeface-poppins": "^0.0.72",
     "typeface-work-sans": "^0.0.72",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "validator": "^13.1.17"
   },
   "scripts": {
     "start": "react-scripts start",
