@@ -1,6 +1,6 @@
 {
   "headline": "A place to offer and request help",
-  "tagline": "<0>Pandemics will continue to happen.</0><1>We help communities prepare and respond</1>",
+  "tagline": "<0>Pandemics will continue to happen.</0><1>We help communities prepare and respond.</1>",
   "common": {
     "getHelp": "Request Help",
     "giveHelp": "Offer Help",
@@ -24,7 +24,7 @@
       "whereLocated": "Where are you located?",
       "relevantResults": "We want to show you the most relevant results",
       "enterAddress": "Enter address, zip code, or city",
-      "shareLocation": "Share my Location",
+      "shareLocation": "Share My Location",
       "showAnywhere": "Show me postings from anywhere",
       "whatEmail": "What is your email address?",
       "respectPrivacy": "We respect your privacy. Please read our and <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
@@ -33,7 +33,7 @@
     "needHelp": {
       "whatHelp": "What type of help do you need?",
       "medical": "Medical",
-      "haveCovidSymptoms": "I have symptoms of COVID-19",
+      "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc."
     },
@@ -57,7 +57,7 @@
       "location": {
         "label": "Location",
         "enterAddress": "Enter address, zip code, or city",
-        "shareLocation": "Share my Location"
+        "shareLocation": "Share My Location"
       },
       "providers": "Providers",
       "providersList": [
@@ -183,7 +183,8 @@
     "share": "Share",
     "delete": "Delete",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "edited": "edited"
   },
   "profile": {
     "common": {
@@ -207,7 +208,7 @@
       "savingChanges": "Saving Changes...",
       "submit": "Create Profile",
       "submitLoading": "Creating Profile...",
-      "invalidPassword": "Password must contain at least 3 of these:  lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+      "invalidPassword": "Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
       "addressRequired": "Address is required. Please enter your address and select it from the drop-down",
       "emailRequired": "Email address is required",
       "passwordRequired": "Password is required",
@@ -224,7 +225,9 @@
         "linkedin": "LinkedIn URL",
         "website": "Website"
       },
-      "emailInvalid": "Email address is invalid"
+      "emailMaxLength": "Email address must not exceed 200 characters",
+      "emailInvalid": "Email address is invalid",
+      "emailDomainInvalid": "Email domain is invalid"
     },
     "individual": {
       "email": "Email",
@@ -237,7 +240,7 @@
       "shareInformation": "Share Information",
       "iNeed": "I need",
       "medical": "Medical Help",
-      "haveCovidSymptoms": "I have symptoms of COVID-19",
+      "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
       "editProfile": "Edit Profile",
@@ -325,7 +328,7 @@
     "password": "Password",
     "enterPassword": "Enter password",
     "confirmPassword": "Confirm password",
-    "forgotPassword": "Forgot Password",
+    "forgotPassword": "Forgot Password?",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
     "recoverLink": "Email me a recovery link",
@@ -593,7 +596,7 @@
     "thankYouMessage": "Your input means a lot and helps us improve our services during and after the COVID-19 pandemic.",
     "submitFeedback": "Submit Feedback",
     "radio": {
-      "age": "What is your age",
+      "age": "What is your age?",
       "unaffected": "I go to work/school normally",
       "quarantine": "I am healthy, but in a stay-at-home quarantine",
       "symptomaticUntested": "I have mild symptoms but haven't been tested",
@@ -664,7 +667,7 @@
     "invalidState": "Invalid state",
     "passwordsShouldMatch": "Password should be entered twice exactly the same",
     "passwordWeak": "Password is too weak",
-    "wrongCredentials": "Wrong email or password",
+    "wrongCredentials": "Wrong email or password.",
     "failedChangePasswordEmail": "Error creating change password email",
     "feedbackAlreadySubmitted": "Feedback already submitted",
     "emailIssue": "Email is already in use or cannot be validated",
@@ -722,6 +725,13 @@
       "Loop Detected": "Loop Detected",
       "Not Extended": "Not Extended",
       "Network Authentication Required": "Network Authentication Required"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
+      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
+      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
+      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
+      "networkError": "Sorry, some network error occurred."
     }
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
@@ -764,5 +774,10 @@
   "TEMP: Done": "Done",
   "TEMP: Retake the Test": "Retake the Test",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Based on your reported symptoms, you should seek care immediately.\nCall the emergency number!",
-  "TEMP: Your Responses": "Your Responses"
+  "TEMP: Your Responses": "Your Responses",
+  "avatar": {
+    "submitBtn": "Submit",
+    "cancelBtn": "Cancel",
+    "tryAgainBtn": "Try Again"
+  }
 }

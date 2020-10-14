@@ -1,72 +1,72 @@
-import RecoverPassword from '../../../elements/pages/recoverPassword'
+import ForgotPassword from '../../../elements/pages/recoverPassword'
 import {VALID_SAMPLE_EMAIL} from '../../constants';
 import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
 import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
 
 
-describe('FightPandemics Recover Password Page', () => {
+describe('FightPandemics Forgot Password Page', () => {
 
-    const recoverPassword = new RecoverPassword();
-    var h4Heading = "Recover Password";
+    const forgotPassword = new ForgotPassword();
+    var h4Heading = "Forgot Password?";
 
 
     context('User is trying to recover password', () => {
         beforeEach(() => {
-            recoverPassword.visit();
+            forgotPassword.visit();
         });
 
         it('FP logo is visible and clickable', () => {
-            cy.checkFpLogoIsVisibleAndClickable(recoverPassword.getFpLogoLocator());
+            cy.checkFpLogoIsVisibleAndClickable(forgotPassword.getFpLogoLocator());
 
         });
         
-        it('Recover Password page contains heading and image', () => {          
-            cy.pageContainsHeadingAndImage(recoverPassword.getRecoverPasswordPageTitleLocator(),h4Heading, recoverPassword.getImageLocator());
+        it('Forgot Password page contains heading and image', () => {          
+            cy.pageContainsHeadingAndImage(forgotPassword.getForgotPasswordPageTitleLocator(),h4Heading, forgotPassword.getImageLocator());
         });
 
-        it('Recover Password button is disabled', () => {
-            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
+        it('Submit button is disabled', () => {
+            checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
         });
 
-        it('Leaving email field blank triggers error and Recover Password Button is disabled', () => {
-            var emailField = recoverPassword.getEmailField();
+        it('Leaving email field blank triggers error and Submit Button is disabled', () => {
+            var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
-            var emailRequiredErrorMessage = recoverPassword.getErrorMessageField();
+            var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
-            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
+            checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
 
         });
 
-        it('Entering invalid email triggers error and Recover Password Button is disabled', () => {
-            var emailField = recoverPassword.getEmailField();
+        it('Entering invalid email triggers error and Submit Button is disabled', () => {
+            var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type('qa.test.invalid@').focus().blur();
-            var emailRequiredErrorMessage = recoverPassword.getErrorMessageField();
+            var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(INVALID_EMAIL_ERROR_MESSAGE);
-            checkRecoverButtonIsDisabled(recoverPassword.getRecoverPasswordButton());
+            checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
 
         });
         
-        it('Entering correct email triggers Recovery Button is enabled', () => {
-            var emailField = recoverPassword.getEmailField();
+        it('Entering correct email triggers Submit Button is enabled', () => {
+            var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
             emailField.type(VALID_SAMPLE_EMAIL).focus().blur();           
-            var recoverPasswordButton = recoverPassword.getRecoverPasswordButton();
-            recoverPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'false');
+            var submitButton = forgotPassword.getSubmitButton();
+            submitButton.invoke('attr', 'aria-disabled').should('contain', 'false');
         });
 
         it('Back to Sign in screen link is visible and clickable', () => {
-            var backToSignInPageLink = recoverPassword.getBackToSignInLink();
+            var backToSignInPageLink = forgotPassword.getBackToSignInLink();
             backToSignInPageLink.should('be.visible');
             backToSignInPageLink.contains('Back to Sign In screen').click();
 
         });
     });
 
-    function checkRecoverButtonIsDisabled(recoverPasswordButton){
-        recoverPasswordButton.invoke('attr', 'aria-disabled').should('contain', 'true')
+    function checkSubmitButtonIsDisabled(submitButton){
+        submitButton.invoke('attr', 'aria-disabled').should('contain', 'true');
     }
 
 });
