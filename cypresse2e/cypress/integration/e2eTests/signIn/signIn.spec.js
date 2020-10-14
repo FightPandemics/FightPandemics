@@ -14,7 +14,7 @@ describe('FightPandemics Sign In Page', () => {
 
         it('FP logo is visible and clickable', () => {
             var fpLogo = signIn.getFpLogo();
-            fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+            cy.checkFpLogoIsVisibleAndClickable(signIn.getFpLogoLocator());
 
         });
 
@@ -137,7 +137,7 @@ describe('FightPandemics Sign In Page', () => {
         it('Forgot password link is visible and clickable', () => {
             var forgotPasswordLink = signIn.getForgotPasswordLink();
             forgotPasswordLink.should('be.visible');
-            forgotPasswordLink.contains('a', 'Forgot password?').click();
+            forgotPasswordLink.contains('a', 'Forgot Password?').click();
 
         });
 
@@ -165,7 +165,7 @@ describe('FightPandemics Sign In Page', () => {
         it('LinkedIn button for sign in is visible', () => {
             var signInByLinkedinButton = signIn.getSignInLinkedinButton();
             signInByLinkedinButton.should('be.visible');
-            signInByLinkedinButton.contains('span', 'Linkedin');
+            signInByLinkedinButton.contains('span', 'LinkedIn');
 
         });
     });

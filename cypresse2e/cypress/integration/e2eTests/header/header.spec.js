@@ -10,7 +10,7 @@ describe('FightPandemics Navigation bar', () => {
           });
  
       it('Logo is present and visible', () => {
-        header.getLogo().should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo');
+        cy.checkFpLogoIsVisibleAndClickable(header.getFpLogoLocator());
       });
 
       it('Login and Registers buttons should be visible when user is not logged in', () => {
