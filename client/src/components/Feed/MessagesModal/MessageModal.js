@@ -48,7 +48,7 @@ const MessageModal = ({
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
   const [msgRsp, setMsgRsp] = useState(true);
-  const { sendMessage, joinRoom } = useContext(WebSocketContext);
+  const { sendMessage, joinRoom, getUserRooms } = useContext(WebSocketContext);
   let history = useHistory();
 
   const showModal = async () => {
@@ -69,6 +69,7 @@ const MessageModal = ({
       content: text,
       postId: postId,
     });
+    getUserRooms();
     if (confirmation) {
       setMsgSent(true);
       setMsgRsp(true);
