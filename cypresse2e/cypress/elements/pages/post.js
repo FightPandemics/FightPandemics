@@ -5,6 +5,7 @@ class Post{
     shareButton = 'div[id^="PO_SH"]';
     postHeader = 'div.card-header';
     postTitle = 'h4';
+    postAuthorUrl = 'div.card-header > a';
     modalWindowShareVia = 'div[role="document"]';
     modalWindowShareViaH4Title = 'div.am-modal-body h4';
     modalWindowCloseButton = 'span.am-modal-close-x';
@@ -43,7 +44,15 @@ class Post{
     getPostTitle(){
         return cy.get(this.postTitle);
     }
-    
+
+    getPostAuthorUrl(){
+        return cy.get(this.postAuthorUrl);
+    }
+
+    getPostAuthorUrlSelector(){
+        return this.postAuthorUrl;
+    }
+
     getModalWindowShareViaSelector(){
         return this.modalWindowShareVia;
     }

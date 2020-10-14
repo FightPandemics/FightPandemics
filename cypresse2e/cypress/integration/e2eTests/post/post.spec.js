@@ -30,14 +30,13 @@ describe('FightPandemics Post for unauthorized user', () => {
         it('Unauthorized user can share a post. Share via... modal window is displayed.', () => {  
             var postTitle;  
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
-                var postTitleElmenet = post.getPostTitle();
-                postTitleElmenet.invoke('text').then((text => {
+                var postTitleElement = post.getPostTitle();
+                postTitleElement.invoke('text').then((text => {
                     postTitle = text.toString();
                 }));
                 post.getShareButton().click();
             })  
             cy.get(post.getModalWindowShareViaSelector()).within(($modalWindow) => { 
-                cy.log(postTitle);
                 var modalWindowTitle = post.getModalWindowShareViaH4Title();
                 modalWindowTitle.should('be.visible').contains(shareViaModalWindowTitle);
                 var modalWindowEmailButton = post.getModalWindowOrgPostButton();
@@ -64,12 +63,15 @@ describe('FightPandemics Post for unauthorized user', () => {
             post.getModalWindowShareVia().should('not.exist');                                                       
         });
 
-        it('Unauthorized user can click on a post header and is redirected to the post\'s author screen', () => {     
+        it('Unauthorized user can click on a post header and is redirected to the post\'s author screen', () => {  
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
-                post.getPostHeader().click();
-                cy.validateCorrectScreenIsOpen("organisation");
-            })                                          
-        });
+                post.getPostAuthorUrl().invoke('attr', 'href')
+                .then(value => {
+                    post.getPostHeader().click();                     
+                    cy.validateCorrectScreenIsOpen(value);               
+            });
+        }) 
+    }) ;
 });
 
 });
