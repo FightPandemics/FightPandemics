@@ -111,7 +111,7 @@ const Profile = ({
     params: { id: pathUserId },
   },
   history,
-  isAuthenticated
+  isAuthenticated,
 }) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
@@ -413,7 +413,9 @@ const Profile = ({
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             <PhotoUploadButton>
-              {ownUser && <UploadPic user={user} />}
+              {ownUser && (
+                <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
+              )}
             </PhotoUploadButton>
           </AvatarPhotoContainer>
         </div>
