@@ -156,8 +156,9 @@ function EditAccount(props) {
           <FillEmptySpace />
           <ProfilePicWrapper>
             <ProfilePic
-              resolution={"7680px"}
-              noPic={true}
+              resolution={"768rem"}
+              allowUpload={false}
+              user={user}
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             {/* hide this until backend API is available

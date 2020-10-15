@@ -16,6 +16,9 @@ import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "../components/Picture/UploadPic";
+import { NoPosts } from "pages/Feed";
+
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -39,6 +42,9 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -73,6 +79,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -103,6 +110,8 @@ const Profile = ({
   match: {
     params: { id: pathUserId },
   },
+  history,
+  isAuthenticated,
 }) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
@@ -144,6 +153,7 @@ const Profile = ({
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -339,28 +349,38 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
-    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-    let response = {};
-    if (user) {
-      if (liked) {
-        try {
-          response = await axios.delete(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
         }
-      } else {
-        try {
-          response = await axios.put(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
-      if (response.data) {
-        postsDispatch({
-          type: SET_LIKE,
-          postId,
-          count: response.data.likesCount,
-        });
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
       }
     }
   };
@@ -386,13 +406,25 @@ const Profile = ({
             onClick={onToggleDrawer}
           />
         )}
-        <ProfilePic
-          noPic={true}
-          initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
-        />
+        <div>
+          <AvatarPhotoContainer>
+            <ProfilePic
+              user={user}
+              initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
+            />
+            <PhotoUploadButton>
+              {ownUser && (
+                <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
+              )}
+            </PhotoUploadButton>
+          </AvatarPhotoContainer>
+        </div>
         <UserInfoDesktop>
           <NameDiv>
-            {firstName} {lastName}
+            <NamePara>
+              {firstName} {lastName}
+            </NamePara>
+
             <PlaceholderIcon />
             {ownUser && (
               <EditEmptyIcon

@@ -186,8 +186,8 @@ function EditOrganisationProfile(props) {
       return (
         <ProfilePicWrapper>
           <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
+            resolution={"768rem"}
+            user={organisation}
             initials={getInitialsFromFullName(name)}
           />
           {/* hide this until backend API is available
@@ -209,7 +209,6 @@ function EditOrganisationProfile(props) {
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
-
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>

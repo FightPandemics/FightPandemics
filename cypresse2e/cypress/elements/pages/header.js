@@ -16,6 +16,10 @@ class Header{
         return cy.get(this.fightPandemicsLogo);
     }
 
+    getFpLogoLocator() {
+        return this.fightPandemicsLogo;
+    }
+
     getAboutUsLink(){
         return cy.get(this.aboutUsLink);
     }
