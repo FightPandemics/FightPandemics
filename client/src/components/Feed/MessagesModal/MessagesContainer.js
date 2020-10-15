@@ -81,7 +81,6 @@ export const MsgModal = styled(Modal)`
   .ant-modal-content {
     position: relative;
     right: 6em;
-    height: ${(props) => (props.isFromProfile ? "22em" : "31.071em")};
     width: 46.857em;
     border-radius: 0.714em;
     padding: 1.5em 2em;
@@ -127,14 +126,15 @@ export const SuccessModal = styled(MsgModal)`
     padding-top: 1em;
     width: 100%;
     font-size: 1.143em;
+    text-align: center;
   }
   .ant-modal-title {
     text-align: center;
     padding-top: 1em;
     font-size: 1.571em;
+    line-height: 1.5;
   }
   .ant-modal-content {
-    height: 20.5em;
     width: 46.857em;
     border-radius: 0.714em;
     padding: 1.5em 2em;
@@ -176,40 +176,14 @@ export const SuccessModal = styled(MsgModal)`
 `;
 
 export const FailedModal = styled(SuccessModal)`
-  p {
-    font-size: 1em;
-    text-align: center;
-  }
-  .ant-modal-title {
-    padding-top: 0.5em;
-  }
-  .ant-modal-content {
-    height: 14em;
-    width: 50em;
-    padding: 0em 6em;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: relative;
-      padding: 0em 2em;
-      margin: auto;
-      width: 90%;
-      height: 50%;
-    }
-  }
   .ant-btn {
     :first-child {
       display: block !important;
+      margin: 0 auto;
     }
     :last-child {
       display: none !important;
     }
-  }
-  .ant-modal-footer > div {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    bottom: 0.5em;
-    width: 100%;
-    right: 0;
   }
   .ant-modal-close-x {
     display: none;

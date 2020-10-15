@@ -112,7 +112,6 @@ const MessageModal = ({
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !text }}
-            isFromProfile={isFromProfile}
           >
             {!isFromProfile && (
               <OrgPostRef
@@ -141,8 +140,9 @@ const MessageModal = ({
               cancelText="Done"
             >
               <p>
-                Your message to {postAuthorName} concerning the "{title}" was
-                sent succesfully.
+                Your message to {postAuthorName}{" "}
+                {!isFromProfile && `concerning the "${title}"`} was sent
+                succesfully.
               </p>
             </SuccessModal>
           ) : (
@@ -153,8 +153,9 @@ const MessageModal = ({
               cancelText="Close"
             >
               <p>
-                Your message to {postAuthorName} concerning the "{title}" was
-                not sent succesfully. Please try again later.
+                Your message to {postAuthorName}{" "}
+                {!isFromProfile && `concerning the "${title}"`} was not sent
+                succesfully. Please try again later.
               </p>
             </FailedModal>
           )}
