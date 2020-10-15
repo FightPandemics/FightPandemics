@@ -21,8 +21,15 @@ const getLocationReverseGeocodeSchema = {
     .prop("lng", S.number().minimum(-180).maximum(180).required()),
 };
 
+const getHealthFacilityPlacesSchema = {
+  querystring: strictSchema()
+    .prop("lat", S.number().minimum(0).maximum(90).required())
+    .prop("lng", S.number().minimum(-180).maximum(180).required()),
+};
+
 module.exports = {
   getAddressPredictionsSchema,
   getLocationDetailsSchema,
   getLocationReverseGeocodeSchema,
+  getHealthFacilityPlacesSchema,
 };

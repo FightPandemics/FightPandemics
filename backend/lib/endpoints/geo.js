@@ -2,11 +2,13 @@ const {
   getAddressPredictions,
   getLocationDetailsByPlaceId,
   getLocationByLatLng,
+  getHealthFacilityPlaces,
 } = require("../components/Geo");
 const {
   getAddressPredictionsSchema,
   getLocationDetailsSchema,
   getLocationReverseGeocodeSchema,
+  getHealthFacilityPlacesSchema
 } = require("./schema/geo");
 
 /*
@@ -58,6 +60,21 @@ async function routes(app) {
       return data;
     }
   );
+
+  app.get(
+    "/health-facility-places",
+    { schema: getHealthFacilityPlacesSchema },
+    async (req) => {
+      const { lat, lng } = req.query;
+      const [err, data] = await app.to(getHealthFacilityPlaces(lat, lng));
+      if (err) {
+        app.log.error(err, "Failed retrieving health facility places");
+        throw app.httpErrors.internalServerError();
+      }
+      return data;
+    }
+  );
+
 }
 
 module.exports = routes;
