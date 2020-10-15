@@ -9,7 +9,7 @@ class Post{
     modalWindowShareVia = 'div[role="document"]';
     modalWindowShareViaH4Title = 'div.am-modal-body h4';
     modalWindowCloseButton = 'span.am-modal-close-x';
-    modalWindowOrgPostButton = 'button[aria-label="email"]';
+    modalWindowEmailButton = 'button[aria-label="email"]';
     modalWindowFacebookButton = 'button[aria-label="facebook"]';
     modalWindowLinkedinButton = 'button[aria-label="linkedin"]';
     modalWindowRedditButton = 'button[aria-label="reddit"]';
@@ -65,8 +65,8 @@ class Post{
     getModalWindowCloseButton(){
         return cy.get(this.modalWindowCloseButton);
     }
-    getModalWindowOrgPostButton(){
-        return cy.get(this.modalWindowOrgPostButton);
+    getModalWindowEmailButton(){
+        return cy.get(this.modalWindowEmailButton);
     }
     getModalWindowFacebookButton(){
         return cy.get(this.modalWindowFacebookButton);

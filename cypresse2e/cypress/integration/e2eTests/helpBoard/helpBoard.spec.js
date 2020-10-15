@@ -21,7 +21,7 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
             cy.pageContainsHeading(helpBoard.getHelpBoardPageTitleLocator(),h1Heading);
         });
 
-        it('Unauthorized user is redirected to SignIn page when cliking Add Post Button', () => {          
+        it('Unauthorized user is redirected to SignIn page when clicking Add Post Button', () => {          
             var addPostButton = helpBoard.getAddPostButton();
             addPostButton.click({ force: true });
             cy.validateCorrectScreenIsOpen("auth/login");
