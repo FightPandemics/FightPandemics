@@ -46,7 +46,10 @@ const CurrentChat = ({
       threadId: room._id,
       skip: chatLog.length,
     });
-    if (loadMoreSuccess) setIsLoading(false);
+    if (loadMoreSuccess)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
   };
 
   useEffect(() => {

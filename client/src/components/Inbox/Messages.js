@@ -191,7 +191,7 @@ const Messages = ({
 
   useLayoutEffect(() => {
     if (!isLoading) scrollToBottom();
-  }, [room, chatLog.length, isLoading]);
+  }, [room, chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <MessagesContainer className={`${inputExpanded ? "input-expanded" : ""}`}>
