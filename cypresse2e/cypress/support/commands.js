@@ -1,6 +1,6 @@
 Cypress.Commands.add('checkFpLogoIsVisibleAndClickable', (fpLogoLocator) => {
     var fpLogo = cy.get(fpLogoLocator);
-    fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+    fpLogo.should('be.visible').and('have.attr', 'alt', 'FightPandemics logo').click();
 });
 
 Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading, pageImageLocator) => {
@@ -22,4 +22,14 @@ export const randomString = (length) => {
 
 Cypress.Commands.add('generateRandomEmail', () => {
     return randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com';
+});
+
+Cypress.Commands.overwrite('visit', (visit, url) => {
+        return visit(url, {
+        onBeforeLoad (win) {
+          Object.defineProperty(win.navigator, 'language', {
+            value: 'en_US'
+          })
+        }
+      })
 });

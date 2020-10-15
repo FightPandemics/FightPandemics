@@ -1,6 +1,6 @@
 {
   "headline": "Miejsce, gdzie możesz zaoferować i poprosić o pomoc",
-  "tagline": "<0>Pandemie nadal będą się zdarzały.</0><1>Pomagamy społecznościom przygotować się na nie i zareagować</1>",
+  "tagline": "<0>Pandemie nadal będą się zdarzały.</0><1>Pomagamy społecznościom przygotować się na nie i zareagować.</1>",
   "common": {
     "getHelp": "Poproś o pomoc",
     "giveHelp": "Zaoferuj pomoc",
@@ -183,7 +183,8 @@
     "share": "Udostępnij",
     "delete": "Usuń",
     "cancel": "Anuluj",
-    "confirm": "Potwierdź"
+    "confirm": "Potwierdź",
+    "edited": "edytowany"
   },
   "profile": {
     "common": {
@@ -323,7 +324,7 @@
     "password": "Hasło",
     "enterPassword": "Podaj hasło",
     "confirmPassword": "Potwierdź hasło",
-    "forgotPassword": "Nie pamiętasz hasła",
+    "forgotPassword": "Nie pamiętasz hasła?",
     "noAccount": "Nie posiadasz konta?",
     "haveAccount": "Posiadasz już konto?",
     "recoverLink": "Wyślij mi e-mail z linkiem do odzyskiwania konta",
@@ -591,7 +592,7 @@
     "thankYouMessage": "Twój wkład wiele znaczy i pomaga nam udoskonalić nasze usługi zarówno podczas, jak i po pandemii COVID-19.",
     "submitFeedback": "Prześlij opinię",
     "radio": {
-      "age": "Twój wiek to",
+      "age": "Twój wiek to?",
       "unaffected": "Normalnie chodzę do pracy/szkoły",
       "quarantine": "Jestem zdrowy, ale na kwarantannie domowej",
       "symptomaticUntested": "Mam łagodne objawy, ale nie byłam badana",
@@ -720,6 +721,13 @@
       "Loop Detected": "Wykryto pętlę",
       "Not Extended": "Nierozszerzony",
       "Network Authentication Required": "Wymagane uwierzytelnienie sieciowe"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Przepraszamy, obsługujemy tylko pliki graficzne typu jp(e)g oraz png.",
+      "fileSizeTooLarge": "Prześlij obraz o rozmiarze mniejszym niż 5 MB.",
+      "imageDimensionTooSmall": "Prześlij obraz, który ma co najmniej 250 pikseli wysokości i 250 pikseli szerokości.",
+      "imageDimensionTooWide": "Przepraszamy, obraz jest zbyt szeroki. Spróbuj ponownie z obrazem, którego szerokość jest mniejsza niż dwukrotna wysokość.",
+      "networkError": "Przepraszamy, wystąpił błąd sieci."
     }
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
@@ -762,5 +770,10 @@
   "TEMP: Done": "Gotowe",
   "TEMP: Retake the Test": "Powtórz test",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "W oparciu o opisane objawy, sugerujemy niezwłocznie zwrócić się o pomoc. Zadzwoń na numer alarmowy!",
-  "TEMP: Your Responses": "Twoje odpowiedzi"
+  "TEMP: Your Responses": "Twoje odpowiedzi",
+  "avatar": {
+    "submitBtn": "Prześlij",
+    "cancelBtn": "Anuluj",
+    "tryAgainBtn": "Spróbuj ponownie"
+  }
 }
