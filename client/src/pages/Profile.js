@@ -423,7 +423,7 @@ const Profile = ({
               <MessageModal
                 isAuthenticated={true}
                 isFromProfile={true}
-                postAuthor={`${firstName} ${lastName}`}
+                postAuthorName={`${firstName} ${lastName}`}
                 authorId={userId}
               />
             )}

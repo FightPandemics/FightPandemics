@@ -448,7 +448,11 @@ const Post = ({
         handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
-        postAuthor={post.author.name}
+        postAuthorName={post.author.name}
+        postAuthorAvatar={post.author.photo}
+        isOwnOrg={
+          user?.organisations && isAuthorOrg(user.organisations, post.author)
+        }
         authorId={post.author.id}
         postId={post?._id}
         postTitle={post?.title}

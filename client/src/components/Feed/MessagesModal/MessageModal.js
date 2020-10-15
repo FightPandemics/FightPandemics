@@ -14,15 +14,14 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
 
-const OrgPostRef = ({ title, content, postAuthor }) => {
-  const Avatar = getInitialsFromFullName(postAuthor);
-
+const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
+  const Initials = getInitialsFromFullName(postAuthorName);
   return (
     <Container>
       <RefPost>
         <header>
           <div className="author">
-            To:<TextAvatar>{Avatar}</TextAvatar> {postAuthor}
+            To:<TextAvatar src={avatar}>{Initials}</TextAvatar> {postAuthorName}
           </div>
           <h3>{title}</h3>
         </header>
@@ -37,7 +36,8 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
 const MessageModal = ({
   title,
   postContent,
-  postAuthor,
+  postAuthorName,
+  avatar,
   authorId,
   isAuthenticated,
   postId,
@@ -118,7 +118,8 @@ const MessageModal = ({
               <OrgPostRef
                 title={title}
                 content={postContent}
-                postAuthor={postAuthor}
+                postAuthorName={postAuthorName}
+                avatar={avatar}
               />
             )}
             <textarea
@@ -140,8 +141,8 @@ const MessageModal = ({
               cancelText="Done"
             >
               <p>
-                Your message to {postAuthor} concerning the "{title}" was sent
-                succesfully.
+                Your message to {postAuthorName} concerning the "{title}" was
+                sent succesfully.
               </p>
             </SuccessModal>
           ) : (
@@ -152,8 +153,8 @@ const MessageModal = ({
               cancelText="Close"
             >
               <p>
-                Your message to {postAuthor} concerning the "{title}" was not
-                sent succesfully. Please try again later.
+                Your message to {postAuthorName} concerning the "{title}" was
+                not sent succesfully. Please try again later.
               </p>
             </FailedModal>
           )}
