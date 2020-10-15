@@ -88,8 +88,9 @@ export default class SocketManager extends React.Component {
 
     // user was blocked while online.
     this.socket.on("FORCE_ROOM_UPDATE", (threadId) => {
-      console.log(threadId);
-      this.joinRoom({ threadId });
+      if (props.store.getState().ws.room?._id == threadId)
+        return this.joinRoom({ threadId });
+      this.getUserRooms();
     });
   }
 

@@ -97,6 +97,14 @@ function onSocketConnect(socket) {
       [threadErr, thread] = await this.to(new Thread(newThread).save());
       if (threadErr)
         return res({ code: 500, message: "Internal server error" });
+
+      // if user is online, force add this room to their rooms list.
+      const recipientSocketId = await getSocketIdByUserId(
+        this,
+        thread.participants.find((p) => p.id != userId).id,
+      );
+      if (recipientSocketId)
+        this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", thread._id);
     } else if (!thread) return res({ code: 401, message: "Unauthorized" });
 
     // update participant.lastAccess, and mark messages as read.
@@ -211,11 +219,20 @@ function onSocketConnect(socket) {
     if (threadErr) return res({ code: 500, message: "Internal server error" });
     if (!thread) return res({ code: 401, message: "Unauthorized" });
 
+    // someone blocked someone else, no one can send a message
+    if (thread.participants.find((p) => p.status == "blocked"))
+      return res({ code: 401, message: "Unauthorized" });
+    // sender is still "pending", they can't send until they accept
+    if (
+      thread.participants.find((p) => p.id == userId && p.status == "pending")
+    )
+      return res({ code: 401, message: "Unauthorized" });
+
     let newMessage = {
       authorId: userId,
       content: data.content.substring(0, 2048),
       postRef: null,
-      status: "sent", // later
+      status: "sent",
       threadId: thread._id,
     };
 
@@ -249,12 +266,23 @@ function onSocketConnect(socket) {
 
       if (!recipientSocketId || (recipientSocketId && !isInSameRoom)) {
         // equivalent to (!online || (online && !inSameRoom))
+
+        const updates = {
+          $inc: { "participants.$[userToUpdate].newMessages": 1 },
+        };
+
+        // set status to "accepted", if it was "archived".
+        if (
+          thread.participants.find(
+            (p) => p.id == recipient && p.status == "archived",
+          )
+        )
+          updates.$set = { "participants.$[userToUpdate].status": "accepted" };
+
         const [updateThreadErr, updateThread] = await this.to(
-          Thread.findByIdAndUpdate(
-            thread._id,
-            { $inc: { "participants.$[userToUpdate].newMessages": 1 } },
-            { arrayFilters: [{ "userToUpdate.id": recipient }] },
-          ),
+          Thread.findByIdAndUpdate(thread._id, updates, {
+            arrayFilters: [{ "userToUpdate.id": recipient }],
+          }),
         );
 
         // send message web notification
@@ -263,6 +291,14 @@ function onSocketConnect(socket) {
           this.io
             .to(recipientSocketId)
             .emit("NEW_MESSAGE_NOTIFICATION", message);
+
+            // if the status was "archived", then force room update because it's now "accepted"
+            if (
+              thread.participants.find(
+                (p) => p.id == recipient && p.status == "archived",
+              )
+            )
+            this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", thread._id);
         }
       }
     }

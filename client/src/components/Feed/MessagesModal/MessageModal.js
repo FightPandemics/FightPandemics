@@ -48,7 +48,10 @@ const MessageModal = ({
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
   const [msgRsp, setMsgRsp] = useState(true);
-  const { sendMessage, joinRoom, getUserRooms } = useContext(WebSocketContext);
+  const [threadId, setThreadId] = useState(null);
+  const { sendMessage, joinRoom, getUserRooms, leaveAllRooms } = useContext(
+    WebSocketContext,
+  );
   let history = useHistory();
 
   const showModal = async () => {
@@ -60,16 +63,18 @@ const MessageModal = ({
   };
   const handleOk = async () => {
     await setConfirmLoading(true);
-    let createThread = await joinRoom({
+    let createdThread = await joinRoom({
       receiverId: authorId,
       threadId: null,
     });
+    setThreadId(createdThread?._id);
     let confirmation = await sendMessage({
-      threadId: createThread?._id || null,
+      threadId: createdThread?._id || null,
       content: text,
       postId: postId,
     });
-    getUserRooms();
+    leaveAllRooms(); // leave the room just joined to keep receive notifications from it.
+    getUserRooms(); // update rooms to include the new created one.
     if (confirmation) {
       setMsgSent(true);
       setMsgRsp(true);
@@ -119,6 +124,7 @@ const MessageModal = ({
             <textarea
               placeholder="Type a message..."
               onChange={handleTextChange}
+              maxLength={2000}
             />
           </MsgModal>
           {msgRsp ? (
@@ -127,7 +133,10 @@ const MessageModal = ({
               visible={msgSent}
               okText="View message"
               onCancel={handleDone}
-              onOk={() => history.push("/inbox")}
+              onOk={() => {
+                if (threadId) joinRoom({ threadId });
+                history.push("/inbox");
+              }}
               cancelText="Done"
             >
               <p>

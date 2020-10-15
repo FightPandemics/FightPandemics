@@ -216,6 +216,7 @@ export const InputBox = ({
             value={text}
             onKeyPress={handleKeyPress}
             ref={inputRef}
+            maxLength={2000}
           />
           <a disabled={!text} onClick={handleClick}>
             <img
