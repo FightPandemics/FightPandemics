@@ -4,7 +4,6 @@ import { theme, mq } from "constants/theme";
 export const BubbleContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  position: relative;
   &.recipient {
     justify-content: flex-start;
   }
@@ -40,21 +39,20 @@ export const BubbleContainer = styled.div`
   }
 `;
 export const MessagesContainer = styled.div`
-  position: relative;
   width: 100%;
-  height: 80%;
+  height: calc(100% - 8em);
   min-height: 40%;
-  padding: 0em 1em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  margin-bottom: 0em;
+  -webkit-overflow-scrolling: touch;
   white-space: pre-wrap;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin-top: 4rem;
+    margin-top: 5rem;
   }
   &.input-expanded {
-    margin-bottom: 8em;
+    height: calc(100% - 12em);
   }
   a {
     text-decoration: underline;
@@ -91,7 +89,7 @@ export const SenderBubble = styled.div`
     display: block;
   }
   .message-content-sender {
-    margin: 0em 1em 0em 1em;
+    padding: 0em 1em 0em 1em;
   }
   textarea {
     position: absolute;
@@ -127,7 +125,7 @@ export const RecipientBubble = styled.div`
   margin-top: 1em;
   word-break: break-word;
   .message-content-recipient {
-    margin: 0em 1em 0em 1em;
+    padding: 0em 1em 0em 1em;
   }
   &.deleted {
     opacity: 0.7;
