@@ -24,6 +24,7 @@ export const BubbleContainer = styled.div`
     position: absolute;
     bottom: -2.7rem;
     button {
+      cursor: pointer;
       font-size: 1.3rem;
       background: none;
       color: #425af2;

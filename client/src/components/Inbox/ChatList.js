@@ -117,15 +117,13 @@ export const ChatList = ({
   const SettingsSelector = () => {
     return (
       <>
-        <ChatHeader>
-          <SettingsBackArrow
-            onClick={() => {
-              toggleSettings();
-            }}
-            src={arrow}
-            alt="Back Arrow"
-          />{" "}
-          Messages Settings
+        <ChatHeader
+          onClick={() => {
+            toggleSettings();
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <SettingsBackArrow src={arrow} alt="Back Arrow" /> Messages Settings
         </ChatHeader>
         <div onClick={() => setToggleMobileChatList(false)}>
           <SettingsTabsSelector

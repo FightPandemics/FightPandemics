@@ -70,7 +70,7 @@ const StyledButton = styled(Button)`
   top: 0;
   border: 1px solid #425af2 !important;
   font-weight: 400;
-  color: #425af2;
+  color: #425af2 !important;
   padding: 0 2.5rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: relative;
