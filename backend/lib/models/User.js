@@ -13,6 +13,32 @@ const userSchema = new Schema(
       uniqueCaseInsensitive: true,
       validator: isValidEmail,
     },
+    notifyPrefs: {
+      message: {
+        instant: { default: true, type: Boolean },
+        daily: { default: false, type: Boolean },
+        weekly: { default: false, type: Boolean },
+        biweekly: { default: false, type: Boolean },
+      },
+      likes: {
+        instant: { default: false, type: Boolean },
+        daily: { default: false, type: Boolean },
+        weekly: { default: true, type: Boolean },
+        biweekly: { default: false, type: Boolean },
+      },
+      comments: {
+        instant: { default: false, type: Boolean },
+        daily: { default: true, type: Boolean },
+        weekly: { default: false, type: Boolean },
+        biweekly: { default: false, type: Boolean },
+      },
+      posts: {
+        instant: { default: false, type: Boolean },
+        daily: { default: true, type: Boolean },
+        weekly: { default: false, type: Boolean },
+        biweekly: { default: false, type: Boolean },
+      }
+    },
     location: Object,
     photo: String,
   },
