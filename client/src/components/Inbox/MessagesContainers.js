@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 export const BubbleContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-end;
   &.recipient {
