@@ -4,15 +4,13 @@ Cypress.Commands.add('checkFpLogoIsVisibleAndClickable', (fpLogoLocator) => {
 });
 
 Cypress.Commands.add('pageContainsHeadingAndImage', (pageHeadingLocator, heading, pageImageLocator) => {
-    var pageHeading = cy.get(pageHeadingLocator);
-    pageHeading.should('be.visible').contains(heading);
+    cy.get(pageHeadingLocator).should('be.visible').contains(heading);
     var pageImage = cy.get(pageImageLocator);
     pageImage.should('be.visible');
 });
 
 Cypress.Commands.add('pageContainsHeading', (pageHeadingLocator, heading) => {
-    var pageHeading = cy.get(pageHeadingLocator);
-    pageHeading.should('be.visible').contains(heading);
+    cy.get(pageHeadingLocator).should('be.visible').contains(heading);
 });
 
 export const randomString = (length) => {
