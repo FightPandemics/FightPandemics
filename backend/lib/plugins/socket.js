@@ -1,7 +1,12 @@
 const fp = require("fastify-plugin");
 const { fn } = require("moment");
 const SocketIO = require("socket.io");
+const cookieParser = require('socket.io-cookie-parser');
 const redisAdapter = require("socket.io-redis");
+
+const {
+  config: { auth },
+} = require("../../config");
 
 function onSocketConnect(socket) {
   console.log("[ws] user connected");
@@ -11,13 +16,17 @@ function onSocketConnect(socket) {
   const Message = this.mongo.model("Message");
 
   socket.on("IDENTIFY", async (data, res) => {
-    const [userErr, user] = await this.to(User.findById(data.id));
+    if (!socket.request.cookies['token']) return res({ code: 401, message: "Unauthorized" });
+    const decodedToken = this.jwt.decode(socket.request.cookies['token'])
+    const userId = decodedToken.payload[auth.jwtMongoIdKey]
+    if (!userId) return res({ code: 401, message: "Unauthorized" });
+    const [userErr, user] = await this.to(User.findById(userId));
     if (userErr) {
       return res({ code: 500, message: "Internal server error" });
     } else if (user === null) {
       return res({ code: 404, message: "User not found" });
     }
-    socket.userId = data.id;
+    socket.userId = userId;
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
     socket.on("disconnect", () => {
@@ -35,7 +44,7 @@ function onSocketConnect(socket) {
           });
       }, 1000);
     });
-    res({ code: 200, message: "Success" });
+    res({ code: 200, data: userId });
   });
 
   socket.on("JOIN_ROOM", async (data, res) => {
@@ -452,7 +461,7 @@ function fastifySocketIo(app, config, next) {
     io.adapter(redisAdapter(config.redis));
     io.on("connect", onSocketConnect.bind(app));
     app.decorate("io", io);
-
+    io.use(cookieParser());
     // customHook, to run a request on every node
     // every socket.io server executes below code, when customRequest is called
     io.of("/").adapter.customHook = (request, cb) => {
