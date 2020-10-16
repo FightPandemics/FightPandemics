@@ -478,7 +478,7 @@ const Feed = (props) => {
     const loadPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
+      const baseURL = gePostsBasetUrl(organisationId, limit, skip);
       let endpoint = `${baseURL}${objectiveURL}${filterURL}`;
       postsDispatch({ type: FETCH_POSTS });
 
@@ -540,7 +540,7 @@ const Feed = (props) => {
     if (!showFilters || !filterModal) {
       loadPosts();
     }
-  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -807,5 +807,10 @@ const Feed = (props) => {
     </FeedContext.Provider>
   );
 };
+
+const gePostsBasetUrl = (organisationId, limit, skip) => {
+  const actorId = organisationId ? `&actorId=${organisationId}` : "";
+  return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
+}
 
 export default Feed;

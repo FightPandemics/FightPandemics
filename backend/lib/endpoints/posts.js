@@ -50,6 +50,8 @@ async function routes(app) {
           skip,
         },
       } = req;
+      console.info("***********")
+      console.info(actor)
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
 
       // Base filters - expiration and visibility
@@ -126,21 +128,21 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "author.location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
+          {
+            $geoNear: {
+              distanceField: "distance",
+              key: "author.location.coordinates",
+              near: {
+                $geometry: {
+                  coordinates: location.coordinates,
+                  type: "Point",
                 },
-                query: { $and: filters },
               },
+              query: { $and: filters },
             },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
+          },
+          { $sort: { distance: 1, _id: -1 } },
+        ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
@@ -148,18 +150,18 @@ async function routes(app) {
       const paginationSteps =
         limit === -1
           ? [
-              {
-                $skip: skip || 0,
-              },
-            ]
+            {
+              $skip: skip || 0,
+            },
+          ]
           : [
-              {
-                $skip: skip || 0,
-              },
-              {
-                $limit: limit || POST_PAGE_SIZE,
-              },
-            ];
+            {
+              $skip: skip || 0,
+            },
+            {
+              $limit: limit || POST_PAGE_SIZE,
+            },
+          ];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
