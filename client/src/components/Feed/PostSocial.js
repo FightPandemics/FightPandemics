@@ -35,13 +35,11 @@ const StyledSpan = styled.span`
 const PostSocial = ({
   handlePostLike,
   isAuthenticated,
-  url,
   liked,
   shared,
   showComments,
   numLikes,
   numComments,
-  onCopyLink,
   postId,
   postTitle,
   postContent,
@@ -59,42 +57,6 @@ const PostSocial = ({
       }
     }
   }, [id, liked, handlePostLike]);
-
-  const renderLikeIcon = () => {
-    return liked ? (
-      <StyledSvg src={heart} className="social-icon-svg" />
-    ) : (
-      <StyledSvg src={heartGray} className="social-icon-svg" />
-    );
-  };
-
-  const renderCommentIcon = () => {
-    return showComments || numComments > 0 ? (
-      <StyledSvg src={comment} className="social-icon-svg" />
-    ) : (
-      <StyledSvg src={commentGray} className="social-icon-svg" />
-    );
-  };
-
-  const renderShareIcon = () => {
-    return shared ? (
-      <StyledSvg src={share} className="social-icon-svg" />
-    ) : (
-      <StyledSvg src={shareGray} className="social-icon-svg" />
-    );
-  };
-
-  const renderLabels = (label, count) => {
-    return (
-      <>
-        <StyledSpan className="total-number">
-          {label === "Comment"
-            ? t("comment.commentWithCount", { count })
-            : t("post.likeWithCount", { count })}
-        </StyledSpan>
-      </>
-    );
-  };
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
@@ -122,19 +84,19 @@ const PostSocial = ({
           className="social-icon"
           onClick={() => handlePostLike(id, liked, true)}
         >
-          {renderLikeIcon()}
-          {renderLabels("Like", numLikes)}
+          {renderLikeIcon(liked)}
+          {renderLabels("Like", numLikes, t)}
         </div>
       ) : (
-        <div
-          id={gtmTag("like", GTM.feed.prefix)}
-          className="social-icon"
-          onClick={() => handlePostLike(id, liked, true)}
-        >
-          {renderLikeIcon()}
-          {renderLabels("Like", numLikes)}
-        </div>
-      )}
+          <div
+            id={gtmTag("like", GTM.feed.prefix)}
+            className="social-icon"
+            onClick={() => handlePostLike(id, liked, true)}
+          >
+            {renderLikeIcon(liked)}
+            {renderLabels("Like", numLikes, t)}
+          </div>
+        )}
       <span></span>
       {postId ? (
         <div
@@ -142,52 +104,52 @@ const PostSocial = ({
           className="social-icon"
           onClick={setShowComments}
         >
-          {renderCommentIcon()}
-          {renderLabels("Comment", numComments)}
+          {renderCommentIcon(showComments, numComments)}
+          {renderLabels("Comment", numComments, t)}
         </div>
       ) : (
-        <>
-          {isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${id}`,
-                state: {
-                  postId: id,
-                  comments: true,
-                  from: window.location.href,
-                },
-              }}
-            >
-              <div
-                id={gtmTag("comment", GTM.feed.prefix)}
-                className="social-icon"
-                onClick={setShowComments}
+          <>
+            {isAuthenticated ? (
+              <Link
+                to={{
+                  pathname: `/post/${id}`,
+                  state: {
+                    postId: id,
+                    comments: true,
+                    from: window.location.href,
+                  },
+                }}
               >
-                {renderCommentIcon()}
-                {renderLabels("Comment", numComments)}
-              </div>
-            </Link>
-          ) : (
-            <Link
-              onClick={() =>
-                sessionStorage.setItem("postredirect", `/post/${id}`)
-              }
-              to={{
-                pathname: LOGIN,
-                state: { from: window.location.href },
-              }}
-            >
-              <div
-                id={gtmTag("comment", GTM.feed.prefix)}
-                className="social-icon"
-              >
-                {renderCommentIcon()}
-                {renderLabels("Comment", numComments)}
-              </div>
-            </Link>
-          )}
-        </>
-      )}
+                <div
+                  id={gtmTag("comment", GTM.feed.prefix)}
+                  className="social-icon"
+                  onClick={setShowComments}
+                >
+                  {renderCommentIcon(showComments, numComments)}
+                  {renderLabels("Comment", numComments, t)}
+                </div>
+              </Link>
+            ) : (
+                <Link
+                  onClick={() =>
+                    sessionStorage.setItem("postredirect", `/post/${id}`)
+                  }
+                  to={{
+                    pathname: LOGIN,
+                    state: { from: window.location.href },
+                  }}
+                >
+                  <div
+                    id={gtmTag("comment", GTM.feed.prefix)}
+                    className="social-icon"
+                  >
+                    {renderCommentIcon(showComments, numComments)}
+                    {renderLabels("Comment", numComments, t)}
+                  </div>
+                </Link>
+              )}
+          </>
+        )}
 
       <span></span>
 
@@ -197,13 +159,37 @@ const PostSocial = ({
           className="social-text"
           onClick={showNativeShareOrModal}
         >
-          {renderShareIcon()}
+          {renderShareIcon(shared)}
           <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
+};
+
+const renderLikeIcon = (liked) => {
+  return <StyledSvg src={liked ? heart : heartGray} className="social-icon-svg" />;
+};
+
+const renderCommentIcon = (showComments, numComments) => {
+  return <StyledSvg src={(showComments || numComments > 0) ? comment : commentGray} className="social-icon-svg" />
+};
+
+const renderShareIcon = (shared) => {
+  return <StyledSvg src={shared ? share : shareGray} className="social-icon-svg" />
+};
+
+const renderLabels = (label, count, t) => {
+  return (
+    <>
+      <StyledSpan className="total-number">
+        {label === "Comment"
+          ? t("comment.commentWithCount", { count })
+          : t("post.likeWithCount", { count })}
+      </StyledSpan>
+    </>
+  );
 };
 
 export default PostSocial;

@@ -50,8 +50,6 @@ async function routes(app) {
           skip,
         },
       } = req;
-      console.info("***********")
-      console.info(actor)
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
 
       // Base filters - expiration and visibility
