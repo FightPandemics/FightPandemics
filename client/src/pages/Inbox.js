@@ -41,6 +41,9 @@ const Inbox = (props) => {
   const dispatch = useDispatch();
 
   const unlisten = history.listen(() => {
+    setToggleMobileChatList(true);
+    setToggleViewRequests(false);
+    setIsSettingsOpen(false);
     leaveAllRooms();
     unlisten();
   });

@@ -44,7 +44,7 @@ const Messages = ({
           <a
             target="_blank"
             key={Math.random().toString(36)}
-            href={`//${text}`}
+            href={`${text.startsWith("http") ? "" : "//"}${text}`}
           >
             {text}
           </a>
@@ -197,7 +197,7 @@ const Messages = ({
     <MessagesContainer className={`${inputExpanded ? "input-expanded" : ""}`}>
       {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
         <button onClick={onLoadMoreClick} className={"load-more-btn"}>
-          load more
+          Load more...
         </button>
       )}
       {chatLog?.map((message, i) => (

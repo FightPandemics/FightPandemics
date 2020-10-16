@@ -121,7 +121,10 @@ export const RecipientHeader = ({
       [
         {
           text: <Text type="danger">Archive</Text>,
-          onPress: () => archiveThread(threadId),
+          onPress: () => {
+            archiveThread(threadId);
+            setToggleMobileChatList(true);
+          },
         },
         { text: "Cancel", onPress: () => null },
       ],

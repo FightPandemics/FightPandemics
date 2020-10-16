@@ -55,7 +55,6 @@ export const ChatListContainer = styled.div`
   max-width: 24em;
   .chat-bucket {
     overflow: auto;
-    height: 35em;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: ${(props) =>
