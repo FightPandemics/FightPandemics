@@ -6,7 +6,7 @@ describe('FightPandemics Post for unauthorized user', () => {
     const helpBoard = new HelpBoard();
     const post = new Post();
     const shareViaModalWindowTitle = "Share via..."
- 
+    var postTitle = '';
 
     context('User opens Help Board', () => {
         beforeEach(() => {
@@ -27,8 +27,8 @@ describe('FightPandemics Post for unauthorized user', () => {
             })                                          
         });
 
-        it('Unauthorized user can share a post. Share via... modal window is displayed', () => {  
-            var postTitle;  
+        it('Unauthorized user can see a Share via... modal window', () => {  
+              
             cy.get(helpBoard.getFirstPostOnHelpBoardSelector()).within(($firstPost) => { 
                 var postTitleElement = post.getPostTitle();
                 postTitleElement.invoke('text').then((text => {
