@@ -33,10 +33,6 @@ class Post{
         return cy.get(this.shareButton);
     }
 
-    getShareButton(){
-        return cy.get(this.shareButton);
-    }
-
     getPostHeader(){
         return cy.get(this.postHeader);
     }
