@@ -161,7 +161,8 @@ function wsReducer(state = initialState, action) {
         chatLog: [],
       };
     case GET_MORE_MESSAGES_HISTORY:
-      if (!action.payload.length) state.room.loadedAll = true;
+      if (!action.payload.length || action.payload.length < 20)
+        state.room.loadedAll = true;
       return {
         ...state,
         chatLog: [...action.payload.reverse(), ...state.chatLog],

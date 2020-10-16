@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useLayoutEffect, useContext } from "react";
-import { Menu, Dropdown } from "antd";
+import React, { useRef, useLayoutEffect } from "react";
+import { Menu, Dropdown, Typography } from "antd";
 import { Modal } from "antd-mobile";
 import {
   BubbleContainer,
@@ -13,6 +13,7 @@ import { OrgPost } from "./OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
 import subMenuIcon from "assets/icons/submenu.svg";
+const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
 
@@ -36,14 +37,14 @@ const Messages = ({
   };
 
   const linkify = (text) => {
-    let urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    let urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     function urlify(text) {
       if (urlRegex.test(text))
         return (
           <a
             target="_blank"
             key={Math.random().toString(36)}
-            href={`//${text}`}
+            href={`${text.startsWith("http") ? "" : "//"}${text}`}
           >
             {text}
           </a>
@@ -86,7 +87,10 @@ const Messages = ({
       "Delete the message?",
       "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
       [
-        { text: "Delete", onPress: () => deleteMessage(messageId) },
+        {
+          text: <Text type="danger">Delete</Text>,
+          onPress: () => deleteMessage(messageId),
+        },
         { text: "Cancel", onPress: () => null },
       ],
     );
@@ -126,6 +130,7 @@ const Messages = ({
         className={`${editingMessageId == messageId ? "is-editing" : ""}`}
         key={"b-" + messageId}
       >
+        {isEdited && <small>Edited</small>}
         <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
           {!isDeleted && editingMessageId != messageId && (
             <Dropdown
@@ -141,8 +146,7 @@ const Messages = ({
           <div className="message-content-sender">
             {!isDeleted && message
               ? linkify(message)
-              : "This message was deleted"}
-            {isEdited && <small> (edited)</small>}
+              : "You deleted this message."}
           </div>
           {editingMessageId == messageId && (
             <textarea
@@ -168,30 +172,32 @@ const Messages = ({
   };
   const Recipient = ({ postRef, message, messageId, isDeleted, isEdited }) => {
     return (
-      <RecipientBubble
-        key={"b-" + messageId}
-        className={`${isDeleted ? "deleted" : ""}`}
-      >
-        {postRef && <OrgPost postRef={postRef} />}
-        <div className="message-content-recipient">
-          {!isDeleted && message
-            ? linkify(message)
-            : "This message was deleted"}
-          {isEdited && <small> (edited)</small>}
-        </div>
-      </RecipientBubble>
+      <BubbleContainer className={"recipient"} key={"b-" + messageId}>
+        <RecipientBubble
+          key={"b-" + messageId}
+          className={`${isDeleted ? "deleted" : ""}`}
+        >
+          {postRef && <OrgPost postRef={postRef} />}
+          <div className="message-content-recipient">
+            {!isDeleted && message
+              ? linkify(message)
+              : "This message was deleted."}
+          </div>
+        </RecipientBubble>
+        {isEdited && <small>Edited</small>}
+      </BubbleContainer>
     );
   };
 
   useLayoutEffect(() => {
     if (!isLoading) scrollToBottom();
-  }, [room, chatLog.length, isLoading]);
+  }, [room, chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <MessagesContainer className={`${inputExpanded ? "input-expanded" : ""}`}>
       {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
         <button onClick={onLoadMoreClick} className={"load-more-btn"}>
-          load more
+          Load more...
         </button>
       )}
       {chatLog?.map((message, i) => (

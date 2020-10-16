@@ -8,7 +8,7 @@ const Post = styled.div`
   display: block;
   padding: 0.8em;
   background: #ffff;
-  border-radius: 1em 1em 0em 0em;
+  border-radius: 2em 2em 0em 0em;
   color: #282828;
   margin-bottom: 1em;
   margin-top: -0.7em;
@@ -42,7 +42,7 @@ const Post = styled.div`
   }
   .post-content {
     letter-spacing: 1.3px;
-    white-space: break-spaces;  
+    white-space: break-spaces;
   }
   a {
     &:hover {
@@ -51,7 +51,7 @@ const Post = styled.div`
   }
 `;
 
-export const OrgPost = ({postRef}) => {
+export const OrgPost = ({ postRef }) => {
   return (
     <Post>
       <header>
@@ -63,7 +63,8 @@ export const OrgPost = ({postRef}) => {
         <div className="post-title">{postRef.title}</div>
       </Link>
       <div className="post-content">
-        {postRef.content.substring(0,250)}{postRef.content.length>250 && "..."}
+        {postRef.content.substring(0, 250)}
+        {postRef.content.length > 250 && "..."}
       </div>
     </Post>
   );

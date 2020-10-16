@@ -36,13 +36,15 @@ export default class SocketManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      isAuthenticated: false,
+      isIdentified: false,
     };
     props.store.subscribe(() => {
       const newState = props.store.getState();
-      if (this.state.user != newState.session.user) {
-        this.state.user = newState.session.user;
-        if (newState.session.isAuthenticated) this.identify(this.state.user);
+      if (this.state.isAuthenticated != newState.session.isAuthenticated) {
+        this.setState({ isAuthenticated: newState.session.isAuthenticated });
+        if (this.state.isAuthenticated && !this.state.isIdentified)
+          this.identify();
         else this.socket.disconnect();
       }
     });
@@ -50,17 +52,21 @@ export default class SocketManager extends React.Component {
     this.socket.on("connect", () => {
       this.socket.connected = true;
       console.log(`[WS]: Connected`);
-      if (this.state.user) this.identify(this.state.user);
+      if (!this.state.isAuthenticated) return this.socket.disconnect();
+      if (this.state.isAuthenticated && !this.state.isIdentified)
+        this.identify();
     });
 
     this.socket.on("disconnect", () => {
       this.socket.connected = false;
+      this.setState({ isIdentified: false });
       console.log(`[WS]: Disconnected`);
-      console.log(`[WS}]: Trying to reconnect!`);
       let recon = setInterval(() => {
-        if (this.socket.connected) clearInterval(recon);
+        if (!this.state.isAuthenticated) return;
+        if (this.socket.connected) return clearInterval(recon);
+        console.log(`[WS]: Trying to reconnect!`);
         this.socket.connect();
-      }, 500);
+      }, 1000);
     });
 
     this.socket.on("MESSAGE_RECEIVED", (messageData) => {
@@ -85,16 +91,29 @@ export default class SocketManager extends React.Component {
       if (!this.state.user || data.id == this.state.user.id) return;
       this.props.store.dispatch(userStatusUpdate(data));
     });
+
+    // user was blocked while online.
+    this.socket.on("FORCE_ROOM_UPDATE", (threadId) => {
+      if (props.store.getState().ws.room?._id == threadId)
+        return this.joinRoom({ threadId });
+      this.getUserRooms();
+    });
   }
 
-  identify = (userData) => {
-    if (!this.socket || !this.socket) return;
-    this.socket.emit("IDENTIFY", userData, (response) => {
+  identify = () => {
+    // we set isIdentified:true now, because this request might take time
+    this.setState({ isIdentified: true });
+    // if we keep it false, it function will run twice
+    // but we revert to "false" if identification failed
+    if (!this.socket || !this.state.isIdentified) return;
+    this.socket.emit("IDENTIFY", null, (response) => {
       if (response.code == 200) {
-        console.log(`[WS]: ${userData.id} Identified`);
+        console.log(`[WS]: ${response.data} Identified`);
         this.getUserRooms();
-        this.props.store.dispatch(identifySuccess());
+        return this.props.store.dispatch(identifySuccess());
       } else this.props.store.dispatch(identifyError(response));
+      // if we reached this then the identification has failed
+      this.setState({ isIdentified: false });
     });
   };
 
@@ -169,8 +188,43 @@ export default class SocketManager extends React.Component {
     });
   };
 
-  messageSeen = () => {
-    // later
+  blockThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("BLOCK_THREAD", threadId, (response) => {
+        if (response.code == 200) {
+          this.joinRoom({ threadId }); // refresh room only
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
+  archiveThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("ARCHIVE_THREAD", threadId, async (response) => {
+        if (response.code == 200) {
+          await this.joinRoom({ threadId }); // await refresh room
+          this.leaveAllRooms(); // then leave it
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
+  // used to unblock, but also used to unarchive and accept requests.
+  unblockThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("UNBLOCK_THREAD", threadId, (response) => {
+        if (response.code == 200) {
+          this.getUserRooms(); // refresh rooms
+          this.joinRoom({ threadId }); // refresh room
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
   };
 
   componentWillUnmount() {
@@ -193,6 +247,9 @@ export default class SocketManager extends React.Component {
       getUserRooms: this.getUserRooms,
       getUserStatus: this.getUserStatus,
       leaveAllRooms: this.leaveAllRooms,
+      blockThread: this.blockThread,
+      archiveThread: this.archiveThread,
+      unblockThread: this.unblockThread,
     };
     return (
       <WebSocketContext.Provider value={value}>

@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 export const InboxContainer = styled.div`
-  width: 93%;
+  width: 100%;
   min-width: 50em;
-  max-width: 96em;
   min-height: 37em;
   height: calc(100% - 7rem);
   position: absolute;
@@ -56,10 +55,12 @@ export const ChatListContainer = styled.div`
   max-width: 24em;
   .chat-bucket {
     overflow: auto;
-    height: 35em;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: ${(props) => (props.toggleMobileChatList ? "block" : "none")};
+    display: ${(props) =>
+      props.toggleMobileChatList || props.toggleSettingstList
+        ? "block"
+        : "none"};
     width: ${(props) => (props.toggleMobileChatList ? "100%" : "25%")};
     max-width: ${(props) => (props.toggleMobileChatList ? "100vw" : "22em")};
   }

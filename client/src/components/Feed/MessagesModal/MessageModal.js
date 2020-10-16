@@ -14,15 +14,14 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
 
-const OrgPostRef = ({ title, content, postAuthor }) => {
-  const Avatar = getInitialsFromFullName(postAuthor);
-
+const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
+  const Initials = getInitialsFromFullName(postAuthorName);
   return (
     <Container>
       <RefPost>
         <header>
           <div className="author">
-            To:<TextAvatar>{Avatar}</TextAvatar> {postAuthor}
+            To:<TextAvatar src={avatar}>{Initials}</TextAvatar> {postAuthorName}
           </div>
           <h3>{title}</h3>
         </header>
@@ -37,17 +36,22 @@ const OrgPostRef = ({ title, content, postAuthor }) => {
 const MessageModal = ({
   title,
   postContent,
-  postAuthor,
+  postAuthorName,
+  avatar,
   authorId,
   isAuthenticated,
   postId,
+  isFromProfile,
 }) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
   const [text, setText] = useState("");
   const [msgRsp, setMsgRsp] = useState(true);
-  const { sendMessage, joinRoom } = useContext(WebSocketContext);
+  const [threadId, setThreadId] = useState(null);
+  const { sendMessage, joinRoom, getUserRooms, leaveAllRooms } = useContext(
+    WebSocketContext,
+  );
   let history = useHistory();
 
   const showModal = async () => {
@@ -59,15 +63,18 @@ const MessageModal = ({
   };
   const handleOk = async () => {
     await setConfirmLoading(true);
-    let createThread = await joinRoom({
+    let createdThread = await joinRoom({
       receiverId: authorId,
       threadId: null,
     });
+    setThreadId(createdThread?._id);
     let confirmation = await sendMessage({
-      threadId: createThread?._id || null,
+      threadId: createdThread?._id || null,
       content: text,
       postId: postId,
     });
+    leaveAllRooms(); // leave the room just joined to keep receive notifications from it.
+    getUserRooms(); // update rooms to include the new created one.
     if (confirmation) {
       setMsgSent(true);
       setMsgRsp(true);
@@ -95,7 +102,7 @@ const MessageModal = ({
         <div>
           <PrivateMessageContainer onClick={showModal}>
             <img src={activeemail} />
-            <span>Message</span>
+            {!isFromProfile && <span>Message</span>}
           </PrivateMessageContainer>
           <MsgModal
             title="Send a message"
@@ -106,14 +113,18 @@ const MessageModal = ({
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !text }}
           >
-            <OrgPostRef
-              title={title}
-              content={postContent}
-              postAuthor={postAuthor}
-            />
+            {!isFromProfile && (
+              <OrgPostRef
+                title={title}
+                content={postContent}
+                postAuthorName={postAuthorName}
+                avatar={avatar}
+              />
+            )}
             <textarea
               placeholder="Type a message..."
               onChange={handleTextChange}
+              maxLength={2000}
             />
           </MsgModal>
           {msgRsp ? (
@@ -122,11 +133,15 @@ const MessageModal = ({
               visible={msgSent}
               okText="View message"
               onCancel={handleDone}
-              onOk={() => history.push("/inbox")}
+              onOk={() => {
+                if (threadId) joinRoom({ threadId });
+                history.push("/inbox");
+              }}
               cancelText="Done"
             >
               <p>
-                Your message to {postAuthor} concerning the "{title}" was sent
+                Your message to {postAuthorName}{" "}
+                {!isFromProfile && `concerning the "${title}"`} was sent
                 succesfully.
               </p>
             </SuccessModal>
@@ -138,8 +153,9 @@ const MessageModal = ({
               cancelText="Close"
             >
               <p>
-                Your message to {postAuthor} concerning the "{title}" was not
-                sent succesfully. Please try again later.
+                Your message to {postAuthorName}{" "}
+                {!isFromProfile && `concerning the "${title}"`} was not sent
+                succesfully. Please try again later.
               </p>
             </FailedModal>
           )}

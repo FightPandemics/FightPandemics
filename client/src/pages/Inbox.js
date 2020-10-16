@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { InboxContainer } from "../components/Inbox/Container";
 import { ChatList } from "../components/Inbox/ChatList";
 import CurrentChat from "../components/Inbox/CurrentChat";
+import Settings from "../components/Inbox/Settings";
 import { EmptyInbox } from "../components/Inbox/EmptyInbox";
 import { SelectRoom } from "../components/Inbox/SelectRoom";
 import { ChatContextProvider } from "../context/ChatContext";
@@ -10,9 +12,16 @@ import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
 
 const Inbox = (props) => {
-  const { toggleMobileChatList, setToggleMobileChatList } = useContext(
-    ChatContext,
-  );
+  const {
+    toggleMobileChatList,
+    setToggleMobileChatList,
+    isSettingsOpen,
+    setIsSettingsOpen,
+    setSettingsTab,
+    selectedSettingsTab,
+    toggleViewRequests,
+    setToggleViewRequests,
+  } = useContext(ChatContext);
   const {
     sendMessage,
     deleteMessage,
@@ -23,13 +32,32 @@ const Inbox = (props) => {
     getUserRooms,
     leaveAllRooms,
     getUserStatus,
+    unblockThread,
+    blockThread,
+    archiveThread,
   } = useContext(WebSocketContext);
-  const { isIdentified, user } = props;
+  const { isIdentified, user, history } = props;
   const { room, rooms, chatLog } = props.ws;
   const dispatch = useDispatch();
 
+  const unlisten = history.listen(() => {
+    setToggleMobileChatList(true);
+    setToggleViewRequests(false);
+    setIsSettingsOpen(false);
+    leaveAllRooms();
+    unlisten();
+  });
+
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
+  };
+
+  const toggleSettings = () => {
+    if (!isSettingsOpen) {
+      setSettingsTab("BLOCKED");
+      leaveAllRooms();
+    }
+    setIsSettingsOpen(!isSettingsOpen);
   };
 
   useEffect(() => {
@@ -68,14 +96,29 @@ const Inbox = (props) => {
         room={room}
         user={user}
         joinRoom={joinRoom}
+        leaveAllRooms={leaveAllRooms}
         toggleMobileChatList={toggleMobileChatList}
         setToggleMobileChatList={setToggleMobileChatList}
+        isSettingsOpen={isSettingsOpen}
+        toggleSettings={toggleSettings}
+        setSettingsTab={setSettingsTab}
+        selectedSettingsTab={selectedSettingsTab}
+        toggleViewRequests={toggleViewRequests}
+        setToggleViewRequests={setToggleViewRequests}
       />
-      {!rooms.length ? (
+      {isSettingsOpen && (
+        <Settings
+          selectedSettingsTab={selectedSettingsTab}
+          rooms={rooms}
+          user={user}
+          unblockThread={unblockThread}
+        />
+      )}
+      {!isSettingsOpen && !rooms.length ? (
         <EmptyInbox />
       ) : (
-        (!room && <SelectRoom />) ||
-        (room && (
+        (!isSettingsOpen && !room && <SelectRoom />) ||
+        (!isSettingsOpen && room && (
           <CurrentChat
             room={room}
             user={user}
@@ -88,6 +131,9 @@ const Inbox = (props) => {
             leaveAllRooms={leaveAllRooms}
             toggleMobileChatList={toggleMobileChatList}
             setToggleMobileChatList={setToggleMobileChatList}
+            blockThread={blockThread}
+            unblockThread={unblockThread}
+            archiveThread={archiveThread}
           />
         ))
       )}
@@ -102,5 +148,4 @@ const InboxPage = (props) => {
     </ChatContextProvider>
   );
 };
-
-export default InboxPage;
+export default withRouter(InboxPage);

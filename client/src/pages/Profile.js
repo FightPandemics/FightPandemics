@@ -18,6 +18,7 @@ import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
@@ -416,6 +417,14 @@ const Profile = ({
                 src={editEmpty}
                 id={GTM.user.profilePrefix + GTM.profile.modify}
                 onClick={onToggleDrawer}
+              />
+            )}
+            {!ownUser && (
+              <MessageModal
+                isAuthenticated={true}
+                isFromProfile={true}
+                postAuthorName={`${firstName} ${lastName}`}
+                authorId={userId}
               />
             )}
           </NameDiv>
