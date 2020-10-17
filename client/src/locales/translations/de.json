@@ -1,6 +1,6 @@
 {
   "headline": "Ein Ort, an dem du Hilfe anbieten und anfordern kannst",
-  "tagline": "<0> Pandemien werden weiterhin auftreten. </0> <1> Wir helfen Communitys bei der Vorbereitung und Reaktion</1>",
+  "tagline": "<0> Pandemien werden weiterhin auftreten. </0> <1> Wir helfen Communitys bei der Vorbereitung und Reaktion.</1>",
   "common": {
     "getHelp": "Hilfe anfordern",
     "giveHelp": "Hilfe anbieten",
@@ -10,7 +10,7 @@
     "question": "Frage",
     "aboutUs": "Über Uns",
     "profile": "Profil",
-    "addOrg": "Organisation",
+    "addOrg": "Organisation hinzufügen",
     "logout": "Ausloggen",
     "organisations": "Organisationen"
   },
@@ -33,7 +33,7 @@
     "needHelp": {
       "whatHelp": "Wie kann dir geholfen werden?",
       "medical": "Medizinisch",
-      "haveCovidSymptoms": "Ich habe Symptome von COVID-19",
+      "haveCovidSymptoms": "Ich habe Symptome von COVID-19.",
       "other": "Weitere Hilfe",
       "otherDesc": "Ich brauche Hilfe bei der Beschaffung von Lebensmitteln / Medikamenten / etc."
     },
@@ -183,7 +183,8 @@
     "share": "Teilen",
     "delete": "Löschen",
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "edited": "bearbeitet"
   },
   "profile": {
     "common": {
@@ -239,7 +240,7 @@
       "shareInformation": "Informationen teilen",
       "iNeed": "Ich brauche",
       "medical": "Medizinische Hilfe",
-      "haveCovidSymptoms": "Ich habe Symptome von COVID-19",
+      "haveCovidSymptoms": "Ich habe Symptome von COVID-19.",
       "other": "Weitere Hilfe",
       "otherDesc": "Ich brauche Hilfe bei der Beschaffung von Lebensmitteln / Medikamenten / etc.",
       "editProfile": "Profil bearbeiten",
@@ -323,7 +324,7 @@
     "password": "Passwort",
     "enterPassword": "Passwort eingeben",
     "confirmPassword": "Passwort bestätigen",
-    "forgotPassword": "Passwort vergessen",
+    "forgotPassword": "Passwort vergessen?",
     "noAccount": "Du hast noch keinen Account?",
     "haveAccount": "Du hast bereits ein Konto?",
     "recoverLink": "Link zum Wiederherstellen per E-Mail senden",
@@ -720,6 +721,13 @@
       "Loop Detected": "Schleife erkannt",
       "Not Extended": "Not Extended",
       "Network Authentication Required": "Netzwerkauthentifizierung erforderlich"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Leider unterstützen wir nur Bilddateien vom Typ jp(e)g und png.",
+      "fileSizeTooLarge": "Bitte wähle ein Bild mit einer Größe von weniger als 5 MB.",
+      "imageDimensionTooSmall": "Bitte lade ein Bild hoch, das wenigstens 250 Pixel hoch und 250 Pixel breit ist.",
+      "imageDimensionTooWide": "Das Bild ist leider zu breit. Bitte versuche es erneut mit einem Bild mit einer Breite von weniger als der doppelten Höhe.",
+      "networkError": "Ein Netzwerkfehler ist aufgetreten."
     }
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
@@ -762,5 +770,10 @@
   "TEMP: Done": "Fertig",
   "TEMP: Retake the Test": "Wiederhole den Test",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Basierend auf den gemeldeten Symptomen solltest du sofort Hilfe suchen.\nRufe die Notrufnummer an!",
-  "TEMP: Your Responses": "Deine Antworten"
+  "TEMP: Your Responses": "Deine Antworten",
+  "avatar": {
+    "submitBtn": "Weiter",
+    "cancelBtn": "Abbrechen",
+    "tryAgainBtn": "Erneut versuchen"
+  }
 }
