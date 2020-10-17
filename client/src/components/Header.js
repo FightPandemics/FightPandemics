@@ -343,7 +343,7 @@ export default ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
-            {renderInboxIcon(true) /* mobile = true */}
+            {isAuthenticated && renderInboxIcon(true) /* mobile = true */}
             <DesktopMenu>
               <NavLinks>
                 <ul>{renderNavLinkItems()}</ul>

@@ -1,4 +1,4 @@
-import ForgotPassword from '../../../elements/pages/recoverPassword'
+import ForgotPassword from '../../../elements/pages/forgotPassword'
 import {VALID_SAMPLE_EMAIL} from '../../constants';
 import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
 import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
@@ -10,7 +10,7 @@ describe('FightPandemics Forgot Password Page', () => {
     var h4Heading = "Forgot Password?";
 
 
-    context('User is trying to recover password', () => {
+    context('User is trying to recover forgotten password', () => {
         beforeEach(() => {
             forgotPassword.visit();
         });
