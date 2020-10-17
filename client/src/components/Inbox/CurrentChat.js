@@ -22,6 +22,8 @@ const CurrentChat = ({
 }) => {
   const {
     toggleMobileChatList,
+    text,
+    setText,
     isLoading,
     setIsLoading,
     editingMessageId,
@@ -80,6 +82,7 @@ const CurrentChat = ({
         archiveThread={archiveThread}
       />
       <Messages
+        setText={setText}
         user={user}
         room={room}
         chatLog={chatLog}
@@ -93,6 +96,8 @@ const CurrentChat = ({
       />
       {room && (
         <InputBox
+          text={text}
+          setText={setText}
           user={user}
           room={room}
           sendMessage={sendMessage}
@@ -104,6 +109,9 @@ const CurrentChat = ({
           blockThread={blockThread}
           archiveThread={archiveThread}
           setToggleViewRequests={setToggleViewRequests}
+          editingMessageId={editingMessageId}
+          setEditingMessageId={setEditingMessageId}
+          editMessage={editMessage}
         />
       )}
     </CurrentChatContainer>
