@@ -44,6 +44,16 @@ const StyledNavBar = styled(NavBar)`
     }
   }
 `;
+const InboxIcon = styled.span`
+  display: ${(props) => (props.mobile ? "none" : "initial")};
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: ${(props) => (props.mobile ? "block" : "none")};
+    position: absolute;
+    top: 0.65em;
+    right: 3em;
+    cursor: pointer;
+  }
+`;
 const MenuToggle = styled(SvgIcon)`
   cursor: pointer;
   display: none !important;
@@ -133,7 +143,7 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
-  ws
+  ws,
 }) => {
   const { t } = useTranslation();
   const { rooms } = ws;
@@ -146,7 +156,10 @@ export default ({
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]} key={key}>
+        <Menu.Item
+          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          key={key}
+        >
           <a
             style={
               i18n.language === key
@@ -204,6 +217,31 @@ export default ({
       </Menu.Item>
     </Menu>
   );
+  const renderInboxIcon = (mobile) => {
+    return (
+      <InboxIcon mobile={mobile}>
+        <NavLink
+          id={GTM.nav.prefix + GTM.nav.inbox}
+          activeStyle={activeStyles}
+          to="/inbox"
+        >
+          <Badge
+            count={rooms
+              .map((_room) =>
+                _room.participants.find((p) => p.id == user.id.toString())
+                  ?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0,
+              )
+              .reduce((a, b) => a + b, 0)}
+          >
+            <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
+          </Badge>
+        </NavLink>
+      </InboxIcon>
+    );
+  };
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
@@ -229,22 +267,6 @@ export default ({
         {isAuthenticated ? (
           <>
             <li>
-              <NavLink
-                id={GTM.nav.prefix + GTM.nav.inbox}
-                activeStyle={activeStyles}
-                to="/inbox"
-              >
-                <Badge
-                  count={rooms.map((_room) =>
-                          _room.participants.find((p) => p.id == user.id.toString())?.newMessages
-                          ? 1:0 // remove "? 1:0" to show total messages
-                          || 0).reduce((a, b) => a + b, 0)}
-                >
-                  <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
-                </Badge>
-              </NavLink>
-            </li>
-            <li>
               <Dropdown overlay={menu} trigger={["click"]}>
                 <a
                   className="ant-dropdown-link"
@@ -254,6 +276,7 @@ export default ({
                 </a>
               </Dropdown>
             </li>
+            <li>{renderInboxIcon()}</li>
           </>
         ) : (
           <>
@@ -284,7 +307,11 @@ export default ({
           </>
         )}
         <Dropdown overlay={languageMenu} trigger={["click"]}>
-          <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} className="globe-icon-svg"></SvgIcon>
+          <SvgIcon
+            id={GTM.nav.prefix + GTM.nav.language}
+            src={globe}
+            className="globe-icon-svg"
+          ></SvgIcon>
         </Dropdown>
       </>
     );
@@ -306,6 +333,7 @@ export default ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
+            {renderInboxIcon(true) /* mobile = true */}
             <DesktopMenu>
               <NavLinks>
                 <ul>{renderNavLinkItems()}</ul>
