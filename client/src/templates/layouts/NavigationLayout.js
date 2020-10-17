@@ -574,22 +574,6 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem>
-        <Link to={"/inbox"}>
-          Inbox{" "}
-          <Badge
-            count={ws.rooms
-              .map((_room) =>
-                _room.participants.find((p) => p.id == user.id.toString())
-                  ?.newMessages
-                  ? 1
-                  : 0 || // remove "? 1:0" to show total messages
-                    0,
-              )
-              .reduce((a, b) => a + b, 0)}
-          />
-        </Link>
-      </NavItem>
-      <NavItem>
         {t("post.organisation")}
         {user?.organisations?.length > 0
           ? user?.organisations?.map((organisation) => (

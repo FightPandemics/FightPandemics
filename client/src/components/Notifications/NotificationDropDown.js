@@ -269,28 +269,8 @@ const StyledBadge = styled(Badge)`
   top: 1.4em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: absolute;
-    right: 4em;
-    top: 1.1em;
-  }
-`;
-export const StyledNum = styled.div`
-  height: 17px;
-  width: 17px;
-  position: absolute;
-  right: 4.5em;
-  bottom: 3.1em;
-  z-index: 999;
-  font-size: 10px;
-  letter-spacing: 1px;
-  background-color: #ff5656;
-  color: white;
-  border-radius: 100%;
-  padding: 1px;
-  font-weight: 300;
-  text-align: center;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    right: 7.4em;
-    bottom: 2em;
+    top: 1.05em;
+    right: 6em;
   }
 `;
 

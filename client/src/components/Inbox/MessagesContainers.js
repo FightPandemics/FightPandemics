@@ -5,6 +5,7 @@ export const BubbleContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
+  align-items: baseline;
   &.recipient {
     justify-content: flex-start;
   }
@@ -44,8 +45,6 @@ export const MessagesContainer = styled.div`
   height: calc(100% - 8em);
   min-height: 40%;
   padding: 1em;
-  display: flex;
-  flex-direction: column;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   white-space: pre-wrap;
@@ -64,6 +63,7 @@ export const MessagesContainer = styled.div`
   }
   .load-more-btn {
     border: none;
+    width: 100%;
     background: transparent;
     color: #425af2;
     padding: 5px;
@@ -144,6 +144,7 @@ export const TimeStamp = styled.small`
   color: #969292;
   padding: 2px 1rem;
   opacity: 1 !important;
+  display: block;
   &.left {
     text-align: left;
   }
