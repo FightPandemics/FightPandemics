@@ -5,10 +5,12 @@ const {
   oAuthSchema,
   oAuthProviderSchema,
   signupSchema,
+  updatePasswordSchema,
 } = require("./schema/auth");
 const {
   config: { auth: authConfig },
 } = require("../../config");
+const { getCookieToken } = require("../utils");
 
 /*
  * /api/auth
@@ -154,10 +156,55 @@ async function routes(app) {
         );
         throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
       }
-      req.log.error(err, "Error logging in");
-      throw app.httpErrors.internalServerError();
+
     }
   });
+
+  app.put(
+    "/password",
+    {
+      preHandler: [app.getServerToken],
+      schema: updatePasswordSchema,
+    },
+    async (req, reply) => {
+      const {
+        body: { newPassword, oldPassword },
+        token,
+      } = req;
+      try {
+        const { email, sub: userId } = await Auth0.getUser(getCookieToken(req));
+
+        // validate old password
+        await Auth0.authenticate("password", {
+          password: oldPassword,
+          scope: "openid",
+          username: email,
+        });
+
+        // set new password
+        await Auth0.updateUser(token, userId, {
+          password: newPassword,
+        });
+
+        return reply.code(204);
+      } catch (err) {
+        if (err.statusCode === 403) {
+          throw app.httpErrors.unauthorized("wrongCredentials");
+        }
+        if (err.statusCode === 429) {
+          req.log.error(
+            err,
+            "Maximum number of sign in attempts exceeded. (10 times)",
+          );
+          throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
+        }
+        if (err.message === "PasswordStrengthError: Password is too weak") {
+          throw app.httpErrors.badRequest("passwordWeak");
+        }
+        throw app.httpErrors.badRequest();
+      }
+    },
+  );
 
   app.post(
     "/change-password",
@@ -167,7 +214,10 @@ async function routes(app) {
       const { email } = body;
 
       try {
-        const responseMessage = await Auth0.changePassword(token, email);
+        const responseMessage = await Auth0.sendChangePasswordEmail(
+          token,
+          email,
+        );
         req.log.info(
           `Change password email created successfully for email=${email}`,
         );
