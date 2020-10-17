@@ -141,12 +141,11 @@ const StyledMenu = styled(Menu)`
   border-radius: 10px;
   right: -2.993em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 100vw;
+    width: 90vw;
+    height: 90vh;
     position: absolute;
-    right: -5.67em;
     border-radius: 0px;
     top: 0.7em;
-    height: 96vh;
   }
   a {
     padding: 0.5em 1em;
@@ -184,7 +183,7 @@ const Arrow = styled.div`
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   position: relative;
-  left: 3.89em;
+  left: 2.95em;
   bottom: 1.3em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
@@ -263,11 +262,10 @@ const menu = (
   </StyledMenu>
 );
 const StyledBadge = styled(Badge)`
-  position: absolute;
-  cursor: pointer;
-  right: 3.5em;
-  top: 1.4em;
+  display: ${(props) => (props.mobile ? "none" : "initial")};
+  position: relative;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: ${(props) => (props.mobile ? "initial" : "none")};
     position: absolute;
     top: 1.05em;
     right: 6em;
@@ -285,17 +283,12 @@ export const NotificationDropDown = (props) => {
     }, 100);
   };
   return (
-    <>
-      <Dropdown
-        overlay={menu}
-        trigger="click"
-        onClick={(e) => Visible(e)}
-        placement="bottomRight"
-      >
-        <StyledBadge count={8}>
+    <Dropdown overlay={menu} trigger="click" placement="bottomRight">
+      <a>
+        <StyledBadge mobile={props.mobile} count={8}>
           <img src={bell} />
         </StyledBadge>
-      </Dropdown>
-    </>
+      </a>
+    </Dropdown>
   );
 };

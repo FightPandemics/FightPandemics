@@ -285,6 +285,10 @@ export default ({
               </Dropdown>
             </li>
             <li>{renderInboxIcon()}</li>
+            <li>
+              <NotificationDropDown mobile={false} />
+            </li>
+            <li></li>
           </>
         ) : (
           <>
@@ -321,7 +325,6 @@ export default ({
             className="globe-icon-svg"
           ></SvgIcon>
         </Dropdown>
-        <li>{/* here goes notifications icon with absolute positioning */}</li>
       </>
     );
   };
@@ -337,12 +340,12 @@ export default ({
         }
         rightContent={
           <div>
-            {isAuthenticated ? <NotificationDropDown /> : null}
             <MenuToggle
               src={MenuIcon}
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
+            {isAuthenticated && <NotificationDropDown mobile={true} />}
             {isAuthenticated && renderInboxIcon(true) /* mobile = true */}
             <DesktopMenu>
               <NavLinks>
