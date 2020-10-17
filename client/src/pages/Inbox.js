@@ -36,8 +36,8 @@ const Inbox = (props) => {
     blockThread,
     archiveThread,
   } = useContext(WebSocketContext);
-  const { isIdentified, user, history } = props;
-  const { room, rooms, chatLog } = props.ws;
+  const { user, history, authLoading, isAuthenticated } = props;
+  const { room, rooms, chatLog, isIdentified } = props.ws;
   const dispatch = useDispatch();
 
   const unlisten = history.listen(() => {
@@ -47,6 +47,15 @@ const Inbox = (props) => {
     leaveAllRooms();
     unlisten();
   });
+
+  const ensureLoggedIn = () => {
+    if (!authLoading && !isAuthenticated) {
+      sessionStorage.setItem("postredirect", "/inbox");
+      history.push("/auth/login");
+    }
+  };
+
+  ensureLoggedIn();
 
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
