@@ -63,6 +63,7 @@ module.exports = {
     completedPrefix: "COC",
     createOrgProfPrefix: "COP",
     createNew: "_CN",
+    email: "_EM",
   },
   profile: {
     createProfile: "_CPR",
@@ -70,6 +71,7 @@ module.exports = {
     continuePosting: "_CNP",
     continueToFeed: "_CF",
     modify: "_MOD",
+    uploadAvatar: "_UA",
   },
   sign: {
     inPrefix: "SI",

@@ -113,8 +113,9 @@ const FilterAccord = ({ gtmPrefix }) => {
                   onClick={handleOption(filter.label, value)}
                   className={
                     "tag-selectable " +
-                    (selectedOptions[filter.label] &&
-                    selectedOptions[filter.label].includes(value)
+                    ((selectedOptions[filter.label] &&
+                      selectedOptions[filter.label].includes(value)) ||
+                      value.toLowerCase().includes(selectedType?.toLowerCase())
                       ? "tag-selected"
                       : "")
                   }

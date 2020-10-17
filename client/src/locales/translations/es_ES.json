@@ -1,6 +1,6 @@
 {
   "headline": "Un lugar para ofrecer y solicitar ayuda",
-  "tagline": "<0>Las pandemias seguirán ocurriendo.</0><1>Ayudamos a las comunidades a prepararse y responder</1>",
+  "tagline": "<0>Las pandemias seguirán ocurriendo.</0><1>Ayudamos a las comunidades a prepararse y responder.</1>",
   "common": {
     "getHelp": "Solicitar ayuda",
     "giveHelp": "Ofrecer Ayuda",
@@ -46,7 +46,7 @@
   },
   "feed": {
     "title": "Informes de Ayuda",
-    "all": "Todos los puestos",
+    "all": "Todas las publicaciones",
     "request": "Solicitar ayuda",
     "offer": "Ofreciendo ayuda",
     "quit": "Salir de los filtros",
@@ -105,7 +105,7 @@
       },
       "typesOptions": {
         "Medical Supplies": "Suministros Médicos",
-        "Groceries/Food": "Abarrotes/Alimentos",
+        "Groceries/Food": "Alimentos/Abarrotes",
         "Business": "Negocios",
         "Education": "Educación",
         "Legal": "Legal",
@@ -183,7 +183,8 @@
     "share": "Compartir",
     "delete": "Eliminar",
     "cancel": "Cancelar",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "edited": "editado"
   },
   "profile": {
     "common": {
@@ -224,7 +225,7 @@
         "linkedin": "URL de LinkedIn",
         "website": "Página web"
       },
-      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 254 caracteres",
+      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 200 caracteres",
       "emailInvalid": "La dirección de correo electrónico es inválida",
       "emailDomainInvalid": "El dominio de correo electrónico es inválido"
     },
@@ -323,7 +324,7 @@
     "password": "Contraseña",
     "enterPassword": "Introducir la contraseña",
     "confirmPassword": "Confirmar Contraseña",
-    "forgotPassword": "Olvidaste tu contraseña",
+    "forgotPassword": "Olvidaste tu contraseña?",
     "noAccount": "¿No tienes una cuenta?",
     "haveAccount": "¿Ya tienes una cuenta?",
     "recoverLink": "Envíame un enlace de recuperación",
@@ -591,7 +592,7 @@
     "thankYouMessage": "Su opinión significa mucho y nos ayuda a mejorar nuestros servicios durante y después de la pandemia de COVID-19.",
     "submitFeedback": "Enviar comentarios",
     "radio": {
-      "age": "Cuántos años tienes",
+      "age": "Cuántos años tienes?",
       "unaffected": "Voy al trabajo/escuela normalmente",
       "quarantine": "Estoy sano pero en cuarentena en casa",
       "symptomaticUntested": "Tengo síntomas leves pero no me he hecho la prueba.",
@@ -720,6 +721,13 @@
       "Loop Detected": "Loop Detected",
       "Not Extended": "Not Extended",
       "Network Authentication Required": "Network Authentication Required"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Lo siento, solo admitimos archivos de imagen jp(e)g y png.",
+      "fileSizeTooLarge": "Por favor, sube una imagen de menos de 5 MB.",
+      "imageDimensionTooSmall": "Por favor, sube una imagen que tenga al menos 250 pixeles de alto y 250 pixeles de ancho.",
+      "imageDimensionTooWide": "Lo siento, la imagen es demasiado ancha. Vuelva a intentarlo con una imagen que tenga un ancho inferior al doble de la altura.",
+      "networkError": "Lo siento, se produjo un error de red."
     }
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud",
@@ -762,5 +770,10 @@
   "TEMP: Done": "Completo",
   "TEMP: Retake the Test": "Repetir la prueba",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Según los síntomas reportados, debes buscar atención médica de inmediato.\n¡Llama al número de emergencia!",
-  "TEMP: Your Responses": "Tus respuestas"
+  "TEMP: Your Responses": "Tus respuestas",
+  "avatar": {
+    "submitBtn": "Enviar",
+    "cancelBtn": "Cancelar",
+    "tryAgainBtn": "Inténtalo de nuevo."
+  }
 }
