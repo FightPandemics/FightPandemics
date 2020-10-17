@@ -85,7 +85,22 @@ const ChatDisabled = styled.p`
     }
   }
 `;
+const LengthIndicator = styled.span`
+  position: absolute;
+  bottom: 1.5em;
+  right: 2.8em;
+  font-size: 0.7em;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    right: 2.2em;
+  }
+  &.alomst-full {
+    color: red;
+  }
+`;
+
 export const InputBox = ({
+  setText,
+  text,
   user,
   room,
   sendMessage,
@@ -97,8 +112,10 @@ export const InputBox = ({
   blockThread,
   archiveThread,
   setToggleViewRequests,
+  editMessage,
+  editingMessageId,
+  setEditingMessageId,
 }) => {
-  const [text, setText] = useState("");
   const inputRef = useRef(null);
 
   const getReceiver = (participants) => {
@@ -107,6 +124,10 @@ export const InputBox = ({
 
   const getSender = (participants) => {
     return participants.filter((p) => p.id == user.id)[0];
+  };
+
+  const isMobile = () => {
+    return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
   };
 
   useEffect(() => {
@@ -130,6 +151,15 @@ export const InputBox = ({
   }, [inputExpanded, setInputExpanded, text]);
 
   const handleSendMgessage = async () => {
+    // mobile editing is done inside the inputBox
+    if (isMobile() && editingMessageId) {
+      if (!text.replace(/\s/g, "")) return setEditingMessageId(null);
+      editMessage({ messageId: editingMessageId, newContent: text });
+      setEditingMessageId(null);
+      return setText("");
+    }
+
+    // normal messages sending
     let confirmation = await sendMessage({
       threadId: room._id,
       content: text,
@@ -216,8 +246,15 @@ export const InputBox = ({
             value={text}
             onKeyPress={handleKeyPress}
             ref={inputRef}
-            maxLength={2000}
+            maxLength={2048}
           />
+          {inputExpanded && (
+            <LengthIndicator
+              className={`${2048 - text.length < 100 ? "alomst-full" : ""}`}
+            >
+              {2048 - text.length}
+            </LengthIndicator>
+          )}
           <a disabled={!text} onClick={handleClick}>
             <img
               className="send-comment"

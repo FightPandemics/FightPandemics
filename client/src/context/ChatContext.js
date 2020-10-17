@@ -2,6 +2,7 @@ import React, { useState } from "react";
 const ChatContext = React.createContext();
 
 const ChatContextProvider = (props) => {
+  const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [toggleMobileChatList, setToggleMobileChatList] = useState(true);
   const [editingMessageId, setEditingMessageId] = useState(null);
@@ -12,6 +13,8 @@ const ChatContextProvider = (props) => {
   return (
     <ChatContext.Provider
       value={{
+        text,
+        setText,
         isLoading,
         setIsLoading,
         editingMessageId,

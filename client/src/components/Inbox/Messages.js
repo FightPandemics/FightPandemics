@@ -13,11 +13,13 @@ import { OrgPost } from "./OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
 import subMenuIcon from "assets/icons/submenu.svg";
+import { theme, mq } from "constants/theme";
 const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
 
 const Messages = ({
+  setText,
   user,
   room,
   chatLog,
@@ -34,6 +36,10 @@ const Messages = ({
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ block: "start" });
+  };
+
+  const isMobile = () => {
+    return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
   };
 
   const linkify = (text) => {
@@ -98,6 +104,7 @@ const Messages = ({
 
   function startMessageEditing(messageId, content) {
     setEditingMessageId(messageId);
+    if (isMobile()) setText(content);
   }
 
   function cancelMessageEditing() {
@@ -148,15 +155,16 @@ const Messages = ({
               ? linkify(message)
               : "You deleted this message."}
           </div>
-          {editingMessageId == messageId && (
+          {!isMobile() && editingMessageId == messageId && (
             <textarea
               key={"t-area-" + messageId}
               ref={editTextArea}
               defaultValue={message}
+              maxlength={2048}
             ></textarea>
           )}
         </SenderBubble>
-        {editingMessageId == messageId && (
+        {!isMobile() && editingMessageId == messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
             <button onClick={() => cancelMessageEditing()}>Cancel</button>
             <button

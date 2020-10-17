@@ -343,7 +343,7 @@ function onSocketConnect(socket) {
           authorId: userId,
           status: { $ne: "deleted" },
         },
-        { status: "edited", content: data.newContent },
+        { status: "edited", content: data.newContent.substring(0, 2048) },
         { new: true },
       ),
     );

@@ -124,7 +124,7 @@ const MessageModal = ({
             <textarea
               placeholder="Type a message..."
               onChange={handleTextChange}
-              maxLength={2000}
+              maxLength={2048}
             />
           </MsgModal>
           {msgRsp ? (
