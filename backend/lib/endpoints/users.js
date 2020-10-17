@@ -15,6 +15,7 @@ async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
   const Post = app.mongo.model("Post");
+  const Thread = app.mongo.model("Thread");
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
@@ -108,6 +109,22 @@ async function routes(app) {
         );
         if (commentErr) {
           req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].name": updatedUser.name,
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author refs at threads");
         }
       }
       return updatedUser;
@@ -214,6 +231,21 @@ async function routes(app) {
         );
         if (commentErr) {
           req.log.error(commentErr, "Failed updating author photo refs at comments");
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
         }
 
         return {
