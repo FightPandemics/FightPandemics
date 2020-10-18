@@ -65,6 +65,7 @@ class TemplateBuilder {
         };
         return {
           htmlBody: Mustache.render(htmlTemplate, view),
+          notificationId: notification._id,
           subject,
           textBody: Mustache.render(textTemplate, view),
           toEmailAddress: notification.receiver.email,
