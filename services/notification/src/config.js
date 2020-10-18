@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const config = {
   database: {
     database: process.env.DATABASE_NAME,

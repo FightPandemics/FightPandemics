@@ -3,10 +3,15 @@
 const { handler } = require("./lambda");
 
 // Add test event payload here
-const event = {};
-const context = {};
+const event = {
+  frequency: "instant",
+};
+const context = {
+  callbackWaitsForEmptyEventLoop: false,
+};
 
-const response = handler(event, context);
-
-/* eslint-disable no-console */
-console.log(response);
+handler(event, context).then((response) => {
+  /* eslint-disable no-console */
+  console.log(response);
+  process.exit();
+});
