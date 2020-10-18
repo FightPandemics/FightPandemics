@@ -71,7 +71,8 @@ class DatabaseHelper {
         ? `${config.username}:${config.password}@`
         : "";
     const port = config.port ? `:${config.port}` : "";
-    const uri = `${config.protocol}://${usernamePassword}${config.host}${port}`;
+    const retryWrites = config.retryWrites ? "?retryWrites=true&w=majority" : ""
+    const uri = `${config.protocol}://${usernamePassword}${config.host}${port}${retryWrites}`;
     return uri;
   }
 }

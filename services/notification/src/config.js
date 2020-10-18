@@ -2,6 +2,7 @@ const config = {
   database: {
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,
+    retryWrites: process.env.DATABASE_RETRY_WRITES,
     password: process.env.DATABASE_PASSWORD,
     port: process.env.DATABASE_PORT,
     protocol: process.env.DATABASE_PROTOCOL || "mongodb",
