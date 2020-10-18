@@ -542,7 +542,7 @@ const Feed = (props) => {
           type: ADD_OPTION,
           payload: { option: option.value, label },
         });
-        props.history.replace("/feed")
+        props.history.replace("/feed");
       };
 
       const {
