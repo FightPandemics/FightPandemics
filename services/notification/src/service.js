@@ -25,7 +25,9 @@ class NotificationService {
     // TODO optimize by promise batching (i.e. concurrently send 5-10 at a time, based on SES rate limits)
     for (const payload of emailPayloads) {
       try {
-        await this.mailer.send(payload);
+        // TODO stub out email send for now
+        // await this.mailer.send(payload);
+        console.log(`Mock sending ${JSON.stringify(payload)}`);
         await this.dbHelper.setEmailSentAt(payload.notificationId);
       } catch (error) {
         // Do not throw error if one email fails to send; continue processing remaining emails.
