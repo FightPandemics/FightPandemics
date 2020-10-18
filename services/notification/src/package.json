@@ -22,7 +22,9 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.771.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.2",
+    "mustache": "^4.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
