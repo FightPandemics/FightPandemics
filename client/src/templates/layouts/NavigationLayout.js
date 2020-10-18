@@ -1,5 +1,5 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
-import { Typography, Menu, Dropdown } from "antd";
+import { Typography, Menu, Dropdown, Badge } from "antd";
 import axios from "axios";
 import React, { useState, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -263,7 +263,15 @@ const StyledDrawer = styled(Drawer)`
 
 const NavigationLayout = (props) => {
   const { t } = useTranslation();
-  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const {
+    authLoading,
+    hideFooter,
+    mobiletabs,
+    tabIndex,
+    isAuthenticated,
+    user,
+    ws,
+  } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -679,7 +687,7 @@ const NavigationLayout = (props) => {
       <div>
         <StyledDrawer
           style={{
-            minHeight: document.documentElement.clientHeight,
+            // minHeight: document.documentElement.clientHeight, --Causing extra padding at the bottom of the page when page is adjusted
             ...drawerStyles,
           }}
           enableDragHandle
@@ -695,11 +703,11 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
+            ws={ws}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
           />
-
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
@@ -718,7 +726,7 @@ const NavigationLayout = (props) => {
             {renderRadioModal()}
             {renderThanksModal()}
           </Main>
-          <Footnote />
+          {!hideFooter && <Footnote />}
           <CookieAlert />
         </StyledDrawer>
       </div>

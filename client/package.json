@@ -31,6 +31,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "snyk": "^1.319.2",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",
     "super-tiny-icons": "^0.3.2",
     "tlds": "^1.207.0",
@@ -66,10 +67,12 @@
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",
     "dotenv": "^8.2.0",
+    "redux-devtools-extension": "^2.13.8",
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "remote-redux-devtools": "^0.5.16"
   },
   "husky": {
     "hooks": {

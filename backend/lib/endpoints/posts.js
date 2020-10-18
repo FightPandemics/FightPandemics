@@ -555,7 +555,8 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      await createNotification("like", postId, userId);
+      // action, post, triggeredBy
+      app.notifier.notify('like', updatedPost, userId)
 
       return {
         likes: updatedPost.likes,
@@ -693,7 +694,16 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
-      await createNotification("comment", postId, userId);
+      const [errPost, post] = await app.to(Post.findById(postId));
+      if (errPost) {
+        req.log.error(errPost, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      // action, post, triggeredBy
+      app.notifier.notify('comment', post, userId)
 
       reply.code(201);
       return comment;
