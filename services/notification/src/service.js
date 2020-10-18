@@ -9,12 +9,14 @@ class NotificationService {
     this.templateBuilder = new TemplateBuilder();
   }
 
+  async initializeDb(cachedDb = null) {
+    return this.dbHelper.connect(cachedDb);
+  }
+
   async process(frequency) {
     // TODO handle frequency - immediate, daily, weekly, bi-weekly
-    const notificationsByUser = await this.dbHelper.findUnreadNotifications();
-    const emails = notificationsByUser.map((notifications) =>
-      this.templateBuilder.build(notifications),
-    );
+    const notifications = await this.dbHelper.findNotifications(frequency);
+    const emails = this.templateBuilder.build(frequency, notifications);
     const emailPayloads = emails.map((email) =>
       this.mailer.buildPayload(email),
     );
