@@ -42,8 +42,8 @@ import githubIcon from "assets/icons/social-github.svg";
 import linkedinBlue from "assets/icons/social-linkedin-unfilled.svg";
 import twitterBlue from "assets/icons/social-twitter-unfilled.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
-import playSotreIcon from "assets/icons/google-play.svg";
-import appSotreIcon from "assets/icons/apple-app-store.svg";
+import playStoreIcon from "assets/icons/play-store-icon.svg";
+import appStoreIcon from "assets/icons/app-store-icon.svg";
 
 const UserCard = styled(PostCard)`
   &.am-card {
@@ -142,8 +142,8 @@ const URLS = {
   linkedin: [linkedinBlue, LINKEDIN_INDIVIDUAL_URL],
   twitter: [twitterBlue, TWITTER_URL],
   website: [websiteIcon],
-  appStore: [playSotreIcon, APPSTORE_URL],
-  playStore: [appSotreIcon, PLAYSTORE_URL],
+  appStore: [playStoreIcon, APPSTORE_URL],
+  playStore: [appStoreIcon, PLAYSTORE_URL],
 };
 
 const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
