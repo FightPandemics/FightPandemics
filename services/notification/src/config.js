@@ -4,6 +4,7 @@ const config = {
     host: process.env.DATABASE_HOST,
     password: process.env.DATABASE_PASSWORD,
     port: process.env.DATABASE_PORT,
+    protocol: process.env.DATABASE_PROTOCOL || "mongodb",
     username: process.env.DATABASE_USERNAME,
   },
   feedbackForwardingEmailAddress: process.env.FEEDBACK_FORWARDING_EMAIL_ADDRESS,
