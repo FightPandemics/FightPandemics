@@ -22,6 +22,21 @@ class DatabaseHelper {
     return this._findInstantNotifications();
   }
 
+  async setEmailSentAt(notificationId) {
+    return this.db.collection("notifications").updateOne(
+      {
+        $eq: {
+          _id: notificationId,
+        },
+      },
+      {
+        $set: {
+          emailSentAt: new Date(),
+        },
+      },
+    );
+  }
+
   async _findInstantNotifications() {
     const cursor = this.db.collection("notifications").aggregate([
       {
