@@ -26,10 +26,11 @@ Cypress.Commands.add('generateRandomEmail', () => {
 
 Cypress.Commands.overwrite('visit', (visit, url) => {
         return visit(url, {
-        onBeforeLoad (win) {
-          Object.defineProperty(win.navigator, 'language', {
-            value: 'en_US'
-          })
-        }
-      })
+          
+          onBeforeLoad: (_contentWindow) => { 
+            Object.defineProperty(_contentWindow.navigator, 'language', { value: 'en-US' }) 
+          } 
+        });
+    
+      
 });
