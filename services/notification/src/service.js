@@ -17,12 +17,21 @@ class NotificationService {
     // TODO handle frequency - immediate, daily, weekly, bi-weekly
     const notifications = await this.dbHelper.findNotifications(frequency);
     const emails = this.templateBuilder.build(frequency, notifications);
-    const emailPayloads = emails.map((email) =>
-      this.mailer.buildPayload(email),
-    );
+    const emailPayloads = emails.map((email) => ({
+      notificationId: email.notificationId,
+      payload: this.mailer.buildPayload(email),
+    }));
+
     // TODO optimize by promise batching (i.e. concurrently send 5-10 at a time, based on SES rate limits)
     for (const payload of emailPayloads) {
-      await this.mailer.send(payload);
+      try {
+        await this.mailer.send(payload);
+        await this.dbHelper.setEmailSentAt(payload.notificationId);
+      } catch (error) {
+        // Do not throw error if one email fails to send; continue processing remaining emails.
+        // TODO log to Papertrail and Sentry
+        console.log(error);
+      }
     }
   }
 }
