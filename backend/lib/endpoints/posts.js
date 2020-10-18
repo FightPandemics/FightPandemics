@@ -23,65 +23,8 @@ const {
 async function routes(app) {
   const { mongo } = app;
   const Comment = mongo.model("Comment");
-  const Notification = mongo.model("Notification");
   const Post = mongo.model("Post");
   const User = mongo.model("User");
-
-  const getPost = async (postId) => {
-    const [postErr, post] = await app.to(
-      Post.findById(postId).select({
-        "author.location.address": false,
-        "author.location.coordinates": false,
-        "author.location.neighborhood": false,
-        "author.location.zip": false,
-      }),
-    );
-    if (postErr) {
-      throw new Error("Error fetching post for notification");
-    } else if (post === null) {
-      throw new Error("Cannot fine post for notification");
-    }
-    return post;
-  };
-
-  const getUser = async (userId) => {
-    const user = await User.findById(userId);
-    if (user === null) {
-      throw new Error("Cannot find user for notification");
-    }
-    return user;
-  };
-
-  // TODO move to socket.io plugin or model
-  const createNotification = async (action, postId, triggeredById) => {
-    try {
-      const post = getPost(postId);
-      const user = getUser(triggeredById);
-      const notificationProps = {
-        action,
-        post: {
-          id: mongoose.Types.ObjectId(postId),
-          title: post.title,
-        },
-        receiver: mongoose.Types.ObjectId(post.author.id),
-        readAt: null,
-        emailSentAt: null,
-        triggeredBy: {
-          id: mongoose.Types.ObjectId(triggeredById),
-          name: `${user.firstName} ${user.lastName}`,
-          photo: user.photo,
-          type: user.type,
-        },
-      };
-      const [err, notification] = await app.to(new Notification(notificationProps).save());
-      if (err) {
-        throw new Error("Failed creating notification");
-      }
-    } catch (error) {
-      req.log.error(error, error.message);
-      return;  // Silently fail so user who liked/commented does not see an error
-    }
-  };
 
   // /posts
   const POST_PAGE_SIZE = 5;
