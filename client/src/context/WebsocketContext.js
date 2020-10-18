@@ -16,6 +16,8 @@ import {
   setLastMessage,
   messageDeleted,
   messageEdited,
+  getNotificationsSuccess,
+  notificationReceived,
 } from "../actions/wsActions";
 
 const isLocalhost = Boolean(
@@ -98,6 +100,10 @@ export default class SocketManager extends React.Component {
         return this.joinRoom({ threadId });
       this.getUserRooms();
     });
+
+    this.socket.on("NEW_NOTIFICATION", (notificationData) => {
+      this.props.store.dispatch(notificationReceived(notificationData));
+    });
   }
 
   identify = () => {
@@ -110,6 +116,7 @@ export default class SocketManager extends React.Component {
       if (response.code == 200) {
         console.log(`[WS]: ${response.data} Identified`);
         this.getUserRooms();
+        this.getNotifications();
         return this.props.store.dispatch(identifySuccess());
       } else this.props.store.dispatch(identifyError(response));
       // if we reached this then the identification has failed
@@ -227,6 +234,17 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  getNotifications = () => {
+    this.socket.emit("GET_NOTIFICATIONS", null, (response) => {
+      if (response.code == 200)
+        this.props.store.dispatch(getNotificationsSuccess(response.data));
+    });
+  };
+
+  markNotificationsAsRead = () => {
+    this.socket.emit("MARK_NOTIFICATIONS_AS_READ");
+  };
+
   componentWillUnmount() {
     try {
       this.socket !== null && this.socket.disconnect();
@@ -250,6 +268,8 @@ export default class SocketManager extends React.Component {
       blockThread: this.blockThread,
       archiveThread: this.archiveThread,
       unblockThread: this.unblockThread,
+      getNotifications: this.getNotifications,
+      markNotificationsAsRead: this.markNotificationsAsRead,
     };
     return (
       <WebSocketContext.Provider value={value}>

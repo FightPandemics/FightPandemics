@@ -286,7 +286,10 @@ export default ({
             </li>
             <li>{renderInboxIcon()}</li>
             <li>
-              <NotificationDropDown mobile={false} />
+              <NotificationDropDown
+                notifications={ws.notifications}
+                mobile={false}
+              />
             </li>
             <li></li>
           </>
@@ -345,7 +348,12 @@ export default ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
-            {isAuthenticated && <NotificationDropDown mobile={true} />}
+            {isAuthenticated && (
+              <NotificationDropDown
+                notifications={ws.notifications}
+                mobile={true}
+              />
+            )}
             {isAuthenticated && renderInboxIcon(true) /* mobile = true */}
             <DesktopMenu>
               <NavLinks>

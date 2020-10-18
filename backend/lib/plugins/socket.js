@@ -14,6 +14,7 @@ function onSocketConnect(socket) {
   const User = this.mongo.model("User");
   const Post = this.mongo.model("Post");
   const Message = this.mongo.model("Message");
+  const Notification = this.mongo.model("Notification");
 
   socket.on("IDENTIFY", async (data, res) => {
     if (!socket.request.cookies['token']) return res({ code: 401, message: "Unauthorized" });
@@ -426,6 +427,32 @@ function onSocketConnect(socket) {
     if (recipientSocketId)
       this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
   });
+
+
+  socket.on("GET_NOTIFICATIONS", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
+
+    const [notificationsErr, notifications] = await this.to(
+      Notification.find({ receiver: userId })
+        .sort({ createdAt: -1 }),
+    );
+
+    if (notificationsErr)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, data: notifications });
+  });
+
+  socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
+    userId = socket.userId;
+    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
+    console.log(this.mongo.base.Types.ObjectId(userId))
+
+    const [updateErr, update] = await this.to(
+    Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
+    );
+
+  })
 }
 
 // usefull to send notifications outside socket context, or get online status
@@ -482,4 +509,4 @@ function fastifySocketIo(app, config, next) {
   }
 }
 
-module.exports = fp(fastifySocketIo);
+module.exports = { plugin: fp(fastifySocketIo), getSocketIdByUserId };

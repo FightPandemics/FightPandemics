@@ -30,7 +30,9 @@ const notificationSchema = new Schema(
       },
       name: String,
       photo: String,
-      type: String,
+      type: {
+        type: String,
+      }
     },
   },
   { collection: "notifications", timestamps: true },
