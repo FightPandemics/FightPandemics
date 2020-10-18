@@ -1,0 +1,21 @@
+FightPandemics.com
+
+{{{body}}}
+
+Follow us on social media
+Facebook: https://www.facebook.com/FightPandemics/
+Instagram: https://www.instagram.com/fightpandemics/
+Twitter: https://twitter.com/FightPandemics
+LinkedIn: https://www.linkedin.com/company/fightpandemics/
+Medium: https://medium.com/@fightpandemics
+YouTube: https://www.youtube.com/channel/UCfytoZ4ZczawKbtQLnipYzw
+
+Or contact us at support@fightpandemics.com
+
+Copyright 2020 FightPandemics. All rights reserved.
+
+Notification Preferences
+
+Unsubscribe: {{{baseUrl}}}/unsubscribe?token={{token}}
+
+9 E. Loockerman Street, Suite 311, City of Dover, County of Kent, 19901, Delaware
