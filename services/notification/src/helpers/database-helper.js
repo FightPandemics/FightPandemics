@@ -25,9 +25,7 @@ class DatabaseHelper {
   async setEmailSentAt(notificationId) {
     return this.db.collection("notifications").updateOne(
       {
-        $eq: {
-          _id: notificationId,
-        },
+        _id: notificationId,
       },
       {
         $set: {
@@ -71,7 +69,9 @@ class DatabaseHelper {
         ? `${config.username}:${config.password}@`
         : "";
     const port = config.port ? `:${config.port}` : "";
-    const retryWrites = config.retryWrites ? "?retryWrites=true&w=majority" : ""
+    const retryWrites = config.retryWrites
+      ? "?retryWrites=true&w=majority"
+      : "";
     const uri = `${config.protocol}://${usernamePassword}${config.host}${port}${retryWrites}`;
     return uri;
   }
