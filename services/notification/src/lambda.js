@@ -20,14 +20,14 @@ exports.handler = async (event, context) => {
     setCachedDb(service.dbHelper.db);
     await service.process(frequency);
     return {
-      body: JSON.stringify("Hello world!"),
+      body: JSON.stringify("Success"),
       statusCode: 200,
     };
   } catch (error) {
     /* eslint-disable no-console */
     console.log(error); // TODO remove or replace with logger
     return {
-      body: JSON.stringify("Goodbye world :("),
+      body: JSON.stringify("An error occurred."),
       statusCode: 500,
     };
   }
