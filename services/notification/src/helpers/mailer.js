@@ -47,11 +47,7 @@ class Mailer {
   }
 
   async send(emailPayload) {
-    try {
-      await this.client.sendEmail(emailPayload).promise();
-    } catch (error) {
-      // TODO log error to Papertrail, send to Sentry.
-    }
+    return this.client.sendEmail(emailPayload).promise();
   }
 }
 
