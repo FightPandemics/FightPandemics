@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useReducer } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import axios from 'axios';
 // Local
 import GTM from "constants/gtm-tags";
 import { selectOrganisationId, selectUser } from "reducers/session";
+import { postsActions } from "reducers/posts";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -50,18 +51,19 @@ const PostSocial = ({
   id,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const history = useHistory();
   const organisationId = useSelector(selectOrganisationId);
   const user = useSelector(selectUser);
-  // useEffect(() => {
-  //   const likePost = sessionStorage.getItem("likePost");
+  useEffect(() => {
+    const likePost = sessionStorage.getItem("likePost");
 
-  //   if (id === likePost) {
-  //     if (likePost) {
-  //       handlePostLike(likePost, liked, false);
-  //     }
-  //   }
-  // }, [id, liked, handlePostLike]);
+    if (id === likePost) {
+      if (likePost) {
+        handlePostLike(likePost, liked, false);
+      }
+    }
+  }, [id, liked]);
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
@@ -92,11 +94,7 @@ const PostSocial = ({
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
-        // postsDispatch({
-        //   type: SET_LIKE,
-        //   postId,
-        //   count: data.likesCount,
-        // });
+        dispatch(postsActions.setLikeAction(postId, data.likesCount))
       } catch (error) {
         console.log({ error });
       }

@@ -17,7 +17,7 @@ export const resetPageAction = ({ isLoading = false, loadMore = true, filterType
   }
 });
 
-export const setLikeAction = ({ postId, count }) => ({
+export const setLikeAction = (postId, count) => ({
   type: POSTS_ACTIONS.SET_LIKE,
   payload: {
     postId,

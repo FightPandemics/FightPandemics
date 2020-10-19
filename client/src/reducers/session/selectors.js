@@ -5,3 +5,5 @@ export const selectOrganisationId = (state) => {
   }
   return user?.organisations[organisationIndex]?._id;
 };
+
+export const selectUser = (state) => state.session.user;
