@@ -20,7 +20,8 @@ const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM_ID,
 };
 
-TagManager.initialize(tagManagerArgs);
+if (localStorage.getItem("fp_qa") == "true")
+  TagManager.initialize(tagManagerArgs);
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
