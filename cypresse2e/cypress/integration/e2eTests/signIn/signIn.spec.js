@@ -1,19 +1,32 @@
 import SignIn from '../../../elements/pages/signIn';
-import { DUMMY_SAMPLE_EMAIL } from '../../constants';
-import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
-import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
+const fixturesObjectPath = {
+    errorMessages: '../fixtures/errorMessages.json',
+    emailAndPassword: '../fixtures/emailAndPassword.json',
+    buttonNames: '../fixtures/buttonNames.json'
+}
 
 describe('FightPandemics Sign In Page', () => {
 
     const signIn = new SignIn();
+    const fixtures = {
+        errorMessages: {},
+        emailAndPassword: {},
+        buttonNames: {}
+    };
 
     context('User signs into account', () => {
+
         beforeEach(() => {
+            for (const fixtureKey in fixturesObjectPath) {
+                const fixturePath = fixturesObjectPath[fixtureKey]
+                cy.fixture(fixturePath).then((data) => {
+                    fixtures[fixtureKey] = data;
+                });
+            }
             signIn.visit();
         });
 
         it('FP logo is visible and clickable', () => {
-            var fpLogo = signIn.getFpLogo();
             cy.checkFpLogoIsVisibleAndClickable(signIn.getFpLogoLocator());
 
         });
@@ -21,7 +34,6 @@ describe('FightPandemics Sign In Page', () => {
         it('Sign in page contains heading and image', () => {
             var h4Heading = "Sign In";
             signIn.getH4Heading().should('be.visible').contains(h4Heading);
-
             signIn.getImage().should('be.visible');
 
         });
@@ -29,7 +41,7 @@ describe('FightPandemics Sign In Page', () => {
         it('Email address field is visible and can be populated', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(DUMMY_SAMPLE_EMAIL);
+            emailField.type(fixtures.emailAndPassword.dummySampleEmail);
 
         });
 
@@ -38,33 +50,34 @@ describe('FightPandemics Sign In Page', () => {
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequired = signIn.getEmailRequired();
             emailRequired.should('be.visible');
-            emailRequired.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
+            emailRequired.contains(fixtures.errorMessages.requiredEmail);
 
         });
 
         it('Entering invalid email triggers error', () => {
             var emailField = signIn.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test@').focus().blur();
+            emailField.type(fixtures.emailAndPassword.invalidSampleEmail).focus().blur();
             var validEmailRequired = signIn.getValidEmailRequired();
             validEmailRequired.should('be.visible');
-            validEmailRequired.contains(INVALID_EMAIL_ERROR_MESSAGE);
+            validEmailRequired.contains(fixtures.errorMessages.invalidEmail);
 
         });
 
         it('Password field is visible and can be populated', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type('Testing!');
+            passwordField.type(fixtures.emailAndPassword.validSamplePassword);
 
         });
 
         it('Clicking the password eye displays the password entered', () => {
             var passwordField = signIn.getPasswordField();
             passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type('Testing!');
+            passwordField.type(fixtures.emailAndPassword.validSamplePassword);
             var passwordEye = signIn.getPasswordEye();
             passwordEye.should('be.visible').and('have.attr', 'alt', 'Icon').click();
+
         });
 
         it('Leaving password field blank triggers error', () => {
@@ -72,7 +85,7 @@ describe('FightPandemics Sign In Page', () => {
             passwordField.should('be.visible').and('have.attr', 'name', 'password').focus().blur();
             var passwordRequired = signIn.getPasswordRequired();
             passwordRequired.should('be.visible');
-            passwordRequired.contains('Password is required.');
+            passwordRequired.contains(fixtures.errorMessages.passwordRequired);
 
         });
 
@@ -82,7 +95,7 @@ describe('FightPandemics Sign In Page', () => {
             passwordField.type('test');
             var passwordLengthRequired = signIn.getPasswordLengthRequired();
             passwordLengthRequired.should('be.visible');
-            passwordLengthRequired.contains('Password must be at least 8 characters');
+            passwordLengthRequired.contains(fixtures.errorMessages.passwordLengthRequired);
 
         });
 
@@ -92,7 +105,7 @@ describe('FightPandemics Sign In Page', () => {
             passwordField.type('testtest');
             var passwordCharacterRequired = signIn.getPasswordCharacterRequired();
             passwordCharacterRequired.should('be.visible');
-            passwordCharacterRequired.contains('Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).');
+            passwordCharacterRequired.contains(fixtures.errorMessages.passwordCharacterRequired);
 
         });
 
@@ -103,8 +116,8 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Sign in button is enabled when required details are entered', () => {
-            signIn.getEmailField().type(DUMMY_SAMPLE_EMAIL);
-            signIn.getPasswordField().type('Testing!');
+            signIn.getEmailField().type(fixtures.emailAndPassword.dummySampleEmail);
+            signIn.getPasswordField().type(fixtures.emailAndPassword.validSamplePassword);
             var signInButton = signIn.getSignInButton();
             signInButton.should('be.visible').and('have.attr', 'aria-disabled', 'false');
 
@@ -119,18 +132,19 @@ describe('FightPandemics Sign In Page', () => {
             signIn.getSignInButton().click();
             var loginFailAlert = signIn.getLoginFailAlert();
             loginFailAlert.should('be.visible');
-            loginFailAlert.contains('Login failed, reason: Wrong email or password.');
+            loginFailAlert.contains(fixtures.errorMessages.loginFailWrongEmail);
+
         });
 
         it('Login fail alert appears when maximum sign in attempts are exceeded', () => {
-            signIn.getEmailField().type(DUMMY_SAMPLE_EMAIL);
+            signIn.getEmailField().type(fixtures.emailAndPassword.dummySampleEmail);
             signIn.getPasswordField().type('WrongPW!wpw3hi');
             for (var i = 0; i < 11; i++) {
                 signIn.getSignInButton().click();
             };
             var loginFailAlert = signIn.getLoginFailAlert();
             loginFailAlert.should('be.visible');
-            loginFailAlert.contains('Login failed, reason: Maximum number of sign in attempts exceeded.');
+            loginFailAlert.contains(fixtures.errorMessages.loginFailMaximumAttempts);
 
         });
 
@@ -144,28 +158,28 @@ describe('FightPandemics Sign In Page', () => {
         it('Join now link is visible and clickable', () => {
             var joinNowLink = signIn.getJoinNowLink();
             joinNowLink.should('be.visible');
-            joinNowLink.contains('u', 'Join Now').click();
+            joinNowLink.contains('u', fixtures.buttonNames.joinNow).click();
 
         });
 
         it('Facebook button for sign in is visible', () => {
             var signInByFbButton = signIn.getSignInFbButton();
             signInByFbButton.should('be.visible');
-            signInByFbButton.contains('span', 'Facebook');
+            signInByFbButton.contains('span', fixtures.buttonNames.facebook);
 
         });
 
         it('Google button for sign in is visible', () => {
             var signInByGoogleButton = signIn.getSignInGoogleButton();
             signInByGoogleButton.should('be.visible');
-            signInByGoogleButton.contains('span', 'Google');
+            signInByGoogleButton.contains('span', fixtures.buttonNames.google);
 
         });
 
         it('LinkedIn button for sign in is visible', () => {
             var signInByLinkedinButton = signIn.getSignInLinkedinButton();
             signInByLinkedinButton.should('be.visible');
-            signInByLinkedinButton.contains('span', 'LinkedIn');
+            signInByLinkedinButton.contains('span', fixtures.buttonNames.linkedIn);
 
         });
     });
