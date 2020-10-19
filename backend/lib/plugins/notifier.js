@@ -37,7 +37,7 @@ class Notifier {
 
     // send real-time web notification if online
     let userIsOnline = await getSocketIdByUserId(this.app, post.author.id.toString())
-    if (userIsOnline) this.app.io.to(userIsOnline).emit('NEW_NOTIFICATION', notification);
+    if (userIsOnline) this.app.io.to(post.author.id.toString()).emit('NEW_NOTIFICATION', notification);
   }
 }
 
