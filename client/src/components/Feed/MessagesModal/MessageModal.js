@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
@@ -52,6 +52,7 @@ const MessageModal = ({
   const { sendMessage, joinRoom, getUserRooms, leaveAllRooms } = useContext(
     WebSocketContext,
   );
+  const textAreaRef = useRef(null);
   let history = useHistory();
 
   const showModal = async () => {
@@ -80,6 +81,7 @@ const MessageModal = ({
       setMsgRsp(true);
       setVisible(false);
       setText("");
+      textAreaRef.current.value = "";
     } else {
       setMsgSent(true);
       setMsgRsp(false);
@@ -122,6 +124,7 @@ const MessageModal = ({
               />
             )}
             <textarea
+              ref={textAreaRef}
               placeholder="Type a message..."
               onChange={handleTextChange}
               maxLength={2048}
