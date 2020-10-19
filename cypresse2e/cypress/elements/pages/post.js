@@ -6,6 +6,8 @@ class Post{
     postHeader = 'div.card-header';
     postTitle = 'h4';
     postAuthorUrl = 'div.card-header > a';
+    postTags = 'div.am-card-body';
+    postPageLink = 'a[href^="/post/"]';
     modalWindowShareVia = 'div[role="document"]';
     modalWindowShareViaH4Title = 'div.am-modal-body h4';
     modalWindowCloseButton = 'span.am-modal-close-x';
@@ -47,6 +49,14 @@ class Post{
 
     getPostAuthorUrlSelector(){
         return this.postAuthorUrl;
+    }
+
+    getPostTags(){
+        return cy.get(this.postTags);
+    }
+
+    getPostPageLink(){
+        return cy.get(this.postPageLink);
     }
 
     getModalWindowShareViaSelector(){
