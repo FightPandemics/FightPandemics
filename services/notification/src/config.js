@@ -14,6 +14,9 @@ const config = {
     protocol: process.env.DATABASE_PROTOCOL || "mongodb",
     username: process.env.DATABASE_USERNAME,
   },
+  errorNotifier: {
+    url: process.env.ERROR_NOTIFIER_URL,
+  },
   logger: {
     enabled: process.env.EXTERNAL_LOGGER_ENABLED === "true",
     host: process.env.EXTERNAL_LOGGER_HOST,

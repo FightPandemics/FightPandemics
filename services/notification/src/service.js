@@ -1,4 +1,5 @@
 const { DatabaseHelper } = require("./helpers/database-helper");
+const { errorNotifier } = require("./helpers/error-notifier");
 const { log } = require("./helpers/logger");
 const { Mailer } = require("./helpers/mailer");
 const { TemplateBuilder } = require("./helpers/template-builder");
@@ -39,11 +40,11 @@ class NotificationService {
         await this.dbHelper.setEmailSentAt(payload.notificationId);
       } catch (error) {
         // Do not throw error if one email fails to send; continue processing remaining emails.
-        // TODO log to Sentry
         log.error(
           error,
           `Error processing notification ${payload.notificationId}`,
         );
+        await errorNotifier.capture(error);
       }
     }
   }

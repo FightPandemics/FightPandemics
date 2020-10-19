@@ -1,4 +1,5 @@
 const { config } = require("./config");
+const { errorNotifier } = require("./helpers/error-notifier");
 const { NotificationService } = require("./service");
 const { log } = require("./helpers/logger");
 
@@ -23,7 +24,8 @@ exports.handler = async (event, context) => {
       statusCode: 200,
     };
   } catch (error) {
-    log.error(error, "Internal Server Error"); // TODO also log to Sentry
+    log.error(error, "Internal Server Error");
+    await errorNotifier.capture(error);
     return {
       body: JSON.stringify("An error occurred."),
       statusCode: 500,
