@@ -6,7 +6,7 @@ describe('FightPandemics Post for unauthorized user', () => {
     const helpBoard = new HelpBoard();
     const post = new Post();
     const shareViaModalWindowTitle = "Share via..."
-    var postTitle = '';
+
 
     context('User opens Help Board', () => {
         beforeEach(() => {
