@@ -10,7 +10,7 @@ class Mailer {
     this.client = new AWS.SESV2({
       apiVersion: "2019-09-27",
     });
-    this.config = config;
+    this.fromEmailAddress = config.fromEmailAddress;
   }
 
   // TODO we could consider using SES personalized emails based on templates. But I am not sure if our use case is
@@ -39,12 +39,7 @@ class Mailer {
       Destination: {
         ToAddresses: [email.toEmailAddress],
       },
-      FeedbackForwardingEmailAddress: this.config
-        .feedbackForwardingEmailAddress,
-      //FeedbackForwardingEmailAddressIdentityArn: '',
-      FromEmailAddress: this.config.fromEmailAddress,
-      // FromEmailAddressIdentityArn: '', // TODO not sure if this should be set. See https://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html
-      ReplyToAddresses: [this.config.replyToEmailAddress],
+      FromEmailAddress: this.fromEmailAddress,
     };
   }
 
