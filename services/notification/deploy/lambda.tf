@@ -1,9 +1,9 @@
   locals {
     base_url = {
       review      = "https://feature1426-1637-combined.fightpandemics.xyz" # Temporary. I think we might need a more permanent review build if we want these email links to work.
-      staging     = "https://fightpandemics.work"
+      staging     = "https://staging.fightpandemics.work"
       production  = "https://fightpandemics.com"
-      development = "https://fightpandemics.online"
+      development = "https://development.fightpandemics.online"
     }
   }
 
