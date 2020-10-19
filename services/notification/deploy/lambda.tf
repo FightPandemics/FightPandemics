@@ -23,6 +23,9 @@ resource "aws_lambda_function" "lambda" {
       DATABASE_PROTOCOL                = "mongodb+srv"
       DATABASE_RETRY_WRITES            = "true"
       DATABASE_USERNAME                = data.aws_ssm_parameter.database_user.value
+      ERROR_NOTIFIER_URL               = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sentry_dsn[0].value
+      EXTERNAL_LOGGER_HOST             = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_host[0].value
+      EXTERNAL_LOGGER_PORT             = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_port[0].value
       INSTANT_UNREAD_LOOKBACK_INTERVAL = "5"
       NODE_ENV                         = var.fp_context
       SES_AWS_REGION                   = data.aws_ssm_parameter.aws_ses_region.value
