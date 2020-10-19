@@ -1,7 +1,7 @@
 class HelpBoard{
 
     fpLogo = '.am-navbar.am-navbar-light a img';
-    helpBoardpageTitle = 'h1';
+    helpBoardPageTitle = 'h1';
     addPostButton = 'button > img#HB_CP'
     noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
     addPostLink = 'a#HB_CP';
@@ -20,7 +20,7 @@ class HelpBoard{
     }
 
     getHelpBoardPageTitleLocator() {
-        return this.helpBoardpageTitle;
+        return this.helpBoardPageTitle;
     }
 
     getAddPostButton(){
