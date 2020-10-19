@@ -9,7 +9,8 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -54,21 +55,15 @@ import {
   GITHUB_URL,
 } from "constants/urls";
 import {
-  postsReducer,
-  postsState as initialPostsState,
+  deletePostModalreducer,
+  deletePostState
 } from "hooks/reducers/feedReducers";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+import { selectPosts, postsActions } from "reducers/posts";
 import {
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  SET_LOADING,
-  NEXT_PAGE,
-  RESET_PAGE,
-  ERROR_POSTS,
-  FETCH_POSTS,
-  SET_POSTS,
 } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -106,6 +101,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const Profile = ({
   match: {
     params: { id: pathUserId },
@@ -113,11 +109,10 @@ const Profile = ({
   history,
   isAuthenticated
 }) => {
+  const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [postsState, postsDispatch] = useReducer(
-    postsReducer,
-    initialPostsState,
-  );
+  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
+  const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { t } = useTranslation();
@@ -145,10 +140,10 @@ const Profile = ({
     loadMore,
     page,
     posts: postsList,
-    deleteModalVisibility,
     status,
     error: postsError,
-  } = postsState;
+  } = posts;
+  const { deleteModalVisibility } = deleteModal;
 
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
@@ -187,7 +182,7 @@ const Profile = ({
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      postsDispatch({ type: FETCH_POSTS });
+      dispatch(postsActions.fetchPostsBengin());
       try {
         if (userId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
@@ -196,27 +191,18 @@ const Profile = ({
           } = await axios.get(endpoint);
 
           if (prevUserId !== userId) {
-            postsDispatch({
-              type: SET_POSTS,
+            dispatch(postsActions.fetchPostsSuccess({
               posts: [],
-            });
+            }));
           }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
             }
             if (posts.length < limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
             } else if (meta.total === limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -224,43 +210,32 @@ const Profile = ({
             }, {});
 
             if (prevUserId === userId && postsList) {
-              postsDispatch({
-                type: SET_POSTS,
+              dispatch(postsActions.fetchPostsSuccess({
                 posts: { ...postsList, ...loadedPosts },
-              });
+              }));
             } else {
-              postsDispatch({
-                type: SET_POSTS,
+              dispatch(postsActions.fetchPostsSuccess({
                 posts: { ...loadedPosts },
-              });
+              }));
             }
           } else if (prevUserId === userId && posts) {
-            postsDispatch({
-              type: SET_POSTS,
+            dispatch(postsActions.fetchPostsSuccess({
               posts: { ...postsList },
-            });
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: false,
-              loadMore: false,
-            });
+            }));
+            dispatch(postsActions.finishLoadingAction());
           } else {
-            postsDispatch({ type: SET_LOADING });
+            dispatch(postsActions.finishLoadingAction());
           }
         }
       } catch (error) {
-        postsDispatch({ error, type: ERROR_POSTS });
+        dispatch(postsActions.fetchPostsError(error));
       }
     };
     fetchPosts();
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
-    postsDispatch({
-      type: RESET_PAGE,
-      isLoading,
-      loadMore,
-    });
+    dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -277,7 +252,7 @@ const Profile = ({
         userPosts.length
       ) {
         return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
+          dispatch(postsActions.setNextPageAction());
           resolve();
         });
       } else {
@@ -320,70 +295,34 @@ const Profile = ({
   };
 
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
   };
 
   const handleEditPost = () => {
-    if (postsState.editPostModalVisibility) {
-      postsDispatch({
+    if (deleteModal.editPostModalVisibility) {
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: false,
       });
     } else {
-      postsDispatch({
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
     }
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
+  const handlePostLike = async (postId, liked, create) => { };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
@@ -436,8 +375,8 @@ const Profile = ({
           {address ? (
             <LocationMobileDiv>{address}</LocationMobileDiv>
           ) : (
-            <WhiteSpace />
-          )}
+              <WhiteSpace />
+            )}
           <IconsContainer>
             <HelpContainer>
               {needHelp && t("profile.individual.needHelp")}
@@ -512,7 +451,7 @@ const Profile = ({
             hasNextPage={loadMore}
             totalPostCount={totalPostCount}
           />
-          {status === ERROR_POSTS && (
+          {postsError && (
             <ErrorAlert
               message={t([
                 `error.${postsError.message}`,

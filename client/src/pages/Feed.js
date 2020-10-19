@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
@@ -24,12 +24,12 @@ import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
 import { selectOrganisationId } from "reducers/session";
-
+import { selectPosts, postsActions } from "reducers/posts";
 import {
   optionsReducer,
   feedReducer,
-  postsReducer,
-  postsState,
+  deletePostModalreducer,
+  deletePostState
 } from "hooks/reducers/feedReducers";
 
 // ICONS
@@ -45,13 +45,6 @@ import {
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-  SET_POSTS,
-  FETCH_POSTS,
-  ERROR_POSTS,
-  NEXT_PAGE,
-  RESET_PAGE,
-  SET_LOADING,
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
@@ -238,28 +231,21 @@ export const NoPosts = styled.div`
   }
 `;
 
-const buttonPulse = styled.button`
-  background-color: rgba(255, 255, 0, 0.4);
-  padding: 0 0.2em;
-  border-radius: 3em;
-  height: 4em;
-  position: relative;
-  top: 1.3em;
-`;
-
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Feed = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
+  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
   const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+  const posts = useSelector(selectPosts);
   const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -282,10 +268,9 @@ const Feed = (props) => {
     isLoading,
     loadMore,
     page,
-    posts: postsList,
-    status,
-    deleteModalVisibility,
+    posts: postsList
   } = posts;
+  const { deleteModalVisibility } = deleteModal;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
 
@@ -317,12 +302,7 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    postsDispatch({
-      type: RESET_PAGE,
-      isLoading,
-      loadMore,
-      filterType: "",
-    });
+    dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
@@ -336,7 +316,7 @@ const Feed = (props) => {
 
   const handleLocation = (value) => {
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      dispatch(postsActions.resetPageAction({ filterType: "" }));
     }
     dispatchAction(SET_VALUE, "location", value);
   };
@@ -345,7 +325,7 @@ const Feed = (props) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      dispatch(postsActions.resetPageAction({ filterType: "" }));
     }
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
@@ -367,7 +347,7 @@ const Feed = (props) => {
     const value = e.key;
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", e.key);
-      postsDispatch({ type: RESET_PAGE, filterType: value });
+      dispatch(postsActions.resetPageAction({ filterType: value }));
     }
   };
 
@@ -380,57 +360,21 @@ const Feed = (props) => {
   const handleOnClose = () => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
+    dispatch(postsActions.resetPageAction({ filterType: "" }));
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
+  const handlePostLike = async () => { };
 
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
@@ -480,8 +424,7 @@ const Feed = (props) => {
       const skip = page * limit;
       const baseURL = gePostsBasetUrl(organisationId, limit, skip);
       let endpoint = `${baseURL}${objectiveURL}${filterURL}`;
-      postsDispatch({ type: FETCH_POSTS });
-
+      dispatch(postsActions.fetchPostsBengin());
       try {
         const {
           data: { data: posts, meta },
@@ -491,48 +434,27 @@ const Feed = (props) => {
             setTotalPostCount(meta.total);
           }
           if (posts.length < limit) {
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: true,
-              loadMore: false,
-            });
+            dispatch(postsActions.finishLoadingAction());
           } else if (meta.total === limit) {
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: true,
-              loadMore: false,
-            });
+            dispatch(postsActions.finishLoadingAction());
           }
           const loadedPosts = posts.reduce((obj, item) => {
             obj[item._id] = item;
             return obj;
           }, {});
-          if (postsList) {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...postsList, ...loadedPosts },
-            });
-          } else {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...loadedPosts },
-            });
-          }
+          dispatch(postsActions.fetchPostsSuccess({
+            posts: { ...(postsList || []), ...loadedPosts },
+          }));
         } else if (posts) {
-          postsDispatch({
-            type: SET_POSTS,
+          dispatch(postsActions.fetchPostsSuccess({
             posts: { ...postsList },
-          });
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: false,
-            loadMore: false,
-          });
+          }));
+          dispatch(postsActions.finishLoadingAction());
         } else {
-          postsDispatch({ type: SET_LOADING });
+          dispatch(postsActions.finishLoadingAction());
         }
       } catch (error) {
-        postsDispatch({ error, type: ERROR_POSTS });
+        dispatch(postsActions.fetchPostsError(error));
       }
       dispatchAction(SET_VALUE, "applyFilters", true);
     };
@@ -625,7 +547,7 @@ const Feed = (props) => {
         feedPosts.length
       ) {
         return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
+          dispatch(postsActions.setNextPageAction());
           resolve();
         });
       } else {
@@ -765,7 +687,7 @@ const Feed = (props) => {
               hasNextPage={loadMore}
               totalPostCount={totalPostCount}
             />
-            {status === ERROR_POSTS && (
+            {postsError && (
               <ErrorAlert
                 message={t([
                   `error.${postsError.message}`,

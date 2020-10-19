@@ -1,74 +1,73 @@
 import { POSTS_ACTIONS } from "./actions";
 
 const innitialState = {
-  status: POSTS_ACTIONS.SET_POSTS,
   posts: [],
   page: 0,
   error: null,
   filterType: "ALL",
   isLoading: false,
-  loadMore: true,
-  deleteModalVisibility: POSTS_ACTIONS.DELETE_MODAL_HIDE,
+  loadMore: true
 };
 
 const postsReducer = (state = innitialState, action) => {
   switch (action.type) {
-    case POSTS_ACTIONS.FETCH_POSTS:
+    case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {
         ...state,
-        status: POSTS_ACTIONS.FETCH_POSTS,
         isLoading: true
       };
-    case POSTS_ACTIONS.SET_POSTS:
+    case POSTS_ACTIONS.FETCH_POSTS_SUCCESS: {
+      const { payload } = action;
+      console.info(payload);
       return {
         ...state,
-        status: POSTS_ACTIONS.SET_POSTS,
         error: null,
-        posts: action.posts,
+        posts: payload,
         isLoading: false,
       };
-    case POSTS_ACTIONS.ERROR_POSTS:
+    }
+    case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
+      const { payload } = action;
       return {
         ...state,
-        status: POSTS_ACTIONS.ERROR_POSTS,
-        error: action.error,
+        error: payload,
         posts: [],
         isLoading: false,
       };
+    }
     case POSTS_ACTIONS.NEXT_PAGE:
       return { ...state, page: state.page + 1 };
-    case POSTS_ACTIONS.RESET_PAGE:
+    case POSTS_ACTIONS.RESET_PAGE: {
+      const { payload } = action;
       return {
         ...state,
         page: 0,
-        filterType: action.filterType || "",
+        filterType: payload.filterType,
         posts: [],
-        loadMore: action.loadMore || true,
-        isLoading: action.isLoading || false,
+        loadMore: payload.loadMore,
+        isLoading: payload.isLoading,
       };
-    case POSTS_ACTIONS.SET_LOADING:
+    }
+    case POSTS_ACTIONS.FINISH_LOADING:
       return {
         ...state,
         isLoading: false,
         loadMore: false,
       };
-    case POSTS_ACTIONS.SET_DELETE_MODAL_VISIBILITY:
-      return {
-        ...state,
-        deleteModalVisibility: action.visibility,
-      };
-    case POSTS_ACTIONS.SET_LIKE:
+    case POSTS_ACTIONS.SET_LIKE: {
+      const { payload } = action;
       return {
         ...state,
         posts: {
           ...state.posts,
-          [action.postId]: {
-            ...state.posts[action.postId],
-            liked: !!!state.posts[action.postId].liked,
-            likesCount: action.count,
+          [payload.postId]: {
+            ...state.posts[payload.postId],
+            liked: !!!state.posts[payload.postId].liked,
+            likesCount: payload.count,
           },
         },
       };
+    }
     default:
       return state;
   }

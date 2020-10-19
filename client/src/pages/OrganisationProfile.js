@@ -4,12 +4,13 @@ import React, {
   useState,
   useEffect,
   useContext,
-  useReducer,
   useCallback,
+  useReducer,
   useRef,
 } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -88,24 +89,17 @@ import {
 } from "context/OrganisationContext";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
-  SET_LIKE,
-  SET_LOADING,
-  NEXT_PAGE,
-  RESET_PAGE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE,
-  ERROR_POSTS,
-  SET_POSTS,
-  FETCH_POSTS,
+  DELETE_MODAL_HIDE
 } from "hooks/actions/feedActions";
 import {
-  postsReducer,
-  postsState as initialPostsState,
+  deletePostModalreducer,
+  deletePostState
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
-import { LOGIN } from "templates/RouteWithSubRoutes";
+import { selectPosts, postsActions } from "reducers/posts";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -129,10 +123,8 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     OrganisationContext,
   );
   const { error, loading, organisation } = orgProfileState;
-  const [postsState, postsDispatch] = useReducer(
-    postsReducer,
-    initialPostsState,
-  );
+  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
+  const posts = useSelector(selectPosts);
 
   const {
     userProfileState: { user },
@@ -140,6 +132,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   } = useContext(UserContext);
 
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
@@ -155,10 +148,11 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     loadMore,
     page,
     posts: postsList,
-    deleteModalVisibility,
     status,
     error: postsError,
-  } = postsState;
+  } = posts;
+  const { deleteModalVisibility } = deleteModal;
+
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
@@ -215,7 +209,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     const fetchOrganisationPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      postsDispatch({ type: FETCH_POSTS });
+      dispatch(postsActions.fetchPostsBengin());
       try {
         if (organisationId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
@@ -224,27 +218,19 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
           } = await axios.get(endpoint);
 
           if (prevOrgId !== organisationId) {
-            postsDispatch({
-              type: SET_POSTS,
+            dispatch(postsActions.fetchPostsSuccess({
               posts: [],
-            });
+            }));
           }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
             }
             if (posts.length < limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
             } else if (meta.total === limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
+
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -252,43 +238,32 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
             }, {});
 
             if (prevOrgId === organisationId && postsList) {
-              postsDispatch({
-                type: SET_POSTS,
+              dispatch(postsActions.fetchPostsSuccess({
                 posts: { ...postsList, ...loadedPosts },
-              });
+              }));
             } else {
-              postsDispatch({
-                type: SET_POSTS,
+              dispatch(postsActions.fetchPostsSuccess({
                 posts: { ...loadedPosts },
-              });
+              }));
             }
           } else if (prevOrgId === organisationId && posts) {
-            postsDispatch({
-              type: SET_POSTS,
+            dispatch(postsActions.fetchPostsSuccess({
               posts: { ...postsList },
-            });
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: false,
-              loadMore: false,
-            });
+            }));
+            dispatch(postsActions.finishLoadingAction());
           } else {
-            postsDispatch({ type: SET_LOADING });
+            dispatch(postsActions.finishLoadingAction());
           }
         }
       } catch (error) {
-        postsDispatch({ error, type: ERROR_POSTS });
+        dispatch(postsActions.fetchPostsError(error));
       }
     };
     fetchOrganisationPosts();
   }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
-    postsDispatch({
-      type: RESET_PAGE,
-      isLoading,
-      loadMore,
-    });
+    dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -307,7 +282,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
         organisationPosts.length
       ) {
         return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
+          dispatch(postsActions.setNextPageAction());
           resolve();
         });
       } else {
@@ -355,70 +330,34 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   };
 
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
   };
 
   const handleEditPost = () => {
-    if (postsState.editPostModalVisibility) {
-      postsDispatch({
+    if (deleteModal.editPostModalVisibility) {
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: false,
       });
     } else {
-      postsDispatch({
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
     }
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
+  const handlePostLike = async () => { };
 
   const renderURL = () => {
     if (organisation) {
@@ -544,7 +483,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
               />
-              {status === ERROR_POSTS && (
+              {postsError && (
                 <ErrorAlert
                   message={t([
                     `error.${postsError.message}`,

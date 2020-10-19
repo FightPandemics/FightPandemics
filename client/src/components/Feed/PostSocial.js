@@ -1,12 +1,15 @@
 // Core
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 // Local
-// import { FeedContext } from "pages/Feed.js";
 import GTM from "constants/gtm-tags";
+import { selectOrganisationId, selectUser } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -33,7 +36,6 @@ const StyledSpan = styled.span`
 `;
 
 const PostSocial = ({
-  handlePostLike,
   isAuthenticated,
   liked,
   shared,
@@ -48,15 +50,18 @@ const PostSocial = ({
   id,
 }) => {
   const { t } = useTranslation();
-  useEffect(() => {
-    const likePost = sessionStorage.getItem("likePost");
+  const history = useHistory();
+  const organisationId = useSelector(selectOrganisationId);
+  const user = useSelector(selectUser);
+  // useEffect(() => {
+  //   const likePost = sessionStorage.getItem("likePost");
 
-    if (id === likePost) {
-      if (likePost) {
-        handlePostLike(likePost, liked, false);
-      }
-    }
-  }, [id, liked, handlePostLike]);
+  //   if (id === likePost) {
+  //     if (likePost) {
+  //       handlePostLike(likePost, liked, false);
+  //     }
+  //   }
+  // }, [id, liked, handlePostLike]);
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
@@ -73,6 +78,31 @@ const PostSocial = ({
         });
     } else {
       setShowShareModal(true);
+    }
+  };
+
+  const handlePostLike = async (postId, liked, create) => {
+    sessionStorage.removeItem("likePost");
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${organisationId || user?.id || user?._id}`;
+      if (!user) {
+        return;
+      }
+      const request = liked ? axios.delete : axios.put;
+      try {
+        const { data } = await request(endPoint);
+        // postsDispatch({
+        //   type: SET_LIKE,
+        //   postId,
+        //   count: data.likesCount,
+        // });
+      } catch (error) {
+        console.log({ error });
+      }
+    } else if (create) {
+      sessionStorage.setItem("likePost", postId);
+      history.push(LOGIN);
     }
   };
 
