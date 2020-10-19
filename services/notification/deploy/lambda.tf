@@ -26,6 +26,7 @@ resource "aws_lambda_function" "lambda" {
       ERROR_NOTIFIER_URL               = var.fp_context == "development" ? "" : data.aws_ssm_parameter.sentry_dsn[0].value
       EXTERNAL_LOGGER_HOST             = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_host[0].value
       EXTERNAL_LOGGER_PORT             = var.fp_context == "development" ? "" : data.aws_ssm_parameter.logger_port[0].value
+      FROM_EMAIL_ADDRESS               = "support@fightpandemics.com"
       INSTANT_UNREAD_LOOKBACK_INTERVAL = "5"
       NODE_ENV                         = var.fp_context
       SES_AWS_REGION                   = data.aws_ssm_parameter.aws_ses_region.value
