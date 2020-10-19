@@ -4,6 +4,9 @@ const config = {
   database: {
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,
+    instantUnreadLookbackInterval: Number(
+      process.env.INSTANT_UNREAD_LOOKBACK_INTERVAL || 5,
+    ),
     retryWrites: process.env.DATABASE_RETRY_WRITES,
     password: process.env.DATABASE_PASSWORD,
     port: process.env.DATABASE_PORT,
