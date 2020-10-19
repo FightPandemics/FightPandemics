@@ -454,7 +454,6 @@ const Post = ({
           user?.organisations && isAuthorOrg(user.organisations, post.author)
         }
         authorId={post.author.id}
-        postId={post?._id}
         postTitle={post?.title}
         postContent={post?.content}
         showComments={showComments}
