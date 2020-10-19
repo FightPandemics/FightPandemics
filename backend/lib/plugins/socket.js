@@ -9,12 +9,25 @@ const {
 } = require("../../config");
 
 function onSocketConnect(socket) {
-  console.log("[ws] user connected");
+  this.log.info(`[ws] socket connected [id: ${socket.id}]`);
   const Thread = this.mongo.model("Thread");
   const User = this.mongo.model("User");
   const Post = this.mongo.model("Post");
   const Message = this.mongo.model("Message");
   const Notification = this.mongo.model("Notification");
+
+
+  // "auth" check middleware, all events require auth, except "IDENTIFY"
+  socket.use((packet, next) => {
+    // the IDENTIFY event doesn't need authentication
+    if (packet[0] == "IDENTIFY") return next();
+    res = packet[2]; // the response function
+    // user did not IDENTIFY
+    if (!socket.userId && res) return res({ code: 401, message: "Unauthorized" });
+    else if (!socket.userId) return;
+    // user is not IDENTIFY
+    next();
+  })
 
   socket.on("IDENTIFY", async (data, res) => {
     if (!socket.request.cookies['token']) return res({ code: 401, message: "Unauthorized" });
@@ -31,7 +44,7 @@ function onSocketConnect(socket) {
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
     socket.on("disconnect", () => {
-      console.log("[ws] user disconnected");
+      this.log.info(`[ws] socket disconnected [socketId: ${socket.id}]`);
       for (let room in socket.rooms) {
         socket.leave(room);
       }
@@ -46,12 +59,11 @@ function onSocketConnect(socket) {
       }, 1000);
     });
     res({ code: 200, data: userId });
+    this.log.info(`[ws] socket identified [socketId: ${socket.id}] [userId: ${userId}]`);
   });
 
   socket.on("JOIN_ROOM", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     var threadErr, thread;
     if (data.threadId) {
@@ -149,7 +161,6 @@ function onSocketConnect(socket) {
 
   socket.on("GET_USER_THREADS", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     const [threadsErr, threads] = await this.to(
       Thread.find({ "participants.id": userId }).sort({ updatedAt: 1 }),
     );
@@ -180,8 +191,6 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_CHAT_LOG", async (data, res) => {
-    userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
@@ -197,8 +206,6 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_CHAT_LOG_MORE", async (data, res) => {
-    userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
@@ -216,7 +223,6 @@ function onSocketConnect(socket) {
 
   socket.on("SEND_MESSAGE", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!data.threadId && !userInRoom)
       return res({ code: 401, message: "Unauthorized" });
@@ -319,7 +325,6 @@ function onSocketConnect(socket) {
 
   socket.on("DELETE_MESSAGE", async (messageId) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [messageDeletedErr, messageDeleted] = await this.to(
       Message.findOneAndUpdate(
         {
@@ -336,7 +341,6 @@ function onSocketConnect(socket) {
 
   socket.on("EDIT_MESSAGE", async (data) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [messageEditedErr, messageEdited] = await this.to(
       Message.findOneAndUpdate(
         {
@@ -354,7 +358,6 @@ function onSocketConnect(socket) {
 
   socket.on("BLOCK_THREAD", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [blockThreadErr, blockThread] = await this.to(
       Thread.findByIdAndUpdate(
         data,
@@ -379,7 +382,6 @@ function onSocketConnect(socket) {
 
   socket.on("ARCHIVE_THREAD", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [blockThreadErr, blockThread] = await this.to(
       Thread.findByIdAndUpdate(
         data,
@@ -405,7 +407,6 @@ function onSocketConnect(socket) {
   // used for unblock, accept, and unarchive (because it sets status to "accepted")
   socket.on("UNBLOCK_THREAD", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [unblockThreadErr, unblockThread] = await this.to(
       Thread.findByIdAndUpdate(
         data,
@@ -502,8 +503,10 @@ function fastifySocketIo(app, config, next) {
       cb();
     };
 
+    app.log.info(`[ws] websocket ready`);
     next();
   } catch (error) {
+    app.log.error("[ws] Failed starting the websocket");
     next(error);
   }
 }

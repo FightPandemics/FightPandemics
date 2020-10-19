@@ -217,7 +217,7 @@ const PostSocial = ({
               postContent={postContent}
               postAuthorName={postAuthorName}
               authorId={authorId}
-              postId={postId}
+              postId={id}
               avatar={postAuthorAvatar}
             />
           </div>

@@ -49,7 +49,10 @@ export const MessagesContainer = styled.div`
   -webkit-overflow-scrolling: touch;
   white-space: pre-wrap;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin-top: 5rem;
+    height: calc(100% - 4.5em);
+    &.input-expanded {
+      height: calc(100% - 8em);
+    }
   }
   &.input-expanded {
     height: calc(100% - 12em);
