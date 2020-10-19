@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const config = {
+  appName: `fp-notification-${process.env.NODE_ENV || "dev"}`,
   database: {
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,
@@ -13,12 +14,19 @@ const config = {
     protocol: process.env.DATABASE_PROTOCOL || "mongodb",
     username: process.env.DATABASE_USERNAME,
   },
+  logger: {
+    enabled: process.env.EXTERNAL_LOGGER_ENABLED === "true",
+    host: process.env.EXTERNAL_LOGGER_HOST,
+    level: process.env.LOG_LEVEL || "debug",
+    port: Number(process.env.EXTERNAL_LOGGER_PORT),
+  },
   mailService: {
     apiKeyId: process.env.SES_AWS_ACCESS_KEY_ID,
     apiKey: process.env.SES_AWS_SECRET_ACCESS_KEY,
     fromEmailAddress: process.env.FROM_EMAIL_ADDRESS,
     region: process.env.SES_AWS_REGION,
   },
+  nodeEnv: process.env.NODE_ENV,
 };
 
 module.exports = {
