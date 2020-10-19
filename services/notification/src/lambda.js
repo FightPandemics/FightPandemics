@@ -1,5 +1,6 @@
 const { config } = require("./config");
 const { NotificationService } = require("./service");
+const { log } = require("./helpers/logger");
 
 let cachedDb = null;
 
@@ -12,8 +13,6 @@ function setCachedDb(db) {
 exports.handler = async (event, context) => {
   try {
     context.callbackWaitsForEmptyEventLoop = false;
-    // TODO if processing daily, weekly, bi-weekly digests, may need multiple cron jobs. Probably should pass in
-    // frequency into the event payload
     const frequency = event.frequency;
     const service = new NotificationService(config);
     await service.initializeDb(cachedDb);
@@ -24,8 +23,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
     };
   } catch (error) {
-    /* eslint-disable no-console */
-    console.log(error); // TODO remove or replace with logger
+    log.error(error, "Internal Server Error"); // TODO also log to Sentry
     return {
       body: JSON.stringify("An error occurred."),
       statusCode: 500,
