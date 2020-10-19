@@ -2,11 +2,11 @@ class HelpBoard{
 
     fpLogo = '.am-navbar.am-navbar-light a img';
     helpBoardPageTitle = 'h1';
-    addPostButton = 'button > img#HB_CP'
+    addPostButton = 'button > img#HB_CP';
     noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
     addPostLink = 'a#HB_CP';
-    firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)'
-    helpBoard = 'div.feed-posts'
+    firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)';
+    helpBoard = 'div.feed-posts';
 
 
     constructor() { }
