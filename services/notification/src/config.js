@@ -7,7 +7,7 @@ const config = {
     instantUnreadLookbackInterval: Number(
       process.env.INSTANT_UNREAD_LOOKBACK_INTERVAL || 5,
     ),
-    retryWrites: process.env.DATABASE_RETRY_WRITES,
+    retryWrites: process.env.DATABASE_RETRY_WRITES === "true",
     password: process.env.DATABASE_PASSWORD,
     port: process.env.DATABASE_PORT,
     protocol: process.env.DATABASE_PROTOCOL || "mongodb",
