@@ -1,3 +1,12 @@
+  locals {
+    base_url = {
+      review      = "https://fightpandemics.xyz"
+      staging     = "https://fightpandemics.work"
+      production  = "https://fightpandemics.com"
+      development = "https://fightpandemics.online"
+    }
+  }
+
 resource "aws_lambda_function" "lambda" {
   filename      = "build.zip"
   function_name = "notification-service"
@@ -17,6 +26,7 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
+      BASE_URL                         = local.base_url[var.fp_context]
       DATABASE_HOST                    = data.aws_ssm_parameter.database_host.value
       DATABASE_NAME                    = "fightpandemics"
       DATABASE_PASSWORD                = data.aws_ssm_parameter.database_password.value
