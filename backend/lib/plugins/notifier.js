@@ -9,7 +9,8 @@ class Notifier {
   }
 
   async notify(action, post, triggeredById) {
-    if (!["like", "comment", "post"].includes(action)) throw new Error('Invalid Notification action');
+    if (!["like", "comment", "post"].includes(action)) return this.app.log.error(new Error('Invalid Notification action'));
+    if (post.author.id == triggeredById) return; // user interacted with their own post
 
     const [triggeredByErr, triggeredBy] = await this.app.to(this.User.findById(triggeredById));
     if (triggeredByErr || !triggeredBy) return; 
@@ -32,7 +33,7 @@ class Notifier {
     };
 
     const [err, notification] = await this.app.to(new this.Notification(newNotification).save());
-    if (err) return;
+    if (err) return this.app.log.error(err, 'Failed saving new Notification');
 
     // send real-time web notification if online
     let userIsOnline = await getSocketIdByUserId(this.app, post.author.id.toString())

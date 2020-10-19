@@ -446,10 +446,9 @@ function onSocketConnect(socket) {
   socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
     userId = socket.userId;
     if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-    console.log(this.mongo.base.Types.ObjectId(userId))
 
     const [updateErr, update] = await this.to(
-    Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
+      Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
     );
 
   })
