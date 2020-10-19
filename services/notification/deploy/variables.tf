@@ -21,3 +21,18 @@ data "aws_ssm_parameter" "database_password" {
 data "aws_ssm_parameter" "database_user" {
   name = "/fp/database/user"
 }
+
+data "aws_ssm_parameter" "logger_host" {
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/logger/host"
+}
+
+data "aws_ssm_parameter" "logger_port" {
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/logger/port"
+}
+
+data "aws_ssm_parameter" "sentry_dsn" {
+  count = var.fp_context == "development" ? 0 : 1
+  name  = "/fp/sentry/dsn"
+}
