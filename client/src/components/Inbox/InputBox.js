@@ -26,7 +26,11 @@ const InputContainer = styled.div`
   height: 3.429em;
   width: 100%;
   position: absolute;
-  bottom: 1em;
+  bottom: 0.5em;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    position: fixed;
+    bottom: 0.3em;
+  }
   &.expanded {
     height: 6.858em;
     textarea {
@@ -175,6 +179,7 @@ export const InputBox = ({
     handleSendMgessage();
   };
   const handleKeyPress = (e) => {
+    if (isMobile()) return;
     if (e.key === "Enter" && !e.shiftKey) e.preventDefault();
     if (e.key === "Enter" && !e.shiftKey && text.length > 0) {
       handleSendMgessage();
