@@ -58,6 +58,7 @@ function onSocketConnect(socket) {
           });
       }, 1000);
     });
+    socket.join(userId); // to send events to all the user's browsers, if many are open.
     res({ code: 200, data: userId });
     this.log.info(`[ws] socket identified [socketId: ${socket.id}] [userId: ${userId}]`);
   });
@@ -87,7 +88,7 @@ function onSocketConnect(socket) {
     } else {
       // user called joinRoom({}) inside leaveAllRooms()
       for (let room in socket.rooms) {
-        if (room != socket.id) await socket.leave(room);
+        if (![socket.id, socket.userId].includes(room)) await socket.leave(room);
       }
       return res({ code: 401, message: "Unauthorized" });
     }
@@ -150,9 +151,9 @@ function onSocketConnect(socket) {
 
     if (!userInRoom) {
       // user not already in that room
-      // leave any other room, EXCEPT the unique socket room (socket.id)
+      // leave any other room, EXCEPT the unique socket room (socket.id) and unique user room (userId)
       for (let room in socket.rooms) {
-        if (room != socket.id) await socket.leave(room);
+        if (![socket.id, socket.userId].includes(room)) await socket.leave(room);
       }
       socket.join(threadWithLastMessage._id);
     }
