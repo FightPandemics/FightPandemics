@@ -6,6 +6,7 @@ class DatabaseHelper {
     this.uri = this._buildUri(config);
     this.dbName = config.database;
     this.db = null;
+    this.instantUnreadLookbackInterval = config.instantUnreadLookbackInterval;
   }
 
   async connect(cachedDb = null) {
@@ -42,7 +43,10 @@ class DatabaseHelper {
           readAt: null,
           emailSentAt: null,
           createdAt: {
-            $lt: DateHelper.subtractMinutes(new Date(), 5),
+            $lt: DateHelper.subtractMinutes(
+              new Date(),
+              this.instantUnreadLookbackInterval,
+            ),
           },
         },
       },
