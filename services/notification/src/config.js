@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const config = {
   appName: `fp-notification-${process.env.NODE_ENV || "dev"}`,
+  baseUrl: process.env.BASE_URL,
   database: {
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,

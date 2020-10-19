@@ -8,7 +8,7 @@ class NotificationService {
   constructor(config) {
     this.mailer = new Mailer(config.mailService);
     this.dbHelper = new DatabaseHelper(config.database);
-    this.templateBuilder = new TemplateBuilder();
+    this.templateBuilder = new TemplateBuilder(config.baseUrl);
   }
 
   async initializeDb(cachedDb = null) {
