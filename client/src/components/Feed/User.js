@@ -111,10 +111,10 @@ const ProfileTypeMobile = styled(ProfileType)`
 const Goals = styled.span`
   float: right;
   padding: 0.3rem 1rem;
-  margin: 5px;
+  margin: 0.5rem;
   background: #425af2;
   color: white;
-  border-radius: 40px;
+  border-radius: 2rem;
 `;
 const SendMessage = styled(Link)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -130,9 +130,6 @@ const SendMessage = styled(Link)`
   }
   padding-left: 7.7rem;
   color: #939393;
-  img {
-    margin-right: 7px;
-  }
 `;
 
 const URLS = {
@@ -266,7 +263,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
             <ProfileType>
               <SvgIcon
                 src={statusIndicator}
-                style={{ width: "4px", margin: "1px 10px" }}
+                style={{ width: "0.5rem", margin: "0.11rem 1.1rem" }}
               />
               {t("feed.filters.providersOptions." + type)}
               {type == "Individual" &&
