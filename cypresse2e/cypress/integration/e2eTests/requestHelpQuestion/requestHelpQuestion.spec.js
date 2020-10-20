@@ -71,7 +71,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
 
         it('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
-            locationField.should('be.visible').click();
+            locationField.should('be.visible').click({ force: true });
             locationField.type(LOCATION);
             requestHelpQuestion.getRhLocationDropdown().should('be.visible');
         });

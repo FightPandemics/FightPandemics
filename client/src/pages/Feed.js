@@ -251,8 +251,6 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [filterURL, setFilterURL] = useState("");
-  const [objectiveURL, setObjectiveURL] = useState("");
   const {
     filterModal,
     showCreatePostModal,
@@ -380,8 +378,17 @@ const Feed = (props) => {
     });
   };
 
-  useEffect(() => {
-    (() => {
+  const loadPosts = useCallback(async () => {
+    const filterURL = () => {
+      const filterObj = { ...selectedOptions };
+      delete filterObj["lookingFor"];
+      if (location) filterObj.location = location;
+      return Object.keys(filterObj).length === 0
+        ? ""
+        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+    };
+
+    const objectiveURL = () => {
       let objective = selectedType;
       if (
         selectedOptions["lookingFor"] &&
@@ -394,75 +401,51 @@ const Feed = (props) => {
       }
       switch (objective) {
         case "REQUEST":
-          setObjectiveURL("&objective=request");
-          break;
+          return "&objective=request";
         case "OFFER":
-          setObjectiveURL("&objective=offer");
-          break;
+          return "&objective=offer";
         default:
-          setObjectiveURL("");
+          return "";
       }
-    })();
-  }, [selectedOptions, selectedType]);
-
-  useEffect(() => {
-    (() => {
-      const filterObj = { ...selectedOptions };
-      delete filterObj["lookingFor"];
-      if (location) filterObj.location = location;
-      const getFilter =
-        Object.keys(filterObj).length === 0
-          ? ""
-          : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
-      setFilterURL(getFilter);
-    })();
-  }, [location, selectedOptions]);
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      const limit = PAGINATION_LIMIT;
-      const skip = page * limit;
-      const baseURL = gePostsBasetUrl(organisationId, limit, skip);
-      let endpoint = `${baseURL}${objectiveURL}${filterURL}`;
-      dispatch(postsActions.fetchPostsBengin());
-      try {
-        const {
-          data: { data: posts, meta },
-        } = await axios.get(endpoint);
-        if (posts.length && meta.total) {
-          if (prevTotalPostCount !== meta.total) {
-            setTotalPostCount(meta.total);
-          }
-          if (posts.length < limit) {
-            dispatch(postsActions.finishLoadingAction());
-          } else if (meta.total === limit) {
-            dispatch(postsActions.finishLoadingAction());
-          }
-          const loadedPosts = posts.reduce((obj, item) => {
-            obj[item._id] = item;
-            return obj;
-          }, {});
-          dispatch(postsActions.fetchPostsSuccess({
-            posts: { ...(postsList || []), ...loadedPosts },
-          }));
-        } else if (posts) {
-          dispatch(postsActions.fetchPostsSuccess({
-            posts: { ...postsList },
-          }));
-          dispatch(postsActions.finishLoadingAction());
-        } else {
-          dispatch(postsActions.finishLoadingAction());
-        }
-      } catch (error) {
-        dispatch(postsActions.fetchPostsError(error));
-      }
-      dispatchAction(SET_VALUE, "applyFilters", true);
     };
 
-    if (!showFilters || !filterModal) {
-      loadPosts();
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    const baseURL = gePostsBasetUrl(organisationId, limit, skip);
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
+    dispatch(postsActions.fetchPostsBengin());
+    try {
+      const {
+        data: { data: posts, meta },
+      } = await axios.get(endpoint);
+      if (posts.length && meta.total) {
+        if (prevTotalPostCount !== meta.total) {
+          setTotalPostCount(meta.total);
+        }
+        if (posts.length < limit) {
+          dispatch(postsActions.finishLoadingAction());
+        } else if (meta.total === limit) {
+          dispatch(postsActions.finishLoadingAction());
+        }
+        const loadedPosts = posts.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+        dispatch(postsActions.fetchPostsSuccess({
+          posts: { ...(postsList || []), ...loadedPosts },
+        }));
+      } else if (posts) {
+        dispatch(postsActions.fetchPostsSuccess({
+          posts: { ...postsList },
+        }));
+        dispatch(postsActions.finishLoadingAction());
+      } else {
+        dispatch(postsActions.finishLoadingAction());
+      }
+    } catch (error) {
+      dispatch(postsActions.fetchPostsError(error));
     }
-  }, [filterURL, objectiveURL, page, showFilters, toggleRefetch, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, selectedOptions, location, selectedType, applyFilters, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -470,9 +453,9 @@ const Feed = (props) => {
         delete selectedOptions["providers"];
         setOnboarding(false);
       }
+      loadPosts();
     }
-  }, [selectedOptions, applyFilters, isOnboarding]);
-
+  }, [selectedOptions, applyFilters, loadPosts]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Onboarding
     if (props.history.location.state) {
@@ -539,7 +522,6 @@ const Feed = (props) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      dispatchAction(SET_VALUE, "applyFilters", false);
       if (
         !isLoading &&
         loadMore &&
@@ -554,7 +536,7 @@ const Feed = (props) => {
         return Promise.resolve();
       }
     },
-    [feedPosts.length, isLoading, loadMore],
+    [feedPosts.length, isLoading, loadMore], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
