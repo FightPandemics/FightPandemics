@@ -1,11 +1,12 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken } = require("../utils");
+const { getCookieToken, jwtSimpleDecode } = require("../utils");
 const {
   getUserByIdSchema,
   createUserAvatarSchema,
   createUserSchema,
   updateUserSchema,
+  updateNotifyPrefsSchema,
 } = require("./schema/users");
 
 /*
@@ -43,7 +44,7 @@ async function routes(app) {
       organisations,
       urls,
       photo,
-      notifyPrefs
+      notifyPrefs,
     } = user;
     return {
       about,
@@ -58,7 +59,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
-      notifyPrefs
+      notifyPrefs,
     };
   });
 
@@ -232,7 +233,10 @@ async function routes(app) {
           ),
         );
         if (commentErr) {
-          req.log.error(commentErr, "Failed updating author photo refs at comments");
+          req.log.error(
+            commentErr,
+            "Failed updating author photo refs at comments",
+          );
         }
 
         const [threadErr] = await app.to(
@@ -285,6 +289,38 @@ async function routes(app) {
         email,
       };
       return new User(userData).save();
+    },
+  );
+
+  app.patch(
+    "/unsubscribe",
+    { schema: updateNotifyPrefsSchema },
+    async (req) => {
+      const { notifyPrefs } = req;
+      const token = getCookieToken(req);
+      const { userId, expireDate } = jwtSimpleDecode(token);
+      if (expireDate < Date.now()) {
+        throw app.httpErrors.badRequest("token is expired");
+      }
+      const [err, user] = await app.to(User.findById(userId));
+      if (err) {
+        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      let body = user;
+      body.notifyPrefs = notifyPrefs;
+
+      const [updateErr, updatedUser] = await app.to(
+        Object.assign(user, body).save(),
+      );
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating user");
+        throw app.httpErrors.internalServerError();
+      }
+      return updatedUser;
     },
   );
 }
