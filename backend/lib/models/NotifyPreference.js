@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
 
 const notifyPreferenceSchema = new Schema({
   message: {
@@ -27,9 +27,6 @@ const notifyPreferenceSchema = new Schema({
   },
 });
 
-const NotifyPreference = model("NotifyPreference", notifyPreferenceSchema);
-
 module.exports = {
-  model: NotifyPreference,
   schema: notifyPreferenceSchema,
 };
