@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
+const { schema: notifyPreferenceSchema } = require("./NotifyPreference");
 // const { schema: locationSchema } = require("./Location");
 const { isValidEmail } = require("../utils");
 
@@ -13,32 +14,7 @@ const userSchema = new Schema(
       uniqueCaseInsensitive: true,
       validator: isValidEmail,
     },
-    notifyPrefs: {
-      message: {
-        instant: { default: true, type: Boolean },
-        daily: { default: false, type: Boolean },
-        weekly: { default: false, type: Boolean },
-        biweekly: { default: false, type: Boolean },
-      },
-      like: {
-        instant: { default: false, type: Boolean },
-        daily: { default: false, type: Boolean },
-        weekly: { default: true, type: Boolean },
-        biweekly: { default: false, type: Boolean },
-      },
-      comment: {
-        instant: { default: false, type: Boolean },
-        daily: { default: true, type: Boolean },
-        weekly: { default: false, type: Boolean },
-        biweekly: { default: false, type: Boolean },
-      },
-      post: {
-        instant: { default: false, type: Boolean },
-        daily: { default: true, type: Boolean },
-        weekly: { default: false, type: Boolean },
-        biweekly: { default: false, type: Boolean },
-      }
-    },
+    notifyPrefs: notifyPreferenceSchema,
     location: Object,
     photo: String,
   },
