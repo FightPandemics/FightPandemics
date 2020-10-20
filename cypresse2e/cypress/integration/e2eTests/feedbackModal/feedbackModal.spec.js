@@ -1,4 +1,5 @@
 import FeedbackModal from '../../../elements/pages/feedbackModal';
+import buttonNames from '../../../fixtures/buttonNames.json';
 
 describe('FightPandemics Feedback Modal', () => {
 
@@ -56,7 +57,6 @@ describe('FightPandemics Feedback Modal', () => {
 
             it('Choose rating 5', () => {
                 clickRating(4);
-
             });
 
             it('Close icon is visible and clickable', () => {
@@ -95,7 +95,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Next button on feedback screen two is visible and clickable', () => {
-            feedbackButton('Next');
+            feedbackButton(buttonNames.next);
         });
 
         it('Feedback heading on screen three is visible', () => {
@@ -124,7 +124,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Submit Feedback button on feedback screen three is visible and clickable', () => {
-            feedbackButton('Submit');
+            feedbackButton(buttonNames.submit);
         });
 
     });
@@ -150,7 +150,6 @@ describe('FightPandemics Feedback Modal', () => {
         feedback.getFeedbackInputList()
             .should('be.visible').eq(index).click()
             .invoke('val', answer);
-          
     }
 
     function feedbackButton(buttonText) {
