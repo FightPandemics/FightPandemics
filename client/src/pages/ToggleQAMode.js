@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const ToggleQAMode = () => {
-  const newVal = !(localStorage.getItem("fp_qa") == "true");
-  localStorage.setItem("fp_qa", newVal);
-  alert(`QA mode is now ${newVal ? "enabled" : "disabled"}`);
-  window.location = "/";
+  useEffect(() => {
+    const newVal = !(localStorage.getItem("fp_qa") == "true");
+    localStorage.setItem("fp_qa", newVal);
+    alert(`QA mode is now ${newVal ? "enabled" : "disabled"}`);
+    window.location = "/";
+  }, []);
   return null;
 };
 
