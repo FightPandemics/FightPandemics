@@ -20,8 +20,11 @@ Before getting started please be familiar with the stack below. Additionally it 
 
 ## Project Setup
 
-1. Fork or Clone this repository
-2. There are two ways to set up the app: Docker or Local Setup. It is strongly recommended to use the Docker Setup, but if you are unable to install Docker, you have the option of setting up the app locally.
+1. Clone this repository
+1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
+1. Using nvm, install Node 12.16.2: `nvm install 12.16.2` (or later).
+1. Change directory to the project root and run `npm install` (will install [husky](https://github.com/typicode/husky) at the root, as well as the backend & client modules)
+1. There are two ways to set up the rest set of services that comprise the app: Docker or Local Setup. It is strongly recommended to use the Docker Setup, but if you are unable to install Docker, you have the option of setting up the app locally.
 
 If, at any point, you are having trouble setting up the app, please use Slack's search bar to search for exisiting questions. Also do not hesitate to ask us for assistance in the `#engineering` Slack channel! In order to speed up assistance, please mention the method that you are using to set up the app, as well as the operating system that you are using.
 
@@ -37,9 +40,7 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
 
 ### Local Setup
 
-If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
-
-**Note:** running `npm install` from project root, will install sub projects dependencies (client and backend).
+If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of each service separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
 
 #### MongoDB
 
@@ -47,17 +48,13 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 
 #### Client
 
-1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
-1. Using nvm, install Node 12.16.2: `nvm install 12.16.2`.
-1. Enter the `client` directory and run `npm install`.
-1. Start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
+1. Enter the `client` directory and run `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
 
 #### Backend
 
 1. If not already installed, [install MongoDB](https://docs.mongodb.com/manual/installation/).
-1. If not already installed, install nvm and Node 12.16.2 (see steps 1 and 2 in the Client section above).
-1. Enter the `backend` directory and run `npm install`.
+1. Enter the `backend` directory.
 1. Copy the `.env.example_local` in the `backend` directory to `.env`.
 1. Replace `TODO` entries in `backend/.env` with correct values (this is not needed to run the project in a responding but non-functional state).
     - For  `AIRTABLE` and `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
@@ -65,7 +62,11 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
 1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
-#### Geolocation
+#### Localstack for AWS S3
+
+TODO: Add steps
+
+### Geolocation
 
 We are using the Google Maps API via our backend for geolocation requirements. It is not required for most frontend and backend development and is mocked with a limited set of fixed results when no key is present. This is to reduce friction for developer onboarding. If you need to work on this feature ask in Slack engineering channel about how to get your own development key.
 
@@ -87,15 +88,7 @@ To check the API documentation which is automatically generated using [fastify-o
 
 ## Adding NPM dependencies to package.json
 
-Note that whenever you add a new NPM dependency, you must run `npm install` from within the container. This is because
-NPM dependency installs may not necessarily be cross-platform. There are two ways that you can install the dependencies
-within the container:
-
-### Backend
-Run `docker-compose run backend-service npm install`, or `cd` into the `backend` directory and run `npm run install-docker`.
-
-### Client
-Run `docker-compose run client npm install`, or `cd` into the `client` directory and run `npm run install-docker`.
+Note that whenever you add a new NPM dependency, be sure to run `npm install` in the appropriate sub-folder (`client` or `backend`).
 
 Be sure to also commit any changes to the `package-lock.json` so that dependencies used by third-parties are also locked to specific versions.
 
