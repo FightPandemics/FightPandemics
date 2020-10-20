@@ -46,6 +46,7 @@ export const RouteWithSubRoutes = (route) => {
     notLoggedInOnly,
     tabIndex,
     mobiletabs,
+    navSearch,
     forgotPassword,
   } = props;
 
@@ -111,6 +112,7 @@ export const RouteWithSubRoutes = (route) => {
             user={user}
             routes={route.routes}
             mobiletabs={mobiletabs}
+            navSearch={navSearch}
             tabIndex={tabIndex}
             ws={ws}
             isIdentified={isIdentified}
