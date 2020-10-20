@@ -12,7 +12,7 @@ import { theme, mq } from "constants/theme";
 import GTM from "constants/gtm-tags";
 import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "components/Icon/SvgIcon";
-import downArrow from "assets/icons/down-arrow.svg";
+import filtersIcon from "assets/icons/filters.svg";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -29,16 +29,25 @@ const ModalWrapper = styled(Modal)`
   }
 `;
 
+const StyledSelectWithIconButton = styled(SelectWithIconButton)`
+ &:active, &:focus, &:hover {
+    img {
+      filter: brightness(10);
+    }
+`;
+
 const StyledSubmitButton = styled(SubmitButton)`
   font-size: 1.7rem;
 `;
+
 const gtmTagsMap = {
   lookingFor: GTM.post.requestOffer,
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
-const FilterBox = ({ gtmPrefix }) => {
+
+const FilterBox = ({ gtmPrefix, locationOnly }) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
@@ -48,21 +57,21 @@ const FilterBox = ({ gtmPrefix }) => {
     handleFilterModal,
     handleQuit,
   } = feedContext;
-  const renderFilterOptions = (filters) => {
-    return filters.map((filter, idx) => (
-      <SelectWithIconButton
-        key={idx}
+  const renderFilterOptions = (filter) => {
+    return (
+      <StyledSelectWithIconButton
+        onClick={handleFilterModal}
         primarylight="true"
         righticon="true"
         size="small"
-        icon={<SvgIcon src={downArrow} />}
+        icon={<SvgIcon src={filtersIcon} />}
         onClick={handleFilterModal}
         id={gtmPrefix + gtmTagsMap[filter.label]}
         value={filter.label}
       >
-        {t(`feed.filters.labels.${filter.label}`)}
-      </SelectWithIconButton>
-    ));
+        {t(`feed.filterBy`)}
+      </StyledSelectWithIconButton>
+    );
   };
   return (
     <FilterBoxWrapper className="filter-box">
@@ -71,7 +80,6 @@ const FilterBox = ({ gtmPrefix }) => {
         color={DARK_GRAY}
         size={theme.typography.size.medium}
       >
-        {t("feed.filterBy")}
       </TextLabel>
       {renderFilterOptions(filters)}
       <ModalWrapper
@@ -81,7 +89,7 @@ const FilterBox = ({ gtmPrefix }) => {
         onClose={handleOnClose}
         animationType="slide-up"
       >
-        <FilterAccordion gtmPrefix={gtmPrefix} />
+        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
         <div
           className="confirm-buttons"
           style={{
