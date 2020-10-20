@@ -24,8 +24,8 @@ const RecipientName = styled.div`
   padding-left: 1em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     background-color: #ffffff;
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 5rem;
     z-index: 3;
   }
   .back-arrow {
