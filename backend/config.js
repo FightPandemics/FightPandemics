@@ -16,6 +16,7 @@ const configData = envSchema({
     .prop("AUTH_DOMAIN", S.string().required())
     .prop("AUTH_SECRET_KEY", S.string().required())
     .prop("AUTH_STATE", S.string().required())
+    .prop("UNSUBSCRIBE_KEY", S.string())
     .prop("AWS_ACCESS_KEY_ID", S.string().default("dummy_access_key"))
     .prop("AWS_ENDPOINT_URL", S.string().default("http://localstack:4566"))
     .prop("AWS_REGION", S.string().default("us-east-1"))
@@ -58,6 +59,7 @@ const config = {
     secretKey: configData.AUTH_SECRET_KEY,
     state: configData.AUTH_STATE,
   },
+  unsubscribeKey: configData.UNSUBSCRIBE_KEY,
   cdn: {
     awsAccessKeyId: configData.AWS_ACCESS_KEY_ID,
     awsEndpoint: configData.AWS_ENDPOINT_URL,
