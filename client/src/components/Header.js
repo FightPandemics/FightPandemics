@@ -16,6 +16,7 @@ import globe from "assets/icons/globe.svg";
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
+import FeedSearch from "components/Input/FeedSearch";
 
 const { colors, typography } = theme;
 const { SubMenu } = Menu;
@@ -113,7 +114,12 @@ const NavLinks = styled.div`
     }
   }
 `;
-
+const NavSearch = styled.div`
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none!important;
+  }
+  margin-left: 5rem;
+`;
 const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
@@ -132,6 +138,9 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  onSearchSubmit,
+  onSearchClear,
+  navSearch,
 }) => {
   const { t } = useTranslation();
 
@@ -281,9 +290,19 @@ export default ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt={t("alt.logo")} />
-          </BrandLink>
+          <>
+            <BrandLink to={isAuthenticated ? "/feed" : "/"}>
+              <Logo src={logo} alt={t("alt.logo")} />
+            </BrandLink>
+            <NavSearch>
+            {navSearch && <FeedSearch
+              handleSubmit={onSearchSubmit}
+              handleClear={onSearchClear}
+              placeholder={t("feed.search.placeholder")}
+              t={t}
+            />}
+            </NavSearch>
+          </>
         }
         rightContent={
           <div>
