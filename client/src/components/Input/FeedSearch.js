@@ -69,8 +69,35 @@ const SearchWrapper = styled.div`
   position: relative;
   z-index: 1;
   transition: 0.4s;
+  img:last-child {
+    transition: opacity 2s ease-out;
+    opacity: 1;
+  }
+  @media screen and (max-width: ${mq.desktop.small.minWidth}) {
+    width: 5.4rem;
+    img:last-child {
+      position: absolute;
+      display: none;
+      opacity: 0;
+    }
+    &:active,
+    &:focus-within {
+      width: 30rem;
+      img:last-child {
+        top: 0;
+        display: initial;
+        opacity: 1;
+      }
+    }
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 30rem;
     margin: 0 auto;
+    img:last-child {
+      position: relative;
+      display: initial;
+      opacity: 1;
+    }
   }
 `;
 const Chip = styled.span`
@@ -219,7 +246,12 @@ export default class FeedNavSearch extends React.Component {
     const { isMobile } = this.props;
     const { tooShort } = this.state;
     this.setState({ inputValue: event.target.value });
-    if (tooShort && (event.target.value.length >= MIN_KEYWORD_CHARS || !event.target.value.length)) this.setState({ tooShort: false });
+    if (
+      tooShort &&
+      (event.target.value.length >= MIN_KEYWORD_CHARS ||
+        !event.target.value.length)
+    )
+      this.setState({ tooShort: false });
     if (isMobile) this.filterOptionsByInput();
   }
 
@@ -411,12 +443,12 @@ export default class FeedNavSearch extends React.Component {
         )}
         {!isMobile && tooShort && (
           <StyledInputError>
-            {this.props.t("feed.search.error", {length: MIN_KEYWORD_CHARS})}
+            {this.props.t("feed.search.error", { length: MIN_KEYWORD_CHARS })}
           </StyledInputError>
         )}
         {isMobile && tooShort && (
           <MobileInputError>
-            {this.props.t("feed.search.error", {length: MIN_KEYWORD_CHARS})}
+            {this.props.t("feed.search.error", { length: MIN_KEYWORD_CHARS })}
           </MobileInputError>
         )}
       </SearchContainer>
