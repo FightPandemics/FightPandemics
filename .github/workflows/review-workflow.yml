@@ -9,7 +9,7 @@ on:
       - backend/**
       - client/**
       - main.tf
-      - .github/workflows/**
+      - .github/workflows/review-workflow.yml
       - terraform-task-module/**
 
 jobs:

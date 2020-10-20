@@ -18,6 +18,7 @@ import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
@@ -79,6 +80,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -109,6 +111,8 @@ const Profile = ({
   match: {
     params: { id: pathUserId },
   },
+  history,
+  isAuthenticated,
 }) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
@@ -346,28 +350,38 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
-    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-    let response = {};
-    if (user) {
-      if (liked) {
-        try {
-          response = await axios.delete(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
         }
-      } else {
-        try {
-          response = await axios.put(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
-      if (response.data) {
-        postsDispatch({
-          type: SET_LIKE,
-          postId,
-          count: response.data.likesCount,
-        });
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
       }
     }
   };
@@ -400,7 +414,9 @@ const Profile = ({
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             <PhotoUploadButton>
-              {ownUser && <UploadPic user={user} />}
+              {ownUser && (
+                <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
+              )}
             </PhotoUploadButton>
           </AvatarPhotoContainer>
         </div>
@@ -416,6 +432,14 @@ const Profile = ({
                 src={editEmpty}
                 id={GTM.user.profilePrefix + GTM.profile.modify}
                 onClick={onToggleDrawer}
+              />
+            )}
+            {!ownUser && (
+              <MessageModal
+                isAuthenticated={true}
+                isFromProfile={true}
+                postAuthorName={`${firstName} ${lastName}`}
+                authorId={userId}
               />
             )}
           </NameDiv>

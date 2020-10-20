@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 export const InboxContainer = styled.div`
-  width: 93%;
+  width: 100%;
   min-width: 50em;
-  max-width: 96em;
   min-height: 37em;
   height: calc(100% - 7rem);
   position: absolute;
@@ -14,8 +13,6 @@ export const InboxContainer = styled.div`
     width: 100vw;
     min-width: 20em;
     height: calc(100% - 5rem);
-    position: fixed;
-    bottom: 0;
   }
 `;
 export const ChatHeader = styled.div`
@@ -43,7 +40,10 @@ export const CurrentChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    position: absolute;
     display: ${(props) => (props.toggleMobileChatList ? "none" : "flex")};
+    height: calc(100% - 6rem);
+    bottom: 0;
   }
 `;
 
@@ -56,10 +56,15 @@ export const ChatListContainer = styled.div`
   max-width: 24em;
   .chat-bucket {
     overflow: auto;
-    height: 35em;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: ${(props) => (props.toggleMobileChatList ? "block" : "none")};
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: ${(props) =>
+      props.toggleMobileChatList || props.toggleSettingstList
+        ? "block"
+        : "none"};
     width: ${(props) => (props.toggleMobileChatList ? "100%" : "25%")};
     max-width: ${(props) => (props.toggleMobileChatList ? "100vw" : "22em")};
   }

@@ -13,7 +13,7 @@ describe('FightPandemics Sign Up Page', () => {
 
     it('FP logo is visible and clickable', () => {
       var fpLogo = joinNow.getFpLogo();
-      fpLogo.should('be.visible').and('have.attr', 'alt', 'Fight Pandemics logo').click();
+      cy.checkFpLogoIsVisibleAndClickable(joinNow.getFpLogoLocator());
 
     });
 
@@ -180,7 +180,7 @@ describe('FightPandemics Sign Up Page', () => {
     it('LinkedIn button for sign up is visible', () => {
       var joinByLinkedinButton = joinNow.getJoinNowLinkedinButton();
       joinByLinkedinButton.should('be.visible');
-      joinByLinkedinButton.contains('span', 'Linkedin');
+      joinByLinkedinButton.contains('span', 'LinkedIn');
 
     });
   });

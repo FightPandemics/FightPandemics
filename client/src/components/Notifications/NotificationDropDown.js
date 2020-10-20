@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Badge } from "antd";
@@ -11,80 +12,9 @@ import bell from "../../assets/icons/notification-icons/header-bell.svg";
 import amt from "../../assets/icons/notification-icons/notification-amt.svg";
 import gear from "../../assets/icons/notification-icons/gear-logo.svg";
 import { theme, mq } from "constants/theme";
-const DemoNotifications = [
-  {
-    author: "April Qoo",
-    action: "commented on your post",
-    path: "/feed",
-    actionAvatar: commentpost,
-    createdAt: "30 minutes ago",
-    avatar: "AQ",
-    online: true,
-  },
-  {
-    author: "Kimi Rails",
-    action: "shared your post",
-    path: "/feed",
-    actionAvatar: sharedpost,
-    createdAt: "1 hour ago",
-    avatar: "KR",
-    online: true,
-  },
-  {
-    author: "Jeremy Pan",
-    action: "liked your post",
-    path: "/feed",
-    actionAvatar: likeheart,
-    createdAt: "14 hours ago",
-    avatar: "JP",
-    online: true,
-  },
-  {
-    author: "Sarah Sharp",
-    action: "commented on a post you're following",
-    path: "/feed",
-    actionAvatar: cmntflwpost,
-    createdAt: "Yesterday",
-    avatar: "SS",
-    online: false,
-  },
-  {
-    author: "Jeremy Pan",
-    action: "liked your post",
-    path: "/feed",
-    actionAvatar: likeheart,
-    createdAt: "14 hours ago",
-    avatar: "JP",
-    online: true,
-  },
-  {
-    author: "Sarah Sharp",
-    action: "commented on a post you're following",
-    path: "/feed",
-    actionAvatar: cmntflwpost,
-    createdAt: "Yesterday",
-    avatar: "SS",
-    online: false,
-  },
-  {
-    author: "Jeremy Pan",
-    action: "liked your post",
-    path: "/feed",
-    actionAvatar: likeheart,
-    createdAt: "14 hours ago",
-    avatar: "JP",
-    online: true,
-  },
-  {
-    author: "Sarah Sharp",
-    action: "commented on a post you're following",
-    path: "/feed",
-    actionAvatar: cmntflwpost,
-    createdAt: "Yesterday",
-    avatar: "SS",
-    online: false,
-  },
-];
+import relativeTime from "utils/relativeTime";
+import { getInitialsFromFullName } from "utils/userInfo";
+import { WebSocketContext } from "context/WebsocketContext";
 
 // Menu Item
 const ItemContainer = styled.a`
@@ -119,8 +49,11 @@ const Content = styled.div`
     padding-bottom: 3px;
     font-weight: 500;
     line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
     > span {
       font-weight: 700;
+      white-space: nowrap;
     }
   }
   div:nth-child(2) {
@@ -128,8 +61,8 @@ const Content = styled.div`
     letter-spacing: 0.7px;
   }
 `;
-const Online = styled.div`
-  visibility: ${({ online }) => (online === true ? "visible" : "hidden")};
+const Unread = styled.div`
+  visibility: ${({ unread }) => (unread === true ? "visible" : "hidden")};
 `;
 
 // Menu
@@ -141,12 +74,11 @@ const StyledMenu = styled(Menu)`
   border-radius: 10px;
   right: -2.993em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 100vw;
+    width: 90vw;
+    height: 90vh;
     position: absolute;
-    right: -5.67em;
     border-radius: 0px;
     top: 0.7em;
-    height: 96vh;
   }
   a {
     padding: 0.5em 1em;
@@ -184,7 +116,7 @@ const Arrow = styled.div`
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   position: relative;
-  left: 3.89em;
+  left: 2.95em;
   bottom: 1.3em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
@@ -196,33 +128,16 @@ const NoMoreNotifications = styled(ItemContainer)`
   font-size: 0.8em;
   border-radius: 0px 0px 10px 10px;
 `;
-
-const MenuItem = ({
-  path,
-  author,
-  action,
-  avatar,
-  actionAvatar,
-  createdAt,
-  online,
-}) => {
-  return (
-    <ItemContainer href={path}>
-      <TextAvatar>{avatar}</TextAvatar>
-      <img src={actionAvatar} className="action-avatar" />
-      <Content>
-        <div>
-          <span>{author}</span> {action}
-        </div>
-        <div>{createdAt}</div>
-      </Content>
-      <Online online={online}>
-        <img src={amt} />
-      </Online>
-    </ItemContainer>
-  );
-};
-
+const StyledBadge = styled(Badge)`
+  display: ${(props) => (props.mobile ? "none" : "initial")};
+  position: relative;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: ${(props) => (props.mobile ? "initial" : "none")};
+    position: absolute;
+    top: 1.05em;
+    right: 6em;
+  }
+`;
 const itemStyle = {
   display: "flex",
   justifyContent: "space-between",
@@ -235,7 +150,34 @@ const itemStyle = {
   padding: ".75em 1.3em",
 };
 
-const menu = (
+const MenuItem = ({
+  path,
+  author,
+  action,
+  avatar,
+  actionAvatar,
+  createdAt,
+  postTitle,
+  unread,
+}) => {
+  return (
+    <ItemContainer href={path}>
+      <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
+      <img src={actionAvatar} className="action-avatar" />
+      <Content>
+        <div>
+          <span>{author}</span> {action} <span>{postTitle}</span>
+        </div>
+        <div>{createdAt}</div>
+      </Content>
+      <Unread unread={unread}>
+        <img src={amt} />
+      </Unread>
+    </ItemContainer>
+  );
+};
+
+const menu = (notifications) => (
   <StyledMenu>
     <Menu.Item style={{ ...itemStyle }}>
       <a style={{ color: "white" }}>Notifications</a>
@@ -246,15 +188,16 @@ const menu = (
     </Menu.Item>
     <div className="notifications-container">
       <div>
-        {DemoNotifications.map((each) => (
+        {notifications.map((each) => (
           <MenuItem
             path={each.path}
             author={each.author}
             action={each.action}
+            postTitle={each.postTitle}
             actionAvatar={each.actionAvatar}
             createdAt={each.createdAt}
             avatar={each.avatar}
-            online={each.online}
+            unread={each.unread}
           />
         ))}
       </div>
@@ -262,39 +205,11 @@ const menu = (
     </div>
   </StyledMenu>
 );
-const StyledBadge = styled(Badge)`
-  position: absolute;
-  cursor: pointer;
-  right: 3.5em;
-  top: 1.4em;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    position: absolute;
-    right: 4em;
-    top: 1.1em;
-  }
-`;
-export const StyledNum = styled.div`
-  height: 17px;
-  width: 17px;
-  position: absolute;
-  right: 4.5em;
-  bottom: 3.1em;
-  z-index: 999;
-  font-size: 10px;
-  letter-spacing: 1px;
-  background-color: #ff5656;
-  color: white;
-  border-radius: 100%;
-  padding: 1px;
-  font-weight: 300;
-  text-align: center;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    right: 7.4em;
-    bottom: 2em;
-  }
-`;
 
-export const NotificationDropDown = (props) => {
+export const NotificationDropDown = ({ mobile, notifications }) => {
+  const { markNotificationsAsRead } = useContext(WebSocketContext);
+  const dispatch = useDispatch();
+
   const Visible = (e) => {
     setTimeout(() => {
       if (e && document.querySelector(".ant-dropdown-menu") !== null) {
@@ -304,18 +219,39 @@ export const NotificationDropDown = (props) => {
       }
     }, 100);
   };
+
+  const updateReadAt = () => {
+    dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
+  };
+
+  const mappedNotifications = notifications.map((n) => ({
+    author: n.triggeredBy.name,
+    action: `${n.action == "like" ? "liked" : "commented on"} your post`,
+    postTitle: n.post.title,
+    path: `/post/${n.post.id}`,
+    actionAvatar: n.action == "comment" ? commentpost : likeheart,
+    createdAt: relativeTime(n.createdAt),
+    avatar: n.triggeredBy.photo,
+    unread: !n.readAt,
+  }));
+
   return (
-    <>
-      <Dropdown
-        overlay={menu}
-        trigger="click"
-        onClick={(e) => Visible(e)}
-        placement="bottomRight"
-      >
-        <StyledBadge count={8}>
+    <Dropdown
+      onVisibleChange={(visible) =>
+        visible ? markNotificationsAsRead() : updateReadAt()
+      }
+      overlay={menu(mappedNotifications)}
+      trigger="click"
+      placement="bottomRight"
+    >
+      <a>
+        <StyledBadge
+          mobile={mobile}
+          count={notifications.filter((n) => !n.readAt).length}
+        >
           <img src={bell} />
         </StyledBadge>
-      </Dropdown>
-    </>
+      </a>
+    </Dropdown>
   );
 };

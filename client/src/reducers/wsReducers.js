@@ -14,6 +14,9 @@ import {
   USER_STATUS_UPDATE,
   SET_LAST_MESSAGE,
   MESSAGE_EDITED,
+  NEW_NOTIFICATION,
+  GET_NOTIFICATIONS_SUCCESS,
+  LOCAL_NOTIFICATIONS_MARK_AS_READ,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -21,7 +24,7 @@ const initialState = {
   rooms: [],
   chatLog: [],
   isIdentified: false,
-  newMessage: null,
+  notifications: [],
 };
 
 function wsReducer(state = initialState, action) {
@@ -161,7 +164,8 @@ function wsReducer(state = initialState, action) {
         chatLog: [],
       };
     case GET_MORE_MESSAGES_HISTORY:
-      if (!action.payload.length) state.room.loadedAll = true;
+      if (!action.payload.length || action.payload.length < 20)
+        state.room.loadedAll = true;
       return {
         ...state,
         chatLog: [...action.payload.reverse(), ...state.chatLog],
@@ -177,6 +181,23 @@ function wsReducer(state = initialState, action) {
       } else return state;
       return {
         ...state,
+      };
+    case NEW_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [action.payload, ...state.notifications],
+      };
+    case GET_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        notifications: [...action.payload],
+      };
+    case LOCAL_NOTIFICATIONS_MARK_AS_READ:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications.map((n) => ({ ...n, readAt: new Date() })),
+        ],
       };
   }
   return state;

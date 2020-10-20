@@ -15,17 +15,27 @@ const CurrentChat = ({
   deleteMessage,
   editMessage,
   leaveAllRooms,
+  blockThread,
+  archiveThread,
+  unblockThread,
   user,
 }) => {
   const {
     toggleMobileChatList,
+    text,
+    setText,
     isLoading,
     setIsLoading,
     editingMessageId,
     setEditingMessageId,
     inputExpanded,
     setInputExpanded,
+    setToggleViewRequests,
   } = useContext(ChatContext);
+
+  const getSender = (participants) => {
+    return participants.filter((p) => p.id == user.id)[0];
+  };
 
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
@@ -38,7 +48,10 @@ const CurrentChat = ({
       threadId: room._id,
       skip: chatLog.length,
     });
-    if (loadMoreSuccess) setIsLoading(false);
+    if (loadMoreSuccess)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
   };
 
   useEffect(() => {
@@ -49,14 +62,27 @@ const CurrentChat = ({
     setEditingMessageId(null);
   }, [getChatLog, room, setEditingMessageId]);
 
+  const getThreadBlockStatus = () => {
+    if (getSender(room.participants).status == "blocked") return "did-block";
+    if (getReceiver(room.participants).status == "blocked")
+      return "was-blocked";
+    else return null;
+  };
+
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
       <RecipientHeader
+        threadId={room?._id}
         status={room?.userStatus || null}
         participant={room ? getReceiver(room.participants) : null}
         onMobileBackClick={leaveAllRooms}
+        blockThread={blockThread}
+        unblockThread={unblockThread}
+        blockStatus={getThreadBlockStatus()}
+        archiveThread={archiveThread}
       />
       <Messages
+        setText={setText}
         user={user}
         room={room}
         chatLog={chatLog}
@@ -70,10 +96,22 @@ const CurrentChat = ({
       />
       {room && (
         <InputBox
-          threadId={room._id}
+          text={text}
+          setText={setText}
+          user={user}
+          room={room}
           sendMessage={sendMessage}
           inputExpanded={inputExpanded}
           setInputExpanded={setInputExpanded}
+          blockStatus={getThreadBlockStatus()}
+          leaveAllRooms={leaveAllRooms}
+          unblockThread={unblockThread}
+          blockThread={blockThread}
+          archiveThread={archiveThread}
+          setToggleViewRequests={setToggleViewRequests}
+          editingMessageId={editingMessageId}
+          setEditingMessageId={setEditingMessageId}
+          editMessage={editMessage}
         />
       )}
     </CurrentChatContainer>

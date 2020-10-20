@@ -1,27 +1,50 @@
 const fp = require("fastify-plugin");
 const { fn } = require("moment");
 const SocketIO = require("socket.io");
+const cookieParser = require('socket.io-cookie-parser');
 const redisAdapter = require("socket.io-redis");
 
+const {
+  config: { auth },
+} = require("../../config");
+
 function onSocketConnect(socket) {
-  console.log("[ws] user connected");
+  this.log.info(`[ws] socket connected [id: ${socket.id}]`);
   const Thread = this.mongo.model("Thread");
   const User = this.mongo.model("User");
   const Post = this.mongo.model("Post");
   const Message = this.mongo.model("Message");
+  const Notification = this.mongo.model("Notification");
+
+
+  // "auth" check middleware, all events require auth, except "IDENTIFY"
+  socket.use((packet, next) => {
+    // the IDENTIFY event doesn't need authentication
+    if (packet[0] == "IDENTIFY") return next();
+    res = packet[2]; // the response function
+    // user did not IDENTIFY
+    if (!socket.userId && res) return res({ code: 401, message: "Unauthorized" });
+    else if (!socket.userId) return;
+    // user is not IDENTIFY
+    next();
+  })
 
   socket.on("IDENTIFY", async (data, res) => {
-    const [userErr, user] = await this.to(User.findById(data.id));
+    if (!socket.request.cookies['token']) return res({ code: 401, message: "Unauthorized" });
+    const decodedToken = this.jwt.decode(socket.request.cookies['token'])
+    const userId = decodedToken.payload[auth.jwtMongoIdKey]
+    if (!userId) return res({ code: 401, message: "Unauthorized" });
+    const [userErr, user] = await this.to(User.findById(userId));
     if (userErr) {
       return res({ code: 500, message: "Internal server error" });
     } else if (user === null) {
       return res({ code: 404, message: "User not found" });
     }
-    socket.userId = data.id;
+    socket.userId = userId;
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
     socket.on("disconnect", () => {
-      console.log("[ws] user disconnected");
+      this.log.info(`[ws] socket disconnected [socketId: ${socket.id}]`);
       for (let room in socket.rooms) {
         socket.leave(room);
       }
@@ -35,13 +58,13 @@ function onSocketConnect(socket) {
           });
       }, 1000);
     });
-    res({ code: 200, message: "Success" });
+    socket.join(userId); // to send events to all the user's browsers, if many are open.
+    res({ code: 200, data: userId });
+    this.log.info(`[ws] socket identified [socketId: ${socket.id}] [userId: ${userId}]`);
   });
 
   socket.on("JOIN_ROOM", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
-
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     var threadErr, thread;
     if (data.threadId) {
@@ -65,7 +88,7 @@ function onSocketConnect(socket) {
     } else {
       // user called joinRoom({}) inside leaveAllRooms()
       for (let room in socket.rooms) {
-        if (room != socket.id) await socket.leave(room);
+        if (![socket.id, socket.userId].includes(room)) await socket.leave(room);
       }
       return res({ code: 401, message: "Unauthorized" });
     }
@@ -97,6 +120,14 @@ function onSocketConnect(socket) {
       [threadErr, thread] = await this.to(new Thread(newThread).save());
       if (threadErr)
         return res({ code: 500, message: "Internal server error" });
+
+      // if user is online, force add this room to their rooms list.
+      const recipientSocketId = await getSocketIdByUserId(
+        this,
+        thread.participants.find((p) => p.id != userId).id,
+      );
+      if (recipientSocketId)
+        this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", thread._id);
     } else if (!thread) return res({ code: 401, message: "Unauthorized" });
 
     // update participant.lastAccess, and mark messages as read.
@@ -120,9 +151,9 @@ function onSocketConnect(socket) {
 
     if (!userInRoom) {
       // user not already in that room
-      // leave any other room, EXCEPT the unique socket room (socket.id)
+      // leave any other room, EXCEPT the unique socket room (socket.id) and unique user room (userId)
       for (let room in socket.rooms) {
-        if (room != socket.id) await socket.leave(room);
+        if (![socket.id, socket.userId].includes(room)) await socket.leave(room);
       }
       socket.join(threadWithLastMessage._id);
     }
@@ -131,7 +162,6 @@ function onSocketConnect(socket) {
 
   socket.on("GET_USER_THREADS", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     const [threadsErr, threads] = await this.to(
       Thread.find({ "participants.id": userId }).sort({ updatedAt: 1 }),
     );
@@ -157,13 +187,11 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = await getSocketIdByUserId(this, id) ? "online" : "offline";
+    const status = (await getSocketIdByUserId(this, id)) ? "online" : "offline";
     res({ code: 200, data: status });
   });
 
   socket.on("GET_CHAT_LOG", async (data, res) => {
-    userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
@@ -179,8 +207,6 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_CHAT_LOG_MORE", async (data, res) => {
-    userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!userInRoom) return res({ code: 401, message: "Unauthorized" });
 
@@ -198,7 +224,6 @@ function onSocketConnect(socket) {
 
   socket.on("SEND_MESSAGE", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
     let userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!data.threadId && !userInRoom)
       return res({ code: 401, message: "Unauthorized" });
@@ -211,11 +236,20 @@ function onSocketConnect(socket) {
     if (threadErr) return res({ code: 500, message: "Internal server error" });
     if (!thread) return res({ code: 401, message: "Unauthorized" });
 
+    // someone blocked someone else, no one can send a message
+    if (thread.participants.find((p) => p.status == "blocked"))
+      return res({ code: 401, message: "Unauthorized" });
+    // sender is still "pending", they can't send until they accept
+    if (
+      thread.participants.find((p) => p.id == userId && p.status == "pending")
+    )
+      return res({ code: 401, message: "Unauthorized" });
+
     let newMessage = {
       authorId: userId,
       content: data.content.substring(0, 2048),
       postRef: null,
-      status: "sent", // later
+      status: "sent",
       threadId: thread._id,
     };
 
@@ -249,12 +283,23 @@ function onSocketConnect(socket) {
 
       if (!recipientSocketId || (recipientSocketId && !isInSameRoom)) {
         // equivalent to (!online || (online && !inSameRoom))
+
+        const updates = {
+          $inc: { "participants.$[userToUpdate].newMessages": 1 },
+        };
+
+        // set status to "accepted", if it was "archived".
+        if (
+          thread.participants.find(
+            (p) => p.id == recipient && p.status == "archived",
+          )
+        )
+          updates.$set = { "participants.$[userToUpdate].status": "accepted" };
+
         const [updateThreadErr, updateThread] = await this.to(
-          Thread.findByIdAndUpdate(
-            thread._id,
-            { $inc: { "participants.$[userToUpdate].newMessages": 1 } },
-            { arrayFilters: [{ "userToUpdate.id": recipient }] },
-          ),
+          Thread.findByIdAndUpdate(thread._id, updates, {
+            arrayFilters: [{ "userToUpdate.id": recipient }],
+          }),
         );
 
         // send message web notification
@@ -263,6 +308,14 @@ function onSocketConnect(socket) {
           this.io
             .to(recipientSocketId)
             .emit("NEW_MESSAGE_NOTIFICATION", message);
+
+            // if the status was "archived", then force room update because it's now "accepted"
+            if (
+              thread.participants.find(
+                (p) => p.id == recipient && p.status == "archived",
+              )
+            )
+            this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", thread._id);
         }
       }
     }
@@ -273,7 +326,6 @@ function onSocketConnect(socket) {
 
   socket.on("DELETE_MESSAGE", async (messageId) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [messageDeletedErr, messageDeleted] = await this.to(
       Message.findOneAndUpdate(
         {
@@ -290,7 +342,6 @@ function onSocketConnect(socket) {
 
   socket.on("EDIT_MESSAGE", async (data) => {
     userId = socket.userId;
-    if (!userId) return; //user did not IDENTIFY
     var [messageEditedErr, messageEdited] = await this.to(
       Message.findOneAndUpdate(
         {
@@ -298,24 +349,127 @@ function onSocketConnect(socket) {
           authorId: userId,
           status: { $ne: "deleted" },
         },
-        { status: "edited", content: data.newContent },
+        { status: "edited", content: data.newContent.substring(0, 2048) },
         { new: true },
       ),
     );
     if (messageEditedErr || !messageEdited) return;
     this.io.to(messageEdited.threadId).emit("MESSAGE_EDITED", messageEdited);
   });
+
+  socket.on("BLOCK_THREAD", async (data, res) => {
+    userId = socket.userId;
+    var [blockThreadErr, blockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "blocked",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (blockThreadErr || !blockThread)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      blockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
+
+  socket.on("ARCHIVE_THREAD", async (data, res) => {
+    userId = socket.userId;
+    var [blockThreadErr, blockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "archived",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (blockThreadErr || !blockThread)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      blockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
+
+  // used for unblock, accept, and unarchive (because it sets status to "accepted")
+  socket.on("UNBLOCK_THREAD", async (data, res) => {
+    userId = socket.userId;
+    var [unblockThreadErr, unblockThread] = await this.to(
+      Thread.findByIdAndUpdate(
+        data,
+        {
+          $set: {
+            "participants.$[userToUpdate].status": "accepted",
+          },
+        },
+        { arrayFilters: [{ "userToUpdate.id": userId }] },
+      ),
+    );
+    if (unblockThreadErr || !unblockThread)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, message: "Success" });
+    const recipientSocketId = await getSocketIdByUserId(
+      this,
+      unblockThread.participants.find((p) => p.id != userId).id,
+    );
+    if (recipientSocketId)
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+  });
+
+
+  socket.on("GET_NOTIFICATIONS", async (data, res) => {
+    userId = socket.userId;
+    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
+
+    const [notificationsErr, notifications] = await this.to(
+      Notification.find({ receiver: userId })
+        .sort({ createdAt: -1 }),
+    );
+
+    if (notificationsErr)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, data: notifications });
+  });
+
+  socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
+    userId = socket.userId;
+    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
+
+    const [updateErr, update] = await this.to(
+      Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
+    );
+
+  })
 }
 
 // usefull to send notifications outside socket context, or get online status
 function getSocketIdByUserId(app, userId) {
   return new Promise((resolve) => {
-    app.io.of("/").adapter.customRequest({type:'getSocketIdByUserId', userId: userId},(err, replies) => {
-        // replies is an array of element pushed by cb(element) on individual socket.io server
-        // remove empty replies
-        const filtered = replies.filter(reply => reply != null)
-        resolve(filtered[0])
-    })
+    app.io
+      .of("/")
+      .adapter.customRequest(
+        { type: "getSocketIdByUserId", userId: userId },
+        (err, replies) => {
+          // replies is an array of element pushed by cb(element) on individual socket.io server
+          // remove empty replies
+          const filtered = replies.filter((reply) => reply != null);
+          resolve(filtered[0]);
+        },
+      );
   });
 }
 
@@ -335,24 +489,27 @@ function fastifySocketIo(app, config, next) {
     io.adapter(redisAdapter(config.redis));
     io.on("connect", onSocketConnect.bind(app));
     app.decorate("io", io);
-
+    io.use(cookieParser());
     // customHook, to run a request on every node
     // every socket.io server executes below code, when customRequest is called
-    io.of('/').adapter.customHook = (request, cb) => {
-      if (request.type == 'getSocketIdByUserId') {
-          let userSocket = Object.values(io.of("/").connected).find(
+    io.of("/").adapter.customHook = (request, cb) => {
+      if (request.type == "getSocketIdByUserId") {
+        let userSocket =
+          Object.values(io.of("/").connected).find(
             (socket) => socket.userId == request.userId,
           ) || null;
-          cb(userSocket? userSocket.id : null)
+        cb(userSocket ? userSocket.id : null);
       }
       // add more request types if you need something that runs on all nodes
-      cb()
-    }
+      cb();
+    };
 
+    app.log.info(`[ws] websocket ready`);
     next();
   } catch (error) {
+    app.log.error("[ws] Failed starting the websocket");
     next(error);
   }
 }
 
-module.exports = fp(fastifySocketIo);
+module.exports = { plugin: fp(fastifySocketIo), getSocketIdByUserId };

@@ -363,20 +363,18 @@ const NavigationLayout = (props) => {
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item
-          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
-          key={key}
-        >
-          <a
+        <Menu.Item key={key}>
+          <div
             style={
               i18n.language === key
                 ? { fontWeight: "bold" }
                 : { fontWeight: "normal" }
             }
             onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
           >
             {label.text}
-          </a>
+          </div>
         </Menu.Item>
       ))}
     </Menu>
@@ -573,22 +571,6 @@ const NavigationLayout = (props) => {
       <NavItem history={history}>
         <Link to={`/profile/${user?.id || user?._id}`}>
           {t("common.profile")}
-        </Link>
-      </NavItem>
-      <NavItem>
-        <Link to={"/inbox"}>
-          Inbox{" "}
-          <Badge
-            count={ws.rooms
-              .map((_room) =>
-                _room.participants.find((p) => p.id == user.id.toString())
-                  ?.newMessages
-                  ? 1
-                  : 0 || // remove "? 1:0" to show total messages
-                    0,
-              )
-              .reduce((a, b) => a + b, 0)}
-          />
         </Link>
       </NavItem>
       <NavItem>
