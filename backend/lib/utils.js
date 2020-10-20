@@ -1,4 +1,6 @@
 const moment = require("moment");
+const jwtSimple = require("jwt-simple");
+const { config } = require("../config");
 
 const generateUUID = ({ range }) => {
   const chars =
@@ -57,6 +59,10 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
+const jwtSimpleDecode = (token) => {
+  return jwtSimple.decode(token, config.unsubscribeKey);
+};
+
 module.exports = {
   bool,
   dateToEpoch,
@@ -64,4 +70,5 @@ module.exports = {
   getCookieToken,
   isValidEmail,
   setElapsedTimeText,
+  jwtSimpleDecode,
 };
