@@ -112,6 +112,9 @@ const Post = ({
     loadMoreComments,
     page,
   } = post || {};
+  {
+    console.log("post", post);
+  }
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
