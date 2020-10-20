@@ -214,6 +214,7 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            elapsedTimeText: true,
           },
         },
       ];
@@ -235,7 +236,16 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipelineResults),
+        Post.aggregate(aggregationPipelineResults).then((posts) => {
+          posts.forEach((post) => {
+            post.elapsedTimeText = setElapsedTimeText(
+              post.createdAt,
+              post.updatedAt,
+            );
+          });
+          console.log(posts);
+          return posts;
+        }),
       );
 
       const responseHandler = (response) => {
