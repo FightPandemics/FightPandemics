@@ -105,7 +105,7 @@ const PostSocial = ({
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
   const showNativeShareOrModal = () => {
-    if (navigator.canShare) {
+    if (navigator.share) {
       navigator
         .share({
           title: postTitle,
