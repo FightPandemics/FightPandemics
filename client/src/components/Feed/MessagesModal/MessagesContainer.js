@@ -1,17 +1,22 @@
 import { Modal, Button } from "antd";
 import styled from "styled-components";
-import { mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
-export const MsgBtn = styled(Button)`
-  color: white;
-  margin-left: 1.429em;
-`;
+const primaryColor = theme?.colors?.royalBlue;
 
 export const MsgModal = styled(Modal)`
+  min-width: 580px;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    min-width: 90vw;
+    width: 90vw;
+  }
+
   .ant-modal-title {
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 2.2rem;
   }
+
   .ant-modal-close-x {
     display: none;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -20,45 +25,40 @@ export const MsgModal = styled(Modal)`
   }
   .ant-modal-header {
     border-bottom: none;
-    font-size: 1.286em;
-    padding: 1em 0;
+    padding: 1.4rem 0;
   }
   .ant-modal-footer {
     display: flex;
     justify-content: flex-end;
     border-top: none;
-    bottom: 1em;
+    bottom: 1.4rem;
     width: 100%;
     border-radius: none;
-    padding: 0.714em 5px;
+    padding: 1rem 0.5rem;
+
     .ant-btn {
       box-shadow: none;
-      height: 2.5em;
-      width: 8.643em;
-      font-size: 1.143em;
+      height: 4rem;
+      min-width: 14rem;
+      font-size: 1.6rem;
       letter-spacing: 0.5px;
       outline: none;
       transition: none;
       -webkit-transition: none;
+
       :first-child {
         border: none;
-        border-radius: none;
-        background-color: white;
-        color: #425af2;
-        position: relative;
-        top: 0.4em;
+        color: ${primaryColor};
       }
       :last-child {
-        border: 0.2rem solid #425af2;
+        border: 0.2rem solid ${primaryColor};
         border-radius: 4.6rem;
-        background-color: #425af2;
+        background-color: ${primaryColor};
         color: white;
-        position: relative;
-        top: 0.4em;
       }
     }
+
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      border-radius: 0;
       .ant-modal-close-x {
         display: block;
       }
@@ -75,103 +75,87 @@ export const MsgModal = styled(Modal)`
       }
     }
   }
+
   .ant-modal-body {
     padding: 0;
   }
   .ant-modal-content {
-    position: relative;
-    right: 6em;
-    width: 46.857em;
-    border-radius: 0.714em;
-    padding: 1.5em 2em;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      border-radius: 0;
-      background-color: white;
-    }
+    border-radius: 1rem;
+    padding: 2.1rem 2.8rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   textarea {
-    border: 1px solid lightgrey;
-    border-radius: 6px;
-    height: 9.714em;
+    border: 0.1rem solid lightgrey;
+    border-radius: 0.6rem;
+    min-height: 13.5rem;
     width: 100%;
-    margin: 0 0 1em 0;
-    padding: 1em;
+    margin: 0 0 1.4rem 0;
+    padding: 1.4rem;
     resize: none;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      height: 51vh;
-      margin: 2.3em 0 0.5em 0;
-    }
-    @media screen and (max-width: 570px) {
-      height: 48vh;
-      margin: 2.3em 0 0.1em 0;
-    }
-    @media screen and (max-width: 282px) {
-      height: 51vh;
-      margin: 3.5em 0 0em 0;
-    }
+    font-family: ${theme.typography.font.family.body};
     :focus {
-      border: 1px solid #425af2;
+      border: 1px solid ${primaryColor};
     }
   }
 `;
 
 export const SuccessModal = styled(MsgModal)`
+  top: 12.1rem;
+  min-width: 61.5rem;
+
   p {
-    padding-top: 1em;
     width: 100%;
-    font-size: 1.143em;
+    font-size: 1.4rem;
     text-align: center;
+    margin-bottom: 2.4rem;
   }
   .ant-modal-title {
     text-align: center;
-    padding-top: 1em;
-    font-size: 1.571em;
-    line-height: 1.5;
+    font-size: 2.2rem;
+    line-height: 1.27;
+    color: #333333;
+    margin-bottom: 2.4rem;
+  }
+  .ant-modal-header {
+    padding: 0;
   }
   .ant-modal-content {
-    width: 46.857em;
-    border-radius: 0.714em;
-    padding: 1.5em 2em;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: relative;
-      margin: auto;
-      height: 50%;
-      width: 90%;
-      border-radius: 0.714em;
-      padding: 1.5em 2em;
-    }
+    max-width: 65.6rem;
+    border-radius: 1rem;
+    padding: 2.4rem;
   }
   .ant-modal-footer {
-    display: block;
-    text-align: center;
-  }
-  .ant-modal-footer > div {
-    position: absolute;
-    bottom: 2.143em;
-    right: 6.786em;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: static;
-    }
-  }
-  .ant-btn:last-child {
-    border: 0.2rem solid #425af2;
-    border-radius: 4.6rem;
-    background-color: #425af2;
-    color: white;
-    width: 14.143em;
-    box-shadow: none;
-    position: relative;
-    margin: 0 auto;
     display: flex;
+    text-align: center;
+    flex-direction: column-reverse;
+    padding: 0;
     align-items: center;
-    justify-content: center;
-    z-index: 999;
+
+    .ant-btn:first-child {
+      margin-top: 1.8rem;
+      position: static;
+      height: auto;
+      padding: 0;
+    }
+    .ant-btn:last-child {
+      border-radius: 4.6rem;
+      background-color: ${primaryColor};
+      color: white;
+      width: 14.9rem;
+      box-shadow: none;
+      position: relative;
+      margin: 0 auto;
+      font-size: 1.4rem;
+      padding: 1.9rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
   }
 `;
 
@@ -191,18 +175,18 @@ export const FailedModal = styled(SuccessModal)`
 `;
 
 export const PrivateMessageContainer = styled.div`
-  margin-left: 3em;
+  margin-left: 4.2rem;
   cursor: pointer;
   :hover {
     color: #939393;
   }
   svg {
     position: relative;
-    top: 0.2em;
+    top: 0.28rem;
   }
   span {
     position: relative;
-    left: 0.5em;
+    left: 0.7rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
