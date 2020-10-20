@@ -20,19 +20,19 @@ const userSchema = new Schema(
         weekly: { default: false, type: Boolean },
         biweekly: { default: false, type: Boolean },
       },
-      likes: {
+      like: {
         instant: { default: false, type: Boolean },
         daily: { default: false, type: Boolean },
         weekly: { default: true, type: Boolean },
         biweekly: { default: false, type: Boolean },
       },
-      comments: {
+      comment: {
         instant: { default: false, type: Boolean },
         daily: { default: true, type: Boolean },
         weekly: { default: false, type: Boolean },
         biweekly: { default: false, type: Boolean },
       },
-      posts: {
+      post: {
         instant: { default: false, type: Boolean },
         daily: { default: true, type: Boolean },
         weekly: { default: false, type: Boolean },
