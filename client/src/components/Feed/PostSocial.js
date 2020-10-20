@@ -1,11 +1,11 @@
 // Core
-import React, { useEffect, useReducer } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 // Local
 import GTM from "constants/gtm-tags";
@@ -55,15 +55,6 @@ const PostSocial = ({
   const history = useHistory();
   const organisationId = useSelector(selectOrganisationId);
   const user = useSelector(selectUser);
-  useEffect(() => {
-    const likePost = sessionStorage.getItem("likePost");
-
-    if (id === likePost) {
-      if (likePost) {
-        handlePostLike(likePost, liked, false);
-      }
-    }
-  }, [id, liked]);
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
@@ -83,18 +74,20 @@ const PostSocial = ({
     }
   };
 
-  const handlePostLike = async (postId, liked, create) => {
+  const handlePostLike = useCallback(async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${organisationId || user?.id || user?._id}`;
+      const endPoint = `/api/posts/${postId}/likes/${
+        organisationId || user?.id || user?._id
+      }`;
       if (!user) {
         return;
       }
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
-        dispatch(postsActions.setLikeAction(postId, data.likesCount))
+        dispatch(postsActions.setLikeAction(postId, data.likesCount));
       } catch (error) {
         console.log({ error });
       }
@@ -102,7 +95,17 @@ const PostSocial = ({
       sessionStorage.setItem("likePost", postId);
       history.push(LOGIN);
     }
-  };
+  });
+
+  useEffect(() => {
+    const likePost = sessionStorage.getItem("likePost");
+
+    if (id === likePost) {
+      if (likePost) {
+        handlePostLike(likePost, liked, false);
+      }
+    }
+  }, [handlePostLike, id, liked]);
 
   const renderPostSocialIcons = (
     <>
@@ -116,15 +119,15 @@ const PostSocial = ({
           {renderLabels("Like", numLikes, t)}
         </div>
       ) : (
-          <div
-            id={gtmTag("like", GTM.feed.prefix)}
-            className="social-icon"
-            onClick={() => handlePostLike(id, liked, true)}
-          >
-            {renderLikeIcon(liked)}
-            {renderLabels("Like", numLikes, t)}
-          </div>
-        )}
+        <div
+          id={gtmTag("like", GTM.feed.prefix)}
+          className="social-icon"
+          onClick={() => handlePostLike(id, liked, true)}
+        >
+          {renderLikeIcon(liked)}
+          {renderLabels("Like", numLikes, t)}
+        </div>
+      )}
       <span></span>
       {postId ? (
         <div
@@ -136,48 +139,48 @@ const PostSocial = ({
           {renderLabels("Comment", numComments, t)}
         </div>
       ) : (
-          <>
-            {isAuthenticated ? (
-              <Link
-                to={{
-                  pathname: `/post/${id}`,
-                  state: {
-                    postId: id,
-                    comments: true,
-                    from: window.location.href,
-                  },
-                }}
+        <>
+          {isAuthenticated ? (
+            <Link
+              to={{
+                pathname: `/post/${id}`,
+                state: {
+                  postId: id,
+                  comments: true,
+                  from: window.location.href,
+                },
+              }}
+            >
+              <div
+                id={gtmTag("comment", GTM.feed.prefix)}
+                className="social-icon"
+                onClick={setShowComments}
               >
-                <div
-                  id={gtmTag("comment", GTM.feed.prefix)}
-                  className="social-icon"
-                  onClick={setShowComments}
-                >
-                  {renderCommentIcon(showComments, numComments)}
-                  {renderLabels("Comment", numComments, t)}
-                </div>
-              </Link>
-            ) : (
-                <Link
-                  onClick={() =>
-                    sessionStorage.setItem("postredirect", `/post/${id}`)
-                  }
-                  to={{
-                    pathname: LOGIN,
-                    state: { from: window.location.href },
-                  }}
-                >
-                  <div
-                    id={gtmTag("comment", GTM.feed.prefix)}
-                    className="social-icon"
-                  >
-                    {renderCommentIcon(showComments, numComments)}
-                    {renderLabels("Comment", numComments, t)}
-                  </div>
-                </Link>
-              )}
-          </>
-        )}
+                {renderCommentIcon(showComments, numComments)}
+                {renderLabels("Comment", numComments, t)}
+              </div>
+            </Link>
+          ) : (
+            <Link
+              onClick={() =>
+                sessionStorage.setItem("postredirect", `/post/${id}`)
+              }
+              to={{
+                pathname: LOGIN,
+                state: { from: window.location.href },
+              }}
+            >
+              <div
+                id={gtmTag("comment", GTM.feed.prefix)}
+                className="social-icon"
+              >
+                {renderCommentIcon(showComments, numComments)}
+                {renderLabels("Comment", numComments, t)}
+              </div>
+            </Link>
+          )}
+        </>
+      )}
 
       <span></span>
 
@@ -197,15 +200,24 @@ const PostSocial = ({
 };
 
 const renderLikeIcon = (liked) => {
-  return <StyledSvg src={liked ? heart : heartGray} className="social-icon-svg" />;
+  return (
+    <StyledSvg src={liked ? heart : heartGray} className="social-icon-svg" />
+  );
 };
 
 const renderCommentIcon = (showComments, numComments) => {
-  return <StyledSvg src={(showComments || numComments > 0) ? comment : commentGray} className="social-icon-svg" />
+  return (
+    <StyledSvg
+      src={showComments || numComments > 0 ? comment : commentGray}
+      className="social-icon-svg"
+    />
+  );
 };
 
 const renderShareIcon = (shared) => {
-  return <StyledSvg src={shared ? share : shareGray} className="social-icon-svg" />
+  return (
+    <StyledSvg src={shared ? share : shareGray} className="social-icon-svg" />
+  );
 };
 
 const renderLabels = (label, count, t) => {

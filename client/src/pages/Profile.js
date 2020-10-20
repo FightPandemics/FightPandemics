@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
@@ -18,7 +18,6 @@ import ErrorAlert from "../components/Alert/ErrorAlert";
 import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
-import { NoPosts } from "pages/Feed";
 
 import {
   ProfileLayout,
@@ -56,7 +55,7 @@ import {
 } from "constants/urls";
 import {
   deletePostModalreducer,
-  deletePostState
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import { selectPosts, postsActions } from "reducers/posts";
@@ -74,7 +73,6 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -111,7 +109,10 @@ const Profile = ({
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -140,7 +141,6 @@ const Profile = ({
     loadMore,
     page,
     posts: postsList,
-    status,
     error: postsError,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
@@ -191,9 +191,11 @@ const Profile = ({
           } = await axios.get(endpoint);
 
           if (prevUserId !== userId) {
-            dispatch(postsActions.fetchPostsSuccess({
-              posts: [],
-            }));
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: [],
+              }),
+            );
           }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
@@ -210,18 +212,24 @@ const Profile = ({
             }, {});
 
             if (prevUserId === userId && postsList) {
-              dispatch(postsActions.fetchPostsSuccess({
-                posts: { ...postsList, ...loadedPosts },
-              }));
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...postsList, ...loadedPosts },
+                }),
+              );
             } else {
-              dispatch(postsActions.fetchPostsSuccess({
-                posts: { ...loadedPosts },
-              }));
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...loadedPosts },
+                }),
+              );
             }
           } else if (prevUserId === userId && posts) {
-            dispatch(postsActions.fetchPostsSuccess({
-              posts: { ...postsList },
-            }));
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: { ...postsList },
+              }),
+            );
             dispatch(postsActions.finishLoadingAction());
           } else {
             dispatch(postsActions.finishLoadingAction());
@@ -259,7 +267,7 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [isLoading, loadMore, userPosts.length],
+    [dispatch, isLoading, loadMore, userPosts.length],
   );
 
   useEffect(() => {
@@ -322,8 +330,6 @@ const Profile = ({
     }
   };
 
-  const handlePostLike = async (postId, liked, create) => { };
-
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -377,8 +383,8 @@ const Profile = ({
           {address ? (
             <LocationMobileDiv>{address}</LocationMobileDiv>
           ) : (
-              <WhiteSpace />
-            )}
+            <WhiteSpace />
+          )}
           <IconsContainer>
             <HelpContainer>
               {needHelp && t("profile.individual.needHelp")}
@@ -445,7 +451,6 @@ const Profile = ({
             handleEditPost={handleEditPost}
             deleteModalVisibility={deleteModalVisibility}
             handleCancelPostDelete={handleCancelPostDelete}
-            handlePostLike={handlePostLike}
             loadNextPage={loadNextPage}
             isNextPageLoading={isLoading}
             itemCount={itemCount}

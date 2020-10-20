@@ -19,16 +19,14 @@ import { postReducer, postState } from "hooks/reducers/postReducers";
 import GTM from "constants/gtm-tags";
 
 // Constants
-import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
+import { FEED } from "templates/RouteWithSubRoutes";
 import {
   SET_POST,
   FETCH_POST,
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_SHORT_CONTENT,
-  SET_LOADMORE,
   SET_FULL_CONTENT,
-  SET_LIKE,
 } from "hooks/actions/postActions";
 import {
   DELETE_MODAL_POST,
@@ -37,7 +35,7 @@ import {
 } from "hooks/actions/feedActions";
 import { theme, mq } from "constants/theme";
 
-const { colors, typography } = theme;
+const { typography } = theme;
 const { font, two, four } = theme.typography.heading;
 
 const Container = styled.div`
@@ -113,7 +111,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    partialContent: postSubstring,
     editPostModalVisibility,
     deleteModalVisibility,
     commentsCount,
@@ -127,43 +124,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: true,
     });
-  };
-
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-        if (response.data) {
-          postDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
   };
 
   const handleEditPost = () => {
@@ -329,7 +289,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
             fullContent,
             updateComments,
             isAuthenticated,
-            handlePostLike,
             editPostModalVisibility,
             dispatchPostAction,
             postDispatch,
@@ -352,7 +311,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 handleCancelPostDelete={handleCancelPostDelete}
                 handleCommentDelete={handleCommentDelete}
                 postDelete={postDelete}
-                handlePostLike={handlePostLike}
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}

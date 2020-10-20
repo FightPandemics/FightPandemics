@@ -18,7 +18,7 @@ import Logo from "./Logo";
 import globe from "assets/icons/globe.svg";
 
 import { theme, mq } from "../constants/theme";
-import { localization, languages } from "locales/languages";
+import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;

@@ -69,7 +69,6 @@ const Post = ({
   fullPostLength,
   handleCancelPostDelete,
   handleCommentDelete,
-  handlePostLike,
   includeProfileLink,
   isAuthenticated,
   numComments,
@@ -445,7 +444,6 @@ const Post = ({
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
-        handlePostLike={handlePostLike}
         url={window.location.href}
         liked={post?.liked}
         postId={postId}

@@ -8,7 +8,7 @@ import React, {
   useReducer,
   useRef,
 } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -91,11 +91,11 @@ import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE
+  DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import {
   deletePostModalreducer,
-  deletePostState
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
@@ -123,7 +123,10 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     OrganisationContext,
   );
   const { error, loading, organisation } = orgProfileState;
-  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
   const posts = useSelector(selectPosts);
 
   const {
@@ -148,7 +151,6 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     loadMore,
     page,
     posts: postsList,
-    status,
     error: postsError,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
@@ -218,9 +220,11 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
           } = await axios.get(endpoint);
 
           if (prevOrgId !== organisationId) {
-            dispatch(postsActions.fetchPostsSuccess({
-              posts: [],
-            }));
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: [],
+              }),
+            );
           }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
@@ -230,7 +234,6 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
               dispatch(postsActions.finishLoadingAction());
             } else if (meta.total === limit) {
               dispatch(postsActions.finishLoadingAction());
-
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -238,18 +241,24 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
             }, {});
 
             if (prevOrgId === organisationId && postsList) {
-              dispatch(postsActions.fetchPostsSuccess({
-                posts: { ...postsList, ...loadedPosts },
-              }));
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...postsList, ...loadedPosts },
+                }),
+              );
             } else {
-              dispatch(postsActions.fetchPostsSuccess({
-                posts: { ...loadedPosts },
-              }));
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...loadedPosts },
+                }),
+              );
             }
           } else if (prevOrgId === organisationId && posts) {
-            dispatch(postsActions.fetchPostsSuccess({
-              posts: { ...postsList },
-            }));
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: { ...postsList },
+              }),
+            );
             dispatch(postsActions.finishLoadingAction());
           } else {
             dispatch(postsActions.finishLoadingAction());
@@ -289,7 +298,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [isLoading, loadMore, organisationPosts.length],
+    [dispatch, isLoading, loadMore, organisationPosts.length],
   );
 
   useEffect(() => {
@@ -356,9 +365,6 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
       });
     }
   };
-
-  const handlePostLike = async () => { };
-
   const renderURL = () => {
     if (organisation) {
       if (urlsAndEmail.length !== 0) {
@@ -384,7 +390,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                   src={URLS[name][0]}
                   alt={name}
                   id={
-                    name == "email"
+                    name === "email"
                       ? GTM.organisation.orgPrefix + GTM.organisation.email
                       : ""
                   }
@@ -488,7 +494,6 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                 handleEditPost={handleEditPost}
                 deleteModalVisibility={deleteModalVisibility}
                 handleCancelPostDelete={handleCancelPostDelete}
-                handlePostLike={handlePostLike}
                 loadNextPage={loadNextPage}
                 isNextPageLoading={isLoading}
                 itemCount={itemCount}

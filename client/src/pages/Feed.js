@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
@@ -29,7 +29,7 @@ import {
   optionsReducer,
   feedReducer,
   deletePostModalreducer,
-  deletePostState
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 
 // ICONS
@@ -242,7 +242,10 @@ const Feed = (props) => {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
-  const [deleteModal, deleteModalDispatch] = useReducer(deletePostModalreducer, deletePostState)
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
   const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const posts = useSelector(selectPosts);
@@ -266,7 +269,7 @@ const Feed = (props) => {
     isLoading,
     loadMore,
     page,
-    posts: postsList
+    posts: postsList,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
   const feedPosts = Object.entries(postsList);
@@ -362,8 +365,6 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async () => { };
-
   const handlePostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
@@ -431,13 +432,17 @@ const Feed = (props) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        dispatch(postsActions.fetchPostsSuccess({
-          posts: { ...(postsList || []), ...loadedPosts },
-        }));
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...(postsList || []), ...loadedPosts },
+          }),
+        );
       } else if (posts) {
-        dispatch(postsActions.fetchPostsSuccess({
-          posts: { ...postsList },
-        }));
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...postsList },
+          }),
+        );
         dispatch(postsActions.finishLoadingAction());
       } else {
         dispatch(postsActions.finishLoadingAction());
@@ -445,7 +450,14 @@ const Feed = (props) => {
     } catch (error) {
       dispatch(postsActions.fetchPostsError(error));
     }
-  }, [page, selectedOptions, location, selectedType, applyFilters, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [
+    page,
+    selectedOptions,
+    location,
+    selectedType,
+    applyFilters,
+    organisationId,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -597,7 +609,6 @@ const Feed = (props) => {
         handleLocation,
         handleOnClose,
         showFilters,
-        handlePostLike,
         totalPostCount,
       }}
     >
@@ -656,7 +667,6 @@ const Feed = (props) => {
             <Posts
               isAuthenticated={isAuthenticated}
               filteredPosts={postsList}
-              handlePostLike={handlePostLike}
               postDelete={postDelete}
               user={user}
               deleteModalVisibility={deleteModalVisibility}
@@ -691,13 +701,13 @@ const Feed = (props) => {
                 />
               </NoPosts>
             ) : (
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                  onClick={handleCreatePost}
-                  className="create-post"
-                />
-              )}
+              <CreatePostIcon
+                id={gtmTag(GTM.post.createPost)}
+                src={creatPost}
+                onClick={handleCreatePost}
+                className="create-post"
+              />
+            )}
           </ContentWrapper>
         </LayoutWrapper>
         <CreatePost
@@ -715,6 +725,6 @@ const Feed = (props) => {
 const gePostsBasetUrl = (organisationId, limit, skip) => {
   const actorId = organisationId ? `&actorId=${organisationId}` : "";
   return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
-}
+};
 
 export default Feed;
