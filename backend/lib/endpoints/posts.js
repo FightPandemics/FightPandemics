@@ -233,6 +233,8 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            createdAt: true,
+            updatedAt: true,
             elapsedTimeText: true,
           },
         },
@@ -269,7 +271,6 @@ async function routes(app) {
               post.updatedAt,
             );
           });
-          console.log(posts);
           return posts;
         }),
       );
