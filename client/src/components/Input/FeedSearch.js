@@ -262,8 +262,13 @@ export default class FeedNavSearch extends React.Component {
       if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
         return this.setState({ tooShort: true });
       }
+      // TODO: this is a patch, need to root cause
+      // to reproduce, paste a search term in mobile web, then enter
+      const selectedValueId = selectedValue?.length
+        ? selectedValue[0].id
+        : "POSTS";
       if (isMobile)
-        return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
+        return this.props.handleMobileSubmit(inputValue, selectedValueId);
       this.props.handleSubmit(inputValue);
     }
     if (e.keyCode === 8 && !inputValue && selectedValue.length) {
@@ -400,10 +405,15 @@ export default class FeedNavSearch extends React.Component {
               if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
                 this.setState({ tooShort: true });
               }
+              // TODO: this is a patch, need to root cause
+              // to reproduce, paste a search term in mobile web, then enter
+              const selectedValueId = selectedValue?.length
+                ? selectedValue[0].id
+                : "POSTS";
               if (isMobile)
                 return this.props.handleMobileSubmit(
                   inputValue,
-                  selectedValue[0].id,
+                  selectedValueId,
                 );
               this.props.handleSubmit(inputValue);
             }}
