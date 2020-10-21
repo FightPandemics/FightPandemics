@@ -4,6 +4,7 @@ import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
+import { Tooltip } from "antd";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,10 @@ import WizardFormNav, {
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import { typeToTag } from "assets/data/formToPostMappings";
+import {
+  typeToTag,
+  translateISOTimeTitle,
+} from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
 import { getOptionText } from "components/Feed/utils";
 import {
@@ -99,9 +103,6 @@ const Post = ({
     page,
     elapsedTimeText,
   } = post || {};
-  {
-    console.log("post", post);
-  }
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
@@ -371,18 +372,21 @@ const Post = ({
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
-              &nbsp;&nbsp;
-              {t(
-                `relativeTime.${post?.elapsedTimeText.created.unit}WithCount`,
-                {
-                  count: post?.elapsedTimeText.created.count,
-                },
-              )}
-              {post?.elapsedTimeText.isEdited && ` · ${t("post.edited")}`}
             </div>
           ) : (
             ""
           )}
+          <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+            <div className="timestamp">
+              {t(
+                `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                {
+                  count: post?.elapsedTimeText?.created?.count,
+                },
+              )}
+              {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+            </div>
+          </Tooltip>
         </div>
       }
       thumb={

@@ -98,6 +98,7 @@ const PostCard = styled(Card)`
         }
 
         .location-status {
+          display: inline;
           position: relative;
           padding-left: 1.4rem;
           font-size: ${xsmall};
@@ -112,6 +113,12 @@ const PostCard = styled(Card)`
             margin-right: 0;
           }
         }
+      }
+      .timestamp {
+        display: inline;
+        padding-left: 1rem;
+        font-size: ${xsmall};
+        color: #888;
       }
     }
 
