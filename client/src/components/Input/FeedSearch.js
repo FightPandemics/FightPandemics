@@ -7,7 +7,7 @@ import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
 const { colors } = theme;
 
-const MIN_KEYWORD_CHARS = 4;
+const MIN_KEYWORD_CHARS = 1;
 
 const StyledIcon = styled(SvgIcon)`
   line-height: 1.8rem;
@@ -245,14 +245,15 @@ export default class FeedNavSearch extends React.Component {
   onChange(event) {
     const { isMobile } = this.props;
     const { tooShort } = this.state;
-    this.setState({ inputValue: event.target.value });
+    this.setState({ inputValue: event.target.value }, () => {
+      if (isMobile) this.filterOptionsByInput();
+    });
     if (
       tooShort &&
       (event.target.value.length >= MIN_KEYWORD_CHARS ||
         !event.target.value.length)
     )
       this.setState({ tooShort: false });
-    if (isMobile) this.filterOptionsByInput();
   }
 
   onKeyClick(e) {
