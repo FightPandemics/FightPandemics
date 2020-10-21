@@ -124,6 +124,19 @@ async function routes(app) {
       reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email_verified: emailVerified } = auth0User;
+
+      // NOTICE: this error is not being thrown here because
+      // app.httpErrors.forbidden() throws a 403 error,
+      // which is already being checked against in the catch block
+      // for throwing an unauthorized error for wrong email or password.
+      // That's because auth0 returns  a 403 error
+      // when authenticating a user with wrong email or password
+      // For this reason, we return this error rather than throwing it
+      // which goes against the way error are handled in this middleware
+      if (!emailVerified) {
+        return app.httpErrors.forbidden("emailUnverified");
+      }
+
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
       if (!userId) {
@@ -139,7 +152,7 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
-          photo
+          photo,
         };
       }
       return { email, emailVerified, token, user };
