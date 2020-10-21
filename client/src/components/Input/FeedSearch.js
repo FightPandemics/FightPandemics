@@ -245,14 +245,15 @@ export default class FeedNavSearch extends React.Component {
   onChange(event) {
     const { isMobile } = this.props;
     const { tooShort } = this.state;
-    this.setState({ inputValue: event.target.value });
+    this.setState({ inputValue: event.target.value }, () => {
+      if (isMobile) this.filterOptionsByInput();
+    });
     if (
       tooShort &&
       (event.target.value.length >= MIN_KEYWORD_CHARS ||
         !event.target.value.length)
     )
       this.setState({ tooShort: false });
-    if (isMobile) this.filterOptionsByInput();
   }
 
   onKeyClick(e) {
@@ -262,13 +263,8 @@ export default class FeedNavSearch extends React.Component {
       if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
         return this.setState({ tooShort: true });
       }
-      // TODO: this is a patch, need to root cause
-      // to reproduce, paste a search term in mobile web, then enter
-      const selectedValueId = selectedValue?.length
-        ? selectedValue[0].id
-        : "POSTS";
       if (isMobile)
-        return this.props.handleMobileSubmit(inputValue, selectedValueId);
+        return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
       this.props.handleSubmit(inputValue);
     }
     if (e.keyCode === 8 && !inputValue && selectedValue.length) {
@@ -405,15 +401,10 @@ export default class FeedNavSearch extends React.Component {
               if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
                 this.setState({ tooShort: true });
               }
-              // TODO: this is a patch, need to root cause
-              // to reproduce, paste a search term in mobile web, then enter
-              const selectedValueId = selectedValue?.length
-                ? selectedValue[0].id
-                : "POSTS";
               if (isMobile)
                 return this.props.handleMobileSubmit(
                   inputValue,
-                  selectedValueId,
+                  selectedValue[0].id,
                 );
               this.props.handleSubmit(inputValue);
             }}
