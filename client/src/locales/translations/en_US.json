@@ -178,8 +178,8 @@
         "day": "For a day"
       },
       "helpTypes": {
-        "request": "Looking for help",
-        "offer": "Offering to help"
+        "request": "Requesting help",
+        "offer": "Offering help"
       }
     },
     "post": "Post",
