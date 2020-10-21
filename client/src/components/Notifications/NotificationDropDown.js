@@ -224,9 +224,18 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
     dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
   };
 
+  const generateNotificationText = (notification) => {
+    switch (notification.action) {
+      case "like":
+        return "liked your post";
+      case "comment":
+        return "commented on your post";
+    }
+  };
+
   const mappedNotifications = notifications.map((n) => ({
     author: n.triggeredBy.name,
-    action: `${n.action == "like" ? "liked" : "commented on"} your post`,
+    action: generateNotificationText(n),
     postTitle: n.post.title,
     path: `/post/${n.post.id}`,
     actionAvatar: n.action == "comment" ? commentpost : likeheart,
