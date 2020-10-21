@@ -8,4 +8,5 @@
     "passwordNotMatched": "Passwords don't match",
     "loginFailWrongEmail": "Login failed, reason: Wrong email or password.",
     "loginFailMaximumAttempts": "Login failed, reason: Maximum number of sign in attempts exceeded."
+    
 }
