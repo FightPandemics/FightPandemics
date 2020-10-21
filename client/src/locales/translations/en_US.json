@@ -190,6 +190,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
+      "securityInfo": "Security Information",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -251,7 +252,16 @@
       "wantHelp": "I want to help ",
       "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required."
+      "lastNameRequired": "Last name is required.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "New Password, confirmation",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful"
     },
     "org": {
       "title": "Create Organization Profile",

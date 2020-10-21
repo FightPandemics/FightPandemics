@@ -173,6 +173,9 @@ function EditAccount(props) {
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
+            <CustomLink >
+              <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
