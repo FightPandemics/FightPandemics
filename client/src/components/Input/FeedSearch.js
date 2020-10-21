@@ -7,7 +7,7 @@ import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
 const { colors } = theme;
 
-const MIN_KEYWORD_CHARS = 4;
+const MIN_KEYWORD_CHARS = 1;
 
 const StyledIcon = styled(SvgIcon)`
   line-height: 1.8rem;
