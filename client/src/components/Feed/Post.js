@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
 import axios from "axios";
+import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -65,6 +66,25 @@ const URLS = {
 
 const filters = Object.values(filterOptions);
 
+const Highlight = ({ text = "", highlight = "" }) => {
+  if (!highlight || !highlight.trim()) {
+    return text;
+  }
+  const regex = new RegExp(
+    `(${escapeRegExp(highlight)
+      .split(" ")
+      .filter((key) => key && key.length > 1)
+      .join("|")})`,
+    "gi",
+  );
+  const parts = text.split(regex);
+  return parts
+    .filter((part) => part)
+    .map((part) =>
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+    );
+};
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -74,6 +94,7 @@ const Post = ({
   handleCancelPostDelete,
   handleCommentDelete,
   handlePostLike,
+  highlightWords,
   includeProfileLink,
   isAuthenticated,
   numComments,
@@ -367,17 +388,22 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <div className="author">{post?.author?.name}</div>
+          <Highlight
+            className="author"
+            text={post?.author?.name}
+            highlight={highlightWords}
+          />
+          <br />
           {post?.author?.location?.country ? (
-            <div className="location-status">
+            <span className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
-            </div>
+            </span>
           ) : (
             ""
           )}
           <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-            <div className="timestamp">
+            <span className="timestamp">
               {t(
                 `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
                 {
@@ -385,7 +411,7 @@ const Post = ({
                 },
               )}
               {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-            </div>
+            </span>
           </Tooltip>
         </div>
       }
@@ -507,7 +533,7 @@ const Post = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderContent(title, content, showComplete)}
+            {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
             ) : (
@@ -579,7 +605,7 @@ const Post = ({
                 },
               }}
             >
-              {renderContent(title, content, showComplete)}
+              {renderContent(title, content, highlightWords, showComplete)}
             </Link>
           ) : (
             <>
@@ -590,7 +616,7 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent(title, content, showComplete)}
+              {renderContent(title, content, highlightWords, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
@@ -631,7 +657,7 @@ const Post = ({
   );
 };
 
-const renderContent = (title, content, showComplete) => {
+const renderContent = (title, content, highlightWords, showComplete) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {
     finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
@@ -639,9 +665,11 @@ const renderContent = (title, content, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {title}
+        <Highlight text={title} highlight={highlightWords} />
       </Heading>
-      <p className="post-description">{finalContent}</p>
+      <p className="post-description">
+        <Highlight text={finalContent} highlight={highlightWords} />
+      </p>
     </Card.Body>
   );
 };

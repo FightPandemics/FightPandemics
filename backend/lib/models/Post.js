@@ -168,13 +168,32 @@ postSchema.index({ "author.id": 1, createdAt: -1 });
 postSchema.index({ likes: 1 });
 /* eslint-enable */
 
+// index title and content for search
+postSchema.index(
+  {
+    "author.name": "text",
+    content: "text",
+    title: "text",
+    types: "text",
+  },
+  {
+    default_language: "none",
+    language_override: "dummy",
+    weights: {
+      "author.name": 1,
+      content: 3,
+      title: 5,
+      types: 2,
+    },
+  },
+);
+
 postSchema.set("toObject", { virtuals: true });
 postSchema.set("toJSON", { virtuals: true });
 
 postSchema.virtual("elapsedTimeText").get(function () {
   return setElapsedTimeText(this.createdAt, this.updatedAt);
 });
-
 
 // -- Model
 const Post = model("Post", postSchema);

@@ -24,6 +24,7 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
+import ToggleQAMode from "./pages/ToggleQAMode.js";
 
 const routes = [
   {
@@ -145,6 +146,7 @@ const routes = [
     component: Feed,
     props: {
       mobiletabs: true,
+      navSearch: true,
       tabIndex: 2,
     },
   },
@@ -212,6 +214,10 @@ const routes = [
   {
     path: "/faq",
     component: Faq,
+  },
+  {
+    path: "/toggleqa",
+    component: ToggleQAMode,
   },
   {
     path: "*",
