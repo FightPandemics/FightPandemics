@@ -97,6 +97,7 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
+    elapsedTimeText,
   } = post || {};
   {
     console.log("post", post);
@@ -370,6 +371,14 @@ const Post = ({
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
               {buildLocationString(post.author.location)}
+              &nbsp;&nbsp;
+              {t(
+                `relativeTime.${post?.elapsedTimeText.created.unit}WithCount`,
+                {
+                  count: post?.elapsedTimeText.created.count,
+                },
+              )}
+              {post?.elapsedTimeText.isEdited && ` · ${t("post.edited")}`}
             </div>
           ) : (
             ""
