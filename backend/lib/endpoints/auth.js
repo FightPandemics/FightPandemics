@@ -199,7 +199,8 @@ async function routes(app) {
           password: newPassword,
         });
 
-        return reply.code(204);
+        // don't use return w 204
+        reply.code(204);
       } catch (err) {
         if (err.statusCode === 403) {
           throw app.httpErrors.unauthorized("wrongCredentials");
