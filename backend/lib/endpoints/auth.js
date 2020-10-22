@@ -41,13 +41,14 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations } = dbUser;
+        const { firstName, lastName, organisations, usesPassword } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
           organisations,
+          usesPassword,
         };
       }
       return {
@@ -139,7 +140,13 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations, photo } = dbUser;
+        const {
+          firstName,
+          lastName,
+          organisations,
+          photo,
+          usesPassword,
+        } = dbUser;
         user = {
           email,
           firstName,
@@ -147,6 +154,7 @@ async function routes(app) {
           lastName,
           organisations,
           photo,
+          usesPassword,
         };
       }
       return { email, emailVerified, token, user };

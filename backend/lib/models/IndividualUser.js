@@ -53,6 +53,10 @@ individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
 });
 
+individualUserSchema.virtual("usesPassword").get(function getUsesPassword() {
+  return this.authId.startsWith("auth0");
+});
+
 individualUserSchema.virtual("organisations", {
   foreignField: "ownerId",
   localField: "_id",

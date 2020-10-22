@@ -42,6 +42,7 @@ async function routes(app) {
       organisations,
       urls,
       photo,
+      usesPassword,
     } = user;
     return {
       about,
@@ -56,6 +57,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      usesPassword,
     };
   });
 
