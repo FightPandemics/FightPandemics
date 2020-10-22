@@ -1,4 +1,4 @@
-import HelpBoard from '../../../elements/pages/helpBoard'
+import HelpBoard from '../../../elements/pages/helpBoard';
 
 describe('FightPandemics Help Board Page for unauthorized user', () => {
 
@@ -11,29 +11,26 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
             helpBoard.visit();
         });
 
-
         it('FP logo is visible and clickable', () => {
             cy.checkFpLogoIsVisibleAndClickable(helpBoard.getFpLogoLocator());
-
-        });
-        
-        it('Help Board page contains heading', () => {          
-            cy.pageContainsHeading(helpBoard.getHelpBoardPageTitleLocator(),h1Heading);
         });
 
-        it('Unauthorized user is redirected to SignIn page when clicking Add Post Button', () => {          
+        it('Help Board page contains heading', () => {
+            cy.pageContainsHeading(helpBoard.getHelpBoardPageTitleLocator(), h1Heading);
+        });
+
+        it('Unauthorized user is redirected to SignIn page when clicking Add Post Button', () => {
             helpBoard.getAddPostButton().click({ force: true });
             cy.validateCorrectScreenIsOpen("auth/login");
         });
 
-        it.skip('Help Board is empty - Unauthorized user is redirected to SignIn page when clicking Add Post link', () => {     
+        it.skip('Help Board is empty - Unauthorized user is redirected to SignIn page when clicking Add Post link', () => {
             //there is no post on the Help Board         
             helpBoard.getNoPostsAvailableTextElement().contains(noPostsAvailableText);
             var addPostLink = helpBoard.getAddPostLinkElement();
             addPostLink.click({ force: true });
-            cy.validateCorrectScreenIsOpen("auth/login");           
-          });
-});
-
+            cy.validateCorrectScreenIsOpen("auth/login");
+        });
+    });
 
 });

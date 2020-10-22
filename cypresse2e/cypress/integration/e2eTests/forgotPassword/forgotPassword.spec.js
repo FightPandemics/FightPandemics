@@ -1,14 +1,11 @@
-import ForgotPassword from '../../../elements/pages/forgotPassword'
-import {VALID_SAMPLE_EMAIL} from '../../constants';
-import {INVALID_EMAIL_ERROR_MESSAGE} from '../../constants';
-import {REQUIRED_EMAIL_ERROR_MESSAGE} from '../../constants';
-
+import ForgotPassword from '../../../elements/pages/forgotPassword';
+import errorMessages from '../../../fixtures/errorMessages.json';
+import emailAndPassword from '../../../fixtures/emailAndPassword.json';
 
 describe('FightPandemics Forgot Password Page', () => {
 
     const forgotPassword = new ForgotPassword();
     var h4Heading = "Forgot Password?";
-
 
     context('User is trying to recover forgotten password', () => {
         beforeEach(() => {
@@ -17,11 +14,10 @@ describe('FightPandemics Forgot Password Page', () => {
 
         it('FP logo is visible and clickable', () => {
             cy.checkFpLogoIsVisibleAndClickable(forgotPassword.getFpLogoLocator());
-
         });
         
         it('Forgot Password page contains heading and image', () => {          
-            cy.pageContainsHeadingAndImage(forgotPassword.getForgotPasswordPageTitleLocator(),h4Heading, forgotPassword.getImageLocator());
+            cy.pageContainsHeadingAndImage(forgotPassword.getForgotPasswordPageTitleLocator(), h4Heading, forgotPassword.getImageLocator());
         });
 
         it('Submit button is disabled', () => {
@@ -33,26 +29,24 @@ describe('FightPandemics Forgot Password Page', () => {
             emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
             var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
-            emailRequiredErrorMessage.contains(REQUIRED_EMAIL_ERROR_MESSAGE);
+            emailRequiredErrorMessage.contains(errorMessages.requiredEmail);
             checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
-
         });
 
         it('Entering invalid email triggers error and Submit Button is disabled', () => {
             var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type('qa.test.invalid@').focus().blur();
+            emailField.type(emailAndPassword.invalidSampleEmail).focus().blur();
             var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
-            emailRequiredErrorMessage.contains(INVALID_EMAIL_ERROR_MESSAGE);
+            emailRequiredErrorMessage.contains(errorMessages.invalidEmail);
             checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
-
         });
         
         it('Entering correct email triggers Submit Button is enabled', () => {
             var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(VALID_SAMPLE_EMAIL).focus().blur();           
+            emailField.type(emailAndPassword.validSampleEmail).focus().blur();           
             var submitButton = forgotPassword.getSubmitButton();
             submitButton.invoke('attr', 'aria-disabled').should('contain', 'false');
         });
@@ -61,7 +55,6 @@ describe('FightPandemics Forgot Password Page', () => {
             var backToSignInPageLink = forgotPassword.getBackToSignInLink();
             backToSignInPageLink.should('be.visible');
             backToSignInPageLink.contains('Back to Sign In screen').click();
-
         });
     });
 
