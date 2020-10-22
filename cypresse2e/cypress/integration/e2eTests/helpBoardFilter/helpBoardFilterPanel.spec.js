@@ -1,5 +1,5 @@
 import HelpBoardFilter from '../../../elements/pages/helpBoardFilterPanel';
-import { LOCATION } from '../../constants';
+import inputValues from '../../../fixtures/inputValues';
 
 describe('FightPandemics Help Board Filters', () => {
 
@@ -61,7 +61,7 @@ describe('FightPandemics Help Board Filters', () => {
 
             var locationField = helpBoardFilter.getHbLocationInput();
             locationField.should('be.visible').click({ force: true });
-            locationField.type(LOCATION);
+            locationField.type(inputValues.location);
             helpBoardFilter.getHbLocationDropdown().should('be.visible');
             locationField.click({ force: true });
 
