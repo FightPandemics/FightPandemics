@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
@@ -20,6 +20,7 @@ import globe from "assets/icons/globe.svg";
 import { theme, mq } from "../constants/theme";
 import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
+import { set } from "lodash";
 
 const { colors, typography } = theme;
 const { SubMenu } = Menu;
@@ -145,7 +146,6 @@ const Header = ({
     i18n.changeLanguage(lng);
     window.localStorage.setItem("locale", lng);
   };
-
   const languageMenu = (
     <Menu>
       {Object.entries(languages).map(([key, label]) => (
@@ -166,9 +166,22 @@ const Header = ({
     </Menu>
   );
 
+  const index = localStorage.getItem("organisationIndex");
+  if (index && organisationIndex !== index) {
+    setOrganisationIndex(index);
+  }
+  const setOrganisation = (index) => {
+    if (index === null) {
+      localStorage.removeItem("organisationIndex");
+    } else {
+      localStorage.setItem("organisationIndex", index);
+    }
+    window.location.href = "/feed";
+  };
+
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => setOrganisationIndex(null)}>
+      <Menu.Item onClick={() => setOrganisation(null)}>
         {`${user?.firstName} ${user?.lastName}`}
       </Menu.Item>
       <Menu.Divider />
@@ -186,7 +199,7 @@ const Header = ({
           ? user?.organisations?.map((organisation, i) => (
               <Menu.Item
                 key={organisation._id}
-                onClick={() => setOrganisationIndex(i)}
+                onClick={() => setOrganisation(i)}
               >
                 {organisation.name}
               </Menu.Item>
