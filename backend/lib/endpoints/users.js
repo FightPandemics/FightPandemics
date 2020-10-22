@@ -156,6 +156,7 @@ async function routes(app) {
             urls: true,
             objectives: true,
             needs: true,
+            photo: true,
           },
         },
       ];

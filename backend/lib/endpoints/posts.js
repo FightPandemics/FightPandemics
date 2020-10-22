@@ -145,7 +145,6 @@ async function routes(app) {
             .join("|") || "\\b\\B",
           "ig",
         );
-        console.log(keywordsRegex);
         filters.push({
           $or: [
             { title: keywordsRegex },

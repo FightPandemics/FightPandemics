@@ -158,6 +158,7 @@ async function routes(app) {
             industry: true,
             global: true,
             location: true,
+            photo: true,
           },
         },
       ];
