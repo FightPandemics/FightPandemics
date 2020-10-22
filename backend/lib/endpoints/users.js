@@ -86,7 +86,7 @@ async function routes(app) {
           cleanKeywords
             .split(/[ \/,=$%#()-]/gi)
             .filter((key) => key && ((isLatin && key.length > 2) || (!isLatin && key.length > 1)))
-            .map((key) => (isLatin && key.length <= 2 ? key + "\\b" : key))
+            .map((key) => (isLatin && key.length <= 3 ? key + "\\b" : key))
             .join("|") || "\\b\\B",
           "ig",
         );
