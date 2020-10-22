@@ -292,12 +292,10 @@ async function routes(app) {
     },
   );
 
-  app.patch(
+  app.get(
     "/unsubscribe",
-    { schema: updateNotifyPrefsSchema },
     async (req) => {
-      const { notifyPrefs } = req;
-      const token = getCookieToken(req);
+      const { token } = req.headers;
       const { userId, expireDate } = jwtSimpleDecode(token);
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
@@ -310,17 +308,38 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      let body = user;
-      body.notifyPrefs = notifyPrefs;
+      return user;
+    },
+  );
+
+  app.patch(
+    "/unsubscribe",
+    { schema: updateNotifyPrefsSchema },
+    async (req) => {
+      const { headers, body } = req;
+      const { userId, expireDate } = jwtSimpleDecode(headers.token);
+      if (expireDate < Date.now()) {
+        throw app.httpErrors.badRequest("token is expired");
+      }
+      const [err, user] = await app.to(User.findById(userId));
+      if (err) {
+        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      let userData = user;
+      userData.notifyPrefs = body.notifyPrefs;
 
       const [updateErr, updatedUser] = await app.to(
-        Object.assign(user, body).save(),
+        Object.assign(user, userData).save(),
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed updating user");
         throw app.httpErrors.internalServerError();
       }
-      return updatedUser;
+      return updatedUser.notifyPrefs;
     },
   );
 }
