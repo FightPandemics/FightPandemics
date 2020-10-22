@@ -1,29 +1,26 @@
 import OfferHelpQuestionPage from '../../../elements/pages/offerHelpQuestionPage';
-import { LOCATION } from '../../constants';
-
+import inputValues from '../../../fixtures/inputValues.json';
 
 describe('Fight Pandemics Offer Help Questionnaire', () => {
 
     const offerHelpQuestion = new OfferHelpQuestionPage();
-
 
     context('User goes to offer help question one page', () => {
         beforeEach(() => {
             offerHelpQuestion.visitOfferHelpOne();
         });
 
-
         it('Offer Help Question One page contains heading & question one', () => {
             var questionNumberOne = "Question 1/2";
-            var questionOne = "How do you want to contribute?"
+            var questionOne = "How do you want to contribute?";
             offerHelpQuestion.getQuestionNumberOne().should('be.visible').contains(questionNumberOne);
             offerHelpQuestion.getQuestionOne().should('be.visible').contains(questionOne);
         });
 
         it('Offer Help Question One page contains answer options & checkboxes to select option/options for question one', () => {
             var checkboxOptionOne = "As a Volunteer";
-            var checkboxOptionTwo = "As a Donor/Investor"
-            var checkboxOptionThree = "As an Organization"
+            var checkboxOptionTwo = "As a Donor/Investor";
+            var checkboxOptionThree = "As an Organization";
             offerHelpQuestion.getCheckboxOptionOne().should('be.visible').contains(checkboxOptionOne);
             offerHelpQuestion.getCheckboxOptionTwo().should('be.visible').contains(checkboxOptionTwo);
             offerHelpQuestion.getCheckboxOptionThree().should('be.visible').contains(checkboxOptionThree);
@@ -41,7 +38,6 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             var nextButton = offerHelpQuestion.getNextButtonOne();
             nextButton.should('be.visible').click();
         });
-
 
     });
 
@@ -62,7 +58,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
         it('Offer Help Question Two Page - location can be typed and see list of locations', () => {
             var locationInputLine = offerHelpQuestion.getLocationInputLine();
             locationInputLine.should('be.visible').click({ force: true });
-            locationInputLine.type(LOCATION);
+            locationInputLine.type(inputValues.location);
             offerHelpQuestion.getLocationDropdown().should('be.visible');
         });
 
@@ -89,7 +85,7 @@ describe('Fight Pandemics Offer Help Questionnaire', () => {
             backButton.should('be.visible').click();
         });
 
-    })
+    });
 
 });
 
