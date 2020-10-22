@@ -433,7 +433,6 @@ function onSocketConnect(socket) {
 
   socket.on("GET_NOTIFICATIONS", async (data, res) => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
 
     const [notificationsErr, notifications] = await this.to(
       Notification.find({ receiver: userId })
@@ -447,12 +446,21 @@ function onSocketConnect(socket) {
 
   socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
     userId = socket.userId;
-    if (!userId) return res({ code: 401, message: "Unauthorized" }); //user did not IDENTIFY
 
     const [updateErr, update] = await this.to(
       Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
     );
 
+  })
+
+  socket.on("POST_SHARED", async (data) => {
+    userId = socket.userId;
+
+    const [errPost, post] = await this.to(Post.findById(data.postId));
+    if (errPost || !post) return;
+
+    // action, post, triggeredBy, sharedVia
+    this.notifier.notify("share", post, userId, data.sharedVia)  
   })
 }
 

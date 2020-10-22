@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const notificationSchema = new Schema(
   {
     action: {
-      enum: ["like", "comment", "post"],
+      enum: ["like", "comment", "share"],
       required: true,
       type: String,
     },
@@ -22,6 +22,10 @@ const notificationSchema = new Schema(
     },
     readAt: Date,
     emailSentAt: Date,
+    sharedVia: {
+      enum: ["email", "facebook", "linkedin", "reddit", "telegram", "twitter", "whatsapp" ],
+      type: String,
+    },
     triggeredBy: {
       id: {
         ref: "User",
