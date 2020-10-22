@@ -14,6 +14,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import EditNotifications from "./pages/EditNotifications";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
@@ -174,6 +175,13 @@ const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-notifications",
+    component: EditNotifications,
     props: {
       loggedInOnly: true,
     },
