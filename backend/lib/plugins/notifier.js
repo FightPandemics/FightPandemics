@@ -10,7 +10,7 @@ class Notifier {
 
   async notify(action, post, triggeredById) {
     if (!["like", "comment", "post"].includes(action)) return this.app.log.error(new Error('Invalid Notification action'));
-    if (post.author.id == triggeredById) return; // user interacted with their own post
+    if (post.author.id.toString() == triggeredById.toString()) return; // user interacted with their own post
 
     const [triggeredByErr, triggeredBy] = await this.app.to(this.User.findById(triggeredById));
     if (triggeredByErr || !triggeredBy) return; 
