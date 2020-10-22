@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import { escapeRegExp } from "lodash"
+import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -62,18 +62,33 @@ const URLS = {
 
 const filters = Object.values(filterOptions);
 
-const Highlight = ({text = '', highlight = ''}) => {
+const Highlight = ({ text = "", highlight = "" }) => {
   if (!highlight || !highlight.trim()) {
-    return text
+    return text;
   }
-  const regex = new RegExp(`(${escapeRegExp(highlight).split(' ').filter(key=>key && key.length>1).join('|')})`, 'gi')
-  const parts = text.split(regex)
-  return (
-    parts.filter(part => part).map((part) => (
-      regex.test(part) ? <span className={'highlighted'}>{part}</span> : part
-    ))
-  )
- }
+  let cleanKeywords = highlight.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+  let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
+  const regex = new RegExp(
+    `(${
+      cleanKeywords
+        .split(/[ \/,=$%#()-]/gi)
+        .filter(
+          (key) =>
+            key &&
+            ((isLatin && key.length > 2) || (!isLatin && key.length > 1)),
+        )
+        .map((key) => (isLatin && key.length <= 2 ? key + "\\b" : key))
+        .join("|") || "\\b\\B"
+    })`,
+    "ig",
+  );
+  const parts = text.split(regex);
+  return parts
+    .filter((part) => part)
+    .map((part) =>
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+    );
+};
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -377,7 +392,11 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <Highlight className="author" text={post?.author?.name} highlight={highlightWords}/>
+          <Highlight
+            className="author"
+            text={post?.author?.name}
+            highlight={highlightWords}
+          />
           {post?.author?.location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
@@ -589,7 +608,7 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent(title, content, highlightWords,  showComplete)}
+              {renderContent(title, content, highlightWords, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
@@ -638,9 +657,11 @@ const renderContent = (title, content, highlightWords, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-      <Highlight text={title} highlight={highlightWords}/>
+        <Highlight text={title} highlight={highlightWords} />
       </Heading>
-      <p className="post-description"><Highlight text={finalContent} highlight={highlightWords}/></p>
+      <p className="post-description">
+        <Highlight text={finalContent} highlight={highlightWords} />
+      </p>
     </Card.Body>
   );
 };

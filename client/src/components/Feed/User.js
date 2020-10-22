@@ -180,12 +180,21 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
     if (!highlight || !highlight.trim()) {
       return text;
     }
+    let cleanKeywords = highlight.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+    let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
     const regex = new RegExp(
-      `(${escapeRegExp(highlight)
-        .split(" ")
-        .filter((key) => key && key.length > 1)
-        .join("|")})`,
-      "gi",
+      `(${
+        cleanKeywords
+          .split(/[ \/,=$%#()-]/gi)
+          .filter(
+            (key) =>
+              key &&
+              ((isLatin && key.length > 2) || (!isLatin && key.length > 1)),
+          )
+          .map((key) => (isLatin && key.length <= 2 ? key + "\\b" : key))
+          .join("|") || "\\b\\B"
+      })`,
+      "ig",
     );
     const parts = text.split(regex);
     return parts
