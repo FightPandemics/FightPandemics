@@ -130,7 +130,12 @@ const SendMessage = styled(Link)`
   padding-left: 7.7rem;
   color: #939393;
 `;
-
+const StyledCardHeader = styled(Card.Header)`
+  img:not(.indicator):not(.status-icon) {
+    width: 6rem !important;
+    height: 6rem !important;
+  }
+`;
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -252,7 +257,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
   };
 
   const renderHeader = (
-    <Card.Header
+    <StyledCardHeader
       title={
         <div className="title-wrapper">
           <UserName>
@@ -272,6 +277,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
               <SvgIcon
                 src={statusIndicator}
                 style={{ width: "0.5rem", margin: "0.11rem 1.1rem" }}
+                className={"indicator"}
               />
               {t("feed.filters.providersOptions." + type)}
               {type == "Individual" &&
@@ -357,7 +363,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 }/${_id}`}
               >
                 <SvgIcon src={envelopeBlue} />
-                <span>{t("profile.common.sendMessage")}</span>
+                <span> {t("profile.common.sendMessage")}</span>
               </SendMessage>
             ) : (
               type.toLowerCase() != "individual" && (
@@ -378,7 +384,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                   }}
                 >
                   <SvgIcon src={envelopeBlue} />
-                  <span>{t("profile.common.sendMessage")}</span>
+                  <span> {t("profile.common.sendMessage")}</span>
                 </SendMessage>
               )
             )}
