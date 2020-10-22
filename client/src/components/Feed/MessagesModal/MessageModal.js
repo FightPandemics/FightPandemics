@@ -4,7 +4,6 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
 import { Container, RefPost } from "./OrgPostRef";
 import {
-  MsgBtn,
   MsgModal,
   SuccessModal,
   FailedModal,

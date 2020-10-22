@@ -20,7 +20,6 @@ export const RefPost = styled.div`
   header {
     .author {
       font-size: 0.857em;
-      font-weight: 600;
       position: relative;
       bottom: 1em;
       overflow: hidden;

@@ -103,6 +103,7 @@ export default class SocketManager extends React.Component {
 
     this.socket.on("NEW_NOTIFICATION", (notificationData) => {
       this.props.store.dispatch(notificationReceived(notificationData));
+      this.emitPushNotification(notificationData);
     });
   }
 
@@ -117,6 +118,7 @@ export default class SocketManager extends React.Component {
         console.log(`[WS]: ${response.data} Identified`);
         this.getUserRooms();
         this.getNotifications();
+        this.askNotificationPermission();
         return this.props.store.dispatch(identifySuccess());
       } else this.props.store.dispatch(identifyError(response));
       // if we reached this then the identification has failed
@@ -244,6 +246,34 @@ export default class SocketManager extends React.Component {
   markNotificationsAsRead = () => {
     this.socket.emit("MARK_NOTIFICATIONS_AS_READ");
   };
+
+  askNotificationPermission() {
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+  }
+
+  generateNotificationText = (n) => {
+    switch (n.action) {
+      case "like":
+        return `${n.triggeredBy.name} liked your post "${n.post.title}"`;
+      case "comment":
+        return `${n.triggeredBy.name} commented on your post "${n.post.title}"`;
+    }
+  };
+
+  emitPushNotification(notification) {
+    if (!("Notification" in window)) return;
+    if (Notification.permission === "granted") {
+      let img =
+        "https://raw.githubusercontent.com/FightPandemics/FightPandemics/master/images/fp_logo.png";
+      var notification = new Notification("You have a new notification!", {
+        body: this.generateNotificationText(notification),
+        icon: img,
+      });
+    }
+  }
 
   componentWillUnmount() {
     try {
