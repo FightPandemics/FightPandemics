@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local

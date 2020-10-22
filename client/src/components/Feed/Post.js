@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
-import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
