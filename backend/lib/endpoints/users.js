@@ -499,7 +499,7 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      return user;
+      return user.notifyPrefs;
     },
   );
 
