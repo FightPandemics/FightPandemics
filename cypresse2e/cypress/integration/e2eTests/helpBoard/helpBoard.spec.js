@@ -1,8 +1,10 @@
 import HelpBoard from '../../../elements/pages/helpBoard';
+import Logo from '../../../elements/pages/fpLogo';
 
 describe('FightPandemics Help Board Page for unauthorized user', () => {
 
     const helpBoard = new HelpBoard();
+    const logo = new Logo();
     var h1Heading = "Help Board";
     var noPostsAvailableText = "Sorry, there are currently no relevant posts available. Please try using a different filter search or";
 
@@ -12,7 +14,7 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
         });
 
         it('FP logo is visible and clickable', () => {
-            cy.checkFpLogoIsVisibleAndClickable(helpBoard.getFpLogoLocator());
+            cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
         });
 
         it('Help Board page contains heading', () => {

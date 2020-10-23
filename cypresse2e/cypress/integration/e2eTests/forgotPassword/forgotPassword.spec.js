@@ -1,10 +1,12 @@
 import ForgotPassword from '../../../elements/pages/forgotPassword';
+import Logo from '../../../elements/pages/fpLogo';
 import errorMessages from '../../../fixtures/errorMessages.json';
 import emailAndPassword from '../../../fixtures/emailAndPassword.json';
 
 describe('FightPandemics Forgot Password Page', () => {
 
     const forgotPassword = new ForgotPassword();
+    const logo = new Logo();
     var h4Heading = "Forgot Password?";
 
     context('User is trying to recover forgotten password', () => {
@@ -13,10 +15,10 @@ describe('FightPandemics Forgot Password Page', () => {
         });
 
         it('FP logo is visible and clickable', () => {
-            cy.checkFpLogoIsVisibleAndClickable(forgotPassword.getFpLogoLocator());
+            cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
         });
-        
-        it('Forgot Password page contains heading and image', () => {          
+
+        it('Forgot Password page contains heading and image', () => {
             cy.pageContainsHeadingAndImage(forgotPassword.getForgotPasswordPageTitleLocator(), h4Heading, forgotPassword.getImageLocator());
         });
 
@@ -42,11 +44,11 @@ describe('FightPandemics Forgot Password Page', () => {
             emailRequiredErrorMessage.contains(errorMessages.invalidEmail);
             checkSubmitButtonIsDisabled(forgotPassword.getSubmitButton());
         });
-        
+
         it('Entering correct email triggers Submit Button is enabled', () => {
             var emailField = forgotPassword.getEmailField();
             emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(emailAndPassword.validSampleEmail).focus().blur();           
+            emailField.type(emailAndPassword.validSampleEmail).focus().blur();
             var submitButton = forgotPassword.getSubmitButton();
             submitButton.invoke('attr', 'aria-disabled').should('contain', 'false');
         });
@@ -58,7 +60,7 @@ describe('FightPandemics Forgot Password Page', () => {
         });
     });
 
-    function checkSubmitButtonIsDisabled(submitButton){
+    function checkSubmitButtonIsDisabled(submitButton) {
         submitButton.invoke('attr', 'aria-disabled').should('contain', 'true');
     }
 

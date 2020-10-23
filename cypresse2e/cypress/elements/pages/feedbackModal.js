@@ -12,8 +12,6 @@ class FeedbackModal {
     radioAnswersList = '.ant-radio-wrapper';
     radioAnswers = '.ant-radio-input';
 
-
-
     constructor() { }
 
     visit() {
