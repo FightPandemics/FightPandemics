@@ -1,4 +1,5 @@
 import SignIn from '../../../elements/pages/signIn';
+import Logo from '../../../elements/pages/fpLogo';
 import errorMessages from '../../../fixtures/errorMessages.json';
 import buttonNames from '../../../fixtures/buttonNames.json';
 import emailAndPassword from '../../../fixtures/emailAndPassword.json';
@@ -6,6 +7,8 @@ import emailAndPassword from '../../../fixtures/emailAndPassword.json';
 describe('FightPandemics Sign In Page', () => {
 
     const signIn = new SignIn();
+    const logo = new Logo();
+    var h4Heading = "Sign In";
 
     context('User signs into account', () => {
 
@@ -14,73 +17,57 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('FP logo is visible and clickable', () => {
-            cy.checkFpLogoIsVisibleAndClickable(signIn.getFpLogoLocator());
+            cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
         });
 
         it('Sign in page contains heading and image', () => {
-            var h4Heading = "Sign In";
-            signIn.getH4Heading().should('be.visible').contains(h4Heading);
-            signIn.getImage().should('be.visible');
+            cy.pageContainsHeadingAndImage(signIn.getH4Heading(), h4Heading, signIn.getImage());
         });
 
         it('Email address field is visible and can be populated', () => {
-            var emailField = signIn.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(emailAndPassword.dummySampleEmail);
+            emailField().type(emailAndPassword.dummySampleEmail);
         });
 
         it('Leaving email field blank triggers error', () => {
-            var emailField = signIn.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
+            emailField().focus().blur();
             var emailRequired = signIn.getEmailRequired();
             emailRequired.should('be.visible');
             emailRequired.contains(errorMessages.requiredEmail);
         });
 
         it('Entering invalid email triggers error', () => {
-            var emailField = signIn.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(emailAndPassword.invalidSampleEmail).focus().blur();
+            emailField().type(emailAndPassword.invalidSampleEmail).focus().blur();
             var validEmailRequired = signIn.getValidEmailRequired();
             validEmailRequired.should('be.visible');
             validEmailRequired.contains(errorMessages.invalidEmail);
         });
 
         it('Password field is visible and can be populated', () => {
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type(emailAndPassword.dummySamplePassword);
+            passwordField().type(emailAndPassword.dummySamplePassword);
         });
 
         it('Clicking the password eye displays the password entered', () => {
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible').and('have.attr', 'name', 'password');
-            passwordField.type(emailAndPassword.dummySamplePassword);
+            passwordField().type(emailAndPassword.dummySamplePassword);
             var passwordEye = signIn.getPasswordEye();
             passwordEye.should('be.visible').and('have.attr', 'alt', 'Icon').click();
         });
 
         it('Leaving password field blank triggers error', () => {
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible').and('have.attr', 'name', 'password').focus().blur();
+            passwordField().focus().blur();
             var passwordRequired = signIn.getPasswordRequired();
             passwordRequired.should('be.visible');
             passwordRequired.contains(errorMessages.passwordRequired);
         });
 
         it('Password entered not meeting 8 characters triggers error', () => {
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible');
-            passwordField.type('test');
+            passwordField().type('test');
             var passwordLengthRequired = signIn.getPasswordLengthRequired();
             passwordLengthRequired.should('be.visible');
             passwordLengthRequired.contains(errorMessages.passwordLengthRequired);
         });
 
         it('Password entered not meeting special characters triggers error', () => {
-            var passwordField = signIn.getPasswordField();
-            passwordField.should('be.visible');
-            passwordField.type('testtest');
+            passwordField().type('testtest');
             var passwordCharacterRequired = signIn.getPasswordCharacterRequired();
             passwordCharacterRequired.should('be.visible');
             passwordCharacterRequired.contains(errorMessages.passwordCharacterRequired);
@@ -133,21 +120,32 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Facebook button for sign in is visible', () => {
-            var signInByFbButton = signIn.getSignInFbButton();
-            signInByFbButton.should('be.visible');
-            signInByFbButton.contains('span', buttonNames.facebook);
+            socialMediaSignIn(signIn.getSignInFbButton(), buttonNames.facebook);
         });
 
         it('Google button for sign in is visible', () => {
-            var signInByGoogleButton = signIn.getSignInGoogleButton();
-            signInByGoogleButton.should('be.visible');
-            signInByGoogleButton.contains('span', buttonNames.google);
+            socialMediaSignIn(signIn.getSignInGoogleButton(), buttonNames.google);
         });
 
         it('LinkedIn button for sign in is visible', () => {
-            var signInByLinkedinButton = signIn.getSignInLinkedinButton();
-            signInByLinkedinButton.should('be.visible');
-            signInByLinkedinButton.contains('span', buttonNames.linkedIn);
+            socialMediaSignIn(signIn.getSignInLinkedinButton(), buttonNames.linkedIn);
         });
     });
+
+    function emailField() {
+        var emailField = signIn.getEmailField();
+        emailField.should('be.visible').and('have.attr', 'name', 'email');
+        return emailField;
+    }
+
+    function passwordField() {
+        var passwordField = signIn.getPasswordField();
+        passwordField.should('be.visible').and('have.attr', 'name', 'password');
+        return passwordField;
+    }
+
+    function socialMediaSignIn(getMethod, socialMediaButton) {
+        getMethod.should('be.visible')
+            .contains('span', socialMediaButton);
+    }
 });

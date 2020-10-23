@@ -20,7 +20,6 @@ class Post{
     modalWindowWhatsappButton = 'button[aria-label="whatsapp"]';
     modalWindowSharingUrlInput = 'div > input[type=text]';
 
-
     constructor() { }
 
     getLikeButtonSelector(){
