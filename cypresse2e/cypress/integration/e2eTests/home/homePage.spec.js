@@ -71,4 +71,4 @@ describe('FightPandemics Home screen', () => {
 		getMethod.click();
 		cy.location('pathname').should('eq', link);
 	}
-})
+});

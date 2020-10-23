@@ -37,7 +37,7 @@ describe('FightPandemics Navigation bar', () => {
 
 		it('User can see Global International Languages icon', () => {
 			header.getGlobeIconLanguages().should('be.visible').should('have.attr', 'alt', 'Icon')
-				.should('have.class', 'ant-dropdown-trigger globe-icon-svg is-clickable')
+				.should('have.class', 'ant-dropdown-trigger globe-icon-svg is-clickable');
 		});
 
 		it('User can click on Global International Languages icon and see English(American English) as default', () => {

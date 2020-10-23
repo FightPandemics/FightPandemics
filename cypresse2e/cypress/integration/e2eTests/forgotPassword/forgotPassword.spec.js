@@ -27,8 +27,7 @@ describe('FightPandemics Forgot Password Page', () => {
         });
 
         it('Leaving email field blank triggers error and Submit Button is disabled', () => {
-            var emailField = forgotPassword.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email').focus().blur();
+            emailField().focus().blur()
             var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(errorMessages.requiredEmail);
@@ -36,9 +35,7 @@ describe('FightPandemics Forgot Password Page', () => {
         });
 
         it('Entering invalid email triggers error and Submit Button is disabled', () => {
-            var emailField = forgotPassword.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(emailAndPassword.invalidSampleEmail).focus().blur();
+            emailField().type(emailAndPassword.invalidSampleEmail).focus().blur();
             var emailRequiredErrorMessage = forgotPassword.getErrorMessageField();
             emailRequiredErrorMessage.should('be.visible');
             emailRequiredErrorMessage.contains(errorMessages.invalidEmail);
@@ -46,9 +43,7 @@ describe('FightPandemics Forgot Password Page', () => {
         });
 
         it('Entering correct email triggers Submit Button is enabled', () => {
-            var emailField = forgotPassword.getEmailField();
-            emailField.should('be.visible').and('have.attr', 'name', 'email');
-            emailField.type(emailAndPassword.validSampleEmail).focus().blur();
+            emailField().type(emailAndPassword.validSampleEmail).focus().blur();
             var submitButton = forgotPassword.getSubmitButton();
             submitButton.invoke('attr', 'aria-disabled').should('contain', 'false');
         });
@@ -62,6 +57,12 @@ describe('FightPandemics Forgot Password Page', () => {
 
     function checkSubmitButtonIsDisabled(submitButton) {
         submitButton.invoke('attr', 'aria-disabled').should('contain', 'true');
+    }
+
+    function emailField() {
+        var emailField = forgotPassword.getEmailField();
+        emailField.should('be.visible').and('have.attr', 'name', 'email');
+        return emailField;
     }
 
 });

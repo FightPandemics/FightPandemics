@@ -8,6 +8,7 @@ describe('FightPandemics Sign Up Page', () => {
 
 	const joinNow = new JoinNow();
 	const logo = new Logo();
+	var h4Heading = "Join Now";
 
 	context('User signs up for an account', () => {
 		beforeEach(() => {
@@ -19,9 +20,7 @@ describe('FightPandemics Sign Up Page', () => {
 		});
 
 		it('Sign up page contains heading and image', () => {
-			var h4Heading = "Join Now";
-			joinNow.getH4Heading().should('be.visible').contains(h4Heading);
-			joinNow.getImage().should('be.visible');
+			cy.pageContainsHeadingAndImage(joinNow.getH4Heading(), h4Heading, joinNow.getImage());
 		});
 
 		it('Email address field is visible and can be populated', () => {

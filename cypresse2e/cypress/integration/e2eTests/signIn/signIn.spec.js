@@ -8,6 +8,7 @@ describe('FightPandemics Sign In Page', () => {
 
     const signIn = new SignIn();
     const logo = new Logo();
+    var h4Heading = "Sign In";
 
     context('User signs into account', () => {
 
@@ -20,9 +21,7 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Sign in page contains heading and image', () => {
-            var h4Heading = "Sign In";
-            signIn.getH4Heading().should('be.visible').contains(h4Heading);
-            signIn.getImage().should('be.visible');
+            cy.pageContainsHeadingAndImage(signIn.getH4Heading(), h4Heading, signIn.getImage());
         });
 
         it('Email address field is visible and can be populated', () => {

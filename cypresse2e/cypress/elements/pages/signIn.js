@@ -25,11 +25,11 @@ class SignIn {
     }
 
     getH4Heading() {
-        return cy.get(this.h4Heading);
+        return this.h4Heading;
     }
 
     getImage() {
-        return cy.get(this.image);
+        return this.image;
     }
 
     getEmailField() {
