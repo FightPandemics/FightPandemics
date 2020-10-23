@@ -31,8 +31,8 @@ async function routes(app) {
       const {
         email,
         email_verified: emailVerified,
-        given_name: firstName,
-        family_name: lastName,
+        given_name: auth0FirstName,
+        family_name: auth0LastName,
       } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
@@ -51,8 +51,8 @@ async function routes(app) {
       return {
         email,
         emailVerified,
-        firstName,
-        lastName,
+        firstName: auth0FirstName,
+        lastName: auth0LastName,
         token,
         user,
       };
@@ -71,7 +71,7 @@ async function routes(app) {
       const providerName = provider === "google" ? "google-oauth2" : provider;
       const url = Auth0.buildOauthUrl(providerName, headers.referer);
       reply.redirect(url);
-    },
+    }
   );
 
   app.post(
@@ -109,7 +109,7 @@ async function routes(app) {
         username: email,
       });
       return { emailVerified: false, token: accessToken };
-    },
+    }
   );
 
   app.post("/login", { schema: loginSchema }, async (req, reply) => {
@@ -149,11 +149,11 @@ async function routes(app) {
       if (err.statusCode === 429) {
         req.log.error(
           err,
-          "Maximum number of sign in attempts exceeded. (10 times)",
+          "Maximum number of sign in attempts exceeded. (10 times)"
         );
         throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
       }
-      req.log.error(err, "Error logging in");
+      req.log.error(err, "Error loooogging in");
       throw app.httpErrors.internalServerError();
     }
   });
@@ -168,14 +168,14 @@ async function routes(app) {
       try {
         const responseMessage = await Auth0.changePassword(token, email);
         req.log.info(
-          `Change password email created successfully for email=${email}`,
+          `Change password email created successfully for email=${email}`
         );
         return { email, responseMessage };
       } catch (err) {
         req.log.error(err, "Error creating change password email");
         throw app.httpErrors.internalServerError("failedChangePasswordEmail");
       }
-    },
+    }
   );
 }
 
