@@ -47,36 +47,6 @@ const urlsSchema = S.object()
   )
   .prop("website", S.oneOf([S.null(), S.string().pattern(URL_REGEX)]));
 
-const createUserSchema = {
-  body: strictSchema()
-    .prop("firstName", S.string().required())
-    .prop("lastName", S.string().required())
-    .prop("hide", hideSchema)
-    .prop("needs", needsSchema)
-    .prop("objectives", objectivesSchema)
-    .prop("url", urlsSchema)
-    .prop("location", locationSchema)
-    .required(["location"]),
-};
-
-const getUsersSchema = {
-  querystring: strictSchema()
-    .prop("filter", S.string())
-    .prop("keywords", S.string())
-    .prop("limit", S.integer())
-    .prop("objective", S.string())
-    .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
-};
-
-const createUserAvatarSchema = {
-  body: strictSchema().prop("file", S.required()),
-};
-
-const getUserByIdSchema = {
-  params: strictSchema().prop("userId", S.string().required()),
-};
-
 const notifyPreferenceSchema = strictSchema()
   .prop(
     "message",
@@ -110,6 +80,37 @@ const notifyPreferenceSchema = strictSchema()
       .prop("weekly", S.boolean().default(false))
       .prop("biweekly", S.boolean().default(false)),
   );
+
+const createUserSchema = {
+  body: strictSchema()
+    .prop("firstName", S.string().required())
+    .prop("lastName", S.string().required())
+    .prop("hide", hideSchema)
+    .prop("needs", needsSchema)
+    .prop("objectives", objectivesSchema)
+    .prop("url", urlsSchema)
+    .prop("location", locationSchema)
+    .prop("notifyPrefs", notifyPreferenceSchema)
+    .required(["location"]),
+};
+
+const getUsersSchema = {
+  querystring: strictSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("limit", S.integer())
+    .prop("objective", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
+};
+
+const createUserAvatarSchema = {
+  body: strictSchema().prop("file", S.required()),
+};
+
+const getUserByIdSchema = {
+  params: strictSchema().prop("userId", S.string().required()),
+};
 
 const updateNotifyPrefsSchema = {
   body: strictSchema().prop("notifyPrefs", notifyPreferenceSchema),

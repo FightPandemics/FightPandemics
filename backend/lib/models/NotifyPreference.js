@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const notifyPreferenceSchema = new Schema({
   message: {
@@ -27,6 +27,13 @@ const notifyPreferenceSchema = new Schema({
   },
 });
 
+const NotifyPrefs = model("NotifyPrefs", notifyPreferenceSchema);
+
+const defaultPrefs = () => {
+  return new NotifyPrefs();
+};
+
 module.exports = {
+  defaultPrefs,
   schema: notifyPreferenceSchema,
 };
