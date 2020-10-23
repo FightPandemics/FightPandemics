@@ -5,6 +5,7 @@ import SvgIcon from "../Icon/SvgIcon";
 import SearchSvg from "../../assets/icons/search.svg";
 import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
+import GTM from "constants/gtm-tags";
 const { colors } = theme;
 
 const MIN_KEYWORD_CHARS = 2;
@@ -103,7 +104,7 @@ const SearchWrapper = styled.div`
 const Chip = styled.span`
   padding: 2px 5px;
   margin: 0 10px 0 0;
-  color: #425af2;
+  color: ${colors.royalBlue};
   border-radius: 5px;
   display: inline-flex;
   align-items: center;
@@ -120,10 +121,6 @@ const Chip = styled.span`
     i {
       display: none;
     }
-  }
-  &.disableSelection {
-    pointer-events: none;
-    opacity: 0.5;
   }
 `;
 const OptionListContainer = styled.div`
@@ -152,25 +149,26 @@ const OptionListContainer = styled.div`
   }
   li {
     padding: 10px 10px;
-    color: #425af2;
+    color: ${colors.royalBlue};
     background: #fff;
-    .keyword {
+    cursor: pointer;
+    display: block;
+    &:after {
+      content: "";
+    }
+    span:last-child {
       padding-left: 20px;
       color: #bdbdbd;
     }
-    .option {
+    span:first-child {
       padding: 4px 10px;
       border-radius: 5px;
       background: #f3f4fe;
       margin-left: 15px;
     }
-    &.disableSelection {
-      pointer-events: none;
-      opacity: 0.5;
-    }
   }
   li:first-child {
-    padding: 0;
+    padding: 10px;
   }
   li:last-child {
     padding-bottom: 15px;
@@ -260,7 +258,7 @@ export default class FeedNavSearch extends React.Component {
     const { inputValue, selectedValue } = this.state;
     const { isMobile } = this.props;
     if (e.key === "Enter") {
-      if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
+      if (!inputValue || inputValue.length < MIN_KEYWORD_CHARS) {
         return this.setState({ tooShort: true });
       }
       if (isMobile)
@@ -315,12 +313,25 @@ export default class FeedNavSearch extends React.Component {
 
   renderNormalOption() {
     const { isObject = true, displayValue } = this.props;
+    const getGTMId = (option) => {
+      return (
+        GTM.search.prefix +
+        GTM.search.category +
+        GTM.search[option.id.toLowerCase()]
+      );
+    };
     return this.state.options.map((option, i) => (
-      <li key={`option${i}`} onClick={() => this.onSelectItem(option)}>
-        <span class={"option"}>
+      <li
+        key={`option${i}`}
+        onClick={() => this.onSelectItem(option)}
+        id={getGTMId(option)}
+      >
+        <span id={getGTMId(option)}>
           {isObject ? option[displayValue] : (option || "").toString()}
         </span>
-        <span class={"keyword"}>{this.props.t("feed.search.keywords")}</span>
+        <span id={getGTMId(option)}>
+          {this.props.t("feed.search.keywords")}
+        </span>
       </li>
     ));
   }
@@ -398,15 +409,16 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
-                this.setState({ tooShort: true });
+              if (!inputValue) return;
+              if (inputValue.length < MIN_KEYWORD_CHARS) {
+                return this.setState({ tooShort: true });
               }
-              if (isMobile)
+              if (isMobile && selectedValue[0] && inputValue)
                 return this.props.handleMobileSubmit(
                   inputValue,
                   selectedValue[0].id,
                 );
-              this.props.handleSubmit(inputValue);
+              if (!isMobile && inputValue) this.props.handleSubmit(inputValue);
             }}
           />
           {isMobile && this.renderSelectedList()}
@@ -424,6 +436,7 @@ export default class FeedNavSearch extends React.Component {
               this.props.isMobile &&
               setTimeout(() => this.toggleOptionList(false), 100)
             }
+            id={GTM.search.prefix + GTM.search.input}
           />
           {(inputValue || selectedValue[0]) && (
             <StyledIcon
