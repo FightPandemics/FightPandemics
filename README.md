@@ -48,14 +48,14 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 
 #### Client
 
-1. From the project root run `npm install:client` (or from the `client/` directory `npm install`).
+1. From the project root run `npm run install:client` (or from the `client/` directory `npm install`).
 1. In the `client/` directory start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
 
 #### Backend
 
 1. If not already installed, [install MongoDB](https://docs.mongodb.com/manual/installation/).
-1. From the project root run `npm install:backend` (or from the `backend/` directory `npm install`).
+1. From the project root run `npm run install:backend` (or from the `backend/` directory `npm install`).
 1. Enter the `backend/` directory, copy the `.env.example_local` in the `backend` directory to `.env`.
 1. Replace `TODO` entries in `backend/.env` with correct values (this is not needed to run the project in a responding but non-functional state).
     - For  `AIRTABLE` and `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
