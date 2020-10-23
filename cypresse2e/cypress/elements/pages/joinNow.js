@@ -28,6 +28,7 @@ class JoinNow {
         cy.visit('auth/signup');
     }
 
+
     getFpLogo() {
         return cy.get(this.fpLogo);
     }
