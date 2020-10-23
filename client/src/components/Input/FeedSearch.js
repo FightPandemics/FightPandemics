@@ -261,6 +261,10 @@ export default class FeedNavSearch extends React.Component {
       if (!inputValue || inputValue.length < MIN_KEYWORD_CHARS) {
         return this.setState({ tooShort: true });
       }
+      window.dataLayer.push({
+        event: "SEARCH_KEYWORD",
+        keyword: inputValue,
+      });
       if (isMobile)
         return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
       this.props.handleSubmit(inputValue);
@@ -409,11 +413,15 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (!inputValue) return;
+              if (!inputValue || !selectedValue[0]) return;
               if (inputValue.length < MIN_KEYWORD_CHARS) {
                 return this.setState({ tooShort: true });
               }
-              if (isMobile && selectedValue[0] && inputValue)
+              window.dataLayer.push({
+                event: "SEARCH_KEYWORD",
+                keyword: inputValue,
+              });
+              if (isMobile)
                 return this.props.handleMobileSubmit(
                   inputValue,
                   selectedValue[0].id,
