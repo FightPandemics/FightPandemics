@@ -24,15 +24,25 @@ export const randomString = (length) => {
 };
 
 Cypress.Commands.add('generateRandomEmail', () => {
-    return randomString(64) + '@' + randomString(63) + '.tld';
+    return randomString(64) + '@' + randomString(63) + '.com';
 });
+
+Cypress.Commands.add('checkEmailIsOpen', (string) => {
+    cy.url().then(url => {
+        cy.url().should('contain', string);
+      });
+
+    });
+
 
 Cypress.Commands.add('validateCorrectScreenIsOpen', (string) => {
     cy.url().then(url => {
         cy.url().should('contain', string);
       });
 
-});Cypress.Commands.overwrite('visit', (visit, url) => {
+    });
+    
+    Cypress.Commands.overwrite('visit', (visit, url) => {
         return visit(url, {
           
           onBeforeLoad: (_contentWindow) => { 

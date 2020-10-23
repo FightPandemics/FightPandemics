@@ -87,7 +87,6 @@ describe('FightPandemics Sign Up Page', () => {
       validEmailRequired.contains('small', errorMessages.invalidEmail);
     });
 
-
     it('Password field is visible and can be populated', () => {
       var passwordField = joinNow.getPasswordField();
       passwordField.should('be.visible').and('have.attr', 'name', 'password');
@@ -166,6 +165,7 @@ describe('FightPandemics Sign Up Page', () => {
       var joinNowButton = joinNow.getJoinNowButton();
       joinNowButton.should('be.visible').and('have.attr', 'aria-disabled', 'true');
     });
+  
 
     it('Join Now button is enabled when required details are entered', () => {
       var emailField = joinNow.getEmailField();
@@ -180,6 +180,23 @@ describe('FightPandemics Sign Up Page', () => {
       var joinNowButton = joinNow.getJoinNowButton();
       joinNowButton.should('be.visible').and('have.attr', 'aria-disabled', 'false');
     });
+
+    it('After giving correct email and password user clicking Join Now  Button', () => {
+      var emailField = joinNow.getEmailField();
+      emailField.should('be.visible').and('have.attr', 'name', 'email');
+      cy.generateRandomEmail().then((email) => {
+        joinNow.getEmailField().type(email);
+    });
+      var passwordField = joinNow.getPasswordField();
+      passwordField.should('be.visible').and('have.attr', 'name', 'password');
+      passwordField.type(emailAndPassword.dummySamplePassword);
+      var confirmPasswordField = joinNow.getConfirmPasswordField();
+      confirmPasswordField.should('be.visible').and('have.attr', 'name', 'confirmPassword');
+      confirmPasswordField.type(emailAndPassword.dummySamplePassword);
+      var joinNowButton = joinNow.getJoinNowButton();
+      joinNowButton.click({force: true});
+      cy.checkEmailIsOpen("/auth/check-email");
+  });
 
     it('Sign in link is visible and clickable', () => {
       var signInLink = joinNow.getSignInLink();
