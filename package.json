@@ -7,7 +7,6 @@
   "scripts": {
     "install:client": "cd client && npm install",
     "install:backend": "cd backend && npm install",
-    "postinstall": "npm-run-all install:*",
     "precommit:client": "cd client && npm run precommit",
     "precommit:backend": "cd backend && npm run precommit",
     "precommit": "npm-run-all precommit:*"

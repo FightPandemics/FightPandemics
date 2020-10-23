@@ -21,7 +21,10 @@ Before getting started please be familiar with the stack below. Additionally it 
 ## Project Setup
 
 1. Fork or Clone this repository
-2. There are two ways to set up the app: Docker or Local Setup. It is strongly recommended to use the Docker Setup, but if you are unable to install Docker, you have the option of setting up the app locally.
+1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
+1. Using nvm, install Node 12 or greater, e.g. `nvm install v12.19.0`.
+1. Install root dependencies (required for pre-commit tasks), `npm install`
+1. There are two ways to set up the rest of the app: Docker or Local Setup. It is strongly recommended to use the Docker Setup, but if you are unable to install Docker, you have the option of setting up the app locally.
 
 If, at any point, you are having trouble setting up the app, please use Slack's search bar to search for exisiting questions. Also do not hesitate to ask us for assistance in the `#engineering` Slack channel! In order to speed up assistance, please mention the method that you are using to set up the app, as well as the operating system that you are using.
 
@@ -39,33 +42,32 @@ If, at any point, you are having trouble setting up the app, please use Slack's 
 
 If, for some reason, you are unable to use Docker, you can still set up the app locally. Note that you can set up each of these three services separately, but some functionality may not work. For example, if only the client is running, none of the calls to the backend will work.
 
-**Note:** running `npm install` from project root, will install sub projects dependencies (client and backend).
-
 #### MongoDB
 
 Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/installation/) for your operating system.
 
 #### Client
 
-1. Install [nvm](https://github.com/nvm-sh/nvm) (for Mac/Linux), or [nvm-windows](https://github.com/coreybutler/nvm-windows) (for Windows).
-1. Using nvm, install Node 12.16.2: `nvm install 12.16.2`.
-1. Enter the `client` directory and run `npm install`.
-1. Start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
+1. From the project root run `npm install:client` (or from the `client/` directory `npm install`).
+1. In the `client/` directory start the client app by running `npm start`, and wait for the app to start up. (`Starting the development server...` is not the final line).
 1. Finally, navigate to [localhost:3000](http://localhost:3000) in your browser - the page title should be "Fight Pandemics" and you should see a styled page.
 
 #### Backend
 
 1. If not already installed, [install MongoDB](https://docs.mongodb.com/manual/installation/).
-1. If not already installed, install nvm and Node 12.16.2 (see steps 1 and 2 in the Client section above).
-1. Enter the `backend` directory and run `npm install`.
-1. Copy the `.env.example_local` in the `backend` directory to `.env`.
+1. From the project root run `npm install:backend` (or from the `backend/` directory `npm install`).
+1. Enter the `backend/` directory, copy the `.env.example_local` in the `backend` directory to `.env`.
 1. Replace `TODO` entries in `backend/.env` with correct values (this is not needed to run the project in a responding but non-functional state).
     - For  `AIRTABLE` and `AUTH` variable values, either use Slack's search bar to search for exisiting requests, ask in the #engineering Slack channel, or consult the [non-engineer guide](https://www.notion.so/fightpandemics/Instructions-for-UI-testing-for-non-engineers-26d1237683d649f1a45f01e1b5a6c24b).
 1. Start the backend server by running `npm start`. NOTE: If you want the server to automatically restart on code changes, run `npm run dev` instead.
 1. The backend can be accessed at `localhost:8000` using cURL, Postman, or a similar API testing tool.
 1. To import posts data from Airtable, from the `backend` directory, run `npm run import-posts`. By default 100 records are returned. To get a specific number of records pass a numeric argument, e.g. `npm run import-posts -- 10`. Use `-1` to get all records (~2500 as of this writing).
 
-#### Geolocation
+#### Localstack for AWS S3
+
+TOOD: Add
+
+### Geolocation
 
 We are using the Google Maps API via our backend for geolocation requirements. It is not required for most frontend and backend development and is mocked with a limited set of fixed results when no key is present. This is to reduce friction for developer onboarding. If you need to work on this feature ask in Slack engineering channel about how to get your own development key.
 
