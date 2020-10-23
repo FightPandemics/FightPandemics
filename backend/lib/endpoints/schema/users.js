@@ -103,7 +103,7 @@ const notifyPreferenceSchema = strictSchema()
       .prop("biweekly", S.boolean().default(false)),
   )
   .prop(
-    "post",
+    "share",
     S.object()
       .prop("instant", S.boolean().default(false))
       .prop("daily", S.boolean().default(true))

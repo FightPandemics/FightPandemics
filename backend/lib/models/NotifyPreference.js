@@ -19,7 +19,7 @@ const notifyPreferenceSchema = new Schema({
     weekly: { default: false, type: Boolean },
     biweekly: { default: false, type: Boolean },
   },
-  post: {
+  share: {
     instant: { default: false, type: Boolean },
     daily: { default: true, type: Boolean },
     weekly: { default: false, type: Boolean },
