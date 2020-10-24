@@ -1,26 +1,22 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { Switch } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-
-import ErrorAlert from "components/Alert/ErrorAlert";
-import FormInput from "components/Input/FormInput";
+import { useTranslation } from "react-i18next";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
   FillEmptySpace,
   EditLayout,
   TitlePictureWrapper,
   CustomLink,
-  CustomForm,
   CustomHeading,
-  CustomSubmitButton,
   OptionDiv,
   FormLayout,
   Background,
+  CustomForm,
+  CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
-
+import ErrorAlert from "components/Alert/ErrorAlert";
 import { UserContext, withUserContext } from "context/UserContext";
 import {
   fetchUser,
@@ -31,18 +27,33 @@ import {
   updateUserSuccess,
 } from "hooks/actions/userActions";
 import { getInitialsFromFullName } from "utils/userInfo";
+import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
 
 function EditNotifications(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const { errors, formState, register, handleSubmit } = useForm({
+  const { control, formState, handleSubmit } = useForm({
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName, lastName, urls = {}, about } = user || {};
+  const { firstName, lastName } = user || {};
+  const { t } = useTranslation();
+  const disabledPrefs = {
+    message: { instant: false, daily: false, weekly: false, biweekly: false },
+    like: { instant: false, daily: false, weekly: false, biweekly: false },
+    comment: { instant: false, daily: false, weekly: false, biweekly: false },
+    share: { instant: false, daily: false, weekly: false, biweekly: false },
+  };
+  const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
+  const [checksEnabled, setChecksEnabled] = useState(true);
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
     try {
+      if (!checksEnabled) {
+        Object.assign(formData, {
+          notifyPrefs: { ...disabledPrefs },
+        });
+      }
       const res = await axios.patch("/api/users/current", formData);
       userProfileDispatch(updateUserSuccess(res.data));
       // TODO: consistently return _id or id or both
@@ -60,6 +71,7 @@ function EditNotifications(props) {
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
+        setCurrPrefs({ ...currPrefs, ...res.data.notifyPrefs });
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -70,18 +82,19 @@ function EditNotifications(props) {
     })();
   }, [userProfileDispatch]);
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            Edit Profile
+            {t("profile.individual.editProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
+            resolution={"768rem"}
+            allowUpload={false}
+            user={user}
             initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
           />
         </TitlePictureWrapper>
@@ -90,31 +103,34 @@ function EditNotifications(props) {
         <FormLayout>
           <OptionDiv>
             <CustomLink>
-              <Link to="/edit-account">Account Information</Link>
+              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
             </CustomLink>
-            <CustomLink >
-              <Link to="/edit-profile">Profile Information</Link>
+            <CustomLink>
+              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
             <CustomLink isSelected>
-              <Link to="/edit-notifications">Notification Settings</Link>
+              <Link to="/edit-notifications">
+                {t("profile.common.notificationInfo")}
+              </Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
-             {/* Notification settings toggle button */}
-             Email notifications
-            <Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked />
-
-             Web Notifications
-            <Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked />
+            <NotifyPreferenceInput
+              control={control}
+              currPrefs={currPrefs}
+              setCurrPrefs={setCurrPrefs}
+              checksEnabled={checksEnabled}
+              setChecksEnabled={setChecksEnabled}
+              disabledPrefs={disabledPrefs}
+            />
             {/* Button that saves changes */}
-            
             <CustomSubmitButton
               disabled={!formState.isValid}
               primary="true"
               onClick={handleSubmit(onSubmit)}
             >
-              Save Changes
+              {t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

@@ -195,8 +195,8 @@ function EditProfile(props) {
             <CustomLink isSelected>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
-            <CustomLink >
-              <Link to="/edit-notifications">Notification Preferences</Link>
+            <CustomLink>
+              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
             </CustomLink>
           </OptionDiv>
           <CustomForm>
