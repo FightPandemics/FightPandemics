@@ -802,5 +802,8 @@
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again"
+  },
+  "unsubscribe": {
+    "notifyPrefs": "Notification Preference"
   }
 }

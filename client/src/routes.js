@@ -27,6 +27,7 @@ import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import Unsubscribe from "./pages/Unsubscribe.js";
 
 const routes = [
   {
@@ -234,6 +235,11 @@ const routes = [
   {
     path: "/toggleqa",
     component: ToggleQAMode,
+  },
+  {
+    path: "/unsubscribe",
+    component: Unsubscribe,
+    layout: "logo",
   },
   {
     path: "*",
