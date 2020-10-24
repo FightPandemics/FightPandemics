@@ -39,7 +39,7 @@ const translateISOToString = (ISO) => {
 };
 
 export const translateISOTimeTitle = (ISO) => {
-  return moment(ISO).format("YYYY-MM-DD HH:mm:ss");
+  return moment(ISO).format("YYYY-MM-DD HH:mm");
 };
 
 const getTextFromOption = (type) =>
