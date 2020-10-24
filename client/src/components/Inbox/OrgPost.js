@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 const Post = styled.div`
   display: block;
-  padding: 0.8em;
+  padding: 1.12rem;
   background: #ffff;
-  border-radius: 2em 2em 0em 0em;
+  border-radius: 1.6rem 1.6rem 0.2rem 0.2rem;
   color: #282828;
-  margin-bottom: 1em;
-  margin-top: -0.7em;
+  margin-bottom: 1.4rem;
+  margin-top: 0.7rem;
   max-height: 340px;
   overflow: hidden;
   header {

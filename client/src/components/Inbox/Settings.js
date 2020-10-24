@@ -19,30 +19,25 @@ const UserName = styled.h4`
   margin-bottom: -0.3em;
 `;
 const ThreadContainer = styled(SideChatContainer)`
+  padding: 1.6rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
-    height: 12em;
+    flex-wrap: wrap;
+    &:hover {
+      background: #fff;
+    }
   }
+
   header {
+    justify-content: flex-start;
     h5 {
-      position: relative;
-      display: inline-block;
       color: gray;
       font-weight: 300;
       letter-spacing: 0.3px;
-      line-height: 2.5;
-      margin: 0 0.5rem;
+      line-height: 1;
+      margin: 0.5rem 0.5rem 0;
     }
   }
-  content {
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: absolute;
-      top: initial;
-    }
-    .message {
-      color: #cecece;
-    }
-  }
+
   &.for-blocked {
     height: 4em;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -59,23 +54,28 @@ const ThreadContainer = styled(SideChatContainer)`
 `;
 const ThreadsListContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin-top: 5rem;
+    margin-top: 6rem;
   }
 `;
 const StyledButton = styled(Button)`
   display: inline-block;
   position: relative;
-  width: 17rem;
+  width: 13rem;
   right: 0;
   top: 0;
   border: 1px solid #425af2 !important;
   font-weight: 400;
   color: #425af2 !important;
-  padding: 0 2.5rem;
+  padding: 1.4rem;
+  font-size: 1.6rem;
+  height: 4.4rem;
+  line-height: 1;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: relative;
     display: block;
-    top: 5rem;
+    top: 1rem;
+    left: 4rem;
+    margin-bottom: 1rem;
   }
   &.for-blocked {
     position: absolute;
@@ -101,6 +101,8 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
         return "Blocked Accounts";
       case "ARCHIVED":
         return "Archived Conversations";
+      default:
+        return "";
     }
   };
 
@@ -109,14 +111,14 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
+    return participants.filter((p) => p.id === user.id)[0];
   };
 
   const ArchivedConversations = ({ rooms }) => {
     return (
       <ThreadsListContainer>
         {rooms
-          .filter((r) => getSender(r.participants).status == "archived")
+          .filter((r) => getSender(r.participants).status === "archived")
           .map((_room) => (
             <ThreadContainer>
               <Badge>
@@ -145,7 +147,7 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
               </StyledButton>
             </ThreadContainer>
           ))}
-        {!rooms.filter((r) => getSender(r.participants).status == "archived")
+        {!rooms.filter((r) => getSender(r.participants).status === "archived")
           .length && (
           <NoThreads>You don't have any archived conversations.</NoThreads>
         )}
@@ -157,7 +159,7 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
     return (
       <ThreadsListContainer>
         {rooms
-          .filter((r) => getSender(r.participants).status == "blocked")
+          .filter((r) => getSender(r.participants).status === "blocked")
           .map((_room) => (
             <ThreadContainer className={"for-blocked"}>
               <Badge>
@@ -180,7 +182,7 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
               </content>
             </ThreadContainer>
           ))}
-        {!rooms.filter((r) => getSender(r.participants).status == "blocked")
+        {!rooms.filter((r) => getSender(r.participants).status === "blocked")
           .length && <NoThreads>You haven't blocked any accounts.</NoThreads>}
       </ThreadsListContainer>
     );
@@ -189,10 +191,10 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
   return (
     <CurrentChatContainer toggleMobileChatList={toggleMobileChatList}>
       <SettingsHeader tabName={getTabName()} />
-      {selectedSettingsTab == "ARCHIVED" && (
+      {selectedSettingsTab === "ARCHIVED" && (
         <ArchivedConversations rooms={rooms} />
       )}
-      {selectedSettingsTab == "BLOCKED" && <BlockedAccounts rooms={rooms} />}
+      {selectedSettingsTab === "BLOCKED" && <BlockedAccounts rooms={rooms} />}
     </CurrentChatContainer>
   );
 };

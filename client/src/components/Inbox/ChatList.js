@@ -34,8 +34,7 @@ const SettingsNextArrow = styled.img`
   right: 1rem;
 `;
 const SettingsTabsSelector = styled(SideChatContainer)`
-  padding: 0.4em;
-  height: 4em;
+  height: 5.6rem;
 `;
 
 export const ChatList = ({
@@ -54,18 +53,18 @@ export const ChatList = ({
   setToggleViewRequests,
 }) => {
   const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
+    return participants.filter((p) => p.id !== user.id)[0];
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
+    return participants.filter((p) => p.id === user.id)[0];
   };
 
   const pendingRooms = rooms.filter(
-    (r) => getSender(r.participants).status == "pending",
+    (r) => getSender(r.participants)?.status === "pending",
   );
   const acceptedRooms = rooms.filter(
-    (r) => getSender(r.participants).status == "accepted",
+    (r) => getSender(r.participants).status === "accepted",
   );
 
   const SideChats = () => {
@@ -74,12 +73,12 @@ export const ChatList = ({
       <>
         {roomsToShow.map((_room) => (
           <SideChatContainer
-            className={`${_room._id == room?._id ? "selected" : ""}`}
+            className={`${_room._id === room?._id ? "selected" : ""}`}
             key={_room._id}
             toggleMobileChatList={toggleMobileChatList}
             tabIndex="1"
             onClick={() => {
-              if (!room || room._id != _room._id)
+              if (!room || room._id !== _room._id)
                 joinRoom({
                   threadId: _room._id,
                 });
@@ -127,14 +126,16 @@ export const ChatList = ({
         </ChatHeader>
         <div onClick={() => setToggleMobileChatList(false)}>
           <SettingsTabsSelector
-            className={`${selectedSettingsTab == "BLOCKED" ? "selected" : ""}`}
+            className={`${selectedSettingsTab === "BLOCKED" ? "selected" : ""}`}
             onClick={() => setSettingsTab("BLOCKED")}
           >
             Blocked Accounts
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
           <SettingsTabsSelector
-            className={`${selectedSettingsTab == "ARCHIVED" ? "selected" : ""}`}
+            className={`${
+              selectedSettingsTab === "ARCHIVED" ? "selected" : ""
+            }`}
             onClick={() => setSettingsTab("ARCHIVED")}
           >
             Archived Conversations
@@ -164,9 +165,10 @@ export const ChatList = ({
           )}
           {(pendingRooms.length > 0 || toggleViewRequests) && (
             <ChatHeader
-              style={{ cursor: "pointer" }}
+              type="subHeader"
+              style={toggleViewRequests ? { fontWeight: "bold" } : {}}
               onClick={() => {
-                if (!toggleViewRequests) leaveAllRooms();
+                leaveAllRooms();
                 setToggleViewRequests(!toggleViewRequests);
               }}
             >

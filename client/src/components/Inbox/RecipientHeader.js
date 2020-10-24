@@ -1,23 +1,23 @@
 import React, { useContext } from "react";
 import { Badge, Menu, Dropdown, Typography } from "antd";
-import { Modal } from "antd-mobile";
 import styled from "styled-components";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import subMenuIcon from "assets/icons/submenu.svg";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
 import TextAvatar from "components/TextAvatar";
 import { ChatContext } from "context/ChatContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
+import { AlertBox } from "./AlertBox";
 const { Text } = Typography;
 
 const RecipientName = styled.div`
   width: 100%;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-  height: 3.5em;
+  border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
+  min-height: 5.8rem;
   overflow: auto;
   position: relative;
-  top: 0px;
+  top: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -33,7 +33,7 @@ const RecipientName = styled.div`
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: inline;
       transform: rotate(90deg);
-      padding-top: 1em;
+      padding-top: 1.4rem;
       cursor: pointer;
     }
   }
@@ -77,17 +77,15 @@ const LastSeen = styled.small`
 const ThreadMenu = styled.img`
   opacity: 0.5;
   position: absolute;
-  right: 0;
   width: 4.5rem;
   height: 4.5rem;
   cursor: pointer;
   padding: 1rem;
   background: #f6f7fb;
   border-radius: 100%;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    right: 1rem;
-  }
+  right: 1rem;
 `;
+
 export const RecipientHeader = ({
   threadId,
   participant,
@@ -99,26 +97,30 @@ export const RecipientHeader = ({
   blockStatus,
 }) => {
   const { setToggleMobileChatList } = useContext(ChatContext);
+  const [alertBoxData, setAlertBox] = React.useState({});
 
   function showBlockConfirm() {
-    Modal.alert(
-      `Block the connversation from ${participant.name}?`,
-      `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
-      [
+    setAlertBox({
+      show: true,
+      title: `Block the connversation from ${participant.name}?`,
+      content: `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
+      action: [
         {
           text: <Text type="danger">Block</Text>,
           onPress: () => blockThread(threadId),
         },
-        { text: "Cancel", onPress: () => null },
+        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
       ],
-    );
+    });
   }
 
   function showArchiveConfirm() {
-    Modal.alert(
-      "Archive the conversation?",
-      "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
-      [
+    setAlertBox({
+      show: true,
+      title: "Archive the conversation?",
+      content:
+        "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+      action: [
         {
           text: <Text type="danger">Archive</Text>,
           onPress: () => {
@@ -126,9 +128,9 @@ export const RecipientHeader = ({
             setToggleMobileChatList(true);
           },
         },
-        { text: "Cancel", onPress: () => null },
+        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
       ],
-    );
+    });
   }
 
   const menu = (
@@ -144,6 +146,16 @@ export const RecipientHeader = ({
 
   return (
     <>
+      {alertBoxData?.show && (
+        <AlertBox
+          footer={alertBoxData?.action}
+          visible={alertBoxData?.show}
+          transparent
+          title={alertBoxData?.title}
+        >
+          {alertBoxData?.content}
+        </AlertBox>
+      )}
       {participant && (
         <RecipientName>
           <img

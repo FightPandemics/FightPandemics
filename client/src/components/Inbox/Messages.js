@@ -1,6 +1,5 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Menu, Dropdown, Typography } from "antd";
-import { Modal } from "antd-mobile";
 import {
   BubbleContainer,
   MessagesContainer,
@@ -13,7 +12,8 @@ import { OrgPost } from "./OrgPost";
 import getRelativeTime from "utils/relativeTime";
 import moment from "moment";
 import subMenuIcon from "assets/icons/submenu.svg";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
+import { AlertBox } from "./AlertBox";
 const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
@@ -33,10 +33,14 @@ const Messages = ({
 }) => {
   const messagesEndRef = useRef(null);
   const editTextArea = useRef();
+  const [alertBoxData, setAlertBox] = React.useState({});
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ block: "start" });
-  };
+  const scrollToBottom = React.useCallback(() => {
+    const element = messagesEndRef.current;
+    if (element) {
+      element.scrollTo(0, element?.scrollHeight);
+    }
+  }, []);
 
   const isMobile = () => {
     return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
@@ -67,14 +71,14 @@ const Messages = ({
   // messages time grouping
   const shouldShowTime = (messageIndex) => {
     // this order is important
-    if (chatLog.length == 1) return true;
+    if (chatLog.length === 1) return true;
     if (
       !chatLog[messageIndex + 1] &&
       moment().diff(chatLog[messageIndex].createdAt, "minutes") <=
         GROUP_MESSAGES_TIME_FRAME
     )
       return false;
-    if (chatLog[messageIndex].authorId != chatLog[messageIndex + 1]?.authorId)
+    if (chatLog[messageIndex].authorId !== chatLog[messageIndex + 1]?.authorId)
       return true;
     return (
       moment(chatLog[messageIndex + 1].createdAt).diff(
@@ -89,17 +93,19 @@ const Messages = ({
   };
 
   function showDeleteConfirm(messageId) {
-    Modal.alert(
-      "Delete the message?",
-      "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
-      [
+    setAlertBox({
+      show: true,
+      title: "Delete the message?",
+      content:
+        "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
+      action: [
         {
           text: <Text type="danger">Delete</Text>,
           onPress: () => deleteMessage(messageId),
         },
-        { text: "Cancel", onPress: () => null },
+        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
       ],
-    );
+    });
   }
 
   function startMessageEditing(messageId, content) {
@@ -134,12 +140,12 @@ const Messages = ({
   const Sender = ({ postRef, message, messageId, isDeleted, isEdited }) => {
     return (
       <BubbleContainer
-        className={`${editingMessageId == messageId ? "is-editing" : ""}`}
+        className={`${editingMessageId === messageId ? "is-editing" : ""}`}
         key={"b-" + messageId}
       >
         {isEdited && <small>Edited</small>}
         <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
-          {!isDeleted && editingMessageId != messageId && (
+          {!isDeleted && editingMessageId !== messageId && (
             <Dropdown
               overlay={menu(messageId, message)}
               placement="bottomRight"
@@ -155,7 +161,7 @@ const Messages = ({
               ? linkify(message)
               : "You deleted this message."}
           </div>
-          {!isMobile() && editingMessageId == messageId && (
+          {!isMobile() && editingMessageId === messageId && (
             <textarea
               key={"t-area-" + messageId}
               ref={editTextArea}
@@ -164,7 +170,7 @@ const Messages = ({
             ></textarea>
           )}
         </SenderBubble>
-        {!isMobile() && editingMessageId == messageId && (
+        {!isMobile() && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
             <button onClick={() => cancelMessageEditing()}>Cancel</button>
             <button
@@ -198,11 +204,28 @@ const Messages = ({
   };
 
   useLayoutEffect(() => {
-    if (!isLoading) scrollToBottom();
+    if (!isLoading) {
+      setTimeout(() => {
+        scrollToBottom();
+      }, 500);
+    }
   }, [room, chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <MessagesContainer className={`${inputExpanded ? "input-expanded" : ""}`}>
+    <MessagesContainer
+      ref={messagesEndRef}
+      className={`${inputExpanded ? "input-expanded" : ""}`}
+    >
+      {alertBoxData?.show && (
+        <AlertBox
+          footer={alertBoxData?.action}
+          visible={alertBoxData?.show}
+          transparent
+          title={alertBoxData?.title}
+        >
+          {alertBoxData?.content}
+        </AlertBox>
+      )}
       {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
         <button onClick={onLoadMoreClick} className={"load-more-btn"}>
           Load more...
@@ -210,14 +233,14 @@ const Messages = ({
       )}
       {chatLog?.map((message, i) => (
         <>
-          {message.authorId != user.id ? (
+          {message.authorId !== user.id ? (
             <Recipient
               key={message._id}
               message={message.content}
               postRef={message.postRef}
               messageId={message._id}
-              isDeleted={message.status == "deleted"}
-              isEdited={message.status == "edited"}
+              isDeleted={message.status === "deleted"}
+              isEdited={message.status === "edited"}
             />
           ) : (
             <Sender
@@ -225,14 +248,14 @@ const Messages = ({
               message={message.content}
               postRef={message.postRef}
               messageId={message._id}
-              isDeleted={message.status == "deleted"}
-              isEdited={message.status == "edited"}
+              isDeleted={message.status === "deleted"}
+              isEdited={message.status === "edited"}
             />
           )}
           {shouldShowTime(i) && (
             <TimeStamp
               key={"t-" + message._id}
-              className={message.authorId != user.id ? "left" : "right"}
+              className={message.authorId !== user.id ? "left" : "right"}
             >
               {isToday(message.createdAt)
                 ? getRelativeTime(message.createdAt)
@@ -241,7 +264,7 @@ const Messages = ({
           )}
         </>
       ))}
-      <div ref={messagesEndRef} id={"messages-bottom"}></div>
+      {/* <div ref={messagesEndRef} id={"messages-bottom"}></div> */}
     </MessagesContainer>
   );
 };

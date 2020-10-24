@@ -1,42 +1,65 @@
 import styled from "styled-components";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
 
 export const InboxContainer = styled.div`
   width: 100%;
-  min-width: 50em;
-  min-height: 37em;
-  height: calc(100% - 7rem);
-  position: absolute;
+  min-width: 100vw;
+  height: calc(100vh - 6rem);
+  position: relative;
   background-color: white;
   display: flex;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
-    min-width: 20em;
+    min-width: 30rem;
     height: calc(100% - 5rem);
   }
 `;
 export const ChatHeader = styled.div`
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-  padding: 1.6em 1.1em;
-  font-size: 1.143em;
+  border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
+  padding: 1.6rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+
+  ${({ type }) => {
+    if (type === "subHeader") {
+      return `
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+      `;
+    }
+    return "";
+  }}
+
+  img {
+    padding: 0;
+    height: 2.4rem;
+    width: 2.4rem;
+    margin-right: 1.6rem;
+  }
   span {
-    margin-left: 1em;
+    margin-left: 1.4rem;
     background-color: #425af2;
     border-radius: 50%;
-    padding: 0em 0.6em;
+    padding: 0 0.8rem;
     color: white;
-    font-size: 0.9em;
+    font-size: 1.4rem;
     font-weight: 400;
-    min-width: 2em;
-    min-height: 2em;
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
 export const CurrentChatContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 11rem);
   display: flex;
   flex-direction: column;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -50,14 +73,17 @@ export const CurrentChatContainer = styled.div`
 export const ChatListContainer = styled.div`
   position: relative;
   border-right: 1px solid rgba(232, 232, 232, 0.7);
-  width: 25%;
   height: 100%;
-  min-width: 22em;
-  max-width: 24em;
+  width: 33.6rem;
+  min-width: 33.6rem;
+
   .chat-bucket {
-    overflow: auto;
   }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 100%;
+    max-width: 100vw;
+    margin-top: 10px;
     position: absolute;
     top: 0;
     height: 100%;
@@ -71,12 +97,16 @@ export const ChatListContainer = styled.div`
 `;
 
 export const SideChatContainer = styled.div`
-  padding: 0.4em 1.1em;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
+  padding: 1rem;
+  border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
   display: flex;
-  height: 6em;
+  font-size: 1.4rem;
+  font-weight: 500;
   align-items: center;
   cursor: pointer;
+  line-height: 1.8rem;
+  padding-left: 1.6rem;
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     justify-content: ${(props) =>
       props.toggleMobileChatList ? "center" : null};
@@ -88,7 +118,18 @@ export const SideChatContainer = styled.div`
   &.selected {
     border-left: 3px solid #425af2;
     background: #f3f4fe;
+    padding-left: 2rem;
+    content {
+      .message {
+        color: #425af2;
+      }
+    }
   }
+
+  .ant-badge {
+    margin-top: 1rem;
+  }
+
   .ant-avatar {
     width: 3.8rem;
     height: 3.8rem;
@@ -111,21 +152,23 @@ export const SideChatContainer = styled.div`
       background: lightgreen;
     }
   }
+
   header {
     display: flex;
-    line-height: 0;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
     h4 {
       position: relative;
-      font-weight: 600;
+      font-weight: 500;
       max-width: 80%;
     }
     h5 {
-      position: absolute;
-      right: 0em;
-      top: 0em;
       color: gray;
       font-weight: 300;
       letter-spacing: 0.3px;
+      margin: 0;
     }
     .unread-indicator {
       position: absolute;
@@ -140,25 +183,27 @@ export const SideChatContainer = styled.div`
       line-height: 2rem;
     }
   }
+
   content {
-    position: relative;
-    top: 0.9em;
-    line-height: 1.5;
     width: calc(100% - 5.5rem);
+    display: flex;
+    flex-direction: column;
+
     .title {
-      font-size: 1em;
-      font-weight: 500;
+      font-size: 1.4rem;
+      font-weight: 400;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      line-height: 1;
     }
     .message {
+      text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis;
-      color: #085fff;
-      opacity: 0.7;
+      color: #939393;
       letter-spacing: 0.4px;
+      margin-bottom: 0;
     }
   }
 `;

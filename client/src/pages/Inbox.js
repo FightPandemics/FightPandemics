@@ -40,6 +40,14 @@ const Inbox = (props) => {
   const { room, rooms, chatLog, isIdentified } = props.ws;
   const dispatch = useDispatch();
 
+  const getSender = (participants) => {
+    return participants.filter((p) => p.id == user.id)[0];
+  };
+
+  const pendingRooms = rooms.filter(
+    (r) => getSender(r.participants)?.status == "pending",
+  );
+
   const unlisten = history.listen(() => {
     setToggleMobileChatList(true);
     setToggleViewRequests(false);
@@ -68,6 +76,16 @@ const Inbox = (props) => {
     }
     setIsSettingsOpen(!isSettingsOpen);
   };
+
+  useEffect(() => {
+    try {
+      // removing extra scroll padding-bottom by .am-drawer-content
+      document.querySelector(".app-drawer .am-drawer-content").style.padding =
+        "0";
+    } catch (e) {
+      // e
+    }
+  }, []);
 
   useEffect(() => {
     if (isIdentified) getUserRooms();
@@ -123,10 +141,13 @@ const Inbox = (props) => {
           unblockThread={unblockThread}
         />
       )}
-      {!isSettingsOpen && !rooms.length ? (
+      {!isSettingsOpen &&
+      (rooms.length === 0 || rooms.length === pendingRooms.length) ? (
         <EmptyInbox />
       ) : (
-        (!isSettingsOpen && !room && <SelectRoom />) ||
+        (!isSettingsOpen && !room && (
+          <SelectRoom isRequestPage={toggleViewRequests} />
+        )) ||
         (!isSettingsOpen && room && (
           <CurrentChat
             room={room}

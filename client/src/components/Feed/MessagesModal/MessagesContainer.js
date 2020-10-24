@@ -106,6 +106,11 @@ export const MsgModal = styled(Modal)`
 export const SuccessModal = styled(MsgModal)`
   top: 12.1rem;
   min-width: 61.5rem;
+  max-width: 100vw;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    min-width: 90vw;
+  }
 
   p {
     width: 100%;

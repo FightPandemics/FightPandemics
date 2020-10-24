@@ -49,6 +49,11 @@ const EmptyInboxContainer = styled.div`
   p {
     line-height: 1;
   }
+  h3 {
+    margin-top: 3.2rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -65,6 +70,7 @@ export const EmptyInbox = () => {
         src={emptyinbox}
         alt="Empty Inbox Page"
       />
+      <h3>You don't have any messages</h3>
       <p>You haven't recieved any messages yet.</p>
       <p>Head back to Help Board to find offers or requests to respond to.</p>
       <Link to="/feed">

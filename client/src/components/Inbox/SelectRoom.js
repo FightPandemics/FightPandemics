@@ -12,27 +12,15 @@ const MsgHeader = styled.div`
     position: absolute;
     top: 0;
     width: 100vw;
-    border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-    padding: 1.6em 1.1em;
-    font-size: 1.143em;
+    border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
+    padding: 2.2rem 1.54rem;
+    font-size: 1.4rem;
     font-weight: 700;
     span {
       position: absolute;
-      left: 1em;
-      bottom: 0.5em;
+      left: 1.4rem;
+      bottom: 0.7rem;
     }
-  }
-`;
-const StyledButton = styled(Button)`
-  width: 19rem;
-  font-weight: 400;
-  font-size: 1.143em;
-  height: 3em;
-  margin-top: 0.5em;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 18rem;
-    font-size: 1em;
-    letter-spacing: 0.5px;
   }
 `;
 const EmptyInboxContainer = styled.div`
@@ -42,19 +30,25 @@ const EmptyInboxContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 6em;
+  justify-content: center;
+
   p:first-of-type {
-    margin-top: 2em;
+    margin-top: 2.8rem;
   }
   p {
     line-height: 1;
+  }
+  h3 {
+    margin-top: 3.2rem;
+    font-size: 1.6rem;
+    font-weight: bold;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
 `;
 
-export const SelectRoom = () => {
+export const SelectRoom = ({ isRequestPage }) => {
   return (
     <EmptyInboxContainer>
       <MsgHeader>
@@ -65,8 +59,21 @@ export const SelectRoom = () => {
         src={emptyinbox}
         alt="Empty Inbox Page"
       />
-      <p>You haven't selected a conversation</p>
-      <p>Click on a conversation from the chat list and start chatting.</p>
+      {isRequestPage ? (
+        <>
+          <h3>Select any message request to read</h3>
+          <p>
+            The content of message request would apprear here once you select{" "}
+          </p>
+          <p>one from the message request inbox.</p>
+        </>
+      ) : (
+        <>
+          <h3>Select any message to read</h3>
+          <p>The message content would apprear here once you select</p>
+          <p>a message from the message inbox</p>
+        </>
+      )}
     </EmptyInboxContainer>
   );
 };

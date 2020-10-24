@@ -137,7 +137,7 @@ export default class SocketManager extends React.Component {
   joinRoom = (data) => {
     return new Promise((resolve) => {
       this.socket.emit("JOIN_ROOM", data, (response) => {
-        if (response.code == 200) {
+        if (response.code === 200) {
           this.props.store.dispatch(joinRoomSuccess(response.data));
           return resolve(response.data);
         } else this.props.store.dispatch(joinRoomError());
