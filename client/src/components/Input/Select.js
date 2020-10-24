@@ -9,7 +9,7 @@ const StyledSelect = styled(Select)`
   color: ${theme.colors.royalBlue};
   display: block;
   margin-top: 2rem;
-  min-width: 10em;
+  width: 42%;
   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
     width: 100%;
   }
