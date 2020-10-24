@@ -39,15 +39,21 @@ const ThreadContainer = styled(SideChatContainer)`
   }
 
   &.for-blocked {
-    height: 4em;
+    position: relative;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       margin-bottom: 0;
     }
     content {
       top: initial;
+      flex-direction: row;
+      header {
+        width: 25rem;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          width: calc(100vw - 220px);
+        }
+      }
       header h4 {
         margin-bottom: 0;
-        max-width: 40%;
       }
     }
   }
@@ -78,13 +84,10 @@ const StyledButton = styled(Button)`
     margin-bottom: 1rem;
   }
   &.for-blocked {
-    position: absolute;
-    display: inline-block;
-    top: -1rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      position: absolute !important;
-      top: -0.2rem;
-      right: 1rem;
+      position: static !important;
+      margin: 0;
+      display: block;
     }
   }
 `;

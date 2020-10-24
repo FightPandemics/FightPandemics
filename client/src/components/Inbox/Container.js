@@ -127,7 +127,7 @@ export const SideChatContainer = styled.div`
   }
 
   .ant-badge {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   .ant-avatar {

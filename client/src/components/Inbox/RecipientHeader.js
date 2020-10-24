@@ -107,7 +107,11 @@ export const RecipientHeader = ({
       action: [
         {
           text: <Text type="danger">Block</Text>,
-          onPress: () => blockThread(threadId),
+          onPress: () => {
+            blockThread(threadId);
+            setAlertBox({ show: false });
+            onMobileBackClick();
+          },
         },
         { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
       ],
@@ -126,6 +130,8 @@ export const RecipientHeader = ({
           onPress: () => {
             archiveThread(threadId);
             setToggleMobileChatList(true);
+            setAlertBox({ show: false });
+            onMobileBackClick();
           },
         },
         { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
@@ -188,8 +194,12 @@ export const RecipientHeader = ({
               )}
             </LastSeen>
           </h4>
-          {(!blockStatus || blockStatus == "was-blocked") && (
-            <Dropdown overlay={menu} placement="bottomRight">
+          {(!blockStatus || blockStatus === "was-blocked") && (
+            <Dropdown
+              trigger={["hover", "click"]}
+              overlay={menu}
+              placement="bottomRight"
+            >
               <ThreadMenu src={subMenuIcon} />
             </Dropdown>
           )}
