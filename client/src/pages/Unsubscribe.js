@@ -122,7 +122,7 @@ const Unsubscribe = (props) => {
         setUnsubError(message);
       }
     })();
-  }, [config, currPrefs, disabledPrefs, setValue]);
+  }, []);
 
   return (
     <LoginContainer>

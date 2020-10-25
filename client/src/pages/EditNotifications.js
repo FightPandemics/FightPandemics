@@ -80,7 +80,7 @@ function EditNotifications(props) {
         );
       }
     })();
-  }, [currPrefs, disabledPrefs, setValue, userProfileDispatch]);
+  }, [userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
