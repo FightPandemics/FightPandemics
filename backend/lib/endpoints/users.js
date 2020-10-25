@@ -144,6 +144,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
+        usesPassword
       } = user;
 
       let { location } = user;
@@ -167,6 +168,7 @@ async function routes(app) {
         ownUser: authUserId !== null && authUserId.equals(user.id),
         photo,
         urls,
+        usesPassword
       };
     },
   );
