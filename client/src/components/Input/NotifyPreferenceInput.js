@@ -72,7 +72,7 @@ const NotifyPreferenceInput = ({
   useEffect(() => {
     setCurrPrefs({ ...currPrefs, ...disabledPrefs });
     setChecksEnabled(switchOnOff);
-  }, [currPrefs, disabledPrefs, setChecksEnabled, setCurrPrefs, switchOnOff]);
+  }, [switchOnOff]);
 
   return (
     <div>
