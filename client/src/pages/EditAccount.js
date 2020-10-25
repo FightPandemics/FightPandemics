@@ -78,7 +78,7 @@ function EditAccount(props) {
   });
   const { t } = useTranslation();
   const { error, loading, user } = userProfileState;
-  const { firstName, hide = {}, lastName, needs = {}, objectives = {} } =
+  const { firstName, hide = {}, lastName, needs = {}, objectives = {}, usesPassword = false } =
     user || {};
 
   const handleLocationChange = (location) => {
@@ -173,9 +173,12 @@ function EditAccount(props) {
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
-            <CustomLink >
-              <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
-            </CustomLink>
+            {usesPassword && (
+              <CustomLink >
+                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              </CustomLink>
+            )}
+
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Input, Button, notification } from 'antd'
+import { notification, Spin } from 'antd'
 import {
     EditLayout,
     TitlePictureWrapper,
@@ -12,8 +12,8 @@ import {
     FormLayout,
     OptionDiv,
     CustomLink,
-    CustomContainer,
-    StyledForm
+    CustomForm,
+    CustomSubmitButton
 } from "../components/EditProfile/EditComponents";
 import ProfilePic from "components/Picture/ProfilePic";
 import { useTranslation } from "react-i18next";
@@ -23,16 +23,41 @@ import { Link } from "react-router-dom";
 import { fetchUser, fetchUserError, fetchUserSuccess } from 'hooks/actions/userActions';
 import axios from 'axios';
 import ErrorAlert from 'components/Alert/ErrorAlert';
+import { useForm } from 'react-hook-form';
+import { blockLabelStyles, inputStyles } from 'constants/formStyles';
+import Input from "components/Input/BaseInput";
+import InputError from "components/Input/InputError";
+import Label from "components/Input/Label";
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
+import styled from 'styled-components';
+import { theme } from "constants/theme";
+import { validatePassword } from "utils/validators";
+
+// Icons
+import SvgIcon from "components/Icon/SvgIcon";
+import eyeUnmask from "assets/icons/eye-unmask.svg";
+import eyeMask from "assets/icons/eye-mask.svg";
+
 
 const EditUserPassword = (props) => {
     const { userProfileState, userProfileDispatch } = useContext(UserContext);
     const { t } = useTranslation();
     const { error, loading, user } = userProfileState;
-    const { firstName, lastName } =
+    const { firstName, lastName, usesPassword = false } =
         user || {};
-    const strongRegex = new RegExp(`^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})`);
 
+    const {
+        errors,
+        handleSubmit,
+        register,
+        getValues
+    } = useForm({
+        mode: "change",
+    });
 
+    const [passwordType, setPasswordType] = useState("password");
+    const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+    const [oldPasswordType, setOldPasswordType] = useState("password");
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -58,7 +83,35 @@ const EditUserPassword = (props) => {
 
     if (loading) return <div>"{t("profile.common.loading")}"</div>;
 
-    const handleChangePassword = async (values) => {
+    const togglePasswordVisibility = () => {
+        if (passwordType === "password") {
+            setPasswordType("text");
+        } else {
+            setPasswordType("password");
+        }
+    };
+    const toggleOldPasswordVisibility = () => {
+        if (oldPasswordType === "password") {
+            setOldPasswordType("text");
+        } else {
+            setOldPasswordType("password");
+        }
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        if (confirmPasswordType === "password") {
+            setConfirmPasswordType("text");
+        } else {
+            setConfirmPasswordType("password");
+        }
+    };
+
+    const comparePasswordConfirmation = (confirmPassword) => {
+        const { newPassword } = getValues();
+        return newPassword === confirmPassword || t("auth.passwordNotMatch");
+    };
+
+    const onSubmit = async (values) => {
         const { newPassword, oldPassword } = values
 
         setLoading(true)
@@ -73,7 +126,17 @@ const EditUserPassword = (props) => {
         }
     }
 
-
+    const VisibilityButton = ({ onClick, type }) => {
+        return (
+            <VisibilityIconWrapper>
+                {type === "text" ? (
+                    <SvgIcon src={eyeMask} onClick={onClick} />
+                ) : (
+                        <SvgIcon src={eyeUnmask} onClick={onClick} />
+                    )}
+            </VisibilityIconWrapper>
+        );
+    };
 
     return (
         <Background>
@@ -107,84 +170,158 @@ const EditUserPassword = (props) => {
                         <CustomLink>
                             <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
                         </CustomLink>
-                        <CustomLink isSelected>
-                            <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
-                        </CustomLink>
+                        {usesPassword && (
+                            <CustomLink isSelected>
+                                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+                            </CustomLink>
+                        )}
+
                     </OptionDiv>
-                    <CustomContainer>
+                    <CustomForm>
                         {error && <ErrorAlert message={error} type="error" />}
-                        <StyledForm
-                            name="change-password"
-                            onFinish={handleChangePassword}
-                            layout="vertical"
-                        >
+                        {isLoading && (<div style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
 
-                            <StyledForm.Item
-                                name="oldPassword"
-                                label={t('profile.individual.currentPassword')}
-                                rules={[{ required: true, message: t('profile.individual.currentPasswordRequired') },]}
-                                hasFeedback
-                            >
-                                <Input.Password />
-                            </StyledForm.Item>
+                        }}>
+                            <Label
+                                htmlFor="updatingPassword"
+                                style={{ ...blockLabelStyles, fontSize: "2.0rem" }}
+                                label={t("profile.individual.updatingPassword")}
+                            />
 
-                            <StyledForm.Item
-                                name="newPassword"
-                                label={t('profile.individual.newPassword')}
-                                rules={[
-                                    { required: true, message: t('profile.individual.newPasswordRequired'), },
-                                    () => ({
-                                        validator(rule, value) {
-                                            if (value && !strongRegex.test(value)) {
+                            <Spin size="large" style={{ marginLeft: "1.0rem" }} />
+                        </div>)}
+                        {!isLoading && (
+                            <>
+                                <InputWrapper>
+                                    <Label
+                                        htmlFor="oldPassword"
+                                        style={blockLabelStyles}
+                                        label={t("profile.individual.currentPassword")}
+                                    />
+                                    <Input
+                                        type={oldPasswordType}
+                                        name="oldPassword"
+                                        id="oldPassword"
+                                        className={errors.oldPassword && "has-error"}
+                                        placeholder={t("profile.individual.enterCurrentPassword")}
+                                        ref={register({
+                                            required: t("profile.individual.currentPasswordRequired") + ".",
+                                        })}
+                                        style={{ ...inputStyles, paddingRight: "3.5rem" }}
+                                    />
+                                    <VisibilityButton
+                                        onClick={toggleOldPasswordVisibility}
+                                        type={oldPasswordType}
+                                    />
+                                    {errors.oldPassword && (
+                                        <InputError>{errors.oldPassword.message}</InputError>
+                                    )}
+                                </InputWrapper>
 
-                                                return Promise.reject(t('profile.common.invalidPassword'));
-                                            } else if (value && strongRegex.test(value)) {
-                                                return Promise.resolve();
-                                            } else {
-                                                return Promise.reject()
-                                            }
-                                        },
-                                    }),
-                                ]}
-                                hasFeedback
-                            >
-                                <Input.Password style={{ width: "100%" }} />
-                            </StyledForm.Item>
+                                <InputWrapper>
+                                    <Label
+                                        htmlFor="newPassword"
+                                        style={blockLabelStyles}
+                                        label={t("profile.individual.newPassword")}
+                                    />
+                                    <Input
+                                        type={passwordType}
+                                        name="newPassword"
+                                        id="newPassword"
+                                        className={errors.newPassword && "has-error"}
+                                        placeholder={t("profile.individual.enterNewPassword")}
+                                        ref={register({
+                                            maxLength: {
+                                                value: PASSWORD_MAX_LENGTH,
+                                                message: t("auth.passwordMax", {
+                                                    num: PASSWORD_MAX_LENGTH,
+                                                }),
+                                            },
+                                            minLength: {
+                                                value: PASSWORD_MIN_LENGTH,
+                                                message: t("auth.passwordMin", {
+                                                    num: PASSWORD_MIN_LENGTH,
+                                                }),
+                                            },
+                                            required: t("profile.individual.newPasswordRequired") + ".",
+                                            validate: (newPassword) =>
+                                                validatePassword(newPassword) ||
+                                                t("profile.common.invalidPassword"),
+                                        })}
+                                        style={{ ...inputStyles, paddingRight: "3.5rem" }}
+                                    />
+                                    <VisibilityButton
+                                        onClick={togglePasswordVisibility}
+                                        type={passwordType}
+                                    />
+                                    {errors.newPassword && (
+                                        <InputError>{errors.newPassword.message}</InputError>
+                                    )}
+                                </InputWrapper>
 
-                            <StyledForm.Item
-                                name="confirm"
-                                label={t('profile.individual.confirmNewPassword')}
-                                dependencies={['newPassword']}
-                                hasFeedback
-                                rules={[
-                                    { required: true, message: t('profile.individual.confirmNewPasswordRequired') },
-                                    ({ getFieldValue }) => ({
-                                        validator(rule, value) {
-                                            if (!value || getFieldValue('newPassword') === value) {
-                                                return Promise.resolve();
-                                            }
+                                <InputWrapper>
+                                    <Label
+                                        htmlFor="confirmPassword"
+                                        style={blockLabelStyles}
+                                        label={t("profile.individual.confirmNewPassword")}
+                                    />
+                                    <Input
+                                        type={confirmPasswordType}
+                                        name="confirmPassword"
+                                        id="confirmPassword"
+                                        className={errors.confirmPassword && "has-error"}
+                                        required
+                                        placeholder={t("auth.confirmPassword")}
+                                        ref={register({
+                                            maxLength: PASSWORD_MAX_LENGTH,
+                                            minLength: PASSWORD_MIN_LENGTH,
+                                            required: t("auth.passwordConfirmationRequired"),
+                                            validate: comparePasswordConfirmation,
+                                        })}
+                                        style={{ ...inputStyles, paddingRight: "3.5rem" }}
+                                    />
+                                    <VisibilityButton
+                                        onClick={toggleConfirmPasswordVisibility}
+                                        type={confirmPasswordType}
+                                    />
+                                    {errors.confirmPassword && (
+                                        <InputError>{errors.confirmPassword.message}</InputError>
+                                    )}
+                                </InputWrapper>
+                                <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
+                                    {t("profile.common.saveChanges")}
+                                </CustomSubmitButton>
+                            </>
+                        )}
 
-                                            return Promise.reject(t('profile.individual.passwordMatch'));
-                                        },
-                                    }),
-                                ]}
-                            >
-                                <Input.Password />
-                            </StyledForm.Item>
-
-                            <div style={{ textAlign: "center" }}>
-                                <Button loading={isLoading} htmlType="submit" type="primary" shape="round" size="large">{t('profile.common.saveChanges')}</Button>
-
-                            </div>
-
-
-                        </StyledForm>
-                    </CustomContainer>
+                    </CustomForm>
                 </FormLayout>
 
             </EditLayout>
         </Background>
     )
 }
+const { colors } = theme;
+
+const InputWrapper = styled.div`
+  margin: 2.2rem auto;
+  width: 100%;
+  position: relative;
+`;
+
+const VisibilityIconWrapper = styled.div`
+  position: absolute;
+  top: 2.3rem;
+  right: 0.5rem;
+  color: ${colors.tropicalBlue};
+  cursor: pointer;
+`;
+
+
 
 export default withUserContext(EditUserPassword)

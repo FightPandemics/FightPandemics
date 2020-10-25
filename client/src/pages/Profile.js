@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -136,6 +136,7 @@ const Profile = ({
     objectives = {},
     ownUser,
     urls = {},
+    usesPassword = false
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
@@ -438,8 +439,8 @@ const Profile = ({
           {address ? (
             <LocationMobileDiv>{address}</LocationMobileDiv>
           ) : (
-            <WhiteSpace />
-          )}
+              <WhiteSpace />
+            )}
           <IconsContainer>
             <HelpContainer>
               {needHelp && t("profile.individual.needHelp")}
@@ -551,6 +552,16 @@ const Profile = ({
               {t("profile.individual.editProfile")}{" "}
             </Link>
           </DrawerHeader>
+          {usesPassword && (
+            <DrawerHeader>
+              <Link to="/edit-security">
+                {t("profile.individual.editSecurity")}{" "}
+              </Link>
+            </DrawerHeader>
+          )}
+
+
+
         </CustomDrawer>
       )}
       <WhiteSpace />

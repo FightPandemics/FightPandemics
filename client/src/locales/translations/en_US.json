@@ -261,7 +261,12 @@
       "confirmNewPasswordRequired": "Please confirm your password!",
       "passwordMatch": "The two passwords that you entered do not match!",
       "passwordUpdateSuccess": "Password change successful",
-      "passwordUpdateError": "Password change unsuccessful"
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword":"Enter current password",
+      "enterNewPassword":"Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity":"Edit Security"
+
     },
     "org": {
       "title": "Create Organization Profile",
