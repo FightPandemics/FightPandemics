@@ -35,6 +35,7 @@ const CurrentChat = ({
   } = useContext(ChatContext);
 
   const scrollToBottom = React.useRef(null);
+  const inputRef = React.useRef(null);
 
   const getSender = (participants) => {
     return participants.filter((p) => p.id == user.id)[0];
@@ -98,6 +99,7 @@ const CurrentChat = ({
         isLoading={isLoading}
         getScrollToBottom={scrollToBottom}
         inputExpanded={inputExpanded}
+        inputRef={inputRef}
       />
       {room && (
         <InputBox
@@ -118,6 +120,7 @@ const CurrentChat = ({
           editingMessageId={editingMessageId}
           setEditingMessageId={setEditingMessageId}
           editMessage={editMessage}
+          inputRef={inputRef}
         />
       )}
     </CurrentChatContainer>

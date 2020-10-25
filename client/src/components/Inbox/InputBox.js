@@ -152,9 +152,8 @@ export const InputBox = ({
   editMessage,
   editingMessageId,
   setEditingMessageId,
+  inputRef,
 }) => {
-  const inputRef = useRef(null);
-
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
@@ -173,7 +172,7 @@ export const InputBox = ({
       window.screen.width >= parseInt(mq.phone.wide.maxWidth)
     )
       inputRef.current.focus();
-  }, []);
+  }, [inputRef]);
 
   const handleChange = async (e) => {
     await setText(e.target.value);
@@ -185,7 +184,7 @@ export const InputBox = ({
       return setInputExpanded(true);
     if ((text.match(/\n/g) || []).length) setInputExpanded(true);
     else setInputExpanded(false);
-  }, [inputExpanded, setInputExpanded, text]);
+  }, [inputExpanded, inputRef, setInputExpanded, text]);
 
   useEffect(() => {
     if (typeof scrollToBottom === "function") {

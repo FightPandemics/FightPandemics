@@ -30,6 +30,7 @@ const Messages = ({
   editingMessageId,
   setEditingMessageId,
   getScrollToBottom,
+  inputRef,
   isLoading,
   inputExpanded,
 }) => {
@@ -120,7 +121,12 @@ const Messages = ({
 
   function startMessageEditing(messageId, content) {
     setEditingMessageId(messageId);
-    if (isMobile()) setText(content);
+    if (isMobile()) {
+      setText(content);
+      if (inputRef.current && inputRef.current?.focus) {
+        inputRef.current.focus();
+      }
+    }
   }
 
   function cancelMessageEditing() {
@@ -134,19 +140,21 @@ const Messages = ({
     setEditingMessageId(null);
   }
 
-  const menu = (messageId, content) => (
-    <Menu key={"menu-" + messageId}>
-      {
-        <Menu.Item onClick={() => startMessageEditing(messageId, content)}>
-          Edit
+  const menu = React.useCallback(
+    (messageId, content) => (
+      <Menu key={"menu-" + messageId}>
+        {
+          <Menu.Item onClick={() => startMessageEditing(messageId, content)}>
+            Edit
+          </Menu.Item>
+        }
+        <Menu.Item onClick={() => showDeleteConfirm(messageId)} danger>
+          Delete
         </Menu.Item>
-      }
-      <Menu.Item onClick={() => showDeleteConfirm(messageId)} danger>
-        Delete
-      </Menu.Item>
-    </Menu>
+      </Menu>
+    ),
+    [showDeleteConfirm, startMessageEditing],
   );
-
   const Sender = ({ postRef, message, messageId, isDeleted, isEdited }) => {
     return (
       <BubbleContainer
@@ -154,34 +162,41 @@ const Messages = ({
         key={"b-" + messageId}
       >
         {isEdited && <small>Edited</small>}
-        <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
-          {!isDeleted && editingMessageId !== messageId && (
-            <Dropdown
-              overlay={menu(messageId, message)}
-              placement="bottomRight"
-            >
-              <MessageMenu>
-                <img src={subMenuIcon} />
-              </MessageMenu>
-            </Dropdown>
-          )}
-          {postRef && !(!isMobile() && editingMessageId === messageId) && (
-            <OrgPost postRef={postRef} />
-          )}
-          <div className="message-content-sender">
-            {!isDeleted && message
-              ? linkify(message)
-              : "You deleted this message."}
-          </div>
-          {!isMobile() && editingMessageId === messageId && (
-            <textarea
-              key={"t-area-" + messageId}
-              ref={editTextArea}
-              defaultValue={message}
-              maxlength={2048}
-            ></textarea>
-          )}
-        </SenderBubble>
+        <Dropdown
+          trigger={["contextMenu"]}
+          overlay={menu(messageId, message)}
+          placement="bottomRight"
+        >
+          <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
+            {!isDeleted && editingMessageId !== messageId && (
+              <Dropdown
+                trigger={["click"]}
+                overlay={menu(messageId, message)}
+                placement="bottomRight"
+              >
+                <MessageMenu>
+                  <img alt="menu" src={subMenuIcon} />
+                </MessageMenu>
+              </Dropdown>
+            )}
+            {postRef && !(!isMobile() && editingMessageId === messageId) && (
+              <OrgPost postRef={postRef} />
+            )}
+            <div className="message-content-sender">
+              {!isDeleted && message
+                ? linkify(message)
+                : "You deleted this message."}
+            </div>
+            {!isMobile() && editingMessageId === messageId && (
+              <textarea
+                key={"t-area-" + messageId}
+                ref={editTextArea}
+                defaultValue={message}
+                maxlength={2048}
+              ></textarea>
+            )}
+          </SenderBubble>
+        </Dropdown>
         {!isMobile() && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
             <button onClick={() => cancelMessageEditing()}>Cancel</button>
