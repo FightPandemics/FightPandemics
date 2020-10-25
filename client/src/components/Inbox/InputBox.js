@@ -25,7 +25,7 @@ const InputContainer = styled.div`
   justify-content: center;
   width: calc(100% - 33.6rem);
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     bottom: 0.42rem;
@@ -58,6 +58,15 @@ const ChatDisabled = styled.div`
   padding-bottom: 2.8rem;
   background: #fff;
   font-family: ${theme?.typography?.font?.family?.body};
+
+  & > div {
+    margin-top: 1rem;
+    flex-flow: row wrap;
+    justify-content: center;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: flex;
+    }
+  }
   .unblock-btn {
     display: block;
     border: 1px solid #425af2 !important;
@@ -82,14 +91,29 @@ const ChatDisabled = styled.div`
     cursor: pointer;
     margin: 0.5rem;
     min-width: 12.5rem;
+
+    &.accept-btn {
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        width: 100%;
+      }
+    }
     &.ingore-btn {
       color: red;
       border: 0.1rem solid red !important;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        width: calc(50% - 10px);
+      }
     }
     &.block-btn {
       float: right;
       color: black;
       border: 0.1rem solid black !important;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        float: none;
+        width: calc(50% - 10px);
+      }
     }
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -121,6 +145,7 @@ export const InputBox = ({
   blockStatus,
   leaveAllRooms,
   unblockThread,
+  scrollToBottom,
   blockThread,
   archiveThread,
   setToggleViewRequests,
@@ -161,6 +186,12 @@ export const InputBox = ({
     if ((text.match(/\n/g) || []).length) setInputExpanded(true);
     else setInputExpanded(false);
   }, [inputExpanded, setInputExpanded, text]);
+
+  useEffect(() => {
+    if (typeof scrollToBottom === "function") {
+      scrollToBottom();
+    }
+  }, [inputExpanded, scrollToBottom]);
 
   const handleSendMgessage = async () => {
     // mobile editing is done inside the inputBox

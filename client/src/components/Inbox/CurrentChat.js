@@ -30,8 +30,11 @@ const CurrentChat = ({
     setEditingMessageId,
     inputExpanded,
     setInputExpanded,
+    toggleViewRequests,
     setToggleViewRequests,
   } = useContext(ChatContext);
+
+  const scrollToBottom = React.useRef(null);
 
   const getSender = (participants) => {
     return participants.filter((p) => p.id == user.id)[0];
@@ -91,7 +94,9 @@ const CurrentChat = ({
         onLoadMoreClick={onLoadMoreClick}
         editingMessageId={editingMessageId}
         setEditingMessageId={setEditingMessageId}
+        toggleViewRequests={toggleViewRequests}
         isLoading={isLoading}
+        getScrollToBottom={scrollToBottom}
         inputExpanded={inputExpanded}
       />
       {room && (
@@ -100,6 +105,7 @@ const CurrentChat = ({
           setText={setText}
           user={user}
           room={room}
+          scrollToBottom={scrollToBottom?.current}
           sendMessage={sendMessage}
           inputExpanded={inputExpanded}
           setInputExpanded={setInputExpanded}

@@ -42,6 +42,7 @@ export const BubbleContainer = styled.div`
 `;
 export const MessagesContainer = styled.div`
   min-height: calc(100vh - 26rem);
+  height: calc(100vh - 18rem);
   position: relative;
   display: block;
   padding: 0 1rem;
@@ -50,14 +51,16 @@ export const MessagesContainer = styled.div`
   overflow-y: scroll;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
-    min-height: calc(100vh - 16rem);
+    min-height: calc(100vh - 17rem);
     margin-top: 6.8rem;
-    &.input-expanded {
-      height: calc(100% - 8em);
+
+    &.request-page {
+      min-height: calc(100vh - 32rem);
     }
   }
   &.input-expanded {
-    height: calc(100% - 12em);
+    height: calc(100vh - 23rem);
+    min-height: calc(100vh - 23rem);
   }
   a {
     text-decoration: underline;
@@ -83,7 +86,8 @@ export const SenderBubble = styled.div`
   position: relative;
   display: inline-block;
   max-width: 60%;
-  background-color: #f3f4fe;
+  background-color: #425af2;
+  color: white;
   padding: 1.12rem 0.14rem 1.12rem 0.14rem;
   border-radius: 1.6rem;
   letter-spacing: 1px;
@@ -104,9 +108,10 @@ export const SenderBubble = styled.div`
     left: 0;
     top: 0;
     border-radius: 1.4rem 1.4rem 0.14rem 1.4rem;
-    padding: 1.12rem 1.1em 1.12rem 1.1em;
-    overflow: hidden;
+    padding: 1.12rem;
+    overflow: auto;
     color: black;
+    max-height: 15rem;
   }
   &.deleted {
     opacity: 0.7;

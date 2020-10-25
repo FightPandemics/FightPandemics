@@ -8,7 +8,7 @@ import { Badge } from "antd";
 import TextAvatar from "components/TextAvatar";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { SideChatContainer } from "./Container";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
 import Button from "components/Button/BaseButton";
 
 const UserName = styled.h4`

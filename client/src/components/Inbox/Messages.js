@@ -26,8 +26,10 @@ const Messages = ({
   deleteMessage,
   editMessage,
   onLoadMoreClick,
+  toggleViewRequests,
   editingMessageId,
   setEditingMessageId,
+  getScrollToBottom,
   isLoading,
   inputExpanded,
 }) => {
@@ -41,6 +43,10 @@ const Messages = ({
       element.scrollTo(0, element?.scrollHeight);
     }
   }, []);
+
+  React.useEffect(() => {
+    getScrollToBottom.current = scrollToBottom;
+  }, [getScrollToBottom, scrollToBottom]);
 
   const isMobile = () => {
     return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
@@ -71,7 +77,8 @@ const Messages = ({
   // messages time grouping
   const shouldShowTime = (messageIndex) => {
     // this order is important
-    if (chatLog.length === 1) return true;
+    // always show time for latest one
+    if (!chatLog[messageIndex + 1]) return true;
     if (
       !chatLog[messageIndex + 1] &&
       moment().diff(chatLog[messageIndex].createdAt, "minutes") <=
@@ -101,7 +108,10 @@ const Messages = ({
       action: [
         {
           text: <Text type="danger">Delete</Text>,
-          onPress: () => deleteMessage(messageId),
+          onPress: () => {
+            deleteMessage(messageId);
+            setAlertBox({ show: false });
+          },
         },
         { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
       ],
@@ -155,7 +165,9 @@ const Messages = ({
               </MessageMenu>
             </Dropdown>
           )}
-          {postRef && <OrgPost postRef={postRef} />}
+          {postRef && !(!isMobile() && editingMessageId === messageId) && (
+            <OrgPost postRef={postRef} />
+          )}
           <div className="message-content-sender">
             {!isDeleted && message
               ? linkify(message)
@@ -214,7 +226,9 @@ const Messages = ({
   return (
     <MessagesContainer
       ref={messagesEndRef}
-      className={`${inputExpanded ? "input-expanded" : ""}`}
+      className={`${toggleViewRequests ? "request-page" : ""} ${
+        inputExpanded ? "input-expanded" : ""
+      }`}
     >
       {alertBoxData?.show && (
         <AlertBox

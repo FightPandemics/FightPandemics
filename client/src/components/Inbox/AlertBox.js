@@ -39,6 +39,10 @@ const StyledModal = styled(Modal)`
     .am-modal-button {
       width: 100%;
       flex: 100%;
+      font-size: 1.4rem;
+      font-family: ${theme?.typography?.font?.family?.body};
+      height: 4.4rem;
+      line-height: 4.4rem;
 
       border-top: 1px solid #f2f2f2;
     }
