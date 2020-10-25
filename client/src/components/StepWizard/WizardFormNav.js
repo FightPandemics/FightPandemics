@@ -45,12 +45,22 @@ export const StyledButtonWizard = styled(StepWizard)`
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
   const { t } = useTranslation();
-
   const handleClick = () => {
     if (history?.location?.state?.from) {
-      history.goBack();
-    } else {
-      history.push(FEED);
+      const fromWhere = history.location.state.from;
+      if (typeof fromWhere !== "object") {
+        if (fromWhere?.indexOf("feed") > -1) {
+          const { state } = history.location;
+          history.push(FEED, {
+            ...state,
+            keepScroll: true,
+          });
+        } else {
+          history.goBack();
+        }
+      } else {
+        history.push(FEED);
+      }
     }
   };
 
