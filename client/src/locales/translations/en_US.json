@@ -255,7 +255,7 @@
       "lastNameRequired": "Last name is required.",
       "newPassword": "New Password",
       "currentPassword": "Current Password",
-      "confirmNewPassword": "New Password, confirmation",
+      "confirmNewPassword": "Confirm Password",
       "currentPasswordRequired": "Current password is required",
       "newPasswordRequired": "New password is required",
       "confirmNewPasswordRequired": "Please confirm your password!",
