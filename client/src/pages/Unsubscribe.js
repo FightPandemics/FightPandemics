@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ErrorAlert from "components/Alert/ErrorAlert";
+import SuccessAlert from "components/Alert/SuccessAlert";
 import Heading from "components/Typography/Heading";
 import { useQuery } from "utils/hooks.js";
 import { useTranslation } from "react-i18next";
@@ -95,15 +96,20 @@ const Unsubscribe = (props) => {
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
-  const [unsubError, setUnsubError] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState("");
 
   const onSubmit = async (formData) => {
     try {
-      const res = await axios.patch("/api/users/unsubscribe", formData, config);
-      props.history.push(`/`);
+      await axios.patch("/api/users/unsubscribe", formData, config);
+      setMessageSuccess(t("unsubscribe.success"));
+      // delay for showing user the success Alert
+      setTimeout(() => {
+        props.history.push(`/`);
+      }, 2000);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
-      setUnsubError(message);
+      setMessageError(message);
     }
   };
 
@@ -119,7 +125,7 @@ const Unsubscribe = (props) => {
         }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
-        setUnsubError(message);
+        setMessageError(message);
       }
     })();
   }, []);
@@ -132,7 +138,10 @@ const Unsubscribe = (props) => {
         </SocialImageContainer>
       </LoginLeftContainer>
       <LoginRightContainer>
-        {unsubError && <ErrorAlert message={unsubError} type="error" />}
+        {messageSuccess && (
+          <SuccessAlert message={messageSuccess} type="success" />
+        )}
+        {messageError && <ErrorAlert message={messageError} type="error" />}
         <div className={"form-container"}>
           <Heading className="h4 text-center" level={4}>
             {t("unsubscribe.notifyPrefs")}

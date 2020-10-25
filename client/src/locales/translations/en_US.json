@@ -804,6 +804,7 @@
     "tryAgainBtn": "Try Again"
   },
   "unsubscribe": {
-    "notifyPrefs": "Notification Preference"
+    "notifyPrefs": "Notification Preference",
+    "success": "Your notification preference is updated"
   }
 }
