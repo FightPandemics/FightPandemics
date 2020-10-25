@@ -58,21 +58,21 @@ const NotifyPreferenceInput = ({
   control,
   currPrefs,
   setCurrPrefs,
-  checksEnabled,
-  setChecksEnabled,
+  setValue,
   switchOnOff,
   setSwitchOnOff,
   disabledPrefs,
 }) => {
-  //const [switchOnOff, setSwitchOnOff] = useState(true);
-  //const [checksEnabled, setchecksEnabled] = useState(true);
-  //const [currPrefs, setCurrPrefs] = useState(disabledPrefs);
+  const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
 
   useEffect(() => {
-    setCurrPrefs({ ...currPrefs, ...disabledPrefs });
+    if (!switchOnOff) {
+      setValue("notifyPrefs", { ...disabledPrefs });
+      setCurrPrefs({ ...currPrefs, ...disabledPrefs });
+    }
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff]);
+  }, [currPrefs, disabledPrefs, setCurrPrefs, setValue, switchOnOff]);
 
   return (
     <div>

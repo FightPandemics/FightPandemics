@@ -5,13 +5,13 @@ import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
 import { useQuery } from "utils/hooks.js";
 import { useTranslation } from "react-i18next";
-//import { CustomForm } from "components/EditProfile/EditComponents";
+import isEqual from "lodash/isEqual";
 import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
 import { CustomSubmitButton } from "components/EditProfile/EditComponents";
-// ICONS
-import socialmedia2 from "assets/social-media2.svg";
 import { mq, theme } from "constants/theme";
 import styled from "styled-components";
+// ICONS
+import socialmedia2 from "assets/social-media2.svg";
 
 const { colors } = theme;
 const LoginContainer = styled.div`
@@ -77,7 +77,7 @@ const CustomForm = styled.form`
 `;
 
 const Unsubscribe = (props) => {
-  const { control, formState, handleSubmit } = useForm({
+  const { control, formState, handleSubmit, setValue } = useForm({
     mode: "change",
   });
   const { t } = useTranslation();
@@ -94,16 +94,11 @@ const Unsubscribe = (props) => {
     share: { instant: false, daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
-  const [checksEnabled, setChecksEnabled] = useState(true);
+  const [switchOnOff, setSwitchOnOff] = useState(true);
   const [unsubError, setUnsubError] = useState("");
 
   const onSubmit = async (formData) => {
     try {
-      if (!checksEnabled) {
-        Object.assign(formData, {
-          notifyPrefs: { ...disabledPrefs },
-        });
-      }
       const res = await axios.patch("/api/users/unsubscribe", formData, config);
       props.history.push(`/`);
     } catch (err) {
@@ -116,14 +111,18 @@ const Unsubscribe = (props) => {
     (async function fetchProfile() {
       try {
         const res = await axios.get("/api/users/unsubscribe", config);
-        setCurrPrefs({ ...currPrefs, ...res.data.notifyPrefs });
-        //TODO: data is not populated to UI
+        let { _id, ...prefs } = res.data.notifyPrefs;
+        setCurrPrefs({ ...currPrefs, ...prefs });
+        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
+        if (isEqual(prefs, disabledPrefs)) {
+          setSwitchOnOff(false); // update switch button
+        }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         setUnsubError(message);
       }
     })();
-  }, []);
+  }, [config, currPrefs, disabledPrefs, setValue]);
 
   return (
     <LoginContainer>
@@ -143,8 +142,9 @@ const Unsubscribe = (props) => {
               control={control}
               currPrefs={currPrefs}
               setCurrPrefs={setCurrPrefs}
-              checksEnabled={checksEnabled}
-              setChecksEnabled={setChecksEnabled}
+              setValue={setValue}
+              switchOnOff={switchOnOff}
+              setSwitchOnOff={setSwitchOnOff}
               disabledPrefs={disabledPrefs}
             />
             {/* Button that saves changes */}

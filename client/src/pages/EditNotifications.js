@@ -32,7 +32,7 @@ import isEqual from "lodash/isEqual";
 
 function EditNotifications(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const { control, formState, handleSubmit } = useForm({
+  const { control, formState, handleSubmit, setValue } = useForm({
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
@@ -45,20 +45,13 @@ function EditNotifications(props) {
     share: { instant: false, daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
-  const [checksEnabled, setChecksEnabled] = useState(true);
   const [switchOnOff, setSwitchOnOff] = useState(true);
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
     try {
-      if (!checksEnabled) {
-        Object.assign(formData, {
-          notifyPrefs: { ...disabledPrefs },
-        });
-      }
       const res = await axios.patch("/api/users/current", formData);
       userProfileDispatch(updateUserSuccess(res.data));
-      // TODO: consistently return _id or id or both
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
@@ -73,10 +66,11 @@ function EditNotifications(props) {
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get("/api/users/current");
-        setCurrPrefs({ ...currPrefs, ...res.data.notifyPrefs });
         let { _id, ...prefs } = res.data.notifyPrefs;
+        setCurrPrefs({ ...currPrefs, ...prefs });
+        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         if (isEqual(prefs, disabledPrefs)) {
-          setSwitchOnOff(false);
+          setSwitchOnOff(false); // update switch button
         }
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
@@ -86,7 +80,7 @@ function EditNotifications(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [currPrefs, disabledPrefs, setValue, userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
@@ -126,8 +120,7 @@ function EditNotifications(props) {
               control={control}
               currPrefs={currPrefs}
               setCurrPrefs={setCurrPrefs}
-              checksEnabled={checksEnabled}
-              setChecksEnabled={setChecksEnabled}
+              setValue={setValue}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
               disabledPrefs={disabledPrefs}
