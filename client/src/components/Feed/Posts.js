@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
   InfiniteLoader,
@@ -50,10 +51,32 @@ const Posts = ({
   totalPostCount,
 }) => {
   const posts = Object.entries(filteredPosts);
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const scrollIndex = useRef(0);
+  const history = useHistory();
+  const scrollToIndex = () => {
+    if (history?.location?.state) {
+      let { keepScrollIndex, keepScroll } = history.location.state;
+      if (keepScroll) return keepScrollIndex;
+    }
+    return -1;
+  };
+  const loadMoreItems = isNextPageLoading
+    ? () => {
+        if (history?.location?.state) {
+          const { keepScrollIndex, keepScroll } = history.location.state;
+          if (keepScroll && scrollIndex.current < keepScrollIndex) {
+            scrollIndex.current = keepScrollIndex;
+          } else {
+            history.location.state.keepScrollIndex = scrollIndex.current;
+            history.location.state.keepScroll = false;
+          }
+        }
+      }
+    : loadNextPage;
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
+      scrollIndex.current = index;
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
       } else if (posts[index]) {
@@ -70,6 +93,7 @@ const Posts = ({
               deleteModalVisibility={deleteModalVisibility}
               handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
+              keepScrollIndex={scrollIndex.current}
             />
             <HorizontalRule />
           </>
@@ -133,8 +157,9 @@ const Posts = ({
                       rowRenderer={postItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
-                      overscanRowCount={10}
+                      overscanRowCount={1}
                       scrollToAlignment={"start"}
+                      scrollToIndex={scrollToIndex()}
                     />
                   )}
                 </AutoSizer>
