@@ -28,6 +28,7 @@ import {
 } from "hooks/actions/userActions";
 import { getInitialsFromFullName } from "utils/userInfo";
 import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
+import isEqual from "lodash/isEqual";
 
 function EditNotifications(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -45,6 +46,7 @@ function EditNotifications(props) {
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [checksEnabled, setChecksEnabled] = useState(true);
+  const [switchOnOff, setSwitchOnOff] = useState(true);
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
@@ -72,6 +74,10 @@ function EditNotifications(props) {
       try {
         const res = await axios.get("/api/users/current");
         setCurrPrefs({ ...currPrefs, ...res.data.notifyPrefs });
+        let { _id, ...prefs } = res.data.notifyPrefs;
+        if (isEqual(prefs, disabledPrefs)) {
+          setSwitchOnOff(false);
+        }
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -80,7 +86,7 @@ function EditNotifications(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [currPrefs, disabledPrefs, userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
@@ -122,6 +128,8 @@ function EditNotifications(props) {
               setCurrPrefs={setCurrPrefs}
               checksEnabled={checksEnabled}
               setChecksEnabled={setChecksEnabled}
+              switchOnOff={switchOnOff}
+              setSwitchOnOff={setSwitchOnOff}
               disabledPrefs={disabledPrefs}
             />
             {/* Button that saves changes */}
