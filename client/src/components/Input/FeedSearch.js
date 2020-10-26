@@ -428,7 +428,7 @@ export default class FeedNavSearch extends React.Component {
             src={SearchSvg}
             onClick={() => {
               this.setState({ toggleOptionsList: false });
-              if (!inputValue || !selectedValue[0]) return;
+              if (!inputValue || (isMobile && !selectedValue[0])) return;
               if (inputValue.length < MIN_KEYWORD_CHARS) {
                 return this.setState({ tooShort: true });
               }
