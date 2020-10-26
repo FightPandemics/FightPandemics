@@ -7,6 +7,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import moment from "moment";
 import gearIcon from "assets/icons/settings-blue.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
+import { useTranslation } from "react-i18next";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -52,6 +53,8 @@ export const ChatList = ({
   toggleViewRequests,
   setToggleViewRequests,
 }) => {
+  const { t } = useTranslation();
+
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id !== user.id)[0];
   };
@@ -122,14 +125,14 @@ export const ChatList = ({
           }}
           style={{ cursor: "pointer" }}
         >
-          <SettingsBackArrow src={arrow} alt="Back Arrow" /> Messages Settings
+          <SettingsBackArrow src={arrow} alt="Back Arrow" /> {t("messaging.settings.header")}
         </ChatHeader>
         <div onClick={() => setToggleMobileChatList(false)}>
           <SettingsTabsSelector
             className={`${selectedSettingsTab === "BLOCKED" ? "selected" : ""}`}
             onClick={() => setSettingsTab("BLOCKED")}
           >
-            Blocked Accounts
+           {t("messaging.settings.blocked")}
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
           <SettingsTabsSelector
@@ -138,7 +141,7 @@ export const ChatList = ({
             }`}
             onClick={() => setSettingsTab("ARCHIVED")}
           >
-            Archived Conversations
+            {t("messaging.settings.archived")}
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
         </div>
@@ -152,7 +155,7 @@ export const ChatList = ({
         <>
           {!toggleViewRequests && (
             <ChatHeader>
-              Messages{" "}
+              {t("messaging.header")}{" "}
               <span>
                 {acceptedRooms
                   .map((_room) =>
@@ -178,7 +181,7 @@ export const ChatList = ({
                   style={{ transform: "rotate(90deg)" }}
                 />
               )}
-              Message requests <span>{pendingRooms.length}</span>
+              {t("messaging.requests")} <span>{pendingRooms.length}</span>
               {!toggleViewRequests && (
                 <SettingsIcon
                   src={arrow}

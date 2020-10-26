@@ -165,6 +165,8 @@ export const SideChatContainer = styled.div`
       max-width: 80%;
     }
     h5 {
+      position: absolute;
+      right: 2rem;
       color: gray;
       font-weight: 300;
       letter-spacing: 0.3px;

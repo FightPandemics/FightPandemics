@@ -4,6 +4,7 @@ import emptyinbox from "assets/empty-inbox.svg";
 import Button from "components/Button/SubmitButton";
 import { Link } from "react-router-dom";
 import { theme, mq } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const MsgHeader = styled.div`
   display: none;
@@ -60,21 +61,22 @@ const EmptyInboxContainer = styled.div`
 `;
 
 export const EmptyInbox = () => {
+  const { t } = useTranslation();
   return (
     <EmptyInboxContainer>
       <MsgHeader>
-        <span>Messages</span>
+        <span>{t("messaging.header")}</span>
       </MsgHeader>
       <img
         className="empty-inbox-logo"
         src={emptyinbox}
         alt="Empty Inbox Page"
       />
-      <h3>You don't have any messages</h3>
-      <p>You haven't recieved any messages yet.</p>
-      <p>Head back to Help Board to find offers or requests to respond to.</p>
+      <h3>{t("messaging.emptyInbox.header")}</h3>
+      <p>{t("messaging.emptyInbox.p1")}</p>
+      <p>{t("messaging.emptyInbox.p2")}</p>
       <Link to="/feed">
-        <StyledButton primary="true">Go to Help Board</StyledButton>
+        <StyledButton primary="true">{t("messaging.emptyInbox.goToHB")}</StyledButton>
       </Link>
     </EmptyInboxContainer>
   );

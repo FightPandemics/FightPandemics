@@ -9,6 +9,7 @@ import { ChatContext } from "context/ChatContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
 import { AlertBox } from "./AlertBox";
+import { useTranslation } from "react-i18next";
 const { Text } = Typography;
 
 const RecipientName = styled.div`
@@ -96,24 +97,29 @@ export const RecipientHeader = ({
   archiveThread,
   blockStatus,
 }) => {
+  const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
   const [alertBoxData, setAlertBox] = React.useState({});
 
   function showBlockConfirm() {
     setAlertBox({
       show: true,
-      title: `Block the connversation from ${participant.name}?`,
-      content: `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
+      title: t("messaging.blockQuestion", {
+        username: participant.name
+      }),
+      content: t("messaging.blockText", {
+        username: participant.name
+      }),
       action: [
         {
-          text: <Text type="danger">Block</Text>,
+          text: <Text type="danger"> {t("messaging.block")}</Text>,
           onPress: () => {
             blockThread(threadId);
             setAlertBox({ show: false });
             onMobileBackClick();
           },
         },
-        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
+        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
       ],
     });
   }
@@ -121,12 +127,11 @@ export const RecipientHeader = ({
   function showArchiveConfirm() {
     setAlertBox({
       show: true,
-      title: "Archive the conversation?",
-      content:
-        "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+      title: t("messaging.archiveQuestion"),
+      content: t("messaging.archiveText"),
       action: [
         {
-          text: <Text type="danger">Archive</Text>,
+          text: <Text type="danger">{t("messaging.archive")}</Text>,
           onPress: () => {
             archiveThread(threadId);
             setToggleMobileChatList(true);
@@ -134,17 +139,17 @@ export const RecipientHeader = ({
             onMobileBackClick();
           },
         },
-        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
+        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
       ],
     });
   }
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => showArchiveConfirm()}>Archive</Menu.Item>
+      <Menu.Item onClick={() => showArchiveConfirm()}>{t("messaging.archive")}</Menu.Item>
       {!blockStatus && (
         <Menu.Item onClick={() => showBlockConfirm()} danger>
-          Block
+           {t("messaging.block")}
         </Menu.Item>
       )}
     </Menu>
@@ -183,13 +188,13 @@ export const RecipientHeader = ({
             {participant.name}
             <LastSeen>
               {status == "online" ? (
-                "Active Now"
+                t("messaging.activeNow")
               ) : (
                 <>
-                  Last seen:{" "}
+                  {t("messaging.lastSeen")}:{" "}
                   {participant.lastAccess
                     ? getRelativeTime(participant.lastAccess)
-                    : "never"}
+                    : t("messaging.never")}
                 </>
               )}
             </LastSeen>

@@ -10,6 +10,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import { SideChatContainer } from "./Container";
 import { mq } from "constants/theme";
 import Button from "components/Button/BaseButton";
+import { useTranslation } from "react-i18next";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -96,14 +97,15 @@ const NoThreads = styled.p`
   font-size: 1.5rem;
 `;
 const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
+  const { t } = useTranslation();
   const { toggleMobileChatList } = useContext(ChatContext);
 
   const getTabName = () => {
     switch (selectedSettingsTab) {
       case "BLOCKED":
-        return "Blocked Accounts";
+        return t("messaging.settings.blocked");
       case "ARCHIVED":
-        return "Archived Conversations";
+        return t("messaging.settings.archived");
       default:
         return "";
     }
@@ -146,13 +148,13 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                 </div>
               </content>
               <StyledButton onClick={() => unblockThread(_room._id)}>
-                Unarchive
+              {t("messaging.settings.unarchive")}
               </StyledButton>
             </ThreadContainer>
           ))}
         {!rooms.filter((r) => getSender(r.participants).status === "archived")
           .length && (
-          <NoThreads>You don't have any archived conversations.</NoThreads>
+          <NoThreads>{t("messaging.settings.archiveEmpty")}</NoThreads>
         )}
       </ThreadsListContainer>
     );
@@ -180,13 +182,13 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                   className={"for-blocked"}
                   onClick={() => unblockThread(_room._id)}
                 >
-                  Unblock
+                  {t("messaging.settings.unblock")}
                 </StyledButton>
               </content>
             </ThreadContainer>
           ))}
         {!rooms.filter((r) => getSender(r.participants).status === "blocked")
-          .length && <NoThreads>You haven't blocked any accounts.</NoThreads>}
+          .length && <NoThreads>{t("messaging.settings.blockedEmpty")}</NoThreads>}
       </ThreadsListContainer>
     );
   };

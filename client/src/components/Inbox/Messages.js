@@ -14,6 +14,7 @@ import moment from "moment";
 import subMenuIcon from "assets/icons/submenu.svg";
 import { mq } from "constants/theme";
 import { AlertBox } from "./AlertBox";
+import { useTranslation } from "react-i18next";
 const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
@@ -34,6 +35,7 @@ const Messages = ({
   isLoading,
   inputExpanded,
 }) => {
+  const { t } = useTranslation();
   const messagesEndRef = useRef(null);
   const editTextArea = useRef();
   const [alertBoxData, setAlertBox] = React.useState({});
@@ -103,18 +105,17 @@ const Messages = ({
   function showDeleteConfirm(messageId) {
     setAlertBox({
       show: true,
-      title: "Delete the message?",
-      content:
-        "The selected message will be permanently deleted from both you and the recipent's devices. Are you sure you want to delete?",
+      title: t("messaging.deleteMessageQuestion"),
+      content: t("messaging.deleteMessageText"),
       action: [
         {
-          text: <Text type="danger">Delete</Text>,
+          text: <Text type="danger">{t("messaging.delete")}</Text>,
           onPress: () => {
             deleteMessage(messageId);
             setAlertBox({ show: false });
           },
         },
-        { text: "Cancel", onPress: () => setAlertBox({ show: false }) },
+        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
       ],
     });
   }
@@ -145,11 +146,11 @@ const Messages = ({
       <Menu key={"menu-" + messageId}>
         {
           <Menu.Item onClick={() => startMessageEditing(messageId, content)}>
-            Edit
+            {t("messaging.edit")}
           </Menu.Item>
         }
         <Menu.Item onClick={() => showDeleteConfirm(messageId)} danger>
-          Delete
+        {t("messaging.delete")}
         </Menu.Item>
       </Menu>
     ),
@@ -161,7 +162,7 @@ const Messages = ({
         className={`${editingMessageId === messageId ? "is-editing" : ""}`}
         key={"b-" + messageId}
       >
-        {isEdited && <small>Edited</small>}
+        {isEdited && <small>{t("messaging.edited")}</small>}
         <Dropdown
           trigger={["contextMenu"]}
           overlay={menu(messageId, message)}
@@ -185,7 +186,7 @@ const Messages = ({
             <div className="message-content-sender">
               {!isDeleted && message
                 ? linkify(message)
-                : "You deleted this message."}
+                : t("messaging.didDelete")}
             </div>
             {!isMobile() && editingMessageId === messageId && (
               <textarea
@@ -199,12 +200,12 @@ const Messages = ({
         </Dropdown>
         {!isMobile() && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
-            <button onClick={() => cancelMessageEditing()}>Cancel</button>
+            <button onClick={() => cancelMessageEditing()}>{t("messaging.cancel")}</button>
             <button
               className={"save"}
               onClick={() => saveMessageEditing(messageId)}
             >
-              Save changes
+               {t("messaging.saveEdit")}
             </button>
           </div>
         )}
@@ -222,10 +223,10 @@ const Messages = ({
           <div className="message-content-recipient">
             {!isDeleted && message
               ? linkify(message)
-              : "This message was deleted."}
+              : t("messaging.wasDeleted")}
           </div>
         </RecipientBubble>
-        {isEdited && <small>Edited</small>}
+        {isEdited && <small>{t("messaging.edited")}</small>}
       </BubbleContainer>
     );
   };
@@ -257,7 +258,7 @@ const Messages = ({
       )}
       {!isLoading && room && chatLog.length >= 20 && !room.loadedAll && (
         <button onClick={onLoadMoreClick} className={"load-more-btn"}>
-          Load more...
+          {t("messaging.loadMore")}
         </button>
       )}
       {chatLog?.map((message, i) => (
@@ -287,7 +288,7 @@ const Messages = ({
               className={message.authorId !== user.id ? "left" : "right"}
             >
               {isToday(message.createdAt)
-                ? getRelativeTime(message.createdAt)
+                ? (getRelativeTime(message.createdAt)).replace("0 seconds ago", t("messaging.justNow"))
                 : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
             </TimeStamp>
           )}

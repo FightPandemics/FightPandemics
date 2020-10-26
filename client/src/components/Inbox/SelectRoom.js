@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import emptyinbox from "assets/empty-inbox.svg";
-import Button from "components/Button/SubmitButton";
-import { Link } from "react-router-dom";
 import { theme, mq } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const MsgHeader = styled.div`
   display: none;
@@ -49,10 +48,11 @@ const EmptyInboxContainer = styled.div`
 `;
 
 export const SelectRoom = ({ isRequestPage }) => {
+  const { t } = useTranslation();
   return (
     <EmptyInboxContainer>
       <MsgHeader>
-        <span>Messages</span>
+        <span>{t("messaging.header")}</span>
       </MsgHeader>
       <img
         className="empty-inbox-logo"
@@ -61,17 +61,15 @@ export const SelectRoom = ({ isRequestPage }) => {
       />
       {isRequestPage ? (
         <>
-          <h3>Select any message request to read</h3>
-          <p>
-            The content of message request would apprear here once you select{" "}
-          </p>
-          <p>one from the message request inbox.</p>
+          <h3>{t("messaging.selectRequest.header")}</h3>
+          <p>{t("messaging.selectRequest.p1")}</p>
+          <p>{t("messaging.selectRequest.p2")}</p>
         </>
       ) : (
         <>
-          <h3>Select any message to read</h3>
-          <p>The message content would apprear here once you select</p>
-          <p>a message from the message inbox</p>
+          <h3>{t("messaging.selectRoom.header")}</h3>
+          <p>{t("messaging.selectRoom.p1")}</p>
+          <p>{t("messaging.selectRoom.p2")}</p>
         </>
       )}
     </EmptyInboxContainer>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import sendcomment from "assets/icons/send-paper.svg";
 import { mq, theme } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const MessageInput = styled.textarea`
   min-width: 3em;
@@ -154,6 +155,7 @@ export const InputBox = ({
   setEditingMessageId,
   inputRef,
 }) => {
+  const { t } = useTranslation();
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
@@ -230,26 +232,27 @@ export const InputBox = ({
     >
       {blockStatus === "did-block" && (
         <ChatDisabled>
-          You've bocked {getReceiver(room.participants).name}. unblock to
-          receive messages from them again.
+          {t("messaging.didBlock", {
+            username: getReceiver(room.participants).name
+          })}
           <button
             className={"unblock-btn"}
             onClick={() => unblockThread(room._id)}
           >
-            Unblock
+            {t("messaging.settings.unblock")}
           </button>
         </ChatDisabled>
       )}
       {blockStatus === "was-blocked" && (
         <ChatDisabled>
-          You've been bocked by {getReceiver(room.participants).name}. you can
-          no longer message them.
+          {t("messaging.wasBlocked", {
+            username: getReceiver(room.participants).name
+          })}
         </ChatDisabled>
       )}
       {!blockStatus && getSender(room.participants).status === "pending" && (
         <ChatDisabled>
-          Do want to accept the message request? you cannot reply until you
-          accept the request.
+          {t("messaging.acceptPropmt")}
           <div style={{ marginTop: "1rem" }}>
             <button
               className={"request-btns accept-btn"}
@@ -260,13 +263,13 @@ export const InputBox = ({
                 setToggleViewRequests(false);
               }}
             >
-              Accept
+              {t("messaging.accept")}
             </button>
             <button
               className={"request-btns ingore-btn"}
               onClick={() => archiveThread(room._id)}
             >
-              ignore
+              {t("messaging.ignore")}
             </button>
             <button
               className={"request-btns block-btn"}
@@ -275,7 +278,7 @@ export const InputBox = ({
                 leaveAllRooms();
               }}
             >
-              Block
+              {t("messaging.block")}
             </button>
           </div>
         </ChatDisabled>
@@ -285,7 +288,7 @@ export const InputBox = ({
           <MessageInput
             type="text"
             onChange={handleChange}
-            placeholder="Type a message..."
+            placeholder={t("messaging.typeMessage")}
             value={text}
             onKeyPress={handleKeyPress}
             ref={inputRef}
