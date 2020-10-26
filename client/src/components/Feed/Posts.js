@@ -42,7 +42,6 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
-  highlightWords,
   isNextPageLoading,
   loadNextPage,
   itemCount,
@@ -71,7 +70,6 @@ const Posts = ({
               deleteModalVisibility={deleteModalVisibility}
               handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
-              highlightWords={highlightWords}
             />
             <HorizontalRule />
           </>
@@ -99,7 +97,6 @@ const Posts = ({
       handlePostDelete,
       handlePostLike,
       hasNextPage,
-      highlightWords,
       isAuthenticated,
       isItemLoaded,
       postDelete,

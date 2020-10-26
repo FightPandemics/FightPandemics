@@ -22,33 +22,11 @@ const userSchema = new Schema(
 // indices keys aren't meant to be sorted alphabetically. Please don't change
 // the keys' order unless you really intend to change indexing
 /* eslint-disable sort-keys */
-userSchema.index({ "location.coordinates": "2dsphere" });
-
 userSchema.index({
   type: 1,
   ownerId: 1,
   createdAt: -1,
 });
-
-userSchema.index(
-  {
-    name: "text",
-    firstName: "text",
-    lastName: "text",
-    about: "text",
-  },
-  {
-    default_language: "none",
-    language_override: "dummy",
-    weights: {
-      name: 2,
-      firstName: 2,
-      lastName: 2,
-      about: 1,
-    },
-  },
-);
-
 /* eslint-enable */
 
 // Apply the uniqueValidator plugin to userSchema.

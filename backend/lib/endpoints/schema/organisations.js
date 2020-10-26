@@ -57,16 +57,6 @@ const getOrganisationsSchema = {
     .prop("skip", S.integer()),
 };
 
-const searchOrganisationsSchema = {
-  querystring: strictSchema()
-    .prop("filter", S.string())
-    .prop("keywords", S.string())
-    .prop("limit", S.integer())
-    .prop("objective", S.string())
-    .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
-};
-
 const updateOrganisationSchema = {
   body: strictSchema()
     .prop("about", organisation.about)
@@ -92,6 +82,5 @@ module.exports = {
   deleteOrganisationSchema,
   getOrganisationSchema,
   getOrganisationsSchema,
-  searchOrganisationsSchema,
   updateOrganisationSchema,
 };
