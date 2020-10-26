@@ -210,6 +210,7 @@ export default class FeedNavSearch extends React.Component {
       unfilteredOptions: props.options,
       selectedValue: Object.assign([], props.selectedValue),
       toggleOptionsList: false,
+      mobileReselect: false,
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
@@ -258,6 +259,7 @@ export default class FeedNavSearch extends React.Component {
     const { inputValue, selectedValue } = this.state;
     const { isMobile } = this.props;
     if (e.key === "Enter") {
+      this.setState({ toggleOptionsList: false });
       if (!inputValue || inputValue.length < MIN_KEYWORD_CHARS) {
         return this.setState({ tooShort: true });
       }
@@ -363,26 +365,38 @@ export default class FeedNavSearch extends React.Component {
   }
 
   toggleOptionList(newVal) {
-    const { selectedValue } = this.state;
+    const { selectedValue, mobileReselect } = this.state;
+    if (mobileReselect) return;
     if (selectedValue[0]) return this.setState({ toggleOptionsList: false });
     else this.setState({ toggleOptionsList: newVal });
   }
 
   onSelectItem(item) {
     this.setState({
-      inputValue: "",
+      inputValue: this.state.mobileReselect ? this.state.inputValue : "",
       selectedValue: [item],
       toggleOptionsList: false,
       hidePlaceholder: true,
+      mobileReselect: false,
     });
-    this.searchBox.current.focus();
+    if (this.searchBox.current != document.activeElement)
+      this.searchBox.current.focus();
+  }
+
+  mobileRepick() {
+    this.setState({
+      toggleOptionsList: true,
+      filteredOptions: this.state.unfilteredOptions,
+      options: this.state.unfilteredOptions,
+      mobileReselect: true,
+    });
   }
 
   renderSelectedList() {
     const { isObject = true, displayValue } = this.props;
     const { selectedValue } = this.state;
     return selectedValue.map((value, index) => (
-      <Chip key={index} ref={this.chip}>
+      <Chip key={index} ref={this.chip} onClick={() => this.mobileRepick()}>
         {!isObject
           ? (value || "").toString()
           : value["mobile_display"]
@@ -413,6 +427,7 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
+              this.setState({ toggleOptionsList: false });
               if (!inputValue || !selectedValue[0]) return;
               if (inputValue.length < MIN_KEYWORD_CHARS) {
                 return this.setState({ tooShort: true });
