@@ -171,9 +171,7 @@ export const SideChatContainer = styled.div`
       margin: 0;
     }
     .unread-indicator {
-      position: absolute;
       right: -1rem;
-      top: calc(50% - 1.5rem);
       background: #425af2;
       color: #f3f4fe;
       height: 1rem;
@@ -181,6 +179,8 @@ export const SideChatContainer = styled.div`
       border-radius: 100%;
       text-align: center;
       line-height: 2rem;
+      margin-top: 2.5rem;
+      transform: translateY(50%);
     }
   }
 
