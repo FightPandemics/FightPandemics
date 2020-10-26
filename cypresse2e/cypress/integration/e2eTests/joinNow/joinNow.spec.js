@@ -155,7 +155,7 @@ describe('FightPandemics Sign Up Page', () => {
 		it('After giving correct email and password user clicking Join Now  Button', () => {
 			var emailField = joinNow.getEmailField();
 			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			cy.generateRandomEmail().then((email) => {
+			cy.generateRandomEmail(8,5).then((email) => {
 			  joinNow.getEmailField().type(email);
 		  });
 			var passwordField = joinNow.getPasswordField();

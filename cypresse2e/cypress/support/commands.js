@@ -23,7 +23,7 @@ export const randomString = (length) => {
     return result;
 };
 
-Cypress.Commands.add('generateRandomEmail', () => {
+Cypress.Commands.add('generateRandomEmail', (num1,num2) => {
     return randomString(64) + '@' + randomString(63) + '.com';
 });
 
