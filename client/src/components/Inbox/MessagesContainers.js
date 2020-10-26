@@ -89,7 +89,7 @@ export const SenderBubble = styled.div`
   background-color: #425af2;
   color: white;
   padding: 1.12rem 0.14rem 1.12rem 0.14rem;
-  border-radius: 1.6rem;
+  border-radius: 2.2rem 2.2rem 0rem 2.2rem;
   letter-spacing: 1px;
   margin-top: 1.4rem;
   word-break: break-word;
@@ -130,7 +130,7 @@ export const RecipientBubble = styled.div`
   max-width: 60%;
   background-color: #f3f4fe;
   padding: 1.12rem 0.14rem 1.12rem 0.14rem;
-  border-radius: 2.8rem 2.8rem 2.8rem 2.8rem;
+  border-radius: 0rem 2.2rem 2.2rem 2.2rem;
   letter-spacing: 1px;
   margin-top: 1.4rem;
   word-break: break-word;
