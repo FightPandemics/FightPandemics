@@ -42,42 +42,32 @@ describe('FightPandemics Sign Up Page', () => {
 		});
 
 		it('Entering @ twice or more in email triggers error', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			emailField.type(emailAndPassword.invalidSampleEmail2).focus().blur();
+			emailField().type(emailAndPassword.invalidSampleEmail2).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
 		  });
 		  
 		  it('Entering .tld which are not in txt triggers error', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			emailField.type(emailAndPassword.invalidSampleEmailXY).focus().blur();
+			emailField().type(emailAndPassword.invalidSampleEmailXY).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
 		  });
 	  
 		  it('Entering .tld which are in txt can be populated', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			emailField.type(emailAndPassword.validEmailWithTld);
+			emailField().type(emailAndPassword.validEmailWithTld);
 		  });
 	  
 		  it('Entering more than 64 characters in email body triggers error', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			emailField.type(emailAndPassword.invalidSampleEmail65).focus().blur();
+			emailField().type(emailAndPassword.invalidSampleEmail65).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
 		  });
 	  
 		  it('Entering more than 63 characters in domain field after @ triggers error', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
-			emailField.type(emailAndPassword.invalidDomainForEmail).focus().blur();
+			emailField().type(emailAndPassword.invalidDomainForEmail).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
@@ -153,17 +143,11 @@ describe('FightPandemics Sign Up Page', () => {
 		});
 
 		it('After giving correct email and password user clicking Join Now  Button', () => {
-			var emailField = joinNow.getEmailField();
-			emailField.should('be.visible').and('have.attr', 'name', 'email');
 			cy.generateRandomEmail(8,5).then((email) => {
 			  joinNow.getEmailField().type(email);
 		  });
-			var passwordField = joinNow.getPasswordField();
-			passwordField.should('be.visible').and('have.attr', 'name', 'password');
-			passwordField.type(emailAndPassword.dummySamplePassword);
-			var confirmPasswordField = joinNow.getConfirmPasswordField();
-			confirmPasswordField.should('be.visible').and('have.attr', 'name', 'confirmPassword');
-			confirmPasswordField.type(emailAndPassword.dummySamplePassword);
+			joinNow.getPasswordField().type(emailAndPassword.dummySamplePassword);
+			joinNow.getConfirmPasswordField().type(emailAndPassword.dummySamplePassword);
 			var joinNowButton = joinNow.getJoinNowButton();
 			joinNowButton.click({force: true});
 			cy.checkEmailIsOpen("/auth/check-email");
