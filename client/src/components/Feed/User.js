@@ -319,13 +319,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
         _user?.photo ? (
           _user.photo
         ) : (
-          <UserTextAvatar
-            to={`/${
-              type.toLowerCase() == "individual" ? "profile" : "organisation"
-            }/${_id}`}
-          >
-            {AvatarName}
-          </UserTextAvatar>
+          <UserTextAvatar>{AvatarName}</UserTextAvatar>
         )
       }
     />
@@ -345,7 +339,15 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
       {
         //user in feed.
         <UserCard>
-          <div className="card-header">{renderHeader}</div>
+          <div className="card-header">
+            <Link
+              to={`/${
+                type.toLowerCase() == "individual" ? "profile" : "organisation"
+              }/${_id}`}
+            >
+              {renderHeader}
+            </Link>
+          </div>
           <Link
             to={`/${
               type.toLowerCase() == "individual" ? "profile" : "organisation"
