@@ -118,7 +118,8 @@ const NavSearch = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none !important;
   }
-  margin-left: 5.7rem;
+  position: absolute;
+  left: 29rem;
 `;
 const activeStyles = {
   fontWeight: "600",
