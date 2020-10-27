@@ -55,9 +55,6 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const filters = [{ type: { $ne: "Individual" } }];
 
-      // un-comment if user shouldnt find their owned organizations
-      // if (userId) filters.push({ ownerId: { $ne: userId } });
-
       // prefer location from query filters, then user if authenticated
       let location;
       if (queryFilters.location) {
