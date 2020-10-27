@@ -1,4 +1,4 @@
-Style convention for writing tests:
+**Style convention for writing tests:**
 
 1. Variables naming convention: variables should be declared with a camelCase with a leading lowercase character example: requestHelpButton
 2. Method names conventions: method should be declared with a camelCase with a leading lowercase character example: getOfferHelpButton()
@@ -8,9 +8,20 @@ Style convention for writing tests:
 6. Page Objects are defined in the elements/pages folder
 7. Tests are defined in the integration/e2eTests
 
-How to generate mochawesome report:
+**How to generate mochawesome report:**
 
-1. Run all tests in docker-compose by running 'npm run test' or you can choose a specific test suite to run.
-2. After test(s) finishes, run 'npm run generate:html:report'.
-3. Right click on the 'cypress-tests-report.html' file in the 'TestReport' folder and select the 'Open Containing Folder' option. After the folder opens, double click on the html file to view the generated test report.
-4. To start clean or delete the existing html and all mochawesome json files in the 'TestReport' and 'mochawesome-report' folders run 'npm run clean:reports'. This will prevent multiple old json files from accumulating in the 'mochawesome-report' folder and remove old tests from appearing in the html file each time you generate the report.
+*For local:*
+
+1. Make sure to `cd cypresse2e`.
+2. Run `npm run test` to run all tests or run `npx cypress run --spec "cypress/integration/e2eTests/folderName/testName.spec.js"` to run an individual test - e.g (npm cypress run --spec "cypress/integration/e2eTests/footer/footer.spec.js").
+3. After test(s) finishes, run `npm run report` to generate html report.
+4. Right click on the 'mochawesome.html' file in the 'mochawesome-report' folder and select the 'Open Containing Folder' option. After the folder opens, double click on the html file to view the generated test report.
+5. **Note**: If you are running an individual test and you want to delete the json files in the 'mochawesome-report' folder  generated from previous test runs to prevent them from showing up in the html, run `npm run pretest` before running a new test. 
+
+*For docker-compose:*
+
+1. Make sure to `cd cypresse2e`.
+2. Run `docker-compose build cypress-e2e` (this only needs to be run one time unless changes are made in cypresse2e --> package.json).
+3. Run `docker-compose run cypress-e2e` to run all tests. (If you want to run individual tests, then it will need to be run locally).
+4. After test(s) finishes, the 'mochawesome html' report should generate automatically.
+5. Right click on the 'mochawesome.html' file in the 'mochawesome-report' folder and select the 'Open Containing Folder' option. After the folder opens, double click on the html file to view the generated test report.

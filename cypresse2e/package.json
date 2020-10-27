@@ -3,11 +3,9 @@
     "version": "1.0.0",
     "description": "Cypress tests",
     "scripts": {
-        "test": "npm run clean:reports && cypress run",
-        "clean:reports": "rm -rf mochawesome-report/ TestReport/ cypress-tests-report.json",
-        "merge:reports": "mochawesome-merge mochawesome-report/*.json > cypress-tests-report.json",
-        "create:html:report": "marge --reportDir TestReport cypress-tests-report.json --inline",
-        "generate:html:report": "npm run merge:reports && npm run create:html:report"
+        "pretest": "rm -rf mochawesome-report/* mochawesome.json",
+        "test": "cypress run --spec cypress/integration/e2eTests/post/post.spec.js",
+        "report": "npx mochawesome-merge --reportDir mochawesome-report/ > mochawesome.json && npx mochawesome-report-generator --inline mochawesome.json"
     },
     "private": true,
     "devDependencies": {

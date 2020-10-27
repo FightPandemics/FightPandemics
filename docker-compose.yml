@@ -70,13 +70,26 @@ services:
       - client
     environment:
       - CYPRESS_baseUrl=http://client:3000
-    command: dockerize -wait http://client:3000 -timeout 300s npx cypress run
+    command: ["dockerize", "-wait", "http://client:3000", "-timeout", "300s", "bash", "-c", "npm run test"]
     volumes:
+      - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/
       - ./cypresse2e/cypress:/app/cypress
       - ./cypresse2e/cypress.json:/app/cypress.json
     working_dir: /app
     networks:
       - fp_network
+
+  cypress-e2e-report:
+    build:
+      context: cypresse2e
+      dockerfile: Dockerfile
+    container_name: cypress-e2e
+    command: ["bash", "-c", "npm run report"]
+    volumes:
+      - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/
+      - ./cypresse2e/cypress:/app/cypress
+      - ./cypresse2e/cypress.json:/app/cypress.json
+    working_dir: /app
 
   mocha-integration:
     build:

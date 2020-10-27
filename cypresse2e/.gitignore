@@ -20,5 +20,4 @@ yarn-error.log*
 !.env
 
 mochawesome-report
-TestReport
-cypress-tests-report.json
+mochawesome.json
