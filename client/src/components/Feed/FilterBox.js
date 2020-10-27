@@ -4,15 +4,15 @@ import { Modal } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 
 import SubmitButton from "components/Button/SubmitButton";
-import TextLabel from "components/Typography/TextLabel";
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
 import { theme, mq } from "constants/theme";
 import GTM from "constants/gtm-tags";
-import { DARK_GRAY } from "constants/colors";
 import SvgIcon from "components/Icon/SvgIcon";
 import filtersIcon from "assets/icons/filters.svg";
+import ButtonTag from "../Tag/ButtonTag.js";
+import { getOptionText } from "components/Feed/utils";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -55,7 +55,9 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
     handleOnClose,
     filterModal,
     handleFilterModal,
+    handleOption,
     handleQuit,
+    selectedOptions,
   } = feedContext;
   const renderFilterOptions = (filter) => {
     return (
@@ -75,13 +77,26 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
   };
   return (
     <FilterBoxWrapper className="filter-box">
-      <TextLabel
-        block="true"
-        color={DARK_GRAY}
-        size={theme.typography.size.medium}
-      >
-      </TextLabel>
       {renderFilterOptions(filters)}
+      <div>
+        {Object.keys(selectedOptions).map((filter) =>
+          selectedOptions[filter].map((option, idx) => (
+            <ButtonTag
+              key={idx}
+              className="tag-closable"
+              onClick={handleOption(filter, option)}
+            >
+              {t(
+                getOptionText(
+                  filters,
+                  filter,
+                  option.value ? option.value : option,
+                ),
+              )}
+            </ButtonTag>
+          )),
+        )}
+      </div>
       <ModalWrapper
         popup
         wrapClassName="feed-filter-modal-wrap"
