@@ -4,7 +4,7 @@ const { TemplateBuilder } = require("../helpers/template-builder");
 
 describe("TemplateBuilder tests", () => {
   it("builds templates for instant email notifications", () => {
-    const builder = new TemplateBuilder("https://fightpandemics.com");
+    const builder = new TemplateBuilder("https://fightpandemics.com", "abc");
     const notifications = [
       {
         _id: "5f8b9228653a234a3a62d27f",

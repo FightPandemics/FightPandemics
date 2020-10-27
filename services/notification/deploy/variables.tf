@@ -36,3 +36,7 @@ data "aws_ssm_parameter" "sentry_dsn" {
   count = var.fp_context == "development" ? 0 : 1
   name  = "/fp/sentry/dsn"
 }
+
+data "aws_ssm_parameter" "unsubscribe_token_key" {
+  name  = "/fp/auth/client_secret"
+}

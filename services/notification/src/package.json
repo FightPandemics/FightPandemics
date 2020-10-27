@@ -24,6 +24,7 @@
     "@sentry/node": "^5.26.0",
     "aws-sdk": "^2.771.0",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
     "mustache": "^4.0.1",
     "pino": "^6.7.0",

@@ -31,6 +31,7 @@ const config = {
     region: process.env.SES_AWS_REGION,
   },
   nodeEnv: process.env.NODE_ENV,
+  unsubscribeTokenKey: process.env.UNSUBSCRIBE_TOKEN_KEY,
 };
 
 module.exports = {

@@ -1,10 +1,13 @@
+const { DateHelper } = require("./date-helper");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 const Mustache = require("mustache");
 const path = require("path");
 
 class TemplateBuilder {
-  constructor(baseUrl) {
+  constructor(baseUrl, tokenKey) {
     this.baseUrl = baseUrl;
+    this.tokenKey = tokenKey;
     this.templates = {
       base: {
         html: this._loadTemplateFile("../templates/base.html"),
@@ -48,13 +51,16 @@ class TemplateBuilder {
         ) {
           return;
         }
+        const token = this._generateToken(notification.receiver._id);
         const htmlTemplate = Mustache.render(this.templates.base.html, {
           baseUrl: this.baseUrl,
           body: this.templates.instant[action].html,
+          token,
         });
         const textTemplate = Mustache.render(this.templates.base.text, {
           baseUrl: this.baseUrl,
           body: this.templates.instant[action].text,
+          token,
         });
         const subject = Mustache.render(
           this.templates.instant[action].subject,
@@ -83,6 +89,11 @@ class TemplateBuilder {
     return fs.readFileSync(path.join(__dirname, relPath), {
       encoding: "utf-8",
     });
+  }
+
+  _generateToken(userId) {
+    const token = jwt.sign({ userId }, this.tokenKey, { expiresIn: "30d" });
+    return token;
   }
 }
 
