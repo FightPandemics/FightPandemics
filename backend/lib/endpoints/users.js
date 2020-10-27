@@ -497,8 +497,8 @@ async function routes(app) {
       decoded = payload;
     })
 
-    const { userId, expireDate } = decoded;
-    if (expireDate < Date.now()) {
+    const { userId, exp } = decoded;
+    if (exp * 1000 < Date.now()) {
       throw app.httpErrors.badRequest("token is expired");
     }
     const [err, user] = await app.to(User.findById(userId));
