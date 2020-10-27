@@ -120,6 +120,10 @@ const NavSearch = styled.div`
   }
   position: absolute;
   left: 29rem;
+  @media screen and (max-width: ${mq.desktop.small.minWidth}) {
+    position: initial;
+    margin-right: 2rem;
+  }
 `;
 const activeStyles = {
   fontWeight: "600",
