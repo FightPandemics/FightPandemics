@@ -588,18 +588,20 @@ const Feed = (props) => {
 
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
-    if (searchKeyword) {
-      // trigger custom GTM event
-      window.dataLayer.push({
-        event: "SEARCH_KEYWORD",
-        keyword: searchKeyword,
-        category: searchCategory || "POSTS",
-      });
-    }
+
     try {
       const {
         data: { data: posts, meta },
       } = await axios.get(endpoint);
+      if (searchKeyword) {
+        // trigger custom GTM event
+        window.dataLayer.push({
+          event: "SEARCH_KEYWORD",
+          keyword: searchKeyword,
+          category: searchCategory || "POSTS",
+          resultsCount: meta.total,
+        });
+      }
       if (posts.length && meta.total) {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
