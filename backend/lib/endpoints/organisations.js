@@ -87,8 +87,14 @@ async function routes(app) {
         const keywordsRegex = new RegExp(
           cleanKeywords
             .split(/[ \/,=$%#()-]/gi)
-            .filter((key) => key && ((isLatin && key.length > 2) || (!isLatin && key.length > 1)))
-            .map((key) => (isLatin && key.length <= 3 ? key + "\\b" : key))
+            .filter((key) => key && key.length > 1)
+            .map((key) =>
+              isLatin && key.length <= 3
+                ? "\\b" + key + "\\b"
+                : isLatin
+                ? "\\b" + key
+                : key,
+            )
             .join("|") || "\\b\\B",
           "ig",
         );
