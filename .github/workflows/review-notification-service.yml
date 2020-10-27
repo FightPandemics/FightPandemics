@@ -3,7 +3,7 @@ name: Deploy Notification Service to Review
 on:
   push:
     branches:
-      - feature/**
+      - service/**
       - hotfix/**
     paths:
       - services/notification/**
