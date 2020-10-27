@@ -1,6 +1,6 @@
   locals {
     base_url = {
-      review      = "https://feature1426-1637-combined.fightpandemics.xyz" # Temporary. I think we might need a more permanent review build if we want these email links to work.
+      review      = "https://feature1427-notifications-unsubscribe.fightpandemics.xyz" # Point to Dawei's branch for now
       staging     = "https://staging.fightpandemics.work"
       production  = "https://fightpandemics.com"
       development = "https://development.fightpandemics.online"
