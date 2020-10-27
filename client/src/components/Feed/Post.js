@@ -65,7 +65,9 @@ const Highlight = ({ text = "", highlight = "" }) => {
   if (!highlight || !highlight.trim()) {
     return text;
   }
-  let cleanKeywords = highlight.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+  let cleanKeywords = highlight
+    .replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&")
+    .replace(/\\./g, " ");
   let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
   const regex = new RegExp(
     `(${
