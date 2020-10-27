@@ -57,11 +57,32 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
+const searchRegex = (keywords) => {
+  let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+  let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
+  const keywordsRegex = new RegExp(
+    cleanKeywords
+      .split(/[ \/,=$%#()-]/gi)
+      .filter((key) => key && key.length > 1)
+      .map((key) =>
+        isLatin && key.length <= 3
+          ? "\\b" + key + "\\b"
+          : isLatin
+          ? "\\b" + key
+          : key,
+      )
+      .join("|") || "\\b\\B",
+    "ig",
+  );
+  return keywordsRegex;
+}
+
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
   getCookieToken,
   isValidEmail,
+  searchRegex,
   setElapsedTimeText,
 };
