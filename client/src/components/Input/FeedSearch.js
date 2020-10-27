@@ -255,21 +255,23 @@ export default class FeedNavSearch extends React.Component {
       this.setState({ tooShort: false });
   }
 
-  onKeyClick(e) {
+  submitSearch() {
     const { inputValue, selectedValue } = this.state;
     const { isMobile } = this.props;
+    this.setState({ toggleOptionsList: false });
+    if (!inputValue || (isMobile && !selectedValue[0])) return;
+    if (inputValue.length < MIN_KEYWORD_CHARS) {
+      return this.setState({ tooShort: true });
+    }
+    if (isMobile)
+      return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
+    if (!isMobile) this.props.handleSubmit(inputValue);
+  }
+
+  onKeyClick(e) {
+    const { inputValue, selectedValue } = this.state;
     if (e.key === "Enter") {
-      this.setState({ toggleOptionsList: false });
-      if (!inputValue || inputValue.length < MIN_KEYWORD_CHARS) {
-        return this.setState({ tooShort: true });
-      }
-      window.dataLayer.push({
-        event: "SEARCH_KEYWORD",
-        keyword: inputValue,
-      });
-      if (isMobile)
-        return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
-      this.props.handleSubmit(inputValue);
+      this.submitSearch();
     }
     if (e.keyCode === 8 && !inputValue && selectedValue.length) {
       this.setState({ toggleOptionsList: true });
@@ -372,6 +374,7 @@ export default class FeedNavSearch extends React.Component {
   }
 
   onSelectItem(item) {
+    const { mobileReselect } = this.state;
     this.setState({
       inputValue: this.state.mobileReselect ? this.state.inputValue : "",
       selectedValue: [item],
@@ -379,6 +382,7 @@ export default class FeedNavSearch extends React.Component {
       hidePlaceholder: true,
       mobileReselect: false,
     });
+    if (mobileReselect) return this.submitSearch();
     if (this.searchBox.current != document.activeElement)
       this.searchBox.current.focus();
   }
@@ -427,21 +431,7 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              this.setState({ toggleOptionsList: false });
-              if (!inputValue || (isMobile && !selectedValue[0])) return;
-              if (inputValue.length < MIN_KEYWORD_CHARS) {
-                return this.setState({ tooShort: true });
-              }
-              window.dataLayer.push({
-                event: "SEARCH_KEYWORD",
-                keyword: inputValue,
-              });
-              if (isMobile)
-                return this.props.handleMobileSubmit(
-                  inputValue,
-                  selectedValue[0].id,
-                );
-              if (!isMobile && inputValue) this.props.handleSubmit(inputValue);
+              this.submitSearch();
             }}
           />
           {isMobile && this.renderSelectedList()}
