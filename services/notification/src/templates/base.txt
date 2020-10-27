@@ -14,8 +14,6 @@ Or contact us at support@fightpandemics.com
 
 Copyright 2020 FightPandemics. All rights reserved.
 
-Notification Preferences
-
-Unsubscribe: {{{baseUrl}}}/unsubscribe?token={{token}}
+Edit Notification Preferences or Unsubscribe: {{{baseUrl}}}/unsubscribe?token={{token}}
 
 9 E. Loockerman Street, Suite 311, City of Dover, County of Kent, 19901, Delaware
