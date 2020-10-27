@@ -593,7 +593,7 @@ const Feed = (props) => {
       const {
         data: { data: posts, meta },
       } = await axios.get(endpoint);
-      if (searchKeyword) {
+      if (searchKeyword && window.dataLayer) {
         // trigger custom GTM event
         window.dataLayer.push({
           event: "SEARCH_KEYWORD",
