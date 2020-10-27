@@ -22,6 +22,11 @@ class TemplateBuilder {
           subject: "{{triggeredBy.name}} liked your post: {{post.title}}",
           text: this._loadTemplateFile("../templates/instant/like.txt"),
         },
+        share: {
+          html: this._loadTemplateFile("../templates/instant/share.html"),
+          subject: "{{triggeredBy.name}} shared your post: {{post.title}}",
+          text: this._loadTemplateFile("../templates/instant/share.txt"),
+        },
       },
     };
   }
