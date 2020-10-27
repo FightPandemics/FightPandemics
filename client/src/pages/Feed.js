@@ -95,7 +95,6 @@ let HELP_TYPE = {
   OFFER: "Offering help",
 };
 
-
 const initialState = {
   selectedType: "ALL",
   showFilters: false,
@@ -304,7 +303,11 @@ const Feed = (props) => {
 
   const SEARCH_OPTIONS = [
     { name: t("feed.search.options.posts"), id: "POSTS", default: true },
-    { name: t("feed.search.options.orgs"), id: "ORGANISATIONS", mobile_display: t("feed.search.options.orgsShort") },
+    {
+      name: t("feed.search.options.orgs"),
+      id: "ORGANISATIONS",
+      mobile_display: t("feed.search.options.orgsShort"),
+    },
     { name: t("feed.search.options.people"), id: "INDIVIDUALS" },
   ];
 
@@ -369,12 +372,12 @@ const Feed = (props) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
         HELP_TYPE = {
-          ALL:  t("feed.allPeople")
+          ALL: t("feed.allPeople"),
         };
         break;
       case "ORGANISATIONS":
         HELP_TYPE = {
-          ALL: t("feed.allOrgs",)
+          ALL: t("feed.allOrgs"),
         };
         break;
       default:
@@ -559,7 +562,7 @@ const Feed = (props) => {
         default:
           return "";
       }
-    }
+    };
 
     const searchURL = () => {
       if (searchKeyword)
@@ -585,6 +588,14 @@ const Feed = (props) => {
 
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
+    if (searchKeyword) {
+      // trigger custom GTM event
+      window.dataLayer.push({
+        event: "SEARCH_KEYWORD",
+        keyword: searchKeyword,
+        category: searchCategory || "POSTS",
+      });
+    }
     try {
       const {
         data: { data: posts, meta },
@@ -843,12 +854,12 @@ const Feed = (props) => {
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
                 >
-                {t("post.create")}
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                />
-              </button>
+                  {t("post.create")}
+                  <CreatePostIcon
+                    id={gtmTag(GTM.post.createPost)}
+                    src={creatPost}
+                  />
+                </button>
               )}
             </HeaderWrapper>
             <MobileSearch>
@@ -915,9 +926,13 @@ const Feed = (props) => {
             {emptyFeed() ? (
               <NoPosts>
                 <Trans
-                   i18nKey={(!searchCategory || searchCategory == "POSTS") ? 
-                    "feed.noResultsPosts": searchCategory == "INDIVIDUALS" ?
-                    "feed.noResultsPeople" : "feed.noResultsOrgs"}
+                  i18nKey={
+                    !searchCategory || searchCategory == "POSTS"
+                      ? "feed.noResultsPosts"
+                      : searchCategory == "INDIVIDUALS"
+                      ? "feed.noResultsPeople"
+                      : "feed.noResultsOrgs"
+                  }
                   components={[
                     <a
                       id={gtmTag(GTM.post.createPost)}
