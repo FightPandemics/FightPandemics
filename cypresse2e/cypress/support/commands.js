@@ -24,7 +24,7 @@ export const randomString = (length) => {
 };
 
 Cypress.Commands.add('generateRandomEmail', (num1,num2) => {
-    return randomString(64) + '@' + randomString(63) + '.com';
+    return randomString(num1) + '@' + randomString(num2) + '.com';
 });
 
 Cypress.Commands.add('checkEmailIsOpen', (string) => {

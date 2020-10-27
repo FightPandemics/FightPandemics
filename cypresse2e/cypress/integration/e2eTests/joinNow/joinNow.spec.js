@@ -49,7 +49,7 @@ describe('FightPandemics Sign Up Page', () => {
 		  });
 		  
 		  it('Entering .tld which are not in txt triggers error', () => {
-			emailField().type(emailAndPassword.invalidSampleEmailXY).focus().blur();
+			emailField().type(emailAndPassword.emailWithInvalidTld).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
@@ -60,7 +60,7 @@ describe('FightPandemics Sign Up Page', () => {
 		  });
 	  
 		  it('Entering more than 64 characters in email body triggers error', () => {
-			emailField().type(emailAndPassword.invalidSampleEmail65).focus().blur();
+			emailField().type(emailAndPassword.invalidEmailBodyNum).focus().blur();
 			var validEmailRequired = joinNow.getValidEmailRequired();
 			validEmailRequired.should('be.visible');
 			validEmailRequired.contains('small', errorMessages.invalidEmail);
@@ -143,7 +143,7 @@ describe('FightPandemics Sign Up Page', () => {
 		});
 
 		it('After giving correct email and password user clicking Join Now  Button', () => {
-			cy.generateRandomEmail(8,5).then((email) => {
+			cy.generateRandomEmail(64,63).then((email) => {
 			  joinNow.getEmailField().type(email);
 		  });
 			joinNow.getPasswordField().type(emailAndPassword.dummySamplePassword);
