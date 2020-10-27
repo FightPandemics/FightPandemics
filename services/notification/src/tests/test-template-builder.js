@@ -244,9 +244,75 @@ describe("TemplateBuilder tests", () => {
         readAt: null,
         emailSentAt: null,
       },
+      {
+        _id: "5f8b9237653a214a3b62d46e",
+        action: "comment",
+        post: { id: "5f87ab5524acbb001d812fd1", title: "Test post 1" },
+        receiver: {
+          _id: "5f60488a1f5b72130044d148",
+          hide: { address: false },
+          needs: { medicalHelp: false, otherHelp: false },
+          notifyPrefs: {
+            comment: {
+              instant: true,
+              daily: false,
+              weekly: false,
+              biweekly: false,
+            },
+            like: {
+              instant: false,
+              daily: false,
+              weekly: false,
+              biweekly: false,
+            },
+            message: {
+              instant: false,
+              daily: false,
+              weekly: false,
+              biweekly: false,
+            },
+            share: {
+              instant: true,
+              daily: false,
+              weekly: false,
+              biweekly: false,
+            },
+          },
+          objectives: {
+            donate: false,
+            shareInformation: false,
+            volunteer: true,
+          },
+          type: "Individual",
+          __t: "IndividualUser",
+          firstName: "Bob",
+          lastName: "Saget",
+          location: {
+            address: "Broderick Street, San Francisco, CA 94115, USA",
+            city: "San Francisco",
+            coordinates: [37.786896, -122.441778],
+            country: "US",
+            state: "CA",
+            zip: "94115",
+          },
+          authId: "google-oauth2|108676090732734109990",
+          email: "bob.saget@fullhouse.com",
+          createdAt: "2020-10-15T01:51:52.534Z",
+          updatedAt: "2020-10-15T01:51:52.534Z",
+          __v: 0,
+        },
+        triggeredBy: {
+          id: "5f88f281c2de24001d579daa",
+          name: "Test Manny org",
+          type: "Startup",
+        },
+        createdAt: "2020-10-17T01:51:52.534Z",
+        readAt: null,
+        emailSentAt: null,
+      },
     ];
     const emails = builder.build("instant", notifications);
-    expect(emails.length).to.equal(3);
+    expect(emails.length).to.equal(4);
     expect(emails[0].notificationId).to.equal("5f8b9228653a234a3a62d27f");
     expect(emails[0].toEmailAddress).to.equal("some.fake.email@gmail.com");
     expect(emails[0].subject).to.equal(
@@ -261,6 +327,11 @@ describe("TemplateBuilder tests", () => {
     expect(emails[2].toEmailAddress).to.equal("bob.saget@fullhouse.com");
     expect(emails[2].subject).to.equal(
       "Test Manny org shared your post: Test post 1",
+    );
+    expect(emails[3].notificationId).to.equal("5f8b9237653a214a3b62d46e");
+    expect(emails[3].toEmailAddress).to.equal("bob.saget@fullhouse.com");
+    expect(emails[3].subject).to.equal(
+      "Test Manny org commented on your post: Test post 1",
     );
   });
 });
