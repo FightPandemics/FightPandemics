@@ -236,6 +236,10 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  postShared = (postId, sharedVia) => {
+    this.socket.emit("POST_SHARED", { postId, sharedVia });
+  };
+
   getNotifications = () => {
     this.socket.emit("GET_NOTIFICATIONS", null, (response) => {
       if (response.code == 200)
@@ -260,6 +264,8 @@ export default class SocketManager extends React.Component {
         return `${n.triggeredBy.name} liked your post "${n.post.title}"`;
       case "comment":
         return `${n.triggeredBy.name} commented on your post "${n.post.title}"`;
+      case "share":
+        return `${n.triggeredBy.name} shared your post "${n.post.title}" on ${n.sharedVia}`;
     }
   };
 
@@ -300,6 +306,7 @@ export default class SocketManager extends React.Component {
       unblockThread: this.unblockThread,
       getNotifications: this.getNotifications,
       markNotificationsAsRead: this.markNotificationsAsRead,
+      postShared: this.postShared,
     };
     return (
       <WebSocketContext.Provider value={value}>

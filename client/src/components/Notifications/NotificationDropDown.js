@@ -159,6 +159,7 @@ const MenuItem = ({
   createdAt,
   postTitle,
   unread,
+  sharedVia,
 }) => {
   return (
     <ItemContainer href={path}>
@@ -166,7 +167,13 @@ const MenuItem = ({
       <img src={actionAvatar} className="action-avatar" />
       <Content>
         <div>
-          <span>{author}</span> {action} <span>{postTitle}</span>
+          <span>{author}</span> {action} <span>{postTitle}</span>{" "}
+          {sharedVia && (
+            <>
+              {" "}
+              on <span>{sharedVia}</span>
+            </>
+          )}
         </div>
         <div>{createdAt}</div>
       </Content>
@@ -198,6 +205,7 @@ const menu = (notifications) => (
             createdAt={each.createdAt}
             avatar={each.avatar}
             unread={each.unread}
+            sharedVia={each.sharedVia}
           />
         ))}
       </div>
@@ -224,23 +232,30 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
     dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
   };
 
-  const generateNotificationText = (notification) => {
-    switch (notification.action) {
-      case "like":
-        return "liked your post";
-      case "comment":
-        return "commented on your post";
-    }
+  const notificationTypes = {
+    like: {
+      text: "liked your post",
+      icon: likeheart,
+    },
+    comment: {
+      text: "commented on your post",
+      icon: commentpost,
+    },
+    share: {
+      text: "shared your post",
+      icon: sharedpost,
+    },
   };
 
   const mappedNotifications = notifications.map((n) => ({
     author: n.triggeredBy.name,
-    action: generateNotificationText(n),
+    action: notificationTypes[n.action].text,
     postTitle: n.post.title,
     path: `/post/${n.post.id}`,
-    actionAvatar: n.action == "comment" ? commentpost : likeheart,
+    actionAvatar: notificationTypes[n.action].icon,
     createdAt: relativeTime(n.createdAt),
     avatar: n.triggeredBy.photo,
+    sharedVia: n.sharedVia,
     unread: !n.readAt,
   }));
 

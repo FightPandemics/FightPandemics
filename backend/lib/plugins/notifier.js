@@ -8,9 +8,9 @@ class Notifier {
     this.User = app.mongo.model("User");
   }
 
-  async notify(action, post, triggeredById) {
-    if (!["like", "comment", "post"].includes(action)) return this.app.log.error(new Error('Invalid Notification action'));
-    if (post.author.id == triggeredById) return; // user interacted with their own post
+  async notify(action, post, triggeredById, sharedVia) {
+    if (!["like", "comment", "share"].includes(action)) return this.app.log.error(new Error('Invalid Notification action'));
+    if (post.author.id.toString() == triggeredById.toString()) return; // user interacted with their own post
 
     const [triggeredByErr, triggeredBy] = await this.app.to(this.User.findById(triggeredById));
     if (triggeredByErr || !triggeredBy) return; 
@@ -24,6 +24,7 @@ class Notifier {
       receiver: post.author.id,
       readAt: null,
       emailSentAt: null,
+      sharedVia: sharedVia,
       triggeredBy: {
         id: triggeredBy._id,
         name: triggeredBy.name,
