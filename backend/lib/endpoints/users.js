@@ -1,6 +1,8 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken, jwtSimpleDecode } = require("../utils");
+const { getCookieToken } = require("../utils");
+const { config } = require("../../config");
+const jwt = require("jsonwebtoken");
 const {
   getUserByIdSchema,
   getUsersSchema,
@@ -483,32 +485,49 @@ async function routes(app) {
     },
   );
 
-  app.get(
-    "/unsubscribe",
-    async (req) => {
-      const { token } = req.headers;
-      const { userId, expireDate } = jwtSimpleDecode(token);
-      if (expireDate < Date.now()) {
-        throw app.httpErrors.badRequest("token is expired");
-      }
-      const [err, user] = await app.to(User.findById(userId));
-      if (err) {
-        req.log.error(err, `Failed retrieving user userId=${userId}`);
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        throw app.httpErrors.notFound();
-      }
+  app.get("/unsubscribe", async (req) => {
+    const { token } = req.headers;
 
-      return {notifyPrefs: user.notifyPrefs};
-    },
-  );
+    let decoded = {};
+    jwt.verify(token, config.auth.secretKey, (err, payload) => {
+      if (err) {
+        req.log.error(err, `Invalid token for unsubscribing`);
+        throw app.httpErrors.badRequest("token is invalid");
+      }
+      decoded = payload;
+    })
+
+    const { userId, expireDate } = decoded;
+    if (expireDate < Date.now()) {
+      throw app.httpErrors.badRequest("token is expired");
+    }
+    const [err, user] = await app.to(User.findById(userId));
+    if (err) {
+      req.log.error(err, `Failed retrieving user userId=${userId}`);
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      throw app.httpErrors.notFound();
+    }
+
+    return { notifyPrefs: user.notifyPrefs };
+  });
 
   app.patch(
     "/unsubscribe",
     { schema: updateNotifyPrefsSchema },
     async (req) => {
       const { headers, body } = req;
-      const { userId, expireDate } = jwtSimpleDecode(headers.token);
+      
+      let decoded = {};
+      jwt.verify(headers.token, config.auth.secretKey, (err, payload) => {
+        if (err) {
+          req.log.error(err, `Invalid token for unsubscribing`);
+          throw app.httpErrors.badRequest("token is invalid");
+        }
+        decoded = payload;
+      })
+      
+      const { userId, expireDate } = decoded;
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
       }

@@ -40,8 +40,7 @@ const configData = envSchema({
     .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
-    .prop("SENDGRID_CONTACTS_LIST_ID", S.string())
-    .prop("UNSUBSCRIBE_KEY", S.string()),
+    .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
 });
 
 const config = {
@@ -111,7 +110,6 @@ const config = {
       port: configData.REDIS_PORT,
     },
   },
-  unsubscribeKey: configData.UNSUBSCRIBE_KEY,
 };
 
 module.exports = { config };

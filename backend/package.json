@@ -48,7 +48,6 @@
     "fastify-sensible": "^2.1.1",
     "fluent-schema": "^0.10.0",
     "http-errors": "^1.7.3",
-    "jwt-simple": "^0.5.6",
     "moment": "2.25.3",
     "mongoose": "^5.9.13",
     "mongoose-unique-validator": "^2.0.3",
