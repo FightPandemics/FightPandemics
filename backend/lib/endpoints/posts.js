@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText, searchRegex } = require("../utils");
+const { setElapsedTimeText, createSearchRegex } = require("../utils");
 
 const {
   createCommentSchema,
@@ -135,7 +135,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = searchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords)
         filters.push({
           $or: [
             { title: keywordsRegex },

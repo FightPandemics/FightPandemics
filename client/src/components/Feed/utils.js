@@ -17,7 +17,7 @@ export const getOptionText = (filterOptions, filterLabel, option) =>
     .filter(({ label }) => label === filterLabel)[0]
     .options.filter(({ value }) => value === option)[0].text;
 
-export const searchRegex = (text) => {
+export const highlightSearchRegex = (text) => {
   let cleanKeywords = text
     .replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&")
     .replace(/\\./g, " ");

@@ -25,7 +25,7 @@ import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
-import { getOptionText, searchRegex } from "components/Feed/utils";
+import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -65,7 +65,7 @@ const Highlight = ({ text = "", highlight = "" }) => {
   if (!highlight || !highlight.trim()) {
     return text;
   }
-  const regex = searchRegex(highlight);
+  const regex = highlightSearchRegex(highlight);
   const parts = text.split(regex);
   return parts
     .filter((part) => part)

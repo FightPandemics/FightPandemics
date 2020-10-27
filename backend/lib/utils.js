@@ -57,7 +57,7 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
-const searchRegex = (keywords) => {
+const createSearchRegex = (keywords) => {
   let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
   let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
   const keywordsRegex = new RegExp(
@@ -83,6 +83,6 @@ module.exports = {
   generateUUID,
   getCookieToken,
   isValidEmail,
-  searchRegex,
+  createSearchRegex,
   setElapsedTimeText,
 };

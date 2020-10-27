@@ -11,7 +11,7 @@ import Heading from "components/Typography/Heading";
 import PostCard from "./PostCard";
 import FilterTag from "components/Tag/FilterTag";
 import TextAvatar from "components/TextAvatar";
-import { buildLocationString, searchRegex } from "./utils";
+import { buildLocationString, highlightSearchRegex } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   PlaceholderIcon,
@@ -184,7 +184,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
     if (!highlight || !highlight.trim()) {
       return text;
     }
-    const regex = searchRegex(highlight);
+    const regex = highlightSearchRegex(highlight);
     const parts = text.split(regex);
     return parts
       .filter((part) => part)
