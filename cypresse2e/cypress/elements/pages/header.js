@@ -1,5 +1,5 @@
 class Header{
-    fightPandemicsLogo = 'div.am-navbar-left img';
+
     aboutUsLink = 'li #NAV_AU';
     helpBoardLink = 'li #NAV_HB';
     signInLink = 'li #NAV_SI';
@@ -12,14 +12,6 @@ class Header{
     visit(){
         cy.visit('');
     }   
-
-    getLogo(){
-        return cy.get(this.fightPandemicsLogo);
-    }
-
-    getFpLogoLocator() {
-        return this.fightPandemicsLogo;
-    }
 
     getAboutUsLink(){
         return cy.get(this.aboutUsLink);

@@ -1,6 +1,5 @@
 class JoinNow {
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
     h4Heading = 'h4';
     image = '.SocialImageSVG';
     emailField = '#email';
@@ -21,27 +20,18 @@ class JoinNow {
     joinNowGoogleButton = '#SU_GG';
     joinNowLinkedinButton = '#SU_LN';
 
-
     constructor() { }
 
     visit() {
         cy.visit('auth/signup');
     }
 
-    getFpLogo() {
-        return cy.get(this.fpLogo);
-    }
-    
-    getFpLogoLocator() {
-        return this.fpLogo;
-    }
-
     getH4Heading() {
-        return cy.get(this.h4Heading);
+        return this.h4Heading;
     }
 
     getImage() {
-        return cy.get(this.image);
+        return this.image;
     }
 
     getEmailField() {

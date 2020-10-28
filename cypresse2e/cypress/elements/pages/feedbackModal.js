@@ -1,18 +1,16 @@
 class FeedbackModal {
 
     feedbackIcon = 'button#NAV_FDB';
-    feedbackHeadingOne = '.am-modal-body h3';
+    feedbackH3 = '.am-modal-body h3';
     feedbackScale = '.rectangle';
     feedbackScaleText = '.scale-text';
     closeModal = '.am-modal-close';
-    feedbackHeadingTwo = '.am-modal-body h2';
+    feedbackH2 = '.am-modal-body h2';
     feedbackQuestions = 'label';
     feedbackInputList = '.am-modal-body div > input';
     button = 'a span';
     radioAnswersList = '.ant-radio-wrapper';
     radioAnswers = '.ant-radio-input';
-
-
 
     constructor() { }
 
@@ -24,8 +22,8 @@ class FeedbackModal {
         return cy.get(this.feedbackIcon);
     }
 
-    getFeedbackHeadingOne() {
-        return cy.get(this.feedbackHeadingOne);
+    getFeedbackH3() {
+        return this.feedbackH3;
     }
 
     getFeedbackScale() {
@@ -40,8 +38,8 @@ class FeedbackModal {
         return cy.get(this.closeModal);
     }
 
-    getFeedbackHeadingTwo() {
-        return cy.get(this.feedbackHeadingTwo);
+    getFeedbackH2() {
+        return this.feedbackH2;
     }
 
     getFeedbackQuestions() {
