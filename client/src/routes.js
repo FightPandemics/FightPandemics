@@ -14,6 +14,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import EditNotifications from "./pages/EditNotifications";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
@@ -26,6 +27,7 @@ import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import Unsubscribe from "./pages/Unsubscribe.js";
 
 const routes = [
   {
@@ -179,6 +181,13 @@ const routes = [
     },
   },
   {
+    path: "/edit-notifications",
+    component: EditNotifications,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
     path: "/edit-account",
     component: EditAccount,
     props: {
@@ -226,6 +235,11 @@ const routes = [
   {
     path: "/toggleqa",
     component: ToggleQAMode,
+  },
+  {
+    path: "/unsubscribe",
+    component: Unsubscribe,
+    layout: "logo",
   },
   {
     path: "*",

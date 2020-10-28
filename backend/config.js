@@ -107,9 +107,9 @@ const config = {
     },
     redis: {
       host: configData.REDIS_HOST,
-      port: configData.REDIS_PORT
-    }
-  }
+      port: configData.REDIS_PORT,
+    },
+  },
 };
 
 module.exports = { config };
