@@ -1,6 +1,5 @@
 class HelpBoard{
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
     helpBoardPageTitle = 'h1';
     addPostButton = 'button > img#HB_CP';
     noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
@@ -8,15 +7,10 @@ class HelpBoard{
     firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)';
     helpBoard = 'div.feed-posts';
 
-
     constructor() { }
 
     visit() {
         cy.visit('feed');
-    }
-
-    getFpLogoLocator() {
-        return this.fpLogo;
     }
 
     getHelpBoardPageTitleLocator() {

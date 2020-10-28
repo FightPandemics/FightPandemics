@@ -13,10 +13,10 @@ const POST_SETTINGS = {
   expires: {
     default: { text: "post.options.expires.month", value: "Month" },
     options: [
-      { text: "post.options.expires.forever", value: "Forever" },
-      { text: "post.options.expires.month", value: "Month" },
-      { text: "post.options.expires.week", value: "Week" },
       { text: "post.options.expires.day", value: "Day" },
+      { text: "post.options.expires.week", value: "Week" },
+      { text: "post.options.expires.month", value: "Month" },
+      { text: "post.options.expires.forever", value: "Forever" },
     ],
   },
   helpTypes: {

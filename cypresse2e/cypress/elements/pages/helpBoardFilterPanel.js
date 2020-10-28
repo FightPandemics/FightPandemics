@@ -17,7 +17,6 @@ class HelpBoardFilter {
     quitFiltersButton = '#HB_FI_QF';
     applyFiltersButton = '#HB_FI_VR';
     closeSelectedTags = 'div a.am-button.tag-closable';
-    cookieBanner = '#cookie-banner-close';
 
     constructor() { }
 
@@ -93,9 +92,6 @@ class HelpBoardFilter {
         return cy.get(this.closeSelectedTags);
     }
 
-    getCookieBanner() {
-        return cy.get(this.cookieBanner);
-    }
 }
 
 export default HelpBoardFilter;
