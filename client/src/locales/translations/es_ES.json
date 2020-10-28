@@ -14,7 +14,8 @@
     "logout": "Cerrar sesión",
     "organisations": "Organizaciones",
     "language": "Idioma",
-    "switchAccount": "Switch Account"
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organisation"
   },
   "onboarding": {
     "common": {

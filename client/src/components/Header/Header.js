@@ -20,8 +20,6 @@ import globe from "assets/icons/globe.svg";
 import { theme, mq } from "../../constants/theme";
 import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
-import { ProfilePhoto } from "components/Picture/ProfilePic";
-import { getInitialsFromFullName } from "utils/userInfo";
 import { ProfileMenu } from "./ProfileMenu";
 
 const { colors, typography } = theme;
@@ -141,16 +139,18 @@ const Header = ({
   const { t } = useTranslation();
 
   const index = localStorage.getItem("organisationIndex");
-  if (index && organisationIndex !== index) {
+  if (organisationIndex !== index) {
     setOrganisationIndex(index);
   }
   const setOrganisation = (index) => {
-    if (index === null) {
-      localStorage.removeItem("organisationIndex");
-    } else {
-      localStorage.setItem("organisationIndex", index);
+    if (index !== organisationIndex) {
+      if (index) {
+        localStorage.setItem("organisationIndex", index);
+      } else {
+        localStorage.removeItem("organisationIndex");
+      }
+      window.location.href = "/feed";
     }
-    window.location.href = "/feed";
   };
 
   return (
@@ -202,14 +202,6 @@ const HeaderLinks = ({
 }) => {
   const { t } = useTranslation();
   const languageMenu = <LanguageMenu />;
-  const profileMenu = (
-    <ProfileMenu
-      user={user}
-      organisationIndex={organisationIndex}
-      setOrganisation={setOrganisation}
-      onFeedbackIconClick={onFeedbackIconClick}
-    />
-  );
   return (
     <>
       <ul>
@@ -233,16 +225,12 @@ const HeaderLinks = ({
         </li>
         {isAuthenticated && (
           <li>
-            <Dropdown overlay={profileMenu} trigger={["click"]}>
-              <div style={{ width: "24px", height: "24px" }}>
-                <ProfilePhoto
-                  user={user}
-                  initials={getInitialsFromFullName(
-                    `${user.firstName} ${user.lastName}`,
-                  )}
-                />
-              </div>
-            </Dropdown>
+            <ProfileMenu
+              user={user}
+              organisationIndex={organisationIndex}
+              setOrganisation={setOrganisation}
+              onFeedbackIconClick={onFeedbackIconClick}
+            />
           </li>
         )}
         {!isAuthenticated && (
