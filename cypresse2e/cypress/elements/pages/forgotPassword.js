@@ -1,6 +1,5 @@
-class ForgotPassword{
+class ForgotPassword {
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
     image = '.SocialImageSVG';
     forgotPasswordPageTitle = "h4";
     emailField = '#email';
@@ -14,10 +13,6 @@ class ForgotPassword{
         cy.visit('auth/forgot-password');
     }
 
-    getFpLogoLocator() {
-        return this.fpLogo;
-    }
-
     getForgotPasswordPageTitleLocator() {
         return this.forgotPasswordPageTitle;
     }
@@ -28,19 +23,19 @@ class ForgotPassword{
 
     getEmailField() {
         return cy.get(this.emailField);
-    }   
+    }
 
     getSubmitButton() {
         return cy.get(this.submitButton);
-    } 
+    }
 
     getBackToSignInLink() {
         return cy.get(this.backToSignInLink);
-    } 
+    }
 
     getErrorMessageField() {
         return cy.get(this.errorMessageField);
-    } 
+    }
 
 }
 export default ForgotPassword;

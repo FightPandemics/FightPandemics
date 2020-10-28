@@ -1,8 +1,12 @@
 import FeedbackModal from '../../../elements/pages/feedbackModal';
+import buttonNames from '../../../fixtures/buttonNames.json';
 
 describe('FightPandemics Feedback Modal', () => {
 
     const feedback = new FeedbackModal();
+    var headingOneText = "How well does FightPandemics meet your needs?";
+    var headingTwoText = "Thank you for being an early user of FightPandemics!";
+    var headingThreeText = "We are almost done!";
 
     context('User provides feedback on FightPandemics', () => {
         before(() => {
@@ -15,9 +19,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Feedback scale heading is visible', () => {
-            feedback.getFeedbackHeadingOne()
-                .should('be.visible')
-                .contains('How well does FightPandemics meet your needs?');
+            cy.pageContainsHeading(feedback.getFeedbackH3(), headingOneText);
         });
 
         it('Feedback scale is visible', () => {
@@ -56,7 +58,6 @@ describe('FightPandemics Feedback Modal', () => {
 
             it('Choose rating 5', () => {
                 clickRating(4);
-
             });
 
             it('Close icon is visible and clickable', () => {
@@ -67,7 +68,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Feedback heading on screen two is visible', () => {
-            feedbackHeading('Thank you for being an early user of FightPandemics!');
+            cy.pageContainsHeading(feedback.getFeedbackH2(), headingTwoText);
         });
 
         it('Feedback question one on screen two is visible', () => {
@@ -95,11 +96,11 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Next button on feedback screen two is visible and clickable', () => {
-            feedbackButton('Next');
+            feedbackButton(buttonNames.next);
         });
 
         it('Feedback heading on screen three is visible', () => {
-            feedbackHeading('We are almost done!');
+            cy.pageContainsHeading(feedback.getFeedbackH2(), headingThreeText);
         });
 
         it('Feedback question one on screen three is visible', () => {
@@ -124,7 +125,7 @@ describe('FightPandemics Feedback Modal', () => {
         });
 
         it('Submit Feedback button on feedback screen three is visible and clickable', () => {
-            feedbackButton('Submit');
+            feedbackButton(buttonNames.submit);
         });
 
     });
@@ -132,12 +133,6 @@ describe('FightPandemics Feedback Modal', () => {
     function clickRating(index) {
         feedback.getFeedbackScale()
             .find('div').eq(index).click();
-    }
-
-    function feedbackHeading(headingText) {
-        feedback.getFeedbackHeadingTwo()
-            .should('be.visible')
-            .contains(headingText);
     }
 
     function feedbackQuestion(question) {
@@ -150,7 +145,6 @@ describe('FightPandemics Feedback Modal', () => {
         feedback.getFeedbackInputList()
             .should('be.visible').eq(index).click()
             .invoke('val', answer);
-          
     }
 
     function feedbackButton(buttonText) {

@@ -1,0 +1,11 @@
+{
+    "invalidEmail": "Email address is invalid",
+    "requiredEmail": "Email address is required",
+    "passwordRequired": "Password is required.",
+    "passwordLengthRequired": "Password must be at least 8 characters",
+    "passwordCharacterRequired": "Password must contain at least 3 of these: a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+    "passwordConfirmRequired": "Password confirmation is required.",
+    "passwordNotMatched": "Passwords don't match",
+    "loginFailWrongEmail": "Login failed, reason: Wrong email or password.",
+    "loginFailMaximumAttempts": "Login failed, reason: Maximum number of sign in attempts exceeded."
+}
