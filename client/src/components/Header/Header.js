@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown, Button } from "antd";
@@ -22,9 +22,9 @@ import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 import { ProfilePhoto } from "components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { ProfileMenu } from "./ProfileMenu";
 
 const { colors, typography } = theme;
-const { SubMenu } = Menu;
 const { large } = typography.size;
 
 const BrandLink = styled(Link)`
@@ -295,66 +295,6 @@ const LanguageMenu = () => {
           </div>
         </Menu.Item>
       ))}
-    </Menu>
-  );
-};
-
-const ProfileMenu = ({
-  user,
-  organisationIndex,
-  setOrganisation,
-  onFeedbackIconClick,
-}) => {
-  const { t } = useTranslation();
-  return (
-    <Menu>
-      {/* <Menu.Item onClick={() => setOrganisation(null)}> */}
-      <Menu.Item>{`${user?.firstName} ${user?.lastName}`}</Menu.Item>
-      <Menu.Divider />
-      <SubMenu title={t("common.organisations")}>
-        <Menu.Item>
-          <Link
-            id={GTM.nav.prefix + GTM.nav.addOrg}
-            to="/create-organisation-profile"
-          >
-            {t("common.addOrg")}
-          </Link>
-        </Menu.Item>
-        <Menu.Divider />
-        {user?.organisations?.length > 0
-          ? user?.organisations?.map((organisation, i) => (
-              <Menu.Item
-                key={organisation._id}
-                onClick={() => setOrganisation(i)}
-              >
-                {organisation.name}
-              </Menu.Item>
-            ))
-          : null}
-      </SubMenu>
-      <Menu.Divider />
-      <Menu.Item>
-        <Link
-          to={
-            organisationIndex === null
-              ? `/profile/${user?.id || user?._id}`
-              : `/organisation/${user?.organisations[organisationIndex]?._id}`
-          }
-        >
-          {t("common.profile")}
-        </Link>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item
-        id={GTM.nav.prefix + GTM.nav.feedback}
-        onClick={onFeedbackIconClick}
-      >
-        {t("common.feedback")}
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item>
-        <Link to="/auth/logout">{t("common.logout")}</Link>
-      </Menu.Item>
     </Menu>
   );
 };
