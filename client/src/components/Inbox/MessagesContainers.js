@@ -55,7 +55,7 @@ export const MessagesContainer = styled.div`
     margin-top: 6.8rem;
 
     &.request-page {
-      min-height: calc(100vh - 32rem);
+      min-height: calc(100vh - 33.5rem);
     }
   }
   &.input-expanded {
@@ -130,7 +130,7 @@ export const RecipientBubble = styled.div`
   max-width: 60%;
   background-color: #f3f4fe;
   padding: 1.12rem 0.14rem 1.12rem 0.14rem;
-  border-radius: 0rem 2.2rem 2.2rem 2.2rem;
+  border-radius: 1.6rem 1.6rem 1.6rem 0.2rem;
   letter-spacing: 1px;
   margin-top: 1.4rem;
   word-break: break-word;

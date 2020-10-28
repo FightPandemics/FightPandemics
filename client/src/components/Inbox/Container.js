@@ -78,6 +78,8 @@ export const ChatListContainer = styled.div`
   min-width: 33.6rem;
 
   .chat-bucket {
+    overflow: auto;
+    max-height: calc(100vh - 100px);
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -106,6 +108,7 @@ export const SideChatContainer = styled.div`
   cursor: pointer;
   line-height: 1.8rem;
   padding-left: 1.6rem;
+  position: relative;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     justify-content: ${(props) =>
