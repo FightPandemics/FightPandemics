@@ -47,6 +47,7 @@ import {
   FETCH_POSTS,
   ERROR_POSTS,
   NEXT_PAGE,
+  SET_PAGE,
   RESET_PAGE,
   SET_LOADING,
   SET_LIKE,
@@ -279,6 +280,7 @@ const Feed = (props) => {
     status,
     deleteModalVisibility,
   } = posts;
+  const { history, isAuthenticated, user } = props;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
 
@@ -289,7 +291,6 @@ const Feed = (props) => {
     });
     return ref.current;
   }
-  const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -466,6 +467,18 @@ const Feed = (props) => {
       }
     };
 
+    let postsInState;
+    if (props.history.location.state) {
+      const { keepPostsState, keepPageState } = history.location.state;
+      postsInState = keepPostsState;
+
+      if (keepPageState >= page) {
+        postsDispatch({
+          type: SET_PAGE,
+          page: keepPageState,
+        });
+      }
+    }
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     const baseURL = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
@@ -496,7 +509,13 @@ const Feed = (props) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (postsList) {
+
+        if (postsInState) {
+          postsDispatch({
+            type: SET_POSTS,
+            posts: { ...postsInState },
+          });
+        } else if (postsList) {
           postsDispatch({
             type: SET_POSTS,
             posts: { ...postsList, ...loadedPosts },
@@ -746,6 +765,7 @@ const Feed = (props) => {
               isItemLoaded={isItemLoaded}
               hasNextPage={loadMore}
               totalPostCount={totalPostCount}
+              page={page}
             />
             {status === ERROR_POSTS && (
               <ErrorAlert

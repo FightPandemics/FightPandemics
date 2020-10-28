@@ -49,6 +49,7 @@ const Posts = ({
   isItemLoaded,
   hasNextPage,
   totalPostCount,
+  page,
 }) => {
   const posts = Object.entries(filteredPosts);
   const scrollIndex = useRef(0);
@@ -69,6 +70,8 @@ const Posts = ({
           } else {
             history.location.state.keepScrollIndex = scrollIndex.current;
             history.location.state.keepScroll = false;
+            history.location.state.keepPostsState = undefined;
+            history.location.state.keepPageState = undefined;
           }
         }
       }
@@ -94,6 +97,8 @@ const Posts = ({
               handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
               keepScrollIndex={scrollIndex.current}
+              keepPageState={page}
+              keepPostsState={filteredPosts}
             />
             <HorizontalRule />
           </>
@@ -117,12 +122,14 @@ const Posts = ({
     },
     [
       deleteModalVisibility,
+      filteredPosts,
       handleCancelPostDelete,
       handlePostDelete,
       handlePostLike,
       hasNextPage,
       isAuthenticated,
       isItemLoaded,
+      page,
       postDelete,
       posts,
       user,
