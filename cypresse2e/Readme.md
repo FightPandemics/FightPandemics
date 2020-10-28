@@ -21,7 +21,7 @@
 *For docker-compose:*
 
 1. Make sure to `cd cypresse2e`.
-2. Run `docker-compose build cypress-e2e` (this only needs to be run one time unless changes are made in cypresse2e --> package.json).
-3. Run `docker-compose run cypress-e2e` to run all tests. (If you want to run individual tests, then it will need to be run locally).
-4. After test(s) finishes, the 'mochawesome html' report should generate automatically.
+2. Run `docker-compose build cypress-e2e-tests` in initial setup.
+3. Run `docker-compose run cypress-e2e-tests` to run all tests. (If you want to run individual tests, then it will need to be run locally).
+4. After test(s) finishes, run `docker-compose run cypress-e2e-report` and the 'mochawesome html' report should generate.
 5. Right click on the 'mochawesome.html' file in the 'mochawesome-report' folder and select the 'Open Containing Folder' option. After the folder opens, double click on the html file to view the generated test report.

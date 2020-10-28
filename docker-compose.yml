@@ -61,11 +61,11 @@ services:
     networks:
       - fp_network
 
-  cypress-e2e:
+  cypress-e2e-tests:
     build:
       context: cypresse2e
       dockerfile: Dockerfile
-    container_name: cypress-e2e
+    container_name: cypress-e2e-tests
     depends_on:
       - client
     environment:
@@ -83,7 +83,7 @@ services:
     build:
       context: cypresse2e
       dockerfile: Dockerfile
-    container_name: cypress-e2e
+    container_name: cypress-e2e-report
     command: ["bash", "-c", "npm run report"]
     volumes:
       - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/

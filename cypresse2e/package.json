@@ -4,7 +4,7 @@
     "description": "Cypress tests",
     "scripts": {
         "pretest": "rm -rf mochawesome-report/* mochawesome.json",
-        "test": "cypress run --spec cypress/integration/e2eTests/post/post.spec.js",
+        "test": "cypress run",
         "report": "npx mochawesome-merge --reportDir mochawesome-report/ > mochawesome.json && npx mochawesome-report-generator --inline mochawesome.json"
     },
     "private": true,
