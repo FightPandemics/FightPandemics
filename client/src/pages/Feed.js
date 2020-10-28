@@ -59,6 +59,7 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
+import TagManager from "react-gtm-module";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -593,13 +594,14 @@ const Feed = (props) => {
       const {
         data: { data: posts, meta },
       } = await axios.get(endpoint);
-      if (searchKeyword && window.dataLayer) {
-        // trigger custom GTM event
-        window.dataLayer.push({
-          event: "SEARCH_KEYWORD",
-          keyword: searchKeyword,
-          category: searchCategory || "POSTS",
-          resultsCount: meta.total,
+      if (searchKeyword) {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "SEARCH_KEYWORD",
+            keyword: searchKeyword,
+            category: searchCategory || "POSTS",
+            resultsCount: meta.total,
+          },
         });
       }
       if (posts.length && meta.total) {
