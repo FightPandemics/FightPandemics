@@ -144,10 +144,10 @@ describe('FightPandemics Sign Up Page', () => {
 
 		it('After giving correct email and password user clicking Join Now  Button', () => {
 			cy.generateRandomEmail(64,63).then((email) => {
-			  joinNow.getEmailField().type(email);
+			emailField().type(email);
 		  });
-			joinNow.getPasswordField().type(emailAndPassword.dummySamplePassword);
-			joinNow.getConfirmPasswordField().type(emailAndPassword.dummySamplePassword);
+			passwordField().type(emailAndPassword.dummySamplePassword);
+			confirmPasswordField().type(emailAndPassword.dummySamplePassword);
 			var joinNowButton = joinNow.getJoinNowButton();
 			joinNowButton.click({force: true});
 			cy.checkEmailIsOpen("/auth/check-email");
