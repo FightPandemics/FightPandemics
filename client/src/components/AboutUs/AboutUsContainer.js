@@ -88,6 +88,7 @@ export const SupportersLogosContainer = styled.div`
 
     img {
       max-width: 100%;
+      min-width: 10rem;
     }
   }
 `;
@@ -394,11 +395,26 @@ export const SocialStyle = styled.div`
 
 export const SocialContainer = styled.div`
   text-align: left;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
   img {
     margin: 1.5rem 1.5rem;
     width: 4.55rem;
     height: 4.55rem;
     object-fit: contain;
+  }
+
+  a:first-child {
+    img {
+      margin-left: 0;
+    }
+  }
+  a:last-child {
+    img {
+      margin-right: 0;
+    }
   }
 `;
 

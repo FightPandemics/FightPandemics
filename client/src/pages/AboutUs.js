@@ -150,6 +150,7 @@ function LogoItem(props) {
 
 function LogosList(props) {
   const supporterLogos = props.supporterLogos;
+  console.log(supporterLogos);
   const logoItems = supporterLogos.map((logo) => (
     <LogoItem key={logo.toString()} value={logo} />
   ));
@@ -302,7 +303,7 @@ const AboutUs = () => {
       </SupporterContainer>
 
       <SocialStyle>
-        <FlexBox direction="column" align="center">
+        <FlexBox direction="column" align="flex-start">
           <h3>{t("followUs")}</h3>
           <SocialContainer>
             <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
