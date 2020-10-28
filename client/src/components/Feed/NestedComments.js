@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Avatar, Input, Tooltip, Space } from "antd";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
+import { selectOrganisationId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -53,6 +54,7 @@ const NestedComments = ({
   const [showReply, setShowReply] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
+  const organisationId = useSelector(selectOrganisationId);
 
   const renderAvatar = (
     <Avatar
@@ -153,7 +155,7 @@ const NestedComments = ({
     const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (isAuthenticated && comment.author.id === (organisationId || user.id)) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
 
       try {
@@ -206,7 +208,7 @@ const NestedComments = ({
 
   const editCommentContent = (
     <>
-      {isAuthenticated && comment.author.id === user.id && (
+      {isAuthenticated && comment.author.id === (organisationId || user.id) && (
         <>
           <TextInput
             onChange={handleCommentEdit}
@@ -231,7 +233,7 @@ const NestedComments = ({
   const renderCommentContent = (
     <Space direction="vertical">
       <span>{editedComment}</span>
-      {isAuthenticated && comment.author.id === user.id && (
+      {isAuthenticated && comment.author.id === (organisationId || user.id) && (
         <span>{commentActions}</span>
       )}
     </Space>
