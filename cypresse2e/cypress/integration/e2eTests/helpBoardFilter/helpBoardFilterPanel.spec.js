@@ -1,9 +1,11 @@
 import HelpBoardFilter from '../../../elements/pages/helpBoardFilterPanel';
-import { LOCATION } from '../../constants';
+import CookieBanner from '../../../elements/pages/cookieBanner';
+import inputValues from '../../../fixtures/inputValues';
 
 describe('FightPandemics Help Board Filters', () => {
 
     const helpBoardFilter = new HelpBoardFilter();
+    const cookieBanner = new CookieBanner();
 
     context('Filtering posts by offer help or request help on Help Board', () => {
         beforeEach(() => {
@@ -61,7 +63,7 @@ describe('FightPandemics Help Board Filters', () => {
 
             var locationField = helpBoardFilter.getHbLocationInput();
             locationField.should('be.visible').click({ force: true });
-            locationField.type(LOCATION);
+            locationField.type(inputValues.location);
             helpBoardFilter.getHbLocationDropdown().should('be.visible');
             locationField.click({ force: true });
 
@@ -125,7 +127,7 @@ describe('FightPandemics Help Board Filters', () => {
     }
 
     function closeCookieBanner() {
-        helpBoardFilter.getCookieBanner()
+        cookieBanner.getCookieBannerClose()
             .should('be.visible').click({ force: true });
     }
 

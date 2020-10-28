@@ -124,6 +124,11 @@ async function routes(app) {
       reply.setAuthCookies(token);
       const auth0User = await Auth0.getUser(token);
       const { email_verified: emailVerified } = auth0User;
+      // Don't throw as already checking 403 from Auth0 (wrong email/pw)
+      // to respond to client as 401 unauthorized error
+      if (!emailVerified) {
+        return app.httpErrors.forbidden("emailUnverified");
+      }
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
       if (!userId) {
@@ -139,7 +144,7 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
-          photo
+          photo,
         };
       }
       return { email, emailVerified, token, user };

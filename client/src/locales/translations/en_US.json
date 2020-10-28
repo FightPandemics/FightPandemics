@@ -51,7 +51,7 @@
     "allOrgs": "All organizations",
     "request": "Requesting help",
     "offer": "Offering help",
-    "quit": "Quit filters",
+    "quit": "Clear filters",
     "apply": "Apply filters",
     "getOrGive": "Offer or request help",
     "filters": {
@@ -172,10 +172,10 @@
         "country": "In my Country"
       },
       "expires": {
-        "forever": "Forever",
-        "month": "For a month",
+        "day": "For a day",
         "week": "For a week",
-        "day": "For a day"
+        "month": "For a month",
+        "forever": "Forever"
       },
       "helpTypes": {
         "request": "Looking for help",
