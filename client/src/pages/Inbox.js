@@ -133,40 +133,46 @@ const Inbox = (props) => {
         toggleViewRequests={toggleViewRequests}
         setToggleViewRequests={setToggleViewRequests}
       />
-      {isSettingsOpen && (
-        <Settings
-          selectedSettingsTab={selectedSettingsTab}
-          rooms={rooms}
-          user={user}
-          unblockThread={unblockThread}
-        />
-      )}
-      {!isSettingsOpen &&
-      (rooms.length === 0 || rooms.length === pendingRooms.length) ? (
-        <EmptyInbox />
-      ) : (
-        (!isSettingsOpen && !room && (
-          <SelectRoom isRequestPage={toggleViewRequests} />
-        )) ||
-        (!isSettingsOpen && room && (
-          <CurrentChat
-            room={room}
-            user={user}
-            getChatLog={getChatLog}
-            chatLog={chatLog}
-            loadMore={loadMore}
-            sendMessage={sendMessage}
-            deleteMessage={deleteMessage}
-            editMessage={editMessage}
-            leaveAllRooms={leaveAllRooms}
-            toggleMobileChatList={toggleMobileChatList}
-            setToggleMobileChatList={setToggleMobileChatList}
-            blockThread={blockThread}
-            unblockThread={unblockThread}
-            archiveThread={archiveThread}
-          />
-        ))
-      )}
+      {(() => {
+        if (isSettingsOpen) {
+          return (
+            <Settings
+              selectedSettingsTab={selectedSettingsTab}
+              rooms={rooms}
+              user={user}
+              unblockThread={unblockThread}
+            />
+          );
+        } else {
+          if (
+            rooms?.length === 0 ||
+            (!toggleViewRequests && rooms.length === pendingRooms.length)
+          ) {
+            return <EmptyInbox />;
+          }
+          if (!room) {
+            return <SelectRoom isRequestPage={toggleViewRequests} />;
+          }
+          return (
+            <CurrentChat
+              room={room}
+              user={user}
+              getChatLog={getChatLog}
+              chatLog={chatLog}
+              loadMore={loadMore}
+              sendMessage={sendMessage}
+              deleteMessage={deleteMessage}
+              editMessage={editMessage}
+              leaveAllRooms={leaveAllRooms}
+              toggleMobileChatList={toggleMobileChatList}
+              setToggleMobileChatList={setToggleMobileChatList}
+              blockThread={blockThread}
+              unblockThread={unblockThread}
+              archiveThread={archiveThread}
+            />
+          );
+        }
+      })()}
     </InboxContainer>
   );
 };
