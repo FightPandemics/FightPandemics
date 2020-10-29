@@ -155,7 +155,7 @@ async function routes(app) {
       if (hide.address) {
         location = {};
       }
-
+      const ownUser = authUserId !== null && authUserId.equals(user.id);
       return {
         about,
         firstName,
@@ -165,10 +165,10 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
-        ownUser: authUserId !== null && authUserId.equals(user.id),
+        ownUser,
         photo,
         urls,
-        usesPassword
+        usesPassword: ownUser ? usesPassword : undefined
       };
     },
   );
