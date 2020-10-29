@@ -126,4 +126,12 @@ module.exports = {
     "zh-TW": "_ZH_TW",
     de: "_DE",
   },
+  search: {
+    prefix: "SCH",
+    input: "_IN",
+    category: "_CTG",
+    posts: "_PO",
+    individuals: "_PPL",
+    organisations: "_ORG",
+  },
 };

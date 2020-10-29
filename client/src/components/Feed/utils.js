@@ -16,3 +16,27 @@ export const getOptionText = (filterOptions, filterLabel, option) =>
   filterOptions
     .filter(({ label }) => label === filterLabel)[0]
     .options.filter(({ value }) => value === option)[0].text;
+
+export const highlightSearchRegex = (text) => {
+  let cleanKeywords = text
+    .replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&")
+    .replace(/\\./g, " ");
+  let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
+  const regex = new RegExp(
+    `(${
+      cleanKeywords
+        .split(/[ \/,=$%#()-]/gi)
+        .filter((key) => key && key.length > 1)
+        .map((key) =>
+          isLatin && key.length <= 3
+            ? "\\b" + key + "\\b"
+            : isLatin
+            ? "\\b" + key
+            : key,
+        )
+        .join("|") || "\\b\\B"
+    })`,
+    "ig",
+  );
+  return regex;
+};
