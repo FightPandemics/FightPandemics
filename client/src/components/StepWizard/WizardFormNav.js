@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import backArrow from "assets/icons/back-arrow.svg";
@@ -51,6 +51,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
       if (typeof fromWhere !== "object") {
         if (fromWhere?.indexOf("feed") > -1) {
           const { state } = history.location;
+          console.log(state, "WIZARDSTATE");
           history.push(FEED, {
             ...state,
             keepScroll: true,
@@ -63,6 +64,18 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const { state } = history.location;
+    window.onpopstate = () => {
+      if (state.from.indexOf("feed") > -1) {
+        history.push(FEED, {
+          ...state,
+          keepScroll: true,
+        });
+      }
+    };
+  }, [history]);
 
   return (
     <StyledWizardNav>
