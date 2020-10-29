@@ -148,7 +148,7 @@ export const InputBox = ({
   unblockThread,
   scrollToBottom,
   blockThread,
-  archiveThread,
+  ignoreThread,
   setToggleViewRequests,
   editMessage,
   editingMessageId,
@@ -233,7 +233,7 @@ export const InputBox = ({
       {blockStatus === "did-block" && (
         <ChatDisabled>
           {t("messaging.didBlock", {
-            username: getReceiver(room.participants).name
+            username: getReceiver(room.participants).name,
           })}
           <button
             className={"unblock-btn"}
@@ -246,7 +246,7 @@ export const InputBox = ({
       {blockStatus === "was-blocked" && (
         <ChatDisabled>
           {t("messaging.wasBlocked", {
-            username: getReceiver(room.participants).name
+            username: getReceiver(room.participants).name,
           })}
         </ChatDisabled>
       )}
@@ -267,7 +267,7 @@ export const InputBox = ({
             </button>
             <button
               className={"request-btns ingore-btn"}
-              onClick={() => archiveThread(room._id)}
+              onClick={() => ignoreThread(room._id)}
             >
               {t("messaging.ignore")}
             </button>

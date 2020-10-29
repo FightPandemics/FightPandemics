@@ -93,9 +93,9 @@ export const RecipientHeader = ({
   onMobileBackClick,
   status,
   blockThread,
-  unblockThread,
   archiveThread,
   blockStatus,
+  isPending,
 }) => {
   const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
@@ -105,10 +105,10 @@ export const RecipientHeader = ({
     setAlertBox({
       show: true,
       title: t("messaging.blockQuestion", {
-        username: participant.name
+        username: participant.name,
       }),
       content: t("messaging.blockText", {
-        username: participant.name
+        username: participant.name,
       }),
       action: [
         {
@@ -119,7 +119,10 @@ export const RecipientHeader = ({
             onMobileBackClick();
           },
         },
-        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
+        {
+          text: t("messaging.cancel"),
+          onPress: () => setAlertBox({ show: false }),
+        },
       ],
     });
   }
@@ -139,17 +142,22 @@ export const RecipientHeader = ({
             onMobileBackClick();
           },
         },
-        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
+        {
+          text: t("messaging.cancel"),
+          onPress: () => setAlertBox({ show: false }),
+        },
       ],
     });
   }
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => showArchiveConfirm()}>{t("messaging.archive")}</Menu.Item>
+      <Menu.Item onClick={() => showArchiveConfirm()}>
+        {t("messaging.archive")}
+      </Menu.Item>
       {!blockStatus && (
         <Menu.Item onClick={() => showBlockConfirm()} danger>
-           {t("messaging.block")}
+          {t("messaging.block")}
         </Menu.Item>
       )}
     </Menu>
@@ -199,7 +207,7 @@ export const RecipientHeader = ({
               )}
             </LastSeen>
           </h4>
-          {(!blockStatus || blockStatus === "was-blocked") && (
+          {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
             <Dropdown
               trigger={["hover", "click"]}
               overlay={menu}

@@ -17,6 +17,7 @@ const CurrentChat = ({
   leaveAllRooms,
   blockThread,
   archiveThread,
+  ignoreThread,
   unblockThread,
   user,
 }) => {
@@ -84,6 +85,7 @@ const CurrentChat = ({
         unblockThread={unblockThread}
         blockStatus={getThreadBlockStatus()}
         archiveThread={archiveThread}
+        isPending={getSender(room.participants).status == "pending"}
       />
       <Messages
         setText={setText}
@@ -115,7 +117,7 @@ const CurrentChat = ({
           leaveAllRooms={leaveAllRooms}
           unblockThread={unblockThread}
           blockThread={blockThread}
-          archiveThread={archiveThread}
+          ignoreThread={ignoreThread}
           setToggleViewRequests={setToggleViewRequests}
           editingMessageId={editingMessageId}
           setEditingMessageId={setEditingMessageId}

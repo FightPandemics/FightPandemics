@@ -213,6 +213,19 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  ignoreThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("IGNORE_THREAD", threadId, async (response) => {
+        if (response.code == 200) {
+          await this.joinRoom({ threadId }); // await refresh room
+          this.leaveAllRooms(); // then leave it
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
   // used to unblock, but also used to unarchive and accept requests.
   unblockThread = (threadId) => {
     return new Promise((resolve) => {
@@ -249,6 +262,7 @@ export default class SocketManager extends React.Component {
       leaveAllRooms: this.leaveAllRooms,
       blockThread: this.blockThread,
       archiveThread: this.archiveThread,
+      ignoreThread: this.ignoreThread,
       unblockThread: this.unblockThread,
     };
     return (
