@@ -82,9 +82,8 @@ export const RouteWithSubRoutes = (route) => {
               !forgotPassword
             ) {
               redirect = CHECK_EMAIL;
-            } else if (emailVerified && forgotPassword) {
-              redirect = LOGIN;
-            } else if (
+            }
+            else if (
               emailVerified &&
               !user &&
               location.pathname !== CREATE_PROFILE
@@ -101,18 +100,18 @@ export const RouteWithSubRoutes = (route) => {
             }}
           />
         ) : (
-          <Layout
-            {...rest}
-            {...route.props}
-            component={route.component}
-            authLoading={authLoading}
-            isAuthenticated={isAuthenticated}
-            user={user}
-            routes={route.routes}
-            mobiletabs={mobiletabs}
-            tabIndex={tabIndex}
-          />
-        );
+            <Layout
+              {...rest}
+              {...route.props}
+              component={route.component}
+              authLoading={authLoading}
+              isAuthenticated={isAuthenticated}
+              user={user}
+              routes={route.routes}
+              mobiletabs={mobiletabs}
+              tabIndex={tabIndex}
+            />
+          );
       }}
     />
   );

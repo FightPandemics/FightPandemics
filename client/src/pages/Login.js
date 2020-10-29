@@ -170,7 +170,7 @@ const BackLinkContainer = styled.div`
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) and (min-width: ${mq
-      .phone.wide.minWidth}) {
+    .phone.wide.minWidth}) {
     position: absolute;
     bottom: 30%;
     right: 40%;
@@ -191,13 +191,13 @@ const VisibilityButton = ({ onClick, type }) => {
       {type === "text" ? (
         <SvgIcon src={eyeMask} onClick={onClick} />
       ) : (
-        <SvgIcon src={eyeUnmask} onClick={onClick} />
-      )}
+          <SvgIcon src={eyeUnmask} onClick={onClick} />
+        )}
     </VisibilityIconWrapper>
   );
 };
 
-const Login = ({ isLoginForm, forgotPassword }) => {
+const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -299,8 +299,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   const handleEnterKeyPress = e => {
     if (e.key === "Enter" && !e.shiftKey) {
       isLoginForm
-      ? handleSubmit(onLoginWithEmail)()
-      : handleSubmit(onSignup)()
+        ? handleSubmit(onLoginWithEmail)()
+        : handleSubmit(onSignup)()
     }
   };
 
@@ -368,8 +368,8 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               {isLoginForm
                 ? t("auth.signIn")
                 : forgotPassword
-                ? t("auth.forgotPassword")
-                : t("auth.joinNow")}
+                  ? t("auth.forgotPassword")
+                  : t("auth.joinNow")}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -489,45 +489,45 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 </SubmitButton>
               </form>
             ) : (
-              <ForgotPasswordContainer>
-                <form id="forgot-password">
-                  <InputWrapper>
-                    <Label
-                      htmlFor="email"
-                      style={blockLabelStyles}
-                      label={t("auth.email")}
-                    />
-                    <Input
-                      type="email"
-                      required
-                      name="email"
-                      id="email"
-                      className={errors.email && "has-error"}
-                      placeholder={t("auth.enterEmail")}
-                      ref={register({
-                        validate: (email) => validateEmail(email),
-                      })}
-                      style={inputStyles}
-                    />
-                    {errors.email && (
-                      <InputError>
-                        {t(`profile.common.${errors.email.message}`)}
-                      </InputError>
-                    )}
-                  </InputWrapper>
+                <ForgotPasswordContainer>
+                  <form id="forgot-password">
+                    <InputWrapper>
+                      <Label
+                        htmlFor="email"
+                        style={blockLabelStyles}
+                        label={t("auth.email")}
+                      />
+                      <Input
+                        type="email"
+                        required
+                        name="email"
+                        id="email"
+                        className={errors.email && "has-error"}
+                        placeholder={t("auth.enterEmail")}
+                        ref={register({
+                          validate: (email) => validateEmail(email),
+                        })}
+                        style={inputStyles}
+                      />
+                      {errors.email && (
+                        <InputError>
+                          {t(`profile.common.${errors.email.message}`)}
+                        </InputError>
+                      )}
+                    </InputWrapper>
 
-                  <EmailButtonContainer>
-                    <SubmitButton
-                      primary="true"
-                      disabled={!formState.isValid}
-                      onClick={handleSubmit(onForgotPassword)}
-                    >
-                      {t("onboarding.common.submit")}
-                    </SubmitButton>
-                  </EmailButtonContainer>
-                </form>
-              </ForgotPasswordContainer>
-            )}
+                    <EmailButtonContainer>
+                      <SubmitButton
+                        primary="true"
+                        disabled={!formState.isValid}
+                        onClick={handleSubmit(onForgotPassword)}
+                      >
+                        {t("onboarding.common.submit")}
+                      </SubmitButton>
+                    </EmailButtonContainer>
+                  </form>
+                </ForgotPasswordContainer>
+              )}
             <WhiteSpace />
             <WhiteSpace />
             {!forgotPassword ? (
@@ -549,23 +549,27 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     </p>
                   </>
                 ) : (
-                  <p>
-                    <AuthLink
-                      id={GTM.sign.upPrefix + GTM.sign.in}
-                      to="/auth/login"
-                    >
-                      {t("auth.haveAccount")} <u>{t("auth.signIn")}</u>
-                    </AuthLink>
-                  </p>
-                )}
+                    <p>
+                      <AuthLink
+                        id={GTM.sign.upPrefix + GTM.sign.in}
+                        to="/auth/login"
+                      >
+                        {t("auth.haveAccount")} <u>{t("auth.signIn")}</u>
+                      </AuthLink>
+                    </p>
+                  )}
               </div>
             ) : (
-              <BackLinkContainer>
-                <div className="text-center">
-                  <AuthLink to="/auth/login">{t("auth.back")}</AuthLink>
-                </div>
-              </BackLinkContainer>
-            )}
+                <BackLinkContainer>
+                  <div className="text-center">
+                    <AuthLink
+                      to={isAuthenticated ? "/" : "/auth/login"}
+                    >
+                      {t(isAuthenticated ? "auth.backHome" : "auth.back")}
+                    </AuthLink>
+                  </div>
+                </BackLinkContainer>
+              )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">

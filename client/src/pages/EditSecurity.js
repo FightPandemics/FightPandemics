@@ -13,7 +13,7 @@ import {
     OptionDiv,
     CustomLink,
     CustomForm,
-    CustomSubmitButton
+    CustomSubmitButton,
 } from "../components/EditProfile/EditComponents";
 import ProfilePic from "components/Picture/ProfilePic";
 import { useTranslation } from "react-i18next";
@@ -121,7 +121,17 @@ const EditUserPassword = (props) => {
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            notification.error({ message: t('profile.individual.passwordUpdateError') })
+            let errorMessage = error?.response?.data?.message || error?.message;
+            let description = "";
+
+            if (errorMessage === "wrongCredentials") {
+                description = t('error.wrongOldPassword')
+            } else { t(`error.${errorMessage}`) }
+
+            notification.error({
+                message: t('profile.individual.passwordUpdateError'),
+                description,
+            })
 
         }
     }
@@ -293,6 +303,9 @@ const EditUserPassword = (props) => {
                                         <InputError>{errors.confirmPassword.message}</InputError>
                                     )}
                                 </InputWrapper>
+                                <AuthLink to="/auth/forgot-password">
+                                    {t("auth.forgotPassword")}
+                                </AuthLink>
                                 <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
                                     {t("profile.common.saveChanges")}
                                 </CustomSubmitButton>
@@ -306,7 +319,7 @@ const EditUserPassword = (props) => {
         </Background>
     )
 }
-const { colors } = theme;
+const { colors, typography } = theme;
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -321,7 +334,14 @@ const VisibilityIconWrapper = styled.div`
   color: ${colors.tropicalBlue};
   cursor: pointer;
 `;
-
+const AuthLink = styled(Link)`
+  font-family: ${typography.font.family.display};
+  font-weight: 300;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+  color: ${colors.royalBlue};
+  align-self: center;
+`;
 
 
 export default withUserContext(EditUserPassword)

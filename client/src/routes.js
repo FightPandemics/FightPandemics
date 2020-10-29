@@ -59,7 +59,6 @@ const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
-      notLoggedInOnly: true,
       forgotPassword: true,
     },
   },
