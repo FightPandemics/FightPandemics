@@ -146,7 +146,7 @@ export default class SocketManager extends React.Component {
   joinRoom = (data) => {
     return new Promise((resolve) => {
       this.socket.emit("JOIN_ROOM", data, (response) => {
-        if (response.code == 200) {
+        if (response.code === 200) {
           this.props.store.dispatch(joinRoomSuccess(response.data));
           return resolve(response.data);
         } else this.props.store.dispatch(joinRoomError());
@@ -212,6 +212,19 @@ export default class SocketManager extends React.Component {
   archiveThread = (threadId) => {
     return new Promise((resolve) => {
       this.socket.emit("ARCHIVE_THREAD", threadId, async (response) => {
+        if (response.code == 200) {
+          await this.joinRoom({ threadId }); // await refresh room
+          this.leaveAllRooms(); // then leave it
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  };
+
+  ignoreThread = (threadId) => {
+    return new Promise((resolve) => {
+      this.socket.emit("IGNORE_THREAD", threadId, async (response) => {
         if (response.code == 200) {
           await this.joinRoom({ threadId }); // await refresh room
           this.leaveAllRooms(); // then leave it
@@ -303,6 +316,7 @@ export default class SocketManager extends React.Component {
       leaveAllRooms: this.leaveAllRooms,
       blockThread: this.blockThread,
       archiveThread: this.archiveThread,
+      ignoreThread: this.ignoreThread,
       unblockThread: this.unblockThread,
       getNotifications: this.getNotifications,
       markNotificationsAsRead: this.markNotificationsAsRead,

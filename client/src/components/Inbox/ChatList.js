@@ -7,6 +7,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import moment from "moment";
 import gearIcon from "assets/icons/settings-blue.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
+import { useTranslation } from "react-i18next";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -34,8 +35,7 @@ const SettingsNextArrow = styled.img`
   right: 1rem;
 `;
 const SettingsTabsSelector = styled(SideChatContainer)`
-  padding: 0.4em;
-  height: 4em;
+  height: 5.6rem;
 `;
 
 export const ChatList = ({
@@ -53,19 +53,21 @@ export const ChatList = ({
   toggleViewRequests,
   setToggleViewRequests,
 }) => {
+  const { t } = useTranslation();
+
   const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
+    return participants.filter((p) => p.id !== user.id)[0];
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
+    return participants.filter((p) => p.id === user.id)[0];
   };
 
   const pendingRooms = rooms.filter(
-    (r) => getSender(r.participants).status == "pending",
+    (r) => getSender(r.participants)?.status === "pending",
   );
   const acceptedRooms = rooms.filter(
-    (r) => getSender(r.participants).status == "accepted",
+    (r) => getSender(r.participants).status === "accepted",
   );
 
   const SideChats = () => {
@@ -74,12 +76,12 @@ export const ChatList = ({
       <>
         {roomsToShow.map((_room) => (
           <SideChatContainer
-            className={`${_room._id == room?._id ? "selected" : ""}`}
+            className={`${_room._id === room?._id ? "selected" : ""}`}
             key={_room._id}
             toggleMobileChatList={toggleMobileChatList}
             tabIndex="1"
             onClick={() => {
-              if (!room || room._id != _room._id)
+              if (!room || room._id !== _room._id)
                 joinRoom({
                   threadId: _room._id,
                 });
@@ -123,21 +125,23 @@ export const ChatList = ({
           }}
           style={{ cursor: "pointer" }}
         >
-          <SettingsBackArrow src={arrow} alt="Back Arrow" /> Messages Settings
+          <SettingsBackArrow src={arrow} alt="Back Arrow" /> {t("messaging.settings.header")}
         </ChatHeader>
         <div onClick={() => setToggleMobileChatList(false)}>
           <SettingsTabsSelector
-            className={`${selectedSettingsTab == "BLOCKED" ? "selected" : ""}`}
+            className={`${selectedSettingsTab === "BLOCKED" ? "selected" : ""}`}
             onClick={() => setSettingsTab("BLOCKED")}
           >
-            Blocked Accounts
+           {t("messaging.settings.blocked")}
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
           <SettingsTabsSelector
-            className={`${selectedSettingsTab == "ARCHIVED" ? "selected" : ""}`}
+            className={`${
+              selectedSettingsTab === "ARCHIVED" ? "selected" : ""
+            }`}
             onClick={() => setSettingsTab("ARCHIVED")}
           >
-            Archived Conversations
+            {t("messaging.settings.archived")}
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
         </div>
@@ -151,7 +155,7 @@ export const ChatList = ({
         <>
           {!toggleViewRequests && (
             <ChatHeader>
-              Messages{" "}
+              {t("messaging.header")}{" "}
               <span>
                 {acceptedRooms
                   .map((_room) =>
@@ -164,9 +168,10 @@ export const ChatList = ({
           )}
           {(pendingRooms.length > 0 || toggleViewRequests) && (
             <ChatHeader
-              style={{ cursor: "pointer" }}
+              type="subHeader"
+              style={toggleViewRequests ? { fontWeight: "bold" } : {}}
               onClick={() => {
-                if (!toggleViewRequests) leaveAllRooms();
+                leaveAllRooms();
                 setToggleViewRequests(!toggleViewRequests);
               }}
             >
@@ -176,7 +181,7 @@ export const ChatList = ({
                   style={{ transform: "rotate(90deg)" }}
                 />
               )}
-              Message requests <span>{pendingRooms.length}</span>
+              {t("messaging.requests")} <span>{pendingRooms.length}</span>
               {!toggleViewRequests && (
                 <SettingsIcon
                   src={arrow}

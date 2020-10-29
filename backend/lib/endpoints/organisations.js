@@ -9,6 +9,7 @@ const {
   searchOrganisationsSchema,
   updateOrganisationSchema,
 } = require("./schema/organisations");
+const { createSearchRegex } = require("../utils");
 
 /*
  * /api/organisations
@@ -55,9 +56,6 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const filters = [{ type: { $ne: "Individual" } }];
 
-      // un-comment if user shouldnt find their owned organizations
-      // if (userId) filters.push({ ownerId: { $ne: userId } });
-
       // prefer location from query filters, then user if authenticated
       let location;
       if (queryFilters.location) {
@@ -82,14 +80,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = new RegExp(
-          keywords
-            .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-            .split(/[ .\/,=$%#()-]/gi)
-            .filter((key) => key && key.length > 1)
-            .join("|"),
-          "ig",
-        );
+        const keywordsRegex = createSearchRegex(keywords)
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -156,6 +147,7 @@ async function routes(app) {
             industry: true,
             global: true,
             location: true,
+            photo: true,
           },
         },
       ];

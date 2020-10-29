@@ -1,6 +1,6 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken } = require("../utils");
+const { getCookieToken, createSearchRegex } = require("../utils");
 const {
   getUserByIdSchema,
   getUsersSchema,
@@ -81,14 +81,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = new RegExp(
-          keywords
-            .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-            .split(/[ .\/,=$%#()-]/gi)
-            .filter((key) => key && key.length > 1)
-            .join("|"),
-          "ig",
-        );
+        const keywordsRegex = createSearchRegex(keywords)
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -155,6 +148,7 @@ async function routes(app) {
             urls: true,
             objectives: true,
             needs: true,
+            photo: true,
           },
         },
       ];

@@ -12,15 +12,17 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
+import { useTranslation } from "react-i18next";
 
 const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
+  const { t } = useTranslation();
   const Initials = getInitialsFromFullName(postAuthorName);
   return (
     <Container>
       <RefPost>
         <header>
           <div className="author">
-            To:<TextAvatar src={avatar}>{Initials}</TextAvatar> {postAuthorName}
+            {t("messaging.to")}:<TextAvatar src={avatar}>{Initials}</TextAvatar> {postAuthorName}
           </div>
           <h3>{title}</h3>
         </header>
@@ -42,6 +44,7 @@ const MessageModal = ({
   postId,
   isFromProfile,
 }) => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
@@ -103,13 +106,13 @@ const MessageModal = ({
         <div>
           <PrivateMessageContainer onClick={showModal}>
             <img src={activeemail} />
-            {!isFromProfile && <span>Message</span>}
+            {!isFromProfile && <span>{t("messaging.message")}</span>}
           </PrivateMessageContainer>
           <MsgModal
-            title="Send a message"
+            title={t("messaging.sendMessage")}
             visible={visible}
             onOk={handleOk}
-            okText="Send"
+            okText={t("messaging.send")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !text }}
@@ -124,40 +127,46 @@ const MessageModal = ({
             )}
             <textarea
               ref={textAreaRef}
-              placeholder="Type a message..."
+              placeholder={t("messaging.typeMessage")}
               onChange={handleTextChange}
               maxLength={2048}
             />
           </MsgModal>
           {msgRsp ? (
             <SuccessModal
-              title="🎉 Your message was successfully sent"
+              title={"🎉 "+ t("messaging.sendSuccessHeader")}
               visible={msgSent}
-              okText="View message"
+              okText={t("messaging.viewMessage")}
               onCancel={handleDone}
               onOk={() => {
                 if (threadId) joinRoom({ threadId });
                 history.push("/inbox");
               }}
-              cancelText="Done"
+              cancelText={t("messaging.done")}
             >
               <p>
-                Your message to {postAuthorName}{" "}
-                {!isFromProfile && `concerning the "${title}"`} was sent
-                succesfully.
+              {!isFromProfile? t("messaging.sendSuccessText", {
+                username: postAuthorName,
+                title: title
+              }): t("messaging.sendSuccessTextNoPost", {
+                username: postAuthorName,
+              })}
               </p>
             </SuccessModal>
           ) : (
             <FailedModal
-              title="🚧  Oops, something went wrong"
+              title={"🚧 "+t("messaging.sendFailedHeader")}
               visible={msgSent}
               onCancel={handleDone}
-              cancelText="Close"
+              cancelText={t("messaging.close")}
             >
               <p>
-                Your message to {postAuthorName}{" "}
-                {!isFromProfile && `concerning the "${title}"`} was not sent
-                succesfully. Please try again later.
+              {!isFromProfile? t("messaging.sendFailedText", {
+                username: postAuthorName,
+                title: title
+              }): t("messaging.sendFailedTextNoPost", {
+                username: postAuthorName,
+              })}
               </p>
             </FailedModal>
           )}
@@ -174,7 +183,7 @@ const MessageModal = ({
         >
           <PrivateMessageContainer>
             <img src={activeemail} />
-            <span>Message</span>
+            <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>
       )}

@@ -17,6 +17,7 @@ const CurrentChat = ({
   leaveAllRooms,
   blockThread,
   archiveThread,
+  ignoreThread,
   unblockThread,
   user,
 }) => {
@@ -30,8 +31,12 @@ const CurrentChat = ({
     setEditingMessageId,
     inputExpanded,
     setInputExpanded,
+    toggleViewRequests,
     setToggleViewRequests,
   } = useContext(ChatContext);
+
+  const scrollToBottom = React.useRef(null);
+  const inputRef = React.useRef(null);
 
   const getSender = (participants) => {
     return participants.filter((p) => p.id == user.id)[0];
@@ -80,6 +85,7 @@ const CurrentChat = ({
         unblockThread={unblockThread}
         blockStatus={getThreadBlockStatus()}
         archiveThread={archiveThread}
+        isPending={getSender(room.participants).status == "pending"}
       />
       <Messages
         setText={setText}
@@ -91,8 +97,11 @@ const CurrentChat = ({
         onLoadMoreClick={onLoadMoreClick}
         editingMessageId={editingMessageId}
         setEditingMessageId={setEditingMessageId}
+        toggleViewRequests={toggleViewRequests}
         isLoading={isLoading}
+        getScrollToBottom={scrollToBottom}
         inputExpanded={inputExpanded}
+        inputRef={inputRef}
       />
       {room && (
         <InputBox
@@ -100,6 +109,7 @@ const CurrentChat = ({
           setText={setText}
           user={user}
           room={room}
+          scrollToBottom={scrollToBottom?.current}
           sendMessage={sendMessage}
           inputExpanded={inputExpanded}
           setInputExpanded={setInputExpanded}
@@ -107,11 +117,12 @@ const CurrentChat = ({
           leaveAllRooms={leaveAllRooms}
           unblockThread={unblockThread}
           blockThread={blockThread}
-          archiveThread={archiveThread}
+          ignoreThread={ignoreThread}
           setToggleViewRequests={setToggleViewRequests}
           editingMessageId={editingMessageId}
           setEditingMessageId={setEditingMessageId}
           editMessage={editMessage}
+          inputRef={inputRef}
         />
       )}
     </CurrentChatContainer>

@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card } from "antd-mobile";
 import styled from "styled-components";
-import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -12,7 +11,7 @@ import Heading from "components/Typography/Heading";
 import PostCard from "./PostCard";
 import FilterTag from "components/Tag/FilterTag";
 import TextAvatar from "components/TextAvatar";
-import { buildLocationString } from "./utils";
+import { buildLocationString, highlightSearchRegex } from "./utils";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   PlaceholderIcon,
@@ -131,7 +130,12 @@ const SendMessage = styled(Link)`
   padding-left: 7.7rem;
   color: #939393;
 `;
-
+const StyledCardHeader = styled(Card.Header)`
+  img:not(.indicator):not(.status-icon) {
+    width: 6rem !important;
+    height: 6rem !important;
+  }
+`;
 const URLS = {
   github: [githubIcon, GITHUB_URL],
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -180,13 +184,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
     if (!highlight || !highlight.trim()) {
       return text;
     }
-    const regex = new RegExp(
-      `(${escapeRegExp(highlight)
-        .split(" ")
-        .filter((key) => key && key.length > 1)
-        .join("|")})`,
-      "gi",
-    );
+    const regex = highlightSearchRegex(highlight);
     const parts = text.split(regex);
     return parts
       .filter((part) => part)
@@ -244,7 +242,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
   };
 
   const renderHeader = (
-    <Card.Header
+    <StyledCardHeader
       title={
         <div className="title-wrapper">
           <UserName>
@@ -264,6 +262,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
               <SvgIcon
                 src={statusIndicator}
                 style={{ width: "0.5rem", margin: "0.11rem 1.1rem" }}
+                className={"indicator"}
               />
               {t("feed.filters.providersOptions." + type)}
               {type == "Individual" &&
@@ -305,13 +304,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
         _user?.photo ? (
           _user.photo
         ) : (
-          <UserTextAvatar
-            to={`/${
-              type.toLowerCase() == "individual" ? "profile" : "organisation"
-            }/${_id}`}
-          >
-            {AvatarName}
-          </UserTextAvatar>
+          <UserTextAvatar>{AvatarName}</UserTextAvatar>
         )
       }
     />
@@ -331,7 +324,15 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
       {
         //user in feed.
         <UserCard>
-          <div className="card-header">{renderHeader}</div>
+          <div className="card-header">
+            <Link
+              to={`/${
+                type.toLowerCase() == "individual" ? "profile" : "organisation"
+              }/${_id}`}
+            >
+              {renderHeader}
+            </Link>
+          </div>
           <Link
             to={`/${
               type.toLowerCase() == "individual" ? "profile" : "organisation"
@@ -349,7 +350,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 }/${_id}`}
               >
                 <SvgIcon src={envelopeBlue} />
-                <span>{t("profile.common.sendMessage")}</span>
+                <span> {t("profile.common.sendMessage")}</span>
               </SendMessage>
             ) : (
               type.toLowerCase() != "individual" && (
@@ -370,7 +371,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                   }}
                 >
                   <SvgIcon src={envelopeBlue} />
-                  <span>{t("profile.common.sendMessage")}</span>
+                  <span> {t("profile.common.sendMessage")}</span>
                 </SendMessage>
               )
             )}

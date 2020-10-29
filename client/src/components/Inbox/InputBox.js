@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import sendcomment from "assets/icons/send-paper.svg";
-import { theme, mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const MessageInput = styled.textarea`
   min-width: 3em;
@@ -23,18 +24,18 @@ const MessageInput = styled.textarea`
 const InputContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: 3.429em;
-  width: 100%;
-  position: absolute;
-  bottom: 0.5em;
+  width: calc(100% - 33.6rem);
+  position: fixed;
+  bottom: 1rem;
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    position: fixed;
-    bottom: 0.3em;
+    bottom: 0.42rem;
+    width: 100vw;
   }
   &.expanded {
-    height: 6.858em;
+    height: 9.6rem;
     textarea {
-      height: 6em;
+      height: 8.4rem;
     }
   }
   a {
@@ -51,10 +52,22 @@ const InputContainer = styled.div`
     }
   }
 `;
-const ChatDisabled = styled.p`
+const ChatDisabled = styled.div`
   width: 100%;
-  padding: 1rem;
+  border: 1px solid #f2f2f2;
+  padding: 1.6rem;
+  padding-bottom: 2.8rem;
   background: #fff;
+  font-family: ${theme?.typography?.font?.family?.body};
+
+  & > div {
+    margin-top: 1rem;
+    flex-flow: row wrap;
+    justify-content: center;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: flex;
+    }
+  }
   .unblock-btn {
     display: block;
     border: 1px solid #425af2 !important;
@@ -69,7 +82,7 @@ const ChatDisabled = styled.p`
   }
   .request-btns {
     display: inline;
-    border: 1px solid #425af2 !important;
+    border: 0.1rem solid #425af2 !important;
     font-weight: 500;
     color: #425af2;
     padding: 1rem 2.5rem;
@@ -78,14 +91,34 @@ const ChatDisabled = styled.p`
     font-size: 1.5rem;
     cursor: pointer;
     margin: 0.5rem;
+    min-width: 12.5rem;
+
+    &.accept-btn {
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        width: 100%;
+      }
+    }
     &.ingore-btn {
       color: red;
-      border: 1px solid red !important;
+      border: 0.1rem solid red !important;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        width: calc(50% - 10px);
+      }
     }
     &.block-btn {
       float: right;
       color: black;
-      border: 1px solid black !important;
+      border: 0.1rem solid black !important;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        float: none;
+        width: calc(50% - 10px);
+      }
+    }
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      min-width: 8.5rem;
     }
   }
 `;
@@ -113,21 +146,22 @@ export const InputBox = ({
   blockStatus,
   leaveAllRooms,
   unblockThread,
+  scrollToBottom,
   blockThread,
-  archiveThread,
+  ignoreThread,
   setToggleViewRequests,
   editMessage,
   editingMessageId,
   setEditingMessageId,
+  inputRef,
 }) => {
-  const inputRef = useRef(null);
-
+  const { t } = useTranslation();
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
+    return participants.filter((p) => p.id === user.id)[0];
   };
 
   const isMobile = () => {
@@ -140,7 +174,7 @@ export const InputBox = ({
       window.screen.width >= parseInt(mq.phone.wide.maxWidth)
     )
       inputRef.current.focus();
-  }, []);
+  }, [inputRef]);
 
   const handleChange = async (e) => {
     await setText(e.target.value);
@@ -152,7 +186,13 @@ export const InputBox = ({
       return setInputExpanded(true);
     if ((text.match(/\n/g) || []).length) setInputExpanded(true);
     else setInputExpanded(false);
-  }, [inputExpanded, setInputExpanded, text]);
+  }, [inputExpanded, inputRef, setInputExpanded, text]);
+
+  useEffect(() => {
+    if (typeof scrollToBottom === "function") {
+      scrollToBottom();
+    }
+  }, [inputExpanded, scrollToBottom]);
 
   const handleSendMgessage = async () => {
     // mobile editing is done inside the inputBox
@@ -190,29 +230,30 @@ export const InputBox = ({
       className={`${inputExpanded || blockStatus ? "expanded" : ""}`}
       text={text}
     >
-      {blockStatus == "did-block" && (
+      {blockStatus === "did-block" && (
         <ChatDisabled>
-          You've bocked {getReceiver(room.participants).name}. unblock to
-          receive messages from them again.
+          {t("messaging.didBlock", {
+            username: getReceiver(room.participants).name,
+          })}
           <button
             className={"unblock-btn"}
             onClick={() => unblockThread(room._id)}
           >
-            Unblock
+            {t("messaging.settings.unblock")}
           </button>
         </ChatDisabled>
       )}
-      {blockStatus == "was-blocked" && (
+      {blockStatus === "was-blocked" && (
         <ChatDisabled>
-          You've been bocked by {getReceiver(room.participants).name}. you can
-          no longer message them.
+          {t("messaging.wasBlocked", {
+            username: getReceiver(room.participants).name,
+          })}
         </ChatDisabled>
       )}
-      {!blockStatus && getSender(room.participants).status == "pending" && (
+      {!blockStatus && getSender(room.participants).status === "pending" && (
         <ChatDisabled>
-          Do want to accept the message request?. you cannot reply until you
-          accept the request.
-          <div>
+          {t("messaging.acceptPropmt")}
+          <div style={{ marginTop: "1rem" }}>
             <button
               className={"request-btns accept-btn"}
               onClick={() => {
@@ -222,13 +263,13 @@ export const InputBox = ({
                 setToggleViewRequests(false);
               }}
             >
-              Accept
+              {t("messaging.accept")}
             </button>
             <button
               className={"request-btns ingore-btn"}
-              onClick={() => archiveThread(room._id)}
+              onClick={() => ignoreThread(room._id)}
             >
-              ignore
+              {t("messaging.ignore")}
             </button>
             <button
               className={"request-btns block-btn"}
@@ -237,17 +278,17 @@ export const InputBox = ({
                 leaveAllRooms();
               }}
             >
-              Block
+              {t("messaging.block")}
             </button>
           </div>
         </ChatDisabled>
       )}
-      {!blockStatus && getSender(room.participants).status == "accepted" && (
+      {!blockStatus && getSender(room.participants).status === "accepted" && (
         <>
           <MessageInput
             type="text"
             onChange={handleChange}
-            placeholder="Type a message..."
+            placeholder={t("messaging.typeMessage")}
             value={text}
             onKeyPress={handleKeyPress}
             ref={inputRef}

@@ -178,8 +178,8 @@
         "forever": "Forever"
       },
       "helpTypes": {
-        "request": "Looking for help",
-        "offer": "Offering to help"
+        "request": "Requesting help",
+        "offer": "Offering help"
       }
     },
     "post": "Post",
@@ -792,5 +792,73 @@
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again"
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.", 
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "Go to Help Board"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select", 
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "The content of the message request would apprear here", 
+      "p2": "once you select one from the message requests inbox."
+    },
+    "didBlock": "You've blocked {{username}}. unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. you can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? you cannot reply until you accept the request.",
+    "deleteMessageQuestion": "Delete the message?",
+    "deleteMessageText": "The selected message will be permanently deleted from both yours and the recipient's devices. Are you sure you want to delete?",
+    "blockQuestion": "Block the conversation from {{username}}?",
+    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "archiveQuestion": "Archive the conversation?",
+    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+    "sendSuccessHeader": "Your message was successfully sent",
+    "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
+    "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
+    "sendFailedHeader": "Oops, something went wrong",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not successfully sent.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not successfully sent.",
+    "block": "Block",
+    "archive": "Archive",
+    "accept": "Accept",
+    "ignore": "Ignore",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "edited": "Edited",
+    "saveEdit": "Save changes",
+    "didDelete": "You deleted this message.",
+    "wasDeleted": "This message was deleted.",
+    "loadMore": "Load More...",
+    "justNow": "Just now",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "activeNow": "Active Now",
+    "message": "Message",
+    "sendMessage": "Send a message",
+    "typeMessage": "Type a message...",
+    "viewMessage": "View message",
+    "to": "To",
+    "send": "Send",
+    "done": "Done",
+    "close": "close"
   }
 }

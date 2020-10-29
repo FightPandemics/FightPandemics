@@ -35,10 +35,19 @@ const Inbox = (props) => {
     unblockThread,
     blockThread,
     archiveThread,
+    ignoreThread,
   } = useContext(WebSocketContext);
   const { user, history, authLoading, isAuthenticated } = props;
   const { room, rooms, chatLog, isIdentified } = props.ws;
   const dispatch = useDispatch();
+
+  const getSender = (participants) => {
+    return participants.filter((p) => p.id == user.id)[0];
+  };
+
+  const pendingRooms = rooms.filter(
+    (r) => getSender(r.participants)?.status == "pending",
+  );
 
   const unlisten = history.listen(() => {
     setToggleMobileChatList(true);
@@ -68,6 +77,16 @@ const Inbox = (props) => {
     }
     setIsSettingsOpen(!isSettingsOpen);
   };
+
+  useEffect(() => {
+    try {
+      // removing extra scroll padding-bottom by .am-drawer-content
+      document.querySelector(".app-drawer .am-drawer-content").style.padding =
+        "0";
+    } catch (e) {
+      // e
+    }
+  }, []);
 
   useEffect(() => {
     if (isIdentified) getUserRooms();
@@ -115,37 +134,47 @@ const Inbox = (props) => {
         toggleViewRequests={toggleViewRequests}
         setToggleViewRequests={setToggleViewRequests}
       />
-      {isSettingsOpen && (
-        <Settings
-          selectedSettingsTab={selectedSettingsTab}
-          rooms={rooms}
-          user={user}
-          unblockThread={unblockThread}
-        />
-      )}
-      {!isSettingsOpen && !rooms.length ? (
-        <EmptyInbox />
-      ) : (
-        (!isSettingsOpen && !room && <SelectRoom />) ||
-        (!isSettingsOpen && room && (
-          <CurrentChat
-            room={room}
-            user={user}
-            getChatLog={getChatLog}
-            chatLog={chatLog}
-            loadMore={loadMore}
-            sendMessage={sendMessage}
-            deleteMessage={deleteMessage}
-            editMessage={editMessage}
-            leaveAllRooms={leaveAllRooms}
-            toggleMobileChatList={toggleMobileChatList}
-            setToggleMobileChatList={setToggleMobileChatList}
-            blockThread={blockThread}
-            unblockThread={unblockThread}
-            archiveThread={archiveThread}
-          />
-        ))
-      )}
+      {(() => {
+        if (isSettingsOpen) {
+          return (
+            <Settings
+              selectedSettingsTab={selectedSettingsTab}
+              rooms={rooms}
+              user={user}
+              unblockThread={unblockThread}
+            />
+          );
+        } else {
+          if (
+            rooms?.length === 0 ||
+            (!toggleViewRequests && rooms.length === pendingRooms.length)
+          ) {
+            return <EmptyInbox />;
+          }
+          if (!room) {
+            return <SelectRoom isRequestPage={toggleViewRequests} />;
+          }
+          return (
+            <CurrentChat
+              room={room}
+              user={user}
+              getChatLog={getChatLog}
+              chatLog={chatLog}
+              loadMore={loadMore}
+              sendMessage={sendMessage}
+              deleteMessage={deleteMessage}
+              editMessage={editMessage}
+              leaveAllRooms={leaveAllRooms}
+              toggleMobileChatList={toggleMobileChatList}
+              setToggleMobileChatList={setToggleMobileChatList}
+              blockThread={blockThread}
+              unblockThread={unblockThread}
+              archiveThread={archiveThread}
+              ignoreThread={ignoreThread}
+            />
+          );
+        }
+      })()}
     </InboxContainer>
   );
 };

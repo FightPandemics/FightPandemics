@@ -1,23 +1,24 @@
 import React, { useContext } from "react";
 import { Badge, Menu, Dropdown, Typography } from "antd";
-import { Modal } from "antd-mobile";
 import styled from "styled-components";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import subMenuIcon from "assets/icons/submenu.svg";
-import { theme, mq } from "constants/theme";
+import { mq } from "constants/theme";
 import TextAvatar from "components/TextAvatar";
 import { ChatContext } from "context/ChatContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
+import { AlertBox } from "./AlertBox";
+import { useTranslation } from "react-i18next";
 const { Text } = Typography;
 
 const RecipientName = styled.div`
   width: 100%;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-  height: 3.5em;
+  border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
+  min-height: 5.8rem;
   overflow: auto;
   position: relative;
-  top: 0px;
+  top: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -33,7 +34,7 @@ const RecipientName = styled.div`
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: inline;
       transform: rotate(90deg);
-      padding-top: 1em;
+      padding-top: 1.4rem;
       cursor: pointer;
     }
   }
@@ -77,66 +78,86 @@ const LastSeen = styled.small`
 const ThreadMenu = styled.img`
   opacity: 0.5;
   position: absolute;
-  right: 0;
   width: 4.5rem;
   height: 4.5rem;
   cursor: pointer;
   padding: 1rem;
   background: #f6f7fb;
   border-radius: 100%;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    right: 1rem;
-  }
+  right: 1rem;
 `;
+
 export const RecipientHeader = ({
   threadId,
   participant,
   onMobileBackClick,
   status,
   blockThread,
-  unblockThread,
   archiveThread,
   blockStatus,
+  isPending,
 }) => {
+  const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
+  const [alertBoxData, setAlertBox] = React.useState({});
 
   function showBlockConfirm() {
-    Modal.alert(
-      `Block the connversation from ${participant.name}?`,
-      `By selecting "Block", ${participant.name} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.`,
-      [
+    setAlertBox({
+      show: true,
+      title: t("messaging.blockQuestion", {
+        username: participant.name,
+      }),
+      content: t("messaging.blockText", {
+        username: participant.name,
+      }),
+      action: [
         {
-          text: <Text type="danger">Block</Text>,
-          onPress: () => blockThread(threadId),
+          text: <Text type="danger"> {t("messaging.block")}</Text>,
+          onPress: () => {
+            blockThread(threadId);
+            setAlertBox({ show: false });
+            onMobileBackClick();
+          },
         },
-        { text: "Cancel", onPress: () => null },
+        {
+          text: t("messaging.cancel"),
+          onPress: () => setAlertBox({ show: false }),
+        },
       ],
-    );
+    });
   }
 
   function showArchiveConfirm() {
-    Modal.alert(
-      "Archive the conversation?",
-      "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
-      [
+    setAlertBox({
+      show: true,
+      title: t("messaging.archiveQuestion"),
+      content: t("messaging.archiveText"),
+      action: [
         {
-          text: <Text type="danger">Archive</Text>,
+          text: <Text type="danger">{t("messaging.archive")}</Text>,
           onPress: () => {
             archiveThread(threadId);
             setToggleMobileChatList(true);
+            setAlertBox({ show: false });
+            onMobileBackClick();
           },
         },
-        { text: "Cancel", onPress: () => null },
+        {
+          text: t("messaging.cancel"),
+          onPress: () => setAlertBox({ show: false }),
+        },
       ],
-    );
+    });
   }
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={() => showArchiveConfirm()}>Archive</Menu.Item>
+      <Menu.Item onClick={() => showArchiveConfirm()}>
+        {t("messaging.archive")}
+      </Menu.Item>
       {!blockStatus && (
         <Menu.Item onClick={() => showBlockConfirm()} danger>
-          Block
+          {t("messaging.block")}
         </Menu.Item>
       )}
     </Menu>
@@ -144,6 +165,16 @@ export const RecipientHeader = ({
 
   return (
     <>
+      {alertBoxData?.show && (
+        <AlertBox
+          footer={alertBoxData?.action}
+          visible={alertBoxData?.show}
+          transparent
+          title={alertBoxData?.title}
+        >
+          {alertBoxData?.content}
+        </AlertBox>
+      )}
       {participant && (
         <RecipientName>
           <img
@@ -165,19 +196,23 @@ export const RecipientHeader = ({
             {participant.name}
             <LastSeen>
               {status == "online" ? (
-                "Active Now"
+                t("messaging.activeNow")
               ) : (
                 <>
-                  Last seen:{" "}
+                  {t("messaging.lastSeen")}:{" "}
                   {participant.lastAccess
                     ? getRelativeTime(participant.lastAccess)
-                    : "never"}
+                    : t("messaging.never")}
                 </>
               )}
             </LastSeen>
           </h4>
-          {(!blockStatus || blockStatus == "was-blocked") && (
-            <Dropdown overlay={menu} placement="bottomRight">
+          {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
+            <Dropdown
+              trigger={["hover", "click"]}
+              overlay={menu}
+              placement="bottomRight"
+            >
               <ThreadMenu src={subMenuIcon} />
             </Dropdown>
           )}

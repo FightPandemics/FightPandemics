@@ -106,6 +106,18 @@ export const MsgModal = styled(Modal)`
 export const SuccessModal = styled(MsgModal)`
   top: 12.1rem;
   min-width: 61.5rem;
+  max-width: 100vw;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    min-width: 90vw;
+    width: 90vw !important;
+  }
+
+  .ant-modal-content {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      padding: 1.6rem;
+    }
+  }
 
   p {
     width: 100%;
@@ -140,6 +152,7 @@ export const SuccessModal = styled(MsgModal)`
       position: static;
       height: auto;
       padding: 0;
+      display: block !important;
     }
     .ant-btn:last-child {
       border-radius: 4.6rem;

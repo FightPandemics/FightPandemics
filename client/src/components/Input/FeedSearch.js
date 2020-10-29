@@ -5,9 +5,10 @@ import SvgIcon from "../Icon/SvgIcon";
 import SearchSvg from "../../assets/icons/search.svg";
 import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
+import GTM from "constants/gtm-tags";
 const { colors } = theme;
 
-const MIN_KEYWORD_CHARS = 4;
+const MIN_KEYWORD_CHARS = 2;
 
 const StyledIcon = styled(SvgIcon)`
   line-height: 1.8rem;
@@ -23,7 +24,7 @@ const SearchContainer = styled.span`
   display: block;
   transition: 0.4s;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
-    margin-left: 3rem;
+    margin-left: 8.5rem;
   }
   &.expanded {
     input {
@@ -103,7 +104,7 @@ const SearchWrapper = styled.div`
 const Chip = styled.span`
   padding: 2px 5px;
   margin: 0 10px 0 0;
-  color: #425af2;
+  color: ${colors.royalBlue};
   border-radius: 5px;
   display: inline-flex;
   align-items: center;
@@ -120,10 +121,6 @@ const Chip = styled.span`
     i {
       display: none;
     }
-  }
-  &.disableSelection {
-    pointer-events: none;
-    opacity: 0.5;
   }
 `;
 const OptionListContainer = styled.div`
@@ -152,25 +149,26 @@ const OptionListContainer = styled.div`
   }
   li {
     padding: 10px 10px;
-    color: #425af2;
+    color: ${colors.royalBlue};
     background: #fff;
-    .keyword {
+    cursor: pointer;
+    display: block;
+    &:after {
+      content: "";
+    }
+    span:last-child {
       padding-left: 20px;
       color: #bdbdbd;
     }
-    .option {
+    span:first-child {
       padding: 4px 10px;
       border-radius: 5px;
       background: #f3f4fe;
       margin-left: 15px;
     }
-    &.disableSelection {
-      pointer-events: none;
-      opacity: 0.5;
-    }
   }
   li:first-child {
-    padding: 0;
+    padding: 10px;
   }
   li:last-child {
     padding-bottom: 15px;
@@ -212,6 +210,7 @@ export default class FeedNavSearch extends React.Component {
       unfilteredOptions: props.options,
       selectedValue: Object.assign([], props.selectedValue),
       toggleOptionsList: false,
+      mobileReselect: false,
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
@@ -245,26 +244,34 @@ export default class FeedNavSearch extends React.Component {
   onChange(event) {
     const { isMobile } = this.props;
     const { tooShort } = this.state;
-    this.setState({ inputValue: event.target.value });
+    this.setState({ inputValue: event.target.value }, () => {
+      if (isMobile) this.filterOptionsByInput();
+    });
     if (
       tooShort &&
       (event.target.value.length >= MIN_KEYWORD_CHARS ||
         !event.target.value.length)
     )
       this.setState({ tooShort: false });
-    if (isMobile) this.filterOptionsByInput();
+  }
+
+  submitSearch() {
+    const { inputValue, selectedValue } = this.state;
+    const { isMobile } = this.props;
+    this.setState({ toggleOptionsList: false });
+    if (!inputValue || (isMobile && !selectedValue[0])) return;
+    if (inputValue.length < MIN_KEYWORD_CHARS) {
+      return this.setState({ tooShort: true });
+    }
+    if (isMobile)
+      return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
+    if (!isMobile) this.props.handleSubmit(inputValue);
   }
 
   onKeyClick(e) {
     const { inputValue, selectedValue } = this.state;
-    const { isMobile } = this.props;
     if (e.key === "Enter") {
-      if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
-        return this.setState({ tooShort: true });
-      }
-      if (isMobile)
-        return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
-      this.props.handleSubmit(inputValue);
+      this.submitSearch();
     }
     if (e.keyCode === 8 && !inputValue && selectedValue.length) {
       this.setState({ toggleOptionsList: true });
@@ -314,12 +321,25 @@ export default class FeedNavSearch extends React.Component {
 
   renderNormalOption() {
     const { isObject = true, displayValue } = this.props;
+    const getGTMId = (option) => {
+      return (
+        GTM.search.prefix +
+        GTM.search.category +
+        GTM.search[option.id.toLowerCase()]
+      );
+    };
     return this.state.options.map((option, i) => (
-      <li key={`option${i}`} onClick={() => this.onSelectItem(option)}>
-        <span class={"option"}>
+      <li
+        key={`option${i}`}
+        onClick={() => this.onSelectItem(option)}
+        id={getGTMId(option)}
+      >
+        <span id={getGTMId(option)}>
           {isObject ? option[displayValue] : (option || "").toString()}
         </span>
-        <span class={"keyword"}>{this.props.t("feed.search.keywords")}</span>
+        <span id={getGTMId(option)}>
+          {this.props.t("feed.search.keywords")}
+        </span>
       </li>
     ));
   }
@@ -347,26 +367,40 @@ export default class FeedNavSearch extends React.Component {
   }
 
   toggleOptionList(newVal) {
-    const { selectedValue } = this.state;
+    const { selectedValue, mobileReselect } = this.state;
+    if (mobileReselect) return;
     if (selectedValue[0]) return this.setState({ toggleOptionsList: false });
     else this.setState({ toggleOptionsList: newVal });
   }
 
   onSelectItem(item) {
+    const { mobileReselect } = this.state;
     this.setState({
-      inputValue: "",
+      inputValue: this.state.mobileReselect ? this.state.inputValue : "",
       selectedValue: [item],
       toggleOptionsList: false,
       hidePlaceholder: true,
+      mobileReselect: false,
     });
-    this.searchBox.current.focus();
+    if (mobileReselect) return this.submitSearch();
+    if (this.searchBox.current != document.activeElement)
+      this.searchBox.current.focus();
+  }
+
+  mobileRepick() {
+    this.setState({
+      toggleOptionsList: true,
+      filteredOptions: this.state.unfilteredOptions,
+      options: this.state.unfilteredOptions,
+      mobileReselect: true,
+    });
   }
 
   renderSelectedList() {
     const { isObject = true, displayValue } = this.props;
     const { selectedValue } = this.state;
     return selectedValue.map((value, index) => (
-      <Chip key={index} ref={this.chip}>
+      <Chip key={index} ref={this.chip} onClick={() => this.mobileRepick()}>
         {!isObject
           ? (value || "").toString()
           : value["mobile_display"]
@@ -397,15 +431,7 @@ export default class FeedNavSearch extends React.Component {
           <StyledIcon
             src={SearchSvg}
             onClick={() => {
-              if (inputValue?.length && inputValue.length < MIN_KEYWORD_CHARS) {
-                this.setState({ tooShort: true });
-              }
-              if (isMobile)
-                return this.props.handleMobileSubmit(
-                  inputValue,
-                  selectedValue[0].id,
-                );
-              this.props.handleSubmit(inputValue);
+              this.submitSearch();
             }}
           />
           {isMobile && this.renderSelectedList()}
@@ -423,6 +449,7 @@ export default class FeedNavSearch extends React.Component {
               this.props.isMobile &&
               setTimeout(() => this.toggleOptionList(false), 100)
             }
+            id={GTM.search.prefix + GTM.search.input}
           />
           {(inputValue || selectedValue[0]) && (
             <StyledIcon

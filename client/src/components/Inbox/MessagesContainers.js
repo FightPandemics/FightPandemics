@@ -41,21 +41,26 @@ export const BubbleContainer = styled.div`
   }
 `;
 export const MessagesContainer = styled.div`
-  width: 100%;
-  height: calc(100% - 8em);
-  min-height: 40%;
-  padding: 1em;
-  overflow: auto;
+  min-height: calc(100vh - 26rem);
+  height: calc(100vh - 18rem);
+  position: relative;
+  display: block;
+  padding: 0 1rem;
   -webkit-overflow-scrolling: touch;
   white-space: pre-wrap;
+  overflow-y: scroll;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    height: calc(100% - 4.5em);
-    &.input-expanded {
-      height: calc(100% - 8em);
+    width: 100vw;
+    min-height: calc(100vh - 17rem);
+    margin-top: 6.8rem;
+
+    &.request-page {
+      min-height: calc(100vh - 33.5rem);
     }
   }
   &.input-expanded {
-    height: calc(100% - 12em);
+    height: calc(100vh - 23rem);
+    min-height: calc(100vh - 23rem);
   }
   a {
     text-decoration: underline;
@@ -82,18 +87,18 @@ export const SenderBubble = styled.div`
   display: inline-block;
   max-width: 60%;
   background-color: #425af2;
-  padding: 0.8em 0.1em 0.8em 0.1em;
-  border-radius: 2em 2em 0.1em 2em;
+  color: white;
+  padding: 1.12rem 0.14rem 1.12rem 0.14rem;
+  border-radius: 2.2rem 2.2rem 0rem 2.2rem;
   letter-spacing: 1px;
-  margin-top: 1em;
+  margin-top: 1.4rem;
   word-break: break-word;
-  color: #fff;
   &:hover div:first-child,
   .ant-dropdown-open {
     display: block;
   }
   .message-content-sender {
-    padding: 0em 1em 0em 1em;
+    padding: 0em 1.4rem 0em 1.4rem;
   }
   textarea {
     position: absolute;
@@ -102,10 +107,11 @@ export const SenderBubble = styled.div`
     height: 100%;
     left: 0;
     top: 0;
-    border-radius: 1em 1em 0.1em 1em;
-    padding: 0.8em 1.1em 0.8em 1.1em;
-    overflow: hidden;
+    border-radius: 1.4rem 1.4rem 0.14rem 1.4rem;
+    padding: 1.12rem;
+    overflow: auto;
     color: black;
+    max-height: 15rem;
   }
   &.deleted {
     opacity: 0.7;
@@ -122,14 +128,14 @@ export const SenderBubble = styled.div`
 export const RecipientBubble = styled.div`
   display: inline-block;
   max-width: 60%;
-  background-color: #e6e4e6;
-  padding: 0.8em 0.1em 0.8em 0.1em;
-  border-radius: 0.1em 2em 2em 2em;
+  background-color: #f3f4fe;
+  padding: 1.12rem 0.14rem 1.12rem 0.14rem;
+  border-radius: 1.6rem 1.6rem 1.6rem 0.2rem;
   letter-spacing: 1px;
-  margin-top: 1em;
+  margin-top: 1.4rem;
   word-break: break-word;
   .message-content-recipient {
-    padding: 0em 1em 0em 1em;
+    padding: 0em 1.4rem 0em 1.4rem;
   }
   &.deleted {
     opacity: 0.7;

@@ -59,6 +59,7 @@ import {
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
+import TagManager from "react-gtm-module";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -94,7 +95,6 @@ let HELP_TYPE = {
   REQUEST: "Requesting help",
   OFFER: "Offering help",
 };
-
 
 const initialState = {
   selectedType: "ALL",
@@ -304,7 +304,11 @@ const Feed = (props) => {
 
   const SEARCH_OPTIONS = [
     { name: t("feed.search.options.posts"), id: "POSTS", default: true },
-    { name: t("feed.search.options.orgs"), id: "ORGANISATIONS", mobile_display: t("feed.search.options.orgsShort") },
+    {
+      name: t("feed.search.options.orgs"),
+      id: "ORGANISATIONS",
+      mobile_display: t("feed.search.options.orgsShort"),
+    },
     { name: t("feed.search.options.people"), id: "INDIVIDUALS" },
   ];
 
@@ -369,12 +373,12 @@ const Feed = (props) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
         HELP_TYPE = {
-          ALL:  t("feed.allPeople")
+          ALL: t("feed.allPeople"),
         };
         break;
       case "ORGANISATIONS":
         HELP_TYPE = {
-          ALL: t("feed.allOrgs",)
+          ALL: t("feed.allOrgs"),
         };
         break;
       default:
@@ -559,7 +563,7 @@ const Feed = (props) => {
         default:
           return "";
       }
-    }
+    };
 
     const searchURL = () => {
       if (searchKeyword)
@@ -585,10 +589,21 @@ const Feed = (props) => {
 
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
+
     try {
       const {
         data: { data: posts, meta },
       } = await axios.get(endpoint);
+      if (searchKeyword) {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "SEARCH_KEYWORD",
+            keyword: searchKeyword,
+            category: searchCategory || "POSTS",
+            resultsCount: meta.total,
+          },
+        });
+      }
       if (posts.length && meta.total) {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
@@ -843,12 +858,12 @@ const Feed = (props) => {
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
                 >
-                {t("post.create")}
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                />
-              </button>
+                  {t("post.create")}
+                  <CreatePostIcon
+                    id={gtmTag(GTM.post.createPost)}
+                    src={creatPost}
+                  />
+                </button>
               )}
             </HeaderWrapper>
             <MobileSearch>
@@ -915,9 +930,13 @@ const Feed = (props) => {
             {emptyFeed() ? (
               <NoPosts>
                 <Trans
-                   i18nKey={(!searchCategory || searchCategory == "POSTS") ? 
-                    "feed.noResultsPosts": searchCategory == "INDIVIDUALS" ?
-                    "feed.noResultsPeople" : "feed.noResultsOrgs"}
+                  i18nKey={
+                    !searchCategory || searchCategory == "POSTS"
+                      ? "feed.noResultsPosts"
+                      : searchCategory == "INDIVIDUALS"
+                      ? "feed.noResultsPeople"
+                      : "feed.noResultsOrgs"
+                  }
                   components={[
                     <a
                       id={gtmTag(GTM.post.createPost)}

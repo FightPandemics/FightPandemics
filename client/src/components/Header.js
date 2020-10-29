@@ -137,9 +137,14 @@ const NavLinks = styled.div`
 `;
 const NavSearch = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: none!important;
+    display: none !important;
   }
-  margin-left: 5rem;
+  position: absolute;
+  left: 29rem;
+  @media screen and (max-width: ${mq.desktop.small.minWidth}) {
+    position: initial;
+    margin-right: 2rem;
+  }
 `;
 const activeStyles = {
   fontWeight: "600",
@@ -351,12 +356,14 @@ export default ({
               <Logo src={logo} alt={t("alt.logo")} />
             </BrandLink>
             <NavSearch>
-            {navSearch && <FeedSearch
-              handleSubmit={onSearchSubmit}
-              handleClear={onSearchClear}
-              placeholder={t("feed.search.placeholder")}
-              t={t}
-            />}
+              {navSearch && (
+                <FeedSearch
+                  handleSubmit={onSearchSubmit}
+                  handleClear={onSearchClear}
+                  placeholder={t("feed.search.placeholder")}
+                  t={t}
+                />
+              )}
             </NavSearch>
           </>
         }
