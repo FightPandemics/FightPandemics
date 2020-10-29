@@ -1,5 +1,5 @@
 import RequestHelpQuestion from '../../../elements/pages/requestHelpQuestion';
-import { LOCATION } from '../../constants';
+import inputValues from '../../../fixtures/inputValues.json';
 
 describe('FightPandemics Request Help Questionnaire', () => {
 
@@ -26,7 +26,6 @@ describe('FightPandemics Request Help Questionnaire', () => {
             var medicalHelpAnswer = requestHelpQuestion.getMedicalHelpAnswer();
             medicalHelpAnswer.should('be.visible');
             medicalHelpAnswer.contains('Medical:' + ' I have symptoms of COVID-19.').click();
-
         });
 
         it('Need other help answer option is visible and clickable', () => {
@@ -71,8 +70,8 @@ describe('FightPandemics Request Help Questionnaire', () => {
 
         it('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
-            locationField.should('be.visible').click();
-            locationField.type(LOCATION);
+            locationField.should('be.visible').click({ force: true });
+            locationField.type(inputValues.location);
             requestHelpQuestion.getRhLocationDropdown().should('be.visible');
         });
 
@@ -94,7 +93,6 @@ describe('FightPandemics Request Help Questionnaire', () => {
             showPostings.contains('Show me postings from anywhere');
             showPostings.click({ force: true });
         });
-
 
         it('Back button is visible and clickable for question 2', () => {
             clickButton(requestHelpQuestion.getBackButtonTwo());

@@ -25,7 +25,7 @@ import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
-import { getOptionText } from "components/Feed/utils";
+import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -61,6 +61,19 @@ const URLS = {
 
 const filters = Object.values(filterOptions);
 
+const Highlight = ({ text = "", highlight = "" }) => {
+  if (!highlight || !highlight.trim()) {
+    return text;
+  }
+  const regex = highlightSearchRegex(highlight);
+  const parts = text.split(regex);
+  return parts
+    .filter((part) => part)
+    .map((part) =>
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+    );
+};
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -70,11 +83,10 @@ const Post = ({
   handleCancelPostDelete,
   handleCommentDelete,
   handlePostLike,
+  highlightWords,
   includeProfileLink,
   isAuthenticated,
-  loadMorePost,
   numComments,
-  onClick,
   onSelect,
   onChange,
   postDelete,
@@ -298,11 +310,11 @@ const Post = ({
     });
   };
 
-  const ViewMore = ({ onClick }) => (
+  const ViewMore = () => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
-        <div onClick={onClick}>
-          {!loadMorePost ? (
+        <div onClick={() => setShowComplete(!showComplete)}>
+          {showComplete ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
               <span className="view-more">{t("post.viewLess")}</span>
@@ -324,7 +336,7 @@ const Post = ({
     </Card.Body>
   );
 
-  const RenderViewMore = ({ onClick }) => {
+  const RenderViewMore = () => {
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
@@ -342,7 +354,7 @@ const Post = ({
     ) : (
       <>
         {isAuthenticated ? (
-          <ViewMore onClick={onClick} loadContent={loadMorePost} />
+          <ViewMore loadContent={showComplete} />
         ) : (
           <Link
             onClick={() =>
@@ -353,7 +365,7 @@ const Post = ({
               state: { from: window.location.href },
             }}
           >
-            <ViewMore loadContent={loadMorePost} />
+            <ViewMore loadContent={showComplete} />
           </Link>
         )}
       </>
@@ -364,7 +376,11 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <div className="author">{post?.author?.name}</div>
+          <Highlight
+            className="author"
+            text={post?.author?.name}
+            highlight={highlightWords}
+          />
           {post?.author?.location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
@@ -387,15 +403,6 @@ const Post = ({
 
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
-  );
-
-  const renderContent = (
-    <Card.Body className="content-wrapper">
-      <Heading level={4} className="h4">
-        {title}
-      </Heading>
-      <p className="post-description">{content}</p>
-    </Card.Body>
   );
 
   const renderTags = (
@@ -473,6 +480,8 @@ const Post = ({
     </Card.Body>
   );
 
+  const [showComplete, setShowComplete] = useState(true);
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -500,13 +509,9 @@ const Post = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderContent}
+            {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper">
                 {renderExternalLinks()}
@@ -576,7 +581,7 @@ const Post = ({
                 },
               }}
             >
-              {renderContent}
+              {renderContent(title, content, highlightWords, showComplete)}
             </Link>
           ) : (
             <>
@@ -587,16 +592,12 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent}
+              {renderContent(title, content, highlightWords, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
             (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper" />
             ))}
@@ -629,6 +630,23 @@ const Post = ({
         </PostCard>
       )}
     </>
+  );
+};
+
+const renderContent = (title, content, highlightWords, showComplete) => {
+  let finalContent = content;
+  if (finalContent.length > CONTENT_LENGTH && !showComplete) {
+    finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
+  }
+  return (
+    <Card.Body className="content-wrapper">
+      <Heading level={4} className="h4">
+        <Highlight text={title} highlight={highlightWords} />
+      </Heading>
+      <p className="post-description">
+        <Highlight text={finalContent} highlight={highlightWords} />
+      </p>
+    </Card.Body>
   );
 };
 

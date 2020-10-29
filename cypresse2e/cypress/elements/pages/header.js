@@ -1,20 +1,17 @@
 class Header{
-    fightPandemicsLogo = 'div.am-navbar-left img';
+
     aboutUsLink = 'li #NAV_AU';
     helpBoardLink = 'li #NAV_HB';
     signInLink = 'li #NAV_SI';
     joinNowLink = 'li #NAV_JN';
     feedbackButton = 'button#NAV_FDB';
+    globeIconLanguages = 'img#NAV_LS';
 
     constructor(){}
 
     visit(){
         cy.visit('');
     }   
-
-    getLogo(){
-        return cy.get(this.fightPandemicsLogo);
-    }
 
     getAboutUsLink(){
         return cy.get(this.aboutUsLink);
@@ -35,5 +32,10 @@ class Header{
     getFeedbackButton(){
         return cy.get(this.feedbackButton);
     }
+
+    getGlobeIconLanguages()
+	{
+		return cy.get(this.globeIconLanguages);
+	}
 }
 export default Header;

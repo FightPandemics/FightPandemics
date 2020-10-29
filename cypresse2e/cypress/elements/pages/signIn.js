@@ -1,6 +1,5 @@
 class SignIn {
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
     h4Heading = 'h4';
     image = '.SocialImageSVG';
     emailField = '#email';
@@ -19,23 +18,18 @@ class SignIn {
     signInGoogleButton = '#SI_GG';
     signInLinkedinButton = '#SI_LN';
 
-
     constructor() { }
 
     visit() {
         cy.visit('auth/login');
     }
 
-    getFpLogo() {
-        return cy.get(this.fpLogo);
-    }
-
     getH4Heading() {
-        return cy.get(this.h4Heading);
+        return this.h4Heading;
     }
 
     getImage() {
-        return cy.get(this.image);
+        return this.image;
     }
 
     getEmailField() {

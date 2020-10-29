@@ -7,6 +7,7 @@ module.exports = {
     addOrg: "_ADO",
     feed: "_HB",
     feedback: "_FDB",
+    language: "_LS",
   },
   homePage: {
     prefix: "HP",
@@ -61,6 +62,7 @@ module.exports = {
     completedPrefix: "COC",
     createOrgProfPrefix: "COP",
     createNew: "_CN",
+    email: "_EM",
   },
   profile: {
     createProfile: "_CPR",
@@ -68,6 +70,7 @@ module.exports = {
     continuePosting: "_CNP",
     continueToFeed: "_CF",
     modify: "_MOD",
+    uploadAvatar: "_UA",
   },
   sign: {
     inPrefix: "SI",
@@ -114,5 +117,21 @@ module.exports = {
     researchAndDevelopment: "_RD",
     tech: "_TC",
     other: "_OT",
+  },
+  language: {
+    "en-US": "_EN_US",
+    "en-GB": "_EN_GB",
+    pl: "_PL",
+    "es-ES": "_ES_ES",
+    "zh-TW": "_ZH_TW",
+    de: "_DE",
+  },
+  search: {
+    prefix: "SCH",
+    input: "_IN",
+    category: "_CTG",
+    posts: "_PO",
+    individuals: "_PPL",
+    organisations: "_ORG",
   },
 };

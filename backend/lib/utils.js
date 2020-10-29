@@ -77,14 +77,31 @@ const translateISOtoRelativeTime = (ISODate) => {
 };
 
 const setElapsedTimeText = (createdAt, updatedAt) => {
-  if (createdAt < updatedAt) {
-    return `${translateISOtoRelativeTime(
-      createdAt,
-    )} · edited  ${translateISOtoRelativeTime(updatedAt)}`;
-  } else {
-    return translateISOtoRelativeTime(createdAt);
-  }
+  return {
+    created: translateISOtoRelativeTime(createdAt),
+    isEdited: createdAt < updatedAt,
+  };
 };
+
+const createSearchRegex = (keywords) => {
+  let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+  let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
+  const keywordsRegex = new RegExp(
+    cleanKeywords
+      .split(/[ \/,=$%#()-]/gi)
+      .filter((key) => key && key.length > 1)
+      .map((key) =>
+        isLatin && key.length <= 3
+          ? "\\b" + key + "\\b"
+          : isLatin
+          ? "\\b" + key
+          : key,
+      )
+      .join("|") || "\\b\\B",
+    "ig",
+  );
+  return keywordsRegex;
+}
 
 module.exports = {
   bool,
@@ -93,5 +110,6 @@ module.exports = {
   getCookieToken,
   isValidEmail,
   isValidPassword,
+  createSearchRegex,
   setElapsedTimeText,
 };
