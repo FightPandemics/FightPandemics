@@ -1,5 +1,9 @@
 const { Schema, model } = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
+const {
+  defaultPrefs,
+  schema: notifyPreferenceSchema,
+} = require("./NotifyPreference");
 // const { schema: locationSchema } = require("./Location");
 const { isValidEmail } = require("../utils");
 
@@ -12,6 +16,10 @@ const userSchema = new Schema(
       unique: true,
       uniqueCaseInsensitive: true,
       validator: isValidEmail,
+    },
+    notifyPrefs: {
+      default: defaultPrefs(),
+      type: notifyPreferenceSchema,
     },
     location: Object,
     photo: String,

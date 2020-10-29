@@ -140,6 +140,9 @@
       }
     }
   },
+  "message": {
+    "message": "Message"
+  },
   "post": {
     "create": "Create a post",
     "continueAs": "Continue Posting As",
@@ -205,6 +208,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
+      "notificationInfo": "Notification Information",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -243,7 +247,12 @@
       },
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
-      "emailDomainInvalid": "Email domain is invalid"
+      "emailDomainInvalid": "Email domain is invalid",
+      "emailNotification": "Email Notification",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly"
     },
     "individual": {
       "email": "Email",
@@ -260,6 +269,7 @@
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
       "editProfile": "Edit Profile",
+      "editNotification": "Edit Notification",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -860,5 +870,9 @@
     "send": "Send",
     "done": "Done",
     "close": "close"
+  },
+  "unsubscribe": {
+    "notifyPrefs": "Notification Preference",
+    "success": "Your notification preference is updated"
   }
 }
