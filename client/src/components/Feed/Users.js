@@ -10,7 +10,7 @@ import {
 } from "react-virtualized";
 
 //Local
-import Post from "./Post";
+import User from "./User";
 import Loader from "components/Feed/StyledLoader";
 
 // Constants
@@ -33,44 +33,33 @@ const HorizontalRule = styled.hr`
   }
 `;
 
-const Posts = ({
+const Users = ({
   isAuthenticated,
-  filteredPosts,
-  handlePostLike,
-  handleCancelPostDelete,
-  postDelete,
+  filteredUsers,
   user,
-  deleteModalVisibility,
-  handlePostDelete,
   highlightWords,
   isNextPageLoading,
   loadNextPage,
   itemCount,
   isItemLoaded,
   hasNextPage,
-  totalPostCount,
+  totalUsersCount,
 }) => {
-  const posts = Object.entries(filteredPosts);
+  const users = Object.entries(filteredUsers);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-  const postItem = useCallback(
+  const userItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
-      } else if (posts[index]) {
+      } else if (users[index]) {
         content = (
           <>
-            <Post
-              currentPost={posts[index][1]}
+            <User
+              currentUser={users[index][1]}
               includeProfileLink={true}
-              numComments={posts[index][1].commentsCount}
-              handlePostLike={handlePostLike}
-              postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
-              deleteModalVisibility={deleteModalVisibility}
-              handleCancelPostDelete={handleCancelPostDelete}
-              onChange={handlePostDelete}
               highlightWords={highlightWords}
             />
             <HorizontalRule />
@@ -93,24 +82,12 @@ const Posts = ({
         </CellMeasurer>
       );
     },
-    [
-      deleteModalVisibility,
-      handleCancelPostDelete,
-      handlePostDelete,
-      handlePostLike,
-      hasNextPage,
-      highlightWords,
-      isAuthenticated,
-      isItemLoaded,
-      postDelete,
-      posts,
-      user,
-    ],
+    [hasNextPage, highlightWords, isAuthenticated, isItemLoaded, users, user],
   );
 
   return (
     <div className="feed-posts">
-      {!posts.length && isNextPageLoading ? (
+      {!users.length && isNextPageLoading ? (
         <Loader />
       ) : (
         <WindowScroller>
@@ -118,7 +95,7 @@ const Posts = ({
             <InfiniteLoader
               isRowLoaded={isItemLoaded}
               loadMoreRows={loadMoreItems}
-              rowCount={totalPostCount}
+              rowCount={totalUsersCount}
               threshold={5}
             >
               {({ onRowsRendered }) => (
@@ -133,7 +110,7 @@ const Posts = ({
                       rowCount={itemCount}
                       rowHeight={cellMeasurerCache.rowHeight}
                       deferredMeasurementCache={cellMeasurerCache}
-                      rowRenderer={postItem}
+                      rowRenderer={userItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
                       overscanRowCount={10}
@@ -150,4 +127,4 @@ const Posts = ({
   );
 };
 
-export default Posts;
+export default Users;
