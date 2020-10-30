@@ -541,7 +541,7 @@ const Profile = ({
           closable={false}
           onClose={onToggleDrawer}
           visible={drawer}
-          height="fit-content"
+          height="auto"
           key="bottom"
         >
           <DrawerHeader>
