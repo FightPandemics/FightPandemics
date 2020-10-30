@@ -68,7 +68,7 @@ describe('FightPandemics Request Help Questionnaire', () => {
                 .contains('We want to show you the most relevant results');
         });
 
-        it('User can type in location field and see a list of available locations', () => {
+        it.skip('User can type in location field and see a list of available locations', () => {
             var locationField = requestHelpQuestion.getRhLocationField();
             locationField.should('be.visible').click({ force: true });
             locationField.type(inputValues.location);
