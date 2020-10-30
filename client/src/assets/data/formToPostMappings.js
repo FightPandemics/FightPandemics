@@ -6,10 +6,10 @@ import filterOptions from "assets/data/filterOptions";
 const { type: typeFilter } = filterOptions;
 const { expires } = createPostSettings;
 
-const forever = expires.options[0].value;
-const month = expires.options[1].value;
-const week = expires.options[2].value;
-const day = expires.options[3].value;
+const day = expires.options[0].value;
+const week = expires.options[1].value;
+const month = expires.options[2].value;
+const forever = expires.options[3].value;
 
 moment.updateLocale("en", {
   relativeTime: {

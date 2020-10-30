@@ -108,7 +108,7 @@ export const SenderBubble = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     user-select: none;
 
-    &:hover div:first-child {
+    &:hover div.ant-dropdown-trigger {
       display: none;
     }
   }

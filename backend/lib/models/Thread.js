@@ -3,7 +3,7 @@ const { Schema, model, ObjectId } = require("mongoose");
 const { USER_TYPES } = require("./Author");
 
 const CONVERSATION_STATUS_OPTIONS = [
-  "accepted", "archived", "blocked", "pending"
+  "accepted", "archived", "blocked", "pending", "ignored"
 ];
 
 // -- Schema

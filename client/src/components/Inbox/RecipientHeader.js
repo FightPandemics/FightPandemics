@@ -92,9 +92,9 @@ export const RecipientHeader = ({
   onMobileBackClick,
   status,
   blockThread,
-  unblockThread,
   archiveThread,
   blockStatus,
+  isPending,
 }) => {
   const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
@@ -206,7 +206,7 @@ export const RecipientHeader = ({
               )}
             </LastSeen>
           </h4>
-          {(!blockStatus || blockStatus === "was-blocked") && (
+          {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
             <Dropdown
               trigger={["hover", "click"]}
               overlay={menu}

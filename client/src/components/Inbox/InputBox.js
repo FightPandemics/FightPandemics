@@ -151,7 +151,7 @@ export const InputBox = ({
   unblockThread,
   scrollToBottom,
   blockThread,
-  archiveThread,
+  ignoreThread,
   setToggleViewRequests,
   editMessage,
   editingMessageId,
@@ -295,7 +295,7 @@ export const InputBox = ({
                           <Text type="danger">{t("messaging.ignore")}</Text>
                         ),
                         onPress: () => {
-                          archiveThread(room._id);
+                          ignoreThread(room._id);
                           setAlertBox({ show: false });
                         },
                       },

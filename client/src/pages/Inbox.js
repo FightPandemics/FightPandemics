@@ -35,6 +35,7 @@ const Inbox = (props) => {
     unblockThread,
     blockThread,
     archiveThread,
+    ignoreThread,
   } = useContext(WebSocketContext);
   const { user, history, authLoading, isAuthenticated } = props;
   const { room, rooms, chatLog, isIdentified } = props.ws;
@@ -169,6 +170,7 @@ const Inbox = (props) => {
               blockThread={blockThread}
               unblockThread={unblockThread}
               archiveThread={archiveThread}
+              ignoreThread={ignoreThread}
             />
           );
         }

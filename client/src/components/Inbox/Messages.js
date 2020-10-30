@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Menu, Dropdown, Typography } from "antd";
+import { Modal } from "antd-mobile";
 import {
   BubbleContainer,
   MessagesContainer,
@@ -168,44 +169,59 @@ const Messages = ({
         key={"b-" + messageId}
       >
         {isEdited && <small>{t("messaging.edited")}</small>}
-        <Dropdown
-          trigger={["contextMenu"]}
-          overlay={menu(messageId, message)}
-          placement="bottomRight"
+
+        <SenderBubble
+          editingMode={editingMessageId === messageId}
+          className={`${isDeleted ? "deleted" : ""}`}
+          onContextMenu={(event) => {
+            event.persist();
+            event.preventDefault();
+            Modal.operation([
+              {
+                text: t("messaging.edit"),
+                onPress: () => {
+                  startMessageEditing(messageId, message);
+                  setAlertBox({ show: false });
+                },
+              },
+              {
+                text: <Text type="danger">{t("messaging.delete")}</Text>,
+                onPress: () => {
+                  showDeleteConfirm(messageId);
+                  setAlertBox({ show: false });
+                },
+              },
+            ]);
+          }}
         >
-          <SenderBubble
-            editingMode={editingMessageId === messageId}
-            className={`${isDeleted ? "deleted" : ""}`}
-          >
-            {!isDeleted && editingMessageId !== messageId && (
-              <Dropdown
-                trigger={["click", "hover"]}
-                overlay={menu(messageId, message)}
-                placement="bottomRight"
-              >
-                <MessageMenu>
-                  <img alt="menu" src={subMenuIcon} />
-                </MessageMenu>
-              </Dropdown>
-            )}
-            {postRef && !(!isMobile() && editingMessageId === messageId) && (
-              <OrgPost postRef={postRef} />
-            )}
-            <div className="message-content-sender">
-              {!isDeleted && message
-                ? linkify(message)
-                : t("messaging.didDelete")}
-            </div>
-            {!isMobile() && editingMessageId === messageId && (
-              <textarea
-                key={"t-area-" + messageId}
-                ref={editTextArea}
-                defaultValue={message}
-                maxlength={2048}
-              ></textarea>
-            )}
-          </SenderBubble>
-        </Dropdown>
+          {!isDeleted && editingMessageId !== messageId && (
+            <Dropdown
+              trigger={["click", "hover"]}
+              overlay={menu(messageId, message)}
+              placement="bottomRight"
+            >
+              <MessageMenu>
+                <img alt="menu" src={subMenuIcon} />
+              </MessageMenu>
+            </Dropdown>
+          )}
+          {postRef && !(!isMobile() && editingMessageId === messageId) && (
+            <OrgPost postRef={postRef} />
+          )}
+          <div className="message-content-sender">
+            {!isDeleted && message
+              ? linkify(message)
+              : t("messaging.didDelete")}
+          </div>
+          {!isMobile() && editingMessageId === messageId && (
+            <textarea
+              key={"t-area-" + messageId}
+              ref={editTextArea}
+              defaultValue={message}
+              maxlength={2048}
+            ></textarea>
+          )}
+        </SenderBubble>
         {!isMobile() && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
             <button onClick={() => cancelMessageEditing()}>

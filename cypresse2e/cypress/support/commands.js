@@ -23,9 +23,16 @@ export const randomString = (length) => {
     return result;
 };
 
-Cypress.Commands.add('generateRandomEmail', () => {
-    return randomString(8) + '.' + randomString(8) + '@' + randomString(5) + '.com';
+Cypress.Commands.add('generateRandomEmail', (num1,num2) => {
+    return randomString(num1) + '@' + randomString(num2) + '.com';
 });
+
+Cypress.Commands.add('checkEmailIsOpen', (string) => {
+    cy.url().then(url => {
+        cy.url().should('contain', string);
+      });
+
+    });
 
 Cypress.Commands.add('validateCorrectScreenIsOpen', (string) => {
     cy.url().then(url => {
