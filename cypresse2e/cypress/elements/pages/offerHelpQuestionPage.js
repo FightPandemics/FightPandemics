@@ -1,122 +1,120 @@
 class OfferHelpQuestionPage {
+  questionNumberOne = 'h5'
+  questionOne = 'h2'
+  checkboxOptionOne = 'div#OFS1_VO'
+  checkboxOptionTwo = 'div#OFS1_DI'
+  checkboxOptionThree = 'div#OFS1_ORG'
+  checkboxOne = 'div#OFS1_VO label span input'
+  checkboxTwo = 'div#OFS1_DI label span input'
+  checkboxThree = 'div#OFS1_ORG label span input'
+  nextButtonOne = 'a#OF1_NE'
+  backButtonOne = 'a#OF1_BA'
 
-    questionNumberOne = 'h5';
-    questionOne = 'h2';
-    checkboxOptionOne = 'div#OFS1_VO';
-    checkboxOptionTwo = 'div#OFS1_DI';
-    checkboxOptionThree = 'div#OFS1_ORG';
-    checkboxOne = 'div#OFS1_VO label span input';
-    checkboxTwo = 'div#OFS1_DI label span input';
-    checkboxThree = 'div#OFS1_ORG label span input';
-    nextButtonOne = 'a#OF1_NE';
-    backButtonOne = 'a#OF1_BA';
+  questionNumberTwo = 'h5'
+  questionTwo = 'h2'
+  infoText = 'h2~p'
+  locationInputLine = 'input.ant-select-selection-search-input'
+  locationInputInfo = 'div small'
+  locationDropdown = '.ant-select-item-option'
+  shareMyLocationIcon = 'div#OFS2_SL img[alt = "Icon"]'
+  shareMyLocationText = 'div#OFS2_SL'
+  showMePostLink = 'a#OFS2_SA span'
+  nextButtonTwo = 'a#OF2_NE'
+  backButtonTwo = 'a#OF2_BA'
 
+  constructor() {}
 
-    questionNumberTwo = 'h5';
-    questionTwo = 'h2';
-    infoText = 'h2~p';
-    locationInputLine = 'input.ant-select-selection-search-input';
-    locationInputInfo = 'div small';
-    locationDropdown = '.ant-select-item-option';
-    shareMyLocationIcon = 'div#OFS2_SL img[alt = "Icon"]';
-    shareMyLocationText = 'div#OFS2_SL';
-    showMePostLink = 'a#OFS2_SA span';
-    nextButtonTwo = 'a#OF2_NE';
-    backButtonTwo = 'a#OF2_BA';
+  visitOfferHelpOne() {
+    cy.visit('offer-help')
+  }
 
-    constructor() { }
+  visitOfferHelpTwo() {
+    cy.visit('offer-help#Step2')
+  }
 
-    visitOfferHelpOne() {
-        cy.visit('offer-help');
-    }
+  getQuestionNumberOne() {
+    return cy.get(this.questionNumberOne)
+  }
 
-    visitOfferHelpTwo() {
-        cy.visit('offer-help#Step2');
-    }
+  getQuestionNumberTwo() {
+    return cy.get(this.questionNumberTwo)
+  }
 
-    getQuestionNumberOne() {
-        return cy.get(this.questionNumberOne);
-    }
+  getQuestionOne() {
+    return cy.get(this.questionOne)
+  }
 
-    getQuestionNumberTwo() {
-        return cy.get(this.questionNumberTwo);
-    }
+  getQuestionTwo() {
+    return cy.get(this.questionTwo)
+  }
 
-    getQuestionOne() {
-        return cy.get(this.questionOne);
-    }
+  getCheckboxOptionOne() {
+    return cy.get(this.checkboxOptionOne)
+  }
 
-    getQuestionTwo() {
-        return cy.get(this.questionTwo);
-    }
+  getCheckboxOptionTwo() {
+    return cy.get(this.checkboxOptionTwo)
+  }
 
-    getCheckboxOptionOne() {
-        return cy.get(this.checkboxOptionOne);
-    }
+  getCheckboxOptionThree() {
+    return cy.get(this.checkboxOptionThree)
+  }
 
-    getCheckboxOptionTwo() {
-        return cy.get(this.checkboxOptionTwo);
-    }
+  getCheckboxOne() {
+    return cy.get(this.checkboxOne)
+  }
 
-    getCheckboxOptionThree() {
-        return cy.get(this.checkboxOptionThree);
-    }
+  getCheckboxTwo() {
+    return cy.get(this.checkboxTwo)
+  }
 
-    getCheckboxOne() {
-        return cy.get(this.checkboxOne);
-    }
+  getCheckboxThree() {
+    return cy.get(this.checkboxThree)
+  }
 
-    getCheckboxTwo() {
-        return cy.get(this.checkboxTwo);
-    }
+  getNextButtonOne() {
+    return cy.get(this.nextButtonOne)
+  }
 
-    getCheckboxThree() {
-        return cy.get(this.checkboxThree);
-    }
+  getBackButtonOne() {
+    return cy.get(this.backButtonOne)
+  }
 
-    getNextButtonOne() {
-        return cy.get(this.nextButtonOne);
-    }
+  getInfoText() {
+    return cy.get(this.infoText)
+  }
 
-    getBackButtonOne() {
-        return cy.get(this.backButtonOne);
-    }
+  getLocationInputLine() {
+    return cy.get(this.locationInputLine)
+  }
 
-    getInfoText() {
-        return cy.get(this.infoText);
-    }
+  getLocationInputInfo() {
+    return cy.get(this.locationInputInfo)
+  }
 
-    getLocationInputLine() {
-        return cy.get(this.locationInputLine);
-    }
+  getLocationDropdown() {
+    return cy.get(this.locationDropdown)
+  }
 
-    getLocationInputInfo() {
-        return cy.get(this.locationInputInfo);
-    }
+  getShareMyLocationIcon() {
+    return cy.get(this.shareMyLocationIcon)
+  }
 
-    getLocationDropdown() {
-        return cy.get(this.locationDropdown);
-    }
+  getShareMyLocationText() {
+    return cy.get(this.shareMyLocationText)
+  }
 
-    getShareMyLocationIcon() {
-        return cy.get(this.shareMyLocationIcon);
-    }
+  getShowMePostLink() {
+    return cy.get(this.showMePostLink)
+  }
 
-    getShareMyLocationText() {
-        return cy.get(this.shareMyLocationText);
-    }
+  getNextButtonTwo() {
+    return cy.get(this.nextButtonTwo)
+  }
 
-    getShowMePostLink() {
-        return cy.get(this.showMePostLink);
-    }
-
-    getNextButtonTwo() {
-        return cy.get(this.nextButtonTwo);
-    }
-
-    getBackButtonTwo() {
-        return cy.get(this.backButtonTwo);
-    }
+  getBackButtonTwo() {
+    return cy.get(this.backButtonTwo)
+  }
 }
 
-export default OfferHelpQuestionPage;
+export default OfferHelpQuestionPage

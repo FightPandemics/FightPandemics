@@ -1,11 +1,10 @@
 class Logo {
+  fpLogo = '.am-navbar.am-navbar-light a img'
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
+  constructor() {}
 
-    constructor() { }
-
-    getFpLogoLocator() {
-        return this.fpLogo;
-    }
+  getFpLogoLocator() {
+    return this.fpLogo
+  }
 }
-export default Logo;
+export default Logo
