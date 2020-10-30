@@ -1,5 +1,4 @@
 class HelpBoard {
-  helpBoardPageTitle = 'h1'
   addPostButton = 'button > img#HB_CP'
   noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div'
   addPostLink = 'a#HB_CP'
@@ -11,10 +10,6 @@ class HelpBoard {
 
   visit() {
     cy.visit('feed')
-  }
-
-  getHelpBoardPageTitleLocator() {
-    return this.helpBoardPageTitle
   }
 
   getAddPostButton() {
