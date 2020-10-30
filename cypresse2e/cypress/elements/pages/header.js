@@ -1,39 +1,39 @@
 class Header {
-  aboutUsLink = 'li #NAV_AU'
-  helpBoardLink = 'li #NAV_HB'
-  signInLink = 'li #NAV_SI'
-  joinNowLink = 'li #NAV_JN'
-  feedbackButton = 'button#NAV_FDB'
-  globeIconLanguages = 'img#NAV_LS'
+  aboutUsLink = 'li #NAV_AU';
+  helpBoardLink = 'li #NAV_HB';
+  signInLink = 'li #NAV_SI';
+  joinNowLink = 'li #NAV_JN';
+  feedbackButton = 'button#NAV_FDB';
+  globeIconLanguages = 'img#NAV_LS';
 
   constructor() {}
 
   visit() {
-    cy.visit('')
+    cy.visit('');
   }
 
   getAboutUsLink() {
-    return cy.get(this.aboutUsLink)
+    return cy.get(this.aboutUsLink);
   }
 
   getHelpBoardLink() {
-    return cy.get(this.helpBoardLink)
+    return cy.get(this.helpBoardLink);
   }
 
   getSignInLink() {
-    return cy.get(this.signInLink)
+    return cy.get(this.signInLink);
   }
 
   getJoinNowLink() {
-    return cy.get(this.joinNowLink)
+    return cy.get(this.joinNowLink);
   }
 
   getFeedbackButton() {
-    return cy.get(this.feedbackButton)
+    return cy.get(this.feedbackButton);
   }
 
   getGlobeIconLanguages() {
-    return cy.get(this.globeIconLanguages)
+    return cy.get(this.globeIconLanguages);
   }
 }
-export default Header
+export default Header;

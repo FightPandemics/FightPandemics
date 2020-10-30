@@ -1,48 +1,48 @@
 class HelpBoard {
-  addPostButton = 'button > img#HB_CP'
-  noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div'
-  addPostLink = 'a#HB_CP'
+  addPostButton = 'button > img#HB_CP';
+  noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
+  addPostLink = 'a#HB_CP';
   firstPostOnHelpBoard =
-    'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)'
-  helpBoard = 'div.feed-posts'
+    'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)';
+  helpBoard = 'div.feed-posts';
 
   constructor() {}
 
   visit() {
-    cy.visit('feed')
+    cy.visit('feed');
   }
 
   getAddPostButton() {
-    return cy.get(this.addPostButton)
+    return cy.get(this.addPostButton);
   }
 
   getNoPostsAvailableDiv() {
-    return this.noPostsAvailableTextElement
+    return this.noPostsAvailableTextElement;
   }
 
   getAddPostLink() {
-    return this.addPostLink
+    return this.addPostLink;
   }
 
   getAddPostLinkElement() {
-    return cy.get(this.addPostLink)
+    return cy.get(this.addPostLink);
   }
 
   getNoPostsAvailableTextElement() {
-    return cy.xpath(this.noPostsAvailableTextElement)
+    return cy.xpath(this.noPostsAvailableTextElement);
   }
 
   getFirstPostOnHelpBoard() {
-    return cy.get(this.getFirstPostOnHelpBoard)
+    return cy.get(this.getFirstPostOnHelpBoard);
   }
 
   getFirstPostOnHelpBoardSelector() {
-    return this.firstPostOnHelpBoard
+    return this.firstPostOnHelpBoard;
   }
 
   getHelpBoardSelector() {
-    return this.helpBoard
+    return this.helpBoard;
   }
 }
 
-export default HelpBoard
+export default HelpBoard;

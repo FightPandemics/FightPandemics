@@ -1,49 +1,51 @@
-import Header from '../../../elements/pages/header'
-import Logo from '../../../elements/pages/fpLogo'
+import Header from '../../../elements/pages/header';
+import Logo from '../../../elements/pages/fpLogo';
 
 describe('FightPandemics Navigation bar', () => {
-  const header = new Header()
-  const logo = new Logo()
+  const header = new Header();
+  const logo = new Logo();
 
   context(
     'When user is not logged in Register and Login button are visible',
     () => {
       beforeEach(() => {
-        header.visit()
-      })
+        header.visit();
+      });
 
       it('Logo is present and visible', () => {
-        cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator())
-      })
+        cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
+      });
 
       it('Login and Registers buttons should be visible when user is not logged in', () => {
-        var signInLink = header.getSignInLink()
-        signInLink.should('be.visible').and('have.attr', 'href', '/auth/login')
-        var joinInLink = header.getJoinNowLink()
-        joinInLink.should('be.visible').and('have.attr', 'href', '/auth/signup')
-      })
+        var signInLink = header.getSignInLink();
+        signInLink.should('be.visible').and('have.attr', 'href', '/auth/login');
+        var joinInLink = header.getJoinNowLink();
+        joinInLink
+          .should('be.visible')
+          .and('have.attr', 'href', '/auth/signup');
+      });
 
       it('About us, Help Board and Feedback buttons are visible', () => {
         header
           .getAboutUsLink()
           .should('be.visible')
-          .and('have.attr', 'href', '/about-us')
+          .and('have.attr', 'href', '/about-us');
         header
           .getHelpBoardLink()
           .should('be.visible')
-          .and('have.attr', 'href', '/feed')
+          .and('have.attr', 'href', '/feed');
         header
           .getFeedbackButton()
           .find('img')
-          .should('have.attr', 'alt', 'Icon')
-      })
+          .should('have.attr', 'alt', 'Icon');
+      });
     },
-  )
+  );
 
   context('Internationalisation - User can select language', () => {
     beforeEach(() => {
-      header.visit()
-    })
+      header.visit();
+    });
 
     it('User can see Global International Languages icon', () => {
       header
@@ -53,8 +55,8 @@ describe('FightPandemics Navigation bar', () => {
         .should(
           'have.class',
           'ant-dropdown-trigger globe-icon-svg is-clickable',
-        )
-    })
+        );
+    });
 
     it('User can click on Global International Languages icon and see English(American English) as default', () => {
       selectAndValidateSpecificLanguage(
@@ -64,8 +66,8 @@ describe('FightPandemics Navigation bar', () => {
         'Sign In',
         'Help Board',
         'bold',
-      )
-    })
+      );
+    });
 
     it('User can click on Global International Languages icon and choose Chinese Traditional ', () => {
       selectAndValidateSpecificLanguage(
@@ -75,8 +77,8 @@ describe('FightPandemics Navigation bar', () => {
         '登入',
         '幫助板',
         'normal',
-      )
-    })
+      );
+    });
 
     it('User can click on Global International Languages icon and choose English (British English) ', () => {
       selectAndValidateSpecificLanguage(
@@ -86,8 +88,8 @@ describe('FightPandemics Navigation bar', () => {
         'Sign In',
         'Help Board',
         'normal',
-      )
-    })
+      );
+    });
 
     it('User can click on Global International Languages icon and choose German (Deutsch) ', () => {
       selectAndValidateSpecificLanguage(
@@ -97,8 +99,8 @@ describe('FightPandemics Navigation bar', () => {
         'Willkommen',
         'Hilfebrett',
         'normal',
-      )
-    })
+      );
+    });
 
     it('User can click on Global International Languages icon and choose Polish (Polski) ', () => {
       selectAndValidateSpecificLanguage(
@@ -108,8 +110,8 @@ describe('FightPandemics Navigation bar', () => {
         'Zaloguj się',
         'Forum pomocy',
         'normal',
-      )
-    })
+      );
+    });
 
     it('User can click on Global International Languages icon and choose Peninsular Spanish (Español de España) ', () => {
       selectAndValidateSpecificLanguage(
@@ -119,9 +121,9 @@ describe('FightPandemics Navigation bar', () => {
         'Iniciar sesión',
         'Informes de Ayuda',
         'normal',
-      )
-    })
-  })
+      );
+    });
+  });
 
   function selectAndValidateSpecificLanguage(
     getMethod,
@@ -131,19 +133,19 @@ describe('FightPandemics Navigation bar', () => {
     helpBoardLink,
     style,
   ) {
-    var language
+    var language;
     language = getMethod
       .click()
       .get(languageSelector)
       .should(($languageEl) => {
-        expect($languageEl).to.contain(text)
-        expect($languageEl).to.have.attr('style').contains(style)
-      })
+        expect($languageEl).to.contain(text);
+        expect($languageEl).to.have.attr('style').contains(style);
+      });
     //after clicking style is changed to bold
     language
       .click({ force: true })
-      .should('have.attr', 'style', 'font-weight: bold;')
-    header.getSignInLink().invoke('text').should('equal', signInText)
-    header.getHelpBoardLink().invoke('text').should('equal', helpBoardLink)
+      .should('have.attr', 'style', 'font-weight: bold;');
+    header.getSignInLink().invoke('text').should('equal', signInText);
+    header.getHelpBoardLink().invoke('text').should('equal', helpBoardLink);
   }
-})
+});
