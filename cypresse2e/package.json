@@ -10,19 +10,13 @@
   "devDependencies": {
     "cypress": "^4.9.0",
     "cypress-xpath": "^1.6.0",
-    "prettier": "^2.1.2",
     "husky": "^4.3.0",
-    "lint-staged": "^10.5.0"
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.1.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "pretty-quick --staged"
     }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
