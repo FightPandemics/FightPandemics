@@ -9,10 +9,6 @@ function fullName(firstName, lastName) {
 
 const individualUserSchema = new Schema(
   {
-    authId: {
-      required: true,
-      type: String,
-    },
     firstName: {
       required: true,
       type: String,

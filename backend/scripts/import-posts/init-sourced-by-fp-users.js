@@ -20,7 +20,8 @@ const SOURCED_BY_FP_OWNER_FILTER = {
 const SOURCED_BY_FP_OWNER_UPDATE = {
   // can be updated post-launch
   about: "For posts sourced by FightPandemics",
-  authId: "NA",
+  // similar to mock... password set manually 
+  authId: `email|${SOURCED_BY_FP_OWNER_FILTER.email}`,
   firstName: "Sourced by",
   lastName: "FightPandemics",
   location: SOURCED_BY_FP_LOCATION,

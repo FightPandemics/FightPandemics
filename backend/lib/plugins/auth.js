@@ -2,7 +2,6 @@ const fp = require("fastify-plugin");
 const fastifyJwt = require("fastify-jwt");
 const fastifyCookie = require("fastify-cookie");
 const fastifySecretProvider = require("fastify-authz-jwks");
-const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 const { getReqParam } = require("../utils");
 
@@ -50,11 +49,9 @@ const checkAuth = async (req, reply) => {
 
   await req.jwtVerify();
   const { user } = req;
-  const userId = user[auth.jwtMongoIdKey];
-  if (!userId) {
-    throw new Error("User id not found in JWT");
-  }
-  req.userId = mongoose.Types.ObjectId(userId);
+  // temp will have provider specific
+  // or should we use iss (can assume all follow JWT standard?)
+  req.authId = `auth0|${user.sub}`;
 };
 
 const authPlugin = async (app) => {

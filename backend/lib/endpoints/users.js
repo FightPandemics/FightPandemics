@@ -202,9 +202,9 @@ async function routes(app) {
   );
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
-    const { userId } = req;
+    const { authId } = req;
     const [userErr, user] = await app.to(
-      User.findById(userId).populate("organisations"),
+      User.findOne({ authId }).populate("organisations"),
     );
     if (userErr) {
       req.log.error(userErr, "Failed retrieving user");
@@ -250,10 +250,10 @@ async function routes(app) {
     "/current",
     { preValidation: [app.authenticate], schema: updateUserSchema },
     async (req) => {
-      const { body, userId } = req;
-      const [err, user] = await app.to(User.findById(userId));
+      const { body, authId } = req;
+      const [err, user] = await app.to(User.findOne({ authId }));
       if (err) {
-        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        req.log.error(err, `Failed retrieving user authId=${authId}`);
         throw app.httpErrors.internalServerError();
       } else if (user === null) {
         throw app.httpErrors.notFound();
@@ -309,8 +309,8 @@ async function routes(app) {
     },
     async (req) => {
       const {
+        authId,
         params: { userId },
-        userId: authUserId,
       } = req;
 
       const user = await User.findById(userId).populate("organisations");
@@ -340,7 +340,7 @@ async function routes(app) {
       if (hide.address) {
         location = {};
       }
-      const ownUser = authUserId !== null && authUserId.equals(user.id);
+      const ownUser = authId === user.authId;
       return {
         about,
         firstName,
@@ -363,17 +363,17 @@ async function routes(app) {
     { preValidation: [app.authenticate], schema: createUserAvatarSchema },
     async (req) => {
       const { file } = req.raw.files;
-      const { userId } = req;
+      const { authId } = req;
 
-      const [err, user] = await app.to(User.findById(userId));
+      const [err, user] = await app.to(User.findOne({ authId }));
       if (err) {
-        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        req.log.error(err, `Failed retrieving user authId=${authId}`);
         throw app.httpErrors.internalServerError();
       } else if (user === null) {
         throw app.httpErrors.notFound();
       }
       try {
-        const avatarUrl = await uploadUserAvatar(userId, file);
+        const avatarUrl = await uploadUserAvatar(user._id, file);
         user.photo = avatarUrl;
         const [updateErr, updatedUser] = await app.to(user.save());
         if (updateErr) {
@@ -426,19 +426,19 @@ async function routes(app) {
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
-      if (!req.userId) {
+      const { authId } = req;
+      if (!authId) {
         req.log.error(
-          `No userId for create user ${email}, invalid configuration`,
+          `No authId for create user ${email}, invalid configuration`,
         );
         throw app.httpErrors.internalServerError();
       }
-      if (await User.findById(req.userId)) {
+      if (await User.findOne({ authId })) {
         throw app.httpErrors.conflict("userExists");
       }
       const userData = {
         ...req.body,
-        _id: req.userId,
-        authId: req.user.sub,
+        authId,
         email,
       };
       const user = await new User(userData).save();

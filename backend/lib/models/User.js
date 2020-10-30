@@ -6,6 +6,10 @@ const { isValidEmail } = require("../utils");
 const userSchema = new Schema(
   {
     about: { maxLength: 100, trim: true, type: String },
+    authId: {
+      type: String,
+      index: true,
+    },
     email: {
       required: true,
       type: String,
@@ -15,6 +19,8 @@ const userSchema = new Schema(
     },
     location: Object,
     photo: String,
+    // optional password: for use only with local authentication (mock, admin)
+    password: String,
   },
   { collection: "users", timestamps: true },
 );
@@ -29,6 +35,13 @@ userSchema.index({
   ownerId: 1,
   createdAt: -1,
 });
+
+userSchema.index({
+  authId: 1,
+  _id: 1,
+},{
+  unique: true,
+})
 
 userSchema.index(
   {
@@ -48,7 +61,6 @@ userSchema.index(
     },
   },
 );
-
 /* eslint-enable */
 
 // Apply the uniqueValidator plugin to userSchema.

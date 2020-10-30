@@ -38,15 +38,21 @@ async function routes(app) {
         family_name: lastName,
       } = auth0User;
       const { payload } = app.jwt.decode(token);
-      const userId = payload[authConfig.jwtMongoIdKey];
-      const dbUser = await User.findById(userId).populate("organisations");
+      const authId = `auth0|${payload.sub}`;
+      const dbUser = await User.findOne({ authId }).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations, usesPassword } = dbUser;
+        const {
+          _id,
+          firstName,
+          lastName,
+          organisations,
+          usesPassword,
+        } = dbUser;
         user = {
           email,
           firstName,
-          id: userId,
+          id: _id,
           lastName,
           organisations,
           usesPassword,
@@ -143,14 +149,12 @@ async function routes(app) {
         return app.httpErrors.forbidden("emailUnverified");
       }
       const { payload } = app.jwt.decode(token);
-      const userId = payload[authConfig.jwtMongoIdKey];
-      if (!userId) {
-        throw new Error("no mongo_id found in JWT");
-      }
-      const dbUser = await User.findById(userId).populate("organisations");
+      const authId = `auth0|${payload.sub}`;
+      const dbUser = await User.findOne({ authId }).populate("organisations");
       let user = null;
       if (dbUser) {
         const {
+          _id,
           firstName,
           lastName,
           organisations,
@@ -160,7 +164,7 @@ async function routes(app) {
         user = {
           email,
           firstName,
-          id: userId,
+          id: _id,
           lastName,
           organisations,
           photo,
