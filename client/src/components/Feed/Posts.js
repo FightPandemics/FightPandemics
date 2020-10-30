@@ -43,6 +43,7 @@ const Posts = ({
   user,
   deleteModalVisibility,
   handlePostDelete,
+  highlightWords,
   isNextPageLoading,
   loadNextPage,
   itemCount,
@@ -99,6 +100,7 @@ const Posts = ({
               keepScrollIndex={scrollIndex.current}
               keepPageState={page}
               keepPostsState={filteredPosts}
+              highlightWords={highlightWords}
             />
             <HorizontalRule />
           </>
@@ -127,6 +129,7 @@ const Posts = ({
       handlePostDelete,
       handlePostLike,
       hasNextPage,
+      highlightWords,
       isAuthenticated,
       isItemLoaded,
       page,
