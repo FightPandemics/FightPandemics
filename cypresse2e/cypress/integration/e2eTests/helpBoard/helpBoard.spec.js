@@ -17,13 +17,6 @@ describe('FightPandemics Help Board Page for unauthorized user', () => {
       cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator())
     })
 
-    it('Help Board page contains heading', () => {
-      cy.pageContainsHeading(
-        helpBoard.getHelpBoardPageTitleLocator(),
-        h1Heading,
-      )
-    })
-
     it('Unauthorized user is redirected to SignIn page when clicking Add Post Button', () => {
       helpBoard.getAddPostButton().click({ force: true })
       cy.validateCorrectScreenIsOpen('auth/login')
