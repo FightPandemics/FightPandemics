@@ -375,14 +375,18 @@ export default class FeedNavSearch extends React.Component {
 
   onSelectItem(item) {
     const { mobileReselect } = this.state;
-    this.setState({
-      inputValue: this.state.mobileReselect ? this.state.inputValue : "",
-      selectedValue: [item],
-      toggleOptionsList: false,
-      hidePlaceholder: true,
-      mobileReselect: false,
-    });
-    if (mobileReselect) return this.submitSearch();
+    this.setState(
+      {
+        inputValue: this.state.mobileReselect ? this.state.inputValue : "",
+        selectedValue: [item],
+        toggleOptionsList: false,
+        hidePlaceholder: true,
+        mobileReselect: false,
+      },
+      () => {
+        if (mobileReselect) return this.submitSearch();
+      },
+    );
     if (this.searchBox.current != document.activeElement)
       this.searchBox.current.focus();
   }
