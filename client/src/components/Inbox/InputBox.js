@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
+import { Typography } from "antd";
 import styled from "styled-components";
 import sendcomment from "assets/icons/send-paper.svg";
 import { mq, theme } from "constants/theme";
 import { useTranslation } from "react-i18next";
+import { AlertBox } from "./AlertBox";
+const { Text } = Typography;
 
 const MessageInput = styled.textarea`
   min-width: 3em;
@@ -156,6 +159,7 @@ export const InputBox = ({
   inputRef,
 }) => {
   const { t } = useTranslation();
+  const [alertBoxData, setAlertBox] = React.useState({});
   const getReceiver = (participants) => {
     return participants.filter((p) => p.id != user.id)[0];
   };
@@ -226,90 +230,144 @@ export const InputBox = ({
     }
   };
   return (
-    <InputContainer
-      className={`${inputExpanded || blockStatus ? "expanded" : ""}`}
-      text={text}
-    >
-      {blockStatus === "did-block" && (
-        <ChatDisabled>
-          {t("messaging.didBlock", {
-            username: getReceiver(room.participants).name
-          })}
-          <button
-            className={"unblock-btn"}
-            onClick={() => unblockThread(room._id)}
-          >
-            {t("messaging.settings.unblock")}
-          </button>
-        </ChatDisabled>
+    <>
+      {alertBoxData?.show && (
+        <AlertBox
+          footer={alertBoxData?.action}
+          visible={alertBoxData?.show}
+          transparent
+          title={alertBoxData?.title}
+        >
+          {alertBoxData?.content}
+        </AlertBox>
       )}
-      {blockStatus === "was-blocked" && (
-        <ChatDisabled>
-          {t("messaging.wasBlocked", {
-            username: getReceiver(room.participants).name
-          })}
-        </ChatDisabled>
-      )}
-      {!blockStatus && getSender(room.participants).status === "pending" && (
-        <ChatDisabled>
-          {t("messaging.acceptPropmt")}
-          <div style={{ marginTop: "1rem" }}>
+      <InputContainer
+        className={`${inputExpanded || blockStatus ? "expanded" : ""}`}
+        text={text}
+      >
+        {blockStatus === "did-block" && (
+          <ChatDisabled>
+            {t("messaging.didBlock", {
+              username: getReceiver(room.participants).name,
+            })}
             <button
-              className={"request-btns accept-btn"}
-              onClick={() => {
-                unblockThread(
-                  room._id,
-                ); /* even if not blocked, it will mark it as "accepted" */
-                setToggleViewRequests(false);
-              }}
+              className={"unblock-btn"}
+              onClick={() => unblockThread(room._id)}
             >
-              {t("messaging.accept")}
+              {t("messaging.settings.unblock")}
             </button>
-            <button
-              className={"request-btns ingore-btn"}
-              onClick={() => archiveThread(room._id)}
-            >
-              {t("messaging.ignore")}
-            </button>
-            <button
-              className={"request-btns block-btn"}
-              onClick={async () => {
-                await blockThread(room._id);
-                leaveAllRooms();
-              }}
-            >
-              {t("messaging.block")}
-            </button>
-          </div>
-        </ChatDisabled>
-      )}
-      {!blockStatus && getSender(room.participants).status === "accepted" && (
-        <>
-          <MessageInput
-            type="text"
-            onChange={handleChange}
-            placeholder={t("messaging.typeMessage")}
-            value={text}
-            onKeyPress={handleKeyPress}
-            ref={inputRef}
-            maxLength={2048}
-          />
-          {inputExpanded && (
-            <LengthIndicator
-              className={`${2048 - text.length < 100 ? "alomst-full" : ""}`}
-            >
-              {2048 - text.length}
-            </LengthIndicator>
-          )}
-          <a disabled={!text} onClick={handleClick}>
-            <img
-              className="send-comment"
-              src={sendcomment}
-              alt="Send Message"
+          </ChatDisabled>
+        )}
+        {blockStatus === "was-blocked" && (
+          <ChatDisabled>
+            {t("messaging.wasBlocked", {
+              username: getReceiver(room.participants).name,
+            })}
+          </ChatDisabled>
+        )}
+        {!blockStatus && getSender(room.participants).status === "pending" && (
+          <ChatDisabled>
+            {t("messaging.acceptPropmt")}
+            <div style={{ marginTop: "1rem" }}>
+              <button
+                className={"request-btns accept-btn"}
+                onClick={() => {
+                  unblockThread(
+                    room._id,
+                  ); /* even if not blocked, it will mark it as "accepted" */
+                  setToggleViewRequests(false);
+                }}
+              >
+                {t("messaging.accept")}
+              </button>
+              <button
+                className={"request-btns ingore-btn"}
+                onClick={() => {
+                  setAlertBox({
+                    show: true,
+                    title: t("messaging.ignoreDialogTitle", {
+                      username: getReceiver(room.participants).name,
+                    }),
+                    content: t("messaging.ignoreDialogMessage"),
+                    action: [
+                      {
+                        text: (
+                          <Text type="danger">{t("messaging.ignore")}</Text>
+                        ),
+                        onPress: () => {
+                          archiveThread(room._id);
+                          setAlertBox({ show: false });
+                        },
+                      },
+                      {
+                        text: t("messaging.cancel"),
+                        onPress: () => setAlertBox({ show: false }),
+                      },
+                    ],
+                  });
+                }}
+              >
+                {t("messaging.ignore")}
+              </button>
+              <button
+                className={"request-btns block-btn"}
+                onClick={() => {
+                  setAlertBox({
+                    show: true,
+                    title: t("messaging.blockDialogTitle", {
+                      username: getReceiver(room.participants).name,
+                    }),
+                    content: t("messaging.blockDialogMessage"),
+                    action: [
+                      {
+                        text: <Text type="danger">{t("messaging.block")}</Text>,
+                        onPress: async () => {
+                          await blockThread(room._id);
+                          leaveAllRooms();
+                          setAlertBox({ show: false });
+                        },
+                      },
+                      {
+                        text: t("messaging.cancel"),
+                        onPress: () => setAlertBox({ show: false }),
+                      },
+                    ],
+                  });
+                }}
+              >
+                {t("messaging.block")}
+              </button>
+            </div>
+          </ChatDisabled>
+        )}
+        {!blockStatus && getSender(room.participants).status === "accepted" && (
+          <>
+            <MessageInput
+              type="text"
+              onChange={handleChange}
+              placeholder={t("messaging.typeMessage")}
+              value={text}
+              onKeyPress={handleKeyPress}
+              ref={inputRef}
+              maxLength={2048}
             />
-          </a>
-        </>
-      )}
-    </InputContainer>
+            {inputExpanded && (
+              <LengthIndicator
+                className={`${2048 - text.length < 100 ? "alomst-full" : ""}`}
+              >
+                {2048 - text.length}
+              </LengthIndicator>
+            )}
+            <a disabled={!text} onClick={handleClick}>
+              <img
+                className="send-comment"
+                src={sendcomment}
+                alt="Send Message"
+              />
+            </a>
+          </>
+        )}
+      </InputContainer>
+    </>
   );
 };

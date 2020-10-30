@@ -790,18 +790,18 @@
     },
     "emptyInbox": {
       "header": "You don't have any messages",
-      "p1": "You haven't received any messages yet.", 
+      "p1": "You haven't received any messages yet.",
       "p2": "Head back to Help Board to find offers or requests to respond to.",
       "goToHB": "Go to Help Board"
     },
     "selectRoom": {
       "header": "Select any message to read",
-      "p1": "The message content would appear here once you select", 
+      "p1": "The message content would appear here once you select",
       "p2": "a conversation from the inbox."
     },
     "selectRequest": {
       "header": "Select any message request to read",
-      "p1": "The content of the message request would apprear here", 
+      "p1": "The content of the message request would apprear here",
       "p2": "once you select one from the message requests inbox."
     },
     "didBlock": "You've blocked {{username}}. unblock to receive messages from them again.",
@@ -819,6 +819,10 @@
     "sendFailedHeader": "Oops, something went wrong",
     "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not successfully sent.",
     "sendFailedTextNoPost": "Your message to {{username}} was not successfully sent.",
+    "ignoreDialogTitle": "Ignore the message request from {{username}}?",
+    "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
+    "blockDialogTitle": "Block the conversation from {{username}}?",
+    "blockDialogMessage": "By selecting “Block”, Patrick won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
     "block": "Block",
     "archive": "Archive",
     "accept": "Accept",

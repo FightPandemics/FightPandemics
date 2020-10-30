@@ -100,6 +100,8 @@ const CurrentChat = ({
         getScrollToBottom={scrollToBottom}
         inputExpanded={inputExpanded}
         inputRef={inputRef}
+        blockStatus={getThreadBlockStatus()}
+        status={getSender(room.participants).status}
       />
       {room && (
         <InputBox
