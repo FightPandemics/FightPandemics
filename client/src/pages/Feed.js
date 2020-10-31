@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
+import qs from "query-string";
 
 // Antd
 import { Layout, Menu } from "antd";
@@ -44,6 +45,7 @@ import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
+  SET_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
   SET_POSTS,
@@ -97,16 +99,12 @@ let HELP_TYPE = {
 };
 
 const initialState = {
-  selectedType: "ALL",
   showFilters: false,
   filterModal: false,
   showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
   location: null,
-  searchKeyword: "",
-  searchCategory: null,
-  showSearchCategories: false,
 };
 
 const SiderWrapper = styled(Sider)`
@@ -282,12 +280,8 @@ const Feed = (props) => {
     showCreatePostModal,
     activePanel,
     location,
-    selectedType,
     applyFilters,
     showFilters,
-    searchKeyword,
-    searchCategory,
-    showSearchCategories,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -301,7 +295,7 @@ const Feed = (props) => {
   } = posts;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
-
+  const [queryParams, setQueryParams] = useState({});
   const SEARCH_OPTIONS = [
     { name: t("feed.search.options.posts"), id: "POSTS", default: true },
     {
@@ -319,10 +313,57 @@ const Feed = (props) => {
     });
     return ref.current;
   }
-  const { history, isAuthenticated, user, searchKeywords } = props;
+  const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
+
+  const setQueryKeyValue = (key, value) => {
+    let query = qs.parse(history.location.search);
+    if (!value) delete query[key];
+    else query[key] = value;
+    history.push({
+      pathname: history.location.pathname,
+      search: qs.stringify(query),
+    });
+  };
+
+  useEffect(() => {
+    let query = qs.parse(history.location.search);
+    query.s_category = SEARCH_OPTIONS[query.s_category]?.id || "POSTS";
+    if (query.filters) {
+      query.filters = JSON.parse(atob(query.filters));
+      optionsDispatch({
+        type: SET_OPTIONS,
+        payload: { option: query.filters },
+      });
+    } else {
+      optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    }
+    setQueryParams(query);
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const oldFiltersLength = [
+      ...(queryParams.filters?.type || []),
+      ...(queryParams.filters?.providers || []),
+    ].length;
+    const newFiltersLength = [
+      ...(selectedOptions?.type || []),
+      ...(selectedOptions?.providers || []),
+    ].length;
+    if (newFiltersLength) {
+      if (applyFilters || oldFiltersLength > newFiltersLength)
+        return setQueryKeyValue(
+          "filters",
+          btoa(JSON.stringify(selectedOptions)),
+        );
+    } else if (queryParams.filters) return setQueryKeyValue("filters", null);
+  }, [applyFilters, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchPosts();
+  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleFilterModal = () => {
     // method for mobile
@@ -344,21 +385,16 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
 
-    if (!softRefresh || Object.keys(selectedOptions).length || location) {
+    if (!softRefresh) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({
         type: RESET_PAGE,
         isLoading,
         loadMore,
-        filterType: "",
       });
-    } else {
-      postsDispatch({ filterType: "" });
     }
-
     dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
-    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -366,6 +402,7 @@ const Feed = (props) => {
 
   const handleQuit = (e) => {
     e.preventDefault();
+    setQueryKeyValue("filters", null);
     refetchPosts(null, null, true);
   };
 
@@ -392,40 +429,15 @@ const Feed = (props) => {
   };
 
   const handleSearchSubmit = useCallback((selectedValueId) => {
-    if (!selectedValueId || selectedValueId != "POSTS")
-      handleChangeType({ key: "ALL" });
-    dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
-    dispatchAction(SET_VALUE, "showSearchCategories", true);
+    handleChangeType({ key: "ALL" });
     changeHelpType(selectedValueId);
-    refetchPosts();
+    if (queryParams.filters) setQueryKeyValue("filters", null);
   });
 
   const handleSearchClear = useCallback(() => {
-    let needRefetch =
-      searchKeyword || (searchCategory && searchCategory != "POSTS");
     handleChangeType({ key: "ALL" });
-    dispatchAction(SET_VALUE, "searchKeyword", "");
-    dispatchAction(SET_VALUE, "searchCategory", null);
-    dispatchAction(SET_VALUE, "showSearchCategories", false);
     changeHelpType(null);
-    if (needRefetch) refetchPosts();
   });
-
-  const handleMobileSearchSubmit = useCallback(
-    (inputValue, selectedValueId) => {
-      if (!selectedValueId || selectedValueId != "POSTS")
-        handleChangeType({ key: "ALL" });
-      dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
-      dispatchAction(SET_VALUE, "searchKeyword", inputValue);
-      refetchPosts();
-    },
-  );
-
-  useEffect(() => {
-    if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
-    dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
-    handleSearchSubmit(searchCategory);
-  }, [searchKeywords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLocation = (value) => {
     if (applyFilters) {
@@ -437,9 +449,6 @@ const Feed = (props) => {
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-    if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
-    }
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
@@ -458,10 +467,8 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    if (selectedType !== value) {
-      dispatchAction(SET_VALUE, "selectedType", e.key);
-      postsDispatch({ type: RESET_PAGE, filterType: value });
-      dispatchAction(SET_VALUE, "applyFilters", true);
+    if (Object.keys(HELP_TYPE)[queryParams.objective || 0] !== value) {
+      setQueryKeyValue("objective", Object.keys(HELP_TYPE).indexOf(e.key));
     }
   };
 
@@ -474,12 +481,7 @@ const Feed = (props) => {
   const handleOnClose = () => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
-    if (Object.keys(selectedOptions).length || location) {
-      dispatchAction(SET_VALUE, "applyFilters", true);
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
-    } else {
-      postsDispatch({ filterType: "" });
-    }
+    dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
   const handlePostLike = async (postId, liked, create) => {
@@ -535,8 +537,9 @@ const Feed = (props) => {
   };
 
   const loadPosts = useCallback(async () => {
+    dispatchAction(SET_VALUE, "applyFilters", false);
     const filterURL = () => {
-      const filterObj = { ...selectedOptions };
+      const filterObj = { ...(queryParams.filters || {}) };
       delete filterObj["lookingFor"];
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
@@ -545,7 +548,7 @@ const Feed = (props) => {
     };
 
     const objectiveURL = () => {
-      let objective = selectedType;
+      let objective = Object.keys(HELP_TYPE)[queryParams.objective || 0];
       if (
         selectedOptions["lookingFor"] &&
         selectedOptions["lookingFor"].length < 2
@@ -564,7 +567,7 @@ const Feed = (props) => {
           return "";
       }
     };
-
+    const searchKeyword = queryParams.s_keyword;
     const searchURL = () => {
       if (searchKeyword)
         return `&keywords=${encodeURIComponent(searchKeyword)}`;
@@ -574,7 +577,7 @@ const Feed = (props) => {
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
-    switch (searchCategory) {
+    switch (queryParams.s_category) {
       case "POSTS":
         break;
       case "INDIVIDUALS":
@@ -599,7 +602,7 @@ const Feed = (props) => {
           dataLayer: {
             event: "SEARCH_KEYWORD",
             keyword: searchKeyword,
-            category: searchCategory || "POSTS",
+            category: queryParams.s_category || "POSTS",
             resultsCount: meta.total,
           },
         });
@@ -652,7 +655,7 @@ const Feed = (props) => {
     } catch (error) {
       postsDispatch({ error, type: ERROR_POSTS });
     }
-  }, [page, selectedOptions, location, selectedType, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [page, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -796,7 +799,6 @@ const Feed = (props) => {
         location,
         dispatchAction,
         selectedOptions,
-        selectedType,
         handleShowFilters,
         handleOption,
         handleFilterModal,
@@ -818,7 +820,9 @@ const Feed = (props) => {
             <>
               <MenuWrapper
                 defaultSelectedKeys={["ALL"]}
-                selectedKeys={[selectedType]}
+                selectedKeys={[
+                  Object.keys(HELP_TYPE)[queryParams.objective || 0],
+                ]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
@@ -841,7 +845,9 @@ const Feed = (props) => {
               </FiltersWrapper>
             </>
             <FiltersSidebar
-              locationOnly={!(!searchCategory || searchCategory == "POSTS")}
+              locationOnly={
+                !(!queryParams.s_category || queryParams.s_category == "POSTS")
+              }
               gtmPrefix={GTM.feed.prefix}
             />
           </SiderWrapper>
@@ -849,11 +855,13 @@ const Feed = (props) => {
             <HeaderWrapper empty={emptyFeed()}>
               <TabsWrapper
                 options={SEARCH_OPTIONS}
-                handleSubmit={handleSearchSubmit}
-                showOptions={showSearchCategories}
+                showOptions={!!queryParams.s_keyword}
                 displayValue={"name"}
+                onSearchSubmit={handleSearchSubmit}
+                onSearchClear={handleSearchClear}
               />
-              {(!searchCategory || searchCategory == "POSTS") && (
+              {(!queryParams.s_category ||
+                queryParams.s_category == "POSTS") && (
                 <button
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
@@ -872,21 +880,26 @@ const Feed = (props) => {
                 options={SEARCH_OPTIONS}
                 isObject={true}
                 displayValue={"name"}
-                handleMobileSubmit={handleMobileSearchSubmit}
-                handleClear={handleSearchClear}
                 placeholder={t("feed.search.placeholder")}
                 t={t}
+                onSearchSubmit={handleSearchSubmit}
+                onSearchClear={handleSearchClear}
               />
             </MobileSearch>
             {
               <div>
                 <FilterBox
-                  locationOnly={!(!searchCategory || searchCategory == "POSTS")}
+                  locationOnly={
+                    !(
+                      !queryParams.s_category ||
+                      queryParams.s_category == "POSTS"
+                    )
+                  }
                   gtmPrefix={GTM.feed.prefix}
                 />
               </div>
             }
-            {!searchCategory || searchCategory == "POSTS" ? (
+            {!queryParams.s_category || queryParams.s_category == "POSTS" ? (
               <Posts
                 isAuthenticated={isAuthenticated}
                 filteredPosts={postsList}
@@ -902,7 +915,7 @@ const Feed = (props) => {
                 isItemLoaded={isItemLoaded}
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
-                highlightWords={searchKeyword}
+                highlightWords={queryParams.s_keyword}
               />
             ) : (
               <Users
@@ -915,7 +928,7 @@ const Feed = (props) => {
                 isItemLoaded={isItemLoaded}
                 hasNextPage={loadMore}
                 totalUsersCount={totalPostCount}
-                highlightWords={searchKeyword}
+                highlightWords={queryParams.s_keyword}
               />
             )}
             {status === ERROR_POSTS && (
@@ -931,9 +944,9 @@ const Feed = (props) => {
               <NoPosts>
                 <Trans
                   i18nKey={
-                    !searchCategory || searchCategory == "POSTS"
+                    !queryParams.s_category || queryParams.s_category == "POSTS"
                       ? "feed.noResultsPosts"
-                      : searchCategory == "INDIVIDUALS"
+                      : queryParams.s_category == "INDIVIDUALS"
                       ? "feed.noResultsPeople"
                       : "feed.noResultsOrgs"
                   }
@@ -946,7 +959,8 @@ const Feed = (props) => {
                 />
               </NoPosts>
             ) : (
-              (!searchCategory || searchCategory == "POSTS") && (
+              (!queryParams.s_category ||
+                queryParams.s_category == "POSTS") && (
                 <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}

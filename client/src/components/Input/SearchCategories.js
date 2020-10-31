@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import GTM from "constants/gtm-tags";
+import qs from "query-string";
 const { colors } = theme;
 
 const TabsContainer = styled.span`
@@ -26,7 +28,7 @@ const Chip = styled.a`
     color: ${colors.royalBlue};
   }
 `;
-export default class SearchCategories extends React.Component {
+class SearchCategories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +40,16 @@ export default class SearchCategories extends React.Component {
     this.onSelectItem = this.onSelectItem.bind(this);
     this.resetSelectedValue = this.resetSelectedValue.bind(this);
   }
+
+  setQueryKeyValue = (key, value) => {
+    let query = qs.parse(this.props.history.location.search);
+    if (!value) delete query[key];
+    else query[key] = value;
+    this.props.history.push({
+      pathname: this.props.history.location.pathname,
+      search: qs.stringify(query),
+    });
+  };
 
   resetSelectedValue() {
     this.setState({ selectedValue: null });
@@ -51,7 +63,11 @@ export default class SearchCategories extends React.Component {
 
   onSelectItem(item) {
     this.setState({ selectedValue: item });
-    this.props.handleSubmit(item?.id || null);
+    this.setQueryKeyValue(
+      "s_category",
+      this.props.options.findIndex((option) => option.id == item?.id) || null,
+    );
+    this.props.onSearchSubmit(item?.id || null);
   }
 
   renderCategories() {
@@ -101,3 +117,5 @@ SearchCategories.defaultProps = {
   style: {},
   id: "",
 };
+
+export default withRouter(SearchCategories);
