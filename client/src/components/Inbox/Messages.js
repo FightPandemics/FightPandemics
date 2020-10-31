@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Menu, Dropdown, Typography } from "antd";
 import { Modal } from "antd-mobile";
+import styled from "styled-components";
 import {
   BubbleContainer,
   MessagesContainer,
@@ -181,14 +182,22 @@ const Messages = ({
                 text: t("messaging.edit"),
                 onPress: () => {
                   startMessageEditing(messageId, message);
-                  setAlertBox({ show: false });
+                },
+                style: {
+                  fontSize: "1.6rem",
+                  textAlign: "center",
+                  padding: 0,
                 },
               },
               {
                 text: <Text type="danger">{t("messaging.delete")}</Text>,
                 onPress: () => {
                   showDeleteConfirm(messageId);
-                  setAlertBox({ show: false });
+                },
+                style: {
+                  fontSize: "1.6rem",
+                  textAlign: "center",
+                  padding: 0,
                 },
               },
             ]);
