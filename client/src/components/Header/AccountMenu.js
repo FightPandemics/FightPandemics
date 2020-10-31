@@ -7,7 +7,8 @@ import styled from "styled-components";
 import GTM from "constants/gtm-tags";
 import { getInitialsFromFullName } from "utils/userInfo";
 import SvgIcon from "components/Icon/SvgIcon";
-import { MENU_STATE, CustomAvatar, CustomSvgIcon } from "./constants";
+import { Avatar } from "components/Avatar";
+import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import BackIcon from "assets/icons/back.svg";
 import DoneIcon from "assets/icons/done.svg";
@@ -36,9 +37,9 @@ export const AccountMenu = ({
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item onClick={() => setOrganisation(null)}>
-        <CustomAvatar src={user.photo} size={"small"}>
+        <Avatar src={user.photo} size={"small"}>
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
-        </CustomAvatar>
+        </Avatar>
         {`${user?.firstName} ${user?.lastName} `}
         {!organisationId && <SvgIcon src={DoneIcon} />}
       </Menu.Item>
@@ -50,9 +51,9 @@ export const AccountMenu = ({
               key={current._id}
               onClick={() => setOrganisation(current._id)}
             >
-              <CustomAvatar size={"small"}>
+              <Avatar size={"small"}>
                 {getInitialsFromFullName(current.name)}
-              </CustomAvatar>
+              </Avatar>
               {current.name}
               {organisationId === current._id && <SvgIcon src={DoneIcon} />}
             </Menu.Item>

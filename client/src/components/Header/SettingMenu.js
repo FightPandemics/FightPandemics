@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 import GTM from "constants/gtm-tags";
 import { getInitialsFromFullName } from "utils/userInfo";
-import SvgIcon from "components/Icon/SvgIcon";
-import { MENU_STATE, CustomAvatar, CustomSvgIcon } from "./constants";
+import { Avatar } from "components/Avatar";
+import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
@@ -74,9 +74,9 @@ const ProfileItem = ({ user }) => {
   return (
     <ProfileItemContainer>
       <div>
-        <CustomAvatar src={user.photo} size={"small"}>
+        <Avatar src={user.photo} size={"small"}>
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
-        </CustomAvatar>
+        </Avatar>
       </div>
       <div>
         <ProfileInfo bold>

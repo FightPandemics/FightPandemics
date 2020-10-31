@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Dropdown } from "antd";
 
 import { getInitialsFromFullName } from "utils/userInfo";
+import { Avatar } from "components/Avatar";
 import { SettingMenu } from "./SettingMenu";
 import { AccountMenu } from "./AccountMenu";
-import { MENU_STATE, CustomAvatar } from "./constants";
+import { MENU_STATE } from "./constants";
 
 export const ProfileMenu = ({
   user,
@@ -33,20 +34,16 @@ export const ProfileMenu = ({
       onVisibleChange={onVisibleChange}
       trigger={["click"]}
     >
-      <CustomAvatar
+      <Avatar
         size={"small"}
         src={user.photo}
         onClick={() => setMenuState(MENU_STATE.SETTINGS)}
       >
         {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
-      </CustomAvatar>
+      </Avatar>
     </Dropdown>
   );
 };
-
-// const renderAvatar = () => {
-
-// }
 
 const renderMenu = (
   menuState,
