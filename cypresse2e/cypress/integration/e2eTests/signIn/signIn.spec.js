@@ -86,7 +86,7 @@ describe('FightPandemics Sign In Page', () => {
         });
 
         it('Login fail alert appears when incorrect email & password are entered and submitted by user', () => {
-            cy.generateRandomEmail().then((email) => {
+            cy.generateRandomEmail(8,8).then((email) => {
                 signIn.getEmailField().type(email);
             });
             signIn.getPasswordField().type(emailAndPassword.dummySamplePassword);

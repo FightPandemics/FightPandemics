@@ -92,8 +92,8 @@ const LocationInput = ({
 
   useEffect(() => {
     setSelectedAddress(displaySelectedAddressFromLocation(location));
-    document.querySelector(".ant-select-selection-item").id =
-      gtmPrefix + GTM.locationInput.enterAddress;
+    const gtmElement = document.querySelector(".ant-select-selection-item");
+    if (gtmElement) gtmElement.id = gtmPrefix + GTM.locationInput.enterAddress;
   }, [location, setSelectedAddress, gtmPrefix]);
 
   const fetchAddressPredictions = useRef(
