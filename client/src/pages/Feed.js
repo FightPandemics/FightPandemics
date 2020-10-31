@@ -392,13 +392,23 @@ const Feed = (props) => {
         break;
     }
   };
-
+  const resetRouterState = () => {
+    if (history.location.state) {
+      const { keepScroll } = history.location.state;
+      if (keepScroll) {
+        history.location.state.keepScroll = false;
+        history.location.state.keepPageState = undefined;
+        history.location.state.keepPostsState = undefined;
+      }
+    }
+  };
   const handleSearchSubmit = useCallback((selectedValueId) => {
     if (!selectedValueId || selectedValueId != "POSTS")
       handleChangeType({ key: "ALL" });
     dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
     dispatchAction(SET_VALUE, "showSearchCategories", true);
     changeHelpType(selectedValueId);
+    resetRouterState();
     refetchPosts();
   });
 
@@ -419,6 +429,7 @@ const Feed = (props) => {
         handleChangeType({ key: "ALL" });
       dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
       dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+      resetRouterState();
       refetchPosts();
     },
   );
@@ -567,19 +578,6 @@ const Feed = (props) => {
       }
     };
 
-    let postsInState;
-    if (props.history.location.state) {
-      const { keepPostsState, keepPageState } = history.location.state;
-      postsInState = keepPostsState;
-
-      if (keepPageState >= page) {
-        postsDispatch({
-          type: SET_PAGE,
-          page: keepPageState,
-        });
-      }
-    }
-
     const searchURL = () => {
       if (searchKeyword)
         return `&keywords=${encodeURIComponent(searchKeyword)}`;
@@ -601,7 +599,18 @@ const Feed = (props) => {
       default:
         break;
     }
+    let postsInState;
+    if (history.location.state) {
+      const { keepPostsState, keepPageState } = history.location.state;
+      postsInState = keepPostsState;
 
+      if (keepPageState >= page) {
+        postsDispatch({
+          type: SET_PAGE,
+          page: keepPageState,
+        });
+      }
+    }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
 
@@ -640,7 +649,6 @@ const Feed = (props) => {
           obj[item._id] = item;
           return obj;
         }, {});
-
         if (postsInState) {
           postsDispatch({
             type: SET_POSTS,
