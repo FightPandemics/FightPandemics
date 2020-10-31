@@ -235,6 +235,7 @@ describe("TemplateBuilder tests", () => {
           updatedAt: "2020-10-15T01:51:52.534Z",
           __v: 0,
         },
+        sharedVia: "facebook",
         triggeredBy: {
           id: "5f88f281c2de24001d579daa",
           name: "Test Manny org",
@@ -327,6 +328,12 @@ describe("TemplateBuilder tests", () => {
     expect(emails[2].toEmailAddress).to.equal("bob.saget@fullhouse.com");
     expect(emails[2].subject).to.equal(
       "Test Manny org shared your post: Test post 1",
+    );
+    expect(emails[2].htmlBody).to.contain(
+      "Test Manny org shared your post via Facebook: Test post 1",
+    );
+    expect(emails[2].textBody).to.contain(
+      "Test Manny org shared your post via Facebook: Test post 1",
     );
     expect(emails[3].notificationId).to.equal("5f8b9237653a214a3b62d46e");
     expect(emails[3].toEmailAddress).to.equal("bob.saget@fullhouse.com");

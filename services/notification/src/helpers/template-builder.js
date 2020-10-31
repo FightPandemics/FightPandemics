@@ -2,6 +2,7 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const Mustache = require("mustache");
 const path = require("path");
+const { ShareMedium } = require("../models/share-medium");
 
 class TemplateBuilder {
   constructor(baseUrl, tokenKey) {
@@ -73,6 +74,11 @@ class TemplateBuilder {
           post: notification.post,
           triggeredBy: notification.triggeredBy,
         };
+
+        if (notification.sharedVia) {
+          view.shareMedium = ShareMedium[notification.sharedVia.toUpperCase()];
+        }
+
         return {
           htmlBody: Mustache.render(htmlTemplate, view),
           notificationId: notification._id,
