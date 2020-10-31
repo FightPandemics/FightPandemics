@@ -74,7 +74,7 @@ const ProfileItem = ({ user }) => {
   return (
     <ProfileItemContainer>
       <div>
-        <CustomAvatar size={"small"}>
+        <CustomAvatar src={user.photo} size={"small"}>
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
         </CustomAvatar>
       </div>

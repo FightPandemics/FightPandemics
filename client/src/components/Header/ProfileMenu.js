@@ -35,6 +35,7 @@ export const ProfileMenu = ({
     >
       <CustomAvatar
         size={"small"}
+        src={user.photo}
         onClick={() => setMenuState(MENU_STATE.SETTINGS)}
       >
         {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
@@ -42,6 +43,10 @@ export const ProfileMenu = ({
     </Dropdown>
   );
 };
+
+// const renderAvatar = () => {
+
+// }
 
 const renderMenu = (
   menuState,

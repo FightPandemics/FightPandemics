@@ -7,7 +7,7 @@ const { royalBlue, selago } = theme.colors;
 
 export const CustomAvatar = styled(Avatar)`
   color: #425af2;
-  border: 1px solid ${royalBlue};
+  border: ${({ src }) => !src && `1px solid ${royalBlue}`};
   background: ${selago};
   font-size: 10px;
   margin-right: 10px;

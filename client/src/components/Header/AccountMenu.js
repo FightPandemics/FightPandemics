@@ -36,7 +36,7 @@ export const AccountMenu = ({
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item onClick={() => setOrganisation(null)}>
-        <CustomAvatar size={"small"}>
+        <CustomAvatar src={user.photo} size={"small"}>
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
         </CustomAvatar>
         {`${user?.firstName} ${user?.lastName} `}
