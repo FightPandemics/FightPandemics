@@ -208,7 +208,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
-      "notificationInfo": "Notification Information",
+      "notificationInfo": "Notification Preference",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
