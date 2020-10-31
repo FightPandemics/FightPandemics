@@ -333,6 +333,53 @@ const Feed = (props) => {
         break;
     }
   };
+  const resetRouterState = () => {
+    if (history.location.state) {
+      const { keepScroll } = history.location.state;
+      if (keepScroll) {
+        history.location.state.keepScroll = false;
+        history.location.state.keepPageState = undefined;
+        history.location.state.keepPostsState = undefined;
+      }
+    }
+  };
+  const handleSearchSubmit = useCallback((selectedValueId) => {
+    if (!selectedValueId || selectedValueId != "POSTS")
+      handleChangeType({ key: "ALL" });
+    dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
+    dispatchAction(SET_VALUE, "showSearchCategories", true);
+    changeHelpType(selectedValueId);
+    resetRouterState();
+    refetchPosts();
+  });
+
+  const handleSearchClear = useCallback(() => {
+    let needRefetch =
+      searchKeyword || (searchCategory && searchCategory != "POSTS");
+    handleChangeType({ key: "ALL" });
+    dispatchAction(SET_VALUE, "searchKeyword", "");
+    dispatchAction(SET_VALUE, "searchCategory", null);
+    dispatchAction(SET_VALUE, "showSearchCategories", false);
+    changeHelpType(null);
+    if (needRefetch) refetchPosts();
+  });
+
+  const handleMobileSearchSubmit = useCallback(
+    (inputValue, selectedValueId) => {
+      if (!selectedValueId || selectedValueId != "POSTS")
+        handleChangeType({ key: "ALL" });
+      dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
+      dispatchAction(SET_VALUE, "searchKeyword", inputValue);
+      resetRouterState();
+      refetchPosts();
+    },
+  );
+
+  useEffect(() => {
+    if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
+    dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
+    handleSearchSubmit(searchCategory);
+  }, [searchKeywords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLocation = (value) => {
     if (applyFilters) {
@@ -482,18 +529,12 @@ const Feed = (props) => {
       else return "";
     };
 
-    let postsInState;
-    if (props.history.location.state) {
-      const { keepPostsState, keepPageState } = history.location.state;
-      postsInState = keepPostsState;
+    const searchURL = () => {
+      if (searchKeyword)
+        return `&keywords=${encodeURIComponent(searchKeyword)}`;
+      else return "";
+    };
 
-      if (keepPageState >= page) {
-        postsDispatch({
-          type: SET_PAGE,
-          page: keepPageState,
-        });
-      }
-    }
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
@@ -509,7 +550,18 @@ const Feed = (props) => {
       default:
         break;
     }
+    let postsInState;
+    if (history.location.state) {
+      const { keepPostsState, keepPageState } = history.location.state;
+      postsInState = keepPostsState;
 
+      if (keepPageState >= page) {
+        postsDispatch({
+          type: SET_PAGE,
+          page: keepPageState,
+        });
+      }
+    }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
 
