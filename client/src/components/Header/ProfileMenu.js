@@ -8,7 +8,7 @@ import { MENU_STATE, CustomAvatar } from "./constants";
 
 export const ProfileMenu = ({
   user,
-  organisationIndex,
+  organisationId,
   setOrganisation,
   onFeedbackIconClick,
 }) => {
@@ -18,7 +18,7 @@ export const ProfileMenu = ({
     setMenuState,
     user,
     setOrganisation,
-    organisationIndex,
+    organisationId,
     onFeedbackIconClick,
   );
   const onVisibleChange = (visible) => {
@@ -48,14 +48,14 @@ const renderMenu = (
   setMenuState,
   user,
   setOrganisation,
-  organisationIndex,
+  organisationId,
   onFeedbackIconClick,
 ) => {
   if (menuState === MENU_STATE.SETTINGS) {
     return (
       <SettingMenu
         user={user}
-        organisationIndex={organisationIndex}
+        organisationId={organisationId}
         onFeedbackIconClick={onFeedbackIconClick}
         setMenuState={setMenuState}
       />
@@ -66,7 +66,7 @@ const renderMenu = (
       <AccountMenu
         user={user}
         setOrganisation={setOrganisation}
-        organisationIndex={organisationIndex}
+        organisationId={organisationId}
         setMenuState={setMenuState}
       />
     );

@@ -19,14 +19,13 @@ const profileItemStyle = { margin: "8px 0", height: "auto" };
 export const SettingMenu = ({
   setMenuState,
   user,
-  organisationIndex,
+  organisationId,
   onFeedbackIconClick,
 }) => {
   const { t } = useTranslation();
-  const profileUrl =
-    organisationIndex === null
-      ? `/profile/${user?.id || user?._id}`
-      : `/organisation/${user?.organisations[organisationIndex]?._id}`;
+  const profileUrl = organisationId
+    ? `/organisation/${organisationId}`
+    : `/profile/${user?.id || user?._id}`;
   return (
     <Menu>
       <Menu.Item style={profileItemStyle}>

@@ -11,7 +11,7 @@ const initialState = {
   error: null,
   forgotPasswordRequested: false,
   user: null,
-  organisationIndex: null,
+  organisationId: null,
 };
 
 function sessionReducer(state = initialState, action) {
@@ -61,7 +61,7 @@ function sessionReducer(state = initialState, action) {
     case SESSION_ACTIONS.SET_ORGANISATION_INDEX:
       return {
         ...state,
-        organisationIndex: action.payload,
+        organisationId: action.payload,
       };
     default:
       return state;

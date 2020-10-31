@@ -269,7 +269,7 @@ const NavigationLayout = (props) => {
     tabIndex,
     isAuthenticated,
     user,
-    organisationIndex,
+    organisationId,
   } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -702,7 +702,7 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
-            organisationIndex={organisationIndex}
+            organisationId={organisationId}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }

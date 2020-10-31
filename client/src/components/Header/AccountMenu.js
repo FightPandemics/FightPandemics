@@ -23,7 +23,7 @@ export const AccountMenu = ({
   user,
   setMenuState,
   setOrganisation,
-  organisationIndex,
+  organisationId,
 }) => {
   const { t } = useTranslation();
   const anyOrganisation = user?.organisations?.length > 0;
@@ -40,7 +40,7 @@ export const AccountMenu = ({
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
         </CustomAvatar>
         {`${user?.firstName} ${user?.lastName} `}
-        {!organisationIndex && <SvgIcon src={DoneIcon} />}
+        {!organisationId && <SvgIcon src={DoneIcon} />}
       </Menu.Item>
       <Menu.Divider />
       {anyOrganisation && (
@@ -54,7 +54,7 @@ export const AccountMenu = ({
                 {getInitialsFromFullName(current.name)}
               </CustomAvatar>
               {current.name}
-              {organisationIndex === current._id && <SvgIcon src={DoneIcon} />}
+              {organisationId === current._id && <SvgIcon src={DoneIcon} />}
             </Menu.Item>
           ))}
         </CustomItemGroup>

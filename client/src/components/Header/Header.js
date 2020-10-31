@@ -1,26 +1,17 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Menu, Dropdown, Button } from "antd";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import { setOrganisationIndex } from "../../actions/profileActions";
-import i18n from "../../i18n";
-
-// ICONS
+import { setOrganisation } from "../../actions/profileActions";
 import SvgIcon from "../Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
-import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "../Logo";
-import globe from "assets/icons/globe.svg";
-
 import { theme, mq } from "../../constants/theme";
-import { languages } from "locales/languages";
-import GTM from "constants/gtm-tags";
-import { ProfileMenu } from "./ProfileMenu";
+import { HeaderLinks } from "./HeaderLinks";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -115,11 +106,6 @@ const NavLinks = styled.div`
   }
 `;
 
-const activeStyles = {
-  fontWeight: "600",
-  color: `${colors.royalBlue}`,
-};
-
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -130,24 +116,24 @@ const HeaderWrapper = styled.div`
 const Header = ({
   authLoading,
   onMenuClick,
-  organisationIndex,
+  organisationId,
   isAuthenticated,
   user,
   onFeedbackIconClick,
-  setOrganisationIndex,
+  setOrganisationId,
 }) => {
   const { t } = useTranslation();
 
-  const index = localStorage.getItem("organisationIndex");
-  if (organisationIndex !== index) {
-    setOrganisationIndex(index);
+  const index = localStorage.getItem("organisationId");
+  if (organisationId !== index) {
+    setOrganisationId(index);
   }
-  const setOrganisation = (index) => {
-    if (index !== organisationIndex) {
-      if (index) {
-        localStorage.setItem("organisationIndex", index);
+  const onOrganisationChange = (index) => {
+    if (index !== organisationId) {
+      if (index === null) {
+        localStorage.removeItem("organisationId");
       } else {
-        localStorage.removeItem("organisationIndex");
+        localStorage.setItem("organisationId", index);
       }
       window.location.href = "/feed";
     }
@@ -175,9 +161,9 @@ const Header = ({
                   <HeaderLinks
                     isAuthenticated={isAuthenticated}
                     onFeedbackIconClick={onFeedbackIconClick}
-                    organisationIndex={organisationIndex}
+                    organisationId={organisationId}
                     user={user}
-                    setOrganisation={setOrganisation}
+                    setOrganisation={onOrganisationChange}
                   />
                 </NavLinks>
               </DesktopMenu>
@@ -190,101 +176,7 @@ const Header = ({
 };
 
 const mapDispatchToProps = {
-  setOrganisationIndex,
-};
-
-const HeaderLinks = ({
-  isAuthenticated,
-  onFeedbackIconClick,
-  organisationIndex,
-  user,
-  setOrganisation,
-}) => {
-  const { t } = useTranslation();
-  const languageMenu = <LanguageMenu />;
-  return (
-    <>
-      <ul>
-        <li>
-          <NavLink
-            id={GTM.nav.prefix + GTM.nav.feed}
-            activeStyle={activeStyles}
-            to="/feed"
-          >
-            {t("feed.title")}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            id={GTM.nav.prefix + GTM.nav.aboutUs}
-            activeStyle={activeStyles}
-            to="/about-us"
-          >
-            {t("common.aboutUs")}
-          </NavLink>
-        </li>
-        {isAuthenticated && (
-          <li>
-            <ProfileMenu
-              user={user}
-              organisationIndex={organisationIndex}
-              setOrganisation={setOrganisation}
-              onFeedbackIconClick={onFeedbackIconClick}
-            />
-          </li>
-        )}
-        {!isAuthenticated && (
-          <>
-            <NavLink id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-              <Button type="primary" ghost shape="round" className="logInBtn">
-                {t("auth.signIn")}
-              </Button>
-            </NavLink>
-            <NavLink id={GTM.nav.prefix + GTM.nav.login} to="/auth/signup">
-              <Button shape="round" type="primary" className="joinNowBtn">
-                {t("auth.joinNow")}
-              </Button>
-            </NavLink>
-            <Button
-              id={GTM.nav.prefix + GTM.nav.feedback}
-              onClick={onFeedbackIconClick}
-            >
-              <SvgIcon src={feedback} />
-            </Button>
-            <Dropdown overlay={languageMenu} trigger={["click"]}>
-              <SvgIcon
-                id={GTM.nav.prefix + GTM.nav.language}
-                src={globe}
-                className="globe-icon-svg"
-              ></SvgIcon>
-            </Dropdown>
-          </>
-        )}
-      </ul>
-    </>
-  );
-};
-
-const LanguageMenu = () => {
-  const onLanguageChange = (language) => {
-    i18n.changeLanguage(language);
-    window.localStorage.setItem("locale", language);
-  };
-  return (
-    <Menu>
-      {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
-          <div
-            style={{ fontWeight: i18n.language === key ? "bold" : "normal" }}
-            onClick={() => onLanguageChange(key)}
-            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
-          >
-            {label.text}
-          </div>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+  setOrganisationId: setOrganisation,
 };
 
 export default connect(null, mapDispatchToProps)(Header);

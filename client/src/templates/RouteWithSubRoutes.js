@@ -36,7 +36,7 @@ export const RouteWithSubRoutes = (route) => {
     forgotPasswordRequested,
     isAuthenticated,
     path,
-    organisationIndex,
+    organisationId,
     props = {},
     user,
   } = route;
@@ -112,7 +112,7 @@ export const RouteWithSubRoutes = (route) => {
             routes={route.routes}
             mobiletabs={mobiletabs}
             tabIndex={tabIndex}
-            organisationIndex={organisationIndex}
+            organisationId={organisationId}
           />
         );
       }}
@@ -128,7 +128,7 @@ const mapStateToProps = ({ session }) => ({
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
-  organisationIndex: session.organisationIndex,
+  organisationId: session.organisationId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);
