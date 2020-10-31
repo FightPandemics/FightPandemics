@@ -1,15 +1,15 @@
 class HelpBoard {
-  addPostButton = 'button > img#HB_CP';
+  addPostButton = "button > img#HB_CP";
   noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
-  addPostLink = 'a#HB_CP';
+  addPostLink = "a#HB_CP";
   firstPostOnHelpBoard =
-    'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)';
-  helpBoard = 'div.feed-posts';
+    "div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)";
+  helpBoard = "div.feed-posts";
 
   constructor() {}
 
   visit() {
-    cy.visit('feed');
+    cy.visit("feed");
   }
 
   getAddPostButton() {

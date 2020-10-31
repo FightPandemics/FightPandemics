@@ -1,28 +1,28 @@
 class JoinNow {
-  h4Heading = 'h4';
-  image = '.SocialImageSVG';
-  emailField = '#email';
-  passwordField = '#password';
-  confirmPasswordField = '#confirmPassword';
-  passwordEye = '#login-password div:nth-child(2) div img';
-  confirmPasswordEye = '#login-password div:nth-child(3) div img';
-  emailRequired = '#login-password div small';
-  passwordRequired = '#login-password div small';
-  confirmPasswordRequired = '#login-password div small';
-  validEmailRequired = '#login-password div small';
-  passwordLengthRequired = '#login-password div small';
-  passwordCharacterRequired = '#login-password div small';
-  confirmPasswordMatch = '#login-password div small';
-  joinNowButton = '#SU_JN';
-  signInLink = '#SU_SI';
-  joinNowFbButton = '#SU_FB';
-  joinNowGoogleButton = '#SU_GG';
-  joinNowLinkedinButton = '#SU_LN';
+  h4Heading = "h4";
+  image = ".SocialImageSVG";
+  emailField = "#email";
+  passwordField = "#password";
+  confirmPasswordField = "#confirmPassword";
+  passwordEye = "#login-password div:nth-child(2) div img";
+  confirmPasswordEye = "#login-password div:nth-child(3) div img";
+  emailRequired = "#login-password div small";
+  passwordRequired = "#login-password div small";
+  confirmPasswordRequired = "#login-password div small";
+  validEmailRequired = "#login-password div small";
+  passwordLengthRequired = "#login-password div small";
+  passwordCharacterRequired = "#login-password div small";
+  confirmPasswordMatch = "#login-password div small";
+  joinNowButton = "#SU_JN";
+  signInLink = "#SU_SI";
+  joinNowFbButton = "#SU_FB";
+  joinNowGoogleButton = "#SU_GG";
+  joinNowLinkedinButton = "#SU_LN";
 
   constructor() {}
 
   visit() {
-    cy.visit('auth/signup');
+    cy.visit("auth/signup");
   }
 
   getH4Heading() {

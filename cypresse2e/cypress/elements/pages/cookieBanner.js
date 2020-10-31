@@ -1,9 +1,9 @@
 class CookieBanner {
-  cookieBanner = '#cookie-banner-text';
-  cookieBannerClose = '#cookie-banner-close';
-  cookieBannerCookiesPolicy = '#cookie-banner-cookies-policy';
-  cookieBannerPrivacyPolicy = '#cookie-banner-privacy-policy';
-  cookieBannerTermsAndConditions = '#cookie-banner-terms-and-conditions';
+  cookieBanner = "#cookie-banner-text";
+  cookieBannerClose = "#cookie-banner-close";
+  cookieBannerCookiesPolicy = "#cookie-banner-cookies-policy";
+  cookieBannerPrivacyPolicy = "#cookie-banner-privacy-policy";
+  cookieBannerTermsAndConditions = "#cookie-banner-terms-and-conditions";
 
   constructor() {}
 

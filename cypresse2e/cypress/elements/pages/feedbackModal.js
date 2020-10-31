@@ -1,20 +1,20 @@
 class FeedbackModal {
-  feedbackIcon = 'button#NAV_FDB';
-  feedbackH3 = '.am-modal-body h3';
-  feedbackScale = '.rectangle';
-  feedbackScaleText = '.scale-text';
-  closeModal = '.am-modal-close';
-  feedbackH2 = '.am-modal-body h2';
-  feedbackQuestions = 'label';
-  feedbackInputList = '.am-modal-body div > input';
-  button = 'a span';
-  radioAnswersList = '.ant-radio-wrapper';
-  radioAnswers = '.ant-radio-input';
+  feedbackIcon = "button#NAV_FDB";
+  feedbackH3 = ".am-modal-body h3";
+  feedbackScale = ".rectangle";
+  feedbackScaleText = ".scale-text";
+  closeModal = ".am-modal-close";
+  feedbackH2 = ".am-modal-body h2";
+  feedbackQuestions = "label";
+  feedbackInputList = ".am-modal-body div > input";
+  button = "a span";
+  radioAnswersList = ".ant-radio-wrapper";
+  radioAnswers = ".ant-radio-input";
 
   constructor() {}
 
   visit() {
-    cy.visit('');
+    cy.visit("");
   }
 
   getFeedbackIcon() {

@@ -2,14 +2,14 @@ class Post {
   likeButton = 'div[id^="HB_LK"]';
   commentButton = 'div[id^="HB_CM"]';
   shareButton = 'div[id^="PO_SH"]';
-  postHeader = 'div.card-header';
-  postTitle = 'h4';
-  postAuthorUrl = 'div.card-header > a';
-  postTags = 'div.am-card-body';
+  postHeader = "div.card-header";
+  postTitle = "h4";
+  postAuthorUrl = "div.card-header > a";
+  postTags = "div.am-card-body";
   postPageLink = 'a[href^="/post/"]';
   modalWindowShareVia = 'div[role="document"]';
-  modalWindowShareViaH4Title = 'div.am-modal-body h4';
-  modalWindowCloseButton = 'span.am-modal-close-x';
+  modalWindowShareViaH4Title = "div.am-modal-body h4";
+  modalWindowCloseButton = "span.am-modal-close-x";
   modalWindowEmailButton = 'button[aria-label="email"]';
   modalWindowFacebookButton = 'button[aria-label="facebook"]';
   modalWindowLinkedinButton = 'button[aria-label="linkedin"]';
@@ -17,7 +17,7 @@ class Post {
   modalWindowTelegramButton = 'button[aria-label="telegram"]';
   modalWindowTwitterButton = 'button[aria-label="twitter"]';
   modalWindowWhatsappButton = 'button[aria-label="whatsapp"]';
-  modalWindowSharingUrlInput = 'div > input[type=text]';
+  modalWindowSharingUrlInput = "div > input[type=text]";
 
   constructor() {}
 

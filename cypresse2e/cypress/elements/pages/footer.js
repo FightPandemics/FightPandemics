@@ -1,16 +1,16 @@
 class Footer {
-  copyright = 'footer div:nth-child(1)';
-  aboutUs = 'footer a:nth-child(1)';
-  faq = 'footer a:nth-child(2)';
-  blog = 'footer a:nth-child(3)';
-  termsAndConditions = 'footer a:nth-child(4)';
-  privacyPolicy = 'footer a:nth-child(5)';
-  cookiesPolicy = 'footer a:nth-child(6)';
+  copyright = "footer div:nth-child(1)";
+  aboutUs = "footer a:nth-child(1)";
+  faq = "footer a:nth-child(2)";
+  blog = "footer a:nth-child(3)";
+  termsAndConditions = "footer a:nth-child(4)";
+  privacyPolicy = "footer a:nth-child(5)";
+  cookiesPolicy = "footer a:nth-child(6)";
 
   constructor() {}
 
   visit() {
-    cy.visit('');
+    cy.visit("");
   }
 
   getCopyright() {

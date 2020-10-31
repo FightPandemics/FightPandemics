@@ -1,15 +1,15 @@
 class ForgotPassword {
-  image = '.SocialImageSVG';
-  forgotPasswordPageTitle = 'h4';
-  emailField = '#email';
-  submitButton = 'a[role=button]';
+  image = ".SocialImageSVG";
+  forgotPasswordPageTitle = "h4";
+  emailField = "#email";
+  submitButton = "a[role=button]";
   backToSignInLink = 'a[href="/auth/login"]';
-  errorMessageField = 'small';
+  errorMessageField = "small";
 
   constructor() {}
 
   visit() {
-    cy.visit('auth/forgot-password');
+    cy.visit("auth/forgot-password");
   }
 
   getForgotPasswordPageTitleLocator() {

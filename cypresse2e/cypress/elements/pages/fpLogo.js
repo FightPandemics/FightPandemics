@@ -1,5 +1,5 @@
 class Logo {
-  fpLogo = '.am-navbar.am-navbar-light a img';
+  fpLogo = ".am-navbar.am-navbar-light a img";
 
   constructor() {}
 

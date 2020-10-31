@@ -1,15 +1,15 @@
 class Header {
-  aboutUsLink = 'li #NAV_AU';
-  helpBoardLink = 'li #NAV_HB';
-  signInLink = 'li #NAV_SI';
-  joinNowLink = 'li #NAV_JN';
-  feedbackButton = 'button#NAV_FDB';
-  globeIconLanguages = 'img#NAV_LS';
+  aboutUsLink = "li #NAV_AU";
+  helpBoardLink = "li #NAV_HB";
+  signInLink = "li #NAV_SI";
+  joinNowLink = "li #NAV_JN";
+  feedbackButton = "button#NAV_FDB";
+  globeIconLanguages = "img#NAV_LS";
 
   constructor() {}
 
   visit() {
-    cy.visit('');
+    cy.visit("");
   }
 
   getAboutUsLink() {

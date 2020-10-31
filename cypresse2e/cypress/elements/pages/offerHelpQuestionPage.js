@@ -1,35 +1,35 @@
 class OfferHelpQuestionPage {
-  questionNumberOne = 'h5';
-  questionOne = 'h2';
-  checkboxOptionOne = 'div#OFS1_VO';
-  checkboxOptionTwo = 'div#OFS1_DI';
-  checkboxOptionThree = 'div#OFS1_ORG';
-  checkboxOne = 'div#OFS1_VO label span input';
-  checkboxTwo = 'div#OFS1_DI label span input';
-  checkboxThree = 'div#OFS1_ORG label span input';
-  nextButtonOne = 'a#OF1_NE';
-  backButtonOne = 'a#OF1_BA';
+  questionNumberOne = "h5";
+  questionOne = "h2";
+  checkboxOptionOne = "div#OFS1_VO";
+  checkboxOptionTwo = "div#OFS1_DI";
+  checkboxOptionThree = "div#OFS1_ORG";
+  checkboxOne = "div#OFS1_VO label span input";
+  checkboxTwo = "div#OFS1_DI label span input";
+  checkboxThree = "div#OFS1_ORG label span input";
+  nextButtonOne = "a#OF1_NE";
+  backButtonOne = "a#OF1_BA";
 
-  questionNumberTwo = 'h5';
-  questionTwo = 'h2';
-  infoText = 'h2~p';
-  locationInputLine = 'input.ant-select-selection-search-input';
-  locationInputInfo = 'div small';
-  locationDropdown = '.ant-select-item-option';
+  questionNumberTwo = "h5";
+  questionTwo = "h2";
+  infoText = "h2~p";
+  locationInputLine = "input.ant-select-selection-search-input";
+  locationInputInfo = "div small";
+  locationDropdown = ".ant-select-item-option";
   shareMyLocationIcon = 'div#OFS2_SL img[alt = "Icon"]';
-  shareMyLocationText = 'div#OFS2_SL';
-  showMePostLink = 'a#OFS2_SA span';
-  nextButtonTwo = 'a#OF2_NE';
-  backButtonTwo = 'a#OF2_BA';
+  shareMyLocationText = "div#OFS2_SL";
+  showMePostLink = "a#OFS2_SA span";
+  nextButtonTwo = "a#OF2_NE";
+  backButtonTwo = "a#OF2_BA";
 
   constructor() {}
 
   visitOfferHelpOne() {
-    cy.visit('offer-help');
+    cy.visit("offer-help");
   }
 
   visitOfferHelpTwo() {
-    cy.visit('offer-help#Step2');
+    cy.visit("offer-help#Step2");
   }
 
   getQuestionNumberOne() {

@@ -1,26 +1,26 @@
 class HelpBoardFilter {
-  hbAllPosts = '#HB_AP';
-  hbRequestHelp = '#HB_RE';
-  hbOfferHelp = '#HB_OF';
-  filterButton = '#HB_FI';
-  backButton = 'button > svg';
-  hbLocationHeading = '.filter-1 .am-accordion-header';
-  hbLocationInput = '.ant-select-selection-item';
-  hbLocationDropdown = '.ant-select-dropdown';
-  hbLocationSubtext = 'small';
-  hbShareLocation = '#HB_LO_SL';
-  hbProvidersHeading = '.filter-2 .am-accordion-header';
-  hbProvidersTags = '.filter-2 a';
-  hbTypeHeading = '.filter-3 .am-accordion-header';
-  hbTypeTags = '.filter-3 a';
-  quitFiltersButton = '#HB_FI_QF';
-  applyFiltersButton = '#HB_FI_VR';
-  closeSelectedTags = 'div a.am-button.tag-closable';
+  hbAllPosts = "#HB_AP";
+  hbRequestHelp = "#HB_RE";
+  hbOfferHelp = "#HB_OF";
+  filterButton = "#HB_FI";
+  backButton = "button > svg";
+  hbLocationHeading = ".filter-1 .am-accordion-header";
+  hbLocationInput = ".ant-select-selection-item";
+  hbLocationDropdown = ".ant-select-dropdown";
+  hbLocationSubtext = "small";
+  hbShareLocation = "#HB_LO_SL";
+  hbProvidersHeading = ".filter-2 .am-accordion-header";
+  hbProvidersTags = ".filter-2 a";
+  hbTypeHeading = ".filter-3 .am-accordion-header";
+  hbTypeTags = ".filter-3 a";
+  quitFiltersButton = "#HB_FI_QF";
+  applyFiltersButton = "#HB_FI_VR";
+  closeSelectedTags = "div a.am-button.tag-closable";
 
   constructor() {}
 
   visit() {
-    cy.visit('feed');
+    cy.visit("feed");
   }
 
   getHbAllPosts() {

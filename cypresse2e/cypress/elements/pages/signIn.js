@@ -1,26 +1,26 @@
 class SignIn {
-  h4Heading = 'h4';
-  image = '.SocialImageSVG';
-  emailField = '#email';
-  passwordField = '#password';
-  passwordEye = '#login-password div:nth-child(2) div img';
-  emailRequired = '#login-password div small';
-  passwordRequired = '#login-password div small';
-  validEmailRequired = '#login-password div small';
-  passwordLengthRequired = '#login-password div small';
-  passwordCharacterRequired = '#login-password div small';
-  signInButton = '#SI_SI';
-  loginFailAlert = '.ant-alert-message';
-  forgotPasswordLink = '.form-container .text-center p:nth-child(1)';
-  joinNowLink = '#SI_JN';
-  signInFbButton = '#SI_FB';
-  signInGoogleButton = '#SI_GG';
-  signInLinkedinButton = '#SI_LN';
+  h4Heading = "h4";
+  image = ".SocialImageSVG";
+  emailField = "#email";
+  passwordField = "#password";
+  passwordEye = "#login-password div:nth-child(2) div img";
+  emailRequired = "#login-password div small";
+  passwordRequired = "#login-password div small";
+  validEmailRequired = "#login-password div small";
+  passwordLengthRequired = "#login-password div small";
+  passwordCharacterRequired = "#login-password div small";
+  signInButton = "#SI_SI";
+  loginFailAlert = ".ant-alert-message";
+  forgotPasswordLink = ".form-container .text-center p:nth-child(1)";
+  joinNowLink = "#SI_JN";
+  signInFbButton = "#SI_FB";
+  signInGoogleButton = "#SI_GG";
+  signInLinkedinButton = "#SI_LN";
 
   constructor() {}
 
   visit() {
-    cy.visit('auth/login');
+    cy.visit("auth/login");
   }
 
   getH4Heading() {

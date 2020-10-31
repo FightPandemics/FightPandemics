@@ -1,16 +1,16 @@
 class HomePage {
-  requestHelpButton = '#HP_RE';
-  offerHelpButton = '#HP_OF';
-  viewHelpBoardLink = '#HP_VHB';
-  viewHelpBoardLinkParent = '#HP_VHB';
-  h1Heading = 'h1';
-  subHeading1 = 'div > p:nth-child(3)';
-  subHeading2 = 'div > p:nth-child(4)';
+  requestHelpButton = "#HP_RE";
+  offerHelpButton = "#HP_OF";
+  viewHelpBoardLink = "#HP_VHB";
+  viewHelpBoardLinkParent = "#HP_VHB";
+  h1Heading = "h1";
+  subHeading1 = "div > p:nth-child(3)";
+  subHeading2 = "div > p:nth-child(4)";
 
   constructor() {}
 
   visit() {
-    cy.visit('');
+    cy.visit("");
   }
 
   getRequestHelpButton() {

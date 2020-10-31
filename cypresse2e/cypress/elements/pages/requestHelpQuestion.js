@@ -1,27 +1,27 @@
 class RequestHelpQuestion {
-  questionNumber = 'h5';
-  question = 'h2';
-  medicalHelpAnswer = '#RES1_MH';
-  otherHelpAnswer = '#RES1_OH';
-  questionSubtext = 'p';
-  rhLocationField = '#RES2_EAZ';
-  rhLocationDropdown = '.ant-select-item-option';
-  locationSubtext = 'small';
-  rhShareLocation = '#RES2_SL';
-  rhShowPostings = '#RES2_SA';
-  backButtonOne = '#RE1_BA';
-  nextButtonOne = '#RE1_NE';
-  backButtonTwo = '#RE2_BA';
-  nextButtonTwo = '#RE2_NE';
+  questionNumber = "h5";
+  question = "h2";
+  medicalHelpAnswer = "#RES1_MH";
+  otherHelpAnswer = "#RES1_OH";
+  questionSubtext = "p";
+  rhLocationField = "#RES2_EAZ";
+  rhLocationDropdown = ".ant-select-item-option";
+  locationSubtext = "small";
+  rhShareLocation = "#RES2_SL";
+  rhShowPostings = "#RES2_SA";
+  backButtonOne = "#RE1_BA";
+  nextButtonOne = "#RE1_NE";
+  backButtonTwo = "#RE2_BA";
+  nextButtonTwo = "#RE2_NE";
 
   constructor() {}
 
   visitRequestHelpOne() {
-    cy.visit('need-help');
+    cy.visit("need-help");
   }
 
   visitRequestHelpTwo() {
-    cy.visit('need-help#Step2');
+    cy.visit("need-help#Step2");
   }
 
   getQuestionNumber() {
