@@ -1,6 +1,6 @@
   locals {
     base_url = {
-      review      = "https://feature1427-notifications-unsubscribe.fightpandemics.xyz" # Point to Dawei's branch for now
+      review      = "https://feature-notifications.fightpandemics.xyz" # Point to feature/notifications branch for now
       staging     = "https://staging.fightpandemics.work"
       production  = "https://fightpandemics.com"
       development = "https://development.fightpandemics.online"
