@@ -1,0 +1,3 @@
+{{triggeredBy.name}} shared your post via {{shareMedium}}: {{post.title}}
+
+View post: {{{baseUrl}}}/post/{{post.id}}

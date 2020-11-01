@@ -1,24 +1,33 @@
-// TODO remove/replace with actual code
-const tempFunction = async (event, context) => {
-  /* eslint-disable no-console */
-  console.log(event);
-  /* eslint-disable no-console */
-  console.log(context);
-};
+const { config } = require("./config");
+const { errorNotifier } = require("./helpers/error-notifier");
+const { NotificationService } = require("./service");
+const { log } = require("./helpers/logger");
+
+let cachedDb = null;
+
+function setCachedDb(db) {
+  if (cachedDb === null) {
+    cachedDb = db;
+  }
+}
 
 exports.handler = async (event, context) => {
   try {
-    // TODO replace this with actual function to call
-    await tempFunction(event, context);
+    context.callbackWaitsForEmptyEventLoop = false;
+    const frequency = event.frequency;
+    const service = new NotificationService(config);
+    await service.initializeDb(cachedDb);
+    setCachedDb(service.dbHelper.db);
+    await service.process(frequency);
     return {
-      body: JSON.stringify("Hello world!"),
+      body: JSON.stringify("Success"),
       statusCode: 200,
     };
   } catch (error) {
-    /* eslint-disable no-console */
-    console.log(error); // TODO remove or replace with logger
+    log.error(error, "Internal Server Error");
+    await errorNotifier.capture(error);
     return {
-      body: JSON.stringify("Goodbye world :("),
+      body: JSON.stringify("An error occurred."),
       statusCode: 500,
     };
   }

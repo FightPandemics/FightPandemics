@@ -1,0 +1,3 @@
+{{triggeredBy.name}} liked your post: {{post.title}}
+
+View post: {{{baseUrl}}}/post/{{post.id}}

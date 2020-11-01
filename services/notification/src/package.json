@@ -21,7 +21,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "@sentry/node": "^5.26.0",
+    "aws-sdk": "^2.771.0",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.2",
+    "mustache": "^4.0.1",
+    "pino": "^6.7.0",
+    "pino-multi-stream": "^5.1.1",
+    "pino-papertrail": "^2.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -37,7 +45,7 @@
     "mocha": "^7.2.0",
     "nock": "^12.0.3",
     "nodemon": "^2.0.2",
-    "pino-pretty": "^4.1.0",
+    "pino-pretty": "^4.3.0",
     "prettier": "^2.0.2",
     "sinon": "^9.0.3",
     "supertest": "^4.0.2"
