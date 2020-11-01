@@ -43,7 +43,7 @@ export const AccountMenu = ({
         {`${user?.firstName} ${user?.lastName} `}
         {!organisationId && <SvgIcon src={DoneIcon} />}
       </Menu.Item>
-      <Menu.Divider />
+      {anyOrganisation && <Menu.Divider />}
       {anyOrganisation && (
         <CustomItemGroup title={t("common.myOrganisation")}>
           {organisations.map((current) => (

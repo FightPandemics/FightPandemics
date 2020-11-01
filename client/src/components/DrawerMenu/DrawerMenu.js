@@ -1,33 +1,9 @@
-import React from "react";
-import { Dropdown, Menu } from "antd";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import React, { useState } from "react";
 
-import { Avatar } from "components/Avatar";
-import { localization, languages } from "locales/languages";
-import globe from "assets/icons/globe-white.svg";
-import GTM from "constants/gtm-tags";
-import { getInitialsFromFullName } from "utils/userInfo";
-import i18n from "i18n";
-import { TOGGLE_STATE } from "hooks/actions/feedbackActions";
-import {
-  MenuContainer,
-  CloseNav,
-  NavList,
-  Divider,
-  NavItem,
-  GlobeIcon,
-  FeedbackItem,
-  LanguageSwitchItem,
-  Space,
-  CustomSvgIcon,
-} from "./components";
-
-import LogoutIcon from "assets/icons/logout-gray.svg";
-import FeedbackIcon from "assets/icons/feedback-gray.svg";
-import LanguageIcon from "assets/icons/language-gray.svg";
-import PeopleIcon from "assets/icons/people-gray.svg";
+import { MENU_STATE } from "./constants";
+import { ProfileMenu } from "./ProfileMenu";
+import { AccountMenu } from "./AccountMenu";
+import { MenuContainer, CloseNav, NavList } from "./components";
 
 export const DrawerMenu = ({
   user,
@@ -37,84 +13,32 @@ export const DrawerMenu = ({
   isAuthenticated,
   dispatchAction,
 }) => {
-  if (show && !authLoading) {
-    return (
-      <MenuContainer>
-        <CloseNav onClick={toggleDrawer} />
-        <NavList>
-          <SettingMenu
+  const [menuState, setMenuState] = useState(MENU_STATE.ACCOUNTS);
+  if (!show || authLoading) {
+    return null;
+  }
+  return (
+    <MenuContainer>
+      <CloseNav onClick={toggleDrawer} />
+      <NavList>
+        {menuState === MENU_STATE.SETTINGS && (
+          <ProfileMenu
             user={user}
+            setMenuState={setMenuState}
             toggleDrawer={toggleDrawer}
             dispatchAction={dispatchAction}
             isAuthenticated={isAuthenticated}
           />
-        </NavList>
-      </MenuContainer>
-    );
-  }
-  return null;
-};
-
-const SettingMenu = ({
-  user,
-  toggleDrawer,
-  dispatchAction,
-  isAuthenticated,
-}) => {
-  const { t } = useTranslation();
-  const feedToPath = isAuthenticated ? { pathname: "/feed", user } : "/feed";
-  // const languageMenu = renderLanguageMenu();
-  return (
-    <>
-      {isAuthenticated && (
-        <NavItem>
-          <ProfileItem user={user} />
-        </NavItem>
-      )}
-      {!isAuthenticated && (
-        <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-          <NavItem size={"big"}>
-            {t("auth.signIn")} / {t("auth.joinNow")}
-          </NavItem>
-        </Link>
-      )}
-      <Divider />
-      <Link id={GTM.nav.prefix + GTM.nav.feed} to={feedToPath}>
-        <NavItem size={"big"}>{t("feed.title")}</NavItem>
-      </Link>
-      <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
-        <NavItem size={"big"}>{t("common.aboutUs")}</NavItem>
-      </Link>
-      <Divider />
-      {isAuthenticated && (
-        <NavItem>
-          <CustomSvgIcon src={PeopleIcon} />
-          {t("common.switchAccount")}
-        </NavItem>
-      )}
-      <NavItem>
-        <CustomSvgIcon src={LanguageIcon} />
-        {t("common.language")}
-      </NavItem>
-      <NavItem
-        id={GTM.nav.prefix + GTM.nav.feedback}
-        onClick={() => {
-          dispatchAction(TOGGLE_STATE, "ratingModal");
-          toggleDrawer();
-        }}
-      >
-        <CustomSvgIcon src={FeedbackIcon} />
-        {t("common.feedback")}
-      </NavItem>
-      {isAuthenticated && (
-        <Link to="/auth/logout">
-          <NavItem>
-            <CustomSvgIcon src={LogoutIcon} />
-            {t("common.logout")}
-          </NavItem>
-        </Link>
-      )}
-    </>
+        )}
+        {menuState === MENU_STATE.ACCOUNTS && (
+          <AccountMenu
+            user={user}
+            setMenuState={setMenuState}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
+      </NavList>
+    </MenuContainer>
   );
 };
 
@@ -142,38 +66,6 @@ const SettingMenu = ({
 //   i18n.changeLanguage(lng);
 //   localStorage.setItem("locale", lng);
 // };
-
-const ProfileInfo = styled.p`
-  margin: 0;
-  font-size: 12px;
-  font-weight: ${({ bold }) => (bold ? "600" : "normal")};
-  line-height: normal;
-  color: ${({ bold }) => (bold ? "#939393" : "rgba(0, 0, 0, 0.85)")};
-`;
-
-const ProfileItemContainer = styled.div`
-  display: flex;
-  margin: 5px 0;
-  align-items: center;
-`;
-
-const ProfileItem = ({ user }) => {
-  return (
-    <ProfileItemContainer>
-      <div>
-        <Avatar src={user.photo} size={"small"}>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
-        </Avatar>
-      </div>
-      <div>
-        <ProfileInfo bold>
-          {`${user?.firstName} ${user?.lastName} `}
-        </ProfileInfo>
-        <ProfileInfo>View my Profile</ProfileInfo>
-      </div>
-    </ProfileItemContainer>
-  );
-};
 
 {
   /* <NavItem>

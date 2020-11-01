@@ -83,78 +83,14 @@ export const NavItem = styled(List.Item)`
       color: ${white};
       cursor: pointer;
       font-family: "Poppins", sans-serif;
-      font-size: 1.8rem;
+      font-size: ${({ size }) => (size === "small" ? "1.2rem" : "1.8rem")};
       font-weight: ${({ size }) => (size === "big" ? "600" : "400")};
       padding: 0;
-      margin: ${(props) =>
-        typeof props.margin != undefined ? props.margin : "inherit"};
     }
   }
 
   &.am-list-item-active {
     background: ${tropicalBlue};
-  }
-`;
-
-export const GlobeIcon = styled(SvgIcon)`
-  vertical-align: baseline;
-`;
-
-export const FeedbackItem = styled(List.Item)`
-  background: unset;
-  padding-left: 2.1rem;
-  cursor: pointer;
-  height: ${(props) => props.height ?? "inherit"};
-  & .am-list-line {
-    border-bottom: 0;
-    &:after {
-      height: 0 !important;
-    }
-    pointer-events: none;
-    & .am-list-content {
-      color: ${white};
-      pointer: none;
-      font-family: "Poppins", sans-serif;
-      font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
-      font-weight: ${(props) => (props.size === "small" ? "400" : "600")};
-      line-height: 6rem;
-      padding: 0;
-      margin: ${(props) =>
-        typeof props.margin != undefined ? props.margin : "inherit"};
-    }
-  }
-
-  &.am-list-item-active {
-    background: ${tropicalBlue};
-  }
-`;
-
-export const LanguageSwitchItem = styled(List.Item)`
-  background: unset;
-  padding-left: 2.1rem;
-  font-family: "Poppins", sans-serif;
-  font-size: ${(props) => (props.size === "small" ? "2rem" : "2.4rem")};
-  & .am-list-line {
-    border-bottom: 0;
-    &:after {
-      height: 0 !important;
-    }
-    pointer-events: none;
-    & .am-list-content {
-      color: ${white};
-      pointer: none;
-      line-height: 6rem;
-      padding: 0;
-      margin: ${(props) =>
-        typeof props.margin != undefined ? props.margin : "inherit"};
-    }
-  }
-`;
-
-export const Space = styled.div`
-  height: ${(props) => props.height ?? "1rem"};
-  @media (max-height: 699px) {
-    height: ${(props) => props.limitMobileHeight && 0};
   }
 `;
 

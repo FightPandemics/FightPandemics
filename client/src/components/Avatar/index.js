@@ -6,7 +6,8 @@ const { royalBlue, selago } = theme.colors;
 
 export const Avatar = styled(ExtAvatar)`
   color: #425af2;
-  border: ${({ src }) => !src && `1px solid ${royalBlue}`};
+  border: ${({ src, type }) =>
+    !src && type !== "mobile" && `1px solid ${royalBlue}`};
   background: ${selago};
   font-size: 10px;
   margin-right: 10px;
