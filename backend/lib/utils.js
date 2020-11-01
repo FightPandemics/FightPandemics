@@ -36,14 +36,14 @@ const containsNumber = (str) => /\d/.test(str);
 const containsSpecialChars = (str) => SPECIAL_CHARS.test(str);
 
 const isValidPassword = (password) => {
-  const checks = [
+  const passwordChecks = [
     containsLowerCase(password),
     containsUpperCase(password),
     containsNumber(password),
     containsSpecialChars(password),
   ];
 
-  return checks.filter((check) => check).length >= 3;
+  return passwordChecks.filter(isValid => isValid).length >= 3;
 };
 
 const relativeTimeObject = (number, unit) => ({
