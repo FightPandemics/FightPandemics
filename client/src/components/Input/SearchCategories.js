@@ -38,7 +38,11 @@ class SearchCategories extends React.Component {
     };
     this.renderTabsContainer = this.renderTabsContainer.bind(this);
     this.onSelectItem = this.onSelectItem.bind(this);
-    this.resetSelectedValue = this.resetSelectedValue.bind(this);
+  }
+
+  componentDidMount() {
+    let query = qs.parse(this.props.history.location.search);
+    this.onSelectItem(this.props.options[query.s_category || 0]);
   }
 
   setQueryKeyValue = (key, value) => {
@@ -51,33 +55,21 @@ class SearchCategories extends React.Component {
     });
   };
 
-  resetSelectedValue() {
-    this.setState({ selectedValue: null });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.showOptions !== prevProps.showOptions) {
-      this.resetSelectedValue();
-    }
-  }
-
   onSelectItem(item) {
     this.setState({ selectedValue: item });
     this.setQueryKeyValue(
       "s_category",
-      this.props.options.findIndex((option) => option.id == item?.id) || null,
+      this.props.options.findIndex((option) => option.id === item?.id) || null,
     );
     this.props.onSearchSubmit(item?.id || null);
   }
 
   renderCategories() {
-    const { isObject = false, displayValue, options, showOptions } = this.props;
+    const { isObject = false, displayValue, options } = this.props;
     const { selectedValue } = this.state;
-    if (showOptions && !selectedValue)
-      this.setState({ selectedValue: options.find((o) => o.default) });
-    return options.map((value, index) => (
+    return options.map((value) => (
       <Chip
-        key={index}
+        key={value.id}
         onClick={() => this.onSelectItem(value)}
         className={
           selectedValue && selectedValue.id == value.id ? "selected" : ""
@@ -94,7 +86,7 @@ class SearchCategories extends React.Component {
   }
 
   renderTabsContainer() {
-    const { style, id, showOptions } = this.props;
+    const { id, showOptions } = this.props;
     return (
       <TabsContainer id={id || "SearchContainer"}>
         {showOptions && this.renderCategories()}
@@ -114,7 +106,6 @@ SearchCategories.defaultProps = {
   isObject: true,
   displayValue: "name",
   selectionLimit: 1,
-  style: {},
   id: "",
 };
 

@@ -331,6 +331,11 @@ const Feed = (props) => {
   useEffect(() => {
     let query = qs.parse(history.location.search);
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || "POSTS";
+    changeHelpType(query.s_category);
+    if (query.location) {
+      query.location = JSON.parse(atob(query.location));
+      dispatchAction(SET_VALUE, "location", query.location);
+    } else dispatchAction(SET_VALUE, "location", "");
     if (query.filters) {
       query.filters = JSON.parse(atob(query.filters));
       optionsDispatch({
@@ -352,6 +357,9 @@ const Feed = (props) => {
       ...(selectedOptions?.type || []),
       ...(selectedOptions?.providers || []),
     ].length;
+    if (location) {
+      setQueryKeyValue("location", btoa(JSON.stringify(location)));
+    }
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength)
         return setQueryKeyValue(
@@ -393,7 +401,6 @@ const Feed = (props) => {
         loadMore,
       });
     }
-    dispatchAction(SET_VALUE, "location", "");
     dispatchAction(SET_VALUE, "activePanel", null);
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
@@ -430,13 +437,12 @@ const Feed = (props) => {
 
   const handleSearchSubmit = useCallback((selectedValueId) => {
     handleChangeType({ key: "ALL" });
-    changeHelpType(selectedValueId);
-    if (queryParams.filters) setQueryKeyValue("filters", null);
+    if (queryParams.filters && selectedValueId != "POSTS")
+      setQueryKeyValue("filters", null);
   });
 
   const handleSearchClear = useCallback(() => {
     handleChangeType({ key: "ALL" });
-    changeHelpType(null);
   });
 
   const handleLocation = (value) => {
@@ -444,6 +450,7 @@ const Feed = (props) => {
       postsDispatch({ type: RESET_PAGE, filterType: "" });
     }
     dispatchAction(SET_VALUE, "location", value);
+    if (!value && queryParams.location) setQueryKeyValue("location", null);
   };
 
   const handleOption = (label, option) => (e) => {
