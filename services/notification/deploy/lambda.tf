@@ -1,6 +1,6 @@
   locals {
     base_url = {
-      review      = "https://feature-notifications.fightpandemics.xyz" # Point to feature/notifications branch for now
+      review      = "https://featurenotifications.fightpandemics.xyz" # Point to feature/notifications branch for now
       staging     = "https://staging.fightpandemics.work"
       production  = "https://fightpandemics.com"
       development = "https://development.fightpandemics.online"
