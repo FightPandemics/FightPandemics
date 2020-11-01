@@ -18,6 +18,7 @@ import FeedWrapper from "components/Feed/FeedWrapper";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
@@ -433,6 +434,14 @@ const Profile = ({
                 onClick={onToggleDrawer}
               />
             )}
+            {!ownUser && (
+              <MessageModal
+                isAuthenticated={true}
+                isFromProfile={true}
+                postAuthorName={`${firstName} ${lastName}`}
+                authorId={userId}
+              />
+            )}
           </NameDiv>
           <DescriptionDesktop> {about} </DescriptionDesktop>
           {address ? (
@@ -540,7 +549,7 @@ const Profile = ({
           closable={false}
           onClose={onToggleDrawer}
           visible={drawer}
-          height="150px"
+          height="200px"
           key="bottom"
         >
           <DrawerHeader>
@@ -549,6 +558,11 @@ const Profile = ({
           <DrawerHeader>
             <Link to="/edit-profile">
               {t("profile.individual.editProfile")}{" "}
+            </Link>
+          </DrawerHeader>
+          <DrawerHeader>
+            <Link to="/edit-notifications">
+              {t("profile.individual.editNotification")}{" "}
             </Link>
           </DrawerHeader>
         </CustomDrawer>

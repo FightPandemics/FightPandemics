@@ -15,11 +15,12 @@ import heartGray from "assets/icons/heart-gray.svg";
 import comment from "assets/icons/comment.svg";
 import commentGray from "assets/icons/comment-gray.svg";
 import share from "assets/icons/share.svg";
-import shareGray from "assets/icons/share-gray.svg";
+import shareGray from "assets/icons/share.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants
 import { mq } from "constants/theme";
+import MessageModal from "./MessagesModal/MessageModal.js";
 
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;
@@ -35,13 +36,18 @@ const StyledSpan = styled.span`
 const PostSocial = ({
   handlePostLike,
   isAuthenticated,
+  isOwnOrg,
+  authorId,
   url,
+  user,
   liked,
   shared,
   showComments,
   numLikes,
   numComments,
   onCopyLink,
+  postAuthorName,
+  postAuthorAvatar,
   postId,
   postTitle,
   postContent,
@@ -201,6 +207,21 @@ const PostSocial = ({
           <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
+      {!isOwnOrg &&
+        user?.id != authorId &&
+        !/Sourced by FightPandemics\ \(.*?\)/.test(postAuthorName) && (
+          <div className="social-icon">
+            <MessageModal
+              isAuthenticated={isAuthenticated}
+              title={postTitle}
+              postContent={postContent}
+              postAuthorName={postAuthorName}
+              authorId={authorId}
+              postId={id}
+              avatar={postAuthorAvatar}
+            />
+          </div>
+        )}
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;

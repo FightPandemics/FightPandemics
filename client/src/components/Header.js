@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Badge } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import i18n from "../i18n";
@@ -11,8 +11,9 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+import { NotificationDropDown } from "../components/Notifications/NotificationDropDown";
 import globe from "assets/icons/globe.svg";
-
+import mail from "assets/icons/mail.svg";
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
@@ -42,6 +43,26 @@ const StyledNavBar = styled(NavBar)`
       padding-left: 2.3rem;
       padding-top: 1rem;
     }
+  }
+  .mobile-notification-bell {
+    display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: block;
+      position: absolute;
+      top: 0.65em;
+      right: 6em;
+      cursor: pointer;
+    }
+  }
+`;
+const InboxIcon = styled.span`
+  display: ${(props) => (props.mobile ? "none" : "initial")};
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: ${(props) => (props.mobile ? "block" : "none")};
+    position: absolute;
+    top: 0.65em;
+    right: 3em;
+    cursor: pointer;
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -146,8 +167,10 @@ export default ({
   onSearchSubmit,
   onSearchClear,
   navSearch,
+  ws,
 }) => {
   const { t } = useTranslation();
+  const { rooms } = ws;
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -216,6 +239,31 @@ export default ({
       </Menu.Item>
     </Menu>
   );
+  const renderInboxIcon = (mobile) => {
+    return (
+      <InboxIcon mobile={mobile}>
+        <NavLink
+          id={GTM.nav.prefix + GTM.nav.inbox}
+          activeStyle={activeStyles}
+          to="/inbox"
+        >
+          <Badge
+            count={rooms
+              .map((_room) =>
+                _room.participants.find((p) => p.id == user.id.toString())
+                  ?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0,
+              )
+              .reduce((a, b) => a + b, 0)}
+          >
+            <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
+          </Badge>
+        </NavLink>
+      </InboxIcon>
+    );
+  };
   const renderNavLinkItems = () => {
     if (authLoading) return null;
     return (
@@ -250,6 +298,14 @@ export default ({
                 </a>
               </Dropdown>
             </li>
+            <li>{renderInboxIcon()}</li>
+            <li>
+              <NotificationDropDown
+                notifications={ws.notifications}
+                mobile={false}
+              />
+            </li>
+            <li></li>
           </>
         ) : (
           <>
@@ -318,6 +374,13 @@ export default ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
+            {isAuthenticated && (
+              <NotificationDropDown
+                notifications={ws.notifications}
+                mobile={true}
+              />
+            )}
+            {isAuthenticated && renderInboxIcon(true) /* mobile = true */}
             <DesktopMenu>
               <NavLinks>
                 <ul>{renderNavLinkItems()}</ul>
