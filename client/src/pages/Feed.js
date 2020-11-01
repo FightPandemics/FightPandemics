@@ -320,7 +320,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     let query = qs.parse(history.location.search);
-    query.s_category = SEARCH_OPTIONS[query.s_category]?.id || "POSTS";
+    query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
     if (query.location) {
       query.location = JSON.parse(atob(query.location));

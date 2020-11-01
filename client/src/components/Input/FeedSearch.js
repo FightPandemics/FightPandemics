@@ -233,9 +233,9 @@ class FeedNavSearch extends React.Component {
     this.searchWrapper.current.addEventListener("click", this.listenerCallback);
     let query = qs.parse(this.props.history.location.search);
     this.setState({ inputValue: query.s_keyword });
-    if (this.props.isMobile)
+    if (this.props.isMobile && query.s_keyword)
       this.setState({
-        selectedValue: [this.props.options[query.s_category]?.id || "POSTS"],
+        selectedValue: [this.props.options[query.s_category || 0]],
       });
   }
 
@@ -281,7 +281,7 @@ class FeedNavSearch extends React.Component {
       );
       this.props.onSearchSubmit(selectedValue[0]?.id); // this will update helpTypes
       return;
-    } else this.setQueryKeyValue(this.props.history, "s_keyword", inputValue);
+    } else setQueryKeyValue(this.props.history, "s_keyword", inputValue);
   }
 
   onKeyClick(e) {
@@ -302,8 +302,8 @@ class FeedNavSearch extends React.Component {
     this.resetSelectedValue();
     this.setState({ tooShort: false });
     this.searchBox.current.blur();
-    this.setQueryKeyValue("s_keyword", null);
-    this.setQueryKeyValue("s_category", null);
+    setQueryKeyValue(this.props.history, "s_keyword", null);
+    setQueryKeyValue(this.props.history, "s_category", null);
     if (this.props.isMobile) this.props.onSearchClear();
   }
 
@@ -514,6 +514,7 @@ FeedNavSearch.defaultProps = {
   hidePlaceholder: false,
   style: {},
   id: "",
+  options: {},
 };
 
 export default withRouter(FeedNavSearch);
