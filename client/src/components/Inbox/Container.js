@@ -79,7 +79,7 @@ export const ChatListContainer = styled.div`
 
   .chat-bucket {
     overflow: auto;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 140px);
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {

@@ -39,6 +39,15 @@ const ThreadContainer = styled(SideChatContainer)`
     }
   }
 
+  content {
+    max-width: calc(100vw - 55.6rem);
+    position: relative;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      max-width: calc(100% - 5.5rem);
+    }
+  }
+
   &.for-blocked {
     position: relative;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -47,6 +56,7 @@ const ThreadContainer = styled(SideChatContainer)`
     content {
       top: initial;
       flex-direction: row;
+
       header {
         width: 25rem;
         @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -148,7 +158,7 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                 </div>
               </content>
               <StyledButton onClick={() => unblockThread(_room._id)}>
-              {t("messaging.settings.unarchive")}
+                {t("messaging.settings.unarchive")}
               </StyledButton>
             </ThreadContainer>
           ))}
@@ -188,7 +198,9 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
             </ThreadContainer>
           ))}
         {!rooms.filter((r) => getSender(r.participants).status === "blocked")
-          .length && <NoThreads>{t("messaging.settings.blockedEmpty")}</NoThreads>}
+          .length && (
+          <NoThreads>{t("messaging.settings.blockedEmpty")}</NoThreads>
+        )}
       </ThreadsListContainer>
     );
   };

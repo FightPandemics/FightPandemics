@@ -114,7 +114,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
                     "tag-selectable " +
                     ((selectedOptions[filter.label] &&
                       selectedOptions[filter.label].includes(value)) ||
-                      value.toLowerCase().includes(selectedType?.toLowerCase())
+                    value.toLowerCase().includes(selectedType?.toLowerCase())
                       ? "tag-selected"
                       : "")
                   }

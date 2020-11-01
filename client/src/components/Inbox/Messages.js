@@ -1,5 +1,7 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { Menu, Dropdown, Typography } from "antd";
+import { Modal } from "antd-mobile";
+import styled from "styled-components";
 import {
   BubbleContainer,
   MessagesContainer,
@@ -34,6 +36,8 @@ const Messages = ({
   inputRef,
   isLoading,
   inputExpanded,
+  blockStatus,
+  status,
 }) => {
   const { t } = useTranslation();
   const messagesEndRef = useRef(null);
@@ -115,7 +119,10 @@ const Messages = ({
             setAlertBox({ show: false });
           },
         },
-        { text: t("messaging.cancel"), onPress: () => setAlertBox({ show: false }) },
+        {
+          text: t("messaging.cancel"),
+          onPress: () => setAlertBox({ show: false }),
+        },
       ],
     });
   }
@@ -150,11 +157,11 @@ const Messages = ({
           </Menu.Item>
         }
         <Menu.Item onClick={() => showDeleteConfirm(messageId)} danger>
-        {t("messaging.delete")}
+          {t("messaging.delete")}
         </Menu.Item>
       </Menu>
     ),
-    [showDeleteConfirm, startMessageEditing],
+    [showDeleteConfirm, startMessageEditing, t],
   );
   const Sender = ({ postRef, message, messageId, isDeleted, isEdited }) => {
     return (
@@ -163,49 +170,77 @@ const Messages = ({
         key={"b-" + messageId}
       >
         {isEdited && <small>{t("messaging.edited")}</small>}
-        <Dropdown
-          trigger={["contextMenu"]}
-          overlay={menu(messageId, message)}
-          placement="bottomRight"
+
+        <SenderBubble
+          editingMode={editingMessageId === messageId}
+          className={`${isDeleted ? "deleted" : ""}`}
+          onContextMenu={(event) => {
+            event.persist();
+            event.preventDefault();
+            Modal.operation([
+              {
+                text: t("messaging.edit"),
+                onPress: () => {
+                  startMessageEditing(messageId, message);
+                },
+                style: {
+                  fontSize: "1.6rem",
+                  textAlign: "center",
+                  padding: 0,
+                },
+              },
+              {
+                text: <Text type="danger">{t("messaging.delete")}</Text>,
+                onPress: () => {
+                  showDeleteConfirm(messageId);
+                },
+                style: {
+                  fontSize: "1.6rem",
+                  textAlign: "center",
+                  padding: 0,
+                },
+              },
+            ]);
+          }}
         >
-          <SenderBubble className={`${isDeleted ? "deleted" : ""}`}>
-            {!isDeleted && editingMessageId !== messageId && (
-              <Dropdown
-                trigger={["click"]}
-                overlay={menu(messageId, message)}
-                placement="bottomRight"
-              >
-                <MessageMenu>
-                  <img alt="menu" src={subMenuIcon} />
-                </MessageMenu>
-              </Dropdown>
-            )}
-            {postRef && !(!isMobile() && editingMessageId === messageId) && (
-              <OrgPost postRef={postRef} />
-            )}
-            <div className="message-content-sender">
-              {!isDeleted && message
-                ? linkify(message)
-                : t("messaging.didDelete")}
-            </div>
-            {!isMobile() && editingMessageId === messageId && (
-              <textarea
-                key={"t-area-" + messageId}
-                ref={editTextArea}
-                defaultValue={message}
-                maxlength={2048}
-              ></textarea>
-            )}
-          </SenderBubble>
-        </Dropdown>
+          {!isDeleted && editingMessageId !== messageId && (
+            <Dropdown
+              trigger={["click", "hover"]}
+              overlay={menu(messageId, message)}
+              placement="bottomRight"
+            >
+              <MessageMenu>
+                <img alt="menu" src={subMenuIcon} />
+              </MessageMenu>
+            </Dropdown>
+          )}
+          {postRef && !(!isMobile() && editingMessageId === messageId) && (
+            <OrgPost postRef={postRef} />
+          )}
+          <div className="message-content-sender">
+            {!isDeleted && message
+              ? linkify(message)
+              : t("messaging.didDelete")}
+          </div>
+          {!isMobile() && editingMessageId === messageId && (
+            <textarea
+              key={"t-area-" + messageId}
+              ref={editTextArea}
+              defaultValue={message}
+              maxlength={2048}
+            ></textarea>
+          )}
+        </SenderBubble>
         {!isMobile() && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
-            <button onClick={() => cancelMessageEditing()}>{t("messaging.cancel")}</button>
+            <button onClick={() => cancelMessageEditing()}>
+              {t("messaging.cancel")}
+            </button>
             <button
               className={"save"}
               onClick={() => saveMessageEditing(messageId)}
             >
-               {t("messaging.saveEdit")}
+              {t("messaging.saveEdit")}
             </button>
           </div>
         )}
@@ -241,6 +276,8 @@ const Messages = ({
 
   return (
     <MessagesContainer
+      blockStatus={blockStatus}
+      status={status}
       ref={messagesEndRef}
       className={`${toggleViewRequests ? "request-page" : ""} ${
         inputExpanded ? "input-expanded" : ""
@@ -288,7 +325,10 @@ const Messages = ({
               className={message.authorId !== user.id ? "left" : "right"}
             >
               {isToday(message.createdAt)
-                ? (getRelativeTime(message.createdAt)).replace("0 seconds ago", t("messaging.justNow"))
+                ? getRelativeTime(message.createdAt).replace(
+                    "0 seconds ago",
+                    t("messaging.justNow"),
+                  )
                 : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
             </TimeStamp>
           )}
