@@ -7,6 +7,7 @@ import SearchSvg from "../../assets/icons/search.svg";
 import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
 import GTM from "constants/gtm-tags";
+import { setQueryKeyValue } from "components/Feed/utils";
 import qs from "query-string";
 const { colors } = theme;
 
@@ -263,16 +264,6 @@ class FeedNavSearch extends React.Component {
       this.setState({ tooShort: false });
   }
 
-  setQueryKeyValue = (key, value) => {
-    let query = qs.parse(this.props.history.location.search);
-    if (!value) delete query[key];
-    else query[key] = value;
-    this.props.history.push({
-      pathname: this.props.history.location.pathname,
-      search: qs.stringify(query),
-    });
-  };
-
   submitSearch() {
     const { inputValue, selectedValue } = this.state;
     const { isMobile, options } = this.props;
@@ -282,14 +273,15 @@ class FeedNavSearch extends React.Component {
       return this.setState({ tooShort: true });
     }
     if (isMobile) {
-      this.setQueryKeyValue("s_keyword", inputValue);
-      this.setQueryKeyValue(
+      setQueryKeyValue(this.props.history, "s_keyword", inputValue);
+      setQueryKeyValue(
+        this.props.history,
         "s_category",
         options.findIndex((a) => a.id == selectedValue[0]?.id),
       );
       this.props.onSearchSubmit(selectedValue[0]?.id); // this will update helpTypes
       return;
-    } else this.setQueryKeyValue("s_keyword", inputValue);
+    } else this.setQueryKeyValue(this.props.history, "s_keyword", inputValue);
   }
 
   onKeyClick(e) {

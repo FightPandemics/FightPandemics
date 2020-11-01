@@ -26,6 +26,7 @@ import Posts from "components/Feed/Posts";
 import Users from "components/Feed/Users";
 import SearchCategories from "components/Input/SearchCategories";
 import FeedSearch from "components/Input/FeedSearch";
+import { setQueryKeyValue } from "components/Feed/utils";
 
 import {
   optionsReducer,
@@ -270,7 +271,6 @@ const Feed = (props) => {
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const [posts, postsDispatch] = useReducer(postsReducer, postsState);
-  const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -318,16 +318,6 @@ const Feed = (props) => {
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const setQueryKeyValue = (key, value) => {
-    let query = qs.parse(history.location.search);
-    if (!value) delete query[key];
-    else query[key] = value;
-    history.push({
-      pathname: history.location.pathname,
-      search: qs.stringify(query),
-    });
-  };
-
   useEffect(() => {
     let query = qs.parse(history.location.search);
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || "POSTS";
@@ -358,15 +348,17 @@ const Feed = (props) => {
       ...(selectedOptions?.providers || []),
     ].length;
     if (location) {
-      setQueryKeyValue("location", btoa(JSON.stringify(location)));
+      setQueryKeyValue(history, "location", btoa(JSON.stringify(location)));
     }
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength)
         return setQueryKeyValue(
+          history,
           "filters",
           btoa(JSON.stringify(selectedOptions)),
         );
-    } else if (queryParams.filters) return setQueryKeyValue("filters", null);
+    } else if (queryParams.filters && !newFiltersLength)
+      return setQueryKeyValue(history, "filters", null);
   }, [applyFilters, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -409,7 +401,7 @@ const Feed = (props) => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    setQueryKeyValue("filters", null);
+    setQueryKeyValue(history, "filters", null);
     refetchPosts(null, null, true);
   };
 
@@ -438,7 +430,7 @@ const Feed = (props) => {
   const handleSearchSubmit = useCallback((selectedValueId) => {
     handleChangeType({ key: "ALL" });
     if (queryParams.filters && selectedValueId != "POSTS")
-      setQueryKeyValue("filters", null);
+      setQueryKeyValue(history, "filters", null);
   });
 
   const handleSearchClear = useCallback(() => {
@@ -450,7 +442,8 @@ const Feed = (props) => {
       postsDispatch({ type: RESET_PAGE, filterType: "" });
     }
     dispatchAction(SET_VALUE, "location", value);
-    if (!value && queryParams.location) setQueryKeyValue("location", null);
+    if (!value && queryParams.location)
+      setQueryKeyValue(history, "location", null);
   };
 
   const handleOption = (label, option) => (e) => {
@@ -475,7 +468,11 @@ const Feed = (props) => {
   const handleChangeType = (e) => {
     const value = e.key;
     if (Object.keys(HELP_TYPE)[queryParams.objective || 0] !== value) {
-      setQueryKeyValue("objective", Object.keys(HELP_TYPE).indexOf(e.key));
+      setQueryKeyValue(
+        history,
+        "objective",
+        Object.keys(HELP_TYPE).indexOf(e.key),
+      );
     }
   };
 
@@ -666,74 +663,9 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (applyFilters) {
-      if (isOnboarding) {
-        delete selectedOptions["providers"];
-        setOnboarding(false);
-      }
       loadPosts();
     }
   }, [selectedOptions, applyFilters, loadPosts]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    // Onboarding
-    if (props.history.location.state) {
-      const handleOnboardingOptions = (option, label) => {
-        optionsDispatch({
-          type: ADD_OPTION,
-          payload: { option: option.value, label },
-        });
-      };
-
-      const {
-        postType,
-        helpType,
-        location,
-        providers,
-      } = props.history.location.state;
-      location && dispatchAction(SET_VALUE, "location", location);
-      const getValue = (postType) => {
-        switch (postType) {
-          case "Requesting help":
-            return "OFFER";
-          case "Offering help":
-            return "REQUEST";
-          default:
-            return "All";
-        }
-      };
-      const value = getValue(postType);
-      if (postType === HELP_TYPE.REQUEST) {
-        // requesting help
-        handleChangeType({ key: value });
-        if (helpType === "medical") {
-          let option = filters[2].options[0];
-          handleOnboardingOptions(option, "type");
-        } else {
-          for (let i = 1; i < filters[2].options.length; ++i) {
-            let option = filters[2].options[i];
-            handleOnboardingOptions(option, "type");
-          }
-        }
-      } else {
-        // offering help
-        handleChangeType({ key: value });
-        if (providers) {
-          let organisationFilter = providers.filter(
-            (option) => option === "As an Organisation",
-          );
-          if (organisationFilter.length > 0) {
-            for (let i = 1; i < filters[1].options.length; ++i) {
-              let option = filters[1].options[i];
-              handleOnboardingOptions(option, "providers");
-            }
-          } else {
-            let option = filters[1].options[0];
-            handleOnboardingOptions(option, "providers");
-          }
-        }
-      }
-    }
-    dispatchAction(SET_VALUE, "applyFilters", true);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 

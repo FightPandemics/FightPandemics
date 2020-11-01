@@ -1,3 +1,4 @@
+import qs from "query-string";
 const INDIVIDUAL_AUTHOR_TYPE = "Individual";
 
 export const authorProfileLink = (post) =>
@@ -39,4 +40,14 @@ export const highlightSearchRegex = (text) => {
     "ig",
   );
   return regex;
+};
+
+export const setQueryKeyValue = (history, key, value) => {
+  let query = qs.parse(history.location.search);
+  if (!value) delete query[key];
+  else query[key] = value;
+  history.push({
+    pathname: history.location.pathname,
+    search: qs.stringify(query),
+  });
 };

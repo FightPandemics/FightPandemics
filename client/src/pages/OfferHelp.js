@@ -26,6 +26,9 @@ import {
   WizardSubmit,
   StyledDiv,
 } from "components/StepWizard";
+import qs from "query-string";
+import filterOptions from "assets/data/filterOptions";
+const filters = Object.values(filterOptions);
 
 const INITIAL_STATE = {
   postType: "Offering help",
@@ -159,7 +162,7 @@ const Step2 = (props) => {
 const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const [transition, setTransition] = useState(false);
-
+  console.log("filters", filters);
   useEffect(() => {
     setTransition(!transition);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -169,9 +172,28 @@ const OfferHelp = withRouter((props) => {
     setState({ ...updatedAnswers });
     if (key === "location") {
       localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
+      let query = {
+        objective: 1, // indexOf "Requesting Help"
+      };
+      if (updatedAnswers.location)
+        query.location = btoa(JSON.stringify(updatedAnswers.location));
+      const selectedFilters = { providers: [] };
+      if (updatedAnswers.providers) {
+        let organisationFilter = updatedAnswers.providers.filter(
+          (option) => option === "As an Organisation",
+        );
+        if (organisationFilter.length > 0) {
+          for (let i = 1; i < filters[1].options.length; ++i) {
+            selectedFilters.providers.push(filters[1].options[i].value);
+          }
+        } else {
+          selectedFilters.providers.push(filters[1].options[0].value);
+        }
+      }
+      query.filters = btoa(JSON.stringify(selectedFilters));
       props.history.push({
         pathname: "/feed",
-        state: updatedAnswers,
+        search: qs.stringify(query),
       });
     }
   };

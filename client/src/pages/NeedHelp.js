@@ -16,6 +16,9 @@ import {
   WizardFormWrapper,
 } from "components/StepWizard";
 import GTM from "constants/gtm-tags";
+import qs from "query-string";
+import filterOptions from "assets/data/filterOptions";
+const filters = Object.values(filterOptions);
 
 const INITIAL_STATE = {
   postType: "Requesting help",
@@ -127,9 +130,23 @@ const NeedHelp = withRouter((props) => {
     setState({ ...updatedAnswers });
     if (key === "location") {
       localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
+      let query = {
+        objective: 2, // indexOf "Offering Help"
+      };
+      if (updatedAnswers.location)
+        query.location = btoa(JSON.stringify(updatedAnswers.location));
+      const selectedFilters = { type: [] };
+      if (updatedAnswers.helpType === "medical") {
+        selectedFilters.type.push(filters[2].options[0].value);
+      } else {
+        for (let i = 1; i < filters[2].options.length; ++i) {
+          selectedFilters.type.push(filters[2].options[i].value);
+        }
+      }
+      query.filters = btoa(JSON.stringify(selectedFilters));
       props.history.push({
         pathname: "/feed",
-        state: updatedAnswers,
+        search: qs.stringify(query),
       });
     }
   };
