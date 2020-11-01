@@ -8,6 +8,7 @@ import moment from "moment";
 import gearIcon from "assets/icons/settings-blue.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import { useTranslation } from "react-i18next";
+import { mq } from "constants/theme";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -36,6 +37,10 @@ const SettingsNextArrow = styled.img`
 `;
 const SettingsTabsSelector = styled(SideChatContainer)`
   height: 5.6rem;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    max-width: 100vw;
+  }
 `;
 
 export const ChatList = ({
@@ -125,14 +130,19 @@ export const ChatList = ({
           }}
           style={{ cursor: "pointer" }}
         >
-          <SettingsBackArrow src={arrow} alt="Back Arrow" /> {t("messaging.settings.header")}
+          <SettingsBackArrow src={arrow} alt="Back Arrow" />{" "}
+          {t("messaging.settings.header")}
         </ChatHeader>
-        <div onClick={() => setToggleMobileChatList(false)}>
+        <div
+          onClick={() => {
+            setToggleMobileChatList(false);
+          }}
+        >
           <SettingsTabsSelector
             className={`${selectedSettingsTab === "BLOCKED" ? "selected" : ""}`}
             onClick={() => setSettingsTab("BLOCKED")}
           >
-           {t("messaging.settings.blocked")}
+            {t("messaging.settings.blocked")}
             <SettingsNextArrow src={arrow} alt="next Arrow" />
           </SettingsTabsSelector>
           <SettingsTabsSelector
@@ -150,7 +160,9 @@ export const ChatList = ({
   };
 
   return (
-    <ChatListContainer toggleMobileChatList={toggleMobileChatList}>
+    <ChatListContainer
+      toggleMobileChatList={toggleMobileChatList && !room?._id}
+    >
       {!isSettingsOpen ? (
         <>
           {!toggleViewRequests && (
@@ -191,7 +203,11 @@ export const ChatList = ({
             </ChatHeader>
           )}
           <div className="chat-bucket">
-            <div onClick={() => setToggleMobileChatList(false)}>
+            <div
+              onClick={() => {
+                setToggleMobileChatList(false);
+              }}
+            >
               <SideChats />
             </div>
           </div>

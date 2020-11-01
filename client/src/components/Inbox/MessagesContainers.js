@@ -42,7 +42,12 @@ export const BubbleContainer = styled.div`
 `;
 export const MessagesContainer = styled.div`
   min-height: calc(100vh - 26rem);
-  height: calc(100vh - 18rem);
+  height: ${(props) => {
+    if (props.status === "pending" || props.blockStatus === "was-blocked") {
+      return "calc(100vh - 26rem);";
+    }
+    return "calc(100vh - 18rem);";
+  }}
   position: relative;
   display: block;
   padding: 0 1rem;
@@ -93,9 +98,19 @@ export const SenderBubble = styled.div`
   letter-spacing: 1px;
   margin-top: 1.4rem;
   word-break: break-word;
+  ${(props) => `${props.editingMode ? "min-height: 8rem;" : ""}`}
+
   &:hover div:first-child,
   .ant-dropdown-open {
     display: block;
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    user-select: none;
+
+    &:hover div.ant-dropdown-trigger {
+      display: none;
+    }
   }
   .message-content-sender {
     padding: 0em 1.4rem 0em 1.4rem;
@@ -107,11 +122,12 @@ export const SenderBubble = styled.div`
     height: 100%;
     left: 0;
     top: 0;
-    border-radius: 1.4rem 1.4rem 0.14rem 1.4rem;
+    border-radius: 1.4rem 0rem 0.14rem 1.4rem;
     padding: 1.12rem;
     overflow: auto;
     color: black;
     max-height: 15rem;
+    min-height: 8rem;
   }
   &.deleted {
     opacity: 0.7;

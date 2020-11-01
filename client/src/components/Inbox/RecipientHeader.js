@@ -82,7 +82,6 @@ const ThreadMenu = styled.img`
   height: 4.5rem;
   cursor: pointer;
   padding: 1rem;
-  background: #f6f7fb;
   border-radius: 100%;
   right: 1rem;
 `;
