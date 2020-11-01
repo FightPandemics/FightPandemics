@@ -75,13 +75,41 @@ const createSearchRegex = (keywords) => {
     "ig",
   );
   return keywordsRegex;
-}
+};
+
+const getSocketIdByUserId = (app, userId) => {
+  return new Promise((resolve) => {
+    app.io
+      .of("/")
+      .adapter.customRequest(
+        { type: "getSocketIdByUserId", userId },
+        (err, replies) => {
+          // replies is an array of element pushed by cb(element) on individual socket.io server
+          // remove empty replies
+          const filtered = replies.filter((reply) => reply != null);
+          resolve(filtered[0]);
+        },
+      );
+  });
+};
+
+const isUserInRoom = (app, threadId, socketId) => {
+  return new Promise((resolve) => {
+    app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
+      if (err) return resolve(false);
+      if (!rooms.includes(threadId)) return resolve(false);
+      return resolve(true);
+    });
+  });
+};
 
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
   getCookieToken,
+  getSocketIdByUserId,
+  isUserInRoom,
   isValidEmail,
   createSearchRegex,
   setElapsedTimeText,

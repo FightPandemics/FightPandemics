@@ -194,7 +194,7 @@ export const InputBox = ({
     }
   }, [inputExpanded, scrollToBottom]);
 
-  const handleSendMgessage = async () => {
+  const handleSendMessage = async () => {
     // mobile editing is done inside the inputBox
     if (isMobile() && editingMessageId) {
       if (!text.replace(/\s/g, "")) return setEditingMessageId(null);
@@ -216,13 +216,13 @@ export const InputBox = ({
 
   const handleClick = async (e) => {
     e.preventDefault();
-    handleSendMgessage();
+    handleSendMessage();
   };
   const handleKeyPress = (e) => {
     if (isMobile()) return;
     if (e.key === "Enter" && !e.shiftKey) e.preventDefault();
     if (e.key === "Enter" && !e.shiftKey && text.length > 0) {
-      handleSendMgessage();
+      handleSendMessage();
     }
   };
   return (

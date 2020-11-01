@@ -821,11 +821,11 @@
       "p1": "The content of the message request would apprear here", 
       "p2": "once you select one from the message requests inbox."
     },
-    "didBlock": "You've blocked {{username}}. unblock to receive messages from them again.",
-    "wasBlocked": "You've been blocked by {{username}}. you can no longer message them.",
-    "acceptPropmt": "Do you want to accept the message request? you cannot reply until you accept the request.",
+    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
     "deleteMessageQuestion": "Delete the message?",
-    "deleteMessageText": "The selected message will be permanently deleted from both yours and the recipient's devices. Are you sure you want to delete?",
+    "deleteMessageText": "The selected message will be permanently deleted from both your device and the recipient's device. Are you sure you want to delete?",
     "blockQuestion": "Block the conversation from {{username}}?",
     "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
     "archiveQuestion": "Archive the conversation?",
@@ -859,6 +859,6 @@
     "to": "To",
     "send": "Send",
     "done": "Done",
-    "close": "close"
+    "close": "Close"
   }
 }
