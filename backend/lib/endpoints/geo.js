@@ -65,8 +65,8 @@ async function routes(app) {
     "/health-facility-places",
     { schema: getHealthFacilityPlacesSchema },
     async (req) => {
-      const { lat, lng } = req.query;
-      const [err, data] = await app.to(getHealthFacilityPlaces(lat, lng));
+      const { lat, lng, type } = req.query;
+      const [err, data] = await app.to(getHealthFacilityPlaces(lat, lng, type));
       if (err) {
         app.log.error(err, "Failed retrieving health facility places");
         throw app.httpErrors.internalServerError();

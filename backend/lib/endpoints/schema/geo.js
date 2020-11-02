@@ -1,6 +1,12 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 
+const HEALTH_FACILITY_TYPES = {
+  HOSPITAL: "hospital",
+  DOCTOR: "doctor",
+  PHARMACY: "pharmacy"
+}
+
 const getAddressPredictionsSchema = {
   querystring: strictSchema()
     .prop("input", S.string().minLength(3).required())
@@ -24,7 +30,8 @@ const getLocationReverseGeocodeSchema = {
 const getHealthFacilityPlacesSchema = {
   querystring: strictSchema()
     .prop("lat", S.number().minimum(0).maximum(90).required())
-    .prop("lng", S.number().minimum(-180).maximum(180).required()),
+    .prop("lng", S.number().minimum(-180).maximum(180).required())
+    .prop("type", S.string().enum(Object.values(HEALTH_FACILITY_TYPES)).default(HEALTH_FACILITY_TYPES.HOSPITAL)),
 };
 
 module.exports = {
@@ -32,4 +39,5 @@ module.exports = {
   getLocationDetailsSchema,
   getLocationReverseGeocodeSchema,
   getHealthFacilityPlacesSchema,
+  HEALTH_FACILITY_TYPES,
 };

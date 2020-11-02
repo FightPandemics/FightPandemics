@@ -1,16 +1,16 @@
 function Place(name, place_id, type, formatted_phone_number, formatted_address, geometry, url, adr_address, business_status, international_phone_number, opening_hours, distance) {      
-    this.name = name;
-    this.place_id  = place_id;
-    this.type = type;
-    this.formatted_phone_number = formatted_phone_number || null;
-    this.formatted_address = formatted_address || null;
-    this.geometry = geometry || null;
-    this.url = url || null;
-    this.adr_address = adr_address || null;
-    this.business_status = business_status || null;
-    this.international_phone_number = international_phone_number || null;
-    this.opening_hours = opening_hours || null;
-    this.distance = distance || null;
+  this.name = name;
+  this.place_id  = place_id;
+  this.type = type;
+  this.formatted_phone_number = formatted_phone_number || null;
+  this.formatted_address = formatted_address || null;
+  this.geometry = geometry || null;
+  this.url = url || null;
+  this.adr_address = adr_address || null;
+  this.business_status = business_status || null;
+  this.international_phone_number = international_phone_number || null;
+  this.opening_hours = opening_hours || null;
+  this.distance = distance || null;
 }
 
 Place.prototype.getName = function() { return this.name; }
@@ -50,28 +50,28 @@ Place.prototype.getDistance = function() { return this.distance; }
 Place.prototype.setDistance = function(distance) { this.distance = distance; }
 
 Place.prototype.equals = function(otherPlace) {
-    return otherPlace.getName() == this.getName()
-        && otherPlace.getPlaceId() == this.getPlaceId()
-        && otherPlace.getType() == this.getType()
-        && otherPlace.getFormattedPhoneNumber() == this.getFormattedPhoneNumber()
-        && otherPlace.getFormattedAddress() == this.getFormattedAddress()
-        && otherPlace.getGeometry() == this.getGeometry()
-        && otherPlace.getUrl() == this.getUrl()
-        && otherPlace.getAdrAddress() == this.getAdrAddress()
-        && otherPlace.getBusinessStatus() == this.getBusinessStatus()
-        && otherPlace.getInternationalPhoneNumber() == this.getInternationalPhoneNumber()
-        && otherPlace.getOpeningHours() == this.getOpeningHours()
-        && otherPlace.getDistance() == this.getDistance();
+  return otherPlace.getName() == this.getName()
+    && otherPlace.getPlaceId() == this.getPlaceId()
+    && otherPlace.getType() == this.getType()
+    && otherPlace.getFormattedPhoneNumber() == this.getFormattedPhoneNumber()
+    && otherPlace.getFormattedAddress() == this.getFormattedAddress()
+    && otherPlace.getGeometry() == this.getGeometry()
+    && otherPlace.getUrl() == this.getUrl()
+    && otherPlace.getAdrAddress() == this.getAdrAddress()
+    && otherPlace.getBusinessStatus() == this.getBusinessStatus()
+    && otherPlace.getInternationalPhoneNumber() == this.getInternationalPhoneNumber()
+    && otherPlace.getOpeningHours() == this.getOpeningHours()
+    && otherPlace.getDistance() == this.getDistance();
 }
 
 Place.prototype.fill = function(newFields) {
-    for (var field in newFields) {
-        if (this.hasOwnProperty(field) && newFields.hasOwnProperty(field)) {
-            if (this[field] !== 'undefined') {
-                this[field] = newFields[field];
-            }
-        }
+  for (let field in newFields) {
+    if (this.hasOwnProperty(field) && newFields.hasOwnProperty(field)) {
+      if (this[field] !== "undefined") {
+        this[field] = newFields[field];
+      }
     }
+  }
 };
 
 module.exports = Place;
