@@ -27,7 +27,12 @@ class Notifier {
       },
       receiver: post.author.id,
       readAt: null,
-      emailSentAt: null,
+      emailSentAt: {
+        biweekly: null,
+        daily: null,
+        instant: null,
+        weekly: null,
+      },
       sharedVia: details.sharedVia,
       commentText: details.commentText,
       triggeredBy: {
