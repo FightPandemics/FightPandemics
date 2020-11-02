@@ -16,6 +16,7 @@ const BaseSelector = ({
     defaultValue={defaultValue}
     filterOptions={filterOptions}
     onChange={onChange}
+    getPopupContainer={() => document.getElementsByClassName('ant-select-selector')[0]}
   >
     {options.map((item) => (
       <Option {...optionProps} key={item.value} value={item.value}>

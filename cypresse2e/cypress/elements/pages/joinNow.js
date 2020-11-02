@@ -1,116 +1,104 @@
 class JoinNow {
+  h4Heading = "h4";
+  image = ".SocialImageSVG";
+  emailField = "#email";
+  passwordField = "#password";
+  confirmPasswordField = "#confirmPassword";
+  passwordEye = "#login-password div:nth-child(2) div img";
+  confirmPasswordEye = "#login-password div:nth-child(3) div img";
+  emailRequired = "#login-password div small";
+  passwordRequired = "#login-password div small";
+  confirmPasswordRequired = "#login-password div small";
+  validEmailRequired = "#login-password div small";
+  passwordLengthRequired = "#login-password div small";
+  passwordCharacterRequired = "#login-password div small";
+  confirmPasswordMatch = "#login-password div small";
+  joinNowButton = "#SU_JN";
+  signInLink = "#SU_SI";
+  joinNowFbButton = "#SU_FB";
+  joinNowGoogleButton = "#SU_GG";
+  joinNowLinkedinButton = "#SU_LN";
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
-    h4Heading = 'h4';
-    image = '.SocialImageSVG';
-    emailField = '#email';
-    passwordField = '#password';
-    confirmPasswordField = '#confirmPassword';
-    passwordEye = '#login-password div:nth-child(2) div img';
-    confirmPasswordEye = '#login-password div:nth-child(3) div img';
-    emailRequired = '#login-password div small';
-    passwordRequired = '#login-password div small';
-    confirmPasswordRequired = '#login-password div small';
-    validEmailRequired = '#login-password div small';
-    passwordLengthRequired = '#login-password div small';
-    passwordCharacterRequired = '#login-password div small';
-    confirmPasswordMatch = '#login-password div small';
-    joinNowButton = '#SU_JN';
-    signInLink = '#SU_SI';
-    joinNowFbButton = '#SU_FB';
-    joinNowGoogleButton = '#SU_GG';
-    joinNowLinkedinButton = '#SU_LN';
+  constructor() {}
 
+  visit() {
+    cy.visit("auth/signup");
+  }
 
-    constructor() { }
+  getH4Heading() {
+    return this.h4Heading;
+  }
 
-    visit() {
-        cy.visit('auth/signup');
-    }
+  getImage() {
+    return this.image;
+  }
 
-    getFpLogo() {
-        return cy.get(this.fpLogo);
-    }
-    
-    getFpLogoLocator() {
-        return this.fpLogo;
-    }
+  getEmailField() {
+    return cy.get(this.emailField);
+  }
 
-    getH4Heading() {
-        return cy.get(this.h4Heading);
-    }
+  getPasswordField() {
+    return cy.get(this.passwordField);
+  }
 
-    getImage() {
-        return cy.get(this.image);
-    }
+  getConfirmPasswordField() {
+    return cy.get(this.confirmPasswordField);
+  }
 
-    getEmailField() {
-        return cy.get(this.emailField);
-    }
+  getPasswordEye() {
+    return cy.get(this.passwordEye);
+  }
 
-    getPasswordField() {
-        return cy.get(this.passwordField);
-    }
+  getConfirmPasswordEye() {
+    return cy.get(this.confirmPasswordEye);
+  }
 
-    getConfirmPasswordField() {
-        return cy.get(this.confirmPasswordField);
-    }
+  getEmailRequired() {
+    return cy.get(this.emailRequired);
+  }
 
-    getPasswordEye() {
-        return cy.get(this.passwordEye);
-    }
+  getPasswordRequired() {
+    return cy.get(this.passwordRequired);
+  }
 
-    getConfirmPasswordEye() {
-        return cy.get(this.confirmPasswordEye);
-    }
+  getConfirmPasswordRequired() {
+    return cy.get(this.confirmPasswordRequired);
+  }
 
-    getEmailRequired() {
-        return cy.get(this.emailRequired);
-    }
+  getValidEmailRequired() {
+    return cy.get(this.validEmailRequired);
+  }
 
-    getPasswordRequired() {
-        return cy.get(this.passwordRequired);
-    }
+  getPasswordLengthRequired() {
+    return cy.get(this.passwordLengthRequired);
+  }
 
-    getConfirmPasswordRequired() {
-        return cy.get(this.confirmPasswordRequired);
-    }
+  getPasswordCharacterRequired() {
+    return cy.get(this.passwordCharacterRequired);
+  }
 
-    getValidEmailRequired() {
-        return cy.get(this.validEmailRequired);
-    }
+  getConfirmPasswordMatch() {
+    return cy.get(this.confirmPasswordMatch);
+  }
 
-    getPasswordLengthRequired() {
-        return cy.get(this.passwordLengthRequired);
-    }
+  getJoinNowButton() {
+    return cy.get(this.joinNowButton);
+  }
 
-    getPasswordCharacterRequired() {
-        return cy.get(this.passwordCharacterRequired);
-    }
+  getSignInLink() {
+    return cy.get(this.signInLink);
+  }
 
-    getConfirmPasswordMatch() {
-        return cy.get(this.confirmPasswordMatch);
-    }
+  getJoinNowFbButton() {
+    return cy.get(this.joinNowFbButton);
+  }
 
-    getJoinNowButton() {
-        return cy.get(this.joinNowButton);
-    }
+  getJoinNowGoogleButton() {
+    return cy.get(this.joinNowGoogleButton);
+  }
 
-    getSignInLink() {
-        return cy.get(this.signInLink);
-    }
-
-    getJoinNowFbButton() {
-        return cy.get(this.joinNowFbButton);
-    }
-
-    getJoinNowGoogleButton() {
-        return cy.get(this.joinNowGoogleButton);
-    }
-
-    getJoinNowLinkedinButton() {
-        return cy.get(this.joinNowLinkedinButton);
-    }
-
+  getJoinNowLinkedinButton() {
+    return cy.get(this.joinNowLinkedinButton);
+  }
 }
 export default JoinNow;

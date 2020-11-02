@@ -20,6 +20,7 @@ const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
     display: flex;
     flex-direction: column;
+    flex-grow: 0.75;
     justify-content: space-between;
     padding: 2rem;
     button {
@@ -84,7 +85,7 @@ const DrawerWrapper = styled(Drawer)`
   }
 `;
 
-const FiltersSidebar = ({ gtmPrefix }) => {
+const FiltersSidebar = ({ gtmPrefix, locationOnly }) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const { handleQuit, handleOnClose, showFilters } = feedContext;
@@ -104,7 +105,7 @@ const FiltersSidebar = ({ gtmPrefix }) => {
         <button onClick={handleOnClose}>
           <BackIcon />
         </button>
-        <FilterAccordion gtmPrefix={gtmPrefix} />
+        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
       </div>
       <div className="confirm-buttons">
         <SubmitButton
