@@ -49,7 +49,7 @@
     "all": "All posts",
     "request": "Requesting help",
     "offer": "Offering help",
-    "quit": "Quit filters",
+    "quit": "Clear filters",
     "apply": "Apply filters",
     "getOrGive": "Offer or request help",
     "filters": {
@@ -123,7 +123,24 @@
       }
     },
     "filterBy": "Filter by",
-    "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>."
+    "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
+    "allPosts": "All posts",
+    "allPeople": "All people",
+    "allOrgs": "All organisations",
+    "noResultsPosts": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
+    "noResultsPeople": "Sorry, there are currently no relevant Individuals available. Please try using a different filter search.",
+    "noResultsOrgs": "Sorry, there are currently no relevant organisations available. Please try using a different filter search.",
+    "search": {
+      "placeholder": "Search Posts, People & Orgs",
+      "keywords": "keywords",
+      "error": "Min. {{length}} characters",
+      "options": {
+        "posts": "Posts",
+        "people": "People",
+        "orgs": "Organisations",
+        "orgsShort": "Orgs"
+      }
+    }
   },
   "post": {
     "create": "Create a post",
@@ -163,8 +180,8 @@
         "day": "For a day"
       },
       "helpTypes": {
-        "request": "Requesting help",
-        "offer": "Offering help"
+        "request": "Looking for help",
+        "offer": "Offering to help"
       }
     },
     "post": "Post",
@@ -227,7 +244,8 @@
       },
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
-      "emailDomainInvalid": "Email domain is invalid"
+      "emailDomainInvalid": "Email domain is invalid",
+      "sendMessage": "Send Message"
     },
     "individual": {
       "email": "Email",
@@ -313,7 +331,8 @@
       "activity": "Activity",
       "editAccount": "Edit Account Information",
       "updateSuccess": "Organisation successfully updated",
-      "orgNameRequired": "Organisation name is required"
+      "orgNameRequired": "Organisation name is required",
+      "global": "Global"
     }
   },
   "auth": {
@@ -346,7 +365,7 @@
     "ourStory": "Our Story",
     "story": "FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it. Telegram and WhatsApp groups were self-organizing in Manuel’s neighborhood, but without personally knowing anyone involved he could not ask them for assistance. Inspired by so many coming together, Manuel launched the project with one mission in mind: to ensure that others could connect in time.",
     "ourCommunity": "Our Community",
-    "community": "We are built by a team of 450+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
+    "community": "We are built by a team of 1200+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
     "ourIdea": "Our Idea",
     "ourSupporters": "Our Supporters",
     "followUs": "Follow us on social media",
@@ -421,7 +440,7 @@
       ],
       [
         "Do I need to be signed up as an individual to create organisation profiles?",
-        "Yes, once you are signed up as an individual, you can create one or multiple organisational profile linked to your account."
+        "Yes, once you are signed up as an individual, you can create one or multiple organisational profile(s) linked to your account."
       ],
       [
         "Will my name/ organisation's name be displayed to other users?",
@@ -682,7 +701,7 @@
     "failedPasswordRecovery": "Password recovery failed, reason:",
     "http": {
       "Bad Request": "Bad Request",
-      "Unauthorized": "Unauthorized",
+      "Unauthorized": "Unauthorised",
       "Payment Required": "Payment Required",
       "Forbidden": "Forbidden",
       "Not Found": "Not Found",
