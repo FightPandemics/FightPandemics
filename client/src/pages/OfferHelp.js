@@ -186,8 +186,6 @@ const OfferHelp = withRouter((props) => {
           for (let i = 1; i < filters[1].options.length; ++i) {
             selectedFilters.providers.push(filters[1].options[i].value);
           }
-        } else {
-          selectedFilters.providers.push(filters[1].options[0].value);
         }
       }
       query.filters = btoa(JSON.stringify(selectedFilters));
