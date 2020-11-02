@@ -19,6 +19,7 @@ import {
   getNotificationsSuccess,
   notificationReceived,
 } from "../actions/wsActions";
+import i18n from "i18next";
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
@@ -274,11 +275,22 @@ export default class SocketManager extends React.Component {
   generateNotificationText = (n) => {
     switch (n.action) {
       case "like":
-        return `${n.triggeredBy.name} liked your post "${n.post.title}"`;
+        return i18n.t("notifications.liked", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+        });
       case "comment":
-        return `${n.triggeredBy.name} commented on your post "${n.post.title}"`;
+        return i18n.t("notifications.commented", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+        });
       case "share":
-        return `${n.triggeredBy.name} shared your post "${n.post.title}" on ${n.sharedVia}`;
+        return i18n.t("notifications.shared", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+          shareMedium: n.sharedVia,
+        });
+        return;
     }
   };
 
@@ -288,7 +300,10 @@ export default class SocketManager extends React.Component {
       let img =
         "https://raw.githubusercontent.com/FightPandemics/FightPandemics/master/images/fp_logo.png";
       var notification = new Notification("You have a new notification!", {
-        body: this.generateNotificationText(notification),
+        body: this.generateNotificationText(notification).replace(
+          /<\/?[^>]+(>|$)/g,
+          "",
+        ),
         icon: img,
       });
     }
