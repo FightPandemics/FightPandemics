@@ -5,6 +5,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import { Avatar } from "components/Avatar";
 import { SettingMenu } from "./SettingMenu";
 import { AccountMenu } from "./AccountMenu";
+import { LanguageMenu } from "./LanguageMenu";
 import { MENU_STATE } from "./constants";
 
 export const ProfileMenu = ({
@@ -73,5 +74,8 @@ const renderMenu = (
       />
     );
   }
-  return <div></div>;
+  if (menuState === MENU_STATE.LANGUAGES) {
+    return <LanguageMenu setMenuState={setMenuState} />;
+  }
+  return <></>;
 };
