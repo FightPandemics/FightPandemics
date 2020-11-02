@@ -40,6 +40,11 @@ const BareHr = styled.hr`
   boarder-width: 0px;
 `;
 
+const NotifyGroup = {
+  instant: "Instant",
+  digest: "Digest",
+};
+
 const NotifyType = {
   message: "message.message",
   like: "post.like",
@@ -48,7 +53,6 @@ const NotifyType = {
 };
 
 const NotifyFreq = {
-  instant: "Instant",
   daily: "Daily",
   weekly: "Weekly",
   biweekly: "Biweekly",
@@ -94,37 +98,68 @@ const NotifyPreferenceInput = ({
       </HelpWrapper>
       <br />
       <NotifyCheckboxWrapper>
-        {Object.entries(NotifyType).map(([key1, label1]) => (
+        {Object.entries(NotifyGroup).map(([key1, label1]) => (
           <HelpWrapper key={key1}>
             <SubLabel key={key1}>{t(label1)}</SubLabel>
-            {Object.entries(NotifyFreq).map(([subkey, sublabel]) => (
-              <div key={(key1, subkey)}>
-                <CheckBoxWrapper key={(key1, subkey)}>
-                  <Controller
-                    key={(key1, subkey)}
-                    as={Checkbox}
-                    defaultValue={currPrefs[key1][subkey]}
-                    name={`notifyPrefs.${key1}.${subkey}`}
-                    control={control}
-                    onChange={([event]) => event.target.checked}
-                    checked={currPrefs[key1][subkey]}
-                    disabled={!checksEnabled}
-                  >
-                    <Label
+            {key1 == "instant" &&
+              Object.entries(NotifyType).map(([subkey, sublabel]) => (
+                <div key={(key1, subkey)}>
+                  <CheckBoxWrapper key={(key1, subkey)}>
+                    <Controller
                       key={(key1, subkey)}
-                      inputColor={
-                        !checksEnabled
-                          ? theme.colors.lightGray
-                          : theme.colors.black
-                      }
+                      as={Checkbox}
+                      defaultValue={currPrefs[key1][subkey]}
+                      name={`notifyPrefs.${key1}.${subkey}`}
+                      control={control}
+                      onChange={([event]) => event.target.checked}
+                      checked={currPrefs[key1][subkey]}
+                      disabled={!checksEnabled}
                     >
-                      {t("profile.common." + subkey)}
-                    </Label>
-                  </Controller>
-                </CheckBoxWrapper>
-                <BareHr />
-              </div>
-            ))}
+                      <Label
+                        key={(key1, subkey)}
+                        inputColor={
+                          !checksEnabled
+                            ? theme.colors.lightGray
+                            : theme.colors.black
+                        }
+                      >
+                        {t(sublabel)}
+                      </Label>
+                    </Controller>
+                  </CheckBoxWrapper>
+                  <BareHr />
+                </div>
+              ))}
+
+            {key1 == "digest" &&
+              Object.entries(NotifyFreq).map(([subkey, sublabel]) => (
+                <div key={(key1, subkey)}>
+                  <CheckBoxWrapper key={(key1, subkey)}>
+                    <Controller
+                      key={(key1, subkey)}
+                      as={Checkbox}
+                      defaultValue={currPrefs[key1][subkey]}
+                      name={`notifyPrefs.${key1}.${subkey}`}
+                      control={control}
+                      onChange={([event]) => event.target.checked}
+                      checked={currPrefs[key1][subkey]}
+                      disabled={!checksEnabled}
+                    >
+                      <Label
+                        key={(key1, subkey)}
+                        inputColor={
+                          !checksEnabled
+                            ? theme.colors.lightGray
+                            : theme.colors.black
+                        }
+                      >
+                        {t("profile.common." + subkey)}
+                      </Label>
+                    </Controller>
+                  </CheckBoxWrapper>
+                  <BareHr />
+                </div>
+              ))}
           </HelpWrapper>
         ))}
       </NotifyCheckboxWrapper>

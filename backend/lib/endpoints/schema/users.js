@@ -49,36 +49,19 @@ const urlsSchema = S.object()
 
 const notifyPreferenceSchema = strictSchema()
   .prop(
-    "message",
+    "instant",
     S.object()
-      .prop("instant", S.boolean().default(true))
-      .prop("daily", S.boolean().default(false))
-      .prop("weekly", S.boolean().default(false))
-      .prop("biweekly", S.boolean().default(false)),
+      .prop("like", S.boolean().default(true))
+      .prop("comment", S.boolean().default(true))
+      .prop("share", S.boolean().default(true))
+      .prop("message", S.boolean().default(true)),
   )
   .prop(
-    "like",
+    "digest",
     S.object()
-      .prop("instant", S.boolean().default(false))
-      .prop("daily", S.boolean().default(false))
+      .prop("daily", S.boolean().default(true))
       .prop("weekly", S.boolean().default(true))
-      .prop("biweekly", S.boolean().default(false)),
-  )
-  .prop(
-    "comment",
-    S.object()
-      .prop("instant", S.boolean().default(false))
-      .prop("daily", S.boolean().default(true))
-      .prop("weekly", S.boolean().default(false))
-      .prop("biweekly", S.boolean().default(false)),
-  )
-  .prop(
-    "share",
-    S.object()
-      .prop("instant", S.boolean().default(false))
-      .prop("daily", S.boolean().default(true))
-      .prop("weekly", S.boolean().default(false))
-      .prop("biweekly", S.boolean().default(false)),
+      .prop("biweekly", S.boolean().default(true)),
   );
 
 const createUserSchema = {
