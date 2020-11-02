@@ -677,6 +677,7 @@ const Feed = (props) => {
         stopIndex >= feedPosts.length &&
         feedPosts.length
       ) {
+        dispatchAction(SET_VALUE, "applyFilters", true);
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
