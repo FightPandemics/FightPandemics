@@ -1,1 +1,3 @@
-export * from "./DrawerMenu";
+import DrawerMenu from "./DrawerMenu";
+
+export default DrawerMenu;

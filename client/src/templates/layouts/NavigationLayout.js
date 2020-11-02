@@ -32,7 +32,7 @@ import {
 } from "hooks/reducers/feedbackReducers";
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
-import { DrawerMenu } from "components/DrawerMenu";
+import DrawerMenu from "components/DrawerMenu";
 
 const { royalBlue } = theme.colors;
 
@@ -68,7 +68,7 @@ const NavigationLayout = (props) => {
     user,
     organisationId,
   } = props;
-  const [drawerOpened, setDrawerOpened] = useState(true);
+  const [drawerOpened, setDrawerOpened] = useState(false);
 
   const TEXT_FEEDBACK = [
     {
@@ -321,6 +321,7 @@ const NavigationLayout = (props) => {
       authLoading={authLoading}
       isAuthenticated={isAuthenticated}
       dispatchAction={dispatchAction}
+      organisationId={organisationId}
     />
   );
 
