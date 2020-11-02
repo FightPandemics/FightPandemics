@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Avatar, Input, Tooltip, Space } from "antd";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,7 @@ import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
-import { selectOrganisationId } from "reducers/session";
+import { selectIsAuthor } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -39,13 +39,7 @@ const TextInput = styled(TextArea)`
   }
 `;
 
-const NestedComments = ({
-  user,
-  isAuthenticated,
-  comment,
-  dispatchPostAction,
-  deleteComment,
-}) => {
+const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
@@ -54,7 +48,7 @@ const NestedComments = ({
   const [showReply, setShowReply] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
-  const organisationId = useSelector(selectOrganisationId);
+  const isAuthor = useSelector(selectIsAuthor);
 
   const renderAvatar = (
     <Avatar
@@ -155,7 +149,7 @@ const NestedComments = ({
     const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
-    if (isAuthenticated && comment.author.id === (organisationId || user.id)) {
+    if (isAuthor(comment)) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
 
       try {
@@ -208,7 +202,7 @@ const NestedComments = ({
 
   const editCommentContent = (
     <>
-      {isAuthenticated && comment.author.id === (organisationId || user.id) && (
+      {isAuthor(comment) && (
         <>
           <TextInput
             onChange={handleCommentEdit}
@@ -233,9 +227,7 @@ const NestedComments = ({
   const renderCommentContent = (
     <Space direction="vertical">
       <span>{editedComment}</span>
-      {isAuthenticated && comment.author.id === (organisationId || user.id) && (
-        <span>{commentActions}</span>
-      )}
+      {isAuthor(comment) && <span>{commentActions}</span>}
     </Space>
   );
 
@@ -247,10 +239,14 @@ const NestedComments = ({
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
-                  {t(`relativeTime.${comment?.elapsedTimeText.created.unit}WithCount`, {
-                    count: comment?.elapsedTimeText.created.count,
-                  })}
-                  {comment?.elapsedTimeText.isEdited && (` · ${t('post.edited')}`)}
+                  {t(
+                    `relativeTime.${comment?.elapsedTimeText.created.unit}WithCount`,
+                    {
+                      count: comment?.elapsedTimeText.created.count,
+                    },
+                  )}
+                  {comment?.elapsedTimeText.isEdited &&
+                    ` · ${t("post.edited")}`}
                 </span>
               </Tooltip>
             </>
@@ -268,10 +264,4 @@ const NestedComments = ({
   );
 };
 
-const mapStateToProps = ({ session }) => {
-  return {
-    isAuthenticated: session.isAuthenticated,
-  };
-};
-
-export default connect(mapStateToProps)(NestedComments);
+export default NestedComments;

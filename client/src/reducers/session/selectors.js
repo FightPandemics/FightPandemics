@@ -7,3 +7,14 @@ export const selectOrganisationId = (state) => {
 };
 
 export const selectUser = (state) => state.session.user;
+
+export const selectActorId = (state) => {
+  const organisationId = selectOrganisationId(state);
+  const user = selectUser(state);
+  return organisationId || user?.id || user?._id;
+};
+
+export const selectIsAuthor = (state) => (postOrComment) => {
+  const actorId = selectActorId(state);
+  return postOrComment.author.id === actorId;
+};

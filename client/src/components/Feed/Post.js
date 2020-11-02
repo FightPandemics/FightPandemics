@@ -40,7 +40,7 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
-import { selectOrganisationId } from "reducers/session";
+import { selectActorId, selectIsAuthor } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -103,7 +103,8 @@ const Post = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
-  const organisationId = useSelector(selectOrganisationId);
+  const isAuthor = useSelector(selectIsAuthor);
+  const actorId = useSelector(selectActorId);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
@@ -203,7 +204,7 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments`;
     const totalCommentCountEndPoint = `/api/posts/${postId}`;
     const newComment = {
-      actorId: (organisationId || user.id),
+      actorId,
       content: comment,
     };
 
@@ -255,10 +256,7 @@ const Post = ({
     let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
-    console.log(comment.author.id,'comment.author.id')
-    console.log(organisationId,'organisationId')
-    console.log(user.id,'user.id')
-    if (isAuthenticated && comment.author.id === (organisationId || user.id)) {
+    if (isAuthor(comment)) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
       const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
