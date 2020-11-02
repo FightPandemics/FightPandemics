@@ -24,7 +24,6 @@ export const ProfileMenu = ({
 }) => {
   const { t } = useTranslation();
   const feedToPath = isAuthenticated ? { pathname: "/feed", user } : "/feed";
-  // const languageMenu = renderLanguageMenu();
   return (
     <>
       {isAuthenticated && (
@@ -53,7 +52,7 @@ export const ProfileMenu = ({
           {t("common.switchAccount")}
         </NavItem>
       )}
-      <NavItem>
+      <NavItem onClick={() => setMenuState(MENU_STATE.LANGUAGES)}>
         <CustomSvgIcon src={LanguageIcon} />
         {t("common.language")}
       </NavItem>

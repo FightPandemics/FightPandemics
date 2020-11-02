@@ -452,11 +452,13 @@ const Feed = (props) => {
     }
   }, [
     page,
+    organisationId,
+    dispatch,
     selectedOptions,
     location,
     selectedType,
-    applyFilters,
-    organisationId,
+    prevTotalPostCount,
+    postsList,
   ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
