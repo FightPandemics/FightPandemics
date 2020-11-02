@@ -128,7 +128,7 @@ const Unsubscribe = (props) => {
         setMessageError(message);
       }
     })();
-  }, [config, currPrefs, disabledPrefs, setValue]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <LoginContainer>
