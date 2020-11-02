@@ -72,7 +72,9 @@ export default class SearchCategories extends React.Component {
           GTM.search[value.id.toLowerCase()]
         }
       >
-        {!isObject ? (value || "").toString() : value[displayValue]}
+        {this.props.t(
+          !isObject ? (value || "").toString() : value[displayValue],
+        )}
       </Chip>
     ));
   }

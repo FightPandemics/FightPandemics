@@ -298,7 +298,7 @@ export default class FeedNavSearch extends React.Component {
     const { isObject, displayValue } = this.props;
     if (isObject) {
       options = options.filter((i) =>
-        this.matchValues(i[displayValue], inputValue),
+        this.matchValues(this.props.t(i[displayValue]), inputValue),
       );
     } else {
       options = options.filter((i) => this.matchValues(i, inputValue));
@@ -339,7 +339,9 @@ export default class FeedNavSearch extends React.Component {
         id={getGTMId(option)}
       >
         <span id={getGTMId(option)}>
-          {isObject ? option[displayValue] : (option || "").toString()}
+          {this.props.t(
+            isObject ? option[displayValue] : (option || "").toString(),
+          )}
         </span>
         <span id={getGTMId(option)}>
           {this.props.t("feed.search.keywords")}
@@ -409,11 +411,13 @@ export default class FeedNavSearch extends React.Component {
     const { selectedValue } = this.state;
     return selectedValue.map((value, index) => (
       <Chip key={index} ref={this.chip} onClick={() => this.mobileRepick()}>
-        {!isObject
-          ? (value || "").toString()
-          : value["mobile_display"]
-          ? value["mobile_display"]
-          : value[displayValue]}
+        {this.props.t(
+          !isObject
+            ? (value || "").toString()
+            : value["mobile_display"]
+            ? value["mobile_display"]
+            : value[displayValue],
+        )}
       </Chip>
     ));
   }
