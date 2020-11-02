@@ -191,7 +191,7 @@ const menu = (notifications, t) => {
         <a style={{ color: "white" }}>{t("notifications.header")}</a>
         <Arrow />
         <Link
-          to="/edit-account"
+          to="/edit-notifications"
           style={{ color: "white", position: "relative" }}
         >
           <img src={gear} />
