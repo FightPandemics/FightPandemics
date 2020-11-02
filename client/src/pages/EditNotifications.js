@@ -39,10 +39,8 @@ function EditNotifications(props) {
   const { firstName, lastName } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
-    message: { instant: false, daily: false, weekly: false, biweekly: false },
-    like: { instant: false, daily: false, weekly: false, biweekly: false },
-    comment: { instant: false, daily: false, weekly: false, biweekly: false },
-    share: { instant: false, daily: false, weekly: false, biweekly: false },
+    instant: { message: false, like: false, comment: false, share: false },
+    digest: { daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
@@ -80,7 +78,7 @@ function EditNotifications(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [currPrefs, disabledPrefs, setValue, userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (

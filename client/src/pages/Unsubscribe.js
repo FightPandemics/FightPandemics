@@ -89,10 +89,8 @@ const Unsubscribe = (props) => {
   };
 
   const disabledPrefs = {
-    message: { instant: false, daily: false, weekly: false, biweekly: false },
-    like: { instant: false, daily: false, weekly: false, biweekly: false },
-    comment: { instant: false, daily: false, weekly: false, biweekly: false },
-    share: { instant: false, daily: false, weekly: false, biweekly: false },
+    instant: { message: false, like: false, comment: false, share: false },
+    digest: { daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
@@ -128,7 +126,7 @@ const Unsubscribe = (props) => {
         setMessageError(message);
       }
     })();
-  }, []);
+  }, [config, currPrefs, disabledPrefs, setValue]);
 
   return (
     <LoginContainer>
