@@ -335,6 +335,15 @@ const Feed = (props) => {
     } else {
       optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     }
+    if (query.objective) {
+      optionsDispatch({
+        type: ADD_OPTION,
+        payload: {
+          option: filters[3].options[query.objective - 1].value,
+          label: "lookingFor",
+        },
+      });
+    }
     setQueryParams(query);
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -350,13 +359,38 @@ const Feed = (props) => {
     if (location) {
       setQueryKeyValue(history, "location", btoa(JSON.stringify(location)));
     }
+    if (applyFilters && selectedOptions.lookingFor?.length) {
+      const selectedType =
+        (selectedOptions["lookingFor"][1] ||
+          selectedOptions["lookingFor"][0]) === "Request Help"
+          ? "REQUEST"
+          : "OFFER";
+      setQueryKeyValue(
+        history,
+        "objective",
+        Object.keys(HELP_TYPE).indexOf(selectedType),
+      );
+      if (selectedOptions.lookingFor.length > 1) {
+        optionsDispatch({
+          type: REMOVE_OPTION,
+          payload: {
+            option: selectedOptions.lookingFor[0],
+            label: "lookingFor",
+          },
+        });
+        return;
+      }
+    }
     if (newFiltersLength) {
-      if (applyFilters || oldFiltersLength > newFiltersLength)
+      if (applyFilters || oldFiltersLength > newFiltersLength) {
+        const selectedFilters = selectedOptions;
+        delete selectedFilters["lookingFor"];
         return setQueryKeyValue(
           history,
           "filters",
-          btoa(JSON.stringify(selectedOptions)),
+          btoa(JSON.stringify(selectedFilters)),
         );
+      }
     } else if (queryParams.filters && !newFiltersLength)
       return setQueryKeyValue(history, "filters", null);
   }, [applyFilters, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -449,10 +483,12 @@ const Feed = (props) => {
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-    return optionsDispatch({
+    optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
     });
+    if (hasOption && label === "lookingFor")
+      setQueryKeyValue(history, "objective", null);
   };
 
   const handleCreatePost = () => {

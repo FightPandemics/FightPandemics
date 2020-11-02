@@ -68,7 +68,6 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     handleOption,
     location,
     selectedOptions,
-    selectedType,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -112,9 +111,8 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
                   onClick={handleOption(filter.label, value)}
                   className={
                     "tag-selectable " +
-                    ((selectedOptions[filter.label] &&
-                      selectedOptions[filter.label].includes(value)) ||
-                      value.toLowerCase().includes(selectedType?.toLowerCase())
+                    (selectedOptions[filter.label] &&
+                    selectedOptions[filter.label].includes(value)
                       ? "tag-selected"
                       : "")
                   }
