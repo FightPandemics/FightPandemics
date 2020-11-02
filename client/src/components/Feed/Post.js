@@ -40,7 +40,7 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
-import { selectActorId, selectIsAuthor } from "reducers/session";
+import { selectActorId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -103,7 +103,6 @@ const Post = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
-  const isAuthor = useSelector(selectIsAuthor);
   const actorId = useSelector(selectActorId);
 
   const AvatarName =
@@ -256,7 +255,7 @@ const Post = ({
     let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
-    if (isAuthor(comment)) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
       const totalCommentCountEndPoint = `/api/posts/${postId}`;
 

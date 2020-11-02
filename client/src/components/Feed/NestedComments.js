@@ -14,7 +14,7 @@ import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
-import { selectIsAuthor } from "reducers/session";
+import { selectActorId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -48,7 +48,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const [showReply, setShowReply] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
-  const isAuthor = useSelector(selectIsAuthor);
+  const actorId = useSelector(selectActorId);
 
   const renderAvatar = (
     <Avatar
@@ -149,7 +149,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
     const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
-    if (isAuthor(comment)) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
 
       try {
@@ -202,7 +202,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
 
   const editCommentContent = (
     <>
-      {isAuthor(comment) && (
+      {actorId === comment.author.id && (
         <>
           <TextInput
             onChange={handleCommentEdit}
@@ -227,7 +227,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const renderCommentContent = (
     <Space direction="vertical">
       <span>{editedComment}</span>
-      {isAuthor(comment) && <span>{commentActions}</span>}
+      {actorId === comment.author.id && <span>{commentActions}</span>}
     </Space>
   );
 
