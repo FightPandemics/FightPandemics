@@ -8,7 +8,10 @@ class NotificationService {
   constructor(config) {
     this.mailer = new Mailer(config.mailService);
     this.dbHelper = new DatabaseHelper(config.database);
-    this.templateBuilder = new TemplateBuilder(config.baseUrl, config.unsubscribeTokenKey);
+    this.templateBuilder = new TemplateBuilder(
+      config.baseUrl,
+      config.unsubscribeTokenKey,
+    );
   }
 
   async initializeDb(cachedDb = null) {
@@ -37,7 +40,6 @@ class NotificationService {
       try {
         log.debug(`sending email for notification ${payload.notificationId}`);
         await this.mailer.send(payload.body);
-        await this.dbHelper.setEmailSentAt(payload.notificationId);
       } catch (error) {
         // Do not throw error if one email fails to send; continue processing remaining emails.
         log.error(

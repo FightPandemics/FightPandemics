@@ -27,14 +27,14 @@ class DatabaseHelper {
     return this._findDigestNotifications(frequency);
   }
 
-  async setEmailSentAt(notificationId) {
-    return this.db.collection("notifications").updateOne(
+  async setEmailSentAt(notificationIds, frequency) {
+    return this.db.collection("notifications").updateMany(
       {
-        _id: notificationId,
+        _id: { $in: notificationIds },
       },
       {
         $set: {
-          emailSentAt: new Date(),
+          [`emailSentAt.${frequency}`]: new Date(),
         },
       },
     );
@@ -45,7 +45,7 @@ class DatabaseHelper {
       {
         $match: {
           readAt: null,
-          emailSentAt: null,
+          "emailSentAt.instant": null,
           createdAt: {
             $lt: DateHelper.subtractMinutes(
               new Date(),
@@ -68,7 +68,13 @@ class DatabaseHelper {
         },
       },
     ]);
-    return cursor.toArray();
+    const notifications = cursor.toArray();
+    // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
+    await this.dbHelper.setEmailSentAt(
+      notifications.map((notification) => notification._id),
+      EmailFrequency.INSTANT,
+    );
+    return notifications;
   }
 
   async _findDigestNotifications(frequency) {
@@ -86,6 +92,7 @@ class DatabaseHelper {
       .aggregate([
         {
           $match: {
+            [`emailSentAt.${frequency}`]: null,
             createdAt: {
               $gt: DateHelper.subtractDays(new Date(), intervalDays),
             },
@@ -115,6 +122,7 @@ class DatabaseHelper {
       ]);
 
     const digests = [];
+    const processedNotificationIds = [];
 
     while (await notificationsByReceiverCursor.hasNext()) {
       const receiver = await notificationsByReceiverCursor.next();
@@ -125,7 +133,16 @@ class DatabaseHelper {
         posts: topThreePosts,
         receiver: receiver.receiver,
       });
+      for (const notification of receiver.notifications) {
+        processedNotificationIds.push(notification._id);
+      }
     }
+
+    // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
+    await this.dbHelper.setEmailSentAt(
+      notifications.map((notification) => notification._id),
+      frequency,
+    );
 
     return digests;
   }
