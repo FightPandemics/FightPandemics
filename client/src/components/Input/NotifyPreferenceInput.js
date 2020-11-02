@@ -76,7 +76,7 @@ const NotifyPreferenceInput = ({
       setCurrPrefs({ ...currPrefs, ...disabledPrefs });
     }
     setChecksEnabled(switchOnOff);
-  }, [currPrefs, disabledPrefs, setCurrPrefs, setValue, switchOnOff]);
+  }, [switchOnOff]);
 
   return (
     <div>
