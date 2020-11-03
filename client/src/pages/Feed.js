@@ -326,23 +326,24 @@ const Feed = (props) => {
       query.location = JSON.parse(atob(query.location));
       dispatchAction(SET_VALUE, "location", query.location);
     } else dispatchAction(SET_VALUE, "location", "");
-    if (query.filters) {
-      query.filters = JSON.parse(atob(query.filters));
+    if (query.filters || query.objective) {
+      let selectedFilters = {};
+      if (query.filters) {
+        if (query.s_category) return setQueryKeyValue(history, "filters", null);
+        query.filters = JSON.parse(atob(query.filters));
+        selectedFilters = query.filters;
+      }
+      if (query.objective) {
+        selectedFilters["lookingFor"] = [
+          filters[3].options[query.objective - 1]?.value,
+        ];
+      }
       optionsDispatch({
         type: SET_OPTIONS,
-        payload: { option: query.filters },
+        payload: { option: selectedFilters },
       });
     } else {
       optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
-    }
-    if (query.objective) {
-      optionsDispatch({
-        type: ADD_OPTION,
-        payload: {
-          option: filters[3].options[query.objective - 1].value,
-          label: "lookingFor",
-        },
-      });
     }
     setQueryParams(query);
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -383,12 +384,10 @@ const Feed = (props) => {
     }
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
-        const selectedFilters = selectedOptions;
-        delete selectedFilters["lookingFor"];
         return setQueryKeyValue(
           history,
           "filters",
-          btoa(JSON.stringify(selectedFilters)),
+          btoa(JSON.stringify(selectedOptions)),
         );
       }
     } else if (queryParams.filters && !newFiltersLength)
@@ -487,8 +486,16 @@ const Feed = (props) => {
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
     });
-    if (hasOption && label === "lookingFor")
+    if (hasOption && label === "lookingFor") {
+      const selectedFilters = selectedOptions;
+      delete selectedFilters["lookingFor"];
+      setQueryKeyValue(
+        history,
+        "filters",
+        btoa(JSON.stringify(selectedFilters)),
+      );
       setQueryKeyValue(history, "objective", null);
+    }
   };
 
   const handleCreatePost = () => {
