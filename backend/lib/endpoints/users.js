@@ -1,8 +1,9 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken, getUserById } = require("../utils");
+const { getCookieToken, createSearchRegex, getUserById } = require("../utils");
 const {
   getUserByIdSchema,
+  getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
   updateUserSchema,
