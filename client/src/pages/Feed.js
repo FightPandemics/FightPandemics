@@ -338,6 +338,8 @@ const Feed = (props) => {
         selectedFilters["lookingFor"] = [
           filters[3].options[query.objective - 1]?.value,
         ];
+      } else {
+        delete selectedFilters["lookingFor"];
       }
       optionsDispatch({
         type: SET_OPTIONS,
@@ -393,7 +395,7 @@ const Feed = (props) => {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
         return setQueryKeyValue(
           history,
-          "push",
+          "replace",
           "filters",
           btoa(JSON.stringify(selectedOptions)),
         );
