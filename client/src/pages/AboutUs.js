@@ -380,7 +380,7 @@ const AboutUs = () => {
             </AboutUsLink>
           </SocialContainer>
         </FlexBox>
-        <FlexBox direction="column">
+        <FlexBox direction="column" justify="center">
           <p>
             <span>{t("hashtag")}</span>
           </p>
