@@ -1,9 +1,8 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken, createSearchRegex } = require("../utils");
+const { getCookieToken, getUserById } = require("../utils");
 const {
   getUserByIdSchema,
-  getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
   updateUserSchema,
@@ -80,7 +79,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -203,45 +202,9 @@ async function routes(app) {
 
   app.get("/current", { preValidation: [app.authenticate] }, async (req) => {
     const { userId } = req;
-    const [userErr, user] = await app.to(
-      User.findById(userId).populate("organisations"),
-    );
-    if (userErr) {
-      req.log.error(userErr, "Failed retrieving user");
-      throw app.httpErrors.internalServerError();
-    } else if (user === null) {
-      req.log.error(userErr, "User does not exist");
-      throw app.httpErrors.notFound();
-    }
-
-    const {
-      _id: id,
-      about,
-      email,
-      firstName,
-      hide,
-      lastName,
-      location,
-      needs,
-      objectives,
-      organisations,
-      urls,
-      photo,
-    } = user;
-    return {
-      about,
-      email,
-      firstName,
-      hide,
-      id,
-      lastName,
-      location,
-      needs,
-      objectives,
-      organisations,
-      photo,
-      urls,
-    };
+    const dbUser = await getUserById(app, userId);
+    const { user } = dbUser;
+    return user;
   });
 
   app.patch(
@@ -398,7 +361,10 @@ async function routes(app) {
           ),
         );
         if (commentErr) {
-          req.log.error(commentErr, "Failed updating author photo refs at comments");
+          req.log.error(
+            commentErr,
+            "Failed updating author photo refs at comments",
+          );
         }
 
         return {
