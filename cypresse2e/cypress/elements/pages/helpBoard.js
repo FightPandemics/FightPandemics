@@ -1,54 +1,48 @@
-class HelpBoard{
+class HelpBoard {
+  addPostButton = "button > img#HB_CP";
+  noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
+  addPostLink = "a#HB_CP";
+  firstPostOnHelpBoard =
+    "div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)";
+  helpBoard = "div.feed-posts";
 
-    helpBoardPageTitle = 'h1';
-    addPostButton = 'button > img#HB_CP';
-    noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
-    addPostLink = 'a#HB_CP';
-    firstPostOnHelpBoard = 'div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)';
-    helpBoard = 'div.feed-posts';
+  constructor() {}
 
-    constructor() { }
+  visit() {
+    cy.visit("feed");
+  }
 
-    visit() {
-        cy.visit('feed');
-    }
+  getAddPostButton() {
+    return cy.get(this.addPostButton);
+  }
 
-    getHelpBoardPageTitleLocator() {
-        return this.helpBoardPageTitle;
-    }
+  getNoPostsAvailableDiv() {
+    return this.noPostsAvailableTextElement;
+  }
 
-    getAddPostButton(){
-        return cy.get(this.addPostButton);
-    }
+  getAddPostLink() {
+    return this.addPostLink;
+  }
 
-    getNoPostsAvailableDiv(){
-        return this.noPostsAvailableTextElement;
-    }
+  getAddPostLinkElement() {
+    return cy.get(this.addPostLink);
+  }
 
-    getAddPostLink(){
-        return this.addPostLink;
-    }
+  getNoPostsAvailableTextElement() {
+    return cy.xpath(this.noPostsAvailableTextElement);
+  }
 
-    getAddPostLinkElement(){
-        return cy.get(this.addPostLink);
-    }
-    
-    getNoPostsAvailableTextElement(){
-        return cy.xpath(this.noPostsAvailableTextElement);
-    }
+  getFirstPostOnHelpBoard() {
+    return cy.get(this.getFirstPostOnHelpBoard);
+  }
 
-    getFirstPostOnHelpBoard(){
-        return cy.get(this.getFirstPostOnHelpBoard);
-    }
+  getFirstPostOnHelpBoardSelector() {
+    return this.firstPostOnHelpBoard;
+  }
 
-    getFirstPostOnHelpBoardSelector(){
-        return this.firstPostOnHelpBoard;
-    }
-
-    getHelpBoardSelector(){
-        return this.helpBoard;
-    }
-
+  getHelpBoardSelector() {
+    return this.helpBoard;
+  }
 }
 
 export default HelpBoard;

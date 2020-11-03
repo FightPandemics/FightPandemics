@@ -15,7 +15,7 @@ const MIN_KEYWORD_CHARS = 2;
 
 const StyledIcon = styled(SvgIcon)`
   line-height: 1.8rem;
-  vertical-align: bottom;
+  vertical-align: sub;
   height: 100%;
   margin: 0 0.7rem 0 1.4rem;
 `;
@@ -51,11 +51,15 @@ const SearchContainer = styled.span`
     background: transparent;
     width: calc(100% - 5rem);
     color: black;
+    vertical-align: top;
     &:focus {
       outline: none;
     }
     &::placeholder {
       color: #bdbdbd;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      vertical-align: text-bottom;
     }
   }
 `;
@@ -106,15 +110,15 @@ const SearchWrapper = styled.div`
 `;
 const Chip = styled.span`
   padding: 2px 5px;
-  margin: 0 10px 0 0;
   color: ${colors.royalBlue};
   border-radius: 5px;
-  display: inline-flex;
   align-items: center;
   font-size: 1.5rem;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 13rem;
+  max-width: 7.4rem;
+  display: inline-block;
+  vertical-align: text-bottom;
   text-overflow: ellipsis;
   .singleChip {
     background: none;
@@ -312,7 +316,7 @@ class FeedNavSearch extends React.Component {
     const { isObject, displayValue } = this.props;
     if (isObject) {
       options = options.filter((i) =>
-        this.matchValues(i[displayValue], inputValue),
+        this.matchValues(this.props.t(i[displayValue]), inputValue),
       );
     } else {
       options = options.filter((i) => this.matchValues(i, inputValue));
@@ -353,7 +357,9 @@ class FeedNavSearch extends React.Component {
         id={getGTMId(option)}
       >
         <span id={getGTMId(option)}>
-          {isObject ? option[displayValue] : (option || "").toString()}
+          {this.props.t(
+            isObject ? option[displayValue] : (option || "").toString(),
+          )}
         </span>
         <span id={getGTMId(option)}>
           {this.props.t("feed.search.keywords")}
@@ -423,11 +429,13 @@ class FeedNavSearch extends React.Component {
     const { selectedValue } = this.state;
     return selectedValue.map((value, index) => (
       <Chip key={index} ref={this.chip} onClick={() => this.mobileRepick()}>
-        {!isObject
-          ? (value || "").toString()
-          : value["mobile_display"]
-          ? value["mobile_display"]
-          : value[displayValue]}
+        {this.props.t(
+          !isObject
+            ? (value || "").toString()
+            : value["mobile_display"]
+            ? value["mobile_display"]
+            : value[displayValue],
+        )}
       </Chip>
     ));
   }
