@@ -188,7 +188,8 @@ const OfferHelp = withRouter((props) => {
           }
         }
       }
-      query.filters = btoa(JSON.stringify(selectedFilters));
+      if (selectedFilters.providers.length)
+        query.filters = btoa(JSON.stringify(selectedFilters));
       props.history.push({
         pathname: "/feed",
         search: qs.stringify(query),
