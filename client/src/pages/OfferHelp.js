@@ -162,7 +162,7 @@ const Step2 = (props) => {
 const OfferHelp = withRouter((props) => {
   const [state, setState] = useState(INITIAL_STATE);
   const [transition, setTransition] = useState(false);
-  console.log("filters", filters);
+
   useEffect(() => {
     setTransition(!transition);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
