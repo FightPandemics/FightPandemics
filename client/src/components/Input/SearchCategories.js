@@ -62,6 +62,7 @@ class SearchCategories extends React.Component {
     this.setState({ selectedValue: item });
     setQueryKeyValue(
       this.props.history,
+      "push",
       "s_category",
       this.props.options.findIndex((option) => option.id === item?.id) || null,
     );

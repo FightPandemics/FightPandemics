@@ -277,15 +277,17 @@ class FeedNavSearch extends React.Component {
       return this.setState({ tooShort: true });
     }
     if (isMobile) {
-      setQueryKeyValue(this.props.history, "s_keyword", inputValue);
+      setQueryKeyValue(this.props.history, "replace", "s_keyword", inputValue);
       setQueryKeyValue(
         this.props.history,
+        "push",
         "s_category",
         options.findIndex((a) => a.id == selectedValue[0]?.id),
       );
       this.props.onSearchSubmit(selectedValue[0]?.id); // this will update helpTypes
       return;
-    } else setQueryKeyValue(this.props.history, "s_keyword", inputValue);
+    } else
+      setQueryKeyValue(this.props.history, "push", "s_keyword", inputValue);
   }
 
   onKeyClick(e) {
@@ -306,8 +308,8 @@ class FeedNavSearch extends React.Component {
     this.resetSelectedValue();
     this.setState({ tooShort: false });
     this.searchBox.current.blur();
-    setQueryKeyValue(this.props.history, "s_keyword", null);
-    setQueryKeyValue(this.props.history, "s_category", null);
+    setQueryKeyValue(this.props.history, "replace", "s_keyword", null);
+    setQueryKeyValue(this.props.history, "push", "s_category", null);
     if (this.props.isMobile) this.props.onSearchClear();
   }
 

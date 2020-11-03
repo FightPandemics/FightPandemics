@@ -359,7 +359,12 @@ const Feed = (props) => {
       ...(selectedOptions?.providers || []),
     ].length;
     if (location) {
-      setQueryKeyValue(history, "location", btoa(JSON.stringify(location)));
+      setQueryKeyValue(
+        history,
+        "push",
+        "location",
+        btoa(JSON.stringify(location)),
+      );
     }
     if (applyFilters && selectedOptions.lookingFor?.length) {
       const selectedType =
@@ -369,6 +374,7 @@ const Feed = (props) => {
           : "OFFER";
       setQueryKeyValue(
         history,
+        "replace",
         "objective",
         Object.keys(HELP_TYPE).indexOf(selectedType),
       );
@@ -387,12 +393,13 @@ const Feed = (props) => {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
         return setQueryKeyValue(
           history,
+          "push",
           "filters",
           btoa(JSON.stringify(selectedOptions)),
         );
       }
     } else if (queryParams.filters && !newFiltersLength)
-      return setQueryKeyValue(history, "filters", null);
+      return setQueryKeyValue(history, "replace", "filters", null);
   }, [applyFilters, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -435,7 +442,7 @@ const Feed = (props) => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    setQueryKeyValue(history, "filters", null);
+    setQueryKeyValue(history, "push", "filters", null);
     refetchPosts(null, null, true);
   };
 
@@ -464,7 +471,7 @@ const Feed = (props) => {
   const handleSearchSubmit = useCallback((selectedValueId) => {
     handleChangeType({ key: "ALL" });
     if (queryParams.filters && selectedValueId != "POSTS")
-      setQueryParams({ ...queryParams, filters: null });
+      setQueryKeyValue(history, "replace", "filters", null);
   });
 
   const handleSearchClear = useCallback(() => {
@@ -477,7 +484,7 @@ const Feed = (props) => {
     }
     dispatchAction(SET_VALUE, "location", value);
     if (!value && queryParams.location)
-      setQueryKeyValue(history, "location", null);
+      setQueryKeyValue(history, "push", "location", null);
   };
 
   const handleOption = (label, option) => (e) => {
@@ -492,10 +499,11 @@ const Feed = (props) => {
       delete selectedFilters["lookingFor"];
       setQueryKeyValue(
         history,
+        "replace",
         "filters",
         btoa(JSON.stringify(selectedFilters)),
       );
-      setQueryKeyValue(history, "objective", null);
+      setQueryKeyValue(history, "replace", "objective", null);
     }
   };
 
@@ -514,6 +522,7 @@ const Feed = (props) => {
     if (Object.keys(HELP_TYPE)[queryParams.objective || 0] !== value) {
       setQueryKeyValue(
         history,
+        "replace",
         "objective",
         Object.keys(HELP_TYPE).indexOf(e.key),
       );

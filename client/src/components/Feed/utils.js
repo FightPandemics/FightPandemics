@@ -42,11 +42,11 @@ export const highlightSearchRegex = (text) => {
   return regex;
 };
 
-export const setQueryKeyValue = (history, key, value) => {
+export const setQueryKeyValue = (history, method, key, value) => {
   let query = qs.parse(history.location.search);
-  if (!value) delete query[key];
+  if (!value || value === -1) delete query[key];
   else query[key] = value;
-  history.push({
+  history[method]({
     pathname: history.location.pathname,
     search: qs.stringify(query),
   });
