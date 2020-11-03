@@ -9,6 +9,7 @@ const {
 const {
   config: { auth: authConfig },
 } = require("../../config");
+const { getUserById } = require("../utils");
 
 /*
  * /api/auth
@@ -36,26 +37,15 @@ async function routes(app) {
       } = auth0User;
       const { payload } = app.jwt.decode(token);
       const userId = payload[authConfig.jwtMongoIdKey];
-      const dbUser = await User.findById(userId).populate("organisations");
-      let user = null;
-      if (dbUser) {
-        const { firstName, lastName, organisations } = dbUser;
-        user = {
-          email,
-          firstName,
-          id: userId,
-          lastName,
-          organisations,
-        };
-      }
-      return {
+      const options = {
         email,
         emailVerified,
         firstName,
         lastName,
         token,
-        user,
       };
+      const user = await getUserById(app, userId, options);
+      return user;
     } catch (err) {
       req.log.error(err, "OAuth error");
       throw app.httpErrors.internalServerError();
@@ -134,20 +124,9 @@ async function routes(app) {
       if (!userId) {
         throw new Error("no mongo_id found in JWT");
       }
-      const dbUser = await User.findById(userId).populate("organisations");
-      let user = null;
-      if (dbUser) {
-        const { firstName, lastName, organisations, photo } = dbUser;
-        user = {
-          email,
-          firstName,
-          id: userId,
-          lastName,
-          organisations,
-          photo,
-        };
-      }
-      return { email, emailVerified, token, user };
+      const options = { email, emailVerified, token };
+      const user = await getUserById(app, userId, options);
+      return user;
     } catch (err) {
       if (err.statusCode === 403) {
         throw app.httpErrors.unauthorized("wrongCredentials");
