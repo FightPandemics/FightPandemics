@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import GTM from "constants/gtm-tags";
+import { setQueryKeyValue } from "components/Feed/utils";
 import qs from "query-string";
 const { colors } = theme;
 
@@ -38,26 +39,29 @@ class SearchCategories extends React.Component {
     };
     this.renderTabsContainer = this.renderTabsContainer.bind(this);
     this.onSelectItem = this.onSelectItem.bind(this);
+    this.getCategoryFromQuery = this.getCategoryFromQuery.bind(this);
   }
 
   componentDidMount() {
-    let query = qs.parse(this.props.history.location.search);
-    this.onSelectItem(this.props.options[query.s_category || 0]);
+    this.getCategoryFromQuery();
+    const unlisten = this.props.history.listen((location) => {
+      if (location.pathname === "/feed") {
+        return this.getCategoryFromQuery();
+      } else {
+        return unlisten();
+      }
+    });
   }
 
-  setQueryKeyValue = (key, value) => {
+  getCategoryFromQuery() {
     let query = qs.parse(this.props.history.location.search);
-    if (!value) delete query[key];
-    else query[key] = value;
-    this.props.history.push({
-      pathname: this.props.history.location.pathname,
-      search: qs.stringify(query),
-    });
-  };
+    this.setState({ selectedValue: this.props.options[query.s_category || 0] });
+  }
 
   onSelectItem(item) {
     this.setState({ selectedValue: item });
-    this.setQueryKeyValue(
+    setQueryKeyValue(
+      this.props.history,
       "s_category",
       this.props.options.findIndex((option) => option.id === item?.id) || null,
     );

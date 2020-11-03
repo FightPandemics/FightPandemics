@@ -46,7 +46,7 @@ export const setQueryKeyValue = (history, key, value) => {
   let query = qs.parse(history.location.search);
   if (!value) delete query[key];
   else query[key] = value;
-  history.replace({
+  history.push({
     pathname: history.location.pathname,
     search: qs.stringify(query),
   });

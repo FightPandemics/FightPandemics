@@ -329,9 +329,10 @@ const Feed = (props) => {
     if (query.filters || query.objective) {
       let selectedFilters = {};
       if (query.filters) {
-        if (query.s_category) return setQueryKeyValue(history, "filters", null);
-        query.filters = JSON.parse(atob(query.filters));
-        selectedFilters = query.filters;
+        if (!query.s_category) {
+          query.filters = JSON.parse(atob(query.filters));
+          selectedFilters = query.filters;
+        } else delete query.filters;
       }
       if (query.objective) {
         selectedFilters["lookingFor"] = [
@@ -463,7 +464,7 @@ const Feed = (props) => {
   const handleSearchSubmit = useCallback((selectedValueId) => {
     handleChangeType({ key: "ALL" });
     if (queryParams.filters && selectedValueId != "POSTS")
-      setQueryKeyValue(history, "filters", null);
+      setQueryParams({ ...queryParams, filters: null });
   });
 
   const handleSearchClear = useCallback(() => {

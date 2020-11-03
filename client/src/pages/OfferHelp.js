@@ -177,7 +177,10 @@ const OfferHelp = withRouter((props) => {
       };
       if (updatedAnswers.location)
         query.location = btoa(JSON.stringify(updatedAnswers.location));
-      const selectedFilters = { providers: [] };
+      const selectedFilters = {
+        providers: [],
+        lookingFor: [filters[3].options[0].value],
+      };
       if (updatedAnswers.providers) {
         let organisationFilter = updatedAnswers.providers.filter(
           (option) => option === "As an Organisation",
