@@ -15,12 +15,9 @@ import {
   SupportersLogosContainer,
   SocialContainer,
   AboutUsLink,
-  Grid,
   FlexBox,
-  Col,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
-import BlankImage from "assets/about-us-images/Blank.jpg";
 import Group from "assets/about-us-images/group.svg";
 import WorldMap from "assets/about-us-images/world-map.png";
 import HelpBoard from "assets/how-does-work-images/Help-Board.gif";
@@ -29,32 +26,48 @@ import RelevantContent from "assets/how-does-work-images/Relevant-content.gif";
 import ConnectImage from "assets/about-us-images/weConnectPeople.png";
 
 // company supporter logos import
+import accessibe from "assets/supporters-logos/accessibe.png";
 import airtableLogo from "assets/supporters-logos/airtable-logo.svg";
 import algoliaLogo from "assets/supporters-logos/algolia-logo.svg";
+import akveo from "assets/supporters-logos/akveo.png";
 import aut0Logo from "assets/supporters-logos/auth0-logo.svg";
-import awsLogo from "assets/supporters-logos/awsLogo.png";
+import awsLogo from "assets/supporters-logos/aws.svg";
 import calendlyLogo from "assets/supporters-logos/calendlyLogo2.png";
+import datadog from "assets/supporters-logos/datadog.png";
+import datasaur from "assets/supporters-logos/datasaurai.png";
 import figmaLogo from "assets/supporters-logos/figmaLogo.png";
+import geekbot from "assets/supporters-logos/geekbot.png";
 import gitkrakenLogo from "assets/supporters-logos/gitkraken-logo.png";
+import github from "assets/supporters-logos/github.png";
 import googleMapsLogo from "assets/supporters-logos/googleMapsLogo.png";
 import hackoladeLogo from "assets/supporters-logos/hackoladeLogo.png";
+import hopin from "assets/supporters-logos/hopin.png";
+import kite from "assets/supporters-logos/kite.svg";
 import leypayLogo from "assets/supporters-logos/leypalLogo2.png";
 import lokaliseLogo from "assets/supporters-logos/lokaliseLogos.png";
 import lambdatestLogo from "assets/supporters-logos/lambdatestLogo.png";
 import miroLogo from "assets/supporters-logos/miro-logo.svg";
 import mongodbLogo from "assets/supporters-logos/mongodb-logo.png";
+import newrelic from "assets/supporters-logos/newrelic.png";
 import notionLogo from "assets/supporters-logos/notionLogo.svg";
+import onePassword from "assets/supporters-logos/onePassword.png";
 import pagerdutyLogo from "assets/supporters-logos/pagerduty.png";
+import papertrail from "assets/supporters-logos/papertrail.svg";
 import prowlyLogo from "assets/supporters-logos/prowlyLogo.png";
+import reply from "assets/supporters-logos/reply.png";
 import sendgridLogo from "assets/supporters-logos/sendgrid-logo.svg";
 import seo4ajaxLogo from "assets/supporters-logos/seo4ajaxLogo.png";
 import supermetricsLogo from "assets/supporters-logos/supermetricsLogo.png";
 import sentryLogo from "assets/supporters-logos/sentry-logo.svg";
 import saucelabsLogos from "assets/supporters-logos/saucelabsLogo.png";
 import slackLogo from "assets/supporters-logos/slack-logo.svg";
+import startupGrind from "assets/supporters-logos/startupgrind.png";
 import socialbeeLogo from "assets/supporters-logos/socialbee-logo.svg";
+import talend from "assets/supporters-logos/talend.svg";
+import theEscapeGame from "assets/supporters-logos/theescapegame.png";
 import twilioLogo from "assets/supporters-logos/twilio-logo.svg";
 import typeformLogo from "assets/supporters-logos/typeform-logo.png";
+import veriff from "assets/supporters-logos/veriff.png";
 import workableLogo from "assets/supporters-logos/workableLogo.png";
 import whitesourceLogo from "assets/supporters-logos/whitesourceLogo.png";
 import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
@@ -65,40 +78,55 @@ import instagramLogo from "assets/icons/social-instagram.png";
 import linkedInLogo from "assets/icons/social-linkedin.png";
 import facebookLogo from "assets/icons/social-facebook.png";
 import twitterLogo from "assets/icons/social-twitter.png";
-import { size } from "lodash";
 
-const DemoBox = (props) => (
-  <p className={`height-${props.value}`}>{props.children}</p>
-);
+// const DemoBox = (props) => (
+//   <p className={`height-${props.value}`}>{props.children}</p>
+// );
 
 const LogosMap = new Map([
+  [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
+  [akveo, "https://www.akveo.com"],
   [aut0Logo, "http://auth0.com"],
   [calendlyLogo, "https://calendly.com"],
+  [datadog, "https://www.datadoghq.com/"],
+  [datasaur, "https://datasaur.ai/"],
   [hackoladeLogo, "https://hackolade.com/"],
   [figmaLogo, "https://www.figma.com"],
   [whitesourceLogo, "https://www.whitesourcesoftware.com"],
+  [geekbot, "https://geekbot.com/"],
   [gitkrakenLogo, "https://www.gitkraken.com"],
+  [github, "https://github.com/"],
   [googleMapsLogo, "https://maps.google.com"],
+  [hopin, "https://hopin.to/"],
+  [kite, "https://www.kite.com/"],
   [lokaliseLogo, "https://lokalise.com"],
   [leypayLogo, "https://www.leypal.com"],
   [lambdatestLogo, "https://www.lambdatest.com"],
   [miroLogo, "http://www.miro.com"],
   [mongodbLogo, "https://www.mongodb.com"],
+  [newrelic, "https://newrelic.com/"],
   [notionLogo, "https://www.notion.so"],
+  [onePassword, "https://1password.com/"],
   [pagerdutyLogo, "https://www.pagerduty.com"],
+  [papertrail, "https://www.papertrail.com/"],
   [prowlyLogo, "https://prowly.com/en"],
+  [reply, "https://reply.io/"],
   [sendgridLogo, "http://sendgrid.com"],
   [saucelabsLogos, "http://saucelabs.com"],
   [sentryLogo, "https://sentry.io/welcome"],
   [seo4ajaxLogo, "https://www.seo4ajax.com"],
   [socialbeeLogo, "https://socialbee.io/"],
   [slackLogo, "https://slack.com"],
+  [startupGrind, "https://www.startupgrind.com/"],
   [supermetricsLogo, "http://supermetrics.com"],
+  [talend, "https://www.talend.com/"],
+  [theEscapeGame, "https://theescapegame.com/"],
   [twilioLogo, "http://www.twilio.com"],
   [typeformLogo, "http://www.typeform.com"],
+  [veriff, "https://www.veriff.com/"],
   [workableLogo, "https://www.workable.com"],
   [zeplinLogo, "http://zeplin.io"],
   [zendeskLogo, "http://www.zendesk.com"],
@@ -107,31 +135,47 @@ const LogosMap = new Map([
 const supporterLogosLifetime = [
   algoliaLogo,
   hackoladeLogo,
+  kite,
   lokaliseLogo,
   miroLogo,
   saucelabsLogos,
   sentryLogo,
   socialbeeLogo,
+  talend,
   whitesourceLogo,
 ];
 const supporterLogosCurrent = [
   airtableLogo,
   awsLogo,
   aut0Logo,
+  accessibe,
+  akveo,
+  datadog,
+  datasaur,
   figmaLogo,
   gitkrakenLogo,
+  geekbot,
   googleMapsLogo,
+  github,
+  hopin,
   lambdatestLogo,
   mongodbLogo,
   notionLogo,
+  newrelic,
   pagerdutyLogo,
+  papertrail,
   prowlyLogo,
+  onePassword,
+  reply,
   sendgridLogo,
   seo4ajaxLogo,
   slackLogo,
   supermetricsLogo,
+  startupGrind,
   twilioLogo,
   typeformLogo,
+  theEscapeGame,
+  veriff,
   workableLogo,
   zeplinLogo,
   zendeskLogo,
@@ -303,7 +347,7 @@ const AboutUs = () => {
       </SupporterContainer>
 
       <SocialStyle>
-        <FlexBox direction="column" align="flex-start">
+        <FlexBox direction="column" align="center">
           <h3>{t("followUs")}</h3>
           <SocialContainer>
             <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">

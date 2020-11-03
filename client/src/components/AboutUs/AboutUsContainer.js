@@ -71,6 +71,7 @@ export const SupportersLogosContainer = styled.div`
   margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  grid-gap: 1rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -79,11 +80,15 @@ export const SupportersLogosContainer = styled.div`
   > div {
     max-width: 12rem;
     margin: auto;
-    padding-bottom: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12rem;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       max-width: 8rem;
-      padding-bottom: 2.5rem;
+      padding-bottom: 0;
+      height: 8rem;
     }
 
     img {
