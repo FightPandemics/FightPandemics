@@ -89,8 +89,8 @@ const PostSocial = ({
       <>
         <StyledSpan className="total-number">
           {label === "Comment"
-            ? t("comment.commentWithCount", { count })
-            : t("post.likeWithCount", { count })}
+            ?(t("comment.commentWithCount", { count }))
+            :(t("post.likeWithCount", { count }))}
         </StyledSpan>
       </>
     );
