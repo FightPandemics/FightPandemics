@@ -230,8 +230,10 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getCookieToken(req));
-      const { email, email_verified: emailVerified } = user;
+      const {
+        email,
+        email_verified: emailVerified,
+      } = await Auth0.getUser(getCookieToken(req));
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -250,7 +252,11 @@ async function routes(app) {
         authId: req.user.sub,
         email,
       };
-      return new User(userData).save();
+      const user = await new User(userData).save();
+      return {
+        ...user.toObject(),
+        organisations: [],
+      }
     },
   );
 }
