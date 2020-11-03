@@ -49,6 +49,7 @@ import lambdatestLogo from "assets/supporters-logos/lambdatestLogo.png";
 import miroLogo from "assets/supporters-logos/miro-logo.svg";
 import mongodbLogo from "assets/supporters-logos/mongodb-logo.png";
 import newrelic from "assets/supporters-logos/newrelic.png";
+import nubela from "assets/supporters-logos/nubela.svg";
 import notionLogo from "assets/supporters-logos/notionLogo.svg";
 import onePassword from "assets/supporters-logos/onePassword.png";
 import pagerdutyLogo from "assets/supporters-logos/pagerduty.png";
@@ -109,6 +110,7 @@ const LogosMap = new Map([
   [mongodbLogo, "https://www.mongodb.com"],
   [newrelic, "https://newrelic.com/"],
   [notionLogo, "https://www.notion.so"],
+  [nubela, "https://nubela.co/"],
   [onePassword, "https://1password.com/"],
   [pagerdutyLogo, "https://www.pagerduty.com"],
   [papertrail, "https://www.papertrail.com/"],
@@ -138,6 +140,7 @@ const supporterLogosLifetime = [
   kite,
   lokaliseLogo,
   miroLogo,
+  nubela,
   saucelabsLogos,
   sentryLogo,
   socialbeeLogo,
