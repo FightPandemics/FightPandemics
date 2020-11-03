@@ -40,6 +40,12 @@ const PostCard = styled(Card)`
       content: normal !important;
     }
 
+    .highlighted {
+      font-weight: bold;
+      color: #425af2;
+      background: #f3f4fe;
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
