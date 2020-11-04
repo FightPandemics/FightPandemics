@@ -1,7 +1,7 @@
 import { Drawer, List, Button, WhiteSpace } from "antd-mobile";
 import { Typography, Menu, Dropdown } from "antd";
 import axios from "axios";
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -40,7 +40,8 @@ import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import GTM from "constants/gtm-tags";
 import ProfilePic from "../../components/Picture/ProfilePic";
-
+import { UserContext, withUserContext } from "context/UserContext";
+import { fetchUser, fetchUserSuccess } from "hooks/actions/userActions";
 const { royalBlue, tropicalBlue, white } = theme.colors;
 
 const drawerStyles = {
@@ -263,10 +264,18 @@ const StyledDrawer = styled(Drawer)`
 
 const NavigationLayout = (props) => {
   const { t } = useTranslation();
-  const { authLoading, mobiletabs, navSearch, tabIndex, isAuthenticated, user } = props;
+  const {
+    authLoading,
+    mobiletabs,
+    navSearch,
+    tabIndex,
+    isAuthenticated,
+  } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [searchKeywords, setSearchKeywords] = useState(false);
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const { user } = userProfileState;
 
   const handleSearchSubmit = (inputValue) => {
     setSearchKeywords(inputValue);
@@ -287,6 +296,20 @@ const NavigationLayout = (props) => {
     },
     { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
   ];
+
+  useEffect(() => {
+    if (!props.isAuthenticated || !props.user) return;
+    (async function initialProfileFetch() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get(`/api/users/current`);
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        // fallback to the global user.
+        userProfileDispatch(fetchUserSuccess(props.user));
+      }
+    })();
+  }, [isAuthenticated, props.isAuthenticated, props.user, userProfileDispatch]);
 
   const displayAvatar = (user) => {
     if (user?.photo || (user?.firstName && user?.lastName)) {
@@ -745,4 +768,4 @@ const NavigationLayout = (props) => {
   return <>{renderNavigationBar()}</>;
 };
 
-export default NavigationLayout;
+export default withUserContext(NavigationLayout);
