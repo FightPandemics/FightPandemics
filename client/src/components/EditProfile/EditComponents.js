@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Heading from "../Typography/Heading";
-import { Form } from "antd";
 import { mq, theme } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
 const { colors } = theme;
@@ -183,48 +182,4 @@ export const ToggleHeading = styled.div`
   }
 `;
 
-export const ProfileImage = styled.img`
-  width: 70%;
-  align-self: end;
-`;
 
-export const Eclipse = styled.div`
-  width: 7rem;
-  height: 6.5rem;
-  background-color: ${theme.colors.selago};
-  position: relative;
-  border: 2px solid ${theme.colors.royalBlue};
-  border-radius: 100%;
-  align-self: center;
-`;
-
-export const PlusIcon = styled.img`
-  width: 40%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-`;
-export const CustomContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    border: 0.1rem solid ${colors.lightGray};
-    padding: 3rem 4rem;
-    background-color: ${colors.white};
-  }
-  @media screen and (min-width: ${mq.desktop.small.minWidth}) {
-    border: 0.1rem solid ${colors.lightGray};
-    padding: 3rem 4rem;
-    min-width: 62rem;
-    background-color: ${colors.white};
-  }
-`;
-
-export const StyledForm = styled(Form)`
-.ant-form-item-required {
-  color: ${colors.royalBlue};
-  font-size: 1.6rem;
-  font-weight: 500;
-}
-`
