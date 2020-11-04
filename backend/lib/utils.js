@@ -95,7 +95,7 @@ const getUserById = async function (app, userId, options = null) {
     throw app.httpErrors.notFound();
   }
 
-  const defaultUser = ({
+  const {
     id,
     about,
     email,
@@ -108,7 +108,22 @@ const getUserById = async function (app, userId, options = null) {
     organisations,
     urls,
     photo,
-  } = user);
+  } = user;
+
+  const defaultUser = {
+    id,
+    about,
+    email,
+    firstName,
+    hide,
+    lastName,
+    location,
+    needs,
+    objectives,
+    organisations,
+    urls,
+    photo,
+  };
 
   if (!options) options = {};
   options.user = defaultUser;
