@@ -157,7 +157,7 @@ const EditUserPassword = (props) => {
                     </CustomEditAccountHeader>
                     <ToggleHeading>
                         <CustomHeading level={4} className="h4">
-                            {t("profile.common.accountInfo")}
+                            {t("profile.common.changePassword")}
                         </CustomHeading>
                     </ToggleHeading>
                     <FillEmptySpace />

@@ -244,7 +244,8 @@
       },
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
-      "emailDomainInvalid": "Email domain is invalid"
+      "emailDomainInvalid": "Email domain is invalid",
+      "changePassword": "Change Password"
     },
     "individual": {
       "email": "Email",
