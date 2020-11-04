@@ -298,7 +298,7 @@ const NavigationLayout = (props) => {
   ];
 
   useEffect(() => {
-    if (!props.isAuthenticated || !props.user) return;
+    if (!isAuthenticated || !props.user) return;
     (async function initialProfileFetch() {
       userProfileDispatch(fetchUser());
       try {
@@ -309,7 +309,7 @@ const NavigationLayout = (props) => {
         userProfileDispatch(fetchUserSuccess(props.user));
       }
     })();
-  }, [isAuthenticated, props.isAuthenticated, props.user, userProfileDispatch]);
+  }, [isAuthenticated, props.user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayAvatar = (user) => {
     if (user?.photo || (user?.firstName && user?.lastName)) {
