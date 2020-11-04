@@ -101,7 +101,7 @@ const ProfileInfo = styled.p`
   font-size: 12px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
   line-height: normal;
-  color: ${({ bold }) => (bold ? "#939393" : "rgba(0, 0, 0, 0.85)")};
+  color: #ffffff;
 `;
 
 const ProfileItemContainer = styled.div`

@@ -23,26 +23,23 @@ export const localization = {
 };
 
 export const MENU_MAP = {
-  ar: { value: "العربية", text: "Arabic (العربية)" },
-  de: { value: "Deutsch", text: "German (Deutsch)" },
-  "en-US": { value: "American English", text: "English (American English)" },
-  "en-GB": { value: "British English", text: "English (British English)" },
-  "es-ES": {
-    value: "Español de España",
-    text: "Peninsular Spanish (Español de España)",
-  },
-  fr: { value: "Français", text: "French (Français)" },
-  he: { value: "עברית", text: "Hebrew (עברית)" },
-  id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
-  it: { value: "Italiano", text: "Italian (Italiano)" },
-  nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
-  pl: { value: "Polski", text: "Polish (Polski)" },
-  pt: { value: "Português", text: "Portuguese (Português)" },
-  ru: { value: "русский", text: "Russian (русский)" },
-  th: { value: "ไทย", text: "Thai (ไทย)" },
-  tr: { value: "Türkçe", text: "Turkish (Türkçe)" },
-  uk: { value: "Українська", text: "Ukrainian (Українська)" },
-  "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
+  ar: { value: "العربية", text: "Arabic" },
+  de: { value: "Deutsch", text: "German" },
+  "en-US": { value: "American English", text: "English" },
+  "en-GB": { value: "British English", text: "English" },
+  "es-ES": { value: "Español de España", text: "Peninsular Spanish" },
+  fr: { value: "Français", text: "French" },
+  he: { value: "עברית", text: "Hebrew" },
+  id: { value: "Bahasa Indonesia", text: "Indonesian" },
+  it: { value: "Italiano", text: "Italian" },
+  nl: { value: "Nederlands", text: "Dutch" },
+  pl: { value: "Polski", text: "Polish" },
+  pt: { value: "Português", text: "Portuguese" },
+  ru: { value: "русский", text: "Russian" },
+  th: { value: "ไทย", text: "Thai" },
+  tr: { value: "Türkçe", text: "Turkish" },
+  uk: { value: "Українська", text: "Ukrainian" },
+  "zh-TW": { value: "繁體中文", text: "Chinese TraditionalÎ" },
 };
 
 export const languages = Object.keys(resources).reduce(

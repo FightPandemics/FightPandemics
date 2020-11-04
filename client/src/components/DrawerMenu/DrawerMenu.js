@@ -61,10 +61,7 @@ const DrawerMenu = ({
           />
         )}
         {menuState === MENU_STATE.LANGUAGES && (
-          <LanguageMenu
-            setMenuState={setMenuState}
-            isAuthenticated={isAuthenticated}
-          />
+          <LanguageMenu setMenuState={setMenuState} />
         )}
       </NavList>
     </MenuContainer>
