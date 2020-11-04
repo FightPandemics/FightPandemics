@@ -70,11 +70,10 @@ const ButtonWrapper = styled(Button)`
         color: ${button.secondary.color};
       }
     }
-    @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-      ${button.primary}
+    @media screen and (min-width: ${mq.tablet.wide.minWidth}) {  
       svg {
         path {
-          stroke: ${button.primary.color};
+          stroke: ${button.secondary.color};
         }
       }
     }
