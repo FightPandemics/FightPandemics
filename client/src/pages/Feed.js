@@ -290,12 +290,11 @@ const Feed = (props) => {
         isLoading,
         loadMore,
       });
+      if (page === 0) {
+        setToggleRefetch(!toggleRefetch);
+      }
     }
-
     dispatchAction(SET_VALUE, "activePanel", null);
-    if (page === 0) {
-      setToggleRefetch(!toggleRefetch);
-    }
   };
 
   const handleQuit = (e) => {
@@ -438,7 +437,8 @@ const Feed = (props) => {
     });
   };
 
-  const loadPosts = useCallback(async () => {
+  const loadPosts = async () => {
+    if (!applyFilters) return;
     dispatchAction(SET_VALUE, "applyFilters", false);
     const filterURL = () => {
       const filterObj = { ...(queryParams.filters || {}) };
@@ -557,7 +557,7 @@ const Feed = (props) => {
     } catch (error) {
       postsDispatch({ error, type: ERROR_POSTS });
     }
-  }, [page, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   useEffect(() => {
     getStateFromQuery();
@@ -568,14 +568,14 @@ const Feed = (props) => {
   }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    refetchPosts(); // will trigger loadPosts(if needed)
+    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
       loadPosts();
     }
-  }, [selectedOptions, applyFilters, loadPosts]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
@@ -587,8 +587,8 @@ const Feed = (props) => {
         stopIndex >= feedPosts.length &&
         feedPosts.length
       ) {
-        dispatchAction(SET_VALUE, "applyFilters", true);
         return new Promise((resolve) => {
+          dispatchAction(SET_VALUE, "applyFilters", true);
           postsDispatch({ type: NEXT_PAGE });
           resolve();
         });
