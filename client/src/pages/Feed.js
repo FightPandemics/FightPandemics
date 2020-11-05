@@ -530,7 +530,7 @@ const Feed = (props) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (postsList) {
+        if (Object.keys(postsList).length && page) {
           postsDispatch({
             type: SET_POSTS,
             posts: { ...postsList, ...loadedPosts },
