@@ -49,7 +49,7 @@
   },
   "feed": {
     "title": "Forum pomocy",
-    "all": "Wszystkie posty",
+    "all": "Wszystkie wpisy",
     "request": "Prośby o pomoc",
     "offer": "Oferty pomocy",
     "quit": "Wyczyść filtry",
@@ -126,7 +126,24 @@
       }
     },
     "filterBy": "Filtruj według",
-    "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć post</0>"
+    "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć wpis</0>",
+    "allPosts": "Wszystkie wpisy",
+    "allPeople": "Wszyscy ludzie",
+    "allOrgs": "Wszystkie organizacje",
+    "noResultsPosts": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć wpis</0>",
+    "noResultsPeople": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru.",
+    "noResultsOrgs": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru.",
+    "search": {
+      "placeholder": "Szukaj postów, osób i organizacji",
+      "keywords": "Słowa kluczowe",
+      "error": "Minimalna ilość znaków: {{length}}",
+      "options": {
+        "posts": "Wszystkie wpisy",
+        "people": "Ludzie",
+        "orgs": "Organizacje",
+        "orgsShort": "Organizacje"
+      }
+    }
   },
   "post": {
     "create": "Utwórz wpis",
@@ -191,7 +208,7 @@
   },
   "profile": {
     "common": {
-      "accountInfo": "informacje o koncie",
+      "accountInfo": "Informacje o koncie",
       "profileInfo": "Informacje o Profilu",
       "address": "Adres",
       "enterAddress": "Wpisz adres, kod pocztowy lub miasto",
@@ -221,8 +238,8 @@
       "urls": {
         "appStore": "Link do Apple Store",
         "playStore": "Link do Google Play",
-        "twitter": "Twittera URL",
-        "facebook": "Facebooka URL",
+        "twitter": "Twitter URL",
+        "facebook": "Facebook URL",
         "instagram": "Instagram URL",
         "github": "Github URL",
         "linkedin": "LinkedIn URL",
@@ -230,7 +247,8 @@
       },
       "emailMaxLength": "Adres e-mail nie może przekraczać 200 znaków",
       "emailInvalid": "Adres e-mail jest nieprawidłowy",
-      "emailDomainInvalid": "Domena e-mail jest nieprawidłowa"
+      "emailDomainInvalid": "Domena e-mail jest nieprawidłowa",
+      "sendMessage": "Wyślij wiadomość"
     },
     "individual": {
       "email": "E-mail",
@@ -238,13 +256,13 @@
       "lastName": "Nazwisko",
       "hideAddress": "Nie pokazuj mojego adresu",
       "iWant": "Chcę",
-      "volunteer": "Wolontariuszem",
-      "donate": "Podaruj",
-      "shareInformation": "Udostępnij informacje",
+      "volunteer": "Być wolontariuszem",
+      "donate": "Wspomagać",
+      "shareInformation": "Udostępnić informacje",
       "iNeed": "Potrzebuję",
-      "medical": "Pomoc medyczna",
+      "medical": "Pomocy medycznej",
       "haveCovidSymptoms": "Mam objawy COVID-19",
-      "other": "Inna pomoc",
+      "other": "Innej pomocy",
       "otherDesc": "Potrzebuję pomocy przy zakupie artykułów spożywczych / leków / itp.",
       "editProfile": "Edytuj profil",
       "intro": "Samodzielne wprowadzenie",
@@ -252,7 +270,7 @@
       "myActivity": "Moja aktywność",
       "userActivity": "Aktywność użytkownika",
       "wantHelp": "Chcę pomóc",
-      "needHelp": "Potrzebuję pomocy",
+      "needHelp": "Potrzebuję pomocy ",
       "firstNameRequired": "Imię jest wymagane.",
       "lastNameRequired": "Nazwisko jest wymagane."
     },
@@ -264,9 +282,9 @@
       "invalidEmail": "Adres e-mail jest nieprawidłowy",
       "globalOrg": "Jesteśmy organizacją działającą na skalę globalną",
       "seeking": "Czego szukasz?",
-      "volunteers": "Wolontariusze",
+      "volunteers": "Wolontariuszy",
       "donations": "Darowizny",
-      "staff": "Personel",
+      "staff": "Personelu",
       "other": "Inne",
       "typeAndIndustry": "Rodzaj i branża",
       "type": "Rodzaj",
@@ -316,7 +334,8 @@
       "activity": "Aktywność",
       "editAccount": "Edytuj informacje o koncie",
       "updateSuccess": "Organizacja została pomyślnie zaktualizowana",
-      "orgNameRequired": "Nazwa organizacji jest wymagana"
+      "orgNameRequired": "Nazwa organizacji jest wymagana",
+      "global": "Globalny"
     }
   },
   "auth": {
@@ -347,7 +366,7 @@
   },
   "aboutUs": {
     "ourStory": "Nasza historia",
-    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który zaraził się COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić. Grupy Telegram i WhatsApp samoorganizowały się w sąsiedztwie Manuela, ale nie znając osobiście nikogo zaangażowanego, nie udało mu się poprosić o pomoc. Zainspirowany tak wielu chętnymi do pomocy, Manuel rozpoczął projekt z myślą o jednej misji: zapewnić innym możliwość współpracy.",
+    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który zaraził się COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić. Grupy Telegram i WhatsApp samoorganizowały się w sąsiedztwie Manuela, ale nie znając osobiście nikogo, nie udało mu się poprosić o pomoc. Zainspirowany tak wielu chętnymi do pomocy, Manuel rozpoczął projekt z myślą o jednej misji: zapewnić innym możliwość współpracy.",
     "ourCommunity": "Nasza społeczność",
     "community": "Nasz zespół składa się z ponad 450 wolontariuszy: programistów, projektantów, naukowców, ekspertów w dziedzinie zdrowia i menedżerów produktów z całego świata",
     "ourIdea": "Nasz pomysł",

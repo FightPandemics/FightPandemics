@@ -58,7 +58,7 @@ const filterOps = (label, idx) => {
     : GTM.post.type + typeGtmTagsMap[idx];
 };
 
-const FilterAccord = ({ gtmPrefix }) => {
+const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
@@ -72,7 +72,6 @@ const FilterAccord = ({ gtmPrefix }) => {
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
-
   const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "location") {
@@ -94,7 +93,7 @@ const FilterAccord = ({ gtmPrefix }) => {
             />
           </FilterAccordionPanel>
         );
-      } else {
+      } else if (!locationOnly) {
         return (
           <FilterAccordionPanel
             header={
@@ -115,7 +114,7 @@ const FilterAccord = ({ gtmPrefix }) => {
                     "tag-selectable " +
                     ((selectedOptions[filter.label] &&
                       selectedOptions[filter.label].includes(value)) ||
-                      value.toLowerCase().includes(selectedType?.toLowerCase())
+                    value.toLowerCase().includes(selectedType?.toLowerCase())
                       ? "tag-selected"
                       : "")
                   }

@@ -64,7 +64,27 @@ const getReqParam = (req, paramName) => {
   const query = req.query || {};
 
   return body[paramName] || params[paramName] || query[paramName];
-}
+};
+
+const createSearchRegex = (keywords) => {
+  let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
+  let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
+  const keywordsRegex = new RegExp(
+    cleanKeywords
+      .split(/[ \/,=$%#()-]/gi)
+      .filter((key) => key && key.length > 1)
+      .map((key) =>
+        isLatin && key.length <= 3
+          ? "\\b" + key + "\\b"
+          : isLatin
+          ? "\\b" + key
+          : key,
+      )
+      .join("|") || "\\b\\B",
+    "ig",
+  );
+  return keywordsRegex;
+};
 
 module.exports = {
   bool,
@@ -73,5 +93,6 @@ module.exports = {
   getCookieToken,
   getReqParam,
   isValidEmail,
+  createSearchRegex,
   setElapsedTimeText,
 };
