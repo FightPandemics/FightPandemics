@@ -672,6 +672,7 @@ const Feed = (props) => {
       ) {
         return new Promise((resolve) => {
           dispatch(postsActions.setNextPageAction());
+          dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
       } else {
