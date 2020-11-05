@@ -4,9 +4,8 @@ const innitialState = {
   posts: [],
   page: 0,
   error: null,
-  filterType: "ALL",
   isLoading: false,
-  loadMore: true
+  loadMore: true,
 };
 
 const postsReducer = (state = innitialState, action) => {
@@ -14,7 +13,7 @@ const postsReducer = (state = innitialState, action) => {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case POSTS_ACTIONS.FETCH_POSTS_SUCCESS: {
       const { payload } = action;
@@ -41,7 +40,6 @@ const postsReducer = (state = innitialState, action) => {
       return {
         ...state,
         page: 0,
-        filterType: payload.filterType,
         posts: [],
         loadMore: payload.loadMore,
         isLoading: payload.isLoading,

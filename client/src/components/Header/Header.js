@@ -12,6 +12,7 @@ import logo from "assets/logo.svg";
 import Logo from "../Logo";
 import { theme, mq } from "../../constants/theme";
 import { HeaderLinks } from "./HeaderLinks";
+import FeedSearch from "components/Input/FeedSearch";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -113,6 +114,18 @@ const HeaderWrapper = styled.div`
   width: 100vw;
 `;
 
+const NavSearch = styled.div`
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none !important;
+  }
+  position: absolute;
+  left: 29rem;
+  @media screen and (max-width: ${mq.desktop.small.minWidth}) {
+    position: initial;
+    margin-right: 2rem;
+  }
+`;
+
 const Header = ({
   authLoading,
   onMenuClick,
@@ -120,6 +133,9 @@ const Header = ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  onSearchSubmit,
+  onSearchClear,
+  navSearch,
   setOrganisationId,
 }) => {
   const { t } = useTranslation();
@@ -144,9 +160,21 @@ const Header = ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt={t("alt.logo")} />
-          </BrandLink>
+          <>
+            <BrandLink to={isAuthenticated ? "/feed" : "/"}>
+              <Logo src={logo} alt={t("alt.logo")} />
+            </BrandLink>
+            <NavSearch>
+              {navSearch && (
+                <FeedSearch
+                  handleSubmit={onSearchSubmit}
+                  handleClear={onSearchClear}
+                  placeholder={t("feed.search.placeholder")}
+                  t={t}
+                />
+              )}
+            </NavSearch>
+          </>
         }
         rightContent={
           <div>

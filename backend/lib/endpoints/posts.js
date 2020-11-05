@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText } = require("../utils");
+const { setElapsedTimeText, createSearchRegex } = require("../utils");
 
 const {
   createCommentSchema,
@@ -43,11 +43,12 @@ async function routes(app) {
         query: {
           authorId,
           ignoreUserLocation,
-          includeMeta,
           filter,
+          keywords,
           limit,
           objective,
           skip,
+          includeMeta,
         },
       } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
@@ -121,26 +122,44 @@ async function routes(app) {
       };
       /* eslint-enable sort-keys */
 
+      // if location is defined, use simple regex text query, in order to use $geoNear
+      if (location && keywords) {
+        const keywordsRegex = createSearchRegex(keywords);
+        filters.push({
+          $or: [
+            { title: keywordsRegex },
+            { content: keywordsRegex },
+            { "author.name": keywordsRegex },
+            { types: keywordsRegex },
+          ],
+        });
+      }
+
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-          {
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: location.coordinates,
-                  type: "Point",
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
-          },
-          { $sort: { distance: 1, _id: -1 } },
-        ]
+            { $sort: { distance: 1, _id: -1 } },
+          ]
+        : keywords
+        ? [
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $sort: { score: { $meta: "textScore" } } },
+          ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
@@ -148,18 +167,18 @@ async function routes(app) {
       const paginationSteps =
         limit === -1
           ? [
-            {
-              $skip: skip || 0,
-            },
-          ]
+              {
+                $skip: skip || 0,
+              },
+            ]
           : [
-            {
-              $skip: skip || 0,
-            },
-            {
-              $limit: limit || POST_PAGE_SIZE,
-            },
-          ];
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || POST_PAGE_SIZE,
+              },
+            ];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
@@ -222,10 +241,17 @@ async function routes(app) {
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
-      const totalResultsAggregationPipeline = await Post.aggregate([
-        { $match: { $and: filters } },
-        { $group: { _id: null, count: { $sum: 1 } } },
-      ]);
+      const totalResultsAggregationPipeline = await Post.aggregate(
+        keywords && !location
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
+          : [
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+      );
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
