@@ -56,6 +56,21 @@ describe("FightPandemics Forgot Password Page", () => {
       backToSignInPageLink.should("be.visible");
       backToSignInPageLink.contains("Back to Sign In screen").click();
     });
+
+    it('After entering correct email user clicks the Submit Button', () => {
+      emailField().type(emailAndPassword.dummySampleEmail).focus().blur();
+      var submitButton = forgotPassword.getSubmitButton();
+      submitButton.click({force: true});
+      cy.checkEmailIsOpen("/auth/check-email");
+  });
+
+  it('After entering correct email by Unregistered user clicks the Submit Button', () => {
+    emailField().type(emailAndPassword.validSampleEmail).focus().blur();
+    var submitButton = forgotPassword.getSubmitButton();
+    submitButton.click({force: true});
+    cy.checkEmailIsOpen("/auth/check-email");
+});
+
   });
 
   function checkSubmitButtonIsDisabled(submitButton) {
