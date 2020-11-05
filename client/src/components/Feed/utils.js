@@ -42,12 +42,16 @@ export const highlightSearchRegex = (text) => {
   return regex;
 };
 
-export const setQueryKeyValue = (history, method, key, value) => {
-  let query = qs.parse(history.location.search);
-  if (!value || value === -1) delete query[key];
-  else query[key] = value;
-  history[method]({
+export const setQueryKeysValue = (history, newQuery) => {
+  const query = qs.parse(history.location.search);
+  for (const key in newQuery) {
+    if (!newQuery[key] || newQuery[key] === -1) delete query[key];
+    else query[key] = newQuery[key];
+  }
+  const stringifiedQuery = qs.stringify(query);
+  if (stringifiedQuery == history.location.search.replace("?", "")) return;
+  history.push({
     pathname: history.location.pathname,
-    search: qs.stringify(query),
+    search: stringifiedQuery,
   });
 };

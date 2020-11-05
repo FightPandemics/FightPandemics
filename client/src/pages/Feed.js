@@ -12,21 +12,30 @@ import axios from "axios";
 import qs from "query-string";
 
 // Antd
-import { Layout, Menu } from "antd";
+import { Menu } from "antd";
 
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import {
+  FeedWrapper,
+  SiderWrapper,
+  FiltersWrapper,
+  MenuWrapper,
+  LayoutWrapper,
+  ContentWrapper,
+  HeaderWrapper,
+  TabsWrapper,
+  MobileSearchWrapper,
+} from "components/Feed/FeedWrappers";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
 import Users from "components/Feed/Users";
-import SearchCategories from "components/Input/SearchCategories";
 import FeedSearch from "components/Input/FeedSearch";
-import { setQueryKeyValue } from "components/Feed/utils";
+import { setQueryKeysValue } from "components/Feed/utils";
 
 import {
   optionsReducer,
@@ -87,11 +96,7 @@ const gtmTagsMap = {
 
 const gtmTag = (tag) => GTM.feed.prefix + tag;
 
-const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
-
 export const FeedContext = React.createContext();
-
-const { Content, Sider } = Layout;
 
 let HELP_TYPE = {
   ALL: "All posts",
@@ -108,139 +113,6 @@ const initialState = {
   location: null,
 };
 
-const SiderWrapper = styled(Sider)`
-  background-color: ${white};
-  height: calc(100vh - 5rem);
-  overflow-x: hidden;
-  padding-top: 3.3rem;
-  position: fixed;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: none;
-  }
-`;
-
-const FiltersWrapper = styled.div`
-  border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
-  margin: 1.5rem 2rem 0;
-  padding-top: 2rem;
-  button {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: ${black};
-    cursor: pointer;
-    display: flex;
-    width: 100%;
-    font-family: ${theme.typography.font.family.display};
-    font-size: ${theme.typography.size.large};
-    font-weight: bold;
-    margin-bottom: 1rem;
-    padding: 0;
-    span {
-      align-items: center;
-      border: 0.1rem solid ${royalBlue};
-      border-radius: 50%;
-      color: ${royalBlue};
-      display: flex;
-      height: 4.2rem;
-      justify-content: center;
-      margin-right: 1rem;
-      width: 4.2rem;
-      pointer-events: none;
-      svg {
-        fill: ${royalBlue};
-        height: 2rem;
-        width: 2rem;
-        pointer-events: none;
-      }
-    }
-  }
-`;
-
-const MenuWrapper = styled(Menu)`
-  &.ant-menu {
-    .ant-menu-item {
-      height: 3rem;
-      border-left: 0.5rem solid ${white};
-      color: ${darkerGray};
-      font-size: ${theme.typography.size.large};
-      &:hover {
-        color: ${royalBlue};
-      }
-    }
-    .ant-menu-item-selected {
-      background-color: transparent;
-      border-left: 0.5rem solid ${royalBlue};
-      color: ${royalBlue};
-      font-weight: bold;
-    }
-  }
-`;
-
-const LayoutWrapper = styled(Layout)`
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${white};
-  }
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: ${offWhite};
-    min-height: calc(100vh - 5rem);
-    .create-post,
-    .filter-box {
-      display: none;
-    }
-  }
-`;
-
-const ContentWrapper = styled(Content)`
-  margin: 0 1rem;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    overflow-x: visible !important;
-  }
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
-  }
-`;
-
-const HeaderWrapper = styled.div`
-  display: none;
-  h1 {
-    font-size: ${theme.typography.heading.one};
-    font-weight: bold;
-    margin-top: 0;
-  }
-  button {
-    flex-direction: column;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: ${black};
-    cursor: pointer;
-    display: flex;
-    font-family: ${theme.typography.font.family.display};
-    font-size: ${theme.typography.size.large};
-    padding: 0;
-    img {
-      margin-left: 1.2rem;
-      pointer-events: none;
-    }
-  }
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-const TabsWrapper = styled(SearchCategories)`
-  flex-basis: 100%;
-  height: 0;
-`;
-const MobileSearch = styled.div`
-  position: relative;
-  z-index: 1;
-  margin: 2rem auto 1rem;
-  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
-    display: none !important;
-  }
-`;
 export const NoPosts = styled.div`
   text-align: center;
   position: relative;
@@ -252,14 +124,6 @@ export const NoPosts = styled.div`
   }
 `;
 
-const buttonPulse = styled.button`
-  background-color: rgba(255, 255, 0, 0.4);
-  padding: 0 0.2em;
-  border-radius: 3em;
-  height: 4em;
-  position: relative;
-  top: 1.3em;
-`;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const Feed = (props) => {
@@ -318,14 +182,20 @@ const Feed = (props) => {
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  useEffect(() => {
-    let query = qs.parse(history.location.search);
+  const getStateFromQuery = () => {
+    const query = qs.parse(history.location.search);
+
+    // search category (Tab)
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
+
+    // location
     if (query.location) {
       query.location = JSON.parse(atob(query.location));
       dispatchAction(SET_VALUE, "location", query.location);
     } else dispatchAction(SET_VALUE, "location", "");
+
+    // filters / help type (objective)
     if (query.filters || query.objective) {
       let selectedFilters = {};
       if (query.filters) {
@@ -348,10 +218,12 @@ const Feed = (props) => {
     } else {
       optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     }
+    // will trigger => refetchPosts() =(if needed)> loadPosts()
     setQueryParams(query);
-  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  useEffect(() => {
+  const setQueryFromState = () => {
+    const newQuery = {};
     const oldFiltersLength = [
       ...(queryParams.filters?.type || []),
       ...(queryParams.filters?.providers || []),
@@ -360,13 +232,8 @@ const Feed = (props) => {
       ...(selectedOptions?.type || []),
       ...(selectedOptions?.providers || []),
     ].length;
-    if (location) {
-      setQueryKeyValue(
-        history,
-        "push",
-        "location",
-        btoa(JSON.stringify(location)),
-      );
+    if (applyFilters && location) {
+      newQuery.location = btoa(JSON.stringify(location));
     }
     if (applyFilters && selectedOptions.lookingFor?.length) {
       const selectedType =
@@ -374,12 +241,7 @@ const Feed = (props) => {
           selectedOptions["lookingFor"][0]) === "Request Help"
           ? "REQUEST"
           : "OFFER";
-      setQueryKeyValue(
-        history,
-        "replace",
-        "objective",
-        Object.keys(HELP_TYPE).indexOf(selectedType),
-      );
+      newQuery.objective = Object.keys(HELP_TYPE).indexOf(selectedType);
       if (selectedOptions.lookingFor.length > 1) {
         optionsDispatch({
           type: REMOVE_OPTION,
@@ -393,20 +255,12 @@ const Feed = (props) => {
     }
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
-        return setQueryKeyValue(
-          history,
-          "replace",
-          "filters",
-          btoa(JSON.stringify(selectedOptions)),
-        );
+        newQuery.filters = btoa(JSON.stringify(selectedOptions));
       }
     } else if (queryParams.filters && !newFiltersLength)
-      return setQueryKeyValue(history, "replace", "filters", null);
-  }, [applyFilters, selectedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    refetchPosts();
-  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
+      newQuery.filters = null;
+    setQueryKeysValue(history, newQuery);
+  };
 
   const handleFilterModal = () => {
     // method for mobile
@@ -428,6 +282,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
 
+    // softRefresh = only close filter modal etc.. but not RESET_PAGE and refetch posts
     if (!softRefresh) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       postsDispatch({
@@ -436,6 +291,7 @@ const Feed = (props) => {
         loadMore,
       });
     }
+
     dispatchAction(SET_VALUE, "activePanel", null);
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
@@ -444,7 +300,10 @@ const Feed = (props) => {
 
   const handleQuit = (e) => {
     e.preventDefault();
-    setQueryKeyValue(history, "push", "filters", null);
+    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    dispatchAction(SET_VALUE, "location", null);
+    setQueryKeysValue(history, { location: null });
+    // perform soft refetch to only close filter modal etc.. but not actually refetch posts
     refetchPosts(null, null, true);
   };
 
@@ -470,23 +329,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleSearchSubmit = useCallback((selectedValueId) => {
-    handleChangeType({ key: "ALL" });
-    if (queryParams.filters && selectedValueId != "POSTS")
-      setQueryKeyValue(history, "replace", "filters", null);
-  });
-
-  const handleSearchClear = useCallback(() => {
-    handleChangeType({ key: "ALL" });
-  });
-
   const handleLocation = (value) => {
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      postsDispatch({ type: RESET_PAGE });
     }
     dispatchAction(SET_VALUE, "location", value);
     if (!value && queryParams.location)
-      setQueryKeyValue(history, "push", "location", null);
+      setQueryKeysValue(history, { location: null });
   };
 
   const handleOption = (label, option) => (e) => {
@@ -499,13 +348,10 @@ const Feed = (props) => {
     if (hasOption && label === "lookingFor") {
       const selectedFilters = selectedOptions;
       delete selectedFilters["lookingFor"];
-      setQueryKeyValue(
-        history,
-        "replace",
-        "filters",
-        btoa(JSON.stringify(selectedFilters)),
-      );
-      setQueryKeyValue(history, "replace", "objective", null);
+      setQueryKeysValue(history, {
+        objective: null,
+        filters: btoa(JSON.stringify(selectedFilters)),
+      });
     }
   };
 
@@ -522,12 +368,9 @@ const Feed = (props) => {
   const handleChangeType = (e) => {
     const value = e.key;
     if (Object.keys(HELP_TYPE)[queryParams.objective || 0] !== value) {
-      setQueryKeyValue(
-        history,
-        "replace",
-        "objective",
-        Object.keys(HELP_TYPE).indexOf(e.key),
-      );
+      setQueryKeysValue(history, {
+        objective: Object.keys(HELP_TYPE).indexOf(e.key),
+      });
     }
   };
 
@@ -717,6 +560,18 @@ const Feed = (props) => {
   }, [page, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    getStateFromQuery();
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setQueryFromState();
+  }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchPosts(); // will trigger loadPosts(if needed)
+  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     if (applyFilters) {
       loadPosts();
     }
@@ -852,8 +707,6 @@ const Feed = (props) => {
                 options={SEARCH_OPTIONS}
                 showOptions={!!queryParams.s_keyword}
                 displayValue={"name"}
-                onSearchSubmit={handleSearchSubmit}
-                onSearchClear={handleSearchClear}
                 t={t}
               />
               {(!queryParams.s_category ||
@@ -870,7 +723,7 @@ const Feed = (props) => {
                 </button>
               )}
             </HeaderWrapper>
-            <MobileSearch>
+            <MobileSearchWrapper>
               <FeedSearch
                 isMobile={true}
                 options={SEARCH_OPTIONS}
@@ -878,10 +731,8 @@ const Feed = (props) => {
                 displayValue={"name"}
                 placeholder={t("feed.search.placeholder")}
                 t={t}
-                onSearchSubmit={handleSearchSubmit}
-                onSearchClear={handleSearchClear}
               />
-            </MobileSearch>
+            </MobileSearchWrapper>
             {
               <div>
                 <FilterBox

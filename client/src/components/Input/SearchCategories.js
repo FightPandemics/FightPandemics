@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import GTM from "constants/gtm-tags";
-import { setQueryKeyValue } from "components/Feed/utils";
+import { setQueryKeysValue } from "components/Feed/utils";
 import qs from "query-string";
 const { colors } = theme;
 
@@ -60,13 +60,13 @@ class SearchCategories extends React.Component {
 
   onSelectItem(item) {
     this.setState({ selectedValue: item });
-    setQueryKeyValue(
-      this.props.history,
-      "push",
-      "s_category",
-      this.props.options.findIndex((option) => option.id === item?.id) || null,
-    );
-    this.props.onSearchSubmit(item?.id || null);
+    setQueryKeysValue(this.props.history, {
+      s_category:
+        this.props.options.findIndex((option) => option.id === item?.id) ||
+        null,
+      filters: null,
+      objective: null,
+    });
   }
 
   renderCategories() {
