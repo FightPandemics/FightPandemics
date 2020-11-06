@@ -57,10 +57,8 @@ class privacyPolicy {
         return cy.xpath(this.firstParaLoc);
       case 2:
         return cy.xpath(this.secondParaLoc);
-
       case 3:
         return cy.xpath(this.thirdParaLoc);
-
       case 4:
         return cy.xpath(this.fourthParaLoc);
       default:
@@ -74,16 +72,12 @@ class privacyPolicy {
         return cy.xpath(this.firstParaLocWithOrdList);
       case 2:
         return cy.xpath(this.secondParaLocWithOrdList);
-
       case 3:
         return cy.xpath(this.thirdParaLocWithOrdList);
-
       case 4:
         return cy.xpath(this.fourthParaLocWithOrdList);
-
       case 5:
         return cy.xpath(this.fifthParaLocWithOrdList);
-
       case 6:
         return cy.xpath(this.sixthParaLocWithOrdList);
       case 7:
@@ -104,7 +98,6 @@ class privacyPolicy {
         return cy.xpath(this.fourthteenParaLocWithOrdList);
       case 15:
         return cy.xpath(this.fifthteenParaLocWithOrdList);
-
       default:
         break;
     }
