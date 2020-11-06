@@ -1,4 +1,5 @@
 const Auth0 = require("../components/Auth0");
+const { getCookieToken } = require("../utils");
 const {
   changePasswordSchema,
   loginSchema,
@@ -180,6 +181,59 @@ async function routes(app) {
       } catch (err) {
         req.log.error(err, "Error creating change password email");
         throw app.httpErrors.internalServerError("failedChangePasswordEmail");
+      }
+    },
+  );
+
+  app.get(
+    "/link-accounts",
+    { preHandler: [app.getServerToken] },
+    async (req) => {
+      try {
+        const token = getCookieToken(req);
+        if (!token) {
+          throw app.httpErrors.unauthorized("invalidToken");
+        }
+        const { email } = await Auth0.getUser(token);
+        const { payload } = app.jwt.decode(token);
+        const userIdRoot = payload["sub"];
+        const serverToken = req.token;
+        const otherAccounts = await Auth0.getAccountsWithSameEmail(
+          serverToken,
+          email,
+          userIdRoot,
+        );
+        const userIds = otherAccounts.map((account) => account.user_id);
+        return { userIds };
+      } catch (err) {
+        req.log.error(err, "Error querying accounts");
+        throw app.httpErrors.internalServerError();
+      }
+    },
+  );
+
+  app.post(
+    "/link-accounts",
+    { preHandler: [app.getServerToken] },
+    async (req) => {
+      try {
+        const token = getCookieToken(req);
+        if (!token) {
+          throw app.httpErrors.unauthorized("invalidToken");
+        }
+        const { payload } = app.jwt.decode(token);
+        const userIdRoot = payload["sub"];
+        const serverToken = req.token;
+        const { userIds } = req.body;
+        
+        // unlinked accounts could be more than one, link all of them
+        for (let userId of userIds) {
+          await Auth0.linkAccounts(serverToken, userId, userIdRoot);
+        }
+        return { userIds };
+      } catch (err) {
+        req.log.error(err, "Error linking accounts");
+        throw app.httpErrors.internalServerError();
       }
     },
   );
