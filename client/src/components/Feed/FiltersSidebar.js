@@ -11,7 +11,7 @@ import { FeedContext } from "pages/Feed";
 import GTM from "constants/gtm-tags";
 
 // Icons
-import { ReactComponent as BackIcon } from "assets/icons/back.svg";
+import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
 
 // Constants
 import { theme } from "constants/theme";

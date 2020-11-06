@@ -1,8 +1,14 @@
-import React from "react";
+import styled from "styled-components";
 import { Avatar as ExtAvatar } from "antd";
+import { theme } from "constants/theme";
 
-const Avatar = (props) => {
-  return <ExtAvatar {...props} />;
-};
+const { royalBlue, selago } = theme.colors;
 
-export default Avatar;
+export const Avatar = styled(ExtAvatar)`
+  color: #425af2;
+  border: ${({ src, type }) =>
+    !src && type !== "mobile" && `1px solid ${royalBlue}`};
+  background: ${selago};
+  font-size: 10px;
+  margin-right: 10px;
+`;

@@ -4,27 +4,9 @@ import {
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-  SET_POSTS,
-  FETCH_POSTS,
-  ERROR_POSTS,
-  NEXT_PAGE,
-  RESET_PAGE,
-  SET_LOADING,
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_HIDE,
 } from "../actions/feedActions";
-
-export const postsState = {
-  status: SET_POSTS,
-  posts: [],
-  page: 0,
-  error: null,
-  filterType: "ALL",
-  isLoading: false,
-  loadMore: true,
-  deleteModalVisibility: DELETE_MODAL_HIDE,
-};
 
 export const feedReducer = (oldState, action) => {
   const { type, key, value } = action;
@@ -55,59 +37,16 @@ export const optionsReducer = (oldState, action) => {
   }
 };
 
-export const postsReducer = (state = postsState, action) => {
+export const deletePostState = {
+  deleteModalVisibility: DELETE_MODAL_HIDE,
+};
+
+export const deletePostModalreducer = (state = deletePostState, action) => {
   switch (action.type) {
-    case FETCH_POSTS:
-      return { ...state, status: FETCH_POSTS, isLoading: true };
-    case SET_POSTS:
-      return {
-        ...state,
-        status: SET_POSTS,
-        error: null,
-        posts: action.posts,
-        isLoading: false,
-      };
-    case ERROR_POSTS:
-      return {
-        ...state,
-        status: ERROR_POSTS,
-        error: action.error,
-        posts: [],
-        isLoading: false,
-      };
-    case NEXT_PAGE:
-      return { ...state, page: state.page + 1 };
-    case RESET_PAGE:
-      return {
-        ...state,
-        page: 0,
-        filterType: action.filterType || "",
-        posts: [],
-        loadMore: action.loadMore || true,
-        isLoading: action.isLoading || false,
-      };
-    case SET_LOADING:
-      return {
-        ...state,
-        isLoading: false,
-        loadMore: false,
-      };
     case SET_DELETE_MODAL_VISIBILITY:
       return {
         ...state,
         deleteModalVisibility: action.visibility,
-      };
-    case SET_LIKE:
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          [action.postId]: {
-            ...state.posts[action.postId],
-            liked: !!!state.posts[action.postId].liked,
-            likesCount: action.count,
-          },
-        },
       };
     default:
       return state;

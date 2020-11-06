@@ -4,6 +4,7 @@ const fastifyCookie = require("fastify-cookie");
 const fastifySecretProvider = require("fastify-authz-jwks");
 const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
+const { getReqParam } = require("../utils");
 
 const TOKEN_COOKIE = "token";
 // 2nd non-httpOnly "dummy" cookie so user can logout offline
@@ -94,6 +95,46 @@ const authPlugin = async (app) => {
       }
       req.userId = null;
     }
+  });
+
+  // checks that authenticated user can be desired author & sets to req
+  app.decorate("setActor", async (req) => {
+    // must come after either "authenticate" or "optionalAuthenticate" decorator
+    const { userId } = req;
+
+    if (!userId) {
+      req.actor = null;
+      return;
+    }
+
+    // default to req userId
+    const actorId = getReqParam(req, "actorId") || userId;
+
+    // actor can be organisation or individual (self)
+    const User = app.mongo.model("User");
+
+    const [actorErr, actor] = await app.to(User.findById(actorId));
+    if (actorErr) {
+      req.log.error(actorErr, "Failed retrieving acting user");
+      throw app.httpErrors.internalServerError();
+    } else if (actor === null) {
+      req.log.error("Acting user does not exist");
+      throw app.httpErrors.notFound();
+      // In future iterations we will implement a more fine grained policy
+      // based on a user's role within the organisation (besides owner)
+    } else if (!userId.equals(actorId) && !userId.equals(actor.ownerId)) {
+      req.log.error(
+        `Not authorized to act as ${actor.owner ? "organisation" : "user"}`,
+      );
+      throw app.httpErrors.forbidden();
+    }
+
+    // delete body param so not used in mongo update
+    if (req.body && req.body.actorId) {
+      delete req.body.actorId;
+    }
+
+    req.actor = actor;
   });
 
   // eslint-disable-next-line func-names

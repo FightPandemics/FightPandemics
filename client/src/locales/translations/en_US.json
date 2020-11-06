@@ -12,7 +12,10 @@
     "profile": "Profile",
     "addOrg": "Add Organization",
     "logout": "Sign Out",
-    "organisations": "Organizations"
+    "organisations": "Organizations",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organisation"
   },
   "onboarding": {
     "common": {
@@ -212,7 +215,6 @@
       "createProfile": "Create Your Profile",
       "saveChanges": "Save Changes",
       "thankyou": "Thank you for joining our community!",
-      "viewProfile": "My Profile",
       "continuePosting": "Continue Posting",
       "viewFeed": "View Help Board",
       "viewMyProfile": "View my profile",

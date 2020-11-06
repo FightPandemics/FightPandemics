@@ -7,7 +7,6 @@ import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
-const { display } = typography.font.family;
 const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
@@ -43,7 +42,7 @@ const PostCard = styled(Card)`
     .highlighted {
       font-weight: bold;
       color: #425af2;
-      background: #F3F4FE;
+      background: #f3f4fe;
     }
 
     .card-header {

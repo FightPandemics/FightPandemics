@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
@@ -22,6 +23,8 @@ import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
+import { selectOrganisationId } from "reducers/session";
+import { selectPosts, postsActions } from "reducers/posts";
 import Users from "components/Feed/Users";
 import SearchCategories from "components/Input/SearchCategories";
 import FeedSearch from "components/Input/FeedSearch";
@@ -29,8 +32,8 @@ import FeedSearch from "components/Input/FeedSearch";
 import {
   optionsReducer,
   feedReducer,
-  postsReducer,
-  postsState,
+  deletePostModalreducer,
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 
 // ICONS
@@ -46,13 +49,6 @@ import {
   REMOVE_ALL_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-  SET_POSTS,
-  FETCH_POSTS,
-  ERROR_POSTS,
-  NEXT_PAGE,
-  RESET_PAGE,
-  SET_LOADING,
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
@@ -253,25 +249,24 @@ export const NoPosts = styled.div`
   }
 `;
 
-const buttonPulse = styled.button`
-  background-color: rgba(255, 255, 0, 0.4);
-  padding: 0 0.2em;
-  border-radius: 3em;
-  height: 4em;
-  position: relative;
-  top: 1.3em;
-`;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const Feed = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
+  const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+  const posts = useSelector(selectPosts);
   const [isOnboarding, setOnboarding] = useState(true);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -296,9 +291,8 @@ const Feed = (props) => {
     loadMore,
     page,
     posts: postsList,
-    status,
-    deleteModalVisibility,
   } = posts;
+  const { deleteModalVisibility } = deleteModal;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
 
@@ -325,14 +319,8 @@ const Feed = (props) => {
     feedDispatch({ type, key, value });
 
   const handleFilterModal = () => {
-    // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(SET_VALUE, "applyFilters", false);
-    // dispatchAction(
-    //   SET_VALUE,
-    //   "activePanel",
-    //   panelIdx > -1 ? `${panelIdx}` : null,
-    // );
   };
 
   const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
@@ -346,14 +334,7 @@ const Feed = (props) => {
 
     if (!softRefresh || Object.keys(selectedOptions).length || location) {
       dispatchAction(SET_VALUE, "applyFilters", true);
-      postsDispatch({
-        type: RESET_PAGE,
-        isLoading,
-        loadMore,
-        filterType: "",
-      });
-    } else {
-      postsDispatch({ filterType: "" });
+      dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     }
 
     dispatchAction(SET_VALUE, "location", "");
@@ -429,7 +410,7 @@ const Feed = (props) => {
 
   const handleLocation = (value) => {
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      dispatch(postsActions.resetPageAction({}));
     }
     dispatchAction(SET_VALUE, "location", value);
   };
@@ -438,7 +419,7 @@ const Feed = (props) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      dispatch(postsActions.resetPageAction({}));
     }
     return optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
@@ -460,7 +441,7 @@ const Feed = (props) => {
     const value = e.key;
     if (selectedType !== value) {
       dispatchAction(SET_VALUE, "selectedType", e.key);
-      postsDispatch({ type: RESET_PAGE, filterType: value });
+      dispatch(postsActions.resetPageAction({}));
       dispatchAction(SET_VALUE, "applyFilters", true);
     }
   };
@@ -475,66 +456,27 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
     if (Object.keys(selectedOptions).length || location) {
+      dispatch(postsActions.resetPageAction({}));
       dispatchAction(SET_VALUE, "applyFilters", true);
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
-    } else {
-      postsDispatch({ filterType: "" });
-    }
-  };
-
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
     }
   };
 
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
   };
 
   const loadPosts = useCallback(async () => {
+    dispatchAction(SET_VALUE, "applyFilters", false);
     const filterURL = () => {
       const filterObj = { ...selectedOptions };
       delete filterObj["lookingFor"];
@@ -573,7 +515,7 @@ const Feed = (props) => {
 
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
     switch (searchCategory) {
       case "POSTS":
         break;
@@ -586,9 +528,8 @@ const Feed = (props) => {
       default:
         break;
     }
-
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
-    postsDispatch({ type: FETCH_POSTS });
+    dispatch(postsActions.fetchPostsBengin());
 
     try {
       const {
@@ -609,50 +550,44 @@ const Feed = (props) => {
           setTotalPostCount(meta.total);
         }
         if (posts.length < limit) {
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: true,
-            loadMore: false,
-          });
+          dispatch(postsActions.finishLoadingAction());
         } else if (meta.total === limit) {
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: true,
-            loadMore: false,
-          });
+          dispatch(postsActions.finishLoadingAction());
         }
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (postsList) {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...postsList, ...loadedPosts },
-          });
-        } else {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...loadedPosts },
-          });
-        }
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...(postsList || []), ...loadedPosts },
+          }),
+        );
       } else if (posts) {
-        postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList },
-        });
-        postsDispatch({
-          type: SET_LOADING,
-          isLoading: false,
-          loadMore: false,
-        });
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...postsList },
+          }),
+        );
+        dispatch(postsActions.finishLoadingAction());
       } else {
-        postsDispatch({ type: SET_LOADING });
+        dispatch(postsActions.finishLoadingAction());
       }
     } catch (error) {
-      postsDispatch({ error, type: ERROR_POSTS });
+      dispatch(postsActions.fetchPostsError(error));
     }
-  }, [page, selectedOptions, location, selectedType, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [
+    page,
+    organisationId,
+    searchCategory,
+    dispatch,
+    selectedOptions,
+    location,
+    selectedType,
+    searchKeyword,
+    prevTotalPostCount,
+    postsList,
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -736,7 +671,8 @@ const Feed = (props) => {
         feedPosts.length
       ) {
         return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
+          dispatch(postsActions.setNextPageAction());
+          dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
       } else {
@@ -804,7 +740,6 @@ const Feed = (props) => {
         handleLocation,
         handleOnClose,
         showFilters,
-        handlePostLike,
         totalPostCount,
       }}
     >
@@ -891,7 +826,6 @@ const Feed = (props) => {
               <Posts
                 isAuthenticated={isAuthenticated}
                 filteredPosts={postsList}
-                handlePostLike={handlePostLike}
                 postDelete={postDelete}
                 user={user}
                 deleteModalVisibility={deleteModalVisibility}
@@ -919,15 +853,6 @@ const Feed = (props) => {
                 highlightWords={searchKeyword}
               />
             )}
-            {status === ERROR_POSTS && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-
             {emptyFeed() ? (
               <NoPosts>
                 <Trans
@@ -968,6 +893,11 @@ const Feed = (props) => {
       </FeedWrapper>
     </FeedContext.Provider>
   );
+};
+
+const gePostsBasetUrl = (organisationId, limit, skip) => {
+  const actorId = organisationId ? `&actorId=${organisationId}` : "";
+  return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
 };
 
 export default Feed;

@@ -1,11 +1,6 @@
 import axios from "axios";
 import { checkRememberCookie, clearRememberCookie } from "utils/cookie";
-import {
-  AUTH_ERROR,
-  AUTH_LOGOUT,
-  SET_AUTH_LOADING,
-  SET_USER,
-} from "constants/action-types";
+import { SESSION_ACTIONS } from "reducers/session";
 
 import TagManager from "react-gtm-module";
 
@@ -16,7 +11,7 @@ export const initAuth = () => {
   return async (dispatch) => {
     if (!checkRememberCookie()) return;
 
-    dispatch({ type: SET_AUTH_LOADING, payload: true });
+    dispatch({ type: SESSION_ACTIONS.SET_AUTH_LOADING, payload: true });
     try {
       const { data: user } = await axios.get(GET_CURRENT_USER_ENDPOINT);
       TagManager.dataLayer({
@@ -24,11 +19,11 @@ export const initAuth = () => {
           userId: user.id,
         },
       });
-      dispatch({ type: SET_USER, payload: { user } });
+      dispatch({ type: SESSION_ACTIONS.SET_USER, payload: { user } });
     } catch (error) {
-      dispatch({ error, type: AUTH_ERROR });
+      dispatch({ error, type: SESSION_ACTIONS.AUTH_ERROR });
     } finally {
-      dispatch({ type: SET_AUTH_LOADING, payload: false });
+      dispatch({ type: SESSION_ACTIONS.SET_AUTH_LOADING, payload: false });
     }
   };
 };
@@ -37,9 +32,9 @@ export const refetchUser = () => {
   return async (dispatch) => {
     try {
       const { data: user } = await axios.get(GET_CURRENT_USER_ENDPOINT);
-      dispatch({ type: SET_USER, payload: { user } });
+      dispatch({ type: SESSION_ACTIONS.SET_USER, payload: { user } });
     } catch (error) {
-      dispatch({ error, type: AUTH_ERROR });
+      dispatch({ error, type: SESSION_ACTIONS.AUTH_ERROR });
     }
   };
 };
@@ -52,6 +47,6 @@ export const authLogout = () => {
         userId: -1,
       },
     });
-    dispatch({ type: AUTH_LOGOUT });
+    dispatch({ type: SESSION_ACTIONS.AUTH_LOGOUT });
   };
 };

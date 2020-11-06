@@ -36,6 +36,7 @@ export const RouteWithSubRoutes = (route) => {
     forgotPasswordRequested,
     isAuthenticated,
     path,
+    organisationId,
     props = {},
     user,
   } = route;
@@ -113,6 +114,7 @@ export const RouteWithSubRoutes = (route) => {
             mobiletabs={mobiletabs}
             navSearch={navSearch}
             tabIndex={tabIndex}
+            organisationId={organisationId}
           />
         );
       }}
@@ -128,6 +130,7 @@ const mapStateToProps = ({ session }) => ({
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
+  organisationId: session.organisationId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

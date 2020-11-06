@@ -23,7 +23,6 @@ const Activity = ({
   handleCancelPostDelete,
   postDelete,
   deleteModalVisibility,
-  handlePostLike,
   loadNextPage,
   isNextPageLoading,
   itemCount,
@@ -44,7 +43,6 @@ const Activity = ({
             currentPost={posts[index][1]}
             updateComments={updateComments}
             numComments={posts[index][1].commentsCount}
-            handlePostLike={handlePostLike}
             postDelete={postDelete}
             user={user}
             deleteModalVisibility={deleteModalVisibility}
@@ -75,7 +73,6 @@ const Activity = ({
       handleCancelPostDelete,
       handleEditPost,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       isItemLoaded,
       postDelete,
