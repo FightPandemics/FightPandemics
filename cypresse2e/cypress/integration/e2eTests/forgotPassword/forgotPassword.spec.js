@@ -51,7 +51,7 @@ describe("FightPandemics Forgot Password Page", () => {
       submitButton.invoke("attr", "aria-disabled").should("contain", "false");
     });
 
-    it("Back to Sign in screen link is visible and  clickable", () => {
+    it("Back to Sign in screen link is visible and clickable", () => {
       var backToSignInPageLink = forgotPassword.getBackToSignInLink();
       backToSignInPageLink.should("be.visible");
       backToSignInPageLink.contains("Back to Sign In screen").click();
