@@ -12,10 +12,7 @@
     "profile": "Profile",
     "addOrg": "Add Organisation",
     "logout": "Sign Out",
-    "organisations": "Organisations",
-    "language": "Language",
-    "switchAccount": "Switch Account",
-    "myOrganisation": "My Organisation"
+    "organisations": "Organisations"
   },
   "onboarding": {
     "common": {
