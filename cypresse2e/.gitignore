@@ -23,4 +23,4 @@ mochawesome-report
 mochawesome.json
 screenshots
 
-logs
+/cypress/logs
