@@ -118,7 +118,7 @@ const Chip = styled.span`
   overflow: hidden;
   max-width: 7.4rem;
   display: inline-block;
-  vertical-align: text-bottom;
+  vertical-align: top;
   text-overflow: ellipsis;
   .singleChip {
     background: none;
@@ -279,7 +279,7 @@ class FeedNavSearch extends React.Component {
     if (isMobile) {
       let searchQuery = {
         s_keyword: inputValue,
-        s_category: options.findIndex((a) => a.id == selectedValue[0]?.id),
+        s_category: options.findIndex((a) => a.id === selectedValue[0]?.id),
       };
       if (searchQuery.s_category) {
         searchQuery.filters = null;

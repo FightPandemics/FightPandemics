@@ -49,7 +49,8 @@ export const setQueryKeysValue = (history, newQuery) => {
     else query[key] = newQuery[key];
   }
   const stringifiedQuery = qs.stringify(query);
-  if (stringifiedQuery == history.location.search.replace("?", "")) return;
+  const oldQuery = history.location.search.replace("?", "");
+  if (stringifiedQuery === oldQuery) return;
   history.push({
     pathname: history.location.pathname,
     search: stringifiedQuery,

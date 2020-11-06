@@ -224,14 +224,12 @@ const Feed = (props) => {
 
   const setQueryFromState = () => {
     const newQuery = {};
-    const oldFiltersLength = [
-      ...(queryParams.filters?.type || []),
-      ...(queryParams.filters?.providers || []),
-    ].length;
-    const newFiltersLength = [
-      ...(selectedOptions?.type || []),
-      ...(selectedOptions?.providers || []),
-    ].length;
+    const oldFiltersLength =
+      (queryParams.filters?.type || []).length +
+      (queryParams.filters?.providers || []).length;
+    const newFiltersLength =
+      (selectedOptions?.type || []).length +
+      (selectedOptions?.providers || []).length;
     if (applyFilters && location) {
       newQuery.location = btoa(JSON.stringify(location));
     }

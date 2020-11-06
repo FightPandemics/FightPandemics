@@ -37,28 +37,22 @@ class SearchCategories extends React.Component {
       selectedValue: null,
       showOptions: props.showOptions,
     };
-    this.renderTabsContainer = this.renderTabsContainer.bind(this);
-    this.onSelectItem = this.onSelectItem.bind(this);
-    this.getCategoryFromQuery = this.getCategoryFromQuery.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.getCategoryFromQuery();
     const unlisten = this.props.history.listen((location) => {
-      if (location.pathname === "/feed") {
-        return this.getCategoryFromQuery();
-      } else {
-        return unlisten();
-      }
+      if (location.pathname === "/feed") return this.getCategoryFromQuery();
+      unlisten();
     });
-  }
+  };
 
-  getCategoryFromQuery() {
+  getCategoryFromQuery = () => {
     let query = qs.parse(this.props.history.location.search);
     this.setState({ selectedValue: this.props.options[query.s_category || 0] });
-  }
+  };
 
-  onSelectItem(item) {
+  onSelectItem = (item) => {
     this.setState({ selectedValue: item });
     setQueryKeysValue(this.props.history, {
       s_category:
@@ -67,9 +61,9 @@ class SearchCategories extends React.Component {
       filters: null,
       objective: null,
     });
-  }
+  };
 
-  renderCategories() {
+  renderCategories = () => {
     const { isObject = false, displayValue, options } = this.props;
     const { selectedValue } = this.state;
     return options.map((value) => (
@@ -90,16 +84,16 @@ class SearchCategories extends React.Component {
         )}
       </Chip>
     ));
-  }
+  };
 
-  renderTabsContainer() {
+  renderTabsContainer = () => {
     const { id, showOptions } = this.props;
     return (
       <TabsContainer id={id || "SearchContainer"}>
         {showOptions && this.renderCategories()}
       </TabsContainer>
     );
-  }
+  };
 
   render() {
     return this.renderTabsContainer();
