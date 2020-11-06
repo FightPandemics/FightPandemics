@@ -529,7 +529,7 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
-    dispatch(postsActions.fetchPostsBengin());
+    dispatch(postsActions.fetchPostsBegin());
 
     try {
       const {

@@ -24,7 +24,7 @@ export const setLikeAction = (postId, count) => ({
   },
 });
 
-export const fetchPostsBengin = () => ({
+export const fetchPostsBegin = () => ({
   type: POSTS_ACTIONS.FETCH_POSTS_BEGIN,
 });
 
@@ -49,7 +49,7 @@ export const setNextPageAction = () => ({
 export const postsActions = {
   resetPageAction,
   setLikeAction,
-  fetchPostsBengin,
+  fetchPostsBegin,
   fetchPostsSuccess,
   fetchPostsError,
   finishLoadingAction,

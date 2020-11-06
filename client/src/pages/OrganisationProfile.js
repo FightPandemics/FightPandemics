@@ -211,7 +211,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     const fetchOrganisationPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      dispatch(postsActions.fetchPostsBengin());
+      dispatch(postsActions.fetchPostsBegin());
       try {
         if (organisationId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;

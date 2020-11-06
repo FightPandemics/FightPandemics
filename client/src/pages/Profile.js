@@ -182,7 +182,7 @@ const Profile = ({
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      dispatch(postsActions.fetchPostsBengin());
+      dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
