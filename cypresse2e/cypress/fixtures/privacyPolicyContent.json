@@ -1,0 +1,206 @@
+{
+  "paraPolicyCx": [
+    {
+      "id": 1,
+      "regularText": "is the manager of this website and hereby informs YOU how We will collect and process your Personal Data (as defined below) when YOU use our services, websites and applications (the",
+      "strongText": [
+        "FightPandemics, INC.",
+        "“Company”",
+        "“We”",
+        "“Us”",
+        "\"Services\""
+      ]
+    },
+    {
+      "id": 2,
+      "regularText": "By using the Services, YOU consent that we can collect and process your Personal Data. For the avoidance of doubt, We will only use your Personal Data for the purposes described in this Privacy Policy, and in no case, We will provide access or share your Personal Data with any third party, except with the relevant persons set forth in this Privacy Policy.",
+      "strongText": []
+    },
+    {
+      "id": 3,
+      "regularText": " means any information relating to an identified or identifiable natural person. An identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.",
+      "strongText": ["“Personal data”"]
+    },
+    {
+      "id": 4,
+      "regularText": "On the basis of the above, the Company herein provides YOU with a detailed explanation about the treatment of your data when YOU use our Services, as well as an explanation about your rights regarding your Personal Data and how YOU can exercise them:",
+      "strongText": []
+    }
+  ],
+  "paraPolicyCxWithOrdList": [
+    {
+      "id": 1,
+      "firstDivTypeTxt": "We are the Controller of the Services, and our address is at 9 E Loockerman Street Suite 311, Dover, Delaware (19901).",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "If YOU have any questions about our practices or this Privacy Policy, please contact Us at",
+      "secondDivLink": "legal@fightpandemics.com",
+      "strongText": "Who We are and how YOU can contact Us"
+    },
+    {
+      "id": 3,
+      "firstDivTypeTxt": "If YOU want to exercise any of the rights described above, please contact Us using the contact details in Clause 1.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "We may need to request specific information from YOU to help Us confirm your identity and ensure your right to access your Personal Data (or to exercise any of your other rights). This is a security measure to ensure that Personal Data is not disclosed to any person who has no right to receive it. We may also contact YOU to ask YOU for further information in relation to your request to speed up our response.",
+      "secondDivLink": "",
+      "strongText": "How to exercise your rights"
+    },
+
+    {
+      "id": 5,
+      "firstDivTypeTxt": "We collect and process your Personal Data with the aim to provide YOU with the Services, personalize content, remember information to help YOU efficiently access your account, analyse how the Services are used, diagnose service or technical problems, maintain security, monitor aggregate metrics such as total number of visitors, traffic, and demographic patterns.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "Why We collect your Personal Data"
+    },
+    {
+      "id": 9,
+      "firstDivTypeTxt": "WE may not be able to perform the contract We have or are trying to enter into with YOU.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "What happens when YOU do not provide necessary Personal Data?"
+    },
+    {
+      "id": 12,
+      "firstDivTypeTxt": "The Services are provided in the United States of America. Notwithstanding, your Personal Data will be stored, processed in the EU.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "Where We Store Your Personal Data"
+    },
+    {
+      "id": 13,
+      "firstDivTypeTxt": "We have put in place procedures to respond to any actual or suspected Personal Data breach. In the event that Personal Data is compromised as a result of such breach of security, the Company will promptly notify by e-mail to those persons whose personal information has been compromised. WE cannot ensure that your Personal Data will be protected, controlled or otherwise managed pursuant to this Privacy Policy if YOU share your sign in and password information with any third party.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "How We Protect Your Personal Data"
+    },
+    {
+      "id": 14,
+      "firstDivTypeTxt": "If YOU have questions or concerns regarding the way in which your personal data has been used, please contact legal@fightpandemics.com.",
+      "firstDivLink": "legal@fightpandemics.com.",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "Contact Us"
+    },
+    {
+      "id": 15,
+      "firstDivTypeTxt": "We reserve the right, in our sole discretion, to change, modify, add, or remove portions of this Privacy Policy at any time. Any changes or updates will be effective immediately upon posting to this page. YOU should review this Privacy Policy regularly.",
+      "firstDivLink": "",
+      "secondDivTypeTxt": "",
+      "secondDivLink": "",
+      "strongText": "Changes to Our Privacy Policy"
+    }
+  ],
+  "paraPolicyCxOrdListWthnOrdList": [
+    {
+      "id": 2,
+      "firstDivTxt": "The Company recognises that YOU have the following rights:",
+      "secondDivTxt": "",
+      "firstLUTypeTxt": "Access to your Personal Data:",
+      "firstListTxt": "YOU can request Us a copy of the Personal Data we hold about YOU and to check that we are lawfully processing it.",
+      "secondLUTypeTxt": "Correction of your Personal Data:",
+      "secondListTxt": "YOU can request that We correct any information that we hold about YOU if it is incomplete or inaccurate.",
+      "thirdLUTypeTxt": "Erasure of your Personal Data:",
+      "thirdListTxt": "YOU can request Us to delete or remove your Personal Data when it is not necessary that we continue to process it. YOU also have the right if YOU are within the EU to ask Us to delete or remove your Personal Data where YOU have exercised your right to object to processing (see below).",
+      "fourthLUTypeTxt": "Object to processing of your Personal Data:",
+      "fourthListTxt": "This right exists where we are relying on a legitimate interest as the legal basis for our processing and there is something about your particular situation, which makes YOU want to object to the processing of your Personal Data on this ground. YOU also have the right to object where we are processing your Personal Data for direct marketing purposes.",
+      "fifthLUTypeTxt": "Restriction of processing of your Personal Data:",
+      "fifthListTxt": "enables YOU to ask Us to suspend the processing of your Personal Data.",
+      "sixthLUTypeTxt": "Transfer of your Personal Data:",
+      "sixthListTxt": "If YOU are in certain jurisdictions, we will provide YOU, or a third party that you chose, your Personal Data in a structured, commonly used, machine-readable format. Note that this right only applies to automated information which YOU initially provided consent for Us to use or where we used the information to perform a contract with YOU.",
+      "seventhLUTypeTxt": "Withdraw of consent:",
+      "seventhListTxt": "This right only exists where we are relying on consent to process your Personal Data. If YOU withdraw your consent, we may not be able to provide YOU with access to certain specific functionalities of our Services.",
+      "strongText": "Your rights relating your Personal Data"
+    },
+    {
+      "id": 10,
+      "firstDivTxt": "The Company will be able to share your personal data with third parties under the following circumstances:",
+      "secondDivTxt": "",
+      "firstLUTypeTxt": "Service providers and business partners:",
+      "firstListTxt": "We could share anonymized data to our service providers and business partners that perform amongst others, to process maintenance and other IT services, marketing and communication, accounting, finance, legal and audit and other business operations for Us, and in order to be able to provide our service.",
+      "secondLUTypeTxt": "Law enforcement agency, court, regulator, government authority or other third party with compelling authority:",
+      "secondListTxt": "We will be able to share your personal data with these parties where We believe this is necessary to comply with a legal or regulatory obligation, or otherwise to protect our rights or the rights of any third party.",
+      "thirdLUTypeTxt": "Asset purchasers, merger, reorganisation, dissolution or similar event:",
+      "thirdListTxt": "We may also transfer your Personal Data as part of the transferred assets without notifying YOU.",
+      "fourthLUTypeTxt": "Third parties:",
+      "fourthListTxt": "We will share your personal data with third parties for the fulfillment of the relationship YOU have with Us.",
+      "fifthLUTypeTxt": "",
+      "fifthListTxt": "",
+      "sixthLUTypeTxt": "",
+      "sixthListTxt": "",
+      "seventhLUTypeTxt": "",
+      "seventhListTxt": "",
+      "strongText": "With Whom We Share Your Personal Data?"
+    },
+    {
+      "id": 11,
+      "firstDivTxt": "We will retain your information for as long as your account is active and We have a relationship with YOU. Once our relationship with YOU has come to an end, We will retain your personal data for a period of time that enables Us to:",
+      "secondDivTxt": "We will delete your personal data when it is no longer required for these purposes. If there is any information that We are unable, for technical reasons, to delete entirely from our systems, We will put in place appropriate measures to prevent any further processing or use of the data.",
+      "firstLUTypeTxt": "",
+      "firstListTxt": "Maintain business records for analysis and/or audit purposes;",
+      "secondLUTypeTxt": "",
+      "secondListTxt": "Comply with law’s requirements;",
+      "thirdLUTypeTxt": "",
+      "thirdListTxt": "Defend or present legal claims;",
+      "fourthLUTypeTxt": "",
+      "fourthListTxt": "Deal with any complaints regarding the Services.",
+      "fifthLUTypeTxt": "",
+      "fifthListTxt": "",
+      "sixthLUTypeTxt": "",
+      "sixthListTxt": "",
+      "seventhLUTypeTxt": "",
+      "seventhListTxt": "",
+      "strongText": "How long We store your Personal Data"
+    }
+  ],
+
+  "paraPolicyCxDiffTyp1": [
+    {
+      "id": 4,
+      "firstDivTypeTxt": "If YOU would like to submit a complaint regarding this Privacy Policy or our practices in relation to your Personal Data, please contact Us at:",
+      "firstDivLink": "legal@fightpandemics.com",
+      "firstStrTxt": "",
+      "secondDivTypeTxt": "After we have analysed your request, We will reply to your complaint as prompt as possible, always trying to provide the best possible assistance. Notwithstanding, if YOU feel that your complaint has not been adequately resolved, please note that if YOU are in the EU the GDPR gives YOU the right to contact your local data protection supervisory authority.",
+      "strongText": ""
+    },
+    {
+      "id": 7,
+      "firstDivTypeTxt": "We may also collect, process and recollect statistical or demographic data",
+      "firstDivLink": "",
+      "firstStrTxt": "“Aggregated Data”",
+      "secondDivTypeTxt": "Aggregated Data may be derived from your Personal Data, but once in aggregated form it will not constitute Personal Data as this data does not directly or indirectly reveal your identity. However, if we combine or connect Aggregated Data with your Personal Data, We can directly or indirectly identify YOU. In this sense, we will treat the combined data as Personal Data which will be used in accordance with this Privacy Policy.",
+      "strongText": "Aggregated Data"
+    }
+  ],
+
+  "paraPolicyCxDiffTyp2": [
+    {
+      "id": 6,
+      "firstDivTypeTxt": "There are many occasions when YOU provide information that may enable Us to identify YOU personally while using the Services. The Personal Data we may collect from YOU is described in the following table:",
+      "firstHeadTxtP1": "Category of Personal Data",
+      "firstHeadTxtP2": "What it includes",
+      "firstBodyUTxtP1": "Identity Data",
+      "firstBodyTxtP2": "First name, surname, maiden name, last name, username, date of birth, gender, picture, signature, etc.",
+      "secondBodyUTxtP1": "Contact Data",
+      "secondBodyTxtP2": "Your home address, work address, email address and telephone numbers.",
+      "thirdBodyUTxtP1": "Professional Background",
+      "thirdBodyTxtP2": "Educational and professional history, interests and accomplishments and projects completed.",
+      "fourthBodyUTxtP1": "Online Presence Data",
+      "fourthBodyTxtP2": "Links to your public account pages at social media websites, links to personal websites, and other online materials related to YOU.",
+      "fifthBodyUTxtP1": "Content Data",
+      "fifthBodyTxtP2": "Any content YOU post to the Services not already included in another category, including without limitation, your profiles, questions, preference settings, answers, messages, comments and other contributions on the Services.",
+      "sixthBodyUTxtP1": "Communications Preferences",
+      "sixthBodyTxtP2": "Your preferences in receiving marketing from Us and our third parties and your communication preferences. If YOU correspond with Us by email or messaging through the Services, we may retain the content of such messages and our responses.",
+      "seventhBodyUTxtP1": "Behavioural Data",
+      "seventhBodyTxtP2": "Inferred or assumed information relating to your behaviour and interests, based on your online activity.",
+      "eigthBodyUTxtP1": "Technical Data",
+      "eigthBodyTxtP2": "Internet protocol (IP) address, your sign in data, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform and other technology on the devices YOU use to access this website or use our services.",
+      "ninethBodyUTxtP1": "Health Data",
+      "ninethBodyTxtP2": "Health conditions from You, when accessing the questionnaire.",
+      "strongText": "What Personal Data We collect"
+    }
+  ]
+}
