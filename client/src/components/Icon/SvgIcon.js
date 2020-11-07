@@ -10,7 +10,6 @@ const StyledImg = styled.img`
 
   &.globe-icon-svg {
     height: 2rem;
-    margin-left: 1rem;
   }
 `;
 
