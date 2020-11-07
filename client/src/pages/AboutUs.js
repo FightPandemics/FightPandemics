@@ -23,7 +23,7 @@ import WorldMap from "assets/about-us-images/world-map.png";
 import HelpBoard from "assets/how-does-work-images/Help-Board.gif";
 import LocalGlobal from "assets/how-does-work-images/Local&Global.gif";
 import RelevantContent from "assets/how-does-work-images/Relevant-content.gif";
-import ConnectImage from "assets/about-us-images/weConnectPeople.png";
+import ConnectImage from "assets/about-us-images/weConnectPeople.svg";
 
 // company supporter logos import
 import accessibe from "assets/supporters-logos/accessibe.png";
@@ -41,6 +41,7 @@ import gitkrakenLogo from "assets/supporters-logos/gitkraken-logo.png";
 import github from "assets/supporters-logos/github.png";
 import googleMapsLogo from "assets/supporters-logos/googleMapsLogo.png";
 import hackoladeLogo from "assets/supporters-logos/hackoladeLogo.png";
+import hrcloud from "assets/supporters-logos/hrcloud.png";
 import hopin from "assets/supporters-logos/hopin.png";
 import kite from "assets/supporters-logos/kite.svg";
 import leypayLogo from "assets/supporters-logos/leypalLogo2.png";
@@ -75,10 +76,10 @@ import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
 import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
 
 // social icons
-import instagramLogo from "assets/icons/social-instagram.png";
-import linkedInLogo from "assets/icons/social-linkedin.png";
-import facebookLogo from "assets/icons/social-facebook.png";
-import twitterLogo from "assets/icons/social-twitter.png";
+import instagramLogo from "assets/icons/social-instagram.svg";
+import linkedInLogo from "assets/icons/social-linkedin.svg";
+import facebookLogo from "assets/icons/social-fb.svg";
+import twitterLogo from "assets/icons/social-tw.svg";
 
 // const DemoBox = (props) => (
 //   <p className={`height-${props.value}`}>{props.children}</p>
@@ -95,6 +96,7 @@ const LogosMap = new Map([
   [datadog, "https://www.datadoghq.com/"],
   [datasaur, "https://datasaur.ai/"],
   [hackoladeLogo, "https://hackolade.com/"],
+  [hrcloud, "https://www.hrcloud.com/"],
   [figmaLogo, "https://www.figma.com"],
   [whitesourceLogo, "https://www.whitesourcesoftware.com"],
   [geekbot, "https://geekbot.com/"],
@@ -161,6 +163,7 @@ const supporterLogosCurrent = [
   googleMapsLogo,
   github,
   hopin,
+  hrcloud,
   lambdatestLogo,
   mongodbLogo,
   notionLogo,
