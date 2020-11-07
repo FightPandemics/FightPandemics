@@ -227,6 +227,7 @@ export const HelpContainer = styled.div`
     border-radius: 4px;
     padding: 0.8rem 2rem;
     color: ${colors.royalBlue};
+    margin-right: 0.8rem;
   }
 `;
 
