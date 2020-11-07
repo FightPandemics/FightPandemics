@@ -9,6 +9,7 @@ import gearIcon from "assets/icons/settings-blue.svg";
 import arrow from "assets/icons/blue-down-arrow.svg";
 import { useTranslation } from "react-i18next";
 import { mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -186,6 +187,11 @@ export const ChatList = ({
                 leaveAllRooms();
                 setToggleViewRequests(!toggleViewRequests);
               }}
+              id={
+                !toggleViewRequests
+                  ? GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.view
+                  : ""
+              }
             >
               {toggleViewRequests && (
                 <SettingsBackArrow

@@ -11,6 +11,7 @@ import { SideChatContainer } from "./Container";
 import { mq } from "constants/theme";
 import Button from "components/Button/BaseButton";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -40,7 +41,7 @@ const ThreadContainer = styled(SideChatContainer)`
   }
 
   content {
-    max-width: calc(100vw - 55.6rem);
+    max-width: calc(100vw - 25rem);
     position: relative;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -87,6 +88,7 @@ const StyledButton = styled(Button)`
   font-size: 1.6rem;
   height: 4.4rem;
   line-height: 1;
+  margin-left: auto;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: relative;
     display: block;
@@ -106,7 +108,13 @@ const NoThreads = styled.p`
   padding: 1rem;
   font-size: 1.5rem;
 `;
-const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
+const Settings = ({
+  selectedSettingsTab,
+  rooms,
+  user,
+  unblockThread,
+  gtmPrefix,
+}) => {
   const { t } = useTranslation();
   const { toggleMobileChatList } = useContext(ChatContext);
 
@@ -157,7 +165,10 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                   <p className="message">{_room.lastMessage?.content}</p>
                 </div>
               </content>
-              <StyledButton onClick={() => unblockThread(_room._id)}>
+              <StyledButton
+                id={gtmPrefix + GTM.inbox.unarchive}
+                onClick={() => unblockThread(_room._id)}
+              >
                 {t("messaging.settings.unarchive")}
               </StyledButton>
             </ThreadContainer>
@@ -191,6 +202,7 @@ const Settings = ({ selectedSettingsTab, rooms, user, unblockThread }) => {
                 <StyledButton
                   className={"for-blocked"}
                   onClick={() => unblockThread(_room._id)}
+                  id={gtmPrefix + GTM.inbox.unblock}
                 >
                   {t("messaging.settings.unblock")}
                 </StyledButton>

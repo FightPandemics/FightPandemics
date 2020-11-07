@@ -43,8 +43,10 @@ const StyledModal = styled(Modal)`
       font-family: ${theme?.typography?.font?.family?.body};
       height: 4.4rem;
       line-height: 4.4rem;
-
       border-top: 1px solid #f2f2f2;
+      span {
+        display: block;
+      }
     }
   }
 `;

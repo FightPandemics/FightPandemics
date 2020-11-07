@@ -10,6 +10,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
 import { AlertBox } from "./AlertBox";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 const { Text } = Typography;
 
 const RecipientName = styled.div`
@@ -111,7 +112,15 @@ export const RecipientHeader = ({
       }),
       action: [
         {
-          text: <Text type="danger"> {t("messaging.block")}</Text>,
+          text: (
+            <Text
+              type="danger"
+              id={GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.block}
+            >
+              {" "}
+              {t("messaging.block")}
+            </Text>
+          ),
           onPress: () => {
             blockThread(threadId);
             setAlertBox({ show: false });
@@ -133,7 +142,14 @@ export const RecipientHeader = ({
       content: t("messaging.archiveText"),
       action: [
         {
-          text: <Text type="danger">{t("messaging.archive")}</Text>,
+          text: (
+            <Text
+              type="danger"
+              id={GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.archive}
+            >
+              {t("messaging.archive")}
+            </Text>
+          ),
           onPress: () => {
             archiveThread(threadId);
             setToggleMobileChatList(true);
