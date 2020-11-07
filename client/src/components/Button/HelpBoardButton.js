@@ -32,8 +32,7 @@ const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
   &:hover {
     background-color: ${white};
     color: ${royalBlue};
-    border-color: ${royalBlue};
-    border: 1px solid;
+    border: 1px solid ${royalBlue} !important;
     transition: 0.3s all;
   }
 

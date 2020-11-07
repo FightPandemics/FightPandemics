@@ -217,6 +217,10 @@ export const OurStoryContainer = styled.div`
   }
   video {
     margin-top: 8rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      max-width: calc(100vw - 6rem);
+    }
   }
 `;
 

@@ -319,7 +319,7 @@ const AboutUs = () => {
         <p dangerouslySetInnerHTML={{ __html: t("storyInspired") }}></p>
         {/* TODO Add FightPandemics Video */}
         {/* <img src={BlankImage} alt="loading..." /> */}
-        <video width="630" height="354" controls preload="metadata">
+        <video width="630" height="auto" controls preload="metadata">
           <source src={OurStory} type="video/mp4" />
         </video>
       </OurStoryContainer>
