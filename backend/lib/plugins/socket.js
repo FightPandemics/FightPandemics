@@ -468,38 +468,33 @@ function onSocketConnect(socket) {
       this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
   });
 
-
   socket.on("GET_NOTIFICATIONS", async (data, res) => {
-    userId = socket.userId;
-
+    const { userId } = socket;
     const [notificationsErr, notifications] = await this.to(
-      Notification.find({ receiver: userId })
-        .sort({ createdAt: -1 }),
+      Notification.find({ receiver: userId }).sort({ createdAt: -1 }),
     );
-
     if (notificationsErr)
       return res({ code: 500, message: "Internal server error" });
     res({ code: 200, data: notifications });
   });
 
   socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
-    userId = socket.userId;
-
+    const { userId } = socket;
     const [updateErr, update] = await this.to(
-      Notification.updateMany({ receiver: this.mongo.base.Types.ObjectId(userId), readAt: null }, { readAt: new Date() })
+      Notification.updateMany(
+        { receiver: this.mongo.base.Types.ObjectId(userId), readAt: null },
+        { readAt: new Date() },
+      ),
     );
-
-  })
+  });
 
   socket.on("POST_SHARED", async (data) => {
-    userId = socket.userId;
-
+    const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));
     if (errPost || !post) return;
-
-    // action, post, triggeredBy, sharedVia
-    this.notifier.notify("share", post, userId, data.sharedVia)  
-  })
+    // action, post, triggeredBy, {sharedVia}
+    this.notifier.notify("share", post, userId, { sharedVia: data.sharedVia });
+  });
 }
 
 function fastifySocketIo(app, config, next) {

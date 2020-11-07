@@ -26,6 +26,7 @@ const notificationSchema = new Schema(
       enum: ["email", "facebook", "linkedin", "reddit", "telegram", "twitter", "whatsapp" ],
       type: String,
     },
+    commentText: String,
     triggeredBy: {
       id: {
         ref: "User",

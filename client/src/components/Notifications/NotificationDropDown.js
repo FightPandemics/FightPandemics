@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Badge } from "antd";
+import { Trans, useTranslation } from "react-i18next";
 import TextAvatar from "../TextAvatar/index";
 import commentpost from "assets/icons/notification-icons/comment-post.svg";
 import cmntflwpost from "../../assets/icons/notification-icons/comment-following-post.svg";
@@ -160,6 +161,7 @@ const MenuItem = ({
   postTitle,
   unread,
   sharedVia,
+  t,
 }) => {
   return (
     <ItemContainer href={path}>
@@ -167,13 +169,11 @@ const MenuItem = ({
       <img src={actionAvatar} className="action-avatar" />
       <Content>
         <div>
-          <span>{author}</span> {action} <span>{postTitle}</span>{" "}
-          {sharedVia && (
-            <>
-              {" "}
-              on <span>{sharedVia}</span>
-            </>
-          )}
+          <Trans
+            i18nKey={action}
+            components={[<span />, <span />, <span />]}
+            values={{ username: author, postTitle, shareMedium: sharedVia }}
+          ></Trans>
         </div>
         <div>{createdAt}</div>
       </Content>
@@ -184,40 +184,46 @@ const MenuItem = ({
   );
 };
 
-const menu = (notifications) => (
-  <StyledMenu>
-    <Menu.Item style={{ ...itemStyle }}>
-      <a style={{ color: "white" }}>Notifications</a>
-      <Arrow />
-      <Link to="/edit-account" style={{ color: "white", position: "relative" }}>
-        <img src={gear} />
-      </Link>
-    </Menu.Item>
-    <div className="notifications-container">
-      <div>
-        {notifications.map((each) => (
-          <MenuItem
-            path={each.path}
-            author={each.author}
-            action={each.action}
-            postTitle={each.postTitle}
-            actionAvatar={each.actionAvatar}
-            createdAt={each.createdAt}
-            avatar={each.avatar}
-            unread={each.unread}
-            sharedVia={each.sharedVia}
-          />
-        ))}
+const menu = (notifications, t) => {
+  return (
+    <StyledMenu>
+      <Menu.Item style={{ ...itemStyle }}>
+        <a style={{ color: "white" }}>{t("notifications.header")}</a>
+        <Arrow />
+        <Link
+          to="/edit-notifications"
+          style={{ color: "white", position: "relative" }}
+        >
+          <img src={gear} />
+        </Link>
+      </Menu.Item>
+      <div className="notifications-container">
+        <div>
+          {notifications.map((each) => (
+            <MenuItem
+              path={each.path}
+              author={each.author}
+              action={each.action}
+              postTitle={each.postTitle}
+              actionAvatar={each.actionAvatar}
+              createdAt={each.createdAt}
+              avatar={each.avatar}
+              unread={each.unread}
+              sharedVia={each.sharedVia}
+              t={t}
+            />
+          ))}
+        </div>
+        <NoMoreNotifications>No more notifications</NoMoreNotifications>
       </div>
-      <NoMoreNotifications>No more notifications</NoMoreNotifications>
-    </div>
-  </StyledMenu>
-);
+    </StyledMenu>
+  );
+};
 
 export const NotificationDropDown = ({ mobile, notifications }) => {
   const { markNotificationsAsRead } = useContext(WebSocketContext);
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const Visible = (e) => {
     setTimeout(() => {
       if (e && document.querySelector(".ant-dropdown-menu") !== null) {
@@ -234,15 +240,15 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
 
   const notificationTypes = {
     like: {
-      text: "liked your post",
+      text: "notifications.liked",
       icon: likeheart,
     },
     comment: {
-      text: "commented on your post",
+      text: "notifications.commented",
       icon: commentpost,
     },
     share: {
-      text: "shared your post",
+      text: "notifications.shared",
       icon: sharedpost,
     },
   };
@@ -264,7 +270,7 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
       onVisibleChange={(visible) =>
         visible ? markNotificationsAsRead() : updateReadAt()
       }
-      overlay={menu(mappedNotifications)}
+      overlay={menu(mappedNotifications, t)}
       trigger="click"
       placement="bottomRight"
     >

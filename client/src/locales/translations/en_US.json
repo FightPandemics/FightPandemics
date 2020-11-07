@@ -875,8 +875,14 @@
     "done": "Done",
     "close": "Close"
   },
-  "unsubscribe": {
-    "notifyPrefs": "Notification Preference",
-    "success": "Your notification preference is updated"
+  "notifications": {
+    "unsubscribe": {
+      "notifyPrefs": "Notification Preference",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
   }
 }

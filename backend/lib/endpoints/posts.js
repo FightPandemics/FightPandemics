@@ -135,7 +135,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
             { title: keywordsRegex },
@@ -525,7 +525,7 @@ async function routes(app) {
       }
 
       // action, post, triggeredBy
-      app.notifier.notify('like', updatedPost, userId)
+      app.notifier.notify("like", updatedPost, userId);
 
       return {
         likes: updatedPost.likes,
@@ -672,7 +672,9 @@ async function routes(app) {
       }
 
       // action, post, triggeredBy
-      app.notifier.notify('comment', post, userId)  
+      app.notifier.notify("comment", post, userId, {
+        commentText: commentProps.content,
+      });
 
       reply.code(201);
       return comment;

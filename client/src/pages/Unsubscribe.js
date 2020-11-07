@@ -100,7 +100,7 @@ const Unsubscribe = (props) => {
   const onSubmit = async (formData) => {
     try {
       await axios.patch("/api/users/unsubscribe", formData, config);
-      setMessageSuccess(t("unsubscribe.success"));
+      setMessageSuccess(t("notifications.unsubscribe.success"));
       // delay for showing user the success Alert
       setTimeout(() => {
         props.history.push(`/`);
@@ -126,7 +126,7 @@ const Unsubscribe = (props) => {
         setMessageError(message);
       }
     })();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <LoginContainer>
@@ -142,7 +142,7 @@ const Unsubscribe = (props) => {
         {messageError && <ErrorAlert message={messageError} type="error" />}
         <div className={"form-container"}>
           <Heading className="h4 text-center" level={4}>
-            {t("unsubscribe.notifyPrefs")}
+            {t("notifications.unsubscribe.notifyPrefs")}
           </Heading>
           <CustomForm>
             <NotifyPreferenceInput
