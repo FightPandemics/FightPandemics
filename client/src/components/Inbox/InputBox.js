@@ -5,6 +5,7 @@ import sendcomment from "assets/icons/send-paper.svg";
 import { mq, theme } from "constants/theme";
 import { useTranslation } from "react-i18next";
 import { AlertBox } from "./AlertBox";
+import GTM from "constants/gtm-tags";
 const { Text } = Typography;
 
 const MessageInput = styled.textarea`
@@ -253,6 +254,7 @@ export const InputBox = ({
             <button
               className={"unblock-btn"}
               onClick={() => unblockThread(room._id)}
+              id={GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.unblock}
             >
               {t("messaging.settings.unblock")}
             </button>
@@ -277,6 +279,7 @@ export const InputBox = ({
                   ); /* even if not blocked, it will mark it as "accepted" */
                   setToggleViewRequests(false);
                 }}
+                id={GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.accept}
               >
                 {t("messaging.accept")}
               </button>
@@ -306,6 +309,7 @@ export const InputBox = ({
                     ],
                   });
                 }}
+                id={GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.ignore}
               >
                 {t("messaging.ignore")}
               </button>
@@ -334,6 +338,7 @@ export const InputBox = ({
                     ],
                   });
                 }}
+                id={GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.block}
               >
                 {t("messaging.block")}
               </button>
@@ -363,6 +368,7 @@ export const InputBox = ({
                 className="send-comment"
                 src={sendcomment}
                 alt="Send Message"
+                id={GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.sent}
               />
             </a>
           </>

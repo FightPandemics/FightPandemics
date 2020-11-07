@@ -9,6 +9,7 @@ import {
 } from "react-virtualized";
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
+import GTM from "constants/gtm-tags";
 
 const cellMeasurerCache = new CellMeasurerCache({
   fixedWidth: true,
@@ -51,6 +52,7 @@ const Activity = ({
             onChange={handlePostDelete}
             handleCancelPostDelete={handleCancelPostDelete}
             onSelect={handleEditPost}
+            gtmPrefix={GTM.profile.viewProfilePrefix}
           />
         );
       }

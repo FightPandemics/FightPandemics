@@ -13,6 +13,8 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
 import { useTranslation } from "react-i18next";
+import TagManager from "react-gtm-module";
+import GTM from "constants/gtm-tags";
 
 const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
   const { t } = useTranslation();
@@ -43,7 +45,9 @@ const MessageModal = ({
   authorId,
   isAuthenticated,
   postId,
+  postInfo,
   isFromProfile,
+  gtmPrefix,
 }) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
@@ -85,6 +89,15 @@ const MessageModal = ({
       setVisible(false);
       setText("");
       textAreaRef.current.value = "";
+      if (postId) {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "MESSAGE_SENT",
+            sentFrom: gtmPrefix,
+            ...postInfo,
+          },
+        });
+      }
     } else {
       setMsgSent(true);
       setMsgRsp(false);
@@ -101,6 +114,11 @@ const MessageModal = ({
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
+  const gtmId =
+    gtmPrefix +
+    GTM.inbox.message +
+    (isFromProfile ? GTM.inbox.profile : GTM.inbox.post);
+
   return (
     <>
       {isAuthenticated ? (
@@ -108,6 +126,7 @@ const MessageModal = ({
           <PrivateMessageContainer
             onClick={showModal}
             isFromProfile={isFromProfile}
+            id={gtmId}
           >
             <img src={activeemail} />
             <span>{t("messaging.message")}</span>
@@ -119,7 +138,7 @@ const MessageModal = ({
             okText={t("messaging.send")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
-            okButtonProps={{ disabled: !text }}
+            okButtonProps={{ disabled: !text, id: gtmId + GTM.inbox.sent }}
           >
             {!isFromProfile && (
               <OrgPostRef
@@ -147,6 +166,7 @@ const MessageModal = ({
                 history.push("/inbox");
               }}
               cancelText={t("messaging.done")}
+              okButtonProps={{ id: gtmId + GTM.inbox.suffix }}
             >
               <p>
                 {!isFromProfile
@@ -189,7 +209,7 @@ const MessageModal = ({
             state: { from: window.location.href },
           }}
         >
-          <PrivateMessageContainer>
+          <PrivateMessageContainer id={gtmId}>
             <img src={activeemail} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>

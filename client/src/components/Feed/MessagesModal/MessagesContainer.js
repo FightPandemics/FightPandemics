@@ -45,7 +45,9 @@ export const MsgModal = styled(Modal)`
       outline: none;
       transition: none;
       -webkit-transition: none;
-
+      span {
+        pointer-events: none;
+      }
       :first-child {
         border: none;
         color: ${primaryColor};
@@ -168,6 +170,9 @@ export const SuccessModal = styled(MsgModal)`
       align-items: center;
       justify-content: center;
       z-index: 999;
+      span {
+        pointer-events: none;
+      }
     }
   }
 `;
@@ -205,6 +210,11 @@ export const PrivateMessageContainer = styled.div`
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
+  }
+
+  img,
+  span {
+    pointer-events: none;
   }
 
   ${(props) =>

@@ -10,6 +10,7 @@ import { SelectRoom } from "../components/Inbox/SelectRoom";
 import { ChatContextProvider } from "../context/ChatContext";
 import { ChatContext } from "context/ChatContext";
 import { WebSocketContext } from "../context/WebsocketContext";
+import GTM from "constants/gtm-tags";
 
 const Inbox = (props) => {
   const {
@@ -142,6 +143,7 @@ const Inbox = (props) => {
               rooms={rooms}
               user={user}
               unblockThread={unblockThread}
+              gtmPrefix={GTM.inbox.prefix + GTM.inbox.settings}
             />
           );
         } else {

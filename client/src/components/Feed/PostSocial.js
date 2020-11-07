@@ -51,9 +51,11 @@ const PostSocial = ({
   postId,
   postTitle,
   postContent,
+  postInfo,
   setShowComments,
   setShowShareModal,
   id,
+  gtmPrefix,
 }) => {
   const { t } = useTranslation();
   useEffect(() => {
@@ -219,6 +221,8 @@ const PostSocial = ({
               authorId={authorId}
               postId={id}
               avatar={postAuthorAvatar}
+              postInfo={postInfo}
+              gtmPrefix={gtmPrefix}
             />
           </div>
         )}

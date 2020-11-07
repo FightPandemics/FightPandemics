@@ -17,6 +17,7 @@ import subMenuIcon from "assets/icons/submenu.svg";
 import { mq } from "constants/theme";
 import { AlertBox } from "./AlertBox";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
@@ -43,6 +44,8 @@ const Messages = ({
   const messagesEndRef = useRef(null);
   const editTextArea = useRef();
   const [alertBoxData, setAlertBox] = React.useState({});
+  const gtmPrefix =
+    GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.message;
 
   const scrollToBottom = React.useCallback(() => {
     const element = messagesEndRef.current;
@@ -113,7 +116,11 @@ const Messages = ({
       content: t("messaging.deleteMessageText"),
       action: [
         {
-          text: <Text type="danger">{t("messaging.delete")}</Text>,
+          text: (
+            <Text type="danger" id={gtmPrefix + GTM.inbox.delete}>
+              {t("messaging.delete")}
+            </Text>
+          ),
           onPress: () => {
             deleteMessage(messageId);
             setAlertBox({ show: false });
@@ -239,6 +246,7 @@ const Messages = ({
             <button
               className={"save"}
               onClick={() => saveMessageEditing(messageId)}
+              id={gtmPrefix + GTM.inbox.edit}
             >
               {t("messaging.saveEdit")}
             </button>

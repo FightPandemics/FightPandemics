@@ -29,6 +29,9 @@ export const ChatHeader = styled.div`
       font-weight: 500;
       font-size: 1.6rem;
       line-height: 1.8rem;
+      img {
+        pointer-events: none;
+      }
       `;
     }
     return "";
@@ -53,6 +56,7 @@ export const ChatHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none;
   }
 `;
 
