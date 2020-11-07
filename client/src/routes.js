@@ -162,6 +162,9 @@ const routes = [
   {
     path: "/profile/:id",
     component: Profile,
+    props: {
+      isProfile: true,
+    },
   },
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {

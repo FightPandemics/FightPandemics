@@ -13,10 +13,14 @@ const InitialDiv = styled.div`
   color: #425af2;
   font-size: 3rem;
   line-height: 6rem;
-  width: 7rem;
+  width: 8.5rem;
+  height: 8.5rem;
   text-align: center;
   font-weight: 500;
   background-color: #f3f4fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @media screen and (min-width: ${(props) =>
     props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;

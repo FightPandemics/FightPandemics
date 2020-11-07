@@ -730,7 +730,7 @@ const NavigationLayout = (props) => {
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
-          <Main>
+          <Main isProfile={props?.isProfile}>
             <props.component {...props} searchKeywords={searchKeywords} />
             {feedbackFormState.error && (
               <ErrorAlert

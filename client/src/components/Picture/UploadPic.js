@@ -20,7 +20,6 @@ const CustomCancelButton = styled(BaseButton)``;
 
 const CameraButtonUpload = styled.button`
   border: 0;
-  border-color: hidden;
   padding-top: 0.1rem;
   padding-bottom: 0.4rem;
   padding-left: 0.5rem;

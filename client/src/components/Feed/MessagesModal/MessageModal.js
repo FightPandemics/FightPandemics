@@ -123,9 +123,13 @@ const MessageModal = ({
     <>
       {isAuthenticated ? (
         <div>
-          <PrivateMessageContainer onClick={showModal} id={gtmId}>
+          <PrivateMessageContainer
+            onClick={showModal}
+            isFromProfile={isFromProfile}
+            id={gtmId}
+          >
             <img src={activeemail} />
-            {!isFromProfile && <span>{t("messaging.message")}</span>}
+            <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal
             title={t("messaging.sendMessage")}
