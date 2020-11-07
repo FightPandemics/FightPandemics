@@ -11,7 +11,7 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
-import globe from "assets/icons/globe.svg";
+import language from "assets/icons/language.png";
 
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
@@ -282,7 +282,7 @@ export default ({
         <Dropdown overlay={languageMenu} trigger={["click"]}>
           <SvgIcon
             id={GTM.nav.prefix + GTM.nav.language}
-            src={globe}
+            src={language}
             className="globe-icon-svg"
           ></SvgIcon>
         </Dropdown>
