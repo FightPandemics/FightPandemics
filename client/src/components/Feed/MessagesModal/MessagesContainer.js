@@ -190,9 +190,11 @@ export const FailedModal = styled(SuccessModal)`
 export const PrivateMessageContainer = styled.div`
   margin-left: 4.2rem;
   cursor: pointer;
+
   :hover {
     color: #939393;
   }
+
   svg {
     position: relative;
     top: 0.28rem;
@@ -204,4 +206,31 @@ export const PrivateMessageContainer = styled.div`
       display: none;
     }
   }
+
+  ${(props) =>
+    props.isFromProfile
+      ? `
+      display: flex;
+      align-items: center;
+      border: 0.1rem solid ${theme.colors.royalBlue};
+      box-sizing: border-box;
+      border-radius: 4.6rem;
+      padding: 0.8rem 2.8rem;
+      margin-left: 0;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        margin-top: 1rem;
+        justify-content: center;
+      }
+
+        span {
+          font-size: 1.4rem;
+          color: ${theme.colors.royalBlue};
+          font-weight: 500;
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            display: block;
+          }
+        }
+      `
+      : ""}
 `;

@@ -22,7 +22,8 @@ const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
       <RefPost>
         <header>
           <div className="author">
-            {t("messaging.to")}:<TextAvatar src={avatar}>{Initials}</TextAvatar> {postAuthorName}
+            {t("messaging.to")}:<TextAvatar src={avatar}>{Initials}</TextAvatar>{" "}
+            {postAuthorName}
           </div>
           <h3>{title}</h3>
         </header>
@@ -104,9 +105,12 @@ const MessageModal = ({
     <>
       {isAuthenticated ? (
         <div>
-          <PrivateMessageContainer onClick={showModal}>
+          <PrivateMessageContainer
+            onClick={showModal}
+            isFromProfile={isFromProfile}
+          >
             <img src={activeemail} />
-            {!isFromProfile && <span>{t("messaging.message")}</span>}
+            <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal
             title={t("messaging.sendMessage")}
@@ -134,7 +138,7 @@ const MessageModal = ({
           </MsgModal>
           {msgRsp ? (
             <SuccessModal
-              title={"🎉 "+ t("messaging.sendSuccessHeader")}
+              title={"🎉 " + t("messaging.sendSuccessHeader")}
               visible={msgSent}
               okText={t("messaging.viewMessage")}
               onCancel={handleDone}
@@ -145,28 +149,32 @@ const MessageModal = ({
               cancelText={t("messaging.done")}
             >
               <p>
-              {!isFromProfile? t("messaging.sendSuccessText", {
-                username: postAuthorName,
-                title: title
-              }): t("messaging.sendSuccessTextNoPost", {
-                username: postAuthorName,
-              })}
+                {!isFromProfile
+                  ? t("messaging.sendSuccessText", {
+                      username: postAuthorName,
+                      title: title,
+                    })
+                  : t("messaging.sendSuccessTextNoPost", {
+                      username: postAuthorName,
+                    })}
               </p>
             </SuccessModal>
           ) : (
             <FailedModal
-              title={"🚧 "+t("messaging.sendFailedHeader")}
+              title={"🚧 " + t("messaging.sendFailedHeader")}
               visible={msgSent}
               onCancel={handleDone}
               cancelText={t("messaging.close")}
             >
               <p>
-              {!isFromProfile? t("messaging.sendFailedText", {
-                username: postAuthorName,
-                title: title
-              }): t("messaging.sendFailedTextNoPost", {
-                username: postAuthorName,
-              })}
+                {!isFromProfile
+                  ? t("messaging.sendFailedText", {
+                      username: postAuthorName,
+                      title: title,
+                    })
+                  : t("messaging.sendFailedTextNoPost", {
+                      username: postAuthorName,
+                    })}
               </p>
             </FailedModal>
           )}
