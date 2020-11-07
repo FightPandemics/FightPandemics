@@ -415,7 +415,7 @@ export const SocialContainer = styled.div`
     margin: 1.5rem 1.5rem;
     width: 4.55rem;
     height: 4.55rem;
-    object-fit: contain;
+    object-fit: none;
   }
 
   a:first-child {

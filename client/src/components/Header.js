@@ -11,7 +11,7 @@ import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
-import language from "assets/icons/language.png";
+import language from "assets/icons/language.svg";
 
 import { theme, mq } from "../constants/theme";
 import { localization, languages } from "locales/languages";
