@@ -299,10 +299,10 @@ const Feed = (props) => {
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     dispatchAction(SET_VALUE, "location", null);
     setQueryKeysValue(history, { location: null });
-    // perform soft refetch to only close filter modal etc.. but not actually refetch posts
     setTimeout(() => {
       dispatchAction(SET_VALUE, "activePanel", null);
     }, 500);
+    // perform soft refetch to only close filter modal etc.. but not actually refetch posts
     refetchPosts(null, null, true);
   };
 
