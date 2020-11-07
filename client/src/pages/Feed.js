@@ -292,7 +292,6 @@ const Feed = (props) => {
         setToggleRefetch(!toggleRefetch);
       }
     }
-    dispatchAction(SET_VALUE, "activePanel", null);
   };
 
   const handleQuit = (e) => {
@@ -301,6 +300,9 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "location", null);
     setQueryKeysValue(history, { location: null });
     // perform soft refetch to only close filter modal etc.. but not actually refetch posts
+    setTimeout(() => {
+      dispatchAction(SET_VALUE, "activePanel", null);
+    }, 500);
     refetchPosts(null, null, true);
   };
 

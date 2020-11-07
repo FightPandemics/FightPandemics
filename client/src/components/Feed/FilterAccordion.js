@@ -9,7 +9,7 @@ import {
   AccordionHeader,
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
-
+import { SET_VALUE } from "hooks/actions/feedActions";
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
   1: GTM.providersFilters.startUp,
@@ -63,6 +63,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   const feedContext = useContext(FeedContext);
   const {
     activePanel,
+    dispatchAction,
     filters,
     handleLocation,
     handleOption,
@@ -71,6 +72,11 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
+
+  const setActivePanel = (activePanelKey) => {
+    dispatchAction(SET_VALUE, "activePanel", activePanelKey);
+  };
+
   const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "location") {
@@ -130,8 +136,9 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   return (
     <FilterAccordion
       accordion
-      defaultActiveKey={activePanel}
+      activeKey={activePanel}
       className="my-accordion"
+      onChange={setActivePanel}
     >
       {renderPanels()}
     </FilterAccordion>
