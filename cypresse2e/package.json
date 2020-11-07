@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "Cypress tests",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "rm -rf mochawesome-report/* mochawesome.json",
+    "test": "cypress run",
+    "report": "npx mochawesome-merge --reportDir mochawesome-report/ > mochawesome.json && npx mochawesome-report-generator --inline mochawesome.json"
   },
   "private": true,
   "devDependencies": {
     "cypress": "^4.9.0",
     "cypress-xpath": "^1.6.0",
+    "mocha": "^8.2.0",
+    "mochawesome": "^6.1.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.1.0",
     "husky": "^4.3.0",
     "prettier": "^2.1.2",
     "pretty-quick": "^3.1.0"
