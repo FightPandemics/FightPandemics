@@ -215,6 +215,9 @@ export const OurStoryContainer = styled.div`
     margin-bottom: 25rem;
     margin-top: 8rem;
   }
+  video {
+    margin-top: 8rem;
+  }
 `;
 
 export const WebViewBannerContainer = styled.img`

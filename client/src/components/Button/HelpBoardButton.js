@@ -28,6 +28,21 @@ const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
     margin-top: 2.5rem;
     margin-bottom: 6rem;
   }
+
+  &:hover {
+    background-color: ${white};
+    color: ${royalBlue};
+    border-color: ${royalBlue};
+    border: 1px solid;
+    transition: 0.3s all;
+  }
+
+  a {
+    transition: none;
+    &:hover {
+      color: ${royalBlue};
+    }
+  }
 `;
 
 export default HelpBoardButton;
