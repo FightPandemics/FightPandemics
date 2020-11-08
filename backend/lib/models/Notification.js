@@ -21,9 +21,22 @@ const notificationSchema = new Schema(
       type: Schema.Types.ObjectId,
     },
     readAt: Date,
-    emailSentAt: Date,
+    emailSentAt: {
+      biweekly: Date,
+      daily: Date,
+      instant: Date,
+      weekly: Date,
+    },
     sharedVia: {
-      enum: ["email", "facebook", "linkedin", "reddit", "telegram", "twitter", "whatsapp" ],
+      enum: [
+        "email",
+        "facebook",
+        "linkedin",
+        "reddit",
+        "telegram",
+        "twitter",
+        "whatsapp",
+      ],
       type: String,
     },
     commentText: String,
@@ -37,23 +50,35 @@ const notificationSchema = new Schema(
       photo: String,
       type: {
         type: String,
-      }
+      },
     },
   },
   { collection: "notifications", timestamps: true },
 );
 
 /* eslint-disable sort-keys */
-notificationSchema.index({
-  createdAt: -1,
-}, {
-  expireAfterSeconds: 1296000,  // 15 days
-});
+notificationSchema.index(
+  {
+    createdAt: -1,
+  },
+  {
+    expireAfterSeconds: 1296000, // 15 days
+  },
+);
 notificationSchema.index({
   readAt: -1,
 });
 notificationSchema.index({
-  emailSentAt: -1,
+  "emailSentAt.biweekly": -1,
+});
+notificationSchema.index({
+  "emailSentAt.daily": -1,
+});
+notificationSchema.index({
+  "emailSentAt.instant": -1,
+});
+notificationSchema.index({
+  "emailSentAt.weekly": -1,
 });
 notificationSchema.index({
   "post.id": 1,

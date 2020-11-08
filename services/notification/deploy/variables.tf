@@ -38,5 +38,5 @@ data "aws_ssm_parameter" "sentry_dsn" {
 }
 
 data "aws_ssm_parameter" "unsubscribe_token_key" {
-  name  = "/fp/auth/client_secret"
+  name = "/fp/auth/client_secret"
 }

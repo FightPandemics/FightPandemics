@@ -1,0 +1,5 @@
+New activity for {{post.title}}:
+
+{{commentText}}
+
+View {{actionCounts}}: {{{baseUrl}}}/post/{{post.id}}
