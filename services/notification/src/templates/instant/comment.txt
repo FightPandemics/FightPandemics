@@ -1,3 +1,5 @@
 {{triggeredBy.name}} commented on your post: {{post.title}}
 
+{{commentText}}
+
 View post: {{{baseUrl}}}/post/{{post.id}}

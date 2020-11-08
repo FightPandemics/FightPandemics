@@ -149,6 +149,10 @@ class TemplateBuilder {
           triggeredBy: notification.triggeredBy,
         };
 
+        if (notification.commentText) {
+          view.commentText = notification.commentText;
+        }
+
         if (notification.sharedVia) {
           view.shareMedium = ShareMedium[notification.sharedVia.toUpperCase()];
         }
