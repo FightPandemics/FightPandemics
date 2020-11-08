@@ -1,8 +1,8 @@
-import PrivatePolicyPage from "../../../elements/pages/privacyPolicy";
-import privatePolicyContent from "../../../fixtures/privatePolicyContent.json";
+import PrivacyPolicyPage from "../../../elements/pages/privacyPolicy";
+import PrivacyPolicyContent from "../../../fixtures/PrivacyPolicyContent.json";
 
 describe("Private Policy for FightPandemics", () => {
-  const privacyPolicy = new PrivatePolicyPage();
+  const privacyPolicy = new PrivacyPolicyPage();
 
   context("Check on Private Policy page for FightPandemics", () => {
     beforeEach(() => {
@@ -49,6 +49,7 @@ describe("Private Policy for FightPandemics", () => {
       const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
       validateEachParaWithOrdList(getMethod, dataType, ParaNum);
     });
+
 
     it("Get and Validate the PRIVACY POLICY content for the NINETH paragraph with Order List starting with-9. What happens when YOU do not provide necessary Personal Data?", (dataType = "paraPolicyCxWithOrdList", ParaNum = 9) => {
       const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
@@ -119,11 +120,13 @@ describe("Private Policy for FightPandemics", () => {
       expect($el.text()).to.be.equal(firstDivTxt);
       if (firstDivLink != "") {
         expect($el.find("a").text()).to.be.equal(firstDivLink);
+        expect($el.find("a")).to.respondTo("click");
       }
       if (secondDivTxt != "") {
         expect($el.next().text()).to.be.contain(secondDivTxt);
         if (secondtDivLink != "") {
           expect($el.next().find("a").text()).to.be.equal(secondtDivLink);
+          expect($el.next().find("a")).to.respondTo("click");
         }
       }
     });
@@ -225,27 +228,27 @@ describe("Private Policy for FightPandemics", () => {
       contentPara.parents("div").next("div").contains(secondDivTxt);
   }
 
-  //to get object data
+  //to get object Privacydata
   function getObjectData(dataType, ParaNum) {
     var objArray;
     var objCx;
     var returnObjCx = [];
     switch (dataType) {
       case "paraPolicyCx":
-        objArray = privatePolicyContent.paraPolicyCx;
+        objArray = PrivacyPolicyContent.paraPolicyCx;
         break;
       case "paraPolicyCxWithOrdList":
-        objArray = privatePolicyContent.paraPolicyCxWithOrdList;
+        objArray = PrivacyPolicyContent.paraPolicyCxWithOrdList;
         break;
 
       case "paraPolicyCxOrdListWthnOrdList":
-        objArray = privatePolicyContent.paraPolicyCxOrdListWthnOrdList;
+        objArray = PrivacyPolicyContent.paraPolicyCxOrdListWthnOrdList;
         break;
       case "paraPolicyCxDiffTyp1":
-        objArray = privatePolicyContent.paraPolicyCxDiffTyp1;
+        objArray = PrivacyPolicyContent.paraPolicyCxDiffTyp1;
         break;
       case "paraPolicyCxDiffTyp2":
-        objArray = privatePolicyContent.paraPolicyCxDiffTyp2;
+        objArray = PrivacyPolicyContent.paraPolicyCxDiffTyp2;
         break;
       default:
         break;
