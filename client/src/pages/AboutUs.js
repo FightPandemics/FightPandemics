@@ -82,9 +82,16 @@ import linkedInLogo from "assets/icons/social-linkedin.svg";
 import facebookLogo from "assets/icons/social-fb.svg";
 import twitterLogo from "assets/icons/social-tw.svg";
 
+import GTM from "constants/gtm-tags";
+
 // const DemoBox = (props) => (
 //   <p className={`height-${props.value}`}>{props.children}</p>
 // );
+
+const getGTM = (id) => {
+  console.log(id);
+  return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
+};
 
 const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
@@ -201,7 +208,6 @@ function LogoItem(props) {
 
 function LogosList(props) {
   const supporterLogos = props.supporterLogos;
-  console.log(supporterLogos);
   const logoItems = supporterLogos.map((logo) => (
     <LogoItem key={logo.toString()} value={logo} />
   ));
@@ -247,7 +253,7 @@ const AboutUs = () => {
       >
         <h1>{t("ourCommunity")}</h1>
         <p>{t("community")}</p>
-        <GetInvButton />
+        <GetInvButton getGTM={getGTM} />
       </ImageContainer>
 
       <ConnectContainer>
@@ -306,7 +312,9 @@ const AboutUs = () => {
             </FlexBox>
           </FlexBox>
           <HelpBoardButton type="primary">
-            <Link to="/feed">{t("goToHelpBoard")}</Link>
+            <Link id={getGTM("goToHelp")} to="/feed">
+              {t("goToHelpBoard")}
+            </Link>
           </HelpBoardButton>
         </>
       </HowDoesThisWorkContainer>
@@ -359,28 +367,40 @@ const AboutUs = () => {
         <FlexBox direction="column" align="center">
           <h3>{t("followUs")}</h3>
           <SocialContainer>
-            <AboutUsLink href="https://www.linkedin.com/company/fightpandemics/">
+            <AboutUsLink
+              id={getGTM("linkedIn")}
+              href="https://www.linkedin.com/company/fightpandemics/"
+            >
               <img
                 loading="lazy"
                 src={linkedInLogo}
                 alt="FightPandemics LinkedIn Icon"
               />
             </AboutUsLink>
-            <AboutUsLink href="https://www.facebook.com/FightPandemics/">
+            <AboutUsLink
+              id={getGTM("facebook")}
+              href="https://www.facebook.com/FightPandemics/"
+            >
               <img
                 loading="lazy"
                 src={facebookLogo}
                 alt="FightPandemics Facebook Icon"
               />
             </AboutUsLink>
-            <AboutUsLink href="https://www.instagram.com/fightpandemics/">
+            <AboutUsLink
+              id={getGTM("instagram")}
+              href="https://www.instagram.com/fightpandemics/"
+            >
               <img
                 loading="lazy"
                 src={instagramLogo}
                 alt="FightPandemics Instagram Icon"
               />
             </AboutUsLink>
-            <AboutUsLink href="https://twitter.com/FightPandemics">
+            <AboutUsLink
+              id={getGTM("twitter")}
+              href="https://twitter.com/FightPandemics"
+            >
               <img
                 loading="lazy"
                 src={twitterLogo}
