@@ -1,8 +1,8 @@
 locals {
   rules = {
-    instant  = "2/5 * ? * * *" # Every 5th minute of the hour, starting from minute 2
-    daily    = "0 2 ? * * *"   # Every day at 2am UTC
-    weekly   = "0 3 ? * MON *" # Every week on Monday at 3am UTC
+    instant  = "cron(2/5 * ? * * *)" # Every 5th minute of the hour, starting from minute 2
+    daily    = "cron(0 2 ? * * *)"   # Every day at 2am UTC
+    weekly   = "cron(0 3 ? * MON *)" # Every week on Monday at 3am UTC
     biweekly = "rate(14 days)" # Every two weeks
   }
 }
