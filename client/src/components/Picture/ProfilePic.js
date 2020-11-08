@@ -24,7 +24,7 @@ const InitialDiv = styled.div`
   @media screen and (min-width: ${(props) =>
     props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;
-    height: 80%;
+    height: ${(props) => (props.hasPhoto ? `12.2rem` : `12rem`)};
     line-height: ${(props) => (props.hasPhoto ? `10rem` : `11rem`)};
     width: ${(props) => (props.hasPhoto ? `12.2rem` : `12rem`)};
     margin-right: 3rem;

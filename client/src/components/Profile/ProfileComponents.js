@@ -168,7 +168,7 @@ export const BackgroundHeader = styled.div`
 
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
-  position: fixed;
+  position: absolute;
   top: 6rem;
   left: 0;
   width: 100vw;
@@ -178,7 +178,7 @@ export const ProfileBackgroup = styled.div`
 `;
 export const DescriptionMobile = styled.div`
   background-color: ${colors.white};
-  borderradius: 0.5rem;
+  border-radius: 0.5rem;
   width: 100%;
   font-size: 1.2rem;
   color: ${colors.darkGray};
