@@ -18,7 +18,7 @@ import {
   FlexBox,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
-import OurStory from "assets/ourStory.mp4";
+// import OurStory from "assets/ourStory.mp4";
 import Group from "assets/about-us-images/group.svg";
 import WorldMap from "assets/about-us-images/world-map.png";
 import HelpBoard from "assets/how-does-work-images/Help-Board.gif";
@@ -318,10 +318,9 @@ const AboutUs = () => {
         <br />
         <p dangerouslySetInnerHTML={{ __html: t("storyInspired") }}></p>
         {/* TODO Add FightPandemics Video */}
-        {/* <img src={BlankImage} alt="loading..." /> */}
-        <video width="630" height="auto" controls preload="metadata">
+        {/* <video width="630" height="auto" controls preload="metadata">
           <source src={OurStory} type="video/mp4" />
-        </video>
+        </video> */}
       </OurStoryContainer>
 
       <SupporterContainer>
