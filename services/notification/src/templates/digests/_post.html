@@ -1,5 +1,8 @@
 <h2>New activity for {{post.title}}</h2>
 
-<p>{{commentText}}</p>
+<p>
+  <strong> {{latestComment.triggeredBy.name}} commented: </strong>
+  {{latestComment.commentText}}
+</p>
 
 <a href="{{{baseUrl}}}/post/{{post.id}}"> View {{actionCounts}} </a>

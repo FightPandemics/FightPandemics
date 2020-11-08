@@ -85,7 +85,7 @@ class TemplateBuilder {
         const postHtmlTemplates = posts.map((post) =>
           Mustache.render(this.templates.post.html, {
             baseUrl: this.baseUrl,
-            commentText: post.latest ? post.latest.commentText : "",
+            latestComment: post.latest,
             post: post.post,
             actionCounts: this._generatePostCountsCopy(post.counts),
           }),
@@ -93,7 +93,7 @@ class TemplateBuilder {
         const postTextTemplates = posts.map((post) =>
           Mustache.render(this.templates.post.text, {
             baseUrl: this.baseUrl,
-            commentText: post.latest ? post.latest.commentText : "",
+            latestComment: post.latest,
             post: post.post,
             actionCounts: this._generatePostCountsCopy(post.counts),
           }),
