@@ -44,7 +44,12 @@ describe("TemplateBuilder tests", () => {
         },
         createdAt: "2020-10-17T01:51:52.534Z",
         readAt: null,
-        emailSentAt: null,
+        emailSentAt: {
+          instant: null,
+          daily: null,
+          weekly: null,
+          biweekly: null,
+        },
       },
       {
         _id: "5f8b9228655a231a3a62d27f",
@@ -55,26 +60,13 @@ describe("TemplateBuilder tests", () => {
           hide: { address: false },
           needs: { medicalHelp: false, otherHelp: false },
           notifyPrefs: {
-            comment: {
-              instant: true,
-              daily: true,
-              weekly: true,
-              biweekly: true,
+            instant: {
+              comment: true,
+              like: true,
+              message: true,
+              share: true,
             },
-            like: {
-              instant: true,
-              daily: true,
-              weekly: true,
-              biweekly: true,
-            },
-            message: {
-              instant: true,
-              daily: true,
-              weekly: true,
-              biweekly: true,
-            },
-            share: {
-              instant: true,
+            digest: {
               daily: true,
               weekly: true,
               biweekly: true,
@@ -110,7 +102,12 @@ describe("TemplateBuilder tests", () => {
         },
         createdAt: "2020-10-17T01:51:52.534Z",
         readAt: null,
-        emailSentAt: null,
+        emailSentAt: {
+          instant: null,
+          daily: null,
+          weekly: null,
+          biweekly: null,
+        },
       },
       {
         _id: "5f8b9228653a214a3b62d27f",
@@ -121,26 +118,13 @@ describe("TemplateBuilder tests", () => {
           hide: { address: false },
           needs: { medicalHelp: false, otherHelp: false },
           notifyPrefs: {
-            comment: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
+            instant: {
+              comment: false,
+              like: false,
+              message: false,
+              share: true,
             },
-            like: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            message: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            share: {
-              instant: true,
+            digest: {
               daily: false,
               weekly: false,
               biweekly: false,
@@ -176,7 +160,12 @@ describe("TemplateBuilder tests", () => {
         },
         createdAt: "2020-10-17T01:51:52.534Z",
         readAt: null,
-        emailSentAt: null,
+        emailSentAt: {
+          instant: null,
+          daily: null,
+          weekly: null,
+          biweekly: null,
+        },
       },
       {
         _id: "5f8b9237653a214a3b62d27f",
@@ -187,26 +176,13 @@ describe("TemplateBuilder tests", () => {
           hide: { address: false },
           needs: { medicalHelp: false, otherHelp: false },
           notifyPrefs: {
-            comment: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
+            instant: {
+              comment: false,
+              like: false,
+              message: false,
+              share: true,
             },
-            like: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            message: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            share: {
-              instant: true,
+            digest: {
               daily: false,
               weekly: false,
               biweekly: false,
@@ -243,7 +219,12 @@ describe("TemplateBuilder tests", () => {
         },
         createdAt: "2020-10-17T01:51:52.534Z",
         readAt: null,
-        emailSentAt: null,
+        emailSentAt: {
+          instant: null,
+          daily: null,
+          weekly: null,
+          biweekly: null,
+        },
       },
       {
         _id: "5f8b9237653a214a3b62d46e",
@@ -254,26 +235,13 @@ describe("TemplateBuilder tests", () => {
           hide: { address: false },
           needs: { medicalHelp: false, otherHelp: false },
           notifyPrefs: {
-            comment: {
-              instant: true,
-              daily: false,
-              weekly: false,
-              biweekly: false,
+            instant: {
+              comment: true,
+              like: false,
+              message: false,
+              share: true,
             },
-            like: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            message: {
-              instant: false,
-              daily: false,
-              weekly: false,
-              biweekly: false,
-            },
-            share: {
-              instant: true,
+            digest: {
               daily: false,
               weekly: false,
               biweekly: false,
@@ -308,8 +276,14 @@ describe("TemplateBuilder tests", () => {
           type: "Startup",
         },
         createdAt: "2020-10-17T01:51:52.534Z",
+        commentText: "Nice post dude",
         readAt: null,
-        emailSentAt: null,
+        emailSentAt: {
+          instant: null,
+          daily: null,
+          weekly: null,
+          biweekly: null,
+        },
       },
     ];
     const emails = builder.build("instant", notifications);
