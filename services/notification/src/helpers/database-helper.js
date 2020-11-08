@@ -68,9 +68,9 @@ class DatabaseHelper {
         },
       },
     ]);
-    const notifications = cursor.toArray();
+    const notifications = await cursor.toArray();
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.dbHelper.setEmailSentAt(
+    await this.setEmailSentAt(
       notifications.map((notification) => notification._id),
       EmailFrequency.INSTANT,
     );
@@ -139,10 +139,7 @@ class DatabaseHelper {
     }
 
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.dbHelper.setEmailSentAt(
-      notifications.map((notification) => notification._id),
-      frequency,
-    );
+    await this.setEmailSentAt(processedNotificationIds, frequency);
 
     return digests;
   }
