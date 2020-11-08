@@ -55,6 +55,15 @@ notificationSchema.index({
 notificationSchema.index({
   emailSentAt: -1,
 });
+notificationSchema.index({
+  "post.id": 1,
+  "triggeredBy.id": 1,
+}, {
+  unique: true,
+  partialFilterExpression: {
+    action: "like",
+  },
+});
 /* eslint-enable */
 
 const Notification = model("Notification", notificationSchema);

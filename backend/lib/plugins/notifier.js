@@ -41,7 +41,11 @@ class Notifier {
     const [err, notification] = await this.app.to(
       new this.Notification(newNotification).save(),
     );
-    if (err) return this.app.log.error(err, "Failed saving new Notification");
+
+    if (err) {
+      if (err.code === 11000) return; // MongoError: E11000 duplicate key error
+      return this.app.log.error(err, "Failed saving new Notification");
+    };
 
     // send real-time web notification if online
     const userIsOnline = await getSocketIdByUserId(
