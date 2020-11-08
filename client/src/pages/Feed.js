@@ -303,13 +303,13 @@ const Feed = (props) => {
   const prevTotalPostCount = usePrevious(totalPostCount);
 
   const SEARCH_OPTIONS = [
-    { name: t("feed.search.options.posts"), id: "POSTS", default: true },
+    { name: "feed.search.options.posts", id: "POSTS", default: true },
     {
-      name: t("feed.search.options.orgs"),
+      name: "feed.search.options.orgs",
       id: "ORGANISATIONS",
-      mobile_display: t("feed.search.options.orgsShort"),
+      mobile_display: "feed.search.options.orgsShort",
     },
-    { name: t("feed.search.options.people"), id: "INDIVIDUALS" },
+    { name: "feed.search.options.people", id: "INDIVIDUALS" },
   ];
 
   function usePrevious(value) {
@@ -373,19 +373,19 @@ const Feed = (props) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
         HELP_TYPE = {
-          ALL: t("feed.allPeople"),
+          ALL: "feed.allPeople",
         };
         break;
       case "ORGANISATIONS":
         HELP_TYPE = {
-          ALL: t("feed.allOrgs"),
+          ALL: "feed.allOrgs",
         };
         break;
       default:
         HELP_TYPE = {
-          ALL: t("feed.allPosts"),
-          REQUEST: t("feed.request"),
-          OFFER: t("feed.offer"),
+          ALL: "feed.allPosts",
+          REQUEST: "feed.request",
+          OFFER: "feed.offer",
         };
         break;
     }
@@ -823,7 +823,7 @@ const Feed = (props) => {
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (
                   <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {HELP_TYPE[item]}
+                    {t(HELP_TYPE[item])}
                   </Menu.Item>
                 ))}
               </MenuWrapper>
@@ -852,6 +852,7 @@ const Feed = (props) => {
                 handleSubmit={handleSearchSubmit}
                 showOptions={showSearchCategories}
                 displayValue={"name"}
+                t={t}
               />
               {(!searchCategory || searchCategory == "POSTS") && (
                 <button
