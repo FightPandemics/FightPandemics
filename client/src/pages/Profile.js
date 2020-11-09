@@ -103,7 +103,7 @@ const URLS = {
   website: [websiteIcon],
 };
 
-const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+const getHref = url => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const Profile = ({
@@ -137,8 +137,8 @@ const Profile = ({
     ownUser,
     urls = {},
   } = user || {};
-  const needHelp = Object.values(needs).some((val) => val === true);
-  const offerHelp = Object.values(objectives).some((val) => val === true);
+  const needHelp = Object.values(needs).some(val => val === true);
+  const offerHelp = Object.values(objectives).some(val => val === true);
   const { address } = location;
   const {
     isLoading,
@@ -154,7 +154,7 @@ const Profile = ({
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
 
-  function usePrevious(value) {
+  function usePrevious (value) {
     const ref = useRef();
     useEffect(() => {
       ref.current = value;
@@ -163,7 +163,7 @@ const Profile = ({
   }
 
   useEffect(() => {
-    (async function fetchProfile() {
+    (async function fetchProfile () {
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get(`/api/users/${pathUserId}`);
@@ -266,7 +266,7 @@ const Profile = ({
     }
   };
 
-  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
+  const isItemLoaded = useCallback(index => !!userPosts[index], [userPosts]);
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
@@ -276,7 +276,7 @@ const Profile = ({
         stopIndex >= userPosts.length &&
         userPosts.length
       ) {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           postsDispatch({ type: NEXT_PAGE });
           resolve();
         });
@@ -291,7 +291,7 @@ const Profile = ({
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
-  const postDelete = async (post) => {
+  const postDelete = async post => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
     if (user && (user._id === post.author.id || user.id === post.author.id)) {
@@ -349,12 +349,19 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
+    let currentUser;
+    try {
+      const res = await axios.get("/api/users/current");
+      currentUser = res.data.id;
+    } catch (error) {
+      console.log({ error });
+    }
 
     if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      const endPoint = `/api/posts/${postId}/likes/${currentUser}`;
       let response = {};
-
-      if (user) {
+      console.log(endPoint);
+      if (currentUser) {
         if (liked) {
           try {
             response = await axios.delete(endPoint);
@@ -390,7 +397,7 @@ const Profile = ({
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
   if (error) {
-    return <ErrorAlert message={error} type="error" />;
+    return <ErrorAlert message={error} type='error' />;
   }
   if (loading) return <Loader />;
   return (
@@ -462,8 +469,8 @@ const Profile = ({
                         : `${URLS[name][1]}${url}`
                     }
                     key={name}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <SocialIcon src={URLS[name][0]} />
                   </a>
@@ -536,18 +543,18 @@ const Profile = ({
       </div>
       {ownUser && (
         <CustomDrawer
-          placement="bottom"
+          placement='bottom'
           closable={false}
           onClose={onToggleDrawer}
           visible={drawer}
-          height="150px"
-          key="bottom"
+          height='150px'
+          key='bottom'
         >
           <DrawerHeader>
-            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+            <Link to='/edit-account'>{t("profile.org.editAccount")}</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-profile">
+            <Link to='/edit-profile'>
               {t("profile.individual.editProfile")}{" "}
             </Link>
           </DrawerHeader>
