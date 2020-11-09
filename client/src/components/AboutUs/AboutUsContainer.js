@@ -413,8 +413,8 @@ export const SocialContainer = styled.div`
 
   img {
     margin: 1.5rem 1.5rem;
-    width: 4.55rem;
-    height: 4.55rem;
+    width: 4.6rem;
+    height: 4.6rem;
     object-fit: none;
   }
 
