@@ -187,8 +187,6 @@ export const HelpContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  border: 0.1rem solid #6c80ff;
-  border-radius: 0.2rem;
   text-align: center;
   align-items: center;
   margin-left: 1rem;
