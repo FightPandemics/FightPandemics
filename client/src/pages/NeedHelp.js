@@ -129,15 +129,13 @@ const NeedHelp = withRouter((props) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
     if (key === "location") {
-      localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
       let query = {
-        objective: 2, // indexOf "Offering Help"
+        objective: "OFFER",
       };
       if (updatedAnswers.location)
         query.location = btoa(JSON.stringify(updatedAnswers.location));
       const selectedFilters = {
         type: [],
-        lookingFor: [filters[3].options[1].value],
       };
       if (updatedAnswers.helpType === "medical") {
         selectedFilters.type.push(filters[2].options[0].value);

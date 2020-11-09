@@ -205,9 +205,14 @@ const Feed = (props) => {
         } else delete query.filters;
       }
       if (query.objective) {
-        selectedFilters["lookingFor"] = [
-          filters[3].options[query.objective - 1]?.value,
-        ];
+        let indexOfHelpType = Object.keys(HELP_TYPE).indexOf(
+          query.objective.toUpperCase(),
+        );
+        if (indexOfHelpType > 0)
+          selectedFilters["lookingFor"] = [
+            filters[3].options[indexOfHelpType - 1]?.value,
+          ];
+        else query.objective = "ALL";
       } else {
         delete selectedFilters["lookingFor"];
       }
@@ -239,7 +244,7 @@ const Feed = (props) => {
           selectedOptions["lookingFor"][0]) === "Request Help"
           ? "REQUEST"
           : "OFFER";
-      newQuery.objective = Object.keys(HELP_TYPE).indexOf(selectedType);
+      newQuery.objective = selectedType;
       if (selectedOptions.lookingFor.length > 1) {
         optionsDispatch({
           type: REMOVE_OPTION,
@@ -366,9 +371,9 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    if (Object.keys(HELP_TYPE)[queryParams.objective || 0] !== value) {
+    if (queryParams.objective?.toUpperCase() !== value) {
       setQueryKeysValue(history, {
-        objective: Object.keys(HELP_TYPE).indexOf(e.key),
+        objective: e.key === "ALL" ? null : e.key,
       });
     }
   };
@@ -450,7 +455,7 @@ const Feed = (props) => {
     };
 
     const objectiveURL = () => {
-      let objective = Object.keys(HELP_TYPE)[queryParams.objective || 0];
+      let objective = queryParams.objective;
       if (
         selectedOptions["lookingFor"] &&
         selectedOptions["lookingFor"].length < 2
@@ -670,9 +675,7 @@ const Feed = (props) => {
             <>
               <MenuWrapper
                 defaultSelectedKeys={["ALL"]}
-                selectedKeys={[
-                  Object.keys(HELP_TYPE)[queryParams.objective || 0],
-                ]}
+                selectedKeys={[queryParams.objective || "ALL"]}
                 onClick={handleChangeType}
               >
                 {Object.keys(HELP_TYPE).map((item, index) => (

@@ -171,28 +171,11 @@ const OfferHelp = withRouter((props) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
     if (key === "location") {
-      localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
       let query = {
-        objective: 1, // indexOf "Requesting Help"
+        objective: "REQUEST",
       };
       if (updatedAnswers.location)
         query.location = btoa(JSON.stringify(updatedAnswers.location));
-      const selectedFilters = {
-        providers: [],
-        lookingFor: [filters[3].options[0].value],
-      };
-      if (updatedAnswers.providers) {
-        let organisationFilter = updatedAnswers.providers.filter(
-          (option) => option === "As an Organisation",
-        );
-        if (organisationFilter.length > 0) {
-          for (let i = 1; i < filters[1].options.length; ++i) {
-            selectedFilters.providers.push(filters[1].options[i].value);
-          }
-        }
-      }
-      if (selectedFilters.providers.length)
-        query.filters = btoa(JSON.stringify(selectedFilters));
       props.history.push({
         pathname: "/feed",
         search: qs.stringify(query),
