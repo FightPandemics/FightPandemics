@@ -11,6 +11,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "polished": "^3.6.2",
+    "query-string": "^6.13.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-gtm-module": "^2.0.8",

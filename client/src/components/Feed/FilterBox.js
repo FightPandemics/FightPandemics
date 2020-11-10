@@ -47,6 +47,8 @@ const gtmTagsMap = {
   providers: GTM.post.providers,
 };
 
+const LOCATION_DISPLAY_LENGTH_MAX = 30;
+
 const FilterBox = ({ gtmPrefix, locationOnly }) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
@@ -55,8 +57,10 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
     handleOnClose,
     filterModal,
     handleFilterModal,
+    handleLocation,
     handleOption,
     handleQuit,
+    location,
     selectedOptions,
   } = feedContext;
   const renderFilterOptions = (filter) => {
@@ -79,6 +83,16 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
     <FilterBoxWrapper className="filter-box">
       {renderFilterOptions(filters)}
       <div>
+        {location && (
+          <ButtonTag
+            className="tag-closable"
+            onClick={() => handleLocation(null)}
+          >
+            {location?.address?.length > LOCATION_DISPLAY_LENGTH_MAX
+              ? `${location?.address?.substr(0, LOCATION_DISPLAY_LENGTH_MAX)}…`
+              : location?.address}
+          </ButtonTag>
+        )}
         {Object.keys(selectedOptions).map((filter) =>
           selectedOptions[filter].map((option, idx) => (
             <ButtonTag

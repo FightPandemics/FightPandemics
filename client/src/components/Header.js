@@ -143,8 +143,6 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
-  onSearchSubmit,
-  onSearchClear,
   navSearch,
 }) => {
   const { t } = useTranslation();
@@ -301,12 +299,7 @@ export default ({
             </BrandLink>
             <NavSearch>
               {navSearch && (
-                <FeedSearch
-                  handleSubmit={onSearchSubmit}
-                  handleClear={onSearchClear}
-                  placeholder={t("feed.search.placeholder")}
-                  t={t}
-                />
+                <FeedSearch placeholder={t("feed.search.placeholder")} t={t} />
               )}
             </NavSearch>
           </>
