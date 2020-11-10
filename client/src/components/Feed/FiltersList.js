@@ -32,23 +32,18 @@ const FiltersList = () => {
             : location?.address}
         </ButtonTag>
       )}
-      {Object.keys(selectedOptions).map((filter) =>
-        selectedOptions[filter].map((option, idx) => (
+      {Object.keys(selectedOptions).map((filter) => {
+        if (filter === "lookingFor") return;
+        return selectedOptions[filter].map((option, idx) => (
           <ButtonTag
             key={idx}
             onClick={handleOption(filter, option)}
             className="tag-closable"
           >
-            {t(
-              getOptionText(
-                filters,
-                filter,
-                option.value ? option.value : option,
-              ),
-            )}
+            {t(getOptionText(filters, filter, option.value || option))}
           </ButtonTag>
-        )),
-      )}
+        ));
+      })}
     </div>
   );
 };

@@ -26,6 +26,9 @@ import {
   WizardSubmit,
   StyledDiv,
 } from "components/StepWizard";
+import qs from "query-string";
+import filterOptions from "assets/data/filterOptions";
+const filters = Object.values(filterOptions);
 
 const INITIAL_STATE = {
   postType: "Offering help",
@@ -168,10 +171,14 @@ const OfferHelp = withRouter((props) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
     if (key === "location") {
-      localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
+      let query = {
+        objective: "REQUEST",
+      };
+      if (updatedAnswers.location)
+        query.location = btoa(JSON.stringify(updatedAnswers.location));
       props.history.push({
         pathname: "/feed",
-        state: updatedAnswers,
+        search: qs.stringify(query),
       });
     }
   };
