@@ -128,25 +128,14 @@ const PostSocial = ({
       ) : (
         <>
           {isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${id}`,
-                state: {
-                  postId: id,
-                  comments: true,
-                  from: window.location.href,
-                },
-              }}
+            <div
+              id={gtmTag("like", GTM.feed.prefix)}
+              className="social-icon"
+              onClick={() => handlePostLike(id, liked, true)}
             >
-              <div
-                id={gtmTag("like", GTM.feed.prefix)}
-                className="social-icon"
-                onClick={() => handlePostLike(id, liked, true)}
-              >
-                {renderLikeIcon()}
-                {renderLabels("Like", numLikes)}
-              </div>
-            </Link>
+              {renderLikeIcon()}
+              {renderLabels("Like", numLikes)}
+            </div>
           ) : (
             <Link
               onClick={() =>
