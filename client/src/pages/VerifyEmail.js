@@ -87,7 +87,11 @@ const VerifyEmail = ({ forgotPasswordRequested, email }) => {
     <VerifyEmailContainer>
       <VerifyEmailLeftContainer>
         <EnvelopeImageContainer>
-          <img className="EnvelopeSVG" src={emailVerify} alt={t("alt.envelope")} />
+          <img
+            className="EnvelopeSVG"
+            src={emailVerify}
+            alt={t("alt.envelope")}
+          />
         </EnvelopeImageContainer>
       </VerifyEmailLeftContainer>
       <VerifyEmailRightContainer>
@@ -98,13 +102,15 @@ const VerifyEmail = ({ forgotPasswordRequested, email }) => {
               {forgotPasswordRequested ? (
                 <>
                   <Trans i18nKey="verifyEmail.forgotPass" email={email}>
-                    An email has been sent to {{email}} with further instructions on how to reset your password.
+                    An email has been sent to {{ email }} with further
+                    instructions on how to reset your password.
                   </Trans>
                 </>
               ) : (
                 <>
                   <Trans i18nKey="verifyEmail.confirm" email={email}>
-                    We just emailed a link to {{email}}. Click the link to confirm your account and complete your profile.
+                    We just emailed a link to {{ email }}. Click the link to
+                    confirm your account and complete your profile.
                   </Trans>
                 </>
               )}

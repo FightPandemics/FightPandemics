@@ -43,7 +43,7 @@ const PostCard = styled(Card)`
     .highlighted {
       font-weight: bold;
       color: #425af2;
-      background: #F3F4FE;
+      background: #f3f4fe;
     }
 
     .card-header {

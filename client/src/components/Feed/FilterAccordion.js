@@ -9,7 +9,7 @@ import {
   AccordionHeader,
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
-
+import { SET_VALUE } from "hooks/actions/feedActions";
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
   1: GTM.providersFilters.startUp,
@@ -63,15 +63,20 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   const feedContext = useContext(FeedContext);
   const {
     activePanel,
+    dispatchAction,
     filters,
     handleLocation,
     handleOption,
     location,
     selectedOptions,
-    selectedType,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
+
+  const setActivePanel = (activePanelKey) => {
+    dispatchAction(SET_VALUE, "activePanel", activePanelKey);
+  };
+
   const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "location") {
@@ -105,19 +110,18 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
             key={idx}
           >
             {Object.values(filter.options).map(({ text, value }, idx) => {
+              const tagClassName = `tag-selectable ${
+                selectedOptions[filter.label] &&
+                selectedOptions[filter.label].includes(value)
+                  ? "tag-selected"
+                  : ""
+              }`;
               return (
                 <ButtonTag
                   id={gtmPrefix + filterOps(filter.label, idx)}
                   key={idx}
                   onClick={handleOption(filter.label, value)}
-                  className={
-                    "tag-selectable " +
-                    ((selectedOptions[filter.label] &&
-                      selectedOptions[filter.label].includes(value)) ||
-                      value.toLowerCase().includes(selectedType?.toLowerCase())
-                      ? "tag-selected"
-                      : "")
-                  }
+                  className={tagClassName}
                 >
                   {t(text)}
                 </ButtonTag>
@@ -132,8 +136,9 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   return (
     <FilterAccordion
       accordion
-      defaultActiveKey={activePanel}
+      activeKey={activePanel}
       className="my-accordion"
+      onChange={setActivePanel}
     >
       {renderPanels()}
     </FilterAccordion>
