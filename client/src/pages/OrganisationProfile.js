@@ -16,16 +16,17 @@ import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
-import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
-import githubIcon from "assets/icons/social-github.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
+
+import instagramIcon from "assets/icons/social-instagram.svg";
+import linkedinBlue from "assets/icons/social-linkedin.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import twitterBlue from "assets/icons/social-tw.svg";
+import githubIcon from "assets/icons/social-github.svg";
+import websiteIcon from "assets/icons/website-icon.svg";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -60,6 +61,7 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  ProfileBackgroup,
 } from "../components/Profile/ProfileComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -470,14 +472,8 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
       const { address } = location;
       return (
         <>
+          <ProfileBackgroup />
           <UserInfoContainer>
-            {isOwner && (
-              <EditIcon
-                src={edit}
-                id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                onClick={onToggleDrawer}
-              />
-            )}
             <div>
               <AvatarPhotoContainer>
                 <ProfilePic
@@ -496,25 +492,27 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
             </div>
             <UserInfoDesktop>
               <NameDiv>
-                <NamePara>{name}</NamePara>
-                <PlaceholderIcon />
+                <div className="name-container">
+                  <NamePara>{name}</NamePara>
+                  {address && (
+                    <div title={address} className="address-container">
+                      <img src={locationIcon} alt={address} />
+                      {address}
+                    </div>
+                  )}
+                </div>
                 {isOwner && (
-                  <EditEmptyIcon
-                    src={editEmpty}
+                  <EditIcon
+                    src={edit}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
                     onClick={onToggleDrawer}
                   />
                 )}
               </NameDiv>
-              <DescriptionDesktop> {about} </DescriptionDesktop>
-              <LocationMobileDiv>{address}</LocationMobileDiv>
+              {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
               <IconsContainer>
-                <LocationDesktopDiv>
-                  <LocationIcon src={locationIcon} />
-                  {address}
-                </LocationDesktopDiv>
-                <PlaceholderIcon />
-                {renderURL()}
+                <div />
+                <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>

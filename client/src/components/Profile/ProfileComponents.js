@@ -91,7 +91,7 @@ export const NameDiv = styled(TextLabel)`
   justify-content: space-between;
 
   &.ant-typography {
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: bold;
   }
 
