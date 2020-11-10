@@ -281,7 +281,6 @@ class FeedNavSearch extends React.Component {
         s_category: options.findIndex((a) => a.id === selectedValue[0]?.id),
       };
       if (searchQuery.s_category) {
-        searchQuery.filters = null;
         searchQuery.objective = null;
       }
       setQueryKeysValue(this.props.history, searchQuery);

@@ -58,7 +58,6 @@ class SearchCategories extends React.Component {
       s_category:
         this.props.options.findIndex((option) => option.id === item?.id) ||
         null,
-      filters: null,
       objective: null,
     });
   };
