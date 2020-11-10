@@ -77,13 +77,9 @@ export const LocationIcon = styled(SvgIcon)`
 
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
-  width: 2rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 2.5rem;
-    margin: 0 1rem 0.5rem 0;
-  }
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1.6rem;
 `;
 
 export const NameDiv = styled(TextLabel)`
@@ -103,6 +99,27 @@ export const NameDiv = styled(TextLabel)`
     padding: 0;
     margin-top: 2.5rem;
     flex-direction: column;
+  }
+
+  .name-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .address-container {
+    color: #939393;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1.6rem);
+
+    img {
+      margin-right: 0.8rem;
+    }
   }
 `;
 
@@ -214,6 +231,12 @@ export const IconsContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+  }
+
+  .social-icons {
+    a:last-child img {
+      margin-right: 0;
+    }
   }
 `;
 export const HelpContainer = styled.div`

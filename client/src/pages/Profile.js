@@ -88,13 +88,14 @@ import createPost from "assets/icons/create-post.svg";
 import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
 import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
-import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
+import instagramIcon from "assets/icons/social-instagram.svg";
+import linkedinBlue from "assets/icons/social-linkedin.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import twitterBlue from "assets/icons/social-tw.svg";
 import githubIcon from "assets/icons/social-github.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
-import locationIcon from "assets/icons/location.svg";
-import websiteIcon from "assets/icons/social-website-blue.svg";
+import websiteIcon from "assets/icons/website-icon.svg";
+
+import locationIcon from "assets/icons/status-indicator.svg";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -390,6 +391,7 @@ const Profile = ({
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  console.log("urls", location);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -413,9 +415,17 @@ const Profile = ({
           </AvatarPhotoContainer>
           <UserInfoDesktop>
             <NameDiv>
-              <NamePara>
-                {firstName} {lastName}
-              </NamePara>
+              <div className="name-container">
+                <NamePara>
+                  {firstName} {lastName}
+                </NamePara>
+                {address && (
+                  <div title={address} className="address-container">
+                    <img src={locationIcon} alt={address} />
+                    {address}
+                  </div>
+                )}
+              </div>
               {ownUser && (
                 <EditIcon
                   src={edit}
@@ -433,30 +443,31 @@ const Profile = ({
               )}
             </NameDiv>
             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-            {address && <LocationMobileDiv>{address}</LocationMobileDiv>}
             <IconsContainer>
               <HelpContainer>
                 {needHelp && <div>{t("profile.individual.needHelp")}</div>}
                 {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
               </HelpContainer>
-              {Object.entries(urls).map(([name, url]) => {
-                return (
-                  url && (
-                    <a
-                      href={
-                        name === "website"
-                          ? getHref(url)
-                          : `${URLS[name][1]}${url}`
-                      }
-                      key={name}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SocialIcon src={URLS[name][0]} />
-                    </a>
-                  )
-                );
-              })}
+              <div className="social-icons">
+                {Object.entries(urls).map(([name, url]) => {
+                  return (
+                    url && (
+                      <a
+                        href={
+                          name === "website"
+                            ? getHref(url)
+                            : `${URLS[name][1]}${url}`
+                        }
+                        key={name}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <SocialIcon src={URLS[name][0]} />
+                      </a>
+                    )
+                  );
+                })}
+              </div>
             </IconsContainer>
           </UserInfoDesktop>
         </UserInfoContainer>
