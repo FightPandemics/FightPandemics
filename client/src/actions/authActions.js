@@ -10,6 +10,7 @@ import {
 import TagManager from "react-gtm-module";
 
 const GET_CURRENT_USER_ENDPOINT = "/api/users/current";
+const CHECK_REMEMBER_COOKIE_INTERVAL = 3000;
 
 // Token stored in httpOnly cookie set/cleared by server
 export const initAuth = () => {
@@ -54,4 +55,15 @@ export const authLogout = () => {
     });
     dispatch({ type: AUTH_LOGOUT });
   };
+};
+
+export const startCheckCookieInterval = () => {
+  const checkRememberCookieInterval = setInterval(() => {
+    if (!checkRememberCookie()) {
+      clearInterval(checkRememberCookieInterval);
+      authLogout();
+      sessionStorage.setItem("postredirect", window.location.pathname);
+      return window.location.reload();
+    }
+  }, CHECK_REMEMBER_COOKIE_INTERVAL);
 };
