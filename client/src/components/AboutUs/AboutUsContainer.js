@@ -285,7 +285,7 @@ export const ImageContainer = styled.div`
   }
   p {
     max-width: 53rem;
-    height: 9.5rem;
+    min-height: 9.5rem;
     display: inline-block;
     line-height: 1.5;
     margin-top: 1.25rem;
