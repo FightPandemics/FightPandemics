@@ -163,7 +163,7 @@ const MessageModal = ({
               onCancel={handleDone}
               onOk={() => {
                 if (threadId) joinRoom({ threadId });
-                history.push("/inbox");
+                history.push("/inbox", { hideMobileChatList: true });
               }}
               cancelText={t("messaging.done")}
               okButtonProps={{ id: gtmId + GTM.inbox.suffix }}

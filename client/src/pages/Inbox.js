@@ -58,6 +58,11 @@ const Inbox = (props) => {
     unlisten();
   });
 
+  useEffect(() => {
+    if (history.location.state?.hideMobileChatList)
+      setToggleMobileChatList(false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const ensureLoggedIn = () => {
     if (!authLoading && !isAuthenticated) {
       sessionStorage.setItem("postredirect", "/inbox");
