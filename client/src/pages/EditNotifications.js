@@ -78,7 +78,7 @@ function EditNotifications(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (

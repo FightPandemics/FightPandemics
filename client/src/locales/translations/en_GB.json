@@ -143,7 +143,8 @@
     }
   },
   "message": {
-    "message": "Message"
+    "message": "Message",
+    "message_plural": "Messages"
   },
   "post": {
     "create": "Create a post",
@@ -201,6 +202,7 @@
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
+    "share_plural": "Shares",
     "delete": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",

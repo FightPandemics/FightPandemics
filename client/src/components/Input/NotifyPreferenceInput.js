@@ -46,10 +46,10 @@ const NotifyGroup = {
 };
 
 const NotifyType = {
-  message: "message.message",
-  like: "post.like",
-  comment: "comment.comment",
-  share: "post.share",
+  like: "post.like_plural",
+  share: "post.share_plural",
+  comment: "comment.comment_plural",
+  message: "message.message_plural",
 };
 
 const NotifyFreq = {
@@ -76,7 +76,7 @@ const NotifyPreferenceInput = ({
       setCurrPrefs({ ...currPrefs, ...disabledPrefs });
     }
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff]);
+  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
