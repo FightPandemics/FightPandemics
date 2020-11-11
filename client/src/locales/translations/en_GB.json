@@ -832,7 +832,8 @@
     "tryAgainBtn": "Try Again"
   },
   "unsubscribe": {
-    "notifyPrefs": "Notification Preference",
+    "unsubscribe": "Unsubscribe",
+    "canceled": "Operation is canceled",
     "success": "Your notification preference is updated"
   }
 }

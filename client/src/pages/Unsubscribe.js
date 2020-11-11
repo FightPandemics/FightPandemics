@@ -10,6 +10,7 @@ import isEqual from "lodash/isEqual";
 import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
 import { CustomSubmitButton } from "components/EditProfile/EditComponents";
 import { mq, theme } from "constants/theme";
+import { WhiteSpace } from "antd-mobile";
 import styled from "styled-components";
 // ICONS
 import socialmedia2 from "assets/social-media2.svg";
@@ -77,6 +78,26 @@ const CustomForm = styled.form`
   }
 `;
 
+const SubmitButtonLeft = styled(CustomSubmitButton).attrs(
+  ({ size, inline }) => {
+    return { size, inline };
+  },
+)`
+  align-items: left;
+  max-width: 18rem;
+  min-width: 10rem;
+`;
+
+const SubmitButtonRight = styled(CustomSubmitButton).attrs(
+  ({ size, inline }) => {
+    return { size, inline };
+  },
+)`
+  align-items: right;
+  max-width: 18rem;
+  min-width: 10rem;
+`;
+
 const Unsubscribe = (props) => {
   const { control, formState, handleSubmit, setValue } = useForm({
     mode: "change",
@@ -111,6 +132,13 @@ const Unsubscribe = (props) => {
     }
   };
 
+  const onCancel = async () => {
+    setMessageSuccess(t("notifications.unsubscribe.canceled"));
+    setTimeout(() => {
+      props.history.push(`/`);
+    }, 2000);
+  };
+
   useEffect(() => {
     (async function fetchProfile() {
       try {
@@ -142,7 +170,7 @@ const Unsubscribe = (props) => {
         {messageError && <ErrorAlert message={messageError} type="error" />}
         <div className={"form-container"}>
           <Heading className="h4 text-center" level={4}>
-            {t("notifications.unsubscribe.notifyPrefs")}
+            {t("notifications.unsubscribe.unsubscribe")}
           </Heading>
           <CustomForm>
             <NotifyPreferenceInput
@@ -155,13 +183,26 @@ const Unsubscribe = (props) => {
               disabledPrefs={disabledPrefs}
             />
             {/* Button that saves changes */}
-            <CustomSubmitButton
-              disabled={!formState.isValid}
-              primary="true"
-              onClick={handleSubmit(onSubmit)}
-            >
-              {t("profile.common.saveChanges")}
-            </CustomSubmitButton>
+            <WhiteSpace />
+            <WhiteSpace />
+            <LoginContainer>
+              <SubmitButtonLeft
+                key="left"
+                disabled={!formState.isValid}
+                primary="true"
+                onClick={handleSubmit(onCancel)}
+              >
+                {t("post.cancel")}
+              </SubmitButtonLeft>
+              <SubmitButtonRight
+                key="right"
+                disabled={!formState.isValid}
+                primary="true"
+                onClick={handleSubmit(onSubmit)}
+              >
+                {t("post.confirm")}
+              </SubmitButtonRight>
+            </LoginContainer>
           </CustomForm>
         </div>
       </LoginRightContainer>
