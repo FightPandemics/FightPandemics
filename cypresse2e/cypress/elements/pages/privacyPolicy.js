@@ -36,7 +36,7 @@ class privacyPolicy {
     '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[14]';
   fifthteenParaLocWithOrdList =
     '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[15]';
-  all_emails = "ol >li a href";
+
 
   constructor() {}
 
