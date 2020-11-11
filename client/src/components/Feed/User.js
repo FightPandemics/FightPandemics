@@ -346,7 +346,6 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
           <IconsContainer style={{ "margin-top": "0" }}>
             {_id != user?.id &&
               !user?.organisations?.find((org) => org._id === _id) &&
-              name &&
               !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
                 <MessageModal
                   isAuthenticated={!!user}
