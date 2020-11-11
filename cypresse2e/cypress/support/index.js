@@ -25,4 +25,3 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 });
-require("cypress-failed-log");

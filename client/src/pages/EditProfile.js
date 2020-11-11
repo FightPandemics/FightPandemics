@@ -82,7 +82,7 @@ function EditProfile(props) {
       "LinkedIn URL",
       {
         pattern: {
-          value: /^[a-zA-Z0-9\-]*$/,
+          value: /^[a-zA-Z0-9_\-/]*$/,
           message: t("profile.common.validCharacters", {
             characters: "A-Z a-z 0-9 -",
           }),
