@@ -532,7 +532,7 @@ const Profile = ({
             closable={false}
             onClose={onToggleDrawer}
             visible={drawer}
-            height="150px"
+            height="200px"
             key="bottom"
           >
             <DrawerHeader>
@@ -541,6 +541,11 @@ const Profile = ({
             <DrawerHeader>
               <Link to="/edit-profile">
                 {t("profile.individual.editProfile")}{" "}
+              </Link>
+            </DrawerHeader>
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
               </Link>
             </DrawerHeader>
           </CustomDrawer>
