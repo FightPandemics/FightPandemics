@@ -344,44 +344,6 @@ const Feed = (props) => {
       }
     }
   };
-  const handleSearchSubmit = useCallback((selectedValueId) => {
-    if (!selectedValueId || selectedValueId != "POSTS")
-      handleChangeType({ key: "ALL" });
-    dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
-    dispatchAction(SET_VALUE, "showSearchCategories", true);
-    changeHelpType(selectedValueId);
-    resetRouterState();
-    refetchPosts();
-  });
-
-  const handleSearchClear = useCallback(() => {
-    let needRefetch =
-      searchKeyword || (searchCategory && searchCategory != "POSTS");
-    handleChangeType({ key: "ALL" });
-    dispatchAction(SET_VALUE, "searchKeyword", "");
-    dispatchAction(SET_VALUE, "searchCategory", null);
-    dispatchAction(SET_VALUE, "showSearchCategories", false);
-    changeHelpType(null);
-    if (needRefetch) refetchPosts();
-  });
-
-  const handleMobileSearchSubmit = useCallback(
-    (inputValue, selectedValueId) => {
-      if (!selectedValueId || selectedValueId != "POSTS")
-        handleChangeType({ key: "ALL" });
-      dispatchAction(SET_VALUE, "searchCategory", selectedValueId);
-      dispatchAction(SET_VALUE, "searchKeyword", inputValue);
-      resetRouterState();
-      refetchPosts();
-    },
-  );
-
-  useEffect(() => {
-    if (!searchKeywords || !searchKeywords.length) return handleSearchClear();
-    dispatchAction(SET_VALUE, "searchKeyword", searchKeywords);
-    handleSearchSubmit(searchCategory);
-  }, [searchKeywords]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const handleLocation = (value) => {
     if (applyFilters) {
       postsDispatch({ type: RESET_PAGE });
