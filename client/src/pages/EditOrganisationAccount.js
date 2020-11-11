@@ -316,9 +316,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
         <div>
           <Controller
             as={
-              <Select
-                style={{ width: "100%" }}
-              >
+              <Select style={{ width: "100%" }}>
                 {orgData.type.options.map((option, i) => (
                   <Select.Option key={i} value={option.text}>
                     {t("profile.org.types." + i)}
@@ -333,9 +331,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
           />
           <Controller
             as={
-              <Select
-                style={{ width: "100%" }}
-              >
+              <Select style={{ width: "100%" }}>
                 {orgData.industry.options.map((option, i) => (
                   <Select.Option key={i} value={option.text}>
                     {t("profile.org.industries." + i)}

@@ -275,15 +275,6 @@ const NavigationLayout = (props) => {
   } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const [searchKeywords, setSearchKeywords] = useState(false);
-
-  const handleSearchSubmit = (inputValue) => {
-    setSearchKeywords(inputValue);
-  };
-
-  const handleSearchClear = () => {
-    setSearchKeywords("");
-  };
 
   const TEXT_FEEDBACK = [
     {
@@ -723,14 +714,12 @@ const NavigationLayout = (props) => {
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
             navSearch={navSearch}
-            onSearchSubmit={handleSearchSubmit}
-            onSearchClear={handleSearchClear}
           />
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
           <Main>
-            <props.component {...props} searchKeywords={searchKeywords} />
+            <props.component {...props} />
             {feedbackFormState.error && (
               <ErrorAlert
                 message={feedbackFormState.error}

@@ -135,4 +135,16 @@ module.exports = {
     individuals: "_PPL",
     organisations: "_ORG",
   },
+  aboutUs: {
+    prefix: "AU",
+    getInvolved: "_GI",
+    goToHelp: "_VHB",
+    linkedIn: "_LN",
+    instagram: "_IG",
+    twitter: "_TW",
+    facebook: "_FB",
+    joinVolunteer: "_GI_JV",
+    joinAmbassador: "_GI_JA",
+    joinStudentProgram: "_GI_JSP",
+  },
 };
