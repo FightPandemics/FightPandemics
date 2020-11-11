@@ -25,7 +25,7 @@ const isLocalhost = Boolean(
       /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
     ),
 );
-
+const RECONNECT_INTERVAL = 1000;
 const WebSocketContext = createContext();
 
 export { WebSocketContext };
@@ -41,8 +41,8 @@ export default class SocketManager extends React.Component {
     };
     props.store.subscribe(() => {
       const newState = props.store.getState();
-      if (this.state.isAuthenticated != newState.session.isAuthenticated) {
-        this.setState({ isAuthenticated: newState.session.isAuthenticated });
+      if (this.state.isAuthenticated != !!newState.session.user) {
+        this.setState({ isAuthenticated: !!newState.session.user });
         if (this.state.isAuthenticated && !this.state.isIdentified)
           this.identify();
         else this.socket.disconnect();
@@ -66,7 +66,7 @@ export default class SocketManager extends React.Component {
         if (this.socket.connected) return clearInterval(recon);
         console.log(`[WS]: Trying to reconnect!`);
         this.socket.connect();
-      }, 1000);
+      }, RECONNECT_INTERVAL);
     });
 
     this.socket.on("MESSAGE_RECEIVED", (messageData) => {
@@ -103,8 +103,8 @@ export default class SocketManager extends React.Component {
   identify = () => {
     // we set isIdentified:true now, because this request might take time
     this.setState({ isIdentified: true });
-    // if we keep it false, it function will run twice
-    // but we revert to "false" if identification failed
+    // if we keep it "false", this method will run twice
+    // later we revert to "false" if identification failed
     if (!this.socket || !this.state.isIdentified) return;
     this.socket.emit("IDENTIFY", null, (response) => {
       if (response.code == 200) {
