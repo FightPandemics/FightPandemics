@@ -36,7 +36,7 @@ const StyledSpan = styled.span`
 const PostSocial = ({
   handlePostLike,
   isAuthenticated,
-  isOwnOrg,
+  isOwnPost,
   authorId,
   url,
   user,
@@ -228,8 +228,7 @@ const PostSocial = ({
           <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
-      {!isOwnOrg &&
-        user?.id != authorId &&
+      {!isOwnPost &&
         !/Sourced by FightPandemics\ \(.*?\)/.test(postAuthorName) && (
           <div className="social-icon">
             <MessageModal

@@ -47,6 +47,7 @@ const MessageModal = ({
   postId,
   postInfo,
   isFromProfile,
+  isFromUserCard,
   gtmPrefix,
 }) => {
   const { t } = useTranslation();
@@ -115,9 +116,15 @@ const MessageModal = ({
     setText(e.target.value);
   };
   const gtmId =
-    gtmPrefix +
+    (gtmPrefix || GTM.user.profilePrefix) +
     GTM.inbox.message +
-    (isFromProfile ? GTM.inbox.profile : GTM.inbox.post);
+    (isFromProfile
+      ? ""
+      : isFromUserCard
+      ? isFromUserCard === "USER"
+        ? GTM.inbox.user
+        : GTM.inbox.org
+      : GTM.inbox.post);
 
   return (
     <>
@@ -126,6 +133,7 @@ const MessageModal = ({
           <PrivateMessageContainer
             onClick={showModal}
             isFromProfile={isFromProfile}
+            isFromUserCard={isFromUserCard}
             id={gtmId}
           >
             <img src={activeemail} />
@@ -140,7 +148,7 @@ const MessageModal = ({
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !text, id: gtmId + GTM.inbox.sent }}
           >
-            {!isFromProfile && (
+            {!isFromProfile && !isFromUserCard && (
               <OrgPostRef
                 title={title}
                 content={postContent}
@@ -169,7 +177,7 @@ const MessageModal = ({
               okButtonProps={{ id: gtmId + GTM.inbox.suffix }}
             >
               <p>
-                {!isFromProfile
+                {!isFromProfile && !isFromUserCard
                   ? t("messaging.sendSuccessText", {
                       username: postAuthorName,
                       title: title,
@@ -187,7 +195,7 @@ const MessageModal = ({
               cancelText={t("messaging.close")}
             >
               <p>
-                {!isFromProfile
+                {!isFromProfile && !isFromUserCard
                   ? t("messaging.sendFailedText", {
                       username: postAuthorName,
                       title: title,
@@ -202,14 +210,25 @@ const MessageModal = ({
       ) : (
         <Link
           onClick={() =>
-            sessionStorage.setItem("postredirect", `/post/${postId}`)
+            sessionStorage.setItem(
+              "postredirect",
+              postId
+                ? `/post/${postId}`
+                : isFromUserCard == "USER"
+                ? `/profile/${authorId}`
+                : `/organisation/${authorId}`,
+            )
           }
           to={{
             pathname: LOGIN,
             state: { from: window.location.href },
           }}
         >
-          <PrivateMessageContainer id={gtmId}>
+          <PrivateMessageContainer
+            isFromProfile={isFromProfile}
+            isFromUserCard={isFromUserCard}
+            id={gtmId}
+          >
             <img src={activeemail} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
