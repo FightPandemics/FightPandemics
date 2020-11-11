@@ -180,6 +180,8 @@ const Feed = (props) => {
     return ref.current;
   }
 
+  const { history, isAuthenticated, user, searchKeywords } = props;
+
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
