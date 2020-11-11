@@ -92,6 +92,7 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  gtmPrefix,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -482,6 +483,12 @@ const Post = ({
         setShowShareModal={setShowShareModal}
         id={post?._id}
         user={user}
+        gtmPrefix={gtmPrefix || (postId ? GTM.post.prefix : GTM.feed.prefix)}
+        postInfo={{
+          objective: post.objective,
+          tags: post.types,
+          location: post.author.location,
+        }}
       />
     </Card.Body>
   );

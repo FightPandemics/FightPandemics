@@ -718,7 +718,7 @@ const NavigationLayout = (props) => {
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
-          <Main>
+          <Main isProfile={props?.isProfile}>
             <props.component {...props} />
             {feedbackFormState.error && (
               <ErrorAlert
