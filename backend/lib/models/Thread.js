@@ -55,11 +55,10 @@ const threadSchema = new Schema(
 /* eslint-disable */
 threadSchema.index({ "participants.id": 1 });
 
-// Index to get inbox sorted by most recent
+// Index to get inbox sorted
 threadSchema.index({
   "participants.id": 1,
-  "status": 1,
-  "updatedAt": -1
+  "updatedAt": 1
 });
 /* eslint-enable */
 
