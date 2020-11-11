@@ -60,9 +60,12 @@ const InboxIcon = styled.span`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: ${(props) => (props.mobile ? "block" : "none")};
     position: absolute;
-    top: 0.65em;
-    right: 3em;
+    top: 0.678em;
+    right: 3.3em;
     cursor: pointer;
+    img {
+      height: 2.3rem;
+    }
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -256,7 +259,7 @@ export default ({
               )
               .reduce((a, b) => a + b, 0)}
           >
-            <SvgIcon src={mail} className="globe-icon-svg"></SvgIcon>
+            <SvgIcon src={mail}></SvgIcon>
           </Badge>
         </NavLink>
       </InboxIcon>

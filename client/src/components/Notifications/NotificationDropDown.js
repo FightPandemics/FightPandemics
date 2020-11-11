@@ -69,17 +69,18 @@ const Unread = styled.div`
 // Menu
 const StyledMenu = styled(Menu)`
   position: absolute;
-  top: 1.1em;
+  top: 0.75em;
   width: 21.429em;
   height: 28.9em;
   border-radius: 10px;
   right: -2.993em;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 90vw;
+    width: 100vw;
     height: 90vh;
     position: absolute;
     border-radius: 0px;
     top: 0.7em;
+    overflow: hidden;
   }
   a {
     padding: 0.5em 1em;
@@ -94,12 +95,12 @@ const StyledMenu = styled(Menu)`
     scroll-margin: 0px;
     border-radius: 0 0 10px 10px;
     height: 25.15em;
-    ::-webkit-scrollbar {
-      display: none;
-    }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       border-radius: 0px !important;
-      height: 85.8vh;
+      height: 82vh;
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
   .ant-dropdown-menu-item {
@@ -135,8 +136,11 @@ const StyledBadge = styled(Badge)`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: ${(props) => (props.mobile ? "initial" : "none")};
     position: absolute;
-    top: 1.05em;
-    right: 6em;
+    top: 1.03em;
+    right: 6.2em;
+    img {
+      height: 2.3rem;
+    }
   }
 `;
 const itemStyle = {
@@ -273,6 +277,9 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
       overlay={menu(mappedNotifications, t)}
       trigger="click"
       placement="bottomRight"
+      getPopupContainer={() =>
+        document.getElementsByClassName("am-navbar-right")[0]
+      }
     >
       <a>
         <StyledBadge
