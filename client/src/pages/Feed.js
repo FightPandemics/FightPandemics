@@ -158,7 +158,6 @@ const Feed = (props) => {
     status,
     deleteModalVisibility,
   } = posts;
-  const { history, isAuthenticated, user } = props;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
   const [queryParams, setQueryParams] = useState({});
@@ -531,12 +530,6 @@ const Feed = (props) => {
       else return "";
     };
 
-    const searchURL = () => {
-      if (searchKeyword)
-        return `&keywords=${encodeURIComponent(searchKeyword)}`;
-      else return "";
-    };
-
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
@@ -602,14 +595,12 @@ const Feed = (props) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (Object.keys(postsList).length && page) {
-
         if (postsInState) {
           postsDispatch({
             type: SET_POSTS,
             posts: { ...postsInState },
           });
-        } else if (postsList) {
+        } else if (Object.keys(postsList).length && page) {
           postsDispatch({
             type: SET_POSTS,
             posts: { ...postsList, ...loadedPosts },
