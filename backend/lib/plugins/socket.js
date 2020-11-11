@@ -246,7 +246,7 @@ function onSocketConnect(socket) {
       return res({ code: 401, message: "Unauthorized" });
     // sender is still "pending", they can't send until they accept
     if (
-      thread.participants.find((p) => p.id === userId && p.status === "pending")
+      thread.participants.find((p) => p.id.toString() === userId && p.status === "pending")
     ) {
       return res({ code: 401, message: "Unauthorized" });
     }
