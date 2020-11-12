@@ -61,20 +61,13 @@ const NotifyFreq = {
 const NotifyPreferenceInput = ({
   control,
   currPrefs,
-  setCurrPrefs,
-  setValue,
   switchOnOff,
   setSwitchOnOff,
-  disabledPrefs,
 }) => {
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!switchOnOff) {
-      setValue("notifyPrefs", { ...disabledPrefs });
-      setCurrPrefs({ ...currPrefs, ...disabledPrefs });
-    }
     setChecksEnabled(switchOnOff);
   }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
