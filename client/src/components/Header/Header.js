@@ -133,8 +133,6 @@ const Header = ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
-  onSearchSubmit,
-  onSearchClear,
   navSearch,
   setOrganisationId,
 }) => {
@@ -166,12 +164,7 @@ const Header = ({
             </BrandLink>
             <NavSearch>
               {navSearch && (
-                <FeedSearch
-                  handleSubmit={onSearchSubmit}
-                  handleClear={onSearchClear}
-                  placeholder={t("feed.search.placeholder")}
-                  t={t}
-                />
+                <FeedSearch placeholder={t("feed.search.placeholder")} t={t} />
               )}
             </NavSearch>
           </>
