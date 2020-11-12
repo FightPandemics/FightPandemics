@@ -1,6 +1,5 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
-const { setElapsedTimeText } = require("../utils");
 
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
 const VISIBILITY_OPTIONS = ["city", "country", "state", "worldwide"];
@@ -187,14 +186,6 @@ postSchema.index(
     },
   },
 );
-
-postSchema.set("toObject", { virtuals: true });
-postSchema.set("toJSON", { virtuals: true });
-
-postSchema.virtual("elapsedTimeText").get(function () {
-  return setElapsedTimeText(this.createdAt, this.updatedAt);
-});
-
 
 // -- Model
 const Post = model("Post", postSchema);
