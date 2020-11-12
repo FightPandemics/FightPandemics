@@ -74,8 +74,9 @@ const StyledMenu = styled(Menu)`
   height: 28.9em;
   border-radius: 10px;
   right: -2.993em;
+  padding: 0 0 4px;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 100vw;
+    width: 102vw;
     height: 90vh;
     position: absolute;
     border-radius: 0px;
@@ -90,14 +91,27 @@ const StyledMenu = styled(Menu)`
     }
   }
   .notifications-container {
-    overflow: scroll;
+    overflow: overlay;
     scroll-padding: 0px;
     scroll-margin: 0px;
     border-radius: 0 0 10px 10px;
-    height: 25.15em;
+    height: 25.61em;
+    margin-top: -0.21em;
+    clip-path: inset(-10% 0% 0% -10% round 10px);
+    ::-webkit-scrollbar {
+      width: 0.8rem;
+      border-bottom-right-radius: 10px;
+      background-color: transparent;
+      overflow: hidden;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.colors.royalBlue};
+      cursor: pointer;
+    }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      clip-path: none;
       border-radius: 0px !important;
-      height: 82vh;
+      height: 83.1vh;
       ::-webkit-scrollbar {
         display: none;
       }
@@ -128,7 +142,8 @@ const NoMoreNotifications = styled(ItemContainer)`
   background-color: rgba(245, 246, 251, 0.8);
   justify-content: center;
   font-size: 0.8em;
-  border-radius: 0px 0px 10px 10px;
+  cursor: default;
+  user-select: none;
 `;
 const StyledBadge = styled(Badge)`
   display: ${(props) => (props.mobile ? "none" : "initial")};
@@ -192,7 +207,9 @@ const menu = (notifications, t) => {
   return (
     <StyledMenu>
       <Menu.Item style={{ ...itemStyle }}>
-        <a style={{ color: "white" }}>{t("notifications.header")}</a>
+        <a style={{ color: "white", paddingTop: "0.9rem" }}>
+          {t("notifications.header")}
+        </a>
         <Arrow />
         <Link
           to="/edit-notifications"
