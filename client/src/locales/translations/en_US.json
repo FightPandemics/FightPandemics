@@ -907,7 +907,7 @@
   "notifications": {
     "unsubscribe": {
       "unsubscribe": "Unsubscribe",
-      "canceled": "Operation is canceled",
+      "canceled": "No changes will be made to your notification preferences",
       "success": "Your notification preference is updated"
     },
     "header": "Notifications",
