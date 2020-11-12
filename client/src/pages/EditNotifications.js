@@ -48,6 +48,13 @@ function EditNotifications(props) {
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
     try {
+      if (!switchOnOff) {
+        localStorage.setItem(
+          "notifyPrefs",
+          JSON.stringify(formData.notifyPrefs),
+        );
+        Object.assign(formData.notifyPrefs, disabledPrefs);
+      }
       const res = await axios.patch("/api/users/current", formData);
       userProfileDispatch(updateUserSuccess(res.data));
       props.history.push(`/profile/${res.data._id}`);
@@ -65,11 +72,15 @@ function EditNotifications(props) {
       try {
         const res = await axios.get("/api/users/current");
         let { _id, ...prefs } = res.data.notifyPrefs;
-        setCurrPrefs({ ...currPrefs, ...prefs });
-        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
+          const preNotifyPrefsString = localStorage.getItem("notifyPrefs");
+          if (preNotifyPrefsString) {
+            Object.assign(prefs, JSON.parse(preNotifyPrefsString));
+          }
         }
+        setCurrPrefs({ ...currPrefs, ...prefs });
+        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
