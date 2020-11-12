@@ -381,12 +381,16 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <Highlight
-            className="author"
-            text={post?.author?.name}
-            highlight={highlightWords}
-          />
-          <div className="sub-header">
+          <span className="author">
+            <Highlight text={post?.author?.name} highlight={highlightWords} />
+          </span>
+          <div
+            className="sub-header"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
             {post?.author?.location?.country ? (
               <span className="location-status">
                 <SvgIcon src={statusIndicator} className="status-icon" />
