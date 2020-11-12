@@ -19,6 +19,10 @@ yarn-error.log*
 
 !.env
 
+
 mochawesome-report
 mochawesome.json
 screenshots
+
+/cypress/logs
+

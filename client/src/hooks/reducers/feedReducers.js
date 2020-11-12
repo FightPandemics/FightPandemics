@@ -2,6 +2,7 @@ import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
+  SET_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
   SET_DELETE_MODAL_VISIBILITY,
@@ -24,6 +25,8 @@ export const optionsReducer = (oldState, action) => {
   const { option, label } = action.payload;
   const newState = Object.assign({}, oldState);
   switch (action.type) {
+    case SET_OPTIONS:
+      return { ...option };
     case ADD_OPTION:
       return { ...oldState, [label]: [...(oldState[label] || []), option] };
     case REMOVE_OPTION:
