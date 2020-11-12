@@ -1,6 +1,7 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 const { locationSchema } = require("./location");
+const { notifyPreferenceSchema } = require("./notificationPreference");
 
 // todo: upgrade to shorter regex when AJV supported, see https://github.com/ajv-validator/ajv/blob/master/lib/compile/formats.js#L16
 //  const URL_REGEX = /^(?:(?:https?):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)(?:\.(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)*(?:\.(?:[a-z\u{00a1}-\u{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/iu;
@@ -47,23 +48,6 @@ const urlsSchema = S.object()
   )
   .prop("website", S.oneOf([S.null(), S.string().pattern(URL_REGEX)]));
 
-const notifyPreferenceSchema = strictSchema()
-  .prop(
-    "instant",
-    S.object()
-      .prop("like", S.boolean().default(true))
-      .prop("comment", S.boolean().default(true))
-      .prop("share", S.boolean().default(true))
-      .prop("message", S.boolean().default(true)),
-  )
-  .prop(
-    "digest",
-    S.object()
-      .prop("daily", S.boolean().default(true))
-      .prop("weekly", S.boolean().default(true))
-      .prop("biweekly", S.boolean().default(true)),
-  );
-
 const createUserSchema = {
   body: strictSchema()
     .prop("firstName", S.string().required())
@@ -95,10 +79,6 @@ const getUserByIdSchema = {
   params: strictSchema().prop("userId", S.string().required()),
 };
 
-const updateNotifyPrefsSchema = {
-  body: strictSchema().prop("notifyPrefs", notifyPreferenceSchema),
-};
-
 const updateUserSchema = {
   body: strictSchema()
     .prop("about", S.string().maxLength(160))
@@ -119,5 +99,4 @@ module.exports = {
   getUserByIdSchema,
   getUsersSchema,
   updateUserSchema,
-  updateNotifyPrefsSchema,
 };
