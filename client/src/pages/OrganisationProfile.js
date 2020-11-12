@@ -581,7 +581,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
               closable={false}
               onClose={onToggleDrawer}
               visible={drawer}
-              height="150px"
+              height="200px"
               key="bottom"
             >
               <DrawerHeader>
@@ -592,6 +592,11 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
                   {t("profile.individual.editProfile") + " "}
+                </Link>
+              </DrawerHeader>
+              <DrawerHeader>
+                <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                  {t("profile.individual.editNotification")}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>
