@@ -16,6 +16,15 @@ let feedbackWithValidInputs = {
   whatWouldChange: "Offer more Provider filter tags",
 };
 
+let feedbackWithBlankInputs = {
+  age: "",
+  covidImpact: "",
+  generalFeedback: "",
+  mostValuableFeature: "",
+  rating: "",
+  whatWouldChange: "",
+};
+
 let feedbackWithInvalidAge = {};
 Object.assign(feedbackWithInvalidAge, feedbackWithValidInputs);
 Object.assign(feedbackWithInvalidAge, { age: "%" });
@@ -31,15 +40,6 @@ Object.assign(feedbackWithInvalidRating, { rating: "%" });
 let feedbackWithNegativeRating = {};
 Object.assign(feedbackWithNegativeRating, feedbackWithValidInputs);
 Object.assign(feedbackWithNegativeRating, { rating: -5 });
-
-let feedbackWithBlankInputs = {
-  age: "",
-  covidImpact: "",
-  generalFeedback: "",
-  mostValuableFeature: "",
-  rating: "",
-  whatWouldChange: "",
-};
 
 describe("POST Feedback endpoint tests", () => {
   describe("Unauthorized user enters feedback data", () => {
