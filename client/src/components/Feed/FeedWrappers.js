@@ -10,6 +10,17 @@ export const FeedWrapper = styled.div`
   font-family: ${display};
   width: 100%;
   position: relative;
+
+  .activity {
+    ${(props) =>
+      props.isProfile
+        ? `
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        background: #f5f5f9;
+      }
+    `
+        : ""}
+  }
 `;
 
 export const SiderWrapper = styled(Sider)`
