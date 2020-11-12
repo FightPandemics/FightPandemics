@@ -167,7 +167,7 @@ function EditProfile(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [t, userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (

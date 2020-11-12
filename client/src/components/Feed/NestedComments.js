@@ -245,10 +245,14 @@ const NestedComments = ({
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
-                  {t(`relativeTime.${comment?.elapsedTimeText.created.unit}WithCount`, {
-                    count: comment?.elapsedTimeText.created.count,
-                  })}
-                  {comment?.elapsedTimeText.isEdited && (` · ${t('post.edited')}`)}
+                  {t(
+                    `relativeTime.${comment?.elapsedTimeText.created.unit}WithCount`,
+                    {
+                      count: comment?.elapsedTimeText.created.count,
+                    },
+                  )}
+                  {comment?.elapsedTimeText.isEdited &&
+                    ` · ${t("post.edited")}`}
                 </span>
               </Tooltip>
             </>
