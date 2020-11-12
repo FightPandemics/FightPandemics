@@ -416,6 +416,10 @@ async function routes(app) {
         ...post.toObject(),
         liked: post.likes.includes(mongoose.Types.ObjectId(userId)),
         likesCount: post.likes.length,
+        elapsedTimeText: setElapsedTimeText(
+          post.createdAt,
+          post.updatedAt,
+        )
       };
 
       return {
