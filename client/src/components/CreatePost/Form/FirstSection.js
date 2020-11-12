@@ -46,10 +46,8 @@ const First = ({
         rows={7}
         placeholder="Write your post*"
       />
-      <div className="error-box" style={{ color: "red" }}>
-        {post && !formData.title ? renderError("title") : <Fragment />}
-      </div>
-      <div className="error-box" style={{ color: "red" }}>
+      <div className="error-box">
+        {post && !formData.title ? `${renderError("title")} ` : <Fragment />}
         {post && !formData.description ? (
           renderError("description")
         ) : (

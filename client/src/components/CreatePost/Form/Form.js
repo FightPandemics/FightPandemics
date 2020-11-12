@@ -39,10 +39,6 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const [postForm, setPostForm] = useState(initialState.postForm);
   formData.help = type;
 
-  useEffect(() => {
-    populateErrors();
-  }, [populateErrors]);
-
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
     if (errors.includes(field) && formData[field]) {
@@ -90,6 +86,10 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
     }
     setErrors([...errors, ...newErrors]);
   };
+
+  useEffect(() => {
+    populateErrors();
+  }, [populateErrors]);
 
   const handleSubmit = async (e) => {
     setPostForm(true);

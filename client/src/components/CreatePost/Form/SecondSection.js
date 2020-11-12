@@ -13,7 +13,7 @@ const Second = ({ addTag, selectedTags, title, renderError, post }) => {
       <div className="tags">
         <AddTags addTag={addTag} filters={types} selected={selectedTags} />
       </div>
-      <span className="error-box" style={{ color: "red" }}>
+      <span className="error-box">
         {post && !selectedTags.length ? renderError("tags") : <Fragment />}
       </span>
     </Section>

@@ -46,6 +46,12 @@ export const Section = styled.section`
     }
   }
 
+  .error-box {
+    color: red;
+    font-size: 1.1rem;
+    margin-top: 0.2rem;
+  }
+
   @media screen and (min-width: ${mq.phone.wide.minWidth}) {
     .visibility-post {
       display: flex;
@@ -68,6 +74,11 @@ export const HeadWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 1.2rem;
+
+  span.required {
+    margin-left: 0.4rem;
+    color: red;
+  }
 `;
 
 export const Badge = styled.div`
