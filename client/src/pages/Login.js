@@ -296,11 +296,9 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     }
   };
 
-  const handleEnterKeyPress = e => {
+  const handleEnterKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      isLoginForm
-      ? handleSubmit(onLoginWithEmail)()
-      : handleSubmit(onSignup)()
+      isLoginForm ? handleSubmit(onLoginWithEmail)() : handleSubmit(onSignup)();
     }
   };
 

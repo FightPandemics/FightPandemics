@@ -7,6 +7,10 @@ const StyledImg = styled.img`
   &.is-clickable {
     cursor: pointer;
   }
+
+  &.globe-icon-svg {
+    height: 2rem;
+  }
 `;
 
 const SvgIcon = ({ alt = "Icon", className, src, ...props }) => (
