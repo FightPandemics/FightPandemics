@@ -386,25 +386,27 @@ const Post = ({
             text={post?.author?.name}
             highlight={highlightWords}
           />
-          {post?.author?.location?.country ? (
-            <div className="location-status">
-              <SvgIcon src={statusIndicator} className="status-icon" />
-              {buildLocationString(post.author.location)}
-            </div>
-          ) : (
-            ""
-          )}
-          <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-            <div className="timestamp">
-              {t(
-                `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                {
-                  count: post?.elapsedTimeText?.created?.count,
-                },
-              )}
-              {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-            </div>
-          </Tooltip>
+          <div className="sub-header">
+            {post?.author?.location?.country ? (
+              <span className="location-status">
+                <SvgIcon src={statusIndicator} className="status-icon" />
+                {buildLocationString(post.author.location)}
+              </span>
+            ) : (
+              ""
+            )}
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
+          </div>
         </div>
       }
       thumb={

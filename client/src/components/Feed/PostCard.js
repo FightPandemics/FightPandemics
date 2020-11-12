@@ -43,7 +43,7 @@ const PostCard = styled(Card)`
     .highlighted {
       font-weight: bold;
       color: #425af2;
-      background: #F3F4FE;
+      background: #f3f4fe;
     }
 
     .card-header {
@@ -95,8 +95,9 @@ const PostCard = styled(Card)`
         }
 
         .author,
-        .location-status {
+        .sub-header {
           line-height: 2rem;
+          font-size: ${xsmall};
         }
 
         .author {
@@ -104,7 +105,6 @@ const PostCard = styled(Card)`
         }
 
         .location-status {
-          display: inline;
           position: relative;
           padding-left: 1.4rem;
           font-size: ${xsmall};
@@ -112,7 +112,7 @@ const PostCard = styled(Card)`
 
           img {
             position: absolute;
-            top: 0.7rem;
+            top: 0.5rem;
             left: 0;
             width: 0.6rem;
             height: 0.6rem;
@@ -121,7 +121,6 @@ const PostCard = styled(Card)`
         }
       }
       .timestamp {
-        display: inline;
         padding-left: 1rem;
         font-size: ${xsmall};
         color: #888;
