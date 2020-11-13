@@ -1,0 +1,823 @@
+{
+  "headline": "Một nơi để cung cấp và yêu cầu giúp đỡ",
+  "tagline": "<0> Đại dịch sẽ tiếp tục xảy ra. </0> <1> Chúng tôi giúp cộng đồng chuẩn bị và ứng phó. </1>",
+  "common": {
+    "getHelp": "Yêu cầu trợ giúp",
+    "giveHelp": "Đề nghị giúp đỡ",
+    "viewFeed": "Xem Bảng Trợ giúp",
+    "register": "Tham gia bây giờ",
+    "feedback": "Phản hồi",
+    "question": "Câu hỏi",
+    "aboutUs": "Về chúng tôi",
+    "profile": "Hồ sơ",
+    "addOrg": "Thêm Tổ chức",
+    "logout": "Đăng xuất",
+    "organisations": "Những Tổ chức"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Câu hỏi",
+      "next": "Kế tiếp",
+      "previous": "Trở lại",
+      "submit": "Gửi",
+      "skip": "Nhảy",
+      "whereLocated": "Bạn đang ở đâu?",
+      "relevantResults": "Chúng tôi muốn hiển thị cho bạn những kết quả phù hợp nhất",
+      "enterAddress": "Nhập địa chỉ, mã zip hoặc thành phố",
+      "shareLocation": "Chia sẻ địa điểm của tôi",
+      "showAnywhere": "Hiển thị cho tôi bài đăng từ mọi nơi",
+      "whatEmail": "Địa chỉ email của bạn là gì?",
+      "respectPrivacy": "Chúng tôi tôn trọng quyền riêng tư của bạn. Xin vui lòng đọc < 1 > Chính sách Bảo mật < / 1 > và < 3 > Điều khoản & Điều kiện của chúng tôi. < / 3 >",
+      "enterEmail": "Nhập địa chỉ email của bạn..."
+    },
+    "needHelp": {
+      "whatHelp": "Bạn cần loại trợ giúp nào?",
+      "medical": "Y khoa",
+      "haveCovidSymptoms": "Tôi có các triệu chứng của COVID-19.",
+      "other": "Trợ giúp khác",
+      "otherDesc": "Tôi cần hỗ trợ nhận hàng tạp hóa / thuốc / vv"
+    },
+    "offerHelp": {
+      "howContribute": "Bạn muốn đóng góp như thế nào?",
+      "volunteer": "Là một tình nguyện viên",
+      "donorInvestor": "Với tư cách là nhà tài trợ / nhà đầu tư",
+      "organisation": "Là một Tổ chức"
+    }
+  },
+  "feed": {
+    "title": "Bảng Trợ giúp",
+    "all": "Tất cả những bài viết",
+    "request": "Yêu cầu trợ giúp",
+    "offer": "Đề nghị giúp đỡ",
+    "quit": "Xóa bộ lọc",
+    "apply": "Áp dụng các bộ lọc",
+    "getOrGive": "Đề nghị hoặc yêu cầu trợ giúp",
+    "filters": {
+      "title": "Bộ lọc",
+      "location": {
+        "label": "Vị trí",
+        "enterAddress": "Nhập địa chỉ, mã zip hoặc thành phố",
+        "shareLocation": "Chia sẻ địa điểm của tôi"
+      },
+      "providers": "Nhà cung cấp",
+      "providersList": [
+        "Cá nhân",
+        "Khởi nghiệp",
+        "Công ty",
+        "Cộng đồng",
+        "Chính quyền",
+        "Phi lợi nhuận",
+        "Đại học",
+        "Nhà cung cấp dịch vụ y tế",
+        "Khác"
+      ],
+      "types": "Các loại",
+      "typesList": [
+        "Nhà cung cấp vật tư y tế",
+        "Tạp hóa / Thực phẩm",
+        "Kinh doanh",
+        "Giáo dục",
+        "Hợp pháp",
+        "An toàn cuộc sống /Tinh thần",
+        "Giải trí",
+        "Thông tin",
+        "Tài trợ",
+        "Nghiên Cứu & Phát Triển",
+        "Công nghệ",
+        "Khác"
+      ],
+      "labels": {
+        "location": "Vị trí",
+        "providers": "Nhà cung cấp",
+        "type": "Các loại",
+        "lookingFor": "Đề nghị hoặc yêu cầu trợ giúp"
+      },
+      "providersOptions": {
+        "Individual": "Cá nhân",
+        "Startup": "Khởi nghiệp",
+        "Company": "Công ty",
+        "Community": "Cộng đồng",
+        "Government": "Chính quyền",
+        "Non-profit": "Phi lợi nhuận",
+        "University": "Đại học",
+        "Health care provider": "Nhà cung cấp dịch vụ y tế",
+        "Other": "Khác"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Nhà cung cấp vật tư y tế",
+        "Groceries/Food": "Tạp hóa / Thực phẩm",
+        "Business": "Kinh doanh",
+        "Education": "Giáo dục",
+        "Legal": "Hợp pháp",
+        "Wellbeing/Mental": "An toàn cuộc sống /Tinh thần",
+        "Entertainment": "Giải trí",
+        "Information": "Thông tin",
+        "Funding": "Tài trợ",
+        "R&D": "Nghiên Cứu & Phát Triển",
+        "Tech": "Công nghệ",
+        "Other": "Khác"
+      },
+      "lookingForOptions": {
+        "Request Help": "Yêu cầu trợ giúp",
+        "Offer Help": "Cung cấp trợ giúp"
+      }
+    },
+    "filterBy": "Lọc bởi",
+    "noResults": "Xin lỗi, hiện tại không có bài viết nào có liên quan. Vui lòng thử sử dụng tìm kiếm bộ lọc khác hoặc < 0 > tạo bài đăng < / 0 > .",
+    "allPosts": "Tất cả những bài viết",
+    "allPeople": "Tất cả mọi người",
+    "allOrgs": "Tất cả các tổ chức",
+    "noResultsPosts": "Xin lỗi, hiện tại không có bài viết nào có liên quan. Vui lòng thử sử dụng tìm kiếm bộ lọc khác hoặc < 0 > tạo bài đăng < / 0 > .",
+    "noResultsPeople": "Xin lỗi, hiện không có cá nhân liên quan nào có sẵn. Xin vui lòng thử sử dụng tìm kiếm với bộ lọc khác.",
+    "noResultsOrgs": "Xin lỗi, hiện không có tổ chức thích hợp nào liên quan.  Xin vui lòng thử sử dụng tìm kiếm với bộ lọc khác.",
+    "search": {
+      "placeholder": "Tìm kiếm Bài đăng , Người và Tổ chức",
+      "keywords": "Từ khoá",
+      "error": "Tối thiểu {{minNum}} ký tự.",
+      "options": {
+        "posts": "Bài đăng",
+        "people": "Mọi người",
+        "orgs": "Những Tổ chức",
+        "orgsShort": "Tổ chức"
+      }
+    }
+  },
+  "post": {
+    "create": "Tạo một bài đăng",
+    "continueAs": "Tiếp tục Đăng dưới dạng",
+    "individual": "Cá nhân",
+    "organisation": "Tổ chức",
+    "givingHelp": "Cung cấp trợ giúp",
+    "gettingHelp": "Yêu cầu trợ giúp",
+    "writePostHere": "Viết bài của bạn ở đây",
+    "title": "Tiêu đề",
+    "writePost": "Viết bài của bạn",
+    "whatGiving": "Bạn đang cung cấp những gì?",
+    "addTags": "Thêm thẻ để làm cho bài đăng của bạn hiển thị nhiều hơn",
+    "whatVisibility": "Khả năng hiển thị của bài đăng của bạn là gì?",
+    "postVisible": "Bài đăng sẽ hiển thị với",
+    "success": "Sự thành công",
+    "viewPost": "Xem bài đăng của bạn",
+    "like": "Thích",
+    "like_plural": "Thích",
+    "likeWithCount": "{{count}} Thích",
+    "likeWithCount_plural": "{{count}} Thích",
+    "comment": "Bình luận",
+    "comment_plural": "Những nhận xét",
+    "commentWithCount": "{{count}}Nhận xét",
+    "commentWithCount_plural": "{{count}} Nhận xét",
+    "options": {
+      "shareWith": {
+        "city": "Trong thành phố của tôi",
+        "state": "Trong tiểu bang của tôi",
+        "worldwide": "Toàn thế giới",
+        "country": "Ở Nước của tôi"
+      },
+      "expires": {
+        "forever": "Mãi mãi",
+        "month": "Trong một tháng",
+        "week": "Trong một tuần",
+        "day": "Trong một ngày"
+      },
+      "helpTypes": {
+        "request": "Yêu cầu trợ giúp",
+        "offer": "Cung cấp trợ giúp"
+      }
+    },
+    "post": "Bài đăng",
+    "postAsOrg": "Đăng với tư cách là một Tổ Chức",
+    "createNew": "Tạo một cái mới",
+    "whatNeed": "Bạn cần gì?",
+    "viewLess": "Xem bớt",
+    "viewMore": "Xem thêm",
+    "deletePostConfirmation": "Bạn có chắc bạn muốn xóa bỏ bài đăng không?",
+    "deleteCommentConfirmation": "Bạn có chắc chắn muốn xóa nhận xét không?",
+    "shareVia": "Chia sẻ qua...",
+    "others": "Khác",
+    "expireTitle": "Ahh... Snap!",
+    "expire": "Bài đăng bạn đang tìm kiếm đã hết hạn. Vui lòng kiểm tra Bảng Trợ giúp của chúng tôi để biết thêm các bài viết như vậy.",
+    "noActivity": "Không tìm thấy hoạt động nào",
+    "share": "Chia sẻ",
+    "delete": "Xóa bỏ",
+    "cancel": "Huỷ bỏ",
+    "confirm": "Xác nhận",
+    "edited": "đã chỉnh sửa"
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Thông tin tài khoản",
+      "profileInfo": "Thông tin cá nhân",
+      "address": "Địa chỉ",
+      "enterAddress": "Nhập địa chỉ, mã zip hoặc thành phố",
+      "agreePrivacy": "Bằng cách đăng ký, tôi đồng ý với <0>Chính sách bảo mật</0>",
+      "agreeTerms": "Bằng cách đăng ký, tôi đồng ý với <0>Điều khoản và Điều kiện</0>",
+      "createProfile": "Tạo hồ sơ của bạn",
+      "saveChanges": "Lưu Thay đổi",
+      "thankyou": "Cảm ơn bạn đã tham gia cộng đồng của chúng tôi!",
+      "viewProfile": "Hồ sơ của tôi",
+      "continuePosting": "Tiếp tục Đăng",
+      "viewFeed": "Xem Bảng Trợ giúp",
+      "viewMyProfile": "Xem hồ sơ của tôi",
+      "loading": "Đang tải",
+      "invalidEmail": "Email không hợp lệ",
+      "selectOption": "Xin vui lòng chọn ít nhất một tùy chọn",
+      "invalidURL": "URL không hợp lệ",
+      "savingChanges": "Đang lưu Thay đổi...",
+      "submit": "Tạo hồ sơ",
+      "submitLoading": "Đang tạo Hồ sơ...",
+      "invalidPassword": "Mật khẩu phải chứa ít nhất 3 trong số này: một chữ thường, một chữ hoa, một số, một ký tự đặc biệt (chẳng hạn như! @ # $% ^ & *).",
+      "addressRequired": "Địa chỉ là bắt buộc. Xin vui lòng nhập địa chỉ của bạn và chọn địa chỉ đó từ menu thả xuống",
+      "emailRequired": "Địa chỉ e-mail là bắt buộc",
+      "passwordRequired": "Mật khẩu là bắt buộc",
+      "maxCharacters": "tối đa {{maxNum}} ký tự.",
+      "minCharacters": "Tối thiểu {{minNum}} ký tự.",
+      "validCharacters": "Các ký tự hợp lệ là: {{characters}} .",
+      "urls": {
+        "appStore": "Liên kết với Apple Store",
+        "playStore": "Liên kết với Google Play",
+        "twitter": "Twitter URL",
+        "facebook": "Facebook URL",
+        "instagram": "Instagram URL",
+        "github": "Github URL",
+        "linkedin": "LinkedIn URL",
+        "website": "Trang mạng"
+      },
+      "emailMaxLength": "Địa chỉ email không được vượt quá 200 ký tự",
+      "emailInvalid": "Địa chỉ email không hợp lệ",
+      "emailDomainInvalid": "Miền email không hợp lệ",
+      "sendMessage": "Gửi tin nhắn"
+    },
+    "individual": {
+      "email": "Email",
+      "firstName": "Tên đầu tiên",
+      "lastName": "Họ",
+      "hideAddress": "Không hiển thị địa chỉ của tôi",
+      "iWant": "Tôi muốn",
+      "volunteer": "Tình nguyện viên",
+      "donate": "Quyên góp",
+      "shareInformation": "Chia sẻ thông tin",
+      "iNeed": "Tôi cần",
+      "medical": "Trợ giúp y tế",
+      "haveCovidSymptoms": "Tôi có các triệu chứng của COVID-19.",
+      "other": "Trợ giúp khác",
+      "otherDesc": "Tôi cần hỗ trợ nhận hàng tạp hóa / thuốc / vv",
+      "editProfile": "Sửa Hồ sơ",
+      "intro": "Tự giới thiệu",
+      "website": "Trang mạng cá nhân",
+      "myActivity": "Hoạt động của tôi",
+      "userActivity": "Hoạt động của người dùng",
+      "wantHelp": "Tôi muốn giúp đỡ",
+      "needHelp": "tôi cần giúp đỡ",
+      "firstNameRequired": "Tên là bắt buộc.",
+      "lastNameRequired": "Họ là bắt buộc."
+    },
+    "org": {
+      "title": "Tạo hồ sơ Tổ chức",
+      "editOrgProfile": "Sửa Hồ sơ Tổ chức",
+      "name": "Tên tổ chức",
+      "email": "Email liên hệ của tổ chức",
+      "invalidEmail": "Email không hợp lệ",
+      "globalOrg": "Chúng tôi là một tổ chức toàn cầu",
+      "seeking": "Bạn đang tìm kiếm cái gì",
+      "volunteers": "Tình nguyện viên",
+      "donations": "Quyên góp",
+      "staff": "Nhân Viên",
+      "other": "Khác",
+      "typeAndIndustry": "Loại hình và công nghiệp",
+      "type": "Loại",
+      "types": [
+        "Khởi nghiệp",
+        "Công ty",
+        "Cộng đồng",
+        "Chính quyền",
+        "Phi lợi nhuận",
+        "Đại học",
+        "Nhà cung cấp dịch vụ y tế",
+        "Khác"
+      ],
+      "industry": "Ngành công nghiệp",
+      "industries": [
+        "Ô tô",
+        "Ngành kiến trúc",
+        "Nghệ thuật & Thủ công",
+        "Ngân hàng",
+        "Công nghệ sinh học",
+        "Kinh doanh vật tư và thiết bị",
+        "Tổ chức Hành chính & Xã hội",
+        "Dịch vụ sự kiện",
+        "Gây quỹ",
+        "Quan hệ Chính phủ",
+        "Sức khỏe, Sức khỏe và Thể dục",
+        "Bệnh viện & Chăm sóc sức khỏe",
+        "Ngành công nghiệp",
+        "Công nghệ thông tin và Dịch vụ",
+        "Dịch vụ pháp lý",
+        "Tiếp thị và quảng cáo",
+        "Thiết bị y tế",
+        "Quản lý tổ chức phi lợi nhuận",
+        "Khác",
+        "Từ thiện",
+        "Giáo dục Tiểu học / Trung học",
+        "Đào tạo & Huấn luyện Chuyên nghiệp",
+        "Nghiên cứu",
+        "Think Tanks",
+        "Bản dịch và bản địa hóa"
+      ],
+      "typeIndustryError": "Vui lòng chọn loại tổ chức và ngành từ danh sách thả xuống",
+      "desc": "Mô tả Tổ Chức",
+      "lang": "Ngôn ngữ Tổ Chức",
+      "completeOrgProfile": "Hoàn thành hồ sơ Tổ Chức",
+      "about": "Về",
+      "activity": "Hoạt động",
+      "editAccount": "Chỉnh sửa thông tin tài khoản",
+      "updateSuccess": "Tổ chức được cập nhật thành công",
+      "orgNameRequired": "Tên tổ chức là bắt buộc",
+      "global": "Toàn cầu"
+    }
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "joinNow": "Tham gia bây giờ",
+    "email": "Email",
+    "enterEmail": "Nhập địa chỉ email",
+    "password": "Mật khẩu",
+    "enterPassword": "Nhập mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "forgotPassword": "Quên Mật khẩu?",
+    "noAccount": "Không có tài khoản?",
+    "haveAccount": "Bạn đã có tài khoản?",
+    "recoverLink": "Gửi email cho tôi một liên kết phục hồi",
+    "orSignIn": "HOẶC ĐĂNG NHẬP VỚI",
+    "orJoinNow": "HOẶC THAM GIA NGAY VỚI",
+    "back": "Quay lại màn hình Đăng nhập",
+    "passwordMax": "Mật khẩu không được vượt quá {{num}} ký tự.",
+    "passwordMin": "Mật khẩu phải có ít nhất {{num}} ký tự",
+    "passwordConfirmationRequired": "Xác nhận mật khẩu là bắt buộc.",
+    "passwordNotMatch": "Mật khẩu không khớp"
+  },
+  "verifyEmail": {
+    "checkInbox": "Kiểm tra hộp thư của bạn",
+    "forgotPass": "Nếu tài khoản được liên kết với {{email}}, bạn sẽ nhận được email có hướng dẫn thêm về cách đặt lại mật khẩu.",
+    "confirm": "Chúng tôi vừa gửi liên kết đến {{email}}. Nhấp vào liên kết để xác nhận tài khoản của bạn và hoàn thành hồ sơ của bạn.",
+    "checkSpam": "Nếu bạn không thấy thư trong vòng vài phút, vui lòng kiểm tra thư rác, quảng cáo hoặc các thư mục thư đến khác."
+  },
+  "aboutUs": {
+    "ourStory": "Câu chuyện của chúng tôi",
+    "story": "là đứa con tinh thần của Manuel Gonzalez Alzuru, người đã bị nhiễm COVID-19 ở Pháp. Khi trở về nhà ở Barcelona, anh thấy mình không thể nhận được sự giúp đỡ mặc dù có những người muốn cung cấp nó.",
+    "ourCommunity": "Cộng đồng của chúng tôi",
+    "community": "Chúng tôi được xây dựng bởi một đội ngũ hơn 1100 nhà phát triển tình nguyện viên, nhà thiết kế, nhà khoa học, chuyên gia y tế và nhà quản lý sản phẩm từ khắp nơi trên thế giới",
+    "ourIdea": "Ý tưởng của chúng tôi",
+    "ourSupporters": "Những người ủng hộ chúng tôi",
+    "followUs": "Theo dõi chúng tôi trên mạng xã hội",
+    "contactUs": "Liên lạc với chúng tôi tại:",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "Chúng tôi muốn tạo ra một thế giới nơi con người có khả năng chống chọi tốt hơn với các trường hợp khẩn cấp",
+    "subHeading": "bằng cách giúp cộng đồng phản ứng nhanh hơn và hiệu quả hơn với các cuộc khủng hoảng.",
+    "forWhoHeading": "Cái này cho ai?",
+    "forWho": "Bất kỳ ai hoặc bất kỳ loại hình kinh doanh, nhóm cộng đồng, chính phủ hoặc tổ chức chăm sóc sức khỏe nào cần hoặc muốn cung cấp trợ giúp.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Lấy cảm hứng từ việc rất nhiều người đến cùng nhau, Manuel đã khởi động dự án với một sứ mệnh: <span> để đảm bảo rằng những người khác có thể kết nối kịp thời. </span>",
+    "connectPeople": "Chúng tôi kết nối mọi người",
+    "connect": "Một nền tảng vị tha để kết nối những người cần giúp đỡ với những người có thể cung cấp nó.",
+    "howWork": "Làm thế nào để làm việc này?",
+    "helpBoard": "Bảng Trợ giúp",
+    "helpBoardDetail": "Một nền tảng cộng đồng cho các cá nhân và tổ chức cung cấp và yêu cầu viện trợ.",
+    "localGlobal": "Địa phương & Toàn cầu",
+    "localGlobalDetail": "Đề nghị và yêu cầu trợ giúp trong cộng đồng của tôi và trên toàn thế giới.",
+    "relevantContent": "Nội dung có liên quan",
+    "relevantContentDetail": "Thời gian hết hạn đảm bảo bảng luôn được cập nhật.",
+    "goToHelpBoard": "Đi tới Bảng Trợ giúp",
+    "supporters": "Người ủng hộ",
+    "thanksSupporters": "Cảm ơn những người ủng hộ của chúng tôi, nếu không có họ, chúng tôi sẽ không thể giúp cộng đồng chuẩn bị và ứng phó với đại dịch.",
+    "becomeSupporter": "Để tìm hiểu thêm về cách doanh nghiệp của bạn có thể trở thành người hỗ trợ, vui lòng liên hệ với nhóm đối tác của chúng tôi tại",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Nhấp vào biểu tượng công ty bên dưới để truy cập trang web của người ủng hộ.",
+    "lifetimeSupporters": "Người ủng hộ trọn đời",
+    "currentSupporters": "Những người ủng hộ hiện tại",
+    "pastSupporters": "Những người ủng hộ trong quá khứ",
+    "hashtag": "#DànhChoCộngĐồngBởiCộngĐồng"
+  },
+  "footer": {
+    "faq": "Câu hỏi thường gặp",
+    "blog": "Blog",
+    "termsConditions": "Điều khoản & Điều kiện",
+    "privacyPolicy": "Chính sách bảo mật",
+    "cookiesPolicy": "Chính sách cookie",
+    "copyright": "Bản quyền {{currentYear}} FightPandemics. Đã đăng ký Bản quyền."
+  },
+  "faq": {
+    "title": "Thông tin về FightPandemics / General",
+    "offerRequestHelp": "Đề nghị và yêu cầu trợ giúp",
+    "profileAccount": "Hồ sơ và Tài khoản",
+    "contects": "Contects",
+    "general": [
+      [
+        "FightPandemics là gì?",
+        "FightPandemics là một nền tảng được tạo ra trong bối cảnh dịch COVID-19 bùng phát với mục đích trở thành một nơi dành cho những người bị ảnh hưởng theo nhiều cách bởi đại dịch.",
+        "Sứ mệnh chính của chúng tôi là kết nối các cá nhân và tổ chức đề nghị và yêu cầu trợ giúp trong bối cảnh khủng hoảng đại dịch, ở cấp độ địa phương và toàn cầu. Dù bạn có tìm kiếm trợ giúp y tế, khẩu trang, trợ giúp pháp lý, cửa hàng tạp hóa, người dắt chó đi dạo hoặc hỗ trợ bất kỳ hoạt động hàng ngày nào khác hay không, bạn có thể tìm tại đây:",
+        "Chúng tôi cố gắng thu thập thông tin thiết yếu có tính phân mảnh cao, kết nối trong một mạng lưới các cá nhân, cộng đồng và tổ chức làm việc về các vấn đề hoặc dự án liên quan đến đại dịch. Tầm nhìn của chúng tôi là tạo ra một thế giới nơi mọi người có khả năng chống chọi tốt hơn với các trường hợp khẩn cấp, bằng cách giúp cộng đồng ứng phó nhanh hơn và hiệu quả hơn với các trường hợp khẩn cấp về y tế và khủng hoảng nhân đạo."
+      ],
+      [
+        "FightPandemics là ai?",
+        "FightPandemics là một đội ngũ toàn cầu, tình nguyện viên với sứ mệnh phục vụ như một nơi cần đến để được giúp đỡ.  Đội ngũ của chúng tôi bao gồm hơn 150 tình nguyện viên tham gia từ hơn 70 quốc gia phấn đấu để tạo ra sự khác biệt. Nền tảng này được xây dựng với sự đổi mới, nỗ lực hợp tác , tập hợp một nhóm đa dạng gồm những người giải quyết vấn đề với nhiều kỹ năng sẵn sàng đồng sáng tạo và học hỏi lẫn nhau.",
+        "Bạn có muốn tham gia sáng kiến của chúng tôi không? Liên hệ với < 0 > hr@fightpandemics.com < / 0 >"
+      ],
+      [
+        "FightPandemics hoạt động ở những thành phố nào?",
+        "FightPandemics là một nền tảng toàn cầu. Phiên bản đầu tiên của chúng tôi đã được ra mắt bằng tiếng Anh, nhưng chúng tôi có kế hoạch để thêm các ngôn ngữ khác sớm."
+      ],
+      [
+        "FightPandemics dành cho ai?",
+        "Bất cứ ai cần hoặc cung cấp trợ giúp đều được chào đón tham gia nền tảng của chúng tôi và kết nối với các cá nhân và tổ chức khác."
+      ],
+      [
+        "Làm cách nào tôi có thể đăng đề nghị hoặc yêu cầu trợ giúp trên FightPandemics?",
+        "< 0 > Khi bạn tham gia cộng đồng, bạn sẽ có quyền truy cập không giới hạn để xem và tạo các bài đăng và nhận xét trên nền tảng FightPandemics. < / 0 > < 1 > Để tham gia cộng đồng với tư cách người dùng, hãy nhấp vào nút \"Trình đơn\" và chọn tùy chọn \"Tham gia ngay / Đăng nhập\". Ở đó, bạn sẽ có thể tham gia với sự lựa chọn của bạn qua email hoặc thông tin đăng nhập mạng xã hội. < / 1 > < 2 > Khi bạn đã hoàn thành hồ sơ của mình, hãy chọn nút menu, chọn xem hồ sơ của tôi và nhấp vào nút dấu cộng để tạo bài đăng đầu tiên của bạn. < / 2 >"
+      ],
+      [
+        "Làm thế nào tôi có thể cập nhật tin tức FightPandemics?",
+        "Xin vui lòng theo dõi chúng tôi trên phương tiện truyền thông xã hội! Chúng tôi đăng cập nhật thường xuyên lên <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2> và <3>Instagram</3>."
+      ],
+      [
+        "Tôi có phải trả tiền để sử dụng FightPandemics không?",
+        "Không, FightPandemics là một nền tảng hoàn toàn miễn phí do các tình nguyện viên điều hành.FightPandemics"
+      ],
+      [
+        "Tôi có thể cung cấp/ yêu cầu trợ giúp gì trên FightPandemics?",
+        "Bạn được chào đón để yêu cầu và cung cấp bất kỳ loại trợ giúp để hỗ trợ các cá nhân và tổ chức đối phó trong đại dịch COVID-19. Dưới đây là danh sách với một số ví dụ về loại trợ giúp bạn có thể cung cấp hoặc yêu cầu:",
+        "< 0 > tạp hóa < / 0 > < 1 > Vật tư y tế < / 1 > < 2 > Hỗ trợ pháp lý < / 2 > < 3 > Hỗ trợ kỹ thuật < / 3 > < 4 > Thông tin < / 4 > < 5 > Nguồn vốn < / 5 > < 6 > Sự kiện và hoạt động < / 6 > < 7 > Giáo dục < / 7 > < 8 > Sức khỏe < / 8 > < 9 > Nghiên cứu và phát triển < / 9 >"
+      ],
+      [
+        "Tôi có thể tìm trợ giúp bằng cách nào?",
+        "Từ trang chủ FightPandemics, chọn \"Cần trợ giúp\". Nếu bạn chọn \"Trợ giúp khác\", bạn sẽ nhập vị trí của mình và được dẫn đến trang có các đề nghị trợ giúp trong khu vực đã chọn. Sau đó, bạn có thể lọc các bài đăng mà bạn muốn xem theo nhà cung cấp và loại cung cấp . Ngoài ra, bạn có thể chọn \"Xem các bài đăng của cộng đồng\" từ trang chính để xem tất cả các bài đăng và áp dụng các bộ lọc mong muốn."
+      ],
+      [
+        "Tôi có thể giúp đỡ bằng cách nào?",
+        "<0>Bạn có thể cung cấp trợ giúp với tư cách cá nhân hoặc tổ chức.</0> <1>Từ trang chủ, chọn \"Trợ giúp\" để xem tất cả các bài đăng do người dùng yêu cầu trợ giúp và lọc kết quả theo vị trí và loại. Bạn cần phải đăng nhập để liên hệ với họ. Bạn cũng có thể tạo các bài đăng của riêng mình mô tả sự trợ giúp mà bạn có thể cung cấp.</1>"
+      ],
+      [
+        "Tôi có cần đăng nhập để xem các yêu cầu trợ giúp và cung cấp trợ giúp không?",
+        "Bạn không cần phải đăng nhập để xem bất kỳ bài đăng nào trên bảng trợ giúp, nhưng bạn sẽ cần đăng nhập để nhận xét hoặc thích một bài đăng."
+      ],
+      [
+        "Tôi có cần đăng nhập để tạo/chỉnh sửa bài đăng không?",
+        "Có, bạn cần tạo tài khoản và đăng nhập nếu bạn muốn tạo hoặc chỉnh sửa bài đăng."
+      ],
+      [
+        "Tôi có cần phải đăng ký với tư cách cá nhân để tạo hồ sơ tổ chức không?",
+        "Có, khi bạn đã đăng ký với tư cách cá nhân, bạn có thể tạo một hoặc nhiều hồ sơ tổ chức được liên kết với tài khoản của mình."
+      ],
+      [
+        "Tên/tên tổ chức của tôi có được hiển thị cho người dùng khác không?",
+        "Khi bạn tạo bài đăng hoặc cung cấp hoặc tìm kiếm trợ giúp, tên của bạn / tên tổ chức của bạn sẽ được hiển thị cho bất kỳ ai xem bảng trợ giúp."
+      ],
+      [
+        "Làm thế nào tôi có thể tin rằng các bài đăng là đáng tin cậy?",
+        "Rất tiếc, chúng tôi không thể đảm bảo rằng tất cả các bài đăng đều đáng tin cậy, vì các bài đăng được tạo bởi người dùng của chúng tôi. Tuy nhiên, chúng tôi cố gắng hết sức để giữ cho nội dung có liên quan, bằng cách làm sạch dữ liệu thường xuyên và bằng cách hủy kích hoạt các bài đăng sau khi chúng hết hạn. Nếu bạn có thắc mắc về nội dung của bài đăng, vui lòng liên hệ với chúng tôi tại < 0 > support@fightpandemics.com < / 0 >"
+      ],
+      [
+        "Bạn có thể giúp tôi với các vấn đề y tế?",
+        "FightPandemics không phải là một nhà cung cấp dịch vụ chăm sóc y tế."
+      ],
+      [
+        "Tôi có cần chia sẻ vị trí hiện tại của mình không? Nếu tôi không muốn chia sẻ vị trí của mình thì sao?",
+        "Chúng tôi sử dụng vị trí để hiển thị cho bạn các kết quả phù hợp nhất, tuy nhiên, bạn cũng có thể xem tất cả các bài đăng. Vì FightPandemics có hàng nghìn tin đăng từ khắp nơi, chúng tôi khuyên bạn nên nhập một địa điểm gần bạn để có kết quả phù hợp nhất."
+      ],
+      [
+        "Không có sự giúp đỡ được liệt kê trong khu vực của tôi. Tôi phải làm gì?",
+        "Cộng đồng của chúng tôi luôn phát triển. Bạn được hoan nghênh là người đầu tiên trong khu vực của bạn tạo bài đăng và yêu cầu trợ giúp. Xin vui lòng xem các dịch vụ có thể truy cập cho bất kỳ ai độc lập với vị trí của họ."
+      ],
+      [
+        "Tôi tìm thấy một lỗi trên trang web. Làm cách nào để báo cáo điều đó?",
+        "Xin vui lòng gửi phản hồi hoặc liên hệ với < 0 > support@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Tôi không còn được phép sử dụng FightPandemics nữa - tôi phải làm gì?",
+        "Xin vui lòng liên hệ với chúng tôi tại < 0 > support@fightpandemics.com < / 0 > và chúng tôi sẽ kiểm tra vấn đề với tài khoản của bạn."
+      ],
+      [
+        "Bạn lưu trữ thông tin gì?",
+        "FightPandemics thu thập và xử lý dữ liệu cá nhân của người dùng cho các mục đích được mô tả trong < 0 > chính sách bảo mật của chúng tôi. < / 0 > Trong mọi trường hợp, chúng tôi sẽ không cung cấp quyền truy cập hoặc chia sẻ dữ liệu cá nhân của bạn với bất kỳ bên thứ ba nào, ngoại trừ với những người có liên quan được quy định trong chính sách này."
+      ],
+      [
+        "Tôi có thể cung cấp / nhận trợ giúp từ thành phố hoặc tiểu bang của tôi không? Bài viết sẽ hiển thị trong bao lâu?",
+        "Bài đăng để cung cấp/nhận trợ giúp có thể ở cấp mã zip, thành phố, tiểu bang hoặc quốc gia trong thời hạn một ngày, một tuần, một tháng hoặc mãi mãi. Theo mặc định, các bài đăng sẽ được đặt ở cấp thành phố trong một tháng."
+      ],
+      [
+        "Câu hỏi của tôi không được liệt kê. Tôi có thể tiếp cận với ai?",
+        "Đối với các câu hỏi chung và các vấn đề khác không được liệt kê ở đây, hãy liên hệ với < 0 > contact@fightpandemics.com. < / 0 >"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "Tôi làm thế nào để tham gia?",
+        "<0>Để tham gia cộng đồng với tư cách người dùng, bấm nút \"Menu\" và chọn tùy chọn \"Tham gia ngay/Đăng nhập\". Ở đó bạn sẽ có thể tham gia với sự lựa chọn của bạn về email hoặc phương tiện truyền thông xã hội thông tin đăng nhập.</0> <1>Khi bạn tham gia cộng đồng, bạn sẽ có quyền truy cập không giới hạn để xem và tạo bài đăng và nhận xét trên nền tảng FightPandemics.</1>"
+      ],
+      [
+        "Làm cách nào để thay đổi hồ sơ cá nhân của tôi thành hồ sơ tổ chức?",
+        "Hồ sơ tổ chức được gắn với hồ sơ cá nhân của bạn. Sau khi tạo hồ sơ cá nhân, bạn có thể thêm bao nhiêu hồ sơ tổ chức tùy thích gắn với hồ sơ cá nhân đó. Thông tin đăng nhập của bạn sẽ tiếp tục là email và mật khẩu bạn đã sử dụng để tham gia cho hồ sơ cá nhân."
+      ],
+      [
+        "Làm thế nào tôi có thể thay đổi hồ sơ tổ chức của mình thành một hồ sơ cá nhân?",
+        "Bạn không thể thay đổi hồ sơ tổ chức của mình thành hồ sơ cá nhân. Để tạo hồ sơ tổ chức, bạn bắt buộc phải có hồ sơ cá nhân. Sau khi tạo hồ sơ cá nhân của mình, bạn có thể thêm bao nhiêu hồ sơ tổ chức tùy thích, gắn liền với hồ sơ cá nhân đó. Thông tin đăng nhập của bạn sẽ tiếp tục là email và mật khẩu bạn đã sử dụng để tham gia cho hồ sơ cá nhân."
+      ],
+      [
+        "Làm cách nào để tôi có thể đặt lại mật khẩu của mình?",
+        "Nhấp vào \"Đăng nhập\" từ trang chủ và sau đó nhấp vào \"Quên mật khẩu\" và làm theo hướng dẫn"
+      ],
+      [
+        "Tại sao mật khẩu của tôi không hợp lệ?",
+        "Xin vui lòng kiểm tra xem mật khẩu của bạn có ít nhất 8 chữ cái hay không. Nếu bạn đã có tài khoản nhưng quên mật khẩu đăng nhập, hãy nhấp vào \"Đăng nhập\" từ trang chủ và sau đó chuyển đến \"Quên mật khẩu\"."
+      ],
+      [
+        "Tôi đã đăng ký và tôi không nhận được email xác nhận. Tôi phải làm gì?",
+        "Nếu bạn chưa nhận được email xác nhận, xin vui lòng thử các tùy chọn sau:",
+        "Kiểm tra thư mục Spam của bạn để tìm email khôi phục.",
+        "Hãy thử quy trình \"Khôi phục mật khẩu\".",
+        "Nếu các sự lựa chọn trên không giải quyết được vấn đề, xin vui lòng liên hệ với nhóm hỗ trợ của chúng tôi: < 0 > support@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Làm cách nào để xóa / hủy tài khoản của tôi?",
+        "Nếu bạn muốn xóa tài khoản của mình, xin vui lòng liên hệ với chúng tôi tại < 0 > support@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Làm cách nào để cập nhật thông tin hồ sơ của tôi?",
+        "Từ menu ở góc trên bên phải, chọn \"Hồ sơ của tôi\", sau đó nhấp vào biểu tượng cây bút ở trên đầu hồ sơ của bạn. Bạn sẽ được đưa đến màn hình nơi bạn có thể chỉnh sửa thông tin hồ sơ của mình và chọn \"Lưu Thay đổi\" khi bạn hoàn tất."
+      ],
+      [
+        "Làm cách nào để báo cáo một bài viết không chính xác hoặc phản cảm?",
+        "Nếu bạn tìm thấy bài đăng không chính xác hoặc vi phạm Quy tắc Ứng xử của FightPandemics, xin vui lòng gửi email cho chúng tôi tại địa chỉ <0>support@fightpandemics.com.</0>"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "Tôi muốn trở thành một đối tác hoặc nhà tài trợ.",
+        "Xin vui lòng liên lạc với nhóm đối tác của chúng tôi tại < 0 > partnerhips@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Tôi đến từ báo chí / truyền thông.",
+        "Xin vui lòng liên hệ với chúng tôi tại < 0 > pr@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Tôi cần hỗ trợ kỹ thuật.",
+        "Chúng tôi rất tiếc vì điều đó. Gửi email cho chúng tôi tại địa chỉ  <0>help@fightpandemics.com.</0> Vì chúng tôi là một nhóm tình nguyện viên, xin vui lòng đợi ít nhất 48 giờ để có phản hồi."
+      ],
+      [
+        "Tôi muốn liên lạc với FightPandemics vì những lý do khác.",
+        "Đối với các câu hỏi chung và các vấn đề khác không được liệt kê ở đây, xin vui lòng liên hệ với < 0 > contact@fightpandemics.com. < / 0 >"
+      ]
+    ],
+    "contacts": "Liên lạc",
+    "contactsFAQ": [
+      [
+        "Tôi muốn trở thành một đối tác hoặc nhà tài trợ.",
+        "Xin vui lòng liên lạc với nhóm đối tác của chúng tôi tại < 0 > partnerhips@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Tôi đến từ báo chí / truyền thông.",
+        "Xin vui lòng liên hệ với chúng tôi tại < 0 > pr@fightpandemics.com. < / 0 >"
+      ],
+      [
+        "Tôi cần hỗ trợ kỹ thuật.",
+        "Chúng tôi rất tiếc vì điều đó. Gửi email cho chúng tôi tại địa chỉ  <0>help@fightpandemics.com.</0> Vì chúng tôi là một nhóm tình nguyện viên, xin vui lòng đợi ít nhất 48 giờ để có phản hồi."
+      ],
+      [
+        "Tôi muốn liên lạc với FightPandemics vì những lý do khác.",
+        "Đối với các câu hỏi chung và các vấn đề khác không được liệt kê ở đây, xin vui lòng liên hệ với < 0 > contact@fightpandemics.com. < / 0 >"
+      ]
+    ],
+    "faqTitle": "Các câu hỏi thường gặp"
+  },
+  "cookies": {
+    "whatCookies": "COOKIES LÀ GÌ?",
+    "whatCookiesContent": "< 0 > Trang web này sử dụng ¨Cookies¨ và các cơ chế tương tự khác (hereinafter gọi là Cookie). Cookie là các tệp được gửi đến trình duyệt thông qua máy chủ Web để ghi lại các hoạt động của Người dùng trên một trang web đã định rõ hoặc trên tất cả các trang web, ứng dụng và / hoặc dịch vụ trên trang web đó.  Mục đích đầu tiên của Cookie là cung cấp cho Người dùng quyền truy cập nhanh hơn và được cá nhân hóa vào các dịch vụ được cung cấp.  Cookie chỉ được liên kết với Người dùng ẩn danh và máy tính của người đó và không cung cấp các tham khảo cho phép khấu trừ dữ liệu cá nhân của Người dùng. < / 0 > < 1 > Người dùng có thể định cấu hình trình duyệt của mình để thông báo và từ chối cài đặt Cookie do trang web này gửi mà không ảnh hưởng đến khả năng truy cập Nội dung của Người dùng. Tuy nhiên, chúng tôi lưu ý rằng, trong mọi trường hợp, hiệu suất của trang web có thể giảm. Trang web này sử dụng Web Bugs, là những hình ảnh nhỏ và trong suốt được chèn vào email. Khi Người dùng mở bản tin của Trang web, hình ảnh này sẽ được tải xuống cùng với phần còn lại của nội dung email và cho phép biết liệu một email cụ thể đã được mở hay chưa, cũng như địa chỉ IP mà nó đã được tải xuống. FightPandemics sử dụng thông tin này để thu thập số liệu thống kê và thực hiện các nghiên cứu phân tích về việc Người dùng tiếp nhận email của mình. < / 1 >",
+    "typeCookies": "LOẠI, MỤC ĐÍCH VÀ CHỨC NĂNG CỦA COOKIES",
+    "typeCookiesBegin": "Cookie, tùy thuộc vào tính vĩnh viễn của chúng, có thể được chia ra thành Cookie phiên hoặc Cookie vĩnh viễn.  Loại đầu tiên hết hạn khi Người dùng đóng trình duyệt.   Loại thứ hai hết hạn tùy thuộc vào thời điểm hoàn thành mục tiêu mà chúng phân phát hoặc khi chúng bị xóa theo cách thủ công. Ngoài ra, tùy thuộc vào mục tiêu của bạn, Cookie được sử dụng bởi Trang mạng này có thể được phân loại như sau:",
+    "typeCookiesContent": "< 0 > Cookie kỹ thuật: Những cookie này cho phép người dùng điều hướng qua trang web, nền tảng hoặc ứng dụng và sử dụng các tùy chọn hoặc dịch vụ khác nhau tồn tại ở đó, chẳng hạn như kiểm soát lưu lượng truy cập và giao tiếp dữ liệu, xác định phiên, truy cập hạn chế truy cập các bộ phận, ghi nhớ các yếu tố tạo nên đơn đặt hàng, thực hiện quy trình mua đơn đặt hàng, thực hiện yêu cầu đăng ký hoặc tham gia một sự kiện, sử dụng các yếu tố bảo mật trong quá trình điều hướng, lưu trữ nội dung để phổ biến video hoặc âm thanh hoặc chia sẻ nội dung thông qua mạng xã hội . < / 0 > < 1 > Cookie phân tích: Những cookie được xử lý bởi chúng tôi hoặc bởi bên thứ ba, cho phép định lượng số lượng người dùng và do đó thực hiện đo lường và phân tích thống kê việc sử dụng của người dùng các dịch vụ được cung cấp. Vì vậy, việc duyệt web của bạn trên trang web của chúng tôi được phân tích để cải thiện việc cung cấp các sản phẩm hoặc dịch vụ mà chúng tôi cung cấp. < / 1 > < 2 > Cookie quảng cáo: Là những cookie do chúng tôi hoặc bên thứ ba xử lý, cho phép chúng tôi quản lý theo cách hiệu quả nhất có thể việc cung cấp các không gian quảng cáo trên trang web, điều chỉnh nội dung của quảng cáo nội dung của dịch vụ được yêu cầu hoặc việc sử dụng mà bạn thực hiện từ trang web của chúng tôi. Vì vậy, chúng tôi có thể phân tích thói quen duyệt web của bạn trên Internet và chúng tôi có thể hiển thị cho bạn quảng cáo liên quan đến hồ sơ duyệt web của bạn. < / 2 > < 3 > Cookie quảng cáo hành vi: Những cookie này cho phép quản lý không gian quảng cáo, theo cách hiệu quả nhất có thể, nếu thích hợp, trình chỉnh sửa đã đưa vào trang web, ứng dụng hoặc nền tảng mà từ đó nó cung cấp các yêu cầu dịch vụ. Những cookie này lưu trữ thông tin về hành vi của người dùng thu được thông qua việc quan sát liên tục thói quen duyệt web của họ, cho phép phát triển một hồ sơ cụ thể để hiển thị quảng cáo dựa trên đó. < / 3 >",
+    "typeCookiesEnd": "Trang mạng có thể sử dụng các dịch vụ của bên thứ ba có thể với yêu cầu cài đặt Cookie cho Người dùng thay mặt cho FightPandemics, đồng thời sẽ thu thập thông tin cho các mục đích thống kê về việc sử dụng Trang mạng  của người dùng và để cung cấp các dịch vụ khác liên quan đến hoạt động của trang web và các dịch vụ Internet khác.",
+    "disableCookies": "LÀM THẾ NÀO ĐỂ VÔ HIỆU HÓA COOKIE VÀ LỖI WEB TRONG CÁC TRÌNH DUYỆT CHÍNH?",
+    "disableCookiesContent": "Thông thường có thể ngừng chấp nhận cookie của trình duyệt hoặc ngừng chấp nhận cookie từ một dịch vụ cụ thể. Tất cả các trình duyệt hiện đại đều cho phép bạn thay đổi cấu hình của Cookie. Các cài đặt này thường được tìm thấy trong 'Tùy chọn' hoặc 'Sự Ưa Thích ' của menu trình duyệt của bạn.  Bạn cũng có thể định cấu hình trình duyệt hoặc trình quản lý email của mình, cũng như cài đặt các tiện ích bổ sung miễn phí để ngăn Lỗi web tải xuống khi mở email. Sử dụng các hướng dẫn sau theo trình duyệt internet của bạn để thay đổi tùy chọn cookie:",
+    "updateCookies": "CẬP NHẬT CHÍNH SÁCH COOKIES",
+    "updateCookiesContent": "FightPandemics có thể sửa đổi Chính sách Cookie này dựa trên các yêu cầu lập pháp, quy định hoặc với mục đích điều chỉnh chính sách nói trên theo hướng dẫn do Cơ quan Bảo vệ Dữ liệu Tây Ban Nha ban hành, do đó Người dùng nên truy cập định kỳ trang này để biết những thay đổi phải chịu trong đó. Khi có những thay đổi đáng kể trong Chính sách Cookie này, Người dùng sẽ được thông báo qua web hoặc qua email cho Người dùng đã đăng ký trong dịch vụ bản tin.",
+    "cookieAlert": "Trang web này sử dụng cookie để phân bố dịch vụ của chúng tôi và hiển thị cho bạn thông tin có liên quan. Bằng cách sử dụng trang web của chúng tôi, bạn xác nhận rằng bạn đã đọc và hiểu < 0 > Chính sách Cookie < / 0 > , < 1 > Chính sách Bảo mật < / 1 > và < 2 > Điều khoản & Điều kiện < / 2 > của chúng tôi. Việc bạn sử dụng Sản phẩm của FightPandemics phải tuân theo các chính sách và điều khoản này."
+  },
+  "comment": {
+    "writeAComment": "Viết nhận xét",
+    "onlyAuthenticated": "Chỉ người dùng đã đăng nhập mới có thể nhận xét.",
+    "loading": "Đang tải...",
+    "showMore": "Hiển thị thêm nhận xét",
+    "comment": "Nhận xét",
+    "comment_plural": "Những nhận xét",
+    "commentWithCount": "{{count}}nhận xét",
+    "commentWithCount_plural": "{{count}}nhận xét",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa bỏ",
+    "save": "Lưu",
+    "showLess": "Hiển thị ít nhận xét hơn"
+  },
+  "medical": {
+    "localNumber": "Số khẩn cấp địa phương của bạn",
+    "call": "Xin vui lòng gọi số khẩn cấp địa phương của bạn",
+    "nearestHospitals": "Bệnh viện gần nhất",
+    "check": "Kiểm tra triệu chứng",
+    "findHelp": "Tìm trợ giúp"
+  },
+  "feedback": {
+    "poorly": "Kém",
+    "well": "Rất tốt",
+    "howMeetNeeds": "FightPandemics đáp ứng nhu cầu của bạn tốt như thế nào?",
+    "almostFinished": "Chúng ta đang gần hoàn tất!",
+    "howImpacted": "COVID-19 đã tác động đến bạn như thế nào?",
+    "mostValuable": "Tính năng nào có giá trị nhất đối với bạn?",
+    "oneChange": "Nếu bạn có thể thay đổi một điều về FightPandemics, đó sẽ là gì?",
+    "otherFeedback": "Bất kỳ phản hồi nào khác cho chúng tôi?",
+    "thankYou": "Cảm ơn bạn!",
+    "thankYouEarly": "Cảm ơn bạn đã là người dùng sớm của FightPandemics!",
+    "thankYouMessage": "Ý kiến đóng góp của bạn rất có ý nghĩa và giúp chúng tôi cải thiện dịch vụ của mình trong và sau đại dịch COVID-19.",
+    "submitFeedback": "Gửi phản hồi",
+    "radio": {
+      "age": "Bạn bao nhiêu tuổi?",
+      "unaffected": "Tôi đi làm / đi học bình thường",
+      "quarantine": "Tôi khỏe mạnh, nhưng bị cách ly ở nhà",
+      "symptomaticUntested": "Tôi có các triệu chứng nhẹ nhưng chưa được kiểm tra",
+      "diagnosed": "Tôi được chẩn đoán mắc bệnh COVID-19"
+    }
+  },
+  "relativeTime": {
+    "second": "giây",
+    "second_plural": "nhiều giây",
+    "secondWithCount": "{{count}} giây trước",
+    "secondWithCount_plural": "{{count}} giây trước",
+    "minute": "phút",
+    "minute_plural": "nhiều phút",
+    "minuteWithCount": "{{count}} phút trước",
+    "minuteWithCount_plural": "{{count}} phút trước",
+    "hour": "giờ",
+    "hour_plural": "nhiều giờ",
+    "hourWithCount": "{{count}} giờ trước",
+    "hourWithCount_plural": "{{count}} giờ trước",
+    "day": "ngày",
+    "day_plural": "nhiều ngày",
+    "dayWithCount": "{{count}} ngày trước",
+    "dayWithCount_plural": "{{count}} ngày trước",
+    "week": "tuần",
+    "week_plural": "nhiều tuần",
+    "weekWithCount": "{{count}} tuần trước",
+    "weekWithCount_plural": "{{count}} tuần trước",
+    "month": "tháng",
+    "month_plural": "nhiều tháng",
+    "monthWithCount": "{{count}} tháng trước",
+    "monthWithCount_plural": "{{count}} tháng trước",
+    "year": "năm",
+    "year_plural": "nhiều năm",
+    "yearWithCount": "{{count}} năm trước",
+    "yearWithCount_plural": "{{count}} năm trước"
+  },
+  "alt": {
+    "logo": "Logo của FightPandemics",
+    "blogLink": "FightPandemics Blog Liên kết",
+    "desktopBanner": "Desktop Mission and Vision Banner",
+    "mobileBanner": "Sứ mệnh di động và Biểu ngữ Tầm nhìn",
+    "ideaImage": "Hình ảnh ý tưởng của chúng tôi",
+    "linkedinIcon": "Biểu tượng FightPandemics LinkedIn",
+    "facebookIcon": "Biểu tượng Facebook FightPandemics",
+    "instagramIcon": "Biểu tượng Instagram FightPandemics",
+    "twitterIcon": "Biểu tượng Twitter FightPandemics",
+    "createOrg": "tạo tổ chức",
+    "personalDataImage": "hai người đứng bên cạnh một danh sách các vật dụng cá nhân",
+    "envelope": "Phong bì",
+    "avatar": "hình đại diện"
+  },
+  "error": {
+    "title": "Xin vui lòng bao gồm một tiêu đề cho bài viết của bạn.",
+    "description": "Xin vui lòng bao gồm một mô tả cho bài viết của bạn.",
+    "help": "Xin vui lòng chọn một loại trợ giúp.",
+    "tags": "Xin vui lòng thêm ít nhất một thẻ.",
+    "privacyPolicyRequired": "Bạn phải đồng ý với chính sách bảo mật của chúng tôi trước khi tiếp tục",
+    "termsConditionsRequired": "Bạn phải đồng ý với các điều khoản và điều kiện của chúng tôi trước khi tiếp tục",
+    "failedPredictions": "Không nhận được dự đoán.  Xin vui lòng thử lại.",
+    "failedLocation": "Không tìm được vị trí.",
+    "failedLocationDetails": "Không lấy được thông tin chi tiết về vị trí.  Xin vui lòng thử lại.",
+    "User denied Geolocation": "Người dùng đã từ chối định vị địa lý.",
+    "resetBrowserLocationPermission": "Xin vui lòng đặt lại quyền vị trí của trình duyệt hoặc nhập địa chỉ.",
+    "enterAddressAgain": "Xin vui lòng nhập địa chỉ hoặc thử lại.",
+    "loggedInToCreateOrgProfile": "Bạn phải đăng nhập để tạo một hồ sơ tổ chức",
+    "selectOneOption": "Xin vui lòng chọn ít nhất một tùy chọn",
+    "userExists": "Người dùng đã tồn tại",
+    "invalidState": "Trạng thái không hợp lệ",
+    "passwordsShouldMatch": "Mật khẩu phải được nhập hai lần giống hệt nhau",
+    "passwordWeak": "Mật khẩu quá yếu",
+    "wrongCredentials": "Email hoặc mật khẩu bị sai.",
+    "failedChangePasswordEmail": "Lỗi khi tạo email bởi thay đổi mật khẩu",
+    "feedbackAlreadySubmitted": "Phản hồi đã được gửi",
+    "emailIssue": "Email đã được sử dụng hoặc không thể được xác nhận",
+    "emailUnverified": "Email không được xác nhận",
+    "maxSignInAttemptsExceeded": "Đã vượt quá số lần đăng nhập tối đa.",
+    "failedSubmittingFeedback": "Gửi phản hồi không thành công, lý do:",
+    "failedCreatingUser": "Không thể tạo người dùng, lý do:",
+    "failedLoadingProfile": "Không tải được hồ sơ, lý do:",
+    "failedLoadingActivity": "Hoạt động tải không thành công, lý do:",
+    "failedCreatingOrgProfile": "Không tạo được hồ sơ tổ chức, lý do:",
+    "failedUpdatingOrgProfile": "Không cập nhật được hồ sơ tổ chức, lý do:",
+    "failedUpdatingProfile": "Không cập nhật được hồ sơ, lý do:",
+    "failedAuthentication": "Xác thực không thành công, lý do:",
+    "failedLogin": "Đăng nhập không thành công, lý do:",
+    "failedSignup": "Đăng ký không thành công, lý do:",
+    "failedPasswordRecovery": "Khôi phục mật khẩu không thành công, lý do:",
+    "http": {
+      "Bad Request": "Yêu cầu không hợp lệ",
+      "Unauthorized": "Không được phép",
+      "Payment Required": "Yêu cầu thanh toán",
+      "Forbidden": "Bị cấm",
+      "Not Found": "Không tìm thấy",
+      "Method Not Allowed": "Phương pháp không được phép",
+      "Not Acceptable": "Không được chấp nhận",
+      "Proxy Authentication Required": "Yêu cầu Xác thực Ủy quyền",
+      "Request Timeout": "Hết thời gian yêu cầu",
+      "Conflict": "Xung đột",
+      "Gone": "Không còn",
+      "Length Required": "Yêu cầu độ dài",
+      "Precondition Failed": "Điều kiện tiên quyết không thành công",
+      "Payload Too Large": "Tải trọng quá lớn",
+      "URI Too Long": "URI quá dài",
+      "Unsupported Media Type": "Loại phương tiện không được hỗ trợ",
+      "Range Not Satisfiable": "Phạm vi không đạt yêu cầu",
+      "Expectation Failed": "Kỳ vọng không thành công",
+      "I'm a teapot": "Tôi là một ấm trà",
+      "Misdirected Request": "Yêu cầu sai hướng",
+      "Unprocessable Entity": "Thực thể không thể xử lý",
+      "Locked": "Đã khóa",
+      "Failed Dependency": "Phụ thuộc Thất bại",
+      "Too Early": "Quá sớm",
+      "Upgrade Required": "Yêu cầu nâng cấp",
+      "Precondition Required": "Yêu cầu điều kiện tiên quyết",
+      "Too Many Requests": "Quá nhiều yêu cầu",
+      "Request Header Fields Too Large": "Request Header Fields Too Large",
+      "Unavailable For Legal Reasons": "Không có sẵn vì lý do pháp lý",
+      "Internal Server Error": "Lỗi Máy chủ Nội bộ",
+      "Not Implemented": "Không được thực hiện",
+      "Bad Gateway": "Cổng kết nối không được tốt",
+      "Service Unavailable": "Dịch vụ Không sẵn có",
+      "Gateway Timeout": "Thời gian chờ Cổng kết nối đã hết",
+      "HTTP Version Not Supported": "Phiên bản HTTP không được hỗ trợ",
+      "Variant Also Negotiates": "Biến thể cũng thương lượng",
+      "Insufficient Storage": "Không đủ dung lượng lưu trữ",
+      "Loop Detected": "Phát hiện Vòng lặp",
+      "Not Extended": "Không mở rộng",
+      "Network Authentication Required": "Yêu cầu Xác thực Mạng"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Xin lỗi, chúng tôi chỉ hỗ trợ các tệp tin hình ảnh của loại jp(e) g và png.",
+      "fileSizeTooLarge": "Xin vui lòng tải lên hình ảnh có kích thước nhỏ hơn 5 MB.",
+      "imageDimensionTooSmall": "Xin vui lòng tải lên hình ảnh tối thiểu cao 250 pixel và rộng 250 pixel.",
+      "imageDimensionTooWide": "Xin lỗi, hình ảnh quá rộng.  Xin vui lòng thử lại với ảnh có chiều rộng nhỏ hơn gấp đôi chiều cao.",
+      "networkError": "Xin lỗi, một số lỗi mạng đã xảy ra."
+    }
+  },
+  "TEMP: We are not a provider of healthcare services": "Chúng tôi không phải là nhà cung cấp các dịch vụ chăm sóc sức khỏe",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dịch vụ này được cung cấp một cách thiện chí cho những người nói cách khác không thể có được sự trợ giúp và các nguồn lực trong trường hợp khẩn cấp về sức khỏe cộng đồng chưa từng có này.",
+  "TEMP: Please consult your healthcare provider for medical advice": "Xin vui lòng tham khảo ý kiến nhà cung cấp dịch vụ chăm sóc sức khỏe của bạn để được tư vấn y tế",
+  "TEMP: I Understand": "Tôi hiểu",
+  "TEMP: COVID-19 Screening Tool": "Công cụ sàng lọc COVID-19",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Chúng tôi sẽ hỏi bạn một vài câu hỏi về các triệu chứng, chuyến đi và tiếp xúc của bạn với những người khác",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Câu trả lời của bạn sẽ không được lưu trữ hoặc chia sẻ. Đây chỉ là một công cụ để giúp đỡ thế giới.",
+  "TEMP: For Myself": "Cho mình",
+  "TEMP: For Someone Else": "Cho một người khác",
+  "TEMP: Is this an emergency?": "Đây có phải là trường hợp khẩn cấp không?",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "Có, tôi đang gặp ít nhất một trong những triệu chứng này",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "Có, họ đang gặp ít nhất một trong những triệu chứng này",
+  "TEMP: No, I do not have any of these symptoms": "Không, tôi không có bất kỳ triệu chứng nào trong số này",
+  "TEMP: No, they do not have any of these symptoms": "Không, họ không có bất kỳ triệu chứng nào trong số này",
+  "TEMP: Under 18": "Dưới 18",
+  "TEMP: Between 18 and 64": "Từ 18 đến 64",
+  "TEMP: 65 or older": "Từ 65 tuổi trở lên",
+  "TEMP: Multiple options can be selected": "Nhiều tùy chọn có thể được chọn",
+  "TEMP: Fever, chills, or sweating": "Sốt, ớn lạnh hoặc đổ mồ hôi",
+  "TEMP: New or worsening cough": "Mới bị ho hoặc ho nặng hơn",
+  "TEMP: Sore throat": "Đau họng",
+  "TEMP: Vomiting or diarrhea": "Nôn mửa hoặc tiêu chảy",
+  "TEMP: Do you live in a care facility?": "Bạn có sống trong một cơ sở chăm sóc?",
+  "TEMP: Do they live in a care facility?": "Họ có sống trong một cơ sở chăm sóc?",
+  "TEMP: This includes nursing homes or assisted living facilities.": "Điều này bao gồm các nhà dưỡng lão hoặc các cơ sở hỗ trợ sinh hoạt.",
+  "TEMP: No, I don’t live in a long-term care facility": "Không, tôi không sống trong cơ sở chăm sóc dài hạn",
+  "TEMP: I live in a long-term care facility": "Tôi sống trong một cơ sở chăm sóc dài hạn",
+  "TEMP: No, they don’t live in a long-term care facility": "Không, họ không sống trong một cơ sở chăm sóc dài hạn",
+  "TEMP: They live in a long-term care facility": "Họ sống trong một cơ sở chăm sóc dài hạn",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "Điều này bao gồm bệnh viện, phòng cấp cứu, cơ sở y tế khác hoặc cơ sở chăm sóc dài hạn. Chọn tất cả những gì phù hợp.",
+  "TEMP: No, I don’t work or plan to work in a care facility": "Không, tôi không làm việc hoặc dự định làm việc trong một cơ sở chăm sóc",
+  "TEMP: No, they don’t work or plan to work in a care facility": "Không, họ không làm việc hoặc có kế hoạch làm việc trong một cơ sở chăm sóc",
+  "TEMP: Do any of these apply to you?": "Có cái nào trong số này áp dụng cho bạn không?",
+  "TEMP: Do any of these apply to them?": "Có cái nào áp dụng cho họ không?",
+  "TEMP: Pregnancy": "Mang thai",
+  "TEMP: None of the above": "Không có cái nào ở trên",
+  "TEMP: Please consult a medical professional for advice": "Xin vui lòng tham khảo ý kiến chuyên gia y tế để được tư vấn",
+  "TEMP: Done": "Làm xong",
+  "TEMP: Retake the Test": "Thi lại bài kiểm tra",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Dựa trên các triệu chứng được báo cáo, bạn nên đi khám ngay lập tức.\nGọi số khẩn cấp!",
+  "TEMP: Your Responses": "Phản hồi của bạn",
+  "avatar": {
+    "submitBtn": "Gửi",
+    "cancelBtn": "Huỷ bỏ",
+    "tryAgainBtn": "Thử lại"
+  }
+}
