@@ -8,7 +8,7 @@ import createPostSettings from "assets/data/createPostSettings";
 import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
-import { errorStyles } from "components/OrganisationProfile/CreateProfileComponents";
+// import { errorStyles } from "components/OrganisationProfile/CreateProfileComponents";
 
 const { shareWith, expires, helpTypes } = createPostSettings;
 
@@ -35,7 +35,13 @@ const initialState = {
 const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
-  const [errors, setErrors] = useState(initialState.errors);
+  const [errors, setErrors] = useState(() => {
+    const newErrors = [];
+    for (let field in errorMsg) {
+      newErrors.push(field);
+    }
+    return newErrors;
+  });
   const [postForm, setPostForm] = useState(initialState.postForm);
   formData.help = type;
 
@@ -76,20 +82,6 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
       setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
-
-  const populateErrors = () => {
-    const newErrors = [];
-    for (let field in errorMsg) {
-      if (!errors.includes(field)) {
-        newErrors.push(field);
-      }
-    }
-    setErrors([...errors, ...newErrors]);
-  };
-
-  useEffect(() => {
-    populateErrors();
-  }, [populateErrors]);
 
   const handleSubmit = async (e) => {
     setPostForm(true);
