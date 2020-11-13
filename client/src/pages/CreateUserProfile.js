@@ -1,5 +1,5 @@
 import { Flex, WhiteSpace } from "antd-mobile";
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
@@ -27,6 +27,8 @@ import SubmitButton from "components/Button/SubmitButton";
 import PrivacyPolicyContent from "components/PolicyPages/PrivacyPolicyContent";
 import TermsConditionsContent from "components/PolicyPages/TermsConditionsContent";
 import PolicyModal from "components/PolicyPages/PolicyModal";
+import SuccessAlert from "components/Alert/SuccessAlert";
+import { clearRememberCookie } from "utils/cookie";
 import { theme, mq } from "constants/theme";
 import {
   blockLabelStyles,
@@ -40,7 +42,7 @@ import {
 } from "hooks/reducers/userReducers";
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
-import { SET_USER } from "../constants/action-types";
+import { SET_USER, AUTH_LOGOUT } from "../constants/action-types";
 import GTM from "constants/gtm-tags";
 
 const StyledUnderlineLink = styled.a`
@@ -146,6 +148,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
   const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState("");
   const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
     false,
   );
@@ -169,7 +172,36 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
     createUserFormReducer,
     initialState,
   );
+  useEffect(() => {
+    (async function linkAccounts() {
+      try {
+        const resAccounts = await axios.get("/api/auth/link-accounts");
+        const { userIds } = resAccounts.data;
+        if (userIds?.length > 0) {
+          await axios.post("/api/auth/link-accounts", resAccounts.data);
+          // TODO: replace SuccessAlert with ModalDialog
+          setMessageSuccess(t("auth.linkAccountsSuccess"));
+        }
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
+        createUserFormDispatch({
+          type: CREATE_USER_ERROR,
+          error: `${t("error.failedLinkAccounts")} ${translatedErrorMessage}`,
+        });
+      }
+    })();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const { t } = useTranslation();
+
+  const handleLinkAccountsSuccessClose = () => {
+    clearRememberCookie(); // clear logged-in Cookie
+    dispatch({ type: AUTH_LOGOUT });
+  };
 
   const handleInputChangePrivacy = (e) => {
     setPrivacy(e.target.checked);
@@ -256,6 +288,15 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
           <Heading className="text-center" level={4}>
             {t("profile.common.createProfile")}
           </Heading>
+          {messageSuccess && (
+            <>
+              <SuccessAlert
+                message={messageSuccess}
+                closable
+                afterClose={handleLinkAccountsSuccessClose}
+              />
+            </>
+          )}
           {createUserFormState.error && (
             <ErrorAlert message={createUserFormState.error} type="error" />
           )}

@@ -351,7 +351,8 @@
     "passwordMax": "Password must be at most {{num}} characters.",
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Passwords don't match",
+    "linkAccountsSuccess": "Your accounts with same email were linked together, please log in again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -688,6 +689,7 @@
     "maxSignInAttemptsExceeded": "Maximum number of sign in attempts exceeded.",
     "failedSubmittingFeedback": "Failed submitting feedback, reason:",
     "failedCreatingUser": "Failed creating user, reason:",
+    "failedLinkAccounts": "Failed linking accounts, reason:",
     "failedLoadingProfile": "Failed loading profile, reason:",
     "failedLoadingActivity": "Failed loading activity, reason:",
     "failedCreatingOrgProfile": "Failed creating organization profile, reason:",
