@@ -20,6 +20,7 @@ const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
     display: flex;
     flex-direction: column;
+    flex-grow: 0.75;
     justify-content: space-between;
     padding: 2rem;
     button {

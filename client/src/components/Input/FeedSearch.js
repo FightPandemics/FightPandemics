@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import SvgIcon from "../Icon/SvgIcon";
@@ -6,13 +7,15 @@ import SearchSvg from "../../assets/icons/search.svg";
 import CloseSvg from "../../assets/icons/close-btn.svg";
 import InputError from "./InputError";
 import GTM from "constants/gtm-tags";
+import { setQueryKeysValue } from "components/Feed/utils";
+import qs from "query-string";
 const { colors } = theme;
 
 const MIN_KEYWORD_CHARS = 2;
 
 const StyledIcon = styled(SvgIcon)`
   line-height: 1.8rem;
-  vertical-align: bottom;
+  vertical-align: sub;
   height: 100%;
   margin: 0 0.7rem 0 1.4rem;
 `;
@@ -48,11 +51,15 @@ const SearchContainer = styled.span`
     background: transparent;
     width: calc(100% - 5rem);
     color: black;
+    vertical-align: top;
     &:focus {
       outline: none;
     }
     &::placeholder {
       color: #bdbdbd;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      vertical-align: text-bottom;
     }
   }
 `;
@@ -103,15 +110,15 @@ const SearchWrapper = styled.div`
 `;
 const Chip = styled.span`
   padding: 2px 5px;
-  margin: 0 10px 0 0;
   color: ${colors.royalBlue};
   border-radius: 5px;
-  display: inline-flex;
   align-items: center;
   font-size: 1.5rem;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 13rem;
+  max-width: 7.4rem;
+  display: inline-block;
+  vertical-align: top;
   text-overflow: ellipsis;
   .singleChip {
     background: none;
@@ -199,7 +206,7 @@ const Overlay = styled.div`
   z-index: -2;
   transition: 0.7s;
 `;
-export default class FeedNavSearch extends React.Component {
+class FeedNavSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -214,34 +221,39 @@ export default class FeedNavSearch extends React.Component {
     };
     this.searchWrapper = React.createRef();
     this.searchBox = React.createRef();
-    this.onChange = this.onChange.bind(this);
-    this.renderSearchContainer = this.renderSearchContainer.bind(this);
-    this.listenerCallback = this.listenerCallback.bind(this);
-    this.onKeyClick = this.onKeyClick.bind(this);
-    this.renderSelectedList = this.renderSelectedList.bind(this);
-    this.toggleOptionList = this.toggleOptionList.bind(this);
-    this.onSelectItem = this.onSelectItem.bind(this);
-    this.filterOptionsByInput = this.filterOptionsByInput.bind(this);
-    this.renderNormalOption = this.renderNormalOption.bind(this);
-    this.resetSelectedValue = this.resetSelectedValue.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.searchWrapper.current.addEventListener("click", this.listenerCallback);
-  }
+    this.getKeywordAndCategoryFromQuery();
+    const unlisten = this.props.history.listen((location) => {
+      if (location.pathname === "/feed")
+        return this.getKeywordAndCategoryFromQuery();
+      unlisten();
+    });
+  };
 
-  listenerCallback() {
+  getKeywordAndCategoryFromQuery = () => {
+    let query = qs.parse(this.props.history.location.search);
+    this.setState({ inputValue: query.s_keyword || "" });
+    if (this.props.isMobile && query.s_keyword)
+      this.setState({
+        selectedValue: [this.props.options[query.s_category || 0]],
+      });
+  };
+
+  listenerCallback = () => {
     this.searchBox.current.focus();
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.searchWrapper.current.removeEventListener(
       "click",
       this.listenerCallback,
     );
-  }
+  };
 
-  onChange(event) {
+  onChange = (event) => {
     const { isMobile } = this.props;
     const { tooShort } = this.state;
     this.setState({ inputValue: event.target.value }, () => {
@@ -253,22 +265,33 @@ export default class FeedNavSearch extends React.Component {
         !event.target.value.length)
     )
       this.setState({ tooShort: false });
-  }
+  };
 
-  submitSearch() {
+  submitSearch = () => {
     const { inputValue, selectedValue } = this.state;
-    const { isMobile } = this.props;
+    const { isMobile, options } = this.props;
     this.setState({ toggleOptionsList: false });
     if (!inputValue || (isMobile && !selectedValue[0])) return;
     if (inputValue.length < MIN_KEYWORD_CHARS) {
       return this.setState({ tooShort: true });
     }
-    if (isMobile)
-      return this.props.handleMobileSubmit(inputValue, selectedValue[0].id);
-    if (!isMobile) this.props.handleSubmit(inputValue);
-  }
+    if (isMobile) {
+      let searchQuery = {
+        s_keyword: inputValue,
+        s_category: options.findIndex((a) => a.id === selectedValue[0]?.id),
+      };
+      if (searchQuery.s_category) {
+        searchQuery.objective = null;
+      }
+      setQueryKeysValue(this.props.history, searchQuery);
+      return;
+    } else
+      setQueryKeysValue(this.props.history, {
+        s_keyword: inputValue,
+      });
+  };
 
-  onKeyClick(e) {
+  onKeyClick = (e) => {
     const { inputValue, selectedValue } = this.state;
     if (e.key === "Enter") {
       this.submitSearch();
@@ -277,32 +300,35 @@ export default class FeedNavSearch extends React.Component {
       this.setState({ toggleOptionsList: true });
       this.resetSelectedValue();
     }
-  }
+  };
 
-  closeClicked() {
+  closeClicked = () => {
     this.setState({
       inputValue: "",
     });
     this.resetSelectedValue();
     this.setState({ tooShort: false });
     this.searchBox.current.blur();
-    this.props.handleClear();
-  }
+    setQueryKeysValue(this.props.history, {
+      s_keyword: null,
+      s_category: null,
+    });
+  };
 
-  filterOptionsByInput() {
+  filterOptionsByInput = () => {
     let { options, inputValue } = this.state;
     const { isObject, displayValue } = this.props;
     if (isObject) {
       options = options.filter((i) =>
-        this.matchValues(i[displayValue], inputValue),
+        this.matchValues(this.props.t(i[displayValue]), inputValue),
       );
     } else {
       options = options.filter((i) => this.matchValues(i, inputValue));
     }
     this.setState({ options });
-  }
+  };
 
-  resetSelectedValue() {
+  resetSelectedValue = () => {
     const { unfilteredOptions } = this.state;
     this.setState(
       {
@@ -313,13 +339,13 @@ export default class FeedNavSearch extends React.Component {
       },
       this.initialSetValue,
     );
-  }
+  };
 
-  matchValues(value, search) {
+  matchValues = (value, search) => {
     return value.toLowerCase().startsWith(search.toLowerCase());
-  }
+  };
 
-  renderNormalOption() {
+  renderNormalOption = () => {
     const { isObject = true, displayValue } = this.props;
     const getGTMId = (option) => {
       return (
@@ -335,16 +361,18 @@ export default class FeedNavSearch extends React.Component {
         id={getGTMId(option)}
       >
         <span id={getGTMId(option)}>
-          {isObject ? option[displayValue] : (option || "").toString()}
+          {this.props.t(
+            isObject ? option[displayValue] : (option || "").toString(),
+          )}
         </span>
         <span id={getGTMId(option)}>
           {this.props.t("feed.search.keywords")}
         </span>
       </li>
     ));
-  }
+  };
 
-  renderOptionList() {
+  renderOptionList = () => {
     const {
       options,
       unfilteredOptions,
@@ -364,16 +392,16 @@ export default class FeedNavSearch extends React.Component {
         {this.renderNormalOption()}
       </ul>
     );
-  }
+  };
 
-  toggleOptionList(newVal) {
+  toggleOptionList = (newVal) => {
     const { selectedValue, mobileReselect } = this.state;
     if (mobileReselect) return;
     if (selectedValue[0]) return this.setState({ toggleOptionsList: false });
     else this.setState({ toggleOptionsList: newVal });
-  }
+  };
 
-  onSelectItem(item) {
+  onSelectItem = (item) => {
     const { mobileReselect } = this.state;
     this.setState(
       {
@@ -389,32 +417,34 @@ export default class FeedNavSearch extends React.Component {
     );
     if (this.searchBox.current != document.activeElement)
       this.searchBox.current.focus();
-  }
+  };
 
-  mobileRepick() {
+  mobileRepick = () => {
     this.setState({
       toggleOptionsList: true,
       filteredOptions: this.state.unfilteredOptions,
       options: this.state.unfilteredOptions,
       mobileReselect: true,
     });
-  }
+  };
 
-  renderSelectedList() {
+  renderSelectedList = () => {
     const { isObject = true, displayValue } = this.props;
     const { selectedValue } = this.state;
     return selectedValue.map((value, index) => (
       <Chip key={index} ref={this.chip} onClick={() => this.mobileRepick()}>
-        {!isObject
-          ? (value || "").toString()
-          : value["mobile_display"]
-          ? value["mobile_display"]
-          : value[displayValue]}
+        {this.props.t(
+          !isObject
+            ? (value || "").toString()
+            : value["mobile_display"]
+            ? value["mobile_display"]
+            : value[displayValue],
+        )}
       </Chip>
     ));
-  }
+  };
 
-  renderSearchContainer() {
+  renderSearchContainer = () => {
     const {
       inputValue,
       tooShort,
@@ -484,11 +514,11 @@ export default class FeedNavSearch extends React.Component {
         )}
       </SearchContainer>
     );
-  }
+  };
 
-  render() {
+  render = () => {
     return this.renderSearchContainer();
-  }
+  };
 }
 
 FeedNavSearch.defaultProps = {
@@ -496,4 +526,7 @@ FeedNavSearch.defaultProps = {
   hidePlaceholder: false,
   style: {},
   id: "",
+  options: {},
 };
+
+export default withRouter(FeedNavSearch);
