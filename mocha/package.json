@@ -7,10 +7,11 @@
   },
   "private": true,
   "devDependencies": {
-    "mocha": "^8.1.0",
-    "should": "^13.2.3",
-    "http-status": "^1.4.2",
     "chai": "^4.2.0",
+    "http-status": "^1.4.2",
+    "mocha": "^8.1.0",
+    "mongoose": "^5.10.13",
+    "should": "^13.2.3",
     "supertest": "^4.0.2"
   }
 }
