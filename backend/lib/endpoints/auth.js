@@ -227,7 +227,7 @@ async function routes(app) {
         const { userIds } = req.body;
         
         // unlinked accounts could be more than one, link all of them
-        for (let userId of userIds) {
+        for (const userId of userIds) {
           await Auth0.linkAccounts(serverToken, userId, userIdRoot);
         }
         return { userIds };
