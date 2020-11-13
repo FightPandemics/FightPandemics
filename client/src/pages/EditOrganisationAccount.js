@@ -434,6 +434,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
                 {t("profile.common.profileInfo")}
               </Link>
             </CustomLink>
+            <CustomLink>
+              <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                {t("profile.common.notificationInfo")}
+              </Link>
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {renderFormInputs()}

@@ -3,13 +3,13 @@ const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken, createSearchRegex } = require("../utils");
 const { config } = require("../../config");
 const jwt = require("jsonwebtoken");
+const { updateNotifyPrefsSchema } = require("./schema/notificationPreference");
 const {
   getUserByIdSchema,
   getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
   updateUserSchema,
-  updateNotifyPrefsSchema,
 } = require("./schema/users");
 
 /*
