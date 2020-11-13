@@ -1,0 +1,823 @@
+{
+  "headline": "Yardım teklif edebileceğiniz ve talep edebileceğiniz bir yer",
+  "tagline": "<0>Pandemiler olmaya devam edecek.</0><1>Bizler toplulukların hazırlanmasına ve karşılık vermesine yardım ediyoruz.</1>",
+  "common": {
+    "getHelp": "Yardım talebi",
+    "giveHelp": "Yardım önerisi",
+    "viewFeed": "Yardım Panosunu Görüntüle",
+    "register": "Hemen katıl",
+    "feedback": "Geribildirim",
+    "question": "Soru",
+    "aboutUs": "Hakkımızda",
+    "profile": "Profil",
+    "addOrg": "Kuruluş ekle",
+    "logout": "Oturumu Kapat",
+    "organisations": "Kuruluşlar"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Soru",
+      "next": "Sonraki",
+      "previous": "Geri",
+      "submit": "Gönder",
+      "skip": "Atla",
+      "whereLocated": "Bulunduğun yer neresi?",
+      "relevantResults": "Size en tutarlı sonuçları göstermek istiyoruz",
+      "enterAddress": "Adres, posta kodu veya şehir girin",
+      "shareLocation": "Konumumu paylaş",
+      "showAnywhere": "Bana tüm gönderileri göster",
+      "whatEmail": "E-posta adresiniz nedir?",
+      "respectPrivacy": "Gizliliğinize saygı duyuyoruz. Lütfen < 1 > Gizlilik Politikamızı < / 1 > ve < 3 > Şartlar ve Koşullarımızı okuyun. < / 3 >",
+      "enterEmail": "E-posta adresinizi giriniz..."
+    },
+    "needHelp": {
+      "whatHelp": "Ne tür bir yardım gerekiyor?",
+      "medical": "Tıbbi",
+      "haveCovidSymptoms": "COVID-19 semptomlarım var",
+      "other": "Diğer Yardımlar",
+      "otherDesc": "Yiyecek / ilaç / vb. almak için yardıma ihtiyacım var."
+    },
+    "offerHelp": {
+      "howContribute": "Nasıl katkıda bulunmak istersiniz?",
+      "volunteer": "Gönüllü",
+      "donorInvestor": "Bağışçı / Yatırımcı Olarak",
+      "organisation": "Kurum Olarak"
+    }
+  },
+  "feed": {
+    "title": "Yardım Panosu",
+    "all": "Tüm gönderiler",
+    "request": "Yardım talebi",
+    "offer": "Yardım önerisi",
+    "quit": "Filtreleri temizle",
+    "apply": "Filtreleri uygulayın",
+    "getOrGive": "Yardım önerisi veya talebi",
+    "filters": {
+      "title": "Filtre",
+      "location": {
+        "label": "Konum",
+        "enterAddress": "Adres, posta kodu veya şehir girin",
+        "shareLocation": "Konumumu paylaş"
+      },
+      "providers": "Tedarikçiler",
+      "providersList": [
+        "Bireysel",
+        "Yeni Girişim",
+        "Şirket",
+        "Topluluk",
+        "Devlet",
+        "Kâr Amacı Gütmeyen",
+        "Üniversite",
+        "Sağlık Kuruluşu",
+        "Diğer"
+      ],
+      "types": "Türler",
+      "typesList": [
+        "Tıbbi malzemeler",
+        "Market / Gıda",
+        "İş",
+        "Eğitim",
+        "Yasal",
+        "Sağlık / Zihinsel",
+        "Eğlence",
+        "Bilgi",
+        "Finansman",
+        "Ar-Ge",
+        "Teknoloji",
+        "Diğer"
+      ],
+      "labels": {
+        "location": "Konum",
+        "providers": "Tedarikçiler",
+        "type": "Türler",
+        "lookingFor": "Yardım önerisi veya talebi"
+      },
+      "providersOptions": {
+        "Individual": "Bireysel",
+        "Startup": "Yeni Girişim",
+        "Company": "Şirket",
+        "Community": "Topluluk",
+        "Government": "Hükümet",
+        "Non-profit": "Kâr Amacı Gütmeyen",
+        "University": "Üniversite",
+        "Health care provider": "Sağlık Kuruluşu",
+        "Other": "Diğerleri"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Tıbbi malzemeler",
+        "Groceries/Food": "Market / Gıda",
+        "Business": "İş",
+        "Education": "Eğitim",
+        "Legal": "Yasal",
+        "Wellbeing/Mental": "Sağlık / Zihinsel",
+        "Entertainment": "Eğlence",
+        "Information": "Bilgi",
+        "Funding": "Finansman",
+        "R&D": "Ar-Ge",
+        "Tech": "Teknoloji",
+        "Other": "Diğerleri"
+      },
+      "lookingForOptions": {
+        "Request Help": "Yardım talebi",
+        "Offer Help": "Yardım önerisi"
+      }
+    },
+    "filterBy": "Filtre uygula",
+    "noResults": "Üzgünüz, şu anda aramanıza uygun bir gönderi mevcut değil. Lütfen farklı bir filtre kullanarak aramayı deneyin veya <0>bir gönderi oluşturun</0>.",
+    "allPosts": "Tüm gönderiler",
+    "allPeople": "Kişiler",
+    "allOrgs": "Kuruluşlar",
+    "noResultsPosts": "Üzgünüz, şu anda aramanıza uygun bir gönderi mevcut değil. Lütfen farklı bir filtre kullanarak aramayı deneyin veya <0>bir gönderi oluşturun</0>.",
+    "noResultsPeople": "Üzgünüz, şu anda aramanıza uygun bir kişi bulunamadı. Lütfen farklı bir anahtar kelime kullanmayı deneyin.",
+    "noResultsOrgs": "Üzgünüz, şu anda aramanıza uygun bir kuruluş bulunamadı. Lütfen farklı bir anahtar kullanmayı deneyin.",
+    "search": {
+      "placeholder": "Gönderi, Kişi ya da Kuruluş Ara",
+      "keywords": "Anahtar kelimeler",
+      "error": "Minimum {{length}} karakter",
+      "options": {
+        "posts": "Gönderiler",
+        "people": "Kişiler",
+        "orgs": "Kuruluşlar",
+        "orgsShort": "Kuruluşlar"
+      }
+    }
+  },
+  "post": {
+    "create": "Bir gönderi oluştur",
+    "continueAs": "Gönderiye Devam Et",
+    "individual": "Bireysel",
+    "organisation": "Kuruluş",
+    "givingHelp": "Yardım Talebi",
+    "gettingHelp": "Yardım İsteme",
+    "writePostHere": "Gönderinizi buraya yazın",
+    "title": "Başlık",
+    "writePost": "Gönderinizi yazın",
+    "whatGiving": "Nasıl yardım edebilirsiniz?",
+    "addTags": "Gönderinizi daha görünür hale getirmek için etiketler ekleyin",
+    "whatVisibility": "Gönderinizin görünürlüğü nedir?",
+    "postVisible": "Gönderi şu kullanıcılara görünür olacak",
+    "success": "Başarı",
+    "viewPost": "Gönderinizi Görüntüleyin",
+    "like": "Beğeni",
+    "like_plural": "Beğeni",
+    "likeWithCount": "{{count}} Beğeni",
+    "likeWithCount_plural": "{{count}} Beğeni",
+    "comment": "Yorum",
+    "comment_plural": "Yorumlar",
+    "commentWithCount": "{{count}} Yorum",
+    "commentWithCount_plural": "{{count}} Yorumlar",
+    "options": {
+      "shareWith": {
+        "city": "Şehrimde",
+        "state": "Bölgemde",
+        "worldwide": "Dünya çapında",
+        "country": "Benim ülkemde"
+      },
+      "expires": {
+        "forever": "Sonsuza kadar",
+        "month": "Bir ay boyunca",
+        "week": "Bir haftalığına.",
+        "day": "Bir günlüğüne"
+      },
+      "helpTypes": {
+        "request": "Yardıma ihtiyacım var",
+        "offer": "Yardım et"
+      }
+    },
+    "post": "Gönderi",
+    "postAsOrg": "Kurum olarak gönderi oluştur.",
+    "createNew": "Yeni bir tane oluştur",
+    "whatNeed": "Neye ihtiyacın var?",
+    "viewLess": "Daha az göster",
+    "viewMore": "Daha fazla göster",
+    "deletePostConfirmation": "Gönderiyi silmek istediğinizden emin misiniz?",
+    "deleteCommentConfirmation": "Yorumu silmek istediğinizden emin misiniz?",
+    "shareVia": "Üzerinden paylaşın...",
+    "others": "Diğerleri",
+    "expireTitle": "Ahh ... tuh!",
+    "expire": "Aradığınız gönderinin süresi doldu. Lütfen bu tür gönderiler için Yardım Panomuzu kontrol edin.",
+    "noActivity": "Herhangi bir etkinlik bulunamadı",
+    "share": "Paylaş",
+    "delete": "Sil",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "edited": "Düzenlendi"
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Hesap Bilgileri",
+      "profileInfo": "Profil Bilgileri",
+      "address": "Adres",
+      "enterAddress": "Adres, posta kodu veya şehir girin",
+      "agreePrivacy": "Kaydolarak < 0 > Gizlilik Politikası < / 0 > nı kabul ediyorum",
+      "agreeTerms": "Kaydolarak < 0 > Şartlar ve Koşulları < / 0 > kabul ediyorum",
+      "createProfile": "Profil oluştur",
+      "saveChanges": "Değişiklikleri Kaydet",
+      "thankyou": "Topluluğumuza katıldığınız için teşekkür ederiz!",
+      "viewProfile": "Profilim",
+      "continuePosting": "Gönderiye Devam Et",
+      "viewFeed": "Yardım Panosunu Görüntüle",
+      "viewMyProfile": "Profilimi görüntüle",
+      "loading": "Yükleniyor",
+      "invalidEmail": "Geçersiz e-posta",
+      "selectOption": "Lütfen en az bir seçenek seçin",
+      "invalidURL": "Geçersiz URL",
+      "savingChanges": "Değişiklikler kaydediliyor...",
+      "submit": "Profil oluştur",
+      "submitLoading": "Profil Oluşturuluyor ...",
+      "invalidPassword": "Parola şunlardan en az 3'ünü içermelidir: küçük harf, büyük harf, sayı, özel karakter (örneğin! @ # $% ^ & *).",
+      "addressRequired": "Adres gereklidir. Lütfen adresinizi girin ve açılır menüden seçin",
+      "emailRequired": "E-posta adresi gereklidir",
+      "passwordRequired": "Parola gereklidir",
+      "maxCharacters": "Maximum {{maxNum}} karakter.",
+      "minCharacters": "Minimum {{minNum}} karakter.",
+      "validCharacters": "Geçerli karakterler şunlardır: {{characters}}.",
+      "urls": {
+        "appStore": "Apple Store'a git",
+        "playStore": "Google Play'e git",
+        "twitter": "Twitter URL",
+        "facebook": "Facebook URL",
+        "instagram": "Instagram URL",
+        "github": "Github URL",
+        "linkedin": "LinkedIn URL",
+        "website": "Web sitesi"
+      },
+      "emailMaxLength": "E-posta adresi 200 karakteri geçmemeli",
+      "emailInvalid": "E-posta adresi geçersiz",
+      "emailDomainInvalid": "E-posta alan adı geçersiz",
+      "sendMessage": "İleti Gönder"
+    },
+    "individual": {
+      "email": "E-posta adresi",
+      "firstName": "İsim",
+      "lastName": "Soyadı",
+      "hideAddress": "Adresimi gösterme",
+      "iWant": "İstiyorum",
+      "volunteer": "Gönüllü",
+      "donate": "Bağış yap",
+      "shareInformation": "Bilgi paylaşımı",
+      "iNeed": "İhtiyacım var.",
+      "medical": "Tıbbi yardım",
+      "haveCovidSymptoms": "COVID-19 semptomlarım var",
+      "other": "Diğer Yardımlar",
+      "otherDesc": "Yiyecek / ilaç / vb. almak için yardıma ihtiyacım var.",
+      "editProfile": "Profili Düzenle",
+      "intro": "Kendini tanıtma",
+      "website": "Kişisel Web Sitesi",
+      "myActivity": "Etkinliğim",
+      "userActivity": "Kullanıcı Aktivitesi",
+      "wantHelp": "Yardım etmek istiyorum",
+      "needHelp": "Yardıma ihtiyacım var",
+      "firstNameRequired": "Ad gereklidir.",
+      "lastNameRequired": "Soyadı gereklidir."
+    },
+    "org": {
+      "title": "Kuruluş Profili Oluşturma",
+      "editOrgProfile": "Kuruluş Profilini Düzenle",
+      "name": "Kuruluş Adı",
+      "email": "Kuruluş İletişim E-postası",
+      "invalidEmail": "Geçersiz e-posta ",
+      "globalOrg": "Biz küresel bir kuruluşuz",
+      "seeking": "Ne arıyorsunuz",
+      "volunteers": "Gönüllüler",
+      "donations": "Bağışlar",
+      "staff": "Personel",
+      "other": "Diğer",
+      "typeAndIndustry": "Tür ve Sektör",
+      "type": "Tür",
+      "types": [
+        "Yeni Girişim",
+        "Şirket",
+        "Topluluk",
+        "Devlet",
+        "Kâr Amacı Gütmeyen",
+        "Üniversite",
+        "Sağlık Kuruluşu",
+        "Diğer"
+      ],
+      "industry": "Sanayi",
+      "industries": [
+        "Otomotiv",
+        "Mimari",
+        "Sanat & El Sanatları",
+        "Bankacılık",
+        "Biyoteknoloji",
+        "İş Malzemeleri ve Ekipmanları",
+        "Sivil ve Sosyal Kuruluşlar",
+        "Etkinlik Hizmetleri",
+        "Bağış toplama",
+        "Devlet İlişkileri",
+        "Sağlık, Sağlıklı Yaşam ve Fitness",
+        "Hastane ve Sağlık",
+        "Sektörler",
+        "Bilgi Teknolojileri ve Hizmetleri",
+        "Yasal hizmetler",
+        "Pazarlama ve Reklamcılık",
+        "Tıbbi Cihazlar",
+        "Kar Amacı Gütmeyen Kuruluş Yönetimi",
+        "Diğer",
+        "Hayırseverlik",
+        "İlkokul/Ortaöğretim",
+        "Profesyonel Eğitim & Koçluk",
+        "Araştırma",
+        "Düşünce Kuruluşları",
+        "Çeviri ve Yerelleştirme"
+      ],
+      "typeIndustryError": "Lütfen açılır menüden kuruluş türünü ve sektörü seçin",
+      "desc": "Kuruluş Tanımı",
+      "lang": "Kuruluş Dili",
+      "completeOrgProfile": "Kurumun Profilini Tamamla",
+      "about": "Hakkında",
+      "activity": "Etkinlik",
+      "editAccount": "Hesap Bilgilerini Düzenle",
+      "updateSuccess": "Kuruluş başarıyla güncellendi.",
+      "orgNameRequired": "Kurum adı zorunludur",
+      "global": "Global"
+    }
+  },
+  "auth": {
+    "signIn": "Oturum Aç",
+    "joinNow": "Hemen katıl",
+    "email": "E-posta",
+    "enterEmail": "E-posta adresini girin",
+    "password": "Parola",
+    "enterPassword": "Parola girin",
+    "confirmPassword": "Parolayı onayla",
+    "forgotPassword": "Parolanızı mı unuttunuz?",
+    "noAccount": "Hesabınız yok mu?",
+    "haveAccount": "Zaten bir hesabınız var mı?",
+    "recoverLink": "Kurtarma bağlantısı gönder.",
+    "orSignIn": "VEYA ŞUNUNLA OTURUM AÇ",
+    "orJoinNow": "VEYA ŞİMDİ ŞUNUNLA KATILIN",
+    "back": "Oturum Açma ekranına dön",
+    "passwordMax": "Şifreniz en fazla {{num}} karakterden oluşmalıdır.",
+    "passwordMin": "Şifreniz en az {{num}} karakterden oluşmalıdır.",
+    "passwordConfirmationRequired": "Parolayı onaylamanız gerekmektedir",
+    "passwordNotMatch": "Şifre eşleşmedi"
+  },
+  "verifyEmail": {
+    "checkInbox": "Gelen kutunuzu kontrol edin",
+    "forgotPass": "Bu hesap {{email}} ile ilişkiliyse, parolanın nasıl sıfırlanacağına dair daha fazla yönerge içeren bir e-posta alacaksınız.",
+    "confirm": "Az önce {{email}} adresine bir bağlantı gönderdik. Hesabınızı onaylamak ve profilinizi tamamlamak için linke tıklayın.",
+    "checkSpam": "Birkaç dakika içinde bir ileti görmüyorsanız lütfen spam, promosyonlar veya diğer gelen posta klasörlerini kontrol edin."
+  },
+  "aboutUs": {
+    "ourStory": "Bizim Hikayemiz",
+    "story": "FightPandemics, Fransa'da COVID-19 ile enfekte olan Manuel Gonzalez Alzuru'nun fikridir. Barselona'ya döndüğünde, yardım etmek isteyenler olmasına rağmen yardım alamadı ve buradaki güçlüğü fark etti.",
+    "ourCommunity": "Topluluğumuz",
+    "community": "Dünyanın dört bir yanından 1100'den fazla gönüllü yazılımcı, tasarımcı, bilim adamı, sağlık uzmanı ve ürün yöneticisinden oluşan bir ekip tarafından oluşturulduk.",
+    "ourIdea": "Fikrimiz",
+    "ourSupporters": "Destekçilerimiz",
+    "followUs": "Bizi sosyal medyada takip edin",
+    "contactUs": "Bize ulaşın:",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "İnsanların acil durumlara karşı daha dirençli olduğu bir dünya yaratmak istiyoruz.",
+    "subHeading": "toplulukların krizlere daha hızlı ve etkili bir şekilde yanıt vermesine yardımcı olarak.",
+    "forWhoHeading": "Bu kimin için?",
+    "forWho": "Yardıma ihtiyacı olan veya yardım etmek isteyen herhangi bir iş, topluluk grubu, hükümet veya sağlık kuruluşu.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Pek çok kişinin bir araya gelmesinden ilham alan Manuel, projeyi tek bir misyonla başlattı: <span> herkesin zamanında iletişim kurmasını sağlamak. </span>",
+    "connectPeople": "İnsanları birbirine bağlıyoruz",
+    "connect": "Yardıma ihtiyacı olanları bunu sağlayabilenlerle buluşturan özgecil bir platform.",
+    "howWork": "Bu nasıl işliyor?",
+    "helpBoard": "Yardım Panosu",
+    "helpBoardDetail": "Bireyler ve kuruluşlar için yardım sunmak ve talep etmek için bir topluluk platformu.",
+    "localGlobal": "Yerel & Global",
+    "localGlobalDetail": "Topluluğum içinde ve dünyanın her yerinden yardım teklif edin ve isteyin.",
+    "relevantContent": "İlgili İçerik",
+    "relevantContentDetail": "Son kullanma süreleri, panonun her zaman güncel olmasını sağlar.",
+    "goToHelpBoard": "Yardım Panosuna Git",
+    "supporters": "Destekçiler",
+    "thanksSupporters": "Destekçilerimize teşekkür ederiz, onlar olmadan toplumların salgınları hazırlamalarına ve cevap vermelerine yardımcı olamazdık.",
+    "becomeSupporter": "İşletmenizin nasıl bir destekçi olabileceği hakkında daha fazla bilgi edinmek için lütfen şu adresten iş ortaklıkları ekibimizle iletişime geçin:",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Destekçinin web sitesine gitmek için aşağıdaki şirket logosuna tıklayın.",
+    "lifetimeSupporters": "Ömür boyu destekçiler",
+    "currentSupporters": "Mevcut destekçiler",
+    "pastSupporters": "Geçmiş destekçiler",
+    "hashtag": "#ForCommunitiesByCommunities"
+  },
+  "footer": {
+    "faq": "SSS",
+    "blog": "Blog",
+    "termsConditions": "Şartlar ve Koşullar",
+    "privacyPolicy": "Gizlilik Politikası",
+    "cookiesPolicy": "Çerez Politikası",
+    "copyright": "Telif hakkı {{currentYear}} FightPandemics. Tüm hakları saklıdır."
+  },
+  "faq": {
+    "title": "FightPandemics Hakkında / Genel",
+    "offerRequestHelp": "Yardım önerisi veya talebi",
+    "profileAccount": "Profil ve Hesap",
+    "contects": "İçerikler",
+    "general": [
+      [
+        "FightPandemics nedir?",
+        "FightPandemics, COVID-19 salgını esnasında, salgından etkilenen insanlar için bir buluşma & iletişim kurma amacı ile oluşturulmuş bir platformdur.",
+        "Ana misyonumuz, pandemi krizi esnasında yardım etmek isteyen ve yardıma ihtiyacı olan kişi ve kuruluşların yerel ve küresel düzeyde birbirleriyle iletişim kurabilmelerini sağlamaktır. Tıbbi yardım, yüz maskeleri, yasal yardım, market / gıda, köpeğinizi gezdirecek birini ya da diğer günlük aktiviteleri destekleyecek birini arıyorsanız, burada bulabilirsiniz:",
+        "Pandemi ile ilgili sorunlar veya projeler üzerinde çalışan bireyleri, toplulukları ve kuruluşları tek bir ağda birbirine bağlamaya ve ortada dolaşan dağınık ve kopuk haldeki temel bilgileri toplamaya çalışıyoruz. Vizyonumuz, toplulukların sağlıkla ilgili acil durumlara ve insani krizlere daha hızlı ve etkili bir şekilde yanıt vermesine yardımcı olarak herkesin acil durumlara karşı daha dirençli olduğu bir dünya yaratmaktır."
+      ],
+      [
+        "FightPandemics kimdir?",
+        "FightPandemics, yardım ihtiyacı halinde başvurulacak olan bir platform olarak hizmet etme misyonuna sahip, tamamen gönüllü olarak çalışanlardan oluşan küresel bir ekiptir. 70'den fazla ülkeden destek veren 150'den fazla aktif gönüllüden oluşan ekibimiz, fark yaratmak için çabalıyor. Platform farklı kültürlerden çeşitli yeteneklere sahip, bir takım olarak üretmek ve yeteneklerini geliştirmek isteyen analitik bakış açısına sahip kişileri bir araya getiren yenilikçi bir kollektif çaba ile oluşturulmuştur.",
+        "Girişimimize katılmak ister misiniz? hr@fightpandemics.com adresinden bize ulaşabilirsiniz."
+      ],
+      [
+        "FightPandemics hangi şehirlerde faaliyet göstermektedir?",
+        "FightPandemics küresel bir platformdur. İlk sürümümüz İngilizce olarak yayınlandı, ancak yakında başka diller de eklemeyi planlıyoruz."
+      ],
+      [
+        "FightPandemics kimler içindir?",
+        "Yardıma ihtiyaç duyan veya yarım etmek isteyen herkes platformumuza katılabilir ve diğer kişi ve kuruluşlarla bağlantı kurabilir."
+      ],
+      [
+        "FightPandemics'te yardım önerisi / talebi için nasıl gönderi oluşturabilirim?",
+        "< 0 > Topluluğa katıldığınızda, FightPandemics platformundaki gönderi ve yorumları görüntülemek ve gönderi oluşturmak için sınırsız erişime sahip olacaksınız. < / 0 > < 1 > Topluluğa kullanıcı olarak katılmak için \"Menü\" düğmesine tıklayın ve \"Şimdi Katıl / Giriş Yap\" seçeneğini seçin. Orada seçtiğiniz e-posta veya sosyal medya kimlik bilgileriyle katılabilirsiniz. < / 1 > < 2 > Profilinizi tamamladıktan sonra menü düğmesine tıklayın, profilimi görüntüle'yi seçin ve ilk gönderinizi oluşturmak için artı işaretine tıklayın. < / 2 >"
+      ],
+      [
+        "FightPandemics haberlerini nasıl güncel olarak takip edebilirim?",
+        "Lütfen bizi sosyal medyada takip edin! < 0 > Facebook < / 0 > , < 1 > Twitter < / 1 > , < 2 > LinkedIn < / 2 > ve < 3 > Instagram < / 3 > için düzenli güncellemeler yayınlıyoruz."
+      ],
+      [
+        "FightPandemics'i kullanmak için ödeme yapmam gerekir mi?",
+        "Hayır, FightPandemics, gönüllüler tarafından yönetilen tamamen ücretsiz bir platformdur."
+      ],
+      [
+        "FightPandemics'te ne tür bir yardım sunabilirim/ talep edebilirim?",
+        "COVID-19 salgını sırasında bireyleri ve organizasyonları desteklemek için her türlü yardımı isteyebilir veya sunabilirsiniz. Burada, sunabileceğiniz veya isteyebileceğiniz yardım türüne ait bazı örneklerin yer aldığı bir liste verilmiştir:",
+        "< 0 > Market ihtiyacı < / 0 > < 1 > Tıbbi malzemeler < / 1 > < 2 > Hukuki yardım < / 2 > < 3 > Teknik destek < / 3 > < 4 > Bilgi < / 4 > < 5 > Finansman < / 5 > < 6 > Etkinlik ve faaliyetler < / 6 > < 7 > Eğitim < / 7 > < 8 > Sağlık < / 8 > < 9 > Araştırma ve geliştirme < / 9 >"
+      ],
+      [
+        "Nasıl yardım alabilirim?",
+        "FightPandemics ana sayfasından \"Yardıma ihtiyacım var\" seçeneğini seçin. \"Diğer yardım\" seçeneğini seçmeniz ve konumunuzu girmeniz durumunda seçilen bölgedeki yardım tekliflerinin bulunduğu bir sayfaya yönlendirileceksiniz. Daha sonra görmek istediğiniz gönderileri sağlayıcıya ve türe göre filtreleyebilirsiniz. Alternatif olarak, tüm gönderileri görüntülemek ve istediğiniz filtreleri uygulamak için ana sayfadan \"Topluluk gönderilerini görüntüle\" yi seçebilirsiniz."
+      ],
+      [
+        "Nasıl yardım edebilirim?",
+        "<0>Bireysel veya kuruluş olarak yardım sunabilirsiniz. </0><1>Yardım isteyen kullanıcıların oluşturduğu tüm gönderileri görmek ve sonuçları konuma ve türe göre filtrelemek için ana sayfadan \"Yardım et\" i seçin. Gönderilere ulaşmak için oturum açmanız gerekir. Ayrıca, sunabileceğiniz yardım detayını açıklayan kendi gönderilerinizi de oluşturabilirsiniz.</1>"
+      ],
+      [
+        "Yardım istek ve tekliflerini görüntülemek için oturum açmam gerekir mi?",
+        "Yardım panosundaki gönderilerin herhangi birini görüntülemek için oturum açmanız gerekmez, ancak yorum yapmak veya gönderiyi beğenmek için oturum açmanız gerekir."
+      ],
+      [
+        "Gönderi oluşturmak / düzenlemek için oturum açmam gerekir mi?",
+        "Evet, gönderi oluşturmak veya düzenlemek istiyorsanız bir hesap oluşturmanız ve oturum açmanız gerekir."
+      ],
+      [
+        "Kuruluş profilleri oluşturmak için kişisel hesap açmam gerekiyor mu?",
+        "Evet, bir kişi olarak kaydolduktan sonra, hesabınıza bağlı bir veya birden çok kuruluş profili oluşturabilirsiniz."
+      ],
+      [
+        "Adımın / kuruluşumun adı diğer kullanıcılara gösterilecek mi?",
+        "Yardım sunan veya yardım isteyen gönderiler oluşturduğunuzda, adınız / kuruluşunuzun adı, yardım panosunu görüntüleyen herkese gösterilir."
+      ],
+      [
+        "Gönderilerin güvenilir olduğuna nasıl güvenebilirim?",
+        "Ne yazık ki, gönderiler kullanıcılarımız tarafından oluşturulduğundan, tüm gönderilerin güvenilir olduğundan emin olamayız. Ancak, düzenli veri temizliği yaparak ve son kullanma tarihinden sonra gönderileri devre dışı bırakarak içeriği güncel ve etkin tutmak için elimizden geleni yapıyoruz. Bir gönderinin içeriğiyle ilgili endişeleriniz varsa lütfen <0>support@fightpandemics.com</0> adresinden bize ulaşın."
+      ],
+      [
+        "Tıbbi ihtiyaçlarımla ilgili bana yardım edebilir misiniz?",
+        "FightPandemics bir sağlık kurumu değildir."
+      ],
+      [
+        "Geçerli konumumu paylaşmam gerekiyor mu? Konumumu paylaşmak istemiyorsam ne olur?",
+        "Size en alakalı sonuçları göstermek için konumunuzu kullanıyoruz, ancak tüm ilanları da görüntüleyebilirsiniz. FightPandemics' de dünyanın heryerinden binlerce gönderi olduğundan, sonuçları en iyi şekilde uyarlamak için yakınınızdaki bir yeri seçmenizi öneririz."
+      ],
+      [
+        "Benim bölgemde verilen bir yardım yok. Ne yapacağım?",
+        "Topluluğumuz sürekli olarak büyüyor. Bulunduğunuz bölgede ilk gönderiyi oluşturup yardım isteyen kişi siz olabilirsiniz. Lütfen bölgeden bağımsız olarak heryerden herkesin ulaşabileceği hizmetlere de göz atın."
+      ],
+      [
+        "Web sitesinde bir hata buldum. Bunu nasıl bildirebilirim?",
+        "Lütfen geri bildirim gönderin veya support@fightpandemics.com adresinden bizimle iletişime geçin."
+      ],
+      [
+        "Artık FightPandemics kullanma iznim yok - ne yapmalıyım?",
+        "Lütfen <0>support@fightpandemics.com</0> adresinden bize ulaşın ve hesabınızla ilgili sorunun ne olduğunu kontrol edelim."
+      ],
+      [
+        "Hangi bilgileri saklıyorsunuz?",
+        "FightPandemics, kullanıcıların kişisel verilerini yalnızca gizlilik politikamızda açıklanan amaçlar doğrultusunda toplar ve işler. Bu politikada belirtilen ilgili kişiler dışında hiçbir durumda kişisel verilerinize erişim sağlamayacağız veya üçüncü şahıslarla paylaşmayacağız."
+      ],
+      [
+        "Yaşadığım şehir veya eyaletimden yardım verebilir miyim / alabilir miyim? Gönderin ne kadar süreyle görünür olacak?",
+        "Yardım verme/alma gönderisi bir posta kodu, şehir veya ülke düzeyinde ve süresi de bir gün, bir hafta, bir ay veya sonsuza kadar olabilir. Varsayılan olarak, gönderiler bir ay süreyle şehir düzeyine ayarlanır."
+      ],
+      [
+        "Benim sorum listede bulunmuyor. Kime ulaşabilirim?",
+        "Burada listelenmemiş genel sorular ve diğer sorunlar için <0>contact@fightpandemics.com</0> adresinden bize ulaşabilirsiniz."
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "Nasıl katılabilirim?",
+        "<0>Topluluğa kullanıcı olarak katılmak için, \"Menü\" düğmesini tıklayın ve \"Şimdi Katıl / Oturum Aç\" seçeneğini seçin. Orada, e-posta veya sosyal medya kimlik bilgileriyle katılabilme seçenekleri bulunmaktadır. </0><1>Topluluğa katıldığınızda, FightPandemics platformundaki gönderi ve yorumları görüntülemek ve gönderi yapmak için sınırsız erişime sahip olacaksınız.</1>"
+      ],
+      [
+        "Bireysel profilimi bir kuruluş profiline nasıl dönüştürebilirim?",
+        "Kuruluş profili, kişisel profilinize bağlıdır. Kişisel profilinizi oluşturduktan sonra, bu profile bağlı olarak istediğiniz kadar çok kuruluş profili ekleyebilirsiniz. Oturum açma kimliğiniz, kişisel profiliniz için kullandığınız e-posta ve parola olmaya devam edecektir."
+      ],
+      [
+        "Kuruluş profilimi bireysel bir profil olarak nasıl değiştirebilirim?",
+        "Kuruluş profilinizi bireysel bir profil olarak değiştiremezsiniz. Bir kuruluş profili oluşturmak için, bireysel bir profilinizin olması gerekir. Bireysel profilinizi oluşturduktan sonra, bu bireysel profile bağlı olarak istediğiniz kadar kuruluş profili ekleyebilirsiniz. Oturum açma kimlik bilgileriniz, bireysel profil için kullandığınız e-posta ve şifre ile aynı olacaktır."
+      ],
+      [
+        "Parolamı nasıl resetlerim?",
+        "Ana sayfadan \"Oturum Aç\" ı tıklayın ve ardından \"Parolamı unuttum\" u tıklayın ve talimatları izleyin"
+      ],
+      [
+        "Parolam neden geçerli değil?",
+        "Lütfen parolanızda en az 8 harf olup olmadığını kontrol edin. Zaten bir hesabınız varsa ancak oturum açma parolanızı unuttuysanız, ana sayfadan \"Oturum Aç\" ı tıklayın ve ardından \"Parolamı unuttum\" a gidin."
+      ],
+      [
+        "Kaydoldum ama onay e-postası bana ulaşmadı. Ne yapmalıyım?",
+        "Bir onay e-postası almadıysanız lütfen aşağıdaki seçenekleri deneyin:",
+        "Kurtarma e-postası için Spam klasörünüzü kontrol edin.",
+        "\"Parolayı kurtar\" işlemini deneyin.",
+        "Yukarıdaki seçenekler sorunu çözmezse, lütfen destek ekibimize ulaşmaktan çekinmeyin: <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Hesabımı nasıl silerim / iptal ederim?",
+        "Hesabınızı silmek isterseniz, lütfen <0>support@fightpandemics.com</0> adresinden bize ulaşın."
+      ],
+      [
+        "Profil bilgilerimi nasıl güncelleyebilirim?",
+        "Sağ üst köşedeki menüden \"Profilim\" öğesini seçin ve ardından profilinizin üst kısmındaki kalem simgesine tıklayın. Profil bilgilerinizi düzenleyebileceğiniz ve tamamladığınızda \"Değişiklikleri Kaydet\" i seçebileceğiniz bir ekrana yönlendirileceksiniz."
+      ],
+      [
+        "Hatalı veya rencide edici bir gönderiyi nasıl bildirebilirim?",
+        "Hatalı veya FightPandemics Davranış Kurallarını ihlal eden bir gönderi ile karşılaşırsanız, lütfen <0>support@fightpandemics.com</0> adresinden bize bildirin."
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "Partner veya sponsor olmak istiyorum.",
+        "Lütfen <0>partners@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
+      ],
+      [
+        "Basından / medyadanım.",
+        "Lütfen bize ulaşın. <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Teknik desteğe ihtiyacım var.",
+        "Bunun için üzgünüz. Lütfen bize <0>help@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
+      ],
+      [
+        "Başka nedenlerden dolayı FightPandemics'le iletişim kurmak istiyorum.",
+        "Bu listede bulamadığınız sorular ve diğer sorunlar için lütfen <0>contact@fightpandemics.com adresinden bize ulaşın.</0>"
+      ]
+    ],
+    "contacts": "Kişiler",
+    "contactsFAQ": [
+      [
+        "Ortak veya sponsor olmak istiyorum.",
+        "Lütfen <0>partners@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
+      ],
+      [
+        "Basından / medyadanım.",
+        "Lütfen bize ulaşın. <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Teknik desteğe ihtiyacım var.",
+        "Bunun için üzgünüz. Lütfen bize <0>help@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
+      ],
+      [
+        "FightPandemics'le başka nedenlerle iletişime geçmek istiyorum.",
+        "Bu listede bulamadığınız sorular ve diğer sorunlar için lütfen <0>contact@fightpandemics.com adresinden bize ulaşın.</0>\n"
+      ]
+    ],
+    "faqTitle": "Sıkça Sorulan Sorular"
+  },
+  "cookies": {
+    "whatCookies": "ÇEREZ NEDİR?",
+    "whatCookiesContent": "< 0 > Bu Web Sitesi \"Çerezler\" ve diğer benzer mekanizmaları (bundan böyle Çerezler olarak anılacaktır) kullanır. Çerezler kullanıcının belirli bir web sitesindeki veya bu web sitesindeki tüm web siteleri, uygulamalar ve / veya hizmetlerdeki faaliyetlerini kaydetmek için bir web sunucusu aracılığıyla bir tarayıcıya gönderilen dosyalardır. Çerezlerin ilk amacı kullanıcıya sunulan hizmetlere daha hızlı ve daha kişiselleştirilmiş erişim sağlamaktır. Çerezler yalnızca anonim bir kullanıcı ve onun bilgisayarıyla ilişkilendirilir ve kullanıcının kişisel verilerinin elde edilmesine izin veren referanslar sağlamaz. < / 0 > < 1 > Kullanıcı bu web sitesi tarafından gönderilen çerezlerin yüklenmesini, kullanıcının içeriklere erişimini engellememek koşulu ile bildirecek ve reddedecek şekilde tarayıcısını yapılandırabilir. Ancak her durumda web sitesinin performansının düşebileceğini unutmayın. Bu web sitesi, e-postalara eklenen küçük ve şeffaf görüntüler olan web işaretçilerini kullanır. Kullanıcı web sitesinin bir haber bültenini açtığında, bu görüntü e-posta içeriğinin geri kalanıyla birlikte indirilir ve belirli bir e-postanın açılıp açılmadığını ve indirildiği IP adresini bilmeye izin verir. FightPandemics, bu bilgileri istatistik almak ve e-postalarının kullanıcılar tarafından alınmasıyla ilgili analitik çalışmalar yapmak için kullanır. < / 1 >",
+    "typeCookies": "ÇEREZLERİN TÜRÜ, AMACI VE İŞLEVLERİ",
+    "typeCookiesBegin": "Çerezler, kalıcılıklarına bağlı olarak, oturum boyunca süren veya kalıcı çerezler olarak ayrılabilir. Kullanıcı tarayıcıyı kapattığında ilki sona erer. İkincisi, hizmet verdiği hedefin ne zaman yerine getirildiğine ve manuel olarak ne zaman silindiğine bağlı olarak sona erer. Ayrıca amacınıza bağlı olarak bu web sitesi tarafından kullanılan çerezler aşağıdaki gibi sınıflandırılabilir:",
+    "typeCookiesContent": "<0>Teknik çerezler: Bunlar, kullanıcının bir web sayfası, platform veya uygulamada gezinmesine ve orada bulunan farklı seçenekleri veya hizmetleri kullanmasına izin verir, örneğin trafiği ve veri iletişimini kontrol etme, oturumu tanımlama, erişim kısıtı olan alanlara erişme, bir siparişi oluşturan öğeleri hatırlatma, bir siparişin satın alma sürecini gerçekleştirme, kaydolma veya bir etkinliğe katılım talebinde bulunma, navigasyon sırasında güvenlik unsurlarını kullanma, videoların veya seslerin dağıtımı için içerik depolama veya sosyal ağlar aracılığıyla içerik paylaşma. </0><1>Analiz çerezleri: Bizim tarafımızdan ya da üçüncü şahıslar tarafından işlenen, kullanıcı sayısını ölçmeye ve kullanıcılara sunulan hizmetlerin kullanımıyla ilgili ölçüm ve istatistiksel analiz yapmaya izin veren çerezlerdir.\n</1><2>Reklam çerezleri: Bizim tarafımızdan ya da üçüncü şahıslar tarafından işlenen, web sitesindeki reklam alanlarını mümkün olan en verimli şekilde yönetmemize olanak tanıyan, reklamın içeriğini istenen hizmetin içeriğine veya web sitemizden yaptığınız kullanıma uyarlayan çerezlerdir. Bunun sayesinde internette tarama alışkanlıklarınızı analiz edebilir ve size tarama profilinizle ilgili reklamlar gösterebiliriz.\n</2><3>Davranışsal reklam çerezleri: Bunlar, editörün, istenen hizmetin sunulduğu bir web sayfası, uygulama veya platformda bulunan reklam alanlarının mümkün olan en verimli şekilde yönetilmesine olanak sağlar. Bu çerezler, gezinme alışkanlıklarının sürekli olarak gözlemlenmesi yoluyla elde edilen kullanıcı davranışları hakkında bilgi depolar ve buna dayalı reklamları görüntülemek için belirli bir profil geliştirilmesine izin verir.</3>",
+    "typeCookiesEnd": "Web Sitesi FightPandemics adına kullanıcılara çerezlerin yüklenmesini gerektirebilecek üçüncü taraf hizmetleri kullanabilir ve kullanıcı tarafından Web Sitesinin kullanımı, Web Sitesi etkinliği ve diğer Internet hizmetleriyle ilgili başka hizmetlerin sağlanması hakkında istatistiksel amaçlarla bilgi toplayabilir.",
+    "disableCookies": "TARAYICILARDA ÇEREZLER VE WEB HATALARI NASIL DEVRE DIŞI BIRAKILIR?",
+    "disableCookiesContent": "Normalde tarayıcı çerezlerini kabul etmeyi durdurmak veya belirli bir hizmetten çerez bilgilerini kabul etmeyi durdurmak mümkündür. Tüm modern tarayıcılar çerez ayarlarını değiştirmenize olanak sağlar. Bu ayarlar genellikle tarayıcı menünüzün 'Seçenekler' veya 'Tercihler' kısımlarında bulunur. Ayrıca tarayıcınızı veya e-posta yöneticinizi yapılandırabilir ve web işaretçilerinin e-posta açarken indirilmesini önlemek için ücretsiz eklentiler yükleyebilirsiniz. Çerez tercihlerini değiştirmek için internet tarayıcınıza göre aşağıdaki yönergeleri kullanın:",
+    "updateCookies": "GÜNCEL ÇEREZ POLİTİKASI",
+    "updateCookiesContent": "FightPandemics, bu Çerezler Politikasını yasal gerekliliklere dayalı olarak veya İspanya Veri Koruma Ajansı tarafından verilen talimatları uyarlamak amacıyla değiştirebilir, bu nedenle kullanıcıların bu sayfada meydana gelen değişikliklerden haberdar olabilmek için düzenli olarak ziyaret etmeleri tavsiye edilir. Çerezler Politikası'nda önemli değişiklikler olduğunda, kullanıcılar web üzerinden veya haber bültenine kayıtlı kullanıcılara e-posta yoluyla bilgilendirilir.",
+    "cookieAlert": "Bu site, hizmet sunabilmek ve size ilgili bilgileri göstermek için çerezleri kullanır. Sitemizi kullanarak,<0> Çerezler Politikamızı</0>, <1>Gizlilik Politikasını</1>,ve <2>Şartlar ve Koşulları</2> okuduğunuzu ve anladığınızı kabul etmiş olursunuz. FightPandemics'in Ürünlerini kullanımınız bu politika ve şartlara tabidir."
+  },
+  "comment": {
+    "writeAComment": "Yorum yaz...",
+    "onlyAuthenticated": "Sadece giriş yapmış kullanıcılar yorum yapabilir.",
+    "loading": "Yükleniyor...",
+    "showMore": "Daha Fazla Yorum Göster",
+    "comment": "Yorum",
+    "comment_plural": "Yorumlar",
+    "commentWithCount": "{{count}} Yorum",
+    "commentWithCount_plural": "{{count}} Yorumlar",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "save": "Kaydet",
+    "showLess": "Daha Az Yorum Göster"
+  },
+  "medical": {
+    "localNumber": "Yerel acil numaranız",
+    "call": "Lütfen Yerel Acil Numaranızı Arayın",
+    "nearestHospitals": "Size en yakın hastaneler",
+    "check": "Semptom Kontrolü",
+    "findHelp": "Yardım Bul"
+  },
+  "feedback": {
+    "poorly": "Zayıf",
+    "well": "Çok iyi",
+    "howMeetNeeds": "FightPandemics ihtiyaçlarınızı ne kadar iyi karşılıyor?",
+    "almostFinished": "Neredeyse bitti!",
+    "howImpacted": "COVID-19 sizi nasıl etkiledi?",
+    "mostValuable": "Sizin için en değerli özellikler hangileri?",
+    "oneChange": "FightPandemics ile ilgili bir şeyi değiştirmek isteseniz, bu ne olurdu?",
+    "otherFeedback": "Bizim için başka geri bildiriminiz var mı?",
+    "thankYou": "Teşekkürler!",
+    "thankYouEarly": "FightPandemics'in ilk kullanıcılarından olduğunuz için teşekkür ederiz!",
+    "thankYouMessage": "Verdiğiniz bilgiler bizim için çok değerli, COVID-19 salgını sırasında ve sonrasında hizmet kalitemizi iyileştirmemizi sağlıyor.",
+    "submitFeedback": "Geri Bildirim Gönder",
+    "radio": {
+      "age": "Kaç yaşındasınız?",
+      "unaffected": "İşe / okula pandemi öncesindeki gibi gidebiliyorum.",
+      "quarantine": "Sağlıklıyım ama evde karantinadayım",
+      "symptomaticUntested": "Hafif semptomlarım var ama test edilmedim.",
+      "diagnosed": "Bana COVID-19 teşhisi kondu."
+    }
+  },
+  "relativeTime": {
+    "second": "ikinci",
+    "second_plural": "saniye",
+    "secondWithCount": "{{count}} saniye önce",
+    "secondWithCount_plural": "{{count}} saniyeler önce",
+    "minute": "dakika",
+    "minute_plural": "dakikalar",
+    "minuteWithCount": "{{count}} dakika önce",
+    "minuteWithCount_plural": "{{count}} dakikalar önce",
+    "hour": "saat",
+    "hour_plural": "saatler",
+    "hourWithCount": "{{count}} saat önce",
+    "hourWithCount_plural": "{{count}} saat önce",
+    "day": "gün",
+    "day_plural": "günler",
+    "dayWithCount": "{{count}} gün önce",
+    "dayWithCount_plural": "{{count}} gün önce",
+    "week": "hafta",
+    "week_plural": "haftalar",
+    "weekWithCount": "{{count}} hafta önce",
+    "weekWithCount_plural": "{{count}} haftalar önce",
+    "month": "ay",
+    "month_plural": "aylar",
+    "monthWithCount": "{{count}} ay önce",
+    "monthWithCount_plural": "{{count}} aylar önce",
+    "year": "yıl",
+    "year_plural": "yıllar",
+    "yearWithCount": "{{count}} yıl önce",
+    "yearWithCount_plural": "{{count}} yıllar önce"
+  },
+  "alt": {
+    "logo": "FightPandemics logosu",
+    "blogLink": "FightPandemics Blog Link",
+    "desktopBanner": "Masaüstü Misyon ve Vizyon Banneri",
+    "mobileBanner": "Mobil Misyon ve Vizyon Banner",
+    "ideaImage": "Fikir Resmimiz",
+    "linkedinIcon": "FightPandemics LinkedIn Simgesi",
+    "facebookIcon": "FightPandemics Facebook Simgesi",
+    "instagramIcon": "FightPandemics Instagram Simgesi",
+    "twitterIcon": "FightPandemics Twitter Simgesi",
+    "createOrg": "Organizasyon oluştur",
+    "personalDataImage": "Kişisel eşyalar listesinin yanında duran iki kişi",
+    "envelope": "zarf",
+    "avatar": "avatar"
+  },
+  "error": {
+    "title": "Lütfen gönderiniz için bir başlık ekleyin.",
+    "description": "Lütfen gönderiniz için bir açıklama ekleyin.",
+    "help": "Lütfen bir yardım türü seçin.",
+    "tags": "Lütfen en az bir etiket ekleyin.",
+    "privacyPolicyRequired": "Devam etmeden önce gizlilik politikamızı kabul etmelisiniz",
+    "termsConditionsRequired": "Devam etmeden önce hüküm ve koşullarımızı kabul etmelisiniz",
+    "failedPredictions": "Tahminler alınamadı. Lütfen tekrar deneyiniz.",
+    "failedLocation": "Konum alınamadı.",
+    "failedLocationDetails": "Konum ayrıntıları alınamadı. Lütfen tekrar deneyiniz.",
+    "User denied Geolocation": "Kullanıcı konum paylaşmayı reddetti.",
+    "resetBrowserLocationPermission": "Lütfen tarayıcınızın konum izinlerini sıfırlayın veya adresi girin.",
+    "enterAddressAgain": "Lütfen adresi girin veya tekrar deneyin.",
+    "loggedInToCreateOrgProfile": "Bir kuruluş profili oluşturmak için giriş yapmalısınız",
+    "selectOneOption": "Lütfen en az bir seçenek seçin",
+    "userExists": "Kullanıcı zaten var",
+    "invalidState": "Geçersiz durum",
+    "passwordsShouldMatch": "Parola aynı şekilde iki kez girilmelidir",
+    "passwordWeak": "Parola çok güçsüz",
+    "wrongCredentials": "Yanlış e-posta veya parola",
+    "failedChangePasswordEmail": "Şifre değiştirme e-postası oluşturulurken hata meydana geldi",
+    "feedbackAlreadySubmitted": "Geri bildirim zaten gönderildi",
+    "emailIssue": "E-posta zaten kullanılıyor veya doğrulanamıyor",
+    "emailUnverified": "E-posta doğrulanmadı",
+    "maxSignInAttemptsExceeded": "Maksimum oturum açma denemesi sayısı aşıldı.",
+    "failedSubmittingFeedback": "Geri bildirim gönderilemedi, nedeni:",
+    "failedCreatingUser": "Kullanıcı oluşturulamadı, nedeni:",
+    "failedLoadingProfile": "Profil yüklenemedi, nedeni:",
+    "failedLoadingActivity": "Etkinlik yüklenemedi, nedeni:",
+    "failedCreatingOrgProfile": "Kurum profili oluşturulamadı, nedeni:",
+    "failedUpdatingOrgProfile": "Kurum profili güncellenemedi, nedeni:",
+    "failedUpdatingProfile": "Profil güncellenemedi, nedeni:",
+    "failedAuthentication": "Kimlik doğrulama başarısız oldu, nedeni:",
+    "failedLogin": "Giriş başarısız oldu, nedeni:",
+    "failedSignup": "Üyelik başarısız oldu, nedeni:",
+    "failedPasswordRecovery": "Şifre kurtarma başarısız oldu, nedeni:",
+    "http": {
+      "Bad Request": "Geçersiz istek",
+      "Unauthorized": "Yetkiniz yoktur.",
+      "Payment Required": "Ödeme Gerekli",
+      "Forbidden": "Yasak",
+      "Not Found": "Bulunamadı",
+      "Method Not Allowed": "izin verilmeyen yöntem",
+      "Not Acceptable": "Kabul edilemez",
+      "Proxy Authentication Required": "Proxy Kimlik Doğrulaması Gerekli",
+      "Request Timeout": "İstek zaman aşımına uğradı",
+      "Conflict": "Çakışma / Uyumsuzluk",
+      "Gone": "Kaldırıldı",
+      "Length Required": "Uzunluk girilmeli.",
+      "Precondition Failed": "İstek gereksinimleri örtüşmedi",
+      "Payload Too Large": "Girilen veri çok büyük.",
+      "URI Too Long": "URI Çok Uzun",
+      "Unsupported Media Type": "Desteklenmeyen Ortam Türü",
+      "Range Not Satisfiable": "İstek Aralığı Tahmin Edilemez",
+      "Expectation Failed": "İstek karşılanamadı",
+      "I'm a teapot": "HTTP 418 — (I’m a teapot:))",
+      "Misdirected Request": "Yanlış Yönlendirilmiş İstek",
+      "Unprocessable Entity": "İşlenemeyen Varlık",
+      "Locked": "Kilitli",
+      "Failed Dependency": "İstek başarısız oldu.",
+      "Too Early": "Çok erken",
+      "Upgrade Required": "Güncelleme gerekmektedir.",
+      "Precondition Required": "Ön Koşul Gerekli",
+      "Too Many Requests": "Çok fazla istek gönderildi.",
+      "Request Header Fields Too Large": "İstek çok büyük.",
+      "Unavailable For Legal Reasons": "Yasal Nedenlerle Kullanılamıyor",
+      "Internal Server Error": "Dahili Sunucu Hatası",
+      "Not Implemented": "Desteklenmiyor",
+      "Bad Gateway": "Hatalı Ağ Geçidi",
+      "Service Unavailable": "Hizmet Kullanılamıyor",
+      "Gateway Timeout": "Ağ geçidi zaman aşımına uğradı",
+      "HTTP Version Not Supported": "HTTP Sürümü Desteklenmiyor",
+      "Variant Also Negotiates": "Sunucu dahili konfigürasyon hatası",
+      "Insufficient Storage": "Yetersiz disk alanı.",
+      "Loop Detected": "Döngü tespit edildi.",
+      "Not Extended": "Genişletilmemiş",
+      "Network Authentication Required": "Ağ Kimlik Doğrulaması Gerekli"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Üzgünüz, yalnızca jp(e)g ve png türündeki resim dosyalarını destekliyoruz.",
+      "fileSizeTooLarge": "Lütfen 5 MB'den küçük bir resim yükleyiniz.",
+      "imageDimensionTooSmall": "Lütfen en az 250 piksel uzunluğunda ve 250 piksel genişliğinde bir resim yükleyiniz.",
+      "imageDimensionTooWide": "Maalesef resim çok geniş. Lütfen yüksekliği iki katından daha az genişliğe sahip bir resimle tekrar deneyin.",
+      "networkError": "Üzgünüz, ağda bir sorun oluştu."
+    }
+  },
+  "TEMP: We are not a provider of healthcare services": "Biz sağlık hizmetleri sunan bir organizasyon değiliz",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Bu hizmet, şuan yaşamakta olduğumuz halk sağlığını tehdit eden bu olagan üstü durum sırasında, yardım alamayan ve temel kaynaklarından yoksun kalan insanlara yardım etmek amacıyla verilmektedir.",
+  "TEMP: Please consult your healthcare provider for medical advice": "Lütfen tıbbi tavsiye için sağlık uzmanınıza danışın",
+  "TEMP: I Understand": "Anlıyorum",
+  "TEMP: COVID-19 Screening Tool": "COVID-19 Tarama Aracı",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Size semptomlarınız, seyahatleriniz ve başkalarıyla olan temaslarınız hakkında birkaç soru soracağız.",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Cevaplarınız saklanmayacak veya paylaşılmayacaktır. Bu sadece insanlara yardım eden bir araçtır.",
+  "TEMP: For Myself": "Kendim için",
+  "TEMP: For Someone Else": "Başkası Için",
+  "TEMP: Is this an emergency?": "Bu acil bir durum mu?",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "Evet, bu semptomlardan en az birine sahibim.",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "Evet, bu semptomlardan en az birine sahipler.",
+  "TEMP: No, I do not have any of these symptoms": "Hayır, bu semptomlardan hiçbirine sahip değilim",
+  "TEMP: No, they do not have any of these symptoms": "Hayır, bu semptomlardan hiçbirine sahip değiller",
+  "TEMP: Under 18": "18 yaşın altında",
+  "TEMP: Between 18 and 64": "18 ile 64 arasında",
+  "TEMP: 65 or older": "65 yaş ve üzeri",
+  "TEMP: Multiple options can be selected": "Birden çok seçenek seçilebilir",
+  "TEMP: Fever, chills, or sweating": "Ateş, titreme veya terleme",
+  "TEMP: New or worsening cough": "Yeni veya kötüleşen öksürük",
+  "TEMP: Sore throat": "Boğaz ağrısı",
+  "TEMP: Vomiting or diarrhea": "Kusma veya ishal",
+  "TEMP: Do you live in a care facility?": "Huzur evinde mi yaşıyorsun?",
+  "TEMP: Do they live in a care facility?": "Huzur evinde mi yaşıyorlar?",
+  "TEMP: This includes nursing homes or assisted living facilities.": "Buna huzurevleri veya rehabilitasyon merkezleri dahildir.",
+  "TEMP: No, I don’t live in a long-term care facility": "Hayır, bakım evinde yaşamıyorum.",
+  "TEMP: I live in a long-term care facility": "Bakım evinde yaşıyorum.",
+  "TEMP: No, they don’t live in a long-term care facility": "Hayır, huzur evinde yaşamıyorlar.",
+  "TEMP: They live in a long-term care facility": "Huzur evinde yaşıyorlar.",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "Buna bir hastane, acil servis, herhangi bir tıbbi ortam veya huzur evleri dahildir. Uygun olan tüm seçenekleri işaretleyin.",
+  "TEMP: No, I don’t work or plan to work in a care facility": "Hayır, bir bakım evinde çalışmıyorum veya çalışmayı düşünmüyorum.",
+  "TEMP: No, they don’t work or plan to work in a care facility": "Hayır, bir bakım evinde çalışmıyorlar veya çalışmayı düşünmüyorlar.",
+  "TEMP: Do any of these apply to you?": "Bunlardan herhangi biri sizin için geçerli mi?",
+  "TEMP: Do any of these apply to them?": "Bunlardan herhangi biri onlar için geçerli mi?",
+  "TEMP: Pregnancy": "Gebelik",
+  "TEMP: None of the above": "Yukarıdakilerden hiçbiri",
+  "TEMP: Please consult a medical professional for advice": "Lütfen bir sağlık kuruluşuna danışın.",
+  "TEMP: Done": "Tamam",
+  "TEMP: Retake the Test": "Testi Tekrar Yapın",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Bildirdiğiniz belirtilere göre, hemen yardım almalısınız. Acil çağrı merkezini arayın!",
+  "TEMP: Your Responses": "Yanıtlarınız",
+  "avatar": {
+    "submitBtn": "Gönder",
+    "cancelBtn": "İptal",
+    "tryAgainBtn": "Tekrar deneyiniz."
+  }
+}
