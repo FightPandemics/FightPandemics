@@ -58,6 +58,13 @@ function EditOrganisationNotifications(props) {
   const onSubmit = async (formData) => {
     orgProfileDispatch(updateOrganisation());
     try {
+      if (!switchOnOff) {
+        localStorage.setItem(
+          `notifyPrefs-${organisationId}`,
+          JSON.stringify(formData.notifyPrefs),
+        );
+        Object.assign(formData.notifyPrefs, disabledPrefs);
+      }
       const res = await axios.patch(
         `/api/organisations/${organisationId}`,
         formData,
@@ -84,12 +91,17 @@ function EditOrganisationNotifications(props) {
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         let { _id, ...prefs } = res.data.notifyPrefs;
-        console.log(res);
-        setCurrPrefs({ ...currPrefs, ...prefs });
-        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
+          const preNotifyPrefsString = localStorage.getItem(
+            `notifyPrefs-${organisationId}`,
+          );
+          if (preNotifyPrefsString) {
+            Object.assign(prefs, JSON.parse(preNotifyPrefsString));
+          }
         }
+        setCurrPrefs({ ...currPrefs, ...prefs });
+        setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -159,11 +171,8 @@ function EditOrganisationNotifications(props) {
             <NotifyPreferenceInput
               control={control}
               currPrefs={currPrefs}
-              setCurrPrefs={setCurrPrefs}
-              setValue={setValue}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
-              disabledPrefs={disabledPrefs}
             />
             {/* Button that saves changes */}
             <CustomSubmitButton

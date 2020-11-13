@@ -187,11 +187,8 @@ const Unsubscribe = (props) => {
             <NotifyPreferenceInput
               control={control}
               currPrefs={currPrefs}
-              setCurrPrefs={setCurrPrefs}
-              setValue={setValue}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
-              disabledPrefs={disabledPrefs}
             />
             {/* Button that saves changes */}
             <WhiteSpace />
