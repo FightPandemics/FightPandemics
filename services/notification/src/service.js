@@ -19,7 +19,6 @@ class NotificationService {
   }
 
   async process(frequency) {
-    // TODO handle frequency - immediate, daily, weekly, bi-weekly
     const notifications = await this.dbHelper.findNotifications(frequency);
     if (notifications.length === 0) {
       log.info("No new notifications");
