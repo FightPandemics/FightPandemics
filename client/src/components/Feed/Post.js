@@ -469,8 +469,9 @@ const Post = ({
         liked={post?.liked}
         postAuthorName={post.author.name}
         postAuthorAvatar={post.author.photo}
-        isOwnOrg={
-          user?.organisations && isAuthorOrg(user.organisations, post.author)
+        isOwnPost={
+          isAuthorUser(user, post) ||
+          isAuthorOrg(user?.organisations, post.author)
         }
         authorId={post.author.id}
         postTitle={post?.title}

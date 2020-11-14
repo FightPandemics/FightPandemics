@@ -116,6 +116,7 @@ function onSocketConnect(socket) {
           id: participant._id,
           lastAccess: participant == sender ? new Date() : null,
           name: participant.name,
+          emailSent: false,
           newMessages: participant == receiver ? 1 : 0,
           photo: participant.photo,
           status: participant == sender ? "accepted" : "pending",
@@ -247,7 +248,9 @@ function onSocketConnect(socket) {
       return res({ code: 401, message: "Unauthorized" });
     // sender is still "pending", they can't send until they accept
     if (
-      thread.participants.find((p) => p.id === userId && p.status === "pending")
+      thread.participants.find(
+        (p) => p.id.toString() === userId && p.status === "pending",
+      )
     ) {
       return res({ code: 401, message: "Unauthorized" });
     }
@@ -293,17 +296,22 @@ function onSocketConnect(socket) {
 
         const updates = {
           $inc: { "participants.$[userToUpdate].newMessages": 1 },
+          $set: { "participants.$[userToUpdate].emailSent": false },
         };
 
         switch (thread.participants.find((p) => p.id === recipient).status) {
           case "archived":
             // set status to "accepted", if it was "archived".
-            updates.$set = {
-              "participants.$[userToUpdate].status": "accepted",
-            };
+            updates.$set["participants.$[userToUpdate].status"] = "accepted";
+            break;
+          case "pending":
+            // Don't flip emailSent if status is "pending"
+            delete updates.$set;
             break;
           case "ignored":
             // set status to "pending again" if it was "ignored".
+            // This clobbers the setting of emailSent above, which is fine because
+            // we do not want this flag to be flipped if "ignored".
             updates.$set = { "participants.$[userToUpdate].status": "pending" };
             break;
         }
@@ -371,101 +379,34 @@ function onSocketConnect(socket) {
     this.io.to(messageEdited.threadId).emit("MESSAGE_EDITED", messageEdited);
   });
 
-  socket.on("BLOCK_THREAD", async (data, res) => {
+  socket.on("UPDATE_THREAD_STATUS", async (data, res) => {
+    if (
+      !Thread.schema.tree.participants.type[0].obj.status.enum.includes(
+        data.newStatus,
+      )
+    )
+      return;
     const { userId } = socket;
-    const [blockThreadErr, blockedThread] = await this.to(
+    const [updateThreadErr, updatedThread] = await this.to(
       Thread.findByIdAndUpdate(
-        data,
+        data.threadId,
         {
           $set: {
-            "participants.$[userToUpdate].status": "blocked",
+            "participants.$[userToUpdate].status": data.newStatus,
           },
         },
         { arrayFilters: [{ "userToUpdate.id": userId }] },
       ),
     );
-    if (blockThreadErr || !blockedThread)
+    if (updateThreadErr || !updatedThread)
       return res({ code: 500, message: "Internal server error" });
     res({ code: 200, message: "Success" });
     const recipientSocketId = await getSocketIdByUserId(
       this,
-      blockedThread.participants.find((p) => p.id != userId).id,
+      updatedThread.participants.find((p) => p.id != userId).id,
     );
     if (recipientSocketId)
-      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
-  });
-
-  socket.on("ARCHIVE_THREAD", async (data, res) => {
-    const { userId } = socket;
-    const [archiveThreadErr, archivedThread] = await this.to(
-      Thread.findByIdAndUpdate(
-        data,
-        {
-          $set: {
-            "participants.$[userToUpdate].status": "archived",
-          },
-        },
-        { arrayFilters: [{ "userToUpdate.id": userId }] },
-      ),
-    );
-    if (archiveThreadErr || !archivedThread)
-      return res({ code: 500, message: "Internal server error" });
-    res({ code: 200, message: "Success" });
-    const recipientSocketId = await getSocketIdByUserId(
-      this,
-      archivedThread.participants.find((p) => p.id != userId).id,
-    );
-    if (recipientSocketId)
-      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
-  });
-
-  socket.on("IGNORE_THREAD", async (data, res) => {
-    const { userId } = socket;
-    const [ignoreThreadErr, ignoredThread] = await this.to(
-      Thread.findByIdAndUpdate(
-        data,
-        {
-          $set: {
-            "participants.$[userToUpdate].status": "ignored",
-          },
-        },
-        { arrayFilters: [{ "userToUpdate.id": userId }] },
-      ),
-    );
-    if (ignoreThreadErr || !ignoredThread)
-      return res({ code: 500, message: "Internal server error" });
-    res({ code: 200, message: "Success" });
-    const recipientSocketId = await getSocketIdByUserId(
-      this,
-      ignoredThread.participants.find((p) => p.id != userId).id,
-    );
-    if (recipientSocketId)
-      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
-  });
-
-  // used for unblock, accept, and unarchive (because it sets status to "accepted")
-  socket.on("UNBLOCK_THREAD", async (data, res) => {
-    const { userId } = socket;
-    const [unblockThreadErr, unblockThread] = await this.to(
-      Thread.findByIdAndUpdate(
-        data,
-        {
-          $set: {
-            "participants.$[userToUpdate].status": "accepted",
-          },
-        },
-        { arrayFilters: [{ "userToUpdate.id": userId }] },
-      ),
-    );
-    if (unblockThreadErr || !unblockThread)
-      return res({ code: 500, message: "Internal server error" });
-    res({ code: 200, message: "Success" });
-    const recipientSocketId = await getSocketIdByUserId(
-      this,
-      unblockThread.participants.find((p) => p.id != userId).id,
-    );
-    if (recipientSocketId)
-      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data);
+      this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data.threadId);
   });
 
   socket.on("GET_NOTIFICATIONS", async (data, res) => {

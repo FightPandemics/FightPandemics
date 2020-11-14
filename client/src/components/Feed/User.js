@@ -30,6 +30,8 @@ import {
   PLAYSTORE_URL,
 } from "constants/urls";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+import MessageModal from "components/Feed/MessagesModal/MessageModal.js";
+import GTM from "constants/gtm-tags";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -73,6 +75,7 @@ const UserCard = styled(PostCard)`
     }
     .content-wrapper {
       padding-left: 7.7rem;
+      min-height: 0;
       .post-description {
         color: #bdbdbd;
       }
@@ -340,41 +343,20 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
             style={{ display: "none" }}
           ></Link>
           {renderContent}
-          <IconsContainer>
-            {isAuthenticated && type.toLowerCase() != "individual" ? (
-              <SendMessage
-                to={`/${
-                  type.toLowerCase() == "individual"
-                    ? "profile"
-                    : "organisation"
-                }/${_id}`}
-              >
-                <SvgIcon src={envelopeBlue} />
-                <span> {t("profile.common.sendMessage")}</span>
-              </SendMessage>
-            ) : (
-              type.toLowerCase() != "individual" && (
-                <SendMessage
-                  onClick={() =>
-                    sessionStorage.setItem(
-                      "postredirect",
-                      `/${
-                        type.toLowerCase() == "individual"
-                          ? "profile"
-                          : "organisation"
-                      }/${_id}`,
-                    )
+          <IconsContainer style={{ "margin-top": "0" }}>
+            {_id != user?.id &&
+              !user?.organisations?.find((org) => org._id === _id) &&
+              !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
+                <MessageModal
+                  isAuthenticated={!!user}
+                  isFromUserCard={
+                    type.toLowerCase() == "individual" ? "USER" : "ORG"
                   }
-                  to={{
-                    pathname: LOGIN,
-                    state: { from: window.location.href },
-                  }}
-                >
-                  <SvgIcon src={envelopeBlue} />
-                  <span> {t("profile.common.sendMessage")}</span>
-                </SendMessage>
-              )
-            )}
+                  postAuthorName={`${firstName} ${lastName}`}
+                  authorId={_id}
+                  gtmPrefix={GTM.feed.prefix}
+                />
+              )}
             <PlaceholderIcon />
             {renderExternalLinks}
           </IconsContainer>

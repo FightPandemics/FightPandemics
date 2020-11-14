@@ -55,6 +55,19 @@ const Messages = ({
   }, []);
 
   React.useEffect(() => {
+    if (typeof scrollToBottom === "function") {
+      // when input expands only scroll down if the user is close to the bottom of the chat
+      if (
+        messagesEndRef.current.scrollHeight -
+          messagesEndRef.current.clientHeight -
+          messagesEndRef.current.scrollTop <
+        100
+      )
+        scrollToBottom();
+    }
+  }, [inputExpanded, scrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
     getScrollToBottom.current = scrollToBottom;
   }, [getScrollToBottom, scrollToBottom]);
 
@@ -144,6 +157,15 @@ const Messages = ({
     }
   }
 
+  React.useEffect(() => {
+    if (editTextArea && editTextArea.current) {
+      editTextArea.current.focus();
+      // this will move cursor to the end.
+      editTextArea.current.value = "";
+      editTextArea.current.value = editTextArea.current.defaultValue;
+    }
+  }, [editingMessageId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   function cancelMessageEditing() {
     setEditingMessageId(null);
   }
@@ -212,7 +234,7 @@ const Messages = ({
         >
           {!isDeleted && editingMessageId !== messageId && (
             <Dropdown
-              trigger={["click", "hover"]}
+              trigger={["click"]}
               overlay={menu(messageId, message)}
               placement="bottomRight"
             >
@@ -276,9 +298,7 @@ const Messages = ({
 
   useLayoutEffect(() => {
     if (!isLoading) {
-      setTimeout(() => {
-        scrollToBottom();
-      }, 500);
+      scrollToBottom();
     }
   }, [room, chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -306,42 +326,46 @@ const Messages = ({
           {t("messaging.loadMore")}
         </button>
       )}
-      {chatLog?.map((message, i) => (
-        <>
-          {message.authorId !== user.id ? (
-            <Recipient
-              key={message._id}
-              message={message.content}
-              postRef={message.postRef}
-              messageId={message._id}
-              isDeleted={message.status === "deleted"}
-              isEdited={message.status === "edited"}
-            />
-          ) : (
-            <Sender
-              key={message._id}
-              message={message.content}
-              postRef={message.postRef}
-              messageId={message._id}
-              isDeleted={message.status === "deleted"}
-              isEdited={message.status === "edited"}
-            />
-          )}
-          {shouldShowTime(i) && (
-            <TimeStamp
-              key={"t-" + message._id}
-              className={message.authorId !== user.id ? "left" : "right"}
-            >
-              {isToday(message.createdAt)
-                ? getRelativeTime(message.createdAt).replace(
-                    "0 seconds ago",
-                    t("messaging.justNow"),
-                  )
-                : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
-            </TimeStamp>
-          )}
-        </>
-      ))}
+      {chatLog?.map((message, i) => {
+        const relativeTime = getRelativeTime(message.createdAt);
+        return (
+          <>
+            {message.authorId !== user.id ? (
+              <Recipient
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status === "deleted"}
+                isEdited={message.status === "edited"}
+              />
+            ) : (
+              <Sender
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status === "deleted"}
+                isEdited={message.status === "edited"}
+              />
+            )}
+            {shouldShowTime(i) && (
+              <TimeStamp
+                key={"t-" + message._id}
+                className={message.authorId !== user.id ? "left" : "right"}
+              >
+                {isToday(message.createdAt)
+                  ? relativeTime[1] === "second" && relativeTime[0] < 10
+                    ? t("messaging.justNow")
+                    : t(`relativeTime.${relativeTime[1]}WithCount`, {
+                        count: relativeTime[0],
+                      })
+                  : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
+              </TimeStamp>
+            )}
+          </>
+        );
+      })}
       {/* <div ref={messagesEndRef} id={"messages-bottom"}></div> */}
     </MessagesContainer>
   );

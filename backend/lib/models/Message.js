@@ -3,33 +3,31 @@ const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
 const { POST_OBJECTIVES: OBJECTIVES } = require("./Post");
 
-const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"]
+const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"];
 
 // -- Schema
-const postRefSchema = new Schema(
-  {
-    content: {
-      required: true,
-      type: String,
-    },
-    id: {
-      ref: "Post",
-      required: true,
-      type: ObjectId,
-    },
-    objective: {
-      enum: OBJECTIVES,
-      required: true,
-      trim: true,
-      type: String,
-    },
-    title: {
-      required: true,
-      type: String,
-    },
-    createdAt: Date,
-  }
-)
+const postRefSchema = new Schema({
+  content: {
+    required: true,
+    type: String,
+  },
+  id: {
+    ref: "Post",
+    required: true,
+    type: ObjectId,
+  },
+  objective: {
+    enum: OBJECTIVES,
+    required: true,
+    trim: true,
+    type: String,
+  },
+  title: {
+    required: true,
+    type: String,
+  },
+  createdAt: Date,
+});
 
 const messageSchema = new Schema(
   {
@@ -63,12 +61,10 @@ const messageSchema = new Schema(
 
 // -- Indexes
 /* eslint-disable */
-// Index to get messages of a conversation ordered by creation date (_id)uses
-// creation timestamp)
+// Index to get messages of a conversation ordered by creation date
 messageSchema.index({
-  "threadId": 1,
-  "status": 1,
-  "_id": -1
+  threadId: 1,
+  createdAt: -1,
 });
 /* eslint-enable */
 

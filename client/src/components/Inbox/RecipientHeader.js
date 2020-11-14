@@ -216,7 +216,14 @@ export const RecipientHeader = ({
                 <>
                   {t("messaging.lastSeen")}:{" "}
                   {participant.lastAccess
-                    ? getRelativeTime(participant.lastAccess)
+                    ? t(
+                        `relativeTime.${
+                          getRelativeTime(participant.lastAccess)[1]
+                        }WithCount`,
+                        {
+                          count: getRelativeTime(participant.lastAccess)[0],
+                        },
+                      )
                     : t("messaging.never")}
                 </>
               )}
@@ -224,7 +231,7 @@ export const RecipientHeader = ({
           </h4>
           {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
             <Dropdown
-              trigger={["hover", "click"]}
+              trigger={["click"]}
               overlay={menu}
               placement="bottomRight"
             >

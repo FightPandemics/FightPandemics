@@ -207,6 +207,7 @@ export const PrivateMessageContainer = styled.div`
   span {
     position: relative;
     left: 0.7rem;
+    color: #939393;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
@@ -216,6 +217,13 @@ export const PrivateMessageContainer = styled.div`
   span {
     pointer-events: none;
   }
+
+  ${(props) =>
+    props.isFromUserCard
+      ? `
+    margin-left: 7.4rem;
+  `
+      : ""}
 
   ${(props) =>
     props.isFromProfile

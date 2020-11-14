@@ -489,7 +489,7 @@ const Profile = ({
               </>
             )}
           </SectionHeader>
-          <FeedWrapper>
+          <FeedWrapper isProfile>
             <Activity
               filteredPosts={postsList}
               user={user}

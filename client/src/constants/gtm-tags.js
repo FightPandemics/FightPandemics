@@ -148,6 +148,8 @@ module.exports = {
     suffix: "_INB",
     message: "_MS",
     post: "_PT",
+    user: "_PPL",
+    org: "_ORG",
     profile: "_PF",
     conversation: "_CON",
     request: "_RQT",

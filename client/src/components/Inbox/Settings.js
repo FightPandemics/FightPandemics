@@ -155,9 +155,9 @@ const Settings = ({
                 <header>
                   <UserName>{getReceiver(_room.participants).name}</UserName>
                   <h5>
-                    {_room.lastMessage
-                      ? moment(_room.lastMessage.createdAt).format("MMM. DD")
-                      : moment(_room.createdAt).format("MMM. DD")}
+                    {moment(
+                      _room.lastMessage?.createdAt || _room.createdAt,
+                    ).format("MMM. DD")}
                   </h5>
                 </header>
                 <div className="content">
