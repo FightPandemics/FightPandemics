@@ -35,6 +35,7 @@ class DatabaseHelper {
         {
           $match: {
             "participants.newMessages": { $gt: 0 },
+            "participants.emailSentAt": null,
             "participants.lastAccess": {
               $lt: DateHelper.subtractMinutes(
                 new Date(),
@@ -54,7 +55,34 @@ class DatabaseHelper {
             from: "users",
             localField: "participants.id",
             foreignField: "_id",
-            as: "users",
+            as: "user",
+          },
+        },
+        {
+          $project: {
+            participants: {
+              $map: {
+                input: "$participants",
+                in: {
+                  id: "$$this.id",
+                  emailSentAt: "$$this.emailSentAt",
+                  lastAccess: "$$this.lastAccess",
+                  name: "$$this.name",
+                  newMessages: "$$this.newMessages",
+                  photo: "$$this.photo",
+                  status: "$$this.status",
+                  type: "$$this.type",
+                  user: {
+                    $arrayElemAt: [
+                      "$user",
+                      {
+                        $indexOfArray: ["$user._id", "$$this.id"],
+                      },
+                    ],
+                  },
+                },
+              },
+            },
           },
         },
       ])
@@ -73,7 +101,6 @@ class DatabaseHelper {
       {
         $match: {
           threadId: { $in: threadIds },
-          // emailSentAt: null, // TODO need to add this field to messages collection
         },
       },
       { $sort: { createdAt: 1 } },
@@ -107,10 +134,7 @@ class DatabaseHelper {
       if (sender === undefined || receiver === undefined) {
         continue;
       }
-      const receiverUser = thread.users.find(
-        (user) => user._id.toString() === receiver.id.toString(),
-      );
-      const { notifyPrefs, email } = receiverUser;
+      const { notifyPrefs, email } = receiver.user;
       if (notifyPrefs && !notifyPrefs.instant.message) {
         // Receiver has disabled instant notifications for direct messages
         continue;
