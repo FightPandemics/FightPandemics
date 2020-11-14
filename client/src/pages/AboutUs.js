@@ -253,7 +253,7 @@ const AboutUs = () => {
       >
         <h1>{t("ourCommunity")}</h1>
         <p>{t("community")}</p>
-        <GetInvButton getGTM={getGTM} />
+        <GetInvButton getGTM={getGTM} t={t} />
       </ImageContainer>
 
       <ConnectContainer>
