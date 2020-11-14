@@ -88,45 +88,15 @@ const getUserById = async function (app, userId, options = null) {
     throw app.httpErrors.internalServerError();
   } else if (user === null) {
     if (options) {
-      options.user = null;
+      options.user = user;
       return options;
     }
     req.log.error(userErr, "User does not exist");
     throw app.httpErrors.notFound();
   }
 
-  const {
-    id,
-    about,
-    email,
-    firstName,
-    hide,
-    lastName,
-    location,
-    needs,
-    objectives,
-    organisations,
-    urls,
-    photo,
-  } = user;
-
-  const defaultUser = {
-    id,
-    about,
-    email,
-    firstName,
-    hide,
-    lastName,
-    location,
-    needs,
-    objectives,
-    organisations,
-    urls,
-    photo,
-  };
-
   if (!options) options = {};
-  options.user = defaultUser;
+  options.user = user;
   return options;
 };
 
