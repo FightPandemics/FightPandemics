@@ -1,6 +1,7 @@
 const { EmailFrequency } = require("../models/email-frequency");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const { MessageThreadStatus } = require("../models/message-thread-status");
 const Mustache = require("mustache");
 const path = require("path");
 const { ShareMedium } = require("../models/share-medium");
@@ -42,9 +43,13 @@ class TemplateBuilder {
           text: this._loadTemplateFile("../templates/instant/message.txt"),
         },
         messageRequest: {
-          html: this._loadTemplateFile("../templates/instant/message-request.html"),
+          html: this._loadTemplateFile(
+            "../templates/instant/message-request.html",
+          ),
           subject: "{{senderName}} sent you a direct message request",
-          text: this._loadTemplateFile("../templates/instant/message-request.txt"),
+          text: this._loadTemplateFile(
+            "../templates/instant/message-request.txt",
+          ),
         },
         share: {
           html: this._loadTemplateFile("../templates/instant/share.html"),
@@ -82,7 +87,10 @@ class TemplateBuilder {
           return;
         }
         const token = this._generateToken(receiver.id);
-        const templateKey = receiver.status === "pending" ? "messageRequest" : "message";
+        const templateKey =
+          receiver.status === MessageThreadStatus.PENDING
+            ? "messageRequest"
+            : "message";
         const htmlTemplate = Mustache.render(this.templates.base.html, {
           baseUrl: this.baseUrl,
           body: this.templates.instant[templateKey].html,
