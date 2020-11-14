@@ -349,6 +349,9 @@ const Post = ({
             postId: post._id,
             from: window.location.href,
             user,
+            keepScrollIndex,
+            keepPageState,
+            keepPostsState,
           },
         }}
       >
