@@ -110,13 +110,13 @@ class TemplateBuilder {
         const view = {
           baseUrl: this.baseUrl,
           senderName: sender.name,
+          postTextCopy: message.postRef
+            ? `for your post ${message.postRef.title}`
+            : null, // TODO localize
         };
 
         if (templateKey === "message") {
           view.message = message.content;
-          if (message.postRef) {
-            view.postTextCopy = `for your post ${message.postRef.title}`; // TODO localize
-          }
         }
 
         return {
