@@ -415,7 +415,7 @@ const AboutUs = () => {
           </p>
           <p>
             {t("contactUs")}
-            <AboutUsLink href="mailto:admin@fightpandemics.com">
+            <AboutUsLink href="mailto:contact@fightpandemics.com">
               {t("contactEmail")}
             </AboutUsLink>
           </p>
