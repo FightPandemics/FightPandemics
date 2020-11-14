@@ -50,7 +50,7 @@ import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -179,7 +179,7 @@ const Feed = (props) => {
     return ref.current;
   }
 
-  const { history, isAuthenticated, user, searchKeywords } = props;
+  const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
@@ -334,16 +334,7 @@ const Feed = (props) => {
         break;
     }
   };
-  const resetRouterState = () => {
-    if (history.location.state) {
-      const { keepScroll } = history.location.state;
-      if (keepScroll) {
-        history.location.state.keepScroll = false;
-        history.location.state.keepPageState = undefined;
-        history.location.state.keepPostsState = undefined;
-      }
-    }
-  };
+
   const handleLocation = (value) => {
     if (applyFilters) {
       postsDispatch({ type: RESET_PAGE });
@@ -507,18 +498,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let postsInState;
-    if (history.location.state) {
-      const { keepPostsState, keepPageState } = history.location.state;
-      postsInState = keepPostsState;
 
-      if (keepPageState >= page) {
-        postsDispatch({
-          type: SET_PAGE,
-          page: keepPageState,
-        });
-      }
-    }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     postsDispatch({ type: FETCH_POSTS });
 
@@ -540,13 +520,29 @@ const Feed = (props) => {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
-        if (posts.length < limit) {
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: true,
-            loadMore: false,
-          });
-        } else if (meta.total === limit) {
+        let postsInState;
+        if (history.location.state) {
+          const { keepPostsState, keepPageState } = history.location.state;
+          postsInState = keepPostsState;
+          if (keepPageState >= page) {
+            postsDispatch({
+              type: SET_PAGE,
+              page: keepPageState,
+            });
+          }
+        }
+        if (postsInState) {
+          if (Object.keys(postsInState).length === meta.total) {
+            postsDispatch({
+              type: SET_LOADING,
+              isLoading: true,
+              loadMore: false,
+            });
+          }
+        }
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        console.log(page, lastPage, meta.total);
+        if (page === lastPage) {
           postsDispatch({
             type: SET_LOADING,
             isLoading: true,
@@ -560,7 +556,7 @@ const Feed = (props) => {
         if (postsInState) {
           postsDispatch({
             type: SET_POSTS,
-            posts: { ...postsInState },
+            posts: { ...postsInState, ...loadedPosts },
           });
         } else if (Object.keys(postsList).length && page) {
           postsDispatch({
@@ -726,7 +722,7 @@ const Feed = (props) => {
             </>
             <FiltersSidebar
               locationOnly={
-                !(!queryParams.s_category || queryParams.s_category == "POSTS")
+                !(!queryParams.s_category || queryParams.s_category === "POSTS")
               }
               gtmPrefix={GTM.feed.prefix}
             />
@@ -740,7 +736,7 @@ const Feed = (props) => {
                 t={t}
               />
               {(!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
+                queryParams.s_category === "POSTS") && (
                 <button
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
@@ -769,14 +765,14 @@ const Feed = (props) => {
                   locationOnly={
                     !(
                       !queryParams.s_category ||
-                      queryParams.s_category == "POSTS"
+                      queryParams.s_category === "POSTS"
                     )
                   }
                   gtmPrefix={GTM.feed.prefix}
                 />
               </div>
             }
-            {!queryParams.s_category || queryParams.s_category == "POSTS" ? (
+            {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
               <Posts
                 isAuthenticated={isAuthenticated}
                 filteredPosts={postsList}
@@ -822,9 +818,10 @@ const Feed = (props) => {
               <NoPosts>
                 <Trans
                   i18nKey={
-                    !queryParams.s_category || queryParams.s_category == "POSTS"
+                    !queryParams.s_category ||
+                    queryParams.s_category === "POSTS"
                       ? "feed.noResultsPosts"
-                      : queryParams.s_category == "INDIVIDUALS"
+                      : queryParams.s_category === "INDIVIDUALS"
                       ? "feed.noResultsPeople"
                       : "feed.noResultsOrgs"
                   }
@@ -838,7 +835,7 @@ const Feed = (props) => {
               </NoPosts>
             ) : (
               (!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
+                queryParams.s_category === "POSTS") && (
                 <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}
