@@ -96,7 +96,7 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_DE",
         "German (Deutsch)",
-        "Willkommen",
+        "Anmelden",
         "Hilfebrett",
         "normal",
       );

@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import GTM from "constants/gtm-tags";
+import { setQueryKeysValue } from "components/Feed/utils";
+import qs from "query-string";
 const { colors } = theme;
 
 const TabsContainer = styled.span`
@@ -26,7 +29,7 @@ const Chip = styled.a`
     color: ${colors.royalBlue};
   }
 `;
-export default class SearchCategories extends React.Component {
+class SearchCategories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,34 +37,37 @@ export default class SearchCategories extends React.Component {
       selectedValue: null,
       showOptions: props.showOptions,
     };
-    this.renderTabsContainer = this.renderTabsContainer.bind(this);
-    this.onSelectItem = this.onSelectItem.bind(this);
-    this.resetSelectedValue = this.resetSelectedValue.bind(this);
   }
 
-  resetSelectedValue() {
-    this.setState({ selectedValue: null });
-  }
+  componentDidMount = () => {
+    this.getCategoryFromQuery();
+    const unlisten = this.props.history.listen((location) => {
+      if (location.pathname === "/feed") return this.getCategoryFromQuery();
+      unlisten();
+    });
+  };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.showOptions !== prevProps.showOptions) {
-      this.resetSelectedValue();
-    }
-  }
+  getCategoryFromQuery = () => {
+    let query = qs.parse(this.props.history.location.search);
+    this.setState({ selectedValue: this.props.options[query.s_category || 0] });
+  };
 
-  onSelectItem(item) {
+  onSelectItem = (item) => {
     this.setState({ selectedValue: item });
-    this.props.handleSubmit(item?.id || null);
-  }
+    setQueryKeysValue(this.props.history, {
+      s_category:
+        this.props.options.findIndex((option) => option.id === item?.id) ||
+        null,
+      objective: null,
+    });
+  };
 
-  renderCategories() {
-    const { isObject = false, displayValue, options, showOptions } = this.props;
+  renderCategories = () => {
+    const { isObject = false, displayValue, options } = this.props;
     const { selectedValue } = this.state;
-    if (showOptions && !selectedValue)
-      this.setState({ selectedValue: options.find((o) => o.default) });
-    return options.map((value, index) => (
+    return options.map((value) => (
       <Chip
-        key={index}
+        key={value.id}
         onClick={() => this.onSelectItem(value)}
         className={
           selectedValue && selectedValue.id == value.id ? "selected" : ""
@@ -77,16 +83,16 @@ export default class SearchCategories extends React.Component {
         )}
       </Chip>
     ));
-  }
+  };
 
-  renderTabsContainer() {
-    const { style, id, showOptions } = this.props;
+  renderTabsContainer = () => {
+    const { id, showOptions } = this.props;
     return (
       <TabsContainer id={id || "SearchContainer"}>
         {showOptions && this.renderCategories()}
       </TabsContainer>
     );
-  }
+  };
 
   render() {
     return this.renderTabsContainer();
@@ -100,6 +106,7 @@ SearchCategories.defaultProps = {
   isObject: true,
   displayValue: "name",
   selectionLimit: 1,
-  style: {},
   id: "",
 };
+
+export default withRouter(SearchCategories);

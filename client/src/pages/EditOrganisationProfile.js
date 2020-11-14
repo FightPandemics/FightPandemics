@@ -179,7 +179,7 @@ function EditOrganisationProfile(props) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId]);
+  }, [orgProfileDispatch, organisationId, t]);
 
   const renderProfilePicture = () => {
     if (organisation) {

@@ -86,7 +86,7 @@ describe("Fight Pandemics Offer Help Questionnaire", () => {
       offerHelpQuestion.getInfoText().should("be.visible").contains(infoText);
     });
 
-    it("Offer Help Question Two Page - location can be typed and see list of locations", () => {
+    it.skip("Offer Help Question Two Page - location can be typed and see list of locations", () => {
       var locationInputLine = offerHelpQuestion.getLocationInputLine();
       locationInputLine.should("be.visible").click({ force: true });
       locationInputLine.type(inputValues.location);
