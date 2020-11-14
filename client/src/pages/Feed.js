@@ -364,7 +364,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
-      sessionStorage.setItem("createPostAttemptLoggedOut", true);
+      sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
   };
@@ -581,6 +581,15 @@ const Feed = (props) => {
       loadPosts();
     }
   }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const createPostAttemptLoggedOut = sessionStorage.getItem(
+      "createPostAttemptLoggedOut",
+    );
+    if (createPostAttemptLoggedOut) {
+      handleCreatePost();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
