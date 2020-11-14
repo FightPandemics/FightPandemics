@@ -115,6 +115,7 @@ function onSocketConnect(socket) {
           id: participant._id,
           lastAccess: participant == sender ? new Date() : null,
           name: participant.name,
+          emailSent: false,
           newMessages: participant == receiver ? 1 : 0,
           photo: participant.photo,
           status: participant == sender ? "accepted" : "pending",
@@ -307,6 +308,10 @@ function onSocketConnect(socket) {
             // set status to "pending again" if it was "ignored".
             updates.$set = { "participants.$[userToUpdate].status": "pending" };
             break;
+          case "accepted":
+            // Only set or reset the emailSent flag to false if user has accepted message request.
+            // We do not want to reset this if the message request is still pending.
+            updates.$set = { "participants.$[userToUpdate].emailSent": false };
         }
 
         const [updateThreadErr, updateThread] = await this.to(
