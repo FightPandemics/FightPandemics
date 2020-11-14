@@ -181,7 +181,7 @@ function EditOrganisationProfile(props) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, t]);
+  }, [orgProfileDispatch, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderProfilePicture = () => {
     if (organisation) {
