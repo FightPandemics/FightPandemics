@@ -16,7 +16,9 @@ class DatabaseHelper {
     if (cachedDb && cachedDb.serverConfig.isConnected()) {
       this.db = cachedDb;
     } else {
-      const client = await MongoClient.connect(this.uri);
+      const client = await MongoClient.connect(this.uri, {
+        useUnifiedTopology: true,
+      });
       this.db = client.db(this.dbName);
     }
   }
