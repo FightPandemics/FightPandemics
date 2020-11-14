@@ -52,6 +52,7 @@ function wsReducer(state = initialState, action) {
         ...state,
         room: action.payload,
         rooms: state.rooms,
+        chatLog: [],
       };
     case JOIN_ROOM_ERROR:
       return {

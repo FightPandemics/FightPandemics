@@ -41,31 +41,72 @@ export const BubbleContainer = styled.div`
   }
 `;
 export const MessagesContainer = styled.div`
-  min-height: calc(100vh - 26rem);
+  position: fixed;
+  width: calc(100% - 33.6rem);
   height: ${(props) => {
-    if (props.status === "pending" || props.blockStatus === "was-blocked") {
-      return "calc(100vh - 26rem);";
+    if (
+      props.status === "pending" ||
+      props.blockStatus === "was-blocked" ||
+      props.blockStatus === "did-block"
+    ) {
+      return "calc(100vh - 22.4rem);";
     }
-    return "calc(100vh - 18rem);";
+    return "calc(100vh - 17.8rem);";
   }}
-  position: relative;
+  bottom: ${(props) => {
+    if (
+      props.status === "pending" ||
+      props.blockStatus === "was-blocked" ||
+      props.blockStatus === "did-block"
+    ) {
+      return "10.6rem;";
+    }
+    return "6rem;";
+  }}
+  right: 0;
   display: block;
   padding: 0 1rem;
   -webkit-overflow-scrolling: touch;
   white-space: pre-wrap;
   overflow-y: scroll;
+  &.request-page {
+    height: calc(100vh - 25.7rem);
+    bottom: 14rem;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
-    min-height: calc(100vh - 17rem);
-    margin-top: 6.8rem;
-
+    height: ${(props) => {
+      if (
+        props.status === "pending" ||
+        props.blockStatus === "was-blocked" ||
+        props.blockStatus === "did-block"
+      ) {
+        return "calc(100vh - 20.4rem);";
+      }
+      return "calc(100vh - 15.9rem);";
+    }}
+    bottom: ${(props) => {
+      if (
+        props.status === "pending" ||
+        props.blockStatus === "was-blocked" ||
+        props.blockStatus === "did-block"
+      ) {
+        return "10rem;";
+      }
+      return "5.1rem;";
+    }}
     &.request-page {
-      min-height: calc(100vh - 33.5rem);
+      bottom: 20rem;
+      height: calc(100vh - 31rem);
     }
   }
   &.input-expanded {
-    height: calc(100vh - 23rem);
-    min-height: calc(100vh - 23rem);
+    height: calc(100vh - 22.2rem);
+    bottom: 10.5rem;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      height: calc(100vh - 20.6rem);
+      bottom: 10rem;
+    }
   }
   a {
     text-decoration: underline;

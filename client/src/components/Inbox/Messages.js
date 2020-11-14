@@ -55,6 +55,19 @@ const Messages = ({
   }, []);
 
   React.useEffect(() => {
+    if (typeof scrollToBottom === "function") {
+      // when input expands only scroll down if the user is close to the bottom of the chat
+      if (
+        messagesEndRef.current.scrollHeight -
+          messagesEndRef.current.clientHeight -
+          messagesEndRef.current.scrollTop <
+        100
+      )
+        scrollToBottom();
+    }
+  }, [inputExpanded, scrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
     getScrollToBottom.current = scrollToBottom;
   }, [getScrollToBottom, scrollToBottom]);
 
@@ -276,9 +289,7 @@ const Messages = ({
 
   useLayoutEffect(() => {
     if (!isLoading) {
-      setTimeout(() => {
-        scrollToBottom();
-      }, 500);
+      scrollToBottom();
     }
   }, [room, chatLog.length]); // eslint-disable-line react-hooks/exhaustive-deps
 

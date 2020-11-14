@@ -193,12 +193,6 @@ export const InputBox = ({
     else setInputExpanded(false);
   }, [inputExpanded, inputRef, setInputExpanded, text]);
 
-  useEffect(() => {
-    if (typeof scrollToBottom === "function") {
-      scrollToBottom();
-    }
-  }, [inputExpanded, scrollToBottom]);
-
   const handleSendMessage = async () => {
     // mobile editing is done inside the inputBox
     if (isMobile() && editingMessageId) {
@@ -213,9 +207,6 @@ export const InputBox = ({
       threadId: room._id,
       content: text,
     });
-    if (typeof scrollToBottom === "function") {
-      scrollToBottom();
-    }
     if (confirmation) {
       setText("");
       inputRef.current.focus();
@@ -330,7 +321,7 @@ export const InputBox = ({
                         text: <Text type="danger">{t("messaging.block")}</Text>,
                         onPress: async () => {
                           await blockThread(room._id);
-                          leaveAllRooms();
+                          setToggleViewRequests(false);
                           setAlertBox({ show: false });
                         },
                       },
