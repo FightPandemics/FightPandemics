@@ -68,13 +68,6 @@ messageSchema.index({
   threadId: 1,
   createdAt: -1,
 });
-
-// Index to for message editing/deleting
-messageSchema.index({
-  _id: 1,
-  authorId: 1,
-  status: 1,
-});
 /* eslint-enable */
 
 const Message = model("Message", messageSchema);

@@ -53,8 +53,6 @@ const threadSchema = new Schema(
 
 // -- Indexes
 /* eslint-disable */
-threadSchema.index({ "participants.id": 1 });
-
 // Index to get inbox sorted
 threadSchema.index({
   "participants.id": 1,
