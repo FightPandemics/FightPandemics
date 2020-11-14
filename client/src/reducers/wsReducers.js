@@ -91,7 +91,7 @@ function wsReducer(state = initialState, action) {
             state.rooms[index].topic = action.payload.postRef.title;
           for (const participant of state.rooms[index].participants) {
             // since we don't have access to logged-in user.id we will just apply this to all participants
-            // because it doesn't matter, and we will only user the one that maches user.id at the end
+            // because it doesn't matter, and we will only use the one that matches user.id later.
             participant.newMessages++;
           }
         }

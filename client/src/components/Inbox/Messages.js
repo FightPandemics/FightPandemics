@@ -306,42 +306,46 @@ const Messages = ({
           {t("messaging.loadMore")}
         </button>
       )}
-      {chatLog?.map((message, i) => (
-        <>
-          {message.authorId !== user.id ? (
-            <Recipient
-              key={message._id}
-              message={message.content}
-              postRef={message.postRef}
-              messageId={message._id}
-              isDeleted={message.status === "deleted"}
-              isEdited={message.status === "edited"}
-            />
-          ) : (
-            <Sender
-              key={message._id}
-              message={message.content}
-              postRef={message.postRef}
-              messageId={message._id}
-              isDeleted={message.status === "deleted"}
-              isEdited={message.status === "edited"}
-            />
-          )}
-          {shouldShowTime(i) && (
-            <TimeStamp
-              key={"t-" + message._id}
-              className={message.authorId !== user.id ? "left" : "right"}
-            >
-              {isToday(message.createdAt)
-                ? getRelativeTime(message.createdAt).replace(
-                    "0 seconds ago",
-                    t("messaging.justNow"),
-                  )
-                : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
-            </TimeStamp>
-          )}
-        </>
-      ))}
+      {chatLog?.map((message, i) => {
+        const relativeTime = getRelativeTime(message.createdAt);
+        return (
+          <>
+            {message.authorId !== user.id ? (
+              <Recipient
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status === "deleted"}
+                isEdited={message.status === "edited"}
+              />
+            ) : (
+              <Sender
+                key={message._id}
+                message={message.content}
+                postRef={message.postRef}
+                messageId={message._id}
+                isDeleted={message.status === "deleted"}
+                isEdited={message.status === "edited"}
+              />
+            )}
+            {shouldShowTime(i) && (
+              <TimeStamp
+                key={"t-" + message._id}
+                className={message.authorId !== user.id ? "left" : "right"}
+              >
+                {isToday(message.createdAt)
+                  ? relativeTime[1] === "second" && relativeTime[0] < 10
+                    ? t("messaging.justNow")
+                    : t(`relativeTime.${relativeTime[1]}WithCount`, {
+                        count: relativeTime[0],
+                      })
+                  : moment(message.createdAt).format("ddd MMM. DD, HH:mm")}
+              </TimeStamp>
+            )}
+          </>
+        );
+      })}
       {/* <div ref={messagesEndRef} id={"messages-bottom"}></div> */}
     </MessagesContainer>
   );

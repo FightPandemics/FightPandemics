@@ -1,34 +1,30 @@
-import moment from 'moment';
+import moment from "moment";
+import i18n from "i18next";
 
-export default function (ISODate) {
-    moment.updateLocale("en", {
-      relativeTime: {
-        future: "in %s",
-        past: "%s ago",
-        s: (number) => number + " second ago",
-        ss: "%d seconds ago",
-        m: "1 minute ago",
-        mm: "%d minutes ago",
-        h: "1 hour ago",
-        hh: "%d hours ago",
-        d: "1 day ago",
-        dd: "%d days ago",
-        M: "a month ago",
-        MM: "%d months ago",
-        y: "a year ago",
-        yy: "%d years ago",
-      },
-    });
-    const secondsElapsed = moment().diff(ISODate, "seconds");
-    const dayStart = moment().startOf("day").seconds(secondsElapsed);
-  
-    if (secondsElapsed > 300) {
-      return moment(ISODate).fromNow(true);
-    } else if (secondsElapsed < 60) {
-      return dayStart.format("s ") + "seconds ago";
-    } else {
-      const minute = dayStart.format("m ");
-      const minuteString = minute > 1 ? " minutes ago" : " minute ago";
-      return minute.concat(minuteString);
-    }
-  };
+const relativeTimeObject = (number, unit) => [number, unit];
+
+const translateISOtoRelativeTime = (ISODate) => {
+  moment.updateLocale(i18n.language, {
+    relativeTime: {
+      future: "in %s",
+      past: "%s ago",
+      s: (number) => relativeTimeObject(number, "second"),
+      ss: (number) => relativeTimeObject(number, "second"),
+      m: (number) => relativeTimeObject(number, "minute"),
+      mm: (number) => relativeTimeObject(number, "minute"),
+      h: (number) => relativeTimeObject(number, "hour"),
+      hh: (number) => relativeTimeObject(number, "hour"),
+      d: (number) => relativeTimeObject(number, "day"),
+      dd: (number) => relativeTimeObject(number, "day"),
+      w: (number) => relativeTimeObject(number, "week"),
+      ww: (number) => relativeTimeObject(number, "week"),
+      M: (number) => relativeTimeObject(number, "month"),
+      MM: (number) => relativeTimeObject(number, "month"),
+      y: (number) => relativeTimeObject(number, "year"),
+      yy: (number) => relativeTimeObject(number, "year"),
+    },
+  });
+  return moment(ISODate).fromNow(true);
+};
+
+export default translateISOtoRelativeTime;

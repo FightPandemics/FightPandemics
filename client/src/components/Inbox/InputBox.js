@@ -213,6 +213,9 @@ export const InputBox = ({
       threadId: room._id,
       content: text,
     });
+    if (typeof scrollToBottom === "function") {
+      scrollToBottom();
+    }
     if (confirmation) {
       setText("");
       inputRef.current.focus();

@@ -216,7 +216,14 @@ export const RecipientHeader = ({
                 <>
                   {t("messaging.lastSeen")}:{" "}
                   {participant.lastAccess
-                    ? getRelativeTime(participant.lastAccess)
+                    ? t(
+                        `relativeTime.${
+                          getRelativeTime(participant.lastAccess)[1]
+                        }WithCount`,
+                        {
+                          count: getRelativeTime(participant.lastAccess)[0],
+                        },
+                      )
                     : t("messaging.never")}
                 </>
               )}

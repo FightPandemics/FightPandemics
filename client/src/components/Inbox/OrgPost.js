@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { theme, mq } from "constants/theme";
-import getRelativeTime from "utils/relativeTime";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import getRelativeTime from "utils/relativeTime";
+import { theme, mq } from "constants/theme";
 
 const Post = styled.div`
   display: block;
@@ -52,12 +53,17 @@ const Post = styled.div`
 `;
 
 export const OrgPost = ({ postRef }) => {
+  const { t } = useTranslation();
   return (
     <Post>
       <header>
         <div className="post-type">{postRef.objective}</div>
         <span>.</span>
-        <div className="post-date">{getRelativeTime(postRef.createdAt)}</div>
+        <div className="post-date">
+          {t(`relativeTime.${getRelativeTime(postRef.createdAt)[1]}WithCount`, {
+            count: getRelativeTime(postRef.createdAt)[0],
+          })}
+        </div>
       </header>
       <Link to={`/post/${postRef.id}`}>
         <div className="post-title">{postRef.title}</div>
