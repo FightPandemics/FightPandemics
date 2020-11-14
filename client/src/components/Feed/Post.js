@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
@@ -23,6 +24,8 @@ import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
 import { typeToTag } from "assets/data/formToPostMappings";
+import filterOptions from "assets/data/filterOptions";
+import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -56,6 +59,21 @@ const URLS = {
   email: [envelopeBlue],
 };
 
+const filters = Object.values(filterOptions);
+
+const Highlight = ({ text = "", highlight = "" }) => {
+  if (!highlight || !highlight.trim()) {
+    return text;
+  }
+  const regex = highlightSearchRegex(highlight);
+  const parts = text.split(regex);
+  return parts
+    .filter((part) => part)
+    .map((part) =>
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+    );
+};
+
 export const CONTENT_LENGTH = 120;
 const Post = ({
   currentPost,
@@ -65,17 +83,17 @@ const Post = ({
   handleCancelPostDelete,
   handleCommentDelete,
   handlePostLike,
+  highlightWords,
   includeProfileLink,
   isAuthenticated,
-  loadMorePost,
   numComments,
-  onClick,
   onSelect,
   onChange,
   postDelete,
   showComments,
   user,
 }) => {
+  const { t } = useTranslation();
   const { postId } = useParams();
   const limit = useRef(5);
   let post;
@@ -147,9 +165,13 @@ const Post = ({
         (comment1, index, self) =>
           index === self.findIndex((comment2) => comment2._id === comment1._id),
       );
-      if (previousComments.length === allComments.length) {
+      if (
+        previousComments.length === allComments.length ||
+        allComments.length === commentsCount
+      ) {
         dispatchPostAction(TOGGLE_COMMENTS);
-      } else {
+      }
+      if (previousComments.length !== allComments.length) {
         dispatchPostAction(
           SET_COMMENTS,
           "comments",
@@ -166,6 +188,12 @@ const Post = ({
     }
     const currentLimit = limit.current;
     limit.current = currentLimit * page;
+  };
+
+  const showLessComments = () => {
+    comments.splice(5);
+    dispatchPostAction(RESET_PAGE);
+    dispatchPostAction(TOGGLE_COMMENTS);
   };
 
   useEffect(() => {
@@ -282,33 +310,33 @@ const Post = ({
     });
   };
 
-  const ViewMore = ({ onClick }) => (
+  const ViewMore = () => (
     <Card.Body className="view-more-wrapper">
       {postId && isAuthenticated ? (
-        <div onClick={onClick}>
-          {!loadMorePost ? (
+        <div onClick={() => setShowComplete(!showComplete)}>
+          {showComplete ? (
             <>
               <IconsContainer>{renderExternalLinks()}</IconsContainer>
-              <span className="view-more">View Less</span>
+              <span className="view-more">{t("post.viewLess")}</span>
             </>
           ) : (
             <span
               id={GTM.post.prefix + GTM.post.viewMore}
               className="view-more"
             >
-              View More
+              {t("post.viewMore")}
             </span>
           )}
         </div>
       ) : (
         <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
-          View More
+          {t("post.viewMore")}
         </span>
       )}
     </Card.Body>
   );
 
-  const RenderViewMore = ({ onClick }) => {
+  const RenderViewMore = () => {
     return !postId && post && isAuthenticated ? (
       <Link
         to={{
@@ -326,7 +354,7 @@ const Post = ({
     ) : (
       <>
         {isAuthenticated ? (
-          <ViewMore onClick={onClick} loadContent={loadMorePost} />
+          <ViewMore loadContent={showComplete} />
         ) : (
           <Link
             onClick={() =>
@@ -337,7 +365,7 @@ const Post = ({
               state: { from: window.location.href },
             }}
           >
-            <ViewMore loadContent={loadMorePost} />
+            <ViewMore loadContent={showComplete} />
           </Link>
         )}
       </>
@@ -348,7 +376,11 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <div className="author">{post?.author?.name}</div>
+          <Highlight
+            className="author"
+            text={post?.author?.name}
+            highlight={highlightWords}
+          />
           {post?.author?.location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
@@ -373,21 +405,12 @@ const Post = ({
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
 
-  const renderContent = (
-    <Card.Body className="content-wrapper">
-      <Heading level={4} className="h4">
-        {title}
-      </Heading>
-      <p className="post-description">{content}</p>
-    </Card.Body>
-  );
-
   const renderTags = (
     <Card.Body>
       {post?.types &&
         post?.types.map((tag, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
-            {typeToTag(tag)}
+            {t(getOptionText(filters, "type", typeToTag(tag)))}
           </FilterTag>
         ))}
     </Card.Body>
@@ -400,13 +423,13 @@ const Post = ({
       {isAuthenticated ? (
         <AutoSize
           gtmTag={`${GTM.post.prefix}${GTM.post.writeComment}_${postId}`}
-          placeholder={"Write a comment..."}
+          placeholder={t("comment.writeAComment")}
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
         />
       ) : (
-        <div>Only logged in users can comment.</div>
+        <div>{t("comment.onlyAuthenticated")}</div>
       )}
       {isAuthenticated ? (
         <>
@@ -417,13 +440,19 @@ const Post = ({
             dispatchPostAction={dispatchPostAction}
             user={user}
           />
-          {loadMoreComments && commentsCount >= 5 ? (
-            <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
-              {isLoading ? "Loading..." : "Show More Comments"}
-            </StyledLoadMoreButton>
-          ) : (
-            <></>
-          )}
+          {commentsCount > 5 &&
+            (loadMoreComments ? (
+              <StyledLoadMoreButton disabled={isLoading} onClick={loadComments}>
+                {isLoading ? t("comment.loading") : t("comment.showMore")}
+              </StyledLoadMoreButton>
+            ) : (
+              <StyledLoadMoreButton
+                disabled={isLoading}
+                onClick={showLessComments}
+              >
+                {isLoading ? t("comment.loading") : t("comment.showLess")}
+              </StyledLoadMoreButton>
+            ))}
         </>
       ) : (
         ""
@@ -450,6 +479,8 @@ const Post = ({
       />
     </Card.Body>
   );
+
+  const [showComplete, setShowComplete] = useState(true);
 
   return (
     <>
@@ -478,13 +509,9 @@ const Post = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderContent}
+            {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper">
                 {renderExternalLinks()}
@@ -500,19 +527,19 @@ const Post = ({
             />
             {renderComments}
             <WebModal
-              title="Confirm"
+              title={t("post.confirm")}
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
               }
               onOk={() => handleDeleteOk()}
               onCancel={handleCancelPostDelete}
-              okText="Delete"
-              cancelText="Cancel"
+              okText={t("post.delete")}
+              cancelText={t("post.cancel")}
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>Are you sure you want to delete the post?</p>
-              )) || <p>Are you sure you want to delete the comment?</p>}
+                <p>{t("post.deletePostConfirmation")}</p>
+              )) || <p>{t("post.deleteCommentConfirmation")}</p>}
             </WebModal>
           </StyledPostPagePostCard>
           <StyledButtonWizard
@@ -554,7 +581,7 @@ const Post = ({
                 },
               }}
             >
-              {renderContent}
+              {renderContent(title, content, highlightWords, showComplete)}
             </Link>
           ) : (
             <>
@@ -565,16 +592,12 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent}
+              {renderContent(title, content, highlightWords, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
             (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore
-                postId={postId}
-                onClick={onClick}
-                loadMorePost={loadMorePost}
-              />
+              <RenderViewMore />
             ) : (
               <Card.Body className="view-more-wrapper" />
             ))}
@@ -587,7 +610,7 @@ const Post = ({
             postContent={post.content}
           />
           <WebModal
-            title="Confirm"
+            title={t("post.confirm")}
             visible={
               !!deleteModalVisibility &&
               deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -595,18 +618,35 @@ const Post = ({
             }
             onOk={() => handleDeleteOk()}
             onCancel={handleCancelPostDelete}
-            okText="Delete"
-            cancelText="Cancel"
+            okText={t("post.delete")}
+            cancelText={t("post.cancel")}
           >
             {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>Are you sure you want to delete the post?</p>
+              <p>{t("post.deletePostConfirmation")}</p>
             ) : (
-              <p>Are you sure you want to delete the comment?</p>
+              <p>{t("post.deleteCommentConfirmation")}</p>
             )}
           </WebModal>
         </PostCard>
       )}
     </>
+  );
+};
+
+const renderContent = (title, content, highlightWords, showComplete) => {
+  let finalContent = content;
+  if (finalContent.length > CONTENT_LENGTH && !showComplete) {
+    finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
+  }
+  return (
+    <Card.Body className="content-wrapper">
+      <Heading level={4} className="h4">
+        <Highlight text={title} highlight={highlightWords} />
+      </Heading>
+      <p className="post-description">
+        <Highlight text={finalContent} highlight={highlightWords} />
+      </p>
+    </Card.Body>
   );
 };
 

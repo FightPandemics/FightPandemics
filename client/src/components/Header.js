@@ -1,18 +1,22 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Menu, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
-
+import i18n from "../i18n";
 // ICONS
 import SvgIcon from "./Icon/SvgIcon";
 import MenuIcon from "assets/icons/menu.svg";
 import feedback from "assets/icons/feedback.svg";
 import logo from "assets/logo.svg";
 import Logo from "./Logo";
+import globe from "assets/icons/globe.svg";
 
 import { theme, mq } from "../constants/theme";
+import { localization, languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
+import FeedSearch from "components/Input/FeedSearch";
 
 const { colors, typography } = theme;
 const { SubMenu } = Menu;
@@ -32,6 +36,12 @@ const StyledNavBar = styled(NavBar)`
   }
   .am-navbar-title {
     display: none;
+  }
+  .am-navbar-left {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      padding-left: 2.3rem;
+      padding-top: 1rem;
+    }
   }
 `;
 const MenuToggle = styled(SvgIcon)`
@@ -104,7 +114,17 @@ const NavLinks = styled.div`
     }
   }
 `;
-
+const NavSearch = styled.div`
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: none !important;
+  }
+  position: absolute;
+  left: 29rem;
+  @media screen and (max-width: ${mq.desktop.small.minWidth}) {
+    position: initial;
+    margin-right: 2rem;
+  }
+`;
 const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
@@ -123,44 +143,74 @@ export default ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  navSearch,
 }) => {
+  const { t } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item key={key}>
+          <div
+            style={
+              i18n.language === key
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          >
+            {label.text}
+          </div>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/profile/${user?.id || user?._id}`}>My Profile</Link>
+        <Link to={`/profile/${user?.id || user?._id}`}>
+          {t("profile.common.viewProfile")}
+        </Link>
       </Menu.Item>
       <Menu.Divider />
-      <SubMenu title="Organisations">
-          <Menu.Item>
-            <Link
-              id={GTM.nav.prefix + GTM.nav.addOrg}
-              to="/create-organisation-profile"
-            >
-              Add Organisation
-            </Link>
-          </Menu.Item>
-          <Menu.Divider />
-          {user?.organisations?.length > 0
-            ? user?.organisations?.map((organisation) => (
-                <Menu.Item key={organisation._id}>
-                  <Link to={`/organisation/${organisation._id}`}>
-                    {organisation.name}
-                  </Link>
-                </Menu.Item>
-              ))
-            : null}
-          {user?.organisations?.length > 0}
-        </SubMenu>
+      <SubMenu title={t("common.organisations")}>
+        <Menu.Item>
+          <Link
+            id={GTM.nav.prefix + GTM.nav.addOrg}
+            to="/create-organisation-profile"
+          >
+            {t("common.addOrg")}
+          </Link>
+        </Menu.Item>
         <Menu.Divider />
+        {user?.organisations?.length > 0
+          ? user?.organisations?.map((organisation) => (
+              <Menu.Item key={organisation._id}>
+                <Link to={`/organisation/${organisation._id}`}>
+                  {organisation.name}
+                </Link>
+              </Menu.Item>
+            ))
+          : null}
+        {user?.organisations?.length > 0}
+      </SubMenu>
+      <Menu.Divider />
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
       >
-        Feedback
+        {t("common.feedback")}
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/auth/logout">Sign Out</Link>
+        <Link to="/auth/logout">{t("common.logout")}</Link>
       </Menu.Item>
     </Menu>
   );
@@ -174,7 +224,7 @@ export default ({
             activeStyle={activeStyles}
             to="/about-us"
           >
-            About Us
+            {t("common.aboutUs")}
           </NavLink>
         </li>
         <li>
@@ -183,7 +233,7 @@ export default ({
             activeStyle={activeStyles}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -194,7 +244,7 @@ export default ({
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  Profile
+                  {t("common.profile")}
                 </a>
               </Dropdown>
             </li>
@@ -207,7 +257,7 @@ export default ({
                 activeStyle={activeStyles}
                 to="/auth/login"
               >
-                Sign In
+                {t("auth.signIn")}
               </NavLink>
             </li>
             <li className="registerBtn">
@@ -216,7 +266,7 @@ export default ({
                 className="registerLink"
                 to="/auth/signup"
               >
-                Join Now
+                {t("auth.joinNow")}
               </NavLink>
             </li>
             <button
@@ -227,6 +277,13 @@ export default ({
             </button>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon
+            id={GTM.nav.prefix + GTM.nav.language}
+            src={globe}
+            className="globe-icon-svg"
+          ></SvgIcon>
+        </Dropdown>
       </>
     );
   };
@@ -236,9 +293,16 @@ export default ({
       <StyledNavBar
         mode="light"
         leftContent={
-          <BrandLink to={isAuthenticated ? "/feed" : "/"}>
-            <Logo src={logo} alt="Fight Pandemics logo" />
-          </BrandLink>
+          <>
+            <BrandLink to={isAuthenticated ? "/feed" : "/"}>
+              <Logo src={logo} alt={t("alt.logo")} />
+            </BrandLink>
+            <NavSearch>
+              {navSearch && (
+                <FeedSearch placeholder={t("feed.search.placeholder")} t={t} />
+              )}
+            </NavSearch>
+          </>
         }
         rightContent={
           <div>

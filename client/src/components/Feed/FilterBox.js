@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Modal } from "antd-mobile";
-import SubmitButton from "components/Button/SubmitButton";
-import TextLabel from "components/Typography/TextLabel";
-import { theme, mq } from "constants/theme";
-import GTM from "constants/gtm-tags";
+import { useTranslation } from "react-i18next";
 
+import SubmitButton from "components/Button/SubmitButton";
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import FilterAccordion from "./FilterAccordion";
 import { FeedContext } from "pages/Feed";
-import { DARK_GRAY } from "constants/colors";
+import { theme, mq } from "constants/theme";
+import GTM from "constants/gtm-tags";
 import SvgIcon from "components/Icon/SvgIcon";
-import downArrow from "assets/icons/down-arrow.svg";
+import filtersIcon from "assets/icons/filters.svg";
+import ButtonTag from "../Tag/ButtonTag.js";
+import { getOptionText } from "components/Feed/utils";
 
 const FilterBoxWrapper = styled.div`
   margin-bottom: 4rem;
@@ -21,60 +22,95 @@ const FilterBoxWrapper = styled.div`
 
 const ModalWrapper = styled(Modal)`
   .filter-4 .am-button {
-    padding: 0 4.2rem;
+    padding: 0 1rem;
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
 `;
-function capitalizeFirstLetter(header) {
-  // capitalize first letter and show providers if  header is fromWhom
-  if (header === "fromWhom") {
-    header = "providers";
-  }
-  return header.charAt(0).toUpperCase() + header.slice(1);
-}
+
+const StyledSelectWithIconButton = styled(SelectWithIconButton)`
+ &:active, &:focus, &:hover {
+    img {
+      filter: brightness(10);
+    }
+`;
+
+const StyledSubmitButton = styled(SubmitButton)`
+  font-size: 1.7rem;
+`;
 
 const gtmTagsMap = {
-  "offer or request help": GTM.post.requestOffer,
+  lookingFor: GTM.post.requestOffer,
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
 };
-const FilterBox = ({ gtmPrefix }) => {
+
+const LOCATION_DISPLAY_LENGTH_MAX = 30;
+
+const FilterBox = ({ gtmPrefix, locationOnly }) => {
+  const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
     filters,
     handleOnClose,
     filterModal,
     handleFilterModal,
+    handleLocation,
+    handleOption,
     handleQuit,
+    location,
+    selectedOptions,
   } = feedContext;
-  const renderFilterOptions = (filters) => {
-    return filters.map((filter, idx) => (
-      <SelectWithIconButton
-        key={idx}
+  const renderFilterOptions = (filter) => {
+    return (
+      <StyledSelectWithIconButton
+        onClick={handleFilterModal}
         primarylight="true"
         righticon="true"
         size="small"
-        icon={<SvgIcon src={downArrow} />}
+        icon={<SvgIcon src={filtersIcon} />}
         onClick={handleFilterModal}
         id={gtmPrefix + gtmTagsMap[filter.label]}
+        value={filter.label}
       >
-        {capitalizeFirstLetter(filter.label)}
-      </SelectWithIconButton>
-    ));
+        {t(`feed.filterBy`)}
+      </StyledSelectWithIconButton>
+    );
   };
   return (
     <FilterBoxWrapper className="filter-box">
-      <TextLabel
-        block="true"
-        color={DARK_GRAY}
-        size={theme.typography.size.medium}
-      >
-        Filter by
-      </TextLabel>
       {renderFilterOptions(filters)}
+      <div>
+        {location && (
+          <ButtonTag
+            className="tag-closable"
+            onClick={() => handleLocation(null)}
+          >
+            {location?.address?.length > LOCATION_DISPLAY_LENGTH_MAX
+              ? `${location?.address?.substr(0, LOCATION_DISPLAY_LENGTH_MAX)}…`
+              : location?.address}
+          </ButtonTag>
+        )}
+        {Object.keys(selectedOptions).map((filter) =>
+          selectedOptions[filter].map((option, idx) => (
+            <ButtonTag
+              key={idx}
+              className="tag-closable"
+              onClick={handleOption(filter, option)}
+            >
+              {t(
+                getOptionText(
+                  filters,
+                  filter,
+                  option.value ? option.value : option,
+                ),
+              )}
+            </ButtonTag>
+          )),
+        )}
+      </div>
       <ModalWrapper
         popup
         wrapClassName="feed-filter-modal-wrap"
@@ -82,7 +118,7 @@ const FilterBox = ({ gtmPrefix }) => {
         onClose={handleOnClose}
         animationType="slide-up"
       >
-        <FilterAccordion gtmPrefix={gtmPrefix} />
+        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
         <div
           className="confirm-buttons"
           style={{
@@ -91,24 +127,24 @@ const FilterBox = ({ gtmPrefix }) => {
             padding: "1rem 0",
           }}
         >
-          <SubmitButton
+          <StyledSubmitButton
             inline
             secondary="true"
             onClick={handleQuit}
             style={{ fontWeight: "normal" }}
             id={gtmPrefix + GTM.post.filterPost + GTM.post.quitFilters}
           >
-            Quit filters
-          </SubmitButton>
-          <SubmitButton
+            {t("feed.quit")}
+          </StyledSubmitButton>
+          <StyledSubmitButton
             inline
             primary="true"
             onClick={handleOnClose}
             style={{ fontWeight: "normal" }}
             id={gtmPrefix + GTM.post.filterPost + GTM.post.viewResults}
           >
-            Apply filters
-          </SubmitButton>
+            {t("feed.apply")}
+          </StyledSubmitButton>
         </div>
       </ModalWrapper>
     </FilterBoxWrapper>

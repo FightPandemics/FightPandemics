@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ImageButton from "components/Button/ImageButton";
@@ -100,6 +101,8 @@ const StyledStrapline = styled(StyledWelcome)`
   @media only screen and ${mq.phone.narrow.max} {
     text-align: center;
     margin: 0 auto 1.5rem auto;
+    color: ${black};
+    font-size: ${typography.size.xlarge};
   }
 `;
 
@@ -158,6 +161,8 @@ const StyleLink = styled.p`
 `;
 
 const Home = (props) => {
+  const { t } = useTranslation();
+
   return (
     <MainContainer className="text-center home">
       <StyledIntro>
@@ -167,10 +172,12 @@ const Home = (props) => {
           </Title>
 
           <StyledStrapline level={2} margin="none">
-            A place to offer and request help
+            {t("headline")}
           </StyledStrapline>
-          <StyledP>Pandemics will continue to happen.</StyledP>
-          <StyledP>We help communities prepare and respond.</StyledP>
+          <Trans
+            i18nKey="tagline"
+            components={[<StyledP />, <StyledP />]}
+          ></Trans>
         </IntroText>
       </StyledIntro>
 
@@ -184,7 +191,7 @@ const Home = (props) => {
               activeImg={needHelpActive}
               onClick={() => props.history.push("/need-help")}
             >
-              Request Help
+              {t("common.getHelp")}
             </ImageButton>
           </FlexChild>
           <FlexChild>
@@ -195,13 +202,13 @@ const Home = (props) => {
               activeImg={offerHelpActive}
               onClick={() => props.history.push("/offer-help")}
             >
-              Offer Help
+              {t("common.giveHelp")}
             </ImageButton>
           </FlexChild>
 
           <Link to="/feed">
             <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
-              View Help Board
+              {t("common.viewFeed")}
             </StyleLink>
           </Link>
         </OnboardingContainer>

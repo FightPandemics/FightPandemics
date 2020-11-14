@@ -40,6 +40,11 @@ const createOrganisationSchema = {
     .required(["location"]),
 };
 
+const createOrganisationAvatarSchema = {
+  params: strictSchema().prop("organisationId", S.string().required()),
+  body: strictSchema().prop("file", S.required()),
+};
+
 const getOrganisationSchema = {
   params: strictSchema().prop("organisationId", S.string().required()),
 };
@@ -50,6 +55,16 @@ const getOrganisationsSchema = {
     .prop("limit", S.integer())
     .prop("ownerId", S.string())
     .prop("skip", S.integer()),
+};
+
+const searchOrganisationsSchema = {
+  querystring: strictSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("limit", S.integer())
+    .prop("objective", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
 };
 
 const updateOrganisationSchema = {
@@ -72,9 +87,11 @@ const deleteOrganisationSchema = {
 };
 
 module.exports = {
+  createOrganisationAvatarSchema,
   createOrganisationSchema,
   deleteOrganisationSchema,
   getOrganisationSchema,
   getOrganisationsSchema,
+  searchOrganisationsSchema,
   updateOrganisationSchema,
 };

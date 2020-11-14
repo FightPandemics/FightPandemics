@@ -71,10 +71,9 @@ const ButtonWrapper = styled(Button)`
       }
     }
     @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-      ${button.primary}
       svg {
         path {
-          stroke: ${button.primary.color};
+          stroke: ${button.secondary.color};
         }
       }
     }

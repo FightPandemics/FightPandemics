@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -29,8 +30,10 @@ import appStoreIcon from "assets/icons/app-store-icon.svg";
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "components/Picture/UploadPic";
+
 import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
@@ -54,8 +57,11 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg, isAuthorUser, NoPosts } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import {
   FACEBOOK_URL,
@@ -99,6 +105,7 @@ import {
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -115,7 +122,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-const OrganisationProfile = () => {
+const OrganisationProfile = ({ history, isAuthenticated }) => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -132,6 +139,7 @@ const OrganisationProfile = () => {
     userProfileDispatch,
   } = useContext(UserContext);
 
+  const { t } = useTranslation();
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
@@ -152,7 +160,9 @@ const OrganisationProfile = () => {
     error: postsError,
   } = postsState;
   const prevTotalPostCount = usePrevious(totalPostCount);
+  const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -160,6 +170,7 @@ const OrganisationProfile = () => {
     });
     return ref.current;
   }
+
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
@@ -169,12 +180,17 @@ const OrganisationProfile = () => {
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         orgProfileDispatch(
-          fetchOrganisationError(`Failed loading profile, reason: ${message}`),
+          fetchOrganisationError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -182,12 +198,18 @@ const OrganisationProfile = () => {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
@@ -200,6 +222,13 @@ const OrganisationProfile = () => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+
+          if (prevOrgId !== organisationId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
@@ -207,7 +236,7 @@ const OrganisationProfile = () => {
             if (posts.length < limit) {
               postsDispatch({
                 type: SET_LOADING,
-                isLoading: false,
+                isLoading: true,
                 loadMore: false,
               });
             } else if (meta.total === limit) {
@@ -221,7 +250,8 @@ const OrganisationProfile = () => {
               obj[item._id] = item;
               return obj;
             }, {});
-            if (postsList) {
+
+            if (prevOrgId === organisationId && postsList) {
               postsDispatch({
                 type: SET_POSTS,
                 posts: { ...postsList, ...loadedPosts },
@@ -232,7 +262,7 @@ const OrganisationProfile = () => {
                 posts: { ...loadedPosts },
               });
             }
-          } else if (posts) {
+          } else if (prevOrgId === organisationId && posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -271,8 +301,10 @@ const OrganisationProfile = () => {
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
-        (!isLoading && loadMore && stopIndex >= organisationPosts.length,
-        organisationPosts.length)
+        !isLoading &&
+        loadMore &&
+        stopIndex >= organisationPosts.length &&
+        organisationPosts.length
       ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
@@ -353,30 +385,37 @@ const OrganisationProfile = () => {
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
-    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-    let response = {};
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      let response = {};
 
-    if (user) {
-      if (liked) {
-        try {
-          response = await axios.delete(endPoint);
-        } catch (error) {
-          console.log({ error });
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
         }
-      } else {
-        try {
-          response = await axios.put(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
-
-      if (response.data) {
-        postsDispatch({
-          type: SET_LIKE,
-          postId,
-          count: response.data.likesCount,
-        });
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
       }
     }
   };
@@ -402,7 +441,15 @@ const OrganisationProfile = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SocialIcon src={URLS[name][0]} alt={name} />
+                <SocialIcon
+                  src={URLS[name][0]}
+                  alt={name}
+                  id={
+                    name == "email"
+                      ? GTM.organisation.orgPrefix + GTM.organisation.email
+                      : ""
+                  }
+                />
               </a>
             )
           );
@@ -412,7 +459,7 @@ const OrganisationProfile = () => {
       }
     }
   };
-  const gtmTag = (tag) => GTM.organisation.orgPrefix + tag;
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -431,10 +478,25 @@ const OrganisationProfile = () => {
                 onClick={onToggleDrawer}
               />
             )}
-            <ProfilePic noPic={true} initials={getInitialsFromFullName(name)} />
+            <div>
+              <AvatarPhotoContainer>
+                <ProfilePic
+                  user={organisation}
+                  initials={getInitialsFromFullName(name)}
+                />
+                <PhotoUploadButton>
+                  {isOwner && (
+                    <UploadPic
+                      gtmPrefix={GTM.organisation.orgPrefix}
+                      user={organisation}
+                    />
+                  )}
+                </PhotoUploadButton>
+              </AvatarPhotoContainer>
+            </div>
             <UserInfoDesktop>
               <NameDiv>
-                {name}
+                <NamePara>{name}</NamePara>
                 <PlaceholderIcon />
                 {isOwner && (
                   <EditEmptyIcon
@@ -460,16 +522,16 @@ const OrganisationProfile = () => {
           <div style={{ margin: "0 2.5rem" }}>
             <WhiteSpace />
             <DescriptionMobile>
-              <SectionHeader> About</SectionHeader>
+              <SectionHeader> {t("profile.org.about")}</SectionHeader>
               {about}
             </DescriptionMobile>
             <WhiteSpace />
             <SectionHeader>
-              Activity
+              {t("profile.org.activity")}
               <PlaceholderIcon />
               {isOwner && (
                 <>
-                  <CreatePostDiv>Create a post</CreatePostDiv>
+                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
                     src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
@@ -496,21 +558,14 @@ const OrganisationProfile = () => {
                 totalPostCount={totalPostCount}
               />
               {status === ERROR_POSTS && (
-                <ErrorAlert message={postsError.message} />
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
               )}
-              {emptyFeed() && (
-                <NoPosts>
-                  Sorry, there are currently no relevant posts available. Please
-                  try using a different filter search or{" "}
-                  <a
-                    id={gtmTag(GTM.post.createPost)}
-                    onClick={onToggleCreatePostDrawer}
-                  >
-                    create a post
-                  </a>
-                  .
-                </NoPosts>
-              )}
+              {emptyFeed() && <></>}
               {isOwner && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
@@ -533,12 +588,12 @@ const OrganisationProfile = () => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  Edit Account Information
+                  {t("profile.org.editAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  Edit Profile{" "}
+                  {t("profile.individual.editProfile") + " "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

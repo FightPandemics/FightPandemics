@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Input } from "antd";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import Head from "./Head";
 import { Section } from "../StyledModal";
 import { theme } from "constants/theme";
@@ -31,20 +32,21 @@ const First = ({
   formData,
   post,
 }) => {
+  const { t } = useTranslation();
   return (
     <Section>
-      <Head number={1} title="Write your post here" />
+      <Head number={1} title={t("post.writePostHere")} />
       <TitleInput
         onChange={onChangeTitle}
         value={formData.title}
-        placeholder="Title*"
+        placeholder={t("post.title")}
         maxLength={60}
       />
       <TextInput
         onChange={onChangeDescription}
         value={formData.description}
         rows={7}
-        placeholder="Write your post*"
+        placeholder={t("post.writePost")}
       />
       <div className="error-box">
         {post && !formData.title ? `${renderError("title")} ` : <Fragment />}

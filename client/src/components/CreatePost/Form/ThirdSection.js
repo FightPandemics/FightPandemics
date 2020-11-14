@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Head from "./Head";
 import { SubTitle, Section, Selector } from "components/CreatePost/StyledModal";
 import SvgIcon from "components/Icon/SvgIcon";
@@ -8,11 +10,18 @@ import createPostSettings from "assets/data/createPostSettings";
 const { shareWith, expires } = createPostSettings;
 
 const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
+  const { t } = useTranslation();
+
+  const translateOptions = (options) =>
+    options.map(({ text, value }) => ({ text: t(text), value: value }));
+
   return (
     <Section>
-      <Head number={3} title="What is the visibility of your post?" />
+      <Head number={3} title={t("post.whatVisibility")} />
       <div className="buttons visibility-post">
-        <SubTitle className="visibility-post--info">The post will be visible to</SubTitle>
+        <SubTitle className="visibility-post--info">
+          {t("post.postVisible")}
+        </SubTitle>
         <div className="visibility-post--selector">
           <Selector
             suffixIcon={
@@ -22,9 +31,11 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
               />
             }
             onChange={onShareWithChange}
-            defaultValue={formData ? formData.shareWith : shareWith.default.value}
+            defaultValue={
+              formData ? formData.shareWith : shareWith.default.value
+            }
             filterOption={false}
-            options={shareWith.options}
+            options={translateOptions(shareWith.options)}
           />
           <Selector
             suffixIcon={
@@ -36,7 +47,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             onChange={onExpirationChange}
             defaultValue={formData ? formData.expires : expires.default.value}
             filterOption={false}
-            options={expires.options}
+            options={translateOptions(expires.options)}
           />
         </div>
       </div>

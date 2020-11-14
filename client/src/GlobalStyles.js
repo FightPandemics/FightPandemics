@@ -68,6 +68,9 @@ a {
 	min-height: 100vh;
 	padding-bottom: 6rem; // footer height
 	overflow: hidden;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+	  padding-bottom: 12rem; // max mobile footer height based on content
+  }
 }
 
 .am-drawer-sidebar {

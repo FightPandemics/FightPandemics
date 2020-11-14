@@ -9,13 +9,16 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
+import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
+
 import {
   ProfileLayout,
   BackgroundHeader,
@@ -39,6 +42,9 @@ import {
   CreatePostIcon,
   DrawerHeader,
   CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -73,6 +79,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -103,6 +110,8 @@ const Profile = ({
   match: {
     params: { id: pathUserId },
   },
+  history,
+  isAuthenticated,
 }) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [postsState, postsDispatch] = useReducer(
@@ -111,6 +120,7 @@ const Profile = ({
   );
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const { t } = useTranslation();
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -142,6 +152,8 @@ const Profile = ({
 
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
+  const prevUserId = usePrevious(userId);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -158,12 +170,18 @@ const Profile = ({
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading profile, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [pathUserId, userProfileDispatch]);
+  }, [pathUserId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -176,6 +194,13 @@ const Profile = ({
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+
+          if (prevUserId !== userId) {
+            postsDispatch({
+              type: SET_POSTS,
+              posts: [],
+            });
+          }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
@@ -197,7 +222,8 @@ const Profile = ({
               obj[item._id] = item;
               return obj;
             }, {});
-            if (postsList) {
+
+            if (prevUserId === userId && postsList) {
               postsDispatch({
                 type: SET_POSTS,
                 posts: { ...postsList, ...loadedPosts },
@@ -208,7 +234,7 @@ const Profile = ({
                 posts: { ...loadedPosts },
               });
             }
-          } else if (posts) {
+          } else if (prevUserId === userId && posts) {
             postsDispatch({
               type: SET_POSTS,
               posts: { ...postsList },
@@ -245,8 +271,10 @@ const Profile = ({
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
-        (!isLoading && loadMore && stopIndex >= userPosts.length,
-        userPosts.length)
+        !isLoading &&
+        loadMore &&
+        stopIndex >= userPosts.length &&
+        userPosts.length
       ) {
         return new Promise((resolve) => {
           postsDispatch({ type: NEXT_PAGE });
@@ -321,34 +349,42 @@ const Profile = ({
 
   const handlePostLike = async (postId, liked, create) => {
     sessionStorage.removeItem("likePost");
-    const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-    let response = {};
-    if (user) {
-      if (liked) {
-        try {
-          response = await axios.delete(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+    if (isAuthenticated) {
+      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
+      let response = {};
+
+      if (user) {
+        if (liked) {
+          try {
+            response = await axios.delete(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
+        } else {
+          try {
+            response = await axios.put(endPoint);
+          } catch (error) {
+            console.log({ error });
+          }
         }
-      } else {
-        try {
-          response = await axios.put(endPoint);
-        } catch (error) {
-          console.log({ error });
+
+        if (response.data) {
+          postsDispatch({
+            type: SET_LIKE,
+            postId,
+            count: response.data.likesCount,
+          });
         }
       }
-
-      if (response.data) {
-        postsDispatch({
-          type: SET_LIKE,
-          postId,
-          count: response.data.likesCount,
-        });
+    } else {
+      if (create) {
+        sessionStorage.setItem("likePost", postId);
+        history.push(LOGIN);
       }
     }
   };
 
-  const gtmTag = (tag) => GTM.user.profilePrefix + tag;
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -370,13 +406,25 @@ const Profile = ({
             onClick={onToggleDrawer}
           />
         )}
-        <ProfilePic
-          noPic={true}
-          initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
-        />
+        <div>
+          <AvatarPhotoContainer>
+            <ProfilePic
+              user={user}
+              initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
+            />
+            <PhotoUploadButton>
+              {ownUser && (
+                <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
+              )}
+            </PhotoUploadButton>
+          </AvatarPhotoContainer>
+        </div>
         <UserInfoDesktop>
           <NameDiv>
-            {firstName} {lastName}
+            <NamePara>
+              {firstName} {lastName}
+            </NamePara>
+
             <PlaceholderIcon />
             {ownUser && (
               <EditEmptyIcon
@@ -394,13 +442,14 @@ const Profile = ({
           )}
           <IconsContainer>
             <HelpContainer>
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help"}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")}
             </HelpContainer>
             <LocationDesktopDiv>
               {address && <LocationIcon src={locationIcon} />}
-              {needHelp && "I need help "}
-              {offerHelp && "I want to help "} {address && `• ${address}`}
+              {needHelp && t("profile.individual.needHelp")}
+              {offerHelp && t("profile.individual.wantHelp")}{" "}
+              {address && `• ${address}`}
             </LocationDesktopDiv>
             <PlaceholderIcon />
             {Object.entries(urls).map(([name, url]) => {
@@ -428,16 +477,18 @@ const Profile = ({
       <div style={{ margin: "0 2.5rem" }}>
         <WhiteSpace />
         <DescriptionMobile>
-          <SectionHeader> About</SectionHeader>
+          <SectionHeader> {t("profile.org.about")}</SectionHeader>
           {about}
         </DescriptionMobile>
         <WhiteSpace />
         <SectionHeader>
-          {ownUser ? "My Activity" : "User Activity"}
+          {ownUser
+            ? t("profile.individual.myActivity")
+            : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {ownUser && (
             <>
-              <CreatePostDiv>Create a post</CreatePostDiv>
+              <CreatePostDiv>{t("post.create")}</CreatePostDiv>
               <CreatePostIcon
                 id={GTM.user.profilePrefix + GTM.post.createPost}
                 src={createPost}
@@ -464,21 +515,14 @@ const Profile = ({
             totalPostCount={totalPostCount}
           />
           {status === ERROR_POSTS && (
-            <ErrorAlert message={postsError.message} />
+            <ErrorAlert
+              message={t([
+                `error.${postsError.message}`,
+                `error.http.${postsError.message}`,
+              ])}
+            />
           )}
-          {emptyFeed() && (
-            <NoPosts>
-              Sorry, there are currently no relevant posts available. Please try
-              using a different filter search or{" "}
-              <a
-                id={gtmTag(GTM.post.createPost)}
-                onClick={onToggleCreatePostDrawer}
-              >
-                create a post
-              </a>
-              .
-            </NoPosts>
-          )}
+          {emptyFeed() && <></>}
           {ownUser && (
             <CreatePost
               onCancel={onToggleCreatePostDrawer}
@@ -500,10 +544,12 @@ const Profile = ({
           key="bottom"
         >
           <DrawerHeader>
-            <Link to="/edit-account">Edit Account Information</Link>
+            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
           </DrawerHeader>
           <DrawerHeader>
-            <Link to="/edit-profile">Edit Profile </Link>
+            <Link to="/edit-profile">
+              {t("profile.individual.editProfile")}{" "}
+            </Link>
           </DrawerHeader>
         </CustomDrawer>
       )}

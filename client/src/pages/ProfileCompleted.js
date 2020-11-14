@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 import { refetchUser } from "actions/authActions";
 
@@ -16,6 +17,7 @@ import GTM from "constants/gtm-tags";
 import { connect } from "react-redux";
 
 const ProfileCompleted = ({ user, refetchUser }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   useEffect(() => {
     refetchUser();
@@ -27,7 +29,7 @@ const ProfileCompleted = ({ user, refetchUser }) => {
         <ProfileCompletedHeadingWrapper>
           <HeadingIcon />
           <ProfileCompletedHeading>
-            Thank you for joining our community!
+            {t("profile.common.thankyou")}
           </ProfileCompletedHeading>
         </ProfileCompletedHeadingWrapper>
       </ProfileCompletedHeader>
@@ -44,7 +46,7 @@ const ProfileCompleted = ({ user, refetchUser }) => {
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.viewProfile}
           >
-            View my Profile
+            {t("profile.common.viewMyProfile")}
           </StyledButton>
         </Link>
         <Link to={FEED}>
@@ -53,8 +55,8 @@ const ProfileCompleted = ({ user, refetchUser }) => {
             id={GTM.user.profilePrefix + GTM.profile.continuePosting}
           >
             {sessionStorage.getItem("createPostAttemptLoggedOut")
-              ? "Continue posting"
-              : "View Help Board"}
+              ? t("profile.common.continuePosting")
+              : t("profile.common.viewFeed")}
           </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>

@@ -183,18 +183,6 @@ export const ToggleHeading = styled.div`
   }
 `;
 
-export const StyledSelect = styled(Select)`
-  border: 1px solid ${theme.colors.royalBlue};
-  border-radius: 0.3rem;
-  color: ${theme.colors.royalBlue};
-  width: 35%;
-  margin-right: 1.8rem;
-  @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-    width: 100%;
-    margin-bottom: 1.8rem;
-  }
-`;
-
 export const ProfileImage = styled.img`
   width: 70%;
   align-self: end;
