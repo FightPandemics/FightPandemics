@@ -15,10 +15,12 @@ export const BubbleContainer = styled.div`
     top: 50%;
     font-style: italic;
   }
-  &.is-editing {
-    margin-bottom: 3rem;
-    div {
-      min-width: 40%;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    &.is-editing {
+      margin-bottom: 3rem;
+      div {
+        min-width: 40%;
+      }
     }
   }
   .edit-controls {
@@ -139,8 +141,9 @@ export const SenderBubble = styled.div`
   letter-spacing: 1px;
   margin-top: 1.4rem;
   word-break: break-word;
-  ${(props) => `${props.editingMode ? "min-height: 8rem;" : ""}`}
-
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    ${(props) => `${props.editingMode ? "min-height: 8rem;" : ""}`}
+  }
   &:hover div:first-child,
   .ant-dropdown-open {
     display: block;

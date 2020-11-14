@@ -157,6 +157,15 @@ const Messages = ({
     }
   }
 
+  React.useEffect(() => {
+    if (editTextArea && editTextArea.current) {
+      editTextArea.current.focus();
+      // this will move cursor to the end.
+      editTextArea.current.value = "";
+      editTextArea.current.value = editTextArea.current.defaultValue;
+    }
+  }, [editingMessageId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   function cancelMessageEditing() {
     setEditingMessageId(null);
   }
