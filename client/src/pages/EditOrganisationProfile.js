@@ -52,7 +52,9 @@ function EditOrganisationProfile(props) {
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: "change",
+  });
   const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
@@ -179,7 +181,7 @@ function EditOrganisationProfile(props) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId]);
+  }, [orgProfileDispatch, organisationId, t]);
 
   const renderProfilePicture = () => {
     if (organisation) {
