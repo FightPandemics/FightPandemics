@@ -26,30 +26,45 @@ class DatabaseHelper {
   async findNotifications(frequency) {
     if (frequency === EmailFrequency.INSTANT) {
       return this._findInstantNotifications();
+    } else if (frequency === EmailFrequency.MESSAGE) {
+      return this._findUnreadDirectMessages();
     }
     return this._findDigestNotifications(frequency);
   }
 
-  async findUnreadDirectMessages() {
+  async _findUnreadDirectMessages() {
     const threads = await this.db
       .collection("threads")
       .aggregate([
         {
           $match: {
             "participants.newMessages": { $gt: 0 },
-            "participants.emailSentAt": null,
-            "participants.lastAccess": {
-              $lt: DateHelper.subtractMinutes(
-                new Date(),
-                this.instantUnreadLookbackInterval,
-              ),
-              // Don't send out instant notifications for anything older than 30 minutes
-              // TODO uncomment after done dev testing
-              // $gt: DateHelper.subtractMinutes(new Date(), 30),
-            },
+            "participants.emailSent": false,
             "participants.status": {
               $in: [MessageThreadStatus.ACCEPTED, MessageThreadStatus.PENDING],
             },
+            $or: [
+              {
+                "participants.lastAccess": null,
+              },
+              {
+                $and: [
+                  {
+                    "participants.lastAccess": {
+                      $lt: DateHelper.subtractMinutes(
+                        new Date(),
+                        this.instantUnreadLookbackInterval,
+                      ),
+                    },
+                  },
+                  {
+                    "participants.lastAccess": {
+                      $gt: DateHelper.subtractMinutes(new Date(), 30),
+                    },
+                  },
+                ],
+              },
+            ],
           },
         },
         {
@@ -67,7 +82,7 @@ class DatabaseHelper {
                 input: "$participants",
                 in: {
                   id: "$$this.id",
-                  emailSentAt: "$$this.emailSentAt",
+                  emailSent: "$$this.emailSent",
                   lastAccess: "$$this.lastAccess",
                   name: "$$this.name",
                   newMessages: "$$this.newMessages",
@@ -141,6 +156,7 @@ class DatabaseHelper {
         // Receiver has disabled instant notifications for direct messages
         continue;
       }
+      await this.setThreadParticipantEmailSent(thread._id, receiver.id);
       messages.push({
         sender: { ...sender },
         receiver: { ...receiver, email },
@@ -151,7 +167,7 @@ class DatabaseHelper {
     return messages;
   }
 
-  async setEmailSentAt(notificationIds, frequency) {
+  async setNotificationEmailSentAt(notificationIds, frequency) {
     return this.db.collection("notifications").updateMany(
       {
         _id: { $in: notificationIds },
@@ -160,6 +176,26 @@ class DatabaseHelper {
         $set: {
           [`emailSentAt.${frequency}`]: new Date(),
         },
+      },
+    );
+  }
+
+  async setThreadParticipantEmailSent(threadId, userId) {
+    return this.db.collection("threads").findOneAndUpdate(
+      {
+        _id: threadId,
+      },
+      {
+        $set: {
+          [`participants.$[userToUpdate].emailSent`]: true,
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            "userToUpdate.id": userId,
+          },
+        ],
       },
     );
   }
@@ -194,7 +230,7 @@ class DatabaseHelper {
     ]);
     const notifications = await cursor.toArray();
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.setEmailSentAt(
+    await this.setNotificationEmailSentAt(
       notifications.map((notification) => notification._id),
       EmailFrequency.INSTANT,
     );
@@ -263,7 +299,7 @@ class DatabaseHelper {
     }
 
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.setEmailSentAt(processedNotificationIds, frequency);
+    await this.setNotificationEmailSentAt(processedNotificationIds, frequency);
 
     return digests;
   }
