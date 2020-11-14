@@ -49,6 +49,40 @@ const individualUserSchema = new Schema(
   { collection: "users" },
 );
 
+individualUserSchema.methods.toObject = function(){
+    const {
+        id,
+        about,
+        email,
+        firstName,
+        hide,
+        lastName,
+        location,
+        needs,
+        objectives,
+        organisations,
+        urls,
+        photo,
+      } = this;
+
+      const defaultUser = {
+        id,
+        about,
+        email,
+        firstName,
+        hide,
+        lastName,
+        location,
+        needs,
+        objectives,
+        organisations,
+        urls,
+        photo,
+      };
+
+      return defaultUser;
+}
+
 individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
 });
