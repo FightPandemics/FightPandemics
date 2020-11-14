@@ -36,6 +36,16 @@ class TemplateBuilder {
           subject: "{{triggeredBy.name}} liked your post: {{post.title}}",
           text: this._loadTemplateFile("../templates/instant/like.txt"),
         },
+        message: {
+          html: this._loadTemplateFile("../templates/instant/message.html"),
+          subject: "{{senderName}} sent you a direct message",
+          text: this._loadTemplateFile("../templates/instant/message.txt"),
+        },
+        messageRequest: {
+          html: this._loadTemplateFile("../templates/instant/message-request.html"),
+          subject: "{{senderName}} sent you a direct message request",
+          text: this._loadTemplateFile("../templates/instant/message-request.txt"),
+        },
         share: {
           html: this._loadTemplateFile("../templates/instant/share.html"),
           subject: "{{triggeredBy.name}} shared your post: {{post.title}}",
@@ -57,8 +67,59 @@ class TemplateBuilder {
   build(frequency, notifications) {
     if (frequency === EmailFrequency.INSTANT) {
       return this._buildInstant(notifications);
+    } else if (frequency === EmailFrequency.MESSAGE) {
+      return this._buildDirectMessages(notifications);
     }
     return this._buildDigest(frequency, notifications);
+  }
+
+  _buildDirectMessages(notifications) {
+    return notifications
+      .map((notification) => {
+        const { sender, receiver, message } = notification;
+        const notifyPrefs = receiver.notifyPrefs;
+        if (notifyPrefs && !notifyPrefs.instant.message) {
+          return;
+        }
+        const token = this._generateToken(receiver.id);
+        const templateKey = receiver.status === "pending" ? "messageRequest" : "message";
+        const htmlTemplate = Mustache.render(this.templates.base.html, {
+          baseUrl: this.baseUrl,
+          body: this.templates.instant[templateKey].html,
+          token,
+        });
+        const textTemplate = Mustache.render(this.templates.base.text, {
+          baseUrl: this.baseUrl,
+          body: this.templates.instant[templateKey].text,
+          token,
+        });
+        const subject = Mustache.render(
+          this.templates.instant[templateKey].subject,
+          {
+            senderName: sender.name,
+          },
+        );
+        const view = {
+          baseUrl: this.baseUrl,
+          senderName: sender.name,
+        };
+
+        if (templateKey === "message") {
+          view.message = message.content;
+          if (message.postRef) {
+            view.postTextCopy = `for your post ${message.postRef.title}`; // TODO localize
+          }
+        }
+
+        return {
+          htmlBody: Mustache.render(htmlTemplate, view),
+          notificationId: message._id,
+          subject,
+          textBody: Mustache.render(textTemplate, view),
+          toEmailAddress: receiver.email,
+        };
+      })
+      .filter((email) => !!email);
   }
 
   _buildDigest(frequency, notifications) {
