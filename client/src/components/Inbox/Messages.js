@@ -225,7 +225,7 @@ const Messages = ({
         >
           {!isDeleted && editingMessageId !== messageId && (
             <Dropdown
-              trigger={["click", "hover"]}
+              trigger={["click"]}
               overlay={menu(messageId, message)}
               placement="bottomRight"
             >

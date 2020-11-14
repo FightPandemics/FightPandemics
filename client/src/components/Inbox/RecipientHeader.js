@@ -231,7 +231,7 @@ export const RecipientHeader = ({
           </h4>
           {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
             <Dropdown
-              trigger={["hover", "click"]}
+              trigger={["click"]}
               overlay={menu}
               placement="bottomRight"
             >
