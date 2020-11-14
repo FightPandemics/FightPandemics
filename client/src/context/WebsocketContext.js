@@ -88,7 +88,6 @@ export default class SocketManager extends React.Component {
     });
 
     this.socket.on("USER_STATUS_UPDATE", (data) => {
-      if (!this.state.user || data.id == this.state.user.id) return;
       this.props.store.dispatch(userStatusUpdate(data));
     });
 
