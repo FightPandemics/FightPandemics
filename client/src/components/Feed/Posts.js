@@ -101,9 +101,6 @@ const Posts = ({
               keepPageState={page}
               keepPostsState={filteredPosts}
               highlightWords={highlightWords}
-              keepScrollIndex={scrollIndex.current}
-              keepPageState={page}
-              keepPostsState={filteredPosts}
             />
             <HorizontalRule />
           </>
@@ -171,7 +168,7 @@ const Posts = ({
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
                       overscanRowCount={1}
-                      scrollToAlignment={"start"}
+                      scrollToAlignment={"center"}
                       scrollToIndex={scrollToIndex()}
                     />
                   )}
