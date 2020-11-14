@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText } = require("../utils");
+const { setElapsedTimeText, createSearchRegex } = require("../utils");
 
 const {
   createCommentSchema,
@@ -43,6 +43,7 @@ async function routes(app) {
         authorId,
         ignoreUserLocation,
         filter,
+        keywords,
         limit,
         objective,
         skip,
@@ -132,6 +133,19 @@ async function routes(app) {
       };
       /* eslint-enable sort-keys */
 
+      // if location is defined, use simple regex text query, in order to use $geoNear
+      if (location && keywords) {
+        const keywordsRegex = createSearchRegex(keywords)
+        filters.push({
+          $or: [
+            { title: keywordsRegex },
+            { content: keywordsRegex },
+            { "author.name": keywordsRegex },
+            { types: keywordsRegex },
+          ],
+        });
+      }
+
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
@@ -151,6 +165,11 @@ async function routes(app) {
               },
             },
             { $sort: { distance: 1, _id: -1 } },
+          ]
+        : keywords
+        ? [
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $sort: { score: { $meta: "textScore" } } },
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
@@ -228,10 +247,17 @@ async function routes(app) {
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
-      const totalResultsAggregationPipeline = await Post.aggregate([
-        { $match: { $and: filters } },
-        { $group: { _id: null, count: { $sum: 1 } } },
-      ]);
+      const totalResultsAggregationPipeline = await Post.aggregate(
+        keywords && !location
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
+          : [
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+      );
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(

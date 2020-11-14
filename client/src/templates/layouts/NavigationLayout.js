@@ -263,7 +263,14 @@ const StyledDrawer = styled(Drawer)`
 
 const NavigationLayout = (props) => {
   const { t } = useTranslation();
-  const { authLoading, mobiletabs, tabIndex, isAuthenticated, user } = props;
+  const {
+    authLoading,
+    mobiletabs,
+    navSearch,
+    tabIndex,
+    isAuthenticated,
+    user,
+  } = props;
   const history = useHistory();
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -637,11 +644,16 @@ const NavigationLayout = (props) => {
         </Link>
       </NavItem>
       <NavItem history={history}>
+        <Link id={GTM.nav.prefix + GTM.nav.feed} to="/feed">
+          {t("feed.title")}
+        </Link>
+      </NavItem>
+      <NavItem history={history}>
         <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
           {t("common.aboutUs")}
         </Link>
       </NavItem>
-      <Space height="33vh" />
+      <Space height="10vh" />
       <Dropdown overlay={languageMenu} trigger={["click"]}>
         <LanguageSwitchItem id={GTM.nav.prefix + GTM.nav.language}>
           <GlobeIcon src={globe} className="globe-icon-svg"></GlobeIcon>
@@ -698,6 +710,7 @@ const NavigationLayout = (props) => {
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
+            navSearch={navSearch}
           />
 
           {mobiletabs ? (

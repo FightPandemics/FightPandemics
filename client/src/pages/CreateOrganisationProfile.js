@@ -180,7 +180,9 @@ const CreateOrgProfile = (props) => {
           ]);
           createOrganisationFormDispatch({
             type: CREATE_Organisation_ERROR,
-            error: `${t("error.failedCreatingOrgProfile")} ${translatedErrorMessage}`,
+            error: `${t(
+              "error.failedCreatingOrgProfile",
+            )} ${translatedErrorMessage}`,
           });
         }
       } else {

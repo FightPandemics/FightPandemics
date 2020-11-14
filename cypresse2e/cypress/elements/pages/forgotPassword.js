@@ -1,41 +1,39 @@
 class ForgotPassword {
+  image = ".SocialImageSVG";
+  forgotPasswordPageTitle = "h4";
+  emailField = "#email";
+  submitButton = "a[role=button]";
+  backToSignInLink = 'a[href="/auth/login"]';
+  errorMessageField = "small";
 
-    image = '.SocialImageSVG';
-    forgotPasswordPageTitle = "h4";
-    emailField = '#email';
-    submitButton = 'a[role=button]';
-    backToSignInLink = 'a[href="/auth/login"]';
-    errorMessageField = 'small';
+  constructor() {}
 
-    constructor() { }
+  visit() {
+    cy.visit("auth/forgot-password");
+  }
 
-    visit() {
-        cy.visit('auth/forgot-password');
-    }
+  getForgotPasswordPageTitleLocator() {
+    return this.forgotPasswordPageTitle;
+  }
 
-    getForgotPasswordPageTitleLocator() {
-        return this.forgotPasswordPageTitle;
-    }
+  getImageLocator() {
+    return this.image;
+  }
 
-    getImageLocator() {
-        return this.image;
-    }
+  getEmailField() {
+    return cy.get(this.emailField);
+  }
 
-    getEmailField() {
-        return cy.get(this.emailField);
-    }
+  getSubmitButton() {
+    return cy.get(this.submitButton);
+  }
 
-    getSubmitButton() {
-        return cy.get(this.submitButton);
-    }
+  getBackToSignInLink() {
+    return cy.get(this.backToSignInLink);
+  }
 
-    getBackToSignInLink() {
-        return cy.get(this.backToSignInLink);
-    }
-
-    getErrorMessageField() {
-        return cy.get(this.errorMessageField);
-    }
-
+  getErrorMessageField() {
+    return cy.get(this.errorMessageField);
+  }
 }
 export default ForgotPassword;
