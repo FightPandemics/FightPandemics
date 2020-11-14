@@ -38,7 +38,8 @@ const StyledContainer = styled.section`
   }
 `;
 
-const GetInvolvedButton = ({ getGTM }) => {
+const GetInvolvedButton = ({ getGTM, t }) => {
+  // 't' comes from 'AboutUs' scope for translation
   const [visible, setVisible] = useState(false);
 
   const handleCancel = async (e) => {
@@ -57,7 +58,7 @@ const GetInvolvedButton = ({ getGTM }) => {
         shape="round"
         onClick={showPopUp}
       >
-        Get Involved
+        {t("getInvolved")}
       </LinkButton>
       <Modal
         visible={visible}
@@ -67,7 +68,7 @@ const GetInvolvedButton = ({ getGTM }) => {
         onCancel={handleCancel}
       >
         <StyledContainer>
-          <h4>Get Involved</h4>
+          <h4>{t("getInvolved")}</h4>
           <LinkButton
             type="primary"
             shape="round"
@@ -76,7 +77,7 @@ const GetInvolvedButton = ({ getGTM }) => {
             target="_blank"
             id={getGTM("joinVolunteer")}
           >
-            Join as Volunteer
+            {t("joinVolunteer")}
           </LinkButton>
           <LinkButton
             type="primary"
@@ -86,10 +87,10 @@ const GetInvolvedButton = ({ getGTM }) => {
             target="_blank"
             id={getGTM("joinAmbassador")}
           >
-            Join as Ambassador
+            {t("joinAmbassador")}
           </LinkButton>
-          <h4 style={{ "margin-top": "6rem" }}>Student Summer Program</h4>
-          <p>For Students ages 14-18.</p>
+          <h4 style={{ "margin-top": "6rem" }}>{t("studentSummerProgram")}</h4>
+          <p>{t("forStudentInAge")}</p>
           <LinkButton
             type="primary"
             shape="round"
@@ -98,7 +99,7 @@ const GetInvolvedButton = ({ getGTM }) => {
             target="_blank"
             id={getGTM("joinStudentProgram")}
           >
-            Join Student Program
+            {t("joinStudentProgram")}
           </LinkButton>
         </StyledContainer>
       </Modal>
