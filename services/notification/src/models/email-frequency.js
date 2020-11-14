@@ -1,8 +1,9 @@
 const EmailFrequency = Object.freeze({
-  INSTANT: "instant",
-  DAILY: "daily",
-  WEEKLY: "weekly",
   BIWEEKLY: "biweekly",
+  DAILY: "daily",
+  INSTANT: "instant",
+  MESSAGE: "message",
+  WEEKLY: "weekly",
 });
 
 module.exports = {
