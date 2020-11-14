@@ -68,8 +68,9 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const cleanForm = () => setFormData(initialState.formData);
 
   const renderError = (field) => {
-    if (errors.includes(field) && (!formData[field] || !formData[field].length))
+    if (errorMsg?.[field] && (!formData[field] || !formData[field].length))
       return errorMsg[field];
+    return "";
   };
 
   const addTag = (tag) => (e) => {
