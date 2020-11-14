@@ -3,33 +3,31 @@ const { Schema, model, ObjectId } = require("mongoose");
 const { schema: authorSchema } = require("./Author");
 const { POST_OBJECTIVES: OBJECTIVES } = require("./Post");
 
-const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"]
+const MESSAGE_STATUS_OPTIONS = ["deleted", "edited", "sent"];
 
 // -- Schema
-const postRefSchema = new Schema(
-  {
-    content: {
-      required: true,
-      type: String,
-    },
-    id: {
-      ref: "Post",
-      required: true,
-      type: ObjectId,
-    },
-    objective: {
-      enum: OBJECTIVES,
-      required: true,
-      trim: true,
-      type: String,
-    },
-    title: {
-      required: true,
-      type: String,
-    },
-    createdAt: Date,
-  }
-)
+const postRefSchema = new Schema({
+  content: {
+    required: true,
+    type: String,
+  },
+  id: {
+    ref: "Post",
+    required: true,
+    type: ObjectId,
+  },
+  objective: {
+    enum: OBJECTIVES,
+    required: true,
+    trim: true,
+    type: String,
+  },
+  title: {
+    required: true,
+    type: String,
+  },
+  createdAt: Date,
+});
 
 const messageSchema = new Schema(
   {

@@ -115,6 +115,7 @@ function onSocketConnect(socket) {
           id: participant._id,
           lastAccess: participant == sender ? new Date() : null,
           name: participant.name,
+          emailSent: false,
           newMessages: participant == receiver ? 1 : 0,
           photo: participant.photo,
           status: participant == sender ? "accepted" : "pending",
@@ -294,17 +295,22 @@ function onSocketConnect(socket) {
 
         const updates = {
           $inc: { "participants.$[userToUpdate].newMessages": 1 },
+          $set: { "participants.$[userToUpdate].emailSent": false },
         };
 
         switch (thread.participants.find((p) => p.id === recipient).status) {
           case "archived":
             // set status to "accepted", if it was "archived".
-            updates.$set = {
-              "participants.$[userToUpdate].status": "accepted",
-            };
+            updates.$set["participants.$[userToUpdate].status"] = "accepted";
+            break;
+          case "pending":
+            // Don't flip emailSent if status is "pending"
+            delete updates.$set;
             break;
           case "ignored":
             // set status to "pending again" if it was "ignored".
+            // This clobbers the setting of emailSent above, which is fine because
+            // we do not want this flag to be flipped if "ignored".
             updates.$set = { "participants.$[userToUpdate].status": "pending" };
             break;
         }
