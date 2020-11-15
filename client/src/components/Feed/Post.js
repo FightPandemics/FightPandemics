@@ -115,7 +115,6 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
-    elapsedTimeText,
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
