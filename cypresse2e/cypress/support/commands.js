@@ -54,3 +54,9 @@ Cypress.Commands.overwrite("visit", (visit, url) => {
     },
   });
 });
+
+Cypress.Commands.add("checkAnyKindOfLinks", (button,link) => {
+    cy.get(button)
+      .should('be.visible')
+      .and('have.attr', 'href', link)
+});

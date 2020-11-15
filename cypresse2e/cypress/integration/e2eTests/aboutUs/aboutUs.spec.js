@@ -1,7 +1,7 @@
 import AboutUs from '../../../elements/pages/aboutUs'
 
 
-describe('Fight Pandemics About Us page', () => {
+describe('FightPandemics About Us page', () => {
   const aboutUs = new AboutUs()
 
   context('User opens About Us Page', () => {
@@ -31,46 +31,39 @@ describe('Fight Pandemics About Us page', () => {
   //the following functions are for make the code more readable and maintainable, and to avoid code duplications
 
   function linkedInButtonIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.linkedInButton, aboutUs.linkedInLink)
+    cy.checkAnyKindOfLinks(aboutUs.linkedInButton, aboutUs.linkedInLink)
   }
 
   function facebookButtonIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.facebookButton, aboutUs.facebookLink)
+    cy.checkAnyKindOfLinks(aboutUs.facebookButton, aboutUs.facebookLink)
   }
 
   function instagramButtonIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.instagramButton, aboutUs.instagramLink)
+    cy.checkAnyKindOfLinks(aboutUs.instagramButton, aboutUs.instagramLink)
   }
 
   function twitterButtonIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.twitterButton, aboutUs.twitterLink)
+    cy.checkAnyKindOfLinks(aboutUs.twitterButton, aboutUs.twitterLink)
   }
 
-  function clickOnGetInvolvedButton (){
+  function clickOnGetInvolvedButton() {
     cy.get(aboutUs.getInvolvedButton).click()
   }
 
   function joinAsVolunteerIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.joinAsVolunteerButton,aboutUs.joinAsVolunteerLink)
+    cy.checkAnyKindOfLinks(aboutUs.joinAsVolunteerButton, aboutUs.joinAsVolunteerLink)
   }
 
   function joinAsAmbassadorIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.joinAsAmbassadorButton,aboutUs.joinAsAmbassadorLink)
+    cy.checkAnyKindOfLinks(aboutUs.joinAsAmbassadorButton, aboutUs.joinAsAmbassadorLink)
   }
 
   function joinStudentProgramIsVisibleAndPointToAppropriateLink() {
-    checkAnyKindOfLinks(aboutUs.joinStudentProgramButton,aboutUs.joinStudentProgramLink)
+    cy.checkAnyKindOfLinks(aboutUs.joinStudentProgramButton, aboutUs.joinStudentProgramLink)
   }
 
   function goToHelpBoardButtonIsVisibleAndPointToAppropriateLink() {
-      checkAnyKindOfLinks(aboutUs.getToHelpBoardButton,aboutUs.goToHElpBoardLink)
-  }
-
-  
-  function checkAnyKindOfLinks(button, link) {
-    cy.get(button)
-      .should('be.visible')
-      .and('have.attr', 'href', link)
+    cy.checkAnyKindOfLinks(aboutUs.getToHelpBoardButton, aboutUs.goToHelpBoardLink)
   }
 
 

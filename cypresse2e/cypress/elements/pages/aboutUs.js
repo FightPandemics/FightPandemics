@@ -16,7 +16,7 @@ class AboutUs {
   joinStudentProgramButton = '#AU_GI_JSP';
   joinStudentProgramLink = 'https://apply.workable.com/fightpandemics/j/58B157AAB2/';
   getToHelpBoardButton = '#AU_VHB';
-  goToHElpBoardLink = '/feed'
+  goToHelpBoardLink = '/feed'
   constructor() {
   }
 
