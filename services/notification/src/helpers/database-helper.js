@@ -38,33 +38,31 @@ class DatabaseHelper {
       .aggregate([
         {
           $match: {
-            "participants.newMessages": { $gt: 0 },
-            "participants.emailSent": false,
-            "participants.status": {
-              $in: [MessageThreadStatus.ACCEPTED, MessageThreadStatus.PENDING],
-            },
-            $or: [
-              {
-                "participants.lastAccess": null,
-              },
-              {
-                $and: [
+            participants: {
+              $elemMatch: {
+                newMessages: { $gt: 0 },
+                emailSent: false,
+                status: {
+                  $in: [
+                    MessageThreadStatus.ACCEPTED,
+                    MessageThreadStatus.PENDING,
+                  ],
+                },
+                $or: [
                   {
-                    "participants.lastAccess": {
+                    lastAccess: null,
+                  },
+                  {
+                    lastAccess: {
                       $lt: DateHelper.subtractMinutes(
                         new Date(),
                         this.instantUnreadLookbackInterval,
                       ),
                     },
                   },
-                  {
-                    "participants.lastAccess": {
-                      $gt: DateHelper.subtractMinutes(new Date(), 30),
-                    },
-                  },
                 ],
               },
-            ],
+            },
           },
         },
         {
@@ -118,6 +116,9 @@ class DatabaseHelper {
       {
         $match: {
           threadId: { $in: threadIds },
+          createdAt: {
+            $gt: DateHelper.subtractMinutes(new Date(), 30),
+          },
         },
       },
       { $sort: { createdAt: 1 } },
