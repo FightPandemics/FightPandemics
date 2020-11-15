@@ -16,7 +16,9 @@ describe('FightPandemics About Us page', () => {
       twitterButtonIsVisibleAndPointToAppropriateLink()
     })
 
-    it('Check if Get Involved modal windows sub-buttons are visible and get us to the appropriate link', () => {
+    it('Check if close (x) button works on the modal window and check if Get Involved modal windows sub-buttons are visible and get us to the appropriate link', () => {
+      clickOnGetInvolvedButton()
+      closeGetInvolvedModalWindow()
       clickOnGetInvolvedButton()
       joinAsVolunteerIsVisibleAndPointToAppropriateLink()
       joinAsAmbassadorIsVisibleAndPointToAppropriateLink()
@@ -25,6 +27,11 @@ describe('FightPandemics About Us page', () => {
 
     it('Check if Go to Help Board button visible and get us to the appropriate link', () => {
       goToHelpBoardButtonIsVisibleAndPointToAppropriateLink()
+    })
+
+    it('Check if FightPandemics email links are working', () => {
+      partnershipEmailLinkIsVisibleAndPointToAppropriateLink()
+      contactEmailLinkIsVisibleAndPointToAppropriateLink()
     })
   })
 
@@ -66,5 +73,22 @@ describe('FightPandemics About Us page', () => {
     cy.checkAnyKindOfLinks(aboutUs.getToHelpBoardButton, aboutUs.goToHelpBoardLink)
   }
 
+  function closeGetInvolvedModalWindow() {
+    cy.get(aboutUs.getInvolvedCloseButton).click()
+  }
 
+  function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
+    checkEmailWorks(aboutUs.partnershipEmail, aboutUs.partnershipEmailHref)
+  }
+
+  function contactEmailLinkIsVisibleAndPointToAppropriateLink() {
+    checkEmailWorks(aboutUs.contactEmail, aboutUs.contactEmailHref)
+  }
+
+
+  function checkEmailWorks(email, link) {
+    cy.contains(email)
+      .should('be.visible')
+      .and('have.attr', 'href', link)
+  }
 })
