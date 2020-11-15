@@ -29,6 +29,13 @@ const initialState = {
 
 const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { t } = useTranslation();
+  const errorMsg = {
+    title: t("post.title"),
+    description: t("post.description"),
+    help: t("post.help"),
+    tags: t("post.tags"),
+  };
+
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(() => {
@@ -40,13 +47,6 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   });
   const [postForm, setPostForm] = useState(initialState.postForm);
   formData.help = type;
-
-  const errorMsg = {
-    title: t("post.title"),
-    description: t("post.description"),
-    help: t("post.help"),
-    tags: t("post.tags"),
-  };
 
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
