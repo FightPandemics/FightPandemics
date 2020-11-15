@@ -60,16 +60,24 @@ export const HeaderLinks = ({
         )}
         {!isAuthenticated && (
           <>
-            <NavLink id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
-              <Button type="primary" ghost shape="round" className="logInBtn">
+            <li>
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.login}
+                activeStyle={activeStyles}
+                to="/auth/login"
+              >
                 {t("auth.signIn")}
-              </Button>
-            </NavLink>
-            <NavLink id={GTM.nav.prefix + GTM.nav.login} to="/auth/signup">
-              <Button shape="round" type="primary" className="joinNowBtn">
+              </NavLink>
+            </li>
+            <li className="registerBtn">
+              <NavLink
+                id={GTM.nav.prefix + GTM.nav.register}
+                className="registerLink"
+                to="/auth/signup"
+              >
                 {t("auth.joinNow")}
-              </Button>
-            </NavLink>
+              </NavLink>
+            </li>
             <Button
               id={GTM.nav.prefix + GTM.nav.feedback}
               onClick={onFeedbackIconClick}

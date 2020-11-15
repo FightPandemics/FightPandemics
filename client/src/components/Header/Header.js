@@ -79,13 +79,21 @@ const NavLinks = styled.div`
     margin-right: 5rem;
     align-items: center;
 
-    .logInBtn {
-      border: 1px solid #1890ff;
-      margin-right: 10px;
+    .registerBtn {
+      margin-bottom: 0.2rem;
+      align-self: center;
     }
 
-    .joinNowBtn {
-      background: #1890ff;
+    .registerLink {
+      display: block;
+      border: 0.1rem solid ${colors.royalBlue};
+      border-radius: 2rem;
+      padding: 0 1rem;
+      color: ${colors.royalBlue};
+    }
+    .registerLink:hover {
+      background-color: ${colors.royalBlue};
+      color: ${colors.white};
     }
 
     li {
