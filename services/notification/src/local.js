@@ -8,6 +8,7 @@ const validFrequencies = new Set([
   "daily",
   "weekly",
   "biweekly",
+  "message",
 ]);
 
 if (!validFrequencies.has(frequency)) {

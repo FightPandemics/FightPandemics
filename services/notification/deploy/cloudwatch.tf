@@ -1,5 +1,6 @@
 locals {
   rules = {
+    message  = "cron(3/5 * ? * * *)" # Every 5th minute of the hour, starting from minute 3
     instant  = "cron(2/5 * ? * * *)" # Every 5th minute of the hour, starting from minute 2
     daily    = "cron(0 2 ? * * *)"   # Every day at 2am UTC
     weekly   = "cron(0 3 ? * MON *)" # Every week on Monday at 3am UTC

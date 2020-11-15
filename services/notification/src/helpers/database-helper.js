@@ -1,5 +1,6 @@
 const { DateHelper } = require("./date-helper");
 const { EmailFrequency } = require("../models/email-frequency");
+const { MessageThreadStatus } = require("../models/message-thread-status");
 const { MongoClient } = require("mongodb");
 const { NotificationAction } = require("../models/notification-action");
 
@@ -15,7 +16,9 @@ class DatabaseHelper {
     if (cachedDb && cachedDb.serverConfig.isConnected()) {
       this.db = cachedDb;
     } else {
-      const client = await MongoClient.connect(this.uri);
+      const client = await MongoClient.connect(this.uri, {
+        useUnifiedTopology: true,
+      });
       this.db = client.db(this.dbName);
     }
   }
@@ -23,11 +26,148 @@ class DatabaseHelper {
   async findNotifications(frequency) {
     if (frequency === EmailFrequency.INSTANT) {
       return this._findInstantNotifications();
+    } else if (frequency === EmailFrequency.MESSAGE) {
+      return this._findUnreadDirectMessages();
     }
     return this._findDigestNotifications(frequency);
   }
 
-  async setEmailSentAt(notificationIds, frequency) {
+  async _findUnreadDirectMessages() {
+    const threads = await this.db
+      .collection("threads")
+      .aggregate([
+        {
+          $match: {
+            "participants.newMessages": { $gt: 0 },
+            "participants.emailSent": false,
+            "participants.status": {
+              $in: [MessageThreadStatus.ACCEPTED, MessageThreadStatus.PENDING],
+            },
+            $or: [
+              {
+                "participants.lastAccess": null,
+              },
+              {
+                $and: [
+                  {
+                    "participants.lastAccess": {
+                      $lt: DateHelper.subtractMinutes(
+                        new Date(),
+                        this.instantUnreadLookbackInterval,
+                      ),
+                    },
+                  },
+                  {
+                    "participants.lastAccess": {
+                      $gt: DateHelper.subtractMinutes(new Date(), 30),
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "participants.id",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $project: {
+            participants: {
+              $map: {
+                input: "$participants",
+                in: {
+                  id: "$$this.id",
+                  emailSent: "$$this.emailSent",
+                  lastAccess: "$$this.lastAccess",
+                  name: "$$this.name",
+                  newMessages: "$$this.newMessages",
+                  photo: "$$this.photo",
+                  status: "$$this.status",
+                  type: "$$this.type",
+                  user: {
+                    $arrayElemAt: [
+                      "$user",
+                      {
+                        $indexOfArray: ["$user._id", "$$this.id"],
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+      ])
+      .toArray();
+
+    const threadIds = threads.map((thread) => thread._id);
+
+    // Convert threads array to object keyed by thread ID for O(1) lookup
+    // See https://www.olioapps.com/blog/map-reduce/ for indexing an array of objects
+    const threadsObject = threads.reduce(
+      (accumulator, thread) => ({ ...accumulator, [thread._id]: thread }),
+      {},
+    );
+
+    const messagesCursor = this.db.collection("messages").aggregate([
+      {
+        $match: {
+          threadId: { $in: threadIds },
+        },
+      },
+      { $sort: { createdAt: 1 } },
+      {
+        $group: {
+          _id: "$threadId",
+          latestMessage: {
+            $last: "$$ROOT",
+          },
+        },
+      },
+    ]);
+
+    const messages = [];
+
+    while (await messagesCursor.hasNext()) {
+      const message = await messagesCursor.next();
+      const thread = threadsObject[message._id];
+      /*
+        The thread.participants array will always have only two elements in it
+        (at least for direct messages). One of these participants is a sender
+        while the other is a receiver. The newMessages count for participants
+        is mutually exclusive in that only one of the participants will have
+        this count greater than 0, while the other will have this count equal
+        to 0. Therefore we can assume that the sender is the participant with
+        newMessages count equal to 0, while the receiver is the participant
+        with newMessages greater than 0.
+      */
+      const sender = thread.participants.find((p) => p.newMessages === 0);
+      const receiver = thread.participants.find((p) => p.newMessages > 0);
+      if (sender === undefined || receiver === undefined) {
+        continue;
+      }
+      const { notifyPrefs, email } = receiver.user;
+      if (notifyPrefs && !notifyPrefs.instant.message) {
+        // Receiver has disabled instant notifications for direct messages
+        continue;
+      }
+      await this.setThreadParticipantEmailSent(thread._id, receiver.id);
+      messages.push({
+        sender: { ...sender },
+        receiver: { ...receiver, email },
+        message: { ...message.latestMessage },
+      });
+    }
+
+    return messages;
+  }
+
+  async setNotificationEmailSentAt(notificationIds, frequency) {
     return this.db.collection("notifications").updateMany(
       {
         _id: { $in: notificationIds },
@@ -36,6 +176,26 @@ class DatabaseHelper {
         $set: {
           [`emailSentAt.${frequency}`]: new Date(),
         },
+      },
+    );
+  }
+
+  async setThreadParticipantEmailSent(threadId, userId) {
+    return this.db.collection("threads").findOneAndUpdate(
+      {
+        _id: threadId,
+      },
+      {
+        $set: {
+          [`participants.$[userToUpdate].emailSent`]: true,
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            "userToUpdate.id": userId,
+          },
+        ],
       },
     );
   }
@@ -70,7 +230,7 @@ class DatabaseHelper {
     ]);
     const notifications = await cursor.toArray();
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.setEmailSentAt(
+    await this.setNotificationEmailSentAt(
       notifications.map((notification) => notification._id),
       EmailFrequency.INSTANT,
     );
@@ -139,7 +299,7 @@ class DatabaseHelper {
     }
 
     // Set emailSentAt timestamp right away so we don't risk sending duplicate emails.
-    await this.setEmailSentAt(processedNotificationIds, frequency);
+    await this.setNotificationEmailSentAt(processedNotificationIds, frequency);
 
     return digests;
   }
