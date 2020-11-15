@@ -498,11 +498,12 @@ const Feed = (props) => {
         const lastPage = Math.ceil(meta.total / limit) - 1;
         console.log(page, lastPage, meta.total);
         if (page === lastPage) {
-          dispatch({
-            type: "SET_LOADING",
-            isLoading: true,
-            loadMore: false,
-          });
+          dispatch(
+            postsActions.setLoadingAction({
+              isLoading: true,
+              loadMore: false,
+            }),
+          );
         }
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
