@@ -96,6 +96,9 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  keepScrollIndex,
+  keepPageState,
+  keepPostsState,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -350,6 +353,9 @@ const Post = ({
             postId: post._id,
             from: window.location.href,
             user,
+            keepScrollIndex,
+            keepPageState,
+            keepPostsState,
           },
         }}
       >
@@ -599,6 +605,9 @@ const Post = ({
                   postId: _id,
                   from: window.location.href,
                   user,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
                 },
               }}
             >

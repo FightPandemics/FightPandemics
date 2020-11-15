@@ -14,6 +14,7 @@ import {
   SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_HIDE,
+  SET_PAGE,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -79,6 +80,8 @@ export const postsReducer = (state = postsState, action) => {
       };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
+    case SET_PAGE:
+      return { ...state, page: action.page };
     case RESET_PAGE:
       return {
         ...state,
