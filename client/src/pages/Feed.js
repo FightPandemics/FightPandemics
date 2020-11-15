@@ -472,6 +472,11 @@ const Feed = (props) => {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
+        if (posts.length < limit) {
+          dispatch(postsActions.finishLoadingAction());
+        } else if (meta.total === limit) {
+          dispatch(postsActions.finishLoadingAction());
+        }
         let postsInState;
         if (history.location.state) {
           const { keepPostsState, keepPageState } = history.location.state;
