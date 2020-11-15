@@ -79,7 +79,9 @@ const PostCard = styled(Card)`
         min-height: 4rem;
         padding-left: 5rem;
         font-size: ${medium};
-
+        .title-wrapper {
+          cursor: default;
+        }
         > .ant-avatar-circle,
         > img {
           position: absolute;
@@ -95,12 +97,14 @@ const PostCard = styled(Card)`
         }
 
         .author,
-        .location-status {
+        .sub-header {
           line-height: 2rem;
+          font-size: ${xsmall};
         }
 
         .author {
           font-size: ${medium};
+          cursor: pointer;
         }
 
         .location-status {
@@ -108,16 +112,20 @@ const PostCard = styled(Card)`
           padding-left: 1.4rem;
           font-size: ${xsmall};
           color: #888;
-
           img {
             position: absolute;
-            top: 0.7rem;
+            top: 0.5rem;
             left: 0;
             width: 0.6rem;
             height: 0.6rem;
             margin-right: 0;
           }
         }
+      }
+      .timestamp {
+        padding-left: 1rem;
+        font-size: ${xsmall};
+        color: #888;
       }
     }
 

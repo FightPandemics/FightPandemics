@@ -4,6 +4,7 @@ import { Modal as WebModal } from "antd";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
+import { Tooltip } from "antd";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,10 @@ import WizardFormNav, {
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import { typeToTag } from "assets/data/formToPostMappings";
+import {
+  typeToTag,
+  translateISOTimeTitle,
+} from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
 import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
@@ -376,19 +380,36 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <Highlight
-            className="author"
-            text={post?.author?.name}
-            highlight={highlightWords}
-          />
-          {post?.author?.location?.country ? (
-            <div className="location-status">
-              <SvgIcon src={statusIndicator} className="status-icon" />
-              {buildLocationString(post.author.location)}
-            </div>
-          ) : (
-            ""
-          )}
+          <span className="author">
+            <Highlight text={post?.author?.name} highlight={highlightWords} />
+          </span>
+          <div
+            className="sub-header"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            {post?.author?.location?.country ? (
+              <span className="location-status">
+                <SvgIcon src={statusIndicator} className="status-icon" />
+                {buildLocationString(post.author.location)}
+              </span>
+            ) : (
+              ""
+            )}
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
+          </div>
         </div>
       }
       thumb={
