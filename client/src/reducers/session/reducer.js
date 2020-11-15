@@ -1,4 +1,5 @@
 import { SESSION_ACTIONS } from "./actions";
+import { startCheckCookieInterval } from "actions/authActions";
 
 const initialState = {
   isAuthenticated: false,
@@ -22,6 +23,7 @@ function sessionReducer(state = initialState, action) {
         authError: action.error,
       };
     case SESSION_ACTIONS.AUTH_SUCCESS:
+      startCheckCookieInterval();
       return {
         ...state,
         emailVerified: action.payload.emailVerified,
@@ -39,6 +41,7 @@ function sessionReducer(state = initialState, action) {
         isAuthenticated: true, // required for redirect logic to verify-email
       };
     case SESSION_ACTIONS.SET_USER:
+      startCheckCookieInterval();
       const {
         payload: { user },
       } = action;

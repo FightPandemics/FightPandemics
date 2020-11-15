@@ -11,6 +11,7 @@ import {
   SET_LOADING,
   SET_COMMENT,
   SET_COMMENTS,
+  SET_PAGE,
   SHOW_COMMENTS,
   TOGGLE_COMMENTS,
   TOGGLE_SHOW_COMMENTS,
@@ -103,10 +104,16 @@ export const postReducer = (state = postState, action) => {
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
       return { ...state, page: state.page - 1 };
+    case SET_PAGE:
+      return { ...state, page: action.page };
     case RESET_LOADING:
       return { ...state, isLoading: false };
     case SET_LOADING:
-      return { ...state, isLoading: true };
+      return {
+        ...state,
+        isLoading: action.isLoading || true,
+        loadMore: action.loadMore || false,
+      };
     case SET_COMMENTS:
       return {
         ...state,
