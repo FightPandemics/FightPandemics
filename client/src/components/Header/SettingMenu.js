@@ -38,10 +38,6 @@ export const SettingMenu = ({
         <CustomSvgIcon src={PeopleIcon} />
         {t("common.switchAccount")}
       </Menu.Item>
-      <Menu.Item onClick={() => setMenuState(MENU_STATE.LANGUAGES)}>
-        <CustomSvgIcon src={LanguageIcon} />
-        {t("common.language")}
-      </Menu.Item>
       <Menu.Item
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={onFeedbackIconClick}
