@@ -177,7 +177,7 @@ const Profile = ({
         );
       }
     })();
-  }, [dispatch, pathUserId, t, userProfileDispatch]);
+  }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const fetchPosts = async () => {

@@ -206,7 +206,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
         );
       }
     })();
-  }, [dispatch, orgProfileDispatch, organisationId, t, userProfileDispatch]);
+  }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
