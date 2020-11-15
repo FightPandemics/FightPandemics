@@ -26,7 +26,32 @@ export const HeaderLinks = ({
   setOrganisation: setOrganisationId,
 }) => {
   const { t } = useTranslation();
-  const languageMenu = <LanguageMenu />;
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    window.localStorage.setItem("locale", lng);
+  };
+
+  const languageMenu = (
+    <Menu>
+      {Object.entries(languages).map(([key, label]) => (
+        <Menu.Item key={key}>
+          <div
+            style={
+              i18n.language === key
+                ? { fontWeight: "bold" }
+                : { fontWeight: "normal" }
+            }
+            onClick={() => changeLanguage(key)}
+            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          >
+            {label.text}
+          </div>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <>
       <ul>
@@ -84,38 +109,16 @@ export const HeaderLinks = ({
             >
               <SvgIcon src={feedback} />
             </Button>
-            <Dropdown overlay={languageMenu} trigger={["click"]}>
-              <SvgIcon
-                id={GTM.nav.prefix + GTM.nav.language}
-                src={globe}
-                className="globe-icon-svg"
-              ></SvgIcon>
-            </Dropdown>
           </>
         )}
+        <Dropdown overlay={languageMenu} trigger={["click"]}>
+          <SvgIcon
+            id={GTM.nav.prefix + GTM.nav.language}
+            src={globe}
+            className="globe-icon-svg"
+          ></SvgIcon>
+        </Dropdown>
       </ul>
     </>
-  );
-};
-
-const LanguageMenu = () => {
-  const onLanguageChange = (language) => {
-    i18n.changeLanguage(language);
-    window.localStorage.setItem("locale", language);
-  };
-  return (
-    <Menu>
-      {Object.entries(languages).map(([key, label]) => (
-        <Menu.Item key={key}>
-          <div
-            style={{ fontWeight: i18n.language === key ? "bold" : "normal" }}
-            onClick={() => onLanguageChange(key)}
-            id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
-          >
-            {label.text}
-          </div>
-        </Menu.Item>
-      ))}
-    </Menu>
   );
 };
