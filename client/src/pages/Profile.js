@@ -158,6 +158,7 @@ const Profile = ({
   }
 
   useEffect(() => {
+    dispatch(postsActions.resetPageAction({}));
     (async function fetchProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -176,7 +177,7 @@ const Profile = ({
         );
       }
     })();
-  }, [pathUserId, t, userProfileDispatch]);
+  }, [dispatch, pathUserId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchPosts = async () => {

@@ -168,6 +168,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   }
 
   useEffect(() => {
+    dispatch(postsActions.resetPageAction({}));
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -205,7 +206,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, t, userProfileDispatch]);
+  }, [dispatch, orgProfileDispatch, organisationId, t, userProfileDispatch]);
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
