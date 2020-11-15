@@ -18,6 +18,7 @@ const {
 async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const BaseUser = app.mongo.model("User");
   const Post = app.mongo.model("Post");
   const Thread = app.mongo.model("Thread");
 
@@ -495,7 +496,7 @@ async function routes(app) {
     if (exp * 1000 < Date.now()) {
       throw app.httpErrors.badRequest("token is expired");
     }
-    const [err, user] = await app.to(User.findById(userId));
+    const [err, user] = await app.to(BaseUser.findById(userId));
     if (err) {
       req.log.error(err, `Failed retrieving user userId=${userId}`);
       throw app.httpErrors.internalServerError();
@@ -525,19 +526,13 @@ async function routes(app) {
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
       }
-      const [err, user] = await app.to(User.findById(userId));
-      if (err) {
-        req.log.error(err, `Failed retrieving user userId=${userId}`);
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        throw app.httpErrors.notFound();
-      }
-
-      let userData = user;
-      userData.notifyPrefs = body.notifyPrefs;
 
       const [updateErr, updatedUser] = await app.to(
-        Object.assign(user, userData).save(),
+        BaseUser.findOneAndUpdate(
+          { _id: userId },
+          { $set: { notifyPrefs: body.notifyPrefs } },
+          { new: true },
+        ),
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed updating user");
