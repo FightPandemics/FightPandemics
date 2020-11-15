@@ -253,7 +253,7 @@ const AboutUs = () => {
       >
         <h1>{t("ourCommunity")}</h1>
         <p>{t("community")}</p>
-        <GetInvButton getGTM={getGTM} />
+        <GetInvButton getGTM={getGTM} t={t} />
       </ImageContainer>
 
       <ConnectContainer>
@@ -415,7 +415,7 @@ const AboutUs = () => {
           </p>
           <p>
             {t("contactUs")}
-            <AboutUsLink href="mailto:admin@fightpandemics.com">
+            <AboutUsLink href="mailto:contact@fightpandemics.com">
               {t("contactEmail")}
             </AboutUsLink>
           </p>

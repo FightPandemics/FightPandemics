@@ -53,7 +53,7 @@ import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -179,6 +179,7 @@ const Feed = (props) => {
     });
     return ref.current;
   }
+
   const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
@@ -356,7 +357,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
-      sessionStorage.setItem("createPostAttemptLoggedOut", true);
+      sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
   };
@@ -476,11 +477,45 @@ const Feed = (props) => {
         } else if (meta.total === limit) {
           dispatch(postsActions.finishLoadingAction());
         }
+        let postsInState;
+        if (history.location.state) {
+          const { keepPostsState, keepPageState } = history.location.state;
+          postsInState = keepPostsState;
+          if (keepPageState >= page) {
+            dispatch(postsActions.setPageAction(keepPageState));
+          }
+        }
+        if (postsInState) {
+          if (Object.keys(postsInState).length === meta.total) {
+            dispatch(
+              postsActions.setLoadingAction({
+                isLoading: true,
+                loadMore: false,
+              }),
+            );
+          }
+        }
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        console.log(page, lastPage, meta.total);
+        if (page === lastPage) {
+          dispatch(
+            postsActions.setLoadingAction({
+              isLoading: true,
+              loadMore: false,
+            }),
+          );
+        }
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (Object.keys(postsList).length && page) {
+        if (postsInState) {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...postsInState, ...loadedPosts },
+            }),
+          );
+        } else if (Object.keys(postsList).length && page) {
           dispatch(
             postsActions.fetchPostsSuccess({
               posts: { ...postsList, ...loadedPosts },
@@ -525,6 +560,15 @@ const Feed = (props) => {
       loadPosts();
     }
   }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const createPostAttemptLoggedOut = sessionStorage.getItem(
+      "createPostAttemptLoggedOut",
+    );
+    if (createPostAttemptLoggedOut) {
+      handleCreatePost();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
@@ -642,7 +686,7 @@ const Feed = (props) => {
             </>
             <FiltersSidebar
               locationOnly={
-                !(!queryParams.s_category || queryParams.s_category == "POSTS")
+                !(!queryParams.s_category || queryParams.s_category === "POSTS")
               }
               gtmPrefix={GTM.feed.prefix}
             />
@@ -656,7 +700,7 @@ const Feed = (props) => {
                 t={t}
               />
               {(!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
+                queryParams.s_category === "POSTS") && (
                 <button
                   id={gtmTag(GTM.post.createPost)}
                   onClick={handleCreatePost}
@@ -685,14 +729,14 @@ const Feed = (props) => {
                   locationOnly={
                     !(
                       !queryParams.s_category ||
-                      queryParams.s_category == "POSTS"
+                      queryParams.s_category === "POSTS"
                     )
                   }
                   gtmPrefix={GTM.feed.prefix}
                 />
               </div>
             }
-            {!queryParams.s_category || queryParams.s_category == "POSTS" ? (
+            {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
               <Posts
                 isAuthenticated={isAuthenticated}
                 filteredPosts={postsList}
@@ -708,6 +752,7 @@ const Feed = (props) => {
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
                 highlightWords={queryParams.s_keyword}
+                page={page}
               />
             ) : (
               <Users
@@ -727,9 +772,10 @@ const Feed = (props) => {
               <NoPosts>
                 <Trans
                   i18nKey={
-                    !queryParams.s_category || queryParams.s_category == "POSTS"
+                    !queryParams.s_category ||
+                    queryParams.s_category === "POSTS"
                       ? "feed.noResultsPosts"
-                      : queryParams.s_category == "INDIVIDUALS"
+                      : queryParams.s_category === "INDIVIDUALS"
                       ? "feed.noResultsPeople"
                       : "feed.noResultsOrgs"
                   }
@@ -743,7 +789,7 @@ const Feed = (props) => {
               </NoPosts>
             ) : (
               (!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
+                queryParams.s_category === "POSTS") && (
                 <CreatePostIcon
                   id={gtmTag(GTM.post.createPost)}
                   src={creatPost}

@@ -371,7 +371,7 @@
     "ourIdea": "Our Idea",
     "ourSupporters": "Our Supporters",
     "followUs": "Follow us on social media",
-    "contactUs": "Contact us at: ",
+    "contactUs": "Or contact us at: ",
     "contactEmail": "contact@fightpandemics.com",
     "heading": "We want to create a world where humans are more resilient to emergencies",
     "subHeading": "by helping communities respond more quickly and effectively to crises.",
@@ -397,7 +397,13 @@
     "lifetimeSupporters": "Lifetime supporters",
     "currentSupporters": "Current supporters",
     "pastSupporters": "Past supporters",
-    "hashtag": "#ForCommunitiesByCommunities"
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "Get Involved",
+    "joinVolunteer": "Join as Volunteer",
+    "joinAmbassador": "Join as Ambassador",
+    "joinStudentProgram": "Join Student Program",
+    "studentSummerProgram": "Student Summer Program",
+    "forStudentInAge": "For Students ages 14-18."
   },
   "footer": {
     "faq": "FAQ",

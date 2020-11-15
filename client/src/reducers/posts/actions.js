@@ -6,6 +6,7 @@ export const POSTS_ACTIONS = {
   NEXT_PAGE: "NEXT_PAGE",
   RESET_PAGE: "RESET_PAGE",
   SET_LIKE: "SET_LIKE",
+  SET_LOADING: "SET_LOADING",
 };
 
 export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
@@ -46,6 +47,16 @@ export const setNextPageAction = () => ({
   type: POSTS_ACTIONS.NEXT_PAGE,
 });
 
+export const setPageAction = (page) => ({
+  type: POSTS_ACTIONS.NEXT_PAGE,
+  payload: { page },
+});
+
+export const setLoadingAction = ({ isLoading, loadMore }) => ({
+  type: POSTS_ACTIONS.SET_LOADING,
+  payload: { isLoading, loadMore },
+});
+
 export const postsActions = {
   resetPageAction,
   setLikeAction,
@@ -53,5 +64,7 @@ export const postsActions = {
   fetchPostsSuccess,
   fetchPostsError,
   finishLoadingAction,
+  setLoadingAction,
   setNextPageAction,
+  setPageAction,
 };
