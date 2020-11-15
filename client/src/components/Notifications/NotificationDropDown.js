@@ -13,7 +13,7 @@ import bell from "../../assets/icons/notification-icons/header-bell.svg";
 import amt from "../../assets/icons/notification-icons/notification-amt.svg";
 import gear from "../../assets/icons/notification-icons/gear-logo.svg";
 import { theme, mq } from "constants/theme";
-import relativeTime from "utils/relativeTime";
+import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
 
@@ -194,7 +194,11 @@ const MenuItem = ({
             values={{ username: author, postTitle, shareMedium: sharedVia }}
           ></Trans>
         </div>
-        <div>{createdAt}</div>
+        <div>
+          {t(`relativeTime.${createdAt[1]}WithCount`, {
+            count: createdAt[0],
+          })}
+        </div>
       </Content>
       <Unread unread={unread}>
         <img src={amt} />
@@ -280,7 +284,7 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
     postTitle: n.post.title,
     path: `/post/${n.post.id}`,
     actionAvatar: notificationTypes[n.action].icon,
-    createdAt: relativeTime(n.createdAt),
+    createdAt: getRelativeTime(n.createdAt),
     avatar: n.triggeredBy.photo,
     sharedVia: n.sharedVia,
     unread: !n.readAt,
