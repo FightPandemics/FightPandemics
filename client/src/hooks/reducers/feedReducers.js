@@ -7,6 +7,7 @@ import {
   SET_VALUE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_HIDE,
+  SET_PAGE,
 } from "../actions/feedActions";
 
 export const feedReducer = (oldState, action) => {
