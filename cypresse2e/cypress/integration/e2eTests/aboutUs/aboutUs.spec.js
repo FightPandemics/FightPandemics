@@ -29,6 +29,12 @@ describe("FightPandemics About Us page", () => {
       goToHelpBoardButtonIsVisibleAndPointToAppropriateLink();
     });
 
+    it("Check if supporter (lifetime, current, past) containers are exist, visible and how many links are present in each", () => {
+      lifetimeSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
+      currentSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
+      pastSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
+    });
+
     it("Check if FightPandemics email links are working", () => {
       partnershipEmailLinkIsVisibleAndPointToAppropriateLink();
       contactEmailLinkIsVisibleAndPointToAppropriateLink();
@@ -77,6 +83,20 @@ describe("FightPandemics About Us page", () => {
     cy.get(aboutUs.getInvolvedCloseButton).click();
   }
 
+  function lifetimeSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
+    supporterContainerVisibleAndContainsMembers(aboutUs.lifetimeSupportersContainerXpath,aboutUs.lifetimeNumberOfMembers)
+  }
+
+   function currentSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
+    supporterContainerVisibleAndContainsMembers(aboutUs.currentSupportersContainerXpath,aboutUs.currentNumberOfMembers)
+  }
+
+   function pastSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
+    supporterContainerVisibleAndContainsMembers(aboutUs.pastSupportersContainerXpath,aboutUs.pastNumberOfMembers)
+  }
+
+
+
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
     checkEmailWorks(socialContactInfo.partnershipEmail, socialContactInfo.partnershipEmailHref);
   }
@@ -90,5 +110,11 @@ describe("FightPandemics About Us page", () => {
     cy.contains(email)
       .should("be.visible")
       .and("have.attr", "href", link);
+  }
+
+  function supporterContainerVisibleAndContainsMembers(supporterContainerXpath,numberOfMembers) {
+    cy.xpath(supporterContainerXpath)
+      .should("be.visible")
+      .children().should("have.length", numberOfMembers);
   }
 });
