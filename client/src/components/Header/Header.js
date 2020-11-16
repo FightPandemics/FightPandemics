@@ -111,6 +111,10 @@ const NavLinks = styled.div`
         color: ${colors.royalBlue};
         border-bottom: 0.3rem solid ${colors.royalBlue};
       }
+      .ant-avatar {
+        cursor: pointer;
+        user-select: none;
+      }
     }
   }
 `;

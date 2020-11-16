@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Menu } from "antd";
 import styled from "styled-components";
 
 import GTM from "constants/gtm-tags";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { Avatar } from "components/Avatar";
+import Menu from "./StyledMenu";
 import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import FeedbackIcon from "assets/icons/feedback-gray.svg";

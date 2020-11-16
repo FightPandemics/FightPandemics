@@ -27,19 +27,27 @@ export const ProfileMenu = ({
       setMenuState(MENU_STATE.CLOSED);
     }
   };
+  const actor = organisationId
+    ? user.organisations.find((org) => org._id === organisationId)
+    : user;
   return (
     <Dropdown
       overlay={menu}
       visible={menuState !== MENU_STATE.CLOSED}
       onVisibleChange={onVisibleChange}
       trigger={["click"]}
+      getPopupContainer={() =>
+        document.getElementsByClassName("am-navbar-right")[0]
+      }
     >
       <Avatar
         size={"small"}
-        src={user.photo}
+        src={actor.photo}
         onClick={() => setMenuState(MENU_STATE.SETTINGS)}
       >
-        {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
+        {getInitialsFromFullName(
+          `${actor.name || `${actor.firstName} ${actor.lastName}`}`,
+        )}
       </Avatar>
     </Dropdown>
   );
