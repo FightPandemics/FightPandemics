@@ -71,12 +71,14 @@ const ProfileItem = ({ user }) => {
     <ProfileItemContainer>
       <div>
         <Avatar src={user.photo} size={"small"}>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
+          {getInitialsFromFullName(
+            `${user.name || `${user.firstName} ${user.lastName}`}`,
+          )}
         </Avatar>
       </div>
       <div>
         <ProfileInfo bold>
-          {`${user?.firstName} ${user?.lastName} `}
+          {`${user.name || `${user.firstName} ${user.lastName}`}`}
         </ProfileInfo>
         <ProfileInfo>View my Profile</ProfileInfo>
       </div>

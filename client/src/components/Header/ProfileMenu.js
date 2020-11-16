@@ -14,9 +14,13 @@ export const ProfileMenu = ({
   onFeedbackIconClick,
 }) => {
   const [menuState, setMenuState] = useState(MENU_STATE.CLOSED);
+  const actor = organisationId
+    ? user.organisations.find((org) => org._id === organisationId)
+    : user;
   const menu = renderMenu(
     menuState,
     setMenuState,
+    actor,
     user,
     setOrganisation,
     organisationId,
@@ -27,9 +31,7 @@ export const ProfileMenu = ({
       setMenuState(MENU_STATE.CLOSED);
     }
   };
-  const actor = organisationId
-    ? user.organisations.find((org) => org._id === organisationId)
-    : user;
+
   return (
     <Dropdown
       overlay={menu}
@@ -56,6 +58,7 @@ export const ProfileMenu = ({
 const renderMenu = (
   menuState,
   setMenuState,
+  actor,
   user,
   setOrganisation,
   organisationId,
@@ -64,7 +67,7 @@ const renderMenu = (
   if (menuState === MENU_STATE.SETTINGS) {
     return (
       <SettingMenu
-        user={user}
+        user={actor}
         organisationId={organisationId}
         onFeedbackIconClick={onFeedbackIconClick}
         setMenuState={setMenuState}
