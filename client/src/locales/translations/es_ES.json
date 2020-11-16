@@ -1,6 +1,6 @@
 {
   "headline": "Un lugar para ofrecer y solicitar ayuda",
-  "tagline": "<0>Las pandemias seguirán ocurriendo.</0><1>Ayudamos a las comunidades a prepararse y responder</1>",
+  "tagline": "<0>Las pandemias seguirán ocurriendo.</0><1>Ayudamos a las comunidades a prepararse y responder.</1>",
   "common": {
     "getHelp": "Solicitar ayuda",
     "giveHelp": "Ofrecer Ayuda",
@@ -46,7 +46,7 @@
   },
   "feed": {
     "title": "Informes de Ayuda",
-    "all": "Todos los puestos",
+    "all": "Todas las publicaciones",
     "request": "Solicitar ayuda",
     "offer": "Ofreciendo ayuda",
     "quit": "Salir de los filtros",
@@ -105,7 +105,7 @@
       },
       "typesOptions": {
         "Medical Supplies": "Suministros Médicos",
-        "Groceries/Food": "Abarrotes/Alimentos",
+        "Groceries/Food": "Alimentos/Abarrotes",
         "Business": "Negocios",
         "Education": "Educación",
         "Legal": "Legal",
@@ -123,7 +123,24 @@
       }
     },
     "filterBy": "Filtrar por",
-    "noResults": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0> crea una publicación </0>"
+    "noResults": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0> crea una publicación </0>",
+    "allPosts": "Todas las publicaciones",
+    "allPeople": "Todas las personas",
+    "allOrgs": "Todas las organizaciones",
+    "noResultsPosts": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0> crea una publicación </0>",
+    "noResultsPeople": "Lo sentimos, actualmente no hay personas disponibles. Por favor intenta utilizar un filtro de búsqueda diferente.",
+    "noResultsOrgs": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Por favor intenta utilizar un filtro de búsqueda diferente.",
+    "search": {
+      "placeholder": "Buscar publicaciones, Personas y Organizaciones",
+      "keywords": "Palabras clave",
+      "error": "Mín.{{length}}caracteres",
+      "options": {
+        "posts": "Publicaciones",
+        "people": "Personas",
+        "orgs": "Organizaciones",
+        "orgsShort": "Organizaciones"
+      }
+    }
   },
   "post": {
     "create": "Crear una publicación",
@@ -183,7 +200,8 @@
     "share": "Compartir",
     "delete": "Eliminar",
     "cancel": "Cancelar",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "edited": "editado"
   },
   "profile": {
     "common": {
@@ -224,9 +242,10 @@
         "linkedin": "URL de LinkedIn",
         "website": "Página web"
       },
-      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 254 caracteres",
+      "emailMaxLength": "La dirección de correo electrónico no debe exceder los 200 caracteres",
       "emailInvalid": "La dirección de correo electrónico es inválida",
-      "emailDomainInvalid": "El dominio de correo electrónico es inválido"
+      "emailDomainInvalid": "El dominio de correo electrónico es inválido",
+      "sendMessage": "Enviar mensaje"
     },
     "individual": {
       "email": "Correo Electrónico",
@@ -312,7 +331,8 @@
       "activity": "Actividad",
       "editAccount": "Editar Información de la Cuenta",
       "updateSuccess": "La organización se actualizó con éxito",
-      "orgNameRequired": "Se requiere el nombre de la organización"
+      "orgNameRequired": "Se requiere el nombre de la organización",
+      "global": "Global"
     }
   },
   "auth": {
@@ -323,7 +343,7 @@
     "password": "Contraseña",
     "enterPassword": "Introducir la contraseña",
     "confirmPassword": "Confirmar Contraseña",
-    "forgotPassword": "Olvidaste tu contraseña",
+    "forgotPassword": "Olvidaste tu contraseña?",
     "noAccount": "¿No tienes una cuenta?",
     "haveAccount": "¿Ya tienes una cuenta?",
     "recoverLink": "Envíame un enlace de recuperación",
@@ -345,12 +365,37 @@
     "ourStory": "Nuestra Historia",
     "story": "La idea de FightPandemics es la creación de Manuel González Alzuru, que fue infectado con COVID-19 en Francia. Al regresar a Barcelona, se dio cuenta de que no podía conseguir ayuda a pesar de que había personas que querían ayudar. Sin saber personalmente a nadie involucrado no podía pedirles asistencia directamente.  Dentro de el barrio de Manuel, grupos por Telegram y WhatsApp comenzaron a organizarse. Inspirado por todos que se unieron, Manuel lanzó el proyecto con una misión en mente: asegurarse que otros pudieran conectarse a tiempo.",
     "ourCommunity": "Nuestra Comunidad",
-    "community": "Estamos formados por un equipo de más de 450 voluntarios conformado por programadores, diseñadores, científicos, expertos en salud y project managers de todo el mundo.",
+    "community": "Estamos formados por un equipo de más de 1200 voluntarios conformado por programadores, diseñadores, científicos, expertos en salud y project managers de todo el mundo.",
     "ourIdea": "Nuestra Idea",
     "ourSupporters": "Nuestro Seguidores",
     "followUs": "Síguenos en las redes sociales",
-    "contactUs": "O contáctanos en",
-    "contactEmail": "contact@fightpandemics.com"
+    "contactUs": "O contáctanos en ",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "We want to create a world where humans are more resilient to emergencies",
+    "subHeading": "by helping communities respond more quickly and effectively to crises.",
+    "forWhoHeading": "Who is this for?",
+    "forWho": "Anyone or any type of business, community group, government, or health care organisation who needs or wants to provide help.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Inspired by so many coming together, Manuel launched the project with one mission in mind: <span>to ensure that others could connect in time.</span>",
+    "connectPeople": "We connect people",
+    "connect": "An altruistic platform to connect those who need help with those who can provide it.",
+    "howWork": "How does this work?",
+    "helpBoard": "Informes de Ayuda",
+    "helpBoardDetail": "A community platform for individuals and organizations to offer and request aid.",
+    "localGlobal": "Local & Global",
+    "localGlobalDetail": "Offer and request help within my community and around the world.",
+    "relevantContent": "Relevant Content",
+    "relevantContentDetail": "Expiration periods ensure the board is always up to date.",
+    "goToHelpBoard": "Go to Help Board",
+    "supporters": "Supporters",
+    "thanksSupporters": "Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.",
+    "becomeSupporter": "To learn more about how your business can become a supporter, please contact our partnerships team at",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Click on the company logo below to go to the supporter's website.",
+    "lifetimeSupporters": "Lifetime supporters",
+    "currentSupporters": "Current supporters",
+    "pastSupporters": "Past supporters",
+    "hashtag": "#ForCommunitiesByCommunities"
   },
   "footer": {
     "faq": "Preguntas Frecuentes",
@@ -591,7 +636,7 @@
     "thankYouMessage": "Su opinión significa mucho y nos ayuda a mejorar nuestros servicios durante y después de la pandemia de COVID-19.",
     "submitFeedback": "Enviar comentarios",
     "radio": {
-      "age": "Cuántos años tienes",
+      "age": "Cuántos años tienes?",
       "unaffected": "Voy al trabajo/escuela normalmente",
       "quarantine": "Estoy sano pero en cuarentena en casa",
       "symptomaticUntested": "Tengo síntomas leves pero no me he hecho la prueba.",
@@ -680,46 +725,53 @@
     "failedSignup": "Error de inscripción, motivo:",
     "failedPasswordRecovery": "Error en la recuperación de la contraseña, motivo:",
     "http": {
-      "Bad Request": "Bad Request",
-      "Unauthorized": "Not found",
-      "Payment Required": "Payment Required",
-      "Forbidden": "Forbidden",
-      "Not Found": "Not Found",
-      "Method Not Allowed": "Method Not Allowed",
-      "Not Acceptable": "Not Acceptable",
-      "Proxy Authentication Required": "Proxy Authentication Required",
-      "Request Timeout": "Request Timeout",
-      "Conflict": "Conflict",
-      "Gone": "Gone",
+      "Bad Request": "Solicitud incorrecta",
+      "Unauthorized": "Desautorizado",
+      "Payment Required": "Pago requerido",
+      "Forbidden": "Prohibido",
+      "Not Found": "No encontrado",
+      "Method Not Allowed": "Método no permitido",
+      "Not Acceptable": "Inaceptable",
+      "Proxy Authentication Required": "Se requiere autenticación proxy",
+      "Request Timeout": "Solicitar tiempo de espera",
+      "Conflict": "Conflicto",
+      "Gone": "Se ha ido",
       "Length Required": "Longitud Requerida",
-      "Precondition Failed": "Precondition Failed",
-      "Payload Too Large": "Payload Too Large",
-      "URI Too Long": "URI Too Long",
-      "Unsupported Media Type": "Unsupported Media Type",
-      "Range Not Satisfiable": "Range Not Satisfiable",
-      "Expectation Failed": "Expectation Failed",
-      "I'm a teapot": "I'm a teapot",
-      "Misdirected Request": "Misdirected Request",
-      "Unprocessable Entity": "Unprocessable Entity",
-      "Locked": "Locked",
-      "Failed Dependency": "Failed Dependency",
-      "Too Early": "Too Early",
-      "Upgrade Required": "Upgrade Required",
-      "Precondition Required": "Precondition Required",
-      "Too Many Requests": "Too Many Requests",
-      "Request Header Fields Too Large": "Request Header Fields Too Large",
-      "Unavailable For Legal Reasons": "Unavailable For Legal Reasons",
-      "Internal Server Error": "Internal Server Error",
-      "Not Implemented": "Not Implemented",
-      "Bad Gateway": "Bad Gateway",
-      "Service Unavailable": "Service Unavailable",
-      "Gateway Timeout": "Gateway Timeout",
+      "Precondition Failed": "Condición previa Falló",
+      "Payload Too Large": "Carga útil demasiado larga",
+      "URI Too Long": "URI demasiado largo",
+      "Unsupported Media Type": "Medio de comunicación no admitido",
+      "Range Not Satisfiable": "Rango no satisfactorio",
+      "Expectation Failed": "Expectativa fallida",
+      "I'm a teapot": "Soy una tetera",
+      "Misdirected Request": "Solicitud mal dirigida",
+      "Unprocessable Entity": "Entidad no procesable",
+      "Locked": "Bloqueado",
+      "Failed Dependency": "Dependencia fallida",
+      "Too Early": "Demasiado temprano",
+      "Upgrade Required": "Actualización requerida",
+      "Precondition Required": "Requisito previo",
+      "Too Many Requests": "Demasiadas solicitudes",
+      "Request Header Fields Too Large": "Campos de encabezado de solicitud demasiado grandes",
+      "Unavailable For Legal Reasons": "No disponible por motivos legales",
+      "Internal Server Error": "Error interno del servidor",
+      "Not Implemented": "No se ha implementado",
+      "Bad Gateway": "Puerta de enlace incorrecta",
+      "Service Unavailable": "Servicio no disponible",
+      "Gateway Timeout": "Tiempo de espera de puerta de enlace",
       "HTTP Version Not Supported": "Versión HTTP no compatible",
-      "Variant Also Negotiates": "Variant Also Negotiates",
-      "Insufficient Storage": "Insufficient Storage",
-      "Loop Detected": "Loop Detected",
-      "Not Extended": "Not Extended",
-      "Network Authentication Required": "Network Authentication Required"
+      "Variant Also Negotiates": "La variante también negocia",
+      "Insufficient Storage": "Espacio insuficiente",
+      "Loop Detected": "Bucle detectado",
+      "Not Extended": "No extendido",
+      "Network Authentication Required": "Se requiere autenticación de red"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Lo siento, solo admitimos archivos de imagen jp(e)g y png.",
+      "fileSizeTooLarge": "Por favor, sube una imagen de menos de 5 MB.",
+      "imageDimensionTooSmall": "Por favor, sube una imagen que tenga al menos 250 pixeles de alto y 250 pixeles de ancho.",
+      "imageDimensionTooWide": "Lo siento, la imagen es demasiado ancha. Vuelva a intentarlo con una imagen que tenga un ancho inferior al doble de la altura.",
+      "networkError": "Lo siento, se produjo un error de red."
     }
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud",
@@ -762,5 +814,10 @@
   "TEMP: Done": "Completo",
   "TEMP: Retake the Test": "Repetir la prueba",
   "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Según los síntomas reportados, debes buscar atención médica de inmediato.\n¡Llama al número de emergencia!",
-  "TEMP: Your Responses": "Tus respuestas"
+  "TEMP: Your Responses": "Tus respuestas",
+  "avatar": {
+    "submitBtn": "Enviar",
+    "cancelBtn": "Cancelar",
+    "tryAgainBtn": "Inténtalo de nuevo."
+  }
 }

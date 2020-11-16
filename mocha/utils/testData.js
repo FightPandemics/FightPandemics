@@ -1,79 +1,120 @@
 const randomStringGenerator = require("../utils/randomStringGenerator");
 
 exports.userCredentialsWithRandomEmailAndRandomPassword = {
-    email: generateRandomEmail(),
-    password: generateRandomPassword(),
+  email: generateRandomEmail(),
+  password: generateRandomPassword(),
 };
 
 exports.userCredentialsWithRandomEmail = {
-    email: generateRandomEmail(),
-    password: 'AbcTest123;',
+  email: generateRandomEmail(),
+  password: "AbcTest123;",
 };
 
 exports.userCredentialsWithEmptyEmail = {
-    email: '',
-    password: generateRandomPassword(),
+  email: "",
+  password: generateRandomPassword(),
 };
 
 exports.userCredentialsWithEmptyPassword = {
-    email: generateRandomEmail(),
-    password: '',
+  email: generateRandomEmail(),
+  password: "",
 };
 
 exports.userCredentialsWithInvalidEmailNoDomainSpecified = {
-    email: generateInvalidRandomEmail(),
-    password: generateRandomPassword(),
-}
+  email: generateInvalidRandomEmail(),
+  password: generateRandomPassword(),
+};
 
 exports.userCredentialsWithInvalidPassword = {
-    email: generateRandomEmail(),
-    password: 'abc',
-}
+  email: generateRandomEmail(),
+  password: "abc",
+};
 
 exports.userCredentialsWithEmailLocalExceeding64Characters = {
-    email: generateEmailLocalExceeding64Characters(),
-    password: generateRandomPassword(),
-}
+  email: generateEmailLocalExceeding64Characters(),
+  password: generateRandomPassword(),
+};
 
 exports.userCredentialsWithEmailDomainExceeding63Characters = {
-    email: generateEmailDomainExceeding63Characters(),
-    password: generateRandomPassword(),
-}
+  email: generateEmailDomainExceeding63Characters(),
+  password: generateRandomPassword(),
+};
 
 exports.userCredentialsWithEmailInvalidTopLevelDomain = {
-    email: generateEmailInvalidTopLevelDomain(),
-    password: generateRandomPassword(),
-}
+  email: generateEmailInvalidTopLevelDomain(),
+  password: generateRandomPassword(),
+};
+
+exports.userCredentialsWithEmailExceeding254Characters = {
+  email: generateEmailExceeding254Characters(),
+  password: generateRandomPassword(),
+};
 
 exports.userCredentialsWithMismatchedPassword = {
-    confirmPassword: 'Password'
-}
-
+  confirmPassword: "Password",
+};
 
 function generateRandomEmail() {
-    return randomStringGenerator.randomString(8) + '.' + randomStringGenerator.randomString(8) + '@' + randomStringGenerator.randomString(5) + '.com';
+  return (
+    randomStringGenerator.randomString(8) +
+    "." +
+    randomStringGenerator.randomString(8) +
+    "@" +
+    randomStringGenerator.randomString(5) +
+    ".com"
+  );
 }
 
 function generateInvalidRandomEmail() {
-    return randomStringGenerator.randomString(8) + '.' + randomStringGenerator.randomString(8) + '@';
+  return (
+    randomStringGenerator.randomString(8) +
+    "." +
+    randomStringGenerator.randomString(8) +
+    "@"
+  );
 }
 
 function generateRandomPassword() {
-    return randomStringGenerator.randomString(8) + '.;';
+  return randomStringGenerator.randomString(8) + ".;";
 }
 
 function generateEmailLocalExceeding64Characters() {
-    //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
-    return randomStringGenerator.randomString(100) + '@' + randomStringGenerator.randomString(5) + '.com';
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(100) +
+    "@" +
+    randomStringGenerator.randomString(5) +
+    ".com"
+  );
 }
 
 function generateEmailDomainExceeding63Characters() {
-    //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
-    return randomStringGenerator.randomString(64) + '@' + randomStringGenerator.randomString(65) + '.com';
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(64) +
+    "@" +
+    randomStringGenerator.randomString(65) +
+    ".com"
+  );
 }
 
 function generateEmailInvalidTopLevelDomain() {
-    //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
-    return randomStringGenerator.randomString(64) + '@' + randomStringGenerator.randomString(63) + '.' + randomStringGenerator.randomString(150);
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(64) +
+    "@" +
+    randomStringGenerator.randomString(63) +
+    "." +
+    randomStringGenerator.randomString(150)
+  );
 }
 
+function generateEmailExceeding254Characters() {
+  //following the rules that Auth0 are using the email needs to have 64max for the local part and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(64) +
+    "@" +
+    randomStringGenerator.randomString(200) +
+    ".com"
+  );
+}

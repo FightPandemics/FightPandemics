@@ -44,6 +44,7 @@ export const RouteWithSubRoutes = (route) => {
     notLoggedInOnly,
     tabIndex,
     mobiletabs,
+    navSearch,
     forgotPassword,
   } = props;
 
@@ -62,9 +63,14 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
+            const createPostRedirect = sessionStorage.getItem(
+              "createPostAttemptLoggedOut",
+            );
             //redirect to the appropriate post if View More or Comment clicked
             const postRedirect = sessionStorage.getItem("postredirect");
-            if (postRedirect) {
+            if (createPostRedirect) {
+              redirect = createPostRedirect;
+            } else if (postRedirect) {
               redirect = postRedirect;
               sessionStorage.removeItem("postredirect");
             } else {
@@ -110,6 +116,7 @@ export const RouteWithSubRoutes = (route) => {
             user={user}
             routes={route.routes}
             mobiletabs={mobiletabs}
+            navSearch={navSearch}
             tabIndex={tabIndex}
           />
         );

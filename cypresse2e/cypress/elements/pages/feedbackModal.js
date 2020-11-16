@@ -1,67 +1,64 @@
 class FeedbackModal {
+  feedbackIcon = "button#NAV_FDB";
+  feedbackH3 = ".am-modal-body h3";
+  feedbackScale = ".rectangle";
+  feedbackScaleText = ".scale-text";
+  closeModal = ".am-modal-close";
+  feedbackH2 = ".am-modal-body h2";
+  feedbackQuestions = "label";
+  feedbackInputList = ".am-modal-body div > input";
+  button = "a span";
+  radioAnswersList = ".ant-radio-wrapper";
+  radioAnswers = ".ant-radio-input";
 
-    feedbackIcon = 'button#NAV_FDB';
-    feedbackHeadingOne = '.am-modal-body h3';
-    feedbackScale = '.rectangle';
-    feedbackScaleText = '.scale-text';
-    closeModal = '.am-modal-close';
-    feedbackHeadingTwo = '.am-modal-body h2';
-    feedbackQuestions = 'label';
-    feedbackInputList = '.am-modal-body div > input';
-    button = 'a span';
-    radioAnswersList = '.ant-radio-wrapper';
-    radioAnswers = '.ant-radio-input';
+  constructor() {}
 
+  visit() {
+    cy.visit("");
+  }
 
+  getFeedbackIcon() {
+    return cy.get(this.feedbackIcon);
+  }
 
-    constructor() { }
+  getFeedbackH3() {
+    return this.feedbackH3;
+  }
 
-    visit() {
-        cy.visit('');
-    }
+  getFeedbackScale() {
+    return cy.get(this.feedbackScale);
+  }
 
-    getFeedbackIcon() {
-        return cy.get(this.feedbackIcon);
-    }
+  getFeedbackScaleText() {
+    return cy.get(this.feedbackScaleText);
+  }
 
-    getFeedbackHeadingOne() {
-        return cy.get(this.feedbackHeadingOne);
-    }
+  getCloseModal() {
+    return cy.get(this.closeModal);
+  }
 
-    getFeedbackScale() {
-        return cy.get(this.feedbackScale);
-    }
+  getFeedbackH2() {
+    return this.feedbackH2;
+  }
 
-    getFeedbackScaleText() {
-        return cy.get(this.feedbackScaleText);
-    }
+  getFeedbackQuestions() {
+    return cy.get(this.feedbackQuestions);
+  }
 
-    getCloseModal() {
-        return cy.get(this.closeModal);
-    }
+  getFeedbackInputList() {
+    return cy.get(this.feedbackInputList);
+  }
 
-    getFeedbackHeadingTwo() {
-        return cy.get(this.feedbackHeadingTwo);
-    }
+  getButton() {
+    return cy.get(this.button);
+  }
 
-    getFeedbackQuestions() {
-        return cy.get(this.feedbackQuestions);
-    }
+  getRadioAnswersList() {
+    return cy.get(this.radioAnswersList);
+  }
 
-    getFeedbackInputList() {
-        return cy.get(this.feedbackInputList);
-    }
-
-    getButton() {
-        return cy.get(this.button);
-    }
-
-    getRadioAnswersList() {
-        return cy.get(this.radioAnswersList);
-    }
-
-    getRadioAnswers() {
-        return cy.get(this.radioAnswers);
-    }
+  getRadioAnswers() {
+    return cy.get(this.radioAnswers);
+  }
 }
 export default FeedbackModal;

@@ -12,13 +12,18 @@ export const localization = {
   he: "he",
   id: "id",
   it: "it",
+  "kn-IN": "kn-IN",
+  "ms-MY": "ms-MY",
   nl: "nl",
   pl: "pl",
   pt: "pt",
   ru: "ru",
+  "te-IN": "te-IN",
   th: "th",
   tr: "tr",
   uk: "uk",
+  vi: "vi",
+  "zh-CN": "zh-CN",
   "zh-TW": "zh-TW",
 };
 
@@ -36,13 +41,18 @@ export const MENU_MAP = {
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
   it: { value: "Italiano", text: "Italian (Italiano)" },
   nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
-  pl: { value: "Polskie", text: "Polish (Polskie)" },
+  pl: { value: "Polski", text: "Polish (Polski)" },
   pt: { value: "Português", text: "Portuguese (Português)" },
   ru: { value: "русский", text: "Russian (русский)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },
   tr: { value: "Türkçe", text: "Turkish (Türkçe)" },
   uk: { value: "Українська", text: "Ukrainian (Українська)" },
   "zh-TW": { value: "繁體中文", text: "Chinese Traditional (繁體中文)" },
+  "zh-CN": { value: "简体中文", text: "Chinese Simplified (简体中文)" },
+  "kn-IN": { value: "ಕನ್ನಡ", text: "Kannada (ಕನ್ನಡ)" },
+  "ms-MY": { value: "Bahasa Melayu", text: "Malay (Bahasa Melayu)" },
+  "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" },
+  vi: { value: "Tiếng Việt", text: "Vietnamese (Tiếng Việt)" },
 };
 
 export const languages = Object.keys(resources).reduce(

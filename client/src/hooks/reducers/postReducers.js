@@ -9,8 +9,6 @@ import {
   RESET_LOADING,
   NEXT_PAGE,
   SET_LOADING,
-  RESET_LOADMORE,
-  SET_LOADMORE,
   SET_COMMENT,
   SET_COMMENTS,
   SHOW_COMMENTS,
@@ -20,9 +18,7 @@ import {
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
 } from "../actions/postActions";
-import {
-  DELETE_MODAL_HIDE,
-} from "../actions/feedActions";
+import { DELETE_MODAL_HIDE } from "../actions/feedActions";
 
 export const postState = {
   status: SET_POST,
@@ -47,7 +43,6 @@ export const postState = {
   editPostModalVisibility: false,
   showComments: true,
   isLoading: false,
-  loadMorePost: false,
   loadMoreComments: true,
   page: 1,
 };
@@ -112,10 +107,6 @@ export const postReducer = (state = postState, action) => {
       return { ...state, isLoading: false };
     case SET_LOADING:
       return { ...state, isLoading: true };
-    case RESET_LOADMORE:
-      return { ...state, loadMorePost: false };
-    case SET_LOADMORE:
-      return { ...state, loadMorePost: true };
     case SET_COMMENTS:
       return {
         ...state,

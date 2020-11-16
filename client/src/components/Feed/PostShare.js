@@ -43,7 +43,7 @@ export const ShareModal = ({
       </Heading>
 
       <div>
-        <EmailShareButton url={postUrl} title={postTitle} body={postContent}>
+        <EmailShareButton url={postUrl} subject={postTitle} body={postContent}>
           <EmailIcon size={ICON_SIZE_PIXEL} round />
         </EmailShareButton>
         <FacebookShareButton url={postUrl} hashtag={"#fightpandemics"}>

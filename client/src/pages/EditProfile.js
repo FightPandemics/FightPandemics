@@ -82,7 +82,7 @@ function EditProfile(props) {
       "LinkedIn URL",
       {
         pattern: {
-          value: /^[a-zA-Z0-9_\-/]*$/,
+          value: /^[a-zA-Z0-9\-]*$/,
           message: t("profile.common.validCharacters", {
             characters: "A-Z a-z 0-9 -",
           }),
@@ -167,7 +167,7 @@ function EditProfile(props) {
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [t, userProfileDispatch]);
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
@@ -179,8 +179,9 @@ function EditProfile(props) {
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic
-            resolution={"7680px"}
-            noPic={true}
+            resolution={"768rem"}
+            allowUpload={false}
+            user={user}
             initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
           />
         </TitlePictureWrapper>

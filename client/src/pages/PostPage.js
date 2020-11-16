@@ -26,7 +26,6 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_SHORT_CONTENT,
-  RESET_LOADMORE,
   SET_LOADMORE,
   SET_FULL_CONTENT,
   SET_LIKE,
@@ -117,7 +116,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     partialContent: postSubstring,
     editPostModalVisibility,
     deleteModalVisibility,
-    loadMorePost,
     commentsCount,
     showComments,
   } = post;
@@ -187,24 +185,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: false,
     });
-  };
-
-  const toggleViewContent = async () => {
-    if (!loadMorePost) {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: postSubstring,
-      });
-      dispatchPostAction(SET_LOADMORE);
-    } else {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: fullContent,
-      });
-      dispatchPostAction(RESET_LOADMORE);
-    }
   };
 
   const handlePostDelete = () => {
@@ -347,7 +327,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
           value={{
             user,
             fullContent,
-            loadMorePost,
             updateComments,
             isAuthenticated,
             handlePostLike,
@@ -366,8 +345,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
-                onClick={toggleViewContent}
-                loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
                 showComments={showComments}
                 numComments={commentsCount}
