@@ -79,7 +79,6 @@ class PrivacyPolicy {
       case 17:
         return cy.xpath(this.seventhParaLocWithOrdList);
       case 18:
-        console.log(ParaNumber);
         return cy.xpath(this.eightParaLocWithOrdList);
       case 19:
         return cy.xpath(this.ninethParaLocWithOrdList);
@@ -92,7 +91,6 @@ class PrivacyPolicy {
       case 113:
         return cy.xpath(this.thirteenParaLocWithOrdList);
       case 114:
-        console.log(ParaNumber);
         return cy.xpath(this.fourthteenParaLocWithOrdList);
       case 115:
         return cy.xpath(this.fifthteenParaLocWithOrdList);

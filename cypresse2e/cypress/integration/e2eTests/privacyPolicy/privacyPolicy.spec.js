@@ -40,32 +40,26 @@ describe("Private Policy for FightPandemics", () => {
       });
 
       it("Get and Validate the PRIVACY POLICY content for the SECOND paragraph with Order List starting with-2. Your rights relating your Personal Data", (ParaNum = 12) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[5]);
       });
 
       it("Get and Validate the PRIVACY POLICY content for the THIRD paragraph with Order List starting with-3. How to exercise your rights", (ParaNum = 13) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[6]);
       });
 
       it("Get and Validate the PRIVACY POLICY content for the FOURTH paragraph with Order List starting with-4. If YOU would like to submit a complaint regarding this Privacy Policy", (ParaNum = 14) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[7]);
       });
 
       it("Get and Validate the PRIVACY POLICY content for the FIFTH paragraph with Order List starting with-5. Why We collect your Personal Data", (ParaNum = 15) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[8]);
       });
 
       it("Get and Validate the PRIVACY POLICY content for the SIXTH paragraph with Order List starting with-6. What Personal Data We collect", (ParaNum = 16) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[9]);
       });
 
       it("Get and Validate the PRIVACY POLICY content for the SEVENTH paragraph with Order List starting with-7. Aggregated Data", (ParaNum = 17) => {
-        //const getMethod = privacyPolicy.getLocationParaWithOrdList(ParaNum);
         validateEachPara(privacyPolicyContent.paraPolicyCx[10]);
       });
 
@@ -103,47 +97,46 @@ describe("Private Policy for FightPandemics", () => {
           .invoke("text")
           .should("eq", dateOfDocument);
       });
-
-      context(
-        "Check on FightPandemics Logo and Email links on the Privacy Policy Page for FightPandemics",
-        () => {
-          beforeEach(() => {
-            privacyPolicy.visit();
-          });
-
-          it("FP logo is visible and clickable", () => {
-            cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
-          });
-
-          it("Emails are visible and clickable", () => {
-            var numEmails = privacyPolicyContent.paraPolicyWithEmail.length;
-
-            for (var i = 0; i < numEmails; i++) {
-              checkEmaiEachParagraph(
-                privacyPolicyContent.paraPolicyWithEmail[i].id,
-                privacyPolicy.legalEmail,
-                privacyPolicy.legalEmailRef,
-              );
-            }
-          });
-        },
-      );
-
-      //to validate each paragraph
-      function validateEachPara(objData) {
-        const id = objData.id;
-        const text = objData.text;
-        privacyPolicy.getLocationPara(id).contains(text);
-      }
-
-      //to check email each paragraph
-      function checkEmaiEachParagraph(paraNum, email, link) {
-        privacyPolicy
-          .getLocationPara(paraNum)
-          .contains(email)
-          .should("be.visible")
-          .and("have.attr", "href", link);
-      }
     },
   );
+  context(
+    "Check on FightPandemics Logo and Email links on the Privacy Policy Page for FightPandemics",
+    () => {
+      beforeEach(() => {
+        privacyPolicy.visit();
+      });
+
+      it("FP logo is visible and clickable", () => {
+        cy.checkFpLogoIsVisibleAndClickable(logo.getFpLogoLocator());
+      });
+
+      it("Emails are visible with correct link", () => {
+        var numEmails = privacyPolicyContent.paraPolicyWithEmail.length;
+
+        for (var i = 0; i < numEmails; i++) {
+          checkEmaiEachParagraph(
+            privacyPolicyContent.paraPolicyWithEmail[i].id,
+            privacyPolicy.legalEmail,
+            privacyPolicy.legalEmailRef,
+          );
+        }
+      });
+    },
+  );
+
+  //to validate each paragraph existing
+  function validateEachPara(objData) {
+    const id = objData.id;
+    const text = objData.text;
+    privacyPolicy.getLocationPara(id).contains(text);
+  }
+
+  //to check email each paragraph
+  function checkEmaiEachParagraph(paraNum, email, link) {
+    privacyPolicy
+      .getLocationPara(paraNum)
+      .contains(email)
+      .should("be.visible")
+      .and("have.attr", "href", link);
+  }
 });
