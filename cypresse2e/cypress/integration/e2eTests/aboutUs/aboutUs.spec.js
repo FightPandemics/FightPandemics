@@ -1,5 +1,5 @@
 import AboutUs from "../../../elements/pages/aboutUs";
-
+import socialContactInfo from "../../../fixtures/socialContactInfo.json";
 
 describe("FightPandemics About Us page", () => {
   const aboutUs = new AboutUs();
@@ -38,19 +38,19 @@ describe("FightPandemics About Us page", () => {
   //the following functions are for make the code more readable and maintainable, and to avoid code duplications
 
   function linkedInButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinks(aboutUs.linkedInButton, aboutUs.linkedInLink);
+    cy.checkAnyKindOfLinks(aboutUs.linkedInButton, socialContactInfo.linkedInLink);
   }
 
   function facebookButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinks(aboutUs.facebookButton, aboutUs.facebookLink);
+    cy.checkAnyKindOfLinks(aboutUs.facebookButton, socialContactInfo.facebookLink);
   }
 
   function instagramButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinks(aboutUs.instagramButton, aboutUs.instagramLink);
+    cy.checkAnyKindOfLinks(aboutUs.instagramButton, socialContactInfo.instagramLink);
   }
 
   function twitterButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinks(aboutUs.twitterButton, aboutUs.twitterLink);
+    cy.checkAnyKindOfLinks(aboutUs.twitterButton, socialContactInfo.twitterLink);
   }
 
   function clickOnGetInvolvedButton() {
@@ -78,11 +78,11 @@ describe("FightPandemics About Us page", () => {
   }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
-    checkEmailWorks(aboutUs.partnershipEmail, aboutUs.partnershipEmailHref);
+    checkEmailWorks(socialContactInfo.partnershipEmail, socialContactInfo.partnershipEmailHref);
   }
 
   function contactEmailLinkIsVisibleAndPointToAppropriateLink() {
-    checkEmailWorks(aboutUs.contactEmail, aboutUs.contactEmailHref);
+    checkEmailWorks(socialContactInfo.contactEmail, socialContactInfo.contactEmailHref);
   }
 
 
