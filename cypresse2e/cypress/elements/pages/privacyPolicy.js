@@ -65,12 +65,10 @@ class PrivacyPolicy {
       case 4:
         return cy.xpath(this.fourthParaLoc);
       case 11:
-        console.log(ParaNumber);
         return cy.xpath(this.firstParaLocWithOrdList);
       case 12:
         return cy.xpath(this.secondParaLocWithOrdList);
       case 13:
-        console.log(ParaNumber);
         return cy.xpath(this.thirdParaLocWithOrdList);
       case 14:
         return cy.xpath(this.fourthParaLocWithOrdList);
