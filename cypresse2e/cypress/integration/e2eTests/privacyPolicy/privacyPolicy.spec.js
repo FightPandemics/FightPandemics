@@ -21,75 +21,102 @@ describe("Private Policy for FightPandemics", () => {
           .should("eq", "Privacy Policy");
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the FIRST paragraph starting with-FightPandemics, INC", (ParaNum = 1) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[0]);
+      it("Get and Validate the PRIVACY POLICY existing for the FIRST paragraph starting with-FightPandemics, INC", (paraNum = 1) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[0], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the SECOND paragraph starting with-By using the Services, YOU consent", (ParaNum = 2) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[1]);
+      it("Get and Validate the PRIVACY POLICY existing for the SECOND paragraph starting with-By using the Services, YOU consent", (paraNum = 2) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[1], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the THIRD paragraph starting with-“Personal data” means any information", (ParaNum = 3) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[2]);
+      it("Get and Validate the PRIVACY POLICY existing for the THIRD paragraph starting with-“Personal data” means any information", (paraNum = 3) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[2], paraNum);
       });
-      it("Get and Validate the PRIVACY POLICY content for the FOURTH paragraph starting with-On the basis of the above, the Company herein provides YOU", (ParaNum = 4) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[3]);
+      it("Get and Validate the PRIVACY POLICY existing for the FOURTH paragraph starting with-On the basis of the above, the Company herein provides YOU", (paraNum = 4) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[3], paraNum);
       });
-      it("Get and Validate the PRIVACY POLICY content for the FIRST paragraph with Order List starting with-1. Who We are and how YOU can contact Us", (ParaNum = 11) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[4]);
-      });
-
-      it("Get and Validate the PRIVACY POLICY content for the SECOND paragraph with Order List starting with-2. Your rights relating your Personal Data", (ParaNum = 12) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[5]);
+      it("Get and Validate the PRIVACY POLICY existing for the FIRST paragraph with Order List starting with-1. Who We are and how YOU can contact Us", (paraNum = 11) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[4], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the THIRD paragraph with Order List starting with-3. How to exercise your rights", (ParaNum = 13) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[6]);
+      it("Get and Validate the PRIVACY POLICY existing for the SECOND paragraph with Order List starting with-2. Your rights relating your Personal Data", (paraNum = 12) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[5], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the FOURTH paragraph with Order List starting with-4. If YOU would like to submit a complaint regarding this Privacy Policy", (ParaNum = 14) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[7]);
+      it("Get and Validate the PRIVACY POLICY existing for the THIRD paragraph with Order List starting with-3. How to exercise your rights", (paraNum = 13) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[6], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the FIFTH paragraph with Order List starting with-5. Why We collect your Personal Data", (ParaNum = 15) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[8]);
+      it("Get and Validate the PRIVACY POLICY existing for the FOURTH paragraph with Order List starting with-4. If YOU would like to submit a complaint regarding this Privacy Policy", (paraNum = 14) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[7], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the SIXTH paragraph with Order List starting with-6. What Personal Data We collect", (ParaNum = 16) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[9]);
+      it("Get and Validate the PRIVACY POLICY existing for the FIFTH paragraph with Order List starting with-5. Why We collect your Personal Data", (paraNum = 15) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[8], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the SEVENTH paragraph with Order List starting with-7. Aggregated Data", (ParaNum = 17) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[10]);
+      it("Get and Validate the PRIVACY POLICY existing for the SIXTH paragraph with Order List starting with-6. What Personal Data We collect", (paraNum = 16) => {
+        validateEachParaExisting(privacyPolicyContent.paraPolicyCx[9], paraNum);
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the EIGHTH paragraph with Order List starting with-8. How We Use Your Personal Data and Why", (ParaNum = 18) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[11]);
+      it("Get and Validate the PRIVACY POLICY existing for the SEVENTH paragraph with Order List starting with-7. Aggregated Data", (paraNum = 17) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[10],
+          paraNum,
+        );
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the NINETH paragraph with Order List starting with-9. What happens when YOU do not provide necessary Personal Data?", (ParaNum = 19) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[12]);
+      it("Get and Validate the PRIVACY POLICY existing for the EIGHTH paragraph with Order List starting with-8. How We Use Your Personal Data and Why", (paraNum = 18) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[11],
+          paraNum,
+        );
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the TENTH paragraph with Order List starting with-10. With Whom We Share Your Personal Data?", (ParaNum = 110) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[13]);
-      });
-      it("Get and Validate the PRIVACY POLICY content for the ELEVENTH paragraph with Order List starting with-11. How long We store your Personal Data?", (ParaNum = 111) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[14]);
-      });
-
-      it("Get and Validate the PRIVACY POLICY content for the TWELVETH paragraph with Order List starting with-12. Where We Store Your Personal Data", (ParaNum = 112) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[15]);
-      });
-      it("Get and Validate the PRIVACY POLICY content for the THIRTEENTH paragraph with Order List starting with-13. How We Protect Your Personal Data", (ParaNum = 113) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[16]);
+      it("Get and Validate the PRIVACY POLICY existing for the NINETH paragraph with Order List starting with-9. What happens when YOU do not provide necessary Personal Data?", (paraNum = 19) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[12],
+          paraNum,
+        );
       });
 
-      it("Get and Validate the PRIVACY POLICY content for the FOURTEENTH paragraph with Order List starting with-14. Contact Us", (ParaNum = 114) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[17]);
+      it("Get and Validate the PRIVACY POLICY existing for the TENTH paragraph with Order List starting with-10. With Whom We Share Your Personal Data?", (paraNum = 110) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[13],
+          paraNum,
+        );
       });
-      it("Get and Validate the PRIVACY POLICY content for the FIFTEENTH paragraph with Order List starting with-15. Changes to Our Privacy Policy", (ParaNum = 115) => {
-        validateEachPara(privacyPolicyContent.paraPolicyCx[18]);
+      it("Get and Validate the PRIVACY POLICY existing for the ELEVENTH paragraph with Order List starting with-11. How long We store your Personal Data?", (paraNum = 111) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[14],
+          paraNum,
+        );
+      });
+
+      it("Get and Validate the PRIVACY POLICY existing for the TWELVETH paragraph with Order List starting with-12. Where We Store Your Personal Data", (paraNum = 112) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[15],
+          paraNum,
+        );
+      });
+      it("Get and Validate the PRIVACY POLICY existing for the THIRTEENTH paragraph with Order List starting with-13. How We Protect Your Personal Data", (paraNum = 113) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[16],
+          paraNum,
+        );
+      });
+
+      it("Get and Validate the PRIVACY POLICY existing for the FOURTEENTH paragraph with Order List starting with-14. Contact Us", (paraNum = 114) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[17],
+          paraNum,
+        );
+      });
+      it("Get and Validate the PRIVACY POLICY existing for the FIFTEENTH paragraph with Order List starting with-15. Changes to Our Privacy Policy", (paraNum = 115) => {
+        validateEachParaExisting(
+          privacyPolicyContent.paraPolicyCx[18],
+          paraNum,
+        );
       });
       it("Get and Validate Date of Document created", () => {
         privacyPolicy
@@ -114,7 +141,7 @@ describe("Private Policy for FightPandemics", () => {
         var numEmails = privacyPolicyContent.paraPolicyWithEmail.length;
 
         for (var i = 0; i < numEmails; i++) {
-          checkEmaiEachParagraph(
+          checkEmailEachParagraph(
             privacyPolicyContent.paraPolicyWithEmail[i].id,
             privacyPolicy.legalEmail,
             privacyPolicy.legalEmailRef,
@@ -125,14 +152,13 @@ describe("Private Policy for FightPandemics", () => {
   );
 
   //to validate each paragraph existing
-  function validateEachPara(objData) {
-    const id = objData.id;
-    const text = objData.text;
-    privacyPolicy.getLocationPara(id).contains(text);
+  function validateEachParaExisting(paraPolicyCxObject, paraNum) {
+    const text = paraPolicyCxObject.text;
+    privacyPolicy.getLocationPara(paraNum).contains(text);
   }
 
   //to check email each paragraph
-  function checkEmaiEachParagraph(paraNum, email, link) {
+  function checkEmailEachParagraph(paraNum, email, link) {
     privacyPolicy
       .getLocationPara(paraNum)
       .contains(email)
