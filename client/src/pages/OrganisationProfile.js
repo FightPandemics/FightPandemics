@@ -100,6 +100,7 @@ import {
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
+import { selectOrganisationId } from "reducers/session";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -158,6 +159,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
+  const actorOrganisationId = useSelector(selectOrganisationId);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -166,6 +168,9 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
     });
     return ref.current;
   }
+  const getActorQuery = () => {
+    return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
+  };
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -215,7 +220,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (organisationId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}`;
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
@@ -488,6 +493,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
             </SectionHeader>
             <FeedWrapper>
               <Activity
+                postDispatch={dispatch}
                 filteredPosts={postsList}
                 user={user}
                 postDelete={postDelete}

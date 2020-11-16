@@ -151,10 +151,11 @@ export const postReducer = (state = postState, action) => {
         loadMoreComments: true,
       };
     case SET_LIKE:
+      const { payload } = action;
       return {
         ...state,
         liked: !!!state.liked,
-        likesCount: action.count,
+        likesCount: payload.count,
       };
     default:
       return state;

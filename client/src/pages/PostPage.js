@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from "react";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,7 @@ import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
+import { selectOrganisationId } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -93,6 +95,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
   const { t } = useTranslation();
+  const organisationId = useSelector(selectOrganisationId);
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -118,6 +121,10 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   } = post;
 
   const initialState = { ...post };
+
+  const getActorQuery = () => {
+    return organisationId ? `?actorId=${organisationId}` : "";
+  };
 
   const editRedirectFromFeed = () => {
     postDispatch({
@@ -181,7 +188,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         DELETE_MODAL_HIDE,
       );
       history.push(FEED);
-      let endPoint = `/api/posts/${postId}`;
+      let endPoint = `/api/posts/${postId}${getActorQuery()}`;
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
@@ -202,7 +209,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
 
   const loadPost = async () => {
     let response;
-    const endPoint = `/api/posts/${postId}`;
+    const endPoint = `/api/posts/${postId}${getActorQuery()}`;
 
     dispatchPostAction(FETCH_POST);
 

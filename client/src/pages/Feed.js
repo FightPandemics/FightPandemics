@@ -741,6 +741,7 @@ const Feed = (props) => {
                 isAuthenticated={isAuthenticated}
                 filteredPosts={postsList}
                 postDelete={postDelete}
+                postDispatch={dispatch}
                 user={user}
                 deleteModalVisibility={deleteModalVisibility}
                 handlePostDelete={handlePostDelete}

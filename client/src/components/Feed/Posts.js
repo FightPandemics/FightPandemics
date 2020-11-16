@@ -36,6 +36,7 @@ const HorizontalRule = styled.hr`
 
 const Posts = ({
   isAuthenticated,
+  postDispatch,
   filteredPosts,
   handleCancelPostDelete,
   postDelete,
@@ -87,6 +88,7 @@ const Posts = ({
           <>
             <Post
               currentPost={posts[index][1]}
+              postDispatch={postDispatch}
               includeProfileLink={true}
               numComments={posts[index][1].commentsCount}
               postDelete={postDelete}
@@ -131,6 +133,7 @@ const Posts = ({
       isItemLoaded,
       page,
       postDelete,
+      postDispatch,
       posts,
       user,
     ],

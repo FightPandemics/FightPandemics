@@ -84,6 +84,7 @@ const Post = ({
   currentPost,
   deleteModalVisibility,
   dispatchPostAction,
+  postDispatch,
   fullPostLength,
   handleCancelPostDelete,
   handleCommentDelete,
@@ -493,6 +494,7 @@ const Post = ({
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
+        postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
         postId={postId}

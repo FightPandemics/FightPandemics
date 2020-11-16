@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -38,6 +38,7 @@ const StyledSpan = styled.span`
 
 const PostSocial = ({
   isAuthenticated,
+  postDispatch,
   liked,
   shared,
   showComments,
@@ -51,7 +52,6 @@ const PostSocial = ({
   id,
 }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const history = useHistory();
   const organisationId = useSelector(selectOrganisationId);
   const user = useSelector(selectUser);
@@ -87,7 +87,7 @@ const PostSocial = ({
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
-        dispatch(postsActions.setLikeAction(postId, data.likesCount));
+        postDispatch(postsActions.setLikeAction(postId, data.likesCount));
       } catch (error) {
         console.log({ error });
       }

@@ -73,6 +73,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
+import { selectOrganisationId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -148,6 +149,7 @@ const Profile = ({
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
+  const organisationId = useSelector(selectOrganisationId);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -156,6 +158,10 @@ const Profile = ({
     });
     return ref.current;
   }
+
+  const getActorQuery = () => {
+    return organisationId ? `&actorId=${organisationId}` : "";
+  };
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -186,7 +192,7 @@ const Profile = ({
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
@@ -445,6 +451,7 @@ const Profile = ({
         </SectionHeader>
         <FeedWrapper>
           <Activity
+            postDispatch={dispatch}
             filteredPosts={postsList}
             user={user}
             postDelete={postDelete}
