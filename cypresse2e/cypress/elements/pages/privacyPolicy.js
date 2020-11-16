@@ -1,4 +1,4 @@
-class privacyPolicy {
+class PrivacyPolicy {
   privacyPolicyH2 = '//*[@id="root"]/div/div/div[3]/main/div/div/h2';
   policyContent = ".am-drawer-content main div div";
   firstParaLoc = '//*[@id="root"]/div/div/div[3]/main/div/div/div[1]';
@@ -37,6 +37,9 @@ class privacyPolicy {
   fifthteenParaLocWithOrdList =
     '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[15]';
 
+  legalEmail = "legal@fightpandemics.com";
+  legalEmailRef = "mailto:legal@fightpandemics.com";
+
   constructor() {}
 
   visit() {
@@ -61,50 +64,48 @@ class privacyPolicy {
         return cy.xpath(this.thirdParaLoc);
       case 4:
         return cy.xpath(this.fourthParaLoc);
+      case 11:
+        console.log(ParaNumber);
+        return cy.xpath(this.firstParaLocWithOrdList);
+      case 12:
+        return cy.xpath(this.secondParaLocWithOrdList);
+      case 13:
+        console.log(ParaNumber);
+        return cy.xpath(this.thirdParaLocWithOrdList);
+      case 14:
+        return cy.xpath(this.fourthParaLocWithOrdList);
+      case 15:
+        return cy.xpath(this.fifthParaLocWithOrdList);
+      case 16:
+        return cy.xpath(this.sixthParaLocWithOrdList);
+      case 17:
+        return cy.xpath(this.seventhParaLocWithOrdList);
+      case 18:
+        console.log(ParaNumber);
+        return cy.xpath(this.eightParaLocWithOrdList);
+      case 19:
+        return cy.xpath(this.ninethParaLocWithOrdList);
+      case 110:
+        return cy.xpath(this.tenthParaLocWithOrdList);
+      case 111:
+        return cy.xpath(this.eleventhParaLocWithOrdList);
+      case 112:
+        return cy.xpath(this.twelveParaLocWithOrdList);
+      case 113:
+        return cy.xpath(this.thirteenParaLocWithOrdList);
+      case 114:
+        console.log(ParaNumber);
+        return cy.xpath(this.fourthteenParaLocWithOrdList);
+      case 115:
+        return cy.xpath(this.fifthteenParaLocWithOrdList);
       default:
         break;
     }
     return cy.xpath(this.firstParaLoc);
   }
-  getLocationParaWithOrdList(ParaNumber) {
-    switch (ParaNumber) {
-      case 1:
-        return cy.xpath(this.firstParaLocWithOrdList);
-      case 2:
-        return cy.xpath(this.secondParaLocWithOrdList);
-      case 3:
-        return cy.xpath(this.thirdParaLocWithOrdList);
-      case 4:
-        return cy.xpath(this.fourthParaLocWithOrdList);
-      case 5:
-        return cy.xpath(this.fifthParaLocWithOrdList);
-      case 6:
-        return cy.xpath(this.sixthParaLocWithOrdList);
-      case 7:
-        return cy.xpath(this.seventhParaLocWithOrdList);
-      case 8:
-        return cy.xpath(this.eightParaLocWithOrdList);
-      case 9:
-        return cy.xpath(this.ninethParaLocWithOrdList);
-      case 10:
-        return cy.xpath(this.tenthParaLocWithOrdList);
-      case 11:
-        return cy.xpath(this.eleventhParaLocWithOrdList);
-      case 12:
-        return cy.xpath(this.twelveParaLocWithOrdList);
-      case 13:
-        return cy.xpath(this.thirteenParaLocWithOrdList);
-      case 14:
-        return cy.xpath(this.fourthteenParaLocWithOrdList);
-      case 15:
-        return cy.xpath(this.fifthteenParaLocWithOrdList);
-      default:
-        break;
-    }
-    return cy.xpath(this.firstParaLocWithOrdList);
-  }
+
   getDateDocumented() {
     return cy.xpath(this.dateDocumented);
   }
 }
-export default privacyPolicy;
+export default PrivacyPolicy;

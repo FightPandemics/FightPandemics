@@ -2,97 +2,95 @@
   "paraPolicyCx": [
     {
       "id": 1,
-      "text": "is the manager of this website and hereby informs YOU how We will collect and process your Personal Data (as defined below) when YOU use our services, websites and applications (the"
+      "text": "is the manager of this website and hereby informs YOU"
     },
     {
       "id": 2,
-      "text": "By using the Services, YOU consent that we can collect and process your Personal Data. For the avoidance of doubt, We will only use your Personal Data for the purposes described in this Privacy Policy, and in no case, We will provide access or share your Personal Data with any third party, except with the relevant persons set forth in this Privacy Policy."
+      "text": "By using the Services, YOU consent that we can collect and process your Personal Data. "
     },
     {
       "id": 3,
-      "text": " means any information relating to an identified or identifiable natural person. An identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person."
+      "text": "means any information relating to an identified or identifiable natural person."
     },
     {
       "id": 4,
-      "text": "On the basis of the above, the Company herein provides YOU with a detailed explanation about the treatment of your data when YOU use our Services, as well as an explanation about your rights regarding your Personal Data and how YOU can exercise them:"
-    }
-  ],
-  "paraPolicyCxWithOrdList": [
-    {
-      "id": 1,
-      "text": "If YOU have any questions about our practices or this Privacy Policy, please contact Us at legal@fightpandemics.com.",
-      "email": "legal@fightpandemics.com"
-    },
-    {
-      "id": 2,
-      "text": "The Company recognises that YOU have the following rights:",
-      "email": ""
-    },
-    {
-      "id": 3,
-      "text": "If YOU want to exercise any of the rights described above, please contact Us using the contact details in Clause 1.",
-      "email": ""
+      "text": "On the basis of the above, the Company herein provides YOU with a detailed explanation"
     },
 
     {
-      "id": 4,
-      "text": "If YOU would like to submit a complaint regarding this Privacy Policy or our practices in relation to your Personal Data, please contact Us at: legal@fightpandemics.com.",
-      "email": "legal@fightpandemics.com"
-    },
-    {
-      "id": 5,
-      "text": "We collect and process your Personal Data with the aim to provide YOU with the Services, personalize content, remember information to help YOU efficiently access your account, analyse how the Services are used, diagnose service or technical problems, maintain security, monitor aggregate metrics such as total number of visitors, traffic, and demographic patterns.",
-      "email": ""
-    },
-    {
-      "id": 6,
-      "text": "There are many occasions when YOU provide information that may enable Us to identify YOU personally while using the Services. The Personal Data we may collect from YOU is described in the following table:",
-      "email": ""
-    },
-    {
-      "id": 7,
-      "text": "We may also collect, process and recollect statistical or demographic data",
-      "email": ""
-    },
-    {
-      "id": 8,
-      "text": "YOU have the right to change your mind at any time (but this will not affect any processing that has already taken place) and YOU can contact Us to the email legal@fightpandemics.com",
-      "email": "legal@fightpandemics.com"
-    },
-    {
-      "id": 9,
-      "text": "WE may not be able to perform the contract We have or are trying to enter into with YOU.",
-      "email": ""
-    },
-    {
-      "id": 10,
-      "text": "The Company will be able to share your personal data with third parties under the following circumstances:",
-      "email": ""
-    },
-    {
       "id": 11,
-      "text": "We will retain your information for as long as your account is active and We have a relationship with YOU. Once our relationship with YOU has come to an end, We will retain your personal data for a period of time that enables Us to",
-      "email": ""
+      "text": "Who We are and how YOU can contact Us"
     },
     {
       "id": 12,
-      "text": "The Services are provided in the United States of America. Notwithstanding, your Personal Data will be stored, processed in the EU.",
-      "email": ""
+      "text": "Your rights relating your Personal Data"
     },
     {
       "id": 13,
-      "text": "We have put in place procedures to respond to any actual or suspected Personal Data breach.",
-      "email": ""
+      "text": "How to exercise your rights"
     },
+
     {
       "id": 14,
-      "text": "If YOU have questions or concerns regarding the way in which your personal data has been used, please contact legal@fightpandemics.com.",
-      "email": "legal@fightpandemics.com"
+      "text": "If YOU would like to submit a complaint regarding this Privacy Policy"
     },
     {
       "id": 15,
-      "text": "YOU should review this Privacy Policy regularly.",
-      "email": ""
+      "text": "Why We collect your Personal Data"
+    },
+    {
+      "id": 16,
+      "text": "What Personal Data We collect"
+    },
+    {
+      "id": 17,
+      "text": "Aggregated Data"
+    },
+    {
+      "id": 18,
+      "text": "How We Use Your Personal Data and Why"
+    },
+    {
+      "id": 19,
+      "text": "What happens when YOU do not provide necessary Personal Data?"
+    },
+    {
+      "id": 110,
+      "text": "With Whom We Share Your Personal Data?"
+    },
+    {
+      "id": 111,
+      "text": "How long We store your Personal Data"
+    },
+    {
+      "id": 112,
+      "text": "Where We Store Your Personal Data"
+    },
+    {
+      "id": 113,
+      "text": "How We Protect Your Personal Data"
+    },
+    {
+      "id": 114,
+      "text": "Contact Us"
+    },
+    {
+      "id": 115,
+      "text": "Changes to Our Privacy Policy"
+    }
+  ],
+  "paraPolicyWithEmail": [
+    {
+      "id": 11
+    },
+    {
+      "id": 14
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 114
     }
   ]
 }
