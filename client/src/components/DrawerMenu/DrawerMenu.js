@@ -38,13 +38,16 @@ const DrawerMenu = ({
     }
   };
 
+  const actor =
+    user?.organisations.find((org) => org._id === organisationId) || user;
+
   return (
     <MenuContainer>
       {menuState === MENU_STATE.SETTINGS && <CloseNav onClick={toggleDrawer} />}
       <NavList>
         {menuState === MENU_STATE.SETTINGS && (
           <ProfileMenu
-            user={user}
+            user={actor}
             setMenuState={setMenuState}
             toggleDrawer={toggleDrawer}
             dispatchAction={dispatchAction}

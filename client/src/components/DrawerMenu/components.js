@@ -96,4 +96,5 @@ export const NavItem = styled(List.Item)`
 
 export const CustomSvgIcon = styled(SvgIcon)`
   margin-right: 10px;
+  filter: brightness(2);
 `;

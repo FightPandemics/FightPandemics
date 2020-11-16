@@ -82,13 +82,15 @@ export const ProfileItem = ({ user }) => {
   return (
     <ProfileItemContainer>
       <div>
-        <Avatar src={user.photo} size={"small"}>
-          {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
+        <Avatar src={user.photo}>
+          {getInitialsFromFullName(
+            `${user.name || `${user.firstName} ${user.lastName}`}`,
+          )}
         </Avatar>
       </div>
       <div>
         <ProfileInfo bold>
-          {`${user?.firstName} ${user?.lastName} `}
+          {`${user.name || `${user.firstName} ${user.lastName}`}`}
         </ProfileInfo>
         <ProfileInfo>View my Profile</ProfileInfo>
       </div>
@@ -108,4 +110,10 @@ const ProfileItemContainer = styled.div`
   display: flex;
   margin: 5px 0;
   align-items: center;
+  .ant-avatar {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `;

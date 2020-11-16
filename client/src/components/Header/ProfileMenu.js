@@ -14,9 +14,8 @@ export const ProfileMenu = ({
   onFeedbackIconClick,
 }) => {
   const [menuState, setMenuState] = useState(MENU_STATE.CLOSED);
-  const actor = organisationId
-    ? user.organisations.find((org) => org._id === organisationId)
-    : user;
+  const actor =
+    user?.organisations.find((org) => org._id === organisationId) || user;
   const menu = renderMenu(
     menuState,
     setMenuState,
