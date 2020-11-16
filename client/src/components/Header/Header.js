@@ -161,7 +161,9 @@ const Header = ({
       } else {
         localStorage.setItem("organisationId", index);
       }
-      window.location.href = "/feed";
+      window.location.href = index
+        ? `/organisation/${index}`
+        : `/profile/${user.id}`;
     }
   };
 

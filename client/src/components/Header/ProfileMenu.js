@@ -42,7 +42,6 @@ export const ProfileMenu = ({
       }
     >
       <Avatar
-        size={"small"}
         src={actor.photo}
         onClick={() => setMenuState(MENU_STATE.SETTINGS)}
       >

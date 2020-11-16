@@ -57,20 +57,20 @@ export const HeaderLinks = ({
       <ul>
         <li>
           <NavLink
-            id={GTM.nav.prefix + GTM.nav.feed}
-            activeStyle={activeStyles}
-            to="/feed"
-          >
-            {t("feed.title")}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             id={GTM.nav.prefix + GTM.nav.aboutUs}
             activeStyle={activeStyles}
             to="/about-us"
           >
             {t("common.aboutUs")}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            id={GTM.nav.prefix + GTM.nav.feed}
+            activeStyle={activeStyles}
+            to="/feed"
+          >
+            {t("feed.title")}
           </NavLink>
         </li>
         {isAuthenticated && (
