@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 import { MENU_STATE } from "./constants";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -11,6 +12,13 @@ import { Divider, NavItem, CustomSvgIcon } from "./components";
 import BackIcon from "assets/icons/back-white.svg";
 import PlusIcon from "assets/icons/plus.svg";
 import DoneIcon from "assets/icons/done-white.svg";
+
+const StyledAvatar = styled(Avatar)`
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export const AccountMenu = ({
   user,
@@ -33,9 +41,9 @@ export const AccountMenu = ({
       </NavItem>
       <Divider />
       <NavItem onClick={() => setOrganisationId(null)}>
-        <Avatar src={user.photo} size={"small"}>
+        <StyledAvatar src={user.photo} size={"small"}>
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
-        </Avatar>
+        </StyledAvatar>
         {`${user?.firstName} ${user?.lastName} `}
         {!organisationId && <CustomSvgIcon src={DoneIcon} />}
       </NavItem>
@@ -46,9 +54,9 @@ export const AccountMenu = ({
           key={current._id}
           onClick={() => setOrganisationId(current._id)}
         >
-          <Avatar type="mobile" size="small">
+          <StyledAvatar type="mobile" size="small">
             {getInitialsFromFullName(current.name)}
-          </Avatar>
+          </StyledAvatar>
           {current.name}
           {organisationId === current._id && <CustomSvgIcon src={DoneIcon} />}
         </NavItem>
