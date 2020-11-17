@@ -54,11 +54,15 @@ export const SettingMenu = ({
 };
 
 const ProfileInfo = styled.p`
+  width: 13rem;
   margin: 0;
   font-size: 12px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
   line-height: normal;
   color: ${({ bold }) => (bold ? "#939393" : "rgba(0, 0, 0, 0.85)")};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const ProfileItemContainer = styled.div`

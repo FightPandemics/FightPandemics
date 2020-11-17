@@ -15,6 +15,15 @@ const StyledMenu = styled(Menu)`
       color: ${colors.royalBlue};
     }
   }
+  .ant-menu-item {
+    padding: 0 24px 0 16px!important;
+    .check-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translate(0,-50%);
+    }
+  }
 `;
 
 export default StyledMenu;
