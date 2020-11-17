@@ -233,6 +233,8 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            createdAt: true,
+            updatedAt: true,
           },
         },
       ];
@@ -261,7 +263,15 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipelineResults),
+        Post.aggregate(aggregationPipelineResults).then((posts) => {
+          posts.forEach((post) => {
+            post.elapsedTimeText = setElapsedTimeText(
+              post.createdAt,
+              post.updatedAt,
+            );
+          });
+          return posts;
+        }),
       );
 
       const responseHandler = (response) => {
@@ -406,6 +416,10 @@ async function routes(app) {
         ...post.toObject(),
         liked: post.likes.includes(mongoose.Types.ObjectId(userId)),
         likesCount: post.likes.length,
+        elapsedTimeText: setElapsedTimeText(
+          post.createdAt,
+          post.updatedAt,
+        )
       };
 
       return {

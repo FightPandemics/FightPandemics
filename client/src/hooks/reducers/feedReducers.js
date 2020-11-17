@@ -2,6 +2,7 @@ import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
+  SET_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
   SET_POSTS,
@@ -13,6 +14,7 @@ import {
   SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_HIDE,
+  SET_PAGE,
 } from "../actions/feedActions";
 
 export const postsState = {
@@ -20,7 +22,6 @@ export const postsState = {
   posts: [],
   page: 0,
   error: null,
-  filterType: "ALL",
   isLoading: false,
   loadMore: true,
   deleteModalVisibility: DELETE_MODAL_HIDE,
@@ -42,6 +43,8 @@ export const optionsReducer = (oldState, action) => {
   const { option, label } = action.payload;
   const newState = Object.assign({}, oldState);
   switch (action.type) {
+    case SET_OPTIONS:
+      return { ...option };
     case ADD_OPTION:
       return { ...oldState, [label]: [...(oldState[label] || []), option] };
     case REMOVE_OPTION:
@@ -77,11 +80,12 @@ export const postsReducer = (state = postsState, action) => {
       };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
+    case SET_PAGE:
+      return { ...state, page: action.page };
     case RESET_PAGE:
       return {
         ...state,
         page: 0,
-        filterType: action.filterType || "",
         posts: [],
         loadMore: action.loadMore || true,
         isLoading: action.isLoading || false,

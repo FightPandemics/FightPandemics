@@ -14,7 +14,7 @@ import { Trans, useTranslation } from "react-i18next";
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import { NoPosts } from "pages/Feed";
