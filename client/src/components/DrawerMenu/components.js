@@ -85,7 +85,7 @@ export const NavItem = styled(List.Item)`
       font-family: "Poppins", sans-serif;
       font-size: ${({ size }) => (size === "small" ? "1.2rem" : "1.8rem")};
       font-weight: ${({ size }) => (size === "big" ? "600" : "400")};
-      padding: 0;
+      padding: 0 1rem 0 0;
     }
   }
 
@@ -97,4 +97,9 @@ export const NavItem = styled(List.Item)`
 export const CustomSvgIcon = styled(SvgIcon)`
   margin-right: 10px;
   filter: brightness(2);
+  &.check-icon {
+    position: absolute;
+    right: 0;
+    top: 1.2rem;
+  }
 `;

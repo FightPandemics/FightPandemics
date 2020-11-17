@@ -34,7 +34,10 @@ export const SettingMenu = ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}>
+      <Menu.Item
+        id={GTM.nav.prefix + GTM.nav.switch}
+        onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
+      >
         <CustomSvgIcon src={PeopleIcon} />
         {t("common.switchAccount")}
       </Menu.Item>

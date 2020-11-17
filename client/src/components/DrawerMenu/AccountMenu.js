@@ -45,7 +45,7 @@ export const AccountMenu = ({
           {getInitialsFromFullName(`${user.firstName} ${user.lastName} `)}
         </StyledAvatar>
         {`${user?.firstName} ${user?.lastName} `}
-        {!organisationId && <CustomSvgIcon src={DoneIcon} />}
+        {!organisationId && <CustomSvgIcon className={"check-icon"} src={DoneIcon} />}
       </NavItem>
       {anyOrganisation && <Divider />}
       <NavItem size="small">{t("common.myOrganisation")}</NavItem>
@@ -54,11 +54,11 @@ export const AccountMenu = ({
           key={current._id}
           onClick={() => setOrganisationId(current._id)}
         >
-          <StyledAvatar type="mobile" size="small">
+          <StyledAvatar type="mobile" src={current.photo} size="small">
             {getInitialsFromFullName(current.name)}
           </StyledAvatar>
           {current.name}
-          {organisationId === current._id && <CustomSvgIcon src={DoneIcon} />}
+          {organisationId === current._id && <CustomSvgIcon className={"check-icon"} src={DoneIcon} />}
         </NavItem>
       ))}
       <Divider />

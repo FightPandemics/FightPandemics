@@ -66,11 +66,13 @@ const NavLinks = styled.div`
     border: none;
     background: transparent;
     cursor: pointer;
-
     img {
-      margin-left: 1.5rem;
       pointer-events: none;
     }
+  }
+  .globe-icon-svg {
+    position: absolute;
+    right: 3.7rem;
   }
   ul {
     list-style-type: none;

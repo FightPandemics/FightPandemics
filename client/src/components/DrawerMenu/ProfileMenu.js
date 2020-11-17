@@ -12,7 +12,7 @@ import { Divider, NavItem, CustomSvgIcon } from "./components";
 
 import LogoutIcon from "assets/icons/logout-gray.svg";
 import FeedbackIcon from "assets/icons/feedback-gray.svg";
-import LanguageIcon from "assets/icons/language-gray.svg";
+import globe from "assets/icons/globe-white.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
 
 export const ProfileMenu = ({
@@ -24,12 +24,17 @@ export const ProfileMenu = ({
 }) => {
   const { t } = useTranslation();
   const feedToPath = isAuthenticated ? { pathname: "/feed", user } : "/feed";
+  const profileUrl = isAuthenticated
+    ? `/${user.type ? "organisation" : "profile"}/${user?.id || user?._id}`
+    : null;
   return (
     <>
       {isAuthenticated && (
-        <NavItem>
-          <ProfileItem user={user} />
-        </NavItem>
+        <Link to={profileUrl}>
+          <NavItem>
+            <ProfileItem user={user} />
+          </NavItem>
+        </Link>
       )}
       {!isAuthenticated && (
         <Link id={GTM.nav.prefix + GTM.nav.login} to="/auth/login">
@@ -47,13 +52,16 @@ export const ProfileMenu = ({
       </Link>
       <Divider />
       {isAuthenticated && (
-        <NavItem onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}>
+        <NavItem
+          id={GTM.nav.prefix + GTM.nav.switch}
+          onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
+        >
           <CustomSvgIcon src={PeopleIcon} />
           {t("common.switchAccount")}
         </NavItem>
       )}
       <NavItem onClick={() => setMenuState(MENU_STATE.LANGUAGES)}>
-        <CustomSvgIcon src={LanguageIcon} />
+        <CustomSvgIcon src={globe} />
         {t("common.language")}
       </NavItem>
       <NavItem
@@ -99,11 +107,15 @@ export const ProfileItem = ({ user }) => {
 };
 
 const ProfileInfo = styled.p`
+  width: 15rem;
   margin: 0;
   font-size: 12px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
   line-height: normal;
   color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const ProfileItemContainer = styled.div`
