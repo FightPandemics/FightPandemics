@@ -8,9 +8,10 @@ import { theme, mq } from "../constants/theme";
 const { colors } = theme;
 
 const HomeRegisterBanner = styled.div`
-  min-height: 7.2rem;
+  min-height: 6rem;
   width: 100vw;
-  position: relative;
+  position: fixed;
+  top: 6rem;
   background-color: #f3f4fe;
   background-image: url(${bg});
   background-repeat: no-repeat;
@@ -20,7 +21,8 @@ const HomeRegisterBanner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.4rem 2.4rem;
+  padding: 1rem 2.4rem;
+  z-index: 4;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
@@ -29,6 +31,9 @@ const HomeRegisterBanner = styled.div`
     padding: 4.4rem 2.4rem 2.4rem;
     background-image: url(${bgMobile});
     background-size: contain;
+    position: relative;
+    top: 0;
+    z-index: 1;
 
     .action-container {
       width: 100%;
@@ -89,9 +94,14 @@ export const BannerContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+  top: ${(props) => (props.visible ? "4rem" : "0")};
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    top: 0;
+  }
 `;
 
-const Banner = () => {
+const WithSummitBanner = ({ children }) => {
   const [showBanner, setBannerState] = React.useState(
     localStorage?.showSummitBanner === "false" ? false : true,
   );
@@ -105,37 +115,40 @@ const Banner = () => {
     }
   }, []);
 
-  if (!showBanner) return null;
-
   return (
-    <HomeRegisterBanner>
-      <div>
-        <b>Stronger Together Summit 2020 - 4th December 2020</b> : bringing
-        together bright and diverse minds to discuss the ongoing battles against
-        COVID-19.{" "}
-        <a target="_blank" href="https://events.fightpandemics.com/">
-          Learn More
-        </a>
-        .
-      </div>
-      <div className="action-container">
-        <div
-          onClick={() => {
-            window.open(
-              "https://hopin.com/events/stronger-together-summit",
-              "_blank",
-            );
-          }}
-          className="register-btn"
-        >
-          Register Now
-        </div>
-        <div onClick={removeBanner} className="close-action">
-          <img src={bgCross} />
-        </div>
-      </div>
-    </HomeRegisterBanner>
+    <BannerContainer visible={showBanner}>
+      {showBanner && (
+        <HomeRegisterBanner>
+          <div>
+            <b>Stronger Together Summit 2020 - 4th December 2020</b> : bringing
+            together bright and diverse minds to discuss the ongoing battles
+            against COVID-19.{" "}
+            <a target="_blank" href="https://events.fightpandemics.com/">
+              Learn More
+            </a>
+            .
+          </div>
+          <div className="action-container">
+            <div
+              onClick={() => {
+                window.open(
+                  "https://hopin.com/events/stronger-together-summit",
+                  "_blank",
+                );
+              }}
+              className="register-btn"
+            >
+              Register Now
+            </div>
+            <div onClick={removeBanner} className="close-action">
+              <img src={bgCross} />
+            </div>
+          </div>
+        </HomeRegisterBanner>
+      )}
+      {children}
+    </BannerContainer>
   );
 };
 
-export default Banner;
+export default WithSummitBanner;

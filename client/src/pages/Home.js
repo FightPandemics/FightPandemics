@@ -7,7 +7,7 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
-import Banner, { BannerContainer } from "components/Banner";
+import WithSummitBanner from "components/WithSummitBanner";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -166,8 +166,7 @@ const Home = (props) => {
   const { t } = useTranslation();
 
   return (
-    <BannerContainer>
-      <Banner />
+    <WithSummitBanner>
       <MainContainer className="text-center home">
         <StyledIntro>
           <IntroText>
@@ -222,7 +221,7 @@ const Home = (props) => {
           </OnboardingContainer>
         </>
       </MainContainer>
-    </BannerContainer>
+    </WithSummitBanner>
   );
 };
 

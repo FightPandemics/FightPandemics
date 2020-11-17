@@ -73,7 +73,7 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
-import Banner, { BannerContainer } from "components/Banner";
+import WithSummitBanner from "components/WithSummitBanner";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -679,8 +679,7 @@ const Feed = (props) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
-    <BannerContainer>
-      <Banner />
+    <WithSummitBanner>
       <FeedContext.Provider
         value={{
           filters,
@@ -870,7 +869,7 @@ const Feed = (props) => {
           />
         </FeedWrapper>
       </FeedContext.Provider>
-    </BannerContainer>
+    </WithSummitBanner>
   );
 };
 
