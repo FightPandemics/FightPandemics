@@ -1,41 +1,41 @@
 class PrivacyPolicy {
-  privacyPolicyH2 = '//*[@id="root"]/div/div/div[3]/main/div/div/h2';
+  privacyPolicyH2 = "//*[@id='root']/div/div/div[3]/main/div/div/h2";
   policyContent = ".am-drawer-content main div div";
-  firstParaLoc = '//*[@id="root"]/div/div/div[3]/main/div/div/div[1]';
-  secondParaLoc = '//*[@id="root"]/div/div/div[3]/main/div/div/div[2]';
-  thirdParaLoc = '//*[@id="root"]/div/div/div[3]/main/div/div/div[3]';
-  fourthParaLoc = '//*[@id="root"]/div/div/div[3]/main/div/div/div[4]';
-  dateDocumented = '//*[@id="root"]/div/div/div[3]/main/div/div/div[5]';
+  firstParaLoc = "//*[@id='root']/div/div/div[3]/main/div/div/div[1]";
+  secondParaLoc = "//*[@id='root']/div/div/div[3]/main/div/div/div[2]";
+  thirdParaLoc = "//*[@id='root']/div/div/div[3]/main/div/div/div[3]";
+  fourthParaLoc = "//*[@id='root']/div/div/div[3]/main/div/div/div[4]";
+  dateDocumented = "//*[@id='root']/div/div/div[3]/main/div/div/div[5]";
   firstParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[1]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[1]";
   secondParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[2]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[2]";
   thirdParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[3]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[3]";
   fourthParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[4]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[4]";
   fifthParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[5]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[5]";
   sixthParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[6]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[6]";
   seventhParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[7]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[7]";
   eightParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[8]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[8]";
   ninethParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[9]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[9]";
   tenthParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[10]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[10]";
   eleventhParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[11]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[11]";
   twelveParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[12]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[12]";
   thirteenParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[13]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[13]";
   fourthteenParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[14]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[14]";
   fifthteenParaLocWithOrdList =
-    '//*[@id="root"]/div/div/div[3]/main/div/div/ol/li[15]';
+    "//*[@id='root']/div/div/div[3]/main/div/div/ol/li[15]";
 
   legalEmail = "legal@fightpandemics.com";
   legalEmailRef = "mailto:legal@fightpandemics.com";
