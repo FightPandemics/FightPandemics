@@ -1,7 +1,7 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
 import { Modal as WebModal } from "antd";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
@@ -44,6 +44,7 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
+import { selectActorId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -83,6 +84,7 @@ const Post = ({
   currentPost,
   deleteModalVisibility,
   dispatchPostAction,
+  postDispatch,
   fullPostLength,
   handleCancelPostDelete,
   handleCommentDelete,
@@ -124,6 +126,7 @@ const Post = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
+  const actorId = useSelector(selectActorId);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
@@ -223,6 +226,7 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments`;
     const totalCommentCountEndPoint = `/api/posts/${postId}`;
     const newComment = {
+      actorId,
       content: comment,
     };
 
@@ -274,7 +278,7 @@ const Post = ({
     let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
       const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
@@ -490,7 +494,7 @@ const Post = ({
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
-        handlePostLike={handlePostLike}
+        postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
         postId={postId}

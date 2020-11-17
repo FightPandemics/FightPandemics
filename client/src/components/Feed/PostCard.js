@@ -7,7 +7,6 @@ import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
-const { display } = typography.font.family;
 const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`

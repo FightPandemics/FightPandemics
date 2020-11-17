@@ -36,8 +36,8 @@ const HorizontalRule = styled.hr`
 
 const Posts = ({
   isAuthenticated,
+  postDispatch,
   filteredPosts,
-  handlePostLike,
   handleCancelPostDelete,
   postDelete,
   user,
@@ -88,9 +88,9 @@ const Posts = ({
           <>
             <Post
               currentPost={posts[index][1]}
+              postDispatch={postDispatch}
               includeProfileLink={true}
               numComments={posts[index][1].commentsCount}
-              handlePostLike={handlePostLike}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
@@ -127,13 +127,13 @@ const Posts = ({
       filteredPosts,
       handleCancelPostDelete,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
       page,
       postDelete,
+      postDispatch,
       posts,
       user,
     ],

@@ -83,6 +83,15 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
+const getReqParam = (req, paramName) => {
+  // check in body props OR path params OR query params (might be null)
+  const body = req.body || {}; // might be null
+  const params = req.params || {};
+  const query = req.query || {};
+
+  return body[paramName] || params[paramName] || query[paramName];
+};
+
 const createSearchRegex = (keywords) => {
   let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
   let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
@@ -108,6 +117,7 @@ module.exports = {
   dateToEpoch,
   generateUUID,
   getCookieToken,
+  getReqParam,
   isValidEmail,
   isValidPassword,
   createSearchRegex,

@@ -1,11 +1,4 @@
-import {
-  AUTH_ERROR,
-  AUTH_LOGOUT,
-  AUTH_SUCCESS,
-  FORGOT_PASSWORD_REQUEST_SUCCESS,
-  SET_AUTH_LOADING,
-  SET_USER,
-} from "constants/action-types";
+import { SESSION_ACTIONS } from "./actions";
 import { startCheckCookieInterval } from "actions/authActions";
 
 const initialState = {
@@ -19,16 +12,17 @@ const initialState = {
   error: null,
   forgotPasswordRequested: false,
   user: null,
+  organisationId: null,
 };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
-    case AUTH_ERROR:
+    case SESSION_ACTIONS.AUTH_ERROR:
       return {
         ...initialState,
         authError: action.error,
       };
-    case AUTH_SUCCESS:
+    case SESSION_ACTIONS.AUTH_SUCCESS:
       startCheckCookieInterval();
       return {
         ...state,
@@ -39,14 +33,14 @@ function sessionReducer(state = initialState, action) {
         isAuthenticated: true,
         user: action.payload.user,
       };
-    case FORGOT_PASSWORD_REQUEST_SUCCESS:
+    case SESSION_ACTIONS.FORGOT_PASSWORD_REQUEST_SUCCESS:
       return {
         ...state,
         email: action.payload.email,
         forgotPasswordRequested: true,
         isAuthenticated: true, // required for redirect logic to verify-email
       };
-    case SET_USER:
+    case SESSION_ACTIONS.SET_USER:
       startCheckCookieInterval();
       const {
         payload: { user },
@@ -58,14 +52,19 @@ function sessionReducer(state = initialState, action) {
         authLoading: false,
         user,
       };
-    case SET_AUTH_LOADING:
+    case SESSION_ACTIONS.SET_AUTH_LOADING:
       return {
         ...state,
         authLoading: action.payload,
       };
-    case AUTH_LOGOUT:
+    case SESSION_ACTIONS.AUTH_LOGOUT:
       return {
         ...initialState,
+      };
+    case SESSION_ACTIONS.SET_ORGANISATION_INDEX:
+      return {
+        ...state,
+        organisationId: action.payload,
       };
     default:
       return state;

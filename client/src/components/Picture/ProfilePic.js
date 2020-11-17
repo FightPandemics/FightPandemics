@@ -48,3 +48,36 @@ const ProfilePic = ({ initials, resolution, user }) => {
 };
 
 export default ProfilePic;
+
+const InitialsContainer = styled.div`
+  margin: auto;
+  border-radius: 50%;
+  border: 0.2rem solid #425af2;
+  color: #425af2;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: 500;
+  background-color: #f3f4fe;
+  font-size: 0.5vw;
+`;
+
+export const ProfilePhoto = ({ initials, user }) => {
+  if (user && user.photo) {
+    return (
+      <img
+        style={{
+          maxWidth: "100%",
+          borderRadius: "50%",
+          boxSizing: "content-box",
+        }}
+        src={user.photo}
+      />
+    );
+  }
+  return <ProfileInitials initials={initials} />;
+};
+
+const ProfileInitials = ({ initials }) => (
+  <InitialsContainer>{initials}</InitialsContainer>
+);

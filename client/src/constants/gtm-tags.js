@@ -8,6 +8,7 @@ module.exports = {
     feed: "_HB",
     feedback: "_FDB",
     language: "_LS",
+    switch: "_SWC",
   },
   homePage: {
     prefix: "HP",
