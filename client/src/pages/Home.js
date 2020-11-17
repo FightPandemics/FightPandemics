@@ -164,7 +164,6 @@ const StyleLink = styled.p`
 
 const Home = (props) => {
   const { t } = useTranslation();
-  console.log(props);
 
   return (
     <BannerContainer>
