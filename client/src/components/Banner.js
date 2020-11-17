@@ -20,7 +20,7 @@ const HomeRegisterBanner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2.4rem;
+  padding: 1.4rem 2.4rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
@@ -36,6 +36,7 @@ const HomeRegisterBanner = styled.div`
 
       .register-btn {
         width: 100%;
+        margin-left: 0;
       }
 
       .close-action {
@@ -56,12 +57,13 @@ const HomeRegisterBanner = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f3f4fe;
+    color: #fff;
     font-weight: 500;
     font-size: 1.4rem;
+    margin-left: 2rem;
 
     &:hover {
-      background: #f3f4fe;
+      background: #fff;
       color: ${colors.royalBlue};
       border: 0.1rem solid ${colors.royalBlue};
     }
@@ -86,6 +88,7 @@ const HomeRegisterBanner = styled.div`
 export const BannerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const Banner = () => {
