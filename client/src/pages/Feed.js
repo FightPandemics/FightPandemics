@@ -73,6 +73,7 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
+import Banner, { BannerContainer } from "components/Banner";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -678,192 +679,198 @@ const Feed = (props) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
-    <FeedContext.Provider
-      value={{
-        filters,
-        filterModal,
-        activePanel,
-        location,
-        dispatchAction,
-        selectedOptions,
-        handleShowFilters,
-        handleOption,
-        handleFilterModal,
-        handleQuit,
-        handleLocation,
-        handleOnClose,
-        showFilters,
-        handlePostLike,
-        totalPostCount,
-      }}
-    >
-      <FeedWrapper>
-        <LayoutWrapper>
-          <SiderWrapper
-            breakpoint="md"
-            className="site-layout-background"
-            width="29rem"
-          >
-            <>
-              <MenuWrapper
-                defaultSelectedKeys={["ALL"]}
-                selectedKeys={[queryParams.objective || "ALL"]}
-                onClick={handleChangeType}
-              >
-                {Object.keys(HELP_TYPE).map((item, index) => (
-                  <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {t(HELP_TYPE[item])}
-                  </Menu.Item>
-                ))}
-              </MenuWrapper>
-              <FiltersWrapper>
-                <button
-                  id={gtmTag(GTM.post.filterPost)}
-                  onClick={handleShowFilters}
+    <BannerContainer>
+      <Banner />
+      <FeedContext.Provider
+        value={{
+          filters,
+          filterModal,
+          activePanel,
+          location,
+          dispatchAction,
+          selectedOptions,
+          handleShowFilters,
+          handleOption,
+          handleFilterModal,
+          handleQuit,
+          handleLocation,
+          handleOnClose,
+          showFilters,
+          handlePostLike,
+          totalPostCount,
+        }}
+      >
+        <FeedWrapper>
+          <LayoutWrapper>
+            <SiderWrapper
+              breakpoint="md"
+              className="site-layout-background"
+              width="29rem"
+            >
+              <>
+                <MenuWrapper
+                  defaultSelectedKeys={["ALL"]}
+                  selectedKeys={[queryParams.objective || "ALL"]}
+                  onClick={handleChangeType}
                 >
-                  <span>
-                    <FiltersIcon />
-                  </span>
-                  {t("feed.filters.title")}
-                </button>
-                <FiltersList />
-              </FiltersWrapper>
-            </>
-            <FiltersSidebar
-              locationOnly={
-                !(!queryParams.s_category || queryParams.s_category === "POSTS")
-              }
-              gtmPrefix={GTM.feed.prefix}
-            />
-          </SiderWrapper>
-          <ContentWrapper>
-            <HeaderWrapper empty={emptyFeed()}>
-              <TabsWrapper
-                options={SEARCH_OPTIONS}
-                showOptions={!!queryParams.s_keyword}
-                displayValue={"name"}
-                t={t}
+                  {Object.keys(HELP_TYPE).map((item, index) => (
+                    <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
+                      {t(HELP_TYPE[item])}
+                    </Menu.Item>
+                  ))}
+                </MenuWrapper>
+                <FiltersWrapper>
+                  <button
+                    id={gtmTag(GTM.post.filterPost)}
+                    onClick={handleShowFilters}
+                  >
+                    <span>
+                      <FiltersIcon />
+                    </span>
+                    {t("feed.filters.title")}
+                  </button>
+                  <FiltersList />
+                </FiltersWrapper>
+              </>
+              <FiltersSidebar
+                locationOnly={
+                  !(
+                    !queryParams.s_category ||
+                    queryParams.s_category === "POSTS"
+                  )
+                }
+                gtmPrefix={GTM.feed.prefix}
               />
-              {(!queryParams.s_category ||
-                queryParams.s_category === "POSTS") && (
-                <button
-                  id={gtmTag(GTM.post.createPost)}
-                  onClick={handleCreatePost}
-                >
-                  {t("post.create")}
+            </SiderWrapper>
+            <ContentWrapper>
+              <HeaderWrapper empty={emptyFeed()}>
+                <TabsWrapper
+                  options={SEARCH_OPTIONS}
+                  showOptions={!!queryParams.s_keyword}
+                  displayValue={"name"}
+                  t={t}
+                />
+                {(!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
+                  <button
+                    id={gtmTag(GTM.post.createPost)}
+                    onClick={handleCreatePost}
+                  >
+                    {t("post.create")}
+                    <CreatePostIcon
+                      id={gtmTag(GTM.post.createPost)}
+                      src={creatPost}
+                    />
+                  </button>
+                )}
+              </HeaderWrapper>
+              <MobileSearchWrapper>
+                <FeedSearch
+                  isMobile={true}
+                  options={SEARCH_OPTIONS}
+                  isObject={true}
+                  displayValue={"name"}
+                  placeholder={t("feed.search.placeholder")}
+                  t={t}
+                />
+              </MobileSearchWrapper>
+              {
+                <div>
+                  <FilterBox
+                    locationOnly={
+                      !(
+                        !queryParams.s_category ||
+                        queryParams.s_category === "POSTS"
+                      )
+                    }
+                    gtmPrefix={GTM.feed.prefix}
+                  />
+                </div>
+              }
+              {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
+                <Posts
+                  isAuthenticated={isAuthenticated}
+                  filteredPosts={postsList}
+                  handlePostLike={handlePostLike}
+                  postDelete={postDelete}
+                  user={user}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handlePostDelete={handlePostDelete}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                  page={page}
+                />
+              ) : (
+                <Users
+                  isAuthenticated={isAuthenticated}
+                  filteredUsers={postsList}
+                  user={user}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalUsersCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                />
+              )}
+              {status === ERROR_POSTS && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+
+              {emptyFeed() ? (
+                <NoPosts>
+                  <Trans
+                    i18nKey={
+                      !queryParams.s_category ||
+                      queryParams.s_category === "POSTS"
+                        ? "feed.noResultsPosts"
+                        : queryParams.s_category === "INDIVIDUALS"
+                        ? "feed.noResultsPeople"
+                        : "feed.noResultsOrgs"
+                    }
+                    components={[
+                      <a
+                        id={gtmTag(GTM.post.createPost)}
+                        onClick={handleCreatePost}
+                      />,
+                    ]}
+                  />
+                </NoPosts>
+              ) : (
+                (!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
                   <CreatePostIcon
                     id={gtmTag(GTM.post.createPost)}
                     src={creatPost}
+                    onClick={handleCreatePost}
+                    className="create-post"
                   />
-                </button>
+                )
               )}
-            </HeaderWrapper>
-            <MobileSearchWrapper>
-              <FeedSearch
-                isMobile={true}
-                options={SEARCH_OPTIONS}
-                isObject={true}
-                displayValue={"name"}
-                placeholder={t("feed.search.placeholder")}
-                t={t}
-              />
-            </MobileSearchWrapper>
-            {
-              <div>
-                <FilterBox
-                  locationOnly={
-                    !(
-                      !queryParams.s_category ||
-                      queryParams.s_category === "POSTS"
-                    )
-                  }
-                  gtmPrefix={GTM.feed.prefix}
-                />
-              </div>
-            }
-            {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
-              <Posts
-                isAuthenticated={isAuthenticated}
-                filteredPosts={postsList}
-                handlePostLike={handlePostLike}
-                postDelete={postDelete}
-                user={user}
-                deleteModalVisibility={deleteModalVisibility}
-                handlePostDelete={handlePostDelete}
-                handleCancelPostDelete={handleCancelPostDelete}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPage}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-                highlightWords={queryParams.s_keyword}
-                page={page}
-              />
-            ) : (
-              <Users
-                isAuthenticated={isAuthenticated}
-                filteredUsers={postsList}
-                user={user}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPage}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalUsersCount={totalPostCount}
-                highlightWords={queryParams.s_keyword}
-              />
-            )}
-            {status === ERROR_POSTS && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-
-            {emptyFeed() ? (
-              <NoPosts>
-                <Trans
-                  i18nKey={
-                    !queryParams.s_category ||
-                    queryParams.s_category === "POSTS"
-                      ? "feed.noResultsPosts"
-                      : queryParams.s_category === "INDIVIDUALS"
-                      ? "feed.noResultsPeople"
-                      : "feed.noResultsOrgs"
-                  }
-                  components={[
-                    <a
-                      id={gtmTag(GTM.post.createPost)}
-                      onClick={handleCreatePost}
-                    />,
-                  ]}
-                />
-              </NoPosts>
-            ) : (
-              (!queryParams.s_category ||
-                queryParams.s_category === "POSTS") && (
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                  onClick={handleCreatePost}
-                  className="create-post"
-                />
-              )
-            )}
-          </ContentWrapper>
-        </LayoutWrapper>
-        <CreatePost
-          gtmPrefix={GTM.feed.prefix}
-          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
-          loadPosts={refetchPosts}
-          visible={showCreatePostModal}
-          user={user}
-        />
-      </FeedWrapper>
-    </FeedContext.Provider>
+            </ContentWrapper>
+          </LayoutWrapper>
+          <CreatePost
+            gtmPrefix={GTM.feed.prefix}
+            onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+            loadPosts={refetchPosts}
+            visible={showCreatePostModal}
+            user={user}
+          />
+        </FeedWrapper>
+      </FeedContext.Provider>
+    </BannerContainer>
   );
 };
 

@@ -7,6 +7,7 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
+import Banner, { BannerContainer } from "components/Banner";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -52,6 +53,7 @@ export const Title = styled(TextLabel)`
 
 const MainContainer = styled.div`
   width: 100%;
+  height: 100%;
   @media only screen and ${mq.tablet.narrow.min} {
     background: ${offWhite};
     display: grid;
@@ -162,58 +164,66 @@ const StyleLink = styled.p`
 
 const Home = (props) => {
   const { t } = useTranslation();
+  console.log(props);
 
   return (
-    <MainContainer className="text-center home">
-      <StyledIntro>
-        <IntroText>
-          <Title color="white" size={theme.typography.size.xlarge} weight="500">
-            FightPandemics
-          </Title>
-
-          <StyledStrapline level={2} margin="none">
-            {t("headline")}
-          </StyledStrapline>
-          <Trans
-            i18nKey="tagline"
-            components={[<StyledP />, <StyledP />]}
-          ></Trans>
-        </IntroText>
-      </StyledIntro>
-
-      <>
-        <OnboardingContainer>
-          <FlexChild>
-            <ImageButton
-              id={GTM.homePage.prefix + GTM.homePage.requestHelp}
-              type="ghost"
-              inactiveImg={needHelpInactive}
-              activeImg={needHelpActive}
-              onClick={() => props.history.push("/need-help")}
+    <BannerContainer>
+      <Banner />
+      <MainContainer className="text-center home">
+        <StyledIntro>
+          <IntroText>
+            <Title
+              color="white"
+              size={theme.typography.size.xlarge}
+              weight="500"
             >
-              {t("common.getHelp")}
-            </ImageButton>
-          </FlexChild>
-          <FlexChild>
-            <ImageButton
-              id={GTM.homePage.prefix + GTM.homePage.offerHelp}
-              type="ghost"
-              inactiveImg={offerHelpInactive}
-              activeImg={offerHelpActive}
-              onClick={() => props.history.push("/offer-help")}
-            >
-              {t("common.giveHelp")}
-            </ImageButton>
-          </FlexChild>
+              FightPandemics
+            </Title>
 
-          <Link to="/feed">
-            <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
-              {t("common.viewFeed")}
-            </StyleLink>
-          </Link>
-        </OnboardingContainer>
-      </>
-    </MainContainer>
+            <StyledStrapline level={2} margin="none">
+              {t("headline")}
+            </StyledStrapline>
+            <Trans
+              i18nKey="tagline"
+              components={[<StyledP />, <StyledP />]}
+            ></Trans>
+          </IntroText>
+        </StyledIntro>
+
+        <>
+          <OnboardingContainer>
+            <FlexChild>
+              <ImageButton
+                id={GTM.homePage.prefix + GTM.homePage.requestHelp}
+                type="ghost"
+                inactiveImg={needHelpInactive}
+                activeImg={needHelpActive}
+                onClick={() => props.history.push("/need-help")}
+              >
+                {t("common.getHelp")}
+              </ImageButton>
+            </FlexChild>
+            <FlexChild>
+              <ImageButton
+                id={GTM.homePage.prefix + GTM.homePage.offerHelp}
+                type="ghost"
+                inactiveImg={offerHelpInactive}
+                activeImg={offerHelpActive}
+                onClick={() => props.history.push("/offer-help")}
+              >
+                {t("common.giveHelp")}
+              </ImageButton>
+            </FlexChild>
+
+            <Link to="/feed">
+              <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
+                {t("common.viewFeed")}
+              </StyleLink>
+            </Link>
+          </OnboardingContainer>
+        </>
+      </MainContainer>
+    </BannerContainer>
   );
 };
 
