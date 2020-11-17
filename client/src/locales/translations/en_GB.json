@@ -201,7 +201,13 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "edited": "edited"
+    "edited": "edited",
+    "error": {
+      "title": "Please include a title for your post.",
+      "description": "Please include a description for your post.",
+      "help": "Please select a type of help.",
+      "tags": "Please add at least one tag."
+    }
   },
   "profile": {
     "common": {

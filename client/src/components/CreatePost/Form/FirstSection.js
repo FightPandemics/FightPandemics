@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Input } from "antd";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -49,12 +49,8 @@ const First = ({
         placeholder={t("post.writePost")}
       />
       <div className="error-box">
-        {post && !formData.title ? `${renderError("title")} ` : <Fragment />}
-        {post && !formData.description ? (
-          renderError("description")
-        ) : (
-          <Fragment />
-        )}
+        {post && !formData.title ? `${renderError("title")} ` : null}
+        {post && !formData.description ? renderError("description") : null}
       </div>
     </Section>
   );

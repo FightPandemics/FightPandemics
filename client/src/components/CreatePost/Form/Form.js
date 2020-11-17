@@ -30,10 +30,9 @@ const initialState = {
 const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { t } = useTranslation();
   const errorMsg = {
-    title: t("post.title"),
-    description: t("post.description"),
-    help: t("post.help"),
-    tags: t("post.tags"),
+    title: t("post.error.title"),
+    description: t("post.error.description"),
+    tags: t("post.error.tags"),
   };
 
   const { form } = useContext(CreatePostContext);
