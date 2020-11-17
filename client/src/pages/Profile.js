@@ -133,6 +133,7 @@ const Profile = ({
     objectives = {},
     ownUser,
     urls = {},
+    usesPassword = false
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
@@ -390,8 +391,8 @@ const Profile = ({
           {address ? (
             <LocationMobileDiv>{address}</LocationMobileDiv>
           ) : (
-            <WhiteSpace />
-          )}
+              <WhiteSpace />
+            )}
           <IconsContainer>
             <HelpContainer>
               {needHelp && t("profile.individual.needHelp")}
@@ -492,7 +493,7 @@ const Profile = ({
           closable={false}
           onClose={onToggleDrawer}
           visible={drawer}
-          height="150px"
+          height="auto"
           key="bottom"
         >
           <DrawerHeader>
@@ -503,6 +504,13 @@ const Profile = ({
               {t("profile.individual.editProfile")}{" "}
             </Link>
           </DrawerHeader>
+          {usesPassword && (
+            <DrawerHeader>
+              <Link to="/edit-security">
+                {t("profile.individual.editSecurity")}{" "}
+              </Link>
+            </DrawerHeader>
+          )}
         </CustomDrawer>
       )}
       <WhiteSpace />

@@ -210,6 +210,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
+      "securityInfo": "Security Information",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -247,6 +248,7 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
+      "changePassword": "Change Password",
       "sendMessage": "Send Message"
     },
     "individual": {
@@ -271,7 +273,20 @@
       "wantHelp": "I want to help ",
       "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required."
+      "lastNameRequired": "Last name is required.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security"
     },
     "org": {
       "title": "Create Organization Profile",
@@ -355,7 +370,8 @@
     "passwordMax": "Password must be at most {{num}} characters.",
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Passwords don't match",
+    "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -732,6 +748,7 @@
     "failedLogin": "Login failed, reason:",
     "failedSignup": "Signup failed, reason:",
     "failedPasswordRecovery": "Password recovery failed, reason:",
+    "wrongOldPassword": "Wrong current password",
     "http": {
       "Bad Request": "Bad Request",
       "Unauthorized": "Unauthorized",
