@@ -12,7 +12,10 @@
     "profile": "Profil",
     "addOrg": "Ajouter une organisation",
     "logout": "Se déconnecter",
-    "organisations": "Organisations"
+    "organisations": "Organisations",
+    "language": "Langue",
+    "switchAccount": "Changer de compte",
+    "myOrgnisation": "Mes organisations"
   },
   "onboarding": {
     "common": {
@@ -245,7 +248,9 @@
       "emailMaxLength": "L'adresse e-mail ne doit pas dépasser 200 caractères",
       "emailInvalid": "L'adresse e-mail est invalide",
       "emailDomainInvalid": "Le domaine e-mail est invalide",
-      "sendMessage": "Envoyer un message"
+      "sendMessage": "Envoyer un message",
+      "securityInfo": "Information sur la sécurité",
+      "changePassword": "Changer le mot de passe"
     },
     "individual": {
       "email": "Adresse courriel",
@@ -269,7 +274,20 @@
       "wantHelp": "Je veux aider",
       "needHelp": "J'ai besoin d'aide",
       "firstNameRequired": "Le prénom est requis.",
-      "lastNameRequired": "Le nom de famille est requis."
+      "lastNameRequired": "Le nom de famille est requis.",
+      "newPassword": "Nouveau mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "confirmNewPassword": "Confirmer votre mot de passe",
+      "currentPasswordRequired": "Le mot de passe actuel est requis",
+      "newPasswordRequired": "Un nouveau mot de passe est requis",
+      "confirmNewPasswordRequired": "Veuillez confirmer votre mot de passe!",
+      "passwordMatch": "Les deux mots de passe que vous avez saisis ne correspondent pas!",
+      "passwordUpdateSuccess": "Changement de mot de passe réussi",
+      "passwordUpdateError": "Le changement de mot de passe a échoué",
+      "enterCurrentPassword": "Saisissez le mot de passe actuel",
+      "enterNewPassword": "Saisissez un nouveau mot de passe",
+      "updatingPassword": "Mise à jour du mot de passe",
+      "editSecurity": "Modifier la sécurité"
     },
     "org": {
       "title": "Créer un profil d'organisation",
@@ -353,7 +371,8 @@
     "passwordMax": "Le mot de passe doit comporter au maximum {{num}} caractères",
     "passwordMin": "Le mot de passe doit comporter au moins {{num}} caractères",
     "passwordConfirmationRequired": "La confirmation du mot de passe est requise",
-    "passwordNotMatch": "Mots de passe invalides"
+    "passwordNotMatch": "Mots de passe invalides",
+    "backHome": "Retour à l'écran d'accueil"
   },
   "verifyEmail": {
     "checkInbox": "Vérifiez votre boîte de réception",
@@ -395,7 +414,13 @@
     "lifetimeSupporters": "Supporteurs à vie",
     "currentSupporters": "Supporteurs actuels",
     "pastSupporters": "Anciens supporteurs",
-    "hashtag": "#PourCommunautésParCommunautés"
+    "hashtag": "#PourCommunautésParCommunautés",
+    "getInvolved": "Participez",
+    "joinVolunteer": "Rejoignez en tant que bénévole",
+    "joinAmbassador": "Rejoignez en tant qu'ambassadeur",
+    "joinStudentProgram": "Rejoignez le programme d'étudiants",
+    "studentSummerProgram": "Programme d'emploi d'été pour étudiants",
+    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans."
   },
   "footer": {
     "faq": "FAQ",
@@ -420,7 +445,7 @@
       [
         "Qui sont FightPandemics?",
         "FightPandemics est une équipe mondiale entièrement composée de bénévoles dont la mission est de servir de lieu d'aide. Notre équipe est composée de plus de 150 bénévoles engagés de plus de 70 pays qui s'efforcent de faire la différence. La plate-forme a été construite dans le cadre d'un effort de collaboration innovant, réunissant un groupe diversifié de résolveurs de problèmes avec un large éventail de compétences désireux de co-créer et d'apprendre les uns avec les autres.",
-        "Voulez-vous rejoindre notre initiative? Contactez < 0 > hr@fightpandemics.com < / 0 >"
+        "Voulez-vous rejoindre notre initiative? Contactez <0> hr@fightpandemics.com </0>"
       ],
       [
         "Dans quelles villes les FightPandemics opèrent-ils ?",
@@ -432,11 +457,11 @@
       ],
       [
         "Comment puis-je publier une offre ou une demande d'aide sur FightPandemics?",
-        "< 0 > Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des annonces et des commentaires sur la plateforme FightPandemics. < / 0 > < 1 > Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. < / 1 > < 2 > Une fois que vous avez rempli votre profil, sélectionnez le bouton de menu, sélectionnez voir mon profil et cliquez sur le bouton plus pour créer votre premier message. < / 2 >"
+        "<0> Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des annonces et des commentaires sur la plateforme FightPandemics. </0> <1> Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </1> <2> Une fois que vous avez rempli votre profil, sélectionnez le bouton de menu, sélectionnez voir mon profil et cliquez sur le bouton plus pour créer votre premier message. </2>"
       ],
       [
         "Comment puis-je me tenir au courant des actualités de FightPandemics?",
-        "Suivez-nous sur les réseaux sociaux! Nous publions régulièrement des mises à jour sur <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn< / 2 >, et <3>Instagram </3>."
+        "Suivez-nous sur les réseaux sociaux! Nous publions régulièrement des mises à jour sur <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2>, et <3>Instagram </3>."
       ],
       [
         "Dois-je payer pour utiliser FightPandemics ?",
@@ -453,7 +478,7 @@
       ],
       [
         "Comment puis-je offrir de l'aide?",
-        "< 0 > Vous pouvez offrir de l'aide en tant qu'individu ou en tant qu'organisation. < / 0 > < 1 > Sur la page d'accueil, sélectionnez \"Donner de l'aide\" pour voir tous les messages créés par les utilisateurs demandant de l'aide et filtrer les résultats par lieu et par type. Vous devez être connecté pour les contacter. Vous pouvez également créer vos propres annonces décrivant l'aide que vous êtes en mesure d'offrir. < / 1 >"
+        "<0> Vous pouvez offrir de l'aide en tant qu'individu ou en tant qu'organisation. </0> <1> Sur la page d'accueil, sélectionnez \"Donner de l'aide\" pour voir tous les messages créés par les utilisateurs demandant de l'aide et filtrer les résultats par lieu et par type. Vous devez être connecté pour les contacter. Vous pouvez également créer vos propres annonces décrivant l'aide que vous êtes en mesure d'offrir. </1>"
       ],
       [
         "Dois-je être connecté pour afficher les demandes et les offres d'aide?",
@@ -473,7 +498,7 @@
       ],
       [
         "Comment puis-je être sûr que les annonces sont fiables?",
-        "Malheureusement, nous ne pouvons pas garantir que toutes les annonces sont fiables, car les publications sont créées par nos utilisateurs. Cependant, nous faisons de notre mieux pour garder le contenu pertinent, en nettoyant régulièrement les données et en désactivant les publications après leur expiration. Si vous avez des inquiétudes concernant le contenu d'un message, veuillez nous contacter à < 0 > support@fightpandemics.com < / 0 >"
+        "Malheureusement, nous ne pouvons pas garantir que toutes les annonces sont fiables, car les publications sont créées par nos utilisateurs. Cependant, nous faisons de notre mieux pour garder le contenu pertinent, en nettoyant régulièrement les données et en désactivant les publications après leur expiration. Si vous avez des inquiétudes concernant le contenu d'un message, veuillez nous contacter à <0> support@fightpandemics.com </0>"
       ],
       [
         "Pouvez-vous m'aider avec des problèmes médicaux?",
@@ -489,15 +514,15 @@
       ],
       [
         "J'ai trouvé un bogue sur le site. Comment puis-je le signaler ?",
-        "Veuillez envoyer vos commentaires ou contacter < 0 > support@fightpandemics.com. < / 0 >"
+        "Veuillez envoyer vos commentaires ou contacter <0> support@fightpandemics.com. </0>"
       ],
       [
         "Je ne suis plus autorisé à utiliser FightPandemics - que dois-je faire?",
-        "Veuillez nous contacter à < 0 > support@fightpandemics.com < / 0 > et nous vérifierons quel est le problème avec votre compte."
+        "Veuillez nous contacter à <0> support@fightpandemics.com </0> et nous vérifierons quel est le problème avec votre compte."
       ],
       [
         "Quelles sont les informations que vous conservez ?",
-        "FightPandemics collecte et traite les données personnelles des utilisateurs uniquement aux fins décrites dans notre < 0 > politique de confidentialité. < / 0 > En aucun cas, nous ne fournirons l'accès ou ne partagerons vos données personnelles avec des tiers, sauf avec les personnes concernées énoncées dans cette politique."
+        "FightPandemics collecte et traite les données personnelles des utilisateurs uniquement aux fins décrites dans notre <0> politique de confidentialité. </0> En aucun cas, nous ne fournirons l'accès ou ne partagerons vos données personnelles avec des tiers, sauf avec les personnes concernées énoncées dans cette politique."
       ],
       [
         "Puis-je donner / recevoir de l'aide de ma ville ou de ma région? Combien de temps le message sera-t-il visible?",
@@ -505,13 +530,13 @@
       ],
       [
         "Ma question ne figure pas dans la liste. À qui puis-je m'adresser ?",
-        "Pour les questions générales et autres problèmes non répertoriés ici, contactez < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour les questions générales et autres problèmes non répertoriés ici, contactez <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "accountFAQ": [
       [
         "Comment adhérer?",
-        "< 0 > Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. < / 0 > < 1 > Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics. < / 1 >"
+        "<0> Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </ 0> <1> Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics. </1>"
       ],
       [
         "Comment puis-je changer mon profil individuel en profil d'organisation?",
@@ -534,11 +559,11 @@
         "Si vous n'avez pas reçu d'e-mail de confirmation, essayez les options suivantes:",
         "Recherchez l'e-mail de récupération dans votre dossier indésirable.",
         "Essayez le processus «Récupérer le mot de passe».",
-        "Si les options ci-dessus ne résolvent pas le problème, n'hésitez pas à contacter notre équipe d'assistance: < 0 > support@fightpandemics.com. < / 0 >"
+        "Si les options ci-dessus ne résolvent pas le problème, n'hésitez pas à contacter notre équipe d'assistance: <0> support@fightpandemics.com. </0>"
       ],
       [
         "Comment puis-je supprimer/annuler mon compte ?",
-        "Si vous souhaitez supprimer votre compte, veuillez nous contacter à < 0 > support@fightpandemics.com. < / 0 >"
+        "Si vous souhaitez supprimer votre compte, veuillez nous contacter à <0> support@fightpandemics.com. </0>"
       ],
       [
         "Comment puis-je mettre à jour les informations de mon profil?",
@@ -552,11 +577,11 @@
     "contectsFAQ": [
       [
         "Je souhaite devenir partenaire ou sponsor.",
-        "Veuillez contacter notre équipe des partenariats à < 0 > partenariats@fightpandemics.com. < / 0 >"
+        "Veuillez contacter notre équipe des partenariats à <0> partenariats@fightpandemics.com. </0>"
       ],
       [
         "Je viens de la presse / des médias.",
-        "Veuillez nous contacter à < 0 > pr@fightpandemics.com. < / 0 >"
+        "Veuillez nous contacter à <0> pr@fightpandemics.com. </0>"
       ],
       [
         "J'ai besoin de support technique.",
@@ -564,18 +589,18 @@
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
-        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "contacts": "Contacts",
     "contactsFAQ": [
       [
         "Je souhaite devenir partenaire ou sponsor.",
-        "Veuillez contacter notre équipe des partenariats à < 0 > partenariats@fightpandemics.com. < / 0 >"
+        "Veuillez contacter notre équipe des partenariats à <0> partenariats@fightpandemics.com. </0>"
       ],
       [
         "Je viens de la presse / des médias.",
-        "Veuillez nous contacter à < 0 > pr@fightpandemics.com. < / 0 >"
+        "Veuillez nous contacter à <0> pr@fightpandemics.com. </0>"
       ],
       [
         "J'ai besoin de support technique.",
@@ -583,7 +608,7 @@
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
-        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "faqTitle": "Foire aux questions"
@@ -772,7 +797,8 @@
       "imageDimensionTooSmall": "S’il vous plaît télécharger une image qui est d’au moins 250 pixels de haut et 250 pixels de large.",
       "imageDimensionTooWide": "Désolé, l’image est trop large. S’il vous plaît essayer à nouveau avec une image qui a une largeur inférieure à deux fois la hauteur.",
       "networkError": "Désolé, une erreur réseau s'est produite."
-    }
+    },
+    "wrongOldPassword": "Mot de passe actuel incorrect"
   },
   "TEMP: We are not a provider of healthcare services": "Nous ne sommes pas fournisseur de services de santé",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Nous offrons ce service en tout bonne foi pour ceux qui ne parviennent pas à trouver l'aide et les ressources nécessaires pendant cette crise sanitaire sans précédent.",

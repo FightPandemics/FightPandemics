@@ -12,7 +12,10 @@
     "profile": "Profil",
     "addOrg": "Dodaj organizację",
     "logout": "Wyloguj się",
-    "organisations": "Organizacje"
+    "organisations": "Organizacje",
+    "language": "Język",
+    "switchAccount": "Przełącz konto",
+    "myOrgnisation": "Moje organizacje"
   },
   "onboarding": {
     "common": {
@@ -206,7 +209,7 @@
   "profile": {
     "common": {
       "accountInfo": "Informacje o koncie",
-      "profileInfo": "Informacje o Profilu",
+      "profileInfo": "Informacje o profilu",
       "address": "Adres",
       "enterAddress": "Wpisz adres, kod pocztowy lub miasto",
       "agreePrivacy": "Rejestrując się, wyrażam zgodę na <0>Politykę prywatności</0>",
@@ -245,7 +248,9 @@
       "emailMaxLength": "Adres e-mail nie może przekraczać 200 znaków",
       "emailInvalid": "Adres e-mail jest nieprawidłowy",
       "emailDomainInvalid": "Domena e-mail jest nieprawidłowa",
-      "sendMessage": "Wyślij wiadomość"
+      "sendMessage": "Wyślij wiadomość",
+      "securityInfo": "Informacje o bezpieczeństwie",
+      "changePassword": "Zmień hasło"
     },
     "individual": {
       "email": "E-mail",
@@ -269,7 +274,20 @@
       "wantHelp": "Chcę pomóc",
       "needHelp": "Potrzebuję pomocy",
       "firstNameRequired": "Imię jest wymagane.",
-      "lastNameRequired": "Nazwisko jest wymagane."
+      "lastNameRequired": "Nazwisko jest wymagane.",
+      "newPassword": "Nowe hasło",
+      "currentPassword": "Aktualne hasło",
+      "confirmNewPassword": "Potwierdź hasło",
+      "currentPasswordRequired": "Wymagane jest aktualne hasło",
+      "newPasswordRequired": "Wymagane jest nowe hasło",
+      "confirmNewPasswordRequired": "Proszę, potwierdź swoje hasło!",
+      "passwordMatch": "Dwa wprowadzone hasła nie pasują do siebie!",
+      "passwordUpdateSuccess": "Zmiana hasła powiodła się",
+      "passwordUpdateError": "Zmiana hasła nie powiodła się",
+      "enterCurrentPassword": "Wprowadź bieżące hasło",
+      "enterNewPassword": "Wprowadź nowe hasło",
+      "updatingPassword": "Aktualizacja hasła",
+      "editSecurity": "Edytuj informacje o bezpieczeństwie"
     },
     "org": {
       "title": "Utwórz profil organizacji",
@@ -353,7 +371,8 @@
     "passwordMax": "Hasło nie może zawierać więcej niż {{num}} znaków",
     "passwordMin": "Hasło musi zawierać co najmniej {{num}} znaków",
     "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła",
-    "passwordNotMatch": "Podane hasła nie pasują do siebie"
+    "passwordNotMatch": "Podane hasła nie pasują do siebie",
+    "backHome": "Powrót do ekranu głównego"
   },
   "verifyEmail": {
     "checkInbox": "Sprawdź swoją skrzynkę odbiorczą",
@@ -395,7 +414,13 @@
     "lifetimeSupporters": "Wspierali nas przez cały czas:",
     "currentSupporters": "Wspierają nas obecnie:",
     "pastSupporters": "Wspierali nas:",
-    "hashtag": "#ForCommunitiesByCommunities"
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "Zaangażuj się",
+    "joinVolunteer": "Dołącz jako wolontariusz",
+    "joinAmbassador": "Dołącz jako ambasador",
+    "joinStudentProgram": "Dołącz do programu studenckiego",
+    "studentSummerProgram": "Letni program studencki",
+    "forStudentInAge": "Dla uczniów w wieku 14-18 lat."
   },
   "footer": {
     "faq": "FAQ",
@@ -639,7 +664,7 @@
       "age": "Twój wiek to?",
       "unaffected": "Normalnie chodzę do pracy/szkoły",
       "quarantine": "Jestem zdrowy, ale na kwarantannie domowej",
-      "symptomaticUntested": "Mam łagodne objawy, ale nie byłam badana",
+      "symptomaticUntested": "Mam łagodne objawy, ale nie byłem badany",
       "diagnosed": "Zostałem zdiagnozowany z Covid-19"
     }
   },
@@ -772,7 +797,8 @@
       "imageDimensionTooSmall": "Prześlij obraz, który ma co najmniej 250 pikseli wysokości i 250 pikseli szerokości.",
       "imageDimensionTooWide": "Przepraszamy, obraz jest zbyt szeroki. Spróbuj ponownie z obrazem, którego szerokość jest mniejsza niż dwukrotna wysokość.",
       "networkError": "Przepraszamy, wystąpił błąd sieci."
-    }
+    },
+    "wrongOldPassword": "Nieprawidłowe aktualne hasło"
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Usługa ta jest świadczona w dobrej wierze dla tych, którzy w przeciwnym razie nie byliby w stanie uzyskać pomocy i środków w tej bezprecedensowej sytuacji zagrożenia zdrowia publicznego.",
