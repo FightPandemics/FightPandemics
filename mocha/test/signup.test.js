@@ -101,19 +101,18 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
       );
     });
 
-    //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket has been submitted.
     it("Email local part has more than 64 characters triggers Bad Request error", async () => {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
         apiEndPoint,
         userCredentialsWithEmailLocalExceeding64Characters,
       );
-      console.log(userCredentialsWithEmailLocalExceeding64Characters);
+      userCredentialsWithEmailLocalExceeding64Characters;
       validator.validateStatusCodeErrorAndMessage(
         response,
         httpStatus.BAD_REQUEST,
         "Bad Request",
-        'body.email should match format "email"',
+        "invalidEmail",
       );
     });
 
@@ -157,11 +156,10 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         response,
         httpStatus.BAD_REQUEST,
         "Bad Request",
-        "PasswordsShouldMatch",
+        "passwordNotMatch",
       );
     });
 
-    //Currently the backend API returns a 500 Internal Server error message. This needs to be corrected to return a 400 error message instead. An issue ticket has been submitted.
     it("Empty password and confirm password trigger Bad Request error", async () => {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
@@ -172,7 +170,7 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         response,
         httpStatus.BAD_REQUEST,
         "Bad Request",
-        "Passwords should be populated.",
+        "passwordRequired",
       );
     });
   });
