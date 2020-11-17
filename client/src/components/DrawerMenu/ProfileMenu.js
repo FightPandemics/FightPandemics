@@ -67,7 +67,7 @@ export const ProfileMenu = ({
       <NavItem
         id={GTM.nav.prefix + GTM.nav.feedback}
         onClick={(e) => {
-          e.stopPropagation();
+          e.stopImmediatePropagation()
           e.preventDefault();
           dispatchAction(TOGGLE_STATE, "ratingModal");
           toggleDrawer();
