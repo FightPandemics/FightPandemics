@@ -64,7 +64,7 @@ export const AccountMenu = ({
       )}
       <Menu.Divider />
       <Menu.Item>
-        <CustomSvgIcon src={PlusIcon} />
+        <CustomSvgIcon className={"plus-icon"} src={PlusIcon} />
         <Link
           id={GTM.nav.prefix + GTM.nav.addOrg}
           to="/create-organisation-profile"

@@ -32,7 +32,7 @@ export const ProfileMenu = ({
       {isAuthenticated && (
         <Link to={profileUrl}>
           <NavItem>
-            <ProfileItem user={user} />
+            <ProfileItem user={user} t={t} />
           </NavItem>
         </Link>
       )}
@@ -86,7 +86,7 @@ export const ProfileMenu = ({
   );
 };
 
-export const ProfileItem = ({ user }) => {
+export const ProfileItem = ({ user, t }) => {
   return (
     <ProfileItemContainer>
       <div>
@@ -100,7 +100,7 @@ export const ProfileItem = ({ user }) => {
         <ProfileInfo bold>
           {`${user.name || `${user.firstName} ${user.lastName}`}`}
         </ProfileInfo>
-        <ProfileInfo>View my Profile</ProfileInfo>
+        <ProfileInfo>{t("profile.common.viewMyProfile")}</ProfileInfo>
       </div>
     </ProfileItemContainer>
   );

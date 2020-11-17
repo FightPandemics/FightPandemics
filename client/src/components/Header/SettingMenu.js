@@ -30,7 +30,7 @@ export const SettingMenu = ({
     <Menu>
       <Menu.Item style={profileItemStyle}>
         <Link to={profileUrl}>
-          <ProfileItem user={user} />
+          <ProfileItem user={user} t={t} />
         </Link>
       </Menu.Item>
       <Menu.Divider />
@@ -59,10 +59,10 @@ export const SettingMenu = ({
 const ProfileInfo = styled.p`
   width: 13rem;
   margin: 0;
-  font-size: 12px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
+  font-size: ${({ bold }) => (bold ? "14px" : "12px")};
   line-height: normal;
-  color: ${({ bold }) => (bold ? "#939393" : "rgba(0, 0, 0, 0.85)")};
+  color: ${({ bold }) => (bold ? "#939393" : "#000000")};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -73,7 +73,7 @@ const ProfileItemContainer = styled.div`
   margin: 5px 0;
 `;
 
-const ProfileItem = ({ user }) => {
+const ProfileItem = ({ user, t }) => {
   return (
     <ProfileItemContainer>
       <div>
@@ -87,7 +87,7 @@ const ProfileItem = ({ user }) => {
         <ProfileInfo bold>
           {`${user.name || `${user.firstName} ${user.lastName}`}`}
         </ProfileInfo>
-        <ProfileInfo>View my Profile</ProfileInfo>
+        <ProfileInfo>{t("profile.common.viewMyProfile")}</ProfileInfo>
       </div>
     </ProfileItemContainer>
   );
