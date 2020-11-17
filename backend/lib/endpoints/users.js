@@ -227,6 +227,7 @@ async function routes(app) {
       organisations,
       urls,
       photo,
+      usesPassword,
     } = user;
     return {
       about,
@@ -241,6 +242,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      usesPassword,
     };
   });
 
@@ -327,6 +329,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
+        usesPassword
       } = user;
 
       let { location } = user;
@@ -337,7 +340,7 @@ async function routes(app) {
       if (hide.address) {
         location = {};
       }
-
+      const ownUser = authUserId !== null && authUserId.equals(user.id);
       return {
         about,
         firstName,
@@ -347,9 +350,10 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
-        ownUser: authUserId !== null && authUserId.equals(user.id),
+        ownUser,
         photo,
         urls,
+        usesPassword: ownUser ? usesPassword : undefined
       };
     },
   );

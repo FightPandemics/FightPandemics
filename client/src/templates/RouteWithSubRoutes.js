@@ -88,9 +88,8 @@ export const RouteWithSubRoutes = (route) => {
               !forgotPassword
             ) {
               redirect = CHECK_EMAIL;
-            } else if (emailVerified && forgotPassword) {
-              redirect = LOGIN;
-            } else if (
+            }
+            else if (
               emailVerified &&
               !user &&
               location.pathname !== CREATE_PROFILE
