@@ -16,9 +16,7 @@ class AboutUs {
   lifetimeSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[1]";
   currentSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[2]";
   pastSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[3]";
-  lifetimeNumberOfMembers = 11;
-  currentNumberOfMembers = 35;
-  pastNumberOfMembers = 2;
+
 
   constructor() {
   }

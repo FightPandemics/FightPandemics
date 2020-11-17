@@ -29,10 +29,10 @@ describe("FightPandemics About Us page", () => {
       goToHelpBoardButtonIsVisibleAndPointToAppropriateLink();
     });
 
-    it("Check if supporter (lifetime, current, past) containers are exist, visible and how many links are present in each", () => {
-      lifetimeSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
-      currentSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
-      pastSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers();
+    it("Check if supporter (lifetime, current, past) containers are exist and visible", () => {
+      lifetimeSupporterContainerIsVisible();
+      currentSupporterContainerIsVisible();
+      pastSupporterContainerIsVisible();
     });
 
     it("Check if FightPandemics email links are working", () => {
@@ -83,16 +83,16 @@ describe("FightPandemics About Us page", () => {
     cy.get(aboutUs.getInvolvedCloseButton).click();
   }
 
-  function lifetimeSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
-    supporterContainerVisibleAndContainsMembers(aboutUs.lifetimeSupportersContainerXpath,aboutUs.lifetimeNumberOfMembers)
+  function lifetimeSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.lifetimeSupportersContainerXpath)
   }
 
-   function currentSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
-    supporterContainerVisibleAndContainsMembers(aboutUs.currentSupportersContainerXpath,aboutUs.currentNumberOfMembers)
+   function currentSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.currentSupportersContainerXpath)
   }
 
-   function pastSupporterContainerIsVisibleAndContainsAppropriateNumberOfMembers() {
-    supporterContainerVisibleAndContainsMembers(aboutUs.pastSupportersContainerXpath,aboutUs.pastNumberOfMembers)
+   function pastSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.pastSupportersContainerXpath)
   }
 
 
@@ -112,9 +112,8 @@ describe("FightPandemics About Us page", () => {
       .and("have.attr", "href", link);
   }
 
-  function supporterContainerVisibleAndContainsMembers(supporterContainerXpath,numberOfMembers) {
+  function supporterContainerVisible(supporterContainerXpath) {
     cy.xpath(supporterContainerXpath)
-      .should("be.visible")
-      .children().should("have.length", numberOfMembers);
+      .should("be.visible");
   }
 });
