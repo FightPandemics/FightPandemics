@@ -13,6 +13,10 @@ export const CustomDrawer = styled(Drawer)`
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
   }
+  .ant-drawer-body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
 `;
 
 export const DrawerHeader = styled.div`
