@@ -13,6 +13,10 @@ export const CustomDrawer = styled(Drawer)`
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
   }
+  .ant-drawer-body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
 `;
 
 export const DrawerHeader = styled.div`
@@ -45,14 +49,15 @@ export const EditEmptyIcon = styled(SvgIcon)`
 `;
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
-  z-index: 1;
   bottom: 5%;
   right: 5%;
   height: 5rem;
   width: 5rem;
+  z-index: 1;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     width: 5rem;
     position: initial;
+    z-index: initial;
   }
 `;
 export const CreatePostDiv = styled.div`

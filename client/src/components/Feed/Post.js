@@ -1,9 +1,10 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
 import { Modal as WebModal } from "antd";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
+import { Tooltip } from "antd";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,10 @@ import WizardFormNav, {
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import { typeToTag } from "assets/data/formToPostMappings";
+import {
+  typeToTag,
+  translateISOTimeTitle,
+} from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
 import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
@@ -40,6 +44,7 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
+import { selectActorId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -79,6 +84,7 @@ const Post = ({
   currentPost,
   deleteModalVisibility,
   dispatchPostAction,
+  postDispatch,
   fullPostLength,
   handleCancelPostDelete,
   handleCommentDelete,
@@ -92,6 +98,9 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  keepScrollIndex,
+  keepPageState,
+  keepPostsState,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -117,6 +126,7 @@ const Post = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
+  const actorId = useSelector(selectActorId);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
@@ -216,6 +226,7 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments`;
     const totalCommentCountEndPoint = `/api/posts/${postId}`;
     const newComment = {
+      actorId,
       content: comment,
     };
 
@@ -267,7 +278,7 @@ const Post = ({
     let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
       const totalCommentCountEndPoint = `/api/posts/${postId}`;
 
@@ -346,6 +357,9 @@ const Post = ({
             postId: post._id,
             from: window.location.href,
             user,
+            keepScrollIndex,
+            keepPageState,
+            keepPostsState,
           },
         }}
       >
@@ -376,19 +390,36 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <Highlight
-            className="author"
-            text={post?.author?.name}
-            highlight={highlightWords}
-          />
-          {post?.author?.location?.country ? (
-            <div className="location-status">
-              <SvgIcon src={statusIndicator} className="status-icon" />
-              {buildLocationString(post.author.location)}
-            </div>
-          ) : (
-            ""
-          )}
+          <span className="author">
+            <Highlight text={post?.author?.name} highlight={highlightWords} />
+          </span>
+          <div
+            className="sub-header"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            {post?.author?.location?.country ? (
+              <span className="location-status">
+                <SvgIcon src={statusIndicator} className="status-icon" />
+                {buildLocationString(post.author.location)}
+              </span>
+            ) : (
+              ""
+            )}
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
+          </div>
         </div>
       }
       thumb={
@@ -463,7 +494,7 @@ const Post = ({
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
-        handlePostLike={handlePostLike}
+        postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
         postId={postId}
@@ -578,6 +609,9 @@ const Post = ({
                   postId: _id,
                   from: window.location.href,
                   user,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
                 },
               }}
             >

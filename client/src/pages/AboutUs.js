@@ -89,7 +89,6 @@ import GTM from "constants/gtm-tags";
 // );
 
 const getGTM = (id) => {
-  console.log(id);
   return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
 };
 
@@ -253,7 +252,7 @@ const AboutUs = () => {
       >
         <h1>{t("ourCommunity")}</h1>
         <p>{t("community")}</p>
-        <GetInvButton getGTM={getGTM} />
+        <GetInvButton getGTM={getGTM} t={t} />
       </ImageContainer>
 
       <ConnectContainer>

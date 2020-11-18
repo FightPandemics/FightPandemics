@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
@@ -33,6 +34,8 @@ import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
 import Posts from "components/Feed/Posts";
+import { selectOrganisationId } from "reducers/session";
+import { selectPosts, postsActions } from "reducers/posts";
 import Users from "components/Feed/Users";
 import FeedSearch from "components/Input/FeedSearch";
 import { setQueryKeysValue } from "components/Feed/utils";
@@ -40,8 +43,8 @@ import { setQueryKeysValue } from "components/Feed/utils";
 import {
   optionsReducer,
   feedReducer,
-  postsReducer,
-  postsState,
+  deletePostModalreducer,
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 
 // ICONS
@@ -50,7 +53,7 @@ import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
@@ -58,13 +61,6 @@ import {
   SET_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-  SET_POSTS,
-  FETCH_POSTS,
-  ERROR_POSTS,
-  NEXT_PAGE,
-  RESET_PAGE,
-  SET_LOADING,
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
@@ -72,6 +68,7 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
+import WithSummitBanner from "components/WithSummitBanner";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -126,15 +123,22 @@ export const NoPosts = styled.div`
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const Feed = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
+  const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
+  const posts = useSelector(selectPosts);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -154,9 +158,8 @@ const Feed = (props) => {
     loadMore,
     page,
     posts: postsList,
-    status,
-    deleteModalVisibility,
   } = posts;
+  const { deleteModalVisibility } = deleteModal;
   const feedPosts = Object.entries(postsList);
   const prevTotalPostCount = usePrevious(totalPostCount);
   const [queryParams, setQueryParams] = useState({});
@@ -177,6 +180,7 @@ const Feed = (props) => {
     });
     return ref.current;
   }
+
   const { history, isAuthenticated, user } = props;
 
   const dispatchAction = (type, key, value) =>
@@ -266,14 +270,8 @@ const Feed = (props) => {
   };
 
   const handleFilterModal = () => {
-    // method for mobile
     dispatchAction(TOGGLE_STATE, "filterModal");
     dispatchAction(SET_VALUE, "applyFilters", false);
-    // dispatchAction(
-    //   SET_VALUE,
-    //   "activePanel",
-    //   panelIdx > -1 ? `${panelIdx}` : null,
-    // );
   };
 
   const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
@@ -288,11 +286,7 @@ const Feed = (props) => {
     // softRefresh = only close filter modal etc.. but not RESET_PAGE and refetch posts
     if (!softRefresh) {
       dispatchAction(SET_VALUE, "applyFilters", true);
-      postsDispatch({
-        type: RESET_PAGE,
-        isLoading,
-        loadMore,
-      });
+      dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
       if (page === 0) {
         setToggleRefetch(!toggleRefetch);
       }
@@ -335,7 +329,7 @@ const Feed = (props) => {
 
   const handleLocation = (value) => {
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE });
+      dispatch(postsActions.resetPageAction({}));
     }
     dispatchAction(SET_VALUE, "location", value);
     if (!value && queryParams.location)
@@ -364,7 +358,7 @@ const Feed = (props) => {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
-      sessionStorage.setItem("createPostAttemptLoggedOut", true);
+      sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
   };
@@ -390,53 +384,15 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
-
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
@@ -483,7 +439,7 @@ const Feed = (props) => {
 
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
     switch (queryParams.s_category) {
       case "POSTS":
         break;
@@ -496,9 +452,8 @@ const Feed = (props) => {
       default:
         break;
     }
-
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
-    postsDispatch({ type: FETCH_POSTS });
+    dispatch(postsActions.fetchPostsBegin());
 
     try {
       const {
@@ -519,48 +474,73 @@ const Feed = (props) => {
           setTotalPostCount(meta.total);
         }
         if (posts.length < limit) {
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: true,
-            loadMore: false,
-          });
+          dispatch(postsActions.finishLoadingAction());
         } else if (meta.total === limit) {
-          postsDispatch({
-            type: SET_LOADING,
-            isLoading: true,
-            loadMore: false,
-          });
+          dispatch(postsActions.finishLoadingAction());
+        }
+        let postsInState;
+        if (history.location.state) {
+          const { keepPostsState, keepPageState } = history.location.state;
+          postsInState = keepPostsState;
+          if (keepPageState >= page) {
+            dispatch(postsActions.setPageAction(keepPageState));
+          }
+        }
+        if (postsInState) {
+          if (Object.keys(postsInState).length === meta.total) {
+            dispatch(
+              postsActions.setLoadingAction({
+                isLoading: true,
+                loadMore: false,
+              }),
+            );
+          }
+        }
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        console.log(page, lastPage, meta.total);
+        if (page === lastPage) {
+          dispatch(
+            postsActions.setLoadingAction({
+              isLoading: true,
+              loadMore: false,
+            }),
+          );
         }
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
         }, {});
-        if (Object.keys(postsList).length && page) {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...postsList, ...loadedPosts },
-          });
+        if (postsInState) {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...postsInState, ...loadedPosts },
+            }),
+          );
+        } else if (Object.keys(postsList).length && page) {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...postsList, ...loadedPosts },
+            }),
+          );
         } else {
-          postsDispatch({
-            type: SET_POSTS,
-            posts: { ...loadedPosts },
-          });
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...loadedPosts },
+            }),
+          );
         }
       } else if (posts) {
-        postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList },
-        });
-        postsDispatch({
-          type: SET_LOADING,
-          isLoading: false,
-          loadMore: false,
-        });
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...postsList },
+          }),
+        );
+        dispatch(postsActions.finishLoadingAction());
       } else {
-        postsDispatch({ type: SET_LOADING });
+        dispatch(postsActions.finishLoadingAction());
       }
     } catch (error) {
-      postsDispatch({ error, type: ERROR_POSTS });
+      dispatch(postsActions.fetchPostsError(error));
     }
   };
 
@@ -582,6 +562,15 @@ const Feed = (props) => {
     }
   }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    const createPostAttemptLoggedOut = sessionStorage.getItem(
+      "createPostAttemptLoggedOut",
+    );
+    if (createPostAttemptLoggedOut) {
+      handleCreatePost();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
   const loadNextPage = useCallback(
@@ -593,8 +582,8 @@ const Feed = (props) => {
         feedPosts.length
       ) {
         return new Promise((resolve) => {
+          dispatch(postsActions.setNextPageAction());
           dispatchAction(SET_VALUE, "applyFilters", true);
-          postsDispatch({ type: NEXT_PAGE });
           resolve();
         });
       } else {
@@ -646,191 +635,193 @@ const Feed = (props) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
-    <FeedContext.Provider
-      value={{
-        filters,
-        filterModal,
-        activePanel,
-        location,
-        dispatchAction,
-        selectedOptions,
-        handleShowFilters,
-        handleOption,
-        handleFilterModal,
-        handleQuit,
-        handleLocation,
-        handleOnClose,
-        showFilters,
-        handlePostLike,
-        totalPostCount,
-      }}
-    >
-      <FeedWrapper>
-        <LayoutWrapper>
-          <SiderWrapper
-            breakpoint="md"
-            className="site-layout-background"
-            width="29rem"
-          >
-            <>
-              <MenuWrapper
-                defaultSelectedKeys={["ALL"]}
-                selectedKeys={[queryParams.objective || "ALL"]}
-                onClick={handleChangeType}
-              >
-                {Object.keys(HELP_TYPE).map((item, index) => (
-                  <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {t(HELP_TYPE[item])}
-                  </Menu.Item>
-                ))}
-              </MenuWrapper>
-              <FiltersWrapper>
-                <button
-                  id={gtmTag(GTM.post.filterPost)}
-                  onClick={handleShowFilters}
+    <WithSummitBanner>
+      <FeedContext.Provider
+        value={{
+          filters,
+          filterModal,
+          activePanel,
+          location,
+          dispatchAction,
+          selectedOptions,
+          handleShowFilters,
+          handleOption,
+          handleFilterModal,
+          handleQuit,
+          handleLocation,
+          handleOnClose,
+          showFilters,
+          totalPostCount,
+        }}
+      >
+        <FeedWrapper>
+          <LayoutWrapper>
+            <SiderWrapper
+              breakpoint="md"
+              className="site-layout-background"
+              width="29rem"
+            >
+              <>
+                <MenuWrapper
+                  defaultSelectedKeys={["ALL"]}
+                  selectedKeys={[queryParams.objective || "ALL"]}
+                  onClick={handleChangeType}
                 >
-                  <span>
-                    <FiltersIcon />
-                  </span>
-                  {t("feed.filters.title")}
-                </button>
-                <FiltersList />
-              </FiltersWrapper>
-            </>
-            <FiltersSidebar
-              locationOnly={
-                !(!queryParams.s_category || queryParams.s_category == "POSTS")
-              }
-              gtmPrefix={GTM.feed.prefix}
-            />
-          </SiderWrapper>
-          <ContentWrapper>
-            <HeaderWrapper empty={emptyFeed()}>
-              <TabsWrapper
-                options={SEARCH_OPTIONS}
-                showOptions={!!queryParams.s_keyword}
-                displayValue={"name"}
-                t={t}
+                  {Object.keys(HELP_TYPE).map((item, index) => (
+                    <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
+                      {t(HELP_TYPE[item])}
+                    </Menu.Item>
+                  ))}
+                </MenuWrapper>
+                <FiltersWrapper>
+                  <button
+                    id={gtmTag(GTM.post.filterPost)}
+                    onClick={handleShowFilters}
+                  >
+                    <span>
+                      <FiltersIcon />
+                    </span>
+                    {t("feed.filters.title")}
+                  </button>
+                  <FiltersList />
+                </FiltersWrapper>
+              </>
+              <FiltersSidebar
+                locationOnly={
+                  !(
+                    !queryParams.s_category ||
+                    queryParams.s_category === "POSTS"
+                  )
+                }
+                gtmPrefix={GTM.feed.prefix}
               />
-              {(!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
-                <button
-                  id={gtmTag(GTM.post.createPost)}
-                  onClick={handleCreatePost}
-                >
-                  {t("post.create")}
+            </SiderWrapper>
+            <ContentWrapper>
+              <HeaderWrapper empty={emptyFeed()}>
+                <TabsWrapper
+                  options={SEARCH_OPTIONS}
+                  showOptions={!!queryParams.s_keyword}
+                  displayValue={"name"}
+                  t={t}
+                />
+                {(!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
+                  <button
+                    id={gtmTag(GTM.post.createPost)}
+                    onClick={handleCreatePost}
+                  >
+                    {t("post.create")}
+                    <CreatePostIcon
+                      id={gtmTag(GTM.post.createPost)}
+                      src={creatPost}
+                    />
+                  </button>
+                )}
+              </HeaderWrapper>
+              <MobileSearchWrapper>
+                <FeedSearch
+                  isMobile={true}
+                  options={SEARCH_OPTIONS}
+                  isObject={true}
+                  displayValue={"name"}
+                  placeholder={t("feed.search.placeholder")}
+                  t={t}
+                />
+              </MobileSearchWrapper>
+              {
+                <div>
+                  <FilterBox
+                    locationOnly={
+                      !(
+                        !queryParams.s_category ||
+                        queryParams.s_category === "POSTS"
+                      )
+                    }
+                    gtmPrefix={GTM.feed.prefix}
+                  />
+                </div>
+              }
+              {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
+                <Posts
+                  isAuthenticated={isAuthenticated}
+                  filteredPosts={postsList}
+                  postDelete={postDelete}
+                  postDispatch={dispatch}
+                  user={user}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handlePostDelete={handlePostDelete}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                  page={page}
+                />
+              ) : (
+                <Users
+                  isAuthenticated={isAuthenticated}
+                  filteredUsers={postsList}
+                  user={user}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalUsersCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                />
+              )}
+              {emptyFeed() ? (
+                <NoPosts>
+                  <Trans
+                    i18nKey={
+                      !queryParams.s_category ||
+                      queryParams.s_category === "POSTS"
+                        ? "feed.noResultsPosts"
+                        : queryParams.s_category === "INDIVIDUALS"
+                        ? "feed.noResultsPeople"
+                        : "feed.noResultsOrgs"
+                    }
+                    components={[
+                      <a
+                        id={gtmTag(GTM.post.createPost)}
+                        onClick={handleCreatePost}
+                      />,
+                    ]}
+                  />
+                </NoPosts>
+              ) : (
+                (!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
                   <CreatePostIcon
                     id={gtmTag(GTM.post.createPost)}
                     src={creatPost}
+                    onClick={handleCreatePost}
+                    className="create-post"
                   />
-                </button>
+                )
               )}
-            </HeaderWrapper>
-            <MobileSearchWrapper>
-              <FeedSearch
-                isMobile={true}
-                options={SEARCH_OPTIONS}
-                isObject={true}
-                displayValue={"name"}
-                placeholder={t("feed.search.placeholder")}
-                t={t}
-              />
-            </MobileSearchWrapper>
-            {
-              <div>
-                <FilterBox
-                  locationOnly={
-                    !(
-                      !queryParams.s_category ||
-                      queryParams.s_category == "POSTS"
-                    )
-                  }
-                  gtmPrefix={GTM.feed.prefix}
-                />
-              </div>
-            }
-            {!queryParams.s_category || queryParams.s_category == "POSTS" ? (
-              <Posts
-                isAuthenticated={isAuthenticated}
-                filteredPosts={postsList}
-                handlePostLike={handlePostLike}
-                postDelete={postDelete}
-                user={user}
-                deleteModalVisibility={deleteModalVisibility}
-                handlePostDelete={handlePostDelete}
-                handleCancelPostDelete={handleCancelPostDelete}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPage}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-                highlightWords={queryParams.s_keyword}
-              />
-            ) : (
-              <Users
-                isAuthenticated={isAuthenticated}
-                filteredUsers={postsList}
-                user={user}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPage}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalUsersCount={totalPostCount}
-                highlightWords={queryParams.s_keyword}
-              />
-            )}
-            {status === ERROR_POSTS && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-
-            {emptyFeed() ? (
-              <NoPosts>
-                <Trans
-                  i18nKey={
-                    !queryParams.s_category || queryParams.s_category == "POSTS"
-                      ? "feed.noResultsPosts"
-                      : queryParams.s_category == "INDIVIDUALS"
-                      ? "feed.noResultsPeople"
-                      : "feed.noResultsOrgs"
-                  }
-                  components={[
-                    <a
-                      id={gtmTag(GTM.post.createPost)}
-                      onClick={handleCreatePost}
-                    />,
-                  ]}
-                />
-              </NoPosts>
-            ) : (
-              (!queryParams.s_category ||
-                queryParams.s_category == "POSTS") && (
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                  onClick={handleCreatePost}
-                  className="create-post"
-                />
-              )
-            )}
-          </ContentWrapper>
-        </LayoutWrapper>
-        <CreatePost
-          gtmPrefix={GTM.feed.prefix}
-          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
-          loadPosts={refetchPosts}
-          visible={showCreatePostModal}
-          user={user}
-        />
-      </FeedWrapper>
-    </FeedContext.Provider>
+            </ContentWrapper>
+          </LayoutWrapper>
+          <CreatePost
+            gtmPrefix={GTM.feed.prefix}
+            onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+            loadPosts={refetchPosts}
+            visible={showCreatePostModal}
+            user={user}
+          />
+        </FeedWrapper>
+      </FeedContext.Provider>
+    </WithSummitBanner>
   );
+};
+
+const gePostsBasetUrl = (organisationId, limit, skip) => {
+  const actorId = organisationId ? `&actorId=${organisationId}` : "";
+  return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
 };
 
 export default Feed;

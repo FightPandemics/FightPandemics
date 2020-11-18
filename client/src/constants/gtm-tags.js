@@ -8,6 +8,7 @@ module.exports = {
     feed: "_HB",
     feedback: "_FDB",
     language: "_LS",
+    switch: "_SWC",
   },
   homePage: {
     prefix: "HP",
@@ -125,6 +126,13 @@ module.exports = {
     "es-ES": "_ES_ES",
     "zh-TW": "_ZH_TW",
     de: "_DE",
+    "zh-CN": "_ZN_CN",
+    fr: "_FR",
+    tr: "_TR",
+    "kn-IN": "_KN_IN",
+    "te-IN": "_TE_IN",
+    "ms-MY": "_MS_MY",
+    vi: "_VI",
   },
   search: {
     prefix: "SCH",

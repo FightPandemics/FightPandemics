@@ -1,0 +1,823 @@
+{
+  "headline": "Tempat untuk menawarkan dan memohon bantuan",
+  "tagline": "<0>Pandemik akan terus berlaku.</0><1>Kami membantu komuniti untuk bersiap sedia dan bertindak balas.</1>",
+  "common": {
+    "getHelp": "Mohon Bantuan",
+    "giveHelp": "Tawar Bantuan",
+    "viewFeed": "Lihat Lembaga bantuan",
+    "register": "Sertai Sekarang",
+    "feedback": "Maklum balas",
+    "question": "Soalan",
+    "aboutUs": "Mengenai Kami",
+    "profile": "Profil",
+    "addOrg": "Tambah Pertubuhan",
+    "logout": "Log keluar",
+    "organisations": "Pertubuhan"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Soalan",
+      "next": "Seterusnya",
+      "previous": "Kembali",
+      "submit": "Hantar",
+      "skip": "Langkau",
+      "whereLocated": "Di manakah anda berada?",
+      "relevantResults": "Kami ingin menunjukkan hasil yang paling relevan kepada anda",
+      "enterAddress": "Masukkan alamat, poskod atau bandar",
+      "shareLocation": "Kongsi Lokasi Saya",
+      "showAnywhere": "Tunjukkan saya siaran dari mana-mana sahaja",
+      "whatEmail": "Apakah alamat e-mel anda?",
+      "respectPrivacy": "Kami menghormati privasi anda. Sila baca <1>Dasar Privasi</1> dan <3>Terma & Syarat.</3>",
+      "enterEmail": "Masukkan alamat e-mel anda..."
+    },
+    "needHelp": {
+      "whatHelp": "Apakah jenis bantuan yang anda perlukan?",
+      "medical": "Perubatan",
+      "haveCovidSymptoms": "Saya mempunyai gejala COVID-19.",
+      "other": "Bantuan lain",
+      "otherDesc": "Saya memerlukan bantuan untuk mendapatkan barangan runcit/ubat/dll."
+    },
+    "offerHelp": {
+      "howContribute": "Bagaimanakah anda hendak menyumbang?",
+      "volunteer": "Sebagai Sukarelawan",
+      "donorInvestor": "Sebagai Penderma/Pelabur",
+      "organisation": "Sebagai Pertubuhan"
+    }
+  },
+  "feed": {
+    "title": "Lembaga Bantuan",
+    "all": "Semua siaran",
+    "request": "Memohon Bantuan",
+    "offer": "Menawarkan bantuan",
+    "quit": "Tutup penapis",
+    "apply": "Gunakan penapis",
+    "getOrGive": "Tawar atau mohon bantuan",
+    "filters": {
+      "title": "Penapis",
+      "location": {
+        "label": "Lokasi",
+        "enterAddress": "Masukkan alamat, poskod atau bandar",
+        "shareLocation": "Kongsi Lokasi Saya"
+      },
+      "providers": "Pembekal",
+      "providersList": [
+        "Individu",
+        "Permulaan",
+        "Syarikat",
+        "Komuniti",
+        "Kerajaan",
+        "Bukan untung",
+        "Universiti",
+        "Pembekal penjagaan kesihatan",
+        "Lain"
+      ],
+      "types": "Jenis",
+      "typesList": [
+        "Bekalan Perubatan",
+        "Barangan runcit/Makanan",
+        "Perniagaan",
+        "Pendidikan",
+        "Perundangan",
+        "Kesejahteraan/Mental",
+        "Hiburan",
+        "Maklumat",
+        "Pembiayaan",
+        "R&D",
+        "Teknikal",
+        "Lain"
+      ],
+      "labels": {
+        "location": "Lokasi",
+        "providers": "Pembekal",
+        "type": "Jenis",
+        "lookingFor": "Tawar atau Mohon Bantuan"
+      },
+      "providersOptions": {
+        "Individual": "Individu",
+        "Startup": "Permulaan",
+        "Company": "Syarikat",
+        "Community": "Komuniti",
+        "Government": "Kerajaan",
+        "Non-profit": "Bukan Untung",
+        "University": "Universiti",
+        "Health care provider": "Pembekal Penjagaan Kesihatan",
+        "Other": "Lain"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Bekalan Perubatan",
+        "Groceries/Food": "Barangan runcit/Makanan",
+        "Business": "Perniagaan",
+        "Education": "Pendidikan",
+        "Legal": "Perundangan",
+        "Wellbeing/Mental": "Kesejahteraan/Mental",
+        "Entertainment": "Hiburan",
+        "Information": "Maklumat",
+        "Funding": "Pembiayaan",
+        "R&D": "R&D",
+        "Tech": "Teknikal",
+        "Other": "Lain"
+      },
+      "lookingForOptions": {
+        "Request Help": "Memohon Bantuan",
+        "Offer Help": "Menawarkan Bantuan"
+      }
+    },
+    "filterBy": "Tapis ikut",
+    "noResults": "Maaf, tiada siaran yang berkaitan buat masa ini. Sila cuba menggunakan carian penapis yang berbeza atau <0>mencipta siaran</0>.",
+    "allPosts": "Semua siaran",
+    "allPeople": "Semua orang",
+    "allOrgs": "Semua pertubuhan",
+    "noResultsPosts": "Maaf, tiada siaran yang berkaitan buat masa ini. Sila cuba menggunakan carian penapis yang berbeza atau <0>mencipta siaran</0>.",
+    "noResultsPeople": "Maaf, tiada individu yang berkaitan buat masa ini. Sila cuba menggunakan carian penapis yang berbeza.",
+    "noResultsOrgs": "Maaf, tiada pertubuhan yang berkaitan buat masa ini. Sila cuba menggunakan carian penapis yang berbeza.",
+    "search": {
+      "placeholder": "Cari Siaran, Orang & Org",
+      "keywords": "kata-kata kunci",
+      "error": "Min. {{length}} aksara",
+      "options": {
+        "posts": "Siaran",
+        "people": "Orang",
+        "orgs": "Pertubuhan",
+        "orgsShort": "Org"
+      }
+    }
+  },
+  "post": {
+    "create": "Cipta Siaran",
+    "continueAs": "Terus Menyiar Sebagai",
+    "individual": "Individu",
+    "organisation": "Pertubuhan",
+    "givingHelp": "Menawarkan Bantuan",
+    "gettingHelp": "Memohon Bantuan",
+    "writePostHere": "Tulis siaran anda di sini",
+    "title": "Tajuk",
+    "writePost": "Tulis siaran anda",
+    "whatGiving": "Apa yang anda tawarkan?",
+    "addTags": "Tambahkan tag untuk menjadikan siaran anda lebih kelihatan",
+    "whatVisibility": "Apakah kebolehlihatan siaran anda?",
+    "postVisible": "Siaran akan dapat dilihat oleh",
+    "success": "Kejayaan",
+    "viewPost": "Lihat Siaran Anda",
+    "like": "Suka",
+    "like_plural": "Suka",
+    "likeWithCount": "{{count}} Suka",
+    "likeWithCount_plural": "{{count}} Suka",
+    "comment": "Komen",
+    "comment_plural": "Komen",
+    "commentWithCount": "{{count}} Komen",
+    "commentWithCount_plural": "{{count}} Komen",
+    "options": {
+      "shareWith": {
+        "city": "Di Bandar saya",
+        "state": "Di Negeri saya",
+        "worldwide": "Sedunia",
+        "country": "Di Negara saya"
+      },
+      "expires": {
+        "forever": "Selama-lamanya",
+        "month": "Selama sebulan",
+        "week": "Selama seminggu",
+        "day": "Selama sehari"
+      },
+      "helpTypes": {
+        "request": "Meminta bantuan",
+        "offer": "Menawarkan bantuan"
+      }
+    },
+    "post": "Siar",
+    "postAsOrg": "Membuat Siaran sebagai Pertubuhan",
+    "createNew": "Cipta yang baru",
+    "whatNeed": "Apakah yang anda perlukan?",
+    "viewLess": "Lihat Kurang",
+    "viewMore": "Lihat Lagi",
+    "deletePostConfirmation": "Adakah anda pasti mahu memadamkan siaran?",
+    "deleteCommentConfirmation": "Adakah anda pasti mahu memadamkan komen?",
+    "shareVia": "Kongsi melalui...",
+    "others": "Lain",
+    "expireTitle": "Ohh... tidak!",
+    "expire": "Siaran yang anda cari telah tamat tempoh. Sila semak Lembaga Bantuan kami untuk lebih banyak siaran seperti ini.",
+    "noActivity": "Tiada aktiviti dijumpai",
+    "share": "Kongsi",
+    "delete": "Padam",
+    "cancel": "Batal",
+    "confirm": "Sah",
+    "edited": "disunting"
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Maklumat Akaun",
+      "profileInfo": "Maklumat Profil",
+      "address": "Alamat",
+      "enterAddress": "Masukkan alamat, poskod atau bandar",
+      "agreePrivacy": "Dengan mendaftar, saya bersetuju dengan <0>Dasar Privasi</0>",
+      "agreeTerms": "Dengan mendaftar, saya bersetuju dengan <0>Terma dan Syarat</0>",
+      "createProfile": "Cipta Profil anda",
+      "saveChanges": "Simpan Perubahan",
+      "thankyou": "Terima kasih kerana menyertai komuniti kami!",
+      "viewProfile": "Profil saya",
+      "continuePosting": "Terus Menyiar",
+      "viewFeed": "Lihat Lembaga Bantuan",
+      "viewMyProfile": "Lihat profil saya",
+      "loading": "sedang dimuatkan",
+      "invalidEmail": "E-mel tidak sah",
+      "selectOption": "Sila pilih sekurang-kurangnya satu pilihan",
+      "invalidURL": "URL tidak sah",
+      "savingChanges": "Sedang Menyimpan Perubahan...",
+      "submit": "Mencipta profil",
+      "submitLoading": "Sedang Mencipta profil...",
+      "invalidPassword": "Kata laluan mesti mengandungi sekurang-kurangnya 3 daripada ini: satu huruf kecil, satu huruf besar, satu nombor, satu aksara khas (seperti !@#$%^&*).",
+      "addressRequired": "Alamat diperlukan. Sila masukkan alamat anda dan pilih dari senarai juntai bawah",
+      "emailRequired": "Alamat e-mel diperlukan",
+      "passwordRequired": "Kata laluan diperlukan",
+      "maxCharacters": "Maks. {{maxNum}} aksara.",
+      "minCharacters": "Min. {{minNum}} aksara.",
+      "validCharacters": "Aksara yang sah ialah: {{characters}}.",
+      "urls": {
+        "appStore": "Pautan ke Apple Store",
+        "playStore": "Pautan ke Google Play",
+        "twitter": "URL Twitter",
+        "facebook": "URL Facebook",
+        "instagram": "URL Instagram",
+        "github": "URL Github",
+        "linkedin": "URL LinkedIn",
+        "website": "Laman web"
+      },
+      "emailMaxLength": "Alamat e-mel tidak boleh melebihi 200 aksara",
+      "emailInvalid": "Alamat e-mel tidak sah",
+      "emailDomainInvalid": "Domain e-mel tidak sah",
+      "sendMessage": "Hantar Mesej"
+    },
+    "individual": {
+      "email": "E-mel",
+      "firstName": "Nama pertama",
+      "lastName": "Nama akhir",
+      "hideAddress": "Jangan tunjukkan alamat saya",
+      "iWant": "Saya hendak",
+      "volunteer": "Sukarelawan",
+      "donate": "Derma",
+      "shareInformation": "Kongsi maklumat",
+      "iNeed": "Saya perlu",
+      "medical": "Bantuan Perubatan",
+      "haveCovidSymptoms": "Saya mempunyai gejala COVID-19.",
+      "other": "Bantuan lain",
+      "otherDesc": "Saya memerlukan bantuan untuk mendapatkan barangan runcit/perubatan/dll.",
+      "editProfile": "Sunting profil",
+      "intro": "Pengenalan diri",
+      "website": "Laman Web Peribadi",
+      "myActivity": "Aktiviti Saya",
+      "userActivity": "Aktiviti Pengguna",
+      "wantHelp": "Saya ingin membantu",
+      "needHelp": "Saya memerlukan bantuan",
+      "firstNameRequired": "Nama pertama diperlukan.",
+      "lastNameRequired": "Nama akhir diperlukan."
+    },
+    "org": {
+      "title": "Cipta Profil Pertubuhan",
+      "editOrgProfile": "Sunting Profil Pertubuhan",
+      "name": "Nama Pertubuhan",
+      "email": "E-mel Perhubungan Pertubuhan",
+      "invalidEmail": "E-mel tidak sah",
+      "globalOrg": "Kami merupakan sebuah pertubuhan global",
+      "seeking": "Apakah yang anda cari?",
+      "volunteers": "Sukarelawan",
+      "donations": "Derma",
+      "staff": "Kakitangan",
+      "other": "Lain",
+      "typeAndIndustry": "Jenis dan Industri",
+      "type": "Jenis",
+      "types": [
+        "Permulaan",
+        "Syarikat",
+        "Komuniti",
+        "Kerajaan",
+        "Bukan Untung",
+        "Universiti",
+        "Pembekal Penjagaan Kesihatan",
+        "Lain"
+      ],
+      "industry": "Industri",
+      "industries": [
+        "Automobil",
+        "Seni bina",
+        "Seni & Kraf",
+        "Perbankan",
+        "Bioteknologi",
+        "Bekalan dan Kelengkapan Perniagaan",
+        "Pertubuhan Sivik & Sosial",
+        "Perkhidmatan Acara",
+        "Penjanaan dana",
+        "Hubungan Kerajaan",
+        "Kesihatan, Kesejahteraan dan Kecergasan",
+        "Hospital & Penjagaan Kesihatan",
+        "Industri",
+        "Teknologi Maklumat dan Perkhidmatan",
+        "Perkhidmatan Perundangan",
+        "Pemasaran dan Pengiklanan",
+        "Peralatan Perubatan",
+        "Pengurusan Pertubuhan Bukan Untung",
+        "Lain",
+        "Kedermawanan",
+        "Pendidikan Rendah/Menengah",
+        "Latihan & Kejurulatihan Profesional",
+        "Penyelidikan",
+        "Kumpulan Pemikir",
+        "Penterjemahan dan Penyetempatan"
+      ],
+      "typeIndustryError": "Sila pilih jenis pertubuhan dan industri daripada senarai juntai bawah",
+      "desc": "Penerangan Pertubuhan",
+      "lang": "Bahasa Pertubuhan",
+      "completeOrgProfile": "Profil Pertubuhan Lengkap",
+      "about": "Mengenai",
+      "activity": "Aktiviti",
+      "editAccount": "Sunting Maklumat Akaun",
+      "updateSuccess": "Pertubuhan berjaya dikemas kini",
+      "orgNameRequired": "Nama pertubuhan diperlukan",
+      "global": "Global"
+    }
+  },
+  "auth": {
+    "signIn": "Log masuk",
+    "joinNow": "Sertai sekarang",
+    "email": "E-mel",
+    "enterEmail": "Masukkan alamat e-mel",
+    "password": "Kata Laluan",
+    "enterPassword": "Masukkan Kata Laluan",
+    "confirmPassword": "Sahkan Kata Laluan",
+    "forgotPassword": "Lupa Kata Laluan?",
+    "noAccount": "Tidak memiliki akaun?",
+    "haveAccount": "Sudah memiliki akaun?",
+    "recoverLink": "Emelkan pautan pemulihan kepada saya",
+    "orSignIn": "ATAU LOG MASUK DENGAN",
+    "orJoinNow": "ATAU SERTAI SEKARANG DENGAN",
+    "back": "Kembali ke skrin Log Masuk",
+    "passwordMax": "Kata laluan mestilah sebanyak-banyaknya {{num}} aksara.",
+    "passwordMin": "Kata laluan mestilah sekurang-kurangnya {{num}} aksara.",
+    "passwordConfirmationRequired": "Pengesahan kata laluan diperlukan.",
+    "passwordNotMatch": "Kata laluan tidak sepadan"
+  },
+  "verifyEmail": {
+    "checkInbox": "Semak peti masuk anda",
+    "forgotPass": "E-mel telah dihantar ke {{email}} dengan arahan lanjut mengenai cara menetapkan semula kata laluan anda.",
+    "confirm": "Kami baru sahaja menghantar pautan ke {{email}} . Klik pautan untuk mengesahkan akaun anda dan lengkapkan profil anda.",
+    "checkSpam": "Jika anda tidak melihat mesej selama beberapa minit, sila semak spam, promosi atau folder masuk mel lain."
+  },
+  "aboutUs": {
+    "ourStory": "Cerita Kami",
+    "story": "FightPandemics merupakan buah fikiran Manuel Gonzalez Alzuru yang dijangkiti COVID-19 di Perancis. Sebaik sahaja tiba di rumah yang terletak di Barcelona, beliau mendapati bahawa beliau gagal mendapatkan bantuan walaupun ada orang yang ingin menawarkannya.",
+    "ourCommunity": "Komuniti Kami",
+    "community": "Kami terdiri daripada sekumpulan 1100 + pemaju sukarelawan, pereka, saintis, pakar kesihatan, dan pengurus produk dari seluruh dunia.",
+    "ourIdea": "Idea Kami",
+    "ourSupporters": "Penyokong Kami",
+    "followUs": "Ikuti kami di media sosial",
+    "contactUs": "Atau hubungi kami di",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "Kami mahu mewujudkan dunia di mana manusia menjadi lebih berdaya tahan menghadapi kecemasan.",
+    "subHeading": "dengan membantu komuniti bertindak balas dengan lebih cepat dan berkesan terhadap krisis.",
+    "forWhoHeading": "Ini untuk siapa?",
+    "forWho": "Sesiapa atau apa-apa jenis perniagaan, kumpulan komuniti, kerajaan atau pertubuhan penjagaan kesihatan yang memerlukan atau ingin memberikan bantuan.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Diinspirasikan oleh begitu banyak pertembungan, Manuel melancarkan projek dengan satu misi dalam fikirannya: <span>untuk memastikan orang lain dapat berhubung secara serentak.</span>",
+    "connectPeople": "Kami menghubungkan orang",
+    "connect": "Platform altruistik untuk menghubungkan mereka yang memerlukan bantuan dengan mereka yang dapat menyediakannya.",
+    "howWork": "Bagaimanakah ianya berfungsi?",
+    "helpBoard": "Lembaga Bantuan",
+    "helpBoardDetail": "Platform komuniti untuk individu dan organisasi untuk menawarkan dan memohon bantuan.",
+    "localGlobal": "Tempatan & Global",
+    "localGlobalDetail": "Tawarkan dan mohonkan pertolongan dalam komuniti saya dan di seluruh dunia.",
+    "relevantContent": "Kandungan yang Berkaitan",
+    "relevantContentDetail": "Tempoh tamat memastikan lembaga sentiasa dikemas kini.",
+    "goToHelpBoard": "Pergi ke Lembaga Bantuan",
+    "supporters": "Penyokong",
+    "thanksSupporters": "Terima Kasih kepada penyokong kami, tanpa mereka, kami tidak akan dapat membantu komuniti untuk bersiap sedia dan bertindak balas terhadap pandemik.",
+    "becomeSupporter": "Untuk mengetahui lebih lanjut tentang cara perniagaan anda boleh menjadi penyokong, sila hubungi pasukan perkongsian kami di",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Klik pada logo syarikat di bawah untuk ke laman web penyokong.",
+    "lifetimeSupporters": "Penyokong seumur hidup",
+    "currentSupporters": "Penyokong semasa",
+    "pastSupporters": "Penyokong terdahulu",
+    "hashtag": "#DaripadaKomunitiKepadaKomuniti"
+  },
+  "footer": {
+    "faq": "Soalan Lazim",
+    "blog": "Blog",
+    "termsConditions": "Terma & Syarat",
+    "privacyPolicy": "Dasar Privasi",
+    "cookiesPolicy": "Dasar Kuki",
+    "copyright": "Hak Cipta {{currentYear}} FightPandemics. Hak cipta terpelihara."
+  },
+  "faq": {
+    "title": "Mengenai FightPandemics / Umum",
+    "offerRequestHelp": "Menawarkan dan Mohon Bantuan",
+    "profileAccount": "Profil dan Akaun",
+    "contects": "Berhubunglah",
+    "general": [
+      [
+        "Apakah Fightpandemics?",
+        "FightPandemics ialah platform yang diwujudkan di tengah-tengah wabak COVID-19 dengan tujuan menjadi tempat untuk orang yang terjejas oleh pandemik dalam pelbagai aspek.",
+        "Misi utama kami adalah untuk menghubungkan individu dan pertubuhan yang menawarkan dan meminta bantuan di peringkat tempatan dan global di tengah-tengah krisis pandemik. Tidak kira jika anda mendapatkan bantuan perubatan, topeng muka, bantuan perundangan, barangan runcit, seseorang untuk berjalan kaki dengan anjing anda atau sokongan kepada aktiviti seharian lain, anda dapat mencarinya di sini:",
+        "Kami berusaha untuk mengumpulkan maklumat penting yang lebih bercebis-cebisan, berhubung dalam satu rangkaian individu, komuniti dan pertubuhan yang menguruskan isu atau projek yang berkaitan dengan pandemik. Visi kami adalah untuk mewujudkan dunia di mana setiap orang menjadi lebih berdaya tahan menghadapi kecemasan dengan membantu komuniti untuk bertindak balas terhadap kecemasan kesihatan dan krisis kemanusiaan dengan lebih cepat dan berkesan."
+      ],
+      [
+        "Fightpandemics untuk siapa?",
+        "FightPandemics merupakan pasukan sukarelawan penuh global dengan misi untuk berfungsi sebagai tempat bantuan pilihan utama. Pasukan kami terdiri daripada 150+ sukarelawan yang melibatkan 70+ negara yang berusaha untuk melakukan perubahan. Platform ini dibina dalam usaha kolaboratif yang inovatif dengan menyatukan pelbagai kumpulan penyelesai masalah dengan pelbagai kemahiran untuk penciptaan bersama dan saling belajar antara satu sama lain dengan rela hati.",
+        "Adakah anda ingin menyertai inisiatif kami? Hubungi <0>hr@fightpandemics.com</0>"
+      ],
+      [
+        "Di manakah bandar FightPandemics beroperasi?",
+        "FightPandemics ialah platform global. Versi pertama kami telah dilancarkan dalam Bahasa Inggeris tetapi kami mempunyai rancangan untuk menambahkan bahasa lain tidak lama lagi."
+      ],
+      [
+        "Fightpandemics untuk siapa?",
+        "Sesiapa yang memerlukan atau menawarkan bantuan dialu-alukan untuk menyertai platform kami dan berhubung dengan individu dan pertubuhan lain."
+      ],
+      [
+        "Bagaimanakah saya boleh menyiarkan tawaran atau permohonan bantuan di FightPandemics?",
+        "<0>Apabila anda menyertai komuniti, anda akan mempunyai akses tanpa had untuk melihat dan mencipta siaran dan komen di platform FightPandemics.</0><1>Untuk menyertai komuniti sebagai pengguna, klik butang \"Menu\" dan pilih pilihan \"Sertai Sekarang/Log Masuk\". Anda akan dapat menyertai dengan kelayakan e-mel atau media sosial pilihan anda.</1><2>Sebaik sahaja anda telah melengkapkan profil anda, pilih butang menu, pilih lihat profil saya dan klik pada butang tambah untuk mencipta siaran pertama anda.</2>"
+      ],
+      [
+        "Bagaimanakah saya dapat mengikuti berita FightPandemics terkini?",
+        "Sila ikuti kami di media sosial! Kami menyiarkan kemas kini tetap kepada <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2> dan <3>Instagram</3>."
+      ],
+      [
+        "Adakah saya perlu membayar untuk menggunakan FightPandemics?",
+        "Tidak, FightPandemics ialah platform percuma sepenuhnya yang dikendalikan oleh sukarelawan."
+      ],
+      [
+        "Apakah jenis bantuan yang boleh saya tawarkan/ mohonkan di FightPandemics?",
+        "Anda dialu-alukan untuk meminta dan menawarkan apa-apa jenis bantuan untuk menyokong individu dan pertubuhan dalam menghadapi pandemik COVID-19. Berikut ialah senarai bersertakan beberapa contoh jenis bantuan yang boleh anda tawarkan atau mohonkan:",
+        "<0>Barangan runcit</0><1>Bekalan perubatan </1><2>Bantuan perundangan</2><3>Sokongan teknikal </3><4>Maklumat</4><5>Pembiayaan</5><6>Acara dan aktiviti</6><7>Pendidikan</7><8>Kesejahteraan</8><9>Penyelidikan dan pengembangan</9>"
+      ],
+      [
+        "Bagaimanakah saya boleh mendapatkan bantuan?",
+        "Daripada halaman utama FightPandemics, pilih \"Perlu Bantuan\". Jika anda memilih \"Bantuan Lain\", anda akan masukkan lokasi anda dan menghala ke halaman dengan tawaran bantuan di kawasan yang dipilih. Kemudian, anda juga boleh menapis siaran yang anda mahu lihat mengikut pembekal dan jenis. Sebagai alternatif, anda boleh memilih \"Lihat Siaran Komuniti\" daripada halaman utama untuk melihat semua siaran dan menggunakan penapis yang dikehendaki."
+      ],
+      [
+        "Bagaimanakah saya boleh menawarkan bantuan?",
+        "<0>Anda boleh menawarkan bantuan sebagai individu atau pertubuhan.</0><1>Daripada laman utama, pilih \"Beri Bantuan\" untuk melihat semua siaran yang dicipta oleh pengguna yang meminta bantuan dan menapis hasil mengikuti lokasi dan jenis. Anda perlu dilog masuk untuk menghubungi mereka. Anda juga boleh mencipta siaran anda sendiri untuk menerangkan bantuan yang dapat anda tawarkan.</1>"
+      ],
+      [
+        "Adakah saya perlu dilog masuk untuk melihat permohonan dan tawaran bantuan?",
+        "Anda tidak perlu dilog masuk untuk melihat mana-mana siaran pada lembaga bantuan tetapi anda perlu log masuk untuk memberi komen atau menyukai siaran."
+      ],
+      [
+        "Adakah saya perlu log masuk untuk mencipta/menyunting siaran?",
+        "Ya, anda perlu mendaftar akaun dan log masuk jika anda ingin mencipta atau menyunting siaran."
+      ],
+      [
+        "Adakah saya perlu mendaftar sebagai individu untuk mencipta profil pertubuhan?",
+        "Ya, sebaik sahaja anda mendaftar sebagai individu, anda boleh mencipta satu atau beberapa profil pertubuhan yang dipautkan ke akaun anda."
+      ],
+      [
+        "Adakah nama/ nama pertubuhan saya akan paparkan kepada pengguna lain?",
+        "Apabila anda mencipta siaran sama ada menawarkan atau meminta bantuan, nama anda/ nama pertubuhan anda dipaparkan kepada sesiapa yang sedang melihat lembaga bantuan."
+      ],
+      [
+        "Bagaimanakah saya boleh mempercayai bahawa siaran adalah benar?",
+        "Malangnya, kami tidak boleh memastikan bahawa semua siaran boleh dipercayai kerana siaran ini dicipta oleh pengguna kami. Walau bagaimanapun, kami berusaha sedaya upaya untuk menyimpan kandungan yang relevan dengan melakukan pembersihan data seperti biasa dan dengan menyahaktifkan siaran selepas tamat tempoh mereka. Jika anda mempunyai kebimbangan mengenai kandungan siaran, sila hubungi kami di <0>support@fightpandemics.com</0>"
+      ],
+      [
+        "Bolehkah anda membantu saya dengan masalah perubatan?",
+        "FightPandemics bukan pembekal penjagaan perubatan."
+      ],
+      [
+        "Adakah saya perlu berkongsi lokasi semasa saya? Bagaimana jika saya tidak mahu berkongsi lokasi saya?",
+        "Kami menggunakan lokasi untuk menunjukkan hasil yang paling relevan kepada anda, namun, anda juga dapat melihat semua siaran. Oleh sebab FightPandemics mempunyai ribuan siaran dari seluruh dunia, kami mencadangkan anda memasuki lokasi berdekatan anda untuk menyesuaikan hasil secara terbaik."
+      ],
+      [
+        "Tiada bantuan yang disenaraikan di kawasan saya. Apakah yang perlu saya lakukan?",
+        "Komuniti kita sentiasa berkembang. Anda dialu-alukan untuk menjadi orang pertama di kawasan anda untuk mencipta siaran dan meminta bantuan. Sila lihat juga melalui perkhidmatan yang boleh diakses oleh sesiapa secara bebas dari lokasi mereka."
+      ],
+      [
+        "Saya menemui pepijat di laman web. Bagaimanakah saya melaporkannya?",
+        "Sila hantarkan maklum balas, atau hubungi <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya tidak lagi dibenarkan untuk menggunakan FightPandemics - apakah yang perlu saya lakukan?",
+        "Sila hubungi kami di <0>support@fightpandemics.com</0> dan kami akan menyemak apakah isu dengan akaun anda."
+      ],
+      [
+        "Apakah maklumat yang anda simpankan?",
+        "FightPandemics hanya mengumpul dan memproses data peribadi pengguna untuk tujuan yang diterangkan dalam <0>dasar privasi</0> kami. Dalam apa jua keadaan, kami tidak akan memberi akses atau berkongsi data peribadi anda dengan mana-mana pihak ketiga kecuali dengan orang berkenaan yang dinyatakan dalam dasar ini."
+      ],
+      [
+        "Bolehkah saya memberi/menerima bantuan dari bandar atau negeri saya? Berapa lamakah siaran dapat dilihat?",
+        "Siaran untuk memberi/menerima bantuan boleh ditetapkan di peringkat poskod, bandar, negeri atau negara dalam tempoh sehari, seminggu, sebulan atau selamanya. Secara lalai, siaran akan ditetapkan di peringkat bandar dalam tempoh sebulan."
+      ],
+      [
+        "Soalan saya tidak disenaraikan. Siapakah yang boleh saya hubungi?",
+        "Untuk pertanyaan lazim dan isu lain yang tidak disenaraikan di sini, hubungi <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "Bagaimanakah saya menyertai?",
+        "<0>Untuk menyertai komuniti sebagai pengguna, klik butang \"Menu\" dan pilih pilihan \"Sertai Sekarang / Log Masuk\". Anda dapat menyertai dengan pilihan kelayakan e-mel atau media sosial anda di sana.</0><1>Apabila anda menyertai komuniti, anda akan mempunyai akses tanpa had untuk melihat dan membuat catatan dan komen di platform FightPandemics.</1>"
+      ],
+      [
+        "Bagaimanakah saya boleh menukarkan profil individu saya kepada profil pertubuhan?",
+        "Profil pertubuhan dikaitkan dengan profil individu anda. Sebaik sahaja anda mencipta profil individu anda, anda boleh menambahkan seberapa banyak profil pertubuhan yang terikat pada profil individu tersebut yang anda mahukan. E-mel dan kata laluan yang anda gunakan untuk menyertai bagi profil individu tersebut akan terus menjadi kelayakan log masuk anda."
+      ],
+      [
+        "Bagaimanakah saya boleh menukarkan profil pertubuhan saya kepada profil individu?",
+        "Anda tidak boleh menukarkan profil pertubuhan anda kepada profil individu. Untuk mencipta profil pertubuhan, anda perlu mempunyai profil individu. Sebaik sahaja anda mencipta profil individu anda, anda boleh menambahkan seberapa banyak profil pertubuhan yang anda mahukan dan dikaitkan dengan profil individu tersebut. E-mel dan kata laluan yang anda gunakan untuk menyertai bagi profil individu tersebut akan terus menjadi kelayakan log masuk anda."
+      ],
+      [
+        "Bagaimanakah saya boleh menetapkan semula kata laluan saya?",
+        "Klik pada \"Daftar Masuk\" daripada halaman utama dan kemudian klik pada \"Terlupa Kata Laluan\" dan ikut arahannya"
+      ],
+      [
+        "Mengapakah kata laluan saya tidak sah?",
+        "Sila semak jika kata laluan anda mempunyai sekurang-kurangnya 8 huruf. Jika anda sudah mempunyai akaun tetapi terlupa kata laluan log masuk anda, klik pada \"Log Masuk\" daripada halaman utama dan kemudian pergi ke \"Terlupa kata laluan\"."
+      ],
+      [
+        "Saya mendaftar dan tidak menerima e-mel pengesahan. Apakah yang harus saya lakukan?",
+        "Jika anda belum menerima e-mel pengesahan, sila cuba pilihan berikut:",
+        "Semak folder spam anda untuk e-mel pemulihan.",
+        "Cuba proses \"Pulihkan kata laluan\".",
+        "Jika pilihan di atas tidak menyelesaikan masalah, jangan ragu-ragu untuk menghubungi pasukan sokongan kami: <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Bagaimanakah saya boleh memadam/ membatalkan akaun saya?",
+        "Jika anda ingin memadam akaun anda, hubungi kami di <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Bagaimanakah saya boleh mengemas kini maklumat profil saya?",
+        "Dari menu di sudut kanan atas, pilih \"Profil Saya\", kemudian klik ikon pen di bahagian atas profil anda. Anda akan dibawa ke laman di mana anda dapat menyunting maklumat profil anda dan pilih \"Simpan Perubahan\" setelah selesai."
+      ],
+      [
+        "Bagaimanakah saya boleh melaporkan siaran yang salah atau menyinggung perasaan?",
+        "Jika anda menemui siaran yang tidak betul atau melanggar Kod Tingkah Laku FightPandemics, sila hantarkan e-mel kepada kami di <0>support@fightpandemics.com.</0>"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "Saya hendak menjadi rakan kongsi atau penaja.",
+        "Sila berhubung dengan pasukan perkongsian kami di <0>partnerships@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya dari pihak akhbar/ media.",
+        "Sila hubungi kami di <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya memerlukan sokongan teknikal.",
+        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>help@fightpandemics.com.</0> Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
+      ],
+      [
+        "Saya ingin menghubungi FightPandemics untuk sebab lain.",
+        "Untuk pertanyaan lazim dan masalah lain yang tidak disenaraikan di sini, sila hubungi <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "contacts": "Kenalan",
+    "contactsFAQ": [
+      [
+        "Saya hendak menjadi rakan kongsi atau penaja.",
+        "Sila berhubung dengan pasukan perkongsian kami di <0>Partnerships@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya dari pihak akhbar/ media.",
+        "Sila hubungi kami di <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya memerlukan sokongan teknikal.",
+        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>help@fightpandemics.com.</0> Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
+      ],
+      [
+        "Saya ingin menghubungi FightPandemics atas sebab lain.",
+        "Untuk pertanyaan lazim dan masalah lain yang tidak disenaraikan di sini, sila hubungi <0>contact@fightpandemics.com.</0>"
+      ]
+    ],
+    "faqTitle": "Soalan Lazim"
+  },
+  "cookies": {
+    "whatCookies": "Apakah Kuki?",
+    "whatCookiesContent": "<0>Laman Web ini menggunakan \"Cookies\" dan mekanisme lain yang serupa (akan merujuk sebagai kuki). Kuki adalah fail yang dihantar ke pelayar melalui pelayan web untuk merekodkan aktiviti Pengguna di laman web tertentu atau di semua laman web, aplikasi dan / atau perkhidmatan laman web ini. Tujuan utama kuki adalah untuk membenarkan pengguna akses yang lebih cepat dan lebih memperibadikan ke perkhidmatan yang ditawarkan. Kuki hanya dikaitkan dengan Pengguna keawanamaan dan komputernya dan tidak memberikan rujukan yang membenarkan pemotongan data peribadi Pengguna.</0><1>Pengguna mungkin boleh mengkonfigurasi pelayarnya untuk memaklum dan menolak pemasangan Kuki yang dihantar oleh laman web ini tanpa menjejaskan kemampuan Pengguna untuk mengakses Kandungan. Walau bagaimanapun, kami perhatikan bahawa, dalam apa-apa keadaan, prestasi laman web mungkin menurun. Laman web ini menggunakan Pepijat Web, iaitu imej yang kecil dan telus dimasukkan ke dalam e-mel. Apabila Pengguna membuka buletin Laman Web, imej dan kandungan e-mel lain akan dimuat turun secara serentak dan mengetahui sama ada e-mel tertentu dapat dibukakan, termasuk alamat IP dari mana-mana e-mel yang telah dimuat turunkan. FightPandemics menggunakan maklumat ini untuk mendapatkan statistik dan menjalankan kajian analitikal tentang penerimaan e-mel oleh Pengguna.</1>",
+    "typeCookies": "JENIS, TUJUAN DAN FUNGSI KUKI",
+    "typeCookiesBegin": "Kuki, bergantung pada kekekalannya, boleh dibahagikan kepada sesi atau kuki kekal. Kuki pihak pertama tamat tempoh apabila Pengguna menutup pelayar. Kuki pihak kedua tamat tempoh apabila mereka dipadamkan secara manual. Selain itu, bergantung pada objektif anda, Kuki yang digunakan oleh Laman Web ini dapat diklasifikasikan seperti berikut:",
+    "typeCookiesContent": "<0>Kuki teknikal: Ini membenarkan pengguna melayari melalui laman web, platform atau aplikasi dan menggunakan pelbagai pilihan atau perkhidmatan yang sedia ada, seperti, misalnya, mengawal trafik dan komunikasi data, mengenal pasti sesi, mengakses bahagian akses terhad, mengingati elemen yang membentukkan pesanan, melakukan proses pembelian pesanan, memohon pendaftaran atau penyertaan dalam acara, menggunakan elemen sekuriti semasa navigasi, menyimpan kandungan untuk penyebaran video atau audio atau perkongsian kandungan melalui rangkaian sosial.</0><1>Kuki analisis: Itu yang kami proseskan atau diproseskan oleh pihak ketiga dengan memberi kebenaran untuk menjumlahkan bilangan pengguna dan seterusnya melakukan pengukuran dan analisis statistik berdasarkan penggunaan yang dihasilkan oleh pengguna perkhidmatan yang ditawarkan. Untuk ini, pelayaran laman web kami dianalisiskan untuk meningkatkan penawaran produk atau perkhidmatan yang kami tawarkan.</1><2>Kuki iklan: Adalah itu yang kami proseskan atau diproseskan oleh pihak ketiga dengan membenarkan kami untuk menguruskan tawaran ruang iklan yang disediakan di laman web dengan cara yang paling berkemungkinan efisien dalam menyesuaikan kandungan iklan tersebut dengan kandungan perkhidmatan yang diminta atau penggunaan yang anda hasilkan daripada laman web kami. Untuk ini, kami dapat menganalisis tabiat melayari internet anda dan kami dapat menunjukkan iklan yang berkaitan dengan profil pelayaran anda kepada anda .</2><3>Kuki iklan tingkah laku: Ini membenarkan pengurusan dengan cara yang paling berkemungkinan efisien terhadap ruang iklan, jika sesuai, penyunting yang disediakan di dalam laman web, aplikasi atau platform dari mana ia menyediakan yang perkhidmatan yang diminta. Kuki ini menyimpan maklumat tentang tingkah laku pengguna yang diperoleh melalui pemerhatian berterusan terhadap tabiat melayari mereka dengan membenarkan untuk mengembangkan profil tertentu untuk memaparkan iklan berdasarkannya.</3>",
+    "typeCookiesEnd": "Laman Web mungkin menggunakan perkhidmatan pihak ketiga yang mungkin memerlukan pemasangan Kuki pada Pengguna dan atas nama FightPandemics, dan akan mengumpulkan maklumat untuk tujuan statistik mengenai penggunaan laman web oleh pengguna dan untuk penyediaan perkhidmatan lain yang berkaitan dengan aktiviti Laman Web dan perkhidmatan Internet yang lain.",
+    "disableCookies": "BAGAIMANAKAH UNTUK MEMADAM KUKI DAN PEPIJAT WEB DALAM PELAYAR UTAMA?",
+    "disableCookiesContent": "Biasanya, ia berkemungkinan untuk dihentikan untuk menerima kuki pelayar atau dihentikan untuk menerima kuki daripada perkhidmatan tertentu. Semua pelayar moden membenarkan anda untuk menukar konfigurasi kuki. Tetapan ini sering ditemui dalam 'pilihan' or 'Pemeriksaan' menu pelayar anda. Anda juga boleh mengkonfigurasi pelayar anda atau pengurus e-mel, termasuk memasang alat tambah percuma untuk mengelakkan Pepijat Web daripada memuat turun apabila membuka e-mel. Gunakan arahan berikut mengikut pelayar internet anda untuk menukar pemeriksaan kuki:",
+    "updateCookies": "KEMAS KINI DASAR KUKI",
+    "updateCookiesContent": "FightPandemics dapat mengubah suai Dasar Kuki ini berdasarkan perundangan, keperluan peraturan, atau dengan tujuan menyesuaikan dasar tersebut mengikuti garis panduan yang dikeluarkan oleh Badan Perlindungan Data Sepanyol, oleh itu, Pengguna dinasihati untuk mengunjungi halaman ini secara berkala untuk mengetahui perubahan yang dialami di dalamnya. Apabila terdapat perubahan ketara dalam Dasar Kuki ini, Pengguna akan dimaklumkan melalui web atau menghantar e-mel kepada Pengguna yang didaftarkan dalam perkhidmatan buletin.",
+    "cookieAlert": "Laman web ini menggunakan kuki untuk menyampaikan perkhidmatan kami dan untuk menunjukkan maklumat yang relevan kepada anda. Dengan menggunakan laman web kami, anda mengakui bahawa anda telah membaca dan memahami <0>Dasar Kuki</0> , <1>Dasar Privasi</1> dan <2>Terma & Syarat</2> kami. Penggunaan Produk FightPandemics anda tertakluk kepada dasar dan syarat ini."
+  },
+  "comment": {
+    "writeAComment": "Tulis komen...",
+    "onlyAuthenticated": "Hanya pengguna yang log masuk boleh memberi komen.",
+    "loading": "Sedang Dimuatkan...",
+    "showMore": "Tunjukkan Lebih Banyak Komen",
+    "comment": "Komen",
+    "comment_plural": "Komen",
+    "commentWithCount": "{{count}} Komen",
+    "commentWithCount_plural": "{{count}} Komen",
+    "edit": "Sunting",
+    "delete": "Padam",
+    "save": "Simpan",
+    "showLess": "Tunjukkan Kurang Komen"
+  },
+  "medical": {
+    "localNumber": "Nombor Kecemasan Tempatan Anda",
+    "call": "Sila Hubungi Nombor Kecemasan Tempatan Anda",
+    "nearestHospitals": "Hospital terdekat",
+    "check": "Pemeriksaan Gejala",
+    "findHelp": "Minta Bantuan"
+  },
+  "feedback": {
+    "poorly": "Buruk",
+    "well": "Sangat Baik",
+    "howMeetNeeds": "Sejauh manakah FightPandemics memenuhi keperluan anda?",
+    "almostFinished": "Kita hampir selesai!",
+    "howImpacted": "Bagaimanakah COVID-19 memberi impak kepada anda?",
+    "mostValuable": "Fungsi manakah yang paling berharga bagi anda?",
+    "oneChange": "Sekiranya anda boleh mengubah mana-mana satu perkara mengenai FightPandemics, apakah itu?",
+    "otherFeedback": "Maklum balas lain untuk kami?",
+    "thankYou": "Terima kasih!",
+    "thankYouEarly": "Terima kasih kerana menjadi pengguna awal FightPandemics!",
+    "thankYouMessage": "Input anda sangat bermakna dan membantu kami untuk meningkatkan perkhidmatan semasa dan selepas pandemik COVID-19.",
+    "submitFeedback": "Hantar Maklum Balas",
+    "radio": {
+      "age": "Berapakah umur anda?",
+      "unaffected": "Saya biasanya pergi ke tempat kerja/sekolah",
+      "quarantine": "Saya sihat tetapi menjalani kuarantin di rumah",
+      "symptomaticUntested": "Saya mengalami gejala ringan tetapi belum diuji",
+      "diagnosed": "Saya didiagnosis dengan COVID-19"
+    }
+  },
+  "relativeTime": {
+    "second": "saat",
+    "second_plural": "saat",
+    "secondWithCount": "{{count}} saat yang lalu",
+    "secondWithCount_plural": "{{count}} saat yang lalu",
+    "minute": "minit",
+    "minute_plural": "minit",
+    "minuteWithCount": "{{count}} minit yang lalu",
+    "minuteWithCount_plural": "{{count}} minit yang lalu",
+    "hour": "jam",
+    "hour_plural": "jam",
+    "hourWithCount": "{{count}} jam yang lalu",
+    "hourWithCount_plural": "{{count}} jam yang lalu",
+    "day": "hari",
+    "day_plural": "hari",
+    "dayWithCount": "{{count}} hari yang lalu",
+    "dayWithCount_plural": "{{count}} hari yang lalu",
+    "week": "minggu",
+    "week_plural": "minggu",
+    "weekWithCount": "{{count}} minggu yang lalu",
+    "weekWithCount_plural": "{{count}} minggu yang lalu",
+    "month": "bulan",
+    "month_plural": "bulan",
+    "monthWithCount": "{{count}} bulan yang lalu",
+    "monthWithCount_plural": "{{count}} bulan yang lalu",
+    "year": "tahun",
+    "year_plural": "tahun",
+    "yearWithCount": "{{count}} tahun yang lalu",
+    "yearWithCount_plural": "{{count}} tahun yang lalu"
+  },
+  "alt": {
+    "logo": "Logo FightPandemics",
+    "blogLink": "Pautan Blog FightPandemics",
+    "desktopBanner": "Sepanduk Misi dan Misi Atas Meja",
+    "mobileBanner": "Sepanduk Misi dan Visi Mudah Alih",
+    "ideaImage": "Gambar Idea Kami",
+    "linkedinIcon": "Ikon LinkedIn FightPandemics",
+    "facebookIcon": "Ikon Facebook FightPandemics",
+    "instagramIcon": "Ikon Instagram FightPandemics",
+    "twitterIcon": "Ikon Twitter FightPandemics",
+    "createOrg": "mencipta pertubuhan",
+    "personalDataImage": "dua orang berdiri di tepi senarai barangan peribadi",
+    "envelope": "sampul surat",
+    "avatar": "avatar"
+  },
+  "error": {
+    "title": "Sila sertakan tajuk untuk siaran anda.",
+    "description": "Sila sertakan keterangan untuk siaran anda.",
+    "help": "Sila pilih sejenis bantuan.",
+    "tags": "Sila tambahkan sekurang-kurangnya satu tag.",
+    "privacyPolicyRequired": "Anda mesti bersetuju dengan dasar privasi kami sebelum meneruskan",
+    "termsConditionsRequired": "Anda mesti bersetuju dengan terma dan syarat kami sebelum meneruskan",
+    "failedPredictions": "Gagal mendapatkan ramalan. Sila cuba lagi.",
+    "failedLocation": "Gagal mendapatkan lokasi.",
+    "failedLocationDetails": "Gagal mendapatkan maklumat lokasi. Sila cuba lagi.",
+    "User denied Geolocation": "Pengguna menolak Geolokasi.",
+    "resetBrowserLocationPermission": "Sila tetapkan semula kebenaran lokasi pelayar anda atau masukkan alamatnya.",
+    "enterAddressAgain": "Sila masukkan alamat atau cuba lagi.",
+    "loggedInToCreateOrgProfile": "Anda mesti log masuk untuk mencipta profil pertubuhan",
+    "selectOneOption": "Sila pilih sekurang-kurangnya satu pilihan",
+    "userExists": "Pengguna sudah wujud",
+    "invalidState": "Keadaan tidak sah",
+    "passwordsShouldMatch": "Kata laluan yang betul-betul sama perlu dimasukkan dua kali",
+    "passwordWeak": "Kata laluan terlalu lemah",
+    "wrongCredentials": "E-mel atau kata laluan yang salah.",
+    "failedChangePasswordEmail": "Ralat membuat perubahan pada e-mel kata laluan",
+    "feedbackAlreadySubmitted": "Maklum balas sudah dihantar",
+    "emailIssue": "E-mel sudah digunakan atau tidak dapat disahkan",
+    "emailUnverified": "E-mel tidak dapat disahkan",
+    "maxSignInAttemptsExceeded": "Melebihi bilangan maksimum percubaan log masuk.",
+    "failedSubmittingFeedback": "Gagal menghantar maklum balas, sebab:",
+    "failedCreatingUser": "Gagal mencipta pengguna, sebab:",
+    "failedLoadingProfile": "Profil gagal dimuatkan, sebab:",
+    "failedLoadingActivity": "Aktiviti gagal dimuatkan, sebab:",
+    "failedCreatingOrgProfile": "Gagal mencipta profil pertubuhan, sebab:",
+    "failedUpdatingOrgProfile": "Gagal mengemas kini profil pertubuhan, sebab:",
+    "failedUpdatingProfile": "Gagal mengemas kini profil, sebab:",
+    "failedAuthentication": "Pengesahan gagal, sebab:",
+    "failedLogin": "Log masuk gagal, sebab:",
+    "failedSignup": "Pendaftaran gagal, sebab:",
+    "failedPasswordRecovery": "Pemulihan kata laluan gagal, sebab:",
+    "http": {
+      "Bad Request": "Permintaan Teruk",
+      "Unauthorized": "Tidak dibenarkan",
+      "Payment Required": "Pembayaran Diperlukan",
+      "Forbidden": "Dilarang",
+      "Not Found": "Tidak Ditemui",
+      "Method Not Allowed": "Kaedah Tidak Dibenarkan",
+      "Not Acceptable": "Tidak Boleh Diterima",
+      "Proxy Authentication Required": "Pengesahan Proksi Diperlukan",
+      "Request Timeout": "Permintaan Tamat Tempoh",
+      "Conflict": "Konflik",
+      "Gone": "Hilang",
+      "Length Required": "Panjang Diperlukan",
+      "Precondition Failed": "Prasyarat Gagal",
+      "Payload Too Large": "Muat Beban Terlalu Besar",
+      "URI Too Long": "URI Terlalu Panjang",
+      "Unsupported Media Type": "Jenis Media Tidak Disokong",
+      "Range Not Satisfiable": "Julat Permintaan Tidak Dibenarkan",
+      "Expectation Failed": "Jangkaan Gagal",
+      "I'm a teapot": "Saya merupakan teapot",
+      "Misdirected Request": "Permintaan Salah Dihalakan",
+      "Unprocessable Entity": "Entiti Tidak Boleh Diproses",
+      "Locked": "Terkunci",
+      "Failed Dependency": "Pergantungan Gagal",
+      "Too Early": "Terlalu Awal",
+      "Upgrade Required": "Naik Taraf Diperlukan",
+      "Precondition Required": "Prasyarat Diperlukan",
+      "Too Many Requests": "Terlalu Banyak Permintaan",
+      "Request Header Fields Too Large": "Medan Pengepala Permintaan Terlalu Besar",
+      "Unavailable For Legal Reasons": "Tidak Tersedia Atas Sebab Undang-Undang",
+      "Internal Server Error": "Ralat Pelayan Dalaman",
+      "Not Implemented": "Tidak Dilaksanakan",
+      "Bad Gateway": "Get Laluan Teruk",
+      "Service Unavailable": "Perkhidmatan Tidak Tersedia",
+      "Gateway Timeout": "Get Laluan Tamat Tempoh",
+      "HTTP Version Not Supported": "Versi HTTP Tidak Disokong",
+      "Variant Also Negotiates": "Varian Juga Berunding",
+      "Insufficient Storage": "Simpanan Yang Tidak Mencukupi",
+      "Loop Detected": "Gelung Dikesan",
+      "Not Extended": "Tidak Dilanjutkan",
+      "Network Authentication Required": "Pengesahan Rangkaian Diperlukan"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Maaf, kami hanya menyokong fail imej jenis jp(e)g dan png.",
+      "fileSizeTooLarge": "Sila muat naik imej saiz kurang daripada 5 MB.",
+      "imageDimensionTooSmall": "Sila muat naik imej yang sekurang-kurangnya 250 piksel tinggi dan 250 piksel lebar.",
+      "imageDimensionTooWide": "Maaf, imej terlalu lebar. Sila cuba lagi dengan imej yang mempunyai lebar kurang daripada dua kali ketinggian.",
+      "networkError": "Maaf, sesuatu ralat rangkaian berlaku."
+    }
+  },
+  "TEMP: We are not a provider of healthcare services": "Kami bukan pembekal perkhidmatan penjagaan kesihatan",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Perkhidmatan ini disediakan dengan niat ikhlas bagi sesiapa jua yang tidak mampu untuk mendapatkan bantuan dan sumber semasa kecemasan kesihatan awam yang belum pernah berlaku sebelum ini.",
+  "TEMP: Please consult your healthcare provider for medical advice": "Sila rujuk pembekal penjagaan kesihatan anda untuk mendapatkan nasihat perubatan",
+  "TEMP: I Understand": "Saya Faham",
+  "TEMP: COVID-19 Screening Tool": "Alat Saringan COVID-19",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Kami akan menanyakan beberapa soalan mengenai gejala, perjalanan dan kontak anda dengan orang lain",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Jawapan anda tidak akan disimpan atau dikongsi. Ini hanyalah alat bantuan sedunia.",
+  "TEMP: For Myself": "Untuk Diri Sendiri",
+  "TEMP: For Someone Else": "Untuk Orang Lain",
+  "TEMP: Is this an emergency?": "Adakah ini kecemasan?",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "Ya, saya mengalami sekurang-kurangnya satu gejala ini",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "Ya, mereka mengalami sekurang-kurangnya satu gejala ini",
+  "TEMP: No, I do not have any of these symptoms": "Tidak, saya tidak menunjukkan sebarang gejala ini",
+  "TEMP: No, they do not have any of these symptoms": "Tidak, mereka tidak menunjukkan sebarang gejala ini",
+  "TEMP: Under 18": "Di bawah 18",
+  "TEMP: Between 18 and 64": "Antara 18 dan 64",
+  "TEMP: 65 or older": "65 atau lebih tua",
+  "TEMP: Multiple options can be selected": "Berganda pilihan boleh dipilih",
+  "TEMP: Fever, chills, or sweating": "Demam, menggigil atau berpeluh",
+  "TEMP: New or worsening cough": "Batuk baru atau semakin parah",
+  "TEMP: Sore throat": "Sakit tekak",
+  "TEMP: Vomiting or diarrhea": "Muntah atau cirit-birit",
+  "TEMP: Do you live in a care facility?": "Adakah anda tinggal di kemudahan penjagaan?",
+  "TEMP: Do they live in a care facility?": "Adakah mereka tinggal di kemudahan penjagaan?",
+  "TEMP: This includes nursing homes or assisted living facilities.": "Ini termasuk pusat jagaan atau kemudahan kehidupan dibantu.",
+  "TEMP: No, I don’t live in a long-term care facility": "Tidak, saya tidak menetap di kemudahan penjagaan jangka panjang",
+  "TEMP: I live in a long-term care facility": "Saya menetap di kemudahan penjagaan jangka panjang",
+  "TEMP: No, they don’t live in a long-term care facility": "Tidak, mereka tidak menetap di kemudahan penjagaan jangka panjang",
+  "TEMP: They live in a long-term care facility": "Mereka menetap di kemudahan penjagaan jangka panjang",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "Ini termasuk hospital, bilik kecemasan, perkhidmatan rawatan lain atau kemudahan penjagaan jangka panjang. Pilih semua yang berkaitan.",
+  "TEMP: No, I don’t work or plan to work in a care facility": "Tidak, saya tidak bekerja atau merancang untuk bekerja di kemudahan pusat penjagaan",
+  "TEMP: No, they don’t work or plan to work in a care facility": "Tidak, mereka tidak bekerja atau merancang untuk bekerja di kemudahan pusat penjagaan",
+  "TEMP: Do any of these apply to you?": "Yang manakah antara berikut dapat dikaitkan dengan anda?",
+  "TEMP: Do any of these apply to them?": "Yang manakah antara berikut dapat dikaitkan dengan mereka?",
+  "TEMP: Pregnancy": "Kehamilan",
+  "TEMP: None of the above": "Tidak disenaraikan di atas",
+  "TEMP: Please consult a medical professional for advice": "Sila rujuk ahli profesional perubatan untuk mendapatkan nasihat",
+  "TEMP: Done": "Selesai",
+  "TEMP: Retake the Test": "Mengambil Semula Ujian",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Berdasarkan gejala yang anda laporkan, anda perlu mendapatkan rawatan dengan segera.\nHubungilah nombor kecemasan!",
+  "TEMP: Your Responses": "Respons Anda",
+  "avatar": {
+    "submitBtn": "Hantar",
+    "cancelBtn": "Batal",
+    "tryAgainBtn": "Cuba Lagi"
+  }
+}

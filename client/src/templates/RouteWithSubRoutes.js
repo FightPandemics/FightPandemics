@@ -36,6 +36,7 @@ export const RouteWithSubRoutes = (route) => {
     forgotPasswordRequested,
     isAuthenticated,
     path,
+    organisationId,
     props = {},
     user,
   } = route;
@@ -63,9 +64,14 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
+            const createPostRedirect = sessionStorage.getItem(
+              "createPostAttemptLoggedOut",
+            );
             //redirect to the appropriate post if View More or Comment clicked
             const postRedirect = sessionStorage.getItem("postredirect");
-            if (postRedirect) {
+            if (createPostRedirect) {
+              redirect = createPostRedirect;
+            } else if (postRedirect) {
               redirect = postRedirect;
               sessionStorage.removeItem("postredirect");
             } else {
@@ -83,9 +89,8 @@ export const RouteWithSubRoutes = (route) => {
               !forgotPassword
             ) {
               redirect = CHECK_EMAIL;
-            } else if (emailVerified && forgotPassword) {
-              redirect = LOGIN;
-            } else if (
+            }
+            else if (
               emailVerified &&
               !user &&
               location.pathname !== CREATE_PROFILE
@@ -113,6 +118,8 @@ export const RouteWithSubRoutes = (route) => {
             mobiletabs={mobiletabs}
             navSearch={navSearch}
             tabIndex={tabIndex}
+            organisationId={organisationId}
+            loggedInOnly={loggedInOnly}
           />
         );
       }}
@@ -128,6 +135,7 @@ const mapStateToProps = ({ session }) => ({
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
+  organisationId: session.organisationId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);
