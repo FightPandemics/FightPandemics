@@ -80,7 +80,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function closeGetInvolvedModalWindow() {
-    cy.get(aboutUs.getInvolvedCloseButton).click();
+    aboutUs.getInvolvedCloseButtonFunction().click();
   }
 
   function lifetimeSupporterContainerIsVisible() {
@@ -113,7 +113,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function supporterContainerVisible(supporterContainerXpath) {
-    cy.xpath(supporterContainerXpath)
+    aboutUs.getSupporterContainer(supporterContainerXpath)
       .should("be.visible");
   }
 });

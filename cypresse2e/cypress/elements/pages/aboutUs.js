@@ -18,7 +18,14 @@ class AboutUs {
   pastSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[3]";
 
 
-  constructor() {
+  constructor() {}
+
+  getInvolvedCloseButtonFunction() {
+    return cy.get(this.getInvolvedCloseButton);
+  }
+
+  getSupporterContainer(supporterContainerXpath) {
+    return cy.xpath(supporterContainerXpath);
   }
 
 }
