@@ -60,7 +60,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function clickOnGetInvolvedButton() {
-    cy.get(aboutUs.getInvolvedButton).click();
+    aboutUs.getInvolvedButton().click();
   }
 
   function joinAsVolunteerIsVisibleAndPointToAppropriateLink() {
@@ -80,7 +80,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function closeGetInvolvedModalWindow() {
-    aboutUs.getInvolvedCloseButtonFunction().click();
+    aboutUs.getInvolvedCloseButton().click();
   }
 
   function lifetimeSupporterContainerIsVisible() {

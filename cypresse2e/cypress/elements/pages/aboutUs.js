@@ -3,8 +3,8 @@ class AboutUs {
   facebookButton = "#AU_FB";
   instagramButton = "#AU_IG";
   twitterButton = "#AU_TW";
-  getInvolvedCloseButton = ".ant-modal-close";
-  getInvolvedButton = "#AU_GI";
+  involvedCloseButton = ".ant-modal-close";
+  involvedButton = "#AU_GI";
   joinAsVolunteerButton = "#AU_GI_JV";
   joinAsVolunteerLink = "https://apply.workable.com/fightpandemics";
   joinAsAmbassadorButton = "#AU_GI_JA";
@@ -20,8 +20,13 @@ class AboutUs {
 
   constructor() {}
 
-  getInvolvedCloseButtonFunction() {
-    return cy.get(this.getInvolvedCloseButton);
+  getInvolvedButton() {
+    return cy.get(this.involvedButton);
+  }
+
+
+  getInvolvedCloseButton() {
+    return cy.get(this.involvedCloseButton);
   }
 
   getSupporterContainer(supporterContainerXpath) {
