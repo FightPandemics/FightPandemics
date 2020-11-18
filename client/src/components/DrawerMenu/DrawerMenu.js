@@ -17,6 +17,7 @@ const DrawerMenu = ({
   dispatchAction,
   organisationId,
   setOrganisationId,
+  onOrganisationChange,
 }) => {
   const [menuState, setMenuState] = useState(MENU_STATE.SETTINGS);
   if (!show || authLoading) {
@@ -27,18 +28,6 @@ const DrawerMenu = ({
   if (organisationId !== index) {
     setOrganisationId(index);
   }
-  const onOrganisationChange = (index) => {
-    if (index !== organisationId) {
-      if (index === null) {
-        localStorage.removeItem("organisationId");
-      } else {
-        localStorage.setItem("organisationId", index);
-      }
-      window.location.href = index
-        ? `/organisation/${index}`
-        : `/profile/${user.id}`;
-    }
-  };
 
   const actor =
     user?.organisations.find((org) => org._id === organisationId) || user;

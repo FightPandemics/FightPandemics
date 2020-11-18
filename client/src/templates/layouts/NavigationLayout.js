@@ -1,5 +1,5 @@
 import React, { useState, useReducer } from "react";
-import { Drawer } from "antd-mobile";
+import { Drawer, Modal } from "antd-mobile";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -67,9 +67,40 @@ const NavigationLayout = (props) => {
     tabIndex,
     isAuthenticated,
     user,
+    loggedInOnly,
     organisationId,
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
+
+  const onOrganisationChange = (index) => {
+    if (index !== organisationId) {
+      if (index === null) {
+        localStorage.removeItem("organisationId");
+      } else {
+        localStorage.setItem("organisationId", index);
+      }
+      if (!loggedInOnly && !window.location.href.includes("/feed")) {
+        Modal.alert(
+          t("common.stayOnPageHeader"),
+          t("common.stayOnPageContent"),
+          [
+            {
+              text: t("common.no"),
+              onPress: () => (window.location.href = "/feed"),
+              style: "default",
+            },
+            { text: t("common.yes"), onPress: () => window.location.reload() },
+          ],
+        );
+      } else if (window.location.href.includes("/feed")) {
+        Modal.alert(null, t("common.willRefresh"), [
+          { text: t("common.ok"), onPress: () => window.location.reload() },
+        ]);
+      } else {
+        window.location.href = "/feed";
+      }
+    }
+  };
 
   const TEXT_FEEDBACK = [
     {
@@ -323,6 +354,7 @@ const NavigationLayout = (props) => {
       isAuthenticated={isAuthenticated}
       dispatchAction={dispatchAction}
       organisationId={organisationId}
+      onOrganisationChange={onOrganisationChange}
     />
   );
 
@@ -351,6 +383,7 @@ const NavigationLayout = (props) => {
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
+            onOrganisationChange={onOrganisationChange}
             navSearch={navSearch}
           />
 

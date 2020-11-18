@@ -49,14 +49,15 @@ export const EditEmptyIcon = styled(SvgIcon)`
 `;
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
-  z-index: 1;
   bottom: 5%;
   right: 5%;
   height: 5rem;
   width: 5rem;
+  z-index: 1;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     width: 5rem;
     position: initial;
+    z-index: initial;
   }
 `;
 export const CreatePostDiv = styled.div`

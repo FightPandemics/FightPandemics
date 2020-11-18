@@ -22,7 +22,7 @@ const HomeRegisterBanner = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2.4rem;
-  z-index: 4;
+  z-index: 1;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
