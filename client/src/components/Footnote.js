@@ -57,6 +57,7 @@ const StyledSpan = styled.span`
 export default () => {
   const currentYear = new Date().getFullYear();
   const { t } = useTranslation();
+  const scrollTop = window.scrollTo(0, 0);
 
   return (
     <StyledFooter>
@@ -65,7 +66,7 @@ export default () => {
           Copyright {{ currentYear }} FightPandemics. All rights reserved.
         </Trans>
       </Copyright>
-      <StyledDiv>
+      <StyledDiv onScroll={scrollTop}>
         <StyledSpan as={Link} to={"/about-us"}>
           {t("common.aboutUs")}
         </StyledSpan>
