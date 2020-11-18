@@ -4,6 +4,7 @@ import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Badge } from "antd";
 
 import { setOrganisation } from "../../actions/profileActions";
 import SvgIcon from "../Icon/SvgIcon";
@@ -13,6 +14,9 @@ import Logo from "../Logo";
 import { theme, mq } from "../../constants/theme";
 import { HeaderLinks } from "./HeaderLinks";
 import FeedSearch from "components/Input/FeedSearch";
+import { InboxIcon } from "./constants"
+import mail from "assets/icons/mail.svg";
+import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -149,8 +153,10 @@ const Header = ({
   onFeedbackIconClick,
   navSearch,
   setOrganisationId,
+  ws,
 }) => {
   const { t } = useTranslation();
+  const { rooms } = ws;
 
   const index = localStorage.getItem("organisationId");
   if (organisationId !== index) {
@@ -167,6 +173,32 @@ const Header = ({
         ? `/organisation/${index}`
         : `/profile/${user.id}`;
     }
+  };
+
+  const renderInboxIcon = (mobile, activeStyles) => {
+    return (
+      <InboxIcon mobile={mobile}>
+        <Link
+          id={GTM.nav.prefix + GTM.nav.inbox}
+          to="/inbox"
+          activeStyles={activeStyles}
+        >
+          <Badge
+            count={rooms
+              .map((_room) =>
+                _room.participants.find((p) => p.id == user.id.toString())
+                  ?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0,
+              )
+              .reduce((a, b) => a + b, 0)}
+          >
+            <SvgIcon src={mail}></SvgIcon>
+          </Badge>
+        </Link>
+      </InboxIcon>
+    );
   };
 
   return (
@@ -192,6 +224,7 @@ const Header = ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
+            {renderInboxIcon(true)}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
@@ -201,6 +234,7 @@ const Header = ({
                     organisationId={organisationId}
                     user={user}
                     setOrganisation={onOrganisationChange}
+                    renderInboxIcon={renderInboxIcon}
                   />
                 </NavLinks>
               </DesktopMenu>

@@ -41,7 +41,6 @@ const PostSocial = ({
   isAuthenticated,
   isOwnPost,
   authorId,
-  user,
   postDispatch,
   liked,
   shared,
