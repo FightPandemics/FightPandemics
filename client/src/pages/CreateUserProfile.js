@@ -1,4 +1,4 @@
-import { Flex, WhiteSpace } from "antd-mobile";
+import { Flex, WhiteSpace, Modal } from "antd-mobile";
 import React, { useReducer, useState, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
@@ -148,7 +148,6 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
   const [location, setLocation] = useState(null);
   const [privacy, setPrivacy] = useState("");
   const [conditions, setConditions] = useState("");
-  const [messageSuccess, setMessageSuccess] = useState("");
   const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] = useState(
     false,
   );
@@ -179,8 +178,9 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
         const { userIds } = resAccounts.data;
         if (userIds?.length > 0) {
           await axios.post("/api/auth/link-accounts", resAccounts.data);
-          // TODO: replace SuccessAlert with ModalDialog
-          setMessageSuccess(t("auth.linkAccountsSuccess"));
+          Modal.alert(null, t("auth.linkAccountsSuccess"), [
+            { text: t("common.ok"), onPress: handleLinkAccountsSuccessClose },
+          ]);
         }
       } catch (err) {
         const message = err.response?.data?.message || err.message;
@@ -288,15 +288,6 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
           <Heading className="text-center" level={4}>
             {t("profile.common.createProfile")}
           </Heading>
-          {messageSuccess && (
-            <>
-              <SuccessAlert
-                message={messageSuccess}
-                closable
-                afterClose={handleLinkAccountsSuccessClose}
-              />
-            </>
-          )}
           {createUserFormState.error && (
             <ErrorAlert message={createUserFormState.error} type="error" />
           )}
