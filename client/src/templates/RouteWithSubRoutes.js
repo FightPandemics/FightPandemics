@@ -119,6 +119,7 @@ export const RouteWithSubRoutes = (route) => {
             navSearch={navSearch}
             tabIndex={tabIndex}
             organisationId={organisationId}
+            loggedInOnly={loggedInOnly}
           />
         );
       }}

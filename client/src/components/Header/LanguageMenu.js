@@ -9,7 +9,7 @@ import i18n from "i18n";
 
 import BackIcon from "assets/icons/back.svg";
 import DoneIcon from "assets/icons/done.svg";
-console.info(languages);
+
 export const LanguageMenu = ({ setMenuState }) => {
   const { t } = useTranslation();
   return (

@@ -147,6 +147,7 @@ const Header = ({
   isAuthenticated,
   user,
   onFeedbackIconClick,
+  onOrganisationChange,
   navSearch,
   setOrganisationId,
 }) => {
@@ -156,18 +157,6 @@ const Header = ({
   if (organisationId !== index) {
     setOrganisationId(index);
   }
-  const onOrganisationChange = (index) => {
-    if (index !== organisationId) {
-      if (index === null) {
-        localStorage.removeItem("organisationId");
-      } else {
-        localStorage.setItem("organisationId", index);
-      }
-      window.location.href = index
-        ? `/organisation/${index}`
-        : `/profile/${user.id}`;
-    }
-  };
 
   return (
     <HeaderWrapper className="header">
