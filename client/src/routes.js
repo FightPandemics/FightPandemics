@@ -26,6 +26,7 @@ import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import EditSecurity from './pages/EditSecurity';
 
 const routes = [
   {
@@ -59,7 +60,6 @@ const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
-      notLoggedInOnly: true,
       forgotPassword: true,
     },
   },
@@ -184,6 +184,13 @@ const routes = [
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-security",
+    component: EditSecurity,
     props: {
       loggedInOnly: true,
     },

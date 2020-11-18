@@ -12,7 +12,10 @@
     "profile": "Profile",
     "addOrg": "Add Organisation",
     "logout": "Sign Out",
-    "organisations": "Organisations"
+    "organisations": "Organisations",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organisations"
   },
   "onboarding": {
     "common": {
@@ -245,7 +248,9 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
-      "sendMessage": "Send Message"
+      "sendMessage": "Send Message",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password"
     },
     "individual": {
       "email": "Email",
@@ -267,9 +272,22 @@
       "myActivity": "My Activity",
       "userActivity": "User Activity",
       "wantHelp": "I want to help",
-      "needHelp": "I need help",
+      "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required."
+      "lastNameRequired": "Last name is required.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security"
     },
     "org": {
       "title": "Create Organisation Profile",
@@ -353,7 +371,8 @@
     "passwordMax": "Password must be at most {{num}} characters.",
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Passwords don't match",
+    "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -362,15 +381,21 @@
     "checkSpam": "If you don't see a message within a few minutes please check spam, promotions or other incoming mail folders."
   },
   "aboutUs": {
+    "ourStory": "Our Story",
+    "story": "FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it.",
+    "ourCommunity": "Our Community",
+    "community": "We are built by a team of 1100+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
+    "ourIdea": "Our Idea",
+    "ourSupporters": "Our Supporters",
+    "followUs": "Follow us on social media",
+    "contactUs": "Or contact us at: ",
+    "contactEmail": "contact@fightpandemics.com",
     "heading": "We want to create a world where humans are more resilient to emergencies",
     "subHeading": "by helping communities respond more quickly and effectively to crises.",
     "forWhoHeading": "Who is this for?",
     "forWho": "Anyone or any type of business, community group, government, or health care organisation who needs or wants to provide help.",
-    "ourStory": "Our Story",
     "FightPandemics": "FightPandemics",
-    "story": "is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it.",
     "storyInspired": "Inspired by so many coming together, Manuel launched the project with one mission in mind: <span>to ensure that others could connect in time.</span>",
-    "ourCommunity": "Our Community",
     "connectPeople": "We connect people",
     "connect": "An altruistic platform to connect those who need help with those who can provide it.",
     "howWork": "How does this work?",
@@ -389,13 +414,13 @@
     "lifetimeSupporters": "Lifetime supporters",
     "currentSupporters": "Current supporters",
     "pastSupporters": "Past supporters",
-    "community": "We are built by a team of 1200+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
-    "ourIdea": "Our Idea",
-    "ourSupporters": "Our Supporters",
-    "followUs": "Follow us on social media",
     "hashtag": "#ForCommunitiesByCommunities",
-    "contactUs": "Contact us at: ",
-    "contactEmail": "admin@fightpandemics.com"
+    "getInvolved": "Get Involved",
+    "joinVolunteer": "Join as Volunteer",
+    "joinAmbassador": "Join as Ambassador",
+    "joinStudentProgram": "Join Student Program",
+    "studentSummerProgram": "Student Summer Program",
+    "forStudentInAge": "For Students ages 14-18."
   },
   "footer": {
     "faq": "FAQ",
@@ -772,7 +797,8 @@
       "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
-    }
+    },
+    "wrongOldPassword": "Wrong current password"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",

@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
   InfiniteLoader,
@@ -35,8 +36,8 @@ const HorizontalRule = styled.hr`
 
 const Posts = ({
   isAuthenticated,
+  postDispatch,
   filteredPosts,
-  handlePostLike,
   handleCancelPostDelete,
   postDelete,
   user,
@@ -49,12 +50,37 @@ const Posts = ({
   isItemLoaded,
   hasNextPage,
   totalPostCount,
+  page,
 }) => {
   const posts = Object.entries(filteredPosts);
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const scrollIndex = useRef(0);
+  const history = useHistory();
+  const scrollToIndex = () => {
+    if (history?.location?.state) {
+      let { keepScrollIndex, keepScroll } = history.location.state;
+      if (keepScroll) return keepScrollIndex;
+    }
+    return -1;
+  };
+  const loadMoreItems = isNextPageLoading
+    ? () => {
+        if (history?.location?.state) {
+          const { keepScrollIndex, keepScroll } = history.location.state;
+          if (keepScroll && scrollIndex.current < keepScrollIndex) {
+            scrollIndex.current = keepScrollIndex;
+          } else {
+            history.location.state.keepScrollIndex = scrollIndex.current;
+            history.location.state.keepScroll = false;
+            history.location.state.keepPostsState = undefined;
+            history.location.state.keepPageState = undefined;
+          }
+        }
+      }
+    : loadNextPage;
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
+      scrollIndex.current = index;
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
       } else if (posts[index]) {
@@ -62,15 +88,18 @@ const Posts = ({
           <>
             <Post
               currentPost={posts[index][1]}
+              postDispatch={postDispatch}
               includeProfileLink={true}
               numComments={posts[index][1].commentsCount}
-              handlePostLike={handlePostLike}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
               deleteModalVisibility={deleteModalVisibility}
               handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
+              keepScrollIndex={scrollIndex.current}
+              keepPageState={page}
+              keepPostsState={filteredPosts}
               highlightWords={highlightWords}
             />
             <HorizontalRule />
@@ -95,14 +124,16 @@ const Posts = ({
     },
     [
       deleteModalVisibility,
+      filteredPosts,
       handleCancelPostDelete,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
+      page,
       postDelete,
+      postDispatch,
       posts,
       user,
     ],
@@ -136,8 +167,9 @@ const Posts = ({
                       rowRenderer={postItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
-                      overscanRowCount={10}
-                      scrollToAlignment={"start"}
+                      overscanRowCount={1}
+                      scrollToAlignment={"center"}
+                      scrollToIndex={scrollToIndex()}
                     />
                   )}
                 </AutoSizer>

@@ -123,7 +123,24 @@
       }
     },
     "filterBy": "Filtern nach",
-    "noResults": "Derzeit sind leider keine relevanten Beiträge verfügbar. Bitte versuche es mit einer anderen Filtersuche oder <0>erstelle einen Beitrag</0>."
+    "noResults": "Derzeit sind leider keine relevanten Beiträge verfügbar. Bitte versuche es mit einer anderen Filtersuche oder <0>erstelle einen Beitrag</0>.",
+    "allPosts": "Alle Beiträge",
+    "allPeople": "Alle Personen",
+    "allOrgs": "Alle Organisationen",
+    "noResultsPosts": "Derzeit sind leider keine relevanten Beiträge verfügbar. Bitte versuche es mit einer anderen Filtersuche oder <0>erstelle einen Beitrag</0>.",
+    "noResultsPeople": "Leider sind derzeit keine relevanten Personen verfügbar. Bitte versuche es mit einer anderen Filtersuche.",
+    "noResultsOrgs": "Leider sind derzeit keine relevanten Organisationen verfügbar. Bitte versuche es mit einer anderen Filtersuche.",
+    "search": {
+      "placeholder": "Suche nach Beiträgen, Personen und Orgs",
+      "keywords": "Schlüsselwörter",
+      "error": "Mind. {{length}} Zeichen",
+      "options": {
+        "posts": "Beiträge",
+        "people": "Personen",
+        "orgs": "Organisationen",
+        "orgsShort": "Orgs"
+      }
+    }
   },
   "post": {
     "create": "Post hinzufügen",
@@ -227,7 +244,8 @@
       },
       "emailMaxLength": "E-Mail-Adresse darf 200 Zeichen nicht überschreiten",
       "emailInvalid": "E-Mail-Adresse ist ungültig",
-      "emailDomainInvalid": "E-Mail-Domain ist ungültig"
+      "emailDomainInvalid": "E-Mail-Domain ist ungültig",
+      "sendMessage": "Nachricht senden"
     },
     "individual": {
       "email": "E-Mail",
@@ -313,11 +331,12 @@
       "activity": "Aktivität",
       "editAccount": "Benutzerkontodaten ändern",
       "updateSuccess": "Organisation erfolgreich aktualisiert",
-      "orgNameRequired": "Name der Organisation ist erforderlich"
+      "orgNameRequired": "Name der Organisation ist erforderlich",
+      "global": "Global"
     }
   },
   "auth": {
-    "signIn": "Willkommen",
+    "signIn": "Anmelden",
     "joinNow": "Jetzt beitreten",
     "email": "E-Mail",
     "enterEmail": "E-Mail-Adresse eingeben",
@@ -344,14 +363,39 @@
   },
   "aboutUs": {
     "ourStory": "Unsere Geschichte",
-    "story": "FightPandemics ist eine Idee von Manuel Gonzalez Alzuru, der in Frankreich mit COVID-19 infiziert war. Als er nach Barcelona zurückkehrte, stellte er fest, dass er keine Hilfe bekommen konnte, obwohl es Leute gab, die sie zur Verfügung stellen wollten. Telegramm- und WhatsApp-Gruppen organisierten sich in Manuels Nachbarschaft selbst, aber ohne persönlich zu wissen, dass jemand daran beteiligt war, konnte er niemanden um Hilfe bitten. Inspiriert von so vielen Zusammenkünften startete Manuel das Projekt mit dem Ziel, sicherzustellen, dass andere sich rechtzeitig verbinden können.",
+    "story": "FightPandemics ist eine Idee von Manuel Gonzalez Alzuru, der in Frankreich mit COVID-19 infiziert war. Als er nach Barcelona zurückkehrte, stellte er fest, dass er keine Hilfe bekommen konnte, obwohl es Leute gab, die sie zur Verfügung stellen wollten. Telegramm- und WhatsApp-Gruppen organisierten sich in Manuels Nachbarschaft selbst, aber ohne persönlich zu wissen wer daran beteiligt war, konnte er niemanden um Hilfe bitten. Inspiriert von so vielen Zusammenkünften startete Manuel dieses Projekt. Das Ziel ist es sicherzustellen, dass andere sich rechtzeitig verbinden können.",
     "ourCommunity": "Unsere Community / Gemeinde",
-    "community": "Wir bestehen aus einem Team von mehr als 450 freiwilligen Entwicklern, Designern, Wissenschaftlern, Gesundheitsexperten und Produktmanagern aus der ganzen Welt.",
+    "community": "Wir bestehen aus einem Team von mehr als 1200 freiwilligen Entwicklern, Designern, Wissenschaftlern, Gesundheitsexperten und Produktmanagern aus der ganzen Welt.",
     "ourIdea": "Unsere Idee",
     "ourSupporters": "Unsere Unterstützer",
     "followUs": "Folge uns in den sozialen Medien",
-    "contactUs": "Oder kontaktiere uns unter",
-    "contactEmail": "contact@fightpandemics.com"
+    "contactUs": "Oder kontaktiere uns unter: ",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "Wir wollen eine Welt schaffen, in der die Menschen in Notfällen widerstandsfähiger sind",
+    "subHeading": "indem sie den Gemeinschaften helfen, schneller und wirksamer auf Krisen zu reagieren.",
+    "forWhoHeading": "Für wen ist das?",
+    "forWho": "Jede Person oder jede Art von Unternehmen, Gemeindegruppen, Regierungs- oder Gesundheitsorganisation, die Hilfe benötigt oder leisten möchte.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Inspiriert von so vielen Zusammenkünften startete Manuel das Projekt mit einer Mission: <span> sicherzustellen, dass andere sich rechtzeitig verbinden können. </span>",
+    "connectPeople": "Wir verbinden Menschen",
+    "connect": "Eine altruistische Plattform, um Hilfesuchende mit denen zu verbinden, die sie bereitstellen können.",
+    "howWork": "Wie funktioniert das?",
+    "helpBoard": "Hilfebrett",
+    "helpBoardDetail": "Eine Gemeinschaftsplattform für Einzelpersonen und Organisationen, um Hilfe anzubieten und anzufordern.",
+    "localGlobal": "Lokal & Global",
+    "localGlobalDetail": "Hilfe innerhalb meiner Gemeinde und auf der ganzen Welt anbieten und anfordern.",
+    "relevantContent": "Relevante Inhalte",
+    "relevantContentDetail": "Ablauffristen stellen sicher, dass das Hilfebrett immer auf dem neuesten Stand ist.",
+    "goToHelpBoard": "Zum Hilfebrett gehen",
+    "supporters": "Unterstützer",
+    "thanksSupporters": "Vielen Dank an unsere Unterstützer, ohne welche wir Gemeinden nicht helfen könnten, sich auf Pandemien vorzubereiten und darauf zu reagieren.",
+    "becomeSupporter": "Um mehr darüber zu erfahren, wie dein Unternehmen ein Unterstützer werden kann, wende dich bitte an unser Partnerschaftsteam unter",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Klicke auf das Firmenlogo, um zur Website des Unterstützers zu gelangen.",
+    "lifetimeSupporters": "Lebenslange Unterstützer",
+    "currentSupporters": "Aktuelle Unterstützer",
+    "pastSupporters": "Ehemalige Unterstützer",
+    "hashtag": "#FürGemeindenVonGemeinden"
   },
   "footer": {
     "faq": "Häufig gestellte Fragen",
