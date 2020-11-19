@@ -507,6 +507,9 @@ const Post = ({
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        keepScrollIndex={keepScrollIndex}
+        keepPageState={keepPageState}
+        keepPostsState={keepPostsState}
       />
     </Card.Body>
   );

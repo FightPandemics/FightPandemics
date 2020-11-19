@@ -50,6 +50,9 @@ const PostSocial = ({
   setShowComments,
   setShowShareModal,
   id,
+  keepScrollIndex,
+  keepPageState,
+  keepPostsState,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -136,7 +139,12 @@ const PostSocial = ({
               }
               to={{
                 pathname: LOGIN,
-                state: { from: window.location.href },
+                state: {
+                  from: window.location.href,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
+                },
               }}
             >
               <div id={gtmTag("like", GTM.feed.prefix)} className="social-icon">
@@ -167,6 +175,9 @@ const PostSocial = ({
                   postId: id,
                   comments: true,
                   from: window.location.href,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
                 },
               }}
             >
@@ -186,7 +197,12 @@ const PostSocial = ({
               }
               to={{
                 pathname: LOGIN,
-                state: { from: window.location.href },
+                state: {
+                  from: window.location.href,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
+                },
               }}
             >
               <div
