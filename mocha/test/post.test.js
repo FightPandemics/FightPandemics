@@ -4,30 +4,21 @@ const apiHelper = require("../utils/apiHelper");
 const apiEndPointHelper = require("../utils/apiEndpoints");
 const validator = require("../utils/validators");
 const testData = require("../utils/testData");
-const mongoose = require("mongoose");
 let apiPostEndPoint = apiEndPointHelper.postApiEndpoint;
+const dbHelper = require("../utils/dbHelper");
 
 describe("GET POST endpoint - for a user that is NOT signed in", function () {
-  before(function (done) {
-    mongoose.connect("mongodb://mongo/fightpandemics", function (error) {
-      if (error) console.error("Error while connecting:\n%\n", error);
-      console.log("connected");
-      done(error);
+  before(function () {
+    console.log("BEFORE");
+    dbHelper.connectToDatabase();
+  });
+  it("Success - user an get a post by ID", async function () {
+    dbHelper.retrivePostFromDb().then((posts) => {
+      console.log("test posts " + posts.length);
     });
   });
-
-  it("Success - user an get a post by ID", async function () {
-    //   let response = await apiHelper.sendPOSTRequest(
-    //     APP_URL,
-    //     apiEndPoint,
-    //     userCredentialsWithRandomEmailAndRandomPassword,
-    //   );
-    //   validator.validateStatusCodeErrorAndMessage(
-    //     response,
-    //     httpStatus.UNAUTHORIZED,
-    //     "Unauthorized",
-    //     "Wrong email or password.",
-    //   );
-    console.log("Get post test");
+  after(function () {
+    console.log("AFTER");
+    dbHelper.disconnect();
   });
 });

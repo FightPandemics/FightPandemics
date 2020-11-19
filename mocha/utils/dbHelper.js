@@ -1,30 +1,31 @@
 const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+const Post = require("../models/post");
 
-// module.exports = {
-//   connectToDatabase: function (done) {
-//     mongoose.connect("mongodb://mongo/fightpandemics", function (error) {
-//       if (error) console.error("Error while connecting:\n%\n", error);
-//       console.log("connected");
-//       done(error);
-//     });
-//   },
-
-//   disconnect: function (done) {
-//     mongoose.connection.close();
-//     console.log("disconnected");
-//     done();
-//   },
-// };
-
-exports.connectToDatabase = async () => {
-  mongoose.connect("mongodb://mongo/fightpandemics", function (error) {
-    if (error) console.error("Error while connecting:\n%\n", error);
-    console.log("connected");
-    done(error);
-  });
+exports.connectToDatabase = function () {
+  mongoose
+    .connect("mongodb://127.0.0.1/fightpandemics")
+    .then(() => console.log("DB Connection Successfull "))
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
-// exports.closeDbConnection = async () => {
-//   mongoose.connection.close();
-//   console.log("disconnected");
-// };
+exports.disconnect = function () {
+  mongoose.connection.close();
+};
+
+exports.retrivePostFromDb = function () {
+  // console.log("Get post test");
+  // console.log("Get post test 2");
+  // const collections = Object.keys(mongoose.connection.collections);
+  // console.log(collections);
+  return Post.find({}, function (err, posts) {
+    if (err) {
+      console.log("Get post test 3");
+    } else {
+      console.log("Get post test 4 " + posts.toString());
+      return posts;
+    }
+  });
+};
