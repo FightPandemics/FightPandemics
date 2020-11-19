@@ -4,18 +4,27 @@ const apiHelper = require("../utils/apiHelper");
 const apiEndPointHelper = require("../utils/apiEndpoints");
 const validator = require("../utils/validators");
 const testData = require("../utils/testData");
-let apiPostEndPoint = apiEndPointHelper.postApiEndpoint;
+let getPostApiEndpoint = apiEndPointHelper.getPostApiEndpoint;
 const dbHelper = require("../utils/dbHelper");
 
-describe("GET POST endpoint - for a user that is NOT signed in", function () {
+describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", function () {
   before(function () {
     console.log("BEFORE");
     dbHelper.connectToDatabase();
   });
-  it("Success - user an get a post by ID", async function () {
-    dbHelper.retrivePostFromDb().then((posts) => {
-      console.log("test posts " + posts.length);
-    });
+  it("Success - user gets a post by ID", async function () {
+    var posts = dbHelper.findDocuments();
+    var firstPostId = (await posts)[0]._id;
+    let response = await apiHelper.sendGETRequest(
+      APP_URL,
+      getPostApiEndpoint + firstPostId,
+    );
+    validator.validateStatusCodeAndMessage(
+      response,
+      httpStatus.OK,
+      200,
+      firstPostId,
+    );
   });
   after(function () {
     console.log("AFTER");
