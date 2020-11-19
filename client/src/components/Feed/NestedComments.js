@@ -1,7 +1,9 @@
 // Core
 import React, { useState } from "react";
 import axios from "axios";
-import { Avatar, Input, Tooltip, Space } from "antd";
+import { Input, Tooltip, Space } from "antd";
+import { Avatar } from "components/Avatar";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -39,7 +41,12 @@ const TextInput = styled(TextArea)`
   }
 `;
 
-const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
+const NestedComments = ({
+  comment,
+  dispatchPostAction,
+  deleteComment,
+  user,
+}) => {
   const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
@@ -51,14 +58,12 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const actorId = useSelector(selectActorId);
 
   const renderAvatar = (
-    <Avatar
-      src={
-        comment.author.photo
-          ? comment.author.photo
-          : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
-      }
-      alt={`${comment.author.name}`}
-    />
+    <Avatar src={comment.author.photo} alt={`${comment.author.name}`}>
+      {!comment.author.photo &&
+        getInitialsFromFullName(
+          `${user.name || `${user.firstName} ${user.lastName}`}`,
+        )}
+    </Avatar>
   );
 
   //TODO: Add comment replies, like button and number of likes.
