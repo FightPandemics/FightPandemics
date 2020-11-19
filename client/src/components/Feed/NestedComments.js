@@ -41,12 +41,7 @@ const TextInput = styled(TextArea)`
   }
 `;
 
-const NestedComments = ({
-  comment,
-  dispatchPostAction,
-  deleteComment,
-  user,
-}) => {
+const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
@@ -59,10 +54,12 @@ const NestedComments = ({
 
   const renderAvatar = (
     <Avatar src={comment.author.photo} alt={`${comment.author.name}`}>
-      {!comment.author.photo &&
-        getInitialsFromFullName(
-          `${user.name || `${user.firstName} ${user.lastName}`}`,
-        )}
+      {getInitialsFromFullName(
+        `${
+          comment.author.name ||
+          `${comment.author.firstName} ${comment.author.lastName}`
+        }`,
+      )}
     </Avatar>
   );
 
