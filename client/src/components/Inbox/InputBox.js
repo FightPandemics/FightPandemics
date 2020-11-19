@@ -158,16 +158,11 @@ export const InputBox = ({
   editingMessageId,
   setEditingMessageId,
   inputRef,
+  sender,
+  receiver,
 }) => {
   const { t } = useTranslation();
   const [alertBoxData, setAlertBox] = React.useState({});
-  const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
-  };
-
-  const getSender = (participants) => {
-    return participants.filter((p) => p.id === user.id)[0];
-  };
 
   const isMobile = () => {
     return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
@@ -243,7 +238,7 @@ export const InputBox = ({
         {blockStatus === "did-block" && (
           <ChatDisabled>
             {t("messaging.didBlock", {
-              username: getReceiver(room.participants).name,
+              username: receiver.name,
             })}
             <button
               className={"unblock-btn"}
@@ -257,11 +252,11 @@ export const InputBox = ({
         {blockStatus === "was-blocked" && (
           <ChatDisabled>
             {t("messaging.wasBlocked", {
-              username: getReceiver(room.participants).name,
+              username: receiver.name,
             })}
           </ChatDisabled>
         )}
-        {!blockStatus && getSender(room.participants).status === "pending" && (
+        {!blockStatus && sender.status === "pending" && (
           <ChatDisabled>
             {t("messaging.acceptPropmt")}
             <div style={{ marginTop: "1rem" }}>
@@ -283,7 +278,7 @@ export const InputBox = ({
                   setAlertBox({
                     show: true,
                     title: t("messaging.ignoreDialogTitle", {
-                      username: getReceiver(room.participants).name,
+                      username: receiver.name,
                     }),
                     content: t("messaging.ignoreDialogMessage"),
                     action: [
@@ -313,7 +308,7 @@ export const InputBox = ({
                   setAlertBox({
                     show: true,
                     title: t("messaging.blockDialogTitle", {
-                      username: getReceiver(room.participants).name,
+                      username: receiver.name,
                     }),
                     content: t("messaging.blockDialogMessage"),
                     action: [
@@ -339,7 +334,7 @@ export const InputBox = ({
             </div>
           </ChatDisabled>
         )}
-        {!blockStatus && getSender(room.participants).status === "accepted" && (
+        {!blockStatus && sender.status === "accepted" && (
           <>
             <MessageInput
               type="text"

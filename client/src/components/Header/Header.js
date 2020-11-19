@@ -14,7 +14,7 @@ import Logo from "../Logo";
 import { theme, mq } from "../../constants/theme";
 import { HeaderLinks } from "./HeaderLinks";
 import FeedSearch from "components/Input/FeedSearch";
-import { InboxIcon } from "./constants"
+import { InboxIcon } from "./constants";
 import mail from "assets/icons/mail.svg";
 import GTM from "constants/gtm-tags";
 
@@ -174,14 +174,17 @@ const Header = ({
         >
           <Badge
             count={rooms
-              .map((_room) =>
-                _room.participants.find((p) => p.id == user.id.toString())
-                  ?.newMessages
-                  ? 1
-                  : 0 || // remove "? 1:0" to show total messages
-                    0,
-              )
-              .reduce((a, b) => a + b, 0)}
+              .reduce(
+                (total, room) =>
+                  total +
+                  room.participants.find(
+                    (p) => p.id == (organisationId || user.id.toString()),
+                  )?.newMessages
+                    ? 1
+                    : 0 || // remove "? 1:0" to show total messages
+                      0,
+                0,
+              )}
           >
             <SvgIcon src={mail}></SvgIcon>
           </Badge>

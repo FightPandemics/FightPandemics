@@ -38,11 +38,14 @@ export default class SocketManager extends React.Component {
     this.state = {
       isAuthenticated: false,
       isIdentified: false,
+      organisationId: null,
     };
     props.store.subscribe(() => {
       const newState = props.store.getState();
       if (this.state.isAuthenticated != !!newState.session.user) {
         this.setState({ isAuthenticated: !!newState.session.user });
+        if (newState.session.organisationId !== this.state.organisationId)
+          this.setState({ organisationId: newState.session.organisationId });
         if (this.state.isAuthenticated && !this.state.isIdentified)
           this.identify();
         else this.socket.disconnect();
@@ -105,15 +108,22 @@ export default class SocketManager extends React.Component {
     // if we keep it "false", this method will run twice
     // later we revert to "false" if identification failed
     if (!this.socket || !this.state.isIdentified) return;
-    this.socket.emit("IDENTIFY", null, (response) => {
-      if (response.code == 200) {
-        console.log(`[WS]: ${response.data} Identified`);
-        this.getUserRooms();
-        return this.props.store.dispatch(identifySuccess());
-      } else this.props.store.dispatch(identifyError(response));
-      // if we reached this then the identification has failed
-      this.setState({ isIdentified: false });
-    });
+    this.socket.emit(
+      "IDENTIFY",
+      { organisationId: this.state.organisationId },
+      (response) => {
+        if (response.code == 200) {
+          console.log(`[WS]: ${response.data} Identified`);
+          this.getUserRooms();
+          // if user disconnected while in a room, join the room back
+          let oldRoom = this.props.store.getState().ws.room;
+          if (oldRoom) this.joinRoom({threadId: oldRoom._id});
+          return this.props.store.dispatch(identifySuccess());
+        } else this.props.store.dispatch(identifyError(response));
+        // if we reached this then the identification has failed
+        this.setState({ isIdentified: false });
+      },
+    );
   };
 
   sendMessage = async (messageData) => {

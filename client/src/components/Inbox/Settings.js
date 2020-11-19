@@ -130,11 +130,11 @@ const Settings = ({
   };
 
   const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
+    return participants.filter((p) => p.id != (user._id || user.id))[0];
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id === user.id)[0];
+    return participants.filter((p) => p.id === (user._id || user.id))[0];
   };
 
   const ArchivedConversations = ({ rooms }) => {

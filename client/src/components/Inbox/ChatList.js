@@ -62,18 +62,18 @@ export const ChatList = ({
   const { t } = useTranslation();
 
   const getReceiver = (participants) => {
-    return participants.filter((p) => p.id !== user.id)[0];
+    return participants.filter((p) => p.id !== (user._id || user.id))[0];
   };
 
   const getSender = (participants) => {
-    return participants.filter((p) => p.id === user.id)[0];
+    return participants.filter((p) => p.id === (user._id || user.id))[0];
   };
 
   const pendingRooms = rooms.filter(
     (r) => getSender(r.participants)?.status === "pending",
   );
   const acceptedRooms = rooms.filter(
-    (r) => getSender(r.participants).status === "accepted",
+    (r) => getSender(r.participants)?.status === "accepted",
   );
 
   const SideChats = () => {

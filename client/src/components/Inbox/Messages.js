@@ -330,7 +330,7 @@ const Messages = ({
         const relativeTime = getRelativeTime(message.createdAt);
         return (
           <>
-            {message.authorId !== user.id ? (
+            {message.authorId !== (user._id || user.id) ? (
               <Recipient
                 key={message._id}
                 message={message.content}
@@ -352,7 +352,7 @@ const Messages = ({
             {shouldShowTime(i) && (
               <TimeStamp
                 key={"t-" + message._id}
-                className={message.authorId !== user.id ? "left" : "right"}
+                className={message.authorId !== (user._id || user.id) ? "left" : "right"}
               >
                 {isToday(message.createdAt)
                   ? relativeTime[1] === "second" && relativeTime[0] < 10
