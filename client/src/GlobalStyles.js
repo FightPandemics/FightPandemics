@@ -60,6 +60,9 @@ a {
   background-color: $white;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .app-drawer .am-drawer-sidebar .am-list {

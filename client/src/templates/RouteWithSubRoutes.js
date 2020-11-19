@@ -122,6 +122,7 @@ export const RouteWithSubRoutes = (route) => {
             ws={ws}
             isIdentified={isIdentified}
             organisationId={organisationId}
+            loggedInOnly={loggedInOnly}
           />
         );
       }}

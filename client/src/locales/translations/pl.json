@@ -15,7 +15,13 @@
     "organisations": "Organizacje",
     "language": "Język",
     "switchAccount": "Przełącz konto",
-    "myOrganisation": "Moje organizacje"
+    "myOrganisation": "Moje organizacje",
+    "willRefresh": "Bieżąca strona zostanie odświeżona.",
+    "stayOnPageHeader": "Pozostajesz na bieżącej stronie?",
+    "stayOnPageContent": "Jeśli wybierzesz „Nie”, zostaniesz przekierowany do Forum pomocy.",
+    "yes": "Tak",
+    "no": "Nie",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {

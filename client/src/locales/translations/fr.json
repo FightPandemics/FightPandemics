@@ -15,7 +15,13 @@
     "organisations": "Organisations",
     "language": "Langue",
     "switchAccount": "Changer de compte",
-    "myOrganisation": "Mes organisations"
+    "myOrganisation": "Mes organisations",
+    "willRefresh": "La page actuelle sera rafraîchie.",
+    "stayOnPageHeader": "Restez sur la page actuelle?",
+    "stayOnPageContent": "Si vous sélectionnez \"Non\", vous serez redirigé vers le Tableau d'aide.",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
