@@ -39,7 +39,6 @@ const postSchema = new Schema(
     },
     language: [String],
     likes: {
-      // TODO: how to guarantee unique ids?
       default: [],
       ref: "User",
       type: [ObjectId],
