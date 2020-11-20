@@ -18,28 +18,20 @@ import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
-import { NoPosts } from "pages/Feed";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
-  BackgroundHeader,
   ProfileBackgroup,
-  MenuIcon,
   UserInfoContainer,
   EditIcon,
   UserInfoDesktop,
   NameDiv,
   PlaceholderIcon,
-  EditEmptyIcon,
   DescriptionDesktop,
-  LocationDesktopDiv,
-  LocationMobileDiv,
   IconsContainer,
   HelpContainer,
-  LocationIcon,
   SocialIcon,
-  DescriptionMobile,
   SectionHeader,
   CreatePostDiv,
   CreatePostIcon,
@@ -80,9 +72,7 @@ import { selectOrganisationId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
-import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
-import editEmpty from "assets/icons/edit-empty.svg";
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
 import facebookIcon from "assets/icons/social-fb.svg";
@@ -108,9 +98,7 @@ const ARBITRARY_LARGE_NUM = 10000;
 const Profile = ({
   match: {
     params: { id: pathUserId },
-  },
-  history,
-  isAuthenticated,
+  }
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -506,7 +494,6 @@ const Profile = ({
             )}
           </CustomDrawer>
         )}
-        <WhiteSpace />
       </ProfileLayout>
     </>
   );

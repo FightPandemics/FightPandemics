@@ -102,6 +102,9 @@ const routes = [
   {
     path: "/organisation/:id",
     component: OrganisationProfile,
+    props: {
+      isProfile: true,
+    },
   },
   {
     path: "/edit-organisation-account",
