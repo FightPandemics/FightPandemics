@@ -36,6 +36,7 @@ export const RouteWithSubRoutes = (route) => {
     forgotPasswordRequested,
     isAuthenticated,
     path,
+    organisationId,
     props = {},
     user,
     isIdentified,
@@ -89,9 +90,8 @@ export const RouteWithSubRoutes = (route) => {
               !forgotPassword
             ) {
               redirect = CHECK_EMAIL;
-            } else if (emailVerified && forgotPassword) {
-              redirect = LOGIN;
-            } else if (
+            }
+            else if (
               emailVerified &&
               !user &&
               location.pathname !== CREATE_PROFILE
@@ -121,6 +121,8 @@ export const RouteWithSubRoutes = (route) => {
             tabIndex={tabIndex}
             ws={ws}
             isIdentified={isIdentified}
+            organisationId={organisationId}
+            loggedInOnly={loggedInOnly}
           />
         );
       }}
@@ -138,6 +140,7 @@ const mapStateToProps = ({ session, ws }) => ({
   user: session.user,
   isIdentified: ws.isIdentified,
   ws: ws,
+  organisationId: session.organisationId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

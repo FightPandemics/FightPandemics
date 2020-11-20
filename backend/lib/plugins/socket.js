@@ -15,6 +15,7 @@ function onSocketConnect(socket) {
   const Post = this.mongo.model("Post");
   const Message = this.mongo.model("Message");
   const Notification = this.mongo.model("Notification");
+  const Organisation = this.mongo.model("OrganisationUser");
 
   // "auth" check middleware, all events require auth, except "IDENTIFY"
   socket.use((packet, next) => {
@@ -43,6 +44,13 @@ function onSocketConnect(socket) {
       return res({ code: 404, message: "User not found" });
     }
     socket.userId = userId;
+    if (data.organisationId) {
+      const [errOrg, org] = await this.to(
+        Organisation.exists({ _id: data.organisationId, ownerId: userId }),
+      );
+      if (!org || errOrg) return res({ code: 401, message: "Unauthorized" });
+      socket.userId = data.organisationId;
+    }
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
     socket.on("disconnect", () => {
@@ -60,10 +68,10 @@ function onSocketConnect(socket) {
           });
       }, 1000);
     });
-    socket.join(userId); // to send events to all the user's browsers, if many are open.
-    res({ code: 200, data: userId });
+    socket.join(socket.userId); // to send events to all the user's browsers, if many are open.
+    res({ code: 200, data: socket.userId });
     this.log.debug(
-      `[ws] socket identified [socketId: ${socket.id}] [userId: ${userId}]`,
+      `[ws] socket identified [socketId: ${socket.id}] [userId: ${socket.userId}]`,
     );
   });
 

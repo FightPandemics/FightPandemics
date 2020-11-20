@@ -9,6 +9,7 @@ module.exports = {
     feedback: "_FDB",
     inbox: "_INB",
     language: "_LS",
+    switch: "_SWC",
   },
   homePage: {
     prefix: "HP",

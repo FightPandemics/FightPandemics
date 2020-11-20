@@ -49,14 +49,34 @@ export const MsgModal = styled(Modal)`
         pointer-events: none;
       }
       :first-child {
+        transition: 0.3s;
         border: none;
+        border-radius: 4.6rem;
         color: ${primaryColor};
+        background-color: white;
+        :hover {
+          border: 0.2rem solid ${primaryColor};
+          color: white;
+          background-color: ${primaryColor};
+        }
       }
       :last-child {
+        transition: 0.3s;
         border: 0.2rem solid ${primaryColor};
         border-radius: 4.6rem;
         background-color: ${primaryColor};
         color: white;
+        :hover {
+          border: 0.2rem solid ${primaryColor};
+          border-radius: 4.6rem;
+          background-color: white;
+          color: ${primaryColor};
+        }
+      }
+      &[disabled] {
+        background-color: grey;
+        border: none;
+        pointer-events: none;
       }
     }
 
@@ -98,9 +118,13 @@ export const MsgModal = styled(Modal)`
     margin: 0 0 1.4rem 0;
     padding: 1.4rem;
     resize: none;
+    cursor: auto;
     font-family: ${theme.typography.font.family.body};
     :focus {
       border: 1px solid ${primaryColor};
+    }
+    ::-webkit-scrollbar {
+      border-radius: 0 0.6rem 0.6rem 0;
     }
   }
 `;
@@ -155,6 +179,8 @@ export const SuccessModal = styled(MsgModal)`
       height: auto;
       padding: 0;
       display: block !important;
+      width: 14.9rem;
+      height: 4rem;
     }
     .ant-btn:last-child {
       border-radius: 4.6rem;

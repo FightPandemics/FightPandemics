@@ -55,7 +55,9 @@
     "pino-papertrail": "^2.0.0",
     "socket.io": "^2.3.0",
     "socket.io-cookie-parser": "^1.0.0",
-    "socket.io-redis": "^5.4.0"
+    "socket.io-redis": "^5.4.0",
+    "tlds": "^1.207.0",
+    "validator": "^13.1.17"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

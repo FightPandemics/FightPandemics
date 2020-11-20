@@ -124,7 +124,7 @@ export const HeaderWrapper = styled.div`
     margin-top: 0;
   }
   button {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     background-color: transparent;
     border: none;

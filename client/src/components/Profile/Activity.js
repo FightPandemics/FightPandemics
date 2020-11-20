@@ -16,6 +16,7 @@ const cellMeasurerCache = new CellMeasurerCache({
   defaultHeight: 380,
 });
 const Activity = ({
+  postDispatch,
   filteredPosts,
   updateComments,
   user,
@@ -24,7 +25,6 @@ const Activity = ({
   handleCancelPostDelete,
   postDelete,
   deleteModalVisibility,
-  handlePostLike,
   loadNextPage,
   isNextPageLoading,
   itemCount,
@@ -42,10 +42,10 @@ const Activity = ({
       } else if (posts[index]) {
         content = (
           <Post
+            postDispatch={postDispatch}
             currentPost={posts[index][1]}
             updateComments={updateComments}
             numComments={posts[index][1].commentsCount}
-            handlePostLike={handlePostLike}
             postDelete={postDelete}
             user={user}
             deleteModalVisibility={deleteModalVisibility}
@@ -77,10 +77,10 @@ const Activity = ({
       handleCancelPostDelete,
       handleEditPost,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       isItemLoaded,
       postDelete,
+      postDispatch,
       posts,
       updateComments,
       user,

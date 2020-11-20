@@ -12,7 +12,16 @@
     "profile": "Profile",
     "addOrg": "Add Organization",
     "logout": "Sign Out",
-    "organisations": "Organizations"
+    "organisations": "Organizations",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organizations",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -256,7 +265,9 @@
       "daily": "Daily",
       "weekly": "Weekly",
       "biweekly": "Biweekly",
-      "sendMessage": "Send Message"
+      "sendMessage": "Send Message",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password"
     },
     "individual": {
       "email": "Email",
@@ -281,7 +292,20 @@
       "wantHelp": "I want to help ",
       "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required."
+      "lastNameRequired": "Last name is required.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security"
     },
     "org": {
       "title": "Create Organization Profile",
@@ -365,7 +389,8 @@
     "passwordMax": "Password must be at most {{num}} characters.",
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Passwords don't match",
+    "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -815,7 +840,8 @@
       "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
-    }
+    },
+    "wrongOldPassword": "Wrong current password"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",

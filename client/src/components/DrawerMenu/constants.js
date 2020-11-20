@@ -1,0 +1,5 @@
+export const MENU_STATE = {
+  SETTINGS: "SETTINGS",
+  ACCOUNTS: "ACCOUNTS",
+  LANGUAGES: "LANGUAGES",
+};

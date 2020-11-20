@@ -38,12 +38,19 @@ const Inbox = (props) => {
     archiveThread,
     ignoreThread,
   } = useContext(WebSocketContext);
-  const { user, history, authLoading, isAuthenticated } = props;
-  const { room, rooms, chatLog, isIdentified } = props.ws;
+  const { user, history, authLoading, isAuthenticated, organisationId } = props;
+  const { room, rooms, chatLog } = props.ws;
   const dispatch = useDispatch();
 
+  const actor =
+    user?.organisations.find((org) => org._id === organisationId) || user;
+
   const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
+    return participants.filter((p) => p.id === (actor._id || actor.id))[0];
+  };
+
+  const getReceiver = (participants) => {
+    return participants.filter((p) => p.id !== (actor._id || actor.id))[0];
   };
 
   const pendingRooms = rooms.filter(
@@ -72,10 +79,6 @@ const Inbox = (props) => {
 
   ensureLoggedIn();
 
-  const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
-  };
-
   const toggleSettings = () => {
     if (!isSettingsOpen) {
       setSettingsTab("BLOCKED");
@@ -93,10 +96,6 @@ const Inbox = (props) => {
       // e
     }
   }, []);
-
-  useEffect(() => {
-    if (isIdentified) getUserRooms();
-  }, [getUserRooms, isIdentified]);
 
   useEffect(() => {
     if (room)
@@ -128,7 +127,7 @@ const Inbox = (props) => {
       <ChatList
         rooms={rooms}
         room={room}
-        user={user}
+        user={actor}
         joinRoom={joinRoom}
         leaveAllRooms={leaveAllRooms}
         toggleMobileChatList={toggleMobileChatList}
@@ -146,7 +145,7 @@ const Inbox = (props) => {
             <Settings
               selectedSettingsTab={selectedSettingsTab}
               rooms={rooms}
-              user={user}
+              user={actor}
               unblockThread={unblockThread}
               gtmPrefix={GTM.inbox.prefix + GTM.inbox.settings}
             />
@@ -164,7 +163,9 @@ const Inbox = (props) => {
           return (
             <CurrentChat
               room={room}
-              user={user}
+              receiver={getReceiver(room.participants)}
+              sender={getSender(room.participants)}
+              user={actor}
               getChatLog={getChatLog}
               chatLog={chatLog}
               loadMore={loadMore}

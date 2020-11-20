@@ -47,7 +47,7 @@ function EditProfile(props) {
   });
   const { error, loading, user } = userProfileState;
   const { t } = useTranslation();
-  const { firstName, lastName, urls = {}, about } = user || {};
+  const { firstName, lastName, urls = {}, about, usesPassword = false } = user || {};
 
   const URLS_CONFIG = {
     facebook: [
@@ -198,6 +198,12 @@ function EditProfile(props) {
             <CustomLink>
               <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
             </CustomLink>
+            {usesPassword && (
+              <CustomLink>
+                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              </CustomLink>
+            )}
+
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
