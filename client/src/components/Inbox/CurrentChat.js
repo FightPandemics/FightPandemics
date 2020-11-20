@@ -79,7 +79,8 @@ const CurrentChat = ({
         unblockThread={unblockThread}
         blockStatus={getThreadBlockStatus()}
         archiveThread={archiveThread}
-        isPending={sender.status == "pending"}
+        senderIsPending={sender.status === "pending"}
+        receiverIsPending={receiver.status === "pending"}
       />
       <Messages
         setText={setText}
