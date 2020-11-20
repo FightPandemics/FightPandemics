@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const dbURI = "mongodb://mongo/fightpandemics";
 mongoose.Promise = global.Promise;
-const Post = require("../models/post");
 
 exports.connectToDatabase = function () {
   mongoose
@@ -16,9 +15,25 @@ exports.disconnect = function () {
   mongoose.connection.close();
 };
 
-exports.findDocuments = async function () {
+exports.findDocuments = async function (Model) {
   try {
-    return await Post.find({});
+    return await Model.find({});
+  } catch (err) {
+    console.error("error");
+  }
+};
+
+exports.findDocumentsWithCondition = async function (Model, condition) {
+  try {
+    return await Model.find(condition);
+  } catch (err) {
+    console.error("error");
+  }
+};
+
+exports.findOneDocumentWithCondition = async function (Model, condition) {
+  try {
+    return await Model.findOne(condition);
   } catch (err) {
     console.error("error");
   }

@@ -14,6 +14,8 @@ exports.sendPOSTRequest = async (baseUrl, apiEndPoint, requestBody) => {
   }
 };
 exports.sendGETRequest = async (baseUrl, apiEndPoint) => {
+  console.log(baseUrl);
+  console.log(apiEndPoint);
   try {
     let res = await supertest(baseUrl)
       .get(apiEndPoint)
