@@ -173,18 +173,17 @@ const Header = ({
           activeStyles={activeStyles}
         >
           <Badge
-            count={rooms
-              .reduce(
-                (total, room) =>
-                  total +
-                  room.participants.find(
-                    (p) => p.id == (organisationId || user.id.toString()),
-                  )?.newMessages
-                    ? 1
-                    : 0 || // remove "? 1:0" to show total messages
-                      0,
-                0,
-              )}
+            count={rooms.reduce(
+              (total, room) =>
+                total +
+                (room.participants.find(
+                  (p) => p.id == (organisationId || user.id.toString()),
+                )?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0),
+              0,
+            )}
           >
             <SvgIcon src={mail}></SvgIcon>
           </Badge>
