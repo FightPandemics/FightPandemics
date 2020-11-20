@@ -5,3 +5,4 @@ exports.organisationsEndpoint = "/api/organisations";
 exports.postsEndpoint = "/api/posts";
 exports.postApiEndpoint = "/api/posts/{postId}";
 exports.getPostApiEndpoint = "/api/posts/";
+exports.getPostApiEndpoint = "/api/posts";
