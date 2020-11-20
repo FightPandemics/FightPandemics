@@ -206,6 +206,7 @@ const Messages = ({
           onContextMenu={(event) => {
             event.persist();
             event.preventDefault();
+            if (isDeleted) return;
             Modal.operation([
               {
                 text: t("messaging.edit"),
