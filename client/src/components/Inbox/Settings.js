@@ -22,6 +22,7 @@ const UserName = styled.h4`
 `;
 const ThreadContainer = styled(SideChatContainer)`
   padding: 1.6rem;
+  width: 100%;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     flex-wrap: wrap;
     &:hover {
@@ -41,9 +42,8 @@ const ThreadContainer = styled(SideChatContainer)`
   }
 
   content {
-    max-width: calc(100vw - 25rem);
+    max-width: calc(100vw - 57rem);
     position: relative;
-
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       max-width: calc(100% - 5.5rem);
     }
@@ -57,7 +57,6 @@ const ThreadContainer = styled(SideChatContainer)`
     content {
       top: initial;
       flex-direction: row;
-
       header {
         width: 25rem;
         @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -71,7 +70,9 @@ const ThreadContainer = styled(SideChatContainer)`
   }
 `;
 const ThreadsListContainer = styled.div`
+  width: calc(100vw - 33.6rem);
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 100vw;
     margin-top: 6rem;
   }
 `;
@@ -93,7 +94,7 @@ const StyledButton = styled(Button)`
     position: relative;
     display: block;
     top: 1rem;
-    left: 4rem;
+    left: 0rem;
     margin-bottom: 1rem;
   }
   &.for-blocked {
