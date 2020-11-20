@@ -73,6 +73,11 @@ export const MsgModal = styled(Modal)`
           color: ${primaryColor};
         }
       }
+      &[disabled] {
+        background-color: grey;
+        border: none;
+        pointer-events: none;
+      }
     }
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
