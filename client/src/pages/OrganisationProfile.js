@@ -142,7 +142,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const { email, name, location = {}, about = "", isOwner, urls = {} } =
+  const { email, name, location = {}, about = "", urls = {} } =
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
@@ -160,6 +160,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
+  const isOwner = organisation && actorOrganisationId == organisation._id;
 
   function usePrevious(value) {
     const ref = useRef();

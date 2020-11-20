@@ -73,7 +73,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { selectOrganisationId } from "reducers/session";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -131,7 +131,6 @@ const Profile = ({
     location = {},
     needs = {},
     objectives = {},
-    ownUser,
     urls = {},
     usesPassword = false
   } = user || {};
@@ -151,6 +150,8 @@ const Profile = ({
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
+  const ownUser = actorId === userId;
 
   function usePrevious(value) {
     const ref = useRef();
