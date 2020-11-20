@@ -441,8 +441,10 @@ function onSocketConnect(socket) {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));
     if (errPost || !post) return;
-    // action, post, triggeredBy, {sharedVia}
-    this.notifier.notify("share", post, userId, { sharedVia: data.sharedVia });
+    const decodedToken = this.jwt.decode(socket.request.cookies.token);
+    const authUserId = decodedToken.payload[auth.jwtMongoIdKey];
+    // action, post, actorId, authUserId, {sharedVia}
+    this.notifier.notify("share", post, userId, authUserId, { sharedVia: data.sharedVia });
   });
 }
 

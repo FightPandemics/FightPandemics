@@ -487,6 +487,7 @@ async function routes(app) {
     async (req) => {
       const {
         actor,
+        userId,
         params: { postId },
       } = req;
 
@@ -504,8 +505,8 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // action, post, triggeredBy
-      app.notifier.notify("like", updatedPost, userId);
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("like", updatedPost, actor._id, userId);
 
       return {
         likes: updatedPost.likes,
@@ -613,6 +614,7 @@ async function routes(app) {
     async (req, reply) => {
       const {
         actor,
+        userId,
         body: commentProps,
         params: { postId },
       } = req;
@@ -649,8 +651,8 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // action, post, triggeredBy
-      app.notifier.notify("comment", post, userId, {
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("comment", post, actor._id, userId, {
         commentText: commentProps.content,
       });
 

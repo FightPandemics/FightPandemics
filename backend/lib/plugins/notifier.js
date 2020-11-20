@@ -8,8 +8,8 @@ class Notifier {
     this.User = app.mongo.model("User");
   }
 
-  async notify(action, post, triggeredById, details = {}) {
-    if (post.author.id.toString() == triggeredById.toString()) return; // user interacted with their own post
+  async notify(action, post, triggeredById, authUserId, details = {}) {
+    if (post.author.id.toString() == triggeredById.toString()) return; // user/org interacted with their own post
     if (!this.Notification.schema.tree.action.enum.includes(action)) {
       return this.app.log.error(new Error("Invalid Notification action"));
     }
@@ -18,6 +18,12 @@ class Notifier {
       this.User.findById(triggeredById),
     );
     if (triggeredByErr || !triggeredBy) return;
+
+      // org interacted with owner's post or other owned orgs by its owner.
+    if (
+      triggeredBy.ownerId && triggeredBy.ownerId.toString() == authUserId.toString()
+    )
+      return;
 
     const newNotification = {
       action,
