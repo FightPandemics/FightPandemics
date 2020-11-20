@@ -256,7 +256,7 @@ export default class SocketManager extends React.Component {
         (response) => {
           if (response.code == 200) {
             this.getUserRooms(); // refresh rooms
-            this.joinRoom({ threadId }); // refresh room
+            if (this.props.store.getState().ws.room) this.joinRoom({ threadId }); // refresh room, if in one.
             return resolve(true);
           }
           resolve(false);

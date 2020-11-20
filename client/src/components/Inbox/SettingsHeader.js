@@ -47,7 +47,7 @@ const TabName = styled.div`
 `;
 
 export const SettingsHeader = ({ tabName }) => {
-  const { setToggleMobileChatList } = useContext(ChatContext);
+  const { setToggleMobileChatList, setIsSettingsOpen } = useContext(ChatContext);
 
   return (
     <>
@@ -55,6 +55,7 @@ export const SettingsHeader = ({ tabName }) => {
         <TabName
           onClick={() => {
             setToggleMobileChatList(true);
+            setIsSettingsOpen(true);
           }}
         >
           <img className="back-arrow" src={arrow} alt="Back Arrow" />
