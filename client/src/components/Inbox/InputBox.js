@@ -42,7 +42,7 @@ const InputContainer = styled.div`
       height: 8.4rem;
     }
   }
-  a {
+  span {
     opacity: ${(props) => (props.text ? "1" : "0.4")};
     img {
       position: absolute;
@@ -352,14 +352,18 @@ export const InputBox = ({
                 {2048 - text.length}
               </LengthIndicator>
             )}
-            <a disabled={!text} onClick={handleClick}>
+            <span
+              disabled={!text}
+              onPointerDown={(e) => e.preventDefault()}
+              onClick={handleClick}
+            >
               <img
                 className="send-comment"
                 src={sendcomment}
                 alt="Send Message"
                 id={GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.sent}
               />
-            </a>
+            </span>
           </>
         )}
       </InputContainer>
