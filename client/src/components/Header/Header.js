@@ -17,6 +17,7 @@ import FeedSearch from "components/Input/FeedSearch";
 import { InboxIcon } from "./constants";
 import mail from "assets/icons/mail.svg";
 import GTM from "constants/gtm-tags";
+import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -216,6 +217,10 @@ const Header = ({
               onClick={onMenuClick}
             />
             {renderInboxIcon(true)}
+            <NotificationDropDown
+              notifications={ws.notifications}
+              mobile={true}
+            />
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
@@ -226,6 +231,7 @@ const Header = ({
                     user={user}
                     setOrganisation={onOrganisationChange}
                     renderInboxIcon={renderInboxIcon}
+                    notifications={ws.notifications}
                   />
                 </NavLinks>
               </DesktopMenu>

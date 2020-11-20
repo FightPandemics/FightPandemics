@@ -11,6 +11,7 @@ import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../constants/theme";
+import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
 
 const { colors } = theme;
 const activeStyles = {
@@ -25,6 +26,7 @@ export const HeaderLinks = ({
   user,
   setOrganisation: setOrganisationId,
   renderInboxIcon,
+  notifications,
 }) => {
   const { t } = useTranslation();
 
@@ -77,6 +79,12 @@ export const HeaderLinks = ({
         {isAuthenticated && (
           <>
             <li>{renderInboxIcon(false, activeStyles)}</li>
+            <li>
+              <NotificationDropDown
+                notifications={notifications}
+                mobile={false}
+              />
+            </li>
             <li>
               <ProfileMenu
                 user={user}
