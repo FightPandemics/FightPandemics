@@ -98,9 +98,13 @@ export const MsgModal = styled(Modal)`
     margin: 0 0 1.4rem 0;
     padding: 1.4rem;
     resize: none;
+    cursor: auto;
     font-family: ${theme.typography.font.family.body};
     :focus {
       border: 1px solid ${primaryColor};
+    }
+    ::-webkit-scrollbar {
+      border-radius: 0 0.6rem 0.6rem 0;
     }
   }
 `;
