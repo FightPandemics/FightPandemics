@@ -8,6 +8,11 @@ resource "aws_alb_target_group" "app" {
     enabled = true
     matcher = "200,401,404"
   }
+  stickiness {
+    type = "lb_cookie"
+    cookie_duration = 14400
+    enabled = true
+  }
 }
 
 resource "aws_alb_listener_rule" "main" {

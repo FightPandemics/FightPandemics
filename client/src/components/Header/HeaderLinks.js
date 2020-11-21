@@ -24,6 +24,7 @@ export const HeaderLinks = ({
   organisationId,
   user,
   setOrganisation: setOrganisationId,
+  renderInboxIcon,
 }) => {
   const { t } = useTranslation();
 
@@ -74,14 +75,17 @@ export const HeaderLinks = ({
           </NavLink>
         </li>
         {isAuthenticated && (
-          <li>
-            <ProfileMenu
-              user={user}
-              organisationId={organisationId}
-              setOrganisation={setOrganisationId}
-              onFeedbackIconClick={onFeedbackIconClick}
-            />
-          </li>
+          <>
+            <li>{renderInboxIcon(false, activeStyles)}</li>
+            <li>
+              <ProfileMenu
+                user={user}
+                organisationId={organisationId}
+                setOrganisation={setOrganisationId}
+                onFeedbackIconClick={onFeedbackIconClick}
+              />
+            </li>
+          </>
         )}
         {!isAuthenticated && (
           <>
