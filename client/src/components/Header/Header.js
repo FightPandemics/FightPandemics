@@ -216,11 +216,11 @@ const Header = ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
-            {renderInboxIcon(true)}
-            <NotificationDropDown
+            {isAuthenticated && renderInboxIcon(true)}
+            {isAuthenticated && <NotificationDropDown
               notifications={webSocket.notifications}
               mobile={true}
-            />
+            />}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
