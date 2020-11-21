@@ -215,7 +215,7 @@ const Header = ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
-            {renderInboxIcon(true)}
+            {isAuthenticated && renderInboxIcon(true)}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
