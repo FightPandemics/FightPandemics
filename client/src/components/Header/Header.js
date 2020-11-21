@@ -220,6 +220,7 @@ const Header = ({
             {isAuthenticated && <NotificationDropDown
               notifications={webSocket.notifications}
               mobile={true}
+              organisationId={organisationId}
             />}
             {!authLoading && (
               <DesktopMenu>

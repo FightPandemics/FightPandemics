@@ -83,6 +83,7 @@ export const HeaderLinks = ({
               <NotificationDropDown
                 notifications={notifications}
                 mobile={false}
+                organisationId={organisationId}
               />
             </li>
             <li>
