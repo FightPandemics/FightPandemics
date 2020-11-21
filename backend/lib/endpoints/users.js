@@ -138,18 +138,26 @@ async function routes(app) {
         {
           $project: {
             _id: true,
-            // about: true,
+            about: true,
             firstName: true,
             lastName: true,
             type: true,
             "hide.address": true,
             location: {
-              $cond: ["$hide.address", null, { address: "$location.address" }],
+              $cond: ["$hide.address", null, { 
+                address: "$location.address",
+                city: "$location.city",
+                //coordinates: "$location.coordinates",
+                country: "$location.country",
+                neighborhood: "$location.neighborhood",
+                state: "$location.state",
+                type: "$location.type",
+                zip: "$location.zip",
+              }],
             },
-            // location: { $cond: ["$hide.address", null, "$location"] },
-            // urls: true,
-            // objectives: true,
-            // needs: true,
+            urls: true,
+            objectives: true,
+            needs: true,
           },
         },
       ];
