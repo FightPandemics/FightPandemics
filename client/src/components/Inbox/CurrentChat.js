@@ -20,6 +20,8 @@ const CurrentChat = ({
   ignoreThread,
   unblockThread,
   user,
+  sender,
+  receiver,
 }) => {
   const {
     toggleMobileChatList,
@@ -37,14 +39,6 @@ const CurrentChat = ({
 
   const scrollToBottom = React.useRef(null);
   const inputRef = React.useRef(null);
-
-  const getSender = (participants) => {
-    return participants.filter((p) => p.id == user.id)[0];
-  };
-
-  const getReceiver = (participants) => {
-    return participants.filter((p) => p.id != user.id)[0];
-  };
 
   const onLoadMoreClick = async () => {
     if (isLoading) return;
@@ -65,11 +59,11 @@ const CurrentChat = ({
         threadId: room._id,
       });
     setEditingMessageId(null);
-  }, [getChatLog, room, setEditingMessageId]);
+  }, [getChatLog, room]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const getThreadBlockStatus = () => {
-    if (getSender(room.participants).status == "blocked") return "did-block";
-    if (getReceiver(room.participants).status == "blocked")
+    if (sender.status == "blocked") return "did-block";
+    if (receiver.status == "blocked")
       return "was-blocked";
     else return null;
   };
@@ -79,13 +73,14 @@ const CurrentChat = ({
       <RecipientHeader
         threadId={room?._id}
         status={room?.userStatus || null}
-        participant={room ? getReceiver(room.participants) : null}
+        participant={room ? receiver : null}
         onMobileBackClick={leaveAllRooms}
         blockThread={blockThread}
         unblockThread={unblockThread}
         blockStatus={getThreadBlockStatus()}
         archiveThread={archiveThread}
-        isPending={getSender(room.participants).status == "pending"}
+        senderIsPending={sender.status === "pending"}
+        receiverIsPending={receiver.status === "pending"}
       />
       <Messages
         setText={setText}
@@ -103,13 +98,15 @@ const CurrentChat = ({
         inputExpanded={inputExpanded}
         inputRef={inputRef}
         blockStatus={getThreadBlockStatus()}
-        status={getSender(room.participants).status}
+        status={sender.status}
       />
       {room && (
         <InputBox
           text={text}
           setText={setText}
           user={user}
+          sender={sender}
+          receiver={receiver}
           room={room}
           scrollToBottom={scrollToBottom?.current}
           sendMessage={sendMessage}

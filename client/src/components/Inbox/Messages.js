@@ -65,11 +65,11 @@ const Messages = ({
       )
         scrollToBottom();
     }
-  }, [inputExpanded, scrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputExpanded]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getScrollToBottom.current = scrollToBottom;
-  }, [getScrollToBottom, scrollToBottom]);
+  }, [getScrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const isMobile = () => {
     return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
@@ -206,6 +206,7 @@ const Messages = ({
           onContextMenu={(event) => {
             event.persist();
             event.preventDefault();
+            if (isDeleted) return;
             Modal.operation([
               {
                 text: t("messaging.edit"),
@@ -330,7 +331,7 @@ const Messages = ({
         const relativeTime = getRelativeTime(message.createdAt);
         return (
           <>
-            {message.authorId !== user.id ? (
+            {message.authorId !== (user._id || user.id) ? (
               <Recipient
                 key={message._id}
                 message={message.content}
@@ -352,7 +353,7 @@ const Messages = ({
             {shouldShowTime(i) && (
               <TimeStamp
                 key={"t-" + message._id}
-                className={message.authorId !== user.id ? "left" : "right"}
+                className={message.authorId !== (user._id || user.id) ? "left" : "right"}
               >
                 {isToday(message.createdAt)
                   ? relativeTime[1] === "second" && relativeTime[0] < 10

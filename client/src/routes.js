@@ -29,6 +29,7 @@ import Faq from "./pages/Faq";
 import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
+import EditSecurity from './pages/EditSecurity';
 
 const routes = [
   {
@@ -62,7 +63,6 @@ const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
-      notLoggedInOnly: true,
       forgotPassword: true,
     },
   },
@@ -105,6 +105,9 @@ const routes = [
   {
     path: "/organisation/:id",
     component: OrganisationProfile,
+    props: {
+      isProfile: true,
+    },
   },
   {
     path: "/edit-organisation-account",
@@ -201,6 +204,13 @@ const routes = [
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-security",
+    component: EditSecurity,
     props: {
       loggedInOnly: true,
     },

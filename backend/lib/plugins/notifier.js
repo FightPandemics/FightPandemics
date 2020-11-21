@@ -6,10 +6,11 @@ class Notifier {
     this.app = app;
     this.Notification = app.mongo.model("Notification");
     this.User = app.mongo.model("User");
+    this.Organisation = app.mongo.model("OrganisationUser");
   }
 
-  async notify(action, post, triggeredById, details = {}) {
-    if (post.author.id.toString() == triggeredById.toString()) return; // user interacted with their own post
+  async notify(action, post, triggeredById, authUserId, details = {}) {
+    if (post.author.id.toString() == triggeredById.toString()) return; // user/org interacted with their own post
     if (!this.Notification.schema.tree.action.enum.includes(action)) {
       return this.app.log.error(new Error("Invalid Notification action"));
     }
@@ -18,6 +19,21 @@ class Notifier {
       this.User.findById(triggeredById),
     );
     if (triggeredByErr || !triggeredBy) return;
+
+    // org interacted with owner's post or other owned orgs by its owner.
+    if (
+      triggeredBy.ownerId &&
+      triggeredBy.ownerId.toString() == authUserId.toString()
+    )
+      return;
+
+    if (!triggeredBy.ownerId) { // only do this extra query if triggredBy is user not org
+      const [isOwnerErr, isOwner] = await this.app.to(
+        this.Organisation.exists({ _id: post.author.id, ownerId: triggeredById }),
+      );
+      // owner intercated with owned org post.
+      if (isOwner) return;
+    }
 
     const newNotification = {
       action,
@@ -50,7 +66,7 @@ class Notifier {
     if (err) {
       if (err.code === 11000) return; // MongoError: E11000 duplicate key error
       return this.app.log.error(err, "Failed saving new Notification");
-    };
+    }
 
     // send real-time web notification if online
     const userIsOnline = await getSocketIdByUserId(

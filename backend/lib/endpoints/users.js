@@ -233,6 +233,7 @@ async function routes(app) {
       urls,
       photo,
       notifyPrefs,
+      usesPassword,
     } = user;
     return {
       about,
@@ -248,6 +249,7 @@ async function routes(app) {
       photo,
       urls,
       notifyPrefs,
+      usesPassword,
     };
   });
 
@@ -350,6 +352,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
+        usesPassword
       } = user;
 
       let { location } = user;
@@ -360,7 +363,7 @@ async function routes(app) {
       if (hide.address) {
         location = {};
       }
-
+      const ownUser = authUserId !== null && authUserId.equals(user.id);
       return {
         about,
         firstName,
@@ -370,9 +373,10 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
-        ownUser: authUserId !== null && authUserId.equals(user.id),
+        ownUser,
         photo,
         urls,
+        usesPassword: ownUser ? usesPassword : undefined
       };
     },
   );
@@ -456,8 +460,10 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getCookieToken(req));
-      const { email, email_verified: emailVerified } = user;
+      const {
+        email,
+        email_verified: emailVerified,
+      } = await Auth0.getUser(getCookieToken(req));
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -476,7 +482,11 @@ async function routes(app) {
         authId: req.user.sub,
         email,
       };
-      return new User(userData).save();
+      const user = await new User(userData).save();
+      return {
+        ...user.toObject(),
+        organisations: [],
+      }
     },
   );
 

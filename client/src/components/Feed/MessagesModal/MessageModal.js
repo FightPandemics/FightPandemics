@@ -136,7 +136,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} />
+            <img src={activeemail} alt={"message-icon"} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal
@@ -146,7 +146,7 @@ const MessageModal = ({
             okText={t("messaging.send")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
-            okButtonProps={{ disabled: !text, id: gtmId + GTM.inbox.sent }}
+            okButtonProps={{ disabled: !!!text, id: gtmId + GTM.inbox.sent }}
           >
             {!isFromProfile && !isFromUserCard && (
               <OrgPostRef
@@ -229,7 +229,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} />
+            <img src={activeemail} alt={"message-icon"}/>
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>

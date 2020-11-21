@@ -89,7 +89,6 @@ import GTM from "constants/gtm-tags";
 // );
 
 const getGTM = (id) => {
-  console.log(id);
   return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
 };
 

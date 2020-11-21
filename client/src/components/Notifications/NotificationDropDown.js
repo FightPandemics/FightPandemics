@@ -207,7 +207,7 @@ const MenuItem = ({
   );
 };
 
-const menu = (notifications, t) => {
+const menu = (notifications, organisationId, t) => {
   return (
     <StyledMenu>
       <Menu.Item style={{ ...itemStyle }}>
@@ -216,7 +216,11 @@ const menu = (notifications, t) => {
         </a>
         <Arrow />
         <Link
-          to="/edit-notifications"
+          to={
+            organisationId
+              ? `/edit-organisation-notifications/${organisationId}`
+              : "/edit-notifications"
+          }
           style={{ color: "white", position: "relative" }}
         >
           <img src={gear} />
@@ -245,19 +249,14 @@ const menu = (notifications, t) => {
   );
 };
 
-export const NotificationDropDown = ({ mobile, notifications }) => {
+export const NotificationDropDown = ({
+  mobile,
+  notifications,
+  organisationId,
+}) => {
   const { markNotificationsAsRead } = useContext(WebSocketContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const Visible = (e) => {
-    setTimeout(() => {
-      if (e && document.querySelector(".ant-dropdown-menu") !== null) {
-        return (document.querySelector(
-          ".ant-dropdown-menu",
-        ).parentElement.style.position = "fixed");
-      }
-    }, 100);
-  };
 
   const updateReadAt = () => {
     dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
@@ -295,7 +294,7 @@ export const NotificationDropDown = ({ mobile, notifications }) => {
       onVisibleChange={(visible) =>
         visible ? markNotificationsAsRead() : updateReadAt()
       }
-      overlay={menu(mappedNotifications, t)}
+      overlay={menu(mappedNotifications, organisationId, t)}
       trigger="click"
       placement="bottomRight"
       getPopupContainer={() =>

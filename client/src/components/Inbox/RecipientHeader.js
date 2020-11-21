@@ -95,7 +95,8 @@ export const RecipientHeader = ({
   blockThread,
   archiveThread,
   blockStatus,
-  isPending,
+  senderIsPending,
+  receiverIsPending
 }) => {
   const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
@@ -170,7 +171,7 @@ export const RecipientHeader = ({
       <Menu.Item onClick={() => showArchiveConfirm()}>
         {t("messaging.archive")}
       </Menu.Item>
-      {!blockStatus && (
+      {!blockStatus && !receiverIsPending && (
         <Menu.Item onClick={() => showBlockConfirm()} danger>
           {t("messaging.block")}
         </Menu.Item>
@@ -229,7 +230,7 @@ export const RecipientHeader = ({
               )}
             </LastSeen>
           </h4>
-          {!isPending && (!blockStatus || blockStatus === "was-blocked") && (
+          {!senderIsPending && (!blockStatus || blockStatus === "was-blocked") && (
             <Dropdown
               trigger={["click"]}
               overlay={menu}
