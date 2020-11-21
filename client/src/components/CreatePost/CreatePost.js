@@ -19,11 +19,11 @@ const { typography } = theme;
 
 export const CreatePostContext = createContext();
 
-const Step3 = ({ onCancel, visible, gtmPrefix }) => {
+const Step1 = ({ onCancel, visible, gtmPrefix }) => {
   const { currentStep, setCurrentStep, setPostId } = useContext(
     CreatePostContext,
   );
-  if (!visible || currentStep !== 3) return null;
+  if (!visible || currentStep !== 1) return null;
   return (
     <TabForms
       setCurrentStep={setCurrentStep}
@@ -44,7 +44,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
       title={" "}
       style={{ textAlign: "center", overflowY: "hidden" }}
       footer={null}
-      visible={visible && currentStep !== 3}
+      visible={visible && currentStep !== 1}
       destroyOnClose={true}
       closeIcon={
         <SvgIcon
@@ -53,7 +53,7 @@ const Wrapper = ({ onCancel, visible, children }) => {
             position: "absolute",
             right: "4.0rem",
             top: "1.7rem",
-            filter: currentStep === 4 ? "" : "brightness(0.6)",
+            filter: currentStep === 2 ? "" : "brightness(0.6)",
           }}
         />
       }
@@ -65,13 +65,13 @@ const Wrapper = ({ onCancel, visible, children }) => {
   );
 };
 
-const Step4 = () => {
+const Step2 = () => {
   const { t } = useTranslation();
   const createPostContext = useContext(CreatePostContext);
   const { currentStep, postId } = createPostContext;
 
   return (
-    currentStep === 4 && (
+    currentStep === 2 && (
       <>
         <TitleStep fontSize={typography.size.xlarge} currentStep={currentStep}>
           {t("post.success")}
@@ -91,18 +91,18 @@ const Step4 = () => {
 
 const CreatePost = ({ onCancel, loadPosts, ...props }) => {
   const organisationId = useSelector(selectOrganisationId);
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({ organisationId: organisationId });
   const [postId, setPostId] = useState("");
 
   const clearState = () => {
     onCancel();
-    if (currentStep === 4) {
+    if (currentStep === 2) {
       loadPosts();
     }
     // delay for modal close effect to complete before re-render
     setTimeout(() => {
-      setCurrentStep(3);
+      setCurrentStep(1);
       setPostId("");
     }, 200);
   };
@@ -112,9 +112,9 @@ const CreatePost = ({ onCancel, loadPosts, ...props }) => {
       value={{ form, setForm, currentStep, setCurrentStep, postId, setPostId }}
     >
       <Wrapper onCancel={clearState} {...props}>
-        <Step4 gtmPrefix={props.gtmPrefix} />
+        <Step2 gtmPrefix={props.gtmPrefix} />
       </Wrapper>
-      <Step3 onCancel={clearState} {...props} gtmPrefix={props.gtmPrefix} />
+      <Step1 onCancel={clearState} {...props} gtmPrefix={props.gtmPrefix} />
     </CreatePostContext.Provider>
   );
 };

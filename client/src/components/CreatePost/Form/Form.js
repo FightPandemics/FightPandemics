@@ -80,7 +80,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   };
 
   const handleSubmit = async (e) => {
-    setCurrentStep(4);
+    setCurrentStep(2);
     e.preventDefault();
     populateErrors();
 
