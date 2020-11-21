@@ -59,7 +59,7 @@ const CurrentChat = ({
         threadId: room._id,
       });
     setEditingMessageId(null);
-  }, [getChatLog, room, setEditingMessageId]);
+  }, [getChatLog, room]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const getThreadBlockStatus = () => {
     if (sender.status == "blocked") return "did-block";

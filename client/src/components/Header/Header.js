@@ -154,10 +154,10 @@ const Header = ({
   onOrganisationChange,
   navSearch,
   setOrganisationId,
-  ws,
+  webSocket,
 }) => {
   const { t } = useTranslation();
-  const { rooms } = ws;
+  const { rooms } = webSocket;
 
   const index = localStorage.getItem("organisationId");
   if (organisationId !== index) {

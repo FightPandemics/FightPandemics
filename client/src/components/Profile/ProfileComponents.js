@@ -38,7 +38,7 @@ export const SectionHeader = styled(Heading)`
     background: transparent;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      background: #f5f5f9;
+      background: ${colors.ghostWhite};
     }
   }
 `;
@@ -135,8 +135,6 @@ export const EditIcon = styled(SvgIcon)`
   top: 2.4rem;
 `;
 
-
-
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
   position: absolute;
@@ -149,7 +147,7 @@ export const ProfileBackgroup = styled.div`
 `;
 
 export const ProfileLayout = styled.div`
-  background-color: #fbfbfd;
+  background-color: ${colors.offWhite};
   max-height: 100%;
   z-index: 1;
   max-width: 80rem;
@@ -173,9 +171,18 @@ export const IconsContainer = styled.div`
   align-items: center;
   margin-top: 2.4rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    flex-direction: column;
+    flex-direction: ${(props) => (props.inCard ? "row" : "column")};
     justify-content: flex-start;
     align-items: flex-start;
+    ${(props) =>
+      props.inCard
+        ? `
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+    `
+        : ""};
   }
 
   .social-icons {
@@ -251,5 +258,5 @@ export const DescriptionDesktop = styled.div`
   margin-top: 2.4rem;
   font-size: 1.4rem;
   line-height: 2rem;
-  color: #282828;
+  color: ${colors.darkerGray};
 `;

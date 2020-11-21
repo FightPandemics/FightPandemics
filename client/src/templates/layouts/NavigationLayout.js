@@ -68,7 +68,7 @@ const NavigationLayout = (props) => {
     tabIndex,
     isAuthenticated,
     user,
-    ws,
+    webSocket,
     loggedInOnly,
     organisationId,
   } = props;
@@ -381,7 +381,7 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
-            ws={ws}
+            webSocket={webSocket}
             organisationId={organisationId}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")

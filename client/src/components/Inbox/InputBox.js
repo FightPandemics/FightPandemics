@@ -174,7 +174,7 @@ export const InputBox = ({
       window.screen.width >= parseInt(mq.phone.wide.maxWidth)
     )
       inputRef.current.focus();
-  }, [inputRef]);
+  }, [inputRef]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const handleChange = async (e) => {
     await setText(e.target.value);
@@ -186,7 +186,7 @@ export const InputBox = ({
       return setInputExpanded(true);
     if ((text.match(/\n/g) || []).length) setInputExpanded(true);
     else setInputExpanded(false);
-  }, [inputExpanded, inputRef, setInputExpanded, text]);
+  }, [text]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const handleSendMessage = async () => {
     // mobile editing is done inside the inputBox

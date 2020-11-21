@@ -65,11 +65,11 @@ const Messages = ({
       )
         scrollToBottom();
     }
-  }, [inputExpanded, scrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputExpanded]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     getScrollToBottom.current = scrollToBottom;
-  }, [getScrollToBottom, scrollToBottom]);
+  }, [getScrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const isMobile = () => {
     return window.screen.width <= parseInt(mq.phone.wide.maxWidth);

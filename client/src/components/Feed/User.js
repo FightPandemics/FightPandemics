@@ -36,7 +36,6 @@ import GTM from "constants/gtm-tags";
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
-import envelopeBlue from "assets/icons/mail.svg";
 import facebookIcon from "assets/icons/social-facebook-unfilled.svg";
 import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
 import githubIcon from "assets/icons/social-github.svg";
@@ -343,7 +342,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
             style={{ display: "none" }}
           ></Link>
           {renderContent}
-          <IconsContainer style={{ "margin-top": "0" }}>
+          <IconsContainer inCard style={{ "margin-top": "0" }}>
             {_id != user?.id &&
               !user?.organisations?.find((org) => org._id === _id) &&
               !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (

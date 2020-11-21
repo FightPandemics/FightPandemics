@@ -219,9 +219,7 @@ export const FailedModal = styled(SuccessModal)`
 `;
 
 export const PrivateMessageContainer = styled.div`
-  margin-left: 4.2rem;
   cursor: pointer;
-
   :hover {
     color: #939393;
   }
