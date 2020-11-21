@@ -136,7 +136,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} />
+            <img src={activeemail} alt={"message-icon"} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal
@@ -229,7 +229,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} />
+            <img src={activeemail} alt={"message-icon"}/>
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>

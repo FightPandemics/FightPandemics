@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import session from "./session";
 import posts from "./posts";
-import ws from "./wsReducers";
+import webSocket from "./wsReducers";
 
 const rootReducer = combineReducers({
   session,
   posts,
-  ws,
+  webSocket,
 });
 
 export default rootReducer;

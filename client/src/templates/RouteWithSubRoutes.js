@@ -40,7 +40,7 @@ export const RouteWithSubRoutes = (route) => {
     props = {},
     user,
     isIdentified,
-    ws,
+    webSocket,
   } = route;
   const {
     loggedInOnly,
@@ -119,7 +119,7 @@ export const RouteWithSubRoutes = (route) => {
             mobiletabs={mobiletabs}
             navSearch={navSearch}
             tabIndex={tabIndex}
-            ws={ws}
+            webSocket={webSocket}
             isIdentified={isIdentified}
             organisationId={organisationId}
             loggedInOnly={loggedInOnly}
@@ -131,15 +131,15 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ session, ws }) => ({
+const mapStateToProps = ({ session, webSocket }) => ({
   authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
-  isIdentified: ws.isIdentified,
-  ws: ws,
+  isIdentified: webSocket.isIdentified,
+  webSocket: webSocket,
   organisationId: session.organisationId,
 });
 

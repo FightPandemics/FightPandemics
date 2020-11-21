@@ -155,10 +155,10 @@ const Header = ({
   onOrganisationChange,
   navSearch,
   setOrganisationId,
-  ws,
+  webSocket,
 }) => {
   const { t } = useTranslation();
-  const { rooms } = ws;
+  const { rooms } = webSocket;
 
   const index = localStorage.getItem("organisationId");
   if (organisationId !== index) {
@@ -218,7 +218,7 @@ const Header = ({
             />
             {renderInboxIcon(true)}
             <NotificationDropDown
-              notifications={ws.notifications}
+              notifications={webSocket.notifications}
               mobile={true}
             />
             {!authLoading && (
@@ -231,7 +231,7 @@ const Header = ({
                     user={user}
                     setOrganisation={onOrganisationChange}
                     renderInboxIcon={renderInboxIcon}
-                    notifications={ws.notifications}
+                    notifications={webSocket.notifications}
                   />
                 </NavLinks>
               </DesktopMenu>

@@ -99,7 +99,7 @@ export default class SocketManager extends React.Component {
 
     // user was blocked while online.
     this.socket.on("FORCE_ROOM_UPDATE", (threadId) => {
-      if (props.store.getState().ws.room?._id == threadId)
+      if (props.store.getState().webSocket.room?._id == threadId)
         return this.joinRoom({ threadId });
       this.getUserRooms();
     });
@@ -126,7 +126,7 @@ export default class SocketManager extends React.Component {
           this.getNotifications();
           this.askNotificationPermission();
           // if user disconnected while in a room, join the room back
-          let oldRoom = this.props.store.getState().ws.room;
+          let oldRoom = this.props.store.getState().webSocket.room;
           if (oldRoom) this.joinRoom({threadId: oldRoom._id});
           return this.props.store.dispatch(identifySuccess());
         } else this.props.store.dispatch(identifyError(response));
@@ -266,7 +266,7 @@ export default class SocketManager extends React.Component {
         (response) => {
           if (response.code == 200) {
             this.getUserRooms(); // refresh rooms
-            if (this.props.store.getState().ws.room) this.joinRoom({ threadId }); // refresh room, if in one.
+            if (this.props.store.getState().webSocket.room) this.joinRoom({ threadId }); // refresh room, if in one.
             return resolve(true);
           }
           resolve(false);

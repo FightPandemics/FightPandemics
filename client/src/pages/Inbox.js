@@ -30,7 +30,6 @@ const Inbox = (props) => {
     joinRoom,
     getChatLog,
     loadMore,
-    getUserRooms,
     leaveAllRooms,
     getUserStatus,
     unblockThread,
@@ -39,7 +38,7 @@ const Inbox = (props) => {
     ignoreThread,
   } = useContext(WebSocketContext);
   const { user, history, authLoading, isAuthenticated, organisationId } = props;
-  const { room, rooms, chatLog } = props.ws;
+  const { room, rooms, chatLog } = props.webSocket;
   const dispatch = useDispatch();
 
   const actor =
@@ -95,14 +94,14 @@ const Inbox = (props) => {
     } catch (e) {
       // e
     }
-  }, []);
+  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (room)
       getChatLog({
         threadId: room._id,
       });
-  }, [getChatLog, room]);
+  }, [getChatLog, room]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     rooms.forEach(async (_room) => {
