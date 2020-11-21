@@ -22,7 +22,13 @@ export const initialState = {
 };
 
 export const feedbackReducer = (oldState, action) => {
-  const { type, key, value } = action;
+
+  // this is only for type number inputs
+  if (action.limit && action.value < action.limit.min) action.value = action.limit.min;
+  if (action.limit && action.value > action.limit.max) action.value = action.limit.max;
+
+  const { type, key, value} = action;
+  
   switch (type) {
     case TOGGLE_STATE:
       return { ...oldState, [key]: !oldState[key] };
@@ -35,6 +41,7 @@ export const feedbackReducer = (oldState, action) => {
 
 export const feedbackFormReducer = (state, action) => {
   const { type, ...payload } = action;
+
   switch (type) {
     case FEEDBACK_FORM_SUBMIT:
       return { ...state, loading: true, error: null };
