@@ -143,23 +143,15 @@ async function routes(app) {
             lastName: true,
             type: true,
             "hide.address": true,
-            location: {
-              $cond: ["$hide.address", null, { 
-                address: "$location.address",
-                city: "$location.city",
-                //coordinates: "$location.coordinates",
-                country: "$location.country",
-                neighborhood: "$location.neighborhood",
-                state: "$location.state",
-                type: "$location.type",
-                zip: "$location.zip",
-              }],
-            },
+            location: { $cond: ["$hide.address", null, "$location"] },
             urls: true,
             objectives: true,
             needs: true,
             photo: true,
           },
+        },
+        {
+          $unset: "location.coordinates", // remove sensitive data
         },
       ];
       /* eslint-enable sort-keys */
