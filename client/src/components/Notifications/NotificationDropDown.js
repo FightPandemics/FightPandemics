@@ -16,6 +16,7 @@ import { theme, mq } from "constants/theme";
 import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
+import GTM from "constants/gtm-tags"
 
 // Menu Item
 const ItemContainer = styled.a`
@@ -181,9 +182,10 @@ const MenuItem = ({
   unread,
   sharedVia,
   t,
+  gtmId,
 }) => {
   return (
-    <ItemContainer href={path}>
+    <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
       <img src={actionAvatar} className="action-avatar" />
       <Content>
@@ -240,6 +242,7 @@ const menu = (notifications, organisationId, t) => {
               unread={each.unread}
               sharedVia={each.sharedVia}
               t={t}
+              gtmId={each.gtmId}
             />
           ))}
         </div>
@@ -266,14 +269,17 @@ export const NotificationDropDown = ({
     like: {
       text: "notifications.liked",
       icon: likeheart,
+      gtmId: GTM.notifications.prefix + GTM.notifications.like,
     },
     comment: {
       text: "notifications.commented",
       icon: commentpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.comment,
     },
     share: {
       text: "notifications.shared",
       icon: sharedpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.share,
     },
   };
 
@@ -287,6 +293,7 @@ export const NotificationDropDown = ({
     avatar: n.triggeredBy.photo,
     sharedVia: n.sharedVia,
     unread: !n.readAt,
+    gtmId: notificationTypes[n.action].gtmId,
   }));
 
   return (
@@ -301,7 +308,7 @@ export const NotificationDropDown = ({
         document.getElementsByClassName("am-navbar-right")[0]
       }
     >
-      <a>
+      <a id={GTM.nav.prefix + GTM.nav.notifications}>
         <StyledBadge
           mobile={mobile}
           count={notifications.filter((n) => !n.readAt).length}
