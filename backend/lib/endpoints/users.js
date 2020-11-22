@@ -151,6 +151,9 @@ async function routes(app) {
             photo: true,
           },
         },
+        {
+          $unset: "location.coordinates", // remove sensitive data
+        },
       ];
       /* eslint-enable sort-keys */
       const aggregationPipelineResults = [
