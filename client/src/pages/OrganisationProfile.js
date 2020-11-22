@@ -136,7 +136,7 @@ const OrganisationProfile = () => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const { email, name, location = {}, about = "", urls = {} } =
+  const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
@@ -154,7 +154,7 @@ const OrganisationProfile = () => {
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
-  const isOwner = organisation && actorOrganisationId == organisation._id;
+  const isSelf = organisation && actorOrganisationId == organisation._id;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -430,7 +430,7 @@ const OrganisationProfile = () => {
                 initials={getInitialsFromFullName(name)}
               />
               <PhotoUploadButton>
-                {isOwner && (
+                {isSelf && (
                   <UploadPic
                     gtmPrefix={GTM.organisation.orgPrefix}
                     user={organisation}
@@ -449,7 +449,7 @@ const OrganisationProfile = () => {
                     </div>
                   )}
                 </div>
-                {isOwner && (
+                {isSelf && (
                   <EditIcon
                     src={edit}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
@@ -476,7 +476,7 @@ const OrganisationProfile = () => {
             <SectionHeader>
               {t("profile.org.activity")}
               <PlaceholderIcon />
-              {isOwner && (
+              {isSelf && (
                 <>
                   <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
@@ -513,7 +513,7 @@ const OrganisationProfile = () => {
                 />
               )}
               {emptyFeed() && <></>}
-              {isOwner && (
+              {isSelf && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={onToggleCreatePostDrawer}
@@ -524,7 +524,7 @@ const OrganisationProfile = () => {
               )}
             </FeedWrapper>
           </div>
-          {isOwner && (
+          {isSelf && (
             <CustomDrawer
               placement="bottom"
               closable={false}
