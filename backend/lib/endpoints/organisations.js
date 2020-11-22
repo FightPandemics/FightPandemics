@@ -19,6 +19,7 @@ async function routes(app) {
   const Organisation = app.mongo.model("OrganisationUser");
   const Post = app.mongo.model("Post");
   const User = app.mongo.model("IndividualUser");
+  const Thread = app.mongo.model("Thread");
 
   const ORGS_PAGE_SIZE = 10;
 
@@ -333,6 +334,21 @@ async function routes(app) {
         }
       }
 
+      const [threadErr] = await app.to(
+        Thread.updateMany(
+          { "participants.id": updatedOrg._id },
+          {
+            $set: {
+              "participants.$[userToUpdate].name": updatedOrg.name,
+              "participants.$[userToUpdate].photo": updatedOrg.photo,
+            },
+          },
+          { arrayFilters: [{ "userToUpdate.id": updatedOrg._id }] },
+        ),
+      );
+      if (threadErr) {
+        req.log.error(threadErr, "Failed updating author refs at threads");
+      }
       return updatedOrg;
     },
   );
@@ -418,6 +434,20 @@ async function routes(app) {
           req.log.error(commentErr, "Failed updating author photo refs at comments");
         }
 
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedOrg._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedOrg.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedOrg._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
+        }
         return updatedOrg;
       } catch (error) {
         req.log.error(error, "Failed updating organisation avatar.");

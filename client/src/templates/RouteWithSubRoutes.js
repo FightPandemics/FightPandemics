@@ -39,6 +39,8 @@ export const RouteWithSubRoutes = (route) => {
     organisationId,
     props = {},
     user,
+    isIdentified,
+    webSocket,
   } = route;
   const {
     loggedInOnly,
@@ -55,7 +57,6 @@ export const RouteWithSubRoutes = (route) => {
       render={({ layout, location, ...rest }) => {
         const Layout = getLayoutComponent(route.layout);
         let redirect;
-
         if (!authLoading) {
           // don't apply redirect if authLoading
           if (authError && location.pathname !== LOGOUT) {
@@ -118,6 +119,8 @@ export const RouteWithSubRoutes = (route) => {
             mobiletabs={mobiletabs}
             navSearch={navSearch}
             tabIndex={tabIndex}
+            webSocket={webSocket}
+            isIdentified={isIdentified}
             organisationId={organisationId}
             loggedInOnly={loggedInOnly}
           />
@@ -128,13 +131,15 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ session }) => ({
+const mapStateToProps = ({ session, webSocket }) => ({
   authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
+  isIdentified: webSocket.isIdentified,
+  webSocket: webSocket,
   organisationId: session.organisationId,
 });
 

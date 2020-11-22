@@ -98,6 +98,7 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  gtmPrefix,
   keepScrollIndex,
   keepPageState,
   keepPostsState,
@@ -497,7 +498,13 @@ const Post = ({
         postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
-        postId={postId}
+        postAuthorName={post.author.name}
+        postAuthorAvatar={post.author.photo}
+        isOwnPost={
+          isAuthorUser(user, post) ||
+          isAuthorOrg(user?.organisations, post.author)
+        }
+        authorId={post.author.id}
         postTitle={post?.title}
         postContent={post?.content}
         showComments={showComments}
@@ -507,6 +514,13 @@ const Post = ({
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        user={user}
+        gtmPrefix={gtmPrefix || (postId ? GTM.post.prefix : GTM.feed.prefix)}
+        postInfo={{
+          objective: post.objective,
+          tags: post.types,
+          location: post.author.location,
+        }}
       />
     </Card.Body>
   );
