@@ -27,7 +27,6 @@ import SubmitButton from "components/Button/SubmitButton";
 import PrivacyPolicyContent from "components/PolicyPages/PrivacyPolicyContent";
 import TermsConditionsContent from "components/PolicyPages/TermsConditionsContent";
 import PolicyModal from "components/PolicyPages/PolicyModal";
-import SuccessAlert from "components/Alert/SuccessAlert";
 import { clearRememberCookie } from "utils/cookie";
 import { theme, mq } from "constants/theme";
 import {
@@ -42,7 +41,6 @@ import {
 } from "hooks/reducers/userReducers";
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
-import { SET_USER, AUTH_LOGOUT } from "../constants/action-types";
 import { SESSION_ACTIONS } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
@@ -201,7 +199,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
 
   const handleLinkAccountsSuccessClose = () => {
     clearRememberCookie(); // clear logged-in Cookie
-    dispatch({ type: AUTH_LOGOUT });
+    dispatch({ type: SESSION_ACTIONS.AUTH_LOGOUT });
   };
 
   const handleInputChangePrivacy = (e) => {
