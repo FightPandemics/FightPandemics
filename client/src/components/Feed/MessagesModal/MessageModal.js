@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
@@ -62,6 +62,13 @@ const MessageModal = ({
   );
   const textAreaRef = useRef(null);
   let history = useHistory();
+
+  useEffect(() => {
+    if (isAuthenticated && sessionStorage.getItem("msgModal") === authorId) {
+      showModal();
+    }
+    sessionStorage.removeItem("msgModal");
+  }, [])
 
   const showModal = async () => {
     await setVisible(true);
@@ -209,7 +216,8 @@ const MessageModal = ({
         </div>
       ) : (
         <Link
-          onClick={() =>
+          onClick={() => {
+            sessionStorage.setItem("msgModal", authorId);
             sessionStorage.setItem(
               "postredirect",
               postId
@@ -217,8 +225,8 @@ const MessageModal = ({
                 : isFromUserCard == "USER"
                 ? `/profile/${authorId}`
                 : `/organisation/${authorId}`,
-            )
-          }
+            );
+          }}
           to={{
             pathname: LOGIN,
             state: { from: window.location.href },
@@ -229,7 +237,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} alt={"message-icon"}/>
+            <img src={activeemail} alt={"message-icon"} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>

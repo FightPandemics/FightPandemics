@@ -111,7 +111,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-const OrganisationProfile = () => {
+const OrganisationProfile = ({ isAuthenticated }) => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -140,7 +140,7 @@ const OrganisationProfile = () => {
     organisation || {};
 
   const urlsAndEmail = { ...urls, email };
-
+  if (isOwner) sessionStorage.removeItem("msgModal");
   const {
     isLoading,
     loadMore,
@@ -455,14 +455,16 @@ const OrganisationProfile = () => {
                     onClick={onToggleDrawer}
                   />
                 )}
-                {!isOwner && !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
-                  <MessageModal
-                    isAuthenticated={true}
-                    isFromProfile={true}
-                    postAuthorName={name}
-                    authorId={organisationId}
-                  />
-                )}
+                {!isOwner &&
+                  !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
+                    <MessageModal
+                      isAuthenticated={isAuthenticated}
+                      isFromProfile={true}
+                      isFromUserCard={"ORG"}
+                      postAuthorName={name}
+                      authorId={organisationId}
+                    />
+                  )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
               <IconsContainer>
