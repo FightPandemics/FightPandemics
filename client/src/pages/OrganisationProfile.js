@@ -154,6 +154,7 @@ const OrganisationProfile = () => {
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
+  const isSelf = organisation && actorOrganisationId == organisation._id;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -429,7 +430,7 @@ const OrganisationProfile = () => {
                 initials={getInitialsFromFullName(name)}
               />
               <PhotoUploadButton>
-                {isOwner && (
+                {isSelf && (
                   <UploadPic
                     gtmPrefix={GTM.organisation.orgPrefix}
                     user={organisation}
@@ -448,7 +449,7 @@ const OrganisationProfile = () => {
                     </div>
                   )}
                 </div>
-                {isOwner && (
+                {isSelf && (
                   <EditIcon
                     src={edit}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
@@ -475,7 +476,7 @@ const OrganisationProfile = () => {
             <SectionHeader>
               {t("profile.org.activity")}
               <PlaceholderIcon />
-              {isOwner && (
+              {isSelf && (
                 <>
                   <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
@@ -512,7 +513,7 @@ const OrganisationProfile = () => {
                 />
               )}
               {emptyFeed() && <></>}
-              {isOwner && (
+              {isSelf && (
                 <CreatePost
                   gtmPrefix={GTM.organisation.orgPrefix}
                   onCancel={onToggleCreatePostDrawer}
@@ -523,7 +524,7 @@ const OrganisationProfile = () => {
               )}
             </FeedWrapper>
           </div>
-          {isOwner && (
+          {isSelf && (
             <CustomDrawer
               placement="bottom"
               closable={false}

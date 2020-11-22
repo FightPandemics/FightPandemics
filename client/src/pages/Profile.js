@@ -68,7 +68,7 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { selectOrganisationId } from "reducers/session";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -143,6 +143,8 @@ const Profile = ({
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
+  const isSelf = actorId === userId;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -350,7 +352,7 @@ const Profile = ({
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             <PhotoUploadButton>
-              {ownUser && (
+              {isSelf && (
                 <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
               )}
             </PhotoUploadButton>
@@ -368,7 +370,7 @@ const Profile = ({
                   </div>
                 )}
               </div>
-              {ownUser && (
+              {isSelf && (
                 <EditIcon
                   src={edit}
                   id={GTM.user.profilePrefix + GTM.profile.modify}
@@ -416,11 +418,11 @@ const Profile = ({
         <WhiteSpace />
         <div>
           <SectionHeader>
-            {ownUser
+            {isSelf
               ? t("profile.individual.myActivity")
               : t("profile.individual.userActivity")}
             <PlaceholderIcon />
-            {ownUser && (
+            {isSelf && (
               <>
                 <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                 <CreatePostIcon
@@ -457,7 +459,7 @@ const Profile = ({
               />
             )}
             {emptyFeed() && <></>}
-            {ownUser && (
+            {isSelf && (
               <CreatePost
                 onCancel={onToggleCreatePostDrawer}
                 loadPosts={refetchPosts}
@@ -468,7 +470,7 @@ const Profile = ({
             )}
           </FeedWrapper>
         </div>
-        {ownUser && (
+        {isSelf && (
           <CustomDrawer
             placement="bottom"
             closable={false}
