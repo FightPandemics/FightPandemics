@@ -123,6 +123,7 @@ const Profile = ({
     location = {},
     needs = {},
     objectives = {},
+    ownUser,
     urls = {},
     usesPassword = false,
   } = user || {};
@@ -143,7 +144,7 @@ const Profile = ({
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
   const actorId = useSelector(selectActorId);
-  const ownUser = actorId === userId;
+  const isSelf = actorId === userId;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -351,7 +352,7 @@ const Profile = ({
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             <PhotoUploadButton>
-              {ownUser && (
+              {isSelf && (
                 <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
               )}
             </PhotoUploadButton>
@@ -369,7 +370,7 @@ const Profile = ({
                   </div>
                 )}
               </div>
-              {ownUser && (
+              {isSelf && (
                 <EditIcon
                   src={edit}
                   id={GTM.user.profilePrefix + GTM.profile.modify}
@@ -417,11 +418,11 @@ const Profile = ({
         <WhiteSpace />
         <div>
           <SectionHeader>
-            {ownUser
+            {isSelf
               ? t("profile.individual.myActivity")
               : t("profile.individual.userActivity")}
             <PlaceholderIcon />
-            {ownUser && (
+            {isSelf && (
               <>
                 <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                 <CreatePostIcon
@@ -458,7 +459,7 @@ const Profile = ({
               />
             )}
             {emptyFeed() && <></>}
-            {ownUser && (
+            {isSelf && (
               <CreatePost
                 onCancel={onToggleCreatePostDrawer}
                 loadPosts={refetchPosts}
@@ -469,7 +470,7 @@ const Profile = ({
             )}
           </FeedWrapper>
         </div>
-        {ownUser && (
+        {isSelf && (
           <CustomDrawer
             placement="bottom"
             closable={false}
