@@ -444,7 +444,9 @@ function onSocketConnect(socket) {
     const decodedToken = this.jwt.decode(socket.request.cookies.token);
     const authUserId = decodedToken.payload[auth.jwtMongoIdKey];
     // action, post, actorId, authUserId, {sharedVia}
-    this.notifier.notify("share", post, userId, authUserId, { sharedVia: data.sharedVia });
+    this.notifier.notify("share", post, userId, authUserId, {
+      sharedVia: data.sharedVia,
+    });
   });
 }
 
@@ -463,7 +465,7 @@ function fastifySocketIo(app, config, next) {
           Object.values(io.of("/").connected).find(
             (socket) => socket.userId === request.userId,
           ) || null;
-          callback(userSocket ? userSocket.id : null);
+        callback(userSocket ? userSocket.id : null);
       }
       // add more request types if you need something that runs on all nodes
       callback();
@@ -477,4 +479,4 @@ function fastifySocketIo(app, config, next) {
   }
 }
 
-module.exports = fp(fastifySocketIo);
+module.exports = { plugin: fp(fastifySocketIo), getSocketIdByUserId };
