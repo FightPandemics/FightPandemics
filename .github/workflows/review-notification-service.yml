@@ -5,7 +5,6 @@ on:
     branches:
       - service/**
       - hotfix/**
-      - feature/notifications # TODO remove this before merging to staging
     paths:
       - services/notification/**
       - .github/workflows/review-notification-service.yml
