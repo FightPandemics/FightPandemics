@@ -16,7 +16,10 @@ import {
   setLastMessage,
   messageDeleted,
   messageEdited,
+  getNotificationsSuccess,
+  notificationReceived,
 } from "../actions/wsActions";
+import i18n from "i18next";
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
@@ -27,6 +30,7 @@ const isLocalhost = Boolean(
 );
 const RECONNECT_INTERVAL = 1000;
 const WebSocketContext = createContext();
+const debug = process.env.NODE_ENV !== "production";
 
 export { WebSocketContext };
 
@@ -54,7 +58,7 @@ export default class SocketManager extends React.Component {
     this.socket = io.connect(isLocalhost ? "localhost:8000" : null);
     this.socket.on("connect", () => {
       this.socket.connected = true;
-      console.log(`[WS]: Connected`);
+      if (debug) console.log(`[WS]: Connected`);
       if (!this.state.isAuthenticated) return this.socket.disconnect();
       if (this.state.isAuthenticated && !this.state.isIdentified)
         this.identify();
@@ -63,11 +67,11 @@ export default class SocketManager extends React.Component {
     this.socket.on("disconnect", () => {
       this.socket.connected = false;
       this.setState({ isIdentified: false });
-      console.log(`[WS]: Disconnected`);
+      if (debug) console.log(`[WS]: Disconnected`);
       let recon = setInterval(() => {
         if (!this.state.isAuthenticated) return;
         if (this.socket.connected) return clearInterval(recon);
-        console.log(`[WS]: Trying to reconnect!`);
+        if (debug) console.log(`[WS]: Trying to reconnect!`);
         this.socket.connect();
       }, RECONNECT_INTERVAL);
     });
@@ -100,6 +104,11 @@ export default class SocketManager extends React.Component {
         return this.joinRoom({ threadId });
       this.getUserRooms();
     });
+
+    this.socket.on("NEW_NOTIFICATION", (notificationData) => {
+      this.props.store.dispatch(notificationReceived(notificationData));
+      this.emitPushNotification(notificationData);
+    });
   }
 
   identify = () => {
@@ -113,8 +122,10 @@ export default class SocketManager extends React.Component {
       { organisationId: this.state.organisationId },
       (response) => {
         if (response.code == 200) {
-          console.log(`[WS]: ${response.data} Identified`);
+          if (debug) console.log(`[WS]: ${response.data} Identified`);
           this.getUserRooms();
+          this.getNotifications();
+          this.askNotificationPermission();
           // if user disconnected while in a room, join the room back
           let oldRoom = this.props.store.getState().webSocket.room;
           if (oldRoom) this.joinRoom({threadId: oldRoom._id});
@@ -265,6 +276,65 @@ export default class SocketManager extends React.Component {
     });
   };
 
+  postShared = (postId, sharedVia) => {
+    this.socket.emit("POST_SHARED", { postId, sharedVia });
+  };
+
+  getNotifications = () => {
+    this.socket.emit("GET_NOTIFICATIONS", null, (response) => {
+      if (response.code == 200)
+        this.props.store.dispatch(getNotificationsSuccess(response.data));
+    });
+  };
+
+  markNotificationsAsRead = () => {
+    this.socket.emit("MARK_NOTIFICATIONS_AS_READ");
+  };
+
+  askNotificationPermission() {
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+  }
+
+  generateNotificationText = (n) => {
+    switch (n.action) {
+      case "like":
+        return i18n.t("notifications.liked", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+        });
+      case "comment":
+        return i18n.t("notifications.commented", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+        });
+      case "share":
+        return i18n.t("notifications.shared", {
+          username: n.triggeredBy.name,
+          postTitle: n.post.title,
+          shareMedium: n.sharedVia,
+        });
+        return;
+    }
+  };
+
+  emitPushNotification(notification) {
+    if (!("Notification" in window)) return;
+    if (Notification.permission === "granted") {
+      let img =
+        "https://raw.githubusercontent.com/FightPandemics/FightPandemics/master/images/fp_logo.png";
+      var notification = new Notification("You have a new notification!", {
+        body: this.generateNotificationText(notification).replace(
+          /<\/?[^>]+(>|$)/g,
+          "",
+        ),
+        icon: img,
+      });
+    }
+  }
+
   componentWillUnmount() {
     try {
       this.socket !== null && this.socket.disconnect();
@@ -289,6 +359,9 @@ export default class SocketManager extends React.Component {
       archiveThread: this.archiveThread,
       ignoreThread: this.ignoreThread,
       unblockThread: this.unblockThread,
+      getNotifications: this.getNotifications,
+      markNotificationsAsRead: this.markNotificationsAsRead,
+      postShared: this.postShared,
     };
     return (
       <WebSocketContext.Provider value={value}>

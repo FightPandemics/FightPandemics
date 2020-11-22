@@ -17,6 +17,7 @@ import FeedSearch from "components/Input/FeedSearch";
 import { InboxIcon } from "./constants";
 import mail from "assets/icons/mail.svg";
 import GTM from "constants/gtm-tags";
+import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -216,6 +217,11 @@ const Header = ({
               onClick={onMenuClick}
             />
             {isAuthenticated && renderInboxIcon(true)}
+            {isAuthenticated && <NotificationDropDown
+              notifications={webSocket.notifications}
+              mobile={true}
+              organisationId={organisationId}
+            />}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
@@ -226,6 +232,7 @@ const Header = ({
                     user={user}
                     setOrganisation={onOrganisationChange}
                     renderInboxIcon={renderInboxIcon}
+                    notifications={webSocket.notifications}
                   />
                 </NavLinks>
               </DesktopMenu>

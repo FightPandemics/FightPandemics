@@ -487,6 +487,11 @@ const Profile = ({
                 {t("profile.individual.editProfile")}{" "}
               </Link>
             </DrawerHeader>
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
+              </Link>
+            </DrawerHeader>
             {usesPassword && (
               <DrawerHeader>
                 <Link to="/edit-security">

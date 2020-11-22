@@ -543,6 +543,11 @@ const OrganisationProfile = () => {
                   {t("profile.individual.editProfile") + " "}
                 </Link>
               </DrawerHeader>
+              <DrawerHeader>
+                <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                  {t("profile.individual.editNotification")}{" "}
+                </Link>
+              </DrawerHeader>
             </CustomDrawer>
           )}
         </ProfileLayout>

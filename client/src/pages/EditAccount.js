@@ -173,6 +173,9 @@ function EditAccount(props) {
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
+            <CustomLink>
+              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
+            </CustomLink>
             {usesPassword && (
               <CustomLink >
                 <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
