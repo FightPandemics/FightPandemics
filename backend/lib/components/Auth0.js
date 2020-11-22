@@ -86,7 +86,20 @@ const getUser = async (token) => {
   }
 };
 
-const changePassword = async (token, email) => {
+const updateUser = async (token, userId, payload) => {
+  try {
+    const res = await axios.patch(
+      `${AUTH_DOMAIN}/api/v2/users/${userId}`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
+const sendChangePasswordEmail = async (token, email) => {
   const client_id = config.auth.clientId;
   const connection = "Username-Password-Authentication";
   const payload = {
@@ -142,9 +155,10 @@ const getAccountsWithSameEmail = async (token, email, userId) => {
 module.exports = {
   authenticate,
   buildOauthUrl,
-  changePassword,
   createUser,
   getUser,
   getAccountsWithSameEmail,
   linkAccounts,
+  sendChangePasswordEmail,
+  updateUser,
 };

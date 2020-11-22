@@ -26,7 +26,7 @@ const Container = styled(Modal)`
     height: 5.8rem;
     border-radius: 1rem 1rem 0 0;
     background-color: ${(props) =>
-      props.currentStep === 4 ? colors.green : colors.white};
+      props.currentStep === 2 ? colors.green : colors.white};
 
     .ant-modal-title {
       font-size: ${typography.size.xlarge};
@@ -44,7 +44,7 @@ const Container = styled(Modal)`
     flex-direction: column;
     justify-content: center;
     ${(props) =>
-      props.currentStep === 2 || props.currentStep === 4
+      props.currentStep === 2
         ? "align-items: center"
         : ""};
   }
@@ -90,9 +90,9 @@ const TitleStep = styled.p`
   top: 1.7rem;
   left: 50%;
   transform: translate(-50%, 0);
-  color: ${(props) => (props.currentStep === 4 ? colors.white : colors.black)};
+  color: ${(props) => (props.currentStep === 2 ? colors.white : colors.black)};
   background-color: ${(props) =>
-    props.currentStep === 4 ? colors.green : colors.white};
+    props.currentStep === 2 ? colors.green : colors.white};
 `;
 
 const BackButton = styled(SvgIcon)`
@@ -114,6 +114,7 @@ const OptionButton = styled(AntDButton)`
     margin-bottom: 1.5rem;
     text-align: left;
     padding-left: 2.5rem;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }

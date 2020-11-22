@@ -36,8 +36,11 @@ export const RouteWithSubRoutes = (route) => {
     forgotPasswordRequested,
     isAuthenticated,
     path,
+    organisationId,
     props = {},
     user,
+    isIdentified,
+    webSocket,
   } = route;
   const {
     loggedInOnly,
@@ -54,7 +57,6 @@ export const RouteWithSubRoutes = (route) => {
       render={({ layout, location, ...rest }) => {
         const Layout = getLayoutComponent(route.layout);
         let redirect;
-
         if (!authLoading) {
           // don't apply redirect if authLoading
           if (authError && location.pathname !== LOGOUT) {
@@ -63,9 +65,14 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (notLoggedInOnly && isAuthenticated) {
+            const createPostRedirect = sessionStorage.getItem(
+              "createPostAttemptLoggedOut",
+            );
             //redirect to the appropriate post if View More or Comment clicked
             const postRedirect = sessionStorage.getItem("postredirect");
-            if (postRedirect) {
+            if (createPostRedirect) {
+              redirect = createPostRedirect;
+            } else if (postRedirect) {
               redirect = postRedirect;
               sessionStorage.removeItem("postredirect");
             } else {
@@ -83,9 +90,8 @@ export const RouteWithSubRoutes = (route) => {
               !forgotPassword
             ) {
               redirect = CHECK_EMAIL;
-            } else if (emailVerified && forgotPassword) {
-              redirect = LOGIN;
-            } else if (
+            }
+            else if (
               emailVerified &&
               !user &&
               location.pathname !== CREATE_PROFILE
@@ -113,6 +119,10 @@ export const RouteWithSubRoutes = (route) => {
             mobiletabs={mobiletabs}
             navSearch={navSearch}
             tabIndex={tabIndex}
+            webSocket={webSocket}
+            isIdentified={isIdentified}
+            organisationId={organisationId}
+            loggedInOnly={loggedInOnly}
           />
         );
       }}
@@ -121,13 +131,16 @@ export const RouteWithSubRoutes = (route) => {
 };
 
 const mapDispatchToProps = {};
-const mapStateToProps = ({ session }) => ({
+const mapStateToProps = ({ session, webSocket }) => ({
   authError: session.authError,
   authLoading: session.authLoading,
   emailVerified: session.emailVerified,
   forgotPasswordRequested: session.forgotPasswordRequested,
   isAuthenticated: session.isAuthenticated,
   user: session.user,
+  isIdentified: webSocket.isIdentified,
+  webSocket: webSocket,
+  organisationId: session.organisationId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);

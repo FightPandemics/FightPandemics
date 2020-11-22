@@ -1,8 +1,10 @@
 // Core
 import React, { useState } from "react";
 import axios from "axios";
-import { Avatar, Input, Tooltip, Space } from "antd";
-import { connect } from "react-redux";
+import { Input, Tooltip, Space } from "antd";
+import { Avatar } from "components/Avatar";
+import { getInitialsFromFullName } from "utils/userInfo";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,6 +16,7 @@ import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
+import { selectActorId } from "reducers/session";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -38,13 +41,7 @@ const TextInput = styled(TextArea)`
   }
 `;
 
-const NestedComments = ({
-  user,
-  isAuthenticated,
-  comment,
-  dispatchPostAction,
-  deleteComment,
-}) => {
+const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
@@ -53,16 +50,17 @@ const NestedComments = ({
   const [showReply, setShowReply] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
+  const actorId = useSelector(selectActorId);
 
   const renderAvatar = (
-    <Avatar
-      src={
-        comment.author.photo
-          ? comment.author.photo
-          : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
-      }
-      alt={`${comment.author.name}`}
-    />
+    <Avatar src={comment.author.photo} alt={`${comment.author.name}`}>
+      {getInitialsFromFullName(
+        `${
+          comment.author.name ||
+          `${comment.author.firstName} ${comment.author.lastName}`
+        }`,
+      )}
+    </Avatar>
   );
 
   //TODO: Add comment replies, like button and number of likes.
@@ -153,7 +151,7 @@ const NestedComments = ({
     const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
 
       try {
@@ -206,7 +204,7 @@ const NestedComments = ({
 
   const editCommentContent = (
     <>
-      {isAuthenticated && comment.author.id === user.id && (
+      {actorId === comment.author.id && (
         <>
           <TextInput
             onChange={handleCommentEdit}
@@ -231,9 +229,7 @@ const NestedComments = ({
   const renderCommentContent = (
     <Space direction="vertical">
       <span>{editedComment}</span>
-      {isAuthenticated && comment.author.id === user.id && (
-        <span>{commentActions}</span>
-      )}
+      {actorId === comment.author.id && <span>{commentActions}</span>}
     </Space>
   );
 
@@ -270,10 +266,4 @@ const NestedComments = ({
   );
 };
 
-const mapStateToProps = ({ session }) => {
-  return {
-    isAuthenticated: session.isAuthenticated,
-  };
-};
-
-export default connect(mapStateToProps)(NestedComments);
+export default NestedComments;

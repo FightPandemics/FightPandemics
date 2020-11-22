@@ -43,6 +43,7 @@ import {
 import { validateEmail } from "../utils/validators";
 import axios from "axios";
 import { SET_USER, AUTH_LOGOUT } from "../constants/action-types";
+import { SESSION_ACTIONS } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
 const StyledUnderlineLink = styled.a`
@@ -248,7 +249,7 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
       const res = await axios.post("/api/users", body);
 
       dispatch({
-        type: SET_USER,
+        type: SESSION_ACTIONS.SET_USER,
         payload: { user: res.data },
       });
       history.push("/profile-completed");

@@ -24,7 +24,9 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
+import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import EditSecurity from './pages/EditSecurity';
 
 const routes = [
   {
@@ -58,7 +60,6 @@ const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
-      notLoggedInOnly: true,
       forgotPassword: true,
     },
   },
@@ -101,6 +102,9 @@ const routes = [
   {
     path: "/organisation/:id",
     component: OrganisationProfile,
+    props: {
+      isProfile: true,
+    },
   },
   {
     path: "/edit-organisation-account",
@@ -161,6 +165,9 @@ const routes = [
   {
     path: "/profile/:id",
     component: Profile,
+    props: {
+      isProfile: true,
+    },
   },
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {
@@ -180,6 +187,13 @@ const routes = [
   {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-security",
+    component: EditSecurity,
     props: {
       loggedInOnly: true,
     },
@@ -214,6 +228,13 @@ const routes = [
   {
     path: "/faq",
     component: Faq,
+  },
+  {
+    path: "/inbox",
+    component: Inbox,
+    props: {
+      hideFooter: true,
+    },
   },
   {
     path: "/toggleqa",

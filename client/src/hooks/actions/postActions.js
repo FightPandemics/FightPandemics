@@ -3,6 +3,7 @@ export const NEXT_PAGE = "NEXT_PAGE";
 export const RESET_LOADING = "RESET_LOADING";
 export const RESET_POST = "RESET_POST";
 export const RESET_PAGE = "RESET_PAGE";
+export const SET_PAGE = "SET_PAGE";
 export const SET_POST = "SET_POST";
 export const SET_SHORT_CONTENT = "SET_SHORT_CONTENT";
 export const SET_FULL_CONTENT = "SET_FULL_CONTENT";

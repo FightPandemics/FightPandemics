@@ -13,6 +13,10 @@ export const CustomDrawer = styled(Drawer)`
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
   }
+  .ant-drawer-body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
 `;
 
 export const DrawerHeader = styled.div`
@@ -31,28 +35,25 @@ export const SectionHeader = styled(Heading)`
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
+    background: transparent;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      background: ${colors.ghostWhite};
+    }
   }
 `;
 
-export const EditEmptyIcon = styled(SvgIcon)`
-  display: none;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: initial;
-    float: right;
-    margin-right: 1.5rem;
-    width: 2rem;
-  }
-`;
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
-  z-index: 1;
   bottom: 5%;
   right: 5%;
   height: 5rem;
   width: 5rem;
+  z-index: 1;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     width: 5rem;
     position: initial;
+    z-index: initial;
   }
 `;
 export const CreatePostDiv = styled.div`
@@ -63,113 +64,103 @@ export const CreatePostDiv = styled.div`
     margin-right: 1rem;
   }
 `;
-export const LocationIcon = styled(SvgIcon)`
-  display: none;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: initial;
-    margin-right: 0.5rem;
-  }
-`;
 
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
-  width: 2rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 2.5rem;
-    margin: 0 1rem 0.5rem 0;
-  }
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1.6rem;
 `;
 
 export const NameDiv = styled(TextLabel)`
-  align-self: center;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+  display: flex;
+  width: 100%;
+  align-self: flex-start;
+  overflow-wrap: break-word;
+  padding-left: 16rem;
+  justify-content: space-between;
+
+  &.ant-typography {
+    font-size: 2.6rem;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding: 0;
+    margin-top: 2.5rem;
+    flex-direction: column;
+  }
+
+  .name-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    align-self: flex-start;
-    overflow-wrap: break-word;
-    &.ant-typography {
-      font-size: 3rem;
-      font-weight: bold;
+  }
+
+  .address-container {
+    color: #939393;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 1.6rem);
+
+    img {
+      margin-right: 0.8rem;
     }
   }
 `;
 
 export const NamePara = styled.p`
   overflow-wrap: break-word;
-  text-align: center;
-  max-width: 25rem;
-  margin: auto;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    text-align: left;
-    max-width: 90%;
+  margin: 0 !important;
+  text-align: left;
+  max-width: 90%;
+  margin-top: 1rem;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding: 0;
+    font-size: 2.2rem;
+    line-height: 2.8rem;
   }
 `;
-export const LocationMobileDiv = styled(TextLabel)`
-  align-self: center;
-  color: ${colors.darkGray};
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: none;
-  }
-`;
-export const LocationDesktopDiv = styled(TextLabel)`
-  display: none;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: initial;
-    margin-top: 1rem;
-    align-self: flex-start;
-    &.ant-typography {
-      color: ${colors.darkGray};
-    }
-  }
-`;
+
 export const EditIcon = styled(SvgIcon)`
   color: ${colors.royalBlue};
   align-self: flex-end;
-  margin-right: 2rem;
-  margin-top: 2rem;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: none;
-  }
+  position: absolute;
+  right: 2.8rem;
+  top: 2.4rem;
 `;
-export const MenuIcon = styled(SvgIcon)`
-  color: ${colors.white};
-  margin-right: 2rem;
-  margin-top: 3rem;
-  float: right;
-`;
-export const BackgroundHeader = styled.div`
-  height: 23vh;
-  left: 0;
-  right: 0;
-  background-color: ${colors.royalBlue};
-  border-bottom-right-radius: 30
-  position: relative;
 
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: none;
-    margin-bottom: 10rem;
-  }
+export const ProfileBackgroup = styled.div`
+  background-color: ${colors.royalBlue};
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  width: 100vw;
+  height: 21rem;
+  z-index: 0;
+  border-radius: 0px 0px 6rem 0px;
 `;
-export const DescriptionMobile = styled.div`
-  background-color: ${colors.white};
-  borderradius: 0.5rem;
-  width: 100%;
-  font-size: 1.2rem;
-  color: ${colors.darkGray};
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: none;
-  }
-`;
+
 export const ProfileLayout = styled.div`
-  background-color: ${colors.lighterGray};
+  background-color: ${colors.offWhite};
   max-height: 100%;
-  flex-direction: row;
-  flex-grow: 1;
-  align-self: flex-start;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    padding: 0 15%;
+  z-index: 1;
+  max-width: 80rem;
+  padding: 0;
+  margin-top: 12.1rem;
+  width: 100vw;
+  border-radius: 0.8rem;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f6f7fb;
   }
 `;
 
@@ -177,60 +168,71 @@ export const IconsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    justify-content: initial;
+  align-items: center;
+  margin-top: 2.4rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    flex-direction: ${(props) => (props.inCard ? "row" : "column")};
+    justify-content: flex-start;
+    align-items: flex-start;
+    ${(props) =>
+      props.inCard
+        ? `
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+    `
+        : ""};
+  }
+
+  .social-icons {
+    a:last-child img {
+      margin-right: 0;
+    }
   }
 `;
 export const HelpContainer = styled.div`
-  align-self: flex-start;
   display: flex;
-  flex-direction: column;
-  width: 30%;
-  border: 0.1rem solid #6c80ff;
-  border-radius: 0.2rem;
-  text-align: center;
-  align-items: center;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: none;
-    border: transparent;
-    width: 100%;
-    margin-left: 0;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-bottom: 1.6rem;
+  }
+
+  & > div {
+    background: #f3f4fe;
+    border-radius: 4px;
+    padding: 0.8rem 2rem;
+    color: ${colors.royalBlue};
+    margin-right: 0.8rem;
   }
 `;
 
 export const UserInfoContainer = styled.div`
   background-color: ${colors.white};
-  margin-top: -13vh;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
-  border-radius: 1rem;
+  box-shadow: 0px 0.2rem 2rem rgba(0, 0, 0, 0.01);
+  max-width: 80rem;
+  width: 100%;
   z-index: 1;
-  filter: drop-shadow(#00000012 5px 0px 5px);
   flex-direction: column;
   display: flex;
   align-items: center;
-
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    z-index: 0;
-    margin-top: 0rem;
-    padding-top: 5rem;
-    border-radius: 0;
-    background-color: transparent;
-    align-items: initial;
-    flex-direction: row;
-  }
+  position: relative;
+  border-radius: 0.8rem;
 `;
 
 export const AvatarPhotoContainer = styled.fieldset`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(2.8rem, -50%);
 `;
+
 export const PhotoUploadButton = styled.legend`
-    position: absolute;
-    bottom: 0;
-  }  
+  position: absolute;
+  bottom: 1rem;
+  left: 10.5rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    left: 7.5rem;
+  }
 `;
 
 export const PlaceholderIcon = styled.div`
@@ -249,15 +251,12 @@ export const UserInfoDesktop = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 60%;
-  }
+  padding: 2.4rem 2.8rem;
 `;
 
 export const DescriptionDesktop = styled.div`
-  display: none;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: initial;
-    color: ${colors.darkGray};
-  }
+  margin-top: 2.4rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: ${colors.darkerGray};
 `;

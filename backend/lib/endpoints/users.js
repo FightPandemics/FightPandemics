@@ -16,6 +16,7 @@ async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
   const Post = app.mongo.model("Post");
+  const Thread = app.mongo.model("Thread");
 
   const USERS_PAGE_SIZE = 10;
 
@@ -150,6 +151,9 @@ async function routes(app) {
             photo: true,
           },
         },
+        {
+          $unset: "location.coordinates", // remove sensitive data
+        },
       ];
       /* eslint-enable sort-keys */
       const aggregationPipelineResults = [
@@ -227,6 +231,7 @@ async function routes(app) {
       organisations,
       urls,
       photo,
+      usesPassword,
     } = user;
     return {
       about,
@@ -241,6 +246,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      usesPassword,
     };
   });
 
@@ -294,6 +300,22 @@ async function routes(app) {
         if (commentErr) {
           req.log.error(commentErr, "Failed updating author refs at comments");
         }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].name": updatedUser.name,
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author refs at threads");
+        }
       }
       return updatedUser;
     },
@@ -327,6 +349,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
+        usesPassword
       } = user;
 
       let { location } = user;
@@ -337,7 +360,7 @@ async function routes(app) {
       if (hide.address) {
         location = {};
       }
-
+      const ownUser = authUserId !== null && authUserId.equals(user.id);
       return {
         about,
         firstName,
@@ -347,9 +370,10 @@ async function routes(app) {
         needs,
         organisations,
         objectives,
-        ownUser: authUserId !== null && authUserId.equals(user.id),
+        ownUser,
         photo,
         urls,
+        usesPassword: ownUser ? usesPassword : undefined
       };
     },
   );
@@ -401,6 +425,21 @@ async function routes(app) {
           req.log.error(commentErr, "Failed updating author photo refs at comments");
         }
 
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
+        }
+
         return {
           updatedUser,
         };
@@ -415,8 +454,10 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const user = await Auth0.getUser(getCookieToken(req));
-      const { email, email_verified: emailVerified } = user;
+      const {
+        email,
+        email_verified: emailVerified,
+      } = await Auth0.getUser(getCookieToken(req));
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -435,7 +476,11 @@ async function routes(app) {
         authId: req.user.sub,
         email,
       };
-      return new User(userData).save();
+      const user = await new User(userData).save();
+      return {
+        ...user.toObject(),
+        organisations: [],
+      }
     },
   );
 }
