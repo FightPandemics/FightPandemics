@@ -1,5 +1,4 @@
 const fp = require("fastify-plugin");
-const { getSocketIdByUserId } = require("./socket");
 
 class Notifier {
   constructor(app) {
@@ -68,15 +67,10 @@ class Notifier {
       return this.app.log.error(err, "Failed saving new Notification");
     }
 
-    // send real-time web notification if online
-    const userIsOnline = await getSocketIdByUserId(
-      this.app,
-      post.author.id.toString(),
-    );
-    if (userIsOnline)
-      this.app.io
-        .to(post.author.id.toString())
-        .emit("NEW_NOTIFICATION", notification);
+    // send real-time web notification, the user will receive it if online
+    this.app.io
+      .to(post.author.id.toString())
+      .emit("NEW_NOTIFICATION", notification);
   }
 }
 
