@@ -1,4 +1,5 @@
 const { EmailFrequency } = require("../models/email-frequency");
+const { EmailFrequencyTrackingCode } = require("../models/email-frequency-tracking-code");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const { MessageThreadStatus } = require("../models/message-thread-status");
@@ -119,8 +120,10 @@ class TemplateBuilder {
           view.message = message.content;
         }
 
+        const trackerParams = this._buildTrackerParams("message");
+
         return {
-          htmlBody: Mustache.render(htmlTemplate, view),
+          htmlBody: Mustache.render(htmlTemplate, { ...view, trackerParams }),
           notificationId: message._id,
           subject,
           textBody: Mustache.render(textTemplate, view),
@@ -157,6 +160,7 @@ class TemplateBuilder {
             latestComment: post.latest,
             post: post.post,
             actionCounts: this._generatePostCountsCopy(post.counts),
+            trackerParams: this._buildTrackerParams(frequency),
           }),
         );
         const postTextTemplates = posts.map((post) =>
@@ -226,8 +230,10 @@ class TemplateBuilder {
           view.shareMedium = ShareMedium[notification.sharedVia.toUpperCase()];
         }
 
+        const trackerParams = this._buildTrackerParams("instant");
+
         return {
-          htmlBody: Mustache.render(htmlTemplate, view),
+          htmlBody: Mustache.render(htmlTemplate, { ...view, trackerParams }),
           notificationId: notification._id,
           subject,
           textBody: Mustache.render(textTemplate, view),
@@ -235,6 +241,13 @@ class TemplateBuilder {
         };
       })
       .filter((email) => !!email);
+  }
+
+  _buildTrackerParams(frequency) {
+    const languageCode = 'EN'; // TODO set this based on user localization preference
+    const frequencyCode = EmailFrequencyTrackingCode[frequency];
+    const campaignName = `E-A-PU-WW-${languageCode}-NOT-ENGA-${frequencyCode}`;
+    return `?utm_source=Email&utm_medium=Email&utm_campaign=${campaignName}`;
   }
 
   _loadTemplateFile(relPath) {
