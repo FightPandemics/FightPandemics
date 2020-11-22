@@ -477,4 +477,4 @@ function fastifySocketIo(app, config, next) {
   }
 }
 
-module.exports = { plugin: fp(fastifySocketIo), getSocketIdByUserId };
+module.exports = fp(fastifySocketIo);
