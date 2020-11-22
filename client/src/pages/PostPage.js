@@ -17,7 +17,7 @@ import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
-import { selectOrganisationId } from "reducers/session";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -96,6 +96,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const [post, postDispatch] = useReducer(postReducer, postState);
   const { t } = useTranslation();
   const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -114,11 +115,15 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    editPostModalVisibility,
+    //editPostModalVisibility,
     deleteModalVisibility,
     commentsCount,
     showComments,
   } = post;
+
+  // switching accounts will reload the page, make sure it's the author
+  const editPostModalVisibility =
+    post.editPostModalVisibility && actorId == post.author.id;
 
   const initialState = { ...post };
 
