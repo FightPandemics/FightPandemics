@@ -63,7 +63,7 @@ export const ChatHeader = styled.div`
 export const CurrentChatContainer = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 6rem);
   display: flex;
   flex-direction: column;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {

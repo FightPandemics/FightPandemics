@@ -20,7 +20,7 @@ const TabName = styled.div`
     position: absolute;
     top: 1rem;
     min-height: 4.8rem;
-    z-index: 3;
+    z-index: 2;
   }
   .back-arrow {
     display: none;

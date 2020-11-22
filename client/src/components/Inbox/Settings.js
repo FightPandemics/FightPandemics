@@ -71,9 +71,12 @@ const ThreadContainer = styled(SideChatContainer)`
 `;
 const ThreadsListContainer = styled.div`
   width: calc(100vw - 33.6rem);
+  overflow-y: scroll;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    position: fixed;
+    height: calc(100vh - 10rem);
     width: 100vw;
-    margin-top: 6rem;
+    bottom: 0;
   }
 `;
 const StyledButton = styled(Button)`

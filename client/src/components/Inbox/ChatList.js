@@ -76,7 +76,9 @@ export const ChatList = ({
     let roomsToShow = toggleViewRequests ? pendingRooms : acceptedRooms;
     return (
       <>
-        {roomsToShow.map((_room) => (
+        {roomsToShow.map((_room) => {
+          const receiver = getReceiver(_room.participants)
+          return (
           <SideChatContainer
             className={`${_room._id === room?._id ? "selected" : ""}`}
             key={_room._id}
@@ -90,14 +92,14 @@ export const ChatList = ({
             }}
           >
             <Badge>
-              <TextAvatar src={getReceiver(_room.participants).photo}>
-                {getInitialsFromFullName(getReceiver(_room.participants).name)}
+              <TextAvatar src={receiver.photo}>
+                {getInitialsFromFullName(receiver.name)}
               </TextAvatar>
               <span className={`status-indicator ${_room.userStatus}`}></span>
             </Badge>
             <content>
               <header>
-                <UserName>{getReceiver(_room.participants).name}</UserName>
+                <UserName>{receiver.name}</UserName>
                 <h5>
                   {_room.lastMessage
                     ? moment(_room.lastMessage.createdAt).format("MMM. DD")
@@ -113,7 +115,7 @@ export const ChatList = ({
               </div>
             </content>
           </SideChatContainer>
-        ))}
+        )})}
         {!roomsToShow.length && <EmptyInbox mobile />}
       </>
     );
