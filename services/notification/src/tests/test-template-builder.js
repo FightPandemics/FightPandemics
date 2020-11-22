@@ -293,11 +293,19 @@ describe("TemplateBuilder tests", () => {
     expect(emails[0].subject).to.equal(
       "Test Manny org liked your post: Test post 1",
     );
+    expect(emails[0].htmlBody).to.contain(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-I",
+    );
+
     expect(emails[1].notificationId).to.equal("5f8b9228655a231a3a62d27f");
     expect(emails[1].toEmailAddress).to.equal("naruto@leafvillage.com");
     expect(emails[1].subject).to.equal(
       "Test Manny org liked your post: Test post 2",
     );
+    expect(emails[1].htmlBody).to.contain(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-I",
+    );
+
     expect(emails[2].notificationId).to.equal("5f8b9237653a214a3b62d27f");
     expect(emails[2].toEmailAddress).to.equal("bob.saget@fullhouse.com");
     expect(emails[2].subject).to.equal(
@@ -309,10 +317,36 @@ describe("TemplateBuilder tests", () => {
     expect(emails[2].textBody).to.contain(
       "Test Manny org shared your post via Facebook: Test post 1",
     );
+    expect(emails[2].htmlBody).to.contain(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-I",
+    );
+
     expect(emails[3].notificationId).to.equal("5f8b9237653a214a3b62d46e");
     expect(emails[3].toEmailAddress).to.equal("bob.saget@fullhouse.com");
     expect(emails[3].subject).to.equal(
       "Test Manny org commented on your post: Test post 1",
+    );
+    expect(emails[3].htmlBody).to.contain(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-I",
+    );
+  });
+
+  it("builds tracker params correctly", () => {
+    const builder = new TemplateBuilder("https://fightpandemics.com", "abc");
+    expect(builder._buildTrackerParams("instant")).to.equal(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-I",
+    );
+    expect(builder._buildTrackerParams("message")).to.equal(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-M",
+    );
+    expect(builder._buildTrackerParams("daily")).to.equal(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-D",
+    );
+    expect(builder._buildTrackerParams("weekly")).to.equal(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-W",
+    );
+    expect(builder._buildTrackerParams("biweekly")).to.equal(
+      "?utm_source=Email&utm_medium=Email&utm_campaign=E-A-PU-WW-EN-NOT-ENGA-BW",
     );
   });
 });
