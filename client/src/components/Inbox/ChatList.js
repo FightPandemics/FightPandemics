@@ -10,6 +10,7 @@ import arrow from "assets/icons/blue-down-arrow.svg";
 import { useTranslation } from "react-i18next";
 import { mq } from "constants/theme";
 import GTM from "constants/gtm-tags";
+import { EmptyInbox } from "components/Inbox/EmptyInbox";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -58,6 +59,8 @@ export const ChatList = ({
   selectedSettingsTab,
   toggleViewRequests,
   setToggleViewRequests,
+  acceptedRooms,
+  pendingRooms,
 }) => {
   const { t } = useTranslation();
 
@@ -68,13 +71,6 @@ export const ChatList = ({
   const getSender = (participants) => {
     return participants.filter((p) => p.id === (user._id || user.id))[0];
   };
-
-  const pendingRooms = rooms.filter(
-    (r) => getSender(r.participants)?.status === "pending",
-  );
-  const acceptedRooms = rooms.filter(
-    (r) => getSender(r.participants)?.status === "accepted",
-  );
 
   const SideChats = () => {
     let roomsToShow = toggleViewRequests ? pendingRooms : acceptedRooms;
@@ -118,6 +114,7 @@ export const ChatList = ({
             </content>
           </SideChatContainer>
         ))}
+        {!roomsToShow.length && <EmptyInbox mobile />}
       </>
     );
   };
@@ -160,6 +157,10 @@ export const ChatList = ({
     );
   };
 
+  const unreadCount = acceptedRooms
+    .map((_room) => (getSender(_room.participants).newMessages ? 1 : 0))
+    .reduce((a, b) => a + b, 0);
+
   return (
     <ChatListContainer
       toggleMobileChatList={toggleMobileChatList && !room?._id}
@@ -169,13 +170,7 @@ export const ChatList = ({
           {!toggleViewRequests && (
             <ChatHeader>
               {t("messaging.header")}{" "}
-              <span>
-                {acceptedRooms
-                  .map((_room) =>
-                    getSender(_room.participants).newMessages ? 1 : 0,
-                  )
-                  .reduce((a, b) => a + b, 0)}
-              </span>
+              {unreadCount > 0 && <span>{unreadCount}</span>}
               <SettingsIcon onClick={() => toggleSettings()} src={gearIcon} />
             </ChatHeader>
           )}
