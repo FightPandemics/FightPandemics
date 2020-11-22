@@ -218,6 +218,7 @@ const menu = (notifications, organisationId, t) => {
         </a>
         <Arrow />
         <Link
+          id={GTM.notifications.prefix + GTM.notifications.settings}
           to={
             organisationId
               ? `/edit-organisation-notifications/${organisationId}`
