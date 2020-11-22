@@ -18,6 +18,7 @@ export const initAuth = () => {
       TagManager.dataLayer({
         dataLayer: {
           userId: user.id,
+          isActingAsOrg: !!localStorage.getItem("organisationId"),
         },
       });
       dispatch({ type: SESSION_ACTIONS.SET_USER, payload: { user } });
@@ -46,6 +47,7 @@ export const authLogout = () => {
     TagManager.dataLayer({
       dataLayer: {
         userId: -1,
+        isActingAsOrg: false,
       },
     });
     dispatch({ type: SESSION_ACTIONS.AUTH_LOGOUT });
