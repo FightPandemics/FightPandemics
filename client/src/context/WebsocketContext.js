@@ -30,6 +30,7 @@ const isLocalhost = Boolean(
 );
 const RECONNECT_INTERVAL = 1000;
 const WebSocketContext = createContext();
+const debug = process.env.NODE_ENV !== "production";
 
 export { WebSocketContext };
 
@@ -57,7 +58,7 @@ export default class SocketManager extends React.Component {
     this.socket = io.connect(isLocalhost ? "localhost:8000" : null);
     this.socket.on("connect", () => {
       this.socket.connected = true;
-      console.log(`[WS]: Connected`);
+      if (debug) console.log(`[WS]: Connected`);
       if (!this.state.isAuthenticated) return this.socket.disconnect();
       if (this.state.isAuthenticated && !this.state.isIdentified)
         this.identify();
@@ -66,11 +67,11 @@ export default class SocketManager extends React.Component {
     this.socket.on("disconnect", () => {
       this.socket.connected = false;
       this.setState({ isIdentified: false });
-      console.log(`[WS]: Disconnected`);
+      if (debug) console.log(`[WS]: Disconnected`);
       let recon = setInterval(() => {
         if (!this.state.isAuthenticated) return;
         if (this.socket.connected) return clearInterval(recon);
-        console.log(`[WS]: Trying to reconnect!`);
+        if (debug) console.log(`[WS]: Trying to reconnect!`);
         this.socket.connect();
       }, RECONNECT_INTERVAL);
     });
@@ -121,7 +122,7 @@ export default class SocketManager extends React.Component {
       { organisationId: this.state.organisationId },
       (response) => {
         if (response.code == 200) {
-          console.log(`[WS]: ${response.data} Identified`);
+          if (debug) console.log(`[WS]: ${response.data} Identified`);
           this.getUserRooms();
           this.getNotifications();
           this.askNotificationPermission();
