@@ -51,7 +51,7 @@ module.exports = function createApp(config) {
     exposeRoute: true,
     routePrefix: "/api/documentation",
   });
-  app.register(require("./plugins/socket".plugin), config.socket);
+  app.register(require("./plugins/socket"), config.socket);
   app.register(require("./plugins/mongoose-connector"), config.mongo);
   app.register(require("./plugins/auth"), config.auth);
   app.register(require("./plugins/notifier"));
