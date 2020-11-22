@@ -52,6 +52,10 @@ a {
   background-color: ${WHITE} !important;
 }
 
+.am-drawer, .app-drawer, .am-drawer-right {
+  min-height: 100% !important;
+}
+
 .app-drawer .am-drawer-sidebar {
   background-color: $white;
   overflow: auto;
@@ -72,7 +76,7 @@ a {
 	padding-bottom: 6rem; // footer height
 	overflow: hidden;
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
-	  padding-bottom: 12rem; // max mobile footer height based on content
+	  padding-bottom: 8rem; // max mobile footer height based on content
   }
 }
 

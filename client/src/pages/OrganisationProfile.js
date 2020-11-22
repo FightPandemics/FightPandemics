@@ -14,19 +14,18 @@ import { useTranslation } from "react-i18next";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
-import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
-import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
-import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
-import githubIcon from "assets/icons/social-github.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
 import locationIcon from "assets/icons/location.svg";
-import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
+
+import instagramIcon from "assets/icons/social-instagram.svg";
+import linkedinBlue from "assets/icons/social-linkedin.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import twitterBlue from "assets/icons/social-tw.svg";
+import githubIcon from "assets/icons/social-github.svg";
+import websiteIcon from "assets/icons/website-icon.svg";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
@@ -34,25 +33,19 @@ import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
-  BackgroundHeader,
-  MenuIcon,
   UserInfoContainer,
   EditIcon,
   UserInfoDesktop,
   NameDiv,
   PlaceholderIcon,
-  EditEmptyIcon,
   DescriptionDesktop,
-  LocationDesktopDiv,
-  LocationMobileDiv,
   IconsContainer,
-  LocationIcon,
   SocialIcon,
-  DescriptionMobile,
   SectionHeader,
   CreatePostDiv,
   CreatePostIcon,
@@ -61,6 +54,7 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  ProfileBackgroup,
 } from "../components/Profile/ProfileComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -117,7 +111,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-const OrganisationProfile = ({ history, isAuthenticated }) => {
+const OrganisationProfile = () => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -415,69 +409,70 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
-  const renderProfileData = () => {
-    if (!organisation) {
-      return <Loader />;
-    } else {
-      const { address } = location;
-      return (
-        <>
+
+  if (error) {
+    return <ErrorAlert message={error} type="error" />;
+  }
+  if (loading) return <Loader />;
+
+  if (!organisation) {
+    return <Loader />;
+  } else {
+    const { address } = location;
+    return (
+      <>
+        <ProfileBackgroup />
+        <ProfileLayout>
           <UserInfoContainer>
-            {isOwner && (
-              <EditIcon
-                src={edit}
-                id={GTM.organisation.orgPrefix + GTM.profile.modify}
-                onClick={onToggleDrawer}
+            <AvatarPhotoContainer>
+              <ProfilePic
+                user={organisation}
+                initials={getInitialsFromFullName(name)}
               />
-            )}
-            <div>
-              <AvatarPhotoContainer>
-                <ProfilePic
-                  user={organisation}
-                  initials={getInitialsFromFullName(name)}
-                />
-                <PhotoUploadButton>
-                  {isOwner && (
-                    <UploadPic
-                      gtmPrefix={GTM.organisation.orgPrefix}
-                      user={organisation}
-                    />
-                  )}
-                </PhotoUploadButton>
-              </AvatarPhotoContainer>
-            </div>
+              <PhotoUploadButton>
+                {isOwner && (
+                  <UploadPic
+                    gtmPrefix={GTM.organisation.orgPrefix}
+                    user={organisation}
+                  />
+                )}
+              </PhotoUploadButton>
+            </AvatarPhotoContainer>
             <UserInfoDesktop>
               <NameDiv>
-                <NamePara>{name}</NamePara>
-                <PlaceholderIcon />
+                <div className="name-container">
+                  <NamePara>{name}</NamePara>
+                  {address && (
+                    <div title={address} className="address-container">
+                      <img src={locationIcon} alt={address} />
+                      {address}
+                    </div>
+                  )}
+                </div>
                 {isOwner && (
-                  <EditEmptyIcon
-                    src={editEmpty}
+                  <EditIcon
+                    src={edit}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}
                     onClick={onToggleDrawer}
                   />
                 )}
+                {!isOwner && !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
+                  <MessageModal
+                    isAuthenticated={true}
+                    isFromProfile={true}
+                    postAuthorName={name}
+                    authorId={organisationId}
+                  />
+                )}
               </NameDiv>
-              <DescriptionDesktop> {about} </DescriptionDesktop>
-              <LocationMobileDiv>{address}</LocationMobileDiv>
+              {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
               <IconsContainer>
-                <LocationDesktopDiv>
-                  <LocationIcon src={locationIcon} />
-                  {address}
-                </LocationDesktopDiv>
-                <PlaceholderIcon />
-                {renderURL()}
+                <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
           <WhiteSpace />
-          <div style={{ margin: "0 2.5rem" }}>
-            <WhiteSpace />
-            <DescriptionMobile>
-              <SectionHeader> {t("profile.org.about")}</SectionHeader>
-              {about}
-            </DescriptionMobile>
-            <WhiteSpace />
+          <div>
             <SectionHeader>
               {t("profile.org.activity")}
               <PlaceholderIcon />
@@ -492,7 +487,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
                 </>
               )}
             </SectionHeader>
-            <FeedWrapper>
+            <FeedWrapper isProfile>
               <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}
@@ -535,7 +530,7 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
               closable={false}
               onClose={onToggleDrawer}
               visible={drawer}
-              height="150px"
+              height="auto"
               key="bottom"
             >
               <DrawerHeader>
@@ -550,24 +545,10 @@ const OrganisationProfile = ({ history, isAuthenticated }) => {
               </DrawerHeader>
             </CustomDrawer>
           )}
-        </>
-      );
-    }
-  };
-
-  if (error) {
-    return <ErrorAlert message={error} type="error" />;
+        </ProfileLayout>
+      </>
+    );
   }
-  if (loading) return <Loader />;
-  return (
-    <ProfileLayout>
-      <BackgroundHeader>
-        <MenuIcon src={menu} />
-      </BackgroundHeader>
-      {renderProfileData()}
-      <WhiteSpace />
-    </ProfileLayout>
-  );
 };
 
 export default withUserContext(withOrganisationContext(OrganisationProfile));
