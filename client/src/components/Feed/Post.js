@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import axios from "axios";
+import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -17,6 +18,7 @@ import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
+import PostDropdownButton from "components/Button/PostDropdownButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
@@ -60,6 +62,25 @@ const URLS = {
 };
 
 const filters = Object.values(filterOptions);
+
+const Highlight = ({ text = "", highlight = "" }) => {
+  if (!highlight || !highlight.trim()) {
+    return text;
+  }
+  const regex = new RegExp(
+    `(${escapeRegExp(highlight)
+      .split(" ")
+      .filter((key) => key && key.length > 1)
+      .join("|")})`,
+    "gi",
+  );
+  const parts = text.split(regex);
+  return parts
+    .filter((part) => part)
+    .map((part) =>
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+    );
+};
 
 export const CONTENT_LENGTH = 120;
 const Post = ({
@@ -279,6 +300,26 @@ const Post = ({
     }
   };
 
+  const handleSave = () => {
+    // save post functionality here
+    console.log('"Save Post" was clicked.');
+  };
+
+  const handleFollow = () => {
+    // follow post functionality here
+    console.log('"Follow Post" was clicked.');
+  };
+
+  const handleHide = () => {
+    // hide post functionality here
+    console.log('"Hide Post" was clicked.');
+  };
+
+  const handleReport = () => {
+    // report post functionality here
+    console.log('"Report Post" was clicked.');
+  };
+
   const renderExternalLinks = () => {
     return Object.entries(externalLinks).map(([name, url]) => {
       return (
@@ -362,7 +403,11 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <div className="author">{post?.author?.name}</div>
+          <Highlight
+            className="author"
+            text={post?.author?.name}
+            highlight={highlightWords}
+          />
           {post?.author?.location?.country ? (
             <div className="location-status">
               <SvgIcon src={statusIndicator} className="status-icon" />
@@ -535,17 +580,26 @@ const Post = ({
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
               {isAuthenticated &&
-                user &&
-                (isAuthorUser(user, post) ||
-                  isAuthorOrg(user.organisations, post.author)) && (
-                  <SubMenuButton
-                    onChange={handleDelete}
-                    onSelect={onSelect}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                  />
-                )}
+              user &&
+              (isAuthorUser(user, post) ||
+                isAuthorOrg(user.organisations, post.author)) ? (
+                <SubMenuButton
+                  onChange={handleDelete}
+                  onSelect={onSelect}
+                  post={post}
+                  user={user}
+                  postId={postId}
+                />
+              ) : (
+                <PostDropdownButton
+                  onSave={handleSave}
+                  onFollow={handleFollow}
+                  onHide={handleHide}
+                  onReport={handleReport}
+                  post={post}
+                  postId={postId}
+                />
+              )}
             </div>
           </div>
           <WhiteSpace size="md" />
@@ -574,7 +628,7 @@ const Post = ({
               {includeProfileLink && (
                 <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
               )}
-              {renderContent(title, content, showComplete)}
+              {renderContent(title, content, highlightWords, showComplete)}
             </>
           )}
           {fullPostLength > CONTENT_LENGTH ||
@@ -623,9 +677,11 @@ const renderContent = (title, content, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        {title}
+        <Highlight text={title} highlight={highlightWords} />
       </Heading>
-      <p className="post-description">{finalContent}</p>
+      <p className="post-description">
+        <Highlight text={finalContent} highlight={highlightWords} />
+      </p>
     </Card.Body>
   );
 };
