@@ -15,3 +15,4 @@ export const OFF_WHITE = "#fbfbfd";
 export const BLACK = "#000000";
 export const GRAY = "#f6f7fb";
 export const LIGHTER_BLACK = "#1e1e1e";
+export const GHOST_WHITE="#f5f5f9";

@@ -18,25 +18,20 @@ import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
-  BackgroundHeader,
-  MenuIcon,
+  ProfileBackgroup,
   UserInfoContainer,
   EditIcon,
   UserInfoDesktop,
   NameDiv,
   PlaceholderIcon,
-  EditEmptyIcon,
   DescriptionDesktop,
-  LocationDesktopDiv,
-  LocationMobileDiv,
   IconsContainer,
   HelpContainer,
-  LocationIcon,
   SocialIcon,
-  DescriptionMobile,
   SectionHeader,
   CreatePostDiv,
   CreatePostIcon,
@@ -77,16 +72,15 @@ import { selectOrganisationId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
-import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
-import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
-import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
+import instagramIcon from "assets/icons/social-instagram.svg";
+import linkedinBlue from "assets/icons/social-linkedin.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import twitterBlue from "assets/icons/social-tw.svg";
 import githubIcon from "assets/icons/social-github.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
-import locationIcon from "assets/icons/location.svg";
-import websiteIcon from "assets/icons/social-website-blue.svg";
+import websiteIcon from "assets/icons/website-icon.svg";
+
+import locationIcon from "assets/icons/status-indicator.svg";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -104,9 +98,7 @@ const ARBITRARY_LARGE_NUM = 10000;
 const Profile = ({
   match: {
     params: { id: pathUserId },
-  },
-  history,
-  isAuthenticated,
+  }
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -133,7 +125,7 @@ const Profile = ({
     objectives = {},
     ownUser,
     urls = {},
-    usesPassword = false
+    usesPassword = false,
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
@@ -341,25 +333,17 @@ const Profile = ({
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  console.log("urls", location);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
   return (
-    <ProfileLayout>
-      <BackgroundHeader>
-        <MenuIcon src={menu} />
-      </BackgroundHeader>
-      <UserInfoContainer>
-        {ownUser && (
-          <EditIcon
-            src={edit}
-            id={GTM.user.profilePrefix + GTM.profile.modify}
-            onClick={onToggleDrawer}
-          />
-        )}
-        <div>
+    <>
+      <ProfileBackgroup />
+      <ProfileLayout>
+        <UserInfoContainer>
           <AvatarPhotoContainer>
             <ProfilePic
               user={user}
@@ -371,150 +355,147 @@ const Profile = ({
               )}
             </PhotoUploadButton>
           </AvatarPhotoContainer>
-        </div>
-        <UserInfoDesktop>
-          <NameDiv>
-            <NamePara>
-              {firstName} {lastName}
-            </NamePara>
-
+          <UserInfoDesktop>
+            <NameDiv>
+              <div className="name-container">
+                <NamePara>
+                  {firstName} {lastName}
+                </NamePara>
+                {address && (
+                  <div title={address} className="address-container">
+                    <img src={locationIcon} alt={address} />
+                    {address}
+                  </div>
+                )}
+              </div>
+              {ownUser && (
+                <EditIcon
+                  src={edit}
+                  id={GTM.user.profilePrefix + GTM.profile.modify}
+                  onClick={onToggleDrawer}
+                />
+              )}
+              {!ownUser && (
+                <MessageModal
+                  isAuthenticated={true}
+                  isFromProfile={true}
+                  postAuthorName={`${firstName} ${lastName}`}
+                  authorId={userId}
+                />
+              )}
+            </NameDiv>
+            {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+            <IconsContainer>
+              <HelpContainer>
+                {needHelp && <div>{t("profile.individual.needHelp")}</div>}
+                {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
+              </HelpContainer>
+              <div className="social-icons">
+                {Object.entries(urls).map(([name, url]) => {
+                  return (
+                    url && (
+                      <a
+                        href={
+                          name === "website"
+                            ? getHref(url)
+                            : `${URLS[name][1]}${url}`
+                        }
+                        key={name}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <SocialIcon src={URLS[name][0]} />
+                      </a>
+                    )
+                  );
+                })}
+              </div>
+            </IconsContainer>
+          </UserInfoDesktop>
+        </UserInfoContainer>
+        <WhiteSpace />
+        <div>
+          <SectionHeader>
+            {ownUser
+              ? t("profile.individual.myActivity")
+              : t("profile.individual.userActivity")}
             <PlaceholderIcon />
             {ownUser && (
-              <EditEmptyIcon
-                src={editEmpty}
-                id={GTM.user.profilePrefix + GTM.profile.modify}
-                onClick={onToggleDrawer}
-              />
+              <>
+                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
+                />
+              </>
             )}
-          </NameDiv>
-          <DescriptionDesktop> {about} </DescriptionDesktop>
-          {address ? (
-            <LocationMobileDiv>{address}</LocationMobileDiv>
-          ) : (
-              <WhiteSpace />
-            )}
-          <IconsContainer>
-            <HelpContainer>
-              {needHelp && t("profile.individual.needHelp")}
-              {offerHelp && t("profile.individual.wantHelp")}
-            </HelpContainer>
-            <LocationDesktopDiv>
-              {address && <LocationIcon src={locationIcon} />}
-              {needHelp && t("profile.individual.needHelp")}
-              {offerHelp && t("profile.individual.wantHelp")}{" "}
-              {address && `• ${address}`}
-            </LocationDesktopDiv>
-            <PlaceholderIcon />
-            {Object.entries(urls).map(([name, url]) => {
-              return (
-                url && (
-                  <a
-                    href={
-                      name === "website"
-                        ? getHref(url)
-                        : `${URLS[name][1]}${url}`
-                    }
-                    key={name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <SocialIcon src={URLS[name][0]} />
-                  </a>
-                )
-              );
-            })}
-          </IconsContainer>
-        </UserInfoDesktop>
-      </UserInfoContainer>
-      <WhiteSpace />
-      <div style={{ margin: "0 2.5rem" }}>
-        <WhiteSpace />
-        <DescriptionMobile>
-          <SectionHeader> {t("profile.org.about")}</SectionHeader>
-          {about}
-        </DescriptionMobile>
-        <WhiteSpace />
-        <SectionHeader>
-          {ownUser
-            ? t("profile.individual.myActivity")
-            : t("profile.individual.userActivity")}
-          <PlaceholderIcon />
-          {ownUser && (
-            <>
-              <CreatePostDiv>{t("post.create")}</CreatePostDiv>
-              <CreatePostIcon
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                src={createPost}
-                onClick={onToggleCreatePostDrawer}
-              />
-            </>
-          )}
-        </SectionHeader>
-        <FeedWrapper>
-          <Activity
-            postDispatch={dispatch}
-            filteredPosts={postsList}
-            user={user}
-            postDelete={postDelete}
-            handlePostDelete={handlePostDelete}
-            handleEditPost={handleEditPost}
-            deleteModalVisibility={deleteModalVisibility}
-            handleCancelPostDelete={handleCancelPostDelete}
-            loadNextPage={loadNextPage}
-            isNextPageLoading={isLoading}
-            itemCount={itemCount}
-            isItemLoaded={isItemLoaded}
-            hasNextPage={loadMore}
-            totalPostCount={totalPostCount}
-          />
-          {postsError && (
-            <ErrorAlert
-              message={t([
-                `error.${postsError.message}`,
-                `error.http.${postsError.message}`,
-              ])}
-            />
-          )}
-          {emptyFeed() && <></>}
-          {ownUser && (
-            <CreatePost
-              onCancel={onToggleCreatePostDrawer}
-              loadPosts={refetchPosts}
-              visible={modal}
+          </SectionHeader>
+          <FeedWrapper isProfile>
+            <Activity
+              postDispatch={dispatch}
+              filteredPosts={postsList}
               user={user}
-              gtmPrefix={GTM.user.profilePrefix}
+              postDelete={postDelete}
+              handlePostDelete={handlePostDelete}
+              handleEditPost={handleEditPost}
+              deleteModalVisibility={deleteModalVisibility}
+              handleCancelPostDelete={handleCancelPostDelete}
+              loadNextPage={loadNextPage}
+              isNextPageLoading={isLoading}
+              itemCount={itemCount}
+              isItemLoaded={isItemLoaded}
+              hasNextPage={loadMore}
+              totalPostCount={totalPostCount}
             />
-          )}
-        </FeedWrapper>
-      </div>
-      {ownUser && (
-        <CustomDrawer
-          placement="bottom"
-          closable={false}
-          onClose={onToggleDrawer}
-          visible={drawer}
-          height="auto"
-          key="bottom"
-        >
-          <DrawerHeader>
-            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
-          </DrawerHeader>
-          <DrawerHeader>
-            <Link to="/edit-profile">
-              {t("profile.individual.editProfile")}{" "}
-            </Link>
-          </DrawerHeader>
-          {usesPassword && (
+            {postsError && (
+              <ErrorAlert
+                message={t([
+                  `error.${postsError.message}`,
+                  `error.http.${postsError.message}`,
+                ])}
+              />
+            )}
+            {emptyFeed() && <></>}
+            {ownUser && (
+              <CreatePost
+                onCancel={onToggleCreatePostDrawer}
+                loadPosts={refetchPosts}
+                visible={modal}
+                user={user}
+                gtmPrefix={GTM.user.profilePrefix}
+              />
+            )}
+          </FeedWrapper>
+        </div>
+        {ownUser && (
+          <CustomDrawer
+            placement="bottom"
+            closable={false}
+            onClose={onToggleDrawer}
+            visible={drawer}
+            height="auto"
+            key="bottom"
+          >
             <DrawerHeader>
-              <Link to="/edit-security">
-                {t("profile.individual.editSecurity")}{" "}
+              <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+            </DrawerHeader>
+            <DrawerHeader>
+              <Link to="/edit-profile">
+                {t("profile.individual.editProfile")}{" "}
               </Link>
             </DrawerHeader>
-          )}
-        </CustomDrawer>
-      )}
-      <WhiteSpace />
-    </ProfileLayout>
+            {usesPassword && (
+              <DrawerHeader>
+                <Link to="/edit-security">
+                  {t("profile.individual.editSecurity")}{" "}
+                </Link>
+              </DrawerHeader>
+            )}
+          </CustomDrawer>
+        )}
+      </ProfileLayout>
+    </>
   );
 };
 

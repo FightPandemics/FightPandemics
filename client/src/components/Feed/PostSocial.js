@@ -14,16 +14,16 @@ import { postsActions } from "reducers/posts";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
-import heart from "assets/icons/heart.svg";
-import heartGray from "assets/icons/heart-gray.svg";
-import comment from "assets/icons/comment.svg";
-import commentGray from "assets/icons/comment-gray.svg";
+import heartFilled from "assets/icons/heart-filled.svg";
+import heartOutline from "assets/icons/heart-outline.svg";
+import commentFilled from "assets/icons/comment-filled.svg";
+import commentOutline from "assets/icons/comment-outline.svg";
 import share from "assets/icons/share.svg";
-import shareGray from "assets/icons/share-gray.svg";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 // Constants
 import { mq } from "constants/theme";
+import MessageModal from "./MessagesModal/MessageModal.js";
 
 const StyledSvg = styled(SvgIcon)`
   pointer-events: none;
@@ -38,21 +38,26 @@ const StyledSpan = styled.span`
 
 const PostSocial = ({
   isAuthenticated,
+  isOwnPost,
+  authorId,
   postDispatch,
   liked,
-  shared,
   showComments,
   numLikes,
   numComments,
+  postAuthorName,
+  postAuthorAvatar,
   postId,
   postTitle,
   postContent,
+  postInfo,
   setShowComments,
   setShowShareModal,
   id,
   keepScrollIndex,
   keepPageState,
   keepPostsState,
+  gtmPrefix,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -216,19 +221,36 @@ const PostSocial = ({
           )}
         </>
       )}
-
       <span></span>
-
       <div className="social-icon">
         <div
           id={gtmTag("share", GTM.post.prefix)}
           className="social-text"
           onClick={showNativeShareOrModal}
         >
-          {renderShareIcon(shared)}
+          {renderShareIcon()}
           <StyledSpan>{t("post.share")}</StyledSpan>
         </div>
       </div>
+      {!isOwnPost &&
+        !/Sourced by FightPandemics\ \(.*?\)/.test(postAuthorName) && (
+          <>
+            <span></span>
+            <div className="social-icon">
+              <MessageModal
+                isAuthenticated={isAuthenticated}
+                title={postTitle}
+                postContent={postContent}
+                postAuthorName={postAuthorName}
+                authorId={authorId}
+                postId={id}
+                avatar={postAuthorAvatar}
+                postInfo={postInfo}
+                gtmPrefix={gtmPrefix}
+              />
+            </div>
+          </>
+        )}
     </>
   );
   return <div className="social-icons">{renderPostSocialIcons}</div>;
@@ -236,32 +258,36 @@ const PostSocial = ({
 
 const renderLikeIcon = (liked) => {
   return (
-    <StyledSvg src={liked ? heart : heartGray} className="social-icon-svg" />
+    <StyledSvg
+      src={liked ? heartFilled : heartOutline}
+      className="social-icon-svg"
+    />
   );
 };
 
 const renderCommentIcon = (showComments, numComments) => {
   return (
     <StyledSvg
-      src={showComments || numComments > 0 ? comment : commentGray}
+      src={showComments || numComments > 0 ? commentFilled : commentOutline}
       className="social-icon-svg"
     />
   );
 };
 
-const renderShareIcon = (shared) => {
-  return (
-    <StyledSvg src={shared ? share : shareGray} className="social-icon-svg" />
-  );
+const renderShareIcon = () => {
+  return <StyledSvg src={share} className="social-icon-svg" />;
 };
 
 const renderLabels = (label, count, t) => {
   return (
     <>
-      <StyledSpan className="total-number">
+      <StyledSpan className="number-with-text">
         {label === "Comment"
           ? t("comment.commentWithCount", { count })
           : t("post.likeWithCount", { count })}
+      </StyledSpan>
+      <StyledSpan className="number-only">
+        {count}
       </StyledSpan>
     </>
   );
