@@ -8,6 +8,8 @@ import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
 import WithSummitBanner from "components/WithSummitBanner";
+import CloudLanding from "assets/Clouds-Landing-page.gif";
+import FPCity from "assets/FP-City.gif";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -28,7 +30,10 @@ const StyledIntro = styled.div`
   }
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-image: ${theme.backgrounds.primary};
+    background-image: url("${CloudLanding}"), ${theme.backgrounds.primary};
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 40rem, cover;
     border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -54,10 +59,38 @@ export const Title = styled(TextLabel)`
 const MainContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
+
+  
   @media only screen and ${mq.tablet.narrow.min} {
-    background: ${offWhite};
+    background-color: ${offWhite};
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .city-gif-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    .city-gif {
+      width: 75vw;
+    }
+
+    &::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #3562f1;
+      width: 100vw;
+      height: 1.736111111111111vw;
+    }
+    
+    @media only screen and ${mq.phone.wide.max} {
+      display: none;
+    }
   }
 
   @media only screen and ${mq.phone.wide.max} {
@@ -144,8 +177,6 @@ const StyledP = styled.p`
 `;
 
 const OnboardingContainer = styled.div`
-  // display: flex;
-  // flexWrap: wrap;
   width: 100%;
   margin: auto 0;
 
@@ -168,6 +199,9 @@ const Home = (props) => {
   return (
     <WithSummitBanner>
       <MainContainer className="text-center home">
+        <div className="city-gif-container">
+          <img src={FPCity} alt="" className="city-gif"></img>
+        </div>
         <StyledIntro>
           <IntroText>
             <Title
