@@ -12,7 +12,16 @@
     "profile": "Profil",
     "addOrg": "Dodaj organizację",
     "logout": "Wyloguj się",
-    "organisations": "Organizacje"
+    "organisations": "Organizacje",
+    "language": "Język",
+    "switchAccount": "Przełącz konto",
+    "myOrganisation": "Moje organizacje",
+    "willRefresh": "Bieżąca strona zostanie odświeżona.",
+    "stayOnPageHeader": "Pozostajesz na bieżącej stronie?",
+    "stayOnPageContent": "Jeśli wybierzesz „Nie”, zostaniesz przekierowany do Forum pomocy.",
+    "yes": "Tak",
+    "no": "Nie",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -46,7 +55,7 @@
   },
   "feed": {
     "title": "Forum pomocy",
-    "all": "Wszystkie posty",
+    "all": "Wszystkie wpisy",
     "request": "Prośby o pomoc",
     "offer": "Oferty pomocy",
     "quit": "Wyczyść filtry",
@@ -123,7 +132,24 @@
       }
     },
     "filterBy": "Filtruj według",
-    "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć post</0>"
+    "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć wpis</0>",
+    "allPosts": "Wszystkie wpisy",
+    "allPeople": "Wszyscy ludzie",
+    "allOrgs": "Wszystkie organizacje",
+    "noResultsPosts": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć wpis</0>",
+    "noResultsPeople": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru.",
+    "noResultsOrgs": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru.",
+    "search": {
+      "placeholder": "Szukaj postów, osób i organizacji",
+      "keywords": "Słowa kluczowe",
+      "error": "Minimalna ilość znaków: {{length}}",
+      "options": {
+        "posts": "Wszystkie wpisy",
+        "people": "Ludzie",
+        "orgs": "Organizacje",
+        "orgsShort": "Organizacje"
+      }
+    }
   },
   "post": {
     "create": "Utwórz wpis",
@@ -188,8 +214,8 @@
   },
   "profile": {
     "common": {
-      "accountInfo": "informacje o koncie",
-      "profileInfo": "Informacje o Profilu",
+      "accountInfo": "Informacje o koncie",
+      "profileInfo": "Informacje o profilu",
       "address": "Adres",
       "enterAddress": "Wpisz adres, kod pocztowy lub miasto",
       "agreePrivacy": "Rejestrując się, wyrażam zgodę na <0>Politykę prywatności</0>",
@@ -218,8 +244,8 @@
       "urls": {
         "appStore": "Link do Apple Store",
         "playStore": "Link do Google Play",
-        "twitter": "Twittera URL",
-        "facebook": "Facebooka URL",
+        "twitter": "Twitter URL",
+        "facebook": "Facebook URL",
         "instagram": "Instagram URL",
         "github": "Github URL",
         "linkedin": "LinkedIn URL",
@@ -227,7 +253,10 @@
       },
       "emailMaxLength": "Adres e-mail nie może przekraczać 200 znaków",
       "emailInvalid": "Adres e-mail jest nieprawidłowy",
-      "emailDomainInvalid": "Domena e-mail jest nieprawidłowa"
+      "emailDomainInvalid": "Domena e-mail jest nieprawidłowa",
+      "sendMessage": "Wyślij wiadomość",
+      "securityInfo": "Informacje o bezpieczeństwie",
+      "changePassword": "Zmień hasło"
     },
     "individual": {
       "email": "E-mail",
@@ -235,13 +264,13 @@
       "lastName": "Nazwisko",
       "hideAddress": "Nie pokazuj mojego adresu",
       "iWant": "Chcę",
-      "volunteer": "Wolontariuszem",
-      "donate": "Podaruj",
-      "shareInformation": "Udostępnij informacje",
+      "volunteer": "Być wolontariuszem",
+      "donate": "Wspomagać",
+      "shareInformation": "Udostępnić informacje",
       "iNeed": "Potrzebuję",
-      "medical": "Pomoc medyczna",
+      "medical": "Pomocy medycznej",
       "haveCovidSymptoms": "Mam objawy COVID-19",
-      "other": "Inna pomoc",
+      "other": "Innej pomocy",
       "otherDesc": "Potrzebuję pomocy przy zakupie artykułów spożywczych / leków / itp.",
       "editProfile": "Edytuj profil",
       "intro": "Samodzielne wprowadzenie",
@@ -251,7 +280,20 @@
       "wantHelp": "Chcę pomóc",
       "needHelp": "Potrzebuję pomocy",
       "firstNameRequired": "Imię jest wymagane.",
-      "lastNameRequired": "Nazwisko jest wymagane."
+      "lastNameRequired": "Nazwisko jest wymagane.",
+      "newPassword": "Nowe hasło",
+      "currentPassword": "Aktualne hasło",
+      "confirmNewPassword": "Potwierdź hasło",
+      "currentPasswordRequired": "Wymagane jest aktualne hasło",
+      "newPasswordRequired": "Wymagane jest nowe hasło",
+      "confirmNewPasswordRequired": "Proszę, potwierdź swoje hasło!",
+      "passwordMatch": "Dwa wprowadzone hasła nie pasują do siebie!",
+      "passwordUpdateSuccess": "Zmiana hasła powiodła się",
+      "passwordUpdateError": "Zmiana hasła nie powiodła się",
+      "enterCurrentPassword": "Wprowadź bieżące hasło",
+      "enterNewPassword": "Wprowadź nowe hasło",
+      "updatingPassword": "Aktualizacja hasła",
+      "editSecurity": "Edytuj informacje o bezpieczeństwie"
     },
     "org": {
       "title": "Utwórz profil organizacji",
@@ -261,9 +303,9 @@
       "invalidEmail": "Adres e-mail jest nieprawidłowy",
       "globalOrg": "Jesteśmy organizacją działającą na skalę globalną",
       "seeking": "Czego szukasz?",
-      "volunteers": "Wolontariusze",
+      "volunteers": "Wolontariuszy",
       "donations": "Darowizny",
-      "staff": "Personel",
+      "staff": "Personelu",
       "other": "Inne",
       "typeAndIndustry": "Rodzaj i branża",
       "type": "Rodzaj",
@@ -313,7 +355,8 @@
       "activity": "Aktywność",
       "editAccount": "Edytuj informacje o koncie",
       "updateSuccess": "Organizacja została pomyślnie zaktualizowana",
-      "orgNameRequired": "Nazwa organizacji jest wymagana"
+      "orgNameRequired": "Nazwa organizacji jest wymagana",
+      "global": "Globalny"
     }
   },
   "auth": {
@@ -334,7 +377,8 @@
     "passwordMax": "Hasło nie może zawierać więcej niż {{num}} znaków",
     "passwordMin": "Hasło musi zawierać co najmniej {{num}} znaków",
     "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła",
-    "passwordNotMatch": "Podane hasła nie pasują do siebie"
+    "passwordNotMatch": "Podane hasła nie pasują do siebie",
+    "backHome": "Powrót do ekranu głównego"
   },
   "verifyEmail": {
     "checkInbox": "Sprawdź swoją skrzynkę odbiorczą",
@@ -344,14 +388,45 @@
   },
   "aboutUs": {
     "ourStory": "Nasza historia",
-    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który zaraził się COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić. Grupy Telegram i WhatsApp samoorganizowały się w sąsiedztwie Manuela, ale nie znając osobiście nikogo zaangażowanego, nie udało mu się poprosić o pomoc. Zainspirowany tak wielu chętnymi do pomocy, Manuel rozpoczął projekt z myślą o jednej misji: zapewnić innym możliwość współpracy.",
+    "story": "FightPandemics jest pomysłem Manuela Gonzaleza Alzuru, który zaraził się COVID-19 we Francji. Po powrocie do Barcelony stwierdził, że nie jest w stanie uzyskać pomocy, mimo że byli ludzie, którzy chcieli jej udzielić.",
     "ourCommunity": "Nasza społeczność",
-    "community": "Nasz zespół składa się z ponad 450 wolontariuszy: programistów, projektantów, naukowców, ekspertów w dziedzinie zdrowia i menedżerów produktów z całego świata",
+    "community": "Nasz zespół składa się z ponad 1100 wolontariuszy: programistów, projektantów, naukowców, ekspertów w dziedzinie zdrowia i menedżerów produktów z całego świata",
     "ourIdea": "Nasz pomysł",
     "ourSupporters": "Wspierają nas:",
     "followUs": "Śledź nas w mediach społecznościowych",
-    "contactUs": "Lub skontaktuj się z nami pod adresem",
-    "contactEmail": "contact@fightpandemics.com"
+    "contactUs": "Lub skontaktuj się z nami pod adresem: ",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "Chcemy stworzyć świat, w którym ludzie są bardziej odporni na sytuacje kryzysowe.",
+    "subHeading": "Dlatego pomagamy społecznościom szybciej i skuteczniej reagować na kryzysy.",
+    "forWhoHeading": "Dla kogo jest FightPandemics?",
+    "forWho": "Każdy lub dowolny rodzaj firmy, grupy społecznej, rządu lub organizacji opieki zdrowotnej, która potrzebuje lub chce udzielić pomocy.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Zainspirowany tak wielu chętnymi do pomocy, Manuel rozpoczął projekt z myślą o jednej misji: <span>zapewnić innym możliwość współpracy.</span>",
+    "connectPeople": "Łączymy ludzi",
+    "connect": "Altruistyczna platforma łącząca tych, którzy potrzebują pomocy, z tymi, którzy mogą jej udzielić.",
+    "howWork": "Jak to działa?",
+    "helpBoard": "Forum pomocy",
+    "helpBoardDetail": "Platforma społecznościowa umożliwiająca osobom i organizacjom oferowanie pomocy i poproszenie o nią.",
+    "localGlobal": "Lokalnie i globalnie",
+    "localGlobalDetail": "Oferuję i proszę o pomoc w mojej społeczności i na całym świecie.",
+    "relevantContent": "Istotna treść",
+    "relevantContentDetail": "Okres ważności zapewnia, że tablica jest zawsze aktualna.",
+    "goToHelpBoard": "Wyświetl forum pomocy",
+    "supporters": "Wspierają nas:",
+    "thanksSupporters": "Dziękujemy naszym sponsorom, bez nich nie bylibyśmy w stanie pomóc społecznościom w przygotowaniu się i reagowaniu na pandemie.",
+    "becomeSupporter": "Aby dowiedzieć się więcej o tym, jak Twoja firma może nas wspierać, skontaktuj się z naszym zespołem ds. Współpracy pod adresem",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Kliknij logo firmy poniżej, aby przejść do jej strony internetowej.",
+    "lifetimeSupporters": "Wspierali nas przez cały czas:",
+    "currentSupporters": "Wspierają nas obecnie:",
+    "pastSupporters": "Wspierali nas:",
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "Zaangażuj się",
+    "joinVolunteer": "Dołącz jako wolontariusz",
+    "joinAmbassador": "Dołącz jako ambasador",
+    "joinStudentProgram": "Dołącz do programu studenckiego",
+    "studentSummerProgram": "Letni program studencki",
+    "forStudentInAge": "Dla uczniów w wieku 14-18 lat."
   },
   "footer": {
     "faq": "FAQ",
@@ -595,7 +670,7 @@
       "age": "Twój wiek to?",
       "unaffected": "Normalnie chodzę do pracy/szkoły",
       "quarantine": "Jestem zdrowy, ale na kwarantannie domowej",
-      "symptomaticUntested": "Mam łagodne objawy, ale nie byłam badana",
+      "symptomaticUntested": "Mam łagodne objawy, ale nie byłem badany",
       "diagnosed": "Zostałem zdiagnozowany z Covid-19"
     }
   },
@@ -728,7 +803,8 @@
       "imageDimensionTooSmall": "Prześlij obraz, który ma co najmniej 250 pikseli wysokości i 250 pikseli szerokości.",
       "imageDimensionTooWide": "Przepraszamy, obraz jest zbyt szeroki. Spróbuj ponownie z obrazem, którego szerokość jest mniejsza niż dwukrotna wysokość.",
       "networkError": "Przepraszamy, wystąpił błąd sieci."
-    }
+    },
+    "wrongOldPassword": "Nieprawidłowe aktualne hasło"
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Usługa ta jest świadczona w dobrej wierze dla tych, którzy w przeciwnym razie nie byliby w stanie uzyskać pomocy i środków w tej bezprecedensowej sytuacji zagrożenia zdrowia publicznego.",

@@ -1,17 +1,17 @@
 import moment from "moment";
-
+import i18n from "i18next";
 import createPostSettings from "assets/data/createPostSettings";
 import filterOptions from "assets/data/filterOptions";
 
 const { type: typeFilter } = filterOptions;
 const { expires } = createPostSettings;
 
-const forever = expires.options[0].value;
-const month = expires.options[1].value;
-const week = expires.options[2].value;
-const day = expires.options[3].value;
+const day = expires.options[0].value;
+const week = expires.options[1].value;
+const month = expires.options[2].value;
+const forever = expires.options[3].value;
 
-moment.updateLocale("en", {
+moment.updateLocale(i18n.language, {
   relativeTime: {
     future: "in %s",
     past: day,
@@ -39,7 +39,7 @@ const translateISOToString = (ISO) => {
 };
 
 export const translateISOTimeTitle = (ISO) => {
-  return moment(ISO).format("YYYY-MM-DD HH:mm:ss");
+  return moment(ISO).format("YYYY-MM-DD HH:mm");
 };
 
 const getTextFromOption = (type) =>

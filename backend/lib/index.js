@@ -11,6 +11,7 @@ const feedback = require("./endpoints/feedback");
 const geo = require("./endpoints/geo");
 const organisations = require("./endpoints/organisations");
 const posts = require("./endpoints/posts");
+const reports = require("./endpoints/reports");
 const users = require("./endpoints/users");
 const sendgrid = require("./endpoints/sendgrid");
 const version = require("./endpoints/version");
@@ -51,8 +52,10 @@ module.exports = function createApp(config) {
     exposeRoute: true,
     routePrefix: "/api/documentation",
   });
+  app.register(require("./plugins/socket"), config.socket);
   app.register(require("./plugins/mongoose-connector"), config.mongo);
   app.register(require("./plugins/auth"), config.auth);
+  app.register(require("./plugins/notifier"));
   app.use(cors());
 
   app.register(auth, { prefix: "/api/auth" });
@@ -61,6 +64,7 @@ module.exports = function createApp(config) {
   app.register(organisations, { prefix: "api/organisations" });
   app.register(posts, { prefix: "/api/posts" });
   app.register(users, { prefix: "/api/users" });
+  app.register(reports, { prefix: "/api/reports" });
   app.register(sendgrid, { prefix: "/api/sendgrid" });
   app.get("/api/version", version);
 

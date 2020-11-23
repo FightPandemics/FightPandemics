@@ -6,6 +6,7 @@ import CreateOrganisationProfile from "./pages/CreateOrganisationProfile";
 import OrganisationProfile from "./pages/OrganisationProfile";
 import EditOrganisationProfile from "./pages/EditOrganisationProfile";
 import EditOrganisationAccount from "./pages/EditOrganisationAccount";
+import EditOrganisationNotifications from "./pages/EditOrganisationNotifications";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -14,6 +15,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import EditNotifications from "./pages/EditNotifications";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
@@ -24,7 +26,10 @@ import ProfileCompleted from "./pages/ProfileCompleted";
 import CreateUserProfile from "./pages/CreateUserProfile";
 import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
+import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import Unsubscribe from "./pages/Unsubscribe.js";
+import EditSecurity from './pages/EditSecurity';
 
 const routes = [
   {
@@ -58,7 +63,6 @@ const routes = [
     layout: "logo",
     props: {
       isLoginForm: false,
-      notLoggedInOnly: true,
       forgotPassword: true,
     },
   },
@@ -101,6 +105,9 @@ const routes = [
   {
     path: "/organisation/:id",
     component: OrganisationProfile,
+    props: {
+      isProfile: true,
+    },
   },
   {
     path: "/edit-organisation-account",
@@ -112,6 +119,13 @@ const routes = [
   {
     path: "/edit-organisation-profile",
     component: EditOrganisationProfile,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-organisation-notifications",
+    component: EditOrganisationNotifications,
     props: {
       loggedInOnly: true,
     },
@@ -146,6 +160,7 @@ const routes = [
     component: Feed,
     props: {
       mobiletabs: true,
+      navSearch: true,
       tabIndex: 2,
     },
   },
@@ -160,6 +175,9 @@ const routes = [
   {
     path: "/profile/:id",
     component: Profile,
+    props: {
+      isProfile: true,
+    },
   },
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {
@@ -177,8 +195,22 @@ const routes = [
     },
   },
   {
+    path: "/edit-notifications",
+    component: EditNotifications,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
     path: "/edit-account",
     component: EditAccount,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/edit-security",
+    component: EditSecurity,
     props: {
       loggedInOnly: true,
     },
@@ -215,8 +247,20 @@ const routes = [
     component: Faq,
   },
   {
+    path: "/inbox",
+    component: Inbox,
+    props: {
+      hideFooter: true,
+    },
+  },
+  {
     path: "/toggleqa",
     component: ToggleQAMode,
+  },
+  {
+    path: "/unsubscribe",
+    component: Unsubscribe,
+    layout: "logo",
   },
   {
     path: "*",

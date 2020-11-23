@@ -2,6 +2,11 @@ const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
+const PERMISSIONS = {
+  user: 0,
+  moderator: 2,
+  administrator: 4,
+};
 
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
@@ -45,12 +50,21 @@ const individualUserSchema = new Schema(
       twitter: String,
       website: String,
     },
+    permissions: {
+      type: Number,
+      required: true,
+      default: PERMISSIONS.user,
+    }
   },
   { collection: "users" },
 );
 
 individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
+});
+
+individualUserSchema.virtual("usesPassword").get(function getUsesPassword() {
+  return this.authId.startsWith("auth0");
 });
 
 individualUserSchema.virtual("organisations", {
@@ -68,4 +82,5 @@ module.exports = {
   INDIVIDUAL_USER_TYPES,
   model: IndividualUser,
   schema: individualUserSchema,
+  PERMISSIONS,
 };

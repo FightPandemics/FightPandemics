@@ -1,6 +1,7 @@
 const S = require("fluent-schema");
 const { strictSchema } = require("./utils");
 const { locationSchema } = require("./location");
+const { notifyPreferenceSchema } = require("./notificationPreference");
 
 const organisation = {
   about: S.string().maxLength(100),
@@ -37,6 +38,7 @@ const createOrganisationSchema = {
     .prop("needs", organisation.needs)
     .prop("type", organisation.type.required())
     .prop("urls", organisation.urls)
+    .prop("notifyPrefs", notifyPreferenceSchema)
     .required(["location"]),
 };
 
@@ -57,6 +59,16 @@ const getOrganisationsSchema = {
     .prop("skip", S.integer()),
 };
 
+const searchOrganisationsSchema = {
+  querystring: strictSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("limit", S.integer())
+    .prop("objective", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
+};
+
 const updateOrganisationSchema = {
   body: strictSchema()
     .prop("about", organisation.about)
@@ -68,7 +80,8 @@ const updateOrganisationSchema = {
     .prop("name", organisation.name)
     .prop("needs", organisation.needs)
     .prop("type", organisation.type)
-    .prop("urls", organisation.urls),
+    .prop("urls", organisation.urls)
+    .prop("notifyPrefs", notifyPreferenceSchema),
   params: strictSchema().prop("organisationId", S.string().required()),
 };
 
@@ -82,5 +95,6 @@ module.exports = {
   deleteOrganisationSchema,
   getOrganisationSchema,
   getOrganisationsSchema,
+  searchOrganisationsSchema,
   updateOrganisationSchema,
 };

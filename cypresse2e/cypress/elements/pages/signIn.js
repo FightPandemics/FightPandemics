@@ -1,106 +1,94 @@
 class SignIn {
+  h4Heading = "h4";
+  image = ".SocialImageSVG";
+  emailField = "#email";
+  passwordField = "#password";
+  passwordEye = "#login-password div:nth-child(2) div img";
+  emailRequired = "#login-password div small";
+  passwordRequired = "#login-password div small";
+  validEmailRequired = "#login-password div small";
+  passwordLengthRequired = "#login-password div small";
+  passwordCharacterRequired = "#login-password div small";
+  signInButton = "#SI_SI";
+  loginFailAlert = ".ant-alert-message";
+  forgotPasswordLink = ".form-container .text-center p:nth-child(1)";
+  joinNowLink = "#SI_JN";
+  signInFbButton = "#SI_FB";
+  signInGoogleButton = "#SI_GG";
+  signInLinkedinButton = "#SI_LN";
 
-    fpLogo = '.am-navbar.am-navbar-light a img';
-    h4Heading = 'h4';
-    image = '.SocialImageSVG';
-    emailField = '#email';
-    passwordField = '#password';
-    passwordEye = '#login-password div:nth-child(2) div img';
-    emailRequired = '#login-password div small';
-    passwordRequired = '#login-password div small';
-    validEmailRequired = '#login-password div small';
-    passwordLengthRequired = '#login-password div small';
-    passwordCharacterRequired = '#login-password div small';
-    signInButton = '#SI_SI';
-    loginFailAlert = '.ant-alert-message';
-    forgotPasswordLink = '.form-container .text-center p:nth-child(1)';
-    joinNowLink = '#SI_JN';
-    signInFbButton = '#SI_FB';
-    signInGoogleButton = '#SI_GG';
-    signInLinkedinButton = '#SI_LN';
+  constructor() {}
 
+  visit() {
+    cy.visit("auth/login");
+  }
 
-    constructor() { }
+  getH4Heading() {
+    return this.h4Heading;
+  }
 
-    visit() {
-        cy.visit('auth/login');
-    }
+  getImage() {
+    return this.image;
+  }
 
-    getFpLogo() {
-        return cy.get(this.fpLogo);
-    }
+  getEmailField() {
+    return cy.get(this.emailField);
+  }
 
-    getFpLogoLocator() {
-        return this.fpLogo;
-    }
-    
-    getH4Heading() {
-        return cy.get(this.h4Heading);
-    }
+  getPasswordField() {
+    return cy.get(this.passwordField);
+  }
 
-    getImage() {
-        return cy.get(this.image);
-    }
+  getPasswordEye() {
+    return cy.get(this.passwordEye);
+  }
 
-    getEmailField() {
-        return cy.get(this.emailField);
-    }
+  getEmailRequired() {
+    return cy.get(this.emailRequired);
+  }
 
-    getPasswordField() {
-        return cy.get(this.passwordField);
-    }
+  getPasswordRequired() {
+    return cy.get(this.passwordRequired);
+  }
 
-    getPasswordEye() {
-        return cy.get(this.passwordEye);
-    }
+  getValidEmailRequired() {
+    return cy.get(this.validEmailRequired);
+  }
 
-    getEmailRequired() {
-        return cy.get(this.emailRequired);
-    }
+  getPasswordLengthRequired() {
+    return cy.get(this.passwordLengthRequired);
+  }
 
-    getPasswordRequired() {
-        return cy.get(this.passwordRequired);
-    }
+  getPasswordCharacterRequired() {
+    return cy.get(this.passwordCharacterRequired);
+  }
 
-    getValidEmailRequired() {
-        return cy.get(this.validEmailRequired);
-    }
+  getSignInButton() {
+    return cy.get(this.signInButton);
+  }
 
-    getPasswordLengthRequired() {
-        return cy.get(this.passwordLengthRequired);
-    }
+  getLoginFailAlert() {
+    return cy.get(this.loginFailAlert);
+  }
 
-    getPasswordCharacterRequired() {
-        return cy.get(this.passwordCharacterRequired);
-    }
+  getForgotPasswordLink() {
+    return cy.get(this.forgotPasswordLink);
+  }
 
-    getSignInButton() {
-        return cy.get(this.signInButton);
-    }
+  getJoinNowLink() {
+    return cy.get(this.joinNowLink);
+  }
 
-    getLoginFailAlert() {
-        return cy.get(this.loginFailAlert);
-    }
+  getSignInFbButton() {
+    return cy.get(this.signInFbButton);
+  }
 
-    getForgotPasswordLink() {
-        return cy.get(this.forgotPasswordLink);
-    }
+  getSignInGoogleButton() {
+    return cy.get(this.signInGoogleButton);
+  }
 
-    getJoinNowLink() {
-        return cy.get(this.joinNowLink);
-    }
-
-    getSignInFbButton() {
-        return cy.get(this.signInFbButton);
-    }
-
-    getSignInGoogleButton() {
-        return cy.get(this.signInGoogleButton);
-    }
-
-    getSignInLinkedinButton() {
-        return cy.get(this.signInLinkedinButton);
-    }
-
+  getSignInLinkedinButton() {
+    return cy.get(this.signInLinkedinButton);
+  }
 }
 export default SignIn;

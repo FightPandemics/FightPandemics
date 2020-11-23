@@ -52,7 +52,9 @@ function EditOrganisationProfile(props) {
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: "change",
+  });
   const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
@@ -108,9 +110,9 @@ function EditOrganisationProfile(props) {
       "LinkedIn URL",
       {
         pattern: {
-          value: /^[a-zA-Z0-9_\-/]*$/,
+          value: /^[a-zA-Z0-9\-]*$/,
           message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 _ - /",
+            characters: "A-Z a-z 0-9 -",
           }),
         },
       },
@@ -179,7 +181,7 @@ function EditOrganisationProfile(props) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId]);
+  }, [orgProfileDispatch, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderProfilePicture = () => {
     if (organisation) {
@@ -221,6 +223,11 @@ function EditOrganisationProfile(props) {
             <CustomLink isSelected>
               <Link to={`/edit-organisation-profile/${organisationId}`}>
                 {t("profile.common.profileInfo")}
+              </Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                {t("profile.common.notificationInfo")}
               </Link>
             </CustomLink>
           </OptionDiv>

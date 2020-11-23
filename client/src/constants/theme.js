@@ -14,6 +14,9 @@ import {
   WHITE,
   OFF_WHITE,
   TROPICAL_BLUE,
+  GRAY,
+  LIGHTER_BLACK,
+  GHOST_WHITE,
 } from "./colors";
 
 const theme = {
@@ -72,6 +75,9 @@ const theme = {
     black: BLACK,
     white: WHITE,
     offWhite: OFF_WHITE,
+    gray: GRAY,
+    lighterBlack: LIGHTER_BLACK,
+    ghostWhite: GHOST_WHITE,
   },
   button: {
     fontFamily: "DM Sans",

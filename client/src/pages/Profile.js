@@ -9,34 +9,29 @@ import React, {
   useRef,
 } from "react";
 import { Link } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
-import { NoPosts } from "pages/Feed";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 
 import {
   ProfileLayout,
-  BackgroundHeader,
-  MenuIcon,
+  ProfileBackgroup,
   UserInfoContainer,
   EditIcon,
   UserInfoDesktop,
   NameDiv,
   PlaceholderIcon,
-  EditEmptyIcon,
   DescriptionDesktop,
-  LocationDesktopDiv,
-  LocationMobileDiv,
   IconsContainer,
   HelpContainer,
-  LocationIcon,
   SocialIcon,
-  DescriptionMobile,
   SectionHeader,
   CreatePostDiv,
   CreatePostIcon,
@@ -54,21 +49,15 @@ import {
   GITHUB_URL,
 } from "constants/urls";
 import {
-  postsReducer,
-  postsState as initialPostsState,
+  deletePostModalreducer,
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+import { selectPosts, postsActions } from "reducers/posts";
 import {
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  SET_LOADING,
-  NEXT_PAGE,
-  RESET_PAGE,
-  ERROR_POSTS,
-  FETCH_POSTS,
-  SET_POSTS,
 } from "hooks/actions/feedActions";
 import {
   fetchUser,
@@ -79,20 +68,19 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { LOGIN } from "templates/RouteWithSubRoutes";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
-import menu from "assets/icons/menu.svg";
 import edit from "assets/icons/edit.svg";
-import editEmpty from "assets/icons/edit-empty.svg";
-import facebookIcon from "assets/icons/social-facebook.svg";
-import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
+import instagramIcon from "assets/icons/social-instagram.svg";
+import linkedinBlue from "assets/icons/social-linkedin.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import twitterBlue from "assets/icons/social-tw.svg";
 import githubIcon from "assets/icons/social-github.svg";
-import linkedinBlue from "assets/icons/social-linkedin-blue.svg";
-import twitterBlue from "assets/icons/social-twitter-blue.svg";
-import locationIcon from "assets/icons/location.svg";
-import websiteIcon from "assets/icons/social-website-blue.svg";
+import websiteIcon from "assets/icons/website-icon.svg";
+
+import locationIcon from "assets/icons/status-indicator.svg";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -106,18 +94,20 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const Profile = ({
+  isAuthenticated,
   match: {
     params: { id: pathUserId },
   },
-  history,
-  isAuthenticated,
 }) => {
+  const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [postsState, postsDispatch] = useReducer(
-    postsReducer,
-    initialPostsState,
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
   );
+  const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { t } = useTranslation();
@@ -136,6 +126,7 @@ const Profile = ({
     objectives = {},
     ownUser,
     urls = {},
+    usesPassword = false,
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
@@ -145,14 +136,16 @@ const Profile = ({
     loadMore,
     page,
     posts: postsList,
-    deleteModalVisibility,
-    status,
     error: postsError,
-  } = postsState;
-
+  } = posts;
+  const { deleteModalVisibility } = deleteModal;
+  if (ownUser) sessionStorage.removeItem("msgModal");
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
+  const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
+  const isSelf = actorId === userId;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -162,7 +155,12 @@ const Profile = ({
     return ref.current;
   }
 
+  const getActorQuery = () => {
+    return organisationId ? `&actorId=${organisationId}` : "";
+  };
+
   useEffect(() => {
+    dispatch(postsActions.resetPageAction({}));
     (async function fetchProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -181,42 +179,35 @@ const Profile = ({
         );
       }
     })();
-  }, [pathUserId, t, userProfileDispatch]);
+  }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
-      postsDispatch({ type: FETCH_POSTS });
+      dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}`;
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
 
           if (prevUserId !== userId) {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: [],
-            });
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: [],
+              }),
+            );
           }
           if (posts.length && meta.total) {
             if (prevTotalPostCount !== meta.total) {
               setTotalPostCount(meta.total);
             }
             if (posts.length < limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
             } else if (meta.total === limit) {
-              postsDispatch({
-                type: SET_LOADING,
-                isLoading: true,
-                loadMore: false,
-              });
+              dispatch(postsActions.finishLoadingAction());
             }
             const loadedPosts = posts.reduce((obj, item) => {
               obj[item._id] = item;
@@ -224,43 +215,38 @@ const Profile = ({
             }, {});
 
             if (prevUserId === userId && postsList) {
-              postsDispatch({
-                type: SET_POSTS,
-                posts: { ...postsList, ...loadedPosts },
-              });
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...postsList, ...loadedPosts },
+                }),
+              );
             } else {
-              postsDispatch({
-                type: SET_POSTS,
-                posts: { ...loadedPosts },
-              });
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...loadedPosts },
+                }),
+              );
             }
           } else if (prevUserId === userId && posts) {
-            postsDispatch({
-              type: SET_POSTS,
-              posts: { ...postsList },
-            });
-            postsDispatch({
-              type: SET_LOADING,
-              isLoading: false,
-              loadMore: false,
-            });
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: { ...postsList },
+              }),
+            );
+            dispatch(postsActions.finishLoadingAction());
           } else {
-            postsDispatch({ type: SET_LOADING });
+            dispatch(postsActions.finishLoadingAction());
           }
         }
       } catch (error) {
-        postsDispatch({ error, type: ERROR_POSTS });
+        dispatch(postsActions.fetchPostsError(error));
       }
     };
     fetchPosts();
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
-    postsDispatch({
-      type: RESET_PAGE,
-      isLoading,
-      loadMore,
-    });
+    dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
@@ -277,14 +263,14 @@ const Profile = ({
         userPosts.length
       ) {
         return new Promise((resolve) => {
-          postsDispatch({ type: NEXT_PAGE });
+          dispatch(postsActions.setNextPageAction());
           resolve();
         });
       } else {
         return Promise.resolve();
       }
     },
-    [isLoading, loadMore, userPosts.length],
+    [dispatch, isLoading, loadMore, userPosts.length],
   );
 
   useEffect(() => {
@@ -320,241 +306,205 @@ const Profile = ({
   };
 
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
   };
 
   const handleEditPost = () => {
-    if (postsState.editPostModalVisibility) {
-      postsDispatch({
+    if (deleteModal.editPostModalVisibility) {
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: false,
       });
     } else {
-      postsDispatch({
+      deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
     }
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
-
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  console.log("urls", location);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
   return (
-    <ProfileLayout>
-      <BackgroundHeader>
-        <MenuIcon src={menu} />
-      </BackgroundHeader>
-      <UserInfoContainer>
-        {ownUser && (
-          <EditIcon
-            src={edit}
-            id={GTM.user.profilePrefix + GTM.profile.modify}
-            onClick={onToggleDrawer}
-          />
-        )}
-        <div>
+    <>
+      <ProfileBackgroup />
+      <ProfileLayout>
+        <UserInfoContainer>
           <AvatarPhotoContainer>
             <ProfilePic
               user={user}
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             <PhotoUploadButton>
-              {ownUser && (
+              {isSelf && (
                 <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
               )}
             </PhotoUploadButton>
           </AvatarPhotoContainer>
-        </div>
-        <UserInfoDesktop>
-          <NameDiv>
-            <NamePara>
-              {firstName} {lastName}
-            </NamePara>
-
+          <UserInfoDesktop>
+            <NameDiv>
+              <div className="name-container">
+                <NamePara>
+                  {firstName} {lastName}
+                </NamePara>
+                {address && (
+                  <div title={address} className="address-container">
+                    <img src={locationIcon} alt={address} />
+                    {address}
+                  </div>
+                )}
+              </div>
+              {isSelf && (
+                <EditIcon
+                  src={edit}
+                  id={GTM.user.profilePrefix + GTM.profile.modify}
+                  onClick={onToggleDrawer}
+                />
+              )}
+              {!ownUser && (
+                <MessageModal
+                  isAuthenticated={isAuthenticated}
+                  isFromUserCard={"USER"}
+                  isFromProfile={true}
+                  postAuthorName={`${firstName} ${lastName}`}
+                  authorId={userId}
+                />
+              )}
+            </NameDiv>
+            {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+            <IconsContainer>
+              <HelpContainer>
+                {needHelp && <div>{t("profile.individual.needHelp")}</div>}
+                {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
+              </HelpContainer>
+              <div className="social-icons">
+                {Object.entries(urls).map(([name, url]) => {
+                  return (
+                    url && (
+                      <a
+                        href={
+                          name === "website"
+                            ? getHref(url)
+                            : `${URLS[name][1]}${url}`
+                        }
+                        key={name}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <SocialIcon src={URLS[name][0]} />
+                      </a>
+                    )
+                  );
+                })}
+              </div>
+            </IconsContainer>
+          </UserInfoDesktop>
+        </UserInfoContainer>
+        <WhiteSpace />
+        <div>
+          <SectionHeader>
+            {isSelf
+              ? t("profile.individual.myActivity")
+              : t("profile.individual.userActivity")}
             <PlaceholderIcon />
-            {ownUser && (
-              <EditEmptyIcon
-                src={editEmpty}
-                id={GTM.user.profilePrefix + GTM.profile.modify}
-                onClick={onToggleDrawer}
+            {isSelf && (
+              <>
+                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
+                />
+              </>
+            )}
+          </SectionHeader>
+          <FeedWrapper isProfile>
+            <Activity
+              postDispatch={dispatch}
+              filteredPosts={postsList}
+              user={user}
+              postDelete={postDelete}
+              handlePostDelete={handlePostDelete}
+              handleEditPost={handleEditPost}
+              deleteModalVisibility={deleteModalVisibility}
+              handleCancelPostDelete={handleCancelPostDelete}
+              loadNextPage={loadNextPage}
+              isNextPageLoading={isLoading}
+              itemCount={itemCount}
+              isItemLoaded={isItemLoaded}
+              hasNextPage={loadMore}
+              totalPostCount={totalPostCount}
+            />
+            {postsError && (
+              <ErrorAlert
+                message={t([
+                  `error.${postsError.message}`,
+                  `error.http.${postsError.message}`,
+                ])}
               />
             )}
-          </NameDiv>
-          <DescriptionDesktop> {about} </DescriptionDesktop>
-          {address ? (
-            <LocationMobileDiv>{address}</LocationMobileDiv>
-          ) : (
-            <WhiteSpace />
-          )}
-          <IconsContainer>
-            <HelpContainer>
-              {needHelp && t("profile.individual.needHelp")}
-              {offerHelp && t("profile.individual.wantHelp")}
-            </HelpContainer>
-            <LocationDesktopDiv>
-              {address && <LocationIcon src={locationIcon} />}
-              {needHelp && t("profile.individual.needHelp")}
-              {offerHelp && t("profile.individual.wantHelp")}{" "}
-              {address && `• ${address}`}
-            </LocationDesktopDiv>
-            <PlaceholderIcon />
-            {Object.entries(urls).map(([name, url]) => {
-              return (
-                url && (
-                  <a
-                    href={
-                      name === "website"
-                        ? getHref(url)
-                        : `${URLS[name][1]}${url}`
-                    }
-                    key={name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <SocialIcon src={URLS[name][0]} />
-                  </a>
-                )
-              );
-            })}
-          </IconsContainer>
-        </UserInfoDesktop>
-      </UserInfoContainer>
-      <WhiteSpace />
-      <div style={{ margin: "0 2.5rem" }}>
-        <WhiteSpace />
-        <DescriptionMobile>
-          <SectionHeader> {t("profile.org.about")}</SectionHeader>
-          {about}
-        </DescriptionMobile>
-        <WhiteSpace />
-        <SectionHeader>
-          {ownUser
-            ? t("profile.individual.myActivity")
-            : t("profile.individual.userActivity")}
-          <PlaceholderIcon />
-          {ownUser && (
-            <>
-              <CreatePostDiv>{t("post.create")}</CreatePostDiv>
-              <CreatePostIcon
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                src={createPost}
-                onClick={onToggleCreatePostDrawer}
+            {emptyFeed() && <></>}
+            {isSelf && (
+              <CreatePost
+                onCancel={onToggleCreatePostDrawer}
+                loadPosts={refetchPosts}
+                visible={modal}
+                user={user}
+                gtmPrefix={GTM.user.profilePrefix}
               />
-            </>
-          )}
-        </SectionHeader>
-        <FeedWrapper>
-          <Activity
-            filteredPosts={postsList}
-            user={user}
-            postDelete={postDelete}
-            handlePostDelete={handlePostDelete}
-            handleEditPost={handleEditPost}
-            deleteModalVisibility={deleteModalVisibility}
-            handleCancelPostDelete={handleCancelPostDelete}
-            handlePostLike={handlePostLike}
-            loadNextPage={loadNextPage}
-            isNextPageLoading={isLoading}
-            itemCount={itemCount}
-            isItemLoaded={isItemLoaded}
-            hasNextPage={loadMore}
-            totalPostCount={totalPostCount}
-          />
-          {status === ERROR_POSTS && (
-            <ErrorAlert
-              message={t([
-                `error.${postsError.message}`,
-                `error.http.${postsError.message}`,
-              ])}
-            />
-          )}
-          {emptyFeed() && <></>}
-          {ownUser && (
-            <CreatePost
-              onCancel={onToggleCreatePostDrawer}
-              loadPosts={refetchPosts}
-              visible={modal}
-              user={user}
-              gtmPrefix={GTM.user.profilePrefix}
-            />
-          )}
-        </FeedWrapper>
-      </div>
-      {ownUser && (
-        <CustomDrawer
-          placement="bottom"
-          closable={false}
-          onClose={onToggleDrawer}
-          visible={drawer}
-          height="150px"
-          key="bottom"
-        >
-          <DrawerHeader>
-            <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
-          </DrawerHeader>
-          <DrawerHeader>
-            <Link to="/edit-profile">
-              {t("profile.individual.editProfile")}{" "}
-            </Link>
-          </DrawerHeader>
-        </CustomDrawer>
-      )}
-      <WhiteSpace />
-    </ProfileLayout>
+            )}
+          </FeedWrapper>
+        </div>
+        {isSelf && (
+          <CustomDrawer
+            placement="bottom"
+            closable={false}
+            onClose={onToggleDrawer}
+            visible={drawer}
+            height="auto"
+            key="bottom"
+          >
+            <DrawerHeader>
+              <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+            </DrawerHeader>
+            <DrawerHeader>
+              <Link to="/edit-profile">
+                {t("profile.individual.editProfile")}{" "}
+              </Link>
+            </DrawerHeader>
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
+              </Link>
+            </DrawerHeader>
+            {usesPassword && (
+              <DrawerHeader>
+                <Link to="/edit-security">
+                  {t("profile.individual.editSecurity")}{" "}
+                </Link>
+              </DrawerHeader>
+            )}
+          </CustomDrawer>
+        )}
+      </ProfileLayout>
+    </>
   );
 };
 
