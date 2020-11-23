@@ -910,7 +910,7 @@
     },
     "selectRequest": {
       "header": "Select any message request to read",
-      "p1": "The content of the message request would apprear here",
+      "p1": "The content of the message request would appear here",
       "p2": "once you select one from the message requests inbox."
     },
     "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
