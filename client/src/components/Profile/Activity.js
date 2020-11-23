@@ -9,12 +9,14 @@ import {
 } from "react-virtualized";
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
+import GTM from "constants/gtm-tags";
 
 const cellMeasurerCache = new CellMeasurerCache({
   fixedWidth: true,
   defaultHeight: 380,
 });
 const Activity = ({
+  postDispatch,
   filteredPosts,
   updateComments,
   user,
@@ -23,7 +25,6 @@ const Activity = ({
   handleCancelPostDelete,
   postDelete,
   deleteModalVisibility,
-  handlePostLike,
   loadNextPage,
   isNextPageLoading,
   itemCount,
@@ -41,16 +42,17 @@ const Activity = ({
       } else if (posts[index]) {
         content = (
           <Post
+            postDispatch={postDispatch}
             currentPost={posts[index][1]}
             updateComments={updateComments}
             numComments={posts[index][1].commentsCount}
-            handlePostLike={handlePostLike}
             postDelete={postDelete}
             user={user}
             deleteModalVisibility={deleteModalVisibility}
             onChange={handlePostDelete}
             handleCancelPostDelete={handleCancelPostDelete}
             onSelect={handleEditPost}
+            gtmPrefix={GTM.profile.viewProfilePrefix}
           />
         );
       }
@@ -75,10 +77,10 @@ const Activity = ({
       handleCancelPostDelete,
       handleEditPost,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       isItemLoaded,
       postDelete,
+      postDispatch,
       posts,
       updateComments,
       user,

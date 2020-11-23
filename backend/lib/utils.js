@@ -83,6 +83,15 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
+const getReqParam = (req, paramName) => {
+  // check in body props OR path params OR query params (might be null)
+  const body = req.body || {}; // might be null
+  const params = req.params || {};
+  const query = req.query || {};
+
+  return body[paramName] || params[paramName] || query[paramName];
+};
+
 const createSearchRegex = (keywords) => {
   let cleanKeywords = keywords.replace(/[.*+?^${}()|[\]\\\.]/g, "\\$&");
   let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
@@ -101,13 +110,42 @@ const createSearchRegex = (keywords) => {
     "ig",
   );
   return keywordsRegex;
-}
+};
+
+const getSocketIdByUserId = (app, userId) => {
+  return new Promise((resolve) => {
+    app.io
+      .of("/")
+      .adapter.customRequest(
+        { type: "getSocketIdByUserId", userId },
+        (err, replies) => {
+          // replies is an array of element pushed by cb(element) on individual socket.io server
+          // remove empty replies
+          const filtered = replies.filter((reply) => reply != null);
+          resolve(filtered[0]);
+        },
+      );
+  });
+};
+
+const isUserInRoom = (app, threadId, socketId) => {
+  return new Promise((resolve) => {
+    app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
+      if (err) return resolve(false);
+      if (!rooms.includes(threadId)) return resolve(false);
+      return resolve(true);
+    });
+  });
+};
 
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
   getCookieToken,
+  getSocketIdByUserId,
+  isUserInRoom,
+  getReqParam,
   isValidEmail,
   isValidPassword,
   createSearchRegex,

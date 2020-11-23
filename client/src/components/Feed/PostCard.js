@@ -7,7 +7,6 @@ import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
 const { royalBlue, darkGray } = colors;
-const { display } = typography.font.family;
 const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
@@ -187,6 +186,11 @@ const PostCard = styled(Card)`
         span {
           width: 4rem;
         }
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          span {
+            width: 3rem;
+          }
+        }
         .social-icon {
           color: ${darkGray};
           cursor: pointer;
@@ -200,12 +204,19 @@ const PostCard = styled(Card)`
           }
         }
 
-        .total-number {
+        .number-with-text {
           font-size: ${medium};
           display: inline;
-
-          @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            display: none;
+          }
+        }
+        .number-only {
+          display: none;
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
             display: inline;
+            font-size: ${large}!important;
+            font-weight: 500;
           }
         }
       }

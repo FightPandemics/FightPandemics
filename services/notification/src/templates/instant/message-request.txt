@@ -1,0 +1,3 @@
+{{senderName}} sent you a direct message request {{postTextCopy}}
+
+View inbox: {{{baseUrl}}}/inbox

@@ -24,6 +24,7 @@ const CookieContainer = styled.div`
   left: 0;
   right: 0;
   text-align: left;
+  z-index: 2;
 `;
 
 const CookieLink = styled.a`
