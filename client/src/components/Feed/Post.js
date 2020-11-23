@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
 import axios from "axios";
+import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -18,6 +19,7 @@ import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
+import PostDropdownButton from "components/Button/PostDropdownButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
@@ -303,6 +305,26 @@ const Post = ({
         );
       }
     }
+  };
+
+  const handleSave = () => {
+    // save post functionality here
+    console.log('"Save Post" was clicked.');
+  };
+
+  const handleFollow = () => {
+    // follow post functionality here
+    console.log('"Follow Post" was clicked.');
+  };
+
+  const handleHide = () => {
+    // hide post functionality here
+    console.log('"Hide Post" was clicked.');
+  };
+
+  const handleReport = () => {
+    // report post functionality here
+    console.log('"Report Post" was clicked.');
   };
 
   const renderExternalLinks = () => {
@@ -593,12 +615,21 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-              {isAuthenticated && actorId === post.author.id && (
+              {isAuthenticated && actorId === post.author.id ? (
                 <SubMenuButton
                   onChange={handleDelete}
                   onSelect={onSelect}
                   post={post}
                   user={user}
+                  postId={postId}
+                />
+              ) : (
+                <PostDropdownButton
+                  onSave={handleSave}
+                  onFollow={handleFollow}
+                  onHide={handleHide}
+                  onReport={handleReport}
+                  post={post}
                   postId={postId}
                 />
               )}
