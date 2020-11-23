@@ -1,0 +1,13 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "rules": {
+    "global-require": "off",
+    "no-underscore-dangle": "off",
+    "sort-keys": ["error", "asc"]
+  }
+}

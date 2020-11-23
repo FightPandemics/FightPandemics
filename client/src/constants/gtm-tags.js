@@ -10,6 +10,7 @@ module.exports = {
     inbox: "_INB",
     language: "_LS",
     switch: "_SWC",
+    notifications: "_NOT",
   },
   homePage: {
     prefix: "HP",
@@ -178,4 +179,11 @@ module.exports = {
     joinAmbassador: "_GI_JA",
     joinStudentProgram: "_GI_JSP",
   },
+  notifications: {
+    prefix: "NOT",
+    like: "_LK",
+    share: "_SH",
+    comment: "_CM",
+    settings: "_SET",
+  }
 };

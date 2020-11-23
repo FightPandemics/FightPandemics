@@ -14,6 +14,7 @@ function onSocketConnect(socket) {
   const User = this.mongo.model("User");
   const Post = this.mongo.model("Post");
   const Message = this.mongo.model("Message");
+  const Notification = this.mongo.model("Notification");
   const Organisation = this.mongo.model("OrganisationUser");
 
   // "auth" check middleware, all events require auth, except "IDENTIFY"
@@ -415,6 +416,38 @@ function onSocketConnect(socket) {
     if (recipientSocketId)
       this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", data.threadId);
   });
+
+  socket.on("GET_NOTIFICATIONS", async (data, res) => {
+    const { userId } = socket;
+    const [notificationsErr, notifications] = await this.to(
+      Notification.find({ receiver: userId }).sort({ createdAt: -1 }),
+    );
+    if (notificationsErr)
+      return res({ code: 500, message: "Internal server error" });
+    res({ code: 200, data: notifications });
+  });
+
+  socket.on("MARK_NOTIFICATIONS_AS_READ", async () => {
+    const { userId } = socket;
+    const [updateErr, update] = await this.to(
+      Notification.updateMany(
+        { receiver: this.mongo.base.Types.ObjectId(userId), readAt: null },
+        { readAt: new Date() },
+      ),
+    );
+  });
+
+  socket.on("POST_SHARED", async (data) => {
+    const { userId } = socket;
+    const [errPost, post] = await this.to(Post.findById(data.postId));
+    if (errPost || !post) return;
+    const decodedToken = this.jwt.decode(socket.request.cookies.token);
+    const authUserId = decodedToken.payload[auth.jwtMongoIdKey];
+    // action, post, actorId, authUserId, {sharedVia}
+    this.notifier.notify("share", post, userId, authUserId, {
+      sharedVia: data.sharedVia,
+    });
+  });
 }
 
 function fastifySocketIo(app, config, next) {
@@ -432,7 +465,7 @@ function fastifySocketIo(app, config, next) {
           Object.values(io.of("/").connected).find(
             (socket) => socket.userId === request.userId,
           ) || null;
-          callback(userSocket ? userSocket.id : null);
+        callback(userSocket ? userSocket.id : null);
       }
       // add more request types if you need something that runs on all nodes
       callback();

@@ -10,7 +10,7 @@ on:
       - backend/**
       - client/**
       - main.tf
-      - .github/workflows/**
+      - .github/workflows/staging-workflow.yml
       - terraform-task-module/**
 
 jobs:

@@ -536,19 +536,15 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-                {isAuthenticated &&
-                  user &&
-                  (isAuthorUser(user, post) ||
-                    (user.organisations &&
-                      isAuthorOrg(user.organisations, post.author))) && (
-                    <SubMenuButton
-                      onSelect={onSelect}
-                      onChange={onChange}
-                      postId={postId}
-                      post={post}
-                      user={user}
-                    />
-                  )}
+                {isAuthenticated && actorId === post.author.id && (
+                  <SubMenuButton
+                    onSelect={onSelect}
+                    onChange={onChange}
+                    postId={postId}
+                    post={post}
+                    user={user}
+                  />
+                )}
               </div>
             </div>
             <WhiteSpace size="md" />
@@ -597,18 +593,15 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (isAuthorUser(user, post) ||
-                  isAuthorOrg(user.organisations, post.author)) && (
-                  <SubMenuButton
-                    onChange={handleDelete}
-                    onSelect={onSelect}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                  />
-                )}
+              {isAuthenticated && actorId === post.author.id && (
+                <SubMenuButton
+                  onChange={handleDelete}
+                  onSelect={onSelect}
+                  post={post}
+                  user={user}
+                  postId={postId}
+                />
+              )}
             </div>
           </div>
           <WhiteSpace size="md" />

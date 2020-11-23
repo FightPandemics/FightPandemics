@@ -151,6 +151,10 @@
       }
     }
   },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
   "post": {
     "create": "Create a post",
     "continueAs": "Continue Posting As",
@@ -207,6 +211,7 @@
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
+    "share_plural": "Shares",
     "delete": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -216,6 +221,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
+      "notificationInfo": "Notification Preference",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -254,6 +260,11 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
+      "emailNotification": "Email Notification",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
       "sendMessage": "Send Message",
       "securityInfo": "Security Information",
       "changePassword": "Change Password"
@@ -273,6 +284,7 @@
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
       "editProfile": "Edit Profile",
+      "editNotification": "Edit Notification",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -948,5 +960,16 @@
     "send": "Send",
     "done": "Done",
     "close": "Close"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Unsubscribe",
+      "canceled": "No changes will be made to your notification preferences",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
   }
 }

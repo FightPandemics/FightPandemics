@@ -151,6 +151,10 @@
       }
     }
   },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
   "post": {
     "create": "Create a post",
     "continueAs": "Continue Posting As",
@@ -207,6 +211,7 @@
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
+    "share_plural": "Shares",
     "delete": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -216,6 +221,7 @@
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
+      "notificationInfo": "Notification Preference",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -241,6 +247,7 @@
       "maxCharacters": "{{maxNum}} characters max.",
       "minCharacters": "{{minNum}} characters minimum.",
       "validCharacters": "Valid characters are: {{characters}}.",
+      "sendMessage": "Send Message",
       "urls": {
         "appStore": "Link to Apple Store",
         "playStore": "Link to Google Play",
@@ -254,7 +261,11 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
-      "sendMessage": "Send Message",
+      "emailNotification": "Email Notification",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
       "securityInfo": "Security Information",
       "changePassword": "Change Password"
     },
@@ -851,5 +862,10 @@
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again"
+  },
+  "unsubscribe": {
+    "unsubscribe": "Unsubscribe",
+    "canceled": "Operation is canceled",
+    "success": "Your notification preference is updated"
   }
 }

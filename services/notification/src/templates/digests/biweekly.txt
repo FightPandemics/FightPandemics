@@ -1,0 +1,3 @@
+Your top posts for the past two weeks
+
+{{{posts}}}
