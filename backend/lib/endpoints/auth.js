@@ -57,7 +57,6 @@ async function routes(app) {
           organisations,
           photo,
           usesPassword,
-          photo, // home page need photo
         };
       }
       return {
