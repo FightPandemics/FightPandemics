@@ -24,6 +24,7 @@ export const DrawerHeader = styled.div`
   a[href] {
     color: ${colors.black};
     font-size: 1.7rem;
+    display: block;
   }
 `;
 
