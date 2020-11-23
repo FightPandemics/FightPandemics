@@ -42,7 +42,13 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations, usesPassword } = dbUser;
+        const {
+          firstName,
+          lastName,
+          organisations,
+          usesPassword,
+          photo,
+        } = dbUser;
         user = {
           email,
           firstName,
@@ -50,6 +56,7 @@ async function routes(app) {
           lastName,
           organisations,
           usesPassword,
+          photo, // home page need photo
         };
       }
       return {
