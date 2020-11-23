@@ -18,6 +18,25 @@ const POST_TYPES = [
   "Wellbeing/Mental",
   "Tech",
 ];
+const POST_STATUS = ["public", "reported", "removed"];
+const reportSchema = new Schema(
+  {
+    id: {
+      ref: "User",
+      required: true,
+      type: ObjectId,
+    },
+    reason: {
+      required: true,
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
+  },
+  { _id: false },
+);
 
 // -- Schema
 const postSchema = new Schema(
@@ -49,6 +68,16 @@ const postSchema = new Schema(
       required: true,
       trim: true,
       type: String,
+    },
+    reportedBy: {
+      default: [],
+      type: [reportSchema],
+    },
+    status: {
+      required: true,
+      type: String,
+      enum: POST_STATUS,
+      default: "public",
     },
     title: {
       required: true,
@@ -186,6 +215,11 @@ postSchema.index(
     },
   },
 );
+// report status index
+postSchema.index({ status: 1 });
+
+// reportedBy user id index
+postSchema.index({ "reportedBy.id": 1 });
 
 // -- Model
 const Post = model("Post", postSchema);
