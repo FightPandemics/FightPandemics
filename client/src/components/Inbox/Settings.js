@@ -74,10 +74,11 @@ const ThreadsListContainer = styled.div`
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    position: fixed;
-    height: calc(100vh - 10rem);
     width: 100vw;
-    bottom: 0;
+    position: absolute;
+    top: 6rem;
+    display: block;
+    height: calc(100vh - 10rem);
   }
 `;
 const StyledButton = styled(Button)`
