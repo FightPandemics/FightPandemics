@@ -4,8 +4,8 @@ const { strictSchema } = require("./utils");
 const HEALTH_FACILITY_TYPES = {
   HOSPITAL: "hospital",
   DOCTOR: "doctor",
-  PHARMACY: "pharmacy"
-}
+  PHARMACY: "pharmacy",
+};
 
 const getAddressPredictionsSchema = {
   querystring: strictSchema()
@@ -23,15 +23,20 @@ const getLocationDetailsSchema = {
 
 const getLocationReverseGeocodeSchema = {
   querystring: strictSchema()
-    .prop("lat", S.number().minimum(0).maximum(90).required())
+    .prop("lat", S.number().minimum(-90).maximum(90).required())
     .prop("lng", S.number().minimum(-180).maximum(180).required()),
 };
 
 const getHealthFacilityPlacesSchema = {
   querystring: strictSchema()
-    .prop("lat", S.number().minimum(0).maximum(90).required())
+    .prop("lat", S.number().minimum(-90).maximum(90).required())
     .prop("lng", S.number().minimum(-180).maximum(180).required())
-    .prop("type", S.string().enum(Object.values(HEALTH_FACILITY_TYPES)).default(HEALTH_FACILITY_TYPES.HOSPITAL)),
+    .prop(
+      "type",
+      S.string()
+        .enum(Object.values(HEALTH_FACILITY_TYPES))
+        .default(HEALTH_FACILITY_TYPES.HOSPITAL),
+    ),
 };
 
 module.exports = {
