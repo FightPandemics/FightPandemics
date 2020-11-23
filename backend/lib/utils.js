@@ -1,6 +1,7 @@
 const moment = require("moment");
 const tlds = require("tlds");
 const _isEmail = require("validator/lib/isEmail");
+const { PERMISSIONS } = require("./models/IndividualUser");
 
 const generateUUID = ({ range }) => {
   const chars =
@@ -21,7 +22,7 @@ const getCookieToken = (req) => req.cookies.token;
 
 // email validation code from front-end 'src\utils\validators'
 const isValidTopLevelDomain = (string) => {
-  return tlds.some(tld => string.endsWith("." + tld));
+  return tlds.some((tld) => string.endsWith("." + tld));
 };
 
 const isValidEmail = (email) => {
@@ -43,7 +44,7 @@ const isValidPassword = (password) => {
     containsSpecialChars(password),
   ];
 
-  return passwordChecks.filter(isValid => isValid).length >= 3;
+  return passwordChecks.filter((isValid) => isValid).length >= 3;
 };
 
 const relativeTimeObject = (number, unit) => ({
@@ -138,6 +139,17 @@ const isUserInRoom = (app, threadId, socketId) => {
   });
 };
 
+const setReqPermLevel = (level) => {
+  return (req, res, done) => {
+
+    // level "user", or not found
+    if (!PERMISSIONS[level]) return done();
+
+    req.permLevel = level;
+    done();
+  };
+};
+
 module.exports = {
   bool,
   dateToEpoch,
@@ -150,4 +162,5 @@ module.exports = {
   isValidPassword,
   createSearchRegex,
   setElapsedTimeText,
+  setReqPermLevel,
 };
