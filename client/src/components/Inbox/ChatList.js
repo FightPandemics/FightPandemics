@@ -77,45 +77,46 @@ export const ChatList = ({
     return (
       <>
         {roomsToShow.map((_room) => {
-          const receiver = getReceiver(_room.participants)
+          const receiver = getReceiver(_room.participants);
           return (
-          <SideChatContainer
-            className={`${_room._id === room?._id ? "selected" : ""}`}
-            key={_room._id}
-            toggleMobileChatList={toggleMobileChatList}
-            tabIndex="1"
-            onClick={() => {
-              if (!room || room._id !== _room._id)
-                joinRoom({
-                  threadId: _room._id,
-                });
-            }}
-          >
-            <Badge>
-              <TextAvatar src={receiver.photo}>
-                {getInitialsFromFullName(receiver.name)}
-              </TextAvatar>
-              <span className={`status-indicator ${_room.userStatus}`}></span>
-            </Badge>
-            <content>
-              <header>
-                <UserName>{receiver.name}</UserName>
-                <h5>
-                  {_room.lastMessage
-                    ? moment(_room.lastMessage.createdAt).format("MMM. DD")
-                    : moment(_room.createdAt).format("MMM. DD")}
-                </h5>
-                {getSender(_room.participants).newMessages > 0 && (
-                  <span className="unread-indicator"></span>
-                )}
-              </header>
-              <div className="content">
-                {<div className="title">{_room.topic}</div>}
-                <p className="message">{_room.lastMessage?.content}</p>
-              </div>
-            </content>
-          </SideChatContainer>
-        )})}
+            <SideChatContainer
+              className={`${_room._id === room?._id ? "selected" : ""}`}
+              key={_room._id}
+              toggleMobileChatList={toggleMobileChatList}
+              tabIndex="1"
+              onClick={() => {
+                if (!room || room._id !== _room._id)
+                  joinRoom({
+                    threadId: _room._id,
+                  });
+              }}
+            >
+              <Badge>
+                <TextAvatar src={receiver.photo}>
+                  {getInitialsFromFullName(receiver.name)}
+                </TextAvatar>
+                <span className={`status-indicator ${_room.userStatus}`}></span>
+              </Badge>
+              <content>
+                <header>
+                  <UserName>{receiver.name}</UserName>
+                  <h5>
+                    {_room.lastMessage
+                      ? moment(_room.lastMessage.createdAt).format("MMM. DD")
+                      : moment(_room.createdAt).format("MMM. DD")}
+                  </h5>
+                  {getSender(_room.participants).newMessages > 0 && (
+                    <span className="unread-indicator"></span>
+                  )}
+                </header>
+                <div className="content">
+                  {<div className="title">{_room.topic}</div>}
+                  <p className="message">{_room.lastMessage?.content}</p>
+                </div>
+              </content>
+            </SideChatContainer>
+          );
+        })}
         {!roomsToShow.length && <EmptyInbox mobile />}
       </>
     );
@@ -170,9 +171,8 @@ export const ChatList = ({
       {!isSettingsOpen ? (
         <>
           {!toggleViewRequests && (
-            <ChatHeader>
-              {t("messaging.header")}{" "}
-              {unreadCount > 0 && <span>{unreadCount}</span>}
+            <ChatHeader hideCount={!(unreadCount > 0)}>
+              {t("messaging.header")} <span>{unreadCount}</span>
               <SettingsIcon onClick={() => toggleSettings()} src={gearIcon} />
             </ChatHeader>
           )}
