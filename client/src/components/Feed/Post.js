@@ -524,9 +524,6 @@ const Post = ({
           tags: post.types,
           location: post.author.location,
         }}
-        keepScrollIndex={keepScrollIndex}
-        keepPageState={keepPageState}
-        keepPostsState={keepPostsState}
       />
     </Card.Body>
   );

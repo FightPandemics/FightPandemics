@@ -58,9 +58,6 @@ const PostSocial = ({
   keepPageState,
   keepPostsState,
   gtmPrefix,
-  keepScrollIndex,
-  keepPageState,
-  keepPostsState,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
