@@ -279,7 +279,6 @@
       "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
-      "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -300,12 +299,16 @@
       "enterCurrentPassword": "Enter current password",
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
+      "editAccount": "Edit Account",
+      "editProfile": "Edit Profile",
       "editSecurity": "Edit Security",
       "editNotification": "Edit Notification"
     },
     "org": {
       "title": "Create Organization Profile",
+      "editOrgAccount": "Edit Organization Account",
       "editOrgProfile": "Edit Organization Profile",
+      "editOrgNotification": "Edit Organization Notification",
       "name": "Organization Name",
       "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
@@ -361,7 +364,6 @@
       "completeOrgProfile": "Complete Organization Profile",
       "about": "About",
       "activity": "Activity",
-      "editAccount": "Edit Account Information",
       "updateSuccess": "Organization successfully updated",
       "orgNameRequired": "Organization name is required",
       "global": "Global"

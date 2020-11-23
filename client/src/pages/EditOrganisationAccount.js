@@ -409,7 +409,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            {t("profile.org.editOrgProfile")}
+            {t("profile.org.editOrgAccount")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">

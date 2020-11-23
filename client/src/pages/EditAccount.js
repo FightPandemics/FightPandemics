@@ -146,7 +146,7 @@ function EditAccount(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            {t("profile.individual.editProfile")}
+            {t("profile.individual.editAccount")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">

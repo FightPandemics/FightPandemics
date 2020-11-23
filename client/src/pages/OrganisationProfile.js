@@ -537,17 +537,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.org.editAccount")}
+                  {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.individual.editProfile") + " "}
+                  {t("profile.org.editOrgProfile") + " "}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                  {t("profile.individual.editNotification")}{" "}
+                  {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

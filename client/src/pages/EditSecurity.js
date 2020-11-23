@@ -153,7 +153,7 @@ const EditUserPassword = (props) => {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            {t("profile.individual.editProfile")}
+            {t("profile.individual.editSecurity")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">

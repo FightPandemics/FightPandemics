@@ -97,7 +97,7 @@ function EditNotifications(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {t("profile.individual.editProfile")}
+            {t("profile.individual.editNotification")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePic

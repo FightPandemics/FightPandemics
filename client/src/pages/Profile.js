@@ -482,7 +482,9 @@ const Profile = ({
             key="bottom"
           >
             <DrawerHeader>
-              <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+              <Link to="/edit-account">
+                {t("profile.individual.editAccount")}
+              </Link>
             </DrawerHeader>
             <DrawerHeader>
               <Link to="/edit-profile">

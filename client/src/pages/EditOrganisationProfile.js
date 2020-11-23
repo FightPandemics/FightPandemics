@@ -45,8 +45,6 @@ import {
 
 const ABOUT_MAX_LENGTH = 160;
 
-const editProfile = true;
-
 function EditOrganisationProfile(props) {
   const organisationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -205,9 +203,7 @@ function EditOrganisationProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile
-              ? t("profile.org.editOrgProfile")
-              : t("profile.org.completeOrgProfile")}
+            {t("profile.org.editOrgProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
