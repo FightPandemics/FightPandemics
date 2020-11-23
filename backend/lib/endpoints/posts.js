@@ -224,6 +224,21 @@ async function routes(app) {
               $size: { $ifNull: ["$likes", []] },
             },
             objective: true,
+            didReport: {
+              $cond: [
+                {
+                  $in: [
+                    mongoose.Types.ObjectId(actor ? actor._id : null),
+                    {$ifNull: ["$reportedBy.id", []]},
+                  ],
+                },
+                true,
+                false,
+              ],
+            },
+            reportsCount: {
+              $size: { $ifNull: ["$reportedBy", []] },
+            },
             title: true,
             types: true,
             visibility: true,
@@ -383,11 +398,13 @@ async function routes(app) {
           mongoose.Types.ObjectId(actor ? actor._id : null),
         ),
         likesCount: post.likes.length,
-        elapsedTimeText: setElapsedTimeText(
-          post.createdAt,
-          post.updatedAt,
-        )
+        elapsedTimeText: setElapsedTimeText(post.createdAt, post.updatedAt),
+        didReport: post.reportedBy
+          ? !post.reportedBy.find((r) => r.id === actor._id)
+          : false,
+        reportsCount: (post.reportedBy || []).length,
       };
+      delete projectedPost.reportedBy;
 
       return {
         numComments: commentQuery || 0,
