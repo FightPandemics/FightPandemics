@@ -96,9 +96,10 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
+  isAuthenticated,
   match: {
     params: { id: pathUserId },
-  }
+  },
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -138,7 +139,7 @@ const Profile = ({
     error: postsError,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
-
+  if (ownUser) sessionStorage.removeItem("msgModal");
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
@@ -379,7 +380,8 @@ const Profile = ({
               )}
               {!ownUser && (
                 <MessageModal
-                  isAuthenticated={true}
+                  isAuthenticated={isAuthenticated}
+                  isFromUserCard={"USER"}
                   isFromProfile={true}
                   postAuthorName={`${firstName} ${lastName}`}
                   authorId={userId}

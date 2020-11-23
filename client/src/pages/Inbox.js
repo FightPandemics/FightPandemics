@@ -53,7 +53,11 @@ const Inbox = (props) => {
   };
 
   const pendingRooms = rooms.filter(
-    (r) => getSender(r.participants)?.status == "pending",
+    (r) => getSender(r.participants)?.status === "pending",
+  );
+
+  const acceptedRooms = rooms.filter(
+    (r) => getSender(r.participants)?.status === "accepted",
   );
 
   const unlisten = history.listen(() => {
@@ -137,6 +141,8 @@ const Inbox = (props) => {
         selectedSettingsTab={selectedSettingsTab}
         toggleViewRequests={toggleViewRequests}
         setToggleViewRequests={setToggleViewRequests}
+        pendingRooms={pendingRooms}
+        acceptedRooms={acceptedRooms}
       />
       {(() => {
         if (isSettingsOpen) {
@@ -153,6 +159,7 @@ const Inbox = (props) => {
           if (
             rooms?.length === 0 ||
             (!toggleViewRequests && rooms.length === pendingRooms.length)
+            || (!toggleViewRequests && !acceptedRooms.length)
           ) {
             return <EmptyInbox />;
           }

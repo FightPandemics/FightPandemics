@@ -46,8 +46,8 @@ async function routes(app) {
           firstName,
           lastName,
           organisations,
-          usesPassword,
           photo,
+          usesPassword,
         } = dbUser;
         user = {
           email,
@@ -55,8 +55,8 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
+          photo,
           usesPassword,
-          photo, // home page need photo
         };
       }
       return {
@@ -186,7 +186,6 @@ async function routes(app) {
         );
         throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
       }
-
     }
   });
 

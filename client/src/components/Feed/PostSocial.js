@@ -63,6 +63,8 @@ const PostSocial = ({
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
+  if (isOwnPost && sessionStorage.getItem("msgModal") === authorId) sessionStorage.removeItem("msgModal");
+
   const showNativeShareOrModal = () => {
     if (navigator.share) {
       navigator
