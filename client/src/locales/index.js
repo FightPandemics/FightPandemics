@@ -5,7 +5,7 @@ import translationDE from "./translations/de.json";
 import translationES_ES from "./translations/es_ES.json";
 import translationIT from "./translations/it.json";
 import translationMK_MK from "./translations/mk_MK.json";
-import translationPT from "./translations/pt.json";
+import translationPT_PT from "./translations/pt_PT.json";
 import translationTL from "./translations/tl.json";
 // import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
@@ -78,8 +78,8 @@ export const index = {
   "mk-MK": {
     translation: translationMK_MK,
   },
-  "pt": {
-    translation: translationPT,
+  "pt-PT": {
+    translation: translationPT_PT,
   },
   "tl": {
     translation: translationTL,

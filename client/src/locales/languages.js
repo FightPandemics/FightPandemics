@@ -44,7 +44,7 @@ export const MENU_MAP = {
   it: { value: "Italiano", text: "Italian (Italiano)" },
   nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
   pl: { value: "Polski", text: "Polish (Polski)" },
-  pt: { value: "Português", text: "Portuguese (Português)" },
+  "pt-PT": { value: "Português", text: "Portuguese (Português)" },
   ru: { value: "русский", text: "Russian (русский)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },
   tr: { value: "Türkçe", text: "Turkish (Türkçe)" },
