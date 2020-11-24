@@ -38,7 +38,7 @@ function EditNotifications(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName, lastName } = user || {};
+  const { firstName, lastName, usesPassword = false } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
     instant: { message: false, like: false, comment: false, share: false },
@@ -129,6 +129,11 @@ function EditNotifications(props) {
                 {t("profile.common.notificationInfo")}
               </Link>
             </CustomLink>
+            {usesPassword && (
+              <CustomLink >
+                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              </CustomLink>
+            )}
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}

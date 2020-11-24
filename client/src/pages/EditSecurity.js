@@ -180,6 +180,9 @@ const EditUserPassword = (props) => {
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
+            <CustomLink>
+              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
+            </CustomLink>
             {usesPassword && (
               <CustomLink isSelected>
                 <Link to="/edit-security">
