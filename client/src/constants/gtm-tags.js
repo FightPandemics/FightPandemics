@@ -136,6 +136,11 @@ module.exports = {
     "te-IN": "_TE_IN",
     "ms-MY": "_MS_MY",
     vi: "_VI",
+    "mk-MK": "_MK_MK",
+    "pt-PT": "_PT_PT",
+    "ar": "_AR",
+    "tl": "_TL",
+    "it": "_IT",
   },
   search: {
     prefix: "SCH",

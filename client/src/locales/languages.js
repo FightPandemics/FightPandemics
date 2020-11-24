@@ -14,6 +14,8 @@ export const localization = {
   it: "it",
   "kn-IN": "kn-IN",
   "ms-MY": "ms-MY",
+  "mk-MK": "mk-MK",
+  "pt-PT": "pt-PT",
   nl: "nl",
   pl: "pl",
   pt: "pt",
@@ -42,7 +44,7 @@ export const MENU_MAP = {
   it: { value: "Italiano", text: "Italian (Italiano)" },
   nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
   pl: { value: "Polski", text: "Polish (Polski)" },
-  pt: { value: "Português", text: "Portuguese (Português)" },
+  "pt-PT": { value: "Português", text: "Portuguese (Português)" },
   ru: { value: "русский", text: "Russian (русский)" },
   th: { value: "ไทย", text: "Thai (ไทย)" },
   tr: { value: "Türkçe", text: "Turkish (Türkçe)" },
@@ -52,7 +54,9 @@ export const MENU_MAP = {
   "kn-IN": { value: "ಕನ್ನಡ", text: "Kannada (ಕನ್ನಡ)" },
   "ms-MY": { value: "Bahasa Melayu", text: "Malay (Bahasa Melayu)" },
   "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" },
+  "tl": { value: "ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔", text: "Tagalog (ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔)" },
   vi: { value: "Tiếng Việt", text: "Vietnamese (Tiếng Việt)" },
+  "mk-MK": { value: "македонски", text: "Macedonian (македонски)" },
 };
 
 export const languages = Object.keys(resources).reduce(

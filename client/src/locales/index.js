@@ -1,9 +1,12 @@
-// import translationAR from "./translations/ar.json";
+import translationAR from "./translations/ar.json";
 import translationEN_GB from "./translations/en_GB.json";
 import translationEN_US from "./translations/en_US.json";
 import translationDE from "./translations/de.json";
 import translationES_ES from "./translations/es_ES.json";
-// import translationIT from "./translations/it.json";
+import translationIT from "./translations/it.json";
+import translationMK_MK from "./translations/mk_MK.json";
+import translationPT_PT from "./translations/pt_PT.json";
+import translationTL from "./translations/tl.json";
 // import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
 // import translationTH from "./translations/th.json";
@@ -18,9 +21,9 @@ import translationVI from "./translations/vi.json";
 
 /* Order in this index controls the order in language selector menu  */
 export const index = {
-  // ar: {
-  //   translation: translationAR,
-  // },
+   ar: {
+     translation: translationAR,
+   },
   // en: {
   //   translation: translationEN_US,
   // },
@@ -45,9 +48,9 @@ export const index = {
   pl: {
     translation: translationPL,
   },
-  // it: {
-  //   translation: translationIT,
-  // },
+   it: {
+     translation: translationIT,
+   },
   // ru: {
   //   translation: translationRU,
   // },
@@ -71,6 +74,15 @@ export const index = {
   },
   vi: {
     translation: translationVI,
+  },
+  "mk-MK": {
+    translation: translationMK_MK,
+  },
+  "pt-PT": {
+    translation: translationPT_PT,
+  },
+  "tl": {
+    translation: translationTL,
   },
   // th: {
   //   translation: translationTH,
