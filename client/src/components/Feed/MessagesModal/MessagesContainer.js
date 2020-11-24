@@ -112,7 +112,6 @@ export const MsgModal = styled(Modal)`
 
   textarea {
     border: 0.1rem solid lightgrey;
-    border-radius: 0.6rem;
     min-height: 13.5rem;
     width: 100%;
     margin: 0 0 1.4rem 0;
@@ -124,7 +123,10 @@ export const MsgModal = styled(Modal)`
       border: 1px solid ${primaryColor};
     }
     ::-webkit-scrollbar {
-      border-radius: 0 0.6rem 0.6rem 0;
+      width: 0.7rem;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: lightgrey;
     }
   }
 `;
