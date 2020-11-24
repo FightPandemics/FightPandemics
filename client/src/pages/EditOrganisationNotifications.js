@@ -15,6 +15,8 @@ import {
   Background,
   ProfilePicWrapper,
   MobilePicWrapper,
+  ToggleHeading,
+  CustomEditAccountHeader,
   CustomForm,
   CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
@@ -34,8 +36,6 @@ import {
 import { getInitialsFromFullName } from "utils/userInfo";
 import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
 import isEqual from "lodash/isEqual";
-
-const editProfile = true;
 
 function EditOrganisationNotifications(props) {
   const organisationId = window.location.pathname.split("/")[2];
@@ -139,11 +139,14 @@ function EditOrganisationNotifications(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
-            {editProfile
-              ? t("profile.org.editOrgProfile")
-              : t("profile.org.completeOrgProfile")}
-          </CustomHeading>
+          <CustomEditAccountHeader className="h4">
+            {t("profile.org.editOrgNotification")}
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.notificationInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>

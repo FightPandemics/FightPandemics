@@ -153,7 +153,7 @@ const EditUserPassword = (props) => {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            {t("profile.individual.editProfile")}
+            {t("profile.individual.editSecurity")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
@@ -179,6 +179,9 @@ const EditUserPassword = (props) => {
             </CustomLink>
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
             </CustomLink>
             {usesPassword && (
               <CustomLink isSelected>

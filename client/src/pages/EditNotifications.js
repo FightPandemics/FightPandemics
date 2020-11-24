@@ -13,6 +13,8 @@ import {
   OptionDiv,
   FormLayout,
   Background,
+  ToggleHeading,
+  CustomEditAccountHeader,
   CustomForm,
   CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
@@ -36,7 +38,7 @@ function EditNotifications(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName, lastName } = user || {};
+  const { firstName, lastName, usesPassword = false } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
     instant: { message: false, like: false, comment: false, share: false },
@@ -96,9 +98,14 @@ function EditNotifications(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
-            {t("profile.individual.editProfile")}
-          </CustomHeading>
+          <CustomEditAccountHeader className="h4">
+            {t("profile.individual.editNotification")}
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.notificationInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePic
             resolution={"768rem"}
@@ -122,6 +129,11 @@ function EditNotifications(props) {
                 {t("profile.common.notificationInfo")}
               </Link>
             </CustomLink>
+            {usesPassword && (
+              <CustomLink >
+                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              </CustomLink>
+            )}
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
