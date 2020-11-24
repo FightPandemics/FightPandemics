@@ -13,6 +13,8 @@ import {
   OptionDiv,
   FormLayout,
   Background,
+  ToggleHeading,
+  CustomEditAccountHeader,
   CustomForm,
   CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
@@ -96,9 +98,14 @@ function EditNotifications(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
+          <CustomEditAccountHeader className="h4">
             {t("profile.individual.editNotification")}
-          </CustomHeading>
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.notificationInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePic
             resolution={"768rem"}

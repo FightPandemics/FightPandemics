@@ -16,6 +16,8 @@ import {
   CustomHeading,
   CustomSubmitButton,
   OptionDiv,
+  ToggleHeading,
+  CustomEditAccountHeader,
   FormLayout,
   Background,
 } from "components/EditProfile/EditComponents";
@@ -174,9 +176,14 @@ function EditProfile(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
+          <CustomEditAccountHeader className="h4">
             {t("profile.individual.editProfile")}
-          </CustomHeading>
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.profileInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePic
             resolution={"768rem"}

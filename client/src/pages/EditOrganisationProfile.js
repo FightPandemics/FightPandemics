@@ -14,6 +14,8 @@ import {
   OptionDiv,
   FormLayout,
   Background,
+  ToggleHeading,
+  CustomEditAccountHeader,
   ProfilePicWrapper,
   MobilePicWrapper,
 } from "../components/EditProfile/EditComponents";
@@ -202,9 +204,14 @@ function EditOrganisationProfile(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
+          <CustomEditAccountHeader className="h4">
             {t("profile.org.editOrgProfile")}
-          </CustomHeading>
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.profileInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>

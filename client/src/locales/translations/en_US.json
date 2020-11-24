@@ -259,7 +259,7 @@
       "securityInfo": "Security Information",
       "changePassword": "Change Password",
       "notificationInfo": "Notification Preference",
-      "emailNotification": "Notification Settings",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
