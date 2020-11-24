@@ -49,35 +49,35 @@ export const ShareModal = ({
           url={postUrl}
           subject={postTitle}
           body={postContent}
-          onShareWindowClose={() => postShared(id, "email")}
+          onClick={() => postShared(id, "email")}
         >
           <EmailIcon size={ICON_SIZE_PIXEL} round />
         </EmailShareButton>
         <FacebookShareButton
           url={postUrl}
           hashtag={"#fightpandemics"}
-          onShareWindowClose={() => postShared(id, "facebook")}
+          onClick={() => postShared(id, "facebook")}
         >
           <FacebookIcon size={ICON_SIZE_PIXEL} round />
         </FacebookShareButton>
         <LinkedinShareButton
           url={postUrl}
           title={postTitle}
-          onShareWindowClose={() => postShared(id, "linkedin")}
+          onClick={() => postShared(id, "linkedin")}
         >
           <LinkedinIcon size={ICON_SIZE_PIXEL} round />
         </LinkedinShareButton>
         <RedditShareButton
           url={postUrl}
           title={postTitle}
-          onShareWindowClose={() => postShared(id, "reddit")}
+          onClick={() => postShared(id, "reddit")}
         >
           <RedditIcon size={ICON_SIZE_PIXEL} round />
         </RedditShareButton>
         <TelegramShareButton
           url={postUrl}
           title={postTitle}
-          onShareWindowClose={() => postShared(id, "telegram")}
+          onClick={() => postShared(id, "telegram")}
         >
           <TelegramIcon size={ICON_SIZE_PIXEL} round />
         </TelegramShareButton>
@@ -85,14 +85,14 @@ export const ShareModal = ({
           url={postUrl}
           title={postTitle}
           hashtags={["fightpandemics"]}
-          onShareWindowClose={() => postShared(id, "twitter")}
+          onClick={() => postShared(id, "twitter")}
         >
           <TwitterIcon size={ICON_SIZE_PIXEL} round />
         </TwitterShareButton>
         <WhatsappShareButton
           title={postTitle}
           url={postUrl}
-          onShareWindowClose={() => postShared(id, "whatsapp")}
+          onClick={() => postShared(id, "whatsapp")}
         >
           <WhatsappIcon size={ICON_SIZE_PIXEL} round />
         </WhatsappShareButton>
