@@ -139,7 +139,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
-  const urlsAndEmail = { ...urls, email };
+  const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
   const {
     isLoading,
