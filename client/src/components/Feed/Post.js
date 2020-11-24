@@ -6,7 +6,6 @@ import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
 import axios from "axios";
-import { escapeRegExp } from "lodash";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -18,8 +17,7 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
-import SubMenuButton from "components/Button/SubMenuButton";
-import PostDropdownButton from "components/Button/PostDropdownButton";
+import PostDropdownButton from "components/Feed/PostDropdownButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
@@ -558,15 +556,18 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-                {isAuthenticated && actorId === post.author.id && (
-                  <SubMenuButton
-                    onSelect={onSelect}
-                    onChange={onChange}
-                    postId={postId}
-                    post={post}
-                    user={user}
-                  />
-                )}
+              <PostDropdownButton
+                  onSave={handleSave}
+                  onFollow={handleFollow}
+                  onHide={handleHide}
+                  onReport={handleReport}
+                  onEdit={onSelect}
+                  onDelete={handleDelete}
+                  post={post}
+                  user={user}
+                  postId={postId}
+                  isOwner={isAuthenticated && actorId === post.author.id}
+                />
               </div>
             </div>
             <WhiteSpace size="md" />
@@ -615,24 +616,18 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-              {isAuthenticated && actorId === post.author.id ? (
-                <SubMenuButton
-                  onChange={handleDelete}
-                  onSelect={onSelect}
-                  post={post}
-                  user={user}
-                  postId={postId}
-                />
-              ) : (
                 <PostDropdownButton
                   onSave={handleSave}
                   onFollow={handleFollow}
                   onHide={handleHide}
                   onReport={handleReport}
+                  onEdit={onSelect}
+                  onDelete={handleDelete}
                   post={post}
+                  user={user}
                   postId={postId}
+                  isOwner={isAuthenticated && actorId === post.author.id}
                 />
-              )}
             </div>
           </div>
           <WhiteSpace size="md" />
