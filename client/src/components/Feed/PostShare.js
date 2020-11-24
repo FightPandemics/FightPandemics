@@ -49,7 +49,7 @@ export const ShareModal = ({
           url={postUrl}
           subject={postTitle}
           body={postContent}
-          onClick={() => postShared(id, "email")}
+          beforeOnClick={() => postShared(id, "email")}
         >
           <EmailIcon size={ICON_SIZE_PIXEL} round />
         </EmailShareButton>
