@@ -558,7 +558,7 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-              <PostDropdownButton
+                <PostDropdownButton
                   onSave={handleSave}
                   onFollow={handleFollow}
                   onHide={handleHide}
@@ -568,7 +568,12 @@ const Post = ({
                   post={post}
                   user={user}
                   postId={postId}
-                  isOwner={isAuthenticated && actorId === post.author.id}
+                  isSelf={isAuthenticated && actorId === post.author.id}
+                  isOwner={
+                    isAuthenticated &&
+                    (isAuthorUser(user, post) ||
+                      isAuthorOrg(user?.organisations, post.author))
+                  }
                 />
               </div>
             </div>
@@ -618,18 +623,23 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-                <PostDropdownButton
-                  onSave={handleSave}
-                  onFollow={handleFollow}
-                  onHide={handleHide}
-                  onReport={handleReport}
-                  onEdit={onSelect}
-                  onDelete={handleDelete}
-                  post={post}
-                  user={user}
-                  postId={postId}
-                  isOwner={isAuthenticated && actorId === post.author.id}
-                />
+              <PostDropdownButton
+                onSave={handleSave}
+                onFollow={handleFollow}
+                onHide={handleHide}
+                onReport={handleReport}
+                onEdit={onSelect}
+                onDelete={handleDelete}
+                post={post}
+                user={user}
+                postId={postId}
+                isSelf={isAuthenticated && actorId === post.author.id}
+                isOwner={
+                  isAuthenticated &&
+                  (isAuthorUser(user, post) ||
+                    isAuthorOrg(user?.organisations, post.author))
+                }              
+              />
             </div>
           </div>
           <WhiteSpace size="md" />

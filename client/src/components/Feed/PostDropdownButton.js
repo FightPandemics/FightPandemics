@@ -9,6 +9,8 @@ import { ReactComponent as SaveIcon } from "assets/icons/save.svg";
 import { ReactComponent as HideIcon } from "assets/icons/hide.svg";
 import { ReactComponent as FollowIcon } from "assets/icons/follow.svg";
 import { ReactComponent as ReportIcon } from "assets/icons/report.svg";
+import { ReactComponent as EditIcon } from "assets/icons/edit-grey.svg";
+import { ReactComponent as DeleteIcon } from "assets/icons/hide.svg";
 
 import { theme } from "constants/theme";
 
@@ -60,16 +62,18 @@ const PostDropdownButton = ({
   post,
   user,
   isOwner,
+  isSelf,
 }) => {
   const { t } = useTranslation();
 
   const menu = (
     <StyledMenu>
-      {isOwner ? (
+      {isSelf ? (
         <>
           {postId ? (
             <Menu.Item onClick={onEdit}>
               <Item>
+              <EditIcon />
                 <Label>
                   <Action>{t("comment.edit")}</Action>
                   <Caption>Edit your post</Caption>
@@ -91,6 +95,7 @@ const PostDropdownButton = ({
                 }}
               >
                 <Item>
+                <EditIcon />
                   <Label>
                     <Action>{t("comment.edit")}</Action>
                     <Caption>Edit your post</Caption>
@@ -101,8 +106,9 @@ const PostDropdownButton = ({
           )}
           <Menu.Item onClick={onDelete}>
             <Item>
+              <DeleteIcon/>
               <Label>
-                <Action>{t("comment.delete")}</Action>
+                <Action style={{"color":"red"}}>{t("comment.delete")}</Action>
                 <Caption>Delete your post</Caption>
               </Label>
             </Item>
@@ -134,11 +140,19 @@ const PostDropdownButton = ({
   );
 
   return (
-    <Dropdown style={{ position: "fixed" }} trigger={["click"]} overlay={menu}>
-      <div className="ant-dropdown-link">
-        <SubMenuIcon />
-      </div>
-    </Dropdown>
+    <>
+      {(!isOwner || (isOwner && isSelf)) && ( // user looking at owned org post, or vice versa
+        <Dropdown
+          style={{ position: "fixed" }}
+          trigger={["click"]}
+          overlay={menu}
+        >
+          <div className="ant-dropdown-link">
+            <SubMenuIcon />
+          </div>
+        </Dropdown>
+      )}
+    </>
   );
 };
 
