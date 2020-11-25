@@ -15,6 +15,7 @@ const PostDeleteModal = styled(Modal)`
         .ant-modal-header {
             border-bottom: 1px solid #C5C5C5;
             border-radius: 10px 10px 0 0;
+            padding-bottom: 0;
             .ant-modal-title {
                 text-align: center;
                 font-weight: 700;
