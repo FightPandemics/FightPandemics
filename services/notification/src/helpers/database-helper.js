@@ -340,7 +340,6 @@ class DatabaseHelper {
     }
 
     const topThreePosts = Object.values(notificationCountsByPost)
-      .filter((post) => !!post.latest)
       .sort((a, b) => b.counts.total - a.counts.total)
       .slice(0, 3);
     return topThreePosts;

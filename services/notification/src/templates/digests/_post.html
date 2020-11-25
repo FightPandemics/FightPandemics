@@ -1,9 +1,11 @@
 <h2 class="post-activity">New activity for {{post.title}}</h2>
 
-<p>
-  <strong> {{latestComment.triggeredBy.name}} commented: </strong>
-  {{latestComment.commentText}}
-</p>
+{{#latestComment}}
+  <p>
+    <strong> {{latestComment.triggeredBy.name}} commented: </strong>
+    {{latestComment.commentText}}
+  </p>
+{{/latestComment}}
 
 <a class="view-activity" href="{{{baseUrl}}}/post/{{post.id}}{{{trackerParams}}}">
   View {{actionCounts}}
