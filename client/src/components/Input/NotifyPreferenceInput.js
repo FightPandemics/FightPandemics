@@ -21,6 +21,10 @@ const HelpWrapper = styled.div`
   }
 `;
 
+const FPSwitch = styled(Switch)`
+  background-color: ${theme.colors.royalBlue};
+`;
+
 const NotifyCheckboxWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -81,7 +85,7 @@ const NotifyPreferenceInput = ({
       />
       <WhiteSpace />
       <HelpWrapper>
-        <Switch
+        <FPSwitch
           checkedChildren="On"
           unCheckedChildren="Off"
           onChange={(checked) => setSwitchOnOff(checked)}
