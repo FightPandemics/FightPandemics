@@ -38,3 +38,13 @@ exports.findOneDocumentWithCondition = async function (Model, condition) {
     console.error("error");
   }
 };
+
+exports.insertDocument = async function (Model, collectionName) {
+  try {
+    return await mongoose.connection
+      .collection(collectionName)
+      .insertOne(Model);
+  } catch (err) {
+    console.error("error");
+  }
+};
