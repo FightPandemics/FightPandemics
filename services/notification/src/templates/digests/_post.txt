@@ -1,5 +1,7 @@
 New activity for {{post.title}}:
 
-{{latestComment.triggeredBy.name}} commented: {{latestComment.commentText}}
+{{#latestComment}}
+    {{latestComment.triggeredBy.name}} commented: {{latestComment.commentText}}
+{{/latestComment}}
 
 View {{actionCounts}}: {{{baseUrl}}}/post/{{post.id}}
