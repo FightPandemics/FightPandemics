@@ -11,6 +11,7 @@ const {
   createUserSchema,
   updateUserSchema,
 } = require("./schema/users");
+const { PERMISSIONS } = require("../models/IndividualUser");
 
 /*
  * /api/users
@@ -554,6 +555,62 @@ async function routes(app) {
       return updatedUser.notifyPrefs;
     },
   );
+
+  // --------Currrently WIP------------
+  app.patch(
+    "/:userId/permission", 
+    async (req) => {
+    
+    const {
+      params: { userId },
+      body: {level},
+    } = req;
+    // -- update permissions to user (value = 0)
+    if (level === "user") {
+      const [updatedErr, updatedUser] = await app.to(
+        User.findOneAndUpdate(
+          { _id: userId },
+          { $set: {permissions: PERMISSIONS.user}},
+          { new: true }
+        )
+      )
+      if(updatedErr) {
+        req.log.error(updateErr, "Failed to add permission");
+        throw app.httpErrors.internalServerError();
+      }
+      return updatedUser.permissions;
+    }
+    // -- update permissions to moderator (value = 2)
+    else if(level === "moderator") {
+      const [updatedErr, updatedUser] = await app.to(
+        User.findOneAndUpdate(
+          { _id: userId },
+          { $set: {permissions: PERMISSIONS.moderator}},
+          { new: true }
+        )
+      )
+      if(updatedErr) {
+        req.log.error(updateErr, "Failed to add permission");
+        throw app.httpErrors.internalServerError();
+      }
+      return updatedUser.permissions;
+    }
+    // -- update permissions to administrator (value = 4)
+    else if(level === "administrator") {
+      const [updatedErr, updatedUser] = await app.to(
+        User.findOneAndUpdate(
+          { _id: userId },
+          { $set: {permissions: PERMISSIONS.administrator}},
+          { new: true }
+        )
+      )
+      if(updatedErr) {
+        req.log.error(updateErr, "Failed to add permission");
+        throw app.httpErrors.internalServerError();
+      }
+      return updatedUser.permissions; 
+    }
+  })
 }
 
 module.exports = routes;
