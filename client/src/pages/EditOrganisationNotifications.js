@@ -15,8 +15,6 @@ import {
   Background,
   ProfilePicWrapper,
   MobilePicWrapper,
-  ToggleHeading,
-  CustomEditAccountHeader,
   CustomForm,
   CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
@@ -139,14 +137,9 @@ function EditOrganisationNotifications(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
+          <CustomHeading level={4} className="h4">
             {t("profile.org.editOrgNotification")}
-          </CustomEditAccountHeader>
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              {t("profile.common.notificationInfo")}
-            </CustomHeading>
-          </ToggleHeading>
+          </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>

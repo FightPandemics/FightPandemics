@@ -27,9 +27,7 @@ import {
   CheckBoxWrapper,
   Label,
   HelpWrapper,
-  ToggleHeading,
   ProfilePicWrapper,
-  CustomEditAccountHeader,
   Background,
 } from "../components/EditProfile/EditComponents";
 import {
@@ -408,17 +406,10 @@ function EditOrganisationAccount({ refetchUser, history }) {
       )}
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
+          <CustomHeading level={4} className="h4">
             {t("profile.org.editOrgAccount")}
-          </CustomEditAccountHeader>
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              {t("profile.common.accountInfo")}
-            </CustomHeading>
-          </ToggleHeading>
-
+          </CustomHeading>
           <FillEmptySpace />
-
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
         </TitlePictureWrapper>
 
