@@ -8,51 +8,51 @@ const dbHelper = require("../utils/dbHelper");
 const Post = require("../models/post");
 const ObjectID = require("mongodb").ObjectID;
 
-const post = {
-  airtableId: String,
-  author: Object,
-  content: {
-    required: true,
-    trim: true,
-    type: String,
-  },
-  expireAt: Date,
-  externalLinks: {
-    appStore: { trim: true, type: String },
-    email: { trim: true, type: String },
-    playStore: { trim: true, type: String },
-    website: { trim: true, type: String },
-  },
-  language: [String],
-  likes: {
-    default: [],
-    ref: "User",
-    type: [ObjectId],
-  },
-  objective: {
-    enum: POST_OBJECTIVES,
-    lowercase: true,
-    required: true,
-    trim: true,
-    type: String,
-  },
-  title: {
-    required: true,
-    trim: true,
-    type: String,
-  },
-  types: {
-    enum: POST_TYPES,
-    trim: true,
-    type: [String],
-  },
-  visibility: {
-    enum: VISIBILITY_OPTIONS,
-    lowercase: true,
-    trim: true,
-    type: String,
-  },
-};
+// const post = {
+//   airtableId: String,
+//   author: Object,
+//   content: {
+//     required: true,
+//     trim: true,
+//     type: String,
+//   },
+//   expireAt: Date,
+//   externalLinks: {
+//     appStore: { trim: true, type: String },
+//     email: { trim: true, type: String },
+//     playStore: { trim: true, type: String },
+//     website: { trim: true, type: String },
+//   },
+//   language: [String],
+//   likes: {
+//     default: [],
+//     ref: "User",
+//     type: [ObjectId],
+//   },
+//   objective: {
+//     enum: POST_OBJECTIVES,
+//     lowercase: true,
+//     required: true,
+//     trim: true,
+//     type: String,
+//   },
+//   title: {
+//     required: true,
+//     trim: true,
+//     type: String,
+//   },
+//   types: {
+//     enum: POST_TYPES,
+//     trim: true,
+//     type: [String],
+//   },
+//   visibility: {
+//     enum: VISIBILITY_OPTIONS,
+//     lowercase: true,
+//     trim: true,
+//     type: String,
+//   },
+// };
 
 describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", function () {
   before(function () {
@@ -60,8 +60,7 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
     dbHelper.connectToDatabase();
   });
   beforeEach(function () {
-    console.log("BEFORE");
-    dbHelper.connectToDatabase();
+    console.log("BEFORE EACH");
   });
   it("Success - user gets a post by ID", async function () {
     var authorRegex = new RegExp("Sourced by FightPandemics", "i");
