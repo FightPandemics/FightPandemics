@@ -29,6 +29,7 @@ import {
   translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
+import CreateReport from "components/CreateReport/CreateReport";
 import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
   RESET_PAGE,
@@ -127,6 +128,7 @@ const Post = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
+  const [callReport, setCallReport] = useState(false);
   const actorId = useSelector(selectActorId);
 
   const AvatarName =
@@ -321,7 +323,7 @@ const Post = ({
   };
 
   const handleReport = () => {
-    // report post functionality here
+    setCallReport(true);
     console.log('"Report Post" was clicked.');
   };
 
@@ -694,6 +696,7 @@ const Post = ({
               <p>{t("post.deleteCommentConfirmation")}</p>
             )}
           </WebModal>
+          {callReport ? <CreateReport postId={post._id} /> : null}
         </PostCard>
       )}
     </>
