@@ -124,16 +124,16 @@ function EditNotifications(props) {
             <CustomLink>
               <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to="/edit-notifications">
-                {t("profile.common.notificationInfo")}
-              </Link>
-            </CustomLink>
             {usesPassword && (
               <CustomLink >
                 <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
               </CustomLink>
             )}
+            <CustomLink isSelected>
+              <Link to="/edit-notifications">
+                {t("profile.common.notificationInfo")}
+              </Link>
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
