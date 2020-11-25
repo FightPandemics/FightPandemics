@@ -41,8 +41,8 @@ const BareHr = styled.hr`
 `;
 
 const NotifyGroup = {
-  instant: "Instant",
-  digest: "Digest",
+  instant: "profile.common.instant",
+  digest: "profile.common.digest",
 };
 
 const NotifyType = {

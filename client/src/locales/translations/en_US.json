@@ -261,6 +261,7 @@
       "notificationInfo": "Notification Preference",
       "emailNotification": "Notification Email Settings",
       "instant": "Instant",
+      "digest": "Digest",
       "daily": "Daily",
       "weekly": "Weekly",
       "biweekly": "Biweekly"
