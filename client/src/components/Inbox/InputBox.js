@@ -284,7 +284,16 @@ export const InputBox = ({
                     action: [
                       {
                         text: (
-                          <Text type="danger">{t("messaging.ignore")}</Text>
+                          <Text
+                            id={
+                              GTM.inbox.prefix +
+                              GTM.inbox.request +
+                              GTM.inbox.ignore
+                            }
+                            type="danger"
+                          >
+                            {t("messaging.ignore")}
+                          </Text>
                         ),
                         onPress: () => {
                           ignoreThread(room._id);
@@ -298,7 +307,6 @@ export const InputBox = ({
                     ],
                   });
                 }}
-                id={GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.ignore}
               >
                 {t("messaging.ignore")}
               </button>
@@ -313,7 +321,18 @@ export const InputBox = ({
                     content: t("messaging.blockDialogMessage"),
                     action: [
                       {
-                        text: <Text type="danger">{t("messaging.block")}</Text>,
+                        text: (
+                          <Text
+                            id={
+                              GTM.inbox.prefix +
+                              GTM.inbox.request +
+                              GTM.inbox.block
+                            }
+                            type="danger"
+                          >
+                            {t("messaging.block")}
+                          </Text>
+                        ),
                         onPress: async () => {
                           await blockThread(room._id);
                           setToggleViewRequests(false);
@@ -327,7 +346,6 @@ export const InputBox = ({
                     ],
                   });
                 }}
-                id={GTM.inbox.prefix + GTM.inbox.request + GTM.inbox.block}
               >
                 {t("messaging.block")}
               </button>
