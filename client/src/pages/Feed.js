@@ -473,11 +473,12 @@ const Feed = (props) => {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
-        if (posts.length < limit) {
-          dispatch(postsActions.finishLoadingAction());
-        } else if (meta.total === limit) {
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (page === lastPage) {
           dispatch(postsActions.finishLoadingAction());
         }
+
         let postsInState;
         if (history.location.state) {
           const { keepPostsState, keepPageState } = history.location.state;
@@ -488,24 +489,10 @@ const Feed = (props) => {
         }
         if (postsInState) {
           if (Object.keys(postsInState).length === meta.total) {
-            dispatch(
-              postsActions.setLoadingAction({
-                isLoading: true,
-                loadMore: false,
-              }),
-            );
+            dispatch(postsActions.finishLoadingAction());
           }
         }
-        const lastPage = Math.ceil(meta.total / limit) - 1;
-        console.log(page, lastPage, meta.total);
-        if (page === lastPage) {
-          dispatch(
-            postsActions.setLoadingAction({
-              isLoading: true,
-              loadMore: false,
-            }),
-          );
-        }
+
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;

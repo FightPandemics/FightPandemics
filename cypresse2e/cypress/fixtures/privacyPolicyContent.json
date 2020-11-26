@@ -1,0 +1,96 @@
+{
+  "paraPolicyCx": [
+    {
+      "id": 1,
+      "text": "is the manager of this website and hereby informs YOU"
+    },
+    {
+      "id": 2,
+      "text": "By using the Services, YOU consent that we can collect and process your Personal Data. "
+    },
+    {
+      "id": 3,
+      "text": "means any information relating to an identified or identifiable natural person."
+    },
+    {
+      "id": 4,
+      "text": "On the basis of the above, the Company herein provides YOU with a detailed explanation"
+    },
+
+    {
+      "id": 11,
+      "text": "Who We are and how YOU can contact Us"
+    },
+    {
+      "id": 12,
+      "text": "Your rights relating your Personal Data"
+    },
+    {
+      "id": 13,
+      "text": "How to exercise your rights"
+    },
+
+    {
+      "id": 14,
+      "text": "If YOU would like to submit a complaint regarding this Privacy Policy"
+    },
+    {
+      "id": 15,
+      "text": "Why We collect your Personal Data"
+    },
+    {
+      "id": 16,
+      "text": "What Personal Data We collect"
+    },
+    {
+      "id": 17,
+      "text": "Aggregated Data"
+    },
+    {
+      "id": 18,
+      "text": "How We Use Your Personal Data and Why"
+    },
+    {
+      "id": 19,
+      "text": "What happens when YOU do not provide necessary Personal Data?"
+    },
+    {
+      "id": 110,
+      "text": "With Whom We Share Your Personal Data?"
+    },
+    {
+      "id": 111,
+      "text": "How long We store your Personal Data"
+    },
+    {
+      "id": 112,
+      "text": "Where We Store Your Personal Data"
+    },
+    {
+      "id": 113,
+      "text": "How We Protect Your Personal Data"
+    },
+    {
+      "id": 114,
+      "text": "Contact Us"
+    },
+    {
+      "id": 115,
+      "text": "Changes to Our Privacy Policy"
+    }
+  ],
+  "paraPolicyWithEmail": [
+    {
+      "id": 11
+    },
+    {
+      "id": 14
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 114
+    }
+  ]
+}

@@ -409,7 +409,7 @@ function EditOrganisationAccount({ refetchUser, history }) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            {t("profile.org.editOrgProfile")}
+            {t("profile.org.editOrgAccount")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
@@ -432,6 +432,11 @@ function EditOrganisationAccount({ refetchUser, history }) {
             <CustomLink>
               <Link to={`/edit-organisation-profile/${organisationId}`}>
                 {t("profile.common.profileInfo")}
+              </Link>
+            </CustomLink>
+            <CustomLink>
+              <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                {t("profile.common.notificationInfo")}
               </Link>
             </CustomLink>
           </OptionDiv>

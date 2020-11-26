@@ -4,6 +4,7 @@ import { NavBar } from "antd-mobile";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Badge } from "antd";
 
 import { setOrganisation } from "../../actions/profileActions";
 import SvgIcon from "../Icon/SvgIcon";
@@ -13,6 +14,10 @@ import Logo from "../Logo";
 import { theme, mq } from "../../constants/theme";
 import { HeaderLinks } from "./HeaderLinks";
 import FeedSearch from "components/Input/FeedSearch";
+import { InboxIcon } from "./constants";
+import mail from "assets/icons/mail.svg";
+import GTM from "constants/gtm-tags";
+import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
 
 const { colors, typography } = theme;
 const { large } = typography.size;
@@ -150,13 +155,43 @@ const Header = ({
   onOrganisationChange,
   navSearch,
   setOrganisationId,
+  webSocket,
 }) => {
   const { t } = useTranslation();
+  const { rooms } = webSocket;
 
   const index = localStorage.getItem("organisationId");
   if (organisationId !== index) {
     setOrganisationId(index);
   }
+
+  const renderInboxIcon = (mobile, activeStyles) => {
+    return (
+      <InboxIcon mobile={mobile}>
+        <Link
+          id={GTM.nav.prefix + GTM.nav.inbox}
+          to="/inbox"
+          activeStyles={activeStyles}
+        >
+          <Badge
+            count={rooms.reduce(
+              (total, room) =>
+                total +
+                (room.participants.find(
+                  (p) => p.id == (organisationId || user.id.toString()),
+                )?.newMessages
+                  ? 1
+                  : 0 || // remove "? 1:0" to show total messages
+                    0),
+              0,
+            )}
+          >
+            <SvgIcon src={mail}></SvgIcon>
+          </Badge>
+        </Link>
+      </InboxIcon>
+    );
+  };
 
   return (
     <HeaderWrapper className="header">
@@ -181,6 +216,12 @@ const Header = ({
               style={{ fontSize: 24, cursor: "pointer" }}
               onClick={onMenuClick}
             />
+            {isAuthenticated && renderInboxIcon(true)}
+            {isAuthenticated && <NotificationDropDown
+              notifications={webSocket.notifications}
+              mobile={true}
+              organisationId={organisationId}
+            />}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
@@ -190,6 +231,8 @@ const Header = ({
                     organisationId={organisationId}
                     user={user}
                     setOrganisation={onOrganisationChange}
+                    renderInboxIcon={renderInboxIcon}
+                    notifications={webSocket.notifications}
                   />
                 </NavLinks>
               </DesktopMenu>

@@ -1,6 +1,9 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken, createSearchRegex } = require("../utils");
+const { config } = require("../../config");
+const jwt = require("jsonwebtoken");
+const { updateNotifyPrefsSchema } = require("./schema/notificationPreference");
 const {
   getUserByIdSchema,
   getUsersSchema,
@@ -15,7 +18,9 @@ const {
 async function routes(app) {
   const Comment = app.mongo.model("Comment");
   const User = app.mongo.model("IndividualUser");
+  const BaseUser = app.mongo.model("User");
   const Post = app.mongo.model("Post");
+  const Thread = app.mongo.model("Thread");
 
   const USERS_PAGE_SIZE = 10;
 
@@ -150,6 +155,9 @@ async function routes(app) {
             photo: true,
           },
         },
+        {
+          $unset: "location.coordinates", // remove sensitive data
+        },
       ];
       /* eslint-enable sort-keys */
       const aggregationPipelineResults = [
@@ -227,6 +235,7 @@ async function routes(app) {
       organisations,
       urls,
       photo,
+      notifyPrefs,
       usesPassword,
     } = user;
     return {
@@ -242,6 +251,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      notifyPrefs,
       usesPassword,
     };
   });
@@ -295,6 +305,22 @@ async function routes(app) {
         );
         if (commentErr) {
           req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].name": updatedUser.name,
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author refs at threads");
         }
       }
       return updatedUser;
@@ -402,7 +428,25 @@ async function routes(app) {
           ),
         );
         if (commentErr) {
-          req.log.error(commentErr, "Failed updating author photo refs at comments");
+          req.log.error(
+            commentErr,
+            "Failed updating author photo refs at comments",
+          );
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
         }
 
         return {
@@ -446,6 +490,68 @@ async function routes(app) {
         ...user.toObject(),
         organisations: [],
       }
+    },
+  );
+
+  app.get("/unsubscribe", async (req) => {
+    const { token } = req.headers;
+
+    let decoded = {};
+    jwt.verify(token, config.auth.secretKey, (err, payload) => {
+      if (err) {
+        req.log.error(err, `Invalid token for unsubscribing`);
+        throw app.httpErrors.badRequest("token is invalid");
+      }
+      decoded = payload;
+    })
+
+    const { userId, exp } = decoded;
+    if (exp * 1000 < Date.now()) {
+      throw app.httpErrors.badRequest("token is expired");
+    }
+    const [err, user] = await app.to(BaseUser.findById(userId));
+    if (err) {
+      req.log.error(err, `Failed retrieving user userId=${userId}`);
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      throw app.httpErrors.notFound();
+    }
+
+    return { notifyPrefs: user.notifyPrefs };
+  });
+
+  app.patch(
+    "/unsubscribe",
+    { schema: updateNotifyPrefsSchema },
+    async (req) => {
+      const { headers, body } = req;
+      
+      let decoded = {};
+      jwt.verify(headers.token, config.auth.secretKey, (err, payload) => {
+        if (err) {
+          req.log.error(err, `Invalid token for unsubscribing`);
+          throw app.httpErrors.badRequest("token is invalid");
+        }
+        decoded = payload;
+      })
+      
+      const { userId, expireDate } = decoded;
+      if (expireDate < Date.now()) {
+        throw app.httpErrors.badRequest("token is expired");
+      }
+
+      const [updateErr, updatedUser] = await app.to(
+        BaseUser.findOneAndUpdate(
+          { _id: userId },
+          { $set: { notifyPrefs: body.notifyPrefs } },
+          { new: true },
+        ),
+      );
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating user");
+        throw app.httpErrors.internalServerError();
+      }
+      return updatedUser.notifyPrefs;
     },
   );
 }

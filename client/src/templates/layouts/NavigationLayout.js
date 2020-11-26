@@ -62,11 +62,13 @@ const NavigationLayout = (props) => {
   const { t } = useTranslation();
   const {
     authLoading,
+    hideFooter,
     mobiletabs,
     navSearch,
     tabIndex,
     isAuthenticated,
     user,
+    webSocket,
     loggedInOnly,
     organisationId,
   } = props;
@@ -363,7 +365,7 @@ const NavigationLayout = (props) => {
       <div>
         <StyledDrawer
           style={{
-            minHeight: document.documentElement.clientHeight,
+            // minHeight: document.documentElement.clientHeight, --Causing extra padding at the bottom of the page when page is adjusted
             ...drawerStyles,
           }}
           enableDragHandle
@@ -379,6 +381,7 @@ const NavigationLayout = (props) => {
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
             user={user}
+            webSocket={webSocket}
             organisationId={organisationId}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
@@ -386,11 +389,10 @@ const NavigationLayout = (props) => {
             onOrganisationChange={onOrganisationChange}
             navSearch={navSearch}
           />
-
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
-          <Main>
+          <Main isProfile={props?.isProfile}>
             <props.component {...props} />
             {feedbackFormState.error && (
               <ErrorAlert
@@ -405,7 +407,7 @@ const NavigationLayout = (props) => {
             {renderRadioModal()}
             {renderThanksModal()}
           </Main>
-          <Footnote />
+          {!hideFooter && <Footnote />}
           <CookieAlert />
         </StyledDrawer>
       </div>

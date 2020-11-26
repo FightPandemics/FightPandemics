@@ -98,6 +98,7 @@ const Post = ({
   postDelete,
   showComments,
   user,
+  gtmPrefix,
   keepScrollIndex,
   keepPageState,
   keepPostsState,
@@ -497,7 +498,13 @@ const Post = ({
         postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
-        postId={postId}
+        postAuthorName={post.author.name}
+        postAuthorAvatar={post.author.photo}
+        isOwnPost={
+          isAuthorUser(user, post) ||
+          isAuthorOrg(user?.organisations, post.author)
+        }
+        authorId={post.author.id}
         postTitle={post?.title}
         postContent={post?.content}
         showComments={showComments}
@@ -507,6 +514,16 @@ const Post = ({
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        keepScrollIndex={keepScrollIndex}
+        keepPageState={keepPageState}
+        keepPostsState={keepPostsState}
+        user={user}
+        gtmPrefix={gtmPrefix || (postId ? GTM.post.prefix : GTM.feed.prefix)}
+        postInfo={{
+          objective: post.objective,
+          tags: post.types,
+          location: post.author.location,
+        }}
       />
     </Card.Body>
   );
@@ -522,19 +539,15 @@ const Post = ({
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
-                {isAuthenticated &&
-                  user &&
-                  (isAuthorUser(user, post) ||
-                    (user.organisations &&
-                      isAuthorOrg(user.organisations, post.author))) && (
-                    <SubMenuButton
-                      onSelect={onSelect}
-                      onChange={onChange}
-                      postId={postId}
-                      post={post}
-                      user={user}
-                    />
-                  )}
+                {isAuthenticated && actorId === post.author.id && (
+                  <SubMenuButton
+                    onSelect={onSelect}
+                    onChange={onChange}
+                    postId={postId}
+                    post={post}
+                    user={user}
+                  />
+                )}
               </div>
             </div>
             <WhiteSpace size="md" />
@@ -583,18 +596,15 @@ const Post = ({
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (isAuthorUser(user, post) ||
-                  isAuthorOrg(user.organisations, post.author)) && (
-                  <SubMenuButton
-                    onChange={handleDelete}
-                    onSelect={onSelect}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                  />
-                )}
+              {isAuthenticated && actorId === post.author.id && (
+                <SubMenuButton
+                  onChange={handleDelete}
+                  onSelect={onSelect}
+                  post={post}
+                  user={user}
+                  postId={postId}
+                />
+              )}
             </div>
           </div>
           <WhiteSpace size="md" />

@@ -17,7 +17,7 @@ import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
-import { selectOrganisationId } from "reducers/session";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -70,21 +70,16 @@ const Body = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  text-decoration: none;
-  margin: 0 auto;
-  font-weight: 500;
-  display: block;
-  text-align: center;
-  background-color: ${theme.colors.white};
-  font-size: ${theme.typography.size.large};
-  color: ${theme.colors.royalBlue};
-  line-height: 7rem;
-  height: 7rem;
-  border-radius: 1rem;
+  padding: 1rem 2rem;
+  background-color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xxlarge};
+  color: ${theme.colors.white};
+  border-radius: 2rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-  &:focus {
+  &:hover {
     border: 1px solid ${theme.colors.royalBlue};
     color: ${theme.colors.royalBlue};
+    background-color: ${theme.colors.white};
   }
 `;
 
@@ -96,6 +91,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const [post, postDispatch] = useReducer(postReducer, postState);
   const { t } = useTranslation();
   const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -114,11 +110,15 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    editPostModalVisibility,
+    //editPostModalVisibility,
     deleteModalVisibility,
     commentsCount,
     showComments,
   } = post;
+
+  // switching accounts will reload the page, make sure it's the author
+  const editPostModalVisibility =
+    post.editPostModalVisibility && actorId == post.author.id;
 
   const initialState = { ...post };
 
@@ -277,14 +277,12 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       <Container>
         <Title>{t("post.expireTitle")}</Title>
         <Body>{t("post.expire")}</Body>
-        <ProfileCompletedButtonsWrapper>
           <StyledLink
             id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
             to="/feed"
           >
             {t("feed.title")}
           </StyledLink>
-        </ProfileCompletedButtonsWrapper>
       </Container>
     );
   return (

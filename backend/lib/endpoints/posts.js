@@ -487,6 +487,7 @@ async function routes(app) {
     async (req) => {
       const {
         actor,
+        userId,
         params: { postId },
       } = req;
 
@@ -503,6 +504,9 @@ async function routes(app) {
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
+
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("like", updatedPost, actor._id, userId);
 
       return {
         likes: updatedPost.likes,
@@ -610,6 +614,7 @@ async function routes(app) {
     async (req, reply) => {
       const {
         actor,
+        userId,
         body: commentProps,
         params: { postId },
       } = req;
@@ -637,6 +642,19 @@ async function routes(app) {
         req.log.error(err, "Failed creating comment");
         throw app.httpErrors.internalServerError();
       }
+
+      const [errPost, post] = await app.to(Post.findById(postId));
+      if (errPost) {
+        req.log.error(errPost, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("comment", post, actor._id, userId, {
+        commentText: commentProps.content,
+      });
 
       reply.code(201);
       return comment;

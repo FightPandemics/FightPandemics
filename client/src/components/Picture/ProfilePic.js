@@ -13,14 +13,18 @@ const InitialDiv = styled.div`
   color: #425af2;
   font-size: 3rem;
   line-height: 6rem;
-  width: 7rem;
+  width: 8.5rem;
+  height: 8.5rem;
   text-align: center;
   font-weight: 500;
   background-color: #f3f4fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @media screen and (min-width: ${(props) =>
     props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;
-    height: 80%;
+    height: ${(props) => (props.hasPhoto ? `12.2rem` : `12rem`)};
     line-height: ${(props) => (props.hasPhoto ? `10rem` : `11rem`)};
     width: ${(props) => (props.hasPhoto ? `12.2rem` : `12rem`)};
     margin-right: 3rem;

@@ -14,7 +14,7 @@ const StyledMenu = styled(Menu)`
   overflow-y: scroll;
   li,
   li a {
-    &:hover {
+    &:hover a {
       color: ${colors.royalBlue};
     }
   }

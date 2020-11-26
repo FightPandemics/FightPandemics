@@ -210,7 +210,8 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "edited": "edited"
+    "edited": "edited",
+    "share_plural": "Shares"
   },
   "profile": {
     "common": {
@@ -256,7 +257,13 @@
       "emailDomainInvalid": "Email domain is invalid",
       "sendMessage": "Send Message",
       "securityInfo": "Security Information",
-      "changePassword": "Change Password"
+      "changePassword": "Change Password",
+      "notificationInfo": "Notification Preference",
+      "emailNotification": "Notification Email Settings",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly"
     },
     "individual": {
       "email": "Email",
@@ -272,7 +279,6 @@
       "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
-      "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -293,11 +299,16 @@
       "enterCurrentPassword": "Enter current password",
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
-      "editSecurity": "Edit Security"
+      "editAccount": "Edit Account",
+      "editProfile": "Edit Profile",
+      "editSecurity": "Edit Security",
+      "editNotification": "Edit Notification"
     },
     "org": {
       "title": "Create Organization Profile",
+      "editOrgAccount": "Edit Organization Account",
       "editOrgProfile": "Edit Organization Profile",
+      "editOrgNotification": "Edit Organization Notification",
       "name": "Organization Name",
       "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
@@ -353,7 +364,6 @@
       "completeOrgProfile": "Complete Organization Profile",
       "about": "About",
       "activity": "Activity",
-      "editAccount": "Edit Account Information",
       "updateSuccess": "Organization successfully updated",
       "orgNameRequired": "Organization name is required",
       "global": "Global"
@@ -440,7 +450,7 @@
     "title": "About FightPandemics / General",
     "offerRequestHelp": "Offering and Requesting Help",
     "profileAccount": "Profile and Account",
-    "contects": "Contects",
+    "contects": "Contacts",
     "general": [
       [
         "What is FightPandemics?",
@@ -558,7 +568,7 @@
       ],
       [
         "Why is my password not valid?",
-        "Please check if your password has at least 8 letters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
+        "Please check if your password has at least 8 characters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
       ],
       [
         "I signed up and I didn't receive the confirmation email. What do I do?",
@@ -851,5 +861,117 @@
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.",
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "Go to Help Board"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select",
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "The content of the message request would appear here",
+      "p2": "once you select one from the message requests inbox."
+    },
+    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
+    "deleteMessageQuestion": "Delete the message?",
+    "deleteMessageText": "The selected message will be permanently deleted from both your device and the recipient's device. Are you sure you want to delete?",
+    "blockQuestion": "Block the conversation from {{username}}?",
+    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "archiveQuestion": "Archive the conversation?",
+    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+    "sendSuccessHeader": "Your message was successfully sent",
+    "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
+    "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
+    "sendFailedHeader": "Oops, something went wrong",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not delivered.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not delivered.",
+    "ignoreDialogTitle": "Ignore the message request from {{username}}?",
+    "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
+    "blockDialogTitle": "Block the conversation from {{username}}?",
+    "blockDialogMessage": "By selecting \"Block\", {{username}} won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "block": "Block",
+    "archive": "Archive",
+    "accept": "Accept",
+    "ignore": "Ignore",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "edited": "Edited",
+    "saveEdit": "Save changes",
+    "didDelete": "You deleted this message.",
+    "wasDeleted": "This message was deleted.",
+    "loadMore": "Load More...",
+    "justNow": "Just now",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "activeNow": "Active Now",
+    "message": "Message",
+    "sendMessage": "Send a message",
+    "typeMessage": "Type a message...",
+    "viewMessage": "View message",
+    "to": "To",
+    "send": "Send",
+    "done": "Done",
+    "close": "Close"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Unsubscribe",
+      "canceled": "No changes will be made to your notification preferences",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
   }
 }
