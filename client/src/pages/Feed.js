@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
+
 import axios from "axios";
 import qs from "query-string";
 
@@ -48,7 +49,8 @@ import {
 } from "hooks/reducers/feedReducers";
 
 // ICONS
-import { CreatePostIcon } from "../components/Profile/ProfileComponents";
+
+import { CreatePostIcon, btnCreatePostStyle } from "../components/Profile/ProfileComponents";
 import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
@@ -69,6 +71,7 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
+
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -691,17 +694,19 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
+
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <button
                     id={gtmTag(GTM.post.createPost)}
+                    style={btnCreatePostStyle}
                     onClick={handleCreatePost}
                   >
-                    {t("post.create")}
                     <CreatePostIcon
                       id={gtmTag(GTM.post.createPost)}
                       src={creatPost}
                     />
+                    {t("post.create")}
                   </button>
                 )}
               </HeaderWrapper>

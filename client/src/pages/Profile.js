@@ -40,6 +40,7 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  btnCreatePostStyle,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -426,12 +427,14 @@ const Profile = ({
             <PlaceholderIcon />
             {isSelf && (
               <>
-                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
-                <CreatePostIcon
-                  id={GTM.user.profilePrefix + GTM.post.createPost}
-                  src={createPost}
-                  onClick={onToggleCreatePostDrawer}
-                />
+                <CreatePostDiv id={GTM.user.profilePrefix + GTM.post.createPost} onClick={onToggleCreatePostDrawer}>
+                  <CreatePostIcon
+                    id={GTM.user.profilePrefix + GTM.post.createPost}
+                    src={createPost}
+                    onClick={onToggleCreatePostDrawer}
+                  />
+                  {t("post.create")}
+                </CreatePostDiv>
               </>
             )}
           </SectionHeader>

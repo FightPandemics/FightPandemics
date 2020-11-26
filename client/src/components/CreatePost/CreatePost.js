@@ -7,6 +7,7 @@ import {
   TitleStep,
   ViewPostButton,
 } from "components/CreatePost/StyledPostAs";
+
 import TabForms from "./Form/TabForms";
 import SvgIcon from "components/Icon/SvgIcon";
 import closeButton from "assets/icons/close-btn.svg";

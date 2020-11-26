@@ -47,7 +47,6 @@ export const SectionHeader = styled(Heading)`
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
   bottom: 5%;
-  right: 5%;
   height: 5rem;
   width: 5rem;
   z-index: 1;
@@ -57,12 +56,27 @@ export const CreatePostIcon = styled(SvgIcon)`
     z-index: initial;
   }
 `;
+
+export const btnCreatePostStyle = {
+  backgroundColor: '#425AF2',
+  color: `${colors.white}`,
+  borderRadius: '100px',
+  marginBottom: '15px',
+  paddingRight: '25px'
+};
+
+
 export const CreatePostDiv = styled.div`
   display: none;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    color: ${colors.black};
+    color: ${colors.white};
     display: initial;
     margin-right: 1rem;
+    border-radius: 100px;
+    margin-bottom: 15px;
+    padding-right: 25px;
+    background-color: #425AF2;
+    cursor: pointer;
   }
 `;
 
