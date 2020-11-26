@@ -65,6 +65,19 @@ const postsReducer = (state = innitialState, action) => {
         },
       };
     }
+    case POSTS_ACTIONS.SET_REPORTED: {
+      const { payload } = action;
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [payload.postId]: {
+            ...state.posts[payload.postId],
+            didReport: true,
+          },
+        },
+      };
+    }
     default:
       return state;
   }

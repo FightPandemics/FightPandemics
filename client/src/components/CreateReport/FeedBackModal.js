@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal } from "antd";
+import { useDispatch } from "react-redux";
 
+import { postsActions } from "reducers/posts";
 import { theme, mq } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const CreateReport = ({ setCallReport, isComment, reportSuccess }) => {
+const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId }) => {
   const [showModal, setShowModal] = useState(true);
-  const closeModal = () => setShowModal(false);
-
+  const dispatch = useDispatch();
+  const closeModal = () => {
+    setShowModal(false);
+    setCallReport(false);
+    dispatch(postsActions.setReported({ postId }));
+  };
   const ModalWrapper = styled(Modal)`
     .ant-modal-title {
       font-family: ${typography.font.family.display};
@@ -63,7 +69,10 @@ const CreateReport = ({ setCallReport, isComment, reportSuccess }) => {
           )}
         </Body>
         <Footer>
-          <Submit onClick={() => setCallReport(false)} primary="true">
+          <Submit
+            onClick={closeModal}
+            primary="true"
+          >
             Finish
           </Submit>
         </Footer>
@@ -72,4 +81,4 @@ const CreateReport = ({ setCallReport, isComment, reportSuccess }) => {
   );
 };
 
-export default CreateReport;
+export default FeedBackModal;

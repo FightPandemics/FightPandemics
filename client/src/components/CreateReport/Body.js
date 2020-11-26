@@ -82,10 +82,8 @@ const Body = ({ closeModal, postId, onSuccess }) => {
     const reasonString = `${reasonData.join("|")}|${description}`;
     const formData = { reason: reasonString };
     e.preventDefault();
-    closeModal();
     try {
       const res = await axios.post(`/api/reports/posts/${postId}`, formData);
-      console.log(res, "RES");
       onSuccess(true);
     } catch (error) {
       onSuccess(false);

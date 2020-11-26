@@ -724,7 +724,11 @@ const Post = ({
                 )}
               </WebModal>
               {callReport ? (
-                <CreateReport setCallReport={setCallReport} postId={post._id} />
+                <CreateReport
+                  callReport={callReport}
+                  setCallReport={setCallReport}
+                  postId={post._id}
+                />
               ) : null}
             </PostCard>
           )}

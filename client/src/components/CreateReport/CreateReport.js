@@ -7,10 +7,9 @@ import FeedBackModal from "./FeedBackModal";
 
 const { colors, typography } = theme;
 
-const CreateReport = ({ postId, setCallReport }) => {
-  const [showModal, setShowModal] = useState(true);
+const CreateReport = ({ postId, setCallReport, callReport }) => {
   const [reportSuccess, setReportSuccess] = useState(null);
-  const closeModal = () => setShowModal(false);
+  const closeModal = () => setCallReport(false);
 
   const ModalWrapper = styled(Modal)`
     width: 564px !important;
@@ -40,10 +39,10 @@ const CreateReport = ({ postId, setCallReport }) => {
 
   return (
     <div className="create-report">
-      <ModalWrapper
+      {reportSuccess === null &&<ModalWrapper
         footer={null}
         title={"Report Post"}
-        visible={showModal}
+        visible={callReport}
         destroyOnClose={true}
         onCancel={closeModal}
       >
@@ -52,9 +51,10 @@ const CreateReport = ({ postId, setCallReport }) => {
           closeModal={closeModal}
           postId={postId}
         />
-      </ModalWrapper>
-      {!showModal && reportSuccess !== null && (
+      </ModalWrapper>}
+      {reportSuccess !== null && (
         <FeedBackModal
+          postId={postId}
           reportSuccess={reportSuccess}
           setCallReport={setCallReport}
         />
