@@ -31,7 +31,11 @@ Object.assign(feedbackWithInvalidAge, { age: "%" });
 
 let feedbackWithNegativeAge = {};
 Object.assign(feedbackWithNegativeAge, feedbackWithValidInputs);
-Object.assign(feedbackWithNegativeAge, { age: -5 });
+Object.assign(feedbackWithNegativeAge, { age: -55 });
+
+let feedbackWithAgeOver150 = {};
+Object.assign(feedbackWithAgeOver150, feedbackWithValidInputs);
+Object.assign(feedbackWithAgeOver150, { age: 555 });
 
 let feedbackWithInvalidRating = {};
 Object.assign(feedbackWithInvalidRating, feedbackWithValidInputs);
@@ -40,6 +44,10 @@ Object.assign(feedbackWithInvalidRating, { rating: "%" });
 let feedbackWithNegativeRating = {};
 Object.assign(feedbackWithNegativeRating, feedbackWithValidInputs);
 Object.assign(feedbackWithNegativeRating, { rating: -5 });
+
+let feedbackWithRatingOver5 = {};
+Object.assign(feedbackWithRatingOver5, feedbackWithValidInputs);
+Object.assign(feedbackWithRatingOver5, { rating: 555 });
 
 describe("POST Feedback endpoint tests", () => {
   describe("Unauthorized user enters feedback data", () => {
@@ -66,7 +74,6 @@ describe("POST Feedback endpoint tests", () => {
       );
     });
 
-    //Currently a negative age triggers a success status and message which is incorrect. Test case will fail until status is fixed.
     it("Negative number in Age question triggers Bad Request message", async () => {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
@@ -77,7 +84,21 @@ describe("POST Feedback endpoint tests", () => {
         response,
         httpStatus.BAD_REQUEST,
         "Bad Request",
-        "body.age should be positive integer",
+        "body.age should be >= 1",
+      );
+    });
+
+    it("Number over 150 in Age question triggers Bad Request message", async () => {
+      let response = await apiHelper.sendPOSTRequest(
+        APP_URL,
+        apiEndPoint,
+        feedbackWithAgeOver150,
+      );
+      validator.validateStatusCodeErrorAndMessage(
+        response,
+        httpStatus.BAD_REQUEST,
+        "Bad Request",
+        "body.age should be <= 150",
       );
     });
 
@@ -95,7 +116,6 @@ describe("POST Feedback endpoint tests", () => {
       );
     });
 
-    //Currently a negative rating triggers a 500 internal server error which is incorrect, should be a 400 bad request error instead. Test case will fail until status is fixed.
     it("Negative number in Rating question triggers Bad Request message", async () => {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
@@ -106,7 +126,21 @@ describe("POST Feedback endpoint tests", () => {
         response,
         httpStatus.BAD_REQUEST,
         "Bad Request",
-        "body.rating should be positive integer",
+        "body.rating should be >= 1",
+      );
+    });
+
+    it("Number over 5 in Rating question triggers Bad Request message", async () => {
+      let response = await apiHelper.sendPOSTRequest(
+        APP_URL,
+        apiEndPoint,
+        feedbackWithRatingOver5,
+      );
+      validator.validateStatusCodeErrorAndMessage(
+        response,
+        httpStatus.BAD_REQUEST,
+        "Bad Request",
+        "body.rating should be <= 5",
       );
     });
   });
