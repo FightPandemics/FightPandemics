@@ -39,12 +39,13 @@ exports.findOneDocumentWithCondition = async function (Model, condition) {
   }
 };
 
+//result contains insertedId and ops array -> inserted doc
 exports.insertDocument = async function (Model, collectionName) {
   try {
     return await mongoose.connection
       .collection(collectionName)
       .insertOne(Model);
   } catch (err) {
-    console.error("error");
+    console.error("insert error" + err.message);
   }
 };
