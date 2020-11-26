@@ -46,6 +46,7 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
+import PostPlaceHolder from "./PostPlaceHolder";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -103,6 +104,9 @@ const Post = ({
   keepScrollIndex,
   keepPageState,
   keepPostsState,
+  isHidden,
+  onPostHide,
+  onPostUnhide,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -122,6 +126,8 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
+    didReport,
+    reportsCount,
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
@@ -318,13 +324,11 @@ const Post = ({
   };
 
   const handleHide = () => {
-    // hide post functionality here
-    console.log('"Hide Post" was clicked.');
+    onPostHide(_id);
   };
 
   const handleReport = () => {
     setCallReport(true);
-    console.log('"Report Post" was clicked.');
   };
 
   const renderExternalLinks = () => {
@@ -619,100 +623,116 @@ const Post = ({
         </>
       ) : (
         //Post in feed.
-        <PostCard>
-          <div className="card-header">
-            {includeProfileLink ? renderHeaderWithLink : renderHeader}
-            <div className="card-submenu">
-              <PostDropdownButton
-                onSave={handleSave}
-                onFollow={handleFollow}
-                onHide={handleHide}
-                onReport={handleReport}
-                onEdit={onSelect}
-                onDelete={handleDelete}
-                post={post}
-                user={user}
-                postId={postId}
-                isSelf={isAuthenticated && actorId === post.author.id}
-                isOwner={
-                  isAuthenticated &&
-                  (isAuthorUser(user, post) ||
-                    isAuthorOrg(user?.organisations, post.author))
-                }              
-              />
-            </div>
-          </div>
-          <WhiteSpace size="md" />
-          {renderTags}
-          <WhiteSpace />
-          {post && isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${_id}`,
-                state: {
-                  post: post,
-                  postId: _id,
-                  from: window.location.href,
-                  user,
-                  keepScrollIndex,
-                  keepPageState,
-                  keepPostsState,
-                },
-              }}
-            >
-              {renderContent(title, content, highlightWords, showComplete)}
-            </Link>
+        <>
+          {didReport || isHidden ? (
+            <PostPlaceHolder
+              postId={_id}
+              isReported={didReport}
+              isSuspected={reportsCount >= 5}
+              isHidden={isHidden}
+              onPostUnhide={onPostUnhide}
+            />
           ) : (
-            <>
-              {/*
+            <PostCard>
+              <div className="card-header">
+                {includeProfileLink ? renderHeaderWithLink : renderHeader}
+                <div className="card-submenu">
+                  <PostDropdownButton
+                    onSave={handleSave}
+                    onFollow={handleFollow}
+                    onHide={handleHide}
+                    onReport={handleReport}
+                    onEdit={onSelect}
+                    onDelete={handleDelete}
+                    post={post}
+                    user={user}
+                    postId={postId}
+                    isSelf={isAuthenticated && actorId === post.author.id}
+                    isOwner={
+                      isAuthenticated &&
+                      (isAuthorUser(user, post) ||
+                        isAuthorOrg(user?.organisations, post.author))
+                    }
+                  />
+                </div>
+              </div>
+              <WhiteSpace size="md" />
+              {renderTags}
+              <WhiteSpace />
+              {post && isAuthenticated ? (
+                <Link
+                  to={{
+                    pathname: `/post/${_id}`,
+                    state: {
+                      post: post,
+                      postId: _id,
+                      from: window.location.href,
+                      user,
+                      keepScrollIndex,
+                      keepPageState,
+                      keepPostsState,
+                    },
+                  }}
+                >
+                  {renderContent(title, content, highlightWords, showComplete)}
+                </Link>
+              ) : (
+                <>
+                  {/*
                 Include hidden link for meta crawler but not on
                 profiles to avoid duplicate crawling of same posts
               */}
-              {includeProfileLink && (
-                <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+                  {includeProfileLink && (
+                    <Link
+                      to={`/post/${_id}`}
+                      style={{ display: "none" }}
+                    ></Link>
+                  )}
+                  {renderContent(title, content, highlightWords, showComplete)}
+                </>
               )}
-              {renderContent(title, content, highlightWords, showComplete)}
-            </>
+              {fullPostLength > CONTENT_LENGTH ||
+                (post?.content?.length > CONTENT_LENGTH ? (
+                  <RenderViewMore />
+                ) : (
+                  <Card.Body className="view-more-wrapper" />
+                ))}
+              {renderSocialIcons}
+              <ShareModal
+                showShareModal={showShareModal}
+                setShowShareModal={setShowShareModal}
+                id={post._id}
+                postTitle={post.title}
+                postContent={post.content}
+              />
+              <WebModal
+                title={t("post.confirm")}
+                visible={
+                  !!deleteModalVisibility &&
+                  deleteModalVisibility !== DELETE_MODAL_HIDE &&
+                  toDelete === post._id
+                }
+                onOk={() => handleDeleteOk()}
+                onCancel={handleCancelPostDelete}
+                okText={t("post.delete")}
+                cancelText={t("post.cancel")}
+              >
+                {deleteModalVisibility === DELETE_MODAL_POST ? (
+                  <p>{t("post.deletePostConfirmation")}</p>
+                ) : (
+                  <p>{t("post.deleteCommentConfirmation")}</p>
+                )}
+              </WebModal>
+              {callReport ? (
+                <CreateReport setCallReport={setCallReport} postId={post._id} />
+              ) : null}
+            </PostCard>
           )}
-          {fullPostLength > CONTENT_LENGTH ||
-            (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore />
-            ) : (
-              <Card.Body className="view-more-wrapper" />
-            ))}
-          {renderSocialIcons}
-          <ShareModal
-            showShareModal={showShareModal}
-            setShowShareModal={setShowShareModal}
-            id={post._id}
-            postTitle={post.title}
-            postContent={post.content}
-          />
-          <WebModal
-            title={t("post.confirm")}
-            visible={
-              !!deleteModalVisibility &&
-              deleteModalVisibility !== DELETE_MODAL_HIDE &&
-              toDelete === post._id
-            }
-            onOk={() => handleDeleteOk()}
-            onCancel={handleCancelPostDelete}
-            okText={t("post.delete")}
-            cancelText={t("post.cancel")}
-          >
-            {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>{t("post.deletePostConfirmation")}</p>
-            ) : (
-              <p>{t("post.deleteCommentConfirmation")}</p>
-            )}
-          </WebModal>
-          {callReport ? <CreateReport postId={post._id} /> : null}
-        </PostCard>
+        </>
       )}
     </>
   );
 };
-
 const renderContent = (title, content, highlightWords, showComplete) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -53,6 +53,9 @@ const Posts = ({
   page,
 }) => {
   const posts = Object.entries(filteredPosts);
+  const [hiddenPosts, setHiddenPosts] = useState(
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+  );
   const scrollIndex = useRef(0);
   const history = useHistory();
   const scrollToIndex = () => {
@@ -61,6 +64,20 @@ const Posts = ({
       if (keepScroll) return keepScrollIndex;
     }
     return -1;
+  };
+  const hidePost = (postId) => {
+    localStorage.setItem(
+      "hiddenPosts",
+      JSON.stringify({ ...hiddenPosts, [postId]: true }),
+    ); // objects are fast, better than looking for postId in an Array
+    setHiddenPosts({ ...hiddenPosts, [postId]: true });
+  };
+  const unhidePost = (postId) => {
+    localStorage.setItem(
+      "hiddenPosts",
+      JSON.stringify({ ...hiddenPosts, [postId]: null }),
+    );
+    setHiddenPosts({ ...hiddenPosts, [postId]: null });
   };
   const loadMoreItems = isNextPageLoading
     ? () => {
@@ -101,6 +118,9 @@ const Posts = ({
               keepPageState={page}
               keepPostsState={filteredPosts}
               highlightWords={highlightWords}
+              isHidden={hiddenPosts[posts[index][1]?._id]}
+              onPostHide={hidePost}
+              onPostUnhide={unhidePost}
             />
             <HorizontalRule />
           </>
@@ -114,11 +134,15 @@ const Posts = ({
           columnIndex={0}
           rowIndex={index}
         >
-          {({ measure, registerChild }) => (
-            <div key={key} ref={registerChild} onLoad={measure} style={style}>
-              {content}
-            </div>
-          )}
+          {({ measure, registerChild }) => {
+            if (registerChild) measure();
+
+            return (
+              <div key={key} ref={registerChild} onLoad={measure} style={style}>
+                {content}
+              </div>
+            );
+          }}
         </CellMeasurer>
       );
     },

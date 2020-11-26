@@ -6,7 +6,7 @@ import { theme, mq } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const CreateReport = () => {
+const CreateReport = ({ setCallReport, isComment, reportSuccess }) => {
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => setShowModal(false);
 
@@ -46,21 +46,24 @@ const CreateReport = () => {
     <div className="create-report">
       <ModalWrapper
         footer={null}
-        title={"Report Recieved"}
+        title={reportSuccess ? "Report Recieved" : "Oops!"}
         visible={showModal}
         destroyOnClose={true}
         onCancel={closeModal}
       >
         <Body>
-          Thank you for your report! This {"post" / "comment"} will be submitted
-          for review and you will receive a notification when action is taken.
+          {reportSuccess ? (
+            <>
+              Thank you for your report! This {isComment ? "comment" : "post"}{" "}
+              will be submitted for review and you will receive a notification
+              when action is taken.
+            </>
+          ) : (
+            <>Oops! something went wrong...</>
+          )}
         </Body>
         <Footer>
-          <Submit
-            primary="true"
-            // onClick={handleSubmit}
-            disabled="false"
-          >
+          <Submit onClick={() => setCallReport(false)} primary="true">
             Finish
           </Submit>
         </Footer>

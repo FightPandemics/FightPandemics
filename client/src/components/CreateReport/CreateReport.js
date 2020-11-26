@@ -3,11 +3,13 @@ import Body from "./Body";
 import styled from "styled-components";
 import { Modal } from "antd";
 import { theme, mq } from "constants/theme";
+import FeedBackModal from "./FeedBackModal";
 
 const { colors, typography } = theme;
 
-const CreateReport = ({ postId }) => {
+const CreateReport = ({ postId, setCallReport }) => {
   const [showModal, setShowModal] = useState(true);
+  const [reportSuccess, setReportSuccess] = useState(null);
   const closeModal = () => setShowModal(false);
 
   const ModalWrapper = styled(Modal)`
@@ -45,8 +47,18 @@ const CreateReport = ({ postId }) => {
         destroyOnClose={true}
         onCancel={closeModal}
       >
-        <Body closeModal={closeModal} postId={postId} />
+        <Body
+          onSuccess={setReportSuccess}
+          closeModal={closeModal}
+          postId={postId}
+        />
       </ModalWrapper>
+      {!showModal && reportSuccess !== null && (
+        <FeedBackModal
+          reportSuccess={reportSuccess}
+          setCallReport={setCallReport}
+        />
+      )}
     </div>
   );
 };

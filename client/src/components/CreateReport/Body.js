@@ -60,7 +60,7 @@ export const Submit = styled(SubmitButton)`
     font-weight: 500;
   }
 `;
-const Body = ({ closeModal, postId }) => {
+const Body = ({ closeModal, postId, onSuccess }) => {
   const [reasonData, setReasonData] = useState([]);
   const [description, setDescription] = useState("");
 
@@ -86,8 +86,9 @@ const Body = ({ closeModal, postId }) => {
     try {
       const res = await axios.post(`/api/reports/posts/${postId}`, formData);
       console.log(res, "RES");
+      onSuccess(true);
     } catch (error) {
-      console.log(error);
+      onSuccess(false);
     }
   };
   return (
