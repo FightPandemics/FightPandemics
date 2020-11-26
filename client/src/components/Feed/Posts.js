@@ -134,15 +134,11 @@ const Posts = ({
           columnIndex={0}
           rowIndex={index}
         >
-          {({ measure, registerChild }) => {
-            if (registerChild) measure();
-
-            return (
-              <div key={key} ref={registerChild} onLoad={measure} style={style}>
-                {content}
-              </div>
-            );
-          }}
+          {({ measure, registerChild }) => (
+            <div key={key} ref={registerChild} onLoad={measure} style={style}>
+              {content}
+            </div>
+          )}
         </CellMeasurer>
       );
     },
