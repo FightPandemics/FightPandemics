@@ -1,6 +1,6 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken, createSearchRegex } = require("../utils");
+const { getCookieToken, createSearchRegex, setReqPermLevel } = require("../utils");
 const { config } = require("../../config");
 const jwt = require("jsonwebtoken");
 const { updateNotifyPrefsSchema } = require("./schema/notificationPreference");
@@ -556,61 +556,35 @@ async function routes(app) {
     },
   );
 
-  // --------Currrently WIP------------
+
   app.patch(
     "/:userId/permission", 
+    {
+      preValidation: [
+        setReqPermLevel("administrator"),
+        app.checkPermission,
+      ]
+    },
     async (req) => {
     
-    const {
-      params: { userId },
-      body: {level},
-    } = req;
-    // -- update permissions to user (value = 0)
-    if (level === "user") {
+      const {
+        params: { userId },
+        body: {level},
+      } = req;
+      
       const [updatedErr, updatedUser] = await app.to(
         User.findOneAndUpdate(
-          { _id: userId },
-          { $set: {permissions: PERMISSIONS.user}},
+          {_id: userId },
+          { $set: {permissions: PERMISSIONS[level]}},
           { new: true }
         )
       )
-      if(updatedErr) {
+      if (updatedErr) {
         req.log.error(updateErr, "Failed to add permission");
         throw app.httpErrors.internalServerError();
       }
       return updatedUser.permissions;
-    }
-    // -- update permissions to moderator (value = 2)
-    else if(level === "moderator") {
-      const [updatedErr, updatedUser] = await app.to(
-        User.findOneAndUpdate(
-          { _id: userId },
-          { $set: {permissions: PERMISSIONS.moderator}},
-          { new: true }
-        )
-      )
-      if(updatedErr) {
-        req.log.error(updateErr, "Failed to add permission");
-        throw app.httpErrors.internalServerError();
-      }
-      return updatedUser.permissions;
-    }
-    // -- update permissions to administrator (value = 4)
-    else if(level === "administrator") {
-      const [updatedErr, updatedUser] = await app.to(
-        User.findOneAndUpdate(
-          { _id: userId },
-          { $set: {permissions: PERMISSIONS.administrator}},
-          { new: true }
-        )
-      )
-      if(updatedErr) {
-        req.log.error(updateErr, "Failed to add permission");
-        throw app.httpErrors.internalServerError();
-      }
-      return updatedUser.permissions; 
-    }
-  })
+  });
 }
 
 module.exports = routes;
