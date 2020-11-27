@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
-
 import axios from "axios";
 import qs from "query-string";
 
@@ -49,7 +48,6 @@ import {
 } from "hooks/reducers/feedReducers";
 
 // ICONS
-
 import { CreatePostIcon, btnCreatePostStyle } from "../components/Profile/ProfileComponents";
 import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
@@ -71,7 +69,6 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
-
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -476,12 +473,11 @@ const Feed = (props) => {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
-
-        const lastPage = Math.ceil(meta.total / limit) - 1;
-        if (page === lastPage) {
+        if (posts.length < limit) {
+          dispatch(postsActions.finishLoadingAction());
+        } else if (meta.total === limit) {
           dispatch(postsActions.finishLoadingAction());
         }
-
         let postsInState;
         if (history.location.state) {
           const { keepPostsState, keepPageState } = history.location.state;
@@ -492,10 +488,24 @@ const Feed = (props) => {
         }
         if (postsInState) {
           if (Object.keys(postsInState).length === meta.total) {
-            dispatch(postsActions.finishLoadingAction());
+            dispatch(
+              postsActions.setLoadingAction({
+                isLoading: true,
+                loadMore: false,
+              }),
+            );
           }
         }
-
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        console.log(page, lastPage, meta.total);
+        if (page === lastPage) {
+          dispatch(
+            postsActions.setLoadingAction({
+              isLoading: true,
+              loadMore: false,
+            }),
+          );
+        }
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
@@ -694,13 +704,12 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
-
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <button
                     id={gtmTag(GTM.post.createPost)}
-                    style={btnCreatePostStyle}
                     onClick={handleCreatePost}
+                    style={btnCreatePostStyle}
                   >
                     <CreatePostIcon
                       id={gtmTag(GTM.post.createPost)}

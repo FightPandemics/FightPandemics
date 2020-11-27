@@ -47,6 +47,7 @@ export const SectionHeader = styled(Heading)`
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
   bottom: 5%;
+  right: 5%;
   height: 5rem;
   width: 5rem;
   z-index: 1;
@@ -67,14 +68,14 @@ export const btnCreatePostStyle = {
 
 
 export const CreatePostDiv = styled.div`
-  display: none;
+  color: #f5f5f9;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     color: ${colors.white};
     display: initial;
     margin-right: 1rem;
     border-radius: 100px;
     margin-bottom: 15px;
-    padding-right: 25px;
+    padding-right: 22px;
     background-color: #425AF2;
     cursor: pointer;
   }
