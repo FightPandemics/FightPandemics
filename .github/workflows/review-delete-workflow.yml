@@ -1,8 +1,6 @@
 name: Delete Review Build
 
-on:
-  pull_request:
-    types: [closed]
+on: [delete]
 
 jobs:
   destroy_review:
