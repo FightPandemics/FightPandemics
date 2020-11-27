@@ -36,6 +36,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             }
             filterOption={false}
             options={translateOptions(shareWith.options)}
+            minWidth="13rem"
           />
           <Selector
             suffixIcon={
