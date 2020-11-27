@@ -1,6 +1,5 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { Modal as WebModal } from "antd";
 import { connect, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
@@ -15,6 +14,7 @@ import FilterTag from "components/Tag/FilterTag";
 import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
+import DeleteModal from "./PostDeleteModal";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
 import SubMenuButton from "components/Button/SubMenuButton";
@@ -570,8 +570,10 @@ const Post = ({
               postContent={post.content}
             />
             {renderComments}
-            <WebModal
-              title={t("post.confirm")}
+            <DeleteModal
+              title={(deleteModalVisibility === DELETE_MODAL_POST && (
+                <p>{t("post.deletePostConfirmationTitle")}</p>
+              )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
@@ -584,7 +586,7 @@ const Post = ({
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
               )) || <p>{t("post.deleteCommentConfirmation")}</p>}
-            </WebModal>
+            </DeleteModal>
           </StyledPostPagePostCard>
           <StyledButtonWizard
             nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
@@ -653,8 +655,10 @@ const Post = ({
             postTitle={post.title}
             postContent={post.content}
           />
-          <WebModal
-            title={t("post.confirm")}
+          <DeleteModal
+            title={(deleteModalVisibility === DELETE_MODAL_POST && (
+              <p>{t("post.deletePostConfirmationTitle")}</p>
+            )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
             visible={
               !!deleteModalVisibility &&
               deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -665,12 +669,10 @@ const Post = ({
             okText={t("post.delete")}
             cancelText={t("post.cancel")}
           >
-            {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>{t("post.deletePostConfirmation")}</p>
-            ) : (
-              <p>{t("post.deleteCommentConfirmation")}</p>
-            )}
-          </WebModal>
+            {(deleteModalVisibility === DELETE_MODAL_POST && (
+                <p>{t("post.deletePostConfirmation")}</p>
+              )) || <p>{t("post.deleteCommentConfirmation")}</p>}
+          </DeleteModal>
         </PostCard>
       )}
     </>
