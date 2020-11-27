@@ -77,12 +77,16 @@ const StyledMenu = styled(Menu)`
   right: -2.993em;
   padding: 0 0 4px;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 102vw;
+    width: 50vw;
     height: 90vh;
     position: absolute;
-    border-radius: 0px;
-    top: 0.7em;
-    overflow: hidden;
+    border-radius: 10px;
+    top: 1em;
+    right: 0;
+  }
+  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    width: 80vw;
+    height: 50vh;
   }
   a {
     padding: 0.5em 1em;
@@ -110,17 +114,10 @@ const StyledMenu = styled(Menu)`
       cursor: pointer;
     }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      clip-path: none;
-      border-radius: 0px !important;
-      height: 83.1vh;
-      ::-webkit-scrollbar {
-        display: none;
-      }
+      height: 84.6vh;
     }
-  }
-  .ant-dropdown-menu-item {
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      border-radius: 0px !important;
+    @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+      height: 44.6vh;
     }
   }
 `;
