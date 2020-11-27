@@ -151,6 +151,7 @@ const MessageModal = ({
             visible={visible}
             onOk={handleOk}
             okText={t("messaging.send")}
+            cancelText={t("messaging.cancel")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !!!text, id: gtmId + GTM.inbox.sent }}

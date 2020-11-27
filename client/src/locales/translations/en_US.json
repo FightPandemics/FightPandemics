@@ -263,9 +263,12 @@
       "notificationInfo": "Notification Preference",
       "emailNotification": "Notification Email Settings",
       "instant": "Instant",
+      "digest": "Digest",
       "daily": "Daily",
       "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "biweekly": "Biweekly",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Email",
@@ -972,6 +975,7 @@
       "success": "Your notification preference is updated"
     },
     "header": "Notifications",
+    "empty": "No more notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
