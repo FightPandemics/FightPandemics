@@ -38,11 +38,7 @@ const Posts = ({
   isAuthenticated,
   postDispatch,
   filteredPosts,
-  handleCancelPostDelete,
-  postDelete,
   user,
-  deleteModalVisibility,
-  handlePostDelete,
   highlightWords,
   isNextPageLoading,
   loadNextPage,
@@ -90,13 +86,8 @@ const Posts = ({
               currentPost={posts[index][1]}
               postDispatch={postDispatch}
               includeProfileLink={true}
-              numComments={posts[index][1].commentsCount}
-              postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
-              deleteModalVisibility={deleteModalVisibility}
-              handleCancelPostDelete={handleCancelPostDelete}
-              onChange={handlePostDelete}
               keepScrollIndex={scrollIndex.current}
               keepPageState={page}
               keepPostsState={filteredPosts}
@@ -123,16 +114,12 @@ const Posts = ({
       );
     },
     [
-      deleteModalVisibility,
       filteredPosts,
-      handleCancelPostDelete,
-      handlePostDelete,
       hasNextPage,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
       page,
-      postDelete,
       postDispatch,
       posts,
       user,
