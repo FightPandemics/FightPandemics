@@ -1,4 +1,5 @@
 import qs from "query-string";
+import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 const INDIVIDUAL_AUTHOR_TYPE = "Individual";
 
 export const authorProfileLink = (post) =>
@@ -55,4 +56,36 @@ export const setQueryKeysValue = (history, newQuery) => {
     pathname: history.location.pathname,
     search: stringifiedQuery,
   });
+};
+
+export const getPostedTime = (post) => {
+  const today = new Date();
+  const postCreatedAt = new Date(post.createdAt);
+  const splitDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    return {
+      year,
+      month,
+      day,
+      hour,
+    };
+  };
+  console.log(postCreatedAt);
+  if (splitDate(today).year > splitDate(postCreatedAt).year)
+    return `${
+      splitDate(today).year - splitDate(postCreatedAt).year
+    } year(s) ago`;
+  if (splitDate(today).month > splitDate(postCreatedAt).month)
+    return `${
+      splitDate(today).month - splitDate(postCreatedAt).month
+    } month(s) ago`;
+  if (splitDate(today).day > splitDate(postCreatedAt).day)
+    return `${splitDate(today).day - splitDate(postCreatedAt).day} day(s) ago`;
+  if (splitDate(today).hour > splitDate(postCreatedAt).hour)
+    return `${
+      splitDate(today).hour - splitDate(postCreatedAt).hour
+    } hour(s) ago`;
 };

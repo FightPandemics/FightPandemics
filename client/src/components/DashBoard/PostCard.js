@@ -80,6 +80,7 @@ const PostCard = styled(Card)`
         font-size: ${medium};
         .title-wrapper {
           cursor: default;
+          padding-top: 1.5rem;
         }
         > .ant-avatar-circle,
         > img {

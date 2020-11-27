@@ -26,8 +26,9 @@ import {
   typeToTag,
   translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
+
 import filterOptions from "assets/data/filterOptions";
-import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
+import { getOptionText, highlightSearchRegex, getPostedTime } from "./utils";
 import {
   RESET_PAGE,
   NEXT_PAGE,
@@ -60,17 +61,13 @@ const URLS = {
 
 export const AntDivider = styled(Divider)`
   height: 100%;
-
-  border-left: 2px solid rgba(0, 0, 0, 0.5);
-
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
   left: 75px;
   margin: -2rem 0 -2rem 0;
 `;
 export const LeftHeader = styled.p`
   padding: 0;
-
   top: 50%;
-
   margin: -2rem 0 0 -1rem;
   position: absolute;
   vertical-align: middle;
@@ -353,9 +350,7 @@ const Post = ({
             <Highlight text={post?.author?.name} highlight={highlightWords} />
           </span>
           <span className="timestamp">
-            <Highlight
-              text={`Posted at ${translateISOTimeTitle(post.createdAt)}`}
-            />
+            <Highlight text={`Posted at ${getPostedTime(post)}`} />
           </span>
           <span className="reporter">
             <Highlight text={`Reported By `} />
@@ -507,7 +502,7 @@ const Post = ({
       ) : (
         //Post in feed.
         <PostCard>
-          <LeftHeader>Something</LeftHeader>
+          <LeftHeader>X Reports</LeftHeader>
 
           <AntDivider type="vertical" plain>
             <div className="card-header">
