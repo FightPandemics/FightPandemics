@@ -17,6 +17,7 @@ import {
   NEW_NOTIFICATION,
   GET_NOTIFICATIONS_SUCCESS,
   LOCAL_NOTIFICATIONS_MARK_AS_READ,
+  LOCAL_NOTIFICATIONS_MARK_AS_CLEARED,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -198,6 +199,17 @@ function wsReducer(state = initialState, action) {
         ...state,
         notifications: [
           ...state.notifications.map((n) => ({ ...n, readAt: new Date() })),
+        ],
+      };
+    case LOCAL_NOTIFICATIONS_MARK_AS_CLEARED:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications.map((n) =>
+            n._id === action.payload.notification_id
+              ? { ...n, isCleared: true }
+              : n,
+          ),
         ],
       };
   }

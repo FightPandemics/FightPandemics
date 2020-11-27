@@ -201,7 +201,17 @@ const MenuItem = ({
   t,
   gtmId,
 }) => {
-  const { clearNotification, getNotifications } = useContext(WebSocketContext);
+  const { clearNotification } = useContext(WebSocketContext); 
+  const dispatch = useDispatch();
+
+  const clearLocalNotification = (notification_id) => {
+    dispatch({
+      type: "LOCAL_NOTIFICATIONS_MARK_AS_CLEARED",
+      payload: { notification_id },
+    });
+  };
+
+
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
@@ -224,7 +234,7 @@ const MenuItem = ({
         onClick={(e) => {
           e.preventDefault();
           clearNotification(_id);
-          getNotifications();
+          clearLocalNotification(_id);
         }}
       >
         &times;
