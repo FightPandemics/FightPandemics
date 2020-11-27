@@ -65,20 +65,28 @@ const Posts = ({
     }
     return -1;
   };
-  const hidePost = (postId) => {
-    localStorage.setItem(
-      "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true }),
-    ); // objects are fast, better than looking for postId in an Array
-    setHiddenPosts({ ...hiddenPosts, [postId]: true });
-  };
-  const unhidePost = (postId) => {
-    localStorage.setItem(
-      "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: null }),
-    );
-    setHiddenPosts({ ...hiddenPosts, [postId]: null });
-  };
+  const hidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      ); // objects are fast, better than looking for postId in an Array
+      setHiddenPosts({ ...hiddenPosts, [postId]: true });
+    },
+    [hiddenPosts],
+  );
+
+  const unhidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: null }),
+      );
+      setHiddenPosts({ ...hiddenPosts, [postId]: null });
+    },
+    [hiddenPosts],
+  );
+
   const loadMoreItems = isNextPageLoading
     ? () => {
         if (history?.location?.state) {
@@ -135,7 +143,13 @@ const Posts = ({
           rowIndex={index}
         >
           {({ measure, registerChild }) => (
-            <div key={key} ref={registerChild} onLoad={measure} style={style}>
+            <div
+              key={key}
+              ref={registerChild}
+              onLoad={measure}
+              onMouseOut={measure}
+              style={style}
+            >
               {content}
             </div>
           )}
@@ -148,6 +162,8 @@ const Posts = ({
       handleCancelPostDelete,
       handlePostDelete,
       hasNextPage,
+      hiddenPosts,
+      hidePost,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
@@ -155,6 +171,7 @@ const Posts = ({
       postDelete,
       postDispatch,
       posts,
+      unhidePost,
       user,
     ],
   );
