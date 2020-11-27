@@ -19,7 +19,7 @@ const StyledComment = styled(Comment)`
         width: 45rem;
         word-break: break-word;
         @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
-          width: 26rem;
+          width: 25rem;
         }
         .ant-comment-content-author-time {
           cursor: default;
