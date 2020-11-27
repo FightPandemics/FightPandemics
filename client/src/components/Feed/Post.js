@@ -220,6 +220,7 @@ const Post = ({
   };
 
   const handleComment = async (e) => {
+    if (e.shiftKey) return;
     e.preventDefault();
     let response;
     let commentCountRes;
@@ -459,6 +460,7 @@ const Post = ({
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
+          maxLength={2048}
         />
       ) : (
         <div>{t("comment.onlyAuthenticated")}</div>
