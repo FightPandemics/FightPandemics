@@ -53,6 +53,7 @@ const PostPlaceHolder = ({
   isHidden,
   isSuspected,
   onPostUnhide,
+  onPostShowAnyway,
 }) => {
   if (isReported)
     return (
@@ -69,7 +70,7 @@ const PostPlaceHolder = ({
         <p>
           This post received multiple reports and has been hidden from the help
           board
-          <span>Show post anyway</span>
+          <span onClick={() => onPostShowAnyway(postId)}>Show post anyway</span>
         </p>
       </SuspuctedPlaceHolder>
     );
@@ -78,7 +79,7 @@ const PostPlaceHolder = ({
       <SuspuctedPlaceHolder>
         <p>
           You did hide this post, it will not be visible for you.
-          <span onClick={() => onPostUnhide(postId)}>Show post anyway</span>
+          <span onClick={() => onPostUnhide(postId)}>Unhide</span>
         </p>
       </SuspuctedPlaceHolder>
     );

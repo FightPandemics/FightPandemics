@@ -58,6 +58,7 @@ import {
   DELETE_MODAL_COMMENT,
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
+import { postsActions } from "reducers/posts";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -144,6 +145,10 @@ const Post = ({
     if (dispatchPostAction) {
       dispatchPostAction(TOGGLE_SHOW_COMMENTS);
     }
+  };
+
+  const onPostShowAnyway = () => {
+    postDispatch(postsActions.showAnyway({ postId: post._id }));
   };
 
   const loadComments = async () => {
@@ -624,13 +629,14 @@ const Post = ({
       ) : (
         //Post in feed.
         <>
-          {didReport || isHidden ? (
+          {didReport || isHidden || reportsCount >= 5 ? (
             <PostPlaceHolder
               postId={_id}
               isReported={didReport}
               isSuspected={reportsCount >= 5}
               isHidden={isHidden}
               onPostUnhide={onPostUnhide}
+              onPostShowAnyway={onPostShowAnyway}
             />
           ) : (
             <PostCard>

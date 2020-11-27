@@ -139,17 +139,6 @@ const isUserInRoom = (app, threadId, socketId) => {
   });
 };
 
-const setReqPermLevel = (level) => {
-  return (req, res, done) => {
-
-    // level "user", or not found
-    if (!PERMISSIONS[level]) return done();
-
-    req.permLevel = level;
-    done();
-  };
-};
-
 module.exports = {
   bool,
   dateToEpoch,
@@ -162,5 +151,4 @@ module.exports = {
   isValidPassword,
   createSearchRegex,
   setElapsedTimeText,
-  setReqPermLevel,
 };

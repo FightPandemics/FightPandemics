@@ -135,6 +135,11 @@ async function routes(app) {
         });
       }
 
+      // remove posts the user have reported
+      if (actor) {
+        filters.push({ "reportedBy.id": { $ne: actor._id } });
+      }
+
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
@@ -224,18 +229,6 @@ async function routes(app) {
               $size: { $ifNull: ["$likes", []] },
             },
             objective: true,
-            didReport: {
-              $cond: [
-                {
-                  $in: [
-                    mongoose.Types.ObjectId(actor ? actor._id : null),
-                    {$ifNull: ["$reportedBy.id", []]},
-                  ],
-                },
-                true,
-                false,
-              ],
-            },
             reportsCount: {
               $size: { $ifNull: ["$reportedBy", []] },
             },

@@ -18,7 +18,7 @@ const POST_TYPES = [
   "Wellbeing/Mental",
   "Tech",
 ];
-const POST_STATUS = ["public", "reported", "removed"];
+const POST_STATUS = ["public", "flagged", "removed"];
 const reportSchema = new Schema(
   {
     id: {

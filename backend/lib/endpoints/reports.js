@@ -33,7 +33,7 @@ async function routes(app) {
         Post.findOneAndUpdate(
           // the only way to ensure unique reports, mongoose doesn't support subdocuments unqiue indexes
           { _id: postId, "reportedBy.id": { $ne: reportProps.id } },
-          { $addToSet: { reportedBy: reportProps }, status: "reported" },
+          { $addToSet: { reportedBy: reportProps }, status: "flagged" },
         ),
       );
       if (updateErr) {
@@ -60,8 +60,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        setReqPermLevel("moderator"),
-        app.checkPermission,
+        app.checkPermission("moderator"),
       ],
       schema: getPostReportsSchema,
     },
@@ -73,7 +72,7 @@ async function routes(app) {
       const skip = REPORTS_PER_PAGE * page;
 
       const [getPostsErr, reportedPosts] = await app.to(
-        Post.find({ status: "reported" }, { new: true })
+        Post.find({ status: "flagged" }, { new: true })
           .skip(skip)
           .limit(REPORTS_PER_PAGE),
       );

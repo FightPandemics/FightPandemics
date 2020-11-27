@@ -1,6 +1,6 @@
 const Auth0 = require("../components/Auth0");
 const { uploadUserAvatar } = require("../components/CDN");
-const { getCookieToken, createSearchRegex, setReqPermLevel } = require("../utils");
+const { getCookieToken, createSearchRegex } = require("../utils");
 const { config } = require("../../config");
 const jwt = require("jsonwebtoken");
 const { updateNotifyPrefsSchema } = require("./schema/notificationPreference");
@@ -561,8 +561,9 @@ async function routes(app) {
     "/:userId/permission", 
     {
       preValidation: [
-        setReqPermLevel("administrator"),
-        app.checkPermission,
+        app.authenticate,
+        app.setActor,
+        app.checkPermission("administrator"),
       ]
     },
     async (req) => {
