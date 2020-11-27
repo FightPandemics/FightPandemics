@@ -291,6 +291,10 @@ export default class SocketManager extends React.Component {
     this.socket.emit("MARK_NOTIFICATIONS_AS_READ");
   };
 
+  clearNotification = (notification_id) => {
+    this.socket.emit("CLEAR_NOTIFICATION", { notification_id })
+  }
+
   askNotificationPermission() {
     if (!("Notification" in window)) return;
     if (Notification.permission !== "denied") {
@@ -361,6 +365,7 @@ export default class SocketManager extends React.Component {
       unblockThread: this.unblockThread,
       getNotifications: this.getNotifications,
       markNotificationsAsRead: this.markNotificationsAsRead,
+      clearNotification: this.clearNotification,
       postShared: this.postShared,
     };
     return (

@@ -437,6 +437,11 @@ function onSocketConnect(socket) {
     );
   });
 
+  socket.on("CLEAR_NOTIFICATION", async (data) => {
+    const { notification_id } = data;
+    await Notification.findByIdAndUpdate(notification_id, { isCleared: true })
+  });
+
   socket.on("POST_SHARED", async (data) => {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));

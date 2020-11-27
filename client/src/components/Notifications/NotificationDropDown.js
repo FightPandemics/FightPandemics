@@ -16,7 +16,7 @@ import { theme, mq } from "constants/theme";
 import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
-import GTM from "constants/gtm-tags"
+import GTM from "constants/gtm-tags";
 
 // Menu Item
 const ItemContainer = styled.a`
@@ -106,7 +106,7 @@ const StyledMenu = styled(Menu)`
       overflow: hidden;
     }
     ::-webkit-scrollbar-thumb {
-      background: ${theme.colors.royalBlue};
+      background: ${theme.colors.darkGray};
       cursor: pointer;
     }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -159,6 +159,22 @@ const StyledBadge = styled(Badge)`
     }
   }
 `;
+
+const CloseNotificationBtn = styled.div`
+  position: absolute;
+  right: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  color: ${theme.colors.darkGray};
+  display: none;
+
+  ${ItemContainer}:hover & {
+    display: block;
+  }
+`;
+
 const itemStyle = {
   display: "flex",
   justifyContent: "space-between",
@@ -172,6 +188,7 @@ const itemStyle = {
 };
 
 const MenuItem = ({
+  _id,
   path,
   author,
   action,
@@ -184,6 +201,7 @@ const MenuItem = ({
   t,
   gtmId,
 }) => {
+  const { clearNotification, getNotifications } = useContext(WebSocketContext);
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
@@ -202,6 +220,15 @@ const MenuItem = ({
           })}
         </div>
       </Content>
+      <CloseNotificationBtn
+        onClick={(e) => {
+          e.preventDefault();
+          clearNotification(_id);
+          getNotifications();
+        }}
+      >
+        &times;
+      </CloseNotificationBtn>
       <Unread unread={unread}>
         <img src={amt} />
       </Unread>
@@ -231,8 +258,10 @@ const menu = (notifications, organisationId, t) => {
       </Menu.Item>
       <div className="notifications-container">
         <div>
-          {notifications.map((each) => (
+          {notifications.map((each, i) => (
             <MenuItem
+              key={i}
+              _id={each._id}
               path={each.path}
               author={each.author}
               action={each.action}
@@ -284,18 +313,21 @@ export const NotificationDropDown = ({
     },
   };
 
-  const mappedNotifications = notifications.map((n) => ({
-    author: n.triggeredBy.name,
-    action: notificationTypes[n.action].text,
-    postTitle: n.post.title,
-    path: `/post/${n.post.id}`,
-    actionAvatar: notificationTypes[n.action].icon,
-    createdAt: getRelativeTime(n.createdAt),
-    avatar: n.triggeredBy.photo,
-    sharedVia: n.sharedVia,
-    unread: !n.readAt,
-    gtmId: notificationTypes[n.action].gtmId,
-  }));
+  const mappedNotifications = notifications
+    .filter((n) => !n.isCleared)
+    .map((n) => ({
+      _id: n._id,
+      author: n.triggeredBy.name,
+      action: notificationTypes[n.action].text,
+      postTitle: n.post.title,
+      path: `/post/${n.post.id}`,
+      actionAvatar: notificationTypes[n.action].icon,
+      createdAt: getRelativeTime(n.createdAt),
+      avatar: n.triggeredBy.photo,
+      sharedVia: n.sharedVia,
+      unread: !n.readAt,
+      gtmId: notificationTypes[n.action].gtmId,
+    }));
 
   return (
     <Dropdown

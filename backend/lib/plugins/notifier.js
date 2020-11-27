@@ -56,6 +56,7 @@ class Notifier {
         photo: triggeredBy.photo,
         type: triggeredBy.type,
       },
+      isCleared: false
     };
 
     const [err, notification] = await this.app.to(

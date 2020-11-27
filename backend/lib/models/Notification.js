@@ -52,6 +52,10 @@ const notificationSchema = new Schema(
         type: String,
       },
     },
+    isCleared: {
+      type: Boolean,
+      required: true
+    }
   },
   { collection: "notifications", timestamps: true },
 );
