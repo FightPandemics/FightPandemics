@@ -238,7 +238,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const renderCommentContent = (
     <Space direction='vertical' > 
       <span>{editedComment}</span>
-      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div>
+      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
               {isComponentVisible ? (
                 <Dropdown 
                   // style={{ position: "fixed"}}
@@ -266,10 +266,11 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   );
 
   return (
-    <div>
+    <div >
       {comment ? (
         <StyledComment
           datetime={
+            
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
