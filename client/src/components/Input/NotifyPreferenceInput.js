@@ -82,8 +82,8 @@ const NotifyPreferenceInput = ({
       <WhiteSpace />
       <HelpWrapper>
         <Switch
-          checkedChildren="On"
-          unCheckedChildren="Off"
+          checkedChildren={t("profile.common.on")}
+          unCheckedChildren={t("profile.common.off")}
           onChange={(checked) => setSwitchOnOff(checked)}
           control={control}
           checked={switchOnOff}
@@ -93,7 +93,7 @@ const NotifyPreferenceInput = ({
       <NotifyCheckboxWrapper>
         {Object.entries(NotifyGroup).map(([key1, label1]) => (
           <HelpWrapper key={key1}>
-            <SubLabel key={key1}>{t(label1)}</SubLabel>
+            <SubLabel key={key1}>{t(`profile.common.${label1.toLowerCase()}`)}</SubLabel>
             {key1 == "instant" &&
               Object.entries(NotifyType).map(([subkey, sublabel]) => (
                 <div key={(key1, subkey)}>

@@ -57,7 +57,7 @@ export const OrgPost = ({ postRef }) => {
   return (
     <Post>
       <header>
-        <div className="post-type">{postRef.objective}</div>
+        <div className="post-type">{t(`feed.${postRef.objective}`)}</div>
         <span>.</span>
         <div className="post-date">
           {t(`relativeTime.${getRelativeTime(postRef.createdAt)[1]}WithCount`, {
