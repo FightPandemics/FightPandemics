@@ -438,8 +438,11 @@ function onSocketConnect(socket) {
   });
 
   socket.on("CLEAR_NOTIFICATION", async (data) => {
+    const { userId } = socket;
     const { notificationId } = data;
-    await Notification.findByIdAndUpdate(notificationId, { isCleared: true })
+    const notification = await Notification.findById(notificationId);
+    if(notification.receiver === userId) 
+      await notification.update({ isCleared: true });
   });
 
   socket.on("CLEAR_ALL_NOTIFICATIONS", async () => {
