@@ -220,6 +220,7 @@ const Post = ({
   };
 
   const handleComment = async (e) => {
+    if (e.shiftKey) return;
     e.preventDefault();
     let response;
     let commentCountRes;
@@ -459,6 +460,7 @@ const Post = ({
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
+          maxLength={2048}
         />
       ) : (
         <div>{t("comment.onlyAuthenticated")}</div>
@@ -571,9 +573,11 @@ const Post = ({
             />
             {renderComments}
             <DeleteModal
-              title={(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>{t("post.deletePostConfirmationTitle")}</p>
-              )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
+              title={
+                (deleteModalVisibility === DELETE_MODAL_POST && (
+                  <p>{t("post.deletePostConfirmationTitle")}</p>
+                )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+              }
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
@@ -656,9 +660,11 @@ const Post = ({
             postContent={post.content}
           />
           <DeleteModal
-            title={(deleteModalVisibility === DELETE_MODAL_POST && (
-              <p>{t("post.deletePostConfirmationTitle")}</p>
-            )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
+            title={
+              (deleteModalVisibility === DELETE_MODAL_POST && (
+                <p>{t("post.deletePostConfirmationTitle")}</p>
+              )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+            }
             visible={
               !!deleteModalVisibility &&
               deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -670,8 +676,8 @@ const Post = ({
             cancelText={t("post.cancel")}
           >
             {(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>{t("post.deletePostConfirmation")}</p>
-              )) || <p>{t("post.deleteCommentConfirmation")}</p>}
+              <p>{t("post.deletePostConfirmation")}</p>
+            )) || <p>{t("post.deleteCommentConfirmation")}</p>}
           </DeleteModal>
         </PostCard>
       )}

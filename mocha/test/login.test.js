@@ -11,8 +11,8 @@ let userCredentialsWithRandomEmail = testData.userCredentialsWithRandomEmail;
 let userCredentialsWithEmptyEmail = testData.userCredentialsWithEmptyEmail;
 let userCredentialsWithInvalidEmailNoDomainSpecified =
   testData.userCredentialsWithInvalidEmailNoDomainSpecified;
-let userCredentialsWithEmailDomainExceeding64Characters =
-  testData.userCredentialsWithEmailDomainExceeding64Characters;
+let userCredentialsWithEmailLocalExceeding64Characters =
+  testData.userCredentialsWithEmailLocalExceeding64Characters;
 let userCredentialsWithEmailExceeding254Characters =
   testData.userCredentialsWithEmailExceeding254Characters;
 
@@ -85,7 +85,7 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
         apiEndPoint,
-        userCredentialsWithEmailDomainExceeding64Characters,
+        userCredentialsWithEmailLocalExceeding64Characters,
       );
       validator.validateStatusCodeErrorAndMessage(
         response,

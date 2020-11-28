@@ -68,7 +68,7 @@ const MessageModal = ({
       showModal();
     }
     sessionStorage.removeItem("msgModal");
-  }, [])
+  }, [authorId, isAuthenticated]);
 
   const showModal = async () => {
     await setVisible(true);
@@ -115,6 +115,8 @@ const MessageModal = ({
   };
   const handleCancel = () => {
     setVisible(false);
+    setText("");
+    textAreaRef.current.value = "";
   };
   const handleDone = () => {
     setMsgSent(false);
