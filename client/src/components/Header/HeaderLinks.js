@@ -116,21 +116,24 @@ export const HeaderLinks = ({
                 {t("auth.joinNow")}
               </NavLink>
             </li>
-            <Button
-              id={GTM.nav.prefix + GTM.nav.feedback}
-              onClick={onFeedbackIconClick}
-            >
-              <SvgIcon src={feedback} />
-            </Button>
+            <li>
+              <Button
+                className="icon-btn"
+                id={GTM.nav.prefix + GTM.nav.feedback}
+                onClick={onFeedbackIconClick}
+              >
+                <SvgIcon src={feedback} />
+              </Button>
+            </li>
           </>
         )}
-        <Dropdown overlay={languageMenu} trigger={["click"]}>
-          <SvgIcon
-            id={GTM.nav.prefix + GTM.nav.language}
-            src={globe}
-            className="globe-icon-svg"
-          ></SvgIcon>
-        </Dropdown>
+        <li>
+          <Dropdown overlay={languageMenu} trigger={["click"]}>
+            <div className="icon-btn">
+              <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} />
+            </div>
+          </Dropdown>
+        </li>
       </ul>
     </>
   );
