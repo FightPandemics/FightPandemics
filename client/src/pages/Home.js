@@ -82,10 +82,10 @@ const MainContainer = styled.div`
       display: block;
       position: absolute;
       bottom: 0;
-      left: 0;
+      right: -25vw;
       background: #3562f1;
-      width: 100vw;
-      height: 1.736111111111111vw;
+      width: 25vw;
+      height: 1.584vw;
     }
     
     @media only screen and ${mq.phone.wide.max} {
@@ -200,7 +200,7 @@ const Home = (props) => {
     <WithSummitBanner>
       <MainContainer className="text-center home">
         <div className="city-gif-container">
-          <img src={FPCity} alt="" className="city-gif"></img>
+          <img loading="lazy" src={FPCity} alt="" className="city-gif"></img>
         </div>
         <StyledIntro>
           <IntroText>
