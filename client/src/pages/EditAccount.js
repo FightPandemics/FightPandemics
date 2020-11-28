@@ -41,6 +41,8 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
 import LocationInput from "../components/Input/LocationInput";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { SESSION_ACTIONS } from "../reducers/session";
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -77,6 +79,7 @@ function EditAccount(props) {
     mode: "change",
   });
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { error, loading, user } = userProfileState;
   const { firstName, hide = {}, lastName, needs = {}, objectives = {}, usesPassword = false } =
     user || {};
@@ -102,6 +105,10 @@ function EditAccount(props) {
         location,
       });
       userProfileDispatch(updateUserSuccess(res.data));
+      dispatch({
+        type: SESSION_ACTIONS.SET_USER, // update the global user
+        payload: { user: { ...user, ...res.data } }, // populate orgs
+      });
       // TODO: consistently return _id or id or both
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
