@@ -74,7 +74,6 @@ const NotifyPreferenceInput = ({
         <div key={(key1, label1)}>
           <WhiteSpace />
           <Label key={(key1, label1)}>{t(label1)}</Label>
-          <HelpWrapper key={(key1, "wrap")}>
             {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
               ([subkey, sublabel]) => (
                 <CheckBoxWrapper key={(key1, subkey)}>
@@ -94,7 +93,6 @@ const NotifyPreferenceInput = ({
               ),
             )}
             {key1 === "digest" && <Col span={3}></Col>}
-          </HelpWrapper>
           <WhiteSpace />
         </div>
       ))}
