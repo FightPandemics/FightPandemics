@@ -8,8 +8,8 @@ import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
 import WithSummitBanner from "components/WithSummitBanner";
-import CloudLanding from "assets/Clouds-Landing.gif";
-import FPCity from "assets/FP-City.gif";
+import CloudLanding from "assets/home-cloud.png";
+import FPCity from "assets/homecity.png";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -33,7 +33,7 @@ const StyledIntro = styled.div`
     background-image: url("${CloudLanding}"), ${theme.backgrounds.primary};
     background-repeat: no-repeat;
     background-position: top right;
-    background-size: 40rem, cover;
+    background-size: 35rem, cover;
     border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -81,7 +81,9 @@ const MainContainer = styled.div`
     }
 
     .city-gif {
-      width: 75vw;
+      width: 58vw;
+      position: relative;
+      left: 12rem;
     }
 
     &::after {
@@ -89,10 +91,10 @@ const MainContainer = styled.div`
       display: block;
       position: absolute;
       bottom: 0;
-      right: -25vw;
+      left: 0;
       background: #2947f0;
-      width: 25vw;
-      height: 1.584vw;
+      width: 100vw;
+      height: 1.284vw;
     }
 
     @media only screen and ${mq.phone.wide.max} {
