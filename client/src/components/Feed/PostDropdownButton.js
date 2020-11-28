@@ -38,6 +38,7 @@ const Label = styled.div`
   flex-direction: column;
   font-family: ${typography.font.family.body};
   margin-left: 2rem;
+  ${props => props.color? `* {color: ${props.color}!important;}`:""}
 `;
 
 const Action = styled.span`
@@ -63,6 +64,7 @@ const PostDropdownButton = ({
   user,
   isOwner,
   isSelf,
+  fromPage,
 }) => {
   const { t } = useTranslation();
 
@@ -107,8 +109,8 @@ const PostDropdownButton = ({
           <Menu.Item onClick={onDelete}>
             <Item>
               <DeleteIcon/>
-              <Label>
-                <Action style={{"color":"red"}}>{t("comment.delete")}</Action>
+              <Label color={"red"}>
+                <Action>{t("comment.delete")}</Action>
                 <Caption>Delete your post</Caption>
               </Label>
             </Item>
@@ -116,7 +118,7 @@ const PostDropdownButton = ({
         </>
       ) : (
         <>
-          <Menu.Item onClick={onHide} key="hide">
+          {!fromPage && <Menu.Item onClick={onHide} key="hide">
             <Item>
               <HideIcon />
               <Label>
@@ -124,7 +126,7 @@ const PostDropdownButton = ({
                 <Caption>It is not relevant to me</Caption>
               </Label>
             </Item>
-          </Menu.Item>
+          </Menu.Item>}
           <Menu.Item onClick={onReport} key="report">
             <Item>
               <ReportIcon />

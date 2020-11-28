@@ -596,6 +596,7 @@ const Post = ({
                     onReport={handleReport}
                     onEdit={onSelect}
                     onDelete={handleDelete}
+                    fromPage={true}
                     post={post}
                     user={user}
                     postId={postId}
@@ -644,6 +645,14 @@ const Post = ({
                 <p>{t("post.deletePostConfirmation")}</p>
               )) || <p>{t("post.deleteCommentConfirmation")}</p>}
             </WebModal>
+            {callReport ? (
+                <CreateReport
+                  callReport={callReport}
+                  setCallReport={setCallReport}
+                  postId={post._id}
+                  fromPage={true}
+                />
+              ) : null}
           </StyledPostPagePostCard>
           <StyledButtonWizard
             nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}

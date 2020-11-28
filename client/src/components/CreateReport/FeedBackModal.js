@@ -8,12 +8,13 @@ import { theme, mq } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId }) => {
+const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId, fromPage }) => {
   const [showModal, setShowModal] = useState(true);
   const dispatch = useDispatch();
   const closeModal = () => {
     setShowModal(false);
     setCallReport(false);
+    if (fromPage) return window.location = "/feed";
     dispatch(postsActions.setReported({ postId }));
   };
   const ModalWrapper = styled(Modal)`

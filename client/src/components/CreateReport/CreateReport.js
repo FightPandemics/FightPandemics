@@ -7,7 +7,7 @@ import FeedBackModal from "./FeedBackModal";
 
 const { colors, typography } = theme;
 
-const CreateReport = ({ postId, setCallReport, callReport }) => {
+const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
   const [reportSuccess, setReportSuccess] = useState(null);
   const closeModal = () => setCallReport(false);
 
@@ -57,6 +57,7 @@ const CreateReport = ({ postId, setCallReport, callReport }) => {
           postId={postId}
           reportSuccess={reportSuccess}
           setCallReport={setCallReport}
+          fromPage={fromPage}
         />
       )}
     </div>
