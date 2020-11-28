@@ -205,10 +205,10 @@ function wsReducer(state = initialState, action) {
       return {
         ...state,
         notifications: [
-          ...state.notifications.map((n) =>
-            n._id === action.payload.notification_id
-              ? { ...n, isCleared: true }
-              : n,
+          ...state.notifications.map((notification) =>
+            notification._id === action.payload.notificationId
+              ? { ...notification, isCleared: true }
+              : notification,
           ),
         ],
       };

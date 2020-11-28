@@ -291,8 +291,8 @@ export default class SocketManager extends React.Component {
     this.socket.emit("MARK_NOTIFICATIONS_AS_READ");
   };
 
-  clearNotification = (notification_id) => {
-    this.socket.emit("CLEAR_NOTIFICATION", { notification_id })
+  clearNotification = (notificationId) => {
+    this.socket.emit("CLEAR_NOTIFICATION", { notificationId })
   }
 
   askNotificationPermission() {

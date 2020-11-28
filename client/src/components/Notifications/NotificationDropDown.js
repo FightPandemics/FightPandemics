@@ -172,6 +172,23 @@ const CloseNotificationBtn = styled.div`
   }
 `;
 
+const ClearAllNotifications = styled(ItemContainer)`
+  min-height: 3rem;
+  cursor: auto;
+`;
+
+const ClearAllButton = styled.div`
+  position: absolute;
+  right: 10px;
+  border-radius: 12px;
+  background-color: ${theme.colors.royalBlue};
+  color: white;
+  font-size: 1rem;
+  width: 75px;
+  cursor: pointer;
+  text-align: center;
+`;
+
 const itemStyle = {
   display: "flex",
   justifyContent: "space-between",
@@ -197,18 +214,8 @@ const MenuItem = ({
   sharedVia,
   t,
   gtmId,
+  clearNotification,
 }) => {
-  const { clearNotification } = useContext(WebSocketContext); 
-  const dispatch = useDispatch();
-
-  const clearLocalNotification = (notification_id) => {
-    dispatch({
-      type: "LOCAL_NOTIFICATIONS_MARK_AS_CLEARED",
-      payload: { notification_id },
-    });
-  };
-
-
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
@@ -231,7 +238,6 @@ const MenuItem = ({
         onClick={(e) => {
           e.preventDefault();
           clearNotification(_id);
-          clearLocalNotification(_id);
         }}
       >
         &times;
@@ -243,7 +249,7 @@ const MenuItem = ({
   );
 };
 
-const menu = (notifications, organisationId, t) => {
+const menu = (notifications, clearNotification, organisationId, t) => {
   return (
     <StyledMenu>
       <Menu.Item style={{ ...itemStyle }}>
@@ -264,10 +270,23 @@ const menu = (notifications, organisationId, t) => {
         </Link>
       </Menu.Item>
       <div className="notifications-container">
+        {notifications.length > 0 && 
+          <ClearAllNotifications>
+            <ClearAllButton
+              onClick={() => {
+                notifications.forEach((notification) => {
+                  clearNotification(notification._id);
+                });
+              }}
+            >
+              Clear All
+            </ClearAllButton>
+          </ClearAllNotifications>
+        }
         <div>
-          {notifications.map((each, i) => (
+          {notifications.map((each, index) => (
             <MenuItem
-              key={i}
+              key={index}
               _id={each._id}
               path={each.path}
               author={each.author}
@@ -280,6 +299,7 @@ const menu = (notifications, organisationId, t) => {
               sharedVia={each.sharedVia}
               t={t}
               gtmId={each.gtmId}
+              clearNotification={clearNotification}
             />
           ))}
         </div>
@@ -294,9 +314,20 @@ export const NotificationDropDown = ({
   notifications,
   organisationId,
 }) => {
-  const { markNotificationsAsRead } = useContext(WebSocketContext);
-  const dispatch = useDispatch();
+  const {
+    markNotificationsAsRead,
+    clearNotification: clearRemoteNotification,
+  } = useContext(WebSocketContext);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const clearNotification = (notificationId) => {
+    dispatch({
+      type: "LOCAL_NOTIFICATIONS_MARK_AS_CLEARED",
+      payload: { notificationId },
+    });
+    clearRemoteNotification(notificationId);
+  };
 
   const updateReadAt = () => {
     dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
@@ -321,7 +352,7 @@ export const NotificationDropDown = ({
   };
 
   const mappedNotifications = notifications
-    .filter((n) => !n.isCleared)
+    .filter((notification) => !notification.isCleared)
     .map((n) => ({
       _id: n._id,
       author: n.triggeredBy.name,
@@ -341,7 +372,7 @@ export const NotificationDropDown = ({
       onVisibleChange={(visible) =>
         visible ? markNotificationsAsRead() : updateReadAt()
       }
-      overlay={menu(mappedNotifications, organisationId, t)}
+      overlay={menu(mappedNotifications, clearNotification, organisationId, t)}
       trigger="click"
       placement="bottomRight"
       getPopupContainer={() =>
