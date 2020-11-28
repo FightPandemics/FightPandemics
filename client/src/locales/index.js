@@ -59,12 +59,6 @@ export const index = {
   "ms-MY": {
     translation: translationMS_MY,
   },
-  es: {
-    translation: translationES_ES,
-  },
-  "es-ES": {
-    translation: translationES_ES,
-  },
   pl: {
     translation: translationPL,
   },
@@ -74,6 +68,9 @@ export const index = {
   // ru: {
   //   translation: translationRU,
   // },
+  "es-ES": {
+    translation: translationES_ES,
+  },
   "tl": {
     translation: translationTL,
   },
