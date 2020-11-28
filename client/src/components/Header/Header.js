@@ -75,15 +75,10 @@ const NavLinks = styled.div`
       pointer-events: none;
     }
   }
-  .globe-icon-svg {
-    position: absolute;
-    right: 3.7rem;
-  }
   ul {
     list-style-type: none;
     display: flex;
-    margin-bottom: 0rem;
-    margin-right: 5rem;
+    margin: 0;
     align-items: center;
 
     .registerBtn {
@@ -107,14 +102,18 @@ const NavLinks = styled.div`
       font-size: ${large};
       color: ${colors.darkerGray};
       padding: 0rem 1rem;
-      a:not(.registerLink) {
+      a:not(.registerLink),
+      .icon-btn {
         color: ${colors.darkerGray};
+        height: 6rem;
         text-decoration: none;
         padding: 1.65rem 1.4rem;
         transition: all 0.2s;
         border-bottom: 0.3rem solid transparent;
       }
-      a:hover:not(.registerLink) {
+      a:hover:not(.registerLink),
+      .icon-btn:hover {
+        cursor: pointer;
         color: ${colors.royalBlue};
         border-bottom: 0.3rem solid ${colors.royalBlue};
       }
@@ -217,11 +216,13 @@ const Header = ({
               onClick={onMenuClick}
             />
             {isAuthenticated && renderInboxIcon(true)}
-            {isAuthenticated && <NotificationDropDown
-              notifications={webSocket.notifications}
-              mobile={true}
-              organisationId={organisationId}
-            />}
+            {isAuthenticated && (
+              <NotificationDropDown
+                notifications={webSocket.notifications}
+                mobile={true}
+                organisationId={organisationId}
+              />
+            )}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
