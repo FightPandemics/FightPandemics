@@ -29,6 +29,7 @@ const AutoSize = ({
   onChange,
   onPressEnter,
   gtmTag = "",
+  maxLength,
 }) => {
   return (
     <>
@@ -39,6 +40,7 @@ const AutoSize = ({
         onChange={onChange}
         onPressEnter={onPressEnter}
         placeholder={placeholder}
+        maxLength={maxLength}
       />
       <SendButton onClick={onPressEnter}>
         <SvgIcon src={send} />
