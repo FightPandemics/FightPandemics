@@ -35,7 +35,7 @@ Object.assign(feedbackWithNegativeAge, { age: -55 });
 
 let feedbackWithAgeOver150 = {};
 Object.assign(feedbackWithAgeOver150, feedbackWithValidInputs);
-Object.assign(feedbackWithAgeOver150, { age: 555 });
+Object.assign(feedbackWithAgeOver150, { age: 151 });
 
 let feedbackWithInvalidRating = {};
 Object.assign(feedbackWithInvalidRating, feedbackWithValidInputs);
@@ -47,7 +47,7 @@ Object.assign(feedbackWithNegativeRating, { rating: -5 });
 
 let feedbackWithRatingOver5 = {};
 Object.assign(feedbackWithRatingOver5, feedbackWithValidInputs);
-Object.assign(feedbackWithRatingOver5, { rating: 555 });
+Object.assign(feedbackWithRatingOver5, { rating: 6 });
 
 describe("POST Feedback endpoint tests", () => {
   describe("Unauthorized user enters feedback data", () => {
