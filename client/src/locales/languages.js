@@ -33,7 +33,7 @@ export const MENU_MAP = {
   de: { value: "Deutsch", text: "German (Deutsch)" },
   "en-US": { value: "American English", text: "English (American English)" },
   "en-GB": { value: "British English", text: "English (British English)" },
-  "es-ES": { value: "Español", text: "Spanish (Español España)" },
+  "es-ES": { value: "Español", text: "Spanish (Español de España)" },
   fr: { value: "Français", text: "French (Français)" },
   he: { value: "עברית", text: "Hebrew (עברית)" },
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
