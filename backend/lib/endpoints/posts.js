@@ -370,7 +370,9 @@ async function routes(app) {
       }
 
       // user shouldn't see reported posts on post page
-      const didReport = post.reportedBy? post.reportedBy.find((r) => r.id.toString() === actor._id.toString()) : false;
+      const didReport = post.reportedBy
+        ? post.reportedBy.find((r) => r.id.toString() === actor._id.toString())
+        : false;
       if (didReport) throw app.httpErrors.notFound();
 
       /* eslint-disable sort-keys */
