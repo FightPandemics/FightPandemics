@@ -564,10 +564,11 @@ const Post = ({
   );
 
   const [showComplete, setShowComplete] = useState(true);
-  const isSuspected = reportsCount >= 1;
+  const isSuspected = reportsCount >= 5;
   const isOwner =
     isAuthenticated &&
     (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -586,25 +587,27 @@ const Post = ({
             )}
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
-              <div className="card-submenu">
-                <PostDropdownButton
-                  onSave={handleSave}
-                  onFollow={handleFollow}
-                  onHide={handleHide}
-                  onReport={handleReport}
-                  onEdit={onSelect}
-                  onDelete={handleDelete}
-                  post={post}
-                  user={user}
-                  postId={postId}
-                  isSelf={isAuthenticated && actorId === post.author.id}
-                  isOwner={
-                    isAuthenticated &&
-                    (isAuthorUser(user, post) ||
-                      isAuthorOrg(user?.organisations, post.author))
-                  }
-                />
-              </div>
+              {isAuthenticated && (
+                <div className="card-submenu">
+                  <PostDropdownButton
+                    onSave={handleSave}
+                    onFollow={handleFollow}
+                    onHide={handleHide}
+                    onReport={handleReport}
+                    onEdit={onSelect}
+                    onDelete={handleDelete}
+                    post={post}
+                    user={user}
+                    postId={postId}
+                    isSelf={isAuthenticated && actorId === post.author.id}
+                    isOwner={
+                      isAuthenticated &&
+                      (isAuthorUser(user, post) ||
+                        isAuthorOrg(user?.organisations, post.author))
+                    }
+                  />
+                </div>
+              )}
             </div>
             <WhiteSpace size="md" />
             {renderTags}
@@ -652,7 +655,7 @@ const Post = ({
           {didReport ? (
             <PostPlaceHolder />
           ) : (
-            <PostCard unClickable={isSuspected || isHidden}>
+            <PostCard unClickable={!isOwner && (isSuspected || isHidden)}>
               {!isOwner && (isHidden || isSuspected) && (
                 <div className="blur-overlay">
                   <SvgIcon src={eyeHide} />
@@ -675,21 +678,23 @@ const Post = ({
               )}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
-                <div className="card-submenu">
-                  <PostDropdownButton
-                    onSave={handleSave}
-                    onFollow={handleFollow}
-                    onHide={handleHide}
-                    onReport={handleReport}
-                    onEdit={onSelect}
-                    onDelete={handleDelete}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                    isSelf={isAuthenticated && actorId === post.author.id}
-                    isOwner={isOwner}
-                  />
-                </div>
+                {isAuthenticated && (
+                  <div className="card-submenu">
+                    <PostDropdownButton
+                      onSave={handleSave}
+                      onFollow={handleFollow}
+                      onHide={handleHide}
+                      onReport={handleReport}
+                      onEdit={onSelect}
+                      onDelete={handleDelete}
+                      post={post}
+                      user={user}
+                      postId={postId}
+                      isSelf={isAuthenticated && actorId === post.author.id}
+                      isOwner={isOwner}
+                    />
+                  </div>
+                )}
               </div>
               <WhiteSpace size="md" />
               {renderTags}
