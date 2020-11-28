@@ -143,13 +143,7 @@ const Posts = ({
           rowIndex={index}
         >
           {({ measure, registerChild }) => (
-            <div
-              key={key}
-              ref={registerChild}
-              onLoad={measure}
-              onMouseOut={measure}
-              style={style}
-            >
+            <div key={key} ref={registerChild} onLoad={measure} style={style}>
               {content}
             </div>
           )}

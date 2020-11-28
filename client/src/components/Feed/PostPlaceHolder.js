@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
-const { colors, typography } = theme;
+const { colors } = theme;
 
 const ReportedPlaceHolder = styled.div`
-  margin-bottom: 4rem;
-  height: 25rem;
+  height: calc(100% - 4rem);
   padding: 2rem;
   border: 0.4px solid rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
@@ -26,62 +25,17 @@ const ReportedPlaceHolder = styled.div`
     height: 100%;
     width: 100%;
     margin: auto;
-    background: #f6f7fb;
+    background: ${colors.gray};
     border-radius: 20px;
-    color: #939393;
+    color: ${colors.darkGray};
   }
 `;
 
-const SuspuctedPlaceHolder = styled(ReportedPlaceHolder)`
-  height: 10rem;
-  p {
-    background: unset;
-    padding: 1rem;
-    span {
-      width: 128px;
-      color: #425af2;
-      margin-left: auto;
-      font-weight: 500;
-      cursor: pointer;
-    }
-  }
-`;
-
-const PostPlaceHolder = ({
-  postId,
-  isReported,
-  isHidden,
-  isSuspected,
-  onPostUnhide,
-  onPostShowAnyway,
-}) => {
-  if (isReported)
-    return (
-      <ReportedPlaceHolder>
-        <p>
-          You have reported this post. It will no longer be visible on your
-          feed.
-        </p>
-      </ReportedPlaceHolder>
-    );
-  if (isSuspected)
-    return (
-      <SuspuctedPlaceHolder>
-        <p>
-          This post received multiple reports and has been hidden from the help
-          board
-          <span onClick={() => onPostShowAnyway(postId)}>Show post anyway</span>
-        </p>
-      </SuspuctedPlaceHolder>
-    );
-  if (isHidden)
-    return (
-      <SuspuctedPlaceHolder>
-        <p>
-          You did hide this post, it will not be visible for you.
-          <span onClick={() => onPostUnhide(postId)}>Unhide</span>
-        </p>
-      </SuspuctedPlaceHolder>
-    );
-};
+const PostPlaceHolder = () => (
+  <ReportedPlaceHolder>
+    <p>
+      You have reported this post. It will no longer be visible on your feed.
+    </p>
+  </ReportedPlaceHolder>
+);
 export default PostPlaceHolder;

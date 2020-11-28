@@ -12,6 +12,13 @@ export const StyledPostPage = styled.div`
 
 export const StyledPostPagePostCard = styled(PostCard)`
   max-width: 100%;
+  .blur-overlay {
+    width: 50%;
+    right: 0;
+    margin: auto;
+    height: calc(100% - 25rem);
+    margin-top: 7rem;
+   }
   margin-top: 1rem;
   overflow-wrap: break-word;
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {

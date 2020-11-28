@@ -53,6 +53,7 @@ import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+import eyeHide from "assets/icons/eye-hide.svg";
 import {
   DELETE_MODAL_POST,
   DELETE_MODAL_COMMENT,
@@ -149,6 +150,12 @@ const Post = ({
 
   const onPostShowAnyway = () => {
     postDispatch(postsActions.showAnyway({ postId: post._id }));
+  };
+
+  const onPostPageShowAnyway = () => {
+    if (dispatchPostAction) {
+      postDispatch(postsActions.showAnyway({ postId: post._id }));
+    }
   };
 
   const loadComments = async () => {
@@ -557,13 +564,26 @@ const Post = ({
   );
 
   const [showComplete, setShowComplete] = useState(true);
-
+  const isSuspected = reportsCount >= 1;
+  const isOwner =
+    isAuthenticated &&
+    (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
   return (
     <>
       {postId && dispatchPostAction ? (
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
+            {!isOwner && isSuspected && (
+              <div className="blur-overlay">
+                <SvgIcon src={eyeHide} />
+                This post received multiple reports and has been hidden from the
+                help board
+                <span onClick={() => onPostPageShowAnyway(postId)}>
+                  Show anyway
+                </span>
+              </div>
+            )}
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
@@ -629,17 +649,30 @@ const Post = ({
       ) : (
         //Post in feed.
         <>
-          {didReport || isHidden || reportsCount >= 5 ? (
-            <PostPlaceHolder
-              postId={_id}
-              isReported={didReport}
-              isSuspected={reportsCount >= 5}
-              isHidden={isHidden}
-              onPostUnhide={onPostUnhide}
-              onPostShowAnyway={onPostShowAnyway}
-            />
+          {didReport ? (
+            <PostPlaceHolder />
           ) : (
-            <PostCard>
+            <PostCard unClickable={isSuspected || isHidden}>
+              {!isOwner && (isHidden || isSuspected) && (
+                <div className="blur-overlay">
+                  <SvgIcon src={eyeHide} />
+                  {isHidden && !isSuspected && (
+                    <>
+                      You have chosen to hide this post
+                      <span onClick={() => onPostUnhide(_id)}>Unhide</span>
+                    </>
+                  )}
+                  {isSuspected && !isOwner && (
+                    <>
+                      This post received multiple reports and has been hidden
+                      from the help board
+                      <span onClick={() => onPostShowAnyway(_id)}>
+                        Show anyway
+                      </span>
+                    </>
+                  )}
+                </div>
+              )}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 <div className="card-submenu">
@@ -654,11 +687,7 @@ const Post = ({
                     user={user}
                     postId={postId}
                     isSelf={isAuthenticated && actorId === post.author.id}
-                    isOwner={
-                      isAuthenticated &&
-                      (isAuthorUser(user, post) ||
-                        isAuthorOrg(user?.organisations, post.author))
-                    }
+                    isOwner={isOwner}
                   />
                 </div>
               </div>

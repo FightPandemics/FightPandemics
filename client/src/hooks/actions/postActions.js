@@ -17,3 +17,4 @@ export const SHOW_COMMENTS = "SHOW_COMMENTS";
 export const TOGGLE_COMMENTS = "TOGGLE_COMMENTS";
 export const TOGGLE_SHOW_COMMENTS = "TOGGLE_SHOW_COMMENTS";
 export const SET_LIKE = "SET_LIKE";
+export const SHOW_AMYWAY = "SHOW_AMYWAY";

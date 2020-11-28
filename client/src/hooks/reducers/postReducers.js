@@ -18,6 +18,7 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
+  SHOW_AMYWAY,
 } from "../actions/postActions";
 import { DELETE_MODAL_HIDE } from "../actions/feedActions";
 
@@ -157,6 +158,12 @@ export const postReducer = (state = postState, action) => {
         liked: !!!state.liked,
         likesCount: payload.count,
       };
+    case SHOW_AMYWAY: {
+      return {
+        ...state,
+        reportsCount: 0,
+      };
+    }
     default:
       return state;
   }
