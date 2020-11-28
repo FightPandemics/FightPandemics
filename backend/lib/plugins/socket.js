@@ -442,6 +442,11 @@ function onSocketConnect(socket) {
     await Notification.findByIdAndUpdate(notificationId, { isCleared: true })
   });
 
+  socket.on("CLEAR_ALL_NOTIFICATIONS", async () => {
+    const { userId } = socket;
+    await Notification.updateMany({ receiver: userId }, { isCleared: true });
+  });
+
   socket.on("POST_SHARED", async (data) => {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));
