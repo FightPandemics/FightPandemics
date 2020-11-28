@@ -23,7 +23,7 @@ const theme = {
   typography: {
     font: {
       family: {
-        display: "Poppins",
+        display: 'Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         body: "Work Sans",
         button: "DM Sans",
       },

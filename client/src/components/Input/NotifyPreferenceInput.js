@@ -61,8 +61,8 @@ const NotifyPreferenceInput = ({
           label={t("profile.common.emailNotification")}
         />
         <FPSwitch
-          checkedChildren="On"
-          unCheckedChildren="Off"
+          checkedChildren={t("profile.common.on")}
+          unCheckedChildren={t("profile.common.off")}
           onChange={(checked) => setSwitchOnOff(checked)}
           control={control}
           checked={switchOnOff}

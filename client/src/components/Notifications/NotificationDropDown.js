@@ -247,7 +247,7 @@ const menu = (notifications, organisationId, t) => {
             />
           ))}
         </div>
-        <NoMoreNotifications>No more notifications</NoMoreNotifications>
+        <NoMoreNotifications>{t("notifications.empty")}</NoMoreNotifications>
       </div>
     </StyledMenu>
   );
