@@ -441,7 +441,7 @@ function onSocketConnect(socket) {
     const { userId } = socket;
     const { notificationId } = data;
     const notification = await Notification.findById(notificationId);
-    if(notification.receiver === userId) 
+    if(notification.receiver.toString() === userId) 
       await notification.update({ isCleared: true });
   });
 

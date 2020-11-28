@@ -93,6 +93,9 @@ notificationSchema.index({
     action: "like",
   },
 });
+notificationSchema.index({
+  receiver: 1
+});
 /* eslint-enable */
 
 const Notification = model("Notification", notificationSchema);
