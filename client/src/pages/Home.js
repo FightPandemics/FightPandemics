@@ -8,7 +8,7 @@ import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
 import WithSummitBanner from "components/WithSummitBanner";
-import CloudLanding from "assets/home-cloud.png";
+import CloudLanding from "assets/home-cloud.gif";
 import FPCity from "assets/homecity.png";
 
 const { typography } = theme;
@@ -64,7 +64,7 @@ const MainContainer = styled.div`
   @media only screen and ${mq.tablet.narrow.min} {
     background-color: ${offWhite};
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .city-gif-container {
@@ -83,7 +83,7 @@ const MainContainer = styled.div`
     .city-gif {
       width: 58vw;
       position: relative;
-      left: 12rem;
+      left: 9rem;
     }
 
     &::after {
