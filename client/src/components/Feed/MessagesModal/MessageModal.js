@@ -115,6 +115,8 @@ const MessageModal = ({
   };
   const handleCancel = () => {
     setVisible(false);
+    setText("");
+    textAreaRef.current.value = "";
   };
   const handleDone = () => {
     setMsgSent(false);
