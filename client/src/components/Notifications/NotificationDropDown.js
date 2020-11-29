@@ -122,7 +122,7 @@ const StyledMenu = styled(Menu)`
       height: 84.6vh;
     }
     @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
-      height: 44.6vh;
+      height: calc(100% - 42px);
     }
   }
 `;
