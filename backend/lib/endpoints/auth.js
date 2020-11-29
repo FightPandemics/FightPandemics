@@ -46,6 +46,7 @@ async function routes(app) {
           firstName,
           lastName,
           organisations,
+          permissions,
           photo,
           usesPassword,
         } = dbUser;
@@ -55,6 +56,7 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
+          permissions,
           photo,
           usesPassword,
         };
@@ -65,6 +67,7 @@ async function routes(app) {
         firstName,
         lastName,
         token,
+        permissions,
         user,
       };
     } catch (err) {
@@ -161,6 +164,7 @@ async function routes(app) {
           firstName,
           lastName,
           organisations,
+          permissions,
           photo,
           usesPassword,
         } = dbUser;
@@ -170,6 +174,7 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
+          permissions,
           photo,
           usesPassword,
         };

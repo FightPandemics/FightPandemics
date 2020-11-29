@@ -235,6 +235,7 @@ async function routes(app) {
       objectives,
       organisations,
       urls,
+      permissions,
       photo,
       notifyPrefs,
       usesPassword,
@@ -252,6 +253,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      permissions,
       notifyPrefs,
       usesPassword,
     };
