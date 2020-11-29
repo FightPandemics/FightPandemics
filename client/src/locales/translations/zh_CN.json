@@ -4,7 +4,7 @@
   "common": {
     "getHelp": "寻求帮助",
     "giveHelp": "提供帮助",
-    "viewFeed": "查看帮助板",
+    "viewFeed": "查看帮助版面",
     "register": "现在加入",
     "feedback": "反馈",
     "question": "问题",
@@ -12,7 +12,16 @@
     "profile": "个人资料",
     "addOrg": "添加组织",
     "logout": "登出",
-    "organisations": "组织机构"
+    "organisations": "组织机构",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organizations",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -45,7 +54,7 @@
     }
   },
   "feed": {
-    "title": "帮助板",
+    "title": "帮助版面",
     "all": "所有帖子",
     "request": "寻求帮助",
     "offer": "提供帮助",
@@ -201,7 +210,8 @@
     "delete": "删除",
     "cancel": "取消",
     "confirm": "确认",
-    "edited": "已编辑"
+    "edited": "已编辑",
+    "share_plural": "分享"
   },
   "profile": {
     "common": {
@@ -216,7 +226,7 @@
       "thankyou": "感谢您加入我们的社区！",
       "viewProfile": "我的个人资料",
       "continuePosting": "继续发布",
-      "viewFeed": "查看帮助板",
+      "viewFeed": "查看帮助版面",
       "viewMyProfile": "查看我的个人资料",
       "loading": "加载",
       "invalidEmail": "无效电子邮件",
@@ -245,7 +255,15 @@
       "emailMaxLength": "电子邮件地址不得超过200个字符",
       "emailInvalid": "电子邮件地址无效",
       "emailDomainInvalid": "电子邮件域无效",
-      "sendMessage": "发送消息"
+      "sendMessage": "发送消息",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password",
+      "notificationInfo": "通知选项",
+      "emailNotification": "电子邮件通知",
+      "instant": "即时",
+      "daily": "每天",
+      "weekly": "每周",
+      "biweekly": "每两周"
     },
     "individual": {
       "email": "电子邮件",
@@ -269,7 +287,21 @@
       "wantHelp": "我想帮忙",
       "needHelp": "需要帮助",
       "firstNameRequired": "名字是必填项。",
-      "lastNameRequired": "姓氏是必填项。"
+      "lastNameRequired": "姓氏是必填项。",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security",
+      "editNotification": "编辑通知选项"
     },
     "org": {
       "title": "创建组织资料",
@@ -353,12 +385,13 @@
     "passwordMax": "密码不得超过{{num}}字符。",
     "passwordMin": "密码必须至少为{{num}}字符。",
     "passwordConfirmationRequired": "需要密码确认。",
-    "passwordNotMatch": "密码不匹配"
+    "passwordNotMatch": "密码不匹配",
+    "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
     "checkInbox": "检查你的收件箱",
     "forgotPass": "如果帐户与{{email}}相关联，您将收到一封电子邮件，其中包含有关如何重设密码的进一步说明。",
-    "confirm": "我们只是通过电子邮件发送了一个指向{{email}}的链接。单击链接以确认您的帐户并完成您的个人资料。",
+    "confirm": "我们已经通过电子邮件发送了一个指向{{email}}的链接。单击链接以确认您的帐户并完成您的个人资料。",
     "checkSpam": "如果几分钟之内没有看到邮件，请检查垃圾邮件，促销或其他收件箱文件夹。"
   },
   "aboutUs": {
@@ -367,7 +400,7 @@
     "ourCommunity": "我们的社区",
     "community": "我们由来自全球的 1200 多名志愿者开发人员、设计师、科学家、健康专家和产品经理组成",
     "ourIdea": "我们的想法",
-    "ourSupporters": "我们的支持者",
+    "ourSupporters": "我们的支持商",
     "followUs": "在社交媒体上关注我们",
     "contactUs": "或通过以下方式联系我们：",
     "contactEmail": "contact@fightpandemics.com",
@@ -380,22 +413,28 @@
     "connectPeople": "我们连接人们",
     "connect": "一个利他的平台，将需要帮助的人与可以提供帮助的人联系起来。",
     "howWork": "这是如何运作的？",
-    "helpBoard": "帮助板",
+    "helpBoard": "帮助版面",
     "helpBoardDetail": "个人和组织提供和请求援助的社区平台。",
     "localGlobal": "本地和全球",
     "localGlobalDetail": "在我的社区以及世界范围内提供和请求帮助。",
     "relevantContent": "相关内容",
-    "relevantContentDetail": "有效期限可确保帮助板始终保持最新状态。",
-    "goToHelpBoard": "前往帮助板",
-    "supporters": "支持者",
-    "thanksSupporters": "感谢我们的支持者，没有他们，我们将无法帮助社区准备和应对大流行病。",
-    "becomeSupporter": "要详细了解您的企业如何能成为支持者，请通过以下方式联系我们的合作伙伴团队：",
+    "relevantContentDetail": "有效期限可确保帮助版面始终保持最新状态。",
+    "goToHelpBoard": "前往帮助版面",
+    "supporters": "支持商",
+    "thanksSupporters": "感谢我们的支持商，没有他们，我们将无法帮助社区准备和应对大流行病。",
+    "becomeSupporter": "要详细了解您的企业如何能成为支持商，请通过以下方式联系我们的合作伙伴团队：",
     "becomePartnerEmail": "partnerships@fightpandemics.com",
-    "companyLogoInfo": "单击下方的公司徽标，以访问支持者的网站。",
-    "lifetimeSupporters": "终身支持者",
-    "currentSupporters": "现在的支持者",
-    "pastSupporters": "过去的支持者",
-    "hashtag": "#为了社区来自社区"
+    "companyLogoInfo": "单击下方的公司徽标，以访问支持商的网站。",
+    "lifetimeSupporters": "终身支持商",
+    "currentSupporters": "现在的支持商",
+    "pastSupporters": "过去的支持商",
+    "hashtag": "#为了社区来自社区",
+    "getInvolved": "马上参与",
+    "joinVolunteer": "作为志愿者加入",
+    "joinAmbassador": "作为传播大使加入",
+    "joinStudentProgram": "加入学生项目",
+    "studentSummerProgram": "学生暑期项目",
+    "forStudentInAge": "适用于14-18岁的学生。"
   },
   "footer": {
     "faq": "常问问题",
@@ -414,7 +453,7 @@
       [
         "FightPandemics 是什么？",
         "FightPandemics是在COVID-19爆发期间创建的一个平台，旨在成为受疫情影响的人们的首选之地。",
-        "我们的主要任务是在地方和全球范围内，在大流行危机中联系提供和请求帮助的个人和组织。无论您是寻求医疗帮助，口罩，法律帮助，食品杂货，请人遛狗的人还是其他日常活动的支持者，都可以在这里查找：",
+        "我们的主要任务是在地方和全球范围内，在大流行危机中联系提供和请求帮助的个人和组织。无论您是寻求医疗帮助，口罩，法律帮助，食品杂货，请人遛狗的人还是其他日常活动的帮助，都可以在这里查找：",
         "我们努力收集高度分散的基本信息，将从事大流行相关问题或项目的个人，社区和组织连接到一个网络中。我们的愿景是通过帮助社区更快，更有效地应对突发卫生事件和人道主义危机，创建一个每个人都对突发事件更具抵抗力的世界。"
       ],
       [
@@ -457,7 +496,7 @@
       ],
       [
         "我是否需要登录才能查看帮助请求和提供的帮助？",
-        "您无需登录即可查看帮助板上的任何帖子，但是您需要登录以发表评论或点赞。"
+        "您无需登录即可查看帮助版面上的任何帖子，但是您需要登录以发表评论或点赞。"
       ],
       [
         "我需要登录才能创建/编辑帖子吗？",
@@ -475,7 +514,10 @@
         "我怎么能相信这些帖子是可靠的？",
         "不幸的是，由于这些帖子是由我们的用户创建的，因此我们无法确保所有帖子都是可靠的。但是，我们会通过定期清除数据并在帖子过期后将其停用来保持内容的相关性。如果您对帖子内容有疑问，请通过<0> support@fightpandemics.com </0>与我们联系。"
       ],
-      ["你们能帮我解决医疗问题吗？", "FightPandemics不是医疗服务提供商。"],
+      [
+        "你们能帮我解决医疗问题吗？",
+        "FightPandemics不是医疗服务提供商。"
+      ],
       [
         "我需要分享我的当前位置吗？如果我不想分享自己的位置怎么办？",
         "我们使用位置来显示最相关的结果，但是，您也可以查看所有帖子。由于FightPandemics各地都有成千上万的帖子，因此我们建议您输入附近的位置，以最佳地定制结果。"
@@ -769,7 +811,8 @@
       "imageDimensionTooSmall": "请上传至少 250 像素高、250 像素宽的图像。",
       "imageDimensionTooWide": "抱歉，图像太宽。请使用宽度小于高度两倍的图像重试。",
       "networkError": "抱歉，发生了一些网络错误。"
-    }
+    },
+    "wrongOldPassword": "Wrong current password"
   },
   "TEMP: We are not a provider of healthcare services": "我们不是医疗服务提供商",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "这项服务是本着诚意为那些在此次空前的卫生危机下无法获得帮助和资源的人提供的。",
@@ -816,5 +859,117 @@
     "submitBtn": "提交",
     "cancelBtn": "取消",
     "tryAgainBtn": "再试一次"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.",
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "前往帮助版面"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select",
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "消息请求的内容将显示在此处",
+      "p2": "一旦从邮件请求收件箱中选择一个。"
+    },
+    "didBlock": "您已阻止{{username}} 。取消阻止以再次接收来自他们的消息。",
+    "wasBlocked": "您已被{{username}}屏蔽。您无法再向他们发送消息。",
+    "acceptPropmt": "您要接受消息请求吗？在您接受请求之前，您无法回复。",
+    "deleteMessageQuestion": "删除消息？",
+    "deleteMessageText": "所选邮件将从您的设备和收件人的设备中永久删除。是否确实要删除？",
+    "blockQuestion": "阻止来自{{username}}的对话？",
+    "blockText": "通过选择“阻止”， {{username}}将无法向您发送消息或消息请求。您可以转到消息设置来管理被阻止的帐户。",
+    "archiveQuestion": "存档对话？",
+    "archiveText": "如果要再次阅读对话，必须转到\"消息设置\"以还原对话。",
+    "sendSuccessHeader": "您的留言已成功发送",
+    "sendSuccessText": "您发送给{{username}}有关“ {{title}}已成功发送。",
+    "sendSuccessTextNoPost": "您发送给{{username}}消息已成功发送。",
+    "sendFailedHeader": "哎呀，出问题了",
+    "sendFailedText": "您发送给{{username}}有关“ {{title}}尚未发送。",
+    "sendFailedTextNoPost": "您发送给{{username}}消息尚未发送。",
+    "ignoreDialogTitle": "忽略来自{{username}}的消息请求？",
+    "ignoreDialogMessage": "消息请求将从您的设备中删除。您确定要忽略吗？",
+    "blockDialogTitle": "阻止来自{{username}}的对话？",
+    "blockDialogMessage": "通过选择\"阻止\"，{{username}} 将无法向您发送邮件或消息请求。您可以转到\"消息设置\"来管理被阻止的帐户。",
+    "block": "阻止",
+    "archive": "存档",
+    "accept": "接受",
+    "ignore": "忽略",
+    "delete": "删除",
+    "cancel": "取消",
+    "edit": "编辑",
+    "edited": "已编辑",
+    "saveEdit": "保存更改",
+    "didDelete": "您已删除此消息。",
+    "wasDeleted": "此消息已被删除。",
+    "loadMore": "加载更多...",
+    "justNow": "现在",
+    "lastSeen": "上次看到",
+    "never": "从不",
+    "activeNow": "现在激活",
+    "message": "消息",
+    "sendMessage": "发送消息",
+    "typeMessage": "键入消息...",
+    "viewMessage": "查看消息",
+    "to": "至",
+    "send": "发送",
+    "done": "完成",
+    "close": "关闭"
+  },
+  "message": {
+    "message": "消息",
+    "message_plural": "消息"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "取消 订阅",
+      "canceled": "您的通知选项并未更改",
+      "success": "您的通知选项已更新"
+    },
+    "header": "通知",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
   }
 }

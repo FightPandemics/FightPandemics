@@ -86,7 +86,6 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     if (history?.location?.state?.from) {
       const { state } = history.location;
       if (typeof state.from !== "object") {
-        console.log(state.from);
         if (state.from.indexOf("feed") > -1) {
           history.push(fullPath(state.from, "feed"), {
             ...state,

@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText, createSearchRegex } = require("../utils");
+const {
+  setElapsedTimeText,
+  createSearchRegex,
+  translateISOtoRelativeTime,
+} = require("../utils");
 
 const {
   createCommentSchema,
@@ -225,6 +229,7 @@ async function routes(app) {
                 "$likes",
               ],
             },
+            isEdited: true,
             likesCount: {
               $size: { $ifNull: ["$likes", []] },
             },
@@ -267,10 +272,10 @@ async function routes(app) {
       const [postsErr, posts] = await app.to(
         Post.aggregate(aggregationPipelineResults).then((posts) => {
           posts.forEach((post) => {
-            post.elapsedTimeText = setElapsedTimeText(
-              post.createdAt,
-              post.updatedAt,
-            );
+            post.elapsedTimeText = {
+              created: translateISOtoRelativeTime(post.createdAt),
+              isEdited: post.isEdited, // keep frontend format
+            };
           });
           return posts;
         }),
@@ -397,7 +402,10 @@ async function routes(app) {
           mongoose.Types.ObjectId(actor ? actor._id : null),
         ),
         likesCount: post.likes.length,
-        elapsedTimeText: setElapsedTimeText(post.createdAt, post.updatedAt),
+        elapsedTimeText: {
+          created: translateISOtoRelativeTime(post.createdAt),
+          isEdited: post.isEdited, // keep frontend format
+        },
         reportsCount: (post.reportedBy || []).length,
       };
       delete projectedPost.reportedBy;
@@ -477,6 +485,7 @@ async function routes(app) {
       } else {
         body.expireAt = null;
       }
+      body.isEdited = true; // set edited true when update
 
       const [updateErr, updatedPost] = await app.to(
         Object.assign(post, body).save(),

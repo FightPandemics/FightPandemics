@@ -482,16 +482,13 @@ const Profile = ({
             key="bottom"
           >
             <DrawerHeader>
-              <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+              <Link to="/edit-account">
+                {t("profile.individual.editAccount")}
+              </Link>
             </DrawerHeader>
             <DrawerHeader>
               <Link to="/edit-profile">
                 {t("profile.individual.editProfile")}{" "}
-              </Link>
-            </DrawerHeader>
-            <DrawerHeader>
-              <Link to="/edit-notifications">
-                {t("profile.individual.editNotification")}{" "}
               </Link>
             </DrawerHeader>
             {usesPassword && (
@@ -501,6 +498,11 @@ const Profile = ({
                 </Link>
               </DrawerHeader>
             )}
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
+              </Link>
+            </DrawerHeader>
           </CustomDrawer>
         )}
       </ProfileLayout>

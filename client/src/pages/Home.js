@@ -154,7 +154,7 @@ const OnboardingContainer = styled.div`
   }
 `;
 
-const StyleLink = styled.p`
+const StyleLink = styled.span`
   color: ${royalBlue};
   font-size: ${typography.size.large};
   font-family: ${typography.font.family.display};

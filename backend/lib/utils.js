@@ -151,4 +151,5 @@ module.exports = {
   isValidPassword,
   createSearchRegex,
   setElapsedTimeText,
+  translateISOtoRelativeTime,
 };

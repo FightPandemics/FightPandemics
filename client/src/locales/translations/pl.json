@@ -210,7 +210,8 @@
     "delete": "Usuń",
     "cancel": "Anuluj",
     "confirm": "Potwierdź",
-    "edited": "edytowany"
+    "edited": "edytowany",
+    "share_plural": "Udostępnienia"
   },
   "profile": {
     "common": {
@@ -256,7 +257,13 @@
       "emailDomainInvalid": "Domena e-mail jest nieprawidłowa",
       "sendMessage": "Wyślij wiadomość",
       "securityInfo": "Informacje o bezpieczeństwie",
-      "changePassword": "Zmień hasło"
+      "changePassword": "Zmień hasło",
+      "notificationInfo": "Preferencje powiadomień",
+      "emailNotification": "Powiadomienie email",
+      "instant": "Natychmiastowy",
+      "daily": "Codziennie",
+      "weekly": "Co tydzień",
+      "biweekly": "Co dwa tygodnie"
     },
     "individual": {
       "email": "E-mail",
@@ -293,7 +300,8 @@
       "enterCurrentPassword": "Wprowadź bieżące hasło",
       "enterNewPassword": "Wprowadź nowe hasło",
       "updatingPassword": "Aktualizacja hasła",
-      "editSecurity": "Edytuj informacje o bezpieczeństwie"
+      "editSecurity": "Edytuj informacje o bezpieczeństwie",
+      "editNotification": "Edytuj powiadomienia"
     },
     "org": {
       "title": "Utwórz profil organizacji",
@@ -440,7 +448,7 @@
     "title": "O FightPandemics / Ogólnie",
     "offerRequestHelp": "Oferowanie i zwracanie się o pomoc",
     "profileAccount": "Profil i konto",
-    "contects": "Kontakt",
+    "contects": "Kontakty",
     "general": [
       [
         "Co to jest FightPandemics?",
@@ -558,7 +566,7 @@
       ],
       [
         "Dlaczego moje hasło jest nieprawidłowe?",
-        "Sprawdź, czy Twoje hasło ma co najmniej 8 liter. Jeśli masz już konto, ale nie pamiętasz hasła do logowania, kliknij „Zaloguj się” na stronie głównej, a następnie przejdź do „Nie pamiętam hasła”."
+        "Sprawdź, czy Twoje hasło ma co najmniej 8 znaków. Jeśli masz już konto, ale nie pamiętasz hasła do logowania, kliknij „Zaloguj się” na stronie głównej, a następnie przejdź do „Nie pamiętam hasła”."
       ],
       [
         "Zarejestrowałem się i nie otrzymałem wiadomości e-mail z potwierdzeniem. Co mam zrobić?",
@@ -851,5 +859,117 @@
     "submitBtn": "Prześlij",
     "cancelBtn": "Anuluj",
     "tryAgainBtn": "Spróbuj ponownie"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "STY",
+      "february": "LUT",
+      "march": "MAR",
+      "april": "KWI",
+      "may": "MAJ",
+      "june": "CZE",
+      "july": "LIP",
+      "august": "SIE",
+      "september": "WRZ",
+      "october": "PAZ",
+      "november": "LIS",
+      "december": "GRU"
+    },
+    "weekdaysShort": {
+      "sunday": "Niedz",
+      "monday": "Pon",
+      "tuesday": "Wt",
+      "wednesday": "Śr",
+      "thursday": "Czw",
+      "friday": "Pt",
+      "saturday": "Sob"
+    }
+  },
+  "messaging": {
+    "header": "Wiadomości",
+    "requests": "Żądania wiadomości",
+    "settings": {
+      "header": "Ustawienia wiadomości",
+      "blocked": "Zablokowane konta",
+      "archived": "Zarchiwizowane rozmowy",
+      "unblock": "Odblokowuj",
+      "unarchive": "Przywróć z archiwum",
+      "archiveEmpty": "Nie masz zarchiwizowanych rozmów.",
+      "blockedEmpty": "Nie zablokowałeś żadnego konta."
+    },
+    "emptyInbox": {
+      "header": "Nie masz żadnych wiadomości",
+      "p1": "Nie otrzymałeś jeszcze żadnych wiadomości.",
+      "p2": "Wróć do Forum pomocy, aby znaleźć oferty lub prośby, na które możesz odpowiedzieć",
+      "goToHB": "Wyświetl forum pomocy"
+    },
+    "selectRoom": {
+      "header": "Wybierz dowolną wiadomość do przeczytania",
+      "p1": "Treść wiadomości pojawi się tutaj po wybraniu",
+      "p2": "rozmowa ze skrzynki odbiorczej."
+    },
+    "selectRequest": {
+      "header": "Wybierz dowolną wiadomość do przeczytania",
+      "p1": "W tym miejscu pojawi się treść wiadomości",
+      "p2": "po wybraniu jednej z wiadomości w skrzynce odbiorczej."
+    },
+    "didBlock": "Zablokowałeś {{username}} . Odblokuj, aby ponownie otrzymywać od niego wiadomości.",
+    "wasBlocked": "Zostałeś zablokowany przez {{username}} . Nie możesz już wysłać do niego wiadomości.",
+    "acceptPropmt": "Czy chcesz zaakceptować prośbę o wiadomość? Nie możesz odpowiedzieć, dopóki nie zaakceptujesz prośby.",
+    "deleteMessageQuestion": "Usunąć wiadomość?",
+    "deleteMessageText": "Wybrana wiadomość zostanie trwale usunięta zarówno z Twojego urządzenia, jak i urządzenia odbiorcy. Czy na pewno chcesz usunąć?",
+    "blockQuestion": "Czy zablokować konwersację z {{username}}?",
+    "blockText": "Po wybraniu opcji „Zablokuj” {{username}} nie będzie w stanie wysłać Ci wiadomości ani prośby o wiadomość. Możesz przejść do Ustawień wiadomości, aby zarządzać zablokowanymi kontami.",
+    "archiveQuestion": "Zarchiwizować rozmowę?",
+    "archiveText": "Jeśli chcesz ponownie przeczytać rozmowę, musisz przejść do Ustawień wiadomości, aby ją przywrócić.",
+    "sendSuccessHeader": "Twoja wiadomość została pomyślnie wysłana",
+    "sendSuccessText": "Twoja wiadomość do {{username}} dotycząca „ {{title}} ” została wysłana pomyślnie.",
+    "sendSuccessTextNoPost": "Twoja wiadomość do {{username}} została wysłana pomyślnie.",
+    "sendFailedHeader": "Ups! Coś poszło nie tak",
+    "sendFailedText": "Twoja wiadomość do {{username}} dotycząca „ {{title}} ” nie została dostarczona.",
+    "sendFailedTextNoPost": "Twoja wiadomość do {{username}} nie została dostarczona.",
+    "ignoreDialogTitle": "Zignorować prośbę o wiadomość od {{username}} ?",
+    "ignoreDialogMessage": "Żądanie wysłania wiadomości zostanie usunięte z urządzenia. Czy na pewno chcesz je zignorować?",
+    "blockDialogTitle": "Zablokować rozmowę od {{username}} ?",
+    "blockDialogMessage": "Po wybraniu opcji „Zablokuj” {{username}} nie będzie w stanie wysłać Ci wiadomości ani prośby o wiadomość. Możesz przejść do Ustawień wiadomości, aby zarządzać zablokowanymi kontami.",
+    "block": "Blokuj",
+    "archive": "Archiwizuj",
+    "accept": "Zaakceptuj",
+    "ignore": "Ignoruj",
+    "delete": "Usuń",
+    "cancel": "Anuluj",
+    "edit": "Edytuj",
+    "edited": "Edytowany",
+    "saveEdit": "Zapisz zmiany",
+    "didDelete": "Usunąłeś tę wiadomość.",
+    "wasDeleted": "Ta wiadomość została usunięta.",
+    "loadMore": "Załaduj więcej...",
+    "justNow": "Właśnie teraz",
+    "lastSeen": "Ostatnio widziany",
+    "never": "Nigdy",
+    "activeNow": "Aktywny teraz",
+    "message": "Wiadomość",
+    "sendMessage": "Wyślij wiadomość",
+    "typeMessage": "Napisz wiadomość...",
+    "viewMessage": "Zobacz wiadomość",
+    "to": "Do",
+    "send": "Wyślij",
+    "done": "Gotowe",
+    "close": "Zamknij"
+  },
+  "message": {
+    "message": "Wiadomość",
+    "message_plural": "Wiadomości"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Wypisz się",
+      "canceled": "Żadne zmiany nie zostaną wprowadzone w Twoich preferencjach powiadamiania",
+      "success": "Twoje preferencje dotyczące powiadamiania zostały aktualizowane"
+    },
+    "header": "Powiadomienia",
+    "liked": "<0> {{username}} </0 > polubił Twój post <1> {{postTitle}} </1 >",
+    "commented": "<0> {{username}} </0> skomentował Twój post <1> {{postTitle}} </1 >",
+    "shared": "<0> {{username}} </0 > udostępnił Twój post <1> {{postTitle}} </1 > w <1> {{shareMedium}} </1>"
   }
 }

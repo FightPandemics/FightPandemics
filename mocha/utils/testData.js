@@ -30,14 +30,28 @@ exports.userCredentialsWithInvalidPassword = {
   password: "abc",
 };
 
-exports.userCredentialsWithEmailDomainExceeding64Characters = {
-  email: generateEmailDomainExceeding64Characters(),
+exports.userCredentialsWithEmailLocalExceeding64Characters = {
+  email: generateEmailLocalExceeding64Characters(),
+  password: generateRandomPassword(),
+};
+
+exports.userCredentialsWithEmailDomainExceeding63Characters = {
+  email: generateEmailDomainExceeding63Characters(),
+  password: generateRandomPassword(),
+};
+
+exports.userCredentialsWithEmailInvalidTopLevelDomain = {
+  email: generateEmailInvalidTopLevelDomain(),
   password: generateRandomPassword(),
 };
 
 exports.userCredentialsWithEmailExceeding254Characters = {
   email: generateEmailExceeding254Characters(),
   password: generateRandomPassword(),
+};
+
+exports.userCredentialsWithMismatchedPassword = {
+  confirmPassword: "Password",
 };
 
 function generateRandomEmail() {
@@ -63,13 +77,34 @@ function generateRandomPassword() {
   return randomStringGenerator.randomString(8) + ".;";
 }
 
-function generateEmailDomainExceeding64Characters() {
-  //following the rules that Auth0 are using the email needs to have 64max for the local part and an overall max of 254 chars
+function generateEmailLocalExceeding64Characters() {
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
   return (
     randomStringGenerator.randomString(100) +
     "@" +
     randomStringGenerator.randomString(5) +
     ".com"
+  );
+}
+
+function generateEmailDomainExceeding63Characters() {
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(64) +
+    "@" +
+    randomStringGenerator.randomString(65) +
+    ".com"
+  );
+}
+
+function generateEmailInvalidTopLevelDomain() {
+  //following the rules that Auth0 are using the email needs to have 64max for the local part, 63max for the domain part, and an overall max of 254 chars
+  return (
+    randomStringGenerator.randomString(64) +
+    "@" +
+    randomStringGenerator.randomString(63) +
+    "." +
+    randomStringGenerator.randomString(150)
   );
 }
 

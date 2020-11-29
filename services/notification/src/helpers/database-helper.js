@@ -340,6 +340,7 @@ class DatabaseHelper {
     }
 
     const topThreePosts = Object.values(notificationCountsByPost)
+      .filter((post) => post.counts.comment > 0 || post.counts.like > 0) // we don't care about share count
       .sort((a, b) => b.counts.total - a.counts.total)
       .slice(0, 3);
     return topThreePosts;

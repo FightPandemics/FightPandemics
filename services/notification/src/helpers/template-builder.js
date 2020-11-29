@@ -1,5 +1,7 @@
 const { EmailFrequency } = require("../models/email-frequency");
-const { EmailFrequencyTrackingCode } = require("../models/email-frequency-tracking-code");
+const {
+  EmailFrequencyTrackingCode,
+} = require("../models/email-frequency-tracking-code");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const { MessageThreadStatus } = require("../models/message-thread-status");
@@ -244,7 +246,7 @@ class TemplateBuilder {
   }
 
   _buildTrackerParams(frequency) {
-    const languageCode = 'EN'; // TODO set this based on user localization preference
+    const languageCode = "EN"; // TODO set this based on user localization preference
     const frequencyCode = EmailFrequencyTrackingCode[frequency];
     const campaignName = `E-A-PU-WW-${languageCode}-NOT-ENGA-${frequencyCode}`;
     return `?utm_source=Email&utm_medium=Email&utm_campaign=${campaignName}`;
@@ -272,9 +274,10 @@ class TemplateBuilder {
     if (counts.like > 0) {
       countCopies.push(`${counts.like} like(s)`);
     }
-    if (counts.share > 0) {
-      countCopies.push(`${counts.share} share(s)`);
-    }
+    // Commenting out since shares can't be seen on the post. If we implement badge counter for shares, we can uncomment
+    // if (counts.share > 0) {
+    //   countCopies.push(`${counts.share} share(s)`);
+    // }
     return countCopies.join(", ");
   }
 }

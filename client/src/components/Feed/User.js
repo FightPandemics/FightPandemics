@@ -351,7 +351,7 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                   isFromUserCard={
                     type.toLowerCase() == "individual" ? "USER" : "ORG"
                   }
-                  postAuthorName={`${firstName} ${lastName}`}
+                  postAuthorName={`${name || `${firstName} ${lastName}`}`}
                   authorId={_id}
                   gtmPrefix={GTM.feed.prefix}
                 />

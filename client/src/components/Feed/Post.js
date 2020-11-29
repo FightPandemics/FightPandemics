@@ -1,6 +1,5 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { Modal as WebModal } from "antd";
 import { connect, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
@@ -11,10 +10,11 @@ import { useTranslation } from "react-i18next";
 // Local
 import AutoSize from "components/Input/AutoSize";
 import Comments from "./Comments";
-import FilterTag from "components/Tag/FilterTag";
+import PostTag from "components/Tag/PostTag";
 import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
+import DeleteModal from "./PostDeleteModal";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
 import PostDropdownButton from "components/Feed/PostDropdownButton";
@@ -240,6 +240,7 @@ const Post = ({
   };
 
   const handleComment = async (e) => {
+    if (e.shiftKey) return;
     e.preventDefault();
     let response;
     let commentCountRes;
@@ -479,9 +480,9 @@ const Post = ({
     <Card.Body>
       {post?.types &&
         post?.types.map((tag, idx) => (
-          <FilterTag key={idx} disabled={true} selected={false}>
+          <PostTag key={idx} disabled={true} selected={false}>
             {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </FilterTag>
+          </PostTag>
         ))}
     </Card.Body>
   );
@@ -497,6 +498,7 @@ const Post = ({
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
+          maxLength={2048}
         />
       ) : (
         <div>{t("comment.onlyAuthenticated")}</div>
@@ -552,6 +554,9 @@ const Post = ({
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        keepScrollIndex={keepScrollIndex}
+        keepPageState={keepPageState}
+        keepPostsState={keepPostsState}
         user={user}
         gtmPrefix={gtmPrefix || (postId ? GTM.post.prefix : GTM.feed.prefix)}
         postInfo={{
@@ -612,7 +617,6 @@ const Post = ({
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            <WhiteSpace />
             {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
@@ -630,8 +634,12 @@ const Post = ({
               postContent={post.content}
             />
             {renderComments}
-            <WebModal
-              title={t("post.confirm")}
+            <DeleteModal
+              title={
+                (deleteModalVisibility === DELETE_MODAL_POST && (
+                  <p>{t("post.deletePostConfirmationTitle")}</p>
+                )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+              }
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
@@ -644,15 +652,15 @@ const Post = ({
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
               )) || <p>{t("post.deleteCommentConfirmation")}</p>}
-            </WebModal>
+            </DeleteModal>
             {callReport ? (
-                <CreateReport
-                  callReport={callReport}
-                  setCallReport={setCallReport}
-                  postId={post._id}
-                  fromPage={true}
-                />
-              ) : null}
+              <CreateReport
+                callReport={callReport}
+                setCallReport={setCallReport}
+                postId={post._id}
+                fromPage={true}
+              />
+            ) : null}
           </StyledPostPagePostCard>
           <StyledButtonWizard
             nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
@@ -754,8 +762,8 @@ const Post = ({
                 postTitle={post.title}
                 postContent={post.content}
               />
-              <WebModal
-                title={t("post.confirm")}
+              <DeleteModal
+                title={t("post.deletePostConfirmationTitle")}
                 visible={
                   !!deleteModalVisibility &&
                   deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -771,7 +779,7 @@ const Post = ({
                 ) : (
                   <p>{t("post.deleteCommentConfirmation")}</p>
                 )}
-              </WebModal>
+              </DeleteModal>
               {callReport ? (
                 <CreateReport
                   callReport={callReport}
