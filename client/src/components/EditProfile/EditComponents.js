@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Heading from "../Typography/Heading";
+import { Link } from "react-router-dom";
 import { mq, theme } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
 const { colors } = theme;
@@ -49,7 +50,7 @@ export const CustomForm = styled.form`
   }
 `;
 
-export const CustomLink = styled.div`
+export const CustomLink = styled(Link)`
   color: ${colors.black};
   border: 0.1rem solid ${colors.lightGray};
   border-radius: 0.3rem;
@@ -181,5 +182,3 @@ export const ToggleHeading = styled.div`
     display: none;
   }
 `;
-
-
