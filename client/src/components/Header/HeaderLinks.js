@@ -19,6 +19,7 @@ const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
 };
+const MODERATOR = 2;
 
 export const HeaderLinks = ({
   isAuthenticated,
@@ -87,16 +88,14 @@ export const HeaderLinks = ({
                 organisationId={organisationId}
               />
             </li>
-            <li>
-              <NavLink
-                activeStyle={activeStyles}
-                to="/dashboard"
-              >
-                <SvgIcon
-                  src={moderator}
-                ></SvgIcon>
-              </NavLink>
-            </li>
+            {user.permissions === MODERATOR && (
+              <li>
+                <NavLink activeStyle={activeStyles} to="/dashboard">
+                  <SvgIcon src={moderator}></SvgIcon>
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <ProfileMenu
                 user={user}
