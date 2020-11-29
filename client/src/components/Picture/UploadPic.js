@@ -147,34 +147,41 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   };
 
   const removePhoto = async () => {
-    //unclear how to execute delete fetch
-    let uploadResponse;
-    let endPoint = "/api/users/current/avatar";
-    console.log(user)
-    if (user.ownerId) {
-      endPoint = `/api/organisations/${user._id}/avatar`;
-    }
-    try {
-      uploadResponse = await axios({
-        method: "delete",
-        url: endPoint,
-        headers: {
-          accept: "application/json",
-          "Content-Type": `application/json`,
-        },
-      });
-      console.log(uploadResponse)
-      if (uploadResponse.status == 200) {
-        setModalVisible(false);
-        window.location.reload(false);
+    const canvas = document.createElement("canvas");
+    const reader = new FileReader();
+    canvas.toBlob((blob) => {
+      let removeResponse;
+      let endPoint = "/api/users/current/avatar";
+      const formData = new FormData();
+      formData.append("file", blob);
+      if (user.ownerId) {
+        endPoint = `/api/organisations/${user._id}/avatar`;
       }
-    } catch (error) {
-      // setUploadError(t("error.avatar.networkError"));
-      console.log({
-        error,
-      });
-    }
-  }
+      reader.readAsDataURL(blob);
+      reader.onloadend = async () => {
+        try {
+          removeResponse = await axios({
+            method: "delete",
+            url: endPoint,
+            data: formData,
+            headers: {
+              accept: "application/json",
+              "Content-Type": `multipart/form-data`,
+            },
+          });
+          if (removeResponse.status == 200) {
+            setModalVisible(false);
+            window.location.reload(false);
+          }
+        } catch (error) {
+          setUploadError(t("error.avatar.networkError"));
+          console.log({
+            error,
+          });
+        }
+      };
+    });
+  };
 
   //new function
   const openModal = (e) => {

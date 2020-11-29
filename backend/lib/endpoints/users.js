@@ -448,12 +448,87 @@ async function routes(app) {
         if (threadErr) {
           req.log.error(threadErr, "Failed updating author photo at threads");
         }
-
+        
         return {
           updatedUser,
         };
       } catch (error) {
-        req.log.error(error, "Failed updating user avatar.");
+        req.log.error(error, "Failed updating user avatar.", file);
+        throw app.httpErrors.internalServerError();
+      }
+    },
+  );
+  //delete
+  app.delete(
+    "/current/avatar",
+    { preValidation: [app.authenticate], schema: createUserAvatarSchema },
+    async (req) => {
+      const { file } = req.raw.files;
+      const { userId } = req;
+
+      const [err, user] = await app.to(User.findById(userId));
+      if (err) {
+        req.log.error(err, `Failed retrieving user userId=${userId}`);
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        throw app.httpErrors.notFound();
+      }
+      try {
+        const avatarUrl = await uploadUserAvatar(userId, file);
+        user.photo = null;
+        const [updateErr, updatedUser] = await app.to(user.save());
+        if (updateErr) {
+          req.log.error(updateErr, "Failed updating user");
+          throw app.httpErrors.internalServerError();
+        }
+
+        // -- Update Author photo references if needed
+        const updateOps = {
+          "author.photo": updatedUser.photo,
+        };
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author photo refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedUser._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(
+            commentErr,
+            "Failed updating author photo refs at comments",
+          );
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedUser._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedUser.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedUser._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
+        }
+        
+        return {
+          updatedUser,
+        };
+      } catch (error) {
+        req.log.error(error, "Failed updating user avatar.", file);
         throw app.httpErrors.internalServerError();
       }
     },
