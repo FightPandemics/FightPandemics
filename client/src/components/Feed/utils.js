@@ -72,7 +72,7 @@ export const getPostedTime = (post) => {
       hour,
     };
   };
-  console.log(postCreatedAt);
+
   if (splitDate(today).year > splitDate(postCreatedAt).year)
     return `${
       splitDate(today).year - splitDate(postCreatedAt).year

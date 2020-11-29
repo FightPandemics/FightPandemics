@@ -18,13 +18,21 @@ const StyledMenu = styled(Menu)`
       color: ${colors.royalBlue};
     }
   }
+  svg {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    path {
+      fill: ${colors.darkGray};
+    }
+  }
   .ant-menu-item {
-    padding: 0 24px 0 16px!important;
+    padding: 0 24px 0 16px !important;
     .check-icon {
       position: absolute;
       right: 1rem;
       top: 50%;
-      transform: translate(0,-50%);
+      transform: translate(0, -50%);
     }
   }
   ::-webkit-scrollbar {

@@ -37,11 +37,7 @@ import SvgIcon from "components/Icon/SvgIcon";
 import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
 // Constants
 import { theme } from "constants/theme";
-import {
-  SET_VALUE,
-} from "hooks/actions/feedActions";
-
-
+import { SET_VALUE } from "hooks/actions/feedActions";
 
 export const FeedContext = React.createContext();
 
@@ -78,6 +74,11 @@ const StyledForwardIcon = styled(BackIcon)`
 const StyledMenuItem = styled(Menu.Item)`
   display: flex;
   justify-content: space-between;
+  svg {
+    path {
+      fill: ${theme.colors.royalBlue};
+    }
+  }
 `;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
@@ -126,7 +127,6 @@ const Feed = (props) => {
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-
   const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
     // softRefresh = only close filter modal etc.. but not RESET_PAGE and refetch posts
     if (!softRefresh) {
@@ -140,7 +140,7 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    dispatchAction(SET_VALUE, "objective", value);    
+    dispatchAction(SET_VALUE, "objective", value);
   };
 
   const loadPosts = async () => {
@@ -167,7 +167,7 @@ const Feed = (props) => {
 */
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    let baseURL =`/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+    let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${objectiveURL()}`;
     dispatch(postsActions.fetchPostsBegin());
 
@@ -203,7 +203,6 @@ const Feed = (props) => {
           }
         }
         const lastPage = Math.ceil(meta.total / limit) - 1;
-        // console.log(page, lastPage, meta.total);
         if (page === lastPage) {
           dispatch(
             postsActions.setLoadingAction({
@@ -287,7 +286,6 @@ const Feed = (props) => {
     setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
   }, [feedPosts.length, loadMore]);
 
-
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
@@ -339,15 +337,12 @@ const Feed = (props) => {
               isItemLoaded={isItemLoaded}
               hasNextPage={loadMore}
               totalPostCount={totalPostCount}
-              highlightWords={null/*queryParams.s_keyword*/}
+              highlightWords={null /*queryParams.s_keyword*/}
               page={page}
             />
             {emptyFeed() ? (
               <NoPosts>
-                <Trans
-                  i18nKey={"feed.noResultsPosts"}
-                  components={[<a />]}
-                />
+                <Trans i18nKey={"feed.noResultsPosts"} components={[<a />]} />
               </NoPosts>
             ) : null}
           </ContentWrapper>
@@ -356,6 +351,5 @@ const Feed = (props) => {
     </FeedContext.Provider>
   );
 };
-
 
 export default Feed;
