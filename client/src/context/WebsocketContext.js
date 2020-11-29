@@ -48,8 +48,10 @@ export default class SocketManager extends React.Component {
       const newState = props.store.getState();
       if (this.state.isAuthenticated != !!newState.session.user) {
         this.setState({ isAuthenticated: !!newState.session.user });
-        if (newState.session.organisationId !== this.state.organisationId)
+        if (newState.session.organisationId !== this.state.organisationId) {
           this.setState({ organisationId: newState.session.organisationId });
+          return this.identify;
+        }
         if (this.state.isAuthenticated && !this.state.isIdentified)
           this.identify();
         else this.socket.disconnect();
@@ -128,7 +130,7 @@ export default class SocketManager extends React.Component {
           this.askNotificationPermission();
           // if user disconnected while in a room, join the room back
           let oldRoom = this.props.store.getState().webSocket.room;
-          if (oldRoom) this.joinRoom({threadId: oldRoom._id});
+          if (oldRoom) this.joinRoom({ threadId: oldRoom._id });
           return this.props.store.dispatch(identifySuccess());
         } else this.props.store.dispatch(identifyError(response));
         // if we reached this then the identification has failed
@@ -267,7 +269,8 @@ export default class SocketManager extends React.Component {
         (response) => {
           if (response.code == 200) {
             this.getUserRooms(); // refresh rooms
-            if (this.props.store.getState().webSocket.room) this.joinRoom({ threadId }); // refresh room, if in one.
+            if (this.props.store.getState().webSocket.room)
+              this.joinRoom({ threadId }); // refresh room, if in one.
             return resolve(true);
           }
           resolve(false);

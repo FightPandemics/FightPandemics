@@ -50,6 +50,7 @@ function onSocketConnect(socket) {
       );
       if (!org || errOrg) return res({ code: 401, message: "Unauthorized" });
       socket.userId = data.organisationId;
+      this.io.emit("USER_STATUS_UPDATE", { id: userId, status: "offline" });
     }
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
