@@ -147,6 +147,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   };
 
   const removePhoto = async () => {
+    //unclear how to execute delete fetch
+    let uploadResponse;
+    let endPoint = "/api/users/current/avatar";
+    console.log(user)
     if (user.ownerId) {
       endPoint = `/api/organisations/${user._id}/avatar`;
     }
@@ -156,15 +160,16 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         url: endPoint,
         headers: {
           accept: "application/json",
-          "Content-Type": `multipart/form-data`,
+          "Content-Type": `application/json`,
         },
       });
+      console.log(uploadResponse)
       if (uploadResponse.status == 200) {
         setModalVisible(false);
         window.location.reload(false);
       }
     } catch (error) {
-      setUploadError(t("error.avatar.networkError"));
+      // setUploadError(t("error.avatar.networkError"));
       console.log({
         error,
       });
@@ -173,9 +178,9 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
 
   //new function
   const openModal = (e) => {
-    console.log(user.photo)
+    console.log(user.photo);
     //problem with setPhotoURL using user.photo causes bug if user submits without getting a new file
-    // setPhotoURL(user.photo)
+    setPhotoURL(user.photo);
     setModalVisible(true);
   }
 
@@ -194,25 +199,39 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   const cropModal = () => {
     return (
       <Modal
+        title={
+          <p 
+            style={{
+              textAlign: "center",
+              fontSize: "xx-large",
+              margin: "0px"
+            }}
+          >
+            {t("Edit Avatar")}
+          </p>
+        }
+        // onClose={closeModal}
+        // onClick={(e) => console.log(e.target)}
         visible={modalVisible}
         onOk={savePhoto}
         destroyOnClose={true}
-        closable={false}
-        maskClosable={false}
+        closable={true}
+        maskClosable={true}
         footer={[
-          <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
-            {/* add button reference for every language then change this to match the other buttons */}
-            {t("Change Photo")}
-          </CustomUploadButton>,
           user && user.photo ? (
             <CustomRemoveButton key="remove" onClick={removePhoto}>
             {/* add button reference for every language then change this to match the other buttons */}
               {t("Delete Photo")}
             </CustomRemoveButton>
           ) : null,
+          <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
+            {/* add button reference for every language then change this to match the other buttons */}
+            {t("Upload New")}
+          </CustomUploadButton>,
           <CustomCancelButton key="cancel" onClick={closeModal}>
             {t("avatar.cancelBtn")}
           </CustomCancelButton>,
+          
           !uploadError ? (
             <CustomSubmitButton key="save" onClick={savePhoto}>
               {t("avatar.submitBtn")}
@@ -228,6 +247,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
           style={{
             textAlign: "center",
           }}
+          onClick={(e) => console.log(e)}
         >
           {uploadError ? (
             <h3>{uploadError}</h3>
