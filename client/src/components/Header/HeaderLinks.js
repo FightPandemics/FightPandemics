@@ -88,7 +88,7 @@ export const HeaderLinks = ({
                 organisationId={organisationId}
               />
             </li>
-            {Boolean(user.permissions & PERMISSIONS.moderator) && (
+            {!organisationId && Boolean(user.permissions & PERMISSIONS.moderator) && (
               <li>
                 <NavLink activeStyle={activeStyles} to="/dashboard">
                   <SvgIcon src={moderator}></SvgIcon>
