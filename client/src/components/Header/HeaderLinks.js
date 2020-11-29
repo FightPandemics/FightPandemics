@@ -13,13 +13,13 @@ import GTM from "constants/gtm-tags";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../constants/theme";
 import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
+import PERMISSIONS from "constants/permissions";
 
 const { colors } = theme;
 const activeStyles = {
   fontWeight: "600",
   color: `${colors.royalBlue}`,
 };
-const MODERATOR = 2;
 
 export const HeaderLinks = ({
   isAuthenticated,
@@ -88,7 +88,7 @@ export const HeaderLinks = ({
                 organisationId={organisationId}
               />
             </li>
-            {user.permissions === MODERATOR && (
+            {Boolean(user.permissions & PERMISSIONS.moderator) && (
               <li>
                 <NavLink activeStyle={activeStyles} to="/dashboard">
                   <SvgIcon src={moderator}></SvgIcon>
