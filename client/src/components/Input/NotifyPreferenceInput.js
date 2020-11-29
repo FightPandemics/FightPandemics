@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Switch, Space, Col } from "antd";
+import { Switch, Col } from "antd";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 import Checkbox from "./Checkbox";
-import { theme } from "constants/theme";
-import {
-  CheckBoxWrapper,
-  HelpWrapper,
-  Label,
-} from "../EditProfile/EditComponents";
+import { theme, mq } from "constants/theme";
+import { CheckBoxWrapper, Label } from "../EditProfile/EditComponents";
 import { WhiteSpace } from "antd-mobile";
 import mail from "assets/icons/mail.svg";
 import InputLabel from "./Label";
@@ -18,6 +14,13 @@ import { blockLabelStyles } from "../../constants/formStyles";
 const FPSwitch = styled(Switch)`
   background-color: ${theme.colors.royalBlue};
   margin-bottom: 1rem;
+`;
+
+const HelpWrapper = styled.div`
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: flex;
+    justify-content: flex-start;
+  }
 `;
 
 const NotifyGroup = {
@@ -33,9 +36,9 @@ const NotifyType = {
 };
 
 const NotifyFreq = {
-  daily: "Daily",
-  weekly: "Weekly",
-  biweekly: "Biweekly",
+  daily: "profile.common.daily",
+  weekly: "profile.common.weekly",
+  biweekly: "profile.common.biweekly",
 };
 
 const NotifyPreferenceInput = ({
@@ -53,27 +56,31 @@ const NotifyPreferenceInput = ({
 
   return (
     <div>
-      <Space size={"large"}>
-        <InputLabel
-          htmlFor="notification"
-          icon={mail}
-          style={blockLabelStyles}
-          label={t("profile.common.emailNotification")}
-        />
-        <FPSwitch
-          checkedChildren={t("profile.common.on")}
-          unCheckedChildren={t("profile.common.off")}
-          onChange={(checked) => setSwitchOnOff(checked)}
-          control={control}
-          checked={switchOnOff}
-        />
-      </Space>
+      <HelpWrapper>
+        <Col span={12}>
+          <InputLabel
+            htmlFor="notification"
+            icon={mail}
+            style={blockLabelStyles}
+            label={t("profile.common.emailNotification")}
+          />
+        </Col>
+        <Col>
+          <FPSwitch
+            checkedChildren={t("profile.common.on")}
+            unCheckedChildren={t("profile.common.off")}
+            onChange={(checked) => setSwitchOnOff(checked)}
+            control={control}
+            checked={switchOnOff}
+          />
+        </Col>
+      </HelpWrapper>
       <WhiteSpace />
-      <WhiteSpace />
-      {Object.entries(NotifyGroup).map(([key1, label1]) => (
-        <div key={(key1, label1)}>
-          <WhiteSpace />
-          <Label key={(key1, label1)}>{t(label1)}</Label>
+      <HelpWrapper>
+        {Object.entries(NotifyGroup).map(([key1, label1]) => (
+          <Col span={8} key={(key1, label1)}>
+            <WhiteSpace />
+            <Label key={(key1, label1)}>{t(label1)}</Label>
             {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
               ([subkey, sublabel]) => (
                 <CheckBoxWrapper key={(key1, subkey)}>
@@ -92,10 +99,10 @@ const NotifyPreferenceInput = ({
                 </CheckBoxWrapper>
               ),
             )}
-            {key1 === "digest" && <Col span={3}></Col>}
-          <WhiteSpace />
-        </div>
-      ))}
+            <WhiteSpace />
+          </Col>
+        ))}
+      </HelpWrapper>
     </div>
   );
 };
