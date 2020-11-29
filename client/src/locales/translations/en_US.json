@@ -94,7 +94,12 @@
         "Funding",
         "R&D",
         "Tech",
-        "Other"
+        "Other",
+        "Childcare",
+        "Translations",
+        "Volunteers",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Location",
@@ -117,6 +122,11 @@
         "Medical Supplies": "Medical Supplies",
         "Groceries/Food": "Groceries/Food",
         "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteers": "Volunteers",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work",
         "Business": "Business",
         "Education": "Education",
         "Legal": "Legal",

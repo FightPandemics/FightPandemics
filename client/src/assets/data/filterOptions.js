@@ -66,6 +66,10 @@ const FILTER_OPTIONS = {
         value: "Business",
       },
       {
+        text: "feed.filters.typesOptions.Childcare",
+        value: "Childcare",
+      },
+      {
         text: "feed.filters.typesOptions.Education",
         value: "Education",
       },
@@ -84,7 +88,23 @@ const FILTER_OPTIONS = {
       },
       { text: "feed.filters.typesOptions.Funding", value: "Funding" },
       { text: "feed.filters.typesOptions.R&D", value: "R&D" },
+      {
+        text: "feed.filters.typesOptions.Remote Work",
+        value: "Remote Work",
+      },
+      {
+        text: "feed.filters.typesOptions.Staff (paid)",
+        value: "Staff (paid)",
+      },
       { text: "feed.filters.typesOptions.Tech", value: "Tech" },
+      {
+        text: "feed.filters.typesOptions.Translations",
+        value: "Translations",
+      },
+      {
+        text: "feed.filters.typesOptions.Volunteers",
+        value: "Volunteers",
+      },
       { text: "feed.filters.typesOptions.Other", value: "Other" },
     ],
   },

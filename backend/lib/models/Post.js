@@ -18,6 +18,11 @@ const POST_TYPES = [
   "Others",
   "Wellbeing/Mental",
   "Tech",
+  "Childcare",
+  "Translations",
+  "Volunteers",
+  "Staff (paid)",
+  "Remote Work",
 ];
 
 // -- Schema
