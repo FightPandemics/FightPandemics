@@ -134,11 +134,7 @@ export const HeaderLinks = ({
             trigger={["click"]}
           >
             <button>
-              <SvgIcon
-                className="globe-icon"
-                id={GTM.nav.prefix + GTM.nav.language}
-                src={globe}
-              />
+              <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} />
             </button>
           </Dropdown>
         </li>
