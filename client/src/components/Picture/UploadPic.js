@@ -18,6 +18,12 @@ const CustomSubmitButton = styled(BaseButton)`
 
 const CustomCancelButton = styled(BaseButton)``;
 
+//new button
+const CustomUploadButton = styled(BaseButton)``;
+
+//new button
+const CustomRemoveButton = styled(BaseButton)``;
+
 const CameraButtonUpload = styled.button`
   border: 0;
   padding-top: 0.1rem;
@@ -140,6 +146,39 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
     setModalVisible(false);
   };
 
+  const removePhoto = async () => {
+    if (user.ownerId) {
+      endPoint = `/api/organisations/${user._id}/avatar`;
+    }
+    try {
+      uploadResponse = await axios({
+        method: "delete",
+        url: endPoint,
+        headers: {
+          accept: "application/json",
+          "Content-Type": `multipart/form-data`,
+        },
+      });
+      if (uploadResponse.status == 200) {
+        setModalVisible(false);
+        window.location.reload(false);
+      }
+    } catch (error) {
+      setUploadError(t("error.avatar.networkError"));
+      console.log({
+        error,
+      });
+    }
+  }
+
+  //new function
+  const openModal = (e) => {
+    console.log(user.photo)
+    //problem with setPhotoURL using user.photo causes bug if user submits without getting a new file
+    // setPhotoURL(user.photo)
+    setModalVisible(true);
+  }
+
   const closeModal = () => {
     imgUpload.current.value = "";
     setUploadError("");
@@ -161,6 +200,16 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         closable={false}
         maskClosable={false}
         footer={[
+          <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
+            {/* add button reference for every language then change this to match the other buttons */}
+            {t("Change Photo")}
+          </CustomUploadButton>,
+          user && user.photo ? (
+            <CustomRemoveButton key="remove" onClick={removePhoto}>
+            {/* add button reference for every language then change this to match the other buttons */}
+              {t("Delete Photo")}
+            </CustomRemoveButton>
+          ) : null,
           <CustomCancelButton key="cancel" onClick={closeModal}>
             {t("avatar.cancelBtn")}
           </CustomCancelButton>,
@@ -215,7 +264,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
       <CameraButtonUpload
         name="avatar-upload-button"
         type="button"
-        onClick={() => imgUpload.current.click()}
+        onClick={(e) => {
+          user.photo ? openModal(e) : imgUpload.current.click()
+          // imgUpload.current.click()
+        }}
       >
         <CameraOutlined
           style={{ fontSize: 18 || cameraIconSize, color: colors.offWhite }}
