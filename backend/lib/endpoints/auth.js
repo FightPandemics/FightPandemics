@@ -253,7 +253,7 @@ async function routes(app) {
     },
   );
 
-  app.get(
+  app.post(
     "/link-accounts",
     { preHandler: [app.getServerToken] },
     async (req) => {
@@ -264,7 +264,7 @@ async function routes(app) {
         }
         const { email } = await Auth0.getUser(token);
         const { payload } = app.jwt.decode(token);
-        const userIdRoot = payload["sub"];
+        const userIdRoot = payload.sub;
         const serverToken = req.token;
         const otherAccounts = await Auth0.getAccountsWithSameEmail(
           serverToken,
@@ -272,28 +272,6 @@ async function routes(app) {
           userIdRoot,
         );
         const userIds = otherAccounts.map((account) => account.user_id);
-        return { userIds };
-      } catch (err) {
-        req.log.error(err, "Error querying accounts");
-        throw app.httpErrors.internalServerError();
-      }
-    },
-  );
-
-  app.post(
-    "/link-accounts",
-    { preHandler: [app.getServerToken] },
-    async (req) => {
-      try {
-        const token = getCookieToken(req);
-        if (!token) {
-          throw app.httpErrors.unauthorized("invalidToken");
-        }
-        const { payload } = app.jwt.decode(token);
-        const userIdRoot = payload["sub"];
-        const serverToken = req.token;
-        const { userIds } = req.body;
-        
         // unlinked accounts could be more than one, link all of them
         for (const userId of userIds) {
           await Auth0.linkAccounts(serverToken, userId, userIdRoot);

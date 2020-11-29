@@ -173,10 +173,9 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
   useEffect(() => {
     (async function linkAccounts() {
       try {
-        const resAccounts = await axios.get("/api/auth/link-accounts");
+        const resAccounts = await axios.post("/api/auth/link-accounts");
         const { userIds } = resAccounts.data;
         if (userIds?.length > 0) {
-          await axios.post("/api/auth/link-accounts", resAccounts.data);
           Modal.alert(null, t("auth.linkAccountsSuccess"), [
             { text: t("common.ok"), onPress: handleLinkAccountsSuccessClose },
           ]);
