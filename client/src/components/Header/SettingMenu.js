@@ -11,9 +11,7 @@ import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
-import LanguageIcon from "assets/icons/language-gray.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
-import moderator from "assets/icons/moderator-badge.svg";
 import { ReactComponent as ModeratorIcon } from "assets/icons/moderator-badge.svg";
 const profileItemStyle = { margin: "8px 0", height: "auto" };
 
