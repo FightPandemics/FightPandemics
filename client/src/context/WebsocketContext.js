@@ -50,7 +50,7 @@ export default class SocketManager extends React.Component {
         this.setState({ isAuthenticated: !!newState.session.user });
         if (newState.session.organisationId !== this.state.organisationId) {
           this.setState({ organisationId: newState.session.organisationId });
-          return this.identify;
+          return this.identify();
         }
         if (this.state.isAuthenticated && !this.state.isIdentified)
           this.identify();
