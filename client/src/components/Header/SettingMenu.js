@@ -13,9 +13,13 @@ import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
 import LanguageIcon from "assets/icons/language-gray.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
-
+import moderator from "assets/icons/moderator-badge.svg";
+import { ReactComponent as ModeratorIcon } from "assets/icons/moderator-badge.svg";
 const profileItemStyle = { margin: "8px 0", height: "auto" };
 
+const StyledModeratorIcon = styled(ModeratorIcon)`
+  margin-right: 10px;
+`;
 export const SettingMenu = ({
   setMenuState,
   user,
@@ -35,9 +39,14 @@ export const SettingMenu = ({
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item
-        id={GTM.nav.prefix + GTM.nav.switch}
-        onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
+      // id={GTM.nav.prefix + GTM.nav.switch}
       >
+        <Link to="/dashboard">
+          <StyledModeratorIcon />
+          Dashboard
+        </Link>
+      </Menu.Item>
+      <Menu.Item onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}>
         <CustomSvgIcon src={PeopleIcon} />
         {t("common.switchAccount")}
       </Menu.Item>

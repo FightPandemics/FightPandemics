@@ -7,6 +7,7 @@ import i18n from "../../i18n";
 import SvgIcon from "../Icon/SvgIcon";
 import feedback from "assets/icons/feedback.svg";
 import globe from "assets/icons/globe.svg";
+import moderator from "assets/icons/moderator-badge.svg";
 import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 import { ProfileMenu } from "./ProfileMenu";
@@ -85,6 +86,19 @@ export const HeaderLinks = ({
                 mobile={false}
                 organisationId={organisationId}
               />
+            </li>
+            <li>
+              <NavLink
+                // id={GTM.nav.prefix + GTM.nav.login}
+                // activeStyle={activeStyles}
+
+                to="/dashboard"
+              >
+                <SvgIcon
+                  // id={GTM.nav.prefix + GTM.nav.language}
+                  src={moderator}
+                ></SvgIcon>
+              </NavLink>
             </li>
             <li>
               <ProfileMenu
