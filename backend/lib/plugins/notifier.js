@@ -26,9 +26,13 @@ class Notifier {
     )
       return;
 
-    if (!triggeredBy.ownerId) { // only do this extra query if triggredBy is user not org
+    if (!triggeredBy.ownerId) {
+      // only do this extra query if triggredBy is user not org
       const [isOwnerErr, isOwner] = await this.app.to(
-        this.Organisation.exists({ _id: post.author.id, ownerId: triggeredById }),
+        this.Organisation.exists({
+          _id: post.author.id,
+          ownerId: triggeredById,
+        }),
       );
       // owner intercated with owned org post.
       if (isOwner) return;
@@ -56,7 +60,7 @@ class Notifier {
         photo: triggeredBy.photo,
         type: triggeredBy.type,
       },
-      isCleared: false
+      isCleared: false,
     };
 
     const [err, notification] = await this.app.to(

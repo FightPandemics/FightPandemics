@@ -440,9 +440,15 @@ function onSocketConnect(socket) {
   socket.on("CLEAR_NOTIFICATION", async (data) => {
     const { userId } = socket;
     const { notificationId } = data;
-    const notification = await Notification.findById(notificationId);
-    if(notification.receiver.toString() === userId) 
-      await notification.update({ isCleared: true });
+    await Notification.findOneAndUpdate(
+      {
+        _id: this.mongo.base.Types.ObjectId(notificationId),
+        receiver: this.mongo.base.Types.ObjectId(userId),
+      },
+      {
+        isCleared: true,
+      },
+    );
   });
 
   socket.on("CLEAR_ALL_NOTIFICATIONS", async () => {
