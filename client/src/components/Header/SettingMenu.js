@@ -36,15 +36,16 @@ export const SettingMenu = ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item
-      // id={GTM.nav.prefix + GTM.nav.switch}
-      >
+      <Menu.Item>
         <Link to="/dashboard">
           <StyledModeratorIcon />
           Dashboard
         </Link>
       </Menu.Item>
-      <Menu.Item onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}>
+      <Menu.Item
+        onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
+        id={GTM.nav.prefix + GTM.nav.switch}
+      >
         <CustomSvgIcon src={PeopleIcon} />
         {t("common.switchAccount")}
       </Menu.Item>

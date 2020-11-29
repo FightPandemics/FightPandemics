@@ -89,13 +89,10 @@ export const HeaderLinks = ({
             </li>
             <li>
               <NavLink
-                // id={GTM.nav.prefix + GTM.nav.login}
-                // activeStyle={activeStyles}
-
+                activeStyle={activeStyles}
                 to="/dashboard"
               >
                 <SvgIcon
-                  // id={GTM.nav.prefix + GTM.nav.language}
                   src={moderator}
                 ></SvgIcon>
               </NavLink>
