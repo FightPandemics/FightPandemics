@@ -58,6 +58,10 @@ const FILTER_OPTIONS = {
         value: "Groceries/Food",
       },
       {
+        text: "feed.filters.typesOptions.Housing",
+        value: "Housing",
+      },
+      {
         text: "feed.filters.typesOptions.Business",
         value: "Business",
       },

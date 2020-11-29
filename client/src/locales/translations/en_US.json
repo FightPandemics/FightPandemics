@@ -86,6 +86,7 @@
         "Groceries/Food",
         "Business",
         "Education",
+        "Housing",
         "Legal",
         "Wellbeing/Mental",
         "Entertainment",
@@ -115,6 +116,7 @@
       "typesOptions": {
         "Medical Supplies": "Medical Supplies",
         "Groceries/Food": "Groceries/Food",
+        "Housing": "Housing",
         "Business": "Business",
         "Education": "Education",
         "Legal": "Legal",

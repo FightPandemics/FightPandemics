@@ -10,6 +10,7 @@ const POST_TYPES = [
   "Entertainment",
   "Funding",
   "Groceries/Food",
+  "Housing",
   "Information",
   "Legal",
   "Medical Supplies",
