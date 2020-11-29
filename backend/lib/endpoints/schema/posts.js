@@ -34,6 +34,7 @@ const createPostSchema = {
         .prop("playStore", S.string().format("url"))
         .prop("website", S.string().format("url")),
     )
+    .prop("isEdited", S.boolean())
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES).required())
     .prop("title", S.string().required())
@@ -60,6 +61,7 @@ const updatePostSchema = {
         .prop("playStore", S.string().format("url"))
         .prop("website", S.string().format("url")),
     )
+    .prop("isEdited", S.boolean())
     .prop("language", S.array().items(S.string()))
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("title", S.string())
