@@ -128,10 +128,18 @@ export const HeaderLinks = ({
           </>
         )}
         <li>
-          <Dropdown overlay={languageMenu} trigger={["click"]}>
-            <div className="icon-btn">
-              <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} />
-            </div>
+          <Dropdown
+            className="icon-btn"
+            overlay={languageMenu}
+            trigger={["click"]}
+          >
+            <button>
+              <SvgIcon
+                className="globe-icon"
+                id={GTM.nav.prefix + GTM.nav.language}
+                src={globe}
+              />
+            </button>
           </Dropdown>
         </li>
       </ul>

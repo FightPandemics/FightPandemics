@@ -68,6 +68,7 @@ const MessageModal = ({
       showModal();
     }
     sessionStorage.removeItem("msgModal");
+    // eslint-disable-next-line no-use-before-define
   }, [authorId, isAuthenticated]);
 
   const showModal = async () => {

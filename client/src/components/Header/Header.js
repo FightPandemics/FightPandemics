@@ -84,7 +84,6 @@ const NavLinks = styled.div`
       margin-bottom: 0.2rem;
       align-self: center;
     }
-
     .registerLink {
       display: block;
       border: 0.1rem solid ${colors.royalBlue};
@@ -96,7 +95,9 @@ const NavLinks = styled.div`
       background-color: ${colors.royalBlue};
       color: ${colors.white};
     }
-
+    .globe-icon {
+      margin-top: 0.4rem;
+    }
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
