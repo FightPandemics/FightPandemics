@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { theme, mq } from "constants/theme";
-import { Section } from "components/CreatePost/StyledModal";
+import { theme } from "constants/theme";
 const { colors, typography } = theme;
 
 export const Title = styled.p`
