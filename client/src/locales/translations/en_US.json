@@ -209,11 +209,16 @@
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
-    "delete": "Delete",
+    "delete": "Delete your post",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "edit": "Edit your post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -989,6 +994,12 @@
     "enterDetails": "Please enter more details here...",
     "reportPost": "Report Post",
     "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong..."
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Recieved",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Other"
   }
 }

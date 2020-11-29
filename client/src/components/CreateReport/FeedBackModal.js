@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { postsActions } from "reducers/posts";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
@@ -64,16 +64,18 @@ const FeedBackModal = ({
     <div className="create-report">
       <ModalWrapper
         footer={null}
-        title={reportSuccess ? "Report Recieved" : "Oops!"}
+        title={
+          reportSuccess
+            ? t("moderation.reportPostSuccessTitle")
+            : t("moderation.reportPostErrorTitle")
+        }
         visible={showModal}
         destroyOnClose={true}
         onCancel={closeModal}
       >
         <Body>
           {reportSuccess ? (
-            <>
-             {t("moderation.reportPostSuccess")}
-            </>
+            <>{t("moderation.reportPostSuccess")}</>
           ) : (
             <>{t("moderation.reportPostError")}</>
           )}
