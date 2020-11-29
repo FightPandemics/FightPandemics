@@ -102,8 +102,8 @@ const FILTER_OPTIONS = {
         value: "Translations",
       },
       {
-        text: "feed.filters.typesOptions.Volunteers",
-        value: "Volunteers",
+        text: "feed.filters.typesOptions.Volunteer",
+        value: "Volunteer",
       },
       { text: "feed.filters.typesOptions.Other", value: "Other" },
     ],

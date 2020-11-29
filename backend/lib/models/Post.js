@@ -20,7 +20,7 @@ const POST_TYPES = [
   "Tech",
   "Childcare",
   "Translations",
-  "Volunteers",
+  "Volunteer",
   "Staff (paid)",
   "Remote Work",
 ];
