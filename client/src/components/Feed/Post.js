@@ -552,7 +552,6 @@ const Post = ({
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            <WhiteSpace />
             {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
