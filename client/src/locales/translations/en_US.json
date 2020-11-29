@@ -86,6 +86,7 @@
         "Groceries/Food",
         "Business",
         "Education",
+        "Housing",
         "Legal",
         "Wellbeing/Mental",
         "Entertainment",
@@ -93,7 +94,12 @@
         "Funding",
         "R&D",
         "Tech",
-        "Other"
+        "Other",
+        "Childcare",
+        "Translations",
+        "Volunteer",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Location",
@@ -115,6 +121,12 @@
       "typesOptions": {
         "Medical Supplies": "Medical Supplies",
         "Groceries/Food": "Groceries/Food",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Volunteer",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work",
         "Business": "Business",
         "Education": "Education",
         "Legal": "Legal",

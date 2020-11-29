@@ -156,7 +156,9 @@ const LogosMap = new Map([
 ]);
 
 const supporterLogosLifetime = [
+  accessibe,
   algoliaLogo,
+  datadog,
   hackoladeLogo,
   kite,
   lokaliseLogo,
@@ -174,9 +176,7 @@ const supporterLogosCurrent = [
   airtableLogo,
   awsLogo,
   aut0Logo,
-  accessibe,
   akveo,
-  datadog,
   datasaur,
   figmaLogo,
   gitkrakenLogo,

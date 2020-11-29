@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 // Local
 import AutoSize from "components/Input/AutoSize";
 import Comments from "./Comments";
-import FilterTag from "components/Tag/FilterTag";
+import PostTag from "components/Tag/PostTag";
 import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
@@ -442,9 +442,9 @@ const Post = ({
     <Card.Body>
       {post?.types &&
         post?.types.map((tag, idx) => (
-          <FilterTag key={idx} disabled={true} selected={false}>
+          <PostTag key={idx} disabled={true} selected={false}>
             {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </FilterTag>
+          </PostTag>
         ))}
     </Card.Body>
   );
@@ -554,7 +554,6 @@ const Post = ({
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            <WhiteSpace />
             {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
@@ -573,9 +572,11 @@ const Post = ({
             />
             {renderComments}
             <DeleteModal
-              title={(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>{t("post.deletePostConfirmationTitle")}</p>
-              )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
+              title={
+                (deleteModalVisibility === DELETE_MODAL_POST && (
+                  <p>{t("post.deletePostConfirmationTitle")}</p>
+                )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+              }
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
@@ -658,9 +659,11 @@ const Post = ({
             postContent={post.content}
           />
           <DeleteModal
-            title={(deleteModalVisibility === DELETE_MODAL_POST && (
-              <p>{t("post.deletePostConfirmationTitle")}</p>
-            )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>}
+            title={
+              (deleteModalVisibility === DELETE_MODAL_POST && (
+                <p>{t("post.deletePostConfirmationTitle")}</p>
+              )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+            }
             visible={
               !!deleteModalVisibility &&
               deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -672,8 +675,8 @@ const Post = ({
             cancelText={t("post.cancel")}
           >
             {(deleteModalVisibility === DELETE_MODAL_POST && (
-                <p>{t("post.deletePostConfirmation")}</p>
-              )) || <p>{t("post.deleteCommentConfirmation")}</p>}
+              <p>{t("post.deletePostConfirmation")}</p>
+            )) || <p>{t("post.deleteCommentConfirmation")}</p>}
           </DeleteModal>
         </PostCard>
       )}

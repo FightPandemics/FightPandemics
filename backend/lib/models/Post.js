@@ -10,6 +10,7 @@ const POST_TYPES = [
   "Entertainment",
   "Funding",
   "Groceries/Food",
+  "Housing",
   "Information",
   "Legal",
   "Medical Supplies",
@@ -17,6 +18,11 @@ const POST_TYPES = [
   "Others",
   "Wellbeing/Mental",
   "Tech",
+  "Childcare",
+  "Translations",
+  "Volunteer",
+  "Staff (paid)",
+  "Remote Work",
 ];
 
 // -- Schema
@@ -36,6 +42,7 @@ const postSchema = new Schema(
       playStore: { trim: true, type: String },
       website: { trim: true, type: String },
     },
+    isEdited: { default: false, type: Boolean },
     language: [String],
     likes: {
       // TODO: how to guarantee unique ids?

@@ -68,7 +68,8 @@ const MessageModal = ({
       showModal();
     }
     sessionStorage.removeItem("msgModal");
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showModal = async () => {
     await setVisible(true);
