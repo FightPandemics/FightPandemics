@@ -9,7 +9,7 @@ import Options from "./Options";
 import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
 import BaseButton from "components/Button/BaseButton";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import { selectOrganisationId } from "reducers/session";
 
 const { colors, typography } = theme;
@@ -83,14 +83,18 @@ const Body = ({ closeModal, postId, onSuccess }) => {
     setDescription(e.target.value);
   };
 
-  const getActorQuery = () =>  actorOrganisationId? `?actorId=${actorOrganisationId}` : ""
+  const getActorQuery = () =>
+    actorOrganisationId ? `?actorId=${actorOrganisationId}` : "";
 
   const sendData = async (e) => {
     const reasonString = `${reasonData.join("|")}|${description}`;
     const formData = { reason: reasonString };
     e.preventDefault();
     try {
-      const res = await axios.post(`/api/reports/posts/${postId}${getActorQuery()}`, formData);
+      const res = await axios.post(
+        `/api/reports/posts/${postId}${getActorQuery()}`,
+        formData,
+      );
       onSuccess(true);
     } catch (error) {
       onSuccess(false);
@@ -108,7 +112,9 @@ const Body = ({ closeModal, postId, onSuccess }) => {
         </>
       ) : null}
       <Footer>
-        <CancelButton onClick={closeModal}>{t("moderation.cancel")}</CancelButton>
+        <CancelButton onClick={closeModal}>
+          {t("moderation.cancel")}
+        </CancelButton>
         <Submit primary="true" onClick={sendData} disabled={!reasonData.length}>
           {t("moderation.report")}
         </Submit>
