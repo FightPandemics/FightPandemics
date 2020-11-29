@@ -2,7 +2,6 @@ const axios = require("axios");
 const httpErrors = require("http-errors");
 const qs = require("querystring");
 const { config } = require("../../config");
-const _ = require("lodash");
 
 const {
   auth: { domain: AUTH_DOMAIN },
@@ -156,8 +155,8 @@ module.exports = {
   authenticate,
   buildOauthUrl,
   createUser,
-  getUser,
   getAccountsWithSameEmail,
+  getUser,
   linkAccounts,
   sendChangePasswordEmail,
   updateUser,
