@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
-import { ReactComponent as SaveIcon } from "assets/icons/save.svg";
 import { ReactComponent as HideIcon } from "assets/icons/hide.svg";
-import { ReactComponent as FollowIcon } from "assets/icons/follow.svg";
 import { ReactComponent as ReportIcon } from "assets/icons/report.svg";
 import { ReactComponent as EditIcon } from "assets/icons/edit-grey.svg";
-import { ReactComponent as DeleteIcon } from "assets/icons/hide.svg";
+import { ReactComponent as PostRemoval } from "assets/icons/post-removal.svg";
 
 import { theme } from "constants/theme";
 
@@ -38,7 +36,7 @@ const Label = styled.div`
   flex-direction: column;
   font-family: ${typography.font.family.body};
   margin-left: 2rem;
-  ${props => props.color? `* {color: ${props.color}!important;}`:""}
+  ${(props) => (props.color ? `* {color: ${props.color}!important;}` : "")}
 `;
 
 const Action = styled.span`
@@ -75,10 +73,9 @@ const PostDropdownButton = ({
           {postId ? (
             <Menu.Item onClick={onEdit}>
               <Item>
-              <EditIcon />
+                <EditIcon />
                 <Label>
-                  <Action>{t("comment.edit")}</Action>
-                  <Caption>Edit your post</Caption>
+                  <Action>{t("post.edit")}</Action>
                 </Label>
               </Item>
             </Menu.Item>
@@ -97,10 +94,9 @@ const PostDropdownButton = ({
                 }}
               >
                 <Item>
-                <EditIcon />
+                  <EditIcon />
                   <Label>
-                    <Action>{t("comment.edit")}</Action>
-                    <Caption>Edit your post</Caption>
+                    <Action>{t("post.edit")}</Action>
                   </Label>
                 </Item>
               </Link>
@@ -108,31 +104,32 @@ const PostDropdownButton = ({
           )}
           <Menu.Item onClick={onDelete}>
             <Item>
-              <DeleteIcon/>
+              <PostRemoval />
               <Label color={"red"}>
-                <Action>{t("comment.delete")}</Action>
-                <Caption>Delete your post</Caption>
+                <Action>{t("post.delete")}</Action>
               </Label>
             </Item>
           </Menu.Item>
         </>
       ) : (
         <>
-          {!fromPage && <Menu.Item onClick={onHide} key="hide">
-            <Item>
-              <HideIcon />
-              <Label>
-                <Action>Hide Post</Action>
-                <Caption>It is not relevant to me</Caption>
-              </Label>
-            </Item>
-          </Menu.Item>}
+          {!fromPage && (
+            <Menu.Item onClick={onHide} key="hide">
+              <Item>
+                <HideIcon />
+                <Label>
+                  <Action>{t("post.hideAction")}</Action>
+                  <Caption>{t("post.hideCaption")}</Caption>
+                </Label>
+              </Item>
+            </Menu.Item>
+          )}
           <Menu.Item onClick={onReport} key="report">
             <Item>
               <ReportIcon />
               <Label>
-                <Action>Report Post</Action>
-                <Caption>for moderators review</Caption>
+                <Action>{t("post.reportAction")}</Action>
+                <Caption>{t("post.reportCaption")}</Caption>
               </Label>
             </Item>
           </Menu.Item>
