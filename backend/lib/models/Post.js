@@ -36,7 +36,7 @@ const postSchema = new Schema(
       playStore: { trim: true, type: String },
       website: { trim: true, type: String },
     },
-    isEdited: Boolean,
+    isEdited: { default: false, type: Boolean },
     language: [String],
     likes: {
       // TODO: how to guarantee unique ids?

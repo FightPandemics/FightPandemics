@@ -325,7 +325,6 @@ async function routes(app) {
 
       // Initial empty likes array
       postProps.likes = [];
-      postProps.isEdited = false; // set edited false when create
 
       const [err, post] = await app.to(new Post(postProps).save());
 
