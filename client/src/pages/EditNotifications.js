@@ -118,21 +118,19 @@ function EditNotifications(props) {
         <ChangePicButton>Change</ChangePicButton> */}
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
+            <CustomLink to="/edit-account">
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
+            <CustomLink to="/edit-profile">
+              {t("profile.common.profileInfo")}
             </CustomLink>
             {usesPassword && (
-              <CustomLink >
-                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              <CustomLink to="/edit-security">
+                {t("profile.common.securityInfo")}
               </CustomLink>
             )}
-            <CustomLink isSelected>
-              <Link to="/edit-notifications">
-                {t("profile.common.notificationInfo")}
-              </Link>
+            <CustomLink to="/edit-notifications" isSelected>
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>

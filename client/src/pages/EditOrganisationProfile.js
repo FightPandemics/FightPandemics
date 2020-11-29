@@ -211,20 +211,19 @@ function EditOrganisationProfile(props) {
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-account/${organisationId}`}>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-profile/${organisationId}`}
+              isSelected
+            >
+              {t("profile.common.profileInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                {t("profile.common.notificationInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-notifications/${organisationId}`}
+            >
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>
