@@ -381,19 +381,18 @@ const AboutUs = () => {
 
       <PressContainer>
         <FlexBox direction="column" align="center">
-          <h1>{t("Press")}</h1>
-          <p>{t("If you're a member of the press, contact us at ")}</p>
+          <h1>{t("press")}</h1>
+          <p>{t("pressInfo")}</p>
           <p>
             <a href="mailto:pr@fightpandemics.com" target="_blank">
-              {" "}
-              pr@fightpandemics.com{" "}
+              pr@fightpandemics.com
             </a>
           </p>
           <LinkButton
             href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
             target="_blank"
           >
-            {t("Go to Press Kit")}
+            {t("pressKitLink")}
           </LinkButton>
         </FlexBox>
       </PressContainer>
