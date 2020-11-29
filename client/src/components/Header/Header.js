@@ -79,6 +79,7 @@ const NavLinks = styled.div`
     position: absolute;
     right: 3.7rem;
   }
+
   ul {
     list-style-type: none;
     display: flex;
@@ -181,8 +182,7 @@ const Header = ({
                   (p) => p.id == (organisationId || user.id.toString()),
                 )?.newMessages
                   ? 1
-                  : 0 || // remove "? 1:0" to show total messages
-                    0),
+                  : 0 || 0), // remove "? 1:0" to show total messages
               0,
             )}
           >
@@ -217,11 +217,13 @@ const Header = ({
               onClick={onMenuClick}
             />
             {isAuthenticated && renderInboxIcon(true)}
-            {isAuthenticated && <NotificationDropDown
-              notifications={webSocket.notifications}
-              mobile={true}
-              organisationId={organisationId}
-            />}
+            {isAuthenticated && (
+              <NotificationDropDown
+                notifications={webSocket.notifications}
+                mobile={true}
+                organisationId={organisationId}
+              />
+            )}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>
