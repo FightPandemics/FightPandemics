@@ -3,6 +3,7 @@ import { Input } from "antd";
 import styled from "styled-components";
 import { Section } from "../CreatePost/StyledModal";
 import { theme } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const { colors, typography } = theme;
 
@@ -30,12 +31,13 @@ export const TextInput = styled(TextArea)`
 `;
 
 const Form = ({ onChangeDescription }) => {
+  const { t } = useTranslation();
   return (
     <Section>
       <TextInput
         onChange={onChangeDescription()}
         rows={4}
-        placeholder="Your description here"
+        placeholder={t("moderation.enterDetails")}
         maxLength={512}
       />
     </Section>

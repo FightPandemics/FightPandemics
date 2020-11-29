@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+
 import Form from "./Form";
 import SubTitle from "./SubTitle";
 import Options from "./Options";
-
 import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
 import BaseButton from "components/Button/BaseButton";
@@ -63,6 +64,7 @@ export const Submit = styled(SubmitButton)`
 const Body = ({ closeModal, postId, onSuccess }) => {
   const [reasonData, setReasonData] = useState([]);
   const [description, setDescription] = useState("");
+  const { t } = useTranslation();
 
   const addOption = (option) => (e) => {
     const hasOption = reasonData.findIndex((reason) => reason === option);
@@ -91,19 +93,19 @@ const Body = ({ closeModal, postId, onSuccess }) => {
   };
   return (
     <>
-      <SubTitle title={"Reason for reporting:"} />
+      <SubTitle title={t("moderation.reason")} />
       <Options handleOption={addOption} selectedOptions={reasonData} />
 
       {reasonData.includes("Other") ? (
         <>
-          <SubTitle title={"Additional details (optional)"} />
+          <SubTitle title={t("moderation.additionalDetails")} />
           <Form onChangeDescription={addDescription} />
         </>
       ) : null}
       <Footer>
-        <CancelButton onClick={closeModal}>Cancel</CancelButton>
+        <CancelButton onClick={closeModal}>{t("moderation.cancel")}</CancelButton>
         <Submit primary="true" onClick={sendData} disabled={!reasonData.length}>
-          Report
+          {t("moderation.report")}
         </Submit>
       </Footer>
     </>

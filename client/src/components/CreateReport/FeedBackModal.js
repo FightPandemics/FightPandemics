@@ -2,19 +2,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { postsActions } from "reducers/posts";
 import { theme, mq } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId, fromPage }) => {
+const FeedBackModal = ({
+  setCallReport,
+  isComment,
+  reportSuccess,
+  postId,
+  fromPage,
+}) => {
   const [showModal, setShowModal] = useState(true);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const closeModal = () => {
     setShowModal(false);
     setCallReport(false);
-    if (fromPage) return window.location = "/feed";
+    if (fromPage) return (window.location = "/feed");
     dispatch(postsActions.setReported({ postId }));
   };
   const ModalWrapper = styled(Modal)`
@@ -64,20 +72,15 @@ const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId, fromPa
         <Body>
           {reportSuccess ? (
             <>
-              Thank you for your report! This {isComment ? "comment" : "post"}{" "}
-              will be submitted for review and you will receive a notification
-              when action is taken.
+             {t("moderation.reportPostSuccess")}
             </>
           ) : (
-            <>Oops! something went wrong...</>
+            <>{t("moderation.reportPostError")}</>
           )}
         </Body>
         <Footer>
-          <Submit
-            onClick={closeModal}
-            primary="true"
-          >
-            Finish
+          <Submit onClick={closeModal} primary="true">
+            {t("moderation.finish")}
           </Submit>
         </Footer>
       </ModalWrapper>

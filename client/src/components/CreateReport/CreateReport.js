@@ -4,12 +4,14 @@ import styled from "styled-components";
 import { Modal } from "antd";
 import { theme, mq } from "constants/theme";
 import FeedBackModal from "./FeedBackModal";
+import { useTranslation } from "react-i18next";
 
 const { colors, typography } = theme;
 
 const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
   const [reportSuccess, setReportSuccess] = useState(null);
   const closeModal = () => setCallReport(false);
+  const { t } = useTranslation();
 
   const ModalWrapper = styled(Modal)`
     width: 60rem !important;
@@ -41,7 +43,7 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
     <div className="create-report">
       {reportSuccess === null &&<ModalWrapper
         footer={null}
-        title={"Report Post"}
+        title={t("moderation.reportPost")}
         visible={callReport}
         destroyOnClose={true}
         onCancel={closeModal}

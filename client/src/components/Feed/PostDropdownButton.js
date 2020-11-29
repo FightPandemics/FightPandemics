@@ -132,7 +132,7 @@ const PostDropdownButton = ({
               <ReportIcon />
               <Label>
                 <Action>Report Post</Action>
-                <Caption>Placeholder text</Caption>
+                <Caption>for moderators review</Caption>
               </Label>
             </Item>
           </Menu.Item>
