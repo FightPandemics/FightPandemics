@@ -8,7 +8,7 @@ export const Title = styled.p`
   font-family: ${typography.font.family.body};
   font-style: normal;
   font-weight: normal;
-  font-size: ${typography.size.xsmall};
+  font-size: ${typography.size.medium};
   line-height: 130%;
   color: ${colors.darkerGray};
 `;

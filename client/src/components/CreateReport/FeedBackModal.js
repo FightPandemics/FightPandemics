@@ -28,7 +28,7 @@ const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId, fromPa
       text-align: center;
     }
     .ant-modal-content {
-      max-width: 564px;
+      max-width: 60rem;
       border-radius: 1rem;
     }
 
@@ -38,6 +38,9 @@ const FeedBackModal = ({ setCallReport, isComment, reportSuccess, postId, fromPa
 
     .ant-modal-body {
       padding: 1.5rem;
+      p {
+        font-size: ${typography.size.medium};
+      }
     }
   `;
 

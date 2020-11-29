@@ -9,17 +9,23 @@ const { colors, typography } = theme;
 const { TextArea } = Input;
 export const TextInput = styled(TextArea)`
   .ant-modal-root .ant-modal-content .ant-modal-body & {
+    border: 0.1rem solid lightgrey;
+    border-radius: 0.6rem;
+    min-height: 13.5rem;
+    width: 100%;
+    margin: 0 0 1.4rem 0;
+    padding: 1.4rem;
     resize: none;
-    overflow-y: scroll;
-    box-sizing: border-box;
-    border-radius: 0.15rem;
-    font-family: ${typography.font.family.display};
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${typography.size.xxsmall};
-    line-height: 140%;
-    display: flex;
-    align-items: center;
+    cursor: auto;
+    color: black;
+    font-size: ${typography.size.medium};
+    font-family: ${theme.typography.font.family.body};
+    :focus {
+      border: 1px solid ${theme.colors.primaryColor};
+    }
+    ::-webkit-scrollbar {
+      border-radius: 0 0.6rem 0.6rem 0;
+    }
   }
 `;
 
@@ -28,8 +34,9 @@ const Form = ({ onChangeDescription }) => {
     <Section>
       <TextInput
         onChange={onChangeDescription()}
-        rows={8}
+        rows={4}
         placeholder="Your description here"
+        maxLength={512}
       />
     </Section>
   );

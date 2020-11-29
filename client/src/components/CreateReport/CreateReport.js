@@ -12,7 +12,7 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
   const closeModal = () => setCallReport(false);
 
   const ModalWrapper = styled(Modal)`
-    width: 564px !important;
+    width: 60rem !important;
     height: 318px !important;
     .ant-modal-title {
       font-family: ${typography.font.family.display};
@@ -24,7 +24,7 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
       text-align: center;
     }
     .ant-modal-content {
-      max-width: 564px;
+      max-width: 60rem;
       border-radius: 1rem;
     }
 

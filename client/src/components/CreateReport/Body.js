@@ -31,7 +31,7 @@ const CancelButton = styled(BaseButton).attrs(({ size, inline }) => {
   span {
     font-family: ${typography.font.family.display};
     font-style: normal;
-    font-size: ${typography.size.small};
+    font-size: ${typography.size.medium};
     line-height: 1.15rem;
     font-weight: 500;
     color: ${colors.royalBlue};
@@ -55,7 +55,7 @@ export const Submit = styled(SubmitButton)`
   span {
     font-family: ${typography.font.family.display};
     font-style: normal;
-    font-size: ${typography.size.small};
+    font-size: ${typography.size.medium};
     line-height: 1.15rem;
     font-weight: 500;
   }
