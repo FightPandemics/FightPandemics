@@ -202,6 +202,7 @@ const itemStyle = {
   color: "white",
   boxShadow: "0 4px 5px rgba(0,0,0,0.22)",
   padding: ".75em 1.3em",
+  cursor: "auto",
 };
 
 const MenuItem = ({
@@ -268,7 +269,7 @@ const menu = (notifications, clearAllNotifications, organisationId, t) => {
   return (
     <StyledMenu>
       <Menu.Item style={{ ...itemStyle }}>
-        <a style={{ color: "white", paddingTop: "0.9rem" }}>
+        <a style={{ color: "white", paddingTop: "0.9rem", cursor: "default" }}>
           {t("notifications.header")}
         </a>
         <Arrow />
