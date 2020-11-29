@@ -71,6 +71,7 @@ const PostCard = styled(Card)`
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        position: unset;
         border: 0.05rem solid rgba(0, 0, 0, 0.5);
       }
     }
