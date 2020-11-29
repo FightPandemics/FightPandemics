@@ -10,6 +10,7 @@ const POST_TYPES = [
   "Entertainment",
   "Funding",
   "Groceries/Food",
+  "Housing",
   "Information",
   "Legal",
   "Medical Supplies",
@@ -17,6 +18,11 @@ const POST_TYPES = [
   "Others",
   "Wellbeing/Mental",
   "Tech",
+  "Childcare",
+  "Translations",
+  "Volunteer",
+  "Staff (paid)",
+  "Remote Work",
 ];
 
 // -- Schema
