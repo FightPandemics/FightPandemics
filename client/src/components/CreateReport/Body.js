@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import Form from "./Form";
 import SubTitle from "./SubTitle";
@@ -9,6 +10,7 @@ import SubmitButton from "components/Button/SubmitButton";
 import styled from "styled-components";
 import BaseButton from "components/Button/BaseButton";
 import { theme, mq } from "constants/theme";
+import { selectOrganisationId } from "reducers/session";
 
 const { colors, typography } = theme;
 
@@ -64,6 +66,7 @@ export const Submit = styled(SubmitButton)`
 const Body = ({ closeModal, postId, onSuccess }) => {
   const [reasonData, setReasonData] = useState([]);
   const [description, setDescription] = useState("");
+  const actorOrganisationId = useSelector(selectOrganisationId);
   const { t } = useTranslation();
 
   const addOption = (option) => (e) => {
@@ -80,12 +83,14 @@ const Body = ({ closeModal, postId, onSuccess }) => {
     setDescription(e.target.value);
   };
 
+  const getActorQuery = () =>  actorOrganisationId? `?actorId=${actorOrganisationId}` : ""
+
   const sendData = async (e) => {
     const reasonString = `${reasonData.join("|")}|${description}`;
     const formData = { reason: reasonString };
     e.preventDefault();
     try {
-      const res = await axios.post(`/api/reports/posts/${postId}`, formData);
+      const res = await axios.post(`/api/reports/posts/${postId}${getActorQuery()}`, formData);
       onSuccess(true);
     } catch (error) {
       onSuccess(false);
