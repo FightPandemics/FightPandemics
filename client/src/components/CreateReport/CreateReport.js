@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Body from "./Body";
 import styled from "styled-components";
 import { Modal } from "antd";
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import FeedBackModal from "./FeedBackModal";
 import { useTranslation } from "react-i18next";
 
@@ -41,19 +41,21 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
 
   return (
     <div className="create-report">
-      {reportSuccess === null &&<ModalWrapper
-        footer={null}
-        title={t("moderation.reportPost")}
-        visible={callReport}
-        destroyOnClose={true}
-        onCancel={closeModal}
-      >
-        <Body
-          onSuccess={setReportSuccess}
-          closeModal={closeModal}
-          postId={postId}
-        />
-      </ModalWrapper>}
+      {reportSuccess === null && (
+        <ModalWrapper
+          footer={null}
+          title={t("moderation.reportPost")}
+          visible={callReport}
+          destroyOnClose={true}
+          onCancel={closeModal}
+        >
+          <Body
+            onSuccess={setReportSuccess}
+            closeModal={closeModal}
+            postId={postId}
+          />
+        </ModalWrapper>
+      )}
       {reportSuccess !== null && (
         <FeedBackModal
           postId={postId}
