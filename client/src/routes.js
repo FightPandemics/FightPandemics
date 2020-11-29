@@ -32,6 +32,8 @@ import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
 
+import PERMISSIONS from "constants/permissions";
+
 const routes = [
   {
     path: "/",
@@ -173,6 +175,7 @@ const routes = [
       mobiletabs: true,
       navSearch: true,
       tabIndex: 2,
+      permLevel: PERMISSIONS.moderator,
     },
   },
   {
