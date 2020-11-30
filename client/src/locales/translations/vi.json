@@ -78,7 +78,7 @@
         "Phi lợi nhuận",
         "Đại học",
         "Nhà cung cấp dịch vụ y tế",
-        "Khác"
+        "Cái khác"
       ],
       "types": "Các loại",
       "typesList": [
@@ -86,6 +86,7 @@
         "Tạp hóa / Thực phẩm",
         "Kinh doanh",
         "Giáo dục",
+        "Nhà ở",
         "Hợp pháp",
         "An toàn cuộc sống /Tinh thần",
         "Giải trí",
@@ -93,7 +94,12 @@
         "Tài trợ",
         "Nghiên Cứu & Phát Triển",
         "Công nghệ",
-        "Khác"
+        "Cái khác",
+        "Chăm sóc trẻ em",
+        "Bản dịch",
+        "Tình nguyện viên",
+        "Nhân viên (trả tiền)",
+        "Làm việc từ xa"
       ],
       "labels": {
         "location": "Vị trí",
@@ -124,7 +130,13 @@
         "Funding": "Tài trợ",
         "R&D": "Nghiên Cứu & Phát Triển",
         "Tech": "Công nghệ",
-        "Other": "Cái khác"
+        "Other": "Cái khác",
+        "Housing": "Nhà ở",
+        "Childcare": "Chăm sóc trẻ em",
+        "Translations": "Bản dịch",
+        "Volunteer": "Tình nguyện viên",
+        "Staff (paid)": "Nhân viên (trả tiền)",
+        "Remote Work": "Làm việc từ xa"
       },
       "lookingForOptions": {
         "Request Help": "Yêu cầu trợ giúp",
@@ -199,8 +211,8 @@
     "whatNeed": "Bạn cần gì?",
     "viewLess": "Xem bớt",
     "viewMore": "Xem thêm",
-    "deletePostConfirmation": "Bạn có chắc bạn muốn xóa bỏ bài đăng không?",
-    "deleteCommentConfirmation": "Bạn có chắc chắn muốn xóa nhận xét không?",
+    "deletePostConfirmation": "Bạn có chắc bạn muốn xóa bỏ bài đăng này không?",
+    "deleteCommentConfirmation": "Bạn có chắc bạn muốn xóa bỏ nhận xét này không?",
     "shareVia": "Chia sẻ qua...",
     "others": "Cái khác",
     "expireTitle": "Ahh... Snap!",
@@ -211,7 +223,9 @@
     "cancel": "Hủy bỏ",
     "confirm": "Xác nhận",
     "edited": "đã chỉnh sửa",
-    "share_plural": "Chia sẻ"
+    "share_plural": "Chia sẻ",
+    "deletePostConfirmationTitle": "Xóa xác nhận bài đăng",
+    "deleteCommentConfirmationTitle": "Xóa xác nhận nhận xét"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Thông tin bảo mật",
       "changePassword": "Thay đổi Mật khẩu",
       "notificationInfo": "Tùy chọn Thông báo",
-      "emailNotification": "Thông báo có email",
+      "emailNotification": "Thiết đặt Email Thông báo",
       "instant": "Tức thì",
       "daily": "Hằng ngày",
       "weekly": "Hàng tuần",
-      "biweekly": "Hai tuần một lần"
+      "biweekly": "Hai tuần một lần",
+      "digest": "Bản tóm tắc",
+      "on": "Bật",
+      "off": "Tắt"
     },
     "individual": {
       "email": "Email",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Nhập mật khẩu mới",
       "updatingPassword": "Đang cập nhật Mật khẩu",
       "editSecurity": "Chỉnh sửa bảo mật",
-      "editNotification": "Chỉnh sửa thông báo"
+      "editNotification": "Chỉnh sửa thông báo",
+      "editAccount": "Sửa Tài khoản"
     },
     "org": {
       "title": "Tạo hồ sơ Tổ chức",
@@ -314,7 +332,7 @@
       "volunteers": "Tình nguyện viên",
       "donations": "Quyên góp",
       "staff": "Nhân Viên",
-      "other": "Khác",
+      "other": "Cái khác",
       "typeAndIndustry": "Loại và Ngành",
       "type": "Loại",
       "types": [
@@ -325,7 +343,7 @@
         "Phi lợi nhuận",
         "Đại học",
         "Nhà cung cấp dịch vụ y tế",
-        "Khác"
+        "Cái khác"
       ],
       "industry": "Ngành công nghiệp",
       "industries": [
@@ -347,7 +365,7 @@
         "Tiếp thị và quảng cáo",
         "Thiết bị y tế",
         "Quản lý tổ chức phi lợi nhuận",
-        "Khác",
+        "Cái khác",
         "Từ thiện",
         "Giáo dục Tiểu học / Trung học",
         "Đào tạo & Huấn luyện Chuyên nghiệp",
@@ -364,7 +382,9 @@
       "editAccount": "Chỉnh sửa thông tin tài khoản",
       "updateSuccess": "Tổ chức được cập nhật thành công",
       "orgNameRequired": "Tên tổ chức là bắt buộc",
-      "global": "Toàn cầu"
+      "global": "Toàn cầu",
+      "editOrgAccount": "Chỉnh sửa tài khoản tổ chức",
+      "editOrgNotification": "Chỉnh sửa Thông báo Tổ chức"
     }
   },
   "auth": {
@@ -396,9 +416,9 @@
   },
   "aboutUs": {
     "ourStory": "Câu chuyện của chúng tôi",
-    "story": "là đứa con tinh thần của Manuel Gonzalez Alzuru, người đã bị nhiễm COVID-19 ở Pháp. Khi trở về nhà ở Barcelona, anh thấy mình không thể nhận được sự giúp đỡ mặc dù có những người muốn cung cấp nó.",
+    "story": "là đứa con tinh thần của Manuel Gonzalez Alzuru, người bị nhiễm COVID-19 ở Pháp. Khi trở về nhà ở Barcelona, anh nhận thấy mình không thể nhận được sự giúp đỡ mặc dù có những người muốn cung cấp.",
     "ourCommunity": "Cộng đồng của chúng tôi",
-    "community": "Chúng tôi được xây dựng bởi một đội ngũ hơn 1100 nhà phát triển tình nguyện viên, nhà thiết kế, nhà khoa học, chuyên gia y tế và nhà quản lý sản phẩm từ khắp nơi trên thế giới",
+    "community": "Chúng tôi được xây dựng bởi một đội ngũ hơn 1100 nhà phát triển tình nguyện viên, nhà thiết kế, nhà khoa học, chuyên gia y tế và nhà quản lý sản phẩm từ khắp nơi trên thế giới.",
     "ourIdea": "Ý tưởng của chúng tôi",
     "ourSupporters": "Những người ủng hộ chúng tôi",
     "followUs": "Theo dõi chúng tôi trên mạng xã hội",
@@ -432,9 +452,12 @@
     "getInvolved": "Tham gia vào",
     "joinVolunteer": "Tham gia với tư cách tình nguyện viên",
     "joinAmbassador": "Tham gia với tư cách là Đại sứ",
-    "joinStudentProgram": "Tham gia chương trình dành cho sinh viên",
+    "joinStudentProgram": "Tham gia chương trình sinh viên",
     "studentSummerProgram": "Chương trình hè dành cho sinh viên",
-    "forStudentInAge": "Dành cho Học sinh từ 14-18 tuổi."
+    "forStudentInAge": "Dành cho Học sinh từ 14-18 tuổi.",
+    "press": "Báo chí",
+    "pressInfo": "Nếu bạn là thành viên của báo chí, hãy liên hệ với chúng tôi tại",
+    "pressKitLink": "Đi tới Bộ tài liệu báo chí"
   },
   "footer": {
     "faq": "Câu hỏi thường gặp",
@@ -630,7 +653,7 @@
   "cookies": {
     "whatCookies": "COOKIES LÀ GÌ?",
     "whatCookiesContent": "<0>Trang web này sử dụng ¨Cookies¨ và các cơ chế tương tự khác (sau đây gọi là Cookie). Cookie là các tệp được gửi đến trình duyệt thông qua máy chủ Web để ghi lại các hoạt động của Người dùng trên một trang web đã định rõ hoặc trên tất cả các trang web, ứng dụng và / hoặc dịch vụ trên trang web đó.  Mục đích đầu tiên của Cookie là cung cấp cho Người dùng quyền truy cập nhanh hơn và được cá nhân hóa vào các dịch vụ được cung cấp.  Cookie chỉ được liên kết với Người dùng ẩn danh và máy tính của người đó và không cung cấp các tham khảo cho phép khấu trừ dữ liệu cá nhân của Người dùng. </0><1> Người dùng có thể định cấu hình trình duyệt của mình để thông báo và từ chối cài đặt Cookie do trang web này gửi mà không ảnh hưởng đến khả năng truy cập Nội dung của Người dùng. Tuy nhiên, chúng tôi lưu ý rằng, trong mọi trường hợp, hiệu suất của trang web có thể giảm. Trang web này sử dụng Web Bugs, là những hình ảnh nhỏ và trong suốt được chèn vào email. Khi Người dùng mở bản tin của Trang web, hình ảnh này sẽ được tải xuống cùng với phần còn lại của nội dung email và cho phép biết liệu một email cụ thể đã được mở hay chưa, cũng như địa chỉ IP mà nó đã được tải xuống. FightPandemics sử dụng thông tin này để thu thập số liệu thống kê và thực hiện các nghiên cứu phân tích về việc Người dùng tiếp nhận email của mình. </1>",
-    "typeCookies": "Cookie kỹ thuật: Những cookie này cho phép người dùng điều hướng",
+    "typeCookies": "LOẠI, MỤC ĐÍCH VÀ CHỨC NĂNG CỦA COOKIES",
     "typeCookiesBegin": "Cookie, tùy thuộc vào tính vĩnh viễn của chúng, có thể được chia ra thành Cookie phiên hoặc Cookie vĩnh viễn.  Loại đầu tiên hết hạn khi Người dùng đóng trình duyệt.   Loại thứ hai hết hạn tùy thuộc vào thời điểm hoàn thành mục tiêu mà chúng phân phát hoặc khi chúng bị xóa theo cách thủ công. Ngoài ra, tùy thuộc vào mục tiêu của bạn, Cookie được sử dụng bởi Trang mạng này có thể được phân loại như sau:",
     "typeCookiesContent": "<0>Cookie kỹ thuật: Những cookie này cho phép người dùng điều hướng qua trang web, nền tảng hoặc ứng dụng và sử dụng các tùy chọn hoặc dịch vụ khác nhau tồn tại ở đó, chẳng hạn như kiểm soát lưu lượng truy cập và giao tiếp dữ liệu, xác định phiên, truy cập hạn chế truy cập các bộ phận, ghi nhớ các yếu tố tạo nên đơn đặt hàng, thực hiện quy trình mua đơn đặt hàng, thực hiện yêu cầu đăng ký hoặc tham gia một sự kiện, sử dụng các yếu tố bảo mật trong quá trình điều hướng, lưu trữ nội dung để phổ biến video hoặc âm thanh hoặc chia sẻ nội dung thông qua mạng xã hội .</0><1>Cookie phân tích: Những cookie được xử lý bởi chúng tôi hoặc bởi bên thứ ba, cho phép định lượng số lượng người dùng và do đó thực hiện đo lường và phân tích thống kê việc sử dụng của người dùng các dịch vụ được cung cấp. Vì vậy, việc duyệt web của bạn trên trang web của chúng tôi được phân tích để cải thiện việc cung cấp các sản phẩm hoặc dịch vụ mà chúng tôi cung cấp. </1><2> Cookie quảng cáo: Là những cookie do chúng tôi hoặc bên thứ ba xử lý, cho phép chúng tôi quản lý theo cách hiệu quả nhất có thể việc cung cấp các không gian quảng cáo trên trang web, điều chỉnh nội dung của quảng cáo nội dung của dịch vụ được yêu cầu hoặc việc sử dụng mà bạn thực hiện từ trang web của chúng tôi. Vì vậy, chúng tôi có thể phân tích thói quen duyệt web của bạn trên Internet và chúng tôi có thể hiển thị cho bạn quảng cáo liên quan đến hồ sơ duyệt web của bạn. </2><3> Cookie quảng cáo hành vi: Những cookie này cho phép quản lý không gian quảng cáo, theo cách hiệu quả nhất có thể, nếu thích hợp, trình chỉnh sửa đã đưa vào trang web, ứng dụng hoặc nền tảng mà từ đó nó cung cấp các yêu cầu dịch vụ. Những cookie này lưu trữ thông tin về hành vi của người dùng thu được thông qua việc quan sát liên tục thói quen duyệt web của họ, cho phép phát triển một hồ sơ cụ thể để hiển thị quảng cáo dựa trên đó. </3>",
     "typeCookiesEnd": "Trang mạng có thể sử dụng các dịch vụ của bên thứ ba có thể với yêu cầu cài đặt Cookie cho Người dùng thay mặt cho FightPandemics, đồng thời sẽ thu thập thông tin cho các mục đích thống kê về việc sử dụng Trang mạng  của người dùng và để cung cấp các dịch vụ khác liên quan đến hoạt động của trang web và các dịch vụ Internet khác.",
@@ -946,7 +969,7 @@
     "loadMore": "Tải thêm ...",
     "justNow": "Ngay bây giờ",
     "lastSeen": "Nhìn thấy lần cuối",
-    "never": "Không bao giờ",
+    "never": "Chưa đọc bao giờ",
     "activeNow": "Hiện hoạt Ngay",
     "message": "Tin nhắn",
     "sendMessage": "Gửi tin nhắn",
@@ -970,6 +993,7 @@
     "header": "Thông báo",
     "liked": "<0> {{username}} </0> thích bài đăng của bạn <1> {{postTitle}} </1>",
     "commented": "<0> {{username}} </0> đã nhận xét về bài đăng của bạn <1> {{postTitle}} </1>",
-    "shared": "<0> {{username}} </0> đã chia sẻ bài đăng của bạn <1> {{postTitle}} </1> trên <1> {{shareMedium}} </1>"
+    "shared": "<0> {{username}} </0> đã chia sẻ bài đăng của bạn <1> {{postTitle}} </1> trên <1> {{shareMedium}} </1>",
+    "empty": "Không có thêm thông báo"
   }
 }
