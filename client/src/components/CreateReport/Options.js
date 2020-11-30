@@ -7,20 +7,20 @@ const Options = ({ handleOption, selectedOptions }) => {
   const { t } = useTranslation();
   const options = [
     {
-      stateKey: "reportReasons",
-      value: t("moderation.spam"),
+      stateKey: "Spam",
+      value: "moderation.spam",
     },
     {
-      stateKey: "reportReasons",
-      value: t("moderation.inappropriateContent"),
+      stateKey: "Inappropriate Content",
+      value: "moderation.inappropriateContent",
     },
     {
-      stateKey: "reportReasons",
-      value: t("moderation.violatesTerms"),
+      stateKey: "Violates Terms",
+      value: "moderation.violatesTerms",
     },
     {
-      stateKey: "reportReasons",
-      value: t("moderation.other"),
+      stateKey: "Other",
+      value: "moderation.other",
     },
   ];
   return (
@@ -30,15 +30,16 @@ const Options = ({ handleOption, selectedOptions }) => {
           <ButtonTag
             className={`tag-selectable
               ${
-                selectedOptions.length && selectedOptions.includes(option.value)
+                selectedOptions.length &&
+                selectedOptions.includes(option.stateKey)
                   ? "tag-selected"
                   : ""
               }`}
-            onClick={handleOption(option.value)}
-            label={option.value}
+            onClick={handleOption(option.stateKey)}
+            label={t(option.value)}
             key={idx}
           >
-            {option.value}
+            {t(option.value)}
           </ButtonTag>
         ))}
       </div>
