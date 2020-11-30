@@ -19,13 +19,35 @@ const PostCard = styled(Card)`
     border: unset !important;
   }
 
+  .pre-header {
+    position: absolute;
+    top: 0;
+    padding: 1rem 0;
+    margin-top: 1rem;
+    font-family: "Work Sans";
+    font-size: ${small};
+    font-weight: 400;
+    color: ${colors.royalBlue};
+    -webkit-text-stroke: 0.2px;
+    &.post-page {
+      position: relative;
+      top: unset;
+      margin-top: -1rem;
+    }
+    .timestamp {
+      padding-left: 1rem;
+      font-size: ${small};
+      color: ${colors.darkishGray};
+    }
+  }
+
   &.am-card {
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       border-top: unset;
     }
 
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      border: 0.2rem solid ${colors.lightGray};
+      border: 0.01rem solid #e4e4e4;
       border-radius: 0.2rem;
       padding: 2rem 2.4rem;
       padding-bottom: 0.2rem;
@@ -33,30 +55,12 @@ const PostCard = styled(Card)`
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        border: 0.2rem solid ${colors.lightGray};
+        border: 0.01rem solid #e4e4e4;
       }
     }
 
     &::before {
       content: normal !important;
-    }
-
-    .pre-header {
-      position: absolute;
-      top: 0;
-      padding: 1rem 0;
-      margin-top: 1rem;
-      font-family: "Work Sans";
-      font-size: ${small};
-      font-weight: 400;
-      color: ${colors.royalBlue};
-      -webkit-text-stroke: 0.2px;
-    }
-
-    .timestamp {
-      padding-left: 1rem;
-      font-size: ${small};
-      color: ${colors.darkishGray};
     }
 
     .highlighted {
@@ -78,6 +82,10 @@ const PostCard = styled(Card)`
       > .card-submenu {
         flex: 0 0 auto;
         margin-left: 3rem;
+        margin-top: -3.45rem;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+          margin-top: -3.25rem;
+        }
         cursor: pointer;
       }
 
