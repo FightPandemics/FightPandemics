@@ -50,7 +50,7 @@ export const MENU_MAP = {
   "kn-IN": { value: "ಕನ್ನಡ", text: "Kannada (ಕನ್ನಡ)" },
   "ms-MY": { value: "Bahasa Melayu", text: "Malay (Bahasa Melayu)" },
   "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" },
-  "tl": { value: "ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔", text: "Tagalog (ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔)" },
+  tl: { value: "ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔", text: "Tagalog (ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔)" },
   vi: { value: "Tiếng Việt", text: "Vietnamese (Tiếng Việt)" },
   "mk-MK": { value: "македонски", text: "Macedonian (македонски)" },
 };

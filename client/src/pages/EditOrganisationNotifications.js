@@ -15,8 +15,6 @@ import {
   Background,
   ProfilePicWrapper,
   MobilePicWrapper,
-  ToggleHeading,
-  CustomEditAccountHeader,
   CustomForm,
   CustomSubmitButton,
 } from "components/EditProfile/EditComponents";
@@ -139,34 +137,26 @@ function EditOrganisationNotifications(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
+          <CustomHeading level={4} className="h4">
             {t("profile.org.editOrgNotification")}
-          </CustomEditAccountHeader>
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              {t("profile.common.notificationInfo")}
-            </CustomHeading>
-          </ToggleHeading>
+          </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-account/${organisationId}`}>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-profile/${organisationId}`}>
+              {t("profile.common.profileInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                {t("profile.common.notificationInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-notifications/${organisationId}`}
+              isSelected
+            >
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>

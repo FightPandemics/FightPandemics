@@ -23,9 +23,9 @@ import translationVI from "./translations/vi.json";
 current values in index are sorted. */
 /* Order in this index controls the order in language selector menu  */
 export const index = {
-   ar: {
-     translation: translationAR,
-   },
+  ar: {
+    translation: translationAR,
+  },
   // en: {
   //   translation: translationEN_US,
   // },
@@ -71,7 +71,7 @@ export const index = {
   "es-ES": {
     translation: translationES_ES,
   },
-  "tl": {
+  tl: {
     translation: translationTL,
   },
   "te-IN": {

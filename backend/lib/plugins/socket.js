@@ -438,6 +438,25 @@ function onSocketConnect(socket) {
     );
   });
 
+  socket.on("CLEAR_NOTIFICATION", async (data) => {
+    const { userId } = socket;
+    const { notificationId } = data;
+    await Notification.findOneAndUpdate(
+      {
+        _id: this.mongo.base.Types.ObjectId(notificationId),
+        receiver: this.mongo.base.Types.ObjectId(userId),
+      },
+      {
+        isCleared: true,
+      },
+    );
+  });
+
+  socket.on("CLEAR_ALL_NOTIFICATIONS", async () => {
+    const { userId } = socket;
+    await Notification.updateMany({ receiver: userId }, { isCleared: true });
+  });
+
   socket.on("POST_SHARED", async (data) => {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));

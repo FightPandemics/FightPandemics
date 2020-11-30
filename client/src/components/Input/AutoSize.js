@@ -19,7 +19,7 @@ const SendButton = styled(Button)`
 
   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
     height: 5rem;
-    padding: .5rem .5rem;
+    padding: 0.5rem 0.5rem;
   }
 `;
 
