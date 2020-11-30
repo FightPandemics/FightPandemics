@@ -75,6 +75,12 @@ const PostCard = styled(Card)`
         border: 0.05rem solid rgba(0, 0, 0, 0.5);
       }
     }
+    body .activity & {
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        position: unset;
+        border: 0.05rem solid rgba(0, 0, 0, 0.5);
+      }
+    }
 
     &::before {
       content: normal !important;
