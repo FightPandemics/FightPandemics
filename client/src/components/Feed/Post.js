@@ -771,7 +771,7 @@ const Post = ({
                 }
                 onOk={() => handleDeleteOk()}
                 onCancel={handleCancelPostDelete}
-                okText={t("post.delete")}
+                okText={t("post.deleteConfirmation")}
                 cancelText={t("post.cancel")}
               >
                 {deleteModalVisibility === DELETE_MODAL_POST ? (
