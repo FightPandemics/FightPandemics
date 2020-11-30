@@ -480,12 +480,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <PlaceholderIcon />
               {isSelf && (
                 <>
-                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
-                  <CreatePostIcon
-                    src={createPost}
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
+                  <CreatePostDiv src={createPost} id={GTM.organisation.orgPrefix + GTM.post.createPost} onClick={onToggleCreatePostDrawer}>
+                    <CreatePostIcon
+                      src={createPost}
+                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                      onClick={onToggleCreatePostDrawer}
+                    />
+                  {t("post.create")}
+                  </CreatePostDiv>
                 </>
               )}
             </SectionHeader>
