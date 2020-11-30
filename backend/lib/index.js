@@ -54,7 +54,9 @@ module.exports = function createApp(config) {
       servers: [{
         url: '/',
       }],
-    }
+      consumes: ['application/json'],
+      produces: ['application/json'],
+    },
   });
   app.register(require("./plugins/socket"), config.socket);
   app.register(require("./plugins/mongoose-connector"), config.mongo);
