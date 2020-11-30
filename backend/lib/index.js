@@ -50,6 +50,11 @@ module.exports = function createApp(config) {
   app.register(require("fastify-oas"), {
     exposeRoute: true,
     routePrefix: "/api/documentation",
+    swagger: {
+      servers: [{
+        url: '/',
+      }],
+    }
   });
   app.register(require("./plugins/socket"), config.socket);
   app.register(require("./plugins/mongoose-connector"), config.mongo);
