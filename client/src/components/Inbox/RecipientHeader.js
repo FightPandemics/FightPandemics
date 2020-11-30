@@ -28,7 +28,6 @@ const RecipientName = styled.div`
     background-color: #ffffff;
     position: fixed;
     top: 5rem;
-    z-index: 2;
   }
   .back-arrow {
     display: none;
