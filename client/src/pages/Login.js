@@ -211,11 +211,6 @@ const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
   const state = queryParams.get("state");
 
   useEffect(() => {
-    //allows user to return to previous page by preventing unwanted redirects
-    sessionStorage.removeItem("createPostAttemptLoggedOut");
-  }, []);
-
-  useEffect(() => {
     if (code && state) {
       const loadOAuth = async () => {
         authFormDispatch({ type: AUTH_FORM_SOCIAL });
