@@ -13,6 +13,7 @@ const PostCard = styled(Card)`
   margin-bottom: 4rem;
   padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
@@ -24,14 +25,15 @@ const PostCard = styled(Card)`
     }
 
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      border: 0.05rem solid rgba(0, 0, 0, 0.5);
+      border: 0.2rem solid ${colors.lightGray};
       border-radius: 0.2rem;
       padding: 2rem 2.4rem;
+      padding-bottom: 0.2rem;
     }
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        border: 0.05rem solid rgba(0, 0, 0, 0.5);
+        border: 0.2rem solid ${colors.lightGray};
       }
     }
 
@@ -43,7 +45,7 @@ const PostCard = styled(Card)`
       position: absolute;
       top: 0;
       padding: 1rem 0;
-      margin-top: 0.7rem;
+      margin-top: 1rem;
       font-family: "Work Sans";
       font-size: ${small};
       font-weight: 400;
@@ -183,8 +185,8 @@ const PostCard = styled(Card)`
 
       &.view-more-wrapper {
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          border-bottom: 0.03rem solid rgba(0, 0, 0, 0.5);
-          margin-bottom: 1.3rem;
+          border-bottom: 0.2rem solid ${colors.lightGray};
+          margin-bottom: 1.6rem;
         }
       }
 
