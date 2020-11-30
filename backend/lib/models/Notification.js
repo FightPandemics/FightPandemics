@@ -52,6 +52,10 @@ const notificationSchema = new Schema(
         type: String,
       },
     },
+    isCleared: {
+      type: Boolean,
+      required: true,
+    },
   },
   { collection: "notifications", timestamps: true },
 );
@@ -80,14 +84,20 @@ notificationSchema.index({
 notificationSchema.index({
   "emailSentAt.weekly": -1,
 });
-notificationSchema.index({
-  "post.id": 1,
-  "triggeredBy.id": 1,
-}, {
-  unique: true,
-  partialFilterExpression: {
-    action: "like",
+notificationSchema.index(
+  {
+    "post.id": 1,
+    "triggeredBy.id": 1,
   },
+  {
+    unique: true,
+    partialFilterExpression: {
+      action: "like",
+    },
+  },
+);
+notificationSchema.index({
+  receiver: 1,
 });
 /* eslint-enable */
 

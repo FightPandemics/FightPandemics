@@ -19,11 +19,13 @@ import translationTE_IN from "./translations/te_IN.json";
 import translationTR from "./translations/tr.json";
 import translationVI from "./translations/vi.json";
 
+/* Please enter languages below in alphabetical order,
+current values in index are sorted. */
 /* Order in this index controls the order in language selector menu  */
 export const index = {
-   ar: {
-     translation: translationAR,
-   },
+  ar: {
+    translation: translationAR,
+  },
   // en: {
   //   translation: translationEN_US,
   // },
@@ -39,50 +41,47 @@ export const index = {
   "en-GB": {
     translation: translationEN_GB,
   },
-  de: {
-    translation: translationDE,
-  },
   fr: {
     translation: translationFR,
   },
-  pl: {
-    translation: translationPL,
+  de: {
+    translation: translationDE,
   },
-   it: {
-     translation: translationIT,
-   },
-  // ru: {
-  //   translation: translationRU,
-  // },
-  es: {
-    translation: translationES_ES,
-  },
-  "es-ES": {
-    translation: translationES_ES,
-  },
-  tr: {
-    translation: translationTR,
+  it: {
+    translation: translationIT,
   },
   "kn-IN": {
     translation: translationKN_IN,
   },
-  "te-IN": {
-    translation: translationTE_IN,
+  "mk-MK": {
+    translation: translationMK_MK,
   },
   "ms-MY": {
     translation: translationMS_MY,
   },
-  vi: {
-    translation: translationVI,
-  },
-  "mk-MK": {
-    translation: translationMK_MK,
+  pl: {
+    translation: translationPL,
   },
   "pt-PT": {
     translation: translationPT_PT,
   },
-  "tl": {
+  // ru: {
+  //   translation: translationRU,
+  // },
+  "es-ES": {
+    translation: translationES_ES,
+  },
+  tl: {
     translation: translationTL,
+  },
+  "te-IN": {
+    translation: translationTE_IN,
+  },
+  tr: {
+    translation: translationTR,
+  },
+  vi: {
+    translation: translationVI,
   },
   // th: {
   //   translation: translationTH,

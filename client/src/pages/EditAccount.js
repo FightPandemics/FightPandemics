@@ -41,6 +41,8 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
 import LocationInput from "../components/Input/LocationInput";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { SESSION_ACTIONS } from "../reducers/session";
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -77,9 +79,16 @@ function EditAccount(props) {
     mode: "change",
   });
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { error, loading, user } = userProfileState;
-  const { firstName, hide = {}, lastName, needs = {}, objectives = {}, usesPassword = false } =
-    user || {};
+  const {
+    firstName,
+    hide = {},
+    lastName,
+    needs = {},
+    objectives = {},
+    usesPassword = false,
+  } = user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -102,6 +111,10 @@ function EditAccount(props) {
         location,
       });
       userProfileDispatch(updateUserSuccess(res.data));
+      dispatch({
+        type: SESSION_ACTIONS.SET_USER, // update the global user
+        payload: { user: { ...user, ...res.data } }, // populate orgs
+      });
       // TODO: consistently return _id or id or both
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
@@ -167,21 +180,20 @@ function EditAccount(props) {
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink isSelected>
-              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
+            <CustomLink to="/edit-account" isSelected>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
-            </CustomLink>
-            <CustomLink>
-              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
+            <CustomLink to="/edit-profile">
+              {t("profile.common.profileInfo")}
             </CustomLink>
             {usesPassword && (
-              <CustomLink >
-                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              <CustomLink to="/edit-security">
+                {t("profile.common.securityInfo")}
               </CustomLink>
             )}
-
+            <CustomLink to="/edit-notifications">
+              {t("profile.common.notificationInfo")}
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}

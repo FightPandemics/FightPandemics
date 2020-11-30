@@ -16,7 +16,12 @@ import { theme, mq } from "constants/theme";
 import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
-import GTM from "constants/gtm-tags"
+import GTM from "constants/gtm-tags";
+
+import {
+  LOCAL_NOTIFICATION_MARK_AS_CLEARED,
+  CLEAR_ALL_LOCAL_NOTIFICATIONS,
+} from "../../../src/actions/wsActions";
 
 // Menu Item
 const ItemContainer = styled.a`
@@ -77,12 +82,16 @@ const StyledMenu = styled(Menu)`
   right: -2.993em;
   padding: 0 0 4px;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width: 102vw;
+    width: 50vw;
     height: 90vh;
     position: absolute;
-    border-radius: 0px;
-    top: 0.7em;
-    overflow: hidden;
+    border-radius: 10px;
+    top: 1em;
+    right: 0;
+  }
+  @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+    width: 80vw;
+    height: 50vh;
   }
   a {
     padding: 0.5em 1em;
@@ -106,21 +115,14 @@ const StyledMenu = styled(Menu)`
       overflow: hidden;
     }
     ::-webkit-scrollbar-thumb {
-      background: ${theme.colors.royalBlue};
+      background: ${theme.colors.darkGray};
       cursor: pointer;
     }
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      clip-path: none;
-      border-radius: 0px !important;
-      height: 83.1vh;
-      ::-webkit-scrollbar {
-        display: none;
-      }
+      height: 84.6vh;
     }
-  }
-  .ant-dropdown-menu-item {
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      border-radius: 0px !important;
+    @media screen and (max-width: ${mq.phone.narrow.maxWidth}) {
+      height: calc(100% - 42px);
     }
   }
 `;
@@ -159,6 +161,37 @@ const StyledBadge = styled(Badge)`
     }
   }
 `;
+
+const CloseNotificationBtn = styled.div`
+  position: absolute;
+  right: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  color: ${theme.colors.darkGray};
+  display: none;
+
+  ${ItemContainer}:hover & {
+    display: block;
+  }
+`;
+
+const ClearAllNotifications = styled.div`
+  position: absolute;
+  right: 50px;
+  top: 15px;
+  min-height: 3rem;
+  cursor: auto;
+`;
+
+const ClearAllButton = styled.div`
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+`;
+
 const itemStyle = {
   display: "flex",
   justifyContent: "space-between",
@@ -169,9 +202,11 @@ const itemStyle = {
   color: "white",
   boxShadow: "0 4px 5px rgba(0,0,0,0.22)",
   padding: ".75em 1.3em",
+  cursor: "auto",
 };
 
 const MenuItem = ({
+  _id,
   path,
   author,
   action,
@@ -184,6 +219,19 @@ const MenuItem = ({
   t,
   gtmId,
 }) => {
+  const { clearNotification: clearRemoteNotification } = useContext(
+    WebSocketContext,
+  );
+  const dispatch = useDispatch();
+
+  const clearNotification = (notificationId) => {
+    dispatch({
+      type: LOCAL_NOTIFICATION_MARK_AS_CLEARED,
+      payload: { notificationId },
+    });
+    clearRemoteNotification(notificationId);
+  };
+
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
@@ -202,6 +250,14 @@ const MenuItem = ({
           })}
         </div>
       </Content>
+      <CloseNotificationBtn
+        onClick={(e) => {
+          e.preventDefault();
+          clearNotification(_id);
+        }}
+      >
+        &times;
+      </CloseNotificationBtn>
       <Unread unread={unread}>
         <img src={amt} />
       </Unread>
@@ -209,14 +265,25 @@ const MenuItem = ({
   );
 };
 
-const menu = (notifications, organisationId, t) => {
+const menu = (notifications, clearAllNotifications, organisationId, t) => {
   return (
     <StyledMenu>
       <Menu.Item style={{ ...itemStyle }}>
-        <a style={{ color: "white", paddingTop: "0.9rem" }}>
+        <a style={{ color: "white", paddingTop: "0.9rem", cursor: "default" }}>
           {t("notifications.header")}
         </a>
         <Arrow />
+        {notifications.length > 0 && (
+          <ClearAllNotifications>
+            <ClearAllButton
+              onClick={() => {
+                clearAllNotifications();
+              }}
+            >
+              Clear All
+            </ClearAllButton>
+          </ClearAllNotifications>
+        )}
         <Link
           id={GTM.notifications.prefix + GTM.notifications.settings}
           to={
@@ -231,8 +298,10 @@ const menu = (notifications, organisationId, t) => {
       </Menu.Item>
       <div className="notifications-container">
         <div>
-          {notifications.map((each) => (
+          {notifications.map((each, index) => (
             <MenuItem
+              key={index}
+              _id={each._id}
               path={each.path}
               author={each.author}
               action={each.action}
@@ -247,7 +316,7 @@ const menu = (notifications, organisationId, t) => {
             />
           ))}
         </div>
-        <NoMoreNotifications>No more notifications</NoMoreNotifications>
+        <NoMoreNotifications>{t("notifications.empty")}</NoMoreNotifications>
       </div>
     </StyledMenu>
   );
@@ -258,12 +327,20 @@ export const NotificationDropDown = ({
   notifications,
   organisationId,
 }) => {
-  const { markNotificationsAsRead } = useContext(WebSocketContext);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const {
+    markNotificationsAsRead,
+    clearAllNotifications: clearAllRemoteNotifications,
+  } = useContext(WebSocketContext);
 
   const updateReadAt = () => {
     dispatch({ type: "LOCAL_NOTIFICATIONS_MARK_AS_READ" });
+  };
+
+  const clearAllNotifications = () => {
+    dispatch({ type: CLEAR_ALL_LOCAL_NOTIFICATIONS });
+    clearAllRemoteNotifications();
   };
 
   const notificationTypes = {
@@ -284,25 +361,33 @@ export const NotificationDropDown = ({
     },
   };
 
-  const mappedNotifications = notifications.map((n) => ({
-    author: n.triggeredBy.name,
-    action: notificationTypes[n.action].text,
-    postTitle: n.post.title,
-    path: `/post/${n.post.id}`,
-    actionAvatar: notificationTypes[n.action].icon,
-    createdAt: getRelativeTime(n.createdAt),
-    avatar: n.triggeredBy.photo,
-    sharedVia: n.sharedVia,
-    unread: !n.readAt,
-    gtmId: notificationTypes[n.action].gtmId,
-  }));
+  const mappedNotifications = notifications
+    .filter((notification) => !notification.isCleared)
+    .map((n) => ({
+      _id: n._id,
+      author: n.triggeredBy.name,
+      action: notificationTypes[n.action].text,
+      postTitle: n.post.title,
+      path: `/post/${n.post.id}`,
+      actionAvatar: notificationTypes[n.action].icon,
+      createdAt: getRelativeTime(n.createdAt),
+      avatar: n.triggeredBy.photo,
+      sharedVia: n.sharedVia,
+      unread: !n.readAt,
+      gtmId: notificationTypes[n.action].gtmId,
+    }));
 
   return (
     <Dropdown
       onVisibleChange={(visible) =>
         visible ? markNotificationsAsRead() : updateReadAt()
       }
-      overlay={menu(mappedNotifications, organisationId, t)}
+      overlay={menu(
+        mappedNotifications,
+        clearAllNotifications,
+        organisationId,
+        t,
+      )}
       trigger="click"
       placement="bottomRight"
       getPopupContainer={() =>
