@@ -50,6 +50,7 @@ function onSocketConnect(socket) {
       );
       if (!org || errOrg) return res({ code: 401, message: "Unauthorized" });
       socket.userId = data.organisationId;
+      this.io.emit("USER_STATUS_UPDATE", { id: userId, status: "offline" });
     }
 
     this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
@@ -202,7 +203,7 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = (await getSocketIdByUserId(this, id)) ? "online" : "offline";
+    const status = (await getSocketIdByUserId(this, id.toString())) ? "online" : "offline";
     res({ code: 200, data: status });
   });
 
@@ -476,19 +477,6 @@ function fastifySocketIo(app, config, next) {
     io.on("connect", onSocketConnect.bind(app));
     app.decorate("io", io);
     io.use(cookieParser());
-    // customHook, to run a request on every node
-    // every socket.io server executes below code, when customRequest is called
-    io.of("/").adapter.customHook = (request, callback) => {
-      if (request.type === "getSocketIdByUserId") {
-        const userSocket =
-          Object.values(io.of("/").connected).find(
-            (socket) => socket.userId === request.userId,
-          ) || null;
-        callback(userSocket ? userSocket.id : null);
-      }
-      // add more request types if you need something that runs on all nodes
-      callback();
-    };
 
     app.log.info(`[ws] websocket ready`);
     next();

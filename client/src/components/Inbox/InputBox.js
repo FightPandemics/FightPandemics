@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Typography } from "antd";
 import styled from "styled-components";
+import TagManager from "react-gtm-module";
 import sendcomment from "assets/icons/send-paper.svg";
 import { mq, theme } from "constants/theme";
 import { useTranslation } from "react-i18next";
@@ -142,15 +143,12 @@ const LengthIndicator = styled.span`
 export const InputBox = ({
   setText,
   text,
-  user,
   room,
   sendMessage,
   inputExpanded,
   setInputExpanded,
   blockStatus,
-  leaveAllRooms,
   unblockThread,
-  scrollToBottom,
   blockThread,
   ignoreThread,
   setToggleViewRequests,
@@ -164,9 +162,7 @@ export const InputBox = ({
   const { t } = useTranslation();
   const [alertBoxData, setAlertBox] = React.useState({});
 
-  const isMobile = () => {
-    return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
-  };
+  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
 
   useEffect(() => {
     if (
@@ -190,7 +186,7 @@ export const InputBox = ({
 
   const handleSendMessage = async () => {
     // mobile editing is done inside the inputBox
-    if (isMobile() && editingMessageId) {
+    if (isMobile && editingMessageId) {
       if (!text.replace(/\s/g, "")) return setEditingMessageId(null);
       editMessage({ messageId: editingMessageId, newContent: text });
       setEditingMessageId(null);
@@ -213,10 +209,16 @@ export const InputBox = ({
     handleSendMessage();
   };
   const handleKeyPress = (e) => {
-    if (isMobile()) return;
+    if (isMobile) return;
     if (e.key === "Enter" && !e.shiftKey) e.preventDefault();
     if (e.key === "Enter" && !e.shiftKey && text.length > 0) {
       handleSendMessage();
+      TagManager.dataLayer({
+        dataLayer: {
+          event: "CONV_MSG_SENT",
+          clickId: GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.sent,
+        },
+      });
     }
   };
   return (
