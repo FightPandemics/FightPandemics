@@ -455,6 +455,80 @@ async function routes(app) {
       }
     },
   );
+
+  app.delete(
+    "/:organisationId/avatar",
+    {
+      preValidation: [app.authenticate],
+      schema: getOrganisationSchema,
+    },
+    async (req) => {
+      const organisationId = req.params.organisationId;
+      const userId = req.userId;
+
+      const [err, org] = await app.to(Organisation.findById(organisationId));
+      if (err) {
+        req.log.error(
+          err,
+          `Failed retrieving organisation organisationId=${organisationId}`,
+        );
+        throw app.httpErrors.internalServerError();
+      } else if (org === null) {
+        throw app.httpErrors.notFound();
+      } else if (!org.ownerId.equals(userId)) {
+        req.log.error("User not allowed to update this organisation");
+        throw app.httpErrors.forbidden();
+      }
+      try {
+        org.photo = null;
+        const [updateErr, updatedOrg] = await app.to(org.save());
+        if (updateErr) {
+          req.log.error(updateErr, "Failed updating organisation");
+          throw app.httpErrors.internalServerError();
+        }
+
+        // -- Update Author photo references if needed
+        const updateOps = {
+          "author.photo": updatedOrg.photo,
+        };
+        const [postErr] = await app.to(
+          Post.updateMany({ "author.id": updatedOrg._id }, { $set: updateOps }),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author photo refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": updatedOrg._id },
+            { $set: updateOps },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author photo refs at comments");
+        }
+
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": updatedOrg._id },
+            {
+              $set: {
+                "participants.$[userToUpdate].photo": updatedOrg.photo,
+              },
+            },
+            { arrayFilters: [{ "userToUpdate.id": updatedOrg._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating author photo at threads");
+        }
+        return updatedOrg;
+      } catch (error) {
+        req.log.error(error, "Failed updating organisation avatar.");
+        throw app.httpErrors.internalServerError();
+      }
+    },
+  );
 }
 
 module.exports = routes;

@@ -461,9 +461,8 @@ async function routes(app) {
   //delete
   app.delete(
     "/current/avatar",
-    { preValidation: [app.authenticate], schema: createUserAvatarSchema },
+    { preValidation: [app.authenticate] },
     async (req) => {
-      const { file } = req.raw.files;
       const { userId } = req;
 
       const [err, user] = await app.to(User.findById(userId));
@@ -474,7 +473,6 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
       try {
-        const avatarUrl = await uploadUserAvatar(userId, file);
         user.photo = null;
         const [updateErr, updatedUser] = await app.to(user.save());
         if (updateErr) {

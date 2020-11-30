@@ -147,47 +147,38 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   };
 
   const removePhoto = async () => {
-    const canvas = document.createElement("canvas");
-    const reader = new FileReader();
-    canvas.toBlob((blob) => {
-      let removeResponse;
-      let endPoint = "/api/users/current/avatar";
-      const formData = new FormData();
-      formData.append("file", blob);
-      if (user.ownerId) {
-        endPoint = `/api/organisations/${user._id}/avatar`;
+    let removeResponse;
+    let endPoint = "/api/users/current/avatar";
+    if (user.ownerId) {
+      endPoint = `/api/organisations/${user._id}/avatar`;
+    }
+    try {
+      removeResponse = await axios({
+        method: "delete",
+        url: endPoint,
+        // data: formData,
+        headers: {
+          accept: "application/json",
+          "Content-Type": `multipart/form-data`,
+        },
+      });
+      if (removeResponse.status == 200) {
+        setModalVisible(false);
+        window.location.reload(false);
       }
-      reader.readAsDataURL(blob);
-      reader.onloadend = async () => {
-        try {
-          removeResponse = await axios({
-            method: "delete",
-            url: endPoint,
-            data: formData,
-            headers: {
-              accept: "application/json",
-              "Content-Type": `multipart/form-data`,
-            },
-          });
-          if (removeResponse.status == 200) {
-            setModalVisible(false);
-            window.location.reload(false);
-          }
-        } catch (error) {
-          setUploadError(t("error.avatar.networkError"));
-          console.log({
-            error,
-          });
-        }
-      };
-    });
+    } catch (error) {
+      setUploadError(t("error.avatar.networkError"));
+      console.log({
+        error,
+      });
+    }
   };
 
   //new function
   const openModal = (e) => {
-    console.log(user.photo);
+    // console.log(user.photo);
     //problem with setPhotoURL using user.photo causes bug if user submits without getting a new file
-    setPhotoURL(user.photo);
+    // setPhotoURL(user.photo);
     setModalVisible(true);
   }
 
@@ -207,7 +198,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
     return (
       <Modal
         title={
-          <p 
+          <p
             style={{
               textAlign: "center",
               fontSize: "xx-large",
@@ -217,7 +208,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             {t("Edit Avatar")}
           </p>
         }
-        // onClose={closeModal}
+        onCancel={closeModal}
         // onClick={(e) => console.log(e.target)}
         visible={modalVisible}
         onOk={savePhoto}
@@ -227,27 +218,23 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         footer={[
           user && user.photo ? (
             <CustomRemoveButton key="remove" onClick={removePhoto}>
-            {/* add button reference for every language then change this to match the other buttons */}
-              {t("Delete Photo")}
+              {/* add button reference for every language then change this to match the other buttons */}
+              {t("Remove Avatar")}
             </CustomRemoveButton>
           ) : null,
           <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
             {/* add button reference for every language then change this to match the other buttons */}
             {t("Upload New")}
           </CustomUploadButton>,
-          <CustomCancelButton key="cancel" onClick={closeModal}>
-            {t("avatar.cancelBtn")}
-          </CustomCancelButton>,
-          
           !uploadError ? (
             <CustomSubmitButton key="save" onClick={savePhoto}>
               {t("avatar.submitBtn")}
             </CustomSubmitButton>
           ) : (
-            <CustomSubmitButton key="retry" onClick={retry}>
-              {t("avatar.tryAgainBtn")}
-            </CustomSubmitButton>
-          ),
+              <CustomSubmitButton key="retry" onClick={retry}>
+                {t("avatar.tryAgainBtn")}
+              </CustomSubmitButton>
+            ),
         ]}
       >
         <div
@@ -259,18 +246,18 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
           {uploadError ? (
             <h3>{uploadError}</h3>
           ) : (
-            <ReactCrop
-              src={photoURL}
-              crop={crop}
-              minHeight={250}
-              minWidth={250}
-              circularCrop={true}
-              ruleOfThirds
-              keepSelection={true}
-              onImageLoaded={imageLoaded}
-              onChange={(newCrop) => setCrop(newCrop)}
-            />
-          )}
+              <ReactCrop
+                src={photoURL}
+                crop={crop}
+                minHeight={250}
+                minWidth={250}
+                circularCrop={true}
+                ruleOfThirds
+                keepSelection={true}
+                onImageLoaded={imageLoaded}
+                onChange={(newCrop) => setCrop(newCrop)}
+              />
+            )}
         </div>
       </Modal>
     );
