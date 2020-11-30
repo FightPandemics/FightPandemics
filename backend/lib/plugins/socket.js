@@ -203,7 +203,7 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = (await getSocketIdByUserId(this, id)) ? "online" : "offline";
+    const status = (await getSocketIdByUserId(this, id.toString())) ? "online" : "offline";
     res({ code: 200, data: status });
   });
 
