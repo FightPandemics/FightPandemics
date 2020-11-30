@@ -12,14 +12,8 @@ import { MENU_STATE, CustomSvgIcon } from "./constants";
 import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
-import { ReactComponent as ModeratorIcon } from "assets/icons/moderator-badge.svg";
-import PERMISSIONS from "constants/permissions";
-
 
 const profileItemStyle = { margin: "8px 0", height: "auto" };
-const StyledModeratorIcon = styled(ModeratorIcon)`
-  margin-right: 10px;
-`;
 
 export const SettingMenu = ({
   setMenuState,
@@ -39,14 +33,6 @@ export const SettingMenu = ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      {Boolean(user.permissions & PERMISSIONS.moderator) && (
-        <Menu.Item>
-          <Link to="/dashboard">
-            <StyledModeratorIcon />
-            Dashboard
-          </Link>
-        </Menu.Item>
-      )}
       <Menu.Item
         onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
         id={GTM.nav.prefix + GTM.nav.switch}
