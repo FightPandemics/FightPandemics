@@ -355,11 +355,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleCreatePost = () => {
+  const handleCreatePost = (trigger) => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
+      //prevent redirect if function was triggered by useEffect(on component mount)
+      if (trigger === "useEffect") return;
       sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
@@ -556,7 +558,7 @@ const Feed = (props) => {
       "createPostAttemptLoggedOut",
     );
     if (createPostAttemptLoggedOut) {
-      handleCreatePost();
+      handleCreatePost("useEffect");
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
