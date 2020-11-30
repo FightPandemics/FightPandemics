@@ -209,7 +209,9 @@ const PostCard = styled(Card)`
           font-weight: 600;
         }
       }
-
+      .am-card-footer {
+        padding-bottom: 2rem;
+      }
       .social-icons {
         display: flex;
 

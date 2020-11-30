@@ -95,6 +95,8 @@ import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -480,12 +482,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <PlaceholderIcon />
               {isSelf && (
                 <>
-                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
-                    src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    src={createPost}
                     onClick={onToggleCreatePostDrawer}
                   />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
                 </>
               )}
             </SectionHeader>
@@ -516,13 +525,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               )}
               {emptyFeed() && <></>}
               {isSelf && (
-                <CreatePost
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
-                  user={user}
-                />
+                <>
+                  <CreatePostIcon
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    src={createPost}
+                    onClick={onToggleCreatePostDrawer}
+                  />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
+                </>
               )}
             </FeedWrapper>
           </div>
