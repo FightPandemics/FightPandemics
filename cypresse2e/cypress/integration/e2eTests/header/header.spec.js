@@ -75,7 +75,7 @@ describe("FightPandemics Navigation bar", () => {
         "div#NAV_LS_ZH_TW",
         "Chinese Traditional (繁體中文)",
         "登入",
-        "幫助板",
+        "幫助版面",
         "normal",
       );
     });
