@@ -58,12 +58,12 @@ const StyleSocialIcon = {
 const SectionDiv = styled.div`
   font-size: 1.4rem;
   text-transform: uppercase;
-  color: ${colors.lightGray};
+  color: ${colors.darkishGray};
   &:before,
   &:after {
     display: inline-block;
     content: "";
-    border-top: 0.1rem solid ${colors.lightGray};
+    border-top: 0.1rem solid ${colors.darkishGray};
     width: 7rem;
     margin: 0 0.5rem;
     transform: translateY(-0.3rem);
@@ -88,12 +88,12 @@ const SocialButton = styled(Button)`
 const ButtonText = styled.span`
   font-family: ${typography.font.family.display};
   font-size: 1.4rem;
-  color: ${colors.darkGray};
+  color: ${colors.darkishGray};
 `;
 
 const AuthLink = styled(Link)`
   font-family: ${typography.font.family.display};
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.1rem;
   color: ${colors.royalBlue};

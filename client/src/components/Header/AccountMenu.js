@@ -12,7 +12,7 @@ import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import BackIcon from "assets/icons/back.svg";
 import DoneIcon from "assets/icons/done.svg";
-import PlusIcon from "assets/icons/plus.svg";
+import PlusIcon from "assets/icons/large-plus.svg";
 
 const CustomItemGroup = styled(Menu.ItemGroup)`
   .ant-menu-item-group-list .ant-menu-item {

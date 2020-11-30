@@ -52,9 +52,7 @@ export const CreatePostIcon = styled(SvgIcon)`
   width: 5rem;
   z-index: 1;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    width: 5rem;
-    position: initial;
-    z-index: initial;
+    display: none;
   }
 `;
 export const CreatePostDiv = styled.div`
@@ -171,6 +169,7 @@ export const IconsContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 2.4rem;
+  ${(props) => (props.inCard ? `padding-bottom: 2rem;` : "")}
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     flex-direction: ${(props) => (props.inCard ? "row" : "column")};
     justify-content: flex-start;
