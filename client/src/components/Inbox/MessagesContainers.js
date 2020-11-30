@@ -98,6 +98,7 @@ export const MessagesContainer = styled.div`
       }
       return "5.1rem;";
     }}
+    top: 11rem;
     &.request-page {
       bottom: 20rem;
       max-height: calc(100vh - 31rem);
