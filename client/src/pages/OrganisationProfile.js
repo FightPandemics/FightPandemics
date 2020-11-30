@@ -524,23 +524,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 />
               )}
               {emptyFeed() && <></>}
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
             </FeedWrapper>
           </div>
           {isSelf && (
