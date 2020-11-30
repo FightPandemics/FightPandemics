@@ -21,7 +21,7 @@ const getCookieToken = (req) => req.cookies.token;
 
 // email validation code from front-end 'src\utils\validators'
 const isValidTopLevelDomain = (string) => {
-  return tlds.some(tld => string.endsWith("." + tld));
+  return tlds.some((tld) => string.endsWith("." + tld));
 };
 
 const isValidEmail = (email) => {
@@ -43,7 +43,7 @@ const isValidPassword = (password) => {
     containsSpecialChars(password),
   ];
 
-  return passwordChecks.filter(isValid => isValid).length >= 3;
+  return passwordChecks.filter((isValid) => isValid).length >= 3;
 };
 
 const relativeTimeObject = (number, unit) => ({
@@ -114,17 +114,10 @@ const createSearchRegex = (keywords) => {
 
 const getSocketIdByUserId = (app, userId) => {
   return new Promise((resolve) => {
-    app.io
-      .of("/")
-      .adapter.customRequest(
-        { type: "getSocketIdByUserId", userId },
-        (err, replies) => {
-          // replies is an array of element pushed by cb(element) on individual socket.io server
-          // remove empty replies
-          const filtered = replies.filter((reply) => reply != null);
-          resolve(filtered[0]);
-        },
-      );
+    app.io.of("/").adapter.clients([userId], (err, clients) => {
+      if (err || !clients || clients.length) return resolve(null);
+      else resolve(clients[0]); // return the entire array, if you want all active devices.
+    });
   });
 };
 

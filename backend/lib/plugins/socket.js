@@ -458,19 +458,6 @@ function fastifySocketIo(app, config, next) {
     io.on("connect", onSocketConnect.bind(app));
     app.decorate("io", io);
     io.use(cookieParser());
-    // customHook, to run a request on every node
-    // every socket.io server executes below code, when customRequest is called
-    io.of("/").adapter.customHook = (request, callback) => {
-      if (request.type === "getSocketIdByUserId") {
-        const userSocket =
-          Object.values(io.of("/").connected).find(
-            (socket) => socket.userId === request.userId,
-          ) || null;
-        callback(userSocket ? userSocket.id : null);
-      }
-      // add more request types if you need something that runs on all nodes
-      callback();
-    };
 
     app.log.info(`[ws] websocket ready`);
     next();
