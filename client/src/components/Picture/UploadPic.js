@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { Modal } from "antd";
+// import { Modal } from "antd";
+import AvatarModal from "./AvatarModal";
 import { CameraOutlined } from "@ant-design/icons";
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
@@ -196,15 +197,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
 
   const cropModal = () => {
     return (
-      <Modal
+      <AvatarModal
         title={
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "xx-large",
-              margin: "0px"
-            }}
-          >
+          <p>
+            {/* needs localization */}
             {t("Edit Avatar")}
           </p>
         }
@@ -218,25 +214,28 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         footer={[
           user && user.photo ? (
             <CustomRemoveButton key="remove" onClick={removePhoto}>
-              {/* add button reference for every language then change this to match the other buttons */}
+              {/* needs localization */}
               {t("Remove Avatar")}
             </CustomRemoveButton>
           ) : null,
           <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
-            {/* add button reference for every language then change this to match the other buttons */}
+            {/* needs localization */}
             {t("Upload New")}
           </CustomUploadButton>,
-          !uploadError ? (
-            <CustomSubmitButton key="save" onClick={savePhoto}>
-              {t("avatar.submitBtn")}
-            </CustomSubmitButton>
-          ) : (
+          photoURL ? (
+            !uploadError ? (
+              <CustomSubmitButton key="save" onClick={savePhoto}>
+                {t("avatar.submitBtn")}
+              </CustomSubmitButton>
+            ) : (
               <CustomSubmitButton key="retry" onClick={retry}>
                 {t("avatar.tryAgainBtn")}
               </CustomSubmitButton>
-            ),
+            )
+          ) : null
         ]}
       >
+        {photoURL ? (
         <div
           style={{
             textAlign: "center",
@@ -259,7 +258,16 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
               />
             )}
         </div>
-      </Modal>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+          <img style={{borderRadius: "50%"}} src={user && user.photo ? user.photo : null}></img>
+          </div>
+        )}
+      </AvatarModal>
     );
   };
 

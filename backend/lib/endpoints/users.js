@@ -458,7 +458,7 @@ async function routes(app) {
       }
     },
   );
-  //delete
+
   app.delete(
     "/current/avatar",
     { preValidation: [app.authenticate] },
