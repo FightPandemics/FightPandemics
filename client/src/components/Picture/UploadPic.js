@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-// import { Modal } from "antd";
 import AvatarModal from "./AvatarModal";
 import { CameraOutlined } from "@ant-design/icons";
 import BaseButton from "../Button/BaseButton";
@@ -17,13 +16,7 @@ const CustomSubmitButton = styled(BaseButton)`
   color: ${colors.white};
 `;
 
-const CustomCancelButton = styled(BaseButton)``;
-
-//new button
 const CustomUploadButton = styled(BaseButton)``;
-
-//new button
-const CustomRemoveButton = styled(BaseButton)``;
 
 const CameraButtonUpload = styled.button`
   border: 0;
@@ -177,9 +170,6 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
 
   //new function
   const openModal = (e) => {
-    // console.log(user.photo);
-    //problem with setPhotoURL using user.photo causes bug if user submits without getting a new file
-    // setPhotoURL(user.photo);
     setModalVisible(true);
   }
 
@@ -212,11 +202,11 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         closable={true}
         maskClosable={true}
         footer={[
-          user && user.photo ? (
-            <CustomRemoveButton key="remove" onClick={removePhoto}>
+          user && user.photo && !photoURL ? (
+            <CustomUploadButton key="remove" onClick={removePhoto}>
               {/* needs localization */}
               {t("Remove Avatar")}
-            </CustomRemoveButton>
+            </CustomUploadButton>
           ) : null,
           <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
             {/* needs localization */}
@@ -228,45 +218,45 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
                 {t("avatar.submitBtn")}
               </CustomSubmitButton>
             ) : (
-              <CustomSubmitButton key="retry" onClick={retry}>
-                {t("avatar.tryAgainBtn")}
-              </CustomSubmitButton>
-            )
+                <CustomSubmitButton key="retry" onClick={retry}>
+                  {t("avatar.tryAgainBtn")}
+                </CustomSubmitButton>
+              )
           ) : null
         ]}
       >
         {photoURL ? (
-        <div
-          style={{
-            textAlign: "center",
-          }}
-          onClick={(e) => console.log(e)}
-        >
-          {uploadError ? (
-            <h3>{uploadError}</h3>
-          ) : (
-              <ReactCrop
-                src={photoURL}
-                crop={crop}
-                minHeight={250}
-                minWidth={250}
-                circularCrop={true}
-                ruleOfThirds
-                keepSelection={true}
-                onImageLoaded={imageLoaded}
-                onChange={(newCrop) => setCrop(newCrop)}
-              />
-            )}
-        </div>
-        ) : (
           <div
             style={{
               textAlign: "center",
             }}
+            onClick={(e) => console.log(e)}
           >
-          <img style={{borderRadius: "50%"}} src={user && user.photo ? user.photo : null}></img>
+            {uploadError ? (
+              <h3>{uploadError}</h3>
+            ) : (
+                <ReactCrop
+                  src={photoURL}
+                  crop={crop}
+                  minHeight={250}
+                  minWidth={250}
+                  circularCrop={true}
+                  ruleOfThirds
+                  keepSelection={true}
+                  onImageLoaded={imageLoaded}
+                  onChange={(newCrop) => setCrop(newCrop)}
+                />
+              )}
           </div>
-        )}
+        ) : (
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <img style={{ borderRadius: "50%" }} src={user && user.photo ? user.photo : null}></img>
+            </div>
+          )}
       </AvatarModal>
     );
   };
@@ -288,7 +278,6 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         type="button"
         onClick={(e) => {
           user.photo ? openModal(e) : imgUpload.current.click()
-          // imgUpload.current.click()
         }}
       >
         <CameraOutlined

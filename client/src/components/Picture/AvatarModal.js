@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
-const { royalBlue } = colors;
+const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
 const { large, xlarge } = typography.size;
 
 const AvatarModal = styled(Modal)`
@@ -28,6 +28,8 @@ const AvatarModal = styled(Modal)`
         .ant-modal-footer {
             border-top: none;
             padding-bottom: 1.8rem;
+            /* display: flex;
+            justify-content: space-between; */
             .ant-btn {
                 font-weight: 500;
                 border: none;
