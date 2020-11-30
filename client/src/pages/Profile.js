@@ -19,6 +19,8 @@ import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   ProfileLayout,
@@ -426,12 +428,19 @@ const Profile = ({
             <PlaceholderIcon />
             {isSelf && (
               <>
-                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                 <CreatePostIcon
                   id={GTM.user.profilePrefix + GTM.post.createPost}
                   src={createPost}
                   onClick={onToggleCreatePostDrawer}
                 />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
               </>
             )}
           </SectionHeader>
