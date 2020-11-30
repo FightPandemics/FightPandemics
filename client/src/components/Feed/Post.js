@@ -121,6 +121,7 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
+    objective,
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
@@ -410,17 +411,6 @@ const Post = ({
             ) : (
               ""
             )}
-            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-              <span className="timestamp">
-                {t(
-                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                  {
-                    count: post?.elapsedTimeText?.created?.count,
-                  },
-                )}
-                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-              </span>
-            </Tooltip>
           </div>
         </div>
       }
@@ -598,6 +588,22 @@ const Post = ({
       ) : (
         //Post in feed.
         <PostCard>
+          <div className="pre-header">
+            <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
+          </div>
+          <WhiteSpace size={"xl"} />
+          <WhiteSpace size={"md"} />
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
             <div className="card-submenu">

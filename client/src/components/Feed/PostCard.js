@@ -39,6 +39,24 @@ const PostCard = styled(Card)`
       content: normal !important;
     }
 
+    .pre-header {
+      position: absolute;
+      top: 0;
+      padding: 1rem 0;
+      margin-top: 0.7rem;
+      font-family: "Work Sans";
+      font-size: ${small};
+      font-weight: 400;
+      color: ${colors.royalBlue};
+      -webkit-text-stroke: 0.2px;
+    }
+
+    .timestamp {
+      padding-left: 1rem;
+      font-size: ${small};
+      color: ${colors.darkishGray};
+    }
+
     .highlighted {
       font-weight: bold;
       color: #425af2;
@@ -78,6 +96,8 @@ const PostCard = styled(Card)`
         min-height: 4rem;
         padding-left: 5rem;
         font-size: ${medium};
+        color: ${colors.darkerGray};
+        font-weight: 500;
         .title-wrapper {
           cursor: default;
         }
@@ -102,15 +122,17 @@ const PostCard = styled(Card)`
         }
 
         .author {
-          font-size: ${medium};
+          font-size: ${large};
           cursor: pointer;
         }
 
         .location-status {
           position: relative;
           padding-left: 1.4rem;
-          font-size: ${xsmall};
-          color: #888;
+          font-weight: 500;
+          font-family: "Work Sans";
+          font-size: ${small};
+          color: ${colors.darkishGray};
           img {
             position: absolute;
             top: 0.5rem;
@@ -121,17 +143,13 @@ const PostCard = styled(Card)`
           }
         }
       }
-      .timestamp {
-        padding-left: 1rem;
-        font-size: ${xsmall};
-        color: #888;
-      }
     }
 
     .am-card-body {
       border-top: unset;
       padding: 0;
-      color: black;
+      color: ${colors.darkerGray};
+      font-family: "Work Sans";
       white-space: pre-line;
 
       &::before {
@@ -150,8 +168,10 @@ const PostCard = styled(Card)`
 
       .post-description {
         font-weight: 400;
-        font-size: ${medium};
+        font-size: ${large};
         line-height: 2rem;
+        letter-spacing: -0.03rem;
+        -webkit-text-stroke: 0.2px;
       }
 
       &.content-wrapper {
