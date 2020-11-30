@@ -174,6 +174,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   }
 
   const closeModal = () => {
+    setPhotoURL(undefined);
     imgUpload.current.value = "";
     setUploadError("");
     setModalVisible(false);
