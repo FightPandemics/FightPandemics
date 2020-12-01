@@ -7,7 +7,7 @@ export const StyledPostPage = styled.div`
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
     width: 100%;
     position: relative;
-  }      
+  }
 `;
 
 export const StyledPostPagePostCard = styled(PostCard)`
@@ -18,7 +18,15 @@ export const StyledPostPagePostCard = styled(PostCard)`
     margin: auto;
     height: calc(100% - 25rem);
     margin-top: 7rem;
-   }
+    @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
+      width: 100%;
+      height: calc(100% - 15rem);
+      margin-top: 2rem;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      height: 100%;
+    }
+  }
   margin-top: 1rem;
   overflow-wrap: break-word;
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
