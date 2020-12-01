@@ -1,12 +1,12 @@
 {
-  "headline": "Yardım teklif edebileceğiniz ve talep edebileceğiniz bir yer",
-  "tagline": "<0>Pandemiler olmaya devam edecek.</0><1>Bizler toplulukların hazırlanmasına ve karşılık vermesine yardım ediyoruz.</1>",
+  "headline": "Yardım sunabileceğiniz ve isteyebileceğiniz bir platform.",
+  "tagline": "<0>Pandemiler olmaya devam edecek.</0><1>Bizler toplulukların buna hazırlıklı olmasına yardım ediyoruz.</1>",
   "common": {
-    "getHelp": "Yardım talebi",
-    "giveHelp": "Yardım teklifi",
+    "getHelp": "Yardım İste",
+    "giveHelp": "Yardım et",
     "viewFeed": "Yardım Panosunu Görüntüle",
     "register": "Hemen katıl",
-    "feedback": "Geribildirim",
+    "feedback": "Geri Bildirim",
     "question": "Soru",
     "aboutUs": "Hakkımızda",
     "profile": "Profil",
@@ -56,11 +56,11 @@
   "feed": {
     "title": "Yardım Panosu",
     "all": "Tüm gönderiler",
-    "request": "Yardım talebi",
-    "offer": "Yardım teklifi",
+    "request": "Yardım isteği",
+    "offer": "Yardım Et",
     "quit": "Filtreleri temizle",
     "apply": "Filtreleri uygulayın",
-    "getOrGive": "Yardım teklifi veya talebi",
+    "getOrGive": "Yardım et veya yardım iste",
     "filters": {
       "title": "Filtre",
       "location": {
@@ -68,7 +68,7 @@
         "enterAddress": "Adres, posta kodu veya şehir girin",
         "shareLocation": "Konumumu paylaş"
       },
-      "providers": "Tedarikçiler",
+      "providers": "Destekçiler",
       "providersList": [
         "Bireysel",
         "Yeni Girişim",
@@ -86,20 +86,26 @@
         "Market / Gıda",
         "İş",
         "Eğitim",
+        "Konut",
         "Yasal",
         "Sağlık / Zihinsel",
         "Eğlence",
-        "Bilgi",
+        "Bilgi paylaşımı",
         "Finansman",
         "Ar-Ge",
         "Teknoloji",
-        "Diğer"
+        "Diğer",
+        "Çocuk bakımı",
+        "Çeviriler",
+        "Gönüllü",
+        "Personel (ücretli)",
+        "Uzaktan çalışma"
       ],
       "labels": {
         "location": "Konum",
-        "providers": "Tedarikçiler",
+        "providers": "Destekçiler",
         "type": "Türler",
-        "lookingFor": "Yardım teklifi veya talebi"
+        "lookingFor": "Yardım et veya yardım iste"
       },
       "providersOptions": {
         "Individual": "Bireysel",
@@ -124,11 +130,17 @@
         "Funding": "Finansman",
         "R&D": "Ar-Ge",
         "Tech": "Teknoloji",
-        "Other": "Diğerleri"
+        "Other": "Diğerleri",
+        "Housing": "Konut",
+        "Childcare": "Çocuk bakımı",
+        "Translations": "Çeviriler",
+        "Volunteer": "Gönüllü",
+        "Staff (paid)": "Personel (ücretli)",
+        "Remote Work": "Uzaktan çalışma"
       },
       "lookingForOptions": {
-        "Request Help": "Yardım talebi",
-        "Offer Help": "Yardım teklifi"
+        "Request Help": "Yardım İstekleri",
+        "Offer Help": "Yardım Teklifleri"
       }
     },
     "filterBy": "Filtre uygula",
@@ -156,8 +168,8 @@
     "continueAs": "Gönderiye Devam Et",
     "individual": "Bireysel",
     "organisation": "Kuruluş",
-    "givingHelp": "Yardım Teklifi",
-    "gettingHelp": "Yardım Talebi",
+    "givingHelp": "Yardım Et",
+    "gettingHelp": "Yardım İste",
     "writePostHere": "Gönderinizi buraya yazın",
     "title": "Başlık",
     "writePost": "Gönderinizi yazın",
@@ -211,7 +223,9 @@
     "cancel": "İptal",
     "confirm": "Onayla",
     "edited": "Düzenlendi",
-    "share_plural": "Paylaşımlar"
+    "share_plural": "Paylaşımlar",
+    "deletePostConfirmationTitle": "İletiyi sil",
+    "deleteCommentConfirmationTitle": "Yorumu sil"
   },
   "profile": {
     "common": {
@@ -248,7 +262,7 @@
         "twitter": "Twitter URL",
         "facebook": "Facebook URL",
         "instagram": "Instagram URL",
-        "github": "Github URL",
+        "github": "GitHub URL",
         "linkedin": "LinkedIn URL",
         "website": "Web sitesi"
       },
@@ -263,13 +277,16 @@
       "instant": "Anlık",
       "daily": "Günlük",
       "weekly": "Haftalık",
-      "biweekly": "İki haftada bir"
+      "biweekly": "İki haftada bir",
+      "digest": "Dönemsel",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "E-posta adresi",
       "firstName": "İsim",
       "lastName": "Soyadı",
-      "hideAddress": "Adresimi gösterme",
+      "hideAddress": "Adresimi gizle",
       "iWant": "İstiyorum",
       "volunteer": "Gönüllü",
       "donate": "Bağış yap",
@@ -280,7 +297,7 @@
       "other": "Diğer Yardımlar",
       "otherDesc": "Yiyecek / ilaç / vb. almak için yardıma ihtiyacım var.",
       "editProfile": "Profili Düzenle",
-      "intro": "Kendini tanıtma",
+      "intro": "Kendini tanıt",
       "website": "Kişisel Web Sitesi",
       "myActivity": "Etkinliğim",
       "userActivity": "Kullanıcı Aktivitesi",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Yeni şifre girin",
       "updatingPassword": "Şifre güncelleniyor",
       "editSecurity": "Güvenliği Düzenle",
-      "editNotification": "Bildirimleri Düzenle"
+      "editNotification": "Bildirimleri Düzenle",
+      "editAccount": "Hesabı düzenle"
     },
     "org": {
       "title": "Kuruluş Profili Oluşturma",
@@ -364,7 +382,9 @@
       "editAccount": "Hesap Bilgilerini Düzenle",
       "updateSuccess": "Kuruluş başarıyla güncellendi.",
       "orgNameRequired": "Kurum adı zorunludur",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Kuruluş Hesabını Düzenle",
+      "editOrgNotification": "Kuruluş Bildirim Ayarlarını Düzenle"
     }
   },
   "auth": {
@@ -414,7 +434,7 @@
     "connect": "Tek amacı, yardıma ihtiyacı olanlarla bunu sağlayabilenleri buluşturmak olan  bir platform.",
     "howWork": "Bu nasıl işliyor?",
     "helpBoard": "Yardım Panosu",
-    "helpBoardDetail": "Bireyler ve kuruluşlar için yardım sunmak ve yardım talebinde bulunmak için oluşturulmuş bir topluluk platformu.",
+    "helpBoardDetail": "Bireyler ve kuruluşlar için yardım etmek ve yardım istemek için oluşturulmuş bir topluluk platformu.",
     "localGlobal": "Yerel & Global",
     "localGlobalDetail": "Topluluğumuzun içinden veya dünyanın her yerinden yardım edin veya yardım isteyin.",
     "relevantContent": "İlgili İçerik",
@@ -434,7 +454,10 @@
     "joinAmbassador": "Temsilci olarak katıl",
     "joinStudentProgram": "Öğrenci Programına Katıl",
     "studentSummerProgram": "Öğrenci Yaz Okulu",
-    "forStudentInAge": "14-18 yaş arası öğrenciler için."
+    "forStudentInAge": "14-18 yaş arası öğrenciler için.",
+    "press": "Basın",
+    "pressInfo": "Basın mensubuysanız, bize buradan ulaşın",
+    "pressKitLink": "Basın Kitine Git"
   },
   "footer": {
     "faq": "SSS",
@@ -446,9 +469,9 @@
   },
   "faq": {
     "title": "FightPandemics Hakkında / Genel",
-    "offerRequestHelp": "Yardım teklifi veya talebi",
+    "offerRequestHelp": "Yardım et veya Yardım iste",
     "profileAccount": "Profil ve Hesap",
-    "contects": "İçerikler",
+    "contects": "Kişiler",
     "general": [
       [
         "FightPandemics nedir?",
@@ -459,7 +482,7 @@
       [
         "FightPandemics kimdir?",
         "FightPandemics, yardım ihtiyacı halinde başvurulacak olan bir platform olarak hizmet etme misyonuna sahip, tamamen gönüllü olarak çalışanlardan oluşan küresel bir ekiptir. 70'den fazla ülkeden destek veren 150'den fazla aktif gönüllüden oluşan ekibimiz, fark yaratmak için çabalamaktadır. Platform farklı kültürlerden çeşitli yeteneklere sahip, bir takım olarak üretmek ve yeteneklerini geliştirmek isteyen analitik bakış açısına sahip kişileri bir araya getiren yenilikçi bir kollektif çaba ile oluşturulmuştur.",
-        "Girişimimize katılmak ister misiniz? hr@fightpandemics.com adresinden bize ulaşabilirsiniz."
+        "Girişimimize katılmak ister misiniz? <0>hr@fightpandemics.com</0> adresinden bize ulaşabilirsiniz."
       ],
       [
         "FightPandemics hangi şehirlerde faaliyet göstermektedir?",
@@ -470,7 +493,7 @@
         "Yardıma ihtiyaç duyan veya yarım etmek isteyen herkes platformumuza katılabilir ve diğer kişi ve kuruluşlarla bağlantı kurabilir."
       ],
       [
-        "FightPandemics'te yardım teklifi / talebi için nasıl gönderi oluşturabilirim?",
+        "FightPandemics'te yardım etmek / istemek için nasıl gönderi oluşturabilirim?",
         "<0> Topluluğa katıldığınızda, FightPandemics platformundaki gönderi ve yorumları görüntülemek ve gönderi oluşturmak için sınırsız erişime sahip olacaksınız. </0> <1> Topluluğa kullanıcı olarak katılmak için \"Menü\" düğmesine tıklayın ve \"Şimdi Katıl / Giriş Yap\" seçeneğini seçin. Orada seçtiğiniz e-posta veya sosyal medya kimlik bilgileriyle katılabilirsiniz. </1> <2> Profilinizi tamamladıktan sonra menü düğmesine tıklayın, profilimi görüntüle'yi seçin ve ilk gönderinizi oluşturmak için artı işaretine tıklayın. </2>"
       ],
       [
@@ -482,13 +505,13 @@
         "Hayır, FightPandemics, gönüllüler tarafından yönetilen tamamen ücretsiz bir platformdur."
       ],
       [
-        "FightPandemics'te ne tür bir yardım sunabilirim / talep edebilirim?",
+        "FightPandemics'te ne tür bir yardım sağlayabilirim / isteyebilirim?",
         "COVID-19 salgını sırasında bireyleri ve organizasyonları desteklemek için her türlü yardımı isteyebilir veya sunabilirsiniz. Burada, sunabileceğiniz veya isteyebileceğiniz yardım türüne ait bazı örneklerin yer aldığı bir liste verilmiştir:",
         "<0> Market ihtiyacı </0> <1> Tıbbi malzemeler </1> <2> Hukuki yardım </2> <3> Teknik destek </3> <4> Bilgi </4> <5> Finansman </5> <6> Etkinlik ve faaliyetler </6> <7> Eğitim </7> <8> Sağlık </8> <9> Araştırma ve geliştirme </9>"
       ],
       [
         "Nasıl yardım alabilirim?",
-        "FightPandemics ana sayfasından \"Yardım talebi\" seçeneğini seçin. \"Diğer yardım\" seçeneğini seçmeniz ve konumunuzu girmeniz durumunda seçilen bölgedeki yardım tekliflerinin bulunduğu bir sayfaya yönlendirileceksiniz. Daha sonra görmek istediğiniz gönderileri sağlayıcıya ve türe göre filtreleyebilirsiniz. Alternatif olarak, tüm gönderileri görüntülemek ve istediğiniz filtreleri uygulamak için ana sayfadan \"Topluluk gönderilerini görüntüle\" yi seçebilirsiniz."
+        "FightPandemics ana sayfasından \"Yardım iste\" seçeneğini seçin. \"Diğer yardım\" seçeneğini seçmeniz ve konumunuzu girmeniz durumunda seçilen bölgedeki yardım tekliflerinin bulunduğu bir sayfaya yönlendirileceksiniz. Daha sonra görmek istediğiniz gönderileri sağlayıcıya ve türe göre filtreleyebilirsiniz. Alternatif olarak, tüm gönderileri görüntülemek ve istediğiniz filtreleri uygulamak için ana sayfadan \"Topluluk gönderilerini görüntüle\" yi seçebilirsiniz."
       ],
       [
         "Nasıl yardım edebilirim?",
@@ -528,7 +551,7 @@
       ],
       [
         "Web sitesinde bir hata buldum. Bunu nasıl bildirebilirim?",
-        "Lütfen geri bildirim gönderin veya support@fightpandemics.com adresinden bizimle iletişime geçin."
+        "Lütfen geri bildirim gönderin veya <0>support@fightpandemics.com</0> adresinden bizimle iletişime geçin."
       ],
       [
         "Artık FightPandemics kullanma iznim yok - ne yapmalıyım?",
@@ -536,7 +559,7 @@
       ],
       [
         "Hangi bilgileri saklıyorsunuz?",
-        "FightPandemics, kullanıcıların kişisel verilerini yalnızca gizlilik politikamızda açıklanan amaçlar doğrultusunda toplar ve işler. Bu politikada belirtilen ilgili kişiler dışında hiçbir durumda kişisel verilerinize erişim sağlamayacağız veya üçüncü şahıslarla paylaşmayacağız."
+        "FightPandemics, kullanıcıların kişisel verilerini yalnızca <0> gizlilik politikamızda </0> açıklanan amaçlar doğrultusunda toplar ve işler. Bu politikada belirtilen ilgili kişiler dışında hiçbir durumda kişisel verilerinize erişim sağlamayacağız veya üçüncü şahıslarla paylaşmayacağız."
       ],
       [
         "Yaşadığım şehir veya eyaletimden yardım verebilir miyim / alabilir miyim? Gönderin ne kadar süreyle görünür olacak?",
@@ -566,7 +589,7 @@
       ],
       [
         "Parolam neden geçerli değil?",
-        "Lütfen parolanızda en az 8 harf olup olmadığını kontrol edin. Zaten bir hesabınız varsa ancak oturum açma parolanızı unuttuysanız, ana sayfadan \"Oturum Aç\" ı tıklayın ve ardından \"Parolamı unuttum\" a gidin."
+        "Lütfen parolanızda en az 8 karakter olup olmadığını kontrol edin. Zaten bir hesabınız varsa ancak oturum açma parolanızı unuttuysanız, ana sayfadan \"Oturum Aç\" ı tıklayın ve ardından \"Parolamı unuttum\" a gidin."
       ],
       [
         "Kaydoldum ama onay e-postası bana ulaşmadı. Ne yapmalıyım?",
@@ -970,6 +993,7 @@
     "header": "Bildirimler",
     "liked": "<0> {{username}} </0> gönderinizi beğendi <1> {{postTitle}} </1>",
     "commented": "<0>{{username}}</0> gönderinize yorum yaptı <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> gönderinizi<1>{{postTitle}}</1> <1>{{shareMedium}}</1> 'de paylaştı"
+    "shared": "<0>{{username}}</0> gönderinizi<1>{{postTitle}}</1> <1>{{shareMedium}}</1> 'de paylaştı",
+    "empty": "Başka bildirim yok"
   }
 }
