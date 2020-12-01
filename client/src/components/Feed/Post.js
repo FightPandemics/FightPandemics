@@ -515,6 +515,7 @@ const Post = ({
           objective: post.objective,
           tags: post.types,
           location: post.author.location,
+          age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
       />
     </Card.Body>
@@ -528,7 +529,7 @@ const Post = ({
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
-          <div className="pre-header post-page">
+            <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
               <Tooltip title={translateISOTimeTitle(post.createdAt)}>
                 <span className="timestamp">
@@ -542,7 +543,7 @@ const Post = ({
                 </span>
               </Tooltip>
             </div>
-            <WhiteSpace size={"sm"}/>
+            <WhiteSpace size={"sm"} />
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
