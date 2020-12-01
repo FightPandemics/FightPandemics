@@ -1016,6 +1016,11 @@
     "spam": "Spam",
     "inappropriateContent": "Inappropriate Content",
     "violatesTerms": "Violates Terms",
-    "other": "Other"
+    "other": "Other",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

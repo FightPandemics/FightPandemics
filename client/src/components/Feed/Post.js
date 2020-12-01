@@ -573,10 +573,9 @@ const Post = ({
             {!isOwner && isSuspected && (
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
-                This post received multiple reports and has been hidden from the
-                help board
+                {t("moderation.postSuspected")}
                 <span onClick={() => onPostPageShowAnyway(postId)}>
-                  Show anyway
+                  {t("moderation.showAnyway")}
                 </span>
               </div>
             )}
@@ -683,16 +682,17 @@ const Post = ({
                   <SvgIcon src={eyeHide} />
                   {isHidden && !isSuspected && (
                     <>
-                      You have chosen to hide this post
-                      <span onClick={() => onPostUnhide(_id)}>Unhide</span>
+                      {t("moderation.postHidden")}
+                      <span onClick={() => onPostUnhide(_id)}>
+                        {t("moderation.unhide")}
+                      </span>
                     </>
                   )}
                   {isSuspected && !isOwner && (
                     <>
-                      This post received multiple reports and has been hidden
-                      from the help board
+                      {t("moderation.postSuspected")}
                       <span onClick={() => onPostShowAnyway(_id)}>
-                        Show anyway
+                        {t("moderation.showAnyway")}
                       </span>
                     </>
                   )}
