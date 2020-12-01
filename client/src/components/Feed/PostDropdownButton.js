@@ -56,8 +56,6 @@ const Caption = styled.span`
 `;
 
 const PostDropdownButton = ({
-  onSave,
-  onFollow,
   onHide,
   onReport,
   onEdit,

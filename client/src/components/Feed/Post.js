@@ -327,16 +327,6 @@ const Post = ({
     }
   };
 
-  const handleSave = () => {
-    // save post functionality here
-    console.log('"Save Post" was clicked.');
-  };
-
-  const handleFollow = () => {
-    // follow post functionality here
-    console.log('"Follow Post" was clicked.');
-  };
-
   const handleHide = () => {
     onPostHide(_id);
   };
@@ -599,8 +589,6 @@ const Post = ({
               {isAuthenticated && (
                 <div className="card-submenu">
                   <PostDropdownButton
-                    onSave={handleSave}
-                    onFollow={handleFollow}
                     onHide={handleHide}
                     onReport={handleReport}
                     onEdit={onSelect}
@@ -723,8 +711,6 @@ const Post = ({
                 {isAuthenticated && (
                   <div className="card-submenu">
                     <PostDropdownButton
-                      onSave={handleSave}
-                      onFollow={handleFollow}
                       onHide={handleHide}
                       onReport={handleReport}
                       onEdit={onSelect}
