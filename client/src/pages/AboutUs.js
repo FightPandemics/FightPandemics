@@ -423,7 +423,7 @@ const AboutUs = () => {
             </AboutUsLink>
             <AboutUsLink
               id={getGTM("instagram")}
-              href="https://www.instagram.com/fightpandemics/"
+              href="https://www.instagram.com/fightpandemicshq/"
             >
               <img
                 loading="lazy"

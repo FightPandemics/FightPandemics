@@ -549,6 +549,7 @@ const Post = ({
           objective: post.objective,
           tags: post.types,
           location: post.author.location,
+          age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
       />
     </Card.Body>
