@@ -374,11 +374,15 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // user shouldn't see reported posts on post page
-      const didReport = post.reportedBy
-        ? post.reportedBy.find((r) => r.id.toString() === actor._id.toString())
-        : false;
-      if (didReport) throw app.httpErrors.notFound();
+      if (actor) {
+        // user shouldn't see reported posts on post page
+        const didReport = post.reportedBy
+          ? post.reportedBy.find(
+              (r) => r.id.toString() === actor._id.toString(),
+            )
+          : false;
+        if (didReport) throw app.httpErrors.notFound();
+      }
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
