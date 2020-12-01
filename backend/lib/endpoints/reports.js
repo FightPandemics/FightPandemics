@@ -2,8 +2,8 @@ const {
   createPostReportSchema,
   getPostReportsSchema,
 } = require("./schema/reports");
-const { setReqPermLevel } = require("../utils");
-const REPORTS_PER_PAGE = 10;
+const MAX_REPORTS_PER_PAGE = 20;
+const UNLOGGED_POST_SIZE = 120;
 
 /*
  * /api/reports
@@ -66,22 +66,87 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        query: { page },
+        query: { limit, status, skip, includeMeta },
       } = req;
 
-      const skip = REPORTS_PER_PAGE * page;
-
-      const [getPostsErr, reportedPosts] = await app.to(
-        Post.find({ status: "flagged" }, { new: true })
-          .skip(skip)
-          .limit(REPORTS_PER_PAGE),
-      );
-      if (getPostsErr) {
-        req.log.error(updateErr, "Failed getting posts");
-        throw app.httpErrors.internalServerError();
+      const filters = [{ status: status }];
+      if (status === "public") {
+        // rejected report, status is "public", but have reportedBy.length
+        filters.push({ reportedBy: { $exists: true, $not: { $size: 0 } } });
       }
 
-      return reportedPosts;
+      const aggregationPipelineResults = [
+        {
+          $match: { $and: filters },
+        },
+        {
+          $skip: parseInt(skip) || 0,
+        },
+        {
+          $limit: Math.min(limit || MAX_REPORTS_PER_PAGE),
+        },
+        {
+          $set: {
+            reportsCount: {
+              $size: {
+                $ifNull: ["$reportedBy", []],
+              },
+            },
+            content: {
+              $concat: [
+                { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
+                "...",
+              ],
+            },
+          },
+        },
+        {
+          $project: {
+            "author.location": false,
+          },
+        },
+        {
+          $sort: {
+            reportsCount: 1,
+          },
+        },
+      ];
+
+      // Get the total results without pagination steps but with filtering aplyed - totalResults
+      /* eslint-disable sort-keys */
+      const totalResultsAggregationPipeline = await Post.aggregate([
+        {
+          $match: { $and: filters },
+        },
+        { $group: { _id: null, count: { $sum: 1 } } },
+      ]);
+      /* eslint-enable sort-keys */
+
+      const [postsErr, posts] = await app.to(
+        Post.aggregate(aggregationPipelineResults),
+      );
+
+      const responseHandler = (response) => {
+        if (!includeMeta) {
+          return posts;
+        }
+        return {
+          meta: {
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
+              : 0,
+          },
+          data: response,
+        };
+      };
+      if (postsErr) {
+        req.log.error(postsErr, "Failed requesting posts");
+        throw app.httpErrors.internalServerError();
+      } else if (posts === null) {
+        return responseHandler([]);
+      } else {
+        return responseHandler(posts);
+      }
     },
   );
 }

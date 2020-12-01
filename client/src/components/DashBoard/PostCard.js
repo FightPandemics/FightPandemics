@@ -76,7 +76,6 @@ const PostCard = styled(Card)`
         position: relative;
         display: block;
         min-height: 4rem;
-        padding-left: 5rem;
         font-size: ${medium};
         .title-wrapper {
           cursor: default;
@@ -125,12 +124,7 @@ const PostCard = styled(Card)`
       .timestamp {
         padding-left: 1.4rem;
         font-size: ${medium};
-        color: black;
-      }
-      .reporter {
-        padding-left: 1.4rem;
-        font-size: ${medium};
-        color: black;
+        color: ${darkGray};
       }
     }
 
@@ -139,6 +133,7 @@ const PostCard = styled(Card)`
       padding: 0;
       color: black;
       white-space: pre-line;
+      max-width: calc(100% - 2rem);
 
       &::before {
         content: none;

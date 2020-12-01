@@ -77,7 +77,7 @@ const Post = ({
     post = currentPost;
   }
 
-  const { _id, content, title } = post || {};
+  const { _id, content, title, reportsCount } = post || {};
 
   const actorId = useSelector(selectActorId);
 
@@ -89,10 +89,7 @@ const Post = ({
             <Highlight text={post?.author?.name} highlight={highlightWords} />
           </span>
           <span className="timestamp">
-            <Highlight text={`Posted at ${getPostedTime(post)}`} />
-          </span>
-          <span className="reporter">
-            <Highlight text={`Reported By `} />
+           Posted {getPostedTime(post)}
           </span>
         </div>
       }
@@ -119,7 +116,7 @@ const Post = ({
   return (
     <>
       <PostCard>
-        <LeftHeader>X Reports</LeftHeader>
+        <LeftHeader>{reportsCount} Reports</LeftHeader>
 
         <AntDivider type="vertical" plain>
           <div className="card-header">

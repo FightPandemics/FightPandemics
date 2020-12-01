@@ -172,9 +172,7 @@ const routes = [
     exact: true,
     component: DashBoard,
     props: {
-      mobiletabs: true,
       navSearch: true,
-      tabIndex: 2,
       permLevel: PERMISSIONS.moderator,
     },
   },

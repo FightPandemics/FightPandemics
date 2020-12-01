@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -28,12 +27,9 @@ import { selectPosts, postsActions } from "reducers/posts";
 
 import {
   feedReducer,
-  deletePostModalreducer,
-  deletePostState,
 } from "hooks/reducers/feedReducers";
 
 // ICONS
-import SvgIcon from "components/Icon/SvgIcon";
 import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
 // Constants
 import { theme } from "constants/theme";
@@ -41,18 +37,18 @@ import { SET_VALUE } from "hooks/actions/feedActions";
 
 export const FeedContext = React.createContext();
 
-let POST_TYPE = {
-  ALL: "All Reports",
-  OPEN: "Open",
-  CLOSED: "Closed",
+let REPORTS_TYPE = {
+  PENDING: "Pending",
+  ACCEPTED: "Accepted",
+  REJECTED: "Rejected",
+  ALL: "All",
 };
 
 const initialState = {
   showFilters: false,
-  filterModal: false,
   applyFilters: false,
   activePanel: null,
-  objective: null,
+  status: "PENDING",
 };
 
 export const NoPosts = styled.div`
@@ -96,12 +92,11 @@ const Feed = (props) => {
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const {
-    filterModal,
     activePanel,
     location,
     applyFilters,
     showFilters,
-    objective,
+    status,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -140,19 +135,21 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    dispatchAction(SET_VALUE, "objective", value);
+    dispatchAction(SET_VALUE, "status", value);
   };
 
   const loadPosts = async () => {
     if (!applyFilters) return;
 
-    const objectiveURL = () => {
-      switch (objective) {
-        case "OPEN":
-          return "&objective=incoming";
-        case "CLOSED":
-          return "&objective=archived";
-        default:
+    const statusURL = () => {
+      switch (status) {
+        case "PENDING":
+          return "&status=flagged";
+        case "ACCEPTED":
+          return "&status=removed";
+        case "REJECTED":
+          return "&status=public";
+        case "ALL":
           return "";
       }
     };
@@ -167,8 +164,8 @@ const Feed = (props) => {
 */
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    let baseURL = `/api/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
-    let endpoint = `${baseURL}${objectiveURL()}`;
+    let baseURL = `/api/reports/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
+    let endpoint = `${baseURL}${statusURL()}`;
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -252,7 +249,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [objective]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -292,10 +289,9 @@ const Feed = (props) => {
     <FeedContext.Provider
       value={{
         filters,
-        filterModal,
         activePanel,
         location,
-        objective,
+        status,
         dispatchAction,
         showFilters,
         totalPostCount,
@@ -310,14 +306,14 @@ const Feed = (props) => {
           >
             <>
               <MenuWrapper
-                defaultSelectedKeys={["ALL"]}
-                selectedKeys={[objective || "ALL"]}
+                defaultSelectedKeys={["PENDING"]}
+                selectedKeys={[status || "PENDING"]}
                 onClick={handleChangeType}
               >
-                {Object.keys(POST_TYPE).map((item, index) => (
+                {Object.keys(REPORTS_TYPE).map((item, index) => (
                   <>
                     <StyledMenuItem key={item}>
-                      {POST_TYPE[item]}
+                      {REPORTS_TYPE[item]}
                       <StyledForwardIcon />
                     </StyledMenuItem>
                   </>
@@ -342,7 +338,7 @@ const Feed = (props) => {
             />
             {emptyFeed() ? (
               <NoPosts>
-                <Trans i18nKey={"feed.noResultsPosts"} components={[<a />]} />
+                There are no "{REPORTS_TYPE[status]}" reports.
               </NoPosts>
             ) : null}
           </ContentWrapper>

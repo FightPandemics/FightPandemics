@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-
+const { PERMISSIONS } = require("../models/User");
 const {
   setElapsedTimeText,
   createSearchRegex,
@@ -374,12 +374,18 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // user shouldn't see reported posts on post page
-      const didReport = post.reportedBy
-        ? post.reportedBy.find((r) => r.id.toString() === actor._id.toString())
-        : false;
-      if (didReport) throw app.httpErrors.notFound();
-
+      // if user is not a moderator
+      if (!actor.permissions || !(actor.permissions & PERMISSIONS.moderator)) {
+        // user shouldn't see removed posts on post page
+        if (post.status === "removed") throw app.httpErrors.notFound();
+        // user shouldn't see posts reported by them, even if public.
+        const didReport = post.reportedBy
+          ? post.reportedBy.find(
+              (r) => r.id.toString() === actor._id.toString(),
+            )
+          : false;
+        if (didReport) throw app.httpErrors.notFound();
+      }
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
       // parameters is important to hit the right database index.

@@ -236,6 +236,7 @@ module.exports = {
   POST_OBJECTIVES,
   POST_TYPES,
   VISIBILITY_OPTIONS,
+  POST_STATUS,
   model: Post,
   schema: postSchema,
 };

@@ -171,19 +171,23 @@ const authPlugin = async (app) => {
   });
 
   app.decorate("checkPermission", (permLevel) => {
-    return (req, res, done) => {
+    return async (req, res, done) => {
       // level "user", or not found
       if (!PERMISSIONS[permLevel]) return done();
 
       // must come after either "authenticate" or "optionalAuthenticate" decorator
       const { actor } = req;
 
-
       // only IndividualUser can have permissions
-      if (!actor || !actor.permissions || PERMISSIONS[permLevel] & actor.permissions) {
+      if (
+        !actor ||
+        !actor.permissions ||
+        !(PERMISSIONS[permLevel] & actor.permissions)
+      ) {
         req.log.error(`Not authorized to act as ${permLevel}`);
-        throw app.httpErrors.forbidden();
+        return app.httpErrors.forbidden();
       }
+      
     };
   });
 };
