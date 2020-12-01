@@ -249,7 +249,9 @@ const Post = ({
     let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
     const newComment = {
       actorId,
       content: comment,
@@ -305,7 +307,9 @@ const Post = ({
     const commentId = comment._id;
     if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
-      const totalCommentCountEndPoint = `/api/posts/${postId}`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}${
+        actorId ? `?actorId=${actorId}` : ""
+      }`;
 
       try {
         response = await axios.delete(endPoint);
