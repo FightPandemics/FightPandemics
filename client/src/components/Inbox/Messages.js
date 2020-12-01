@@ -177,6 +177,35 @@ const Messages = ({
     setEditingMessageId(null);
   }
 
+  const mobileContextMenu = (event, messageId, message) => {
+    event.persist();
+    event.preventDefault();
+    Modal.operation([
+      {
+        text: t("messaging.edit"),
+        onPress: () => {
+          startMessageEditing(messageId, message);
+        },
+        style: {
+          fontSize: "1.6rem",
+          textAlign: "center",
+          padding: 0,
+        },
+      },
+      {
+        text: <Text type="danger">{t("messaging.delete")}</Text>,
+        onPress: () => {
+          showDeleteConfirm(messageId);
+        },
+        style: {
+          fontSize: "1.6rem",
+          textAlign: "center",
+          padding: 0,
+        },
+      },
+    ]);
+  };
+
   const menu = React.useCallback(
     (messageId, content) => (
       <Menu key={"menu-" + messageId}>
@@ -203,34 +232,15 @@ const Messages = ({
         <SenderBubble
           editingMode={editingMessageId === messageId}
           className={`${isDeleted ? "deleted" : ""}`}
-          onContextMenu={(event) => {
-            event.persist();
-            event.preventDefault();
+          onContextMenu={(e) => {
+            e.stopPropagation()
             if (isDeleted) return;
-            Modal.operation([
-              {
-                text: t("messaging.edit"),
-                onPress: () => {
-                  startMessageEditing(messageId, message);
-                },
-                style: {
-                  fontSize: "1.6rem",
-                  textAlign: "center",
-                  padding: 0,
-                },
-              },
-              {
-                text: <Text type="danger">{t("messaging.delete")}</Text>,
-                onPress: () => {
-                  showDeleteConfirm(messageId);
-                },
-                style: {
-                  fontSize: "1.6rem",
-                  textAlign: "center",
-                  padding: 0,
-                },
-              },
-            ]);
+            mobileContextMenu(e, messageId, message);
+          }}
+          onTouchCancel={(e) => {
+            e.stopPropagation()
+            if (isDeleted) return;
+            mobileContextMenu(e, messageId, message);
           }}
         >
           {!isDeleted && editingMessageId !== messageId && (
@@ -353,7 +363,9 @@ const Messages = ({
             {shouldShowTime(i) && (
               <TimeStamp
                 key={"t-" + message._id}
-                className={message.authorId !== (user._id || user.id) ? "left" : "right"}
+                className={
+                  message.authorId !== (user._id || user.id) ? "left" : "right"
+                }
               >
                 {isToday(message.createdAt)
                   ? relativeTime[1] === "second" && relativeTime[0] < 10
