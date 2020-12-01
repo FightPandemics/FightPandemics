@@ -28,11 +28,22 @@ moment.updateLocale("en", {
   },
 });
 
+const timeStringSanityCheck = (strInput) => {
+  // for some OS + browser + local environment
+  // we could see relativeTime til now is like '1,month' etc.
+  // convert them to be valid keys
+  if (strInput.includes("day")) return day;
+  if (strInput.includes("week")) return week;
+  if (strInput.includes("month")) return month;
+  return forever;
+};
+
 const translateISOToString = (ISO) => {
   if (ISO !== null) {
     const time = moment(ISO).subtract(1, "forever");
     const timeString = time.fromNow().split(" ");
-    const ttl = timeString[timeString.length - 1];
+    const ttlString = timeString[timeString.length - 1];
+    const ttl = timeStringSanityCheck(ttlString.toLowerCase());
     return ttl;
   }
 };

@@ -19,17 +19,19 @@ const StyledComment = styled(Comment)`
         width: 45rem;
         word-break: break-word;
         @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
-          width: 26rem;
+          width: 25rem;
         }
         .ant-comment-content-author-time {
           cursor: default;
           color: ${darkGray};
+          display:flex
         }
         .ant-comment-content-author {
+          display:revert;
           border-top-left-radius: 1.5rem;
           border-top-right-radius: 1.5rem;
           margin-bottom: 0;
-          padding: 1rem 0 0.5rem 1.5rem;
+          padding: 1rem 0 0.5rem 1.5rem;         
           .ant-comment-content-author-name > * {
             color: black;
             font-weight: 500;

@@ -25,7 +25,11 @@ export const ProfileMenu = ({
   const { t } = useTranslation();
   const feedToPath = isAuthenticated ? { pathname: "/feed", user } : "/feed";
   const profileUrl = isAuthenticated
-    ? `/${user.type ? "organisation" : "profile"}/${user?.id || user?._id}`
+    ? `/${
+        !user.type || user.type.toLowerCase() === "individual"
+          ? "profile"
+          : "organization"
+      }/${user?.id || user?._id}`
     : null;
   return (
     <>
