@@ -202,6 +202,19 @@ export const InputBox = ({
       setText("");
       inputRef.current.focus();
     }
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "CONV_MSG_SENT",
+        clickId: GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.sent,
+      },
+    });
+    // clear dataLayer
+    TagManager.dataLayer({
+      dataLayer: {
+        event: null,
+        clickId: null,
+      },
+    });
   };
 
   const handleClick = async (e) => {
@@ -213,12 +226,6 @@ export const InputBox = ({
     if (e.key === "Enter" && !e.shiftKey) e.preventDefault();
     if (e.key === "Enter" && !e.shiftKey && text.length > 0) {
       handleSendMessage();
-      TagManager.dataLayer({
-        dataLayer: {
-          event: "CONV_MSG_SENT",
-          clickId: GTM.inbox.prefix + GTM.inbox.conversation + GTM.inbox.sent,
-        },
-      });
     }
   };
   return (
