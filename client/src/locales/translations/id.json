@@ -1,0 +1,999 @@
+{
+  "headline": "Tempat untuk menawarkan dan meminta bantuan",
+  "tagline": "Pandemi masih terus terjadi.\nKami membantu masyarakat dalam menanganinya.",
+  "common": {
+    "getHelp": "Meminta Bantuan",
+    "giveHelp": "Menawarkan bantuan",
+    "viewFeed": "Lihat Papan Bantuan",
+    "register": "Bergabung Sekarang",
+    "feedback": "Feedback",
+    "question": "Pertanyaan",
+    "aboutUs": "Tentang kami",
+    "profile": "Profil",
+    "addOrg": "Tambahkan Organisasi",
+    "logout": "Keluar",
+    "organisations": "Organisasi",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organizations",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
+  },
+  "onboarding": {
+    "common": {
+      "question": "Pertanyaan",
+      "next": "Berikutnya",
+      "previous": "Kembali",
+      "submit": "Kirimkan",
+      "skip": "Lewati",
+      "whereLocated": "Di mana lokasi Anda?",
+      "relevantResults": "Kami mau menunjukkan kepada Anda hasil yang paling relevan",
+      "enterAddress": "Masukkan alamat, kode pos atau kota",
+      "shareLocation": "Bagikan lokasi saya",
+      "showAnywhere": "Bagikan saya posting dari mana-mana",
+      "whatEmail": "Apa email Anda?",
+      "respectPrivacy": "Kami menghargai privasi Anda. Silakan baca syarat dan ketentuan kami.",
+      "enterEmail": "Masukkan alamat email Anda..."
+    },
+    "needHelp": {
+      "whatHelp": "Bantuan apa yang Anda perlukan?",
+      "medical": "Medis",
+      "haveCovidSymptoms": "Saya memiliki gejala COVID-19",
+      "other": "Bantuan Lainnya",
+      "otherDesc": "Saya membutuhkan bantuan untuk mendapatkan bahan makanan / obat-obatan / dll."
+    },
+    "offerHelp": {
+      "howContribute": "Bagaimana Anda mau berkontribusi?",
+      "volunteer": "Sebagai sukarelawan",
+      "donorInvestor": "Sebagai donor atau investor",
+      "organisation": "Sebagai organisasi"
+    }
+  },
+  "feed": {
+    "title": "Papan Bantuan",
+    "all": "Semua postingan",
+    "request": "Meminta bantuan",
+    "offer": "Menawarkan bantuan",
+    "quit": "Stop filter",
+    "apply": "Menerapkan filter",
+    "getOrGive": "Menawarkan atau meminta bantuan",
+    "filters": {
+      "title": "Filter",
+      "location": {
+        "label": "Lokasi",
+        "enterAddress": "Masukkan Alamat, Kode Pos atau Kota ",
+        "shareLocation": "Bagikan lokasi saya"
+      },
+      "providers": "Penyedia",
+      "providersList": [
+        "Perorangan",
+        "Startup",
+        "Perusahaan",
+        "Komunitas",
+        "Pemerintah",
+        "Nirlaba",
+        "Universitas",
+        "Penyedia layanan kesehatan",
+        "Lain "
+      ],
+      "types": "Jenis",
+      "typesList": [
+        "Suplai medis",
+        "Bahan makanan / Makanan",
+        "Bisnis",
+        "Pendidikan",
+        "Hukum",
+        "Kesejahteraan/mental",
+        "Hiburan",
+        "Informasi",
+        "Pendanaan",
+        "R&D",
+        "Teknologi",
+        "Lain ",
+        "Lain",
+        "Childcare",
+        "Translations",
+        "Sukarelawan",
+        "Staff (paid)",
+        "Remote Work"
+      ],
+      "labels": {
+        "location": "Lokasi",
+        "providers": "Penyedia",
+        "type": "Jenis",
+        "lookingFor": "Menawarkan atau Meminta Bantuan"
+      },
+      "providersOptions": {
+        "Individual": "Perorangan",
+        "Startup": "Startup",
+        "Company": "Perusahaan",
+        "Community": "Komunitas",
+        "Government": "Pemerintah",
+        "Non-profit": "Nirlaba",
+        "University": "Universitas",
+        "Health care provider": "Penyedia Layanan Kesehatan",
+        "Other": "Lain-lain"
+      },
+      "typesOptions": {
+        "Medical Supplies": "Persediaan Alat Medis",
+        "Groceries/Food": "Bahan Makanan/Makanan",
+        "Business": "Bisnis",
+        "Education": "Pendidikan",
+        "Legal": "Hukum",
+        "Wellbeing/Mental": "Kesejahteraan/Mental",
+        "Entertainment": "Hiburan",
+        "Information": "Informasi",
+        "Funding": "Pendanaan",
+        "R&D": "R&D",
+        "Tech": "Teknologi",
+        "Other": "Lain-lain",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Sukarelawan",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
+      },
+      "lookingForOptions": {
+        "Request Help": "Meminta Bantuan",
+        "Offer Help": "Menawarkan Bantuan"
+      }
+    },
+    "filterBy": "Filter menurut",
+    "noResults": "Maaf, saat ini tidak ada posting yang relevan yang tersedia. Silakan coba menggunakan pencarian filter yang berbeda atau <0>membuat posting</0>.",
+    "allPosts": "All posts",
+    "allPeople": "All people",
+    "allOrgs": "All organizations",
+    "noResultsPosts": "Maaf, saat ini tidak ada posting yang relevan yang tersedia. Silakan coba menggunakan pencarian filter yang berbeda atau <0>membuat posting</0>.",
+    "noResultsPeople": "Sorry, there are currently no relevant Individuals available. Please try using a different filter search.",
+    "noResultsOrgs": "Sorry, there are currently no relevant organizations available. Please try using a different filter search.",
+    "search": {
+      "placeholder": "Search Posts, People & Orgs",
+      "keywords": "keywords",
+      "error": "Min. {{length}} characters",
+      "options": {
+        "posts": "Posts",
+        "people": "People",
+        "orgs": "Organizations",
+        "orgsShort": "Orgs"
+      }
+    }
+  },
+  "post": {
+    "create": "Buat posting",
+    "continueAs": "Lanjutkan memposting sebagai",
+    "individual": "Perorangan",
+    "organisation": "Organisasi",
+    "givingHelp": "Menawarkan Bantuan",
+    "gettingHelp": "Meminta Bantuan",
+    "writePostHere": "Tulis posting Anda di sini",
+    "title": "Judul",
+    "writePost": "Tulis post",
+    "whatGiving": "Apa yang Anda tawarkan?",
+    "addTags": "Tambahkan tag agar postingan Anda lebih terlihat",
+    "whatVisibility": "Apa visibilitas posting Anda?",
+    "postVisible": "Posting akan terlihat oleh",
+    "success": "Berhasil",
+    "viewPost": "Lihat Posting Anda",
+    "like": "Suka",
+    "like_plural": "Menyukai",
+    "likeWithCount": "{{count}} Menyukai",
+    "likeWithCount_plural": "{{count}} Menyukai",
+    "comment": "Komentar",
+    "comment_plural": "Komentar",
+    "commentWithCount": "{{count}} Komentar",
+    "commentWithCount_plural": "{{count}} Komentar",
+    "options": {
+      "shareWith": {
+        "city": "Di Kota Saya",
+        "state": "Di Daerah saya",
+        "worldwide": "Di seluruh dunia",
+        "country": "Di Negara saya"
+      },
+      "expires": {
+        "forever": "Selamanya",
+        "month": "Untuk satu bulan",
+        "week": "Untuk satu minggu",
+        "day": "Untuk satu hari"
+      },
+      "helpTypes": {
+        "request": "Mencari bantuan",
+        "offer": "Menawarkan bantuan"
+      }
+    },
+    "post": "Posting",
+    "postAsOrg": "Membuat posting sebagai Organisasi",
+    "createNew": "Buat baru",
+    "whatNeed": "Apa yang Anda butuhkan?",
+    "viewLess": "Lihat Lebih Sedikit",
+    "viewMore": "Lihat lebih banyak",
+    "deletePostConfirmation": "Anda yakin ingin menghapus postingan ini?",
+    "deleteCommentConfirmation": "Anda yakin ingin menghapus komentar ini?",
+    "shareVia": "Bagikan melalui ...",
+    "others": "Lain-lain",
+    "expireTitle": "Ahh... Snap!",
+    "expire": "Posting yang Anda cari telah kedaluwarsa. Silakan periksa Papan Bantuan kami untuk lebih banyak posting tersebut.",
+    "noActivity": "Tidak ada aktivitas yang ditemukan",
+    "share": "Bagikan",
+    "delete": "Menghapus",
+    "cancel": "Membatalkan",
+    "confirm": "Konfirmasi",
+    "edited": "edited",
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation"
+  },
+  "profile": {
+    "common": {
+      "accountInfo": "Informasi akun",
+      "profileInfo": "Informasi Profil",
+      "address": "Alamat",
+      "enterAddress": "Masukkan Alamat, Kode Pos atau Kota ",
+      "agreePrivacy": "Dengan mendaftar, saya setuju dengan Kebijakan Privasi.",
+      "agreeTerms": "Dengan mendaftar, saya setuju dengan Syarat dan Ketentuan.",
+      "createProfile": "Buat profil Anda",
+      "saveChanges": "Simpan perubahan",
+      "thankyou": "Terima kasih telah bergabung dengan komunitas kami!",
+      "viewProfile": "Profil Saya",
+      "continuePosting": "Lanjutkan memposting",
+      "viewFeed": "Lihat Papan Bantuan",
+      "viewMyProfile": "Lihat profil saya",
+      "loading": "Memuat",
+      "invalidEmail": "Email tidak valid",
+      "selectOption": "Silakan pilih setidaknya satu opsi",
+      "invalidURL": "URL tidak valid",
+      "savingChanges": "Menyimpan Perubahan...",
+      "submit": "Buat profil",
+      "submitLoading": "Membuat Profil ...",
+      "invalidPassword": "Kata sandi harus mengunakan setidaknya 3 dari ini: huruf kecil, huruf besar, angka, karakter khusus (seperti! @ # $% ^ & *).",
+      "addressRequired": "Alamat diperlukan. Harap masukkan alamat Anda dan pilih dari menu drop-down",
+      "emailRequired": "Alamat email diperlukan",
+      "passwordRequired": "Kata sandi diperlukan",
+      "maxCharacters": "{{maxNum}} karakter maksimum.",
+      "minCharacters": "{{minNum}} karakter minimum.",
+      "validCharacters": "Karakter yang valid adalah: {{characters}}.",
+      "urls": {
+        "appStore": "Tautan ke Apple Store",
+        "playStore": "Link ke Google Play",
+        "twitter": "URL Twitter",
+        "facebook": "URL Facebook",
+        "instagram": "Instagram URL",
+        "github": "URL Github",
+        "linkedin": "Linkedin URL",
+        "website": "Website"
+      },
+      "emailMaxLength": "Email address must not exceed 200 characters",
+      "emailInvalid": "Email address is invalid",
+      "emailDomainInvalid": "Email domain is invalid",
+      "sendMessage": "Send Message",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password",
+      "notificationInfo": "Notification Preference",
+      "emailNotification": "Notification Email Settings",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
+    },
+    "individual": {
+      "email": "Email",
+      "firstName": "Nama depan",
+      "lastName": "Nama belakang",
+      "hideAddress": "Jangan tampilkan alamat saya",
+      "iWant": "Saya mau",
+      "volunteer": "Sukarelawan",
+      "donate": "Donasi",
+      "shareInformation": "Bagikan informasi",
+      "iNeed": "Saya perlu",
+      "medical": "Bantuan Medis",
+      "haveCovidSymptoms": "Saya memiliki gejala COVID-19",
+      "other": "Bantuan Lainnya",
+      "otherDesc": "Saya membutuhkan bantuan untuk mendapatkan bahan makanan / obat-obatan / dll.",
+      "editProfile": "Edit Profil",
+      "intro": "Perkenalan diri",
+      "website": "Situs web pribadi",
+      "myActivity": "Aktivitas Saya",
+      "userActivity": "Aktivitas Pengguna",
+      "wantHelp": "Saya Ingin Membantu",
+      "needHelp": "Saya Membutuhkan Bantuan",
+      "firstNameRequired": "Nama depan diperlukan.",
+      "lastNameRequired": "Nama belakang diperlukan.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Konfirmasi kata sandi",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security",
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
+    },
+    "org": {
+      "title": "Buat profil organisasi",
+      "editOrgProfile": "Edit Profil Organisasi",
+      "name": "Nama Organisasi",
+      "email": "Email Organisasi",
+      "invalidEmail": "Email tidak valid",
+      "globalOrg": "Kami organisasi global",
+      "seeking": "Apa yang Anda cari?",
+      "volunteers": "Relawan",
+      "donations": "Donasi",
+      "staff": "Staf",
+      "other": "Lain ",
+      "typeAndIndustry": "Tipe dan industri",
+      "type": "Tipe",
+      "types": [
+        "Startup",
+        "Perusahaan",
+        "Komunitas",
+        "Pemerintah",
+        "Nirlaba",
+        "Universitas",
+        "Penyedia layanan kesehatan",
+        "Lain "
+      ],
+      "industry": "Industri",
+      "industries": [
+        "Transportasi",
+        "Arsitektur",
+        "Seni dan kerajinan",
+        "Perbankan",
+        "Bioteknologi",
+        "Perlengkapan dan Peralatan Bisnis",
+        "Organisasi sipil dan sosial",
+        "Layanan Acara",
+        "Penggalangan dana",
+        "Hubungan Pemerintah",
+        "Kesehatan, Kebugaran, dan Kebugaran",
+        "Rumah Sakit & Perawatan Kesehatan",
+        "Industri",
+        "Layanan dan Teknologi Informasi",
+        "Layanan Hukum",
+        "Pemasaran dan Periklanan",
+        "Perangkat Medis",
+        "Manajemen Organisasi Nirlaba",
+        "Lain",
+        "Filantropi",
+        "Pendidikan Primer/Sekunder",
+        "Pelatihan & Pembinaan Profesional",
+        "Penelitian",
+        "Think Tank (Tangki Pemikir)",
+        "Terjemahan dan Lokalisasi"
+      ],
+      "typeIndustryError": "Pilih jenis organisasi dan industri dari menu dropdown",
+      "desc": "Deskripsi Organisasi",
+      "lang": "Bahasa Organisasi",
+      "completeOrgProfile": "Lengkapi Profil Organisasi",
+      "about": "Tentang",
+      "activity": "Aktivitas",
+      "editAccount": "Edit Informasi Akun",
+      "updateSuccess": "Organisasi berhasil diperbarui",
+      "orgNameRequired": "Nama organisasi diperlukan",
+      "global": "Global",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
+    }
+  },
+  "auth": {
+    "signIn": "Masuk",
+    "joinNow": "Bergabung sekarang",
+    "email": "Email ",
+    "enterEmail": "Masukkan alamat email",
+    "password": "Kata sandi",
+    "enterPassword": "Masukkan kata sandi",
+    "confirmPassword": "Konfirmasi kata sandi",
+    "forgotPassword": "Lupa kata sandi?",
+    "noAccount": "Belum punya akun?",
+    "haveAccount": "Sudah memiliki akun?",
+    "recoverLink": "Kirim tautan pemulihan",
+    "orSignIn": "ATAU MASUK DENGAN",
+    "orJoinNow": "ATAU BERGABUNG SEKARANG DENGAN",
+    "back": "Kembali ke layar Masuk",
+    "passwordMax": "Kata sandi harus paling banyak {{num}} karakter.",
+    "passwordMin": "Kata sandi harus setidaknya {{num}} karakter.",
+    "passwordConfirmationRequired": "Konfirmasi kata sandi diperlukan.",
+    "passwordNotMatch": "Passwords don't match",
+    "backHome": "Back to Home Screen"
+  },
+  "verifyEmail": {
+    "checkInbox": "Periksa kotak masuk Anda",
+    "forgotPass": "Jika sebuah akun dikaitkan dengan {{email}} , Anda akan menerima email berisi petunjuk lebih lanjut tentang cara menyetel ulang kata sandi.",
+    "confirm": "Kami baru saja mengirimkan tautan melalui email ke {{email}} . Klik tautan untuk mengonfirmasi akun Anda dan melengkapi profil Anda.",
+    "checkSpam": "Jika Anda tidak melihat pesan dalam beberapa menit, periksa folder spam, promosi, atau folder email masuk lainnya."
+  },
+  "aboutUs": {
+    "ourStory": "Kisah Kami",
+    "story": "FightPandemics adalah gagasan dari Manuel Gonzalez Alzuru, yang terinfeksi COVID-19 di Prancis. Sekembalinya ke Barcelona, dia menemukan bahwa dia tidak bisa mendapatkan bantuan meskipun ada orang yang ingin memberikannya. Grup Telegram dan WhatsApp mengatur dirinya sendiri di lingkungan Manuel, tetapi tanpa mengetahui secara pribadi siapa pun yang terlibat, dia tidak dapat meminta bantuan mereka. Terinspirasi oleh begitu banyak yang datang bersama, Manuel meluncurkan proyek dengan satu misi dalam pikiran: untuk memastikan bahwa orang lain dapat terhubung tepat waktu.",
+    "ourCommunity": "Komunitas Kami",
+    "community": "Kami dibangun oleh tim yang ber sebanyak 1200+ pengembang sukarelawan, desainer, ilmuwan, pakar kesehatan, dan manajer produk dari seluruh dunia",
+    "ourIdea": "Ide Kami",
+    "ourSupporters": "Pendukung Kami",
+    "followUs": "Ikuti kami di media sosial",
+    "contactUs": "Atau hubungi kami di",
+    "contactEmail": "contact@fightpandemics.com",
+    "heading": "We want to create a world where humans are more resilient to emergencies",
+    "subHeading": "by helping communities respond more quickly and effectively to crises.",
+    "forWhoHeading": "Who is this for?",
+    "forWho": "Anyone or any type of business, community group, government, or health care organisation who needs or wants to provide help.",
+    "FightPandemics": "FightPandemics",
+    "storyInspired": "Inspired by so many coming together, Manuel launched the project with one mission in mind: <span>to ensure that others could connect in time.</span>",
+    "connectPeople": "We connect people",
+    "connect": "An altruistic platform to connect those who need help with those who can provide it.",
+    "howWork": "How does this work?",
+    "helpBoard": "Help Board",
+    "helpBoardDetail": "A community platform for individuals and organizations to offer and request aid.",
+    "localGlobal": "Local & Global",
+    "localGlobalDetail": "Offer and request help within my community and around the world.",
+    "relevantContent": "Relevant Content",
+    "relevantContentDetail": "Expiration periods ensure the board is always up to date.",
+    "goToHelpBoard": "Go to Help Board",
+    "supporters": "Supporters",
+    "thanksSupporters": "Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.",
+    "becomeSupporter": "To learn more about how your business can become a supporter, please contact our partnerships team at",
+    "becomePartnerEmail": "partnerships@fightpandemics.com",
+    "companyLogoInfo": "Click on the company logo below to go to the supporter's website.",
+    "lifetimeSupporters": "Lifetime supporters",
+    "currentSupporters": "Current supporters",
+    "pastSupporters": "Past supporters",
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "Get Involved",
+    "joinVolunteer": "Join as Volunteer",
+    "joinAmbassador": "Join as Ambassador",
+    "joinStudentProgram": "Join Student Program",
+    "studentSummerProgram": "Student Summer Program",
+    "forStudentInAge": "For Students ages 14-18.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
+  },
+  "footer": {
+    "faq": "FAQ",
+    "blog": "Blog",
+    "termsConditions": "Syarat & Ketentuan",
+    "privacyPolicy": "Kebijakan Privasi",
+    "cookiesPolicy": "Kebijakan Cookies",
+    "copyright": "Copyright {{currentYear}} FightPandemics. All rights reserved."
+  },
+  "faq": {
+    "title": "Tentang FightPandemics / General",
+    "offerRequestHelp": "Menawarkan dan Meminta Bantuan",
+    "profileAccount": "Profil dan Akun",
+    "contects": "Kontak",
+    "general": [
+      [
+        "Apa itu FightPandemics?",
+        "FightPandemics adalah platform yang dibuat di tengah wabah COVID-19 dengan tujuan menjadi tempat tujuan bagi orang-orang yang terkena dampak dalam banyak hal oleh pandemi.",
+        "Misi utama kami adalah menghubungkan individu dan organisasi yang menawarkan dan meminta bantuan di tengah krisis pandemi, di tingkat lokal dan global. Tidak masalah jika Anda mencari bantuan medis, masker wajah, bantuan hukum, bahan makanan, seseorang untuk mengajak anjing Anda berjalan-jalan, atau mendukung aktivitas sehari-hari lainnya, Anda dapat mencarinya di sini:",
+        "Kami berusaha keras untuk mengumpulkan informasi penting yang sangat terfragmentasi, menghubungkan dalam satu jaringan individu, komunitas dan organisasi yang menangani masalah atau proyek terkait pandemi. Visi kami adalah untuk menciptakan dunia di mana setiap orang lebih tahan terhadap keadaan darurat, dengan membantu masyarakat menanggapi keadaan darurat kesehatan dan krisis kemanusiaan secara lebih cepat dan efektif."
+      ],
+      [
+        "Siapa FightPandemics?",
+        "FightPandemics adalah tim global yang semuanya sukarela dengan misi untuk melayani sebagai tempat tujuan bantuan. Tim kami terdiri dari 150+ relawan yang terlibat dari 70+ negara yang berjuang untuk membuat perbedaan. Platform ini dibangun dalam upaya kolaboratif yang inovatif, menyatukan berbagai kelompok pemecah masalah dengan berbagai keterampilan yang bersedia untuk bersama-sama berkreasi dan belajar satu sama lain.",
+        "Apakah Anda ingin bergabung dengan inisiatif kami? Hubungi <0>hr@fightpandemics.com</0>"
+      ],
+      [
+        "Di kota mana saja FightPandemics beroperasi?",
+        "FightPandemics adalah platform global. Versi pertama kami telah diluncurkan dalam bahasa Inggris, tetapi kami berencana untuk segera menambahkan bahasa lain."
+      ],
+      [
+        "Untuk siapa FightPandemics?",
+        "Siapa pun yang membutuhkan atau menawarkan bantuan dipersilakan untuk bergabung dengan platform kami dan terhubung dengan individu dan organisasi lain."
+      ],
+      [
+        "Bagaimana saya bisa memposting penawaran atau permintaan bantuan di FightPandemics?",
+        "<0>Ketika Anda bergabung dengan komunitas, Anda akan memiliki akses tak terbatas untuk melihat dan membuat posting dan komentar di platform FightPandemics.</0> <1>Untuk bergabung dengan komunitas sebagai pengguna, klik tombol \"Menu\" dan pilih opsi \"Gabung Sekarang/Masuk\". Di sana Anda akan dapat bergabung dengan kredensial email atau media sosial pilihan Anda.</1> <2>Setelah Anda menyelesaikan profil Anda, pilih tombol menu, pilih lihat profil saya dan klik tombol plus untuk membuat postingan pertama Anda.</2>"
+      ],
+      [
+        "Bagaimana saya bisa tetap up-to-date dengan berita FightPandemics?",
+        "Silakan ikuti kami di media sosial! Kami memposting pembaruan reguler ke <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2>, dan <3>Instagram</3>."
+      ],
+      [
+        "Apakah saya harus membayar untuk menggunakan FightPandemics?",
+        "Tidak, FightPandemics adalah platform gratis yang dijalankan oleh sukarelawan."
+      ],
+      [
+        "Jenis bantuan apa yang dapat saya tawarkan / minta di FightPandemics?",
+        "Anda dipersilakan untuk meminta dan menawarkan semua jenis bantuan untuk mendukung individu dan organisasi mengatasi selama pandemi COVID-19. Berikut adalah daftar dengan beberapa contoh jenis bantuan yang dapat Anda tawarkan atau minta:",
+        "<0>Bahan makanan</0><1>Perlengkapan medis</1><2>Bantuan hukum</2><3>Dukungan teknis</3><4>Informasi</4><5>Pendanaan</5><6>Acara dan kegiatan</6><7>Pendidikan</7><8>Wellness</8><9>Penelitian dan pengembangan</9>"
+      ],
+      [
+        "Bagaimana saya bisa mendapatkan bantuan?",
+        "Dari beranda FightPandemics, pilih \"Butuh bantuan\". Jika Anda memilih \"Bantuan lain\", Anda akan memasukkan lokasi Anda dan diarahkan ke halaman dengan penawaran bantuan di area yang dipilih. Anda kemudian dapat memfilter postingan yang ingin Anda lihat juga menurut penyedia dan jenisnya. Cara lainnya, Anda dapat memilih \"Lihat postingan komunitas\" dari halaman utama untuk melihat semua postingan dan menerapkan filter yang diinginkan."
+      ],
+      [
+        "Bagaimana saya bisa menawarkan bantuan?",
+        "<0>Anda dapat menawarkan bantuan sebagai individu atau sebagai organisasi.</0> <1>Dari beranda, pilih \"Beri bantuan\" untuk melihat semua postingan yang dibuat oleh pengguna yang meminta bantuan dan memfilter hasil berdasarkan lokasi dan jenis. Anda harus masuk untuk menghubungi mereka. Anda juga dapat membuat posting Anda sendiri yang menjelaskan bantuan yang dapat Anda tawarkan.</1>"
+      ],
+      [
+        "Apakah saya perlu masuk untuk melihat permintaan dan penawaran bantuan?",
+        "Anda tidak perlu masuk untuk melihat kiriman apa pun di papan bantuan, tetapi Anda harus masuk untuk mengomentari atau menyukai kiriman."
+      ],
+      [
+        "Apakah saya perlu masuk untuk membuat / mengedit posting?",
+        "Ya, Anda perlu membuat akun dan masuk jika ingin membuat atau mengedit postingan."
+      ],
+      [
+        "Apakah saya perlu mendaftar sebagai individu untuk membuat profil organisasi?",
+        "Ya, setelah Anda mendaftar sebagai individu, Anda dapat membuat satu atau beberapa profil organisasi yang ditautkan ke akun Anda."
+      ],
+      [
+        "Apakah nama/organisasi saya akan ditampilkan kepada pengguna lain?",
+        "Saat Anda membuat postingan yang menawarkan atau mencari bantuan, nama/organisasi Anda ditampilkan kepada siapa saja yang melihat papan bantuan."
+      ],
+      [
+        "Bagaimana saya dapat mempercayai bahwa postingan tersebut dapat diandalkan?",
+        "Sayangnya, kami tidak dapat memastikan bahwa semua posting dapat diandalkan, karena posting dibuat oleh pengguna kami. Namun kami membuat yang terbaik untuk menjaga konten yang relevan, dengan melakukan pembersihan data secara teratur dan dengan menonaktifkan posting setelah kedaluwarsa. Jika Anda memiliki kekhawatiran tentang isi posting silahkan hubungi kami di <0>support@fightpandemics.com</0>"
+      ],
+      [
+        "Bisakah Anda membantu saya dengan masalah medis?",
+        "FightPandemics bukan penyedia layanan medis."
+      ],
+      [
+        "Apakah saya perlu membagikan lokasi saya saat ini? Bagaimana jika saya tidak ingin membagikan lokasi saya?",
+        "Kami menggunakan lokasi untuk menunjukkan hasil yang paling relevan, namun, Anda juga dapat melihat semua posting. Karena FightPandemics memiliki ribuan posting dari seluruh, kami sarankan Anda memasukkan lokasi di dekat Anda untuk menyesuaikan hasil terbaik."
+      ],
+      [
+        "Tidak ada bantuan yang terdaftar di daerah saya. Apa yang harus kulakukan?",
+        "Komunitas kami selalu berkembang. Anda dipersilakan untuk menjadi orang pertama di wilayah Anda yang membuat pos dan meminta bantuan. Silakan lihat juga di layanan yang dapat diakses oleh siapa pun secara terpisah dari lokasinya."
+      ],
+      [
+        "Saya menemukan bug di situs web. Bagaimana cara melaporkannya?",
+        "Silakan kirim umpan balik, atau hubungi <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya tidak lagi diizinkan untuk menggunakan FightPandemics - apa yang harus saya lakukan?",
+        "Silakan hubungi kami di <0>support@fightpandemics.com</0> dan kami akan memeriksa apa masalahnya dengan akun Anda."
+      ],
+      [
+        "Informasi apa yang Anda simpan?",
+        "FightPandemics mengumpulkan dan memproses data pribadi pengguna hanya untuk tujuan yang dijelaskan dalam <0>kebijakan privasi kami.</0> Kami tidak akan memberikan akses atau berbagi data pribadi Anda dengan pihak ketiga mana pun, kecuali dengan pihak terkait yang ditetapkan dalam kebijakan ini."
+      ],
+      [
+        "Dapatkah saya memberikan/menerima bantuan dari kota atau negara bagian saya? Berapa lama postingan akan terlihat?",
+        "Posting untuk memberi/menerima bantuan bisa menggunakan kode pos, kota, negara bagian atau tingkat negara selama satu hari, seminggu, sebulan atau selamanya. Secara default, postingan akan disetel ke tingkat kota selama satu bulan."
+      ],
+      [
+        "Pertanyaan saya tidak terdaftar. Siapa yang bisa saya hubungi?",
+        "Untuk pertanyaan umum dan masalah lain yang tidak tercantum di sini, hubungi < 0 > contact@fightpandemics.com. < / 0 >"
+      ]
+    ],
+    "accountFAQ": [
+      [
+        "Bagaimana cara saya bergabung?",
+        "<0> Untuk bergabung dengan komunitas sebagai pengguna, klik tombol \"Menu\" dan pilih opsi \"Gabung Sekarang / Masuk\". Di sana Anda akan dapat bergabung dengan pilihan email atau kredensial media sosial Anda. </0><1> Ketika Anda bergabung dengan komunitas, Anda akan memiliki akses tak terbatas untuk melihat dan membuat posting dan komentar di platform FightPandemics. </1>"
+      ],
+      [
+        "Bagaimana cara mengubah profil individu saya menjadi profil organisasi?",
+        "Profil organisasi terkait dengan profil individu Anda. Setelah Anda membuat profil individu, Anda dapat menambahkan profil organisasi sebanyak yang Anda inginkan untuk dikaitkan dengan profil individu tersebut. Kredensial masuk Anda akan tetap menjadi email dan kata sandi yang Anda gunakan untuk bergabung ke profil individu."
+      ],
+      [
+        "Bagaimana cara mengubah profil organisasi saya menjadi profil individual?",
+        "Anda tidak dapat mengubah profil organisasi Anda menjadi profil individu. Untuk membuat profil organisasi, Anda harus memiliki profil individu. Setelah Anda membuat profil individu, Anda dapat menambahkan profil organisasi sebanyak yang Anda inginkan, terkait dengan profil individu tersebut. Kredensial masuk Anda akan tetap menjadi email dan kata sandi yang Anda gunakan untuk bergabung ke profil individu."
+      ],
+      [
+        "Bagaimana cara mengatur ulang kata sandi saya?",
+        "Klik \"Masuk\" dari beranda lalu klik \"Lupa kata sandi\" dan ikuti petunjuknya"
+      ],
+      [
+        "Mengapa kata sandi saya tidak valid?",
+        "Harap periksa apakah kata sandi Anda memiliki setidaknya 8 huruf. Jika Anda sudah memiliki akun tetapi lupa kata sandi masuk Anda, klik \"Masuk\" dari beranda dan kemudian buka \"Lupa kata sandi\"."
+      ],
+      [
+        "Saya mendaftar dan saya tidak menerima email konfirmasi. Apa yang harus saya lakukan?",
+        "Jika Anda belum menerima email konfirmasi, silakan coba opsi berikut:",
+        "Periksa folder Spam Anda untuk mencari email pemulihan.",
+        "Coba proses \"Pulihkan kata sandi\".",
+        "Jika opsi di atas tidak menyelesaikan masalah, jangan ragu untuk menghubungi tim dukungan kami: <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Bagaimana cara menghapus/membatalkan akun saya?",
+        "Jika Anda ingin menghapus akun Anda, silakan hubungi kami di <0>support@fightpandemics.com.</0>"
+      ],
+      [
+        "Bagaimana cara memperbarui informasi profil saya?",
+        "Dari menu di sudut kanan atas, pilih \"Profil Saya\", lalu klik ikon pena di bagian atas profil Anda. Anda akan dibawa ke layar di mana Anda dapat mengedit informasi profil Anda, dan memilih \"Simpan Perubahan\" setelah Anda selesai."
+      ],
+      [
+        "Bagaimana cara melaporkan postingan yang salah atau menyinggung?",
+        "Jika Anda menemukan posting yang salah atau melanggar Kode Etik FightPandemics, silakan email kami di <0>support@fightpandemics.com.</0>"
+      ]
+    ],
+    "contectsFAQ": [
+      [
+        "Saya ingin menjadi mitra atau sponsor.",
+        "Silakan hubungi tim kemitraan kami di <0>partnerships@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya dari pers/media.",
+        "Silahkan hubungi kami di <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya membutuhkan bantuan teknis.",
+        "Kami mohon maaf untuk itu. Kirimi kami email di <0> help@fightpandemics.com. </0> Karena kami semua adalah tim relawan, harap tunggu setidaknya 48 jam untuk mendapatkan tanggapan."
+      ],
+      [
+        "Saya ingin menghubungi FightPandemics untuk alasan lain.",
+        "Untuk pertanyaan umum dan masalah lain yang tidak tercantum di sini, silakan hubungi <0>contact@fightpandemics.com</0>"
+      ]
+    ],
+    "contacts": "Kontak",
+    "contactsFAQ": [
+      [
+        "Saya ingin menjadi mitra atau sponsor.",
+        "Silakan hubungi tim kemitraan kami di <0>partnerships@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya dari pers/media.",
+        "Silahkan hubungi kami di <0>pr@fightpandemics.com.</0>"
+      ],
+      [
+        "Saya membutuhkan bantuan teknis.",
+        "Kami mohon maaf untuk itu. Kirimi kami email di <0> help@fightpandemics.com. </0> Karena kami semua adalah tim relawan, harap tunggu setidaknya 48 jam untuk mendapatkan tanggapan."
+      ],
+      [
+        "Saya ingin menghubungi FightPandemics untuk alasan lain.",
+        "Untuk pertanyaan umum dan masalah lain yang tidak tercantum di sini, silakan hubungi <0> contact@fightpandemics.com. </0>"
+      ]
+    ],
+    "faqTitle": "Pertanyaan yang Sering Diajukan"
+  },
+  "cookies": {
+    "whatCookies": "APA ITU COOKIES?",
+    "whatCookiesContent": "<0>Situs Web ini menggunakan Cookies, dan mekanisme serupa lainnya (selanjutnya, Cookies). Cookies adalah file yang dikirim ke browser melalui server web untuk merekam aktivitas Pengguna di situs web tertentu atau di semua situs web, aplikasi, dan / atau layanan di situs web ini. Tujuan pertama Cookies adalah untuk menyediakan pengguna dengan akses yang lebih cepat dan lebih pribadi ke layanan yang ditawarkan. Cookies hanya terkait dengan Pengguna anonim dan komputernya dan tidak memberikan referensi yang memungkinkan pengurangan data pribadi Pengguna.</0><1>Pengguna dapat mengonfigurasi browsernya untuk memberi tahu dan menolak pemasangan Cookies yang dikirim oleh situs web ini, tanpa mengurangi kemampuan Pengguna untuk mengakses Konten. Namun, kami mencatat bahwa, dalam hal apa pun, kinerja situs web dapat menurun. Situs web ini memanfaatkan Bug Web, yang merupakan gambar kecil dan transparan yang dimasukkan ke dalam email. Ketika Pengguna membuka buletin Situs Web, gambar ini diunduh bersama dengan sisa konten email dan memungkinkan untuk mengetahui apakah email tertentu telah dibuka atau tidak, serta alamat IP tempat email tersebut diunduh. FightPandemics menggunakan informasi ini untuk mendapatkan statistik dan melakukan studi analitis tentang penerimaan emailnya oleh Pengguna.</1>",
+    "typeCookies": "JENIS, TUJUAN DAN FUNGSI COOKIES",
+    "typeCookiesBegin": "Cookies, bergantung pada permanennya, dapat dibagi menjadi Cookies sesi atau permanen. Yang pertama akan kedaluwarsa saat Pengguna menutup browser. Yang kedua kedaluwarsa tergantung pada kapan tujuan yang mereka layani terpenuhi atau ketika dihapus secara manual. Selain itu, tergantung pada tujuan Anda, Cookies yang digunakan oleh Situs Web ini dapat diklasifikasikan sebagai berikut:",
+    "typeCookiesContent": "<0>Cookie teknis: Ini memungkinkan pengguna untuk menavigasi melalui halaman web, platform atau aplikasi dan menggunakan berbagai opsi atau layanan yang ada di sana, seperti, misalnya, mengontrol lalu lintas dan komunikasi data, mengidentifikasi sesi, mengakses akses terbatas bagian, mengingat elemen yang membentuk pesanan, melakukan proses pembelian pesanan, membuat permintaan pendaftaran atau partisipasi dalam suatu acara, menggunakan elemen keamanan selama navigasi, menyimpan konten untuk penyebaran video atau suara atau berbagi konten melalui jejaring sosial .</0><1> Cookies analisis: Cookies yang diproses oleh kami atau pihak ketiga, yang memungkinkan untuk menghitung jumlah pengguna dan dengan demikian melakukan pengukuran dan analisis statistik dari penggunaan yang dilakukan oleh pengguna layanan yang ditawarkan. Untuk ini, penjelajahan Anda di situs web kami dianalisis untuk meningkatkan penawaran produk atau layanan yang kami tawarkan.</1><2> Cookies iklan: Apakah yang diproses oleh kami atau oleh pihak ketiga, memungkinkan kami mengelola penawaran ruang iklan yang ada di situs web seefisien mungkin, menyesuaikan konten iklan ke konten layanan yang diminta atau penggunaan yang Anda lakukan dari situs web kami. Untuk ini, kami dapat menganalisis kebiasaan penjelajahan Anda di Internet, dan kami dapat menampilkan iklan yang terkait dengan profil penjelajahan Anda.</2><3>Cookies periklanan perilaku: Cookies ini memungkinkan pengelolaan, dengan cara yang seefisien mungkin, dari ruang iklan yang, jika sesuai, editor telah disertakan dalam halaman web, aplikasi, atau platform tempat ia menyediakan permintaan yang diminta. layanan. Cookies ini menyimpan informasi tentang perilaku pengguna yang diperoleh melalui pengamatan terus menerus dari kebiasaan browsing mereka, yang memungkinkan pengembangan profil tertentu untuk menampilkan iklan berdasarkan itu.</3>",
+    "typeCookiesEnd": "Situs web dapat menggunakan layanan pihak ketiga yang mungkin memerlukan pemasangan Cookies pada Pengguna dan atas nama FightPandemics, dan akan mengumpulkan informasi untuk tujuan statistik tentang penggunaan Situs web oleh pengguna dan untuk penyediaan layanan lain yang terkait dengan Situs Web. aktivitas dan layanan Internet lainnya.",
+    "disableCookies": "BAGAIMANA CARA MENONAKTIFKAN COOKIES DAN WEB BUG DI BROWSERS UTAMA?",
+    "disableCookiesContent": "Biasanya dimungkinkan untuk berhenti menerima cookie browser atau berhenti menerima cookie dari layanan tertentu. Semua browser modern memungkinkan Anda untuk mengubah konfigurasi Cookie. Pengaturan ini biasanya ditemukan di 'opsi' atau 'Preferensi' menu browser Anda. Anda juga dapat mengkonfigurasi browser atau manajer email Anda, serta menginstal add-on gratis untuk mencegah Bug Web mengunduh saat membuka email. Gunakan petunjuk berikut sesuai dengan browser internet Anda untuk mengubah preferensi cookie:",
+    "updateCookies": "PEMBARUAN KEBIJAKAN COOKIES",
+    "updateCookiesContent": "FightPandemics dapat mengubah Kebijakan Cookies ini berdasarkan legislatif, persyaratan peraturan, atau dengan tujuan menyesuaikan kebijakan tersebut dengan instruksi yang dikeluarkan oleh Badan Perlindungan Data Spanyol, oleh karena itu Pengguna disarankan untuk mengunjungi halaman ini secara berkala untuk mengetahui perubahan yang terjadi di dalamnya. Ketika ada perubahan signifikan dalam Kebijakan Cookies ini, Pengguna akan diberitahukan baik melalui web atau melalui email kepada Pengguna yang terdaftar di layanan buletin.",
+    "cookieAlert": "Situs ini menggunakan cookies untuk memberikan layanan kami dan untuk menunjukkan kepada Anda informasi yang relevan. Dengan menggunakan situs kami, Anda mengakui bahwa Anda telah membaca dan memahami <0>Kebijakan Cookies </0> , <1>Kebijakan Privasi</1>, dan <2>Syarat & Ketentuan</2>. Penggunaan Anda atas Produk FightPandemics tunduk pada kebijakan dan persyaratan ini."
+  },
+  "comment": {
+    "writeAComment": "Tulis komen",
+    "onlyAuthenticated": "Hanya pengguna yang telah masuk yang dapat berkomentar.",
+    "loading": "Memuat...",
+    "showMore": "Tampilkan Lebih Banyak Komentar",
+    "comment": "Komentar",
+    "comment_plural": "Komentar",
+    "commentWithCount": "{{count}} Komentar",
+    "commentWithCount_plural": "{{count}} Komentar",
+    "edit": "Edit",
+    "delete": "Menghapus",
+    "save": "Menyimpan",
+    "showLess": "Show Less Comments"
+  },
+  "medical": {
+    "localNumber": "Nomor Darurat Lokal Anda",
+    "call": "Harap Hubungi Nomor Darurat Lokal Anda",
+    "nearestHospitals": "Rumah Sakit Terdekat",
+    "check": "Pemeriksaan Gejala",
+    "findHelp": "Temukan Bantuan"
+  },
+  "feedback": {
+    "poorly": "Buruk",
+    "well": "Sangat baik",
+    "howMeetNeeds": "Seberapa baik FightPandemics dalam memenuhi kebutuhan Anda?",
+    "almostFinished": "Kita hampir selesai!",
+    "howImpacted": "Bagaimana COVID-19 berdampak pada Anda?",
+    "mostValuable": "Fitur mana yang paling berharga bagi Anda?",
+    "oneChange": "Jika Anda dapat mengubah satu hal tentang FightPandemics, apakah itu?",
+    "otherFeedback": "Ada tanggapan lain untuk kami?",
+    "thankYou": "Terima kasih!",
+    "thankYouEarly": "Terima kasih telah menjadi pengguna awal FightPandemics!",
+    "thankYouMessage": "Masukan Anda sangat berarti dan membantu kami meningkatkan layanan selama dan setelah pandemi COVID-19.",
+    "submitFeedback": "Kirimkan Feedback",
+    "radio": {
+      "age": "Berapa usiamu?",
+      "unaffected": "Saya pergi kerja / sekolah dengan normal",
+      "quarantine": "Saya sehat, tetapi dalam karantina tinggal di rumah",
+      "symptomaticUntested": "Saya memiliki gejala ringan tetapi belum diuji",
+      "diagnosed": "Saya didiagnosis dengan COVID-19"
+    }
+  },
+  "relativeTime": {
+    "second": "Detik",
+    "second_plural": "Detik",
+    "secondWithCount": "{{count}} detik yang lalu",
+    "secondWithCount_plural": "{{count}} detik yang lalu",
+    "minute": "Menit",
+    "minute_plural": "Menit",
+    "minuteWithCount": "{{count}} menit yang lalu",
+    "minuteWithCount_plural": "{{count}} menit yang lalu",
+    "hour": "Jam",
+    "hour_plural": "Jam",
+    "hourWithCount": "{{count}} jam yang lalu",
+    "hourWithCount_plural": "{{count}} jam yang lalu",
+    "day": "Hari",
+    "day_plural": "Hari",
+    "dayWithCount": "{{count}} hari lalu",
+    "dayWithCount_plural": "{{count}} hari lalu",
+    "week": "Minggu",
+    "week_plural": "Minggu",
+    "weekWithCount": "{{count}} minggu lalu",
+    "weekWithCount_plural": "{{count}} minggu lalu",
+    "month": "Bulan",
+    "month_plural": "Bulan",
+    "monthWithCount": "{{count}} bulan lalu",
+    "monthWithCount_plural": "{{count}} bulan lalu",
+    "year": "tahun",
+    "year_plural": "tahun",
+    "yearWithCount": "{{count}} tahun lalu",
+    "yearWithCount_plural": "[{count}} tahun lalu"
+  },
+  "alt": {
+    "logo": "Logo FightPandemics",
+    "blogLink": "Link Blog FightPandemics",
+    "desktopBanner": "Banner Misi dan Visi Desktop",
+    "mobileBanner": "Banner Misi dan Visi Mobile",
+    "ideaImage": "Gambar Ide Kami",
+    "linkedinIcon": "Ikon LinkedIn FightPandemics",
+    "facebookIcon": "Ikon Facebook FightPandemics",
+    "instagramIcon": "Ikon Instagram FightPandemics",
+    "twitterIcon": "Ikon Twitter FightPandemics",
+    "createOrg": "membuat organisasi",
+    "personalDataImage": "dua orang berdiri di samping daftar barang pribadi",
+    "envelope": "Amplop",
+    "avatar": "Avatar"
+  },
+  "error": {
+    "title": "Harap sertakan judul untuk posting Anda.",
+    "description": "Harap sertakan deskripsi untuk postingan Anda.",
+    "help": "Silakan pilih jenis bantuan.",
+    "tags": "Silahkan tambahkan setidaknya satu tag.",
+    "privacyPolicyRequired": "Anda harus menyetujui kebijakan privasi kami sebelum melanjutkan",
+    "termsConditionsRequired": "Anda harus menyetujui syarat dan ketentuan kami sebelum melanjutkan",
+    "failedPredictions": "Gagal mendapatkan prediksi. Silakan coba lagi.",
+    "failedLocation": "Gagal mendapatkan lokasi.",
+    "failedLocationDetails": "Gagal mendapatkan detail lokasi. Silakan coba lagi.",
+    "User denied Geolocation": "Pengguna menolak Geolokasi.",
+    "resetBrowserLocationPermission": "Silahkan atur ulang izin lokasi browser Anda atau masukkan alamat.",
+    "enterAddressAgain": "Silakan masukkan alamat atau coba lagi.",
+    "loggedInToCreateOrgProfile": "Anda harus masuk untuk membuat profil organisasi",
+    "selectOneOption": "Silakan pilih setidaknya satu opsi",
+    "userExists": "Akun sudah terdaftar",
+    "invalidState": "tidak valid",
+    "passwordsShouldMatch": "Kata sandi harus sama",
+    "passwordWeak": "Kata sandi terlalu lemah",
+    "wrongCredentials": "Email atau kata sandi salah",
+    "failedChangePasswordEmail": "Gagal merubah kata sandi email",
+    "feedbackAlreadySubmitted": "Feedback sudah dikirim",
+    "emailIssue": "Email sudah digunakan atau tidak valid",
+    "emailUnverified": "Email tidak terverifikasi",
+    "maxSignInAttemptsExceeded": "Jumlah maksimum masuk terlampaui.",
+    "failedSubmittingFeedback": "Gagal mengirimkan feedback, alasan:",
+    "failedCreatingUser": "Gagal membuat user, alasan:",
+    "failedLoadingProfile": "Gagal memuat profil, alasan:",
+    "failedLoadingActivity": "Gagal memuat aktivitas, alasan:",
+    "failedCreatingOrgProfile": "Gagal membuat profil organisasi, alasan:",
+    "failedUpdatingOrgProfile": "Gagal memperbarui profil organisasi, alasan:",
+    "failedUpdatingProfile": "Gagal memperbarui profil, alasan:",
+    "failedAuthentication": "Autentikasi gagal, alasan:",
+    "failedLogin": "Login gagal, alasan:",
+    "failedSignup": "Pendaftaran gagal, alasan:",
+    "failedPasswordRecovery": "Pemulihan kata sandi gagal, alasan:",
+    "http": {
+      "Bad Request": "Bad Request",
+      "Unauthorized": "Tidak Sah",
+      "Payment Required": "Pembayaran Diperlukan",
+      "Forbidden": "Terlarang",
+      "Not Found": "Tidak Ditemukan",
+      "Method Not Allowed": "Metode Tidak Diizinkan",
+      "Not Acceptable": "Tidak Dapat Diterima",
+      "Proxy Authentication Required": "Autentikasi Proxy Diperlukan",
+      "Request Timeout": "Request Timeout",
+      "Conflict": "Konflik",
+      "Gone": "Hilang",
+      "Length Required": "Panjang Diperlukan",
+      "Precondition Failed": "Prekondisi Gagal",
+      "Payload Too Large": "Muatan Terlalu Besar",
+      "URI Too Long": "URL Terlalu Panjang",
+      "Unsupported Media Type": "Jenis Media Tidak Didukung",
+      "Range Not Satisfiable": "Rentang Tidak Memuaskan",
+      "Expectation Failed": "Expektasi Gagal",
+      "I'm a teapot": "Aku Teko",
+      "Misdirected Request": "Permintaan Salah",
+      "Unprocessable Entity": "Entitas Tidak Dapat Diproses",
+      "Locked": "Terkunci",
+      "Failed Dependency": "Dependensi Gagal",
+      "Too Early": "Terlalu Dini",
+      "Upgrade Required": "Upgrade Diperlukan",
+      "Precondition Required": "Prasyaratan Diperlukan",
+      "Too Many Requests": "Terlalu Banyak Permintaan",
+      "Request Header Fields Too Large": "Bidang Header Permintaan Terlalu Besar",
+      "Unavailable For Legal Reasons": "Tidak Tersedia Karena Alasan Hukum",
+      "Internal Server Error": "Internal Server Error",
+      "Not Implemented": "Tidak Diterapkan",
+      "Bad Gateway": "Bad Gateway",
+      "Service Unavailable": "Layanan Tidak Tersedia",
+      "Gateway Timeout": "Gateway Timeout",
+      "HTTP Version Not Supported": "Versi HTTP Tidak Didukung",
+      "Variant Also Negotiates": "Varian Juga Bernegosiasi",
+      "Insufficient Storage": "Penyimpanan Tidak Cukup",
+      "Loop Detected": "Loop Terdeteksi",
+      "Not Extended": "Tidak Diperpanjang",
+      "Network Authentication Required": "Otentikasi Jaringan Diperlukan"
+    },
+    "avatar": {
+      "fileTypeNotSupported": "Sorry, we only support image files of type jp(e)g and png.",
+      "fileSizeTooLarge": "Please upload an image of size less than 5 MB.",
+      "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
+      "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
+      "networkError": "Sorry, some network error occurred."
+    },
+    "wrongOldPassword": "Wrong current password"
+  },
+  "TEMP: We are not a provider of healthcare services": "Kami bukan penyedia layanan kesehatan",
+  "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Layanan ini disediakan dengan itikad baik untuk orang yang tidak bisa mendapatkan bantuan dan sumber daya selama darurat kesehatan masyarakat.",
+  "TEMP: Please consult your healthcare provider for medical advice": "Silakan konsultasi dengan penyedia layanan kesehatan Anda untuk saran medis",
+  "TEMP: I Understand": "Saya mengerti",
+  "TEMP: COVID-19 Screening Tool": "Alat skrining COVID-19",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "Kami akan menanyakan berberapa pertanyaan tentang gejala, riwayat bepergian dan kontak dengan orang lain",
+  "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "Jawaban Anda tidak akan disimpan atau dibagikan. Ini hanya alat untuk membantu dunia.",
+  "TEMP: For Myself": "Untuk diri sendiri",
+  "TEMP: For Someone Else": "Untuk orang lain",
+  "TEMP: Is this an emergency?": "Apakah ini darurat?",
+  "TEMP: Yes, I am experiencing at least one of these symptoms": "Ya, saya mengalami setidaknya satu dari gejala-gejala ini",
+  "TEMP: Yes, they are experiencing at least one of these symptoms": "Ya, saya mengalami setidaknya satu dari gejala-gejala ini",
+  "TEMP: No, I do not have any of these symptoms": "Tidak, saya tidak punya gejala-gejala ini",
+  "TEMP: No, they do not have any of these symptoms": "Tidak, mereka tidak punya gejala-gejala ini",
+  "TEMP: Under 18": "Di bawah 18 tahun",
+  "TEMP: Between 18 and 64": "Antara 18 dan 64",
+  "TEMP: 65 or older": "65 atau lebih tua",
+  "TEMP: Multiple options can be selected": "Bisa pilih beberapa opsi",
+  "TEMP: Fever, chills, or sweating": "Demam, menggigil atau berkeringat",
+  "TEMP: New or worsening cough": "Baru batuk atau semakin memburuk",
+  "TEMP: Sore throat": "Sakit Tenggorokan",
+  "TEMP: Vomiting or diarrhea": "Muntah dan diare",
+  "TEMP: Do you live in a care facility?": "Apakah Anda tinggal di fasilitas perawatan?",
+  "TEMP: Do they live in a care facility?": "Apakah mereka tinggal di fasilitas perawatan?",
+  "TEMP: This includes nursing homes or assisted living facilities.": "Ini termasuk panti jompo atau fasilitas hidup berbantuan.",
+  "TEMP: No, I don’t live in a long-term care facility": "Tidak, saya tidak tinggal di fasilitas perawatan jangka panjang",
+  "TEMP: I live in a long-term care facility": "Saya tinggal di fasilitas perawatan jangka panjang",
+  "TEMP: No, they don’t live in a long-term care facility": "Tidak, mereka tidak tinggal di fasilitas perawatan jangka panjang",
+  "TEMP: They live in a long-term care facility": "Mereka tinggal di fasilitas perawatan jangka panjang",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "Ini termasuk rumah sakit, ruang gawat darurat, pengaturan medis lainnya, atau fasilitas perawatan jangka panjang. Pilih semua yang berlaku.",
+  "TEMP: No, I don’t work or plan to work in a care facility": "Tidak, saya tidak bekerja atau tidak akan bekerja di fasilitas perawatan",
+  "TEMP: No, they don’t work or plan to work in a care facility": "Tidak, mereka tidak bekerja atau tidak akan bekerja di fasilitas perawatan",
+  "TEMP: Do any of these apply to you?": "Apakah ini berlaku untuk Anda?",
+  "TEMP: Do any of these apply to them?": "Apakah ini berlaku untuk mereka?",
+  "TEMP: Pregnancy": "Kehamilan",
+  "TEMP: None of the above": "Bukan dari salah satu di atas",
+  "TEMP: Please consult a medical professional for advice": "Silakan konsultasi dengan tim medis ",
+  "TEMP: Done": "Selesai",
+  "TEMP: Retake the Test": "Ulangi tes",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Berdasarkan gejala-gejala yang Anda laporkan, Anda perlu segera mencari bantuan.\nHubungi nomor darurat!",
+  "TEMP: Your Responses": "Tanggapan Anda",
+  "avatar": {
+    "submitBtn": "Kirimkan",
+    "cancelBtn": "Cancel",
+    "tryAgainBtn": "Try Again"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.",
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "Go to Help Board"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select",
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "The content of the message request would appear here",
+      "p2": "once you select one from the message requests inbox."
+    },
+    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
+    "deleteMessageQuestion": "Delete the message?",
+    "deleteMessageText": "The selected message will be permanently deleted from both your device and the recipient's device. Are you sure you want to delete?",
+    "blockQuestion": "Block the conversation from {{username}}?",
+    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "archiveQuestion": "Archive the conversation?",
+    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+    "sendSuccessHeader": "Your message was successfully sent",
+    "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
+    "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
+    "sendFailedHeader": "Oops, something went wrong",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not delivered.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not delivered.",
+    "ignoreDialogTitle": "Ignore the message request from {{username}}?",
+    "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
+    "blockDialogTitle": "Block the conversation from {{username}}?",
+    "blockDialogMessage": "By selecting \"Block\", {{username}} won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "block": "Block",
+    "archive": "Archive",
+    "accept": "Accept",
+    "ignore": "Ignore",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "edited": "Edited",
+    "saveEdit": "Save changes",
+    "didDelete": "You deleted this message.",
+    "wasDeleted": "This message was deleted.",
+    "loadMore": "Load More...",
+    "justNow": "Just now",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "activeNow": "Active Now",
+    "message": "Message",
+    "sendMessage": "Send a message",
+    "typeMessage": "Type a message...",
+    "viewMessage": "View message",
+    "to": "To",
+    "send": "Send",
+    "done": "Selesai",
+    "close": "Tutup"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Unsubscribe",
+      "canceled": "No changes will be made to your notification preferences",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
+  }
+}
