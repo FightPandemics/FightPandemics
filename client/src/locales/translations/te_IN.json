@@ -93,7 +93,13 @@
         "నిధులు",
         "ఆర్ అండ్ డీ",
         "టెక్",
-        "ఇతర"
+        "ఇతర",
+        "ఇతర",
+        "Childcare",
+        "Translations",
+        "స్వచ్ఛంద సేవకుడు",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "స్థానం",
@@ -124,7 +130,13 @@
         "Funding": "నిధులు",
         "R&D": "ఆర్ అండ్ డీ",
         "Tech": "టెక్",
-        "Other": "ఇతరులు"
+        "Other": "ఇతరులు",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "స్వచ్ఛంద సేవకుడు",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "సహాయం అభ్యర్థించడం",
@@ -211,7 +223,9 @@
     "cancel": "రద్దు",
     "confirm": "నిర్ధారించండి",
     "edited": "సవరించబడింది",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Security Information",
       "changePassword": "Change Password",
       "notificationInfo": "Notification Preference",
-      "emailNotification": "Email Notification",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "ఇమెయిల్",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
-      "editNotification": "Edit Notification"
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "ఆర్గనైజేషన్ ప్రొఫైల్ సృష్టించు",
@@ -364,7 +382,9 @@
       "editAccount": "ఖాతా సమాచారాన్ని సవరించండి",
       "updateSuccess": "ఆర్గనైజేషన్ విజయవంతంగా అప్ డేట్ చేయబడింది",
       "orgNameRequired": "సంస్థ పేరు అవసరం",
-      "global": "గ్లోబల్"
+      "global": "గ్లోబల్",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "అంబాసిడర్ గా చేరండి",
     "joinStudentProgram": "స్టూడెంట్ ప్రోగ్రామ్ లో చేరండి",
     "studentSummerProgram": "స్టూడెంట్ సమ్మర్ ప్రోగ్రామ్",
-    "forStudentInAge": "14-18 సంవత్సరాల వయస్సు గల విద్యార్థులకు."
+    "forStudentInAge": "14-18 సంవత్సరాల వయస్సు గల విద్యార్థులకు.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
   },
   "footer": {
     "faq": "తరచూ అడిగే ప్రశ్నలు",
@@ -970,6 +993,7 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Badge } from "antd";
@@ -166,10 +166,10 @@ const Header = ({
   const renderInboxIcon = (mobile, activeStyles) => {
     return (
       <InboxIcon mobile={mobile}>
-        <Link
+        <NavLink
           id={GTM.nav.prefix + GTM.nav.inbox}
           to="/inbox"
-          activeStyles={activeStyles}
+          activeStyle={activeStyles}
         >
           <Badge
             count={rooms.reduce(
@@ -185,7 +185,7 @@ const Header = ({
           >
             <SvgIcon src={mail}></SvgIcon>
           </Badge>
-        </Link>
+        </NavLink>
       </InboxIcon>
     );
   };

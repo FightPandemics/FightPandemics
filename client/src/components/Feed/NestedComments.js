@@ -1,5 +1,5 @@
 // Core
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import axios from "axios";
 import { Input, Tooltip, Space } from "antd";
 import { Avatar } from "components/Avatar";
@@ -13,6 +13,8 @@ import { useTranslation } from "react-i18next";
 import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
+import { Menu, Dropdown } from "antd";
+import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
 import { selectActorId } from "reducers/session";
@@ -46,6 +48,20 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
   const actorId = useSelector(selectActorId);
+
+  const [visible, setVisible] = useState(false);
+  const [isComponentVisible, setIsComponentVisible] = useState(false);
+  const ref = useRef(false);
+
+  const handleMenuItemClick = async (e) => {  
+    setVisible(false);
+    setIsComponentVisible(!isComponentVisible);
+  };
+
+  const handleSubMenuClick = (e) => {
+    setVisible(true);
+     setIsComponentVisible(!isComponentVisible);
+  };
 
   const renderAvatar = (
     <Avatar src={comment.author.photo} alt={`${comment.author.name}`}>
@@ -170,7 +186,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   };
 
   const handleDeleteComment = (e) => {
-    e.target.blur();
+    // e.target.blur();
     deleteComment(comment);
   };
 
@@ -178,24 +194,17 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
     setEditComment(!editComment);
   };
 
-  const commentActions = [
-    <Space size="small">
-      <StyledCommentButton
-        size="small"
-        ghost
-        onClick={() => toggleEditComment()}
-      >
-        {t("comment.edit")}
-      </StyledCommentButton>
-      <StyledCommentButton
-        size="small"
-        ghost
-        onClick={(e) => handleDeleteComment(e)}
-      >
-        {t("comment.delete")}
-      </StyledCommentButton>
-    </Space>,
-  ];
+  const commentActions = (
+    <Menu  onClick={handleMenuItemClick}>
+    <Menu.Item   onClick={() => toggleEditComment()} >
+      {t("comment.edit")}
+    </Menu.Item>
+    <Menu.Item   onClick={(e) => handleDeleteComment(e)} >
+      {t("comment.delete")}
+    </Menu.Item>
+  </Menu>
+     
+  ); 
 
   const editCommentContent = (
     <>
@@ -206,7 +215,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
             value={editedComment}
             autoSize={{ minRows: 2 }}
           />
-          <Space direction="vertical">
+          <Space>
             <span></span>
             <StyledCommentButton
               size="small"
@@ -222,17 +231,41 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   );
 
   const renderCommentContent = (
-    <Space direction="vertical">
+    <Space direction='vertical' > 
       <span>{editedComment}</span>
-      {actorId === comment.author.id && <span>{commentActions}</span>}
+      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
+              {isComponentVisible ? (
+                <Dropdown 
+                  // style={{ position: "fixed"}}
+                  onVisibleChange={handleSubMenuClick}
+                  onBlur={() => {
+                    setVisible(false);
+                  }}
+                  visible={visible}
+                  overlay={commentActions}
+                >
+                  <div
+                    className="ant-dropdown-link"
+                    onClick={handleSubMenuClick}
+                  >
+                    <SubMenuIcon  />
+                  </div>
+                </Dropdown>
+              ) : (
+                <div className="ant-dropdown-link" onClick={handleSubMenuClick}>
+                  <SubMenuIcon />
+                </div>
+              )}
+            </div>}</span>}
     </Space>
   );
 
   return (
-    <div>
+    <div >
       {comment ? (
         <StyledComment
           datetime={
+            
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
@@ -262,3 +295,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
 };
 
 export default NestedComments;
+
+
+
+

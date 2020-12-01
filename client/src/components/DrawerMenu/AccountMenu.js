@@ -10,7 +10,7 @@ import GTM from "constants/gtm-tags";
 import { Divider, NavItem, CustomSvgIcon } from "./components";
 
 import BackIcon from "assets/icons/back-white.svg";
-import PlusIcon from "assets/icons/plus.svg";
+import PlusIcon from "assets/icons/large-plus.svg";
 import DoneIcon from "assets/icons/done-white.svg";
 
 const StyledAvatar = styled(Avatar)`
