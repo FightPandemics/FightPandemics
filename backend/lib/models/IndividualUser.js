@@ -1,13 +1,7 @@
 const { Schema } = require("mongoose");
-const { model: User } = require("./User");
+const { model: User, PERMISSIONS } = require("./User");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
-const PERMISSIONS = {
-  user: 0,
-  moderator: 2,
-  administrator: 4,
-};
-
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
 }
@@ -82,5 +76,4 @@ module.exports = {
   INDIVIDUAL_USER_TYPES,
   model: IndividualUser,
   schema: individualUserSchema,
-  PERMISSIONS,
 };
