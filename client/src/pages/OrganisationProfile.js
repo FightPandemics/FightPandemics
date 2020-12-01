@@ -524,6 +524,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 />
               )}
               {emptyFeed() && <></>}
+              {isSelf && (
+                <CreatePost
+                  gtmPrefix={GTM.organisation.orgPrefix}
+                  onCancel={onToggleCreatePostDrawer}
+                  loadPosts={refetchPosts}
+                  visible={modal}
+                  user={user}
+                />
+              )}
             </FeedWrapper>
           </div>
           {isSelf && (
