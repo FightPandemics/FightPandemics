@@ -22,6 +22,14 @@ export const USER_STATUS_UPDATE = "USER_STATUS_UPDATE";
 
 export const SET_LAST_MESSAGE = "SET_LAST_MESSAGE";
 
+export const GET_NOTIFICATIONS_SUCCESS = "GET_NOTIFICATIONS_SUCCESS";
+export const NEW_NOTIFICATION = "NEW_NOTIFICATION";
+export const LOCAL_NOTIFICATIONS_MARK_AS_READ =
+  "LOCAL_NOTIFICATIONS_MARK_AS_READ";
+export const LOCAL_NOTIFICATION_MARK_AS_CLEARED =
+  "LOCAL_NOTIFICATION_MARK_AS_CLEARED";
+export const CLEAR_ALL_LOCAL_NOTIFICATIONS = "CLEAR_ALL_LOCAL_NOTIFICATIONS";
+
 export function identifySuccess() {
   return {
     type: IDENTIFY_SUCCESS,
@@ -126,6 +134,20 @@ export function messageDeleted(payload) {
 export function messageEdited(payload) {
   return {
     type: MESSAGE_EDITED,
+    payload,
+  };
+}
+
+export function notificationReceived(payload) {
+  return {
+    type: NEW_NOTIFICATION,
+    payload,
+  };
+}
+
+export function getNotificationsSuccess(payload) {
+  return {
+    type: GET_NOTIFICATIONS_SUCCESS,
     payload,
   };
 }

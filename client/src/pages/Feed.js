@@ -14,7 +14,7 @@ import qs from "query-string";
 
 // Antd
 import { Menu } from "antd";
-
+import { WhiteSpace } from "antd-mobile";
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
@@ -39,6 +39,8 @@ import { selectPosts, postsActions } from "reducers/posts";
 import Users from "components/Feed/Users";
 import FeedSearch from "components/Input/FeedSearch";
 import { setQueryKeysValue } from "components/Feed/utils";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   optionsReducer,
@@ -353,11 +355,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleCreatePost = () => {
+  const handleCreatePost = (trigger) => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
+      //prevent redirect if function was triggered by useEffect(on component mount)
+      if (trigger === "useEffect") return;
       sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
@@ -473,11 +477,12 @@ const Feed = (props) => {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
-        if (posts.length < limit) {
-          dispatch(postsActions.finishLoadingAction());
-        } else if (meta.total === limit) {
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (page === lastPage) {
           dispatch(postsActions.finishLoadingAction());
         }
+
         let postsInState;
         if (history.location.state) {
           const { keepPostsState, keepPageState } = history.location.state;
@@ -488,24 +493,10 @@ const Feed = (props) => {
         }
         if (postsInState) {
           if (Object.keys(postsInState).length === meta.total) {
-            dispatch(
-              postsActions.setLoadingAction({
-                isLoading: true,
-                loadMore: false,
-              }),
-            );
+            dispatch(postsActions.finishLoadingAction());
           }
         }
-        const lastPage = Math.ceil(meta.total / limit) - 1;
-        console.log(page, lastPage, meta.total);
-        if (page === lastPage) {
-          dispatch(
-            postsActions.setLoadingAction({
-              isLoading: true,
-              loadMore: false,
-            }),
-          );
-        }
+
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
@@ -567,7 +558,7 @@ const Feed = (props) => {
       "createPostAttemptLoggedOut",
     );
     if (createPostAttemptLoggedOut) {
-      handleCreatePost();
+      handleCreatePost("useEffect");
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -706,16 +697,14 @@ const Feed = (props) => {
                 />
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
-                  <button
+                  <CreatePostButton
                     id={gtmTag(GTM.post.createPost)}
                     onClick={handleCreatePost}
+                    inline={true}
+                    icon={<PlusIcon />}
                   >
                     {t("post.create")}
-                    <CreatePostIcon
-                      id={gtmTag(GTM.post.createPost)}
-                      src={creatPost}
-                    />
-                  </button>
+                  </CreatePostButton>
                 )}
               </HeaderWrapper>
               <MobileSearchWrapper>
@@ -741,6 +730,7 @@ const Feed = (props) => {
                   />
                 </div>
               }
+              <WhiteSpace size={"lg"} />
               {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
                 <Posts
                   isAuthenticated={isAuthenticated}

@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import GetInvButton from "components/Button/GetInvolvedButton";
+import LinkButton from "components/Button/LinkButton";
 import HelpBoardButton from "components/Button/HelpBoardButton";
 import {
   AboutUsContainer,
@@ -16,6 +17,7 @@ import {
   SocialContainer,
   AboutUsLink,
   FlexBox,
+  PressContainer,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
 // import OurStory from "assets/ourStory.mp4";
@@ -56,21 +58,26 @@ import notionLogo from "assets/supporters-logos/notionLogo.svg";
 import onePassword from "assets/supporters-logos/onePassword.png";
 import pagerdutyLogo from "assets/supporters-logos/pagerduty.png";
 import papertrail from "assets/supporters-logos/papertrail.svg";
+import panvala from "assets/supporters-logos/panvala.png";
 import prowlyLogo from "assets/supporters-logos/prowlyLogo.png";
+import pcloud from "assets/supporters-logos/pcloud.png";
 import reply from "assets/supporters-logos/reply.png";
 import sendgridLogo from "assets/supporters-logos/sendgrid-logo.svg";
 import seo4ajaxLogo from "assets/supporters-logos/seo4ajaxLogo.png";
 import supermetricsLogo from "assets/supporters-logos/supermetricsLogo.png";
 import sentryLogo from "assets/supporters-logos/sentry-logo.svg";
 import saucelabsLogos from "assets/supporters-logos/saucelabsLogo.png";
+import silkey from "assets/supporters-logos/silkey.png";
 import slackLogo from "assets/supporters-logos/slack-logo.svg";
 import startupGrind from "assets/supporters-logos/startupgrind.png";
 import socialbeeLogo from "assets/supporters-logos/socialbee-logo.svg";
 import talend from "assets/supporters-logos/talend.svg";
+import TEC from "assets/supporters-logos/TEC.png";
 import theEscapeGame from "assets/supporters-logos/theescapegame.png";
 import twilioLogo from "assets/supporters-logos/twilio-logo.svg";
 import typeformLogo from "assets/supporters-logos/typeform-logo.png";
 import veriff from "assets/supporters-logos/veriff.png";
+import vowel from "assets/supporters-logos/vowel.png";
 import workableLogo from "assets/supporters-logos/workableLogo.png";
 import whitesourceLogo from "assets/supporters-logos/whitesourceLogo.png";
 import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
@@ -123,46 +130,53 @@ const LogosMap = new Map([
   [onePassword, "https://1password.com/"],
   [pagerdutyLogo, "https://www.pagerduty.com"],
   [papertrail, "https://www.papertrail.com/"],
+  [panvala, "https://panvala.com/"],
   [prowlyLogo, "https://prowly.com/en"],
+  [pcloud, "https://www.pcloud.com/"],
   [reply, "https://reply.io/"],
   [sendgridLogo, "http://sendgrid.com"],
   [saucelabsLogos, "http://saucelabs.com"],
   [sentryLogo, "https://sentry.io/welcome"],
   [seo4ajaxLogo, "https://www.seo4ajax.com"],
+  [silkey, "https://silkey.io/"],
   [socialbeeLogo, "https://socialbee.io/"],
   [slackLogo, "https://slack.com"],
   [startupGrind, "https://www.startupgrind.com/"],
   [supermetricsLogo, "http://supermetrics.com"],
   [talend, "https://www.talend.com/"],
+  [TEC, "https://tecommons.org/"],
   [theEscapeGame, "https://theescapegame.com/"],
   [twilioLogo, "http://www.twilio.com"],
   [typeformLogo, "http://www.typeform.com"],
   [veriff, "https://www.veriff.com/"],
+  [vowel, "https://www.vowel.com/"],
   [workableLogo, "https://www.workable.com"],
   [zeplinLogo, "http://zeplin.io"],
   [zendeskLogo, "http://www.zendesk.com"],
 ]);
 
 const supporterLogosLifetime = [
+  accessibe,
   algoliaLogo,
+  datadog,
   hackoladeLogo,
   kite,
   lokaliseLogo,
   miroLogo,
-  nubela,
+  panvala,
   saucelabsLogos,
+  silkey,
   sentryLogo,
   socialbeeLogo,
   talend,
+  TEC,
   whitesourceLogo,
 ];
 const supporterLogosCurrent = [
   airtableLogo,
   awsLogo,
   aut0Logo,
-  accessibe,
   akveo,
-  datadog,
   datasaur,
   figmaLogo,
   gitkrakenLogo,
@@ -173,10 +187,12 @@ const supporterLogosCurrent = [
   hrcloud,
   lambdatestLogo,
   mongodbLogo,
-  notionLogo,
   newrelic,
+  notionLogo,
+  nubela,
   pagerdutyLogo,
   papertrail,
+  pcloud,
   prowlyLogo,
   onePassword,
   reply,
@@ -189,6 +205,7 @@ const supporterLogosCurrent = [
   typeformLogo,
   theEscapeGame,
   veriff,
+  vowel,
   workableLogo,
   zeplinLogo,
   zendeskLogo,
@@ -361,6 +378,24 @@ const AboutUs = () => {
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
       </SupporterContainer>
+
+      <PressContainer>
+        <FlexBox direction="column" align="center">
+          <h1>{t("press")}</h1>
+          <p>{t("pressInfo")}</p>
+          <p>
+            <a href="mailto:pr@fightpandemics.com" target="_blank">
+              pr@fightpandemics.com
+            </a>
+          </p>
+          <LinkButton
+            href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
+            target="_blank"
+          >
+            {t("pressKitLink")}
+          </LinkButton>
+        </FlexBox>
+      </PressContainer>
 
       <SocialStyle>
         <FlexBox direction="column" align="center">

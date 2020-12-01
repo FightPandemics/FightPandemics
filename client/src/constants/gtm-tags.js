@@ -10,6 +10,7 @@ module.exports = {
     inbox: "_INB",
     language: "_LS",
     switch: "_SWC",
+    notifications: "_NOT",
   },
   homePage: {
     prefix: "HP",
@@ -135,6 +136,11 @@ module.exports = {
     "te-IN": "_TE_IN",
     "ms-MY": "_MS_MY",
     vi: "_VI",
+    "mk-MK": "_MK_MK",
+    "pt-PT": "_PT_PT",
+    "ar": "_AR",
+    "tl": "_TL",
+    "it": "_IT",
   },
   search: {
     prefix: "SCH",
@@ -178,4 +184,11 @@ module.exports = {
     joinAmbassador: "_GI_JA",
     joinStudentProgram: "_GI_JSP",
   },
+  notifications: {
+    prefix: "NOT",
+    like: "_LK",
+    share: "_SH",
+    comment: "_CM",
+    settings: "_SET",
+  }
 };

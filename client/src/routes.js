@@ -6,6 +6,7 @@ import CreateOrganisationProfile from "./pages/CreateOrganisationProfile";
 import OrganisationProfile from "./pages/OrganisationProfile";
 import EditOrganisationProfile from "./pages/EditOrganisationProfile";
 import EditOrganisationAccount from "./pages/EditOrganisationAccount";
+import EditOrganisationNotifications from "./pages/EditOrganisationNotifications";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -14,6 +15,7 @@ import CookiesPolicy from "./pages/CookiesPolicy";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditAccount from "./pages/EditAccount";
+import EditNotifications from "./pages/EditNotifications";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
 import Login from "./pages/Login";
@@ -26,6 +28,7 @@ import Logout from "./pages/Logout";
 import Faq from "./pages/Faq";
 import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
+import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from './pages/EditSecurity';
 
 const routes = [
@@ -121,6 +124,13 @@ const routes = [
     },
   },
   {
+    path: "/edit-organisation-notifications",
+    component: EditOrganisationNotifications,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
     path: "/medical",
     component: Medical,
   },
@@ -185,6 +195,13 @@ const routes = [
     },
   },
   {
+    path: "/edit-notifications",
+    component: EditNotifications,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
     path: "/edit-account",
     component: EditAccount,
     props: {
@@ -239,6 +256,11 @@ const routes = [
   {
     path: "/toggleqa",
     component: ToggleQAMode,
+  },
+  {
+    path: "/unsubscribe",
+    component: Unsubscribe,
+    layout: "logo",
   },
   {
     path: "*",

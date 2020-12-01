@@ -27,8 +27,6 @@ const HorizontalRule = styled.hr`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: 0;
     height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(243, 244, 254, 1);
     display: block;
     max-width: 325px;
   }

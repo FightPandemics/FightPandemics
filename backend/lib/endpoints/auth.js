@@ -42,13 +42,20 @@ async function routes(app) {
       const dbUser = await User.findById(userId).populate("organisations");
       let user = null;
       if (dbUser) {
-        const { firstName, lastName, organisations, usesPassword } = dbUser;
+        const {
+          firstName,
+          lastName,
+          organisations,
+          photo,
+          usesPassword,
+        } = dbUser;
         user = {
           email,
           firstName,
           id: userId,
           lastName,
           organisations,
+          photo,
           usesPassword,
         };
       }
@@ -179,7 +186,6 @@ async function routes(app) {
         );
         throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
       }
-
     }
   });
 

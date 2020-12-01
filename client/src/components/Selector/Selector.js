@@ -10,6 +10,7 @@ const BaseSelector = ({
   suffixIcon,
   filterOptions,
   defaultValue,
+  minWidth
 }) => (
   <StyledSelector
     suffixIcon={suffixIcon}
@@ -19,6 +20,7 @@ const BaseSelector = ({
     getPopupContainer={() =>
       document.getElementsByClassName("ant-modal-body")[0]
     }
+    minWidth={minWidth}
   >
     {options.map((item) => (
       <Option {...optionProps} key={item.value} value={item.value}>

@@ -86,14 +86,20 @@
         "Les courses / La nourriture",
         "Entreprise",
         "Éducation",
-        "Légal",
-        "Bien-être / santé mentale",
+        "Logement",
+        "Juridique",
+        "Bien-être/Mental",
         "Divertissement",
-        "Informations",
+        "Information",
         "Financement",
         "R&D",
         "Technologie",
-        "Autre"
+        "Autre",
+        "Garde d'enfants",
+        "Traductions",
+        "Faire du bénévolat",
+        "Personnel (payé)",
+        "Travail à distance"
       ],
       "labels": {
         "location": "Lieu",
@@ -124,7 +130,13 @@
         "Funding": "Financement",
         "R&D": "R&D",
         "Tech": "Technologie",
-        "Other": "Autres"
+        "Other": "Autres",
+        "Housing": "Logement",
+        "Childcare": "Garde d'enfants",
+        "Translations": "Traductions",
+        "Volunteer": "Faire du bénévolat",
+        "Staff (paid)": "Personnel (payé)",
+        "Remote Work": "Travail à distance"
       },
       "lookingForOptions": {
         "Request Help": "Demander de l'aide",
@@ -210,7 +222,10 @@
     "delete": "Effacer",
     "cancel": "Annuler",
     "confirm": "Confirmer",
-    "edited": "édité"
+    "edited": "édité",
+    "share_plural": "Je partage",
+    "deletePostConfirmationTitle": "Confirmation de la suppression d'un poste",
+    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire"
   },
   "profile": {
     "common": {
@@ -256,7 +271,16 @@
       "emailDomainInvalid": "Le domaine e-mail est invalide",
       "sendMessage": "Envoyer un message",
       "securityInfo": "Information sur la sécurité",
-      "changePassword": "Changer le mot de passe"
+      "changePassword": "Changer le mot de passe",
+      "notificationInfo": "Préférence de notification",
+      "emailNotification": "Notification par e-mail",
+      "instant": "Instantanée",
+      "daily": "Quotidienne",
+      "weekly": "Hebdomadaire",
+      "biweekly": "Bihebdomadaire",
+      "digest": "Résumé",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Adresse courriel",
@@ -293,7 +317,9 @@
       "enterCurrentPassword": "Saisissez le mot de passe actuel",
       "enterNewPassword": "Saisissez un nouveau mot de passe",
       "updatingPassword": "Mise à jour du mot de passe",
-      "editSecurity": "Modifier la sécurité"
+      "editSecurity": "Modifier la sécurité",
+      "editNotification": "Modifier les notifications",
+      "editAccount": "Modifier le compte"
     },
     "org": {
       "title": "Créer un profil d'organisation",
@@ -356,11 +382,13 @@
       "editAccount": "Modifier les informations du compte",
       "updateSuccess": "Organisation mise à jour avec succès",
       "orgNameRequired": "Nom de l'organisation est requise",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Modifier le compte de l'organisation",
+      "editOrgNotification": "Modifier la notification de l'organisation"
     }
   },
   "auth": {
-    "signIn": "Bienvenue",
+    "signIn": "Se connecter",
     "joinNow": "Inscrivez-vous",
     "email": "Adresse courriel",
     "enterEmail": "Entrer l'adresse e-mail",
@@ -426,7 +454,10 @@
     "joinAmbassador": "Rejoignez en tant qu'ambassadeur",
     "joinStudentProgram": "Rejoignez le programme d'étudiants",
     "studentSummerProgram": "Programme d'emploi d'été pour étudiants",
-    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans."
+    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans.",
+    "press": "Presse",
+    "pressInfo": "Si vous êtes membre de la presse, contactez-nous à l'adresse suivante",
+    "pressKitLink": "Aller au dossier de presse"
   },
   "footer": {
     "faq": "FAQ",
@@ -542,7 +573,7 @@
     "accountFAQ": [
       [
         "Comment adhérer?",
-        "<0> Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </ 0> <1> Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics. </1>"
+        "<0>Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre/Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </0> <1>Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics.</1>"
       ],
       [
         "Comment puis-je changer mon profil individuel en profil d'organisation?",
@@ -851,5 +882,118 @@
     "submitBtn": "Envoyer",
     "cancelBtn": "Annuler",
     "tryAgainBtn": "Réessayer"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Fév",
+      "march": "Mar",
+      "april": "Avr",
+      "may": "Mai",
+      "june": "Juin",
+      "july": "Juil",
+      "august": "Août",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Déc"
+    },
+    "weekdaysShort": {
+      "sunday": "Dim",
+      "monday": "Lun",
+      "tuesday": "Mar",
+      "wednesday": "Mer",
+      "thursday": "Jeu",
+      "friday": "Ven",
+      "saturday": "Sam"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Demandes de message",
+    "settings": {
+      "header": "Paramètres des messages",
+      "blocked": "Comptes bloqués",
+      "archived": "Conversations archivées",
+      "unblock": "Débloquer",
+      "unarchive": "Désarchiver",
+      "archiveEmpty": "Vous n'avez pas de conversations archivées.",
+      "blockedEmpty": "Vous n'avez bloqué aucun compte."
+    },
+    "emptyInbox": {
+      "header": "Vous n'avez pas de nouveaux messages",
+      "p1": "Vous n’avez pas encore reçu de messages.",
+      "p2": "Retournez au tableau d'aide pour trouver des offres ou des demandes auxquelles répondre.",
+      "goToHB": "Aller au tableau d'aide"
+    },
+    "selectRoom": {
+      "header": "Sélectionnez n'importe quel message à lire",
+      "p1": "Le contenu du message apparaîtra ici une fois que vous avez sélectionné",
+      "p2": "une conversation depuis la boîte de réception."
+    },
+    "selectRequest": {
+      "header": "Sélectionnez une demande de message à lire",
+      "p1": "Le contenu de la demande de message apparaîtra ici",
+      "p2": "une fois que vous en sélectionnez une dans la boîte de réception des demandes de message."
+    },
+    "didBlock": "Vous avez bloqué {{username}}. Débloquez pour recevoir à nouveau des messages de leur part.",
+    "wasBlocked": "Vous avez été bloqué par {{username}}. Vous ne pouvez plus leur envoyer de message.",
+    "acceptPropmt": "Voulez-vous accepter la demande de message? Vous ne pouvez pas répondre tant que vous n'avez pas accepté la demande.",
+    "deleteMessageQuestion": "Supprimer le message?",
+    "deleteMessageText": "Le message sélectionné sera définitivement supprimé de votre appareil et de celui du destinataire. Êtes-vous sûr de vouloir le supprimer?",
+    "blockQuestion": "Bloquer la conversation de {{username}}?",
+    "blockText": "En sélectionnant \"Bloquer\", {{username}} ne pourra plus vous envoyer un message ou une demande de message. Vous pouvez aller dans les Paramètres des messages pour gérer les comptes bloqués.",
+    "archiveQuestion": "Archiver la conversation?",
+    "archiveText": "Si vous souhaitez relire la conversation, vous devrez aller dans les Paramètres des messages pour la restaurer.",
+    "sendSuccessHeader": "Votre message a été envoyé avec succès",
+    "sendSuccessText": "Votre message à {{username}} concernant \"{{title}}\" a été envoyé avec succès.",
+    "sendSuccessTextNoPost": "Votre message à {{username}} été envoyé avec succès.",
+    "sendFailedHeader": "Oups, un problème est survenu",
+    "sendFailedText": "Votre message à {{username}} concernant le \"{{title}}\" n'a pas été envoyé.",
+    "sendFailedTextNoPost": "Votre message à {{username}} n'a pas été envoyé.",
+    "ignoreDialogTitle": "Ignorer la demande de message de {{username}}?",
+    "ignoreDialogMessage": "La demande de message sera supprimée de votre liste. Voulez-vous vraiment ignorer?",
+    "blockDialogTitle": "Bloquer la conversation de {{username}}?",
+    "blockDialogMessage": "En sélectionnant \"Bloquer\", {{username}} ne pourra plus vous envoyer un message ou une demande de message. Vous pouvez aller dans les Paramètres des messages pour gérer les comptes bloqués.",
+    "block": "Bloquer",
+    "archive": "Archiver",
+    "accept": "Accepter",
+    "ignore": "Ignorer",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "edited": "Édité",
+    "saveEdit": "Enregistrer",
+    "didDelete": "Vous avez supprimé ce message.",
+    "wasDeleted": "Ce message a été supprimé.",
+    "loadMore": "Charger plus...",
+    "justNow": "À l'instant",
+    "lastSeen": "Dernière visite",
+    "never": "Jamais",
+    "activeNow": "Actif maintenant",
+    "message": "Message",
+    "sendMessage": "Envoyer un message",
+    "typeMessage": "Tapez un message ...",
+    "viewMessage": "Voir le message",
+    "to": "À",
+    "send": "Envoyer",
+    "done": "Terminé",
+    "close": "Fermer"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Se désabonner",
+      "canceled": "Aucune modification ne sera apportée à vos préférences de notification",
+      "success": "Votre préférence de notification est mise à jour"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> avez aimé votre publication <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
+    "empty": "Plus de notifications"
   }
 }

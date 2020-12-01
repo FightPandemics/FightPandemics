@@ -19,7 +19,7 @@ const StyledFooter = styled.footer`
   position: absolute;
   background: ${colors.selago};
   line-height: 2rem;
-  font-family: Poppins;
+  font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 1.1rem;
 
   bottom: 0;

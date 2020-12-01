@@ -58,8 +58,16 @@ const FILTER_OPTIONS = {
         value: "Groceries/Food",
       },
       {
+        text: "feed.filters.typesOptions.Housing",
+        value: "Housing",
+      },
+      {
         text: "feed.filters.typesOptions.Business",
         value: "Business",
+      },
+      {
+        text: "feed.filters.typesOptions.Childcare",
+        value: "Childcare",
       },
       {
         text: "feed.filters.typesOptions.Education",
@@ -80,7 +88,23 @@ const FILTER_OPTIONS = {
       },
       { text: "feed.filters.typesOptions.Funding", value: "Funding" },
       { text: "feed.filters.typesOptions.R&D", value: "R&D" },
+      {
+        text: "feed.filters.typesOptions.Remote Work",
+        value: "Remote Work",
+      },
+      {
+        text: "feed.filters.typesOptions.Staff (paid)",
+        value: "Staff (paid)",
+      },
       { text: "feed.filters.typesOptions.Tech", value: "Tech" },
+      {
+        text: "feed.filters.typesOptions.Translations",
+        value: "Translations",
+      },
+      {
+        text: "feed.filters.typesOptions.Volunteer",
+        value: "Volunteer",
+      },
       { text: "feed.filters.typesOptions.Other", value: "Other" },
     ],
   },

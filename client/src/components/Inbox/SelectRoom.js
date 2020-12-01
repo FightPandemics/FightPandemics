@@ -4,24 +4,6 @@ import emptyinbox from "assets/empty-inbox.svg";
 import { theme, mq } from "constants/theme";
 import { useTranslation } from "react-i18next";
 
-const MsgHeader = styled.div`
-  display: none;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    border-bottom: 0.1rem solid rgba(232, 232, 232, 0.7);
-    padding: 2.2rem 1.54rem;
-    font-size: 1.4rem;
-    font-weight: 700;
-    span {
-      position: absolute;
-      left: 1.4rem;
-      bottom: 0.7rem;
-    }
-  }
-`;
 const EmptyInboxContainer = styled.div`
   position: relative;
   width: 100%;
@@ -36,6 +18,7 @@ const EmptyInboxContainer = styled.div`
   }
   p {
     line-height: 1;
+    text-align: center;
   }
   h3 {
     margin-top: 3.2rem;
@@ -51,9 +34,6 @@ export const SelectRoom = ({ isRequestPage }) => {
   const { t } = useTranslation();
   return (
     <EmptyInboxContainer>
-      <MsgHeader>
-        <span>{t("messaging.header")}</span>
-      </MsgHeader>
       <img
         className="empty-inbox-logo"
         src={emptyinbox}

@@ -45,6 +45,7 @@ Cypress.Commands.add("validateCorrectScreenIsOpen", (string) => {
     cy.url().should("contain", string);
   });
 });
+
 Cypress.Commands.overwrite("visit", (visit, url) => {
   return visit(url, {
     onBeforeLoad: (_contentWindow) => {
@@ -53,4 +54,10 @@ Cypress.Commands.overwrite("visit", (visit, url) => {
       });
     },
   });
+});
+
+Cypress.Commands.add("checkAnyKindOfLinks", (element, link) => {
+  cy.get(element)
+    .should("be.visible")
+    .and("have.attr", "href", link);
 });

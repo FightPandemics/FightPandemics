@@ -95,6 +95,8 @@ import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -111,7 +113,7 @@ const URLS = {
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-const OrganisationProfile = () => {
+const OrganisationProfile = ({ isAuthenticated }) => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -139,8 +141,8 @@ const OrganisationProfile = () => {
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
-  const urlsAndEmail = { ...urls, email };
-
+  const urlsAndEmail = { ...urls, email: isOwner ? null : email };
+  if (isOwner) sessionStorage.removeItem("msgModal");
   const {
     isLoading,
     loadMore,
@@ -456,14 +458,16 @@ const OrganisationProfile = () => {
                     onClick={onToggleDrawer}
                   />
                 )}
-                {!isOwner && !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
-                  <MessageModal
-                    isAuthenticated={true}
-                    isFromProfile={true}
-                    postAuthorName={name}
-                    authorId={organisationId}
-                  />
-                )}
+                {!isOwner &&
+                  !/Sourced by FightPandemics\ \(.*?\)/.test(name) && (
+                    <MessageModal
+                      isAuthenticated={isAuthenticated}
+                      isFromProfile={true}
+                      isFromUserCard={"ORG"}
+                      postAuthorName={name}
+                      authorId={organisationId}
+                    />
+                  )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
               <IconsContainer>
@@ -478,12 +482,19 @@ const OrganisationProfile = () => {
               <PlaceholderIcon />
               {isSelf && (
                 <>
-                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
-                    src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    src={createPost}
                     onClick={onToggleCreatePostDrawer}
                   />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
                 </>
               )}
             </SectionHeader>
@@ -513,15 +524,6 @@ const OrganisationProfile = () => {
                 />
               )}
               {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
-                  user={user}
-                />
-              )}
             </FeedWrapper>
           </div>
           {isSelf && (
@@ -535,12 +537,17 @@ const OrganisationProfile = () => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.org.editAccount")}
+                  {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.individual.editProfile") + " "}
+                  {t("profile.org.editOrgProfile") + " "}
+                </Link>
+              </DrawerHeader>
+              <DrawerHeader>
+                <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                  {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

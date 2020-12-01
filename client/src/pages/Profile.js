@@ -19,6 +19,8 @@ import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   ProfileLayout,
@@ -96,9 +98,10 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
+  isAuthenticated,
   match: {
     params: { id: pathUserId },
-  }
+  },
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -138,7 +141,7 @@ const Profile = ({
     error: postsError,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
-
+  if (ownUser) sessionStorage.removeItem("msgModal");
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
@@ -379,7 +382,8 @@ const Profile = ({
               )}
               {!ownUser && (
                 <MessageModal
-                  isAuthenticated={true}
+                  isAuthenticated={isAuthenticated}
+                  isFromUserCard={"USER"}
                   isFromProfile={true}
                   postAuthorName={`${firstName} ${lastName}`}
                   authorId={userId}
@@ -424,12 +428,19 @@ const Profile = ({
             <PlaceholderIcon />
             {isSelf && (
               <>
-                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                 <CreatePostIcon
                   id={GTM.user.profilePrefix + GTM.post.createPost}
                   src={createPost}
                   onClick={onToggleCreatePostDrawer}
                 />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
               </>
             )}
           </SectionHeader>
@@ -480,7 +491,9 @@ const Profile = ({
             key="bottom"
           >
             <DrawerHeader>
-              <Link to="/edit-account">{t("profile.org.editAccount")}</Link>
+              <Link to="/edit-account">
+                {t("profile.individual.editAccount")}
+              </Link>
             </DrawerHeader>
             <DrawerHeader>
               <Link to="/edit-profile">
@@ -494,6 +507,11 @@ const Profile = ({
                 </Link>
               </DrawerHeader>
             )}
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
+              </Link>
+            </DrawerHeader>
           </CustomDrawer>
         )}
       </ProfileLayout>

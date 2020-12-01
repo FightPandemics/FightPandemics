@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import TextAvatar from "components/TextAvatar";
@@ -63,6 +63,14 @@ const MessageModal = ({
   const textAreaRef = useRef(null);
   let history = useHistory();
 
+  useEffect(() => {
+    if (isAuthenticated && sessionStorage.getItem("msgModal") === authorId) {
+      showModal();
+    }
+    sessionStorage.removeItem("msgModal");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const showModal = async () => {
     await setVisible(true);
     document.querySelector(".ant-modal-root").style.opacity = 0;
@@ -108,6 +116,8 @@ const MessageModal = ({
   };
   const handleCancel = () => {
     setVisible(false);
+    setText("");
+    textAreaRef.current.value = "";
   };
   const handleDone = () => {
     setMsgSent(false);
@@ -144,6 +154,7 @@ const MessageModal = ({
             visible={visible}
             onOk={handleOk}
             okText={t("messaging.send")}
+            cancelText={t("messaging.cancel")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !!!text, id: gtmId + GTM.inbox.sent }}
@@ -209,7 +220,8 @@ const MessageModal = ({
         </div>
       ) : (
         <Link
-          onClick={() =>
+          onClick={() => {
+            sessionStorage.setItem("msgModal", authorId);
             sessionStorage.setItem(
               "postredirect",
               postId
@@ -217,8 +229,8 @@ const MessageModal = ({
                 : isFromUserCard == "USER"
                 ? `/profile/${authorId}`
                 : `/organisation/${authorId}`,
-            )
-          }
+            );
+          }}
           to={{
             pathname: LOGIN,
             state: { from: window.location.href },
@@ -229,7 +241,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} alt={"message-icon"}/>
+            <img src={activeemail} alt={"message-icon"} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>

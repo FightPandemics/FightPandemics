@@ -45,7 +45,7 @@ export const BubbleContainer = styled.div`
 export const MessagesContainer = styled.div`
   position: fixed;
   width: calc(100% - 33.6rem);
-  height: ${(props) => {
+  max-height: ${(props) => {
     if (
       props.status === "pending" ||
       props.blockStatus === "was-blocked" ||
@@ -72,12 +72,12 @@ export const MessagesContainer = styled.div`
   white-space: pre-wrap;
   overflow-y: scroll;
   &.request-page {
-    height: calc(100vh - 25.7rem);
+    max-height: calc(100vh - 25.7rem);
     bottom: 14rem;
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 100vw;
-    height: ${(props) => {
+    max-height: ${(props) => {
       if (
         props.status === "pending" ||
         props.blockStatus === "was-blocked" ||
@@ -99,14 +99,14 @@ export const MessagesContainer = styled.div`
     }}
     &.request-page {
       bottom: 20rem;
-      height: calc(100vh - 31rem);
+      max-height: calc(100vh - 31rem);
     }
   }
   &.input-expanded {
-    height: calc(100vh - 22.2rem);
+    max-height: calc(100vh - 22.2rem);
     bottom: 10.5rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      height: calc(100vh - 20.6rem);
+      max-height: calc(100vh - 20.6rem);
       bottom: 10rem;
     }
   }

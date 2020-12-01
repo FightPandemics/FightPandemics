@@ -14,6 +14,11 @@ import {
   USER_STATUS_UPDATE,
   SET_LAST_MESSAGE,
   MESSAGE_EDITED,
+  NEW_NOTIFICATION,
+  GET_NOTIFICATIONS_SUCCESS,
+  LOCAL_NOTIFICATIONS_MARK_AS_READ,
+  LOCAL_NOTIFICATION_MARK_AS_CLEARED,
+  CLEAR_ALL_LOCAL_NOTIFICATIONS,
 } from "../actions/wsActions";
 
 const initialState = {
@@ -21,7 +26,7 @@ const initialState = {
   rooms: [],
   chatLog: [],
   isIdentified: false,
-  newMessage: null,
+  notifications: [],
 };
 
 function wsReducer(state = initialState, action) {
@@ -179,6 +184,44 @@ function wsReducer(state = initialState, action) {
       } else return state;
       return {
         ...state,
+      };
+    case NEW_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [action.payload, ...state.notifications],
+      };
+    case GET_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        notifications: [...action.payload],
+      };
+    case LOCAL_NOTIFICATIONS_MARK_AS_READ:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications.map((n) => ({ ...n, readAt: new Date() })),
+        ],
+      };
+    case LOCAL_NOTIFICATION_MARK_AS_CLEARED:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications.map((notification) =>
+            notification._id === action.payload.notificationId
+              ? { ...notification, isCleared: true }
+              : notification,
+          ),
+        ],
+      };
+    case CLEAR_ALL_LOCAL_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications.map((notification) => ({
+            ...notification,
+            isCleared: true,
+          })),
+        ],
       };
   }
   return state;

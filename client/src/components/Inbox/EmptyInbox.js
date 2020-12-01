@@ -6,24 +6,6 @@ import { Link } from "react-router-dom";
 import { theme, mq } from "constants/theme";
 import { useTranslation } from "react-i18next";
 
-const MsgHeader = styled.div`
-  display: none;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    border-bottom: 1px solid rgba(232, 232, 232, 0.7);
-    padding: 1.6em 1.1em;
-    font-size: 1.143em;
-    font-weight: 700;
-    span {
-      position: absolute;
-      left: 1em;
-      bottom: 0.5em;
-    }
-  }
-`;
 const StyledButton = styled(Button)`
   width: 19rem;
   font-weight: 400;
@@ -49,24 +31,31 @@ const EmptyInboxContainer = styled.div`
   }
   p {
     line-height: 1;
+    text-align: center;
   }
   h3 {
     margin-top: 3.2rem;
     font-size: 1.6rem;
     font-weight: bold;
   }
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: none;
-  }
+  ${props=> props.mobile?`
+    padding: 0;
+    margin-top: 1em;
+    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  ` : `
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  `}
+
 `;
 
-export const EmptyInbox = () => {
+export const EmptyInbox = ({mobile}) => {
   const { t } = useTranslation();
   return (
-    <EmptyInboxContainer>
-      <MsgHeader>
-        <span>{t("messaging.header")}</span>
-      </MsgHeader>
+    <EmptyInboxContainer mobile={mobile}>
       <img
         className="empty-inbox-logo"
         src={emptyinbox}

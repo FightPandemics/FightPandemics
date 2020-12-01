@@ -1,5 +1,4 @@
 import moment from "moment";
-import i18n from "i18next";
 import createPostSettings from "assets/data/createPostSettings";
 import filterOptions from "assets/data/filterOptions";
 
@@ -11,7 +10,7 @@ const week = expires.options[1].value;
 const month = expires.options[2].value;
 const forever = expires.options[3].value;
 
-moment.updateLocale(i18n.language, {
+moment.updateLocale("en", {
   relativeTime: {
     future: "in %s",
     past: day,
@@ -29,11 +28,22 @@ moment.updateLocale(i18n.language, {
   },
 });
 
+const timeStringSanityCheck = (strInput) => {
+  // for some OS + browser + local environment
+  // we could see relativeTime til now is like '1,month' etc.
+  // convert them to be valid keys
+  if (strInput.includes("day")) return day;
+  if (strInput.includes("week")) return week;
+  if (strInput.includes("month")) return month;
+  return forever;
+};
+
 const translateISOToString = (ISO) => {
   if (ISO !== null) {
     const time = moment(ISO).subtract(1, "forever");
     const timeString = time.fromNow().split(" ");
-    const ttl = timeString[timeString.length - 1];
+    const ttlString = timeString[timeString.length - 1];
+    const ttl = timeStringSanityCheck(ttlString.toLowerCase());
     return ttl;
   }
 };
