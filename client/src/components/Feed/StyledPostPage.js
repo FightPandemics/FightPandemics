@@ -26,6 +26,11 @@ export const StyledPostPagePostCard = styled(PostCard)`
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       height: 100%;
     }
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      width: 100%;
+      height: 100%;
+      margin-top: 2rem;
+    }
   }
   margin-top: 1rem;
   overflow-wrap: break-word;
