@@ -15,5 +15,7 @@ export const StyledCommentButton = styled(Button)`
 `;
 
 export const StyledLoadMoreButton = styled(StyledCommentButton)`
-    border-color: ${lightGray};
+    border: unset!important;
+    margin: 1rem 0 2rem 5rem;
+
 `;
