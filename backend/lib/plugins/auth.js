@@ -5,7 +5,7 @@ const fastifySecretProvider = require("fastify-authz-jwks");
 const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 const { getReqParam } = require("../utils");
-const { PERMISSIONS } = require("../models/IndividualUser");
+const { PERMISSIONS } = require("../models/User");
 
 const TOKEN_COOKIE = "token";
 // 2nd non-httpOnly "dummy" cookie so user can logout offline

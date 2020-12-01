@@ -1,7 +1,6 @@
 const moment = require("moment");
 const tlds = require("tlds");
 const _isEmail = require("validator/lib/isEmail");
-const { PERMISSIONS } = require("./models/IndividualUser");
 
 const generateUUID = ({ range }) => {
   const chars =

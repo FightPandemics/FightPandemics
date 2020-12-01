@@ -11,7 +11,7 @@ const {
   createUserSchema,
   updateUserSchema,
 } = require("./schema/users");
-const { PERMISSIONS } = require("../models/IndividualUser");
+const { PERMISSIONS } = require("../models/User");
 
 /*
  * /api/users
