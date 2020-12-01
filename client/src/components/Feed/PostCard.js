@@ -20,6 +20,7 @@ const PostCard = styled(Card)`
   }
 
   .pre-header {
+    max-width: calc(100% - 4rem);
     position: absolute;
     top: 0;
     padding: 1rem 0;
