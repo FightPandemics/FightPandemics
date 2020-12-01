@@ -557,37 +557,6 @@ async function routes(app) {
       return updatedUser.notifyPrefs;
     },
   );
-
-
-  app.patch(
-    "/:userId/permission", 
-    {
-      preValidation: [
-        app.authenticate,
-        app.setActor,
-        app.checkPermission("administrator"),
-      ]
-    },
-    async (req) => {
-    
-      const {
-        params: { userId },
-        body: {level},
-      } = req;
-      
-      const [updatedErr, updatedUser] = await app.to(
-        User.findOneAndUpdate(
-          {_id: userId },
-          { $set: {permissions: PERMISSIONS[level]}},
-          { new: true }
-        )
-      )
-      if (updatedErr) {
-        req.log.error(updateErr, "Failed to add permission");
-        throw app.httpErrors.internalServerError();
-      }
-      return updatedUser.permissions;
-  });
 }
 
 module.exports = routes;

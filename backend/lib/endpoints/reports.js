@@ -52,38 +52,6 @@ async function routes(app) {
       };
     },
   );
-
-  // get all reported posts
-  app.get(
-    "/posts",
-    {
-      preValidation: [
-        app.authenticate,
-        app.setActor,
-        app.checkPermission("moderator"),
-      ],
-      schema: getPostReportsSchema,
-    },
-    async (req) => {
-      const {
-        query: { page },
-      } = req;
-
-      const skip = REPORTS_PER_PAGE * page;
-
-      const [getPostsErr, reportedPosts] = await app.to(
-        Post.find({ status: "flagged" }, { new: true })
-          .skip(skip)
-          .limit(REPORTS_PER_PAGE),
-      );
-      if (getPostsErr) {
-        req.log.error(updateErr, "Failed getting posts");
-        throw app.httpErrors.internalServerError();
-      }
-
-      return reportedPosts;
-    },
-  );
 }
 
 module.exports = routes;
