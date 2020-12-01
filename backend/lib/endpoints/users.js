@@ -1,5 +1,5 @@
 const Auth0 = require("../components/Auth0");
-const { uploadUserAvatar, deleteUserAvatars } = require("../components/CDN");
+const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken, createSearchRegex } = require("../utils");
 const { config } = require("../../config");
 const jwt = require("jsonwebtoken");
@@ -473,7 +473,6 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
       try {
-        await deleteUserAvatar(userId);
         user.photo = null;
         const [updateErr, updatedUser] = await app.to(user.save());
         if (updateErr) {

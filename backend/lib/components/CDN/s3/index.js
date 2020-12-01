@@ -29,28 +29,6 @@ function upload(Bucket, Key, Body) {
   return s3.upload(uploadParams).promise();
 }
 
-async function listByPrefix(Bucket, Prefix) {
-  const listParams = {
-    Bucket,
-    Prefix,
-  };
-  return s3.listObjects(listParams).promise();
-}
-
-async function deleteObjects(Bucket, keys) {
-  const deleteParams = {
-    Bucket,
-    Delete: {
-      Objects: keys.map((Key) => {
-        Key;
-      }),
-    },
-  };
-  return s3.deleteObjects(deleteParams).promise();
-}
-
 module.exports = {
   upload,
-  listByPrefix,
-  deleteObjects,
 };
