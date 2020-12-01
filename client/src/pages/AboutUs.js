@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import GetInvButton from "components/Button/GetInvolvedButton";
+import LinkButton from "components/Button/LinkButton";
 import HelpBoardButton from "components/Button/HelpBoardButton";
 import {
   AboutUsContainer,
@@ -16,6 +17,7 @@ import {
   SocialContainer,
   AboutUsLink,
   FlexBox,
+  PressContainer,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
 // import OurStory from "assets/ourStory.mp4";
@@ -154,7 +156,9 @@ const LogosMap = new Map([
 ]);
 
 const supporterLogosLifetime = [
+  accessibe,
   algoliaLogo,
+  datadog,
   hackoladeLogo,
   kite,
   lokaliseLogo,
@@ -172,9 +176,7 @@ const supporterLogosCurrent = [
   airtableLogo,
   awsLogo,
   aut0Logo,
-  accessibe,
   akveo,
-  datadog,
   datasaur,
   figmaLogo,
   gitkrakenLogo,
@@ -376,6 +378,24 @@ const AboutUs = () => {
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
       </SupporterContainer>
+
+      <PressContainer>
+        <FlexBox direction="column" align="center">
+          <h1>{t("press")}</h1>
+          <p>{t("pressInfo")}</p>
+          <p>
+            <a href="mailto:pr@fightpandemics.com" target="_blank">
+              pr@fightpandemics.com
+            </a>
+          </p>
+          <LinkButton
+            href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
+            target="_blank"
+          >
+            {t("pressKitLink")}
+          </LinkButton>
+        </FlexBox>
+      </PressContainer>
 
       <SocialStyle>
         <FlexBox direction="column" align="center">

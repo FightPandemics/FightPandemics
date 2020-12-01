@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Badge } from "antd";
@@ -21,6 +21,7 @@ import { NotificationDropDown } from "components/Notifications/NotificationDropD
 
 const { colors, typography } = theme;
 const { large } = typography.size;
+const navbarHeight = "6rem";
 
 const BrandLink = styled(Link)`
   display: inline-flex;
@@ -30,7 +31,7 @@ const BrandLink = styled(Link)`
 `;
 
 const StyledNavBar = styled(NavBar)`
-  height: 6rem;
+  height: ${navbarHeight};
   margin-top: 0;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: auto;
@@ -75,22 +76,11 @@ const NavLinks = styled.div`
       pointer-events: none;
     }
   }
-  .globe-icon-svg {
-    position: absolute;
-    right: 3.7rem;
-  }
   ul {
     list-style-type: none;
     display: flex;
-    margin-bottom: 0rem;
-    margin-right: 5rem;
+    margin: 0;
     align-items: center;
-
-    .registerBtn {
-      margin-bottom: 0.2rem;
-      align-self: center;
-    }
-
     .registerLink {
       display: block;
       border: 0.1rem solid ${colors.royalBlue};
@@ -102,24 +92,32 @@ const NavLinks = styled.div`
       background-color: ${colors.royalBlue};
       color: ${colors.white};
     }
-
     li {
       font-size: ${large};
       color: ${colors.darkerGray};
       padding: 0rem 1rem;
-      a:not(.registerLink) {
+      max-height: ${navbarHeight};
+      a:not(.registerLink),
+      .icon-btn {
+        display: flex;
+        align-items: center;
+        height: ${navbarHeight};
         color: ${colors.darkerGray};
         text-decoration: none;
-        padding: 1.65rem 1.4rem;
+        padding-left: 1.4rem;
+        padding-right: 1.4rem;
         transition: all 0.2s;
         border-bottom: 0.3rem solid transparent;
       }
-      a:hover:not(.registerLink) {
+      a:hover:not(.registerLink),
+      .icon-btn:hover {
+        cursor: pointer;
         color: ${colors.royalBlue};
         border-bottom: 0.3rem solid ${colors.royalBlue};
       }
       .ant-avatar {
         cursor: pointer;
+        margin: 0;
         user-select: none;
       }
     }
@@ -168,10 +166,10 @@ const Header = ({
   const renderInboxIcon = (mobile, activeStyles) => {
     return (
       <InboxIcon mobile={mobile}>
-        <Link
+        <NavLink
           id={GTM.nav.prefix + GTM.nav.inbox}
           to="/inbox"
-          activeStyles={activeStyles}
+          activeStyle={activeStyles}
         >
           <Badge
             count={rooms.reduce(
@@ -188,7 +186,7 @@ const Header = ({
           >
             <SvgIcon src={mail}></SvgIcon>
           </Badge>
-        </Link>
+        </NavLink>
       </InboxIcon>
     );
   };
@@ -217,11 +215,13 @@ const Header = ({
               onClick={onMenuClick}
             />
             {isAuthenticated && renderInboxIcon(true)}
-            {isAuthenticated && <NotificationDropDown
-              notifications={webSocket.notifications}
-              mobile={true}
-              organisationId={organisationId}
-            />}
+            {isAuthenticated && (
+              <NotificationDropDown
+                notifications={webSocket.notifications}
+                mobile={true}
+                organisationId={organisationId}
+              />
+            )}
             {!authLoading && (
               <DesktopMenu>
                 <NavLinks>

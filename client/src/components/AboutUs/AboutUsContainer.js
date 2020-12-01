@@ -362,13 +362,13 @@ export const Col = styled.div`
 `;
 
 export const SocialStyle = styled.div`
-  margin: 13rem 12.4rem 3.5rem;
+  margin: 8.35rem 12.4rem 3.5rem;
   display: flex;
   justify-content: space-between;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin: 0;
-    margin-top: 6rem;
+    margin-top: 5.14rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -402,6 +402,22 @@ export const SocialStyle = styled.div`
   }
   p span {
     color: ${royalBlue};
+  }
+`;
+
+export const PressContainer = styled.div`
+  padding: 3.85rem 0;
+  p {
+    font-size: 2rem;
+  }
+  a:first-child {
+    /*email link*/
+    color: ${royalBlue};
+    display: block;
+    margin-bottom: 3.2rem;
+  }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding: 2.36rem 0;
   }
 `;
 

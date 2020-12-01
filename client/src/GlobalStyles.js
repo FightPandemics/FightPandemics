@@ -119,7 +119,9 @@ a {
     background-color: ${SELAGO};
   }
 }
-
+.ReactVirtualized__Grid, .ReactVirtualized__List, .ReactVirtualized__Grid__innerScrollContainer {
+    overflow: visible !important;
+}
 /* transform: translateZ(1px) messes up z-index precendence on iPhones */
 .feed-filter-modal-wrap {
   transform: none;

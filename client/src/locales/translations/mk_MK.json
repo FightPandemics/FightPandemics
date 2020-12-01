@@ -93,7 +93,13 @@
         "Финансирање",
         "R&D",
         "Техника",
-        "Друго"
+        "Друго",
+        "Друго",
+        "Childcare",
+        "Translations",
+        "Волонтирај",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Локација",
@@ -124,7 +130,13 @@
         "Funding": "Финансирање",
         "R&D": "R&D",
         "Tech": "Техника",
-        "Other": "Другите"
+        "Other": "Другите",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Волонтирај",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Барање Помош",
@@ -211,7 +223,9 @@
     "cancel": "Откажи",
     "confirm": "Потврди",
     "edited": "изменето",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Security Information",
       "changePassword": "Change Password",
       "notificationInfo": "Notification Preference",
-      "emailNotification": "Email Notification",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Е-пошта",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
-      "editNotification": "Edit Notification"
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "Креирај профил на организација",
@@ -364,7 +382,9 @@
       "editAccount": "Уредете ги информациите за сметката",
       "updateSuccess": "Организацијата е успешно ажурирана",
       "orgNameRequired": "Потребно е има на организација",
-      "global": "Глобално"
+      "global": "Глобално",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "Придружи се како амбасадор",
     "joinStudentProgram": "Приклучи се на Програмата за Студенти",
     "studentSummerProgram": "Летна програма за студенти",
-    "forStudentInAge": "За студенти на возраст од 14-18 години."
+    "forStudentInAge": "За студенти на возраст од 14-18 години.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
   },
   "footer": {
     "faq": "Најчесто поставувани прашања",
@@ -970,6 +993,7 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
   }
 }

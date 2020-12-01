@@ -7,7 +7,7 @@ import translationIT from "./translations/it.json";
 import translationMK_MK from "./translations/mk_MK.json";
 import translationPT_PT from "./translations/pt_PT.json";
 import translationTL from "./translations/tl.json";
-// import translationRU from "./translations/ru.json";
+import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
 // import translationTH from "./translations/th.json";
 import translationZH_TW from "./translations/zh_TW.json";
@@ -23,9 +23,9 @@ import translationVI from "./translations/vi.json";
 current values in index are sorted. */
 /* Order in this index controls the order in language selector menu  */
 export const index = {
-   ar: {
-     translation: translationAR,
-   },
+  ar: {
+    translation: translationAR,
+  },
   // en: {
   //   translation: translationEN_US,
   // },
@@ -59,22 +59,19 @@ export const index = {
   "ms-MY": {
     translation: translationMS_MY,
   },
-  es: {
-    translation: translationES_ES,
-  },
-  "es-ES": {
-    translation: translationES_ES,
-  },
   pl: {
     translation: translationPL,
   },
   "pt-PT": {
     translation: translationPT_PT,
   },
-  // ru: {
-  //   translation: translationRU,
-  // },
-  "tl": {
+  ru: {
+    translation: translationRU,
+  },
+  "es-ES": {
+    translation: translationES_ES,
+  },
+  tl: {
     translation: translationTL,
   },
   "te-IN": {

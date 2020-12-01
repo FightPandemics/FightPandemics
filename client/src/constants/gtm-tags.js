@@ -138,9 +138,10 @@ module.exports = {
     vi: "_VI",
     "mk-MK": "_MK_MK",
     "pt-PT": "_PT_PT",
-    "ar": "_AR",
-    "tl": "_TL",
-    "it": "_IT",
+    ar: "_AR",
+    tl: "_TL",
+    it: "_IT",
+    ru: "_RU",
   },
   search: {
     prefix: "SCH",
@@ -190,5 +191,5 @@ module.exports = {
     share: "_SH",
     comment: "_CM",
     settings: "_SET",
-  }
+  },
 };
