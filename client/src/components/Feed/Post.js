@@ -173,7 +173,9 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
     }&skip=${skip}`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
 
     dispatchPostAction(SET_LOADING);
 
