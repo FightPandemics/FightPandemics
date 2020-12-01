@@ -49,8 +49,7 @@ export const MENU_MAP = {
   "zh-CN": { value: "简体中文", text: "Chinese Simplified (简体中文)" },
   "kn-IN": { value: "ಕನ್ನಡ", text: "Kannada (ಕನ್ನಡ)" },
   "ms-MY": { value: "Bahasa Melayu", text: "Malay (Bahasa Melayu)" },
-  "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" },
-  tl: { value: "ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔", text: "Tagalog (ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔)" },
+  "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" }  tl: { value: "Tagalog", text: "Tagalog (Tagalog)" },
   vi: { value: "Tiếng Việt", text: "Vietnamese (Tiếng Việt)" },
   "mk-MK": { value: "македонски", text: "Macedonian (македонски)" },
 };
