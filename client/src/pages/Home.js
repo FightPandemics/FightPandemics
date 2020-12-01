@@ -109,6 +109,7 @@ const StyledStrapline = styled(StyledWelcome)`
 `;
 
 const IntroText = styled.div`
+  color: ${white};
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
     width: 90%;
   }
