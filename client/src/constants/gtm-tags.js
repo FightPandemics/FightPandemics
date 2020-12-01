@@ -192,4 +192,9 @@ module.exports = {
     comment: "_CM",
     settings: "_SET",
   },
+  moderation: {
+    hide: "_HIP",
+    unhide: "_UHIP",
+    report: "_RP",
+  },
 };

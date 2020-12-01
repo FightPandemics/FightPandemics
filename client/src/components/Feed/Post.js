@@ -683,7 +683,10 @@ const Post = ({
                   {isHidden && !isSuspected && (
                     <>
                       {t("moderation.postHidden")}
-                      <span onClick={() => onPostUnhide(_id)}>
+                      <span
+                        id={GTM.post.prefix + GTM.moderation.unhide}
+                        onClick={() => onPostUnhide(_id)}
+                      >
                         {t("moderation.unhide")}
                       </span>
                     </>

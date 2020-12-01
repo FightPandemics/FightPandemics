@@ -11,6 +11,7 @@ import { ReactComponent as EditIcon } from "assets/icons/edit-grey.svg";
 import { ReactComponent as PostRemoval } from "assets/icons/post-removal.svg";
 
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const { typography, colors } = theme;
 
@@ -29,6 +30,10 @@ const Item = styled.div`
   padding: 0 1rem;
   height: 5rem;
   min-width: 18.6rem;
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
 `;
 
 const Label = styled.div`
@@ -114,7 +119,11 @@ const PostDropdownButton = ({
       ) : (
         <>
           {!fromPage && (
-            <Menu.Item onClick={onHide} key="hide">
+            <Menu.Item
+              onClick={onHide}
+              key="hide"
+              id={GTM.post.prefix + GTM.moderation.hide}
+            >
               <Item>
                 <HideIcon />
                 <Label>
@@ -124,7 +133,11 @@ const PostDropdownButton = ({
               </Item>
             </Menu.Item>
           )}
-          <Menu.Item onClick={onReport} key="report">
+          <Menu.Item
+            onClick={onReport}
+            key="report"
+            id={GTM.post.prefix + GTM.moderation.report}
+          >
             <Item>
               <ReportIcon />
               <Label>
