@@ -570,17 +570,17 @@ const Post = ({
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
-          {!isOwner && isSuspected && (
-            <div className="blur-overlay">
-              <SvgIcon src={eyeHide} />
-              This post received multiple reports and has been hidden from the
-              help board
-              <span onClick={() => onPostPageShowAnyway(postId)}>
-                Show anyway
-              </span>
-            </div>
-          )}
-          <div className="pre-header post-page">
+            {!isOwner && isSuspected && (
+              <div className="blur-overlay">
+                <SvgIcon src={eyeHide} />
+                This post received multiple reports and has been hidden from the
+                help board
+                <span onClick={() => onPostPageShowAnyway(postId)}>
+                  Show anyway
+                </span>
+              </div>
+            )}
+            <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
               <Tooltip title={translateISOTimeTitle(post.createdAt)}>
                 <span className="timestamp">
@@ -594,7 +594,7 @@ const Post = ({
                 </span>
               </Tooltip>
             </div>
-            <WhiteSpace size={"sm"}/>
+            <WhiteSpace size={"sm"} />
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               {isAuthenticated && (
@@ -698,22 +698,23 @@ const Post = ({
                   )}
                 </div>
               )}
-               <div className="pre-header">
-            <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-              <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-                <span className="timestamp">
-                  {t(
-                    `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                    {
-                      count: post?.elapsedTimeText?.created?.count,
-                    },
-                  )}
-                  {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-                </span>
-              </Tooltip>
-            </div>
-            <WhiteSpace size={"xl"} />
-            <WhiteSpace size={"md"} />
+              <div className="pre-header">
+                <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                  <span className="timestamp">
+                    {t(
+                      `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                      {
+                        count: post?.elapsedTimeText?.created?.count,
+                      },
+                    )}
+                    {post?.elapsedTimeText?.isEdited &&
+                      ` · ${t("post.edited")}`}
+                  </span>
+                </Tooltip>
+              </div>
+              <WhiteSpace size={"xl"} />
+              <WhiteSpace size={"md"} />
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 {isAuthenticated && (
@@ -784,7 +785,7 @@ const Post = ({
                 postContent={post.content}
               />
               <DeleteModal
-                title={t("post.deletePostConfirmationTitle")}
+                title={<p>{t("post.deletePostConfirmationTitle")}</p>}
                 visible={
                   !!deleteModalVisibility &&
                   deleteModalVisibility !== DELETE_MODAL_HIDE &&
