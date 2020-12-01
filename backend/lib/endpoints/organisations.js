@@ -1,5 +1,5 @@
 const httpErrors = require("http-errors");
-const { uploadOrgAvatar } = require("../components/CDN");
+const { uploadOrgAvatar, deleteOrgAvatars } = require("../components/CDN");
 const {
   createOrganisationAvatarSchema,
   createOrganisationSchema,
@@ -480,6 +480,7 @@ async function routes(app) {
         throw app.httpErrors.forbidden();
       }
       try {
+        await deleteOrgAvatars(organisationId);
         org.photo = null;
         const [updateErr, updatedOrg] = await app.to(org.save());
         if (updateErr) {
