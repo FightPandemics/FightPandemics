@@ -55,6 +55,8 @@ module.exports = {
     orgBtn: "_ORG",
     individualBtn: "_IN",
     button: "_PO",
+    delete: "_DEL",
+    edit: "_EDT",
   },
   user: {
     completedPrefix: "PC",

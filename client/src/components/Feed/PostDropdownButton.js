@@ -74,7 +74,11 @@ const PostDropdownButton = ({
       {isSelf ? (
         <>
           {postId ? (
-            <Menu.Item onClick={onEdit}>
+            <Menu.Item
+              onClick={onEdit}
+              key="edit"
+              id={GTM.post.prefix + GTM.post.edit}
+            >
               <Item>
                 <EditIcon />
                 <Label>
@@ -83,8 +87,9 @@ const PostDropdownButton = ({
               </Item>
             </Menu.Item>
           ) : (
-            <Menu.Item>
+            <Menu.Item key="edit">
               <Link
+                id={GTM.post.prefix + GTM.post.edit}
                 to={{
                   pathname: `/post/${post?._id}`,
                   state: {
@@ -105,7 +110,7 @@ const PostDropdownButton = ({
               </Link>
             </Menu.Item>
           )}
-          <Menu.Item onClick={onDelete}>
+          <Menu.Item onClick={onDelete} key="delete">
             <Item>
               <PostRemoval />
               <Label color={"red"}>

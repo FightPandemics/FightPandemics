@@ -648,6 +648,12 @@ const Post = ({
               onCancel={handleCancelPostDelete}
               okText={t("post.deleteConfirmation")}
               cancelText={t("post.cancel")}
+              okButtonProps={{
+                id:
+                  deleteModalVisibility === DELETE_MODAL_POST
+                    ? GTM.post.prefix + GTM.post.delete
+                    : "",
+              }}
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
@@ -794,6 +800,7 @@ const Post = ({
                 onCancel={handleCancelPostDelete}
                 okText={t("post.deleteConfirmation")}
                 cancelText={t("post.cancel")}
+                okButtonProps={{ id: GTM.post.prefix + GTM.post.delete }}
               >
                 {deleteModalVisibility === DELETE_MODAL_POST ? (
                   <p>{t("post.deletePostConfirmation")}</p>
