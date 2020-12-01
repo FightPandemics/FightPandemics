@@ -146,7 +146,7 @@ const WithSummitBanner = ({ children }) => {
           </div>
         </HomeRegisterBanner>
       )}
-      {children}
+      {typeof children === "function" ? children(showBanner) : children}
     </BannerContainer>
   );
 };
