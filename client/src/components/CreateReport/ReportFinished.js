@@ -9,7 +9,7 @@ import { theme } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const FeedBackModal = ({
+const ReportFinished = ({
   setCallReport,
   isComment,
   reportSuccess,
@@ -90,4 +90,4 @@ const FeedBackModal = ({
   );
 };
 
-export default FeedBackModal;
+export default ReportFinished;

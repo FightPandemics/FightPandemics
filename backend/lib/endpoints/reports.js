@@ -1,9 +1,6 @@
 const {
   createPostReportSchema,
-  getPostReportsSchema,
 } = require("./schema/reports");
-const { setReqPermLevel } = require("../utils");
-const REPORTS_PER_PAGE = 10;
 
 /*
  * /api/reports

@@ -49,7 +49,6 @@ export const RouteWithSubRoutes = (route) => {
     mobiletabs,
     navSearch,
     forgotPassword,
-    permLevel,
   } = props;
 
   return (
@@ -65,8 +64,6 @@ export const RouteWithSubRoutes = (route) => {
             redirect = LOGOUT;
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
-          } else if (isAuthenticated && permLevel && !(user.permissions & permLevel)) {
-            redirect = HOME;
           } else if (notLoggedInOnly && isAuthenticated) {
             const createPostRedirect = sessionStorage.getItem(
               "createPostAttemptLoggedOut",

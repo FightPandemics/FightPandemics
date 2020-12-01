@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
-const { royalBlue } = colors;
+const { royalBlue, mediumGray, orangeRed } = colors;
 const { large, xlarge } = typography.size;
 
 const PostDeleteModal = styled(Modal)`
@@ -13,7 +13,7 @@ const PostDeleteModal = styled(Modal)`
     filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.12));
     border-radius: 10px;
     .ant-modal-header {
-      border-bottom: 1px solid #c5c5c5;
+      border-bottom: 1px solid ${mediumGray};
       border-radius: 10px 10px 0 0;
       padding-bottom: 0;
       .ant-modal-title {
@@ -43,7 +43,7 @@ const PostDeleteModal = styled(Modal)`
         }
         &:last-child {
           color: white;
-          background-color: #ff5656;
+          background-color: ${orangeRed};
         }
       }
     }
