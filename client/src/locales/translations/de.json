@@ -93,7 +93,13 @@
         "Finanzierung",
         "Forschung und Entwicklung",
         "Technik",
-        "Sonstigen"
+        "Sonstigen",
+        "Sonstiges",
+        "Childcare",
+        "Translations",
+        "freiwillig Helfen",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Standort",
@@ -124,7 +130,13 @@
         "Funding": "Finanzierung",
         "R&D": "Forschung und Entwicklung",
         "Tech": "Technik",
-        "Other": "Andere"
+        "Other": "Andere",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "freiwillig Helfen",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Hilfe anfordern",
@@ -211,7 +223,9 @@
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
     "edited": "bearbeitet",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Sicherheitsinformationen",
       "changePassword": "Passwort ändern",
       "notificationInfo": "Notification Preference",
-      "emailNotification": "Email Notification",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "E-Mail",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Neues Passwort eingeben",
       "updatingPassword": "Passwort aktualisieren",
       "editSecurity": "Sicherheit bearbeiten",
-      "editNotification": "Edit Notification"
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "Organisationsprofil erstellen",
@@ -364,7 +382,9 @@
       "editAccount": "Benutzerkontodaten ändern",
       "updateSuccess": "Organisation erfolgreich aktualisiert",
       "orgNameRequired": "Name der Organisation ist erforderlich",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "Als Botschafter beitreten",
     "joinStudentProgram": "Am Schülerprogramm teilnehmen",
     "studentSummerProgram": "Sommerprogramm für Schüler",
-    "forStudentInAge": "Für Schüler im Alter von 14-18 Jahren."
+    "forStudentInAge": "Für Schüler im Alter von 14-18 Jahren.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
   },
   "footer": {
     "faq": "Häufig gestellte Fragen",
@@ -970,6 +993,7 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
   }
 }

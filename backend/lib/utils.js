@@ -115,17 +115,10 @@ const createSearchRegex = (keywords) => {
 
 const getSocketIdByUserId = (app, userId) => {
   return new Promise((resolve) => {
-    app.io
-      .of("/")
-      .adapter.customRequest(
-        { type: "getSocketIdByUserId", userId },
-        (err, replies) => {
-          // replies is an array of element pushed by cb(element) on individual socket.io server
-          // remove empty replies
-          const filtered = replies.filter((reply) => reply != null);
-          resolve(filtered[0]);
-        },
-      );
+    app.io.of("/").adapter.clients([userId], (err, clients) => {
+      if (err || !clients || !clients.length) return resolve(null);
+      else resolve(clients[0]); // return the entire array, if you want all active devices.
+    });
   });
 };
 

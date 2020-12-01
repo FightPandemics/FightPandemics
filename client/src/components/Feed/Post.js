@@ -130,6 +130,7 @@ const Post = ({
     page,
     didReport,
     reportsCount,
+    objective,
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
@@ -448,17 +449,6 @@ const Post = ({
             ) : (
               ""
             )}
-            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-              <span className="timestamp">
-                {t(
-                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                  {
-                    count: post?.elapsedTimeText?.created?.count,
-                  },
-                )}
-                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-              </span>
-            </Tooltip>
           </div>
         </div>
       }
@@ -590,6 +580,21 @@ const Post = ({
                 </span>
               </div>
             )}
+          <div className="pre-header post-page">
+              <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+              <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <span className="timestamp">
+                  {t(
+                    `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                    {
+                      count: post?.elapsedTimeText?.created?.count,
+                    },
+                  )}
+                  {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+                </span>
+              </Tooltip>
+            </div>
+            <WhiteSpace size={"sm"}/>
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               {isAuthenticated && (
@@ -671,6 +676,57 @@ const Post = ({
         <>
           {didReport ? (
             <PostPlaceHolder />
+        <PostCard>
+          <div className="pre-header">
+            <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
+          </div>
+          <WhiteSpace size={"xl"} />
+          <WhiteSpace size={"md"} />
+          <div className="card-header">
+            {includeProfileLink ? renderHeaderWithLink : renderHeader}
+            <div className="card-submenu">
+              {isAuthenticated && actorId === post.author.id && (
+                <SubMenuButton
+                  onChange={handleDelete}
+                  onSelect={onSelect}
+                  post={post}
+                  user={user}
+                  postId={postId}
+                />
+              )}
+            </div>
+          </div>
+          <WhiteSpace size="md" />
+          {renderTags}
+          <WhiteSpace />
+          {post && isAuthenticated ? (
+            <Link
+              to={{
+                pathname: `/post/${_id}`,
+                state: {
+                  post: post,
+                  postId: _id,
+                  from: window.location.href,
+                  user,
+                  keepScrollIndex,
+                  keepPageState,
+                  keepPostsState,
+                },
+              }}
+            >
+              {renderContent(title, content, highlightWords, showComplete)}
+            </Link>
           ) : (
             <PostCard unClickable={!isOwner && (isSuspected || isHidden)}>
               {!isOwner && (isHidden || isSuspected) && (

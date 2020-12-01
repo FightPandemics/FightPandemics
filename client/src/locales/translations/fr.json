@@ -86,14 +86,20 @@
         "Les courses / La nourriture",
         "Entreprise",
         "Éducation",
-        "Légal",
-        "Bien-être / santé mentale",
+        "Logement",
+        "Juridique",
+        "Bien-être/Mental",
         "Divertissement",
-        "Informations",
+        "Information",
         "Financement",
         "R&D",
         "Technologie",
-        "Autre"
+        "Autre",
+        "Garde d'enfants",
+        "Traductions",
+        "Faire du bénévolat",
+        "Personnel (payé)",
+        "Travail à distance"
       ],
       "labels": {
         "location": "Lieu",
@@ -124,7 +130,13 @@
         "Funding": "Financement",
         "R&D": "R&D",
         "Tech": "Technologie",
-        "Other": "Autres"
+        "Other": "Autres",
+        "Housing": "Logement",
+        "Childcare": "Garde d'enfants",
+        "Translations": "Traductions",
+        "Volunteer": "Faire du bénévolat",
+        "Staff (paid)": "Personnel (payé)",
+        "Remote Work": "Travail à distance"
       },
       "lookingForOptions": {
         "Request Help": "Demander de l'aide",
@@ -211,7 +223,9 @@
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "edited": "édité",
-    "share_plural": "Je partage"
+    "share_plural": "Je partage",
+    "deletePostConfirmationTitle": "Confirmation de la suppression d'un poste",
+    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire"
   },
   "profile": {
     "common": {
@@ -263,7 +277,10 @@
       "instant": "Instantanée",
       "daily": "Quotidienne",
       "weekly": "Hebdomadaire",
-      "biweekly": "Bihebdomadaire"
+      "biweekly": "Bihebdomadaire",
+      "digest": "Résumé",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Adresse courriel",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Saisissez un nouveau mot de passe",
       "updatingPassword": "Mise à jour du mot de passe",
       "editSecurity": "Modifier la sécurité",
-      "editNotification": "Modifier les notifications"
+      "editNotification": "Modifier les notifications",
+      "editAccount": "Modifier le compte"
     },
     "org": {
       "title": "Créer un profil d'organisation",
@@ -364,7 +382,9 @@
       "editAccount": "Modifier les informations du compte",
       "updateSuccess": "Organisation mise à jour avec succès",
       "orgNameRequired": "Nom de l'organisation est requise",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Modifier le compte de l'organisation",
+      "editOrgNotification": "Modifier la notification de l'organisation"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "Rejoignez en tant qu'ambassadeur",
     "joinStudentProgram": "Rejoignez le programme d'étudiants",
     "studentSummerProgram": "Programme d'emploi d'été pour étudiants",
-    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans."
+    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans.",
+    "press": "Presse",
+    "pressInfo": "Si vous êtes membre de la presse, contactez-nous à l'adresse suivante",
+    "pressKitLink": "Aller au dossier de presse"
   },
   "footer": {
     "faq": "FAQ",
@@ -970,6 +993,7 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> avez aimé votre publication <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
+    "empty": "Plus de notifications"
   }
 }

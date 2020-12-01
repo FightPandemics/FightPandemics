@@ -93,7 +93,13 @@
         "ಧನಸಹಾಯ",
         "ಆರ್ & ಡಿ",
         "ಟೆಕ್",
-        "ಇತರೆ"
+        "ಇತರೆ",
+        "ಇತರೆ",
+        "Childcare",
+        "Translations",
+        "ಸ್ವಯಂಸೇವಕ",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "ಸ್ಥಳ",
@@ -124,7 +130,13 @@
         "Funding": "ಅನುದಾನ",
         "R&D": "ಆರ್ & ಡಿ",
         "Tech": "ಟೆಕ್",
-        "Other": "ಇತರರು"
+        "Other": "ಇತರರು",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "ಸ್ವಯಂಸೇವಕ",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "ಸಹಾಯವನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ",
@@ -211,7 +223,9 @@
     "cancel": "ರದ್ದುಮಾಡಿ",
     "confirm": "ದೃಢಪಡಿಸಿ",
     "edited": "ಸಂಪಾದಿಸಲಾಗಿದೆ",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Security Information",
       "changePassword": "Change Password",
       "notificationInfo": "Notification Preference",
-      "emailNotification": "Email Notification",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "ಇಮೇಲ್",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
-      "editNotification": "Edit Notification"
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "ಸಂಸ್ಥೆ ಪ್ರೊಫೈಲ್ ರಚಿಸಿ",
@@ -364,7 +382,9 @@
       "editAccount": "ಖಾತೆ ಮಾಹಿತಿಯನ್ನು ಸಂಪಾದಿಸಿ",
       "updateSuccess": "ಸಂಸ್ಥೆ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ",
       "orgNameRequired": "ಸಂಸ್ಥೆಯ ಹೆಸರು ಅಗತ್ಯವಿದೆ",
-      "global": "ಜಾಗತಿಕ"
+      "global": "ಜಾಗತಿಕ",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "Join as Ambassador",
     "joinStudentProgram": "Join Student Program",
     "studentSummerProgram": "Student Summer Program",
-    "forStudentInAge": "For Students ages 14-18."
+    "forStudentInAge": "For Students ages 14-18.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
   },
   "footer": {
     "faq": "ಪದೇ ಪದೇ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು",
@@ -970,6 +993,7 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
   }
 }
