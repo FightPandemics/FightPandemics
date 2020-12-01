@@ -564,9 +564,11 @@ const Post = ({
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
                 {t("moderation.postSuspected")}
+                {/* removed for now
                 <span onClick={() => onPostPageShowAnyway(postId)}>
                   {t("moderation.showAnyway")}
                 </span>
+                */}
               </div>
             )}
             <div className="pre-header post-page">
@@ -682,9 +684,11 @@ const Post = ({
                   {isSuspected && !isOwner && (
                     <>
                       {t("moderation.postSuspected")}
+                      {/* removed for now
                       <span onClick={() => onPostShowAnyway(_id)}>
                         {t("moderation.showAnyway")}
                       </span>
+                      */}
                     </>
                   )}
                 </div>
