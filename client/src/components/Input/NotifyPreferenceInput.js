@@ -13,7 +13,7 @@ import { blockLabelStyles } from "../../constants/formStyles";
 
 const FPSwitch = styled(Switch)`
   background-color: ${(props) =>
-    props?.checked ? theme.colors.royalBlue : theme.colors.lightGray};
+    props?.checked ? theme.colors.royalBlue : theme.colors.mediumGray};
   margin-bottom: 1rem;
 `;
 
