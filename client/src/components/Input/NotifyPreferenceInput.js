@@ -12,7 +12,8 @@ import InputLabel from "./Label";
 import { blockLabelStyles } from "../../constants/formStyles";
 
 const FPSwitch = styled(Switch)`
-  background-color: ${theme.colors.royalBlue};
+  background-color: ${(props) =>
+    props?.checked ? theme.colors.royalBlue : theme.colors.lightGray};
   margin-bottom: 1rem;
 `;
 
