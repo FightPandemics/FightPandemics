@@ -8,7 +8,7 @@ export const POSTS_ACTIONS = {
   SET_LIKE: "SET_LIKE",
   SET_LOADING: "SET_LOADING",
   SET_REPORTED: "SET_REPORTED",
-  SHOW_AMYWAY: "SHOW_AMYWAY",
+  SHOW_ANYWAY: "SHOW_ANYWAY",
 };
 
 export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
@@ -65,7 +65,7 @@ export const setReported = ({ postId }) => ({
 });
 
 export const showAnyway = ({ postId }) => ({
-  type: POSTS_ACTIONS.SHOW_AMYWAY,
+  type: POSTS_ACTIONS.SHOW_ANYWAY,
   payload: { postId },
 });
 

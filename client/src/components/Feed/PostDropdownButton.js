@@ -11,6 +11,7 @@ import { ReactComponent as EditIcon } from "assets/icons/edit-grey.svg";
 import { ReactComponent as PostRemoval } from "assets/icons/post-removal.svg";
 
 import { theme } from "constants/theme";
+import GTM from "constants/gtm-tags";
 
 const { typography, colors } = theme;
 
@@ -29,6 +30,10 @@ const Item = styled.div`
   padding: 0 1rem;
   height: 5rem;
   min-width: 18.6rem;
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
 `;
 
 const Label = styled.div`
@@ -51,8 +56,6 @@ const Caption = styled.span`
 `;
 
 const PostDropdownButton = ({
-  onSave,
-  onFollow,
   onHide,
   onReport,
   onEdit,
@@ -71,7 +74,11 @@ const PostDropdownButton = ({
       {isSelf ? (
         <>
           {postId ? (
-            <Menu.Item onClick={onEdit}>
+            <Menu.Item
+              onClick={onEdit}
+              key="edit"
+              id={GTM.post.prefix + GTM.post.edit}
+            >
               <Item>
                 <EditIcon />
                 <Label>
@@ -80,8 +87,9 @@ const PostDropdownButton = ({
               </Item>
             </Menu.Item>
           ) : (
-            <Menu.Item>
+            <Menu.Item key="edit">
               <Link
+                id={GTM.post.prefix + GTM.post.edit}
                 to={{
                   pathname: `/post/${post?._id}`,
                   state: {
@@ -102,7 +110,7 @@ const PostDropdownButton = ({
               </Link>
             </Menu.Item>
           )}
-          <Menu.Item onClick={onDelete}>
+          <Menu.Item onClick={onDelete} key="delete">
             <Item>
               <PostRemoval />
               <Label color={"red"}>
@@ -114,7 +122,11 @@ const PostDropdownButton = ({
       ) : (
         <>
           {!fromPage && (
-            <Menu.Item onClick={onHide} key="hide">
+            <Menu.Item
+              onClick={onHide}
+              key="hide"
+              id={GTM.post.prefix + GTM.moderation.hide}
+            >
               <Item>
                 <HideIcon />
                 <Label>
@@ -124,7 +136,11 @@ const PostDropdownButton = ({
               </Item>
             </Menu.Item>
           )}
-          <Menu.Item onClick={onReport} key="report">
+          <Menu.Item
+            onClick={onReport}
+            key="report"
+            id={GTM.post.prefix + GTM.moderation.report}
+          >
             <Item>
               <ReportIcon />
               <Label>

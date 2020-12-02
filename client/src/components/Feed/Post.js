@@ -173,7 +173,9 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
     }&skip=${skip}`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
 
     dispatchPostAction(SET_LOADING);
 
@@ -250,7 +252,9 @@ const Post = ({
     let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
     const newComment = {
       actorId,
       content: comment,
@@ -306,7 +310,9 @@ const Post = ({
     const commentId = comment._id;
     if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
-      const totalCommentCountEndPoint = `/api/posts/${postId}`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}${
+        actorId ? `?actorId=${actorId}` : ""
+      }`;
 
       try {
         response = await axios.delete(endPoint);
@@ -328,16 +334,6 @@ const Post = ({
         );
       }
     }
-  };
-
-  const handleSave = () => {
-    // save post functionality here
-    console.log('"Save Post" was clicked.');
-  };
-
-  const handleFollow = () => {
-    // follow post functionality here
-    console.log('"Follow Post" was clicked.');
   };
 
   const handleHide = () => {
@@ -577,11 +573,12 @@ const Post = ({
             {!isOwner && isSuspected && (
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
-                This post received multiple reports and has been hidden from the
-                help board
+                {t("moderation.postSuspected")}
+                {/* removed for now
                 <span onClick={() => onPostPageShowAnyway(postId)}>
-                  Show anyway
+                  {t("moderation.showAnyway")}
                 </span>
+                */}
               </div>
             )}
             <div className="pre-header post-page">
@@ -604,8 +601,6 @@ const Post = ({
               {isAuthenticated && (
                 <div className="card-submenu">
                   <PostDropdownButton
-                    onSave={handleSave}
-                    onFollow={handleFollow}
                     onHide={handleHide}
                     onReport={handleReport}
                     onEdit={onSelect}
@@ -657,6 +652,12 @@ const Post = ({
               onCancel={handleCancelPostDelete}
               okText={t("post.deleteConfirmation")}
               cancelText={t("post.cancel")}
+              okButtonProps={{
+                id:
+                  deleteModalVisibility === DELETE_MODAL_POST
+                    ? GTM.post.prefix + GTM.post.delete
+                    : "",
+              }}
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
@@ -687,17 +688,23 @@ const Post = ({
                   <SvgIcon src={eyeHide} />
                   {isHidden && !isSuspected && (
                     <>
-                      You have chosen to hide this post
-                      <span onClick={() => onPostUnhide(_id)}>Unhide</span>
+                      {t("moderation.postHidden")}
+                      <span
+                        id={GTM.post.prefix + GTM.moderation.unhide}
+                        onClick={() => onPostUnhide(_id)}
+                      >
+                        {t("moderation.unhide")}
+                      </span>
                     </>
                   )}
                   {isSuspected && !isOwner && (
                     <>
-                      This post received multiple reports and has been hidden
-                      from the help board
+                      {t("moderation.postSuspected")}
+                      {/* removed for now
                       <span onClick={() => onPostShowAnyway(_id)}>
-                        Show anyway
+                        {t("moderation.showAnyway")}
                       </span>
+                      */}
                     </>
                   )}
                 </div>
@@ -724,8 +731,6 @@ const Post = ({
                 {isAuthenticated && (
                   <div className="card-submenu">
                     <PostDropdownButton
-                      onSave={handleSave}
-                      onFollow={handleFollow}
                       onHide={handleHide}
                       onReport={handleReport}
                       onEdit={onSelect}
@@ -789,7 +794,7 @@ const Post = ({
                 postContent={post.content}
               />
               <DeleteModal
-                title={t("post.deletePostConfirmationTitle")}
+                title={<p>{t("post.deletePostConfirmationTitle")}</p>}
                 visible={
                   !!deleteModalVisibility &&
                   deleteModalVisibility !== DELETE_MODAL_HIDE &&
@@ -799,6 +804,7 @@ const Post = ({
                 onCancel={handleCancelPostDelete}
                 okText={t("post.deleteConfirmation")}
                 cancelText={t("post.cancel")}
+                okButtonProps={{ id: GTM.post.prefix + GTM.post.delete }}
               >
                 {deleteModalVisibility === DELETE_MODAL_POST ? (
                   <p>{t("post.deletePostConfirmation")}</p>

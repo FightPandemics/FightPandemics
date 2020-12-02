@@ -78,7 +78,7 @@ const postsReducer = (state = innitialState, action) => {
         },
       };
     }
-    case POSTS_ACTIONS.SHOW_AMYWAY: {
+    case POSTS_ACTIONS.SHOW_ANYWAY: {
       const { payload } = action;
       return {
         ...state,

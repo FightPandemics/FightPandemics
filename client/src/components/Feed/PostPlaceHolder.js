@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
+import { useTranslation } from "react-i18next";
 
 const { colors } = theme;
 
@@ -31,11 +32,12 @@ const ReportedPlaceHolder = styled.div`
   }
 `;
 
-const PostPlaceHolder = () => (
-  <ReportedPlaceHolder>
-    <p>
-      You have reported this post. It will no longer be visible on your feed.
-    </p>
-  </ReportedPlaceHolder>
-);
+const PostPlaceHolder = () => {
+  const { t } = useTranslation();
+  return (
+    <ReportedPlaceHolder>
+      <p>{t("moderation.youReported")}</p>
+    </ReportedPlaceHolder>
+  );
+};
 export default PostPlaceHolder;

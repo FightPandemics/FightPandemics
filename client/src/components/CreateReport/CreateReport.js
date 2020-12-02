@@ -3,7 +3,7 @@ import Body from "./Body";
 import styled from "styled-components";
 import { Modal } from "antd";
 import { theme } from "constants/theme";
-import FeedBackModal from "./FeedBackModal";
+import ReportFinished from "./ReportFinished";
 import { useTranslation } from "react-i18next";
 
 const { colors, typography } = theme;
@@ -57,7 +57,7 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
         </ModalWrapper>
       )}
       {reportSuccess !== null && (
-        <FeedBackModal
+        <ReportFinished
           postId={postId}
           reportSuccess={reportSuccess}
           setCallReport={setCallReport}

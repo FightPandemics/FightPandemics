@@ -2,7 +2,6 @@ const { Schema } = require("mongoose");
 const { model: User, PERMISSIONS } = require("./User");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
-
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
 }

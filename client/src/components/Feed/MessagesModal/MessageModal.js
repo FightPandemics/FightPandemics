@@ -119,6 +119,7 @@ const MessageModal = ({
         dataLayer: {
           event: null,
           sentFrom: null,
+          postInfo: null,
         },
       });
     } else {

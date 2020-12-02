@@ -375,7 +375,10 @@ async function routes(app) {
       }
 
       // if user is not a moderator
-      if (!actor.permissions || !(actor.permissions & PERMISSIONS.moderator)) {
+      if (
+        actor &&
+        (!actor.permissions || !(actor.permissions & PERMISSIONS.moderator))
+      ) {
         // user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
         // user shouldn't see posts reported by them, even if public.
@@ -386,6 +389,7 @@ async function routes(app) {
           : false;
         if (didReport) throw app.httpErrors.notFound();
       }
+
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
       // parameters is important to hit the right database index.
