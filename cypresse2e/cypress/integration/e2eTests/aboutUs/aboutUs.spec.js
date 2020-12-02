@@ -35,8 +35,13 @@ describe("FightPandemics About Us page", () => {
       pastSupporterContainerIsVisible();
     });
 
+      it("Check if Go to Press Kit button visible and get us to the appropriate link", () => {
+      goToPressKitButtonIsVisibleAndPointToAppropriateLink();
+    });
+
     it("Check if FightPandemics email links are working", () => {
       partnershipEmailLinkIsVisibleAndPointToAppropriateLink();
+      prEmailLinkIsVisibleAndPointToAppropriateLink();
       contactEmailLinkIsVisibleAndPointToAppropriateLink();
     });
   });
@@ -96,9 +101,16 @@ describe("FightPandemics About Us page", () => {
   }
 
 
+  function goToPressKitButtonIsVisibleAndPointToAppropriateLink() {
+    cy.checkAnyKindOfLinksWithXpath(aboutUs.getToPressKitButton, aboutUs.goToPressKitLink);
+  }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
     checkEmailWorks(socialContactInfo.partnershipEmail, socialContactInfo.partnershipEmailHref);
+  }
+
+  function prEmailLinkIsVisibleAndPointToAppropriateLink() {
+    checkEmailWorks(socialContactInfo.prEmail, socialContactInfo.prEmailHref);
   }
 
   function contactEmailLinkIsVisibleAndPointToAppropriateLink() {

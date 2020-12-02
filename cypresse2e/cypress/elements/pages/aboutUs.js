@@ -13,6 +13,8 @@ class AboutUs {
   joinStudentProgramLink = "https://apply.workable.com/fightpandemics/j/58B157AAB2/";
   getToHelpBoardButton = "#AU_VHB";
   goToHelpBoardLink = "/feed";
+  getToPressKitButton = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[9]/div/a";
+  goToPressKitLink = "https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5";
   lifetimeSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[1]";
   currentSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[2]";
   pastSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[3]";
