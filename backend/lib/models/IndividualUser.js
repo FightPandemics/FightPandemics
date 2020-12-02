@@ -2,7 +2,6 @@ const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
-
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
 }
@@ -44,7 +43,7 @@ const individualUserSchema = new Schema(
       linkedin: String,
       twitter: String,
       website: String,
-    },
+    }
   },
   { collection: "users" },
 );
