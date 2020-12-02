@@ -68,7 +68,8 @@ const MessageModal = ({
       showModal();
     }
     sessionStorage.removeItem("msgModal");
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showModal = async () => {
     await setVisible(true);
@@ -105,7 +106,22 @@ const MessageModal = ({
             ...postInfo,
           },
         });
+      } else {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "MESSAGE_SENT",
+            sentFrom: gtmPrefix,
+          },
+        });
       }
+      // clear dataLayer
+      TagManager.dataLayer({
+        dataLayer: {
+          event: null,
+          sentFrom: null,
+          postInfo: null,
+        },
+      });
     } else {
       setMsgSent(true);
       setMsgRsp(false);
@@ -115,6 +131,8 @@ const MessageModal = ({
   };
   const handleCancel = () => {
     setVisible(false);
+    setText("");
+    textAreaRef.current.value = "";
   };
   const handleDone = () => {
     setMsgSent(false);
@@ -151,6 +169,7 @@ const MessageModal = ({
             visible={visible}
             onOk={handleOk}
             okText={t("messaging.send")}
+            cancelText={t("messaging.cancel")}
             onCancel={handleCancel}
             confirmLoading={confirmLoading}
             okButtonProps={{ disabled: !!!text, id: gtmId + GTM.inbox.sent }}

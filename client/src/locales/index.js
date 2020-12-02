@@ -7,9 +7,10 @@ import translationIT from "./translations/it.json";
 import translationMK_MK from "./translations/mk_MK.json";
 import translationPT_PT from "./translations/pt_PT.json";
 import translationTL from "./translations/tl.json";
-// import translationRU from "./translations/ru.json";
+import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
-// import translationTH from "./translations/th.json";
+import translationTH from "./translations/th.json";
+import translationID from "./translations/id.json";
 import translationZH_TW from "./translations/zh_TW.json";
 import translationZH_CN from "./translations/zh_CN.json";
 import translationFR from "./translations/fr.json";
@@ -19,11 +20,13 @@ import translationTE_IN from "./translations/te_IN.json";
 import translationTR from "./translations/tr.json";
 import translationVI from "./translations/vi.json";
 
+/* Please enter languages below in alphabetical order,
+current values in index are sorted. */
 /* Order in this index controls the order in language selector menu  */
 export const index = {
-   ar: {
-     translation: translationAR,
-   },
+  ar: {
+    translation: translationAR,
+  },
   // en: {
   //   translation: translationEN_US,
   // },
@@ -39,54 +42,54 @@ export const index = {
   "en-GB": {
     translation: translationEN_GB,
   },
-  de: {
-    translation: translationDE,
-  },
   fr: {
     translation: translationFR,
   },
-  pl: {
-    translation: translationPL,
+  de: {
+    translation: translationDE,
   },
-   it: {
-     translation: translationIT,
-   },
-  // ru: {
-  //   translation: translationRU,
-  // },
-  es: {
-    translation: translationES_ES,
+  id: {
+    translation: translationID,
   },
-  "es-ES": {
-    translation: translationES_ES,
-  },
-  tr: {
-    translation: translationTR,
+  it: {
+    translation: translationIT,
   },
   "kn-IN": {
     translation: translationKN_IN,
   },
-  "te-IN": {
-    translation: translationTE_IN,
+  "mk-MK": {
+    translation: translationMK_MK,
   },
   "ms-MY": {
     translation: translationMS_MY,
   },
-  vi: {
-    translation: translationVI,
-  },
-  "mk-MK": {
-    translation: translationMK_MK,
+  pl: {
+    translation: translationPL,
   },
   "pt-PT": {
     translation: translationPT_PT,
   },
-  "tl": {
+  ru: {
+    translation: translationRU,
+  },
+  "es-ES": {
+    translation: translationES_ES,
+  },
+  tl: {
     translation: translationTL,
   },
-  // th: {
-  //   translation: translationTH,
-  // },
+  "te-IN": {
+    translation: translationTE_IN,
+  },
+  th: {
+    translation: translationTH,
+  },
+  tr: {
+    translation: translationTR,
+  },
+  vi: {
+    translation: translationVI,
+  },
 };
 
 export default index;

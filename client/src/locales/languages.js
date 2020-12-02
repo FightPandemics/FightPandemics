@@ -6,7 +6,6 @@ export const localization = {
   en: "en-US",
   "en-US": "en-US",
   "en-GB": "en-GB",
-  es: "es-ES",
   "es-ES": "es-ES",
   fr: "fr",
   he: "he",
@@ -34,10 +33,7 @@ export const MENU_MAP = {
   de: { value: "Deutsch", text: "German (Deutsch)" },
   "en-US": { value: "American English", text: "English (American English)" },
   "en-GB": { value: "British English", text: "English (British English)" },
-  "es-ES": {
-    value: "Español de España",
-    text: "Peninsular Spanish (Español de España)",
-  },
+  "es-ES": { value: "Español", text: "Spanish (Español de España)" },
   fr: { value: "Français", text: "French (Français)" },
   he: { value: "עברית", text: "Hebrew (עברית)" },
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
@@ -54,7 +50,7 @@ export const MENU_MAP = {
   "kn-IN": { value: "ಕನ್ನಡ", text: "Kannada (ಕನ್ನಡ)" },
   "ms-MY": { value: "Bahasa Melayu", text: "Malay (Bahasa Melayu)" },
   "te-IN": { value: "తెలుగు", text: "Telugu (తెలుగు)" },
-  "tl": { value: "ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔", text: "Tagalog (ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔)" },
+  tl: { value: "Tagalog", text: "Tagalog (Tagalog)" },
   vi: { value: "Tiếng Việt", text: "Vietnamese (Tiếng Việt)" },
   "mk-MK": { value: "македонски", text: "Macedonian (македонски)" },
 };

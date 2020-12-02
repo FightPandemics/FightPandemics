@@ -86,14 +86,20 @@
         "Artykuły spożywcze/Żywność",
         "Biznes",
         "Edukacja",
+        "Mieszkanie",
         "Kwestie Prawne",
-        "Dobre samopoczucie / psychika",
+        "Dobre samopoczucie/psychika",
         "Rozrywka",
         "Informacja",
         "Finansowanie",
-        "BADANIA I ROZWÓJ",
+        "R&D",
         "Tech",
-        "Inne"
+        "Inne",
+        "Opieka nad dziećmi",
+        "Tłumaczenia",
+        "Być wolontariuszem",
+        "Personel (płatny)",
+        "Praca zdalna"
       ],
       "labels": {
         "location": "Lokalizacja",
@@ -124,7 +130,13 @@
         "Funding": "Finansowanie",
         "R&D": "Badanie i Rozwój",
         "Tech": "Techniczne",
-        "Other": "Inne"
+        "Other": "Inne",
+        "Housing": "Mieszkanie",
+        "Childcare": "Opieka nad dziećmi",
+        "Translations": "Tłumaczenia",
+        "Volunteer": "Być wolontariuszem",
+        "Staff (paid)": "Personel (płatny)",
+        "Remote Work": "Praca zdalna"
       },
       "lookingForOptions": {
         "Request Help": "Potrzebuję pomocy",
@@ -211,7 +223,9 @@
     "cancel": "Anuluj",
     "confirm": "Potwierdź",
     "edited": "edytowany",
-    "share_plural": "Udostępnienia"
+    "share_plural": "Udostępnienia",
+    "deletePostConfirmationTitle": "Potwierdź usunięcie wpisu",
+    "deleteCommentConfirmationTitle": "Potwierdź usunięcie komentarza"
   },
   "profile": {
     "common": {
@@ -259,11 +273,14 @@
       "securityInfo": "Informacje o bezpieczeństwie",
       "changePassword": "Zmień hasło",
       "notificationInfo": "Preferencje powiadomień",
-      "emailNotification": "Powiadomienie email",
+      "emailNotification": "Ustawienia powiadomień email",
       "instant": "Natychmiastowy",
       "daily": "Codziennie",
       "weekly": "Co tydzień",
-      "biweekly": "Co dwa tygodnie"
+      "biweekly": "Co dwa tygodnie",
+      "digest": "Przegląd",
+      "on": "Wł.",
+      "off": "Wył."
     },
     "individual": {
       "email": "E-mail",
@@ -301,7 +318,8 @@
       "enterNewPassword": "Wprowadź nowe hasło",
       "updatingPassword": "Aktualizacja hasła",
       "editSecurity": "Edytuj informacje o bezpieczeństwie",
-      "editNotification": "Edytuj powiadomienia"
+      "editNotification": "Edytuj powiadomienia",
+      "editAccount": "Edytuj konto"
     },
     "org": {
       "title": "Utwórz profil organizacji",
@@ -364,7 +382,9 @@
       "editAccount": "Edytuj informacje o koncie",
       "updateSuccess": "Organizacja została pomyślnie zaktualizowana",
       "orgNameRequired": "Nazwa organizacji jest wymagana",
-      "global": "Globalny"
+      "global": "Globalny",
+      "editOrgAccount": "Edytuj konto organizacji",
+      "editOrgNotification": "Edycja powiadomienia dla organizacji"
     }
   },
   "auth": {
@@ -434,7 +454,10 @@
     "joinAmbassador": "Dołącz jako ambasador",
     "joinStudentProgram": "Dołącz do programu studenckiego",
     "studentSummerProgram": "Letni program studencki",
-    "forStudentInAge": "Dla uczniów w wieku 14-18 lat."
+    "forStudentInAge": "Dla uczniów w wieku 14-18 lat.",
+    "press": "Prasa",
+    "pressInfo": "Jeśli jesteś przedstawicielem prasy, skontaktuj się z nami pod adresem",
+    "pressKitLink": "Przejdź do materiałów prasowych"
   },
   "footer": {
     "faq": "FAQ",
@@ -970,6 +993,7 @@
     "header": "Powiadomienia",
     "liked": "<0> {{username}} </0 > polubił Twój post <1> {{postTitle}} </1 >",
     "commented": "<0> {{username}} </0> skomentował Twój post <1> {{postTitle}} </1 >",
-    "shared": "<0> {{username}} </0 > udostępnił Twój post <1> {{postTitle}} </1 > w <1> {{shareMedium}} </1>"
+    "shared": "<0> {{username}} </0 > udostępnił Twój post <1> {{postTitle}} </1 > w <1> {{shareMedium}} </1>",
+    "empty": "Nie ma więcej powiadomień"
   }
 }

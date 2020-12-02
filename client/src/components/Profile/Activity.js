@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -34,6 +34,33 @@ const Activity = ({
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const [hiddenPosts, setHiddenPosts] = useState(
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+  );
+
+  const hidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      ); // objects are fast, better than looking for postId in an Array
+      setHiddenPosts({ ...hiddenPosts, [postId]: true });
+    },
+    [hiddenPosts],
+  );
+
+  const unhidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: null }),
+      );
+      setHiddenPosts({ ...hiddenPosts, [postId]: null });
+    },
+    [hiddenPosts],
+  );
+
+
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
@@ -53,6 +80,9 @@ const Activity = ({
             handleCancelPostDelete={handleCancelPostDelete}
             onSelect={handleEditPost}
             gtmPrefix={GTM.profile.viewProfilePrefix}
+            isHidden={hiddenPosts[posts[index][1]?._id]}
+            onPostHide={hidePost}
+            onPostUnhide={unhidePost}
           />
         );
       }

@@ -19,6 +19,8 @@ import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   ProfileLayout,
@@ -336,7 +338,6 @@ const Profile = ({
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
-  console.log("urls", location);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -426,12 +427,19 @@ const Profile = ({
             <PlaceholderIcon />
             {isSelf && (
               <>
-                <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                 <CreatePostIcon
                   id={GTM.user.profilePrefix + GTM.post.createPost}
                   src={createPost}
                   onClick={onToggleCreatePostDrawer}
                 />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
               </>
             )}
           </SectionHeader>
@@ -491,11 +499,6 @@ const Profile = ({
                 {t("profile.individual.editProfile")}{" "}
               </Link>
             </DrawerHeader>
-            <DrawerHeader>
-              <Link to="/edit-notifications">
-                {t("profile.individual.editNotification")}{" "}
-              </Link>
-            </DrawerHeader>
             {usesPassword && (
               <DrawerHeader>
                 <Link to="/edit-security">
@@ -503,6 +506,11 @@ const Profile = ({
                 </Link>
               </DrawerHeader>
             )}
+            <DrawerHeader>
+              <Link to="/edit-notifications">
+                {t("profile.individual.editNotification")}{" "}
+              </Link>
+            </DrawerHeader>
           </CustomDrawer>
         )}
       </ProfileLayout>
