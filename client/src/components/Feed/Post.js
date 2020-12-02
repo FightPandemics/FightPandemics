@@ -199,7 +199,10 @@ const Post = ({
       dispatchPostAction(RESET_PAGE);
     }
     const currentLimit = limit.current;
-    limit.current = currentLimit * page;
+    //limit.current = currentLimit * page;
+    limit.current = currentLimit * (page == 1 ? 2 : page); // a workaround to fix above line,
+    // when page == 1 not expand any more,
+    // to reproduce, use above line, create a post, add 10 comments, toggle show less/more several times
   };
 
   const showLessComments = () => {
@@ -515,6 +518,7 @@ const Post = ({
           objective: post.objective,
           tags: post.types,
           location: post.author.location,
+          age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
       />
     </Card.Body>
@@ -528,7 +532,7 @@ const Post = ({
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
-          <div className="pre-header post-page">
+            <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
               <Tooltip title={translateISOTimeTitle(post.createdAt)}>
                 <span className="timestamp">
@@ -542,7 +546,7 @@ const Post = ({
                 </span>
               </Tooltip>
             </div>
-            <WhiteSpace size={"sm"}/>
+            <WhiteSpace size={"sm"} />
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
               <div className="card-submenu">
