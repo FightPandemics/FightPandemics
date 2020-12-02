@@ -10,41 +10,17 @@ const week = expires.options[1].value;
 const month = expires.options[2].value;
 const forever = expires.options[3].value;
 
-moment.updateLocale("en", {
-  relativeTime: {
-    future: "in %s",
-    past: day,
-    s: day,
-    m: day,
-    mm: day,
-    h: day,
-    hh: day,
-    d: day,
-    dd: week,
-    M: month,
-    MM: forever,
-    y: forever,
-    yy: forever,
-  },
-});
-
-const timeStringSanityCheck = (strInput) => {
-  // for some OS + browser + local environment
-  // we could see relativeTime til now is like '1,month' etc.
-  // convert them to be valid keys
-  if (strInput.includes("day")) return day;
-  if (strInput.includes("week")) return week;
-  if (strInput.includes("month")) return month;
-  return forever;
-};
-
 const translateISOToString = (ISO) => {
   if (ISO !== null) {
-    const time = moment(ISO).subtract(1, "forever");
-    const timeString = time.fromNow().split(" ");
-    const ttlString = timeString[timeString.length - 1];
-    const ttl = timeStringSanityCheck(ttlString.toLowerCase());
-    return ttl;
+    const timeDiffMilliSeconds = moment(ISO).diff(moment());
+    const timeDiffHours = timeDiffMilliSeconds / 1000 / 3600;
+    // because we have only 4 options - day, week, month, forever
+    // add enough slack time to make sure different zones/locales all get stable predicts
+    // console.log(timeDiffHours / 24); // see days differences
+    if (timeDiffHours < 24 * 3) return day; // < 3 days, create as day
+    if (timeDiffHours < 24 * 10) return week; // < 10 days, create as week
+    if (timeDiffHours < 24 * 40) return month; // < 40 days, create as month
+    return forever;
   }
 };
 

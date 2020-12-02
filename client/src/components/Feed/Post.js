@@ -219,7 +219,10 @@ const Post = ({
       dispatchPostAction(RESET_PAGE);
     }
     const currentLimit = limit.current;
-    limit.current = currentLimit * page;
+    //limit.current = currentLimit * page;
+    limit.current = currentLimit * (page == 1 ? 2 : page); // a workaround to fix above line,
+    // when page == 1 not expand any more,
+    // to reproduce, use above line, create a post, add 10 comments, toggle show less/more several times
   };
 
   const showLessComments = () => {
@@ -553,6 +556,7 @@ const Post = ({
           objective: post.objective,
           tags: post.types,
           location: post.author.location,
+          age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
       />
     </Card.Body>
