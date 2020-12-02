@@ -133,7 +133,7 @@ const PostCard = styled(Card)`
       padding: 0;
       color: black;
       white-space: pre-line;
-      max-width: calc(100% - 2rem);
+      max-width: calc(100% - 3rem);
 
       &::before {
         content: none;

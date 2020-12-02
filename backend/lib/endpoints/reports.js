@@ -2,6 +2,10 @@ const {
   createPostReportSchema,
   getPostReportsSchema,
 } = require("./schema/reports");
+const {
+  translateISOtoRelativeTime,
+} = require("../utils");
+
 const MAX_REPORTS_PER_PAGE = 20;
 const UNLOGGED_POST_SIZE = 120;
 
@@ -123,7 +127,15 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipelineResults),
+        Post.aggregate(aggregationPipelineResults).then((posts) => {
+          posts.forEach((post) => {
+            post.elapsedTimeText = {
+              created: translateISOtoRelativeTime(post.createdAt),
+              isEdited: post.isEdited,
+            };
+          });
+          return posts;
+        }),
       );
 
       const responseHandler = (response) => {

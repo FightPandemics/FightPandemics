@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
-import { Divider } from "antd";
+import { Divider, Tooltip } from "antd";
 import { useTranslation } from "react-i18next";
 
 // Local
@@ -15,13 +15,13 @@ import PostActions from "./PostActions";
 
 import {
   typeToTag,
+  translateISOTimeTitle,
 } from "assets/data/formToPostMappings";
 
 import filterOptions from "assets/data/filterOptions";
 import {
   getOptionText,
   highlightSearchRegex,
-  getPostedTime,
   authorProfileLink,
 } from "../Feed/utils";
 import { selectActorId } from "reducers/session";
@@ -89,7 +89,17 @@ const Post = ({
             <Highlight text={post?.author?.name} highlight={highlightWords} />
           </span>
           <span className="timestamp">
-           Posted {getPostedTime(post)}
+           Posted <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <span className="timestamp">
+                  {t(
+                    `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                    {
+                      count: post?.elapsedTimeText?.created?.count,
+                    },
+                  )}
+                  {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+                </span>
+              </Tooltip>
           </span>
         </div>
       }
