@@ -57,7 +57,7 @@ const NotifyPreferenceInput = ({
   return (
     <div>
       <HelpWrapper>
-        <Col span={12}>
+        <Col md="auto">
           <InputLabel
             htmlFor="notification"
             icon={mail}
@@ -65,6 +65,7 @@ const NotifyPreferenceInput = ({
             label={t("profile.common.emailNotification")}
           />
         </Col>
+        <Col offset={1}></Col>
         <Col>
           <FPSwitch
             checkedChildren={t("profile.common.on")}
@@ -78,29 +79,32 @@ const NotifyPreferenceInput = ({
       <WhiteSpace />
       <HelpWrapper>
         {Object.entries(NotifyGroup).map(([key1, label1]) => (
-          <Col span={8} key={(key1, label1)}>
-            <WhiteSpace />
-            <Label key={(key1, label1)}>{t(label1)}</Label>
-            {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
-              ([subkey, sublabel]) => (
-                <CheckBoxWrapper key={(key1, subkey)}>
-                  <Controller
-                    key={(key1, subkey)}
-                    as={Checkbox}
-                    defaultValue={currPrefs[key1][subkey]}
-                    name={`notifyPrefs.${key1}.${subkey}`}
-                    control={control}
-                    onChange={([event]) => event.target.checked}
-                    checked={currPrefs[key1][subkey]}
-                    disabled={!checksEnabled}
-                  >
-                    {t(sublabel)}
-                  </Controller>
-                </CheckBoxWrapper>
-              ),
-            )}
-            <WhiteSpace />
-          </Col>
+          <>
+            <Col md="auto" key={(key1, label1)}>
+              <WhiteSpace />
+              <Label key={(key1, label1)}>{t(label1)}</Label>
+              {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
+                ([subkey, sublabel]) => (
+                  <CheckBoxWrapper key={(key1, subkey)}>
+                    <Controller
+                      key={(key1, subkey)}
+                      as={Checkbox}
+                      defaultValue={currPrefs[key1][subkey]}
+                      name={`notifyPrefs.${key1}.${subkey}`}
+                      control={control}
+                      onChange={([event]) => event.target.checked}
+                      checked={currPrefs[key1][subkey]}
+                      disabled={!checksEnabled}
+                    >
+                      {t(sublabel)}
+                    </Controller>
+                  </CheckBoxWrapper>
+                ),
+              )}
+              <WhiteSpace />
+            </Col>
+            <Col span={2}></Col>
+          </>
         ))}
       </HelpWrapper>
     </div>
