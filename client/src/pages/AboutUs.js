@@ -83,6 +83,9 @@ import whitesourceLogo from "assets/supporters-logos/whitesourceLogo.png";
 import zendeskLogo from "assets/supporters-logos/zendeskLogo.svg";
 import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
 
+// community partners logos import
+import alltogetherLALogo from "assets/community-partners-logos/all-together-la.png";
+
 // social icons
 import instagramLogo from "assets/icons/social-instagram.svg";
 import linkedInLogo from "assets/icons/social-linkedin.svg";
@@ -102,6 +105,7 @@ const getGTM = (id) => {
 const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
+  [alltogetherLALogo, "https://alltogether.la/"],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
   [akveo, "https://www.akveo.com"],
@@ -155,6 +159,7 @@ const LogosMap = new Map([
   [zendeskLogo, "http://www.zendesk.com"],
 ]);
 
+const communityPartnersLogos = [alltogetherLALogo];
 const supporterLogosLifetime = [
   accessibe,
   algoliaLogo,
@@ -346,6 +351,26 @@ const AboutUs = () => {
           <source src={OurStory} type="video/mp4" />
         </video> */}
       </OurStoryContainer>
+
+      <SupporterContainer>
+        <h1>{t("communityPartners")}</h1>
+        <p>
+          {t("communityCollaboration")}
+          <br />
+          <br />
+          {t("becomeCommunityPartner")}{" "}
+          <AboutUsLink href="mailto:partnerships@fightpandemics.com">
+            {" "}
+            {t("becomePartnerEmail")}
+          </AboutUsLink>
+          <br />
+        </p>
+        <h3>{t("currentPartners")}</h3>
+        {/* max-width will change according to number of logos */}
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }}>
+          <LogosList supporterLogos={communityPartnersLogos} />
+        </SupportersLogosContainer>
+      </SupporterContainer>
 
       <SupporterContainer>
         <h1>{t("supporters")}</h1>
