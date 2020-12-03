@@ -219,13 +219,19 @@
     "expire": "Aradığınız gönderinin süresi doldu. Lütfen bu tür gönderiler için Yardım Panomuzu kontrol edin.",
     "noActivity": "Herhangi bir etkinlik bulunamadı",
     "share": "Paylaş",
-    "delete": "Sil",
+    "delete": "Gönderiyi sil",
     "cancel": "İptal",
     "confirm": "Onayla",
     "edited": "Düzenlendi",
     "share_plural": "Paylaşımlar",
     "deletePostConfirmationTitle": "İletiyi sil",
-    "deleteCommentConfirmationTitle": "Yorumu sil"
+    "deleteCommentConfirmationTitle": "Yorumu sil",
+    "deleteConfirmation": "Sil",
+    "edit": "Gönderiyi düzenle",
+    "hideAction": "Gönderiyi gizle",
+    "hideCaption": "Benim için uygun değil.",
+    "reportAction": "Şikayet et",
+    "reportCaption": "Moderatörler için"
   },
   "profile": {
     "common": {
@@ -457,7 +463,11 @@
     "forStudentInAge": "14-18 yaş arası öğrenciler için.",
     "press": "Basın",
     "pressInfo": "Basın mensubuysanız, bize buradan ulaşın",
-    "pressKitLink": "Basın Kitine Git"
+    "pressKitLink": "Basın Kitine Git",
+    "communityPartners": "Topluluk Ortakları",
+    "communityCollaboration": "Platformumuz aracılığıyla dünyanın dört bir yanındaki toplulukları ve kuruluşları güçlendirmek istiyoruz ve bunu yapabilmek için birlikte çalışmamız gerekiyor! Topluluk ortaklarımızla devam eden işbirliğimiz, onlar ve başkaları için daha iyi bir platform oluşturmamıza olanak sağlamaktadır.",
+    "becomeCommunityPartner": "Topluluğunuzun da ortağımız olmasını ister misiniz? Bu konu hakkındaki görüşlerinizi bilmek ve işbirliği yapmaya başlamak isteriz! Bize şuradan ulaşın",
+    "currentPartners": "Mevcut Topluluk Ortakları"
   },
   "footer": {
     "faq": "SSS",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> gönderinize yorum yaptı <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> gönderinizi<1>{{postTitle}}</1> <1>{{shareMedium}}</1> 'de paylaştı",
     "empty": "Başka bildirim yok"
+  },
+  "moderation": {
+    "report": "Şikayet et",
+    "cancel": "İptal",
+    "finish": "Tamamla",
+    "reason": "Şikayet sebebi:",
+    "additionalDetails": "Açıklama (isteğe bağlı)",
+    "enterDetails": "Lütfen buraya daha fazla ayrıntı girin ...",
+    "reportPost": "Şikayet et",
+    "reportPostSuccess": "Şikayetinizi aldık! Bu gönderi incelemeye alınacak.",
+    "reportPostError": "Oops! bir şeyler ters gitti...",
+    "reportPostSuccessTitle": "Şikayet Alındı",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Uygunsuz İçerik",
+    "violatesTerms": "Koşulları İhlal Ediyor",
+    "other": "Diğer",
+    "postSuspected": "Bu gönderi birden fazla şikayet aldı ve incelemeye alındı.",
+    "showAnyway": "Yine de göster",
+    "postHidden": "Bu gönderiyi gizlediniz.",
+    "unhide": "Göster",
+    "youReported": "Bu gönderiyi şikayet ettiniz. Artık sizin haber akışınızda görünmeyecek."
   }
 }

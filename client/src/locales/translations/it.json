@@ -225,7 +225,13 @@
     "edited": "modificato",
     "share_plural": "Condivisioni",
     "deletePostConfirmationTitle": "Elimina conferma post",
-    "deleteCommentConfirmationTitle": "Elimina conferma commento"
+    "deleteCommentConfirmationTitle": "Elimina conferma commento",
+    "deleteConfirmation": "Elimina",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -457,7 +463,11 @@
     "forStudentInAge": "Per studenti di età tra i 14 e i 18 anni.",
     "press": "Stampa",
     "pressInfo": "Se sei un membro stampa, contattaci al",
-    "pressKitLink": "Vai al Kit Stampa"
+    "pressKitLink": "Vai al Kit Stampa",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners"
   },
   "footer": {
     "faq": "FAQ",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> ha commentato il tuo post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> ha condiviso il tuo post <1>{{postTitle}}</1> su <1>{{shareMedium}}</1>",
     "empty": "Non ci sono altre notifiche"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Annulla",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Altro",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
