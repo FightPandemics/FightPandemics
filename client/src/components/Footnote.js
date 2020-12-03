@@ -12,7 +12,6 @@ const StyledFooter = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   padding: 1rem 2rem;
   width: 100%;
 
@@ -26,14 +25,13 @@ const StyledFooter = styled.footer`
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
     font-size: 1.4rem;
-    height: 6rem;
+    height: 8rem;
   }
 `;
 
 const Copyright = styled.div`
-  margin-top: 1.2rem;
   font-weight: 500;
   color: ${colors.darkerGray};
 
