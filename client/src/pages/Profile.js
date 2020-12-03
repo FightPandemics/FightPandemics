@@ -514,6 +514,7 @@ const Profile = ({
           </CustomDrawer>
         )}
       </ProfileLayout>
+      <WhiteSpace />
     </>
   );
 };
