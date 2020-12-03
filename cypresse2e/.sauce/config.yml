@@ -1,0 +1,25 @@
+apiVersion: v1alpha
+kind: cypress
+sauce:
+  region: eu-central-1
+  metadata:
+    name: Testing Cypress Support
+    tags:
+      - e2e
+      - release team
+      - other tag
+    build: Release $CI_COMMIT_SHORT_SHA
+docker:
+  image:
+    name: saucelabs/stt-cypress-mocha-node
+    tag: v0.2.2
+    command: npm install
+cypress:
+  configFile: "cypress.json" # We determine related files based on the location of the config file.
+suites:
+  - name: "saucy test"
+    browser: "chrome"
+    config:
+      env:
+        hello: world
+      testFiles: ["e2eTests/aboutUs/aboutUs.spec.js"] # Cypress native glob support.
