@@ -225,7 +225,13 @@
     "edited": "已編輯",
     "share_plural": "共享",
     "deletePostConfirmationTitle": "刪除貼文確認",
-    "deleteCommentConfirmationTitle": "刪除留言確認"
+    "deleteCommentConfirmationTitle": "刪除留言確認",
+    "deleteConfirmation": "刪除",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -457,7 +463,11 @@
     "forStudentInAge": "適合14-18歲的學生。",
     "press": "新聞",
     "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "前往新聞包"
+    "pressKitLink": "前往新聞包",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners"
   },
   "footer": {
     "faq": "常問問題",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 留言",
     "shared": "<0>{{username}}</0>在 <1>{{shareMedium}}</1> 共享您的貼文 <1>{{postTitle}}</1>",
     "empty": "沒有更多通知"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "取消",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "其它",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
