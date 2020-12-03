@@ -225,7 +225,13 @@
     "edited": "édité",
     "share_plural": "Je partage",
     "deletePostConfirmationTitle": "Confirmation de la suppression d'un poste",
-    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire"
+    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire",
+    "deleteConfirmation": "Supprimer",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -457,7 +463,11 @@
     "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans.",
     "press": "Presse",
     "pressInfo": "Si vous êtes membre de la presse, contactez-nous à l'adresse suivante",
-    "pressKitLink": "Aller au dossier de presse"
+    "pressKitLink": "Aller au dossier de presse",
+    "communityPartners": "Partenaires communautaires",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Vous souhaitez que votre communauté soit également notre partenaire? Nous aimerions avoir de vos nouvelles et commencer à collaborer ! Contactez-nous à ",
+    "currentPartners": "Partenaires communautaires actuels"
   },
   "footer": {
     "faq": "FAQ",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
     "empty": "Plus de notifications"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Annuler",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "S’il vous plaît entrer plus de détails ici ...",
+    "reportPost": "Signaler le poste",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Rapport reçu",
+    "reportPostErrorTitle": "Oups!",
+    "spam": "Spam",
+    "inappropriateContent": "Contenu inapproprié",
+    "violatesTerms": "Viole les conditions",
+    "other": "Autre",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Afficher",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
