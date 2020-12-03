@@ -179,8 +179,7 @@ const Header = ({
                   (p) => p.id == (organisationId || user.id.toString()),
                 )?.newMessages
                   ? 1
-                  : 0 || // remove "? 1:0" to show total messages
-                    0),
+                  : 0 || 0), // remove "? 1:0" to show total messages
               0,
             )}
           >

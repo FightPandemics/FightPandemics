@@ -11,7 +11,6 @@ import { MENU_STATE, CustomSvgIcon } from "./constants";
 
 import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
-import LanguageIcon from "assets/icons/language-gray.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
 
 const profileItemStyle = { margin: "8px 0", height: "auto" };
@@ -35,8 +34,8 @@ export const SettingMenu = ({
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item
-        id={GTM.nav.prefix + GTM.nav.switch}
         onClick={() => setMenuState(MENU_STATE.ACCOUNTS)}
+        id={GTM.nav.prefix + GTM.nav.switch}
       >
         <CustomSvgIcon src={PeopleIcon} />
         {t("common.switchAccount")}

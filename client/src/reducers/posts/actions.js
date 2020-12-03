@@ -7,6 +7,8 @@ export const POSTS_ACTIONS = {
   RESET_PAGE: "RESET_PAGE",
   SET_LIKE: "SET_LIKE",
   SET_LOADING: "SET_LOADING",
+  SET_REPORTED: "SET_REPORTED",
+  SHOW_ANYWAY: "SHOW_ANYWAY",
 };
 
 export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
@@ -57,6 +59,16 @@ export const setLoadingAction = ({ isLoading, loadMore }) => ({
   payload: { isLoading, loadMore },
 });
 
+export const setReported = ({ postId }) => ({
+  type: POSTS_ACTIONS.SET_REPORTED,
+  payload: { postId },
+});
+
+export const showAnyway = ({ postId }) => ({
+  type: POSTS_ACTIONS.SHOW_ANYWAY,
+  payload: { postId },
+});
+
 export const postsActions = {
   resetPageAction,
   setLikeAction,
@@ -67,4 +79,6 @@ export const postsActions = {
   setLoadingAction,
   setNextPageAction,
   setPageAction,
+  setReported,
+  showAnyway,
 };

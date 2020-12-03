@@ -55,6 +55,8 @@ module.exports = {
     orgBtn: "_ORG",
     individualBtn: "_IN",
     button: "_PO",
+    delete: "_DEL",
+    edit: "_EDT",
   },
   user: {
     completedPrefix: "PC",
@@ -193,5 +195,10 @@ module.exports = {
     share: "_SH",
     comment: "_CM",
     settings: "_SET",
+  },
+  moderation: {
+    hide: "_HIP",
+    unhide: "_UHIP",
+    report: "_RP",
   },
 };
