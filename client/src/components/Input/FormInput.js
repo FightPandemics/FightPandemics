@@ -8,7 +8,11 @@ import Label from "./Label";
 
 const { colors } = theme;
 
-const FormInput = styled.input`
+const FormInput = styled.input.attrs(({maxLength, min, max}) => ({
+  maxLength: maxLength || Number.MAX_SAFE_INTEGER,
+  min: min || Number.MIN_SAFE_INTEGER,
+  max: max || Number.MAX_SAFE_INTEGER
+}))`
   border: none;
   box-shadow: none;
   color: ${colors.black};

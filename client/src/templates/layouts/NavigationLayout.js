@@ -108,12 +108,17 @@ const NavigationLayout = (props) => {
     {
       stateKey: "mostValuableFeature",
       label: t("feedback.mostValuable"),
+      limit: 1000,
     },
     {
       stateKey: "whatWouldChange",
       label: t("feedback.oneChange"),
+      limit: 1000,
     },
-    { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
+    { stateKey: "generalFeedback", 
+      label: t("feedback.otherFeedback"),
+      limit: 1000,
+    },
   ];
 
   const [feedbackState, feedbackDispatch] = useReducer(
@@ -139,8 +144,8 @@ const NavigationLayout = (props) => {
     covidImpact,
   } = feedbackState;
 
-  const dispatchAction = (type, key, value) => {
-    feedbackDispatch({ type, key, value });
+  const dispatchAction = (type, key, value, limit) => {
+    feedbackDispatch({ type, key, value, limit });
   };
 
   const toggleDrawer = () => {
@@ -200,7 +205,7 @@ const NavigationLayout = (props) => {
       });
     }
   };
-
+  
   const renderThanksModal = () => (
     <ThanksModal
       onClose={() => closeModalandReset("thanksModal")}
@@ -222,6 +227,10 @@ const NavigationLayout = (props) => {
         stateKey: "age",
         label: t("feedback.radio.age"),
         type: "number",
+        limit: {
+          min: 1,
+          max: 999
+        }
       },
     ];
 
@@ -262,13 +271,16 @@ const NavigationLayout = (props) => {
         closable
       >
         <h2 className="title">{t("feedback.almostFinished")}</h2>
-        {inputLabelsText.map(({ label, stateKey, type }) => (
+        {inputLabelsText.map(({ label, stateKey, type, limit }) => (
           <React.Fragment key={stateKey}>
             <FormInput
               type={type}
+              min={limit.min}
+              max={limit.max}
               inputTitle={label}
+              value={String(feedbackState[stateKey])}
               onChange={(e) =>
-                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
+                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value), limit)
               }
             />
             <RadioGroupWithLabel label={t("feedback.howImpacted")} />
@@ -299,10 +311,12 @@ const NavigationLayout = (props) => {
         closable
       >
         <h2 className="title">{t("feedback.thankYouEarly")}</h2>
-        {TEXT_FEEDBACK.map(({ label, stateKey }) => (
+        {TEXT_FEEDBACK.map(({ label, stateKey, limit }) => (
           <FormInput
             key={stateKey}
             inputTitle={label}
+            maxLength={limit}
+            value={feedbackState[stateKey]}
             onChange={(e) =>
               dispatchAction(SET_VALUE, stateKey, e.target.value)
             }
