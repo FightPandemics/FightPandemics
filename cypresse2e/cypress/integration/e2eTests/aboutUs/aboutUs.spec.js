@@ -29,13 +29,14 @@ describe("FightPandemics About Us page", () => {
       goToHelpBoardButtonIsVisibleAndPointToAppropriateLink();
     });
 
-    it("Check if supporter (lifetime, current, past) containers are exist and visible", () => {
+    it("Check if current community partner and supporter (lifetime, current, past) containers are exist and visible", () => {
+      currentCommunityPartnerIsVisible();
       lifetimeSupporterContainerIsVisible();
       currentSupporterContainerIsVisible();
       pastSupporterContainerIsVisible();
     });
 
-      it("Check if Go to Press Kit button visible and get us to the appropriate link", () => {
+    it("Check if Go to Press Kit button visible and get us to the appropriate link", () => {
       goToPressKitButtonIsVisibleAndPointToAppropriateLink();
     });
 
@@ -88,21 +89,25 @@ describe("FightPandemics About Us page", () => {
     aboutUs.getInvolvedCloseButton().click();
   }
 
+   function currentCommunityPartnerIsVisible() {
+    supporterContainerVisible(aboutUs.currentCommunityPartnerCSS);
+  }
+
   function lifetimeSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.lifetimeSupportersContainerXpath)
+    supporterContainerVisible(aboutUs.lifetimeSupportersContainerCSS);
   }
 
-   function currentSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.currentSupportersContainerXpath)
+  function currentSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.currentSupportersContainerCSS);
   }
 
-   function pastSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.pastSupportersContainerXpath)
+  function pastSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.pastSupportersContainerCSS);
   }
 
 
   function goToPressKitButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinksWithXpath(aboutUs.getToPressKitButton, aboutUs.goToPressKitLink);
+    cy.checkAnyKindOfLinks(aboutUs.getToPressKitButton, aboutUs.goToPressKitLink);
   }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
@@ -124,8 +129,8 @@ describe("FightPandemics About Us page", () => {
       .and("have.attr", "href", link);
   }
 
-  function supporterContainerVisible(supporterContainerXpath) {
-    aboutUs.getSupporterContainer(supporterContainerXpath)
+  function supporterContainerVisible(supporterContainerCSS) {
+    aboutUs.getSupporterContainer(supporterContainerCSS)
       .should("be.visible");
   }
 });
