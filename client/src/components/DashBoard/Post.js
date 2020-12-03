@@ -26,23 +26,24 @@ import {
 } from "../Feed/utils";
 import { selectActorId } from "reducers/session";
 
-// Icons
-import websiteIcon from "assets/icons/social-website-blue.svg";
-import envelopeBlue from "assets/icons/social-envelope-blue.svg";
-
-
 export const AntDivider = styled(Divider)`
   height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.5);
-  left: 75px;
-  margin: -2rem 0 -2rem 0;
+  left: 8rem;
+  margin: -2rem 0;
 `;
 export const LeftHeader = styled.p`
   padding: 0;
   top: 50%;
-  margin: -2rem 0 0 -1rem;
+  transform: translateY(-50%);
   position: absolute;
   vertical-align: middle;
+  text-align: center;
+  div {
+    font-size: 5rem;
+    font-weight: bolder;
+    color: darkgray;
+  }
 `;
 
 const filters = Object.values(filterOptions);
@@ -89,17 +90,18 @@ const Post = ({
             <Highlight text={post?.author?.name} highlight={highlightWords} />
           </span>
           <span className="timestamp">
-           Posted <Tooltip title={translateISOTimeTitle(post.createdAt)}>
-                <span className="timestamp">
-                  {t(
-                    `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                    {
-                      count: post?.elapsedTimeText?.created?.count,
-                    },
-                  )}
-                  {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
-                </span>
-              </Tooltip>
+            Posted{" "}
+            <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <span className="timestamp">
+                {t(
+                  `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                  {
+                    count: post?.elapsedTimeText?.created?.count,
+                  },
+                )}
+                {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+              </span>
+            </Tooltip>
           </span>
         </div>
       }
@@ -112,10 +114,14 @@ const Post = ({
 
   const renderTags = (
     <Card.Body>
-      {post?.types &&
-        post?.types.map((tag, idx) => (
+      {post.reportedBy
+        .map((report) => report.reason)
+        .join("|")
+        .split("|")
+        .filter((e) => e && e !== "Other")
+        .map((reason, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
-            {t(getOptionText(filters, "type", typeToTag(tag)))}
+            {reason}
           </FilterTag>
         ))}
     </Card.Body>
@@ -126,7 +132,9 @@ const Post = ({
   return (
     <>
       <PostCard>
-        <LeftHeader>{reportsCount} Reports</LeftHeader>
+        <LeftHeader>
+          <div>{reportsCount}</div> Reports
+        </LeftHeader>
 
         <AntDivider type="vertical" plain>
           <div className="card-header">

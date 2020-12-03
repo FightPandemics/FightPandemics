@@ -1,10 +1,10 @@
 const {
   createPostReportSchema,
+  getAuditLogSchema,
   getPostReportsSchema,
+  moderatorActionSchema,
 } = require("./schema/reports");
-const {
-  translateISOtoRelativeTime,
-} = require("../utils");
+const { translateISOtoRelativeTime } = require("../utils");
 
 const MAX_REPORTS_PER_PAGE = 20;
 const UNLOGGED_POST_SIZE = 120;
@@ -15,6 +15,7 @@ const UNLOGGED_POST_SIZE = 120;
 async function routes(app) {
   const { mongo } = app;
   const Post = mongo.model("Post");
+  const Audit = mongo.model("Audit");
 
   // report a post
   app.post(
@@ -26,7 +27,6 @@ async function routes(app) {
     async (req, reply) => {
       const {
         actor,
-        // userId,
         params: { postId },
         body: reportProps,
       } = req;
@@ -46,9 +46,6 @@ async function routes(app) {
       } else if (updatedPost === null) {
         throw app.httpErrors.notFound();
       }
-
-      // action, post, actorId (triggredBy), authUserId, details
-      //app.notifier.notify("report", updatedPost, actor._id, userId);
 
       reply.code(201);
       return {
@@ -158,6 +155,144 @@ async function routes(app) {
         return responseHandler([]);
       } else {
         return responseHandler(posts);
+      }
+    },
+  );
+
+  // accept/reject a post report
+  app.patch(
+    "/posts/:postId",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkPermission("moderator"),
+      ],
+      schema: moderatorActionSchema,
+    },
+    async (req, reply) => {
+      const {
+        actor,
+        params: { postId },
+        body: actionProps,
+      } = req;
+      actionProps.moderatorId = actor._id;
+      actionProps.postId = postId;
+
+      const updates = {};
+
+      if (actionProps.action === "accept") {
+        updates.status = "removed";
+      } else if (actionProps.action === "reject") {
+        updates.status = "public";
+      }
+
+      const [updateErr, updatedPost] = await app.to(
+        Post.findByIdAndUpdate(postId, updates),
+      );
+
+      if (updateErr) {
+        req.log.error(updateErr, "Failed reporting post");
+        throw app.httpErrors.internalServerError();
+      } else if (updatedPost === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      const [err] = await app.to(new Audit(actionProps).save());
+
+      if (err) {
+        req.log.error(err, "Failed saving audit log action");
+        throw app.httpErrors.internalServerError();
+      }
+
+      // action, post, actorId (triggredBy), authUserId, details
+      // app.notifier.notify("report", updatedPost, actor._id, userId);
+
+      reply.code(201);
+      return {
+        success: true,
+      };
+    },
+  );
+
+  // report a post
+  app.get(
+    "/logs",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkPermission("moderator"),
+      ],
+      schema: getAuditLogSchema,
+    },
+    async (req) => {
+      const {
+        query: { limit, skip },
+      } = req;
+
+      const aggregationPipelineResults = [
+        {
+          $skip: parseInt(skip) || 0,
+        },
+        {
+          $limit: Math.min(limit || MAX_REPORTS_PER_PAGE),
+        },
+        {
+          $sort: {
+            createdAt: 1,
+          },
+        },
+        {
+          $lookup: {
+            as: "moderator",
+            foreignField: "_id",
+            from: "users",
+            localField: "moderatorId",
+          },
+        },
+        {
+          $set: {
+            moderator: { $arrayElemAt: ["$moderator", 0] },
+          },
+        },
+        {
+          $set: {
+            "moderator.name": {
+              $concat: ["$moderator.firstName", " ", "$moderator.lastName"],
+            },
+          },
+        },
+        {
+          $project: {
+            postId: 1,
+            justification: 1,
+            createdAt: 1,
+            action: 1,
+            "moderator.name": 1,
+            "moderator.photo": 1,
+          },
+        },
+      ];
+
+      const [logsErr, logs] = await app.to(
+        Audit.aggregate(aggregationPipelineResults).then((logs) => {
+          logs.forEach((log) => {
+            log.elapsedTimeText = {
+              created: translateISOtoRelativeTime(log.createdAt),
+            };
+          });
+          return logs;
+        }),
+      );
+
+      if (logsErr) {
+        req.log.error(logsErr, "Failed requesting logs");
+        throw app.httpErrors.internalServerError();
+      } else if (logs === null) {
+        return { logs: [] };
+      } else {
+        return { logs };
       }
     },
   );
