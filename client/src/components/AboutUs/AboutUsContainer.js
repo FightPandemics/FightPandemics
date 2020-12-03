@@ -93,7 +93,7 @@ export const SupportersLogosContainer = styled.div`
 
     img {
       max-width: 100%;
-      min-width: 10rem;
+      min-width: 8rem;
     }
   }
 `;
@@ -189,7 +189,7 @@ export const ConnectContainer = styled.div`
 
 export const OurStoryContainer = styled.div`
   margin: 0 auto;
-  margin-bottom: 13rem;
+  margin-bottom: 3rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-bottom: 6rem;
   }
@@ -257,7 +257,6 @@ export const ImageContainer = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   margin: 0 auto;
-  margin-bottom: 13rem;
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

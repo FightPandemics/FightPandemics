@@ -33,8 +33,13 @@ const StyledFooter = styled.footer`
 `;
 
 const Copyright = styled.div`
+  margin-top: 1.2rem;
   font-weight: 500;
   color: ${colors.darkerGray};
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 0;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -43,8 +48,9 @@ const StyledDiv = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  margin-top: 0.5rem;
 
-  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
     margin-top: 1.2rem;
   }
 `;
