@@ -1,4 +1,5 @@
 const Auth0 = require("../components/Auth0");
+const Veriff = require("../components/Veriff");
 const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken, createSearchRegex } = require("../utils");
 const { config } = require("../../config");
@@ -554,6 +555,24 @@ async function routes(app) {
       return updatedUser.notifyPrefs;
     },
   );
+
+  app.get("/verify", { preValidation: [app.authenticate] }, async (req) => {
+    const { userId } = req;
+    const [userErr, user] = await app.to(
+      User.findById(userId)
+    );
+    if (userErr) {
+      req.log.error(userErr, "Failed retrieving user");
+      throw app.httpErrors.internalServerError();
+    } else if (user === null) {
+      req.log.error(userErr, "User does not exist");
+      throw app.httpErrors.notFound();
+    }
+    const sessionUrl = await Veriff.createSessionUrl(user)
+    return {
+      sessionUrl
+    }
+  });
 }
 
 module.exports = routes;

@@ -21,6 +21,7 @@ import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import Verification from "components/Verification/"
 
 import {
   ProfileLayout,
@@ -418,6 +419,8 @@ const Profile = ({
             </IconsContainer>
           </UserInfoDesktop>
         </UserInfoContainer>
+        <WhiteSpace />
+        {isSelf && <Verification/>}
         <WhiteSpace />
         <div>
           <SectionHeader>

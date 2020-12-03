@@ -40,7 +40,9 @@ const configData = envSchema({
     .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
-    .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
+    .prop("SENDGRID_CONTACTS_LIST_ID", S.string())
+    .prop("VERIFF_PUBLIC_KEY", S.string())
+    .prop("VERIFF_PRIVATE_KEY", S.string()),
 });
 
 const config = {
@@ -109,6 +111,11 @@ const config = {
       host: configData.REDIS_HOST,
       port: configData.REDIS_PORT
     }
+  },
+  veriff: {
+    baseUrl: "https://api.veriff.me/",
+    publicKey: configData.VERIFF_PUBLIC_KEY,
+    privateKey: configData.VERIFF_PRIVATE_KEY,    
   }
 };
 
