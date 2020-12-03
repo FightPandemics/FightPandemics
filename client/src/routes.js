@@ -31,6 +31,7 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+import AdminDashboard from "./pages/AdminDashboard";
 
 import PERMISSIONS from "constants/permissions";
 
@@ -92,6 +93,11 @@ const routes = [
   {
     path: "/about-us",
     component: AboutUs,
+  },
+  {
+    path: "/admin-dashboard",
+    component: AdminDashboard,
+    exact: true,
   },
   {
     path: "/create-organisation-profile",
@@ -274,6 +280,7 @@ const routes = [
     component: Unsubscribe,
     layout: "logo",
   },
+
   {
     path: "*",
     component: NotFoundPage,
