@@ -394,18 +394,18 @@ const AboutUs = () => {
           {t("companyLogoInfo")}
         </p>
         <h3>{t("lifetimeSupporters")}</h3>
-        <SupportersLogosContainer>
+        <SupportersLogosContainer id="AU_LS">
           <LogosList supporterLogos={supporterLogosLifetime} />
         </SupportersLogosContainer>
         <br />
         <h3>{t("currentSupporters")}</h3>
-        <SupportersLogosContainer>
+        <SupportersLogosContainer id="AU_CS">
           <LogosList supporterLogos={supporterLogosCurrent} />
         </SupportersLogosContainer>
         <br />
         <h4>{t("pastSupporters")}</h4>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer style={{ maxWidth: "35rem" }}>
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_PS">
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
       </SupporterContainer>
@@ -420,6 +420,7 @@ const AboutUs = () => {
             </a>
           </p>
           <LinkButton
+            id="AU_PR"
             href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
             target="_blank"
           >
