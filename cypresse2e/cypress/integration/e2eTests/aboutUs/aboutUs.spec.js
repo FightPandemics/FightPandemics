@@ -89,20 +89,20 @@ describe("FightPandemics About Us page", () => {
     aboutUs.getInvolvedCloseButton().click();
   }
 
-   function currentCommunityPartnerIsVisible() {
-    supporterContainerVisible(aboutUs.currentCommunityPartnerCSS);
+  function currentCommunityPartnerIsVisible() {
+    supporterContainerVisibleXpath(aboutUs.currentCommunityPartnerXpath);
   }
 
   function lifetimeSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.lifetimeSupportersContainerCSS);
+    supporterContainerVisible(aboutUs.lifetimeSupportersContainer);
   }
 
   function currentSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.currentSupportersContainerCSS);
+    supporterContainerVisible(aboutUs.currentSupportersContainer);
   }
 
   function pastSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.pastSupportersContainerCSS);
+    supporterContainerVisible(aboutUs.pastSupportersContainer);
   }
 
 
@@ -129,8 +129,13 @@ describe("FightPandemics About Us page", () => {
       .and("have.attr", "href", link);
   }
 
-  function supporterContainerVisible(supporterContainerCSS) {
-    aboutUs.getSupporterContainer(supporterContainerCSS)
+  function supporterContainerVisibleXpath(supporterContainer) {
+    aboutUs.getSupporterContainerXpath(supporterContainer)
+      .should("be.visible");
+  }
+
+  function supporterContainerVisible(supporterContainer) {
+    aboutUs.getSupporterContainer(supporterContainer)
       .should("be.visible");
   }
 });

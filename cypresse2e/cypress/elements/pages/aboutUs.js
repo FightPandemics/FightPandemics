@@ -13,12 +13,12 @@ class AboutUs {
   joinStudentProgramLink = "https://apply.workable.com/fightpandemics/j/58B157AAB2/";
   getToHelpBoardButton = "#AU_VHB";
   goToHelpBoardLink = "/feed";
-  getToPressKitButton = "#root > div > div > div.am-drawer-content > main > div > div.sc-jOFreG.dCiTET > div > a";
+  getToPressKitButton = "#AU_PR";
   goToPressKitLink = "https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5";
-  currentCommunityPartnerCSS = "#root > div > div > div.am-drawer-content > main > div > div:nth-child(8) > div";
-  lifetimeSupportersContainerCSS = "#root > div > div > div.am-drawer-content > main > div > div:nth-child(9) > div:nth-child(4)";
-  currentSupportersContainerCSS = "#root > div > div > div.am-drawer-content > main > div > div:nth-child(9) > div:nth-child(7)";
-  pastSupportersContainerCSS = "#root > div > div > div.am-drawer-content > main > div > div:nth-child(9) > div:nth-child(10)";
+  currentCommunityPartnerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div";
+  lifetimeSupportersContainer = "#AU_LS";
+  currentSupportersContainer = "#AU_CS";
+  pastSupportersContainer = "#AU_PS";
 
 
   constructor() {
@@ -33,8 +33,12 @@ class AboutUs {
     return cy.get(this.involvedCloseButton);
   }
 
-  getSupporterContainer(supporterContainerCSS) {
-    return cy.get(supporterContainerCSS);
+  getSupporterContainerXpath(supporterContainer) {
+    return cy.xpath(supporterContainer);
+  }
+
+  getSupporterContainer(supporterContainer) {
+    return cy.get(supporterContainer);
   }
 
 }
