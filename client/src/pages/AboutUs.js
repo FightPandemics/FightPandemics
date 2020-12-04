@@ -105,7 +105,10 @@ const getGTM = (id) => {
 const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
-  [alltogetherLALogo, "/organisation/5fc8798d4c08fc00111a930a"],
+  [
+    alltogetherLALogo,
+    "https://fightpandemics.com/organisation/5fc8798d4c08fc00111a930a",
+  ],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
   [akveo, "https://www.akveo.com"],
