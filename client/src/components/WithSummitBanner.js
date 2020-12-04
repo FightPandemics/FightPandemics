@@ -116,8 +116,8 @@ const WithSummitBanner = ({ children }) => {
   }, []);
 
   return (
-    <BannerContainer visible={showBanner}>
-      {showBanner && (
+    <BannerContainer visible={false}>
+      {false && (
         <HomeRegisterBanner>
           <div>
             <b>Stronger Together Summit 2020 - 4th December 2020</b> : bringing
