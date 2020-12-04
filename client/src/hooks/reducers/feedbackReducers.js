@@ -1,6 +1,7 @@
 import {
   TOGGLE_STATE,
   SET_VALUE,
+  RESET_FEEDBACK_FORM,
   FEEDBACK_FORM_SUBMIT,
   FEEDBACK_FORM_SUBMIT_ERROR,
 } from "../actions/feedbackActions";
@@ -22,7 +23,6 @@ export const initialState = {
 };
 
 export const feedbackReducer = (oldState, action) => {
-
   // this is only for type number inputs
   if (action.limit && action.value < action.limit.min) action.value = action.limit.min;
   if (action.limit && action.value > action.limit.max) action.value = action.limit.max;
@@ -34,6 +34,8 @@ export const feedbackReducer = (oldState, action) => {
       return { ...oldState, [key]: !oldState[key] };
     case SET_VALUE:
       return { ...oldState, [key]: value };
+    case RESET_FEEDBACK_FORM:
+      return initialState.feedbackReducer;
     default:
       return oldState;
   }

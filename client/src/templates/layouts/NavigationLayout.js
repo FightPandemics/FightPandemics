@@ -22,6 +22,7 @@ import { theme } from "constants/theme";
 import {
   TOGGLE_STATE,
   SET_VALUE,
+  RESET_FEEDBACK_FORM,
   FEEDBACK_FORM_SUBMIT,
   FEEDBACK_FORM_SUBMIT_ERROR,
 } from "hooks/actions/feedbackActions";
@@ -115,7 +116,8 @@ const NavigationLayout = (props) => {
       label: t("feedback.oneChange"),
       limit: 1000,
     },
-    { stateKey: "generalFeedback", 
+    {
+      stateKey: "generalFeedback",
       label: t("feedback.otherFeedback"),
       limit: 1000,
     },
@@ -187,6 +189,7 @@ const NavigationLayout = (props) => {
         whatWouldChange,
       });
 
+      feedbackDispatch({ type: RESET_FEEDBACK_FORM });
       if (res) {
         toggleModal("thanksModal");
         setTimeout(() => dispatchAction(SET_VALUE, "thanksModal", false), 3000);
@@ -205,7 +208,7 @@ const NavigationLayout = (props) => {
       });
     }
   };
-  
+
   const renderThanksModal = () => (
     <ThanksModal
       onClose={() => closeModalandReset("thanksModal")}
@@ -225,12 +228,13 @@ const NavigationLayout = (props) => {
     const inputLabelsText = [
       {
         stateKey: "age",
+        stateErrorKey: "ageError",
         label: t("feedback.radio.age"),
         type: "number",
         limit: {
           min: 1,
-          max: 999
-        }
+          max: 150,
+        },
       },
     ];
 
@@ -271,21 +275,39 @@ const NavigationLayout = (props) => {
         closable
       >
         <h2 className="title">{t("feedback.almostFinished")}</h2>
-        {inputLabelsText.map(({ label, stateKey, type, limit }) => (
-          <React.Fragment key={stateKey}>
-            <FormInput
-              type={type}
-              min={limit.min}
-              max={limit.max}
-              inputTitle={label}
-              value={String(feedbackState[stateKey])}
-              onChange={(e) =>
-                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value), limit)
-              }
-            />
-            <RadioGroupWithLabel label={t("feedback.howImpacted")} />
-          </React.Fragment>
-        ))}
+        {inputLabelsText.map(
+          ({ label, stateKey, stateErrorKey, type, limit }) => (
+            <React.Fragment key={stateKey}>
+              <FormInput
+                type={type}
+                min={limit.min}
+                max={limit.max}
+                inputTitle={label}
+                value={String(feedbackState[stateKey])}
+                error={
+                  feedbackState[stateErrorKey] && {
+                    message: `Maximum is ${limit.max} and minimum is ${limit.min}`,
+                  }
+                }
+                onChange={(e) => {
+                  if (type === "number" && limit) {
+                    const val = parseInt(e.target.value);
+                    if (val > limit.max || val < limit.min)
+                      return dispatchAction(SET_VALUE, stateErrorKey, true);
+                  }
+                  dispatchAction(
+                    SET_VALUE,
+                    stateKey,
+                    parseInt(e.target.value),
+                    limit,
+                  );
+                  dispatchAction(SET_VALUE, stateErrorKey, false);
+                }}
+              />
+              <RadioGroupWithLabel label={t("feedback.howImpacted")} />
+            </React.Fragment>
+          ),
+        )}
         <FeedbackSubmitButton
           title={t("onboarding.common.submit")}
           onClick={() => {

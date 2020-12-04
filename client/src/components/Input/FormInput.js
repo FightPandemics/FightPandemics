@@ -4,14 +4,15 @@ import styled from "styled-components";
 import { blockLabelStyles } from "constants/formStyles";
 import { mq, theme } from "constants/theme";
 import InputError from "./InputError";
+import InputInfo from "./InputInfo";
 import Label from "./Label";
 
 const { colors } = theme;
 
-const FormInput = styled.input.attrs(({maxLength, min, max}) => ({
+const FormInput = styled.input.attrs(({ maxLength, min, max }) => ({
   maxLength: maxLength || Number.MAX_SAFE_INTEGER,
   min: min || Number.MIN_SAFE_INTEGER,
-  max: max || Number.MAX_SAFE_INTEGER
+  max: max || Number.MAX_SAFE_INTEGER,
 }))`
   border: none;
   box-shadow: none;
@@ -60,26 +61,35 @@ export default forwardRef(
       ...props
     },
     ref,
-  ) => (
-    <OuterWrapper>
-      <Label
-        icon={icon}
-        htmlFor={name}
-        style={blockLabelStyles}
-        label={inputTitle}
-      />
-      <InputWrapper className={error && "has-error"}>
-        {prefix && <Prefix>{prefix}</Prefix>}
-        <FormInput
-          name={name}
-          id={name}
-          defaultValue={defaultValue}
-          ref={ref}
-          placeholder={placeholder}
-          {...props}
+  ) => {
+    const charsLeft =
+      props.maxLength && props.value && props.maxLength - props.value.length;
+    return (
+      <OuterWrapper>
+        <Label
+          icon={icon}
+          htmlFor={name}
+          style={blockLabelStyles}
+          label={inputTitle}
         />
-      </InputWrapper>
-      {error && <InputError>{error.message}</InputError>}
-    </OuterWrapper>
-  ),
+        <InputWrapper className={error && "has-error"}>
+          {prefix && <Prefix>{prefix}</Prefix>}
+          <FormInput
+            name={name}
+            id={name}
+            defaultValue={defaultValue}
+            ref={ref}
+            placeholder={placeholder}
+            {...props}
+          />
+        </InputWrapper>
+        {typeof charsLeft === "number" && charsLeft !== props.maxLength && (
+          <InputInfo
+            error={charsLeft === 0}
+          >{`${charsLeft} characters left`}</InputInfo>
+        )}
+        {error && <InputError>{error.message}</InputError>}
+      </OuterWrapper>
+    );
+  },
 );
