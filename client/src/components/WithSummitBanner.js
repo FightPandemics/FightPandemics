@@ -102,9 +102,7 @@ export const BannerContainer = styled.div`
 `;
 
 const WithSummitBanner = ({ children }) => {
-  const [showBanner, setBannerState] = React.useState(
-    localStorage?.showSummitBanner === "false" ? false : true,
-  );
+  const [showBanner, setBannerState] = React.useState(false);
 
   const removeBanner = React.useCallback(() => {
     setBannerState(false);
