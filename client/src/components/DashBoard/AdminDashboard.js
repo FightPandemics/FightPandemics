@@ -1,13 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { Button } from "antd";
-import { Table, Input, Dropdown, Select } from "antd";
-import { WhiteSpace } from "antd-mobile";
+import { Input, Select } from "antd";
 
 import AdDashboard from "components/AdminDashboard/Dashboard";
-import FiltersSidebar from "components/Feed/FiltersSidebar";
+import React from "react";
+import { WhiteSpace } from "antd-mobile";
 
 const { Option } = Select;
 
@@ -66,8 +61,6 @@ function AdminDashboard() {
         style={{
           width: 200,
           margin: "0 10px",
-          position: "absolute",
-          left: "20rem",
           width: "30%",
         }}
       />

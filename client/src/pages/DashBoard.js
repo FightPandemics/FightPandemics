@@ -1,37 +1,36 @@
-import React, {
-  useReducer,
-  useEffect,
-  useCallback,
-  useState,
-  useRef,
-} from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
-import axios from "axios";
-
-// Antd
-import { Menu, Table, Tag } from "antd";
-
-// Local
-import filterOptions from "assets/data/filterOptions";
 import {
-  FeedWrapper,
-  SiderWrapper,
-  MenuWrapper,
-  LayoutWrapper,
   ContentWrapper,
+  FeedWrapper,
+  LayoutWrapper,
+  MenuWrapper,
+  SiderWrapper,
 } from "components/Feed/FeedWrappers";
-import Posts from "components/DashBoard/Posts";
-import { selectPosts, postsActions } from "reducers/posts";
-import { feedReducer } from "hooks/reducers/feedReducers";
-import TextAvatar from "components/TextAvatar";
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import { postsActions, selectPosts } from "reducers/posts";
+import { useDispatch, useSelector } from "react-redux";
 
+import AdminDashboard from "components/DashBoard/AdminDashboard";
+import AuditLog from "components/DashBoard/AuditLog";
 // ICONS
 import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
+// Antd
+import { Menu } from "antd";
+import Posts from "components/DashBoard/Posts";
+import { SET_VALUE } from "hooks/actions/feedActions";
+import axios from "axios";
+import { feedReducer } from "hooks/reducers/feedReducers";
+// Local
+import filterOptions from "assets/data/filterOptions";
+import styled from "styled-components";
 // Constants
 import { theme } from "constants/theme";
-import { SET_VALUE } from "hooks/actions/feedActions";
+import { WhiteSpace } from "antd-mobile";
 
 export const FeedContext = React.createContext();
 
@@ -39,6 +38,11 @@ let REPORTS_TYPE = {
   PENDING: "Pending",
   ACCEPTED: "Removed Posts",
   REJECTED: "Kept Posts",
+};
+
+let ADMIN_PANELS = {
+  LOGS: "Audit Logs",
+  MANAGE: "Manage Users",
 };
 
 const initialState = {
@@ -76,55 +80,6 @@ const StyledMenuItem = styled(Menu.Item)`
 `;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-
-const auditLogsColumns = [
-  {
-    title: "Moderator",
-    dataIndex: "moderator",
-    render: (user) => (
-      <>
-        <TextAvatar
-          style={{ display: "inline-block" }}
-          mobile={true}
-          src={user.photo}
-        >
-          {user.name}
-        </TextAvatar>{" "}
-        {user.name}
-      </>
-    ),
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    render: (action) => (
-      <>
-        <Tag color={action === "accept" ? "green" : "red"} key={action}>
-          {action.toUpperCase()}
-        </Tag>
-      </>
-    ),
-  },
-  {
-    title: "Justification",
-    dataIndex: "justification",
-  },
-  {
-    title: "Date",
-    dataIndex: "createdAt",
-  },
-  {
-    title: "Post",
-    dataIndex: "postId",
-    render: (postId) => (
-      <>
-        <Link style={{ color: "blue" }} to={`post/${postId}`}>
-          View Post
-        </Link>
-      </>
-    ),
-  },
-];
 
 const Feed = (props) => {
   const dispatch = useDispatch();
@@ -384,39 +339,56 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
-                <StyledMenuItem key={"LOGS"}>
-                  Audit Logs
-                  <StyledForwardIcon />
-                </StyledMenuItem>
+                <div style={{ height: "calc(100% - 23rem)" }} />
+                <h3
+                  style={{
+                    marginLeft: "2.15rem",
+                    color: "orangered",
+                    fontWeight: "bolder",
+                  }}
+                >
+                  ADMIN
+                </h3>
+                {Object.keys(ADMIN_PANELS).map((item, index) => (
+                  <>
+                    <StyledMenuItem key={item}>
+                      {ADMIN_PANELS[item]}
+                      <StyledForwardIcon />
+                    </StyledMenuItem>
+                  </>
+                ))}
               </MenuWrapper>
             </>
           </SiderWrapper>
           <ContentWrapper>
-            {status !== "LOGS" ? (
-              <>
-                <Posts
-                  isAuthenticated={isAuthenticated}
-                  filteredPosts={postsList}
-                  postDispatch={dispatch}
-                  user={user}
-                  isNextPageLoading={isLoading}
-                  loadNextPage={loadNextPage}
-                  itemCount={itemCount}
-                  isItemLoaded={isItemLoaded}
-                  hasNextPage={loadMore}
-                  totalPostCount={totalPostCount}
-                  highlightWords={null /*queryParams.s_keyword*/}
-                  page={page}
-                />
-                {emptyFeed() ? (
-                  <NoPosts>
-                    There are no "{REPORTS_TYPE[status]}" reports.
-                  </NoPosts>
-                ) : null}
-              </>
-            ) : (
-              <Table dataSource={logs || []} columns={auditLogsColumns} />
-            )}
+            {(() => {
+              if (status === "LOGS") return <AuditLog logs={logs} />;
+              else if (status === "MANAGE") return <AdminDashboard />;
+              else
+                return (
+                  <>
+                    <Posts
+                      isAuthenticated={isAuthenticated}
+                      filteredPosts={postsList}
+                      postDispatch={dispatch}
+                      user={user}
+                      isNextPageLoading={isLoading}
+                      loadNextPage={loadNextPage}
+                      itemCount={itemCount}
+                      isItemLoaded={isItemLoaded}
+                      hasNextPage={loadMore}
+                      totalPostCount={totalPostCount}
+                      highlightWords={null /*queryParams.s_keyword*/}
+                      page={page}
+                    />
+                    {emptyFeed() ? (
+                      <NoPosts>
+                        There are no "{REPORTS_TYPE[status]}" reports.
+                      </NoPosts>
+                    ) : null}
+                  </>
+                );
+            })()}
           </ContentWrapper>
         </LayoutWrapper>
       </FeedWrapper>
