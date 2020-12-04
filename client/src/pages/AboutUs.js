@@ -220,7 +220,12 @@ const supporterLogosPast = [calendlyLogo, leypayLogo];
 function LogoItem(props) {
   return (
     <div>
-      <a href={LogosMap.get(props.value)} target="_blank">
+      <a
+        href={LogosMap.get(props.value)}
+        target={
+          communityPartnersLogos.includes(props.value) ? "_self" : "_blank"
+        }
+      >
         <img loading="lazy" src={props.value} alt="" />
       </a>
     </div>
