@@ -116,7 +116,7 @@ const WithSummitBanner = ({ children }) => {
   }, []);
 
   return (
-    <BannerContainer visible={false}>
+    <BannerContainer visible={showBanner}>
       {false && (
         <HomeRegisterBanner>
           <div>
