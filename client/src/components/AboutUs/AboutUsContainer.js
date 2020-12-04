@@ -93,7 +93,7 @@ export const SupportersLogosContainer = styled.div`
 
     img {
       max-width: 100%;
-      min-width: 10rem;
+      min-width: 8rem;
     }
   }
 `;
@@ -130,7 +130,7 @@ export const HeadingContainer = styled.div`
 `;
 
 export const HowDoesThisWorkContainer = styled.div`
-  margin-top: 13rem;
+  margin-top: 10rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-top: 6rem;
@@ -189,7 +189,7 @@ export const ConnectContainer = styled.div`
 
 export const OurStoryContainer = styled.div`
   margin: 0 auto;
-  margin-bottom: 13rem;
+  margin-bottom: 5rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-bottom: 6rem;
   }
@@ -257,13 +257,14 @@ export const ImageContainer = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   margin: 0 auto;
-  margin-bottom: 13rem;
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
   flex-direction: ${(props) => props?.flexDirection || "column"};
   align-items: center;
   justify-content: center;
+  margin-bottom: 4rem;
+  margin-top: 2rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: ${(props) => props.mobileHeight};
@@ -321,7 +322,7 @@ export const MobileContentContainer = styled.div`
 
 export const SupporterContainer = styled.div`
   background-color: ${gray};
-  padding: 3.4rem 12.5rem;
+  padding: 3.4rem 10rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     position: relative;

@@ -105,7 +105,10 @@ const getGTM = (id) => {
 const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
-  [alltogetherLALogo, "https://alltogether.la/"],
+  [
+    alltogetherLALogo,
+    "https://fightpandemics.com/organisation/5fc8798d4c08fc00111a930a",
+  ],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
   [akveo, "https://www.akveo.com"],
@@ -220,7 +223,12 @@ const supporterLogosPast = [calendlyLogo, leypayLogo];
 function LogoItem(props) {
   return (
     <div>
-      <a href={LogosMap.get(props.value)} target="_blank">
+      <a
+        href={LogosMap.get(props.value)}
+        target={
+          communityPartnersLogos.includes(props.value) ? "_self" : "_blank"
+        }
+      >
         <img loading="lazy" src={props.value} alt="" />
       </a>
     </div>
@@ -256,9 +264,7 @@ const AboutUs = () => {
         height={"calc(100vw / 2.5411)"}
         mobileHeight={"40rem"}
         flexDirection={"row"}
-      >
-        <h2>{t("forWhoHeading")}</h2>
-      </ImageContainer>
+      ></ImageContainer>
 
       <MobileContentContainer>
         <h2>{t("forWhoHeading")}</h2>
