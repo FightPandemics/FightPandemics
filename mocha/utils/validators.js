@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+//const {should} = require("should");
 
 exports.validateStatusCodeErrorAndMessage = function (
   response,
@@ -28,18 +29,26 @@ exports.validateStatusCode = function (response, statusCode) {
   expect(response.statusCode).to.be.equal(statusCode);
 };
 
-exports.validateStatusBody = function (
-  response,
-  statusCode,
-  value1,
-  value2,
-  value3,
-) {
-  // var org = JSON.parse(responseBody);
-  //expect(org.body).to.have.a.property("_id").to.be.equal(responseBody);
+exports.validateStatusBody = function (response, statusCode) {
   expect(response.statusCode).to.be.equal(statusCode);
-
-  expect(response.body).to.have.a.property("_id").to.be.equal(value1);
-  expect(response.body).to.have.a.property("ownerId").to.be.equal(value2);
-  expect(response.body).to.have.a.property("type").to.be.equal(value3);
+  expect(response.body).toString;
+  expect(response.body).to.have.any.keys(
+    "_t",
+    "_v",
+    "_id",
+    "createdAt",
+    "email",
+    "global",
+    "industry",
+    "isOwner",
+    "language",
+    "location",
+    "name",
+    "needs",
+    "notifyPrefs",
+    "ownerId",
+    "photo",
+    "type",
+    "updatedAt",
+  );
 };

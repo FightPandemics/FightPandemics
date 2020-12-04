@@ -5,9 +5,9 @@ const apiHelper = require("../utils/apiHelper");
 const validator = require("../utils/validators");
 
 let orgApiEndPoint = apiEndPoints.organisationsEndpoint;
-let orgId = "5fc7aa97c0cdcc003855f308";
+//let orgId = "5fc7aa97c0cdcc003855f308";
 let invalidId = "5fba8756dd5c260038d223a3";
-let ownerId = "5fc7aa97c0cdcc003855f304";
+//let ownerId = "5fc7aa97c0cdcc003855f304";
 
 describe("GET organisations endpoint tests", () => {
   it("sending GET request with endpoint, status : 200 OK with org details", async () => {
@@ -15,7 +15,7 @@ describe("GET organisations endpoint tests", () => {
     validator.validateStatusCode(response, 200);
   });
 
-  it("sending GET request with endpoint with valid path parameter id, status : 200 OK with details", async () => {
+  it("/api/organisations{organisationId}, status : 200 OK with details", async () => {
     //var org = JSON.parse(responseBody);
     //let orgId = org[1]._id;
     //let orgId = "5fba8756dd5c260038d223b2";
@@ -23,13 +23,7 @@ describe("GET organisations endpoint tests", () => {
       APP_URL,
       orgApiEndPoint + "/" + orgId,
     );
-    validator.validateStatusBody(
-      response,
-      200,
-      "5fc7aa97c0cdcc003855f308",
-      "5fc7aa97c0cdcc003855f304",
-      "Community",
-    );
+    validator.validateStatusBody(response, 200);
   });
 
   it("sending GET request with endpoint with a invalid path parameter we should recieve status : 404 Not Found", async () => {
