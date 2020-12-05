@@ -1,7 +1,9 @@
 const PERMISSIONS = {
     user: 0,
-    moderator: 2,
-    administrator: 4,
+    reader: 2,
+    moderator: 4,
+    administrator: 8,
+    superAdministrator: 16,
 };
 
 export default PERMISSIONS;

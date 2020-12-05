@@ -51,6 +51,7 @@ const initialState = {
   activePanel: null,
   status: "PENDING",
   logs: [],
+  users: [],
 };
 
 export const NoPosts = styled.div`
@@ -98,6 +99,7 @@ const Feed = (props) => {
     showFilters,
     status,
     logs,
+    users,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -171,7 +173,36 @@ const Feed = (props) => {
     console.log(status);
     console.log(logs);
 
-    if (status !== "LOGS") {
+    if (status === "LOGS") {
+      // Audit log
+      endpoint = `/api/reports/logs?limit=${limit}&skip=${skip}`;
+      try {
+        const {
+          data: { logs },
+        } = await axios.get(endpoint);
+        if (logs) {
+          console.log(typeof logs);
+          dispatchAction(SET_VALUE, "logs", logs);
+          dispatch(postsActions.finishLoadingAction());
+          console.log(logs);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (status === "MANAGE") {
+      endpoint = `/api/users/roles`;
+      try {
+        const {
+          data: { users },
+        } = await axios.get(endpoint);
+        if (users) {
+          dispatchAction(SET_VALUE, "users", users);
+          dispatch(postsActions.finishLoadingAction());
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
       try {
         const {
           data: { data: posts, meta },
@@ -248,22 +279,6 @@ const Feed = (props) => {
       } catch (error) {
         dispatch(postsActions.fetchPostsError(error));
         dispatch(postsActions.finishLoadingAction());
-      }
-    } else {
-      // Audit log
-      endpoint = `/api/reports/logs?limit=${limit}&skip=${skip}`;
-      try {
-        const {
-          data: { logs },
-        } = await axios.get(endpoint);
-        if (logs) {
-          console.log(typeof logs);
-          dispatchAction(SET_VALUE, "logs", logs);
-          dispatch(postsActions.finishLoadingAction());
-          console.log(logs);
-        }
-      } catch (error) {
-        console.log(error);
       }
     }
   };
@@ -364,7 +379,8 @@ const Feed = (props) => {
           <ContentWrapper>
             {(() => {
               if (status === "LOGS") return <AuditLog logs={logs} />;
-              else if (status === "MANAGE") return <AdminDashboard />;
+              else if (status === "MANAGE")
+                return <AdminDashboard users={users} />;
               else
                 return (
                   <>

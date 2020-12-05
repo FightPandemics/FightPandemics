@@ -86,7 +86,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -358,7 +358,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
-        usesPassword
+        usesPassword,
       } = user;
 
       let { location } = user;
@@ -382,7 +382,7 @@ async function routes(app) {
         ownUser,
         photo,
         urls,
-        usesPassword: ownUser ? usesPassword : undefined
+        usesPassword: ownUser ? usesPassword : undefined,
       };
     },
   );
@@ -466,10 +466,9 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const {
-        email,
-        email_verified: emailVerified,
-      } = await Auth0.getUser(getCookieToken(req));
+      const { email, email_verified: emailVerified } = await Auth0.getUser(
+        getCookieToken(req),
+      );
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -492,7 +491,7 @@ async function routes(app) {
       return {
         ...user.toObject(),
         organisations: [],
-      }
+      };
     },
   );
 
@@ -506,7 +505,7 @@ async function routes(app) {
         throw app.httpErrors.badRequest("token is invalid");
       }
       decoded = payload;
-    })
+    });
 
     const { userId, exp } = decoded;
     if (exp * 1000 < Date.now()) {
@@ -528,7 +527,7 @@ async function routes(app) {
     { schema: updateNotifyPrefsSchema },
     async (req) => {
       const { headers, body } = req;
-      
+
       let decoded = {};
       jwt.verify(headers.token, config.auth.secretKey, (err, payload) => {
         if (err) {
@@ -536,8 +535,8 @@ async function routes(app) {
           throw app.httpErrors.badRequest("token is invalid");
         }
         decoded = payload;
-      })
-      
+      });
+
       const { userId, expireDate } = decoded;
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
@@ -558,36 +557,85 @@ async function routes(app) {
     },
   );
 
-
   app.patch(
-    "/:userId/permission", 
+    "/:userId/permission",
     {
       preValidation: [
         app.authenticate,
         app.setActor,
         app.checkPermission("administrator"),
-      ]
+      ],
     },
     async (req) => {
-    
       const {
         params: { userId },
-        body: {level},
+        body: { level },
       } = req;
-      
+
       const [updatedErr, updatedUser] = await app.to(
         User.findOneAndUpdate(
-          {_id: userId },
-          { $set: {permissions: PERMISSIONS[level]}},
-          { new: true }
-        )
-      )
+          { _id: userId },
+          { $set: { permissions: PERMISSIONS[level] } },
+          { new: true },
+        ),
+      );
       if (updatedErr) {
         req.log.error(updateErr, "Failed to add permission");
         throw app.httpErrors.internalServerError();
       }
       return updatedUser.permissions;
-  });
+    },
+  );
+
+  app.get(
+    "/roles",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkPermission("administrator"),
+      ],
+    },
+    async (req) => {
+      const aggregationPipeline = [
+        {
+          $match: {
+            permissions: { $gt: 0 },
+          },
+        },
+        {
+          $set: {
+            name: {
+              $concat: ["$firstName", " ", "$lastName"],
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            permissions: 1,
+            photo: 1,
+          },
+        },
+        {
+          $sort: {
+            permissions: 1,
+          },
+        },
+      ];
+      const [errUsers, users] = await app.to(
+        User.aggregate(aggregationPipeline),
+      );
+      if (errUsers) {
+        req.log.error(updateErr, "Failed to get users");
+        throw app.httpErrors.internalServerError();
+      }
+      return {
+        users,
+      };
+    },
+  );
 }
 
 module.exports = routes;

@@ -39,7 +39,7 @@ export const SettingMenu = ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      {Boolean(user.permissions & PERMISSIONS.moderator) && (
+      {Boolean(user.permissions & PERMISSIONS.reader) && (
         <Menu.Item>
           <Link to="/dashboard">
             <StyledModeratorIcon />
