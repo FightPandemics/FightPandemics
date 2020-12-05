@@ -4,7 +4,7 @@ const { locationSchema } = require("./location");
 const { notifyPreferenceSchema } = require("./notificationPreference");
 
 const organisation = {
-  about: S.string().maxLength(100),
+  about: S.string().maxLength(260),
   email: S.string().format("email"),
   global: S.boolean(),
   industry: S.string(),

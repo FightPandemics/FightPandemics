@@ -113,7 +113,6 @@ const Posts = ({
               currentPost={posts[index][1]}
               postDispatch={postDispatch}
               includeProfileLink={true}
-              numComments={posts[index][1].commentsCount}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}

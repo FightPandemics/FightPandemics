@@ -154,6 +154,7 @@ export const ProfileLayout = styled.div`
   margin-top: 12.1rem;
   width: 100vw;
   border-radius: 0.8rem;
+  margin-bottom: 4rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 90vw;

@@ -417,11 +417,11 @@ async function routes(app) {
           isEdited: post.isEdited, // keep frontend format
         },
         reportsCount: (post.reportedBy || []).length,
+        commentsCount: commentQuery || 0,
       };
       delete projectedPost.reportedBy;
 
       return {
-        numComments: commentQuery || 0,
         post: projectedPost,
       };
     },
