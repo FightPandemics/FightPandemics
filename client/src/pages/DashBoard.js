@@ -330,6 +330,7 @@ const Feed = (props) => {
                 defaultSelectedKeys={["PENDING"]}
                 selectedKeys={[status || "PENDING"]}
                 onClick={handleChangeType}
+                isDashboard
               >
                 {Object.keys(REPORTS_TYPE).map((item, index) => (
                   <>
