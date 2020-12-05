@@ -27,28 +27,11 @@ exports.validateStatusCodeAndSuccess = function (
 
 exports.validateStatusCode = function (response, statusCode) {
   expect(response.statusCode).to.be.equal(statusCode);
-};
-
-exports.validateStatusBody = function (response, statusCode) {
-  expect(response.statusCode).to.be.equal(statusCode);
-  expect(response.body).toString;
-  expect(response.body).to.have.any.keys(
-    "_t",
-    "_v",
-    "_id",
-    "createdAt",
-    "email",
-    "global",
-    "industry",
-    "isOwner",
-    "language",
-    "location",
-    "name",
-    "needs",
-    "notifyPrefs",
-    "ownerId",
-    "photo",
-    "type",
-    "updatedAt",
+  // expect(response.body[0]).to.have.property("name");
+  expect(
+    response.body.forEach((org) => {
+      expect(org).to.have.a.property("_id");
+      expect(org).to.have.a.property("name");
+    }),
   );
 };
