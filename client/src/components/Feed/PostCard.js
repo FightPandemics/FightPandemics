@@ -13,6 +13,7 @@ const PostCard = styled(Card)`
   margin-bottom: 4rem;
   padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   ${({ unClickable }) =>
     unClickable
       ? `
