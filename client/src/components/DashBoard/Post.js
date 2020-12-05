@@ -1,5 +1,5 @@
 // Core
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,18 +12,11 @@ import FilterTag from "components/Tag/FilterTag";
 import Heading from "components/Typography/Heading";
 import PostCard from "./PostCard";
 import PostActions from "./PostActions";
-
-import {
-  typeToTag,
-  translateISOTimeTitle,
-} from "assets/data/formToPostMappings";
+import CreateReport from "components/CreateReport/CreateReport";
+import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 
 import filterOptions from "assets/data/filterOptions";
-import {
-  getOptionText,
-  highlightSearchRegex,
-  authorProfileLink,
-} from "../Feed/utils";
+import { highlightSearchRegex, authorProfileLink } from "../Feed/utils";
 import { selectActorId } from "reducers/session";
 
 export const AntDivider = styled(Divider)`
@@ -45,8 +38,6 @@ export const LeftHeader = styled.p`
     color: darkgray;
   }
 `;
-
-const filters = Object.values(filterOptions);
 
 const Highlight = ({ text = "", highlight = "" }) => {
   if (!highlight || !highlight.trim()) {
@@ -70,6 +61,7 @@ const Post = ({
   keepScrollIndex,
   keepPageState,
   keepPostsState,
+  changeType,
 }) => {
   const { t } = useTranslation();
 
@@ -79,8 +71,6 @@ const Post = ({
   }
 
   const { _id, content, title, reportsCount } = post || {};
-
-  const actorId = useSelector(selectActorId);
 
   const renderHeader = (
     <Card.Header
@@ -128,6 +118,11 @@ const Post = ({
   );
 
   const [showComplete, setShowComplete] = useState(true);
+  const [callReport, setCallReport] = useState(false);
+  const [forModerator, setForModerator] = useState({
+    remove: false,
+    keep: false,
+  });
 
   return (
     <>
@@ -135,7 +130,6 @@ const Post = ({
         <LeftHeader>
           <div>{reportsCount}</div> Reports
         </LeftHeader>
-
         <AntDivider type="vertical" plain>
           <div className="card-header">
             {includeProfileLink ? renderHeaderWithLink : renderHeader}
@@ -174,7 +168,21 @@ const Post = ({
           )}
           <Card.Body className="view-more-wrapper" />
           <Card.Body className="content-wrapper">
-            <PostActions />
+            <PostActions
+              setCallReport={setCallReport}
+              setForModerator={setForModerator}
+            />
+            {callReport ? (
+              <CreateReport
+                callReport={callReport}
+                setCallReport={setCallReport}
+                postId={post._id}
+                currentPost={post}
+                fromPage={true}
+                forModerator={forModerator}
+                changeType={changeType}
+              />
+            ) : null}
           </Card.Body>
         </AntDivider>
       </PostCard>

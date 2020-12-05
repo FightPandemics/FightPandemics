@@ -135,7 +135,7 @@ const Feed = (props) => {
   };
 
   const handleChangeType = (e) => {
-    const value = e.key;
+    const value = e.key ? e.key : e;
     dispatchAction(SET_VALUE, "status", value);
   };
 
@@ -254,7 +254,7 @@ const Feed = (props) => {
       endpoint = `/api/reports/logs?limit=${limit}&skip=${skip}`;
       try {
         const {
-          data: { logs: logs },
+          data: { logs },
         } = await axios.get(endpoint);
         if (logs) {
           console.log(typeof logs);
@@ -380,6 +380,7 @@ const Feed = (props) => {
                       totalPostCount={totalPostCount}
                       highlightWords={null /*queryParams.s_keyword*/}
                       page={page}
+                      changeType={handleChangeType}
                     />
                     {emptyFeed() ? (
                       <NoPosts>

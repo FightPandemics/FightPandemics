@@ -47,6 +47,7 @@ const Posts = ({
   hasNextPage,
   totalPostCount,
   page,
+  changeType,
 }) => {
   const posts = Object.entries(filteredPosts);
   const scrollIndex = useRef(0);
@@ -92,6 +93,7 @@ const Posts = ({
               keepPageState={page}
               keepPostsState={filteredPosts}
               highlightWords={highlightWords}
+              changeType={changeType}
             />
             <HorizontalRule />
           </>

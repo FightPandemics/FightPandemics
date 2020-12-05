@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -54,7 +54,8 @@ export const Submit = styled(SubmitButton)`
   align-self: flex-end;
   line-height: 1.15rem;
   padding: 14px 24px;
-
+  background-color: ${(props) =>
+    props.forModerator?.remove ? colors.orangeRed : colors.royalBlue};
   span {
     font-family: ${typography.font.family.display};
     font-style: normal;
@@ -63,7 +64,13 @@ export const Submit = styled(SubmitButton)`
     font-weight: 500;
   }
 `;
-const Body = ({ closeModal, postId, onSuccess }) => {
+const Body = ({
+  closeModal,
+  postId,
+  onSuccess,
+  postReportedBy,
+  forModerator,
+}) => {
   const [reasonData, setReasonData] = useState([]);
   const [description, setDescription] = useState("");
   const actorOrganisationId = useSelector(selectOrganisationId);
@@ -89,23 +96,38 @@ const Body = ({ closeModal, postId, onSuccess }) => {
   const sendData = async (e) => {
     const reasonString = `${reasonData.join("|")}|${description}`;
     const formData = { reason: reasonString };
+    const formDataForModerator = {
+      justification: reasonString,
+      action: forModerator?.keep ? "reject" : "accept",
+    };
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `/api/reports/posts/${postId}${getActorQuery()}`,
-        formData,
-      );
+      forModerator
+        ? await axios.patch(
+            `/api/reports/posts/${postId}${getActorQuery()}`,
+            formDataForModerator,
+          )
+        : await axios.post(
+            `/api/reports/posts/${postId}${getActorQuery()}`,
+            formData,
+          );
+
       onSuccess(true);
     } catch (error) {
       onSuccess(false);
     }
   };
+
   return (
     <>
-      <SubTitle title={t("moderation.reason")} />
-      <Options handleOption={addOption} selectedOptions={reasonData} />
+      <Options
+        postReportedBy={postReportedBy}
+        handleOption={addOption}
+        selectedOptions={reasonData}
+        forModerator={forModerator}
+      />
 
-      {reasonData.includes("Other") ? (
+      {reasonData.includes("Other") || forModerator?.remove ? (
         <>
           <SubTitle title={t("moderation.additionalDetails")} />
           <Form onChangeDescription={addDescription} />
@@ -115,8 +137,17 @@ const Body = ({ closeModal, postId, onSuccess }) => {
         <CancelButton onClick={closeModal}>
           {t("moderation.cancel")}
         </CancelButton>
-        <Submit primary="true" onClick={sendData} disabled={!reasonData.length}>
-          {t("moderation.report")}
+        <Submit
+          primary="true"
+          onClick={sendData}
+          disabled={!reasonData.length && !forModerator?.keep}
+          forModerator={forModerator}
+        >
+          {forModerator?.remove
+            ? t("moderation.buttonRemove")
+            : forModerator?.keep
+            ? t("moderation.buttonKeep")
+            : t("moderation.report")}
         </Submit>
       </Footer>
     </>

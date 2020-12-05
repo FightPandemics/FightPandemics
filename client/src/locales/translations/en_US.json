@@ -1021,6 +1021,18 @@
     "showAnyway": "Show anyway",
     "postHidden": "You have chosen to hide this post",
     "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "youReported": "You have reported this post. It will no longer be visible on your feed",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report is accepted!",
+    "reportRejectedTitle": "Report is rejected!",
+    "reportAcceptedBody": "This post is succesfully removed!",
+    "reportRejectedBody": "This post is succesfully kept"
   }
 }
