@@ -15,7 +15,7 @@ class AboutUs {
   goToHelpBoardLink = "/feed";
   getToPressKitButton = "#AU_PR";
   goToPressKitLink = "https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5";
-  currentCommunityPartnerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div";
+  currentCommunityPartner = "#AU_CP";
   lifetimeSupportersContainer = "#AU_LS";
   currentSupportersContainer = "#AU_CS";
   pastSupportersContainer = "#AU_PS";

@@ -90,7 +90,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function currentCommunityPartnerIsVisible() {
-    supporterContainerVisibleXpath(aboutUs.currentCommunityPartnerXpath);
+    supporterContainerVisible(aboutUs.currentCommunityPartner);
   }
 
   function lifetimeSupporterContainerIsVisible() {
@@ -129,10 +129,6 @@ describe("FightPandemics About Us page", () => {
       .and("have.attr", "href", link);
   }
 
-  function supporterContainerVisibleXpath(supporterContainer) {
-    aboutUs.getSupporterContainerXpath(supporterContainer)
-      .should("be.visible");
-  }
 
   function supporterContainerVisible(supporterContainer) {
     aboutUs.getSupporterContainer(supporterContainer)
