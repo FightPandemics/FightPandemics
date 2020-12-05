@@ -72,7 +72,10 @@ async function routes(app) {
         app.log.error(err, "Failed retrieving location by reverse geocode");
         throw app.httpErrors.internalServerError();
       }
-      return emergency_numbers[country];
+      if (emergency_numbers["lol"] === undefined) {
+        return { Country: "unknown" };
+      }
+      return emergency_numbers["lol"];
     },
   );
 }
