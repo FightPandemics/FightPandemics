@@ -7,7 +7,6 @@ import steps from "./steps";
 
 function Banner({}) {
   const [step, setStep] = useState(null);
-  const [isInContextUiActive, setIsInContextUiActive] = useState(false);
 
   const startVerification = () => {
     setStep("start");
@@ -27,14 +26,14 @@ function Banner({}) {
   };
 
   const launchInContextSession = (sessionUrl) =>{
+    setStep(null);
     const veriffFrame = createVeriffFrame({
-      url: sessionUrl || "https://magic.veriff.me/v/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoiYWVmODI5YWYtYTJhOS00NTU1LTg5OTUtY2U5Y2NmZDJlZTExIiwiaWF0IjoxNjA2OTU0OTM5fQ.9lfVX1nj1BEd8XodMXWTU0kVTV49B-0dOGvjhz0C--0",
-      // backup url for testing
+      url: sessionUrl,
       onEvent: function (msg) {
         switch (msg) {
           case MESSAGES.STARTED:
-            setIsInContextUiActive(true);
-            break;
+          //
+          break;
           case MESSAGES.CANCELED:
             setStep("cancel");
             break;
@@ -60,7 +59,6 @@ function Banner({}) {
         actionText={steps[step]?.actionText}
         onNext={step === "start" ? getSessionUrl : cancelVerification}
         onCancel={cancelVerification}
-        pendingVerification={isInContextUiActive} // if verification is pending, we should hide the StepModal
       />
     </>
   );
