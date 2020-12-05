@@ -5,7 +5,7 @@ describe("FightPandemics Navigation bar", () => {
   const header = new Header();
   const logo = new Logo();
 
-  context(
+   context(
     "When user is not logged in Register and Login button are visible",
     () => {
       beforeEach(() => {
@@ -40,7 +40,7 @@ describe("FightPandemics Navigation bar", () => {
           .should("have.attr", "alt", "Icon");
       });
     },
-  );
+  );   
 
   context("Internationalisation - User can select language", () => {
     beforeEach(() => {
@@ -51,12 +51,15 @@ describe("FightPandemics Navigation bar", () => {
       header
         .getGlobeIconLanguages()
         .should("have.attr", "alt", "Icon")
-        .parent()
+        .parent()  
         .should("be.visible")
-        .should("have.class", "ant-dropdown-trigger icon-btn");
+        .should(
+          "have.class",
+          "ant-dropdown-trigger icon-btn",
+        );
     });
 
-    it("User can click on Global International Languages icon and see English(American English) as default", () => {
+   it("User can click on Global International Languages icon and see English(American English) as default", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
         "div#NAV_LS_EN_US",
@@ -66,6 +69,7 @@ describe("FightPandemics Navigation bar", () => {
         "bold",
       );
     });
+
 
     it("User can click on Global International Languages icon and choose Arabic (العربية) ", () => {
       selectAndValidateSpecificLanguage(
@@ -252,7 +256,7 @@ describe("FightPandemics Navigation bar", () => {
         "సహాయ బోర్డు",
         "normal",
       );
-    });
+    }); 
 
     it("User can click on Global International Languages icon and choose Thai (ไทย) ", () => {
       selectAndValidateSpecificLanguage(
