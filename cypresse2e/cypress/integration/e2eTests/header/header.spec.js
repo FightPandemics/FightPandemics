@@ -5,7 +5,7 @@ describe("FightPandemics Navigation bar", () => {
   const header = new Header();
   const logo = new Logo();
 
-   context(
+  context(
     "When user is not logged in Register and Login button are visible",
     () => {
       beforeEach(() => {
@@ -40,7 +40,7 @@ describe("FightPandemics Navigation bar", () => {
           .should("have.attr", "alt", "Icon");
       });
     },
-  );   
+  );
 
   context("Internationalisation - User can select language", () => {
     beforeEach(() => {
@@ -51,15 +51,12 @@ describe("FightPandemics Navigation bar", () => {
       header
         .getGlobeIconLanguages()
         .should("have.attr", "alt", "Icon")
-        .parent()  
+        .parent()
         .should("be.visible")
-        .should(
-          "have.class",
-          "ant-dropdown-trigger icon-btn",
-        );
+        .should("have.class", "ant-dropdown-trigger icon-btn");
     });
 
-   it("User can click on Global International Languages icon and see English(American English) as default", () => {
+    it("User can click on Global International Languages icon and see English(American English) as default", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
         "div#NAV_LS_EN_US",
@@ -69,7 +66,6 @@ describe("FightPandemics Navigation bar", () => {
         "bold",
       );
     });
-
 
     it("User can click on Global International Languages icon and choose Arabic (العربية) ", () => {
       selectAndValidateSpecificLanguage(
@@ -118,6 +114,17 @@ describe("FightPandemics Navigation bar", () => {
     it("User can click on Global International Languages icon and choose French (Français) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
+        "div#NAV_LS_FR",
+        "French (Français)",
+        "Se connecter",
+        "Tableau d'aide",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose German (Deutsch) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
         "div#NAV_LS_DE",
         "German (Deutsch)",
         "Anmelden",
@@ -129,10 +136,10 @@ describe("FightPandemics Navigation bar", () => {
     it("User can click on Global International Languages icon and choose Indonesian (Bahasa Indonesia) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
-        "div#NAV_LS_DE",
-        "German (Deutsch)",
-        "Anmelden",
-        "Hilfebrett",
+        "div#NAV_LS_ID",
+        "Indonesian (Bahasa Indonesia)",
+        "Masuk",
+        "Papan Bantuan",
         "normal",
       );
     });
@@ -140,10 +147,10 @@ describe("FightPandemics Navigation bar", () => {
     it("User can click on Global International Languages icon and choose Italian (Italiano) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
-        "div#NAV_LS_DE",
-        "German (Deutsch)",
-        "Anmelden",
-        "Hilfebrett",
+        "div#NAV_LS_IT",
+        "Italian (Italiano)",
+        "Accedi",
+        "Bacheca di aiuto",
         "normal",
       );
     });
@@ -151,10 +158,10 @@ describe("FightPandemics Navigation bar", () => {
     it("User can click on Global International Languages icon and choose Kannada (ಕನ್ನಡ) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
-        "div#NNAV_LS_KN_IN",
+        "div#NAV_LS_KN_IN",
         "Kannada (ಕನ್ನಡ)",
-        "Anmelden",
-        "Hilfebrett",
+        "ಸೈನ್ ಇನ್ ಮಾಡಿ",
+        "ಸಹಾಯ ಮಂಡಳಿ",
         "normal",
       );
     });
@@ -164,8 +171,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_MK_MK",
         "Macedonian (македонски)",
-        "Anmelden",
-        "Hilfebrett",
+        "Најави се",
+        "Одбор за помош",
         "normal",
       );
     });
@@ -175,8 +182,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_MS_MY",
         "Malay (Bahasa Melayu)",
-        "Anmelden",
-        "Hilfebrett",
+        "Log masuk",
+        "Papan Bantuan",
         "normal",
       );
     });
@@ -197,8 +204,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_PT_PT",
         "Portuguese (Português)",
-        "Zaloguj się",
-        "Forum pomocy",
+        "Entrar",
+        "Quadro de Ajuda",
         "normal",
       );
     });
@@ -208,8 +215,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_RU",
         "Russian (русский)",
-        "Zaloguj się",
-        "Forum pomocy",
+        "Войти",
+        "Доска объявлений",
         "normal",
       );
     });
@@ -219,8 +226,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_ES_ES",
         "Spanish (Español de España)",
-        "Zaloguj się",
-        "Forum pomocy",
+        "Iniciar sesión",
+        "Tablero de ayuda",
         "normal",
       );
     });
@@ -230,8 +237,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_TL",
         "Tagalog (Tagalog)",
-        "Zaloguj się",
-        "Forum pomocy",
+        "Mag-sign In",
+        "Board ng Pag-Tulong",
         "normal",
       );
     });
@@ -241,19 +248,19 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_TE_IN",
         "Telugu (తెలుగు)",
-        "Iniciar sesión",
-        "Informes de Ayuda",
+        "సైన్ ఇన్ చేయండి",
+        "సహాయ బోర్డు",
         "normal",
       );
-    }); 
+    });
 
     it("User can click on Global International Languages icon and choose Thai (ไทย) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
         "div#NAV_LS_TH",
         "Thai (ไทย)",
-        "Iniciar sesión",
-        "Informes de Ayuda",
+        "เข้าสู่ระบบ",
+        "บอร์ดความช่วยเหลือ",
         "normal",
       );
     });
@@ -263,8 +270,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_TR",
         "Turkish (Türkçe)",
-        "Iniciar sesión",
-        "Informes de Ayuda",
+        "Oturum Aç",
+        "Yardım Panosu",
         "normal",
       );
     });
@@ -274,8 +281,8 @@ describe("FightPandemics Navigation bar", () => {
         header.getGlobeIconLanguages(),
         "div#NAV_LS_VI",
         "Vietnamese (Tiếng Việt)",
-        "Iniciar sesión",
-        "Informes de Ayuda",
+        "Đăng nhập",
+        "Bảng Trợ giúp",
         "normal",
       );
     });
