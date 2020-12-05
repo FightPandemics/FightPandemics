@@ -43,7 +43,7 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-const ABOUT_MAX_LENGTH = 160;
+const ABOUT_MAX_LENGTH = 250;
 
 function EditOrganisationProfile(props) {
   const organisationId = window.location.pathname.split("/")[2];
