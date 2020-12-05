@@ -138,8 +138,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const { email, name, location = {}, about = "", isOwner, urls = {} } =
-    organisation || {};
+  const {
+    email,
+    name,
+    location = {},
+    about = "",
+    isOwner,
+    urls = {},
+    verified,
+  } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
@@ -443,7 +450,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             <UserInfoDesktop>
               <NameDiv>
                 <div className="name-container">
-                  <NamePara>{name}</NamePara>
+                  <NamePara>
+                    {name} {verified && <small>✔️</small>}
+                  </NamePara>
                   {address && (
                     <div title={address} className="address-container">
                       <img src={locationIcon} alt={address} />

@@ -6,16 +6,12 @@ const {
   veriff: { baseUrl: BASE_URL, publicKey: PUBLIC_KEY, privateKey: PRIVATE_KEY },
 } = config;
 
-// This will be needed to generate "X-SIGNATURE" to verify/modify the sessions
-/*
-const generateXSignature = async (verification) => {
-  const payload = JSON.stringify(verification);
+const generateXSignature = async (payload) => {
   const signature = crypto.createHash("sha256");
   signature.update(new Buffer.from(payload, "utf8"));
   signature.update(new Buffer.from(PRIVATE_KEY, "utf8"));
   return signature.digest("hex");
 };
-*/
 
 const createSessionUrl = async (user) => {
   const body = {
@@ -31,9 +27,6 @@ const createSessionUrl = async (user) => {
     },
   };
 
-  // for later use
-  // const xSignatureHeader = await generateXSignature(body);
-
   try {
     const res = await axios({
       url: "/v1/sessions/",
@@ -42,8 +35,6 @@ const createSessionUrl = async (user) => {
       headers: {
         "Content-Type": "application/json",
         "X-AUTH-CLIENT": PUBLIC_KEY,
-        // for later use
-        // "X-SIGNATURE": xSignatureHeader.toString(),
       },
       data: body,
     });
@@ -55,6 +46,19 @@ const createSessionUrl = async (user) => {
   }
 };
 
+const validateWebhookEvent = async (req, reply, done) => {
+  const incomingXAuthClient = req.headers["x-auth-client"];
+  if (PUBLIC_KEY !== incomingXAuthClient) return false;
+
+  const rawBody = JSON.stringify(req.body);
+  const incomingXSignature = req.headers["x-signature"];
+  const xSignature = await generateXSignature(rawBody);
+
+  if (xSignature != incomingXSignature) throw false;
+  else return done();
+};
+
 module.exports = {
   createSessionUrl,
+  validateWebhookEvent,
 };

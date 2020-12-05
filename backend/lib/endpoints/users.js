@@ -86,7 +86,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -154,6 +154,13 @@ async function routes(app) {
             objectives: true,
             needs: true,
             photo: true,
+            verified: {
+              $cond: [
+                { $eq: ["$verification.status", "approved"] },
+                true,
+                false,
+              ],
+            },
           },
         },
         {
@@ -238,6 +245,7 @@ async function routes(app) {
       photo,
       notifyPrefs,
       usesPassword,
+      verification,
     } = user;
     return {
       about,
@@ -254,6 +262,7 @@ async function routes(app) {
       urls,
       notifyPrefs,
       usesPassword,
+      verified: verification && verification.status === "approved",
     };
   });
 
@@ -356,7 +365,8 @@ async function routes(app) {
         objectives,
         photo,
         urls,
-        usesPassword
+        usesPassword,
+        verification,
       } = user;
 
       let { location } = user;
@@ -380,7 +390,8 @@ async function routes(app) {
         ownUser,
         photo,
         urls,
-        usesPassword: ownUser ? usesPassword : undefined
+        usesPassword: ownUser ? usesPassword : undefined,
+        verified: verification && verification.status === "approved",
       };
     },
   );
@@ -464,10 +475,9 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const {
-        email,
-        email_verified: emailVerified,
-      } = await Auth0.getUser(getCookieToken(req));
+      const { email, email_verified: emailVerified } = await Auth0.getUser(
+        getCookieToken(req),
+      );
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -490,7 +500,7 @@ async function routes(app) {
       return {
         ...user.toObject(),
         organisations: [],
-      }
+      };
     },
   );
 
@@ -504,7 +514,7 @@ async function routes(app) {
         throw app.httpErrors.badRequest("token is invalid");
       }
       decoded = payload;
-    })
+    });
 
     const { userId, exp } = decoded;
     if (exp * 1000 < Date.now()) {
@@ -526,7 +536,7 @@ async function routes(app) {
     { schema: updateNotifyPrefsSchema },
     async (req) => {
       const { headers, body } = req;
-      
+
       let decoded = {};
       jwt.verify(headers.token, config.auth.secretKey, (err, payload) => {
         if (err) {
@@ -534,8 +544,8 @@ async function routes(app) {
           throw app.httpErrors.badRequest("token is invalid");
         }
         decoded = payload;
-      })
-      
+      });
+
       const { userId, expireDate } = decoded;
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
@@ -556,23 +566,133 @@ async function routes(app) {
     },
   );
 
-  app.get("/verify", { preValidation: [app.authenticate] }, async (req) => {
-    const { userId } = req;
-    const [userErr, user] = await app.to(
-      User.findById(userId)
-    );
-    if (userErr) {
-      req.log.error(userErr, "Failed retrieving user");
-      throw app.httpErrors.internalServerError();
-    } else if (user === null) {
-      req.log.error(userErr, "User does not exist");
-      throw app.httpErrors.notFound();
-    }
-    const sessionUrl = await Veriff.createSessionUrl(user)
-    return {
-      sessionUrl
-    }
-  });
+  app.get(
+    "/verification",
+    { preValidation: [app.authenticate] },
+    async (req) => {
+      const { userId } = req;
+      const [userErr, user] = await app.to(User.findById(userId));
+      if (userErr) {
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        req.log.error(userErr, "User does not exist");
+        throw app.httpErrors.notFound();
+      }
+      const sessionUrl = await Veriff.createSessionUrl(user);
+      return {
+        sessionUrl,
+      };
+    },
+  );
+
+  // Veriff decision webhook listener
+  app.post(
+    "/verification/decision",
+    { preValidation: [Veriff.validateWebhookEvent] },
+    async (req) => {
+      const {
+        body: { verification, technicalData },
+      } = req;
+
+      if (verification && verification.vendorData) {
+        const {
+          status,
+          vendorData: userId,
+          decisionTime,
+          reasonCode,
+        } = verification;
+
+        const [userErr, user] = await app.to(User.findById(userId));
+        if (userErr) {
+          req.log.error(userErr, "Failed retrieving user");
+          throw app.httpErrors.internalServerError();
+        } else if (user === null) {
+          req.log.error(userErr, "User does not exist");
+          throw app.httpErrors.notFound();
+        }
+
+        if (status !== "approved") {
+          // resubmission_requested, declined, expired, abandoned
+          const verificationObject = {
+            verification: {
+              status,
+              decisionTime,
+              reasonCode,
+              technicalData,
+            },
+          };
+          Object.assign(user, verificationObject).save();
+        } else if (status === "approved") {
+          const {
+            id,
+            person: {
+              firstName,
+              lastName,
+              nationality,
+              gender,
+              yearOfBirth,
+              idNumber,
+            },
+            document,
+          } = verification;
+
+          const verificationObject = {
+            verification: {
+              id,
+              person: {
+                firstName,
+                lastName,
+                nationality,
+                gender,
+                yearOfBirth,
+                idNumber,
+              },
+              status,
+              document,
+              decisionTime,
+              technicalData, // ip address
+            },
+          };
+          Object.assign(user, verificationObject).save();
+        }
+
+        // update Ref
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": user._id },
+            { "author.verified": status === "approved" },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": user._id },
+            { "author.verified": status === "approved" },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": user._id },
+            {
+              "participants.$[userToUpdate].verified": status === "approved",
+            },
+            { arrayFilters: [{ "userToUpdate.id": user._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating refs at threads");
+        }
+      }
+      return true;
+    },
+  );
 }
 
 module.exports = routes;

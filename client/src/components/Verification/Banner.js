@@ -18,7 +18,7 @@ function Banner({}) {
 
   const getSessionUrl = async () => {
     try {
-      const res = await axios.get(`/api/users/verify`);
+      const res = await axios.get(`/api/users/verification`);
       return launchInContextSession(res.data.sessionUrl)
     } catch (err) {
       console.log(err);

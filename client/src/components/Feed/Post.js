@@ -432,6 +432,7 @@ const Post = ({
         <div className="title-wrapper">
           <span className="author">
             <Highlight text={post?.author?.name} highlight={highlightWords} />
+            {post?.author?.verified && <span>✔️</span>}
           </span>
           <div
             className="sub-header"
