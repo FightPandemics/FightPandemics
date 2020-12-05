@@ -8,7 +8,20 @@ import { useTranslation } from "react-i18next";
 
 const { colors, typography } = theme;
 
-const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
+const CreateReport = ({
+  postId,
+  currentPost,
+  setCallReport,
+  callReport,
+  fromPage,
+  forModerator,
+  changeType,
+}) => {
+  let post;
+  if (currentPost) {
+    post = currentPost;
+  }
+
   const [reportSuccess, setReportSuccess] = useState(null);
   const closeModal = () => setCallReport(false);
   const { t } = useTranslation();
@@ -38,13 +51,18 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
       padding: 1.5rem;
     }
   `;
+  const reportTitle = forModerator?.remove
+    ? t("moderation.removePostTitle")
+    : forModerator?.keep
+    ? t("moderation.keepPostTitle")
+    : t("moderation.reportPost");
 
   return (
     <div className="create-report">
       {reportSuccess === null && (
         <ModalWrapper
           footer={null}
-          title={t("moderation.reportPost")}
+          title={reportTitle}
           visible={callReport}
           destroyOnClose={true}
           onCancel={closeModal}
@@ -53,6 +71,8 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
             onSuccess={setReportSuccess}
             closeModal={closeModal}
             postId={postId}
+            postReportedBy={post?.reportedBy}
+            forModerator={forModerator}
           />
         </ModalWrapper>
       )}
@@ -62,6 +82,8 @@ const CreateReport = ({ postId, setCallReport, callReport, fromPage }) => {
           reportSuccess={reportSuccess}
           setCallReport={setCallReport}
           fromPage={fromPage}
+          forModerator={forModerator}
+          changeType={changeType}
         />
       )}
     </div>

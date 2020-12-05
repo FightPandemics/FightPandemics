@@ -15,6 +15,8 @@ const ReportFinished = ({
   reportSuccess,
   postId,
   fromPage,
+  forModerator,
+  changeType,
 }) => {
   const [showModal, setShowModal] = useState(true);
   const { t } = useTranslation();
@@ -22,7 +24,9 @@ const ReportFinished = ({
   const closeModal = () => {
     setShowModal(false);
     setCallReport(false);
-    if (fromPage) return (window.location = "/feed");
+    if (forModerator?.remove) return changeType("ACCEPTED");
+    if (forModerator?.keep) return changeType("REJECTED");
+    if (fromPage && !forModerator) return (window.location = "/feed");
     dispatch(postsActions.setReported({ postId }));
   };
   const ModalWrapper = styled(Modal)`
@@ -60,14 +64,25 @@ const ReportFinished = ({
     display: flex;
     align-items: center;
   `;
+
+  const modalTitle = forModerator?.remove
+    ? t("moderation.reportAcceptedTitle")
+    : forModerator?.keep
+    ? t("moderation.reportRejectedTitle")
+    : t("moderation.reportPostSuccessTitle");
+
+  const modalBodyText = forModerator?.remove
+    ? t("moderation.reportAcceptedBody")
+    : forModerator?.keep
+    ? t("moderation.reportRejectedBody")
+    : t("moderation.reportPostSuccess");
+
   return (
     <div className="create-report">
       <ModalWrapper
         footer={null}
         title={
-          reportSuccess
-            ? t("moderation.reportPostSuccessTitle")
-            : t("moderation.reportPostErrorTitle")
+          reportSuccess ? modalTitle : t("moderation.reportPostErrorTitle")
         }
         visible={showModal}
         destroyOnClose={true}
@@ -75,7 +90,7 @@ const ReportFinished = ({
       >
         <Body>
           {reportSuccess ? (
-            <>{t("moderation.reportPostSuccess")}</>
+            <>{modalBodyText}</>
           ) : (
             <>{t("moderation.reportPostError")}</>
           )}

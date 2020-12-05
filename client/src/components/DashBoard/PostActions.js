@@ -21,18 +21,22 @@ const StyledSpan = styled.span`
   }
 `;
 
-const PostActions = ({ }) => {
+const PostActions = ({ setCallReport, setForModerator }) => {
+  const callModal = (remove, keep) => () => {
+    setForModerator({ remove, keep });
+    setCallReport(true);
+  };
   const renderActionIcons = (
     <>
-      <div className="social-icon">
-      <StyledSvg src={PostRemoval} className="social-icon-svg" />
+      <div className="social-icon" onClick={callModal(true, false)}>
+        <StyledSvg src={PostRemoval} className="social-icon-svg" />
         <StyledSpan>Remove Post</StyledSpan>
       </div>
 
       <span></span>
 
-      <div className="social-icon">
-      <StyledSvg src={PostApproval} className="social-icon-svg" />
+      <div className="social-icon" onClick={callModal(false, true)}>
+        <StyledSvg src={PostApproval} className="social-icon-svg" />
         <StyledSpan>Keep Post</StyledSpan>
       </div>
 
