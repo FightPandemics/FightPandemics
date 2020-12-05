@@ -311,7 +311,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 dispatchPostAction={dispatchPostAction}
                 onSelect={handleEditPost}
                 showComments={showComments}
-                numComments={commentsCount}
+                commentsCount={commentsCount}
                 onChange={handlePostDelete}
                 handleCancelPostDelete={handleCancelPostDelete}
                 handleCommentDelete={handleCommentDelete}
