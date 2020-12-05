@@ -225,7 +225,13 @@
     "edited": "disunting",
     "share_plural": "Perkongsian",
     "deletePostConfirmationTitle": "Padamkan pengesahan siaran",
-    "deleteCommentConfirmationTitle": "Padamkan pengesahan komen"
+    "deleteCommentConfirmationTitle": "Padamkan pengesahan komen",
+    "deleteConfirmation": "Padam",
+    "edit": "Suntingkan siaran",
+    "hideAction": "Sembunyikan siaran",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Laporkan Siaran",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -430,11 +436,11 @@
     "forWho": "Sesiapa atau apa-apa jenis perniagaan, kumpulan komuniti, kerajaan atau pertubuhan penjagaan kesihatan yang memerlukan atau ingin memberikan bantuan.",
     "FightPandemics": "FightPandemics",
     "storyInspired": "Diinspirasikan oleh begitu banyak pertembungan, Manuel melancarkan projek dengan satu misi dalam fikirannya: <span>untuk memastikan orang lain dapat berhubung secara serentak.</span>",
-    "connectPeople": "Kami menghubungkan orang",
+    "connectPeople": "Kami menghubungkan orang ramai",
     "connect": "Platform altruistik untuk menghubungkan mereka yang memerlukan bantuan dengan mereka yang dapat menyediakannya.",
     "howWork": "Bagaimanakah ianya berfungsi?",
     "helpBoard": "Papan Bantuan",
-    "helpBoardDetail": "Platform komuniti untuk individu dan organisasi untuk menawarkan dan memohon bantuan.",
+    "helpBoardDetail": "Platform komuniti bagi individu dan organisasi untuk menawarkan dan memohon bantuan.",
     "localGlobal": "Tempatan & Global",
     "localGlobalDetail": "Tawarkan dan mohonkan pertolongan dalam komuniti saya dan di seluruh dunia.",
     "relevantContent": "Kandungan yang Berkaitan",
@@ -457,7 +463,11 @@
     "forStudentInAge": "Untuk Pelajar berumur 14-18 tahun.",
     "press": "Penerbit",
     "pressInfo": "Jika anda seorang ahli penerbit, hubungi kami di",
-    "pressKitLink": "Pergi ke Peti Penerbit"
+    "pressKitLink": "Pergi ke Peti Penerbit",
+    "communityPartners": "Rakan Kongsi Komuniti",
+    "communityCollaboration": "Kami mahu memperkasakan komuniti dan organisasi di seluruh dunia melalui platform kami dan untuk berbuat demikian, kami perlu bekerjasama! Kerjasama berterusan dengan rakan kongsi komuniti kami membolehkan kami membina platform yang lebih baik bagi mereka dan orang lain.",
+    "becomeCommunityPartner": "Adakah anda juga mahu komuniti anda menjadi rakan kongsi kami? Kami ingin mendengar daripada anda dan mula bekerjasama! Hubungi di",
+    "currentPartners": "Rakan Kongsi Komuniti Semasa"
   },
   "footer": {
     "faq": "Soalan Lazim",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> memberikan komen pada siaran anda <1>{postTitle}}</1>",
     "shared": "<0>{{username}}</0> berkongsi siaran anda <1>{{postTitle}}</1> pada <1>{{shareMedium}}</1>",
     "empty": "Tiada pemberitahuan lagi"
+  },
+  "moderation": {
+    "report": "Laporan",
+    "cancel": "Batal",
+    "finish": "Selesai",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Butiran tambahan (pilihan)",
+    "enterDetails": "Sila masukkan butiran yang lebih lanjut di sini ...",
+    "reportPost": "Laporkan Siaran",
+    "reportPostSuccess": "Terima kasih atas laporan anda! Siaran ini akan dihantar untuk semakan.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Ops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Lain",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Tunjukkan juga",
+    "postHidden": "Anda telah memilih untuk menyembunyikan siaran ini",
+    "unhide": "Nyahsembunyikan",
+    "youReported": "Anda telah melaporkan siaran ini. Ianya tidak akan dapat dilihat lagi pada suapan anda"
   }
 }
