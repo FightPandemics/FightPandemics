@@ -86,7 +86,8 @@
         "杂货/食品",
         "商业",
         "教育",
-        "法律",
+        "房屋",
+        "法律服务",
         "身心健康",
         "娱乐",
         "信息",
@@ -94,12 +95,11 @@
         "研发",
         "科技",
         "其他",
-        "其他",
-        "Childcare",
-        "Translations",
+        "照看幼儿",
+        "翻译",
         "志愿者",
-        "Staff (paid)",
-        "Remote Work"
+        "员工（有薪）",
+        "远程工作"
       ],
       "labels": {
         "location": "位置",
@@ -131,12 +131,12 @@
         "R&D": "研发",
         "Tech": "科技",
         "Other": "其他",
-        "Housing": "Housing",
-        "Childcare": "Childcare",
-        "Translations": "Translations",
+        "Housing": "房屋",
+        "Childcare": "照看幼儿",
+        "Translations": "翻译",
         "Volunteer": "志愿者",
-        "Staff (paid)": "Staff (paid)",
-        "Remote Work": "Remote Work"
+        "Staff (paid)": "员工（有薪）",
+        "Remote Work": "远程工作"
       },
       "lookingForOptions": {
         "Request Help": "寻求帮助",
@@ -219,13 +219,19 @@
     "expire": "您查询的帖子已过期。请查看我们的帮助版面以获取更多此类帖子。",
     "noActivity": "未找到活动",
     "share": "分享",
-    "delete": "删除",
+    "delete": "删除帖子",
     "cancel": "取消",
     "confirm": "确认",
     "edited": "已编辑",
     "share_plural": "分享",
     "deletePostConfirmationTitle": "确认要删除帖子么",
-    "deleteCommentConfirmationTitle": "确认要删除评论么"
+    "deleteCommentConfirmationTitle": "确认要删除评论么",
+    "deleteConfirmation": "删除",
+    "edit": "编辑帖子",
+    "hideAction": "隐藏帖子",
+    "hideCaption": "与我无关",
+    "reportAction": "举报帖子",
+    "reportCaption": "供版主审核"
   },
   "profile": {
     "common": {
@@ -278,7 +284,7 @@
       "daily": "每天",
       "weekly": "每周",
       "biweekly": "每两周",
-      "digest": "Digest",
+      "digest": "汇总",
       "on": "On",
       "off": "Off"
     },
@@ -455,9 +461,13 @@
     "joinStudentProgram": "加入学生项目",
     "studentSummerProgram": "学生暑期项目",
     "forStudentInAge": "适用于14-18岁的学生。",
-    "press": "Press",
-    "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit"
+    "press": "新闻发布",
+    "pressInfo": "如果您是媒体成员，请通过以下方式联系我们：",
+    "pressKitLink": "转到新闻工具包",
+    "communityPartners": "社区合作伙伴",
+    "communityCollaboration": "我们希望通过我们的平台增强世界各地的社区和组织的能力，为了做到这一点，我们需要共同努力！与社区合作伙伴的持续协作使我们能够为他们和其他人构建更好的平台。",
+    "becomeCommunityPartner": "您希望你的社区也成为我们的合作伙伴吗？我们非常希望听到您的声音，并开始合作！请联系",
+    "currentPartners": "现在的社区合作伙伴"
   },
   "footer": {
     "faq": "常问问题",
@@ -994,6 +1004,28 @@
     "liked": "<0>{{username}}</0>点赞了您的帖子<1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0>评论了您的帖子<1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0>在<1>{{shareMedium}}</1>上分享了您的帖子<1>{{postTitle}}</1>",
-    "empty": "No more notifications"
+    "empty": "没有更多通知了"
+  },
+  "moderation": {
+    "report": "举报",
+    "cancel": "取消",
+    "finish": "完成",
+    "reason": "举报原因：",
+    "additionalDetails": "其他详细信息（可选）",
+    "enterDetails": "请在此处输入更多详细信息...",
+    "reportPost": "举报帖子",
+    "reportPostSuccess": "感谢您的举报！该帖子将被提交以供审查。",
+    "reportPostError": "哎呀，出问题了",
+    "reportPostSuccessTitle": "举报已收到",
+    "reportPostErrorTitle": "哎呀！",
+    "spam": "垃圾信息",
+    "inappropriateContent": "不当内容",
+    "violatesTerms": "违反条款",
+    "other": "其他",
+    "postSuspected": "该帖子收到了多个举报，并已保留以供审核",
+    "showAnyway": "仍然显示",
+    "postHidden": "您已选择隐藏此帖子",
+    "unhide": "取消隐藏",
+    "youReported": "您已举报此帖子。它在您的版面将不再可见"
   }
 }
