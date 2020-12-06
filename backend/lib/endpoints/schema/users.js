@@ -48,17 +48,28 @@ const urlsSchema = S.object()
   )
   .prop("website", S.oneOf([S.null(), S.string().pattern(URL_REGEX)]));
 
+const userSchema = strictSchema()
+  .prop("firstName", S.string())
+  .prop("lastName", S.string())
+  .prop("hide", hideSchema)
+  .prop("needs", needsSchema)
+  .prop("objectives", objectivesSchema)
+  .prop("location", locationSchema);
+
 const createUserSchema = {
-  body: strictSchema()
-    .prop("firstName", S.string().required())
-    .prop("lastName", S.string().required())
-    .prop("hide", hideSchema)
-    .prop("needs", needsSchema)
-    .prop("objectives", objectivesSchema)
-    .prop("url", urlsSchema)
-    .prop("location", locationSchema)
-    .prop("notifyPrefs", notifyPreferenceSchema)
-    .required(["location"]),
+  body: userSchema.required(["firstName", "lastName", "location"]),
+  description:
+    "For creating new User record in DB, " +
+    "needs to have access_token in Cookies, " +
+    'needs to have headers.cookie property including "token=...;", ' +
+    "(needs to delete the user in DB to run the 2nd pass)",
+  response: {
+    200: S.object()
+      .prop("url", urlsSchema)
+      .prop("notifyPrefs", notifyPreferenceSchema)
+      .prop("organisations", S.array().items(S.null()))
+      .extend(userSchema),
+  },
 };
 
 const getUsersSchema = {
