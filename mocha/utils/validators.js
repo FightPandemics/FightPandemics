@@ -25,13 +25,17 @@ exports.validateStatusCodeAndSuccess = function (
     .to.be.equal(successMessage);
 };
 
-exports.validateStatusCode = function (response, statusCode) {
+exports.validateStatusCodeResponseBody = function (
+  response,
+  statusCode,
+  key1,
+  key2,
+) {
   expect(response.statusCode).to.be.equal(statusCode);
-  // expect(response.body[0]).to.have.property("name");
   expect(
     response.body.forEach((org) => {
-      expect(org).to.have.a.property("_id");
-      expect(org).to.have.a.property("name");
+      expect(org).to.have.a.property(key1);
+      expect(org).to.have.a.property(key2);
     }),
   );
 };
