@@ -48,6 +48,7 @@ const Posts = ({
   totalPostCount,
   page,
   changeType,
+  activeTab,
 }) => {
   const posts = Object.entries(filteredPosts);
   const scrollIndex = useRef(0);
@@ -94,6 +95,7 @@ const Posts = ({
               keepPostsState={filteredPosts}
               highlightWords={highlightWords}
               changeType={changeType}
+              activeTab={activeTab}
             />
             <HorizontalRule />
           </>

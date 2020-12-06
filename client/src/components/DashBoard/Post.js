@@ -14,10 +14,8 @@ import PostCard from "./PostCard";
 import PostActions from "./PostActions";
 import CreateReport from "components/CreateReport/CreateReport";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
-
-import filterOptions from "assets/data/filterOptions";
 import { highlightSearchRegex, authorProfileLink } from "../Feed/utils";
-import { selectActorId } from "reducers/session";
+import PERMISSIONS from "constants/permissions";
 
 export const AntDivider = styled(Divider)`
   height: 100%;
@@ -62,6 +60,7 @@ const Post = ({
   keepPageState,
   keepPostsState,
   changeType,
+  activeTab,
 }) => {
   const { t } = useTranslation();
 
@@ -105,10 +104,10 @@ const Post = ({
   const renderTags = (
     <Card.Body>
       {post.reportedBy
-        .map((report) => report.reason)
+        .map((report) => report.reason.replace(/[^|]*$/, ""))
         .join("|")
         .split("|")
-        .filter((e) => e && e !== "Other")
+        .filter((e) => e)
         .map((reason, idx) => (
           <FilterTag key={idx} disabled={true} selected={false}>
             {reason}
@@ -168,10 +167,11 @@ const Post = ({
           )}
           <Card.Body className="view-more-wrapper" />
           <Card.Body className="content-wrapper">
-            <PostActions
-              setCallReport={setCallReport}
-              setForModerator={setForModerator}
-            />
+              <PostActions
+                setCallReport={setCallReport}
+                setForModerator={setForModerator}
+                isEnabled={activeTab === "PENDING" && Boolean(user?.permissions & PERMISSIONS.moderator)}
+              />
             {callReport ? (
               <CreateReport
                 callReport={callReport}

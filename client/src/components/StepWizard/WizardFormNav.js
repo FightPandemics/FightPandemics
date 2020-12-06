@@ -63,7 +63,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   const onBrowserBack = (e) => {
     e.preventDefault();
     const { state } = history.location;
-    if (!isBrowserBackClicked) {
+    if (!isBrowserBackClicked && state) {
       setBrowserBackClicked(true);
       if (typeof state.from !== "object") {
         if (state.from.indexOf("feed") > -1) {

@@ -3,6 +3,7 @@ import { Table, Tag } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
 import TextAvatar from "components/TextAvatar";
+import FilterTag from "components/Tag/FilterTag";
 
 const auditLogsColumns = [
   {
@@ -35,10 +36,30 @@ const auditLogsColumns = [
   {
     title: "Justification",
     dataIndex: "justification",
+    render: (justification) => (
+      <>
+        {justification
+          .replace(/[^|]*$/, "")
+          .split("|")
+          .filter((e) => e)
+          .map((reason, idx) => (
+            <FilterTag key={idx} disabled={true} selected={false}>
+              {reason}
+            </FilterTag>
+          ))}
+        <p>{(justification.match(/([^\|]+$)/) || [])[0]}</p>
+        {justification.length === 1 && (
+          <FilterTag disabled={true} selected={false}>
+            N/A
+          </FilterTag>
+        )}
+      </>
+    ),
   },
   {
     title: "Date",
     dataIndex: "createdAt",
+    render: (date) => new Date(date).toLocaleString(),
   },
   {
     title: "Post",

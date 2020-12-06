@@ -30,7 +30,7 @@ import filterOptions from "assets/data/filterOptions";
 import styled from "styled-components";
 // Constants
 import { theme } from "constants/theme";
-import { WhiteSpace } from "antd-mobile";
+import PERMISSIONS from "constants/permissions";
 
 export const FeedContext = React.createContext();
 
@@ -355,6 +355,7 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
+                {user?.permissions & PERMISSIONS.administrator && (<>
                 <div style={{ height: "calc(100% - 23rem)" }} />
                 <h3
                   style={{
@@ -373,6 +374,7 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
+                </>)}
               </MenuWrapper>
             </>
           </SiderWrapper>
@@ -398,6 +400,7 @@ const Feed = (props) => {
                       highlightWords={null /*queryParams.s_keyword*/}
                       page={page}
                       changeType={handleChangeType}
+                      activeTab={status}
                     />
                     {emptyFeed() ? (
                       <NoPosts>

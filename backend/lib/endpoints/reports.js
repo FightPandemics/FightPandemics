@@ -61,7 +61,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("moderator"),
+        app.checkPermission("reader"),
       ],
       schema: getPostReportsSchema,
     },
@@ -108,7 +108,7 @@ async function routes(app) {
         },
         {
           $sort: {
-            reportsCount: 1,
+            [status === "flagged" ? "reportsCount" : "updatedAt"]: -1,
           },
         },
       ];
@@ -222,7 +222,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("moderator"),
+        app.checkPermission("administrator"),
       ],
       schema: getAuditLogSchema,
     },
@@ -240,7 +240,7 @@ async function routes(app) {
         },
         {
           $sort: {
-            createdAt: 1,
+            createdAt: -1,
           },
         },
         {

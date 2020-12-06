@@ -185,7 +185,7 @@ const authPlugin = async (app) => {
         !(PERMISSIONS[permLevel] & actor.permissions)
       ) {
         req.log.error(`Not authorized to act as ${permLevel}`);
-        return app.httpErrors.forbidden();
+        throw app.httpErrors.forbidden();
       }
       
     };
