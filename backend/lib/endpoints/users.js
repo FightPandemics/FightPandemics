@@ -597,6 +597,7 @@ async function routes(app) {
 
       if (verification && verification.vendorData) {
         const {
+          id,
           status,
           vendorData: userId,
           decisionTime,
@@ -616,16 +617,16 @@ async function routes(app) {
           // resubmission_requested, declined, expired, abandoned
           const verificationObject = {
             verification: {
+              id,
               status,
-              decisionTime,
               reasonCode,
+              decisionTime,
               technicalData,
             },
           };
           Object.assign(user, verificationObject).save();
         } else if (status === "approved") {
           const {
-            id,
             person: {
               firstName,
               lastName,

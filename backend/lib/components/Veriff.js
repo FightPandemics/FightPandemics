@@ -48,7 +48,7 @@ const createSessionUrl = async (user) => {
 
 const validateWebhookEvent = async (req, reply, done) => {
   const incomingXAuthClient = req.headers["x-auth-client"];
-  if (PUBLIC_KEY !== incomingXAuthClient) return false;
+  if (PUBLIC_KEY !== incomingXAuthClient) throw false;
 
   const rawBody = JSON.stringify(req.body);
   const incomingXSignature = req.headers["x-signature"];
