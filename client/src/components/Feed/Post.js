@@ -96,7 +96,6 @@ const Post = ({
   highlightWords,
   includeProfileLink,
   isAuthenticated,
-  numComments,
   onSelect,
   onChange,
   postDelete,
@@ -210,8 +209,8 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           allComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
 
@@ -275,8 +274,8 @@ const Post = ({
         SET_COMMENTS,
         "comments",
         allComments,
-        "numComments",
-        commentCountRes.data.numComments,
+        "commentsCount",
+        commentCountRes.data.post.commentsCount,
       );
       setComment([]);
     }
@@ -329,8 +328,8 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           filterComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
     }
@@ -538,7 +537,7 @@ const Post = ({
         postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
-        numComments={numComments}
+        commentsCount={commentsCount}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}

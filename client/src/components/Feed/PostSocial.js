@@ -44,7 +44,7 @@ const PostSocial = ({
   liked,
   showComments,
   numLikes,
-  numComments,
+  commentsCount,
   postAuthorName,
   postAuthorAvatar,
   postId,
@@ -169,8 +169,8 @@ const PostSocial = ({
           className="social-icon"
           onClick={setShowComments}
         >
-          {renderCommentIcon(showComments, numComments)}
-          {renderLabels("Comment", numComments, t)}
+          {renderCommentIcon(showComments, commentsCount)}
+          {renderLabels("Comment", commentsCount, t)}
         </div>
       ) : (
         <>
@@ -193,8 +193,8 @@ const PostSocial = ({
                 className="social-icon"
                 onClick={setShowComments}
               >
-                {renderCommentIcon(showComments, numComments)}
-                {renderLabels("Comment", numComments, t)}
+                {renderCommentIcon(showComments, commentsCount)}
+                {renderLabels("Comment", commentsCount, t)}
               </div>
             </Link>
           ) : (
@@ -216,8 +216,8 @@ const PostSocial = ({
                 id={gtmTag("comment", GTM.feed.prefix)}
                 className="social-icon"
               >
-                {renderCommentIcon(showComments, numComments)}
-                {renderLabels("Comment", numComments, t)}
+                {renderCommentIcon(showComments, commentsCount)}
+                {renderLabels("Comment", commentsCount, t)}
               </div>
             </Link>
           )}
@@ -267,10 +267,10 @@ const renderLikeIcon = (liked) => {
   );
 };
 
-const renderCommentIcon = (showComments, numComments) => {
+const renderCommentIcon = (showComments, commentsCount) => {
   return (
     <StyledSvg
-      src={showComments || numComments > 0 ? commentFilled : commentOutline}
+      src={showComments || commentsCount > 0 ? commentFilled : commentOutline}
       className="social-icon-svg"
     />
   );
