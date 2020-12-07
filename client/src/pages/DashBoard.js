@@ -410,7 +410,7 @@ const Feed = (props) => {
             {(() => {
               if (status === "LOGS") return <AuditLog logs={logs} />;
               else if (status === "MANAGE")
-                return <AdminDashboard users={users} />;
+                return <AdminDashboard users={users} toggleRefetch={toggleRefetch} setToggleRefetch={setToggleRefetch}/>;
               else
                 return (
                   <>

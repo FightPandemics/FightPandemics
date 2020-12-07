@@ -558,7 +558,7 @@ async function routes(app) {
   );
 
   app.patch(
-    "/:userId/permission",
+    "/:userId/permissions",
     {
       preValidation: [
         app.authenticate,
@@ -572,18 +572,30 @@ async function routes(app) {
         body: { level },
       } = req;
 
+      const index = Object.keys(PERMISSIONS).indexOf(level);
+      if (index === -1)
+        throw app.httpErrors.badRequest("invalid permission level");
+
+      const newPerms = Object.keys(PERMISSIONS).slice(0, index + 1);
+      // give the user all the permissions below the given level + given level
+      // Example: if level is "administrator", we should give the user "reader" + "moderator" + "administrator"
+      const permissionsInt = newPerms.reduce((int, perm) => int | PERMISSIONS[perm], 0)
+
       const [updatedErr, updatedUser] = await app.to(
         User.findOneAndUpdate(
           { _id: userId },
-          { $set: { permissions: PERMISSIONS[level] } },
+          { $set: { permissions: permissionsInt } },
           { new: true },
         ),
       );
+
       if (updatedErr) {
-        req.log.error(updateErr, "Failed to add permission");
+        req.log.error(updatedErr, "Failed to add permission");
         throw app.httpErrors.internalServerError();
       }
-      return updatedUser.permissions;
+      return {
+        success: true,
+      };
     },
   );
 
@@ -620,7 +632,7 @@ async function routes(app) {
         },
         {
           $sort: {
-            permissions: 1,
+            permissions: -1,
           },
         },
       ];

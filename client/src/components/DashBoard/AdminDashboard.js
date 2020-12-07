@@ -1,5 +1,5 @@
 import { Input, Select } from "antd";
-
+import axios from "axios";
 import AdDashboard from "components/AdminDashboard/Dashboard";
 import React from "react";
 import { WhiteSpace } from "antd-mobile";
@@ -10,12 +10,31 @@ const { Option } = Select;
 
 const { Search } = Input;
 
-//we get the id from the input here
-const onSearch = (value) => console.log(value);
+function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
+  const saveChanges = async (userId, permLevel) => {
+    const endpoint = `/api/users/${userId}/permissions`;
+    try {
+      await axios.patch(endpoint, { level: permLevel });
+      setToggleRefetch(!toggleRefetch);
+    } catch (e) {
+      console.log(e);
+      alert("Something went wrong.");
+    }
+  };
 
-function AdminDashboard({ users }) {
-  const saveChnages = () => {
-    alert("saved")
+  //we get the id from the input here
+  const onSearch = async (value) => {
+    if (!value) return;
+    if (!/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i.test(value))
+      return alert("Invalid ID");
+    const endpoint = `/api/users/${value}/permissions`;
+    try {
+      await axios.patch(endpoint, { level: "reader" });
+      setToggleRefetch(!toggleRefetch);
+    } catch (e) {
+      console.log(e);
+      alert("Something went wrong.");
+    }
   };
 
   const columns = [
@@ -31,34 +50,48 @@ function AdminDashboard({ users }) {
             {user.name}
           </TextAvatar>{" "}
           {user.name}
+          <small>ID: {user._id}</small>
         </>
       ),
     },
     {
       title: "Role",
-      dataIndex: "permissions",
-      key: "permissions",
-      render: (permissions) => {
+      render: (user) => {
+        const userPerms = Object.keys(PERMISSIONS)
+          .map((perm) => (PERMISSIONS[perm] & user.permissions ? perm : null))
+          .filter(Boolean);
+        const highestPerm = userPerms[userPerms.length - 1];
         return (
           <Select
-            onChange={() => saveChnages()}
-            defaultValue={permissions}
+            onChange={(value) => saveChanges(user._id, value)}
+            value={highestPerm}
             style={{ width: "16rem" }}
+            disabled={user.permissions & PERMISSIONS.administrator}
           >
             {Object.keys(PERMISSIONS).map((permLevel) => (
-              <Option value={PERMISSIONS[permLevel]}>{permLevel}</Option>
+              <Option value={permLevel}>{permLevel}</Option>
             ))}
           </Select>
         );
       },
     },
     {
-      title: "Remove",
-      key: "remove",
-      render: (text) => <a className="delete">X</a>,
+      dataIndex: "permissions",
+      render: (permissions, user) => {
+        if (permissions & PERMISSIONS.administrator) return null;
+        return (
+          <a
+            onClick={() => {
+              if (window.confirm("Are you sure?")) saveChanges(user._id, "user");
+            }}
+            className="delete"
+          >
+            &times;
+          </a>
+        );
+      },
     },
   ];
-
 
   return (
     <div className="AdDashboard">
