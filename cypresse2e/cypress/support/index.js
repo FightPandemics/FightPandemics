@@ -15,7 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
-require("cypress-xpath");
+// require("cypress-xpath");
 // Alternatively you can use CommonJS syntax:
 //require("./commands");
 const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
@@ -25,4 +25,4 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 });
-require("cypress-failed-log");
+// require("cypress-failed-log");

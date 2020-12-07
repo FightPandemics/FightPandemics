@@ -22,4 +22,4 @@ suites:
     config:
       env:
         hello: world
-      testFiles: ["e2eTests/aboutUs/aboutUs.spec.js"] # Cypress native glob support.
+      testFiles: ["e2eTests/**/**.spec.js"] # Cypress native glob support.
