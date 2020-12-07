@@ -126,7 +126,15 @@ a {
 .feed-filter-modal-wrap {
   transform: none;
 }
-
+#launcher {
+  bottom: 5rem !important;
+  /* fix how it looks on mobile */
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+    bottom: 5% !important;
+    left: 1rem !important;
+    transform: scale(0.90) !important;
+  }
+}
 `;
 
 export default globalStyles;
