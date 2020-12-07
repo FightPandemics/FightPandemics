@@ -60,7 +60,10 @@ async function routes(app) {
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
-        { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
+        {
+          $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
+          status: { $ne: "removed" },
+        },
       ];
 
       // prefer location from query filters, then user if authenticated
@@ -237,6 +240,7 @@ async function routes(app) {
             reportsCount: {
               $size: { $ifNull: ["$reportedBy", []] },
             },
+            status: true,
             title: true,
             types: true,
             visibility: true,
@@ -374,13 +378,14 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      // if user is not a moderator
+      // user shouldn't see removed posts on post page
+      if (post.status === "removed") throw app.httpErrors.notFound();
+
+      // if user is not a "reader" (with dashboard read access)
       if (
         actor &&
-        (!actor.permissions || !(actor.permissions & PERMISSIONS.moderator))
+        (!actor.permissions || !(actor.permissions & PERMISSIONS.reader))
       ) {
-        // user shouldn't see removed posts on post page
-        if (post.status === "removed") throw app.httpErrors.notFound();
         // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy
           ? post.reportedBy.find(
