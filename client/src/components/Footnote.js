@@ -12,28 +12,32 @@ const StyledFooter = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   padding: 1rem 2rem;
   width: 100%;
 
   position: absolute;
   background: ${colors.selago};
   line-height: 2rem;
-  font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 1.1rem;
 
   bottom: 0;
 
   @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
     font-size: 1.4rem;
-    height: 6rem;
+    height: 8rem;
   }
 `;
 
 const Copyright = styled.div`
   font-weight: 500;
   color: ${colors.darkerGray};
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 0;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -42,8 +46,9 @@ const StyledDiv = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  margin-top: 0.5rem;
 
-  @media screen and (min-width: ${mq.tablet.wide.minWidth}) {
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
     margin-top: 1.2rem;
   }
 `;
@@ -51,7 +56,7 @@ const StyledDiv = styled.div`
 const StyledSpan = styled.span`
   margin: 0 1rem;
   text-decoration-line: underline;
-  color: ${colors.darkGray};
+  color: ${colors.darkishGray};
 `;
 
 export default () => {

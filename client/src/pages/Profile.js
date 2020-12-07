@@ -338,7 +338,6 @@ const Profile = ({
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
-  console.log("urls", location);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;

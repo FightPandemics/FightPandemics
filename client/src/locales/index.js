@@ -7,9 +7,10 @@ import translationIT from "./translations/it.json";
 import translationMK_MK from "./translations/mk_MK.json";
 import translationPT_PT from "./translations/pt_PT.json";
 import translationTL from "./translations/tl.json";
-// import translationRU from "./translations/ru.json";
+import translationRU from "./translations/ru.json";
 import translationPL from "./translations/pl.json";
-// import translationTH from "./translations/th.json";
+import translationTH from "./translations/th.json";
+import translationID from "./translations/id.json";
 import translationZH_TW from "./translations/zh_TW.json";
 import translationZH_CN from "./translations/zh_CN.json";
 import translationFR from "./translations/fr.json";
@@ -47,6 +48,9 @@ export const index = {
   de: {
     translation: translationDE,
   },
+  id: {
+    translation: translationID,
+  },
   it: {
     translation: translationIT,
   },
@@ -65,9 +69,9 @@ export const index = {
   "pt-PT": {
     translation: translationPT_PT,
   },
-  // ru: {
-  //   translation: translationRU,
-  // },
+  ru: {
+    translation: translationRU,
+  },
   "es-ES": {
     translation: translationES_ES,
   },
@@ -77,15 +81,15 @@ export const index = {
   "te-IN": {
     translation: translationTE_IN,
   },
+  th: {
+    translation: translationTH,
+  },
   tr: {
     translation: translationTR,
   },
   vi: {
     translation: translationVI,
   },
-  // th: {
-  //   translation: translationTH,
-  // },
 };
 
 export default index;

@@ -15,6 +15,47 @@ const PostCard = styled(Card)`
   overflow-wrap: break-word;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
+  ${({ unClickable }) =>
+    unClickable
+      ? `
+   * {
+     pointer-events: none;
+     user-select: none;
+   }
+   `
+      : ""}
+
+  .blur-overlay {
+    border: 0.05rem solid rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 4rem);
+    z-index: 1;
+    background: rgba(243, 244, 254, 0.3);
+    backdrop-filter: blur(12px);
+    font-weight: 600;
+    font-size: ${medium};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    span {
+      margin-top: 4rem;
+      display: block;
+      color: #425af2;
+      font-weight: 500;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border: unset !important;
+      height: 100%;
+    }
+  }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
   }
@@ -56,6 +97,13 @@ const PostCard = styled(Card)`
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        position: unset;
+        border: 0.01rem solid #e4e4e4;
+      }
+    }
+    body .activity & {
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        position: unset;
         border: 0.01rem solid #e4e4e4;
       }
     }

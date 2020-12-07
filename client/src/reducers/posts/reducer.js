@@ -65,6 +65,32 @@ const postsReducer = (state = innitialState, action) => {
         },
       };
     }
+    case POSTS_ACTIONS.SET_REPORTED: {
+      const { payload } = action;
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [payload.postId]: {
+            ...state.posts[payload.postId],
+            didReport: true,
+          },
+        },
+      };
+    }
+    case POSTS_ACTIONS.SHOW_ANYWAY: {
+      const { payload } = action;
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [payload.postId]: {
+            ...state.posts[payload.postId],
+            reportsCount: 0,
+          },
+        },
+      };
+    }
     default:
       return state;
   }

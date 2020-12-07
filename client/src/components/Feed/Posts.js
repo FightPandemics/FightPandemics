@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -51,6 +51,9 @@ const Posts = ({
   page,
 }) => {
   const posts = Object.entries(filteredPosts);
+  const [hiddenPosts, setHiddenPosts] = useState(
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+  );
   const scrollIndex = useRef(0);
   const history = useHistory();
   const scrollToIndex = () => {
@@ -60,6 +63,28 @@ const Posts = ({
     }
     return -1;
   };
+  const hidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      ); // objects are fast, better than looking for postId in an Array
+      setHiddenPosts({ ...hiddenPosts, [postId]: true });
+    },
+    [hiddenPosts],
+  );
+
+  const unhidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: null }),
+      );
+      setHiddenPosts({ ...hiddenPosts, [postId]: null });
+    },
+    [hiddenPosts],
+  );
+
   const loadMoreItems = isNextPageLoading
     ? () => {
         if (history?.location?.state) {
@@ -88,7 +113,6 @@ const Posts = ({
               currentPost={posts[index][1]}
               postDispatch={postDispatch}
               includeProfileLink={true}
-              numComments={posts[index][1].commentsCount}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
@@ -99,6 +123,9 @@ const Posts = ({
               keepPageState={page}
               keepPostsState={filteredPosts}
               highlightWords={highlightWords}
+              isHidden={hiddenPosts[posts[index][1]?._id]}
+              onPostHide={hidePost}
+              onPostUnhide={unhidePost}
             />
             <HorizontalRule />
           </>
@@ -126,6 +153,8 @@ const Posts = ({
       handleCancelPostDelete,
       handlePostDelete,
       hasNextPage,
+      hiddenPosts,
+      hidePost,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
@@ -133,6 +162,7 @@ const Posts = ({
       postDelete,
       postDispatch,
       posts,
+      unhidePost,
       user,
     ],
   );

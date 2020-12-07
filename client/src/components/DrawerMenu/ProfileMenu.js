@@ -28,7 +28,7 @@ export const ProfileMenu = ({
     ? `/${
         !user.type || user.type.toLowerCase() === "individual"
           ? "profile"
-          : "organization"
+          : "organisation"
       }/${user?.id || user?._id}`
     : null;
   return (

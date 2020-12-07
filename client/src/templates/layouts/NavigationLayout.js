@@ -22,6 +22,7 @@ import { theme } from "constants/theme";
 import {
   TOGGLE_STATE,
   SET_VALUE,
+  RESET_FEEDBACK_FORM,
   FEEDBACK_FORM_SUBMIT,
   FEEDBACK_FORM_SUBMIT_ERROR,
 } from "hooks/actions/feedbackActions";
@@ -108,12 +109,18 @@ const NavigationLayout = (props) => {
     {
       stateKey: "mostValuableFeature",
       label: t("feedback.mostValuable"),
+      limit: 1000,
     },
     {
       stateKey: "whatWouldChange",
       label: t("feedback.oneChange"),
+      limit: 1000,
     },
-    { stateKey: "generalFeedback", label: t("feedback.otherFeedback") },
+    {
+      stateKey: "generalFeedback",
+      label: t("feedback.otherFeedback"),
+      limit: 1000,
+    },
   ];
 
   const [feedbackState, feedbackDispatch] = useReducer(
@@ -139,8 +146,8 @@ const NavigationLayout = (props) => {
     covidImpact,
   } = feedbackState;
 
-  const dispatchAction = (type, key, value) => {
-    feedbackDispatch({ type, key, value });
+  const dispatchAction = (type, key, value, limit) => {
+    feedbackDispatch({ type, key, value, limit });
   };
 
   const toggleDrawer = () => {
@@ -182,6 +189,7 @@ const NavigationLayout = (props) => {
         whatWouldChange,
       });
 
+      feedbackDispatch({ type: RESET_FEEDBACK_FORM });
       if (res) {
         toggleModal("thanksModal");
         setTimeout(() => dispatchAction(SET_VALUE, "thanksModal", false), 3000);
@@ -220,8 +228,13 @@ const NavigationLayout = (props) => {
     const inputLabelsText = [
       {
         stateKey: "age",
+        stateErrorKey: "ageError",
         label: t("feedback.radio.age"),
         type: "number",
+        limit: {
+          min: 1,
+          max: 150,
+        },
       },
     ];
 
@@ -262,18 +275,39 @@ const NavigationLayout = (props) => {
         closable
       >
         <h2 className="title">{t("feedback.almostFinished")}</h2>
-        {inputLabelsText.map(({ label, stateKey, type }) => (
-          <React.Fragment key={stateKey}>
-            <FormInput
-              type={type}
-              inputTitle={label}
-              onChange={(e) =>
-                dispatchAction(SET_VALUE, stateKey, parseInt(e.target.value))
-              }
-            />
-            <RadioGroupWithLabel label={t("feedback.howImpacted")} />
-          </React.Fragment>
-        ))}
+        {inputLabelsText.map(
+          ({ label, stateKey, stateErrorKey, type, limit }) => (
+            <React.Fragment key={stateKey}>
+              <FormInput
+                type={type}
+                min={limit.min}
+                max={limit.max}
+                inputTitle={label}
+                value={String(feedbackState[stateKey])}
+                error={
+                  feedbackState[stateErrorKey] && {
+                    message: `Maximum is ${limit.max} and minimum is ${limit.min}`,
+                  }
+                }
+                onChange={(e) => {
+                  if (type === "number" && limit) {
+                    const val = parseInt(e.target.value);
+                    if (val > limit.max || val < limit.min)
+                      return dispatchAction(SET_VALUE, stateErrorKey, true);
+                  }
+                  dispatchAction(
+                    SET_VALUE,
+                    stateKey,
+                    parseInt(e.target.value),
+                    limit,
+                  );
+                  dispatchAction(SET_VALUE, stateErrorKey, false);
+                }}
+              />
+              <RadioGroupWithLabel label={t("feedback.howImpacted")} />
+            </React.Fragment>
+          ),
+        )}
         <FeedbackSubmitButton
           title={t("onboarding.common.submit")}
           onClick={() => {
@@ -299,10 +333,12 @@ const NavigationLayout = (props) => {
         closable
       >
         <h2 className="title">{t("feedback.thankYouEarly")}</h2>
-        {TEXT_FEEDBACK.map(({ label, stateKey }) => (
+        {TEXT_FEEDBACK.map(({ label, stateKey, limit }) => (
           <FormInput
             key={stateKey}
             inputTitle={label}
+            maxLength={limit}
+            value={feedbackState[stateKey]}
             onChange={(e) =>
               dispatchAction(SET_VALUE, stateKey, e.target.value)
             }

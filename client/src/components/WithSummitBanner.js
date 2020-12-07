@@ -102,9 +102,7 @@ export const BannerContainer = styled.div`
 `;
 
 const WithSummitBanner = ({ children }) => {
-  const [showBanner, setBannerState] = React.useState(
-    localStorage?.showSummitBanner === "false" ? false : true,
-  );
+  const [showBanner, setBannerState] = React.useState(false);
 
   const removeBanner = React.useCallback(() => {
     setBannerState(false);
@@ -117,7 +115,7 @@ const WithSummitBanner = ({ children }) => {
 
   return (
     <BannerContainer visible={showBanner}>
-      {showBanner && (
+      {false && (
         <HomeRegisterBanner>
           <div>
             <b>Stronger Together Summit 2020 - 4th December 2020</b> : bringing
@@ -146,7 +144,7 @@ const WithSummitBanner = ({ children }) => {
           </div>
         </HomeRegisterBanner>
       )}
-      {children}
+      {typeof children === "function" ? children(showBanner) : children}
     </BannerContainer>
   );
 };
