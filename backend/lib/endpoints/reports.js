@@ -67,7 +67,7 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        query: { limit, status, skip, includeMeta },
+        query: { limit, status, skip, includeMeta, keywords },
       } = req;
 
       const filters = [{ status: status }];
@@ -76,10 +76,27 @@ async function routes(app) {
         filters.push({ reportedBy: { $exists: true, $not: { $size: 0 } } });
       }
 
+      const matchingStage = {
+        $match: { $and: filters },
+      };
+      const sortingStage = {};
+
+      if (keywords) {
+        matchingStage.$match.$text = {
+          $search: keywords,
+          $caseSensitive: false,
+          $diacriticSensitive: false,
+        };
+        sortingStage.$sort = { score: { $meta: "textScore" } };
+      } else {
+        sortingStage.$sort = {
+          [status === "flagged" ? "reportsCount" : "updatedAt"]: -1,
+        };
+      }
+
+      console.log(matchingStage);
       const aggregationPipelineResults = [
-        {
-          $match: { $and: filters },
-        },
+        matchingStage,
         {
           $skip: parseInt(skip) || 0,
         },
@@ -106,11 +123,7 @@ async function routes(app) {
             "author.location": false,
           },
         },
-        {
-          $sort: {
-            [status === "flagged" ? "reportsCount" : "updatedAt"]: -1,
-          },
-        },
+        sortingStage,
       ];
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults

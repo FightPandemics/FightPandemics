@@ -24,10 +24,12 @@ import { Menu } from "antd";
 import Posts from "components/DashBoard/Posts";
 import { SET_VALUE } from "hooks/actions/feedActions";
 import axios from "axios";
-import { feedReducer } from "hooks/reducers/feedReducers";
+import qs from "query-string";
 // Local
 import filterOptions from "assets/data/filterOptions";
 import styled from "styled-components";
+import { feedReducer } from "hooks/reducers/feedReducers";
+import { setQueryKeysValue } from "components/Feed/utils";
 // Constants
 import { theme } from "constants/theme";
 import PERMISSIONS from "constants/permissions";
@@ -92,6 +94,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [queryParams, setQueryParams] = useState({});
   const {
     activePanel,
     location,
@@ -136,6 +139,22 @@ const Feed = (props) => {
     }
   };
 
+  const getStateFromQuery = () => {
+    const query = qs.parse(history.location.search);
+    // tab (Tab)
+    handleChangeType({ key: query.tab || "PENDING" });
+    // will trigger => refetchPosts() =(if needed)> loadPosts()
+    setQueryParams(query);
+  };
+
+  const setQueryFromState = () => {
+    const newQuery = {};
+    if (applyFilters) {
+      newQuery.tab = status || null;
+    }
+    setQueryKeysValue(history, newQuery);
+  };
+
   const handleChangeType = (e) => {
     const value = e.key ? e.key : e;
     dispatchAction(SET_VALUE, "status", value);
@@ -157,18 +176,17 @@ const Feed = (props) => {
       }
     };
 
-    /*
-    const searchKeyword = s_keyword;
+    const searchKeyword = queryParams.s_keyword;
     const searchURL = () => {
       if (searchKeyword)
         return `&keywords=${encodeURIComponent(searchKeyword)}`;
       else return "";
     };
-*/
+
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = `/api/reports/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
-    let endpoint = `${baseURL}${statusURL()}`;
+    let endpoint = `${baseURL}${statusURL()}${searchURL()}`;
     dispatch(postsActions.fetchPostsBegin());
     console.log(status);
     console.log(logs);
@@ -284,8 +302,16 @@ const Feed = (props) => {
   };
 
   useEffect(() => {
+    getStateFromQuery();
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setQueryFromState();
+  }, [applyFilters, status]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -355,26 +381,28 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
-                {user?.permissions & PERMISSIONS.administrator && (<>
-                <div style={{ height: "calc(100% - 23rem)" }} />
-                <h3
-                  style={{
-                    marginLeft: "2.15rem",
-                    color: "orangered",
-                    fontWeight: "bolder",
-                  }}
-                >
-                  ADMIN
-                </h3>
-                {Object.keys(ADMIN_PANELS).map((item, index) => (
+                {user?.permissions & PERMISSIONS.administrator && (
                   <>
-                    <StyledMenuItem key={item}>
-                      {ADMIN_PANELS[item]}
-                      <StyledForwardIcon />
-                    </StyledMenuItem>
+                    <div style={{ height: "calc(100% - 23rem)" }} />
+                    <h3
+                      style={{
+                        marginLeft: "2.15rem",
+                        color: "orangered",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      ADMIN
+                    </h3>
+                    {Object.keys(ADMIN_PANELS).map((item, index) => (
+                      <>
+                        <StyledMenuItem key={item}>
+                          {ADMIN_PANELS[item]}
+                          <StyledForwardIcon />
+                        </StyledMenuItem>
+                      </>
+                    ))}
                   </>
-                ))}
-                </>)}
+                )}
               </MenuWrapper>
             </>
           </SiderWrapper>
@@ -397,7 +425,7 @@ const Feed = (props) => {
                       isItemLoaded={isItemLoaded}
                       hasNextPage={loadMore}
                       totalPostCount={totalPostCount}
-                      highlightWords={null /*queryParams.s_keyword*/}
+                      highlightWords={queryParams.s_keyword}
                       page={page}
                       changeType={handleChangeType}
                       activeTab={status}
