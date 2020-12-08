@@ -11,7 +11,6 @@ import { RED, DARK_GRAY } from "constants/colors";
 const { Option } = Select;
 const { Search } = Input;
 
-
 const AdDashboard = styled(Table)`
   padding: 1rem;
   border-radius: 0.2rem;
@@ -76,8 +75,11 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
     {
       title: "Role",
       render: (user) => {
-        const userRoles = Object.keys(ROLES).shift() // remove role "user"
-          .filter((perm) => (ROLES[perm] === user.permissions));
+        const selectableRoles = Object.keys(ROLES);
+        selectableRoles.shift(); // remove role "user"
+        const userRoles = selectableRoles.filter(
+          (perm) => ROLES[perm] === user.permissions,
+        );
         const highestRole = userRoles[userRoles.length - 1]; // mostly length === 1
         return (
           <Select
@@ -86,7 +88,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
             style={{ width: "16rem" }}
             disabled={user.permissions === ROLES.administrator}
           >
-            {Object.keys(ROLES).map((permLevel) => (
+            {selectableRoles.map((permLevel) => (
               <Option value={permLevel}>{permLevel}</Option>
             ))}
           </Select>
@@ -100,7 +102,8 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
         return (
           <a
             onClick={() => {
-              if (window.confirm("Are you sure?")) saveChanges(user._id, "user");
+              if (window.confirm("Are you sure?"))
+                saveChanges(user._id, "user");
             }}
             className="delete"
           >
