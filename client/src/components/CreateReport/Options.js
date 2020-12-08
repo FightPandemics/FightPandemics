@@ -83,7 +83,6 @@ const Options = ({
           .split("|")
           .filter(
             (e) =>
-              e !== "Other" &&
               options.map((reason) => reason.stateKey).includes(e),
           )
           .map((reason, idx) => (
