@@ -13,7 +13,7 @@ import FeedbackIcon from "assets/icons/feedback-gray.svg";
 import LogoutIcon from "assets/icons/logout-gray.svg";
 import PeopleIcon from "assets/icons/people-gray.svg";
 import { ReactComponent as ModeratorIcon } from "assets/icons/moderator-badge.svg";
-import PERMISSIONS from "constants/permissions";
+import { SCOPES } from "constants/permissions";
 
 
 const profileItemStyle = { margin: "8px 0", height: "auto" };
@@ -39,7 +39,7 @@ export const SettingMenu = ({
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      {Boolean(user.permissions & PERMISSIONS.reader) && (
+      {Boolean(user.permissions & SCOPES.DASH_READ_ACCESS) && (
         <Menu.Item>
           <Link to="/dashboard">
             <StyledModeratorIcon />

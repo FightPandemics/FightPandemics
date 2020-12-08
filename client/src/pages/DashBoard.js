@@ -32,7 +32,7 @@ import { feedReducer } from "hooks/reducers/feedReducers";
 import { setQueryKeysValue } from "components/Feed/utils";
 // Constants
 import { theme } from "constants/theme";
-import PERMISSIONS from "constants/permissions";
+import { SCOPES } from "constants/permissions";
 
 export const FeedContext = React.createContext();
 
@@ -188,8 +188,6 @@ const Feed = (props) => {
     let baseURL = `/api/reports/posts?includeMeta=true&limit=${limit}&skip=${skip}`;
     let endpoint = `${baseURL}${statusURL()}${searchURL()}`;
     dispatch(postsActions.fetchPostsBegin());
-    console.log(status);
-    console.log(logs);
 
     if (status === "LOGS") {
       // Audit log
@@ -199,10 +197,8 @@ const Feed = (props) => {
           data: { logs },
         } = await axios.get(endpoint);
         if (logs) {
-          console.log(typeof logs);
           dispatchAction(SET_VALUE, "logs", logs);
           dispatch(postsActions.finishLoadingAction());
-          console.log(logs);
         }
       } catch (error) {
         console.log(error);
@@ -381,27 +377,18 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
-                {user?.permissions & PERMISSIONS.administrator && (
-                  <>
-                    <div style={{ height: "calc(100% - 23rem)" }} />
-                    <h3
-                      style={{
-                        marginLeft: "2.15rem",
-                        color: "orangered",
-                        fontWeight: "bolder",
-                      }}
-                    >
-                      ADMIN
-                    </h3>
-                    {Object.keys(ADMIN_PANELS).map((item, index) => (
-                      <>
-                        <StyledMenuItem key={item}>
-                          {ADMIN_PANELS[item]}
-                          <StyledForwardIcon />
-                        </StyledMenuItem>
-                      </>
-                    ))}
-                  </>
+                <div style={{ height: "calc(100% - 23rem)" }} />
+                {user?.permissions & SCOPES.LOGS_READ_ACCESS && (
+                  <StyledMenuItem key={"LOGS"}>
+                    {ADMIN_PANELS["LOGS"]}
+                    <StyledForwardIcon />
+                  </StyledMenuItem>
+                )}
+                {user?.permissions & SCOPES.MANAGE_USERS && (
+                  <StyledMenuItem key={"MANAGE"}>
+                    {ADMIN_PANELS["MANAGE"]}
+                    <StyledForwardIcon />
+                  </StyledMenuItem>
                 )}
               </MenuWrapper>
             </>
@@ -410,7 +397,13 @@ const Feed = (props) => {
             {(() => {
               if (status === "LOGS") return <AuditLog logs={logs} />;
               else if (status === "MANAGE")
-                return <AdminDashboard users={users} toggleRefetch={toggleRefetch} setToggleRefetch={setToggleRefetch}/>;
+                return (
+                  <AdminDashboard
+                    users={users}
+                    toggleRefetch={toggleRefetch}
+                    setToggleRefetch={setToggleRefetch}
+                  />
+                );
               else
                 return (
                   <>

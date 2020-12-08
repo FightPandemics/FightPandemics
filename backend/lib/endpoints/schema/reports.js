@@ -25,7 +25,7 @@ const moderatorActionSchema = {
 };
 
 const getAuditLogSchema = {
-  body: strictSchema()
+  querystring: strictSchema()
     .prop("limit", S.integer().minimum(1).maximum(20).default(10))
     .prop("skip", S.number()),
 };

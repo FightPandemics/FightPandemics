@@ -6,13 +6,6 @@ const {
 } = require("./NotifyPreference");
 // const { schema: locationSchema } = require("./Location");
 const { isValidEmail } = require("../utils");
-const PERMISSIONS = {
-  user: 0x00000000,
-  reader: 0x00000001,
-  moderator: 0x00000002,
-  administrator: 0x00000004,
-  // to add more, please use: 0x00000008, 0x00000010, 0x00000020, 0x00000040, 0x00000080, 0x00000100, 0x00000200, 0x00000400, etc..
-};
 
 const userSchema = new Schema(
   {
@@ -73,4 +66,3 @@ const User = model("User", userSchema);
 
 exports.schema = userSchema;
 exports.model = User;
-exports.PERMISSIONS = PERMISSIONS;

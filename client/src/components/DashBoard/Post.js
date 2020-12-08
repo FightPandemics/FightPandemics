@@ -15,7 +15,7 @@ import PostActions from "./PostActions";
 import CreateReport from "components/CreateReport/CreateReport";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { highlightSearchRegex, authorProfileLink } from "../Feed/utils";
-import PERMISSIONS from "constants/permissions";
+import { SCOPES } from "constants/permissions";
 
 export const AntDivider = styled(Divider)`
   height: 100%;
@@ -170,7 +170,7 @@ const Post = ({
               <PostActions
                 setCallReport={setCallReport}
                 setForModerator={setForModerator}
-                isEnabled={activeTab === "PENDING" && Boolean(user?.permissions & PERMISSIONS.moderator)}
+                isEnabled={activeTab === "PENDING" && Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)}
               />
             {callReport ? (
               <CreateReport

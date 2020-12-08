@@ -5,6 +5,7 @@ const {
   moderatorActionSchema,
 } = require("./schema/reports");
 const { translateISOtoRelativeTime } = require("../utils");
+const { SCOPES } = require("../constants");
 
 const MAX_REPORTS_PER_PAGE = 20;
 const UNLOGGED_POST_SIZE = 120;
@@ -61,7 +62,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("reader"),
+        app.checkScopes([SCOPES.DASH_READ_ACCESS]),
       ],
       schema: getPostReportsSchema,
     },
@@ -179,7 +180,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("moderator"),
+        app.checkScopes([SCOPES.REPORT_WRITE_ACCESS]),
       ],
       schema: moderatorActionSchema,
     },
@@ -235,7 +236,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("administrator"),
+        app.checkScopes([SCOPES.LOGS_READ_ACCESS]),
       ],
       schema: getAuditLogSchema,
     },

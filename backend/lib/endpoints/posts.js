@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-const { PERMISSIONS } = require("../models/User");
+const { SCOPES } = require("../constants");
 const {
   setElapsedTimeText,
   createSearchRegex,
@@ -384,7 +384,7 @@ async function routes(app) {
       // if user is not a "reader" (with dashboard read access)
       if (
         actor &&
-        (!actor.permissions || !(actor.permissions & PERMISSIONS.reader))
+        (!actor.permissions || !(actor.permissions & SCOPES.DASH_READ_ACCESS))
       ) {
         // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy

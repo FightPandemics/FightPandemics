@@ -13,7 +13,7 @@ import GTM from "constants/gtm-tags";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../constants/theme";
 import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
-import PERMISSIONS from "constants/permissions";
+import { SCOPES } from "constants/permissions";
 
 const { colors } = theme;
 const activeStyles = {
@@ -88,7 +88,7 @@ export const HeaderLinks = ({
                 organisationId={organisationId}
               />
             </li>
-            {!organisationId && Boolean(user.permissions & PERMISSIONS.reader) && (
+            {!organisationId && Boolean(user.permissions & SCOPES.DASH_READ_ACCESS) && (
               <li>
                 <NavLink activeStyle={activeStyles} to="/dashboard">
                   <SvgIcon src={moderator}></SvgIcon>

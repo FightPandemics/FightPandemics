@@ -9,9 +9,10 @@ const {
   getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
+  setUserPermissionsSchema,
   updateUserSchema,
 } = require("./schema/users");
-const { PERMISSIONS } = require("../models/User");
+const { SCOPES, ROLES } = require("../constants");
 
 /*
  * /api/users
@@ -563,28 +564,22 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("administrator"),
+        app.checkScopes([SCOPES.MANAGE_USERS]),
       ],
+      schema: setUserPermissionsSchema
     },
     async (req) => {
       const {
         params: { userId },
-        body: { level },
+        body: { role },
       } = req;
 
-      const index = Object.keys(PERMISSIONS).indexOf(level);
-      if (index === -1)
-        throw app.httpErrors.badRequest("invalid permission level");
-
-      const newPerms = Object.keys(PERMISSIONS).slice(0, index + 1);
-      // give the user all the permissions below the given level + given level
-      // Example: if level is "administrator", we should give the user "reader" + "moderator" + "administrator"
-      const permissionsInt = newPerms.reduce((int, perm) => int | PERMISSIONS[perm], 0)
+      if (ROLES[role] === undefined) throw app.httpErrors.badRequest("invalid role");
 
       const [updatedErr, updatedUser] = await app.to(
         User.findOneAndUpdate(
           { _id: userId },
-          { $set: { permissions: permissionsInt } },
+          { $set: { permissions: ROLES[role] } },
           { new: true },
         ),
       );
@@ -605,14 +600,14 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkPermission("administrator"),
+        app.checkScopes([SCOPES.MANAGE_USERS]),
       ],
     },
     async (req) => {
       const aggregationPipeline = [
         {
           $match: {
-            permissions: { $gt: 0 },
+            permissions: { $gt: SCOPES.NONE },
           },
         },
         {

@@ -5,7 +5,6 @@ const fastifySecretProvider = require("fastify-authz-jwks");
 const mongoose = require("mongoose");
 const NodeCache = require("node-cache");
 const { getReqParam } = require("../utils");
-const { PERMISSIONS } = require("../models/User");
 
 const TOKEN_COOKIE = "token";
 // 2nd non-httpOnly "dummy" cookie so user can logout offline
@@ -170,24 +169,27 @@ const authPlugin = async (app) => {
     req.log.info(msg.ok);
   });
 
-  app.decorate("checkPermission", (permLevel) => {
+  app.decorate("checkScopes", (scopesArray) => {
     return async (req, res, done) => {
-      // level "user", or not found
-      if (!PERMISSIONS[permLevel]) return done();
-
-      // must come after either "authenticate" or "optionalAuthenticate" decorator
+      // just in case someone forgot to pass the array
+      if (!scopesArray || !scopesArray.length) throw app.httpErrors.forbidden();
+      // must come after "authenticate"
       const { actor } = req;
+
+      const requiredPerms = scopesArray.reduce(
+        (total, perm) => total | perm,
+        0,
+      );
 
       // only IndividualUser can have permissions
       if (
         !actor ||
         !actor.permissions ||
-        !(PERMISSIONS[permLevel] & actor.permissions)
+        !(requiredPerms & actor.permissions)
       ) {
-        req.log.error(`Not authorized to act as ${permLevel}`);
+        req.log.error(`Not authorized to act as ${requiredPerms}`);
         throw app.httpErrors.forbidden();
       }
-      
     };
   });
 };

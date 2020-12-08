@@ -32,7 +32,7 @@ import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
 
-import PERMISSIONS from "constants/permissions";
+import { SCOPES } from "constants/permissions";
 
 const routes = [
   {
@@ -173,7 +173,7 @@ const routes = [
     component: DashBoard,
     props: {
       navSearch: true,
-      permLevel: PERMISSIONS.reader,
+      permLevel: SCOPES.DASH_READ_ACCESS,
       hideFooter: true,
     },
   },

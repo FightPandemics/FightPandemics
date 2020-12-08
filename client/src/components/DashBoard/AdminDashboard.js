@@ -1,20 +1,39 @@
-import { Input, Select } from "antd";
-import axios from "axios";
-import AdDashboard from "components/AdminDashboard/Dashboard";
 import React from "react";
 import { WhiteSpace } from "antd-mobile";
+import { Input, Select, Table } from "antd";
+import axios from "axios";
+import styled from "styled-components";
+
 import TextAvatar from "components/TextAvatar";
-import PERMISSIONS from "constants/permissions";
+import { ROLES } from "constants/permissions";
+import { RED, DARK_GRAY } from "constants/colors";
 
 const { Option } = Select;
-
 const { Search } = Input;
 
+
+const AdDashboard = styled(Table)`
+  padding: 1rem;
+  border-radius: 0.2rem;
+  .delete {
+    font-weight: 700;
+    color: ${RED};
+    font-size: 3rem;
+    width: 100%;
+    text-align: center;
+  }
+  small {
+    display: block;
+    color: ${DARK_GRAY};
+    margin-left: 5rem;
+  }
+`;
+
 function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
-  const saveChanges = async (userId, permLevel) => {
+  const saveChanges = async (userId, role) => {
     const endpoint = `/api/users/${userId}/permissions`;
     try {
-      await axios.patch(endpoint, { level: permLevel });
+      await axios.patch(endpoint, { role });
       setToggleRefetch(!toggleRefetch);
     } catch (e) {
       console.log(e);
@@ -57,18 +76,17 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
     {
       title: "Role",
       render: (user) => {
-        const userPerms = Object.keys(PERMISSIONS)
-          .map((perm) => (PERMISSIONS[perm] & user.permissions ? perm : null))
-          .filter(Boolean);
-        const highestPerm = userPerms[userPerms.length - 1];
+        const userRoles = Object.keys(ROLES)
+          .filter((perm) => (ROLES[perm] === user.permissions));
+        const highestRole = userRoles[userRoles.length - 1]; // mostly length === 1
         return (
           <Select
             onChange={(value) => saveChanges(user._id, value)}
-            value={highestPerm}
+            value={highestRole}
             style={{ width: "16rem" }}
-            disabled={user.permissions & PERMISSIONS.administrator}
+            disabled={user.permissions === ROLES.administrator}
           >
-            {Object.keys(PERMISSIONS).map((permLevel) => (
+            {Object.keys(ROLES).map((permLevel) => (
               <Option value={permLevel}>{permLevel}</Option>
             ))}
           </Select>
@@ -78,7 +96,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
     {
       dataIndex: "permissions",
       render: (permissions, user) => {
-        if (permissions & PERMISSIONS.administrator) return null;
+        if (permissions === ROLES.administrator) return null;
         return (
           <a
             onClick={() => {
