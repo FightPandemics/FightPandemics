@@ -171,6 +171,7 @@ const Post = ({
                 setCallReport={setCallReport}
                 setForModerator={setForModerator}
                 isEnabled={activeTab === "PENDING" && Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)}
+                canRestore={activeTab === "ACCEPTED" && Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)}
               />
             {callReport ? (
               <CreateReport

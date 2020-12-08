@@ -6,7 +6,7 @@ import styled from "styled-components";
 import SvgIcon from "../Icon/SvgIcon";
 import PostRemoval from "assets/icons/post-removal.svg";
 import PostApproval from "assets/icons/post-approval.svg";
-import EyeIcon from "assets/icons/eye-mask.svg"
+import EyeIcon from "assets/icons/eye-mask.svg";
 // Constants
 import { mq } from "constants/theme";
 
@@ -21,7 +21,12 @@ const StyledSpan = styled.span`
   }
 `;
 
-const PostActions = ({ setCallReport, setForModerator, isEnabled }) => {
+const PostActions = ({
+  setCallReport,
+  setForModerator,
+  isEnabled,
+  canRestore,
+}) => {
   const callModal = (remove, keep) => () => {
     setForModerator({ remove, keep });
     setCallReport(true);
@@ -49,11 +54,19 @@ const PostActions = ({ setCallReport, setForModerator, isEnabled }) => {
         renderActionIcons
       ) : (
         <>
-          <div className="social-icon" style={{cursor: "initial"}}>
-            <StyledSvg src={EyeIcon} className="social-icon-svg" />
-            <StyledSpan>Read Only</StyledSpan>
-          </div>
+          {!canRestore && (
+            <div className="social-icon" style={{ cursor: "initial" }}>
+              <StyledSvg src={EyeIcon} className="social-icon-svg" />
+              <StyledSpan>Read Only</StyledSpan>
+            </div>
+          )}
         </>
+      )}
+      {canRestore && (
+        <div className="social-icon" onClick={callModal(false, true)}>
+          <StyledSvg src={PostApproval} className="social-icon-svg" />
+          <StyledSpan>Restore Post</StyledSpan>
+        </div>
       )}
     </div>
   );
