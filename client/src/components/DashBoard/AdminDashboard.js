@@ -48,7 +48,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
       return alert("Invalid ID");
     const endpoint = `/api/users/${value}/permissions`;
     try {
-      await axios.patch(endpoint, { level: "reader" });
+      await axios.patch(endpoint, { role: "reader" });
       setToggleRefetch(!toggleRefetch);
     } catch (e) {
       console.log(e);
