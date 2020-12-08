@@ -27,8 +27,8 @@ const auditLogsColumns = [
     dataIndex: "action",
     render: (action) => (
       <>
-        <Tag color={action === "accept" ? "green" : "red"} key={action}>
-          {action.toUpperCase()}
+        <Tag color={action === "accept" ? "red" : "green"} key={action}>
+          {action === "accept" ? "REMOVE" : "KEEP"}
         </Tag>
       </>
     ),
