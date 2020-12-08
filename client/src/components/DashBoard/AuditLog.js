@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import TextAvatar from "components/TextAvatar";
 import FilterTag from "components/Tag/FilterTag";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 const auditLogsColumns = [
   {
@@ -16,7 +17,7 @@ const auditLogsColumns = [
           mobile={true}
           src={user.photo}
         >
-          {user.name}
+          {getInitialsFromFullName(user.name)}
         </TextAvatar>{" "}
         {user.name}
       </>

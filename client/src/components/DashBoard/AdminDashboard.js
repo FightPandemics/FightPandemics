@@ -7,6 +7,7 @@ import styled from "styled-components";
 import TextAvatar from "components/TextAvatar";
 import { ROLES } from "constants/permissions";
 import { RED, DARK_GRAY } from "constants/colors";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -65,7 +66,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
             mobile={true}
             src={user.photo}
           >
-            {user.name}
+            {getInitialsFromFullName(user.name)}
           </TextAvatar>{" "}
           {user.name}
           <small>ID: {user._id}</small>
