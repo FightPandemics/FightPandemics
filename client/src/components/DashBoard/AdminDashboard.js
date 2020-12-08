@@ -76,7 +76,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
     {
       title: "Role",
       render: (user) => {
-        const userRoles = Object.keys(ROLES)
+        const userRoles = Object.keys(ROLES).shift() // remove role "user"
           .filter((perm) => (ROLES[perm] === user.permissions));
         const highestRole = userRoles[userRoles.length - 1]; // mostly length === 1
         return (
