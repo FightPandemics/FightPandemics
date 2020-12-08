@@ -1,4 +1,6 @@
 const moment = require("moment");
+const tlds = require("tlds");
+const _isEmail = require("validator/lib/isEmail");
 
 const generateUUID = ({ range }) => {
   const chars =
@@ -17,8 +19,32 @@ const bool = (env) => env == "true";
 
 const getCookieToken = (req) => req.cookies.token;
 
-const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-const isValidEmail = (email) => emailRegEx.test(email);
+// email validation code from front-end 'src\utils\validators'
+const isValidTopLevelDomain = (string) => {
+  return tlds.some((tld) => string.endsWith("." + tld));
+};
+
+const isValidEmail = (email) => {
+  return _isEmail(email) && isValidTopLevelDomain(email);
+};
+
+// password validation code from front-end 'src\utils\validators'
+const SPECIAL_CHARS = /[!@#$%^&*.;]/;
+const containsLowerCase = (str) => /[a-z]/.test(str);
+const containsUpperCase = (str) => /[A-Z]/.test(str);
+const containsNumber = (str) => /\d/.test(str);
+const containsSpecialChars = (str) => SPECIAL_CHARS.test(str);
+
+const isValidPassword = (password) => {
+  const passwordChecks = [
+    containsLowerCase(password),
+    containsUpperCase(password),
+    containsNumber(password),
+    containsSpecialChars(password),
+  ];
+
+  return passwordChecks.filter((isValid) => isValid).length >= 3;
+};
 
 const relativeTimeObject = (number, unit) => ({
   count: number,
@@ -55,6 +81,15 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
     created: translateISOtoRelativeTime(createdAt),
     isEdited: createdAt < updatedAt,
   };
+};
+
+const getReqParam = (req, paramName) => {
+  // check in body props OR path params OR query params (might be null)
+  const body = req.body || {}; // might be null
+  const params = req.params || {};
+  const query = req.query || {};
+
+  return body[paramName] || params[paramName] || query[paramName];
 };
 
 const createSearchRegex = (keywords) => {
@@ -98,15 +133,39 @@ const getUserById = async function (app, userId, options = null) {
   if (!options) options = {};
   options.user = user;
   return options;
-};
+}
+
+const getSocketIdByUserId = (app, userId) => {
+    return new Promise((resolve) => {
+      app.io.of("/").adapter.clients([userId], (err, clients) => {
+        if (err || !clients || !clients.length) return resolve(null);
+        else resolve(clients[0]); // return the entire array, if you want all active devices.
+      });
+    });
+  };
+  
+  const isUserInRoom = (app, threadId, socketId) => {
+    return new Promise((resolve) => {
+      app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
+        if (err) return resolve(false);
+        if (!rooms.includes(threadId)) return resolve(false);
+        return resolve(true);
+      });
+    });
+  };
 
 module.exports = {
   bool,
   dateToEpoch,
   generateUUID,
   getCookieToken,
+  getSocketIdByUserId,
+  isUserInRoom,
+  getReqParam,
   isValidEmail,
+  isValidPassword,
   createSearchRegex,
   setElapsedTimeText,
-  getUserById,
+translateISOtoRelativeTime,  
+getUserById,
 };

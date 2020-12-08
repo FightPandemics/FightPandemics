@@ -2,7 +2,6 @@ const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
-
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
 }
@@ -44,7 +43,7 @@ const individualUserSchema = new Schema(
       linkedin: String,
       twitter: String,
       website: String,
-    },
+    }
   },
   { collection: "users" },
 );
@@ -63,6 +62,8 @@ individualUserSchema.methods.toObject = function(){
         organisations,
         urls,
         photo,
+        notifyPrefs,
+        usesPassword,
       } = this;
 
       const defaultUser = {
@@ -78,6 +79,8 @@ individualUserSchema.methods.toObject = function(){
         organisations,
         urls,
         photo,
+        notifyPrefs,
+        usesPassword,
       };
 
       return defaultUser;
@@ -85,6 +88,10 @@ individualUserSchema.methods.toObject = function(){
 
 individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
+});
+
+individualUserSchema.virtual("usesPassword").get(function getUsesPassword() {
+  return this.authId.startsWith("auth0");
 });
 
 individualUserSchema.virtual("organisations", {
