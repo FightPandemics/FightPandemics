@@ -66,7 +66,8 @@ const searchOrganisationsSchema = {
     .prop("limit", S.integer())
     .prop("objective", S.string())
     .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("ignoreUserLocation", S.boolean().default(false)),
 };
 
 const updateOrganisationSchema = {
