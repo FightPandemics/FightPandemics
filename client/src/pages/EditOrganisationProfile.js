@@ -14,8 +14,6 @@ import {
   OptionDiv,
   FormLayout,
   Background,
-  ToggleHeading,
-  CustomEditAccountHeader,
   ProfilePicWrapper,
   MobilePicWrapper,
 } from "../components/EditProfile/EditComponents";
@@ -45,7 +43,7 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-const ABOUT_MAX_LENGTH = 160;
+const ABOUT_MAX_LENGTH = 250;
 
 function EditOrganisationProfile(props) {
   const organisationId = window.location.pathname.split("/")[2];
@@ -204,34 +202,28 @@ function EditOrganisationProfile(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomEditAccountHeader className="h4">
+          <CustomHeading level={4} className="h4">
             {t("profile.org.editOrgProfile")}
-          </CustomEditAccountHeader>
-          <ToggleHeading>
-            <CustomHeading level={4} className="h4">
-              {t("profile.common.profileInfo")}
-            </CustomHeading>
-          </ToggleHeading>
+          </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
           <MobilePicWrapper>{renderProfilePicture()}</MobilePicWrapper>
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-account/${organisationId}`}>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-profile/${organisationId}`}
+              isSelected
+            >
+              {t("profile.common.profileInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                {t("profile.common.notificationInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-notifications/${organisationId}`}
+            >
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>

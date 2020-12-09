@@ -1,6 +1,6 @@
 {
   "headline": "一個提供和尋求幫助的地方",
-  "tagline": "<0>大流行將繼續發生。 </0><1>我們幫助社區做好準備並應對危機。</1>",
+  "tagline": "<0>大流行將繼續發生。 </0><1>我們幫助社群做好準備並應對危機。</1>",
   "common": {
     "getHelp": "請求幫助",
     "giveHelp": "提供幫助",
@@ -18,7 +18,7 @@
     "myOrganisation": "我的機構組織",
     "willRefresh": "目前的頁面將重新整理。",
     "stayOnPageHeader": "保留在目前的頁面上？",
-    "stayOnPageContent": "如果選擇“不是”，您將被重新導向到幫助版面。",
+    "stayOnPageContent": "如果選擇“不是”，您將被重新導向至幫助版面。",
     "yes": "是",
     "no": "不是",
     "ok": "好"
@@ -32,7 +32,7 @@
       "skip": "跳过",
       "whereLocated": "你的位置？",
       "relevantResults": "我們想向您展示最相關的結果",
-      "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+      "enterAddress": "輸入地址、郵遞區號或者城市名稱",
       "shareLocation": "分享我的位置",
       "showAnywhere": "向我顯示來自任何地方的貼子",
       "whatEmail": "您的電子郵件是什麼？",
@@ -50,7 +50,7 @@
       "howContribute": "你希望以什么身份提供帮助？",
       "volunteer": "志愿者",
       "donorInvestor": "捐赠者",
-      "organisation": "组织机构"
+      "organisation": "以機構組織的身份"
     }
   },
   "feed": {
@@ -65,7 +65,7 @@
       "title": "篩選器",
       "location": {
         "label": "位置",
-        "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+        "enterAddress": "輸入地址、郵遞區號或者城市名稱",
         "shareLocation": "分享我的位置"
       },
       "providers": "供應商",
@@ -73,7 +73,7 @@
         "個人",
         "創業公司",
         "公司",
-        "社區",
+        "社群",
         "政府",
         "非營利組織",
         "大學",
@@ -86,14 +86,20 @@
         "雜貨/食品",
         "商業",
         "教育",
-        "法律援助",
+        "住宅",
+        "法律",
         "健康/心理",
         "娛樂",
-        "信息",
+        "資訊",
         "資金",
-        "研發部",
-        "科技類",
-        "其它"
+        "研發",
+        "技術",
+        "其它",
+        "托育",
+        "翻譯",
+        "志願者",
+        "員工（有薪）",
+        "遠端工作"
       ],
       "labels": {
         "location": "位置",
@@ -105,7 +111,7 @@
         "Individual": "個人",
         "Startup": "創業公司",
         "Company": "公司",
-        "Community": "社區",
+        "Community": "社群",
         "Government": "政府",
         "Non-profit": "非營利",
         "University": "大學",
@@ -124,7 +130,13 @@
         "Funding": "資金",
         "R&D": "研發部",
         "Tech": "科技類",
-        "Other": "其它"
+        "Other": "其它",
+        "Housing": "住宅",
+        "Childcare": "托育",
+        "Translations": "翻譯",
+        "Volunteer": "志願者",
+        "Staff (paid)": "員工（有薪）",
+        "Remote Work": "遠端工作"
       },
       "lookingForOptions": {
         "Request Help": "尋求幫助",
@@ -138,9 +150,9 @@
     "allOrgs": "所有機構組織",
     "noResultsPosts": "抱歉，目前沒有相關貼文。請嘗試使用其他過濾器搜索或<0>創建貼文</0>。",
     "noResultsPeople": "抱歉，目前沒有相關個人用戶。請嘗試使用其他過濾器搜索。",
-    "noResultsOrgs": "抱歉，目前沒有相關組織。請嘗試使用其他過濾器搜索。",
+    "noResultsOrgs": "抱歉，目前沒有相關機構組織。請嘗試使用其他過濾器搜索。",
     "search": {
-      "placeholder": "搜索貼文，用戶和組織",
+      "placeholder": "搜索貼文、用戶和組織",
       "keywords": "關鍵字",
       "error": "至少{{length}}字元。",
       "options": {
@@ -172,9 +184,9 @@
     "likeWithCount": "{{count}}喜歡",
     "likeWithCount_plural": "{{count}}喜欢",
     "comment": "評論",
-    "comment_plural": "評論",
+    "comment_plural": "留言評論",
     "commentWithCount": "{{count}}評論",
-    "commentWithCount_plural": "{{count}}評論",
+    "commentWithCount_plural": "{{count}}留言評論",
     "options": {
       "shareWith": {
         "city": "在我的城市",
@@ -200,7 +212,7 @@
     "viewLess": "查看較少",
     "viewMore": "查看更多",
     "deletePostConfirmation": "您確定要刪除該貼文嗎？",
-    "deleteCommentConfirmation": "您確定要刪除評論嗎？",
+    "deleteCommentConfirmation": "您確定要刪除此留言嗎？",
     "shareVia": "通過...分享",
     "others": "其它",
     "expireTitle": "啊...快點！",
@@ -211,31 +223,39 @@
     "cancel": "取消",
     "confirm": "確認",
     "edited": "已編輯",
-    "share_plural": "Shares"
+    "share_plural": "共享",
+    "deletePostConfirmationTitle": "刪除貼文確認",
+    "deleteCommentConfirmationTitle": "刪除留言確認",
+    "deleteConfirmation": "刪除",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
       "accountInfo": "帳戶信息",
       "profileInfo": "資料信息",
       "address": "地址",
-      "enterAddress": "輸入地址, 郵遞區號或者城市名稱",
+      "enterAddress": "輸入地址、郵遞區號或者城市名稱",
       "agreePrivacy": "註冊即表示我同意<0>隱私政策</0>",
       "agreeTerms": "註冊即表示我同意<0>條款</0>",
       "createProfile": "建立你的個人資料",
       "saveChanges": "保存更改",
-      "thankyou": "感謝您加入我們的社區！",
+      "thankyou": "感謝您加入我們的社群！",
       "viewProfile": "我的個人資料",
       "continuePosting": "繼續發布",
       "viewFeed": "查看幫助版面",
       "viewMyProfile": "查看我的個人資料",
-      "loading": "加载",
+      "loading": "加載",
       "invalidEmail": "不合規電郵",
       "selectOption": "請至少選擇一個選項",
       "invalidURL": "無效的網址",
       "savingChanges": "正在保存更改...",
       "submit": "創建個人資料",
       "submitLoading": "正在創建個人資料...",
-      "invalidPassword": "密碼必須包含以下至少三個：小寫字母，大寫字母，數字，特殊字符（例如!@＃$％^＆*）。",
+      "invalidPassword": "密碼必須包含以下至少三個：小寫字母、大寫字母、數字、特殊字符（例如!@＃$％^＆*）。",
       "addressRequired": "地址為必填項。請輸入您的地址並從下拉列表中選擇",
       "emailRequired": "電子郵件為必填項",
       "passwordRequired": "密碼是必需的",
@@ -260,10 +280,13 @@
       "changePassword": "變更密碼",
       "notificationInfo": "通知偏好",
       "emailNotification": "電郵通知",
-      "instant": "Instant",
-      "daily": "Daily",
-      "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "instant": "即時",
+      "daily": "每天",
+      "weekly": "每週",
+      "biweekly": "每兩週一次",
+      "digest": "摘要",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "電子郵件",
@@ -301,7 +324,8 @@
       "enterNewPassword": "輸入新密碼",
       "updatingPassword": "更新密碼",
       "editSecurity": "編輯安全",
-      "editNotification": "編輯通知"
+      "editNotification": "編輯通知",
+      "editAccount": "編輯帳戶"
     },
     "org": {
       "title": "創建組織資料",
@@ -320,7 +344,7 @@
       "types": [
         "創業公司",
         "公司",
-        "社區",
+        "社群",
         "政府",
         "非營利",
         "大學",
@@ -339,7 +363,7 @@
         "活動服務",
         "籌款",
         "政府關係",
-        "健康，保健和健身",
+        "健康、保健和健身",
         "醫院與衛生保健",
         "產業領域",
         "資訊科技及服務",
@@ -364,7 +388,9 @@
       "editAccount": "編輯帳戶信息",
       "updateSuccess": "組織已成功更新",
       "orgNameRequired": "機構名稱為必填項",
-      "global": "全球"
+      "global": "全球",
+      "editOrgAccount": "編輯組織帳戶",
+      "editOrgNotification": "編輯組織通知"
     }
   },
   "auth": {
@@ -391,14 +417,14 @@
   "verifyEmail": {
     "checkInbox": "檢查你的收件箱",
     "forgotPass": "一封電子郵件已發送至{{email}}，其中包含有關如何重設密碼的進一步說明。",
-    "confirm": "我們已經通過電子郵件發送了一個鏈接到{{email}}，單擊鏈接以確認您的帳戶並完成您的個人資料。",
+    "confirm": "我們已經通過電子郵件發送了一個連結到{{email}}，單擊連結以確認您的帳戶並完成您的個人資料。",
     "checkSpam": "如果您幾分鐘後仍看不到郵件，請檢查垃圾郵件，促銷或其他傳入郵件文件夾。"
   },
   "aboutUs": {
     "ourStory": "我們的故事",
     "story": "FightPandemics是Manuel Gonzalez Alzuru的腦力結晶，他在法國感染了COVID-19。回到巴塞羅那後，他發現即使有人願意提供幫助，他也無法獲得幫助。",
-    "ourCommunity": "我們的社區",
-    "community": "我們是由來自世界各地的1100+多名志願者開發師，設計師，科學家，健康專家和產品經理組成的團隊",
+    "ourCommunity": "我們的社群",
+    "community": "我們是由來自世界各地的1100多名志願者開發師、設計師、科學家、健康專家和產品經理組成的團隊。",
     "ourIdea": "我們的想法",
     "ourSupporters": "我們的支持者",
     "followUs": "在社交媒體上關注我們",
@@ -414,14 +440,14 @@
     "connect": "將需要幫助的人與可以提供幫助的人聯繫起來的一個利他主義的平台。",
     "howWork": "這是如何運作的？",
     "helpBoard": "幫助版面",
-    "helpBoardDetail": "個人和組織提供和請求援助的社群平台。",
+    "helpBoardDetail": "個人和機構組織提供和請求援助的社群平台。",
     "localGlobal": "本地和全球",
     "localGlobalDetail": "在我的社群以及世界範圍內提供和請求幫助。",
     "relevantContent": "相關内容",
     "relevantContentDetail": "有效期限可確保版面始終保持最新狀態。",
     "goToHelpBoard": "前往幫助版面",
     "supporters": "支持商",
-    "thanksSupporters": "感謝我們的支持商，沒有他們，我們將無法幫助社區做好準備並應對大流行病。",
+    "thanksSupporters": "感謝我們的支持商，沒有他們，我們將無法幫助社群做好準備並應對大流行病。",
     "becomeSupporter": "若要深入瞭解有關您的企業如何成為支持商，請聯繫我們的合作夥伴的團隊：",
     "becomePartnerEmail": "partnerships@fightpandemics.com",
     "companyLogoInfo": "單擊下列的公司徽標，以前往支持商的網站。",
@@ -434,7 +460,14 @@
     "joinAmbassador": "以大使的身分加入",
     "joinStudentProgram": "加入學生計畫",
     "studentSummerProgram": "學生暑期計畫",
-    "forStudentInAge": "適合14-18歲的學生。"
+    "forStudentInAge": "適合14-18歲的學生。",
+    "press": "新聞",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "前往新聞包",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners"
   },
   "footer": {
     "faq": "常問問題",
@@ -448,13 +481,13 @@
     "title": "關於FightPandemics /常規",
     "offerRequestHelp": "提供和請求幫助",
     "profileAccount": "個人資料和帳戶",
-    "contects": "聯繫信息",
+    "contects": "聯繫",
     "general": [
       [
         "什麼是FandPandemics？",
         "FightPandemics是在COVID-19爆發期間創建的一個平台，旨在成為一個受到大流行影響的人們互相幫助的地方。",
-        "我們的主要任務是在本地和全球範圍內，在大流行危機中聯繫提供和請求幫助的個人和組織。無論您是尋求醫療幫助，口罩，法律幫助，食品雜貨，遛狗的人還是其他日常活動的支持者，都可以在這裡查找：",
-        "我們努力收集高度分散的基本信息，將從事大流行相關問題或項目的個人，社區和組織連接到一個網絡中。我們的願景是通過幫助社區更快，更有效地應對突發衛生事件和人道主義危機，創建一個每個人都對突發事件更具抵抗力的世界。"
+        "我們的主要任務是在本地和全球範圍內，在大流行危機中聯繫提供和請求幫助的個人和機構組織。無論您是尋求醫療幫助、口罩、法律幫助、食品雜貨、遛狗的人或援助其他日常活動，都可以在這裡查找：",
+        "我們努力收集高度分散的基本信息，將從事大流行相關問題或項目的個人，社群和機構組織連接到一個網絡中。我們的願景是通過幫助社群更快，更有效地應對突發衛生事件和人道主義危機，創建一個每個人都對突發事件更具抵抗力的世界。"
       ],
       [
         "誰是PandPandemics？",
@@ -467,15 +500,15 @@
       ],
       [
         "FightPandemics是為誰製作的？",
-        "歡迎任何需要幫助的人加入我們的平台，並與其他個人和組織建立聯繫。"
+        "歡迎任何需要幫助的人加入我們的平台，並與其他個人和機構組織建立聯繫。"
       ],
       [
         "如何在FightPandemics上發布要約或尋求幫助？",
-        "<0>加入社區後，您將擁有在FightPandemics平台上查看和創建貼文及評論的無限權限。</0><1>要以用戶身份加入社區，請單擊\"主功能表\"按鈕，然後選擇“立即加入/登錄”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據加入。</1><2>完成個人資料後，選擇主功能表按鈕，選擇查看我的個人資料，然後單擊加號按鈕以創建您的第一篇貼文。</2>"
+        "<0>加入社群後，您將擁有在FightPandemics平台上查看和創建貼文及留言評論的無限權限。</0><1>要以用戶身份加入社群，請單擊“主功能表”按鈕，然後選擇“立即加入/登入”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據加入。</1><2>一旦完成您的個人資料後，選擇主功能表按鈕，選擇查看我的個人資料，然後單擊加號按鈕，以創建您的第一篇貼文。</2>"
       ],
       [
         "我該如何了解FightPandemics新聞？",
-        "請在社交媒體上關注我們！我們定期發布對<0>Facebook</0>，<1>Twitter</1>，<2>LinkedIn</2>和<3>Instagram</3>定期更新。"
+        "請在社交媒體上關注我們！我們定期發布對<0>Facebook</0>、<1>Twitter</1>、<2>LinkedIn</2>和<3>Instagram</3>定期更新。"
       ],
       [
         "我需要付費才能使用FightPandemics嗎？",
@@ -483,24 +516,24 @@
       ],
       [
         "我可以在FightPandemics上提供/請求什麼樣的幫助？",
-        "歡迎您要求並提供任何類型的幫助，以支持個人和組織在COVID-19大流行期間應對。這是一個列表，其中包含一些您可以提供或請求的幫助類型的示例：",
+        "歡迎您要求並提供任何類型的幫助，以支持個人和機構組織在COVID-19大流行期間應對。這是一個列表，其中包含一些您可以提供或請求的幫助類型的示例：",
         "<0>雜貨</0><1>醫療用品</1><2>法律援助</2><3>技術支援</3><4>資訊</4><5>資助</5><6>事件和活動</6><7>教育</7><8>健康</8><9>研究開發</9>"
       ],
       [
         "我如何尋求幫助？",
-        "從FightPandemics主頁中，選擇“需要幫助”。如果選擇“其他幫助”，則將輸入您的位置，並被定向到一個包含所選區域中的請求幫助內容的頁面。然後，您可以按提供者和類型過濾要查看的貼子。或者，您可以從主頁上選擇“查看社區貼子”以查看所有貼子並應用所需的過濾器。"
+        "從FightPandemics主頁中，選擇“需要幫助”。如果選擇“其他幫助”，則將輸入您的位置，並被定向到一個包含所選區域的請求幫助內容的頁面。然後，您可以按提供者和類型過濾要查看的貼子。或者，您可以從主頁上選擇“查看社群貼子”，以查看所有貼子，並應用所需的過濾器。"
       ],
       [
         "我該如何提供幫助？",
-        "<0>您可以作為個人或組織提供幫助。</0><1>在主頁上，選擇“提供幫助”以查看用戶創建的所有尋求幫助的貼文，並按位置和類型篩選結果。您需要登錄才能與他們聯繫。您還可以創建自己的貼子，描述您能夠提供的幫助。</1>"
+        "<0>您可以作為個人或組織提供幫助。</0><1>在主頁上，選擇“提供幫助”以查看用戶創建的所有尋求幫助的貼文，並按位置和類型篩選結果。您需要登入才能與他們聯繫。您還可以創建自己的貼子，描述您能夠提供的幫助。</1>"
       ],
       [
-        "我是否需要登錄才能查看幫助請求和報價？",
-        "您無需登錄即可查看幫助版面上的任何貼子，但需要登錄後才能發表評論或點贊。"
+        "我是否需要登入才能查看幫助請求和提供？",
+        "您無需登入即可查看幫助版面上的任何貼子，但是需要登入後才能留言或點贊。"
       ],
       [
-        "我需要登錄才能創建/編輯貼文嗎？",
-        "是的，如果您要創建或編輯貼文，則需要創建一個帳戶並登錄。"
+        "我需要登入才能創建/編輯貼文嗎？",
+        "是的，如果您要創建或編輯貼文，則需要創建一個帳戶並登入。"
       ],
       [
         "是否需要以個人身份註冊才能創建組織資料？",
@@ -524,11 +557,11 @@
       ],
       [
         "我所在的區域沒有任何幫助。我該怎麼辦？",
-        "我們的社區一直在增長。歡迎您成為您所在地區的第一個創建貼文並尋求幫助的人。還請查看任何人都可以訪問的服務，而無論他們身在何處。"
+        "我們的社群一直在增長。歡迎您成為您所在地區的第一個創建貼文並尋求幫助的人。還請查看任何人都可以訪問的服務，而無論他們身在何處。"
       ],
       [
         "我在網站上發現了一個錯誤。我該如何舉報？",
-        "請提交反饋，或聯繫<0>support@fightpandemics.com.</0>"
+        "請提交反饋或聯繫<0>support@fightpandemics.com.</0>"
       ],
       [
         "我不再被允許使用FightPandemics - 我該怎麼辦？",
@@ -540,25 +573,25 @@
       ],
       [
         "我可以向我所在的城市或州提供幫助嗎？該貼文顯示多長時間？",
-        "提供/接收幫助的貼文可以是郵政編碼，城市，州或國家/地區級別，持續時間為一天，一周，一個月或永遠。默認情況下，貼文將設置為城市級別一個月。"
+        "提供/接收幫助的貼文可以是郵政編碼，城市，州或國家/地區級別，持續時間為一天，一個星期，一個月或永遠。默認情況下，貼文將設置為城市級別一個月。"
       ],
       [
-        "我的問題未列出。我可以聯繫誰？",
+        "我的問題未被列出。我可以聯繫誰？",
         "對於此處未列出的一般性問題和其他問題，請聯繫<0>contact@fightpandemics.com.</0>"
       ]
     ],
     "accountFAQ": [
       [
         "我該如何加入？",
-        "<0>要以用戶身份加入社區，請單擊\"主功能表\"按鈕，然後選擇“立即加入/登錄”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據。 </0><1>加入社區後，您將擁有無限制的訪問權限，可以在FightPandemics平台上查看和創建貼文和評論。 </1>"
+        "<0>要以用戶身份加入社群，請單擊\"主功能表\"按鈕，然後選擇“立即加入/登錄”選項。在那裡，您將可以選擇電子郵件或社交媒體憑據。 </0><1>加入社群後，您將擁有無限制的訪問權限，可以在FightPandemics平台上查看和創建貼文和留言評論。 </1>"
       ],
       [
         "如何將個人資料更改為組織資料？",
-        "組織資料與您的個人資料相關聯。創建個人資料後，您可以根據需要添加任意數量的組織資料。您的登錄憑據將繼續是您用於個人資料的電子郵件和密碼。"
+        "組織資料與您的個人資料相關聯。創建個人資料後，您可以根據需要添加任意數量的組織資料。您的登入憑據將繼續是您用於個人資料的電子郵件和密碼。"
       ],
       [
         "如何將我的組織資料更改為個人資料？",
-        "您不能將組織資料更改為個人資料。為了創建組織資料，您需要擁有一個個人資料。創建個人資料後，您可以根據自己的意願添加任意數量的組織資料。您的登錄憑據將繼續是您用於個人資料的電子郵件和密碼。"
+        "您不能將組織資料更改為個人資料。為了創建組織資料，您需要擁有一個個人資料。創建個人資料後，您可以根據自己的意願添加任意數量的組織資料。您的登入憑據將繼續是您用於個人資料的電子郵件和密碼。"
       ],
       [
         "如何重設我的密碼？",
@@ -566,7 +599,7 @@
       ],
       [
         "為什麼我的密碼無效?",
-        "請檢查您的密碼是否至少包含8個字母。如果您已經有一個帳戶但忘記了登錄密碼，請從主頁上單擊“登錄”，然後轉到“忘記密碼”。"
+        "請檢查您的密碼是否至少包含8個字母。如果您已經有一個帳戶，但是忘記了登入密碼，請從主頁上單擊“登入”，然後前往“忘記密碼”。"
       ],
       [
         "我註冊了，但沒有收到確認電子郵件。那該怎麼辦？",
@@ -581,11 +614,11 @@
       ],
       [
         "如何更新我的個人資料信息？",
-        "從右上角的主功能表中，選擇“我的個人資料”，然後單擊個人資料頂部的筆圖標。您將被帶到一個畫面，您可以在其中編輯個人資料信息，並在完成後選擇“保存更改”。"
+        "從右上角的主功能表中，選擇“我的個人資料”，然後單擊個人資料頂部的筆圖標。您將被帶往到一個可以編輯您的個人資料信息的畫面，並在您完成後選擇“保存更改”。"
       ],
       [
         "如何舉報不正確或令人反感的貼文？",
-        "如果發現貼文不正確或違反《 FightPandemics行為準則》，請通過<0> support@fightpandemics.com給我們發送電子郵件</0>"
+        "如果發現貼文不正確或違反《 FightPandemics行為準則》，請傳送電子郵件到<0> support@fightpandemics.com</0>給我們。"
       ]
     ],
     "contectsFAQ": [
@@ -632,27 +665,27 @@
     "whatCookiesContent": "<0>本網站使用“ Cookies”和其他類似機制（以下稱為Cookie）。 Cookies是通過網絡服務器發送到瀏覽器的文件，用於記錄用戶在特定網站或該網站上所有網站，應用程序和/或服務上的活動。 Cookies的首要目的是為用戶提供對所提供服務的更快，更個性化的訪問。 Cookies僅與匿名用戶及其計算機關聯，並且不提供允許推斷用戶個人數據的參考。</0><1>用戶可以配置他/她的瀏覽器以通知和拒絕安裝本網站發送的Cookies，而不會影響用戶訪問內容的能力。但是，我們注意到，無論如何，網站的性能可能會下降。該網站利用Web Bug，它們是在電子郵件中插入的微小透明圖像。當用戶打開網站的新聞通訊時，該圖像將與其餘電子郵件內容一起下載，並允許知道是否已打開特定電子郵件以及從中下載的IP地址。 FightPandemics使用此信息來獲取統計信息，並對用戶接收其電子郵件進行分析研究。</1>",
     "typeCookies": "Cookie的類型，用途和功能",
     "typeCookiesBegin": "Cookies取決於其持久性，可以分為會話Cookies或永久Cookies。當用戶關閉瀏覽器時，第一個過期。第二個過期取決於完成它們所服務的目標的時間或何時將它們手動刪除。另外，根據您的目標，本網站使用的Cookies可以分類如下：",
-    "typeCookiesContent": "<0>技術cookie：這些cookie允許用戶瀏覽網頁，平台或應用程序，並使用其中存在的不同選項或服務，例如控制流量和數據通信，識別會話，訪問受限訪問零件，記住組成訂單的元素，進行訂單的購買過程，進行註冊或參加活動的請求，在導航過程中使用安全元素，存儲用於傳播視頻或聲音的內容或通過社交網絡共享內容。</0><1>分析cookie：由我們或第三方處理的cookie，它們可以量化用戶數量，從而對所提供服務的用戶使用情況進行度量和統計分析。為此，將分析您在我們網站上的瀏覽，以改善我們提供的產品或服務的提供。</1><2>廣告cookie：由我們或第三方處理的cookie，使我們能夠以最有效的方式管理網站上廣告空間的提供，以適應廣告的內容所請求服務的內容或您在我們網站上進行的使用。為此，我們可以分析您在Internet上的瀏覽習慣，並且可以向您顯示與您的瀏覽配置文件相關的廣告。</2><3>行為廣告Cookie：這些行為允許以最有效的方式管理廣告空間，在適當的情況下，編輯者已將其包含在網頁，應用程序或平台中，從該廣告空間提供所請求的廣告服務。這些cookie存儲有關用戶行為的信息，這些信息是通過持續觀察他們的瀏覽習慣而獲得的，從而允許開發特定的配置文件以基於其顯示廣告。</3>",
+    "typeCookiesContent": "<0>技術cookie：這些cookie允許用戶瀏覽網頁，平台或應用程序，並使用其中存在的不同選項或服務，例如控制流量和數據通信、識別會話、訪問受限訪問零件、記住組成訂單的元素、進行訂單的購買過程、進行註冊或參加活動的請求、在導航過程中使用安全元素、存儲用於傳播視頻或聲音的內容或者通過社交網絡共享內容。</0><1>分析cookie：由我們或第三方處理的cookie，它們可以量化用戶數量，從而對所提供服務的用戶使用情況進行度量和統計分析。為此，將分析您在我們網站上的瀏覽，以改善我們提供的產品或服務的提供。</1><2>廣告cookie：由我們或第三方處理的cookie，使我們能夠以最有效的方式管理網站上廣告空間的提供，以適應廣告的內容所請求服務的內容或您在我們網站上進行的使用。為此，我們可以分析您在Internet上的瀏覽習慣，並且可以向您顯示與您的瀏覽配置文件相關的廣告。</2><3>行為廣告Cookie：這些行為允許以最有效的方式管理廣告空間，在適當的情況下，編輯者已將其包含在網頁，應用程序或平台中，從該廣告空間提供所請求的廣告服務。這些cookie存儲有關用戶行為的信息，這些信息是通過持續觀察他們的瀏覽習慣而獲得的，從而允許開發特定的配置文件以基於其顯示廣告。</3>",
     "typeCookiesEnd": "本網站可能使用第三方服務，可能需要在用戶身上或代表FightPandemics安裝Cookies，並會出於統計目的收集用戶使用本網站以及提供與本網站相關的其他服務的信息，活動和其他互聯網服務。",
     "disableCookies": "如何在主要瀏覽器中禁用Cookie和Web錯誤？",
     "disableCookiesContent": "通常可以停止接受瀏覽器cookie或停止接受來自特定服務的cookie。所有現代的瀏覽器都允許您更改Cookies的配置。這些設置通常在瀏覽器主功能表的“Options”或“Preferences”中找到。您還可以配置瀏覽器或電子郵件管理器，以及安裝免費的附件，以防止在打開電子郵件時下載Web Bug。根據您的Internet瀏覽器使用以下說明來更改Cookie偏好設置：",
     "updateCookies": "更新Cookie政策",
-    "updateCookiesContent": "FightPandemics可能會根據法律，法規要求或為了使該政策適應西班牙數據保護局發布的指示而修改本Cookies政策，因此建議用戶定期訪問此頁面以了解其中的更改。當此Cookies政策發生重大變化時，將通過網絡或通過電子郵件將用戶通知給在新聞通訊服務中註冊的用戶。",
-    "cookieAlert": "本網站使用cookie來提供我們的服務並向您顯示相關信息。通過使用我們的網站，您承認您已閱讀並理解我們的<0>Cookies政策</0>，<1>隱私政策</1>和我們的<2>條款和條件</2>。您對FightPandemics產品的使用受這些政策和條款的約束。"
+    "updateCookiesContent": "FightPandemics可能會根據法律、法規要求或為了使該政策適應西班牙數據保護局發布的指示而修改本Cookies政策，因此建議用戶定期訪問此頁面以了解其中的更改。當此Cookies政策發生重大變化時，將通過網絡或通過電子郵件將用戶通知給在新聞通訊服務中註冊的用戶。",
+    "cookieAlert": "本網站使用cookie來提供我們的服務並向您顯示相關信息。通過使用我們的網站，您承認您已閱讀並理解我們的<0>Cookies政策</0>、<1>隱私政策</1>和我們的<2>條款和條件</2>。您對FightPandemics產品的使用受這些政策和條款的約束。"
   },
   "comment": {
-    "writeAComment": "寫個評論...",
-    "onlyAuthenticated": "只有登錄的用戶可以發表評論。",
+    "writeAComment": "寫個留言...",
+    "onlyAuthenticated": "只有登入的用戶可以留言。",
     "loading": "載入中...",
-    "showMore": "顯示更多評論",
-    "comment": "評論",
-    "comment_plural": "評論",
-    "commentWithCount": "{{count}}評論",
-    "commentWithCount_plural": "{{count}}評論",
+    "showMore": "顯示更多留言評論",
+    "comment": "留言",
+    "comment_plural": "留言評論",
+    "commentWithCount": "{{count}}留言",
+    "commentWithCount_plural": "{{count}}留言評論",
     "edit": "編輯",
     "delete": "刪除",
     "save": "保存",
-    "showLess": "顯示更少留言"
+    "showLess": "顯示更少留言評論"
   },
   "medical": {
     "localNumber": "您當地的緊急電話號碼",
@@ -751,7 +784,7 @@
     "feedbackAlreadySubmitted": "反饋已提交",
     "emailIssue": "電子郵件已被使用或無法驗證",
     "emailUnverified": "電子郵件未驗證",
-    "maxSignInAttemptsExceeded": "超過最高登錄嘗試次數。",
+    "maxSignInAttemptsExceeded": "超過最高登入嘗試次數。",
     "failedSubmittingFeedback": "提交反饋失敗，原因：",
     "failedCreatingUser": "創建用戶失敗，原因：",
     "failedLoadingProfile": "加載個人資料失敗，原因：",
@@ -819,7 +852,7 @@
   "TEMP: Please consult your healthcare provider for medical advice": "請諮詢您的醫療保健提供者以尋求醫療建議",
   "TEMP: I Understand": "我理解",
   "TEMP: COVID-19 Screening Tool": "COVID-19检测工具",
-  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "我們将問您一些關于您的症状，出行和與接触他人的问题",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "我們将問您一些關于您的症状、出行和與接触他人的问题",
   "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "您的回答不會被儲存或共享。這只是幫助世界的工具。",
   "TEMP: For Myself": "爲自己",
   "TEMP: For Someone Else": "為別人",
@@ -843,7 +876,7 @@
   "TEMP: I live in a long-term care facility": "我住在長期護理機構",
   "TEMP: No, they don’t live in a long-term care facility": "不，他們不住在長期護理機構中",
   "TEMP: They live in a long-term care facility": "他們住在長期護理機構",
-  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "這包括醫院，急診室，其它醫療場所，還有長期護理設施。請選擇所有適用的情况。",
+  "TEMP: This includes a hospital, emergency room, other medical setting, or long-term care facility. Select all that apply.": "這包括醫院、急診室、其它醫療場所或長期護理設施。請選擇所有適用的情况。",
   "TEMP: No, I don’t work or plan to work in a care facility": "不，我没有也不計劃在醫療機構工作",
   "TEMP: No, they don’t work or plan to work in a care facility": "不，他們没有或不計劃在醫療機構工作",
   "TEMP: Do any of these apply to you?": "以下情形是否適用於您？",
@@ -862,114 +895,137 @@
   },
   "dates": {
     "monthsShort": {
-      "january": "Jan",
-      "february": "Feb",
-      "march": "Mar",
-      "april": "Apr",
-      "may": "May",
-      "june": "Jun",
-      "july": "Jul",
-      "august": "Aug",
-      "september": "Sep",
-      "october": "Oct",
-      "november": "Nov",
-      "december": "Dec"
+      "january": "一月",
+      "february": "二月",
+      "march": "三月",
+      "april": "四月",
+      "may": "五月",
+      "june": "六月",
+      "july": "七月",
+      "august": "八月",
+      "september": "九月",
+      "october": "十月",
+      "november": "十一月",
+      "december": "十二月"
     },
     "weekdaysShort": {
-      "sunday": "Sun",
-      "monday": "Mon",
-      "tuesday": "Tue",
-      "wednesday": "Wed",
-      "thursday": "Thu",
-      "friday": "Fri",
-      "saturday": "Sat"
+      "sunday": "週日",
+      "monday": "週一",
+      "tuesday": "週二",
+      "wednesday": "週三",
+      "thursday": "週四",
+      "friday": "週五",
+      "saturday": "週六"
     }
   },
   "messaging": {
-    "header": "Messages",
-    "requests": "Message Requests",
+    "header": "訊息",
+    "requests": "訊息要求",
     "settings": {
-      "header": "Messages Settings",
+      "header": "訊息設定",
       "blocked": "被封鎖的帳户",
-      "archived": "Archived Conversations",
+      "archived": "被封存的對話",
       "unblock": "解除封鎖",
-      "unarchive": "Unarchive",
-      "archiveEmpty": "You don't have any archived conversations.",
+      "unarchive": "取消封存",
+      "archiveEmpty": "您沒有任何被封存的對話。",
       "blockedEmpty": "您尚未封鎖任何帳戶。"
     },
     "emptyInbox": {
       "header": "您沒有任何訊息",
       "p1": "您尚未收到任何訊息。",
-      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "p2": "返回幫助版面，以查找提供或請求並回覆。",
       "goToHB": "前往幫助版面"
     },
     "selectRoom": {
       "header": "選擇任何訊息以讀取",
       "p1": "您選擇後，訊息要求的內容將顯示在此處",
-      "p2": "a conversation from the inbox."
+      "p2": "收件箱中的對話。"
     },
     "selectRequest": {
       "header": "選擇任何訊息要求以讀取",
       "p1": "訊息要求的內容將顯示在此處",
-      "p2": "once you select one from the message requests inbox."
+      "p2": "一旦您從訊息要求收件箱中選擇一個。"
     },
-    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
-    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
-    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
-    "deleteMessageQuestion": "Delete the message?",
+    "didBlock": "您已封鎖{{username}}。解除封鎖,以再向他們發送訊息。",
+    "wasBlocked": "您已被{{username}}封鎖。您無法再向他們發送訊息。",
+    "acceptPropmt": "您要接受訊息要求嗎？等到接受要求後，您才能回覆。",
+    "deleteMessageQuestion": "刪除訊息?",
     "deleteMessageText": "所選的訊息將從您和收件人彼此的裝置中永久刪除。您確定要刪除？",
-    "blockQuestion": "Block the conversation from {{username}}?",
-    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
-    "archiveQuestion": "Archive the conversation?",
-    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
-    "sendSuccessHeader": "您的訊息已經成功送達。",
-    "sendSuccessText": "您向{{username}}發送有关《{{title}}》的訊息已經成功送達。",
+    "blockQuestion": "封鎖 {{username}} 的對話？",
+    "blockText": "選擇“封鎖”，籍此， {{username}}將無法向您發送訊息或訊息要求。您可以前往訊息設定，以管理被封鎖的帳戶。",
+    "archiveQuestion": "封存對話?",
+    "archiveText": "如果您想再次讀取對話，則必須前往“訊息設定”將其還原。",
+    "sendSuccessHeader": "您的訊息已成功送達。",
+    "sendSuccessText": "您向{{username}}發送有关《{{title}}》的訊息已經成功送出。",
     "sendSuccessTextNoPost": "您向{{username}}發送的訊息已送達。",
-    "sendFailedHeader": "Oops, something went wrong",
-    "sendFailedText": "您向{{username}}發送有关《{{title}}》的訊息未送達。",
-    "sendFailedTextNoPost": "您向{{username}}發送的訊息未送達。",
+    "sendFailedHeader": "哎呀，出问题了",
+    "sendFailedText": "您向{{username}}發送有关《{{title}}》的訊息未送出。",
+    "sendFailedTextNoPost": "您向{{username}}發送的訊息未送出。",
     "ignoreDialogTitle": "略過 {{username}} 的訊息要求？",
     "ignoreDialogMessage": "訊息要求將從您的裝置中刪除。您確定是否要略過嗎？",
     "blockDialogTitle": "封鎖 {{username}} 的對話？",
-    "blockDialogMessage": "通過選擇“封鎖”, {{username}}將無法向您發送訊息或訊息要求。您可以前往到訊息設定來管理被封鎖的帳戶。",
-    "block": "Block",
-    "archive": "Archive",
-    "accept": "Accept",
-    "ignore": "Ignore",
+    "blockDialogMessage": "通過選擇“封鎖”， {{username}}將無法向您發送訊息或訊息要求。您可以前往到訊息設定來管理被封鎖的帳戶。",
+    "block": "封鎖",
+    "archive": "封存",
+    "accept": "接受",
+    "ignore": "略過",
     "delete": "刪除",
     "cancel": "取消",
     "edit": "編輯",
-    "edited": "Edited",
-    "saveEdit": "Save changes",
-    "didDelete": "You deleted this message.",
-    "wasDeleted": "This message was deleted.",
-    "loadMore": "Load More...",
-    "justNow": "Just now",
-    "lastSeen": "Last seen",
-    "never": "Never",
-    "activeNow": "Active Now",
-    "message": "Message",
-    "sendMessage": "Send a message",
-    "typeMessage": "Type a message...",
-    "viewMessage": "View message",
-    "to": "To",
-    "send": "Send",
+    "edited": "已編輯",
+    "saveEdit": "保存更改",
+    "didDelete": "您已删除此訊息。",
+    "wasDeleted": "此訊息已被删除。",
+    "loadMore": "加載更多...",
+    "justNow": "剛才",
+    "lastSeen": "最後上線",
+    "never": "從未",
+    "activeNow": "目前在線上",
+    "message": "訊息",
+    "sendMessage": "發送訊息",
+    "typeMessage": "輸入訊息...",
+    "viewMessage": "查看訊息",
+    "to": "至",
+    "send": "發送",
     "done": "完成",
-    "close": "Close"
+    "close": "關閉"
   },
   "message": {
-    "message": "Message",
-    "message_plural": "Messages"
+    "message": "訊息",
+    "message_plural": "訊息"
   },
   "notifications": {
     "unsubscribe": {
-      "unsubscribe": "Unsubscribe",
+      "unsubscribe": "取消訂閱",
       "canceled": "未對您的通知偏好進行任何變動",
       "success": "您的通知偏好已更新"
     },
     "header": "通知",
     "liked": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 按讚",
     "commented": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 留言",
-    "shared": "<0>{{username}}</0>在 <1>{{shareMedium}}</1> 共享您的貼文 <1>{{postTitle}}</1>"
+    "shared": "<0>{{username}}</0>在 <1>{{shareMedium}}</1> 共享您的貼文 <1>{{postTitle}}</1>",
+    "empty": "沒有更多通知"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "取消",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "其它",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText, createSearchRegex } = require("../utils");
+const {
+  setElapsedTimeText,
+  createSearchRegex,
+  translateISOtoRelativeTime,
+} = require("../utils");
 
 const {
   createCommentSchema,
@@ -135,6 +139,11 @@ async function routes(app) {
         });
       }
 
+      // remove posts the user have reported
+      if (actor) {
+        filters.push({ "reportedBy.id": { $ne: actor._id } });
+      }
+
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
@@ -220,10 +229,14 @@ async function routes(app) {
                 "$likes",
               ],
             },
+            isEdited: true,
             likesCount: {
               $size: { $ifNull: ["$likes", []] },
             },
             objective: true,
+            reportsCount: {
+              $size: { $ifNull: ["$reportedBy", []] },
+            },
             title: true,
             types: true,
             visibility: true,
@@ -259,10 +272,10 @@ async function routes(app) {
       const [postsErr, posts] = await app.to(
         Post.aggregate(aggregationPipelineResults).then((posts) => {
           posts.forEach((post) => {
-            post.elapsedTimeText = setElapsedTimeText(
-              post.createdAt,
-              post.updatedAt,
-            );
+            post.elapsedTimeText = {
+              created: translateISOtoRelativeTime(post.createdAt),
+              isEdited: post.isEdited, // keep frontend format
+            };
           });
           return posts;
         }),
@@ -361,6 +374,16 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
+      if (actor) {
+        // user shouldn't see reported posts on post page
+        const didReport = post.reportedBy
+          ? post.reportedBy.find(
+              (r) => r.id.toString() === actor._id.toString(),
+            )
+          : false;
+        if (didReport) throw app.httpErrors.notFound();
+      }
+
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
       // parameters is important to hit the right database index.
@@ -383,14 +406,16 @@ async function routes(app) {
           mongoose.Types.ObjectId(actor ? actor._id : null),
         ),
         likesCount: post.likes.length,
-        elapsedTimeText: setElapsedTimeText(
-          post.createdAt,
-          post.updatedAt,
-        )
+        elapsedTimeText: {
+          created: translateISOtoRelativeTime(post.createdAt),
+          isEdited: post.isEdited, // keep frontend format
+        },
+        reportsCount: (post.reportedBy || []).length,
+        commentsCount: commentQuery || 0,
       };
+      delete projectedPost.reportedBy;
 
       return {
-        numComments: commentQuery || 0,
         post: projectedPost,
       };
     },
@@ -464,6 +489,7 @@ async function routes(app) {
       } else {
         body.expireAt = null;
       }
+      body.isEdited = true; // set edited true when update
 
       const [updateErr, updatedPost] = await app.to(
         Object.assign(post, body).save(),

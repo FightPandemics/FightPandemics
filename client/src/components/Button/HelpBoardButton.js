@@ -7,7 +7,7 @@ const { display } = theme.typography.font.family;
 const HelpBoardButton = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
-  width: 22.7rem;
+  width: 25.5rem;
   height: 5.4rem;
   border-radius: 4.6rem;
   border: solid 0 ${black};

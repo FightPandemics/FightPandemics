@@ -13,15 +13,15 @@
     "addOrg": "添加组织",
     "logout": "登出",
     "organisations": "组织机构",
-    "language": "Language",
-    "switchAccount": "Switch Account",
-    "myOrganisation": "My Organizations",
-    "willRefresh": "The current page will refresh.",
-    "stayOnPageHeader": "Stay on the current page?",
-    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
-    "yes": "Yes",
-    "no": "No",
-    "ok": "OK"
+    "language": "语言",
+    "switchAccount": "切换帐户",
+    "myOrganisation": "我的组织",
+    "willRefresh": "当前页面将刷新。",
+    "stayOnPageHeader": "留在当前页面？",
+    "stayOnPageContent": "如果选择“否”，您将被重定向到帮助面板。",
+    "yes": "是",
+    "no": "不好",
+    "ok": "好的"
   },
   "onboarding": {
     "common": {
@@ -86,14 +86,20 @@
         "杂货/食品",
         "商业",
         "教育",
-        "法律",
+        "房屋",
+        "法律服务",
         "身心健康",
         "娱乐",
         "信息",
         "投资",
         "研发",
         "科技",
-        "其他"
+        "其他",
+        "照看幼儿",
+        "翻译",
+        "志愿者",
+        "员工（有薪）",
+        "远程工作"
       ],
       "labels": {
         "location": "位置",
@@ -124,7 +130,13 @@
         "Funding": "投资",
         "R&D": "研发",
         "Tech": "科技",
-        "Other": "其他"
+        "Other": "其他",
+        "Housing": "房屋",
+        "Childcare": "照看幼儿",
+        "Translations": "翻译",
+        "Volunteer": "志愿者",
+        "Staff (paid)": "员工（有薪）",
+        "Remote Work": "远程工作"
       },
       "lookingForOptions": {
         "Request Help": "寻求帮助",
@@ -207,11 +219,19 @@
     "expire": "您查询的帖子已过期。请查看我们的帮助版面以获取更多此类帖子。",
     "noActivity": "未找到活动",
     "share": "分享",
-    "delete": "删除",
+    "delete": "删除帖子",
     "cancel": "取消",
     "confirm": "确认",
     "edited": "已编辑",
-    "share_plural": "分享"
+    "share_plural": "分享",
+    "deletePostConfirmationTitle": "确认要删除帖子么",
+    "deleteCommentConfirmationTitle": "确认要删除评论么",
+    "deleteConfirmation": "删除",
+    "edit": "编辑帖子",
+    "hideAction": "隐藏帖子",
+    "hideCaption": "与我无关",
+    "reportAction": "举报帖子",
+    "reportCaption": "供版主审核"
   },
   "profile": {
     "common": {
@@ -256,14 +276,17 @@
       "emailInvalid": "电子邮件地址无效",
       "emailDomainInvalid": "电子邮件域无效",
       "sendMessage": "发送消息",
-      "securityInfo": "Security Information",
-      "changePassword": "Change Password",
+      "securityInfo": "安全设置",
+      "changePassword": "更改密码",
       "notificationInfo": "通知选项",
       "emailNotification": "电子邮件通知",
       "instant": "即时",
       "daily": "每天",
       "weekly": "每周",
-      "biweekly": "每两周"
+      "biweekly": "每两周",
+      "digest": "汇总",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "电子邮件",
@@ -285,23 +308,24 @@
       "myActivity": "我的活动记录",
       "userActivity": "用户活动记录",
       "wantHelp": "我想帮忙",
-      "needHelp": "需要帮助",
+      "needHelp": "我需要帮助",
       "firstNameRequired": "名字是必填项。",
       "lastNameRequired": "姓氏是必填项。",
-      "newPassword": "New Password",
-      "currentPassword": "Current Password",
-      "confirmNewPassword": "Confirm Password",
-      "currentPasswordRequired": "Current password is required",
-      "newPasswordRequired": "New password is required",
-      "confirmNewPasswordRequired": "Please confirm your password!",
-      "passwordMatch": "The two passwords that you entered do not match!",
-      "passwordUpdateSuccess": "Password change successful",
-      "passwordUpdateError": "Password change unsuccessful",
-      "enterCurrentPassword": "Enter current password",
-      "enterNewPassword": "Enter new password",
-      "updatingPassword": "Updating Password",
-      "editSecurity": "Edit Security",
-      "editNotification": "编辑通知选项"
+      "newPassword": "新密码",
+      "currentPassword": "当前密码",
+      "confirmNewPassword": "确认密码",
+      "currentPasswordRequired": "需要当前密码",
+      "newPasswordRequired": "需要新密码",
+      "confirmNewPasswordRequired": "请确认您的密码！",
+      "passwordMatch": "您输入的两个密码不匹配！",
+      "passwordUpdateSuccess": "密码修改成功",
+      "passwordUpdateError": "密码更改失败",
+      "enterCurrentPassword": "输入当前密码",
+      "enterNewPassword": "输入新密码",
+      "updatingPassword": "更新密码",
+      "editSecurity": "编辑安全性",
+      "editNotification": "编辑通知选项",
+      "editAccount": "编辑帐户"
     },
     "org": {
       "title": "创建组织资料",
@@ -364,7 +388,9 @@
       "editAccount": "编辑帐户信息",
       "updateSuccess": "组织已成功更新",
       "orgNameRequired": "机构名称为必填项",
-      "global": "全球"
+      "global": "全球",
+      "editOrgAccount": "编辑组织帐户",
+      "editOrgNotification": "编辑组织通知"
     }
   },
   "auth": {
@@ -386,7 +412,7 @@
     "passwordMin": "密码必须至少为{{num}}字符。",
     "passwordConfirmationRequired": "需要密码确认。",
     "passwordNotMatch": "密码不匹配",
-    "backHome": "Back to Home Screen"
+    "backHome": "返回主页面"
   },
   "verifyEmail": {
     "checkInbox": "检查你的收件箱",
@@ -396,9 +422,9 @@
   },
   "aboutUs": {
     "ourStory": "我们的故事",
-    "story": "FightPandemics是Manuel Gonzalez Alzuru的创意，他在法国感染了COVID-19。回到巴塞罗那后，他发现即使有人愿意提供帮助，他也无法获得帮助。 Telegram和WhatsApp团体在Manuel附近进行自我组织，但由于不认识参与人员，他无法向他们寻求帮助。受到众多人的启发，Manuel在启动该项目时怀着一个使命：确保其他人可以及时联系。",
+    "story": "FightPandemics是Manuel Gonzalez Alzuru的创意，他在法国感染了COVID-19。回到巴塞罗那后，他发现即使有人愿意提供帮助，他也无法获得帮助。",
     "ourCommunity": "我们的社区",
-    "community": "我们由来自全球的 1200 多名志愿者开发人员、设计师、科学家、健康专家和产品经理组成",
+    "community": "我们由来自全球的 1100 多名志愿者开发人员、设计师、科学家、健康专家和产品经理组成",
     "ourIdea": "我们的想法",
     "ourSupporters": "我们的支持商",
     "followUs": "在社交媒体上关注我们",
@@ -434,7 +460,14 @@
     "joinAmbassador": "作为传播大使加入",
     "joinStudentProgram": "加入学生项目",
     "studentSummerProgram": "学生暑期项目",
-    "forStudentInAge": "适用于14-18岁的学生。"
+    "forStudentInAge": "适用于14-18岁的学生。",
+    "press": "新闻发布",
+    "pressInfo": "如果您是媒体成员，请通过以下方式联系我们：",
+    "pressKitLink": "转到新闻工具包",
+    "communityPartners": "社区合作伙伴",
+    "communityCollaboration": "我们希望通过我们的平台增强世界各地的社区和组织的能力，为了做到这一点，我们需要共同努力！与社区合作伙伴的持续协作使我们能够为他们和其他人构建更好的平台。",
+    "becomeCommunityPartner": "您希望你的社区也成为我们的合作伙伴吗？我们非常希望听到您的声音，并开始合作！请联系",
+    "currentPartners": "现在的社区合作伙伴"
   },
   "footer": {
     "faq": "常问问题",
@@ -812,7 +845,7 @@
       "imageDimensionTooWide": "抱歉，图像太宽。请使用宽度小于高度两倍的图像重试。",
       "networkError": "抱歉，发生了一些网络错误。"
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "当前密码错误"
   },
   "TEMP: We are not a provider of healthcare services": "我们不是医疗服务提供商",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "这项服务是本着诚意为那些在此次空前的卫生危机下无法获得帮助和资源的人提供的。",
@@ -862,54 +895,54 @@
   },
   "dates": {
     "monthsShort": {
-      "january": "Jan",
-      "february": "Feb",
-      "march": "Mar",
-      "april": "Apr",
-      "may": "May",
-      "june": "Jun",
-      "july": "Jul",
-      "august": "Aug",
-      "september": "Sep",
-      "october": "Oct",
-      "november": "Nov",
-      "december": "Dec"
+      "january": "一月",
+      "february": "二月",
+      "march": "三月",
+      "april": "四月",
+      "may": "五月",
+      "june": "六月",
+      "july": "七月",
+      "august": "八月",
+      "september": "九月",
+      "october": "十月",
+      "november": "十一月",
+      "december": "十二月"
     },
     "weekdaysShort": {
-      "sunday": "Sun",
-      "monday": "Mon",
-      "tuesday": "Tue",
-      "wednesday": "Wed",
-      "thursday": "Thu",
-      "friday": "Fri",
-      "saturday": "Sat"
+      "sunday": "周日",
+      "monday": "周一",
+      "tuesday": "周二",
+      "wednesday": "周三",
+      "thursday": "周四",
+      "friday": "周五",
+      "saturday": "周六"
     }
   },
   "messaging": {
-    "header": "Messages",
-    "requests": "Message Requests",
+    "header": "消息",
+    "requests": "消息请求",
     "settings": {
-      "header": "Messages Settings",
-      "blocked": "Blocked Accounts",
-      "archived": "Archived Conversations",
-      "unblock": "Unblock",
-      "unarchive": "Unarchive",
-      "archiveEmpty": "You don't have any archived conversations.",
-      "blockedEmpty": "You haven't blocked any accounts."
+      "header": "消息设置",
+      "blocked": "已阻止的帐户",
+      "archived": "存档的对话",
+      "unblock": "解除阻止",
+      "unarchive": "取消存档",
+      "archiveEmpty": "您没有任何存档的对话。",
+      "blockedEmpty": "您尚未屏蔽任何帐户。"
     },
     "emptyInbox": {
-      "header": "You don't have any messages",
-      "p1": "You haven't received any messages yet.",
-      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "header": "您没有任何消息",
+      "p1": "您尚未收到任何消息。",
+      "p2": "返回帮助版面以查找帮助或请求",
       "goToHB": "前往帮助版面"
     },
     "selectRoom": {
-      "header": "Select any message to read",
-      "p1": "The message content would appear here once you select",
-      "p2": "a conversation from the inbox."
+      "header": "选择要阅读的消息",
+      "p1": "要显示消息，请选择",
+      "p2": "任一收件箱中的对话。"
     },
     "selectRequest": {
-      "header": "Select any message request to read",
+      "header": "选择任何消息请求以阅读",
       "p1": "消息请求的内容将显示在此处",
       "p2": "一旦从邮件请求收件箱中选择一个。"
     },
@@ -946,8 +979,8 @@
     "loadMore": "加载更多...",
     "justNow": "现在",
     "lastSeen": "上次看到",
-    "never": "从不",
-    "activeNow": "现在激活",
+    "never": "从未",
+    "activeNow": "现在在线",
     "message": "消息",
     "sendMessage": "发送消息",
     "typeMessage": "键入消息...",
@@ -968,8 +1001,31 @@
       "success": "您的通知选项已更新"
     },
     "header": "通知",
-    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
-    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "liked": "<0>{{username}}</0>点赞了您的帖子<1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0>评论了您的帖子<1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0>在<1>{{shareMedium}}</1>上分享了您的帖子<1>{{postTitle}}</1>",
+    "empty": "没有更多通知了"
+  },
+  "moderation": {
+    "report": "举报",
+    "cancel": "取消",
+    "finish": "完成",
+    "reason": "举报原因：",
+    "additionalDetails": "其他详细信息（可选）",
+    "enterDetails": "请在此处输入更多详细信息...",
+    "reportPost": "举报帖子",
+    "reportPostSuccess": "感谢您的举报！该帖子将被提交以供审查。",
+    "reportPostError": "哎呀，出问题了",
+    "reportPostSuccessTitle": "举报已收到",
+    "reportPostErrorTitle": "哎呀！",
+    "spam": "垃圾信息",
+    "inappropriateContent": "不当内容",
+    "violatesTerms": "违反条款",
+    "other": "其他",
+    "postSuspected": "该帖子收到了多个举报，并已保留以供审核",
+    "showAnyway": "仍然显示",
+    "postHidden": "您已选择隐藏此帖子",
+    "unhide": "取消隐藏",
+    "youReported": "您已举报此帖子。它在您的版面将不再可见"
   }
 }

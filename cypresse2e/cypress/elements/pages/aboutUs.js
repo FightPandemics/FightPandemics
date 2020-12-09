@@ -13,12 +13,16 @@ class AboutUs {
   joinStudentProgramLink = "https://apply.workable.com/fightpandemics/j/58B157AAB2/";
   getToHelpBoardButton = "#AU_VHB";
   goToHelpBoardLink = "/feed";
-  lifetimeSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[1]";
-  currentSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[2]";
-  pastSupportersContainerXpath = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[8]/div[3]";
+  getToPressKitButton = "#AU_PR";
+  goToPressKitLink = "https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5";
+  currentCommunityPartner = "#AU_CP";
+  lifetimeSupportersContainer = "#AU_LS";
+  currentSupportersContainer = "#AU_CS";
+  pastSupportersContainer = "#AU_PS";
 
 
-  constructor() {}
+  constructor() {
+  }
 
   getInvolvedButton() {
     return cy.get(this.involvedButton);
@@ -29,8 +33,12 @@ class AboutUs {
     return cy.get(this.involvedCloseButton);
   }
 
-  getSupporterContainer(supporterContainerXpath) {
-    return cy.xpath(supporterContainerXpath);
+  getSupporterContainerXpath(supporterContainer) {
+    return cy.xpath(supporterContainer);
+  }
+
+  getSupporterContainer(supporterContainer) {
+    return cy.get(supporterContainer);
   }
 
 }

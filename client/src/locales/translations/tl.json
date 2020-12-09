@@ -93,7 +93,13 @@
         "Pagpopondo",
         "R&D",
         "Tech",
-        "Iba pa"
+        "Iba pa",
+        "Iba pa",
+        "Childcare",
+        "Translations",
+        "Volunteer",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Lokasyon",
@@ -124,7 +130,13 @@
         "Funding": "Pagpopondo",
         "R&D": "R&D",
         "Tech": "Tech",
-        "Other": "Ang iba pa"
+        "Other": "Ang iba pa",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Volunteer",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Humihiling ng Tulong",
@@ -211,7 +223,15 @@
     "cancel": "Kanselahin",
     "confirm": "Kumpirmahin",
     "edited": "na-edit na.",
-    "share_plural": "Shares"
+    "share_plural": "Mga Pagbabahagi",
+    "deletePostConfirmationTitle": "Tanggalin ang kumpirmasyon sa post",
+    "deleteCommentConfirmationTitle": "Tanggalin ang pagkumpirma ng komento",
+    "deleteConfirmation": "\"Tanggalin\" or \"Delete\"",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -258,12 +278,15 @@
       "sendMessage": "Magpadala ng Mensahe",
       "securityInfo": "Impormasyon sa Seguridad",
       "changePassword": "Palitan ANG password",
-      "notificationInfo": "Notification Preference",
-      "emailNotification": "Email Notification",
+      "notificationInfo": "Kagustuhan sa Abiso",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
-      "daily": "Daily",
-      "weekly": "Weekly",
-      "biweekly": "Biweekly"
+      "daily": "Araw-araw",
+      "weekly": "Lingguhan",
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Email",
@@ -301,7 +324,8 @@
       "enterNewPassword": "Maglagay ng bagong password",
       "updatingPassword": "Ina-update ang Password",
       "editSecurity": "I-edit ang Seguridad",
-      "editNotification": "Edit Notification"
+      "editNotification": "I-edit ang Abiso",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "Lumikha ng Profile sa Organisasyon",
@@ -364,7 +388,9 @@
       "editAccount": "I-edit ang Impormasyon ng Account",
       "updateSuccess": "Matagumpay na na-update ang samahan",
       "orgNameRequired": "Kailangan ang pangalan ng samahan",
-      "global": "\"pang-global\" or \"pandaigdigang\""
+      "global": "\"pang-global\" or \"pandaigdigang\"",
+      "editOrgAccount": "I-edit ang Account ng Organisasyon",
+      "editOrgNotification": "I-edit ang Abiso sa Organisasyon"
     }
   },
   "auth": {
@@ -434,7 +460,14 @@
     "joinAmbassador": "Sumali bilang Ambassador",
     "joinStudentProgram": "Sumali sa Programa ng Mag-aaral",
     "studentSummerProgram": "Student Summer Program",
-    "forStudentInAge": "Para sa mga Mag-aaral edad 14-18."
+    "forStudentInAge": "Para sa mga Mag-aaral edad 14-18.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners"
   },
   "footer": {
     "faq": "FAQ",
@@ -939,13 +972,13 @@
     "delete": "\"Tanggalin\" or \"Delete\"",
     "cancel": "Kanselahin",
     "edit": "I-edit",
-    "edited": "Edited",
-    "saveEdit": "Save changes",
-    "didDelete": "You deleted this message.",
-    "wasDeleted": "This message was deleted.",
+    "edited": "Na-edit",
+    "saveEdit": "I-save ang mga pagbabago",
+    "didDelete": "Tinanggal mo ang mensaheng ito.",
+    "wasDeleted": "Ang mensahe na ito ay tinanggal.",
     "loadMore": "Load More...",
-    "justNow": "Just now",
-    "lastSeen": "Last seen",
+    "justNow": "Ngayon lang",
+    "lastSeen": "Huling nakita",
     "never": "Never",
     "activeNow": "Active Now",
     "message": "Message",
@@ -963,13 +996,36 @@
   },
   "notifications": {
     "unsubscribe": {
-      "unsubscribe": "Unsubscribe",
-      "canceled": "No changes will be made to your notification preferences",
-      "success": "Your notification preference is updated"
+      "unsubscribe": "Mag-unsubscribe",
+      "canceled": "Ang iyong kagustuhan sa notification ay na-update",
+      "success": "Ang iyong kagustuhan sa notification ay na-update"
     },
-    "header": "Notifications",
-    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
-    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "header": "Mga Abiso",
+    "liked": "< 0 > Nagustuhan ng {{username}} < / 0 > iyong post < 1 > {{postTitle}} < / 1 >",
+    "commented": "< 0 > {{username}} < / 0 > nagkomento sa iyong post < 1 > {{postTitle}} < / 1 >",
+    "shared": "< 0 > {{username}} < / 0 > ibinahagi ang iyong post < 1 > {{postTitle}} < / 1 > sa < 1 > {{shareMedium}} < / 1 >",
+    "empty": "Wala nang abiso"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Kanselahin",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Iba pa",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

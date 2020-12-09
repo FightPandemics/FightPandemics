@@ -1,6 +1,7 @@
 import {
   ROYAL_BLUE,
   DARK_GRAY,
+  DARKISH_GRAY,
   DARKER_GRAY,
   MEDIUM_GRAY,
   LIGHT_GRAY,
@@ -23,7 +24,8 @@ const theme = {
   typography: {
     font: {
       family: {
-        display: 'Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+        display:
+          'Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         body: "Work Sans",
         button: "DM Sans",
       },
@@ -64,6 +66,7 @@ const theme = {
     tropicalBlue: TROPICAL_BLUE,
     selago: SELAGO,
     darkGray: DARK_GRAY,
+    darkishGray: DARKISH_GRAY,
     darkerGray: DARKER_GRAY,
     mediumGray: MEDIUM_GRAY,
     lightGray: LIGHT_GRAY,

@@ -68,7 +68,8 @@ const MessageModal = ({
       showModal();
     }
     sessionStorage.removeItem("msgModal");
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showModal = async () => {
     await setVisible(true);
@@ -105,7 +106,22 @@ const MessageModal = ({
             ...postInfo,
           },
         });
+      } else {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "MESSAGE_SENT",
+            sentFrom: gtmPrefix,
+          },
+        });
       }
+      // clear dataLayer
+      TagManager.dataLayer({
+        dataLayer: {
+          event: null,
+          sentFrom: null,
+          postInfo: null,
+        },
+      });
     } else {
       setMsgSent(true);
       setMsgRsp(false);

@@ -86,14 +86,20 @@
         "Artykuły spożywcze/Żywność",
         "Biznes",
         "Edukacja",
+        "Mieszkanie",
         "Kwestie Prawne",
-        "Dobre samopoczucie / psychika",
+        "Dobre samopoczucie/psychika",
         "Rozrywka",
         "Informacja",
         "Finansowanie",
-        "BADANIA I ROZWÓJ",
+        "R&D",
         "Tech",
-        "Inne"
+        "Inne",
+        "Opieka nad dziećmi",
+        "Tłumaczenia",
+        "Być wolontariuszem",
+        "Personel (płatny)",
+        "Praca zdalna"
       ],
       "labels": {
         "location": "Lokalizacja",
@@ -124,7 +130,13 @@
         "Funding": "Finansowanie",
         "R&D": "Badanie i Rozwój",
         "Tech": "Techniczne",
-        "Other": "Inne"
+        "Other": "Inne",
+        "Housing": "Mieszkanie",
+        "Childcare": "Opieka nad dziećmi",
+        "Translations": "Tłumaczenia",
+        "Volunteer": "Być wolontariuszem",
+        "Staff (paid)": "Personel (płatny)",
+        "Remote Work": "Praca zdalna"
       },
       "lookingForOptions": {
         "Request Help": "Potrzebuję pomocy",
@@ -211,7 +223,15 @@
     "cancel": "Anuluj",
     "confirm": "Potwierdź",
     "edited": "edytowany",
-    "share_plural": "Udostępnienia"
+    "share_plural": "Udostępnienia",
+    "deletePostConfirmationTitle": "Potwierdź usunięcie wpisu",
+    "deleteCommentConfirmationTitle": "Potwierdź usunięcie komentarza",
+    "deleteConfirmation": "Usuń",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -259,11 +279,14 @@
       "securityInfo": "Informacje o bezpieczeństwie",
       "changePassword": "Zmień hasło",
       "notificationInfo": "Preferencje powiadomień",
-      "emailNotification": "Powiadomienie email",
+      "emailNotification": "Ustawienia powiadomień email",
       "instant": "Natychmiastowy",
       "daily": "Codziennie",
       "weekly": "Co tydzień",
-      "biweekly": "Co dwa tygodnie"
+      "biweekly": "Co dwa tygodnie",
+      "digest": "Przegląd",
+      "on": "Wł.",
+      "off": "Wył."
     },
     "individual": {
       "email": "E-mail",
@@ -301,7 +324,8 @@
       "enterNewPassword": "Wprowadź nowe hasło",
       "updatingPassword": "Aktualizacja hasła",
       "editSecurity": "Edytuj informacje o bezpieczeństwie",
-      "editNotification": "Edytuj powiadomienia"
+      "editNotification": "Edytuj powiadomienia",
+      "editAccount": "Edytuj konto"
     },
     "org": {
       "title": "Utwórz profil organizacji",
@@ -364,7 +388,9 @@
       "editAccount": "Edytuj informacje o koncie",
       "updateSuccess": "Organizacja została pomyślnie zaktualizowana",
       "orgNameRequired": "Nazwa organizacji jest wymagana",
-      "global": "Globalny"
+      "global": "Globalny",
+      "editOrgAccount": "Edytuj konto organizacji",
+      "editOrgNotification": "Edycja powiadomienia dla organizacji"
     }
   },
   "auth": {
@@ -434,7 +460,14 @@
     "joinAmbassador": "Dołącz jako ambasador",
     "joinStudentProgram": "Dołącz do programu studenckiego",
     "studentSummerProgram": "Letni program studencki",
-    "forStudentInAge": "Dla uczniów w wieku 14-18 lat."
+    "forStudentInAge": "Dla uczniów w wieku 14-18 lat.",
+    "press": "Prasa",
+    "pressInfo": "Jeśli jesteś przedstawicielem prasy, skontaktuj się z nami pod adresem",
+    "pressKitLink": "Przejdź do materiałów prasowych",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners"
   },
   "footer": {
     "faq": "FAQ",
@@ -970,6 +1003,29 @@
     "header": "Powiadomienia",
     "liked": "<0> {{username}} </0 > polubił Twój post <1> {{postTitle}} </1 >",
     "commented": "<0> {{username}} </0> skomentował Twój post <1> {{postTitle}} </1 >",
-    "shared": "<0> {{username}} </0 > udostępnił Twój post <1> {{postTitle}} </1 > w <1> {{shareMedium}} </1>"
+    "shared": "<0> {{username}} </0 > udostępnił Twój post <1> {{postTitle}} </1 > w <1> {{shareMedium}} </1>",
+    "empty": "Nie ma więcej powiadomień"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Anuluj",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Inne",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
