@@ -10,6 +10,17 @@ export const FeedWrapper = styled.div`
   font-family: ${display};
   width: 100%;
   position: relative;
+
+  .activity {
+    ${(props) =>
+      props.isProfile
+        ? `
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        background: #f5f5f9;
+      }
+    `
+        : ""}
+  }
 `;
 
 export const SiderWrapper = styled(Sider)`
@@ -97,9 +108,7 @@ export const LayoutWrapper = styled(Layout)`
 
 export const ContentWrapper = styled(Content)`
   margin: 0 1rem;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    overflow-x: visible !important;
-  }
+  overflow-x: visible !important;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem 37.5rem;
   }
@@ -113,7 +122,7 @@ export const HeaderWrapper = styled.div`
     margin-top: 0;
   }
   button {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     background-color: transparent;
     border: none;

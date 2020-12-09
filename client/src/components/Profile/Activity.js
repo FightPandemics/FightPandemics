@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -9,12 +9,14 @@ import {
 } from "react-virtualized";
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
+import GTM from "constants/gtm-tags";
 
 const cellMeasurerCache = new CellMeasurerCache({
   fixedWidth: true,
   defaultHeight: 380,
 });
 const Activity = ({
+  postDispatch,
   filteredPosts,
   updateComments,
   user,
@@ -23,7 +25,6 @@ const Activity = ({
   handleCancelPostDelete,
   postDelete,
   deleteModalVisibility,
-  handlePostLike,
   loadNextPage,
   isNextPageLoading,
   itemCount,
@@ -33,6 +34,33 @@ const Activity = ({
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const [hiddenPosts, setHiddenPosts] = useState(
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+  );
+
+  const hidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      ); // objects are fast, better than looking for postId in an Array
+      setHiddenPosts({ ...hiddenPosts, [postId]: true });
+    },
+    [hiddenPosts],
+  );
+
+  const unhidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: null }),
+      );
+      setHiddenPosts({ ...hiddenPosts, [postId]: null });
+    },
+    [hiddenPosts],
+  );
+
+
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
@@ -41,16 +69,19 @@ const Activity = ({
       } else if (posts[index]) {
         content = (
           <Post
+            postDispatch={postDispatch}
             currentPost={posts[index][1]}
             updateComments={updateComments}
-            numComments={posts[index][1].commentsCount}
-            handlePostLike={handlePostLike}
             postDelete={postDelete}
             user={user}
             deleteModalVisibility={deleteModalVisibility}
             onChange={handlePostDelete}
             handleCancelPostDelete={handleCancelPostDelete}
             onSelect={handleEditPost}
+            gtmPrefix={GTM.profile.viewProfilePrefix}
+            isHidden={hiddenPosts[posts[index][1]?._id]}
+            onPostHide={hidePost}
+            onPostUnhide={unhidePost}
           />
         );
       }
@@ -75,10 +106,10 @@ const Activity = ({
       handleCancelPostDelete,
       handleEditPost,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
       isItemLoaded,
       postDelete,
+      postDispatch,
       posts,
       updateComments,
       user,

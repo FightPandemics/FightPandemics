@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import backArrow from "assets/icons/back-arrow.svg";
@@ -45,10 +45,58 @@ export const StyledButtonWizard = styled(StepWizard)`
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
   const { t } = useTranslation();
+  const fullPath = (from, pathname) => from.slice(from.indexOf(pathname) - 1);
+  const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
+
+  useEffect(() => {
+    const { state, pathname } = history.location;
+    history.push(pathname, {
+      ...state,
+      keepScroll: true,
+    });
+    window.addEventListener("popstate", onBrowserBack);
+    return () => {
+      window.removeEventListener("popstate", onBrowserBack);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onBrowserBack = (e) => {
+    e.preventDefault();
+    const { state } = history.location;
+    if (!isBrowserBackClicked) {
+      setBrowserBackClicked(true);
+      if (typeof state.from !== "object") {
+        if (state.from.indexOf("feed") > -1) {
+          history.push(fullPath(state.from, "feed"), {
+            ...state,
+            keepScroll: true,
+          });
+        } else {
+          history.goBack();
+        }
+      } else {
+        history.push(FEED);
+      }
+    } else {
+      setBrowserBackClicked(false);
+    }
+  };
 
   const handleClick = () => {
     if (history?.location?.state?.from) {
-      history.goBack();
+      const { state } = history.location;
+      if (typeof state.from !== "object") {
+        if (state.from.indexOf("feed") > -1) {
+          history.push(fullPath(state.from, "feed"), {
+            ...state,
+            keepScroll: true,
+          });
+        } else {
+          history.goBack();
+        }
+      } else {
+        history.push(FEED);
+      }
     } else {
       history.push(FEED);
     }

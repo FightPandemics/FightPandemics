@@ -43,16 +43,16 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-const ABOUT_MAX_LENGTH = 160;
-
-const editProfile = true;
+const ABOUT_MAX_LENGTH = 250;
 
 function EditOrganisationProfile(props) {
   const organisationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: "change",
+  });
   const { t } = useTranslation();
   const { loading, organisation } = orgProfileState;
   const { name, language, about, urls = {} } = organisation || {};
@@ -108,9 +108,9 @@ function EditOrganisationProfile(props) {
       "LinkedIn URL",
       {
         pattern: {
-          value: /^[a-zA-Z0-9_\-/]*$/,
+          value: /^[a-zA-Z0-9\-]*$/,
           message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 _ - /",
+            characters: "A-Z a-z 0-9 -",
           }),
         },
       },
@@ -179,7 +179,7 @@ function EditOrganisationProfile(props) {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, t]);
+  }, [orgProfileDispatch, organisationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderProfilePicture = () => {
     if (organisation) {
@@ -203,9 +203,7 @@ function EditOrganisationProfile(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile
-              ? t("profile.org.editOrgProfile")
-              : t("profile.org.completeOrgProfile")}
+            {t("profile.org.editOrgProfile")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
@@ -213,15 +211,19 @@ function EditOrganisationProfile(props) {
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-account/${organisationId}`}>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-profile/${organisationId}`}
+              isSelected
+            >
+              {t("profile.common.profileInfo")}
+            </CustomLink>
+            <CustomLink
+              to={`/edit-organisation-notifications/${organisationId}`}
+            >
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>

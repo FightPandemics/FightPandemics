@@ -136,23 +136,23 @@ const getUserById = async function (app, userId, options = null) {
 }
 
 const getSocketIdByUserId = (app, userId) => {
-    return new Promise((resolve) => {
-      app.io.of("/").adapter.clients([userId], (err, clients) => {
-        if (err || !clients || !clients.length) return resolve(null);
-        else resolve(clients[0]); // return the entire array, if you want all active devices.
-      });
+  return new Promise((resolve) => {
+    app.io.of("/").adapter.clients([userId], (err, clients) => {
+      if (err || !clients || !clients.length) return resolve(null);
+      else resolve(clients[0]); // return the entire array, if you want all active devices.
     });
-  };
-  
-  const isUserInRoom = (app, threadId, socketId) => {
-    return new Promise((resolve) => {
-      app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
-        if (err) return resolve(false);
-        if (!rooms.includes(threadId)) return resolve(false);
-        return resolve(true);
-      });
+  });
+};
+
+const isUserInRoom = (app, threadId, socketId) => {
+  return new Promise((resolve) => {
+    app.io.of("/").adapter.clientRooms(socketId, (err, rooms) => {
+      if (err) return resolve(false);
+      if (!rooms.includes(threadId)) return resolve(false);
+      return resolve(true);
     });
-  };
+  });
+};
 
 module.exports = {
   bool,

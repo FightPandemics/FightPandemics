@@ -12,7 +12,16 @@
     "profile": "Profile",
     "addOrg": "Add Organization",
     "logout": "Sign Out",
-    "organisations": "Organizations"
+    "organisations": "Organizations",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organizations",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -77,6 +86,7 @@
         "Groceries/Food",
         "Business",
         "Education",
+        "Housing",
         "Legal",
         "Wellbeing/Mental",
         "Entertainment",
@@ -84,7 +94,12 @@
         "Funding",
         "R&D",
         "Tech",
-        "Other"
+        "Other",
+        "Childcare",
+        "Translations",
+        "Volunteer",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Location",
@@ -106,6 +121,12 @@
       "typesOptions": {
         "Medical Supplies": "Medical Supplies",
         "Groceries/Food": "Groceries/Food",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Volunteer",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work",
         "Business": "Business",
         "Education": "Education",
         "Legal": "Legal",
@@ -190,18 +211,27 @@
     "whatNeed": "What do you need?",
     "viewLess": "View Less",
     "viewMore": "View More",
-    "deletePostConfirmation": "Are you sure you want to delete the post?",
-    "deleteCommentConfirmation": "Are you sure you want to delete the comment?",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deletePostConfirmation": "Are you sure you want to delete this post?",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation",
+    "deleteCommentConfirmation": "Are you sure you want to delete this comment?",
     "shareVia": "Share via...",
     "others": "Others",
     "expireTitle": "Ahh... snap!",
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
-    "delete": "Delete",
+    "delete": "Delete post",
+    "deleteConfirmation": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "edited": "edited"
+    "edited": "edited",
+    "share_plural": "Shares",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -245,7 +275,18 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
-      "sendMessage": "Send Message"
+      "sendMessage": "Send Message",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password",
+      "notificationInfo": "Notification Preference",
+      "emailNotification": "Notification Email Settings",
+      "instant": "Instant",
+      "digest": "Digest",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Email",
@@ -261,7 +302,6 @@
       "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
-      "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -269,11 +309,29 @@
       "wantHelp": "I want to help ",
       "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
-      "lastNameRequired": "Last name is required."
+      "lastNameRequired": "Last name is required.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editAccount": "Edit Account",
+      "editProfile": "Edit Profile",
+      "editSecurity": "Edit Security",
+      "editNotification": "Edit Notification"
     },
     "org": {
       "title": "Create Organization Profile",
+      "editOrgAccount": "Edit Organization Account",
       "editOrgProfile": "Edit Organization Profile",
+      "editOrgNotification": "Edit Organization Notification",
       "name": "Organization Name",
       "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
@@ -329,7 +387,6 @@
       "completeOrgProfile": "Complete Organization Profile",
       "about": "About",
       "activity": "Activity",
-      "editAccount": "Edit Account Information",
       "updateSuccess": "Organization successfully updated",
       "orgNameRequired": "Organization name is required",
       "global": "Global"
@@ -353,7 +410,8 @@
     "passwordMax": "Password must be at most {{num}} characters.",
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
-    "passwordNotMatch": "Passwords don't match"
+    "passwordNotMatch": "Passwords don't match",
+    "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -387,6 +445,10 @@
     "relevantContent": "Relevant Content",
     "relevantContentDetail": "Expiration periods ensure the board is always up to date.",
     "goToHelpBoard": "Go to Help Board",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
     "supporters": "Supporters",
     "thanksSupporters": "Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.",
     "becomeSupporter": "To learn more about how your business can become a supporter, please contact our partnerships team at",
@@ -395,7 +457,16 @@
     "lifetimeSupporters": "Lifetime supporters",
     "currentSupporters": "Current supporters",
     "pastSupporters": "Past supporters",
-    "hashtag": "#ForCommunitiesByCommunities"
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "Get Involved",
+    "joinVolunteer": "Join as Volunteer",
+    "joinAmbassador": "Join as Ambassador",
+    "joinStudentProgram": "Join Student Program",
+    "studentSummerProgram": "Student Summer Program",
+    "forStudentInAge": "For Students ages 14-18.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit"
   },
   "footer": {
     "faq": "FAQ",
@@ -409,7 +480,7 @@
     "title": "About FightPandemics / General",
     "offerRequestHelp": "Offering and Requesting Help",
     "profileAccount": "Profile and Account",
-    "contects": "Contects",
+    "contects": "Contacts",
     "general": [
       [
         "What is FightPandemics?",
@@ -527,7 +598,7 @@
       ],
       [
         "Why is my password not valid?",
-        "Please check if your password has at least 8 letters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
+        "Please check if your password has at least 8 characters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
       ],
       [
         "I signed up and I didn't receive the confirmation email. What do I do?",
@@ -772,7 +843,8 @@
       "imageDimensionTooSmall": "Please upload an image that is at least 250 pixels tall and 250 pixels wide.",
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
-    }
+    },
+    "wrongOldPassword": "Wrong current password"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -819,5 +891,140 @@
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.",
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "Go to Help Board"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select",
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "The content of the message request would appear here",
+      "p2": "once you select one from the message requests inbox."
+    },
+    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
+    "deleteMessageQuestion": "Delete the message?",
+    "deleteMessageText": "The selected message will be permanently deleted from both your device and the recipient's device. Are you sure you want to delete?",
+    "blockQuestion": "Block the conversation from {{username}}?",
+    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "archiveQuestion": "Archive the conversation?",
+    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+    "sendSuccessHeader": "Your message was successfully sent",
+    "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
+    "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
+    "sendFailedHeader": "Oops, something went wrong",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not delivered.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not delivered.",
+    "ignoreDialogTitle": "Ignore the message request from {{username}}?",
+    "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
+    "blockDialogTitle": "Block the conversation from {{username}}?",
+    "blockDialogMessage": "By selecting \"Block\", {{username}} won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "block": "Block",
+    "archive": "Archive",
+    "accept": "Accept",
+    "ignore": "Ignore",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "edited": "Edited",
+    "saveEdit": "Save changes",
+    "didDelete": "You deleted this message.",
+    "wasDeleted": "This message was deleted.",
+    "loadMore": "Load More...",
+    "justNow": "Just now",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "activeNow": "Active Now",
+    "message": "Message",
+    "sendMessage": "Send a message",
+    "typeMessage": "Type a message...",
+    "viewMessage": "View message",
+    "to": "To",
+    "send": "Send",
+    "done": "Done",
+    "close": "Close"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Unsubscribe",
+      "canceled": "No changes will be made to your notification preferences",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "empty": "No more notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Cancel",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Other",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

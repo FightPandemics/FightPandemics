@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
   InfiniteLoader,
@@ -26,8 +27,6 @@ const HorizontalRule = styled.hr`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: 0;
     height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(243, 244, 254, 1);
     display: block;
     max-width: 325px;
   }
@@ -35,8 +34,8 @@ const HorizontalRule = styled.hr`
 
 const Posts = ({
   isAuthenticated,
+  postDispatch,
   filteredPosts,
-  handlePostLike,
   handleCancelPostDelete,
   postDelete,
   user,
@@ -49,12 +48,62 @@ const Posts = ({
   isItemLoaded,
   hasNextPage,
   totalPostCount,
+  page,
 }) => {
   const posts = Object.entries(filteredPosts);
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const [hiddenPosts, setHiddenPosts] = useState(
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+  );
+  const scrollIndex = useRef(0);
+  const history = useHistory();
+  const scrollToIndex = () => {
+    if (history?.location?.state) {
+      let { keepScrollIndex, keepScroll } = history.location.state;
+      if (keepScroll) return keepScrollIndex;
+    }
+    return -1;
+  };
+  const hidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      ); // objects are fast, better than looking for postId in an Array
+      setHiddenPosts({ ...hiddenPosts, [postId]: true });
+    },
+    [hiddenPosts],
+  );
+
+  const unhidePost = useCallback(
+    (postId) => {
+      localStorage.setItem(
+        "hiddenPosts",
+        JSON.stringify({ ...hiddenPosts, [postId]: null }),
+      );
+      setHiddenPosts({ ...hiddenPosts, [postId]: null });
+    },
+    [hiddenPosts],
+  );
+
+  const loadMoreItems = isNextPageLoading
+    ? () => {
+        if (history?.location?.state) {
+          const { keepScrollIndex, keepScroll } = history.location.state;
+          if (keepScroll && scrollIndex.current < keepScrollIndex) {
+            scrollIndex.current = keepScrollIndex;
+          } else {
+            history.location.state.keepScrollIndex = scrollIndex.current;
+            history.location.state.keepScroll = false;
+            history.location.state.keepPostsState = undefined;
+            history.location.state.keepPageState = undefined;
+          }
+        }
+      }
+    : loadNextPage;
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
+      scrollIndex.current = index;
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
       } else if (posts[index]) {
@@ -62,16 +111,21 @@ const Posts = ({
           <>
             <Post
               currentPost={posts[index][1]}
+              postDispatch={postDispatch}
               includeProfileLink={true}
-              numComments={posts[index][1].commentsCount}
-              handlePostLike={handlePostLike}
               postDelete={postDelete}
               isAuthenticated={isAuthenticated}
               user={user}
               deleteModalVisibility={deleteModalVisibility}
               handleCancelPostDelete={handleCancelPostDelete}
               onChange={handlePostDelete}
+              keepScrollIndex={scrollIndex.current}
+              keepPageState={page}
+              keepPostsState={filteredPosts}
               highlightWords={highlightWords}
+              isHidden={hiddenPosts[posts[index][1]?._id]}
+              onPostHide={hidePost}
+              onPostUnhide={unhidePost}
             />
             <HorizontalRule />
           </>
@@ -95,15 +149,20 @@ const Posts = ({
     },
     [
       deleteModalVisibility,
+      filteredPosts,
       handleCancelPostDelete,
       handlePostDelete,
-      handlePostLike,
       hasNextPage,
+      hiddenPosts,
+      hidePost,
       highlightWords,
       isAuthenticated,
       isItemLoaded,
+      page,
       postDelete,
+      postDispatch,
       posts,
+      unhidePost,
       user,
     ],
   );
@@ -136,8 +195,9 @@ const Posts = ({
                       rowRenderer={postItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
-                      overscanRowCount={10}
-                      scrollToAlignment={"start"}
+                      overscanRowCount={1}
+                      scrollToAlignment={"center"}
+                      scrollToIndex={scrollToIndex()}
                     />
                   )}
                 </AutoSizer>

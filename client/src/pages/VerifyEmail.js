@@ -50,7 +50,7 @@ const VerifyEmailRightContainer = styled.div`
 
 const VerifyDirectionsContainer = styled.div`
   .directions-header {
-    font-family: Poppins;
+    font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 2.6rem;
     font-weight: bold;
     font-stretch: normal;
@@ -60,7 +60,7 @@ const VerifyDirectionsContainer = styled.div`
   }
 
   .directions-text {
-    font-family: Poppins;
+    font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 1.4rem;
     font-weight: 500;
     font-stretch: normal;

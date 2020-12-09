@@ -9,10 +9,7 @@ import GTM from "constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
-import {
-  AUTH_SUCCESS,
-  FORGOT_PASSWORD_REQUEST_SUCCESS,
-} from "constants/action-types";
+import { SESSION_ACTIONS } from "reducers/session";
 import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
@@ -61,12 +58,12 @@ const StyleSocialIcon = {
 const SectionDiv = styled.div`
   font-size: 1.4rem;
   text-transform: uppercase;
-  color: ${colors.lightGray};
+  color: ${colors.darkishGray};
   &:before,
   &:after {
     display: inline-block;
     content: "";
-    border-top: 0.1rem solid ${colors.lightGray};
+    border-top: 0.1rem solid ${colors.darkishGray};
     width: 7rem;
     margin: 0 0.5rem;
     transform: translateY(-0.3rem);
@@ -91,12 +88,12 @@ const SocialButton = styled(Button)`
 const ButtonText = styled.span`
   font-family: ${typography.font.family.display};
   font-size: 1.4rem;
-  color: ${colors.darkGray};
+  color: ${colors.darkishGray};
 `;
 
 const AuthLink = styled(Link)`
   font-family: ${typography.font.family.display};
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.1rem;
   color: ${colors.royalBlue};
@@ -197,7 +194,7 @@ const VisibilityButton = ({ onClick, type }) => {
   );
 };
 
-const Login = ({ isLoginForm, forgotPassword }) => {
+const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -229,7 +226,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               },
             });
           }
-          dispatch({ type: AUTH_SUCCESS, payload: res.data });
+          dispatch({ type: SESSION_ACTIONS.AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
           const translatedErrorMessage = t([
@@ -259,7 +256,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         },
       });
       dispatch({
-        type: AUTH_SUCCESS,
+        type: SESSION_ACTIONS.AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
     } catch (err) {
@@ -280,7 +277,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     try {
       const res = await axios.post("/api/auth/signup", formData);
       dispatch({
-        type: AUTH_SUCCESS,
+        type: SESSION_ACTIONS.AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
     } catch (err) {
@@ -307,7 +304,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     try {
       await axios.post("/api/auth/change-password", formData);
       dispatch({
-        type: FORGOT_PASSWORD_REQUEST_SUCCESS,
+        type: SESSION_ACTIONS.FORGOT_PASSWORD_REQUEST_SUCCESS,
         payload: { email: formData.email },
       });
     } catch (err) {
@@ -560,7 +557,9 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">{t("auth.back")}</AuthLink>
+                  <AuthLink to={isAuthenticated ? "/" : "/auth/login"}>
+                    {t(isAuthenticated ? "auth.backHome" : "auth.back")}
+                  </AuthLink>
                 </div>
               </BackLinkContainer>
             )}

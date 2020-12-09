@@ -10,6 +10,7 @@ const POST_TYPES = [
   "Entertainment",
   "Funding",
   "Groceries/Food",
+  "Housing",
   "Information",
   "Legal",
   "Medical Supplies",
@@ -17,7 +18,31 @@ const POST_TYPES = [
   "Others",
   "Wellbeing/Mental",
   "Tech",
+  "Childcare",
+  "Translations",
+  "Volunteer",
+  "Staff (paid)",
+  "Remote Work",
 ];
+const POST_STATUS = ["public", "flagged", "removed"];
+const reportSchema = new Schema(
+  {
+    id: {
+      ref: "User",
+      required: true,
+      type: ObjectId,
+    },
+    reason: {
+      required: true,
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
+  },
+  { _id: false },
+);
 
 // -- Schema
 const postSchema = new Schema(
@@ -36,6 +61,7 @@ const postSchema = new Schema(
       playStore: { trim: true, type: String },
       website: { trim: true, type: String },
     },
+    isEdited: { default: false, type: Boolean },
     language: [String],
     likes: {
       // TODO: how to guarantee unique ids?
@@ -49,6 +75,16 @@ const postSchema = new Schema(
       required: true,
       trim: true,
       type: String,
+    },
+    reportedBy: {
+      default: [],
+      type: [reportSchema],
+    },
+    status: {
+      required: true,
+      type: String,
+      enum: POST_STATUS,
+      default: "public",
     },
     title: {
       required: true,
@@ -186,6 +222,11 @@ postSchema.index(
     },
   },
 );
+// report status index
+postSchema.index({ status: 1 });
+
+// reportedBy user id index
+postSchema.index({ "reportedBy.id": 1 });
 
 // -- Model
 const Post = model("Post", postSchema);

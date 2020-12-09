@@ -4,7 +4,7 @@
   "common": {
     "getHelp": "Mohon Bantuan",
     "giveHelp": "Tawar Bantuan",
-    "viewFeed": "Lihat Lembaga bantuan",
+    "viewFeed": "Lihat Papan bantuan",
     "register": "Sertai Sekarang",
     "feedback": "Maklum balas",
     "question": "Soalan",
@@ -12,7 +12,16 @@
     "profile": "Profil",
     "addOrg": "Tambah Pertubuhan",
     "logout": "Log keluar",
-    "organisations": "Pertubuhan"
+    "organisations": "Pertubuhan",
+    "language": "Bahasa",
+    "switchAccount": "Tukar Akaun",
+    "myOrganisation": "Pertubuhan Saya",
+    "willRefresh": "Halaman semasa akan disegarkan semula.",
+    "stayOnPageHeader": "Kekal pada halaman semasa?",
+    "stayOnPageContent": "Jika anda memilih \"Tidak\", anda akan dihalakan ke Papan Bantuan.",
+    "yes": "Ya",
+    "no": "Tidak",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -45,7 +54,7 @@
     }
   },
   "feed": {
-    "title": "Lembaga Bantuan",
+    "title": "Papan Bantuan",
     "all": "Semua siaran",
     "request": "Memohon Bantuan",
     "offer": "Menawarkan bantuan",
@@ -77,6 +86,7 @@
         "Barangan runcit/Makanan",
         "Perniagaan",
         "Pendidikan",
+        "Perumahan",
         "Perundangan",
         "Kesejahteraan/Mental",
         "Hiburan",
@@ -84,7 +94,12 @@
         "Pembiayaan",
         "R&D",
         "Teknikal",
-        "Lain"
+        "Lain",
+        "Penjagaan Kanak-Kanak",
+        "Terjemahan",
+        "Sukarelawan",
+        "Kakitangan (dibayar)",
+        "Kerja Dari Rumah"
       ],
       "labels": {
         "location": "Lokasi",
@@ -115,7 +130,13 @@
         "Funding": "Pembiayaan",
         "R&D": "R&D",
         "Tech": "Teknikal",
-        "Other": "Lain"
+        "Other": "Lain",
+        "Housing": "Perumahan",
+        "Childcare": "Penjagaan Kanak-Kanak",
+        "Translations": "Terjemahan",
+        "Volunteer": "Sukarelawan",
+        "Staff (paid)": "Kakitangan (dibayar)",
+        "Remote Work": "Kerja Dari Rumah"
       },
       "lookingForOptions": {
         "Request Help": "Memohon Bantuan",
@@ -190,18 +211,27 @@
     "whatNeed": "Apakah yang anda perlukan?",
     "viewLess": "Lihat Kurang",
     "viewMore": "Lihat Lagi",
-    "deletePostConfirmation": "Adakah anda pasti mahu memadamkan siaran?",
-    "deleteCommentConfirmation": "Adakah anda pasti mahu memadamkan komen?",
+    "deletePostConfirmation": "Adakah anda pasti mahu memadamkan siaran ini?",
+    "deleteCommentConfirmation": "Adakah anda pasti mahu memadamkan komen ini?",
     "shareVia": "Kongsi melalui...",
     "others": "Lain",
     "expireTitle": "Ohh... tidak!",
-    "expire": "Siaran yang anda cari telah tamat tempoh. Sila semak Lembaga Bantuan kami untuk lebih banyak siaran seperti ini.",
+    "expire": "Siaran yang anda cari telah tamat tempoh. Sila semak Papan Bantuan kami untuk lebih banyak siaran seperti ini.",
     "noActivity": "Tiada aktiviti dijumpai",
     "share": "Kongsi",
     "delete": "Padam",
     "cancel": "Batal",
     "confirm": "Sah",
-    "edited": "disunting"
+    "edited": "disunting",
+    "share_plural": "Perkongsian",
+    "deletePostConfirmationTitle": "Padamkan pengesahan siaran",
+    "deleteCommentConfirmationTitle": "Padamkan pengesahan komen",
+    "deleteConfirmation": "Padam",
+    "edit": "Suntingkan siaran",
+    "hideAction": "Sembunyikan siaran",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Laporkan Siaran",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -216,7 +246,7 @@
       "thankyou": "Terima kasih kerana menyertai komuniti kami!",
       "viewProfile": "Profil saya",
       "continuePosting": "Terus Menyiar",
-      "viewFeed": "Lihat Lembaga Bantuan",
+      "viewFeed": "Lihat Papan Bantuan",
       "viewMyProfile": "Lihat profil saya",
       "loading": "sedang dimuatkan",
       "invalidEmail": "E-mel tidak sah",
@@ -245,7 +275,18 @@
       "emailMaxLength": "Alamat e-mel tidak boleh melebihi 200 aksara",
       "emailInvalid": "Alamat e-mel tidak sah",
       "emailDomainInvalid": "Domain e-mel tidak sah",
-      "sendMessage": "Hantar Mesej"
+      "sendMessage": "Hantar Mesej",
+      "securityInfo": "Maklumat Keselamatan",
+      "changePassword": "Tukar Kata Laluan",
+      "notificationInfo": "Pilihan Utama Pemberitahuan",
+      "emailNotification": "Tetapan Pemberitahuan E-mel",
+      "instant": "Segera",
+      "daily": "Harian",
+      "weekly": "Mingguan",
+      "biweekly": "Dua minggu sekali",
+      "digest": "Ringkasan",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "E-mel",
@@ -269,7 +310,22 @@
       "wantHelp": "Saya ingin membantu",
       "needHelp": "Saya memerlukan bantuan",
       "firstNameRequired": "Nama pertama diperlukan.",
-      "lastNameRequired": "Nama akhir diperlukan."
+      "lastNameRequired": "Nama akhir diperlukan.",
+      "newPassword": "Kata Laluan Baru",
+      "currentPassword": "Kata Laluan Semasa",
+      "confirmNewPassword": "Sahkan Kata Laluan",
+      "currentPasswordRequired": "Kata laluan semasa diperlukan",
+      "newPasswordRequired": "Kata laluan baru diperlukan",
+      "confirmNewPasswordRequired": "Sila sahkan kata laluan anda!",
+      "passwordMatch": "Kedua-dua kata laluan yang anda masukkan tidak sepadan!",
+      "passwordUpdateSuccess": "Penukaran kata laluan berjaya",
+      "passwordUpdateError": "Penukaran kata laluan gagal",
+      "enterCurrentPassword": "Masukkan kata laluan semasa",
+      "enterNewPassword": "Masukkan kata laluan baru",
+      "updatingPassword": "Mengemas kini Kata Laluan",
+      "editSecurity": "Suntingkan Keselamatan",
+      "editNotification": "Sunting Pemberitahuan",
+      "editAccount": "Sunting Akaun"
     },
     "org": {
       "title": "Cipta Profil Pertubuhan",
@@ -332,16 +388,18 @@
       "editAccount": "Sunting Maklumat Akaun",
       "updateSuccess": "Pertubuhan berjaya dikemas kini",
       "orgNameRequired": "Nama pertubuhan diperlukan",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Sunting Akaun Pertubuhan",
+      "editOrgNotification": "Sunting Pemberitahuan Pertubuhan"
     }
   },
   "auth": {
     "signIn": "Log masuk",
-    "joinNow": "Sertai sekarang",
+    "joinNow": "Sertai Sekarang",
     "email": "E-mel",
     "enterEmail": "Masukkan alamat e-mel",
     "password": "Kata Laluan",
-    "enterPassword": "Masukkan Kata Laluan",
+    "enterPassword": "Masukkan kata laluan",
     "confirmPassword": "Sahkan Kata Laluan",
     "forgotPassword": "Lupa Kata Laluan?",
     "noAccount": "Tidak memiliki akaun?",
@@ -353,7 +411,8 @@
     "passwordMax": "Kata laluan mestilah sebanyak-banyaknya {{num}} aksara.",
     "passwordMin": "Kata laluan mestilah sekurang-kurangnya {{num}} aksara.",
     "passwordConfirmationRequired": "Pengesahan kata laluan diperlukan.",
-    "passwordNotMatch": "Kata laluan tidak sepadan"
+    "passwordNotMatch": "Kata laluan tidak sepadan",
+    "backHome": "Kembali ke Skrin Utama"
   },
   "verifyEmail": {
     "checkInbox": "Semak peti masuk anda",
@@ -365,28 +424,28 @@
     "ourStory": "Cerita Kami",
     "story": "FightPandemics merupakan buah fikiran Manuel Gonzalez Alzuru yang dijangkiti COVID-19 di Perancis. Sebaik sahaja tiba di rumah yang terletak di Barcelona, beliau mendapati bahawa beliau gagal mendapatkan bantuan walaupun ada orang yang ingin menawarkannya.",
     "ourCommunity": "Komuniti Kami",
-    "community": "Kami terdiri daripada sekumpulan 1100 + pemaju sukarelawan, pereka, saintis, pakar kesihatan, dan pengurus produk dari seluruh dunia.",
+    "community": "Kami terdiri daripada sekumpulan 1100+ pemaju sukarelawan, pereka, saintis, pakar kesihatan dan pengurus produk dari seluruh dunia.",
     "ourIdea": "Idea Kami",
     "ourSupporters": "Penyokong Kami",
     "followUs": "Ikuti kami di media sosial",
-    "contactUs": "Atau hubungi kami di",
+    "contactUs": "Atau hubungi kami di:",
     "contactEmail": "contact@fightpandemics.com",
-    "heading": "Kami mahu mewujudkan dunia di mana manusia menjadi lebih berdaya tahan menghadapi kecemasan.",
+    "heading": "Kami mahu mewujudkan dunia di mana manusia menjadi lebih berdaya tahan menghadapi kecemasan",
     "subHeading": "dengan membantu komuniti bertindak balas dengan lebih cepat dan berkesan terhadap krisis.",
-    "forWhoHeading": "Ini untuk siapa?",
+    "forWhoHeading": "Ianya untuk siapa?",
     "forWho": "Sesiapa atau apa-apa jenis perniagaan, kumpulan komuniti, kerajaan atau pertubuhan penjagaan kesihatan yang memerlukan atau ingin memberikan bantuan.",
     "FightPandemics": "FightPandemics",
     "storyInspired": "Diinspirasikan oleh begitu banyak pertembungan, Manuel melancarkan projek dengan satu misi dalam fikirannya: <span>untuk memastikan orang lain dapat berhubung secara serentak.</span>",
-    "connectPeople": "Kami menghubungkan orang",
+    "connectPeople": "Kami menghubungkan orang ramai",
     "connect": "Platform altruistik untuk menghubungkan mereka yang memerlukan bantuan dengan mereka yang dapat menyediakannya.",
     "howWork": "Bagaimanakah ianya berfungsi?",
-    "helpBoard": "Lembaga Bantuan",
-    "helpBoardDetail": "Platform komuniti untuk individu dan organisasi untuk menawarkan dan memohon bantuan.",
+    "helpBoard": "Papan Bantuan",
+    "helpBoardDetail": "Platform komuniti bagi individu dan organisasi untuk menawarkan dan memohon bantuan.",
     "localGlobal": "Tempatan & Global",
     "localGlobalDetail": "Tawarkan dan mohonkan pertolongan dalam komuniti saya dan di seluruh dunia.",
     "relevantContent": "Kandungan yang Berkaitan",
-    "relevantContentDetail": "Tempoh tamat memastikan lembaga sentiasa dikemas kini.",
-    "goToHelpBoard": "Pergi ke Lembaga Bantuan",
+    "relevantContentDetail": "Tempoh tamat memastikan papan sentiasa dikemas kini.",
+    "goToHelpBoard": "Pergi ke Papan Bantuan",
     "supporters": "Penyokong",
     "thanksSupporters": "Terima Kasih kepada penyokong kami, tanpa mereka, kami tidak akan dapat membantu komuniti untuk bersiap sedia dan bertindak balas terhadap pandemik.",
     "becomeSupporter": "Untuk mengetahui lebih lanjut tentang cara perniagaan anda boleh menjadi penyokong, sila hubungi pasukan perkongsian kami di",
@@ -395,7 +454,20 @@
     "lifetimeSupporters": "Penyokong seumur hidup",
     "currentSupporters": "Penyokong semasa",
     "pastSupporters": "Penyokong terdahulu",
-    "hashtag": "#DaripadaKomunitiKepadaKomuniti"
+    "hashtag": "#DaripadaKomunitiKepadaKomuniti",
+    "getInvolved": "Melibatkan Diri",
+    "joinVolunteer": "Sertai sebagai Sukarelawan",
+    "joinAmbassador": "Sertai sebagai Duta",
+    "joinStudentProgram": "Sertai Program Pelajar",
+    "studentSummerProgram": "Program Musim Panas Pelajar",
+    "forStudentInAge": "Untuk Pelajar berumur 14-18 tahun.",
+    "press": "Penerbit",
+    "pressInfo": "Jika anda seorang ahli penerbit, hubungi kami di",
+    "pressKitLink": "Pergi ke Peti Penerbit",
+    "communityPartners": "Rakan Kongsi Komuniti",
+    "communityCollaboration": "Kami mahu memperkasakan komuniti dan organisasi di seluruh dunia melalui platform kami dan untuk berbuat demikian, kami perlu bekerjasama! Kerjasama berterusan dengan rakan kongsi komuniti kami membolehkan kami membina platform yang lebih baik bagi mereka dan orang lain.",
+    "becomeCommunityPartner": "Adakah anda juga mahu komuniti anda menjadi rakan kongsi kami? Kami ingin mendengar daripada anda dan mula bekerjasama! Hubungi di",
+    "currentPartners": "Rakan Kongsi Komuniti Semasa"
   },
   "footer": {
     "faq": "Soalan Lazim",
@@ -407,18 +479,18 @@
   },
   "faq": {
     "title": "Mengenai FightPandemics / Umum",
-    "offerRequestHelp": "Menawarkan dan Mohon Bantuan",
+    "offerRequestHelp": "Menawarkan dan Memohon Bantuan",
     "profileAccount": "Profil dan Akaun",
     "contects": "Berhubunglah",
     "general": [
       [
-        "Apakah Fightpandemics?",
+        "Apakah FightPandemics?",
         "FightPandemics ialah platform yang diwujudkan di tengah-tengah wabak COVID-19 dengan tujuan menjadi tempat untuk orang yang terjejas oleh pandemik dalam pelbagai aspek.",
         "Misi utama kami adalah untuk menghubungkan individu dan pertubuhan yang menawarkan dan meminta bantuan di peringkat tempatan dan global di tengah-tengah krisis pandemik. Tidak kira jika anda mendapatkan bantuan perubatan, topeng muka, bantuan perundangan, barangan runcit, seseorang untuk berjalan kaki dengan anjing anda atau sokongan kepada aktiviti seharian lain, anda dapat mencarinya di sini:",
         "Kami berusaha untuk mengumpulkan maklumat penting yang lebih bercebis-cebisan, berhubung dalam satu rangkaian individu, komuniti dan pertubuhan yang menguruskan isu atau projek yang berkaitan dengan pandemik. Visi kami adalah untuk mewujudkan dunia di mana setiap orang menjadi lebih berdaya tahan menghadapi kecemasan dengan membantu komuniti untuk bertindak balas terhadap kecemasan kesihatan dan krisis kemanusiaan dengan lebih cepat dan berkesan."
       ],
       [
-        "Fightpandemics untuk siapa?",
+        "FightPandemics untuk siapa?",
         "FightPandemics merupakan pasukan sukarelawan penuh global dengan misi untuk berfungsi sebagai tempat bantuan pilihan utama. Pasukan kami terdiri daripada 150+ sukarelawan yang melibatkan 70+ negara yang berusaha untuk melakukan perubahan. Platform ini dibina dalam usaha kolaboratif yang inovatif dengan menyatukan pelbagai kumpulan penyelesai masalah dengan pelbagai kemahiran untuk penciptaan bersama dan saling belajar antara satu sama lain dengan rela hati.",
         "Adakah anda ingin menyertai inisiatif kami? Hubungi <0>hr@fightpandemics.com</0>"
       ],
@@ -427,7 +499,7 @@
         "FightPandemics ialah platform global. Versi pertama kami telah dilancarkan dalam Bahasa Inggeris tetapi kami mempunyai rancangan untuk menambahkan bahasa lain tidak lama lagi."
       ],
       [
-        "Fightpandemics untuk siapa?",
+        "FightPandemics untuk siapa?",
         "Sesiapa yang memerlukan atau menawarkan bantuan dialu-alukan untuk menyertai platform kami dan berhubung dengan individu dan pertubuhan lain."
       ],
       [
@@ -457,7 +529,7 @@
       ],
       [
         "Adakah saya perlu dilog masuk untuk melihat permohonan dan tawaran bantuan?",
-        "Anda tidak perlu dilog masuk untuk melihat mana-mana siaran pada lembaga bantuan tetapi anda perlu log masuk untuk memberi komen atau menyukai siaran."
+        "Anda tidak perlu dilog masuk untuk melihat mana-mana siaran pada papan bantuan tetapi anda perlu log masuk untuk memberi komen atau menyukai siaran."
       ],
       [
         "Adakah saya perlu log masuk untuk mencipta/menyunting siaran?",
@@ -469,7 +541,7 @@
       ],
       [
         "Adakah nama/ nama pertubuhan saya akan paparkan kepada pengguna lain?",
-        "Apabila anda mencipta siaran sama ada menawarkan atau meminta bantuan, nama anda/ nama pertubuhan anda dipaparkan kepada sesiapa yang sedang melihat lembaga bantuan."
+        "Apabila anda mencipta siaran sama ada menawarkan atau meminta bantuan, nama anda/ nama pertubuhan anda dipaparkan kepada sesiapa yang sedang melihat papan bantuan."
       ],
       [
         "Bagaimanakah saya boleh mempercayai bahawa siaran adalah benar?",
@@ -489,7 +561,7 @@
       ],
       [
         "Saya menemui pepijat di laman web. Bagaimanakah saya melaporkannya?",
-        "Sila hantarkan maklum balas, atau hubungi <0>support@fightpandemics.com.</0>"
+        "Sila hantarkan maklum balas atau hubungi <0>support@fightpandemics.com.</0>"
       ],
       [
         "Saya tidak lagi dibenarkan untuk menggunakan FightPandemics - apakah yang perlu saya lakukan?",
@@ -772,7 +844,8 @@
       "imageDimensionTooSmall": "Sila muat naik imej yang sekurang-kurangnya 250 piksel tinggi dan 250 piksel lebar.",
       "imageDimensionTooWide": "Maaf, imej terlalu lebar. Sila cuba lagi dengan imej yang mempunyai lebar kurang daripada dua kali ketinggian.",
       "networkError": "Maaf, sesuatu ralat rangkaian berlaku."
-    }
+    },
+    "wrongOldPassword": "Kata laluan semasa yang salah"
   },
   "TEMP: We are not a provider of healthcare services": "Kami bukan pembekal perkhidmatan penjagaan kesihatan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Perkhidmatan ini disediakan dengan niat ikhlas bagi sesiapa jua yang tidak mampu untuk mendapatkan bantuan dan sumber semasa kecemasan kesihatan awam yang belum pernah berlaku sebelum ini.",
@@ -819,5 +892,140 @@
     "submitBtn": "Hantar",
     "cancelBtn": "Batal",
     "tryAgainBtn": "Cuba Lagi"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mac",
+      "april": "Apr",
+      "may": "Mei",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Ogos",
+      "september": "Sep",
+      "october": "Okt",
+      "november": "Nov",
+      "december": "Dis"
+    },
+    "weekdaysShort": {
+      "sunday": "Ahd",
+      "monday": "Isn",
+      "tuesday": "Sel",
+      "wednesday": "Rab",
+      "thursday": "Kha",
+      "friday": "Jum",
+      "saturday": "Sab"
+    }
+  },
+  "messaging": {
+    "header": "Mesej",
+    "requests": "Permintaan Mesej",
+    "settings": {
+      "header": "Tetapan Mesej",
+      "blocked": "Akaun Yang Disekat",
+      "archived": "Perbualan Yang Diarkib",
+      "unblock": "Nyahsekat",
+      "unarchive": "Nyaharkib",
+      "archiveEmpty": "Anda tidak mempunyai perbualan yang diarkibkan.",
+      "blockedEmpty": "Anda belum menyekat sebarang akaun."
+    },
+    "emptyInbox": {
+      "header": "Anda tidak mempunyai sebarang mesej",
+      "p1": "Anda belum menerima sebarang mesej lagi.",
+      "p2": "Kembali ke Papan Bantuan untuk mencari tawaran atau permohonan untuk bertindak balas.",
+      "goToHB": "Pergi ke Papan Bantuan"
+    },
+    "selectRoom": {
+      "header": "Pilih mana-mana mesej untuk dibaca",
+      "p1": "Kandungan mesej akan muncul di sini sebaik sahaja anda memilih",
+      "p2": "perbualan daripada peti masuk."
+    },
+    "selectRequest": {
+      "header": "Pilih mana-mana permintaan mesej untuk dibaca",
+      "p1": "Kandungan permintaan mesej akan muncul di sini",
+      "p2": "sebaik sahaja anda memilih satu daripada peti masuk permintaan mesej."
+    },
+    "didBlock": "Anda telah menyekat {{username}}. Menyahsekat untuk menerima mesej daripada mereka semula.",
+    "wasBlocked": "Anda telah disekat oleh {{username}}. Anda tidak lagi boleh menghantar mesej kepada mereka.",
+    "acceptPropmt": "Adakah anda mahu menerima permintaan mesej? Anda tidak dapat membalas sehingga anda menerima permintaan.",
+    "deleteMessageQuestion": "Padamkan mesej?",
+    "deleteMessageText": "Mesej yang dipilih akan dipadamkan secara kekal daripada kedua-dua peranti anda dan peranti penerima. Adakah anda pasti mahu memadam?",
+    "blockQuestion": "Sekat perbualan daripada {{username}}?",
+    "blockText": "Dengan memilih \"Sekat\", {{username}} tidak akan dapat menghantar mesej atau permintaan mesej kepada anda. Anda boleh pergi ke Tetapan Mesej untuk mengurus akaun yang disekat.",
+    "archiveQuestion": "Arkibkan perbualan?",
+    "archiveText": "Sekiranya anda ingin membaca perbualan sekali lagi, anda perlu pergi ke Tetapan Mesej untuk memulihkannya.",
+    "sendSuccessHeader": "Mesej anda telah berjaya dihantar",
+    "sendSuccessText": "Mesej anda kepada {{username}} mengenai \"{{title}}\" telah berjaya dihantar.",
+    "sendSuccessTextNoPost": "Mesej anda kepada {{username}} berjaya dihantar.",
+    "sendFailedHeader": "Ops, sesuatu tersalah",
+    "sendFailedText": "Mesej anda kepada {{username}} mengenai \"{{title}}\" tidak berjaya dihantar.",
+    "sendFailedTextNoPost": "Mesej anda kepada {{username}} tidak berjaya dihantar.",
+    "ignoreDialogTitle": "Abaikan permintaan mesej daripada {{username}}?",
+    "ignoreDialogMessage": "Permintaan mesej akan dipadamkan daripada peranti anda. Adakah anda pasti mahu mengabaikannya?",
+    "blockDialogTitle": "Sekatkan perbualan daripada {{username}}?",
+    "blockDialogMessage": "Dengan memilih \"Sekat\", {{username}} tidak akan dapat menghantar mesej atau permintaan mesej kepada anda. Anda boleh pergi ke Tetapan Mesej untuk mengurus akaun yang disekat.",
+    "block": "Sekat",
+    "archive": "Arkib",
+    "accept": "Terima",
+    "ignore": "Abai",
+    "delete": "Padam",
+    "cancel": "Batal",
+    "edit": "Sunting",
+    "edited": "Disunting",
+    "saveEdit": "Simpan perubahan",
+    "didDelete": "Anda telah memadamkan mesej ini.",
+    "wasDeleted": "Mesej ini telah dipadamkan.",
+    "loadMore": "Muatkan Lebih Banyak...",
+    "justNow": "Sebentar tadi",
+    "lastSeen": "Terakhir dilihat",
+    "never": "Tidak pernah",
+    "activeNow": "Aktif Sekarang",
+    "message": "Mesej",
+    "sendMessage": "Hantarkan mesej",
+    "typeMessage": "Taipkan mesej...",
+    "viewMessage": "Lihat mesej",
+    "to": "Untuk",
+    "send": "Hantar",
+    "done": "Selesai",
+    "close": "Tutup"
+  },
+  "message": {
+    "message": "Mesej",
+    "message_plural": "Mesej"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Nyahlanggan",
+      "canceled": "Tiada perubahan akan dibuat kepada pilihan utama pemberitahuan anda",
+      "success": "Pilihan utama pemberitahuan anda dikemas kini"
+    },
+    "header": "Pemberitahuan",
+    "liked": "<0>{{username}}</0> menyukai siaran anda <1>{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> memberikan komen pada siaran anda <1>{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> berkongsi siaran anda <1>{{postTitle}}</1> pada <1>{{shareMedium}}</1>",
+    "empty": "Tiada pemberitahuan lagi"
+  },
+  "moderation": {
+    "report": "Laporan",
+    "cancel": "Batal",
+    "finish": "Selesai",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Butiran tambahan (pilihan)",
+    "enterDetails": "Sila masukkan butiran yang lebih lanjut di sini ...",
+    "reportPost": "Laporkan Siaran",
+    "reportPostSuccess": "Terima kasih atas laporan anda! Siaran ini akan dihantar untuk semakan.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Ops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Lain",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Tunjukkan juga",
+    "postHidden": "Anda telah memilih untuk menyembunyikan siaran ini",
+    "unhide": "Nyahsembunyikan",
+    "youReported": "Anda telah melaporkan siaran ini. Ianya tidak akan dapat dilihat lagi pada suapan anda"
   }
 }

@@ -12,7 +12,16 @@
     "profile": "Profil",
     "addOrg": "Ajouter une organisation",
     "logout": "Se déconnecter",
-    "organisations": "Organisations"
+    "organisations": "Organisations",
+    "language": "Langue",
+    "switchAccount": "Changer de compte",
+    "myOrganisation": "Mes organisations",
+    "willRefresh": "La page actuelle sera rafraîchie.",
+    "stayOnPageHeader": "Restez sur la page actuelle?",
+    "stayOnPageContent": "Si vous sélectionnez \"Non\", vous serez redirigé vers le Tableau d'aide.",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -77,14 +86,20 @@
         "Les courses / La nourriture",
         "Entreprise",
         "Éducation",
-        "Légal",
-        "Bien-être / santé mentale",
+        "Logement",
+        "Juridique",
+        "Bien-être/Mental",
         "Divertissement",
-        "Informations",
+        "Information",
         "Financement",
         "R&D",
         "Technologie",
-        "Autre"
+        "Autre",
+        "Garde d'enfants",
+        "Traductions",
+        "Faire du bénévolat",
+        "Personnel (payé)",
+        "Travail à distance"
       ],
       "labels": {
         "location": "Lieu",
@@ -115,7 +130,13 @@
         "Funding": "Financement",
         "R&D": "R&D",
         "Tech": "Technologie",
-        "Other": "Autres"
+        "Other": "Autres",
+        "Housing": "Logement",
+        "Childcare": "Garde d'enfants",
+        "Translations": "Traductions",
+        "Volunteer": "Faire du bénévolat",
+        "Staff (paid)": "Personnel (payé)",
+        "Remote Work": "Travail à distance"
       },
       "lookingForOptions": {
         "Request Help": "Demander de l'aide",
@@ -198,10 +219,19 @@
     "expire": "L'annonce que vous recherchiez a expirée. Veuillez consulter notre tableau d'aide pour trouver d'autres annonces de ce type.",
     "noActivity": "Aucune activité trouvée",
     "share": "Partager",
-    "delete": "Effacer",
+    "delete": "Supprimer le poste",
     "cancel": "Annuler",
     "confirm": "Confirmer",
-    "edited": "édité"
+    "edited": "édité",
+    "share_plural": "Je partage",
+    "deletePostConfirmationTitle": "Confirmation de la suppression d'un poste",
+    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire",
+    "deleteConfirmation": "Supprimer",
+    "edit": "Modifier le poste",
+    "hideAction": "Masquer le poste",
+    "hideCaption": "non intéressé",
+    "reportAction": "Signaler le poste",
+    "reportCaption": "Pour l'examen"
   },
   "profile": {
     "common": {
@@ -245,7 +275,18 @@
       "emailMaxLength": "L'adresse e-mail ne doit pas dépasser 200 caractères",
       "emailInvalid": "L'adresse e-mail est invalide",
       "emailDomainInvalid": "Le domaine e-mail est invalide",
-      "sendMessage": "Envoyer un message"
+      "sendMessage": "Envoyer un message",
+      "securityInfo": "Information sur la sécurité",
+      "changePassword": "Changer le mot de passe",
+      "notificationInfo": "Préférence de notification",
+      "emailNotification": "Notification par e-mail",
+      "instant": "Instantanée",
+      "daily": "Quotidienne",
+      "weekly": "Hebdomadaire",
+      "biweekly": "Bihebdomadaire",
+      "digest": "Résumé",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Adresse courriel",
@@ -269,7 +310,22 @@
       "wantHelp": "Je veux aider",
       "needHelp": "J'ai besoin d'aide",
       "firstNameRequired": "Le prénom est requis.",
-      "lastNameRequired": "Le nom de famille est requis."
+      "lastNameRequired": "Le nom de famille est requis.",
+      "newPassword": "Nouveau mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "confirmNewPassword": "Confirmer votre mot de passe",
+      "currentPasswordRequired": "Le mot de passe actuel est requis",
+      "newPasswordRequired": "Un nouveau mot de passe est requis",
+      "confirmNewPasswordRequired": "Veuillez confirmer votre mot de passe!",
+      "passwordMatch": "Les deux mots de passe que vous avez saisis ne correspondent pas!",
+      "passwordUpdateSuccess": "Changement de mot de passe réussi",
+      "passwordUpdateError": "Le changement de mot de passe a échoué",
+      "enterCurrentPassword": "Saisissez le mot de passe actuel",
+      "enterNewPassword": "Saisissez un nouveau mot de passe",
+      "updatingPassword": "Mise à jour du mot de passe",
+      "editSecurity": "Modifier la sécurité",
+      "editNotification": "Modifier les notifications",
+      "editAccount": "Modifier le compte"
     },
     "org": {
       "title": "Créer un profil d'organisation",
@@ -332,11 +388,13 @@
       "editAccount": "Modifier les informations du compte",
       "updateSuccess": "Organisation mise à jour avec succès",
       "orgNameRequired": "Nom de l'organisation est requise",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Modifier le compte de l'organisation",
+      "editOrgNotification": "Modifier la notification de l'organisation"
     }
   },
   "auth": {
-    "signIn": "Bienvenue",
+    "signIn": "Se connecter",
     "joinNow": "Inscrivez-vous",
     "email": "Adresse courriel",
     "enterEmail": "Entrer l'adresse e-mail",
@@ -353,7 +411,8 @@
     "passwordMax": "Le mot de passe doit comporter au maximum {{num}} caractères",
     "passwordMin": "Le mot de passe doit comporter au moins {{num}} caractères",
     "passwordConfirmationRequired": "La confirmation du mot de passe est requise",
-    "passwordNotMatch": "Mots de passe invalides"
+    "passwordNotMatch": "Mots de passe invalides",
+    "backHome": "Retour à l'écran d'accueil"
   },
   "verifyEmail": {
     "checkInbox": "Vérifiez votre boîte de réception",
@@ -395,7 +454,20 @@
     "lifetimeSupporters": "Supporteurs à vie",
     "currentSupporters": "Supporteurs actuels",
     "pastSupporters": "Anciens supporteurs",
-    "hashtag": "#PourCommunautésParCommunautés"
+    "hashtag": "#PourCommunautésParCommunautés",
+    "getInvolved": "Participez",
+    "joinVolunteer": "Rejoignez en tant que bénévole",
+    "joinAmbassador": "Rejoignez en tant qu'ambassadeur",
+    "joinStudentProgram": "Rejoignez le programme d'étudiants",
+    "studentSummerProgram": "Programme d'emploi d'été pour étudiants",
+    "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans.",
+    "press": "Presse",
+    "pressInfo": "Si vous êtes membre de la presse, contactez-nous à l'adresse suivante",
+    "pressKitLink": "Aller au dossier de presse",
+    "communityPartners": "Partenaires communautaires",
+    "communityCollaboration": "Nous voulons donner du pouvoir aux communautés et aux organisations du monde entier grâce à notre plateforme, et pour ce faire, nous devons travailler ensemble! Une collaboration continue avec nos partenaires communautaires nous permet de construire une meilleure plateforme pour eux et pour les autres.",
+    "becomeCommunityPartner": "Vous souhaitez que votre communauté soit également notre partenaire? Nous aimerions avoir de vos nouvelles et commencer à collaborer ! Contactez-nous à ",
+    "currentPartners": "Partenaires communautaires actuels"
   },
   "footer": {
     "faq": "FAQ",
@@ -420,7 +492,7 @@
       [
         "Qui sont FightPandemics?",
         "FightPandemics est une équipe mondiale entièrement composée de bénévoles dont la mission est de servir de lieu d'aide. Notre équipe est composée de plus de 150 bénévoles engagés de plus de 70 pays qui s'efforcent de faire la différence. La plate-forme a été construite dans le cadre d'un effort de collaboration innovant, réunissant un groupe diversifié de résolveurs de problèmes avec un large éventail de compétences désireux de co-créer et d'apprendre les uns avec les autres.",
-        "Voulez-vous rejoindre notre initiative? Contactez < 0 > hr@fightpandemics.com < / 0 >"
+        "Voulez-vous rejoindre notre initiative? Contactez <0> hr@fightpandemics.com </0>"
       ],
       [
         "Dans quelles villes les FightPandemics opèrent-ils ?",
@@ -432,11 +504,11 @@
       ],
       [
         "Comment puis-je publier une offre ou une demande d'aide sur FightPandemics?",
-        "< 0 > Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des annonces et des commentaires sur la plateforme FightPandemics. < / 0 > < 1 > Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. < / 1 > < 2 > Une fois que vous avez rempli votre profil, sélectionnez le bouton de menu, sélectionnez voir mon profil et cliquez sur le bouton plus pour créer votre premier message. < / 2 >"
+        "<0> Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des annonces et des commentaires sur la plateforme FightPandemics. </0> <1> Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </1> <2> Une fois que vous avez rempli votre profil, sélectionnez le bouton de menu, sélectionnez voir mon profil et cliquez sur le bouton plus pour créer votre premier message. </2>"
       ],
       [
         "Comment puis-je me tenir au courant des actualités de FightPandemics?",
-        "Suivez-nous sur les réseaux sociaux! Nous publions régulièrement des mises à jour sur <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn< / 2 >, et <3>Instagram </3>."
+        "Suivez-nous sur les réseaux sociaux! Nous publions régulièrement des mises à jour sur <0>Facebook</0>, <1>Twitter</1>, <2>LinkedIn</2>, et <3>Instagram </3>."
       ],
       [
         "Dois-je payer pour utiliser FightPandemics ?",
@@ -453,7 +525,7 @@
       ],
       [
         "Comment puis-je offrir de l'aide?",
-        "< 0 > Vous pouvez offrir de l'aide en tant qu'individu ou en tant qu'organisation. < / 0 > < 1 > Sur la page d'accueil, sélectionnez \"Donner de l'aide\" pour voir tous les messages créés par les utilisateurs demandant de l'aide et filtrer les résultats par lieu et par type. Vous devez être connecté pour les contacter. Vous pouvez également créer vos propres annonces décrivant l'aide que vous êtes en mesure d'offrir. < / 1 >"
+        "<0> Vous pouvez offrir de l'aide en tant qu'individu ou en tant qu'organisation. </0> <1> Sur la page d'accueil, sélectionnez \"Donner de l'aide\" pour voir tous les messages créés par les utilisateurs demandant de l'aide et filtrer les résultats par lieu et par type. Vous devez être connecté pour les contacter. Vous pouvez également créer vos propres annonces décrivant l'aide que vous êtes en mesure d'offrir. </1>"
       ],
       [
         "Dois-je être connecté pour afficher les demandes et les offres d'aide?",
@@ -473,7 +545,7 @@
       ],
       [
         "Comment puis-je être sûr que les annonces sont fiables?",
-        "Malheureusement, nous ne pouvons pas garantir que toutes les annonces sont fiables, car les publications sont créées par nos utilisateurs. Cependant, nous faisons de notre mieux pour garder le contenu pertinent, en nettoyant régulièrement les données et en désactivant les publications après leur expiration. Si vous avez des inquiétudes concernant le contenu d'un message, veuillez nous contacter à < 0 > support@fightpandemics.com < / 0 >"
+        "Malheureusement, nous ne pouvons pas garantir que toutes les annonces sont fiables, car les publications sont créées par nos utilisateurs. Cependant, nous faisons de notre mieux pour garder le contenu pertinent, en nettoyant régulièrement les données et en désactivant les publications après leur expiration. Si vous avez des inquiétudes concernant le contenu d'un message, veuillez nous contacter à <0> support@fightpandemics.com </0>"
       ],
       [
         "Pouvez-vous m'aider avec des problèmes médicaux?",
@@ -489,15 +561,15 @@
       ],
       [
         "J'ai trouvé un bogue sur le site. Comment puis-je le signaler ?",
-        "Veuillez envoyer vos commentaires ou contacter < 0 > support@fightpandemics.com. < / 0 >"
+        "Veuillez envoyer vos commentaires ou contacter <0> support@fightpandemics.com. </0>"
       ],
       [
         "Je ne suis plus autorisé à utiliser FightPandemics - que dois-je faire?",
-        "Veuillez nous contacter à < 0 > support@fightpandemics.com < / 0 > et nous vérifierons quel est le problème avec votre compte."
+        "Veuillez nous contacter à <0> support@fightpandemics.com </0> et nous vérifierons quel est le problème avec votre compte."
       ],
       [
         "Quelles sont les informations que vous conservez ?",
-        "FightPandemics collecte et traite les données personnelles des utilisateurs uniquement aux fins décrites dans notre < 0 > politique de confidentialité. < / 0 > En aucun cas, nous ne fournirons l'accès ou ne partagerons vos données personnelles avec des tiers, sauf avec les personnes concernées énoncées dans cette politique."
+        "FightPandemics collecte et traite les données personnelles des utilisateurs uniquement aux fins décrites dans notre <0> politique de confidentialité. </0> En aucun cas, nous ne fournirons l'accès ou ne partagerons vos données personnelles avec des tiers, sauf avec les personnes concernées énoncées dans cette politique."
       ],
       [
         "Puis-je donner / recevoir de l'aide de ma ville ou de ma région? Combien de temps le message sera-t-il visible?",
@@ -505,13 +577,13 @@
       ],
       [
         "Ma question ne figure pas dans la liste. À qui puis-je m'adresser ?",
-        "Pour les questions générales et autres problèmes non répertoriés ici, contactez < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour les questions générales et autres problèmes non répertoriés ici, contactez <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "accountFAQ": [
       [
         "Comment adhérer?",
-        "< 0 > Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre maintenant / Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. < / 0 > < 1 > Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics. < / 1 >"
+        "<0>Pour rejoindre la communauté en tant qu'utilisateur, cliquez sur le bouton \"Menu\" et sélectionnez l'option \"Rejoindre/Se connecter\". Là, vous pourrez vous joindre avec votre choix d'informations d'identification de courrier électronique ou de médias sociaux. </0> <1>Lorsque vous rejoignez la communauté, vous aurez un accès illimité pour afficher et créer des publications et des commentaires sur la plate-forme FightPandemics.</1>"
       ],
       [
         "Comment puis-je changer mon profil individuel en profil d'organisation?",
@@ -534,11 +606,11 @@
         "Si vous n'avez pas reçu d'e-mail de confirmation, essayez les options suivantes:",
         "Recherchez l'e-mail de récupération dans votre dossier indésirable.",
         "Essayez le processus «Récupérer le mot de passe».",
-        "Si les options ci-dessus ne résolvent pas le problème, n'hésitez pas à contacter notre équipe d'assistance: < 0 > support@fightpandemics.com. < / 0 >"
+        "Si les options ci-dessus ne résolvent pas le problème, n'hésitez pas à contacter notre équipe d'assistance: <0> support@fightpandemics.com. </0>"
       ],
       [
         "Comment puis-je supprimer/annuler mon compte ?",
-        "Si vous souhaitez supprimer votre compte, veuillez nous contacter à < 0 > support@fightpandemics.com. < / 0 >"
+        "Si vous souhaitez supprimer votre compte, veuillez nous contacter à <0> support@fightpandemics.com. </0>"
       ],
       [
         "Comment puis-je mettre à jour les informations de mon profil?",
@@ -552,11 +624,11 @@
     "contectsFAQ": [
       [
         "Je souhaite devenir partenaire ou sponsor.",
-        "Veuillez contacter notre équipe des partenariats à < 0 > partenariats@fightpandemics.com. < / 0 >"
+        "Veuillez contacter notre équipe des partenariats à <0> partenariats@fightpandemics.com. </0>"
       ],
       [
         "Je viens de la presse / des médias.",
-        "Veuillez nous contacter à < 0 > pr@fightpandemics.com. < / 0 >"
+        "Veuillez nous contacter à <0> pr@fightpandemics.com. </0>"
       ],
       [
         "J'ai besoin de support technique.",
@@ -564,18 +636,18 @@
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
-        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "contacts": "Contacts",
     "contactsFAQ": [
       [
         "Je souhaite devenir partenaire ou sponsor.",
-        "Veuillez contacter notre équipe des partenariats à < 0 > partenariats@fightpandemics.com. < / 0 >"
+        "Veuillez contacter notre équipe des partenariats à <0> partenariats@fightpandemics.com. </0>"
       ],
       [
         "Je viens de la presse / des médias.",
-        "Veuillez nous contacter à < 0 > pr@fightpandemics.com. < / 0 >"
+        "Veuillez nous contacter à <0> pr@fightpandemics.com. </0>"
       ],
       [
         "J'ai besoin de support technique.",
@@ -583,7 +655,7 @@
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
-        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter < 0 > contact@fightpandemics.com. < / 0 >"
+        "Pour des questions générales et d'autres problèmes non répertoriés ici, veuillez contacter <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "faqTitle": "Foire aux questions"
@@ -772,7 +844,8 @@
       "imageDimensionTooSmall": "S’il vous plaît télécharger une image qui est d’au moins 250 pixels de haut et 250 pixels de large.",
       "imageDimensionTooWide": "Désolé, l’image est trop large. S’il vous plaît essayer à nouveau avec une image qui a une largeur inférieure à deux fois la hauteur.",
       "networkError": "Désolé, une erreur réseau s'est produite."
-    }
+    },
+    "wrongOldPassword": "Mot de passe actuel incorrect"
   },
   "TEMP: We are not a provider of healthcare services": "Nous ne sommes pas fournisseur de services de santé",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Nous offrons ce service en tout bonne foi pour ceux qui ne parviennent pas à trouver l'aide et les ressources nécessaires pendant cette crise sanitaire sans précédent.",
@@ -819,5 +892,140 @@
     "submitBtn": "Envoyer",
     "cancelBtn": "Annuler",
     "tryAgainBtn": "Réessayer"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Fév",
+      "march": "Mar",
+      "april": "Avr",
+      "may": "Mai",
+      "june": "Juin",
+      "july": "Juil",
+      "august": "Août",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Déc"
+    },
+    "weekdaysShort": {
+      "sunday": "Dim",
+      "monday": "Lun",
+      "tuesday": "Mar",
+      "wednesday": "Mer",
+      "thursday": "Jeu",
+      "friday": "Ven",
+      "saturday": "Sam"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Demandes de message",
+    "settings": {
+      "header": "Paramètres des messages",
+      "blocked": "Comptes bloqués",
+      "archived": "Conversations archivées",
+      "unblock": "Débloquer",
+      "unarchive": "Désarchiver",
+      "archiveEmpty": "Vous n'avez pas de conversations archivées.",
+      "blockedEmpty": "Vous n'avez bloqué aucun compte."
+    },
+    "emptyInbox": {
+      "header": "Vous n'avez pas de nouveaux messages",
+      "p1": "Vous n’avez pas encore reçu de messages.",
+      "p2": "Retournez au tableau d'aide pour trouver des offres ou des demandes auxquelles répondre.",
+      "goToHB": "Aller au tableau d'aide"
+    },
+    "selectRoom": {
+      "header": "Sélectionnez n'importe quel message à lire",
+      "p1": "Le contenu du message apparaîtra ici une fois que vous avez sélectionné",
+      "p2": "une conversation depuis la boîte de réception."
+    },
+    "selectRequest": {
+      "header": "Sélectionnez une demande de message à lire",
+      "p1": "Le contenu de la demande de message apparaîtra ici",
+      "p2": "une fois que vous en sélectionnez une dans la boîte de réception des demandes de message."
+    },
+    "didBlock": "Vous avez bloqué {{username}}. Débloquez pour recevoir à nouveau des messages de leur part.",
+    "wasBlocked": "Vous avez été bloqué par {{username}}. Vous ne pouvez plus leur envoyer de message.",
+    "acceptPropmt": "Voulez-vous accepter la demande de message? Vous ne pouvez pas répondre tant que vous n'avez pas accepté la demande.",
+    "deleteMessageQuestion": "Supprimer le message?",
+    "deleteMessageText": "Le message sélectionné sera définitivement supprimé de votre appareil et de celui du destinataire. Êtes-vous sûr de vouloir le supprimer?",
+    "blockQuestion": "Bloquer la conversation de {{username}}?",
+    "blockText": "En sélectionnant \"Bloquer\", {{username}} ne pourra plus vous envoyer un message ou une demande de message. Vous pouvez aller dans les Paramètres des messages pour gérer les comptes bloqués.",
+    "archiveQuestion": "Archiver la conversation?",
+    "archiveText": "Si vous souhaitez relire la conversation, vous devrez aller dans les Paramètres des messages pour la restaurer.",
+    "sendSuccessHeader": "Votre message a été envoyé avec succès",
+    "sendSuccessText": "Votre message à {{username}} concernant \"{{title}}\" a été envoyé avec succès.",
+    "sendSuccessTextNoPost": "Votre message à {{username}} été envoyé avec succès.",
+    "sendFailedHeader": "Oups, un problème est survenu",
+    "sendFailedText": "Votre message à {{username}} concernant le \"{{title}}\" n'a pas été envoyé.",
+    "sendFailedTextNoPost": "Votre message à {{username}} n'a pas été envoyé.",
+    "ignoreDialogTitle": "Ignorer la demande de message de {{username}}?",
+    "ignoreDialogMessage": "La demande de message sera supprimée de votre liste. Voulez-vous vraiment ignorer?",
+    "blockDialogTitle": "Bloquer la conversation de {{username}}?",
+    "blockDialogMessage": "En sélectionnant \"Bloquer\", {{username}} ne pourra plus vous envoyer un message ou une demande de message. Vous pouvez aller dans les Paramètres des messages pour gérer les comptes bloqués.",
+    "block": "Bloquer",
+    "archive": "Archiver",
+    "accept": "Accepter",
+    "ignore": "Ignorer",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "edited": "Édité",
+    "saveEdit": "Enregistrer",
+    "didDelete": "Vous avez supprimé ce message.",
+    "wasDeleted": "Ce message a été supprimé.",
+    "loadMore": "Charger plus...",
+    "justNow": "À l'instant",
+    "lastSeen": "Dernière visite",
+    "never": "Jamais",
+    "activeNow": "Actif maintenant",
+    "message": "Message",
+    "sendMessage": "Envoyer un message",
+    "typeMessage": "Tapez un message ...",
+    "viewMessage": "Voir le message",
+    "to": "À",
+    "send": "Envoyer",
+    "done": "Terminé",
+    "close": "Fermer"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Se désabonner",
+      "canceled": "Aucune modification ne sera apportée à vos préférences de notification",
+      "success": "Votre préférence de notification est mise à jour"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> avez aimé votre publication <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
+    "empty": "Plus de notifications"
+  },
+  "moderation": {
+    "report": "Signaler",
+    "cancel": "Annuler",
+    "finish": "Terminer",
+    "reason": "Raison du signalement:",
+    "additionalDetails": "Détails supplémentaires (facultatif)",
+    "enterDetails": "S’il vous plaît entrer plus de détails ici ...",
+    "reportPost": "Signaler le poste",
+    "reportPostSuccess": "Merci pour votre rapport! Ce poste sera soumis à l’examen.",
+    "reportPostError": "Oups! quelque chose s'est mal passé ...",
+    "reportPostSuccessTitle": "Rapport reçu",
+    "reportPostErrorTitle": "Oups!",
+    "spam": "Spam",
+    "inappropriateContent": "Contenu inapproprié",
+    "violatesTerms": "Viole les conditions",
+    "other": "Autre",
+    "postSuspected": "Ce poste a fait l'objet de plusieurs rapports et a été maintenu pour examen",
+    "showAnyway": "Montrer quand même",
+    "postHidden": "Vous avez choisi de cacher ce poste",
+    "unhide": "Afficher",
+    "youReported": "Vous avez signalé ce poste. Il ne sera plus visible sur votre flux"
   }
 }

@@ -52,10 +52,17 @@ a {
   background-color: ${WHITE} !important;
 }
 
+.am-drawer, .app-drawer, .am-drawer-right {
+  min-height: 100% !important;
+}
+
 .app-drawer .am-drawer-sidebar {
   background-color: $white;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .app-drawer .am-drawer-sidebar .am-list {
@@ -69,7 +76,7 @@ a {
 	padding-bottom: 6rem; // footer height
 	overflow: hidden;
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
-	  padding-bottom: 12rem; // max mobile footer height based on content
+	  padding-bottom: 8rem; // max mobile footer height based on content
   }
 }
 
@@ -112,7 +119,9 @@ a {
     background-color: ${SELAGO};
   }
 }
-
+.ReactVirtualized__Grid, .ReactVirtualized__List, .ReactVirtualized__Grid__innerScrollContainer {
+    overflow: visible !important;
+}
 /* transform: translateZ(1px) messes up z-index precendence on iPhones */
 .feed-filter-modal-wrap {
   transform: none;

@@ -7,6 +7,7 @@ import { authLogout } from "actions/authActions"
 const Logout = ({ authLogout }) => {
   useEffect(() => {
     authLogout();
+    localStorage.removeItem("organisationId");
   }, [authLogout]);
   return <Redirect to="/" />;
 }

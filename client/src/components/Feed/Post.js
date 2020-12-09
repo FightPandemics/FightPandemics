@@ -1,30 +1,35 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { Modal as WebModal } from "antd";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
+import { Tooltip } from "antd";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 // Local
 import AutoSize from "components/Input/AutoSize";
 import Comments from "./Comments";
-import FilterTag from "components/Tag/FilterTag";
+import PostTag from "components/Tag/PostTag";
 import Heading from "components/Typography/Heading";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import PostCard from "./PostCard";
+import DeleteModal from "./PostDeleteModal";
 import PostSocial from "./PostSocial";
 import { ShareModal } from "./PostShare";
-import SubMenuButton from "components/Button/SubMenuButton";
+import PostDropdownButton from "components/Feed/PostDropdownButton";
 import WizardFormNav, {
   StyledButtonWizard,
 } from "components/StepWizard/WizardFormNav";
 import { StyledLoadMoreButton } from "./StyledCommentButton";
 import { StyledPostPagePostCard } from "./StyledPostPage";
 import TextAvatar from "components/TextAvatar";
-import { typeToTag } from "assets/data/formToPostMappings";
+import {
+  typeToTag,
+  translateISOTimeTitle,
+} from "assets/data/formToPostMappings";
 import filterOptions from "assets/data/filterOptions";
+import CreateReport from "components/CreateReport/CreateReport";
 import { getOptionText, highlightSearchRegex } from "components/Feed/utils";
 import {
   RESET_PAGE,
@@ -40,17 +45,21 @@ import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
+import { selectActorId } from "reducers/session";
+import PostPlaceHolder from "./PostPlaceHolder";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
 import statusIndicator from "assets/icons/status-indicator.svg";
 import websiteIcon from "assets/icons/social-website-blue.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+import eyeHide from "assets/icons/eye-hide.svg";
 import {
   DELETE_MODAL_POST,
   DELETE_MODAL_COMMENT,
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
+import { postsActions } from "reducers/posts";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -79,6 +88,7 @@ const Post = ({
   currentPost,
   deleteModalVisibility,
   dispatchPostAction,
+  postDispatch,
   fullPostLength,
   handleCancelPostDelete,
   handleCommentDelete,
@@ -86,12 +96,18 @@ const Post = ({
   highlightWords,
   includeProfileLink,
   isAuthenticated,
-  numComments,
   onSelect,
   onChange,
   postDelete,
   showComments,
   user,
+  gtmPrefix,
+  keepScrollIndex,
+  keepPageState,
+  keepPostsState,
+  isHidden,
+  onPostHide,
+  onPostUnhide,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -111,12 +127,17 @@ const Post = ({
     isLoading,
     loadMoreComments,
     page,
+    didReport,
+    reportsCount,
+    objective,
   } = post || {};
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
   const [comment, setComment] = useState([]);
+  const [callReport, setCallReport] = useState(false);
+  const actorId = useSelector(selectActorId);
 
   const AvatarName =
     (post?.author?.name && getInitialsFromFullName(post.author.name)) || "";
@@ -124,6 +145,16 @@ const Post = ({
   const setShowComments = () => {
     if (dispatchPostAction) {
       dispatchPostAction(TOGGLE_SHOW_COMMENTS);
+    }
+  };
+
+  const onPostShowAnyway = () => {
+    postDispatch(postsActions.showAnyway({ postId: post._id }));
+  };
+
+  const onPostPageShowAnyway = () => {
+    if (dispatchPostAction) {
+      postDispatch(postsActions.showAnyway({ postId: post._id }));
     }
   };
 
@@ -141,7 +172,9 @@ const Post = ({
     const endPoint = `/api/posts/${postId}/comments?limit=${
       limit.current * page
     }&skip=${skip}`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
 
     dispatchPostAction(SET_LOADING);
 
@@ -176,8 +209,8 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           allComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
 
@@ -187,7 +220,10 @@ const Post = ({
       dispatchPostAction(RESET_PAGE);
     }
     const currentLimit = limit.current;
-    limit.current = currentLimit * page;
+    //limit.current = currentLimit * page;
+    limit.current = currentLimit * (page == 1 ? 2 : page); // a workaround to fix above line,
+    // when page == 1 not expand any more,
+    // to reproduce, use above line, create a post, add 10 comments, toggle show less/more several times
   };
 
   const showLessComments = () => {
@@ -209,13 +245,17 @@ const Post = ({
   };
 
   const handleComment = async (e) => {
+    if (e.shiftKey) return;
     e.preventDefault();
     let response;
     let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
     const newComment = {
+      actorId,
       content: comment,
     };
 
@@ -234,8 +274,8 @@ const Post = ({
         SET_COMMENTS,
         "comments",
         allComments,
-        "numComments",
-        commentCountRes.data.numComments,
+        "commentsCount",
+        commentCountRes.data.post.commentsCount,
       );
       setComment([]);
     }
@@ -267,9 +307,11 @@ const Post = ({
     let commentCountRes;
     const postId = comment.postId;
     const commentId = comment._id;
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
-      const totalCommentCountEndPoint = `/api/posts/${postId}`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}${
+        actorId ? `?actorId=${actorId}` : ""
+      }`;
 
       try {
         response = await axios.delete(endPoint);
@@ -286,11 +328,19 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           filterComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
     }
+  };
+
+  const handleHide = () => {
+    onPostHide(_id);
+  };
+
+  const handleReport = () => {
+    setCallReport(true);
   };
 
   const renderExternalLinks = () => {
@@ -346,6 +396,9 @@ const Post = ({
             postId: post._id,
             from: window.location.href,
             user,
+            keepScrollIndex,
+            keepPageState,
+            keepPostsState,
           },
         }}
       >
@@ -376,19 +429,25 @@ const Post = ({
     <Card.Header
       title={
         <div className="title-wrapper">
-          <Highlight
-            className="author"
-            text={post?.author?.name}
-            highlight={highlightWords}
-          />
-          {post?.author?.location?.country ? (
-            <div className="location-status">
-              <SvgIcon src={statusIndicator} className="status-icon" />
-              {buildLocationString(post.author.location)}
-            </div>
-          ) : (
-            ""
-          )}
+          <span className="author">
+            <Highlight text={post?.author?.name} highlight={highlightWords} />
+          </span>
+          <div
+            className="sub-header"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            {post?.author?.location?.country ? (
+              <span className="location-status">
+                <SvgIcon src={statusIndicator} className="status-icon" />
+                {buildLocationString(post.author.location)}
+              </span>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       }
       thumb={
@@ -409,9 +468,9 @@ const Post = ({
     <Card.Body>
       {post?.types &&
         post?.types.map((tag, idx) => (
-          <FilterTag key={idx} disabled={true} selected={false}>
+          <PostTag key={idx} disabled={true} selected={false}>
             {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </FilterTag>
+          </PostTag>
         ))}
     </Card.Body>
   );
@@ -427,6 +486,7 @@ const Post = ({
           onPressEnter={handleComment}
           onChange={handleOnChange}
           value={typeof comment === "string" && comment}
+          maxLength={2048}
         />
       ) : (
         <div>{t("comment.onlyAuthenticated")}</div>
@@ -463,24 +523,45 @@ const Post = ({
   const renderSocialIcons = (
     <Card.Body className="content-wrapper">
       <PostSocial
-        handlePostLike={handlePostLike}
+        postDispatch={postDispatch}
         url={window.location.href}
         liked={post?.liked}
-        postId={postId}
+        postAuthorName={post.author.name}
+        postAuthorAvatar={post.author.photo}
+        isOwnPost={
+          isAuthorUser(user, post) ||
+          isAuthorOrg(user?.organisations, post.author)
+        }
+        authorId={post.author.id}
         postTitle={post?.title}
         postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
-        numComments={numComments}
+        commentsCount={commentsCount}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
         id={post?._id}
+        keepScrollIndex={keepScrollIndex}
+        keepPageState={keepPageState}
+        keepPostsState={keepPostsState}
+        user={user}
+        gtmPrefix={gtmPrefix || (postId ? GTM.post.prefix : GTM.feed.prefix)}
+        postInfo={{
+          objective: post.objective,
+          tags: post.types,
+          location: post.author.location,
+          age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
+        }}
       />
     </Card.Body>
   );
 
   const [showComplete, setShowComplete] = useState(true);
+  const isSuspected = reportsCount >= 5;
+  const isOwner =
+    isAuthenticated &&
+    (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
 
   return (
     <>
@@ -488,27 +569,57 @@ const Post = ({
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
+            {!isOwner && isSuspected && (
+              <div className="blur-overlay">
+                <SvgIcon src={eyeHide} />
+                {t("moderation.postSuspected")}
+                {/* removed for now
+                <span onClick={() => onPostPageShowAnyway(postId)}>
+                  {t("moderation.showAnyway")}
+                </span>
+                */}
+              </div>
+            )}
+            <div className="pre-header post-page">
+              <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+              <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <span className="timestamp">
+                  {t(
+                    `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                    {
+                      count: post?.elapsedTimeText?.created?.count,
+                    },
+                  )}
+                  {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
+                </span>
+              </Tooltip>
+            </div>
+            <WhiteSpace size={"sm"} />
             <div className="card-header">
               {includeProfileLink ? renderHeaderWithLink : renderHeader}
-              <div className="card-submenu">
-                {isAuthenticated &&
-                  user &&
-                  (isAuthorUser(user, post) ||
-                    (user.organisations &&
-                      isAuthorOrg(user.organisations, post.author))) && (
-                    <SubMenuButton
-                      onSelect={onSelect}
-                      onChange={onChange}
-                      postId={postId}
-                      post={post}
-                      user={user}
-                    />
-                  )}
-              </div>
+              {isAuthenticated && (
+                <div className="card-submenu">
+                  <PostDropdownButton
+                    onHide={handleHide}
+                    onReport={handleReport}
+                    onEdit={onSelect}
+                    onDelete={handleDelete}
+                    fromPage={true}
+                    post={post}
+                    user={user}
+                    postId={postId}
+                    isSelf={isAuthenticated && actorId === post.author.id}
+                    isOwner={
+                      isAuthenticated &&
+                      (isAuthorUser(user, post) ||
+                        isAuthorOrg(user?.organisations, post.author))
+                    }
+                  />
+                </div>
+              )}
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            <WhiteSpace />
             {renderContent(title, content, highlightWords, showComplete)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
@@ -526,21 +637,39 @@ const Post = ({
               postContent={post.content}
             />
             {renderComments}
-            <WebModal
-              title={t("post.confirm")}
+            <DeleteModal
+              title={
+                (deleteModalVisibility === DELETE_MODAL_POST && (
+                  <p>{t("post.deletePostConfirmationTitle")}</p>
+                )) || <p>{t("post.deleteCommentConfirmationTitle")}</p>
+              }
               visible={
                 !!deleteModalVisibility &&
                 deleteModalVisibility !== DELETE_MODAL_HIDE
               }
               onOk={() => handleDeleteOk()}
               onCancel={handleCancelPostDelete}
-              okText={t("post.delete")}
+              okText={t("post.deleteConfirmation")}
               cancelText={t("post.cancel")}
+              okButtonProps={{
+                id:
+                  deleteModalVisibility === DELETE_MODAL_POST
+                    ? GTM.post.prefix + GTM.post.delete
+                    : "",
+              }}
             >
               {(deleteModalVisibility === DELETE_MODAL_POST && (
                 <p>{t("post.deletePostConfirmation")}</p>
               )) || <p>{t("post.deleteCommentConfirmation")}</p>}
-            </WebModal>
+            </DeleteModal>
+            {callReport ? (
+              <CreateReport
+                callReport={callReport}
+                setCallReport={setCallReport}
+                postId={post._id}
+                fromPage={true}
+              />
+            ) : null}
           </StyledPostPagePostCard>
           <StyledButtonWizard
             nav={<WizardFormNav gtmPrefix={GTM.post.prefix} />}
@@ -548,91 +677,154 @@ const Post = ({
         </>
       ) : (
         //Post in feed.
-        <PostCard>
-          <div className="card-header">
-            {includeProfileLink ? renderHeaderWithLink : renderHeader}
-            <div className="card-submenu">
-              {isAuthenticated &&
-                user &&
-                (isAuthorUser(user, post) ||
-                  isAuthorOrg(user.organisations, post.author)) && (
-                  <SubMenuButton
-                    onChange={handleDelete}
-                    onSelect={onSelect}
-                    post={post}
-                    user={user}
-                    postId={postId}
-                  />
-                )}
-            </div>
-          </div>
-          <WhiteSpace size="md" />
-          {renderTags}
-          <WhiteSpace />
-          {post && isAuthenticated ? (
-            <Link
-              to={{
-                pathname: `/post/${_id}`,
-                state: {
-                  post: post,
-                  postId: _id,
-                  from: window.location.href,
-                  user,
-                },
-              }}
-            >
-              {renderContent(title, content, highlightWords, showComplete)}
-            </Link>
+        <>
+          {didReport ? (
+            <PostPlaceHolder />
           ) : (
-            <>
-              {/*
+            <PostCard unClickable={!isOwner && (isSuspected || isHidden)}>
+              {!isOwner && (isHidden || isSuspected) && (
+                <div className="blur-overlay">
+                  <SvgIcon src={eyeHide} />
+                  {isHidden && !isSuspected && (
+                    <>
+                      {t("moderation.postHidden")}
+                      <span
+                        id={GTM.post.prefix + GTM.moderation.unhide}
+                        onClick={() => onPostUnhide(_id)}
+                      >
+                        {t("moderation.unhide")}
+                      </span>
+                    </>
+                  )}
+                  {isSuspected && !isOwner && (
+                    <>
+                      {t("moderation.postSuspected")}
+                      {/* removed for now
+                      <span onClick={() => onPostShowAnyway(_id)}>
+                        {t("moderation.showAnyway")}
+                      </span>
+                      */}
+                    </>
+                  )}
+                </div>
+              )}
+              <div className="pre-header">
+                <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                  <span className="timestamp">
+                    {t(
+                      `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                      {
+                        count: post?.elapsedTimeText?.created?.count,
+                      },
+                    )}
+                    {post?.elapsedTimeText?.isEdited &&
+                      ` · ${t("post.edited")}`}
+                  </span>
+                </Tooltip>
+              </div>
+              <WhiteSpace size={"xl"} />
+              <WhiteSpace size={"md"} />
+              <div className="card-header">
+                {includeProfileLink ? renderHeaderWithLink : renderHeader}
+                {isAuthenticated && (
+                  <div className="card-submenu">
+                    <PostDropdownButton
+                      onHide={handleHide}
+                      onReport={handleReport}
+                      onEdit={onSelect}
+                      onDelete={handleDelete}
+                      post={post}
+                      user={user}
+                      postId={postId}
+                      isSelf={isAuthenticated && actorId === post.author.id}
+                      isOwner={isOwner}
+                    />
+                  </div>
+                )}
+              </div>
+              <WhiteSpace size="md" />
+              {renderTags}
+              <WhiteSpace />
+              {post && isAuthenticated ? (
+                <Link
+                  to={{
+                    pathname: `/post/${_id}`,
+                    state: {
+                      post: post,
+                      postId: _id,
+                      from: window.location.href,
+                      user,
+                      keepScrollIndex,
+                      keepPageState,
+                      keepPostsState,
+                    },
+                  }}
+                >
+                  {renderContent(title, content, highlightWords, showComplete)}
+                </Link>
+              ) : (
+                <>
+                  {/*
                 Include hidden link for meta crawler but not on
                 profiles to avoid duplicate crawling of same posts
               */}
-              {includeProfileLink && (
-                <Link to={`/post/${_id}`} style={{ display: "none" }}></Link>
+                  {includeProfileLink && (
+                    <Link
+                      to={`/post/${_id}`}
+                      style={{ display: "none" }}
+                    ></Link>
+                  )}
+                  {renderContent(title, content, highlightWords, showComplete)}
+                </>
               )}
-              {renderContent(title, content, highlightWords, showComplete)}
-            </>
+              {fullPostLength > CONTENT_LENGTH ||
+                (post?.content?.length > CONTENT_LENGTH ? (
+                  <RenderViewMore />
+                ) : (
+                  <Card.Body className="view-more-wrapper" />
+                ))}
+              {renderSocialIcons}
+              <ShareModal
+                showShareModal={showShareModal}
+                setShowShareModal={setShowShareModal}
+                id={post._id}
+                postTitle={post.title}
+                postContent={post.content}
+              />
+              <DeleteModal
+                title={<p>{t("post.deletePostConfirmationTitle")}</p>}
+                visible={
+                  !!deleteModalVisibility &&
+                  deleteModalVisibility !== DELETE_MODAL_HIDE &&
+                  toDelete === post._id
+                }
+                onOk={() => handleDeleteOk()}
+                onCancel={handleCancelPostDelete}
+                okText={t("post.deleteConfirmation")}
+                cancelText={t("post.cancel")}
+                okButtonProps={{ id: GTM.post.prefix + GTM.post.delete }}
+              >
+                {deleteModalVisibility === DELETE_MODAL_POST ? (
+                  <p>{t("post.deletePostConfirmation")}</p>
+                ) : (
+                  <p>{t("post.deleteCommentConfirmation")}</p>
+                )}
+              </DeleteModal>
+              {callReport ? (
+                <CreateReport
+                  callReport={callReport}
+                  setCallReport={setCallReport}
+                  postId={post._id}
+                />
+              ) : null}
+            </PostCard>
           )}
-          {fullPostLength > CONTENT_LENGTH ||
-            (post?.content?.length > CONTENT_LENGTH ? (
-              <RenderViewMore />
-            ) : (
-              <Card.Body className="view-more-wrapper" />
-            ))}
-          {renderSocialIcons}
-          <ShareModal
-            showShareModal={showShareModal}
-            setShowShareModal={setShowShareModal}
-            id={post._id}
-            postTitle={post.title}
-            postContent={post.content}
-          />
-          <WebModal
-            title={t("post.confirm")}
-            visible={
-              !!deleteModalVisibility &&
-              deleteModalVisibility !== DELETE_MODAL_HIDE &&
-              toDelete === post._id
-            }
-            onOk={() => handleDeleteOk()}
-            onCancel={handleCancelPostDelete}
-            okText={t("post.delete")}
-            cancelText={t("post.cancel")}
-          >
-            {deleteModalVisibility === DELETE_MODAL_POST ? (
-              <p>{t("post.deletePostConfirmation")}</p>
-            ) : (
-              <p>{t("post.deleteCommentConfirmation")}</p>
-            )}
-          </WebModal>
-        </PostCard>
+        </>
       )}
     </>
   );
 };
-
 const renderContent = (title, content, highlightWords, showComplete) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {

@@ -7,6 +7,9 @@ import ImageButton from "components/Button/ImageButton";
 import { theme, mq } from "constants/theme";
 import TextLabel from "components/Typography/TextLabel";
 import GTM from "constants/gtm-tags";
+import WithSummitBanner from "components/WithSummitBanner";
+import CloudLanding from "assets/home-cloud.gif";
+import FPCity from "assets/homecity.png";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -27,14 +30,17 @@ const StyledIntro = styled.div`
   }
 
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-image: ${theme.backgrounds.primary};
+    background-image: url("${CloudLanding}"), ${theme.backgrounds.primary};
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 35rem, cover;
     border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
-    padding: 16rem 7rem 16rem 5rem;
+    padding: 17rem 7rem 16rem 5rem;
     transition: all 0.3s ease;
   }
 
@@ -52,10 +58,48 @@ export const Title = styled(TextLabel)`
 
 const MainContainer = styled.div`
   width: 100%;
+  height: 100%;
+  position: relative;
+
   @media only screen and ${mq.tablet.narrow.min} {
-    background: ${offWhite};
+    background-color: ${offWhite};
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .city-gif-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    &.with-banner {
+      bottom: 4rem;
+
+      @media only screen and ${mq.tablet.narrow.max} {
+        bottom: 2rem;
+      }
+    }
+
+    .city-gif {
+      width: 58vw;
+      position: relative;
+      left: 9rem;
+    }
+
+    &::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #2947f0;
+      width: 100vw;
+      height: 1.284vw;
+    }
+
+    @media only screen and ${mq.phone.wide.max} {
+      display: none;
+    }
   }
 
   @media only screen and ${mq.phone.wide.max} {
@@ -92,7 +136,7 @@ const StyledWelcome = styled.h1`
 
 const StyledStrapline = styled(StyledWelcome)`
   color: ${white};
-  width: 90%;
+  width: 80%;
   text-align: left;
   font-weight: bolder;
   margin-bottom: 1.5rem;
@@ -107,6 +151,8 @@ const StyledStrapline = styled(StyledWelcome)`
 `;
 
 const IntroText = styled.div`
+  color: ${white};
+  text-align: left;
   @media only screen and (min-width: ${mq.desktop.small.minWidth}) {
     width: 90%;
   }
@@ -142,8 +188,6 @@ const StyledP = styled.p`
 `;
 
 const OnboardingContainer = styled.div`
-  // display: flex;
-  // flexWrap: wrap;
   width: 100%;
   margin: auto 0;
 
@@ -152,7 +196,7 @@ const OnboardingContainer = styled.div`
   }
 `;
 
-const StyleLink = styled.p`
+const StyleLink = styled.span`
   color: ${royalBlue};
   font-size: ${typography.size.large};
   font-family: ${typography.font.family.display};
@@ -164,56 +208,71 @@ const Home = (props) => {
   const { t } = useTranslation();
 
   return (
-    <MainContainer className="text-center home">
-      <StyledIntro>
-        <IntroText>
-          <Title color="white" size={theme.typography.size.xlarge} weight="500">
-            FightPandemics
-          </Title>
-
-          <StyledStrapline level={2} margin="none">
-            {t("headline")}
-          </StyledStrapline>
-          <Trans
-            i18nKey="tagline"
-            components={[<StyledP />, <StyledP />]}
-          ></Trans>
-        </IntroText>
-      </StyledIntro>
-
-      <>
-        <OnboardingContainer>
-          <FlexChild>
-            <ImageButton
-              id={GTM.homePage.prefix + GTM.homePage.requestHelp}
-              type="ghost"
-              inactiveImg={needHelpInactive}
-              activeImg={needHelpActive}
-              onClick={() => props.history.push("/need-help")}
+    <WithSummitBanner>
+      {(bannerVisible) => (
+        <MainContainer className="text-center home">
+          <div
+            className={`city-gif-container ${
+              bannerVisible ? "with-banner" : ""
+            }`}
+          >
+            <img loading="lazy" src={FPCity} alt="" className="city-gif"></img>
+          </div>
+          <StyledIntro>
+            <IntroText>
+              {/* <Title
+              color="white"
+              size={theme.typography.size.xlarge}
+              weight="500"
             >
-              {t("common.getHelp")}
-            </ImageButton>
-          </FlexChild>
-          <FlexChild>
-            <ImageButton
-              id={GTM.homePage.prefix + GTM.homePage.offerHelp}
-              type="ghost"
-              inactiveImg={offerHelpInactive}
-              activeImg={offerHelpActive}
-              onClick={() => props.history.push("/offer-help")}
-            >
-              {t("common.giveHelp")}
-            </ImageButton>
-          </FlexChild>
+              FightPandemics
+            </Title> */}
 
-          <Link to="/feed">
-            <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
-              {t("common.viewFeed")}
-            </StyleLink>
-          </Link>
-        </OnboardingContainer>
-      </>
-    </MainContainer>
+              <StyledStrapline level={2} margin="none">
+                {t("headline")}
+              </StyledStrapline>
+              <Trans
+                i18nKey="tagline"
+                components={[<StyledP />, <StyledP />]}
+              ></Trans>
+            </IntroText>
+          </StyledIntro>
+
+          <>
+            <OnboardingContainer>
+              <FlexChild>
+                <ImageButton
+                  id={GTM.homePage.prefix + GTM.homePage.requestHelp}
+                  type="ghost"
+                  inactiveImg={needHelpInactive}
+                  activeImg={needHelpActive}
+                  onClick={() => props.history.push("/need-help")}
+                >
+                  {t("common.getHelp")}
+                </ImageButton>
+              </FlexChild>
+              <FlexChild>
+                <ImageButton
+                  id={GTM.homePage.prefix + GTM.homePage.offerHelp}
+                  type="ghost"
+                  inactiveImg={offerHelpInactive}
+                  activeImg={offerHelpActive}
+                  onClick={() => props.history.push("/offer-help")}
+                >
+                  {t("common.giveHelp")}
+                </ImageButton>
+              </FlexChild>
+
+              <Link to="/feed">
+                <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
+                  {t("common.viewFeed")}
+                </StyleLink>
+              </Link>
+            </OnboardingContainer>
+          </>
+        </MainContainer>
+      )}
+    </WithSummitBanner>
   );
 };
 
