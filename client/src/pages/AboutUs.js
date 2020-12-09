@@ -103,13 +103,12 @@ const getGTM = (id) => {
   return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
 };
 
+const FP_URL = "https://fightpandemics.com";
+
 const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
-  [
-    alltogetherLALogo,
-    "https://fightpandemics.com/organisation/5fc8798d4c08fc00111a930a",
-  ],
+  [alltogetherLALogo, FP_URL + "/organisation/5fc8798d4c08fc00111a930a"],
   [allNewbiLogo, "https://autismcanada.org/"],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
@@ -222,14 +221,16 @@ const supporterLogosCurrent = [
 ];
 const supporterLogosPast = [calendlyLogo, leypayLogo];
 
+const isInternalLink = (linkString) => {
+  return linkString.startsWith(FP_URL);
+};
+
 function LogoItem(props) {
   return (
     <div>
       <a
         href={LogosMap.get(props.value)}
-        target={
-          communityPartnersLogos.includes(props.value) ? "_self" : "_blank"
-        }
+        target={isInternalLink(LogosMap.get(props.value)) ? "_self" : "_blank"}
       >
         <img loading="lazy" src={props.value} alt="" />
       </a>
