@@ -376,7 +376,7 @@ const AboutUs = () => {
         </p>
         <h3>{t("currentPartners")}</h3>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer style={{ maxWidth: "35rem" }}>
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_CP">
           <LogosList supporterLogos={communityPartnersLogos} />
         </SupportersLogosContainer>
       </SupporterContainer>

@@ -3,7 +3,6 @@ import {
   FETCH_POST,
   SET_SHORT_CONTENT,
   SET_FULL_CONTENT,
-  SET_COMMENT_COUNT,
   RESET_PAGE,
   RESET_POST,
   RESET_LOADING,
@@ -99,8 +98,6 @@ export const postReducer = (state = postState, action) => {
         postLength: action.length,
         fullContent: action.content,
       };
-    case SET_COMMENT_COUNT:
-      return { ...state, totalCommentCount: action.numComments };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
@@ -119,7 +116,7 @@ export const postReducer = (state = postState, action) => {
       return {
         ...state,
         comments: action.comments,
-        commentsCount: action.numComments,
+        commentsCount: action.commentsCount,
       };
     case SET_COMMENT:
       state.comments = state.comments.map((comment) => {
