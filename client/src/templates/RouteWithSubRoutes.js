@@ -65,7 +65,10 @@ export const RouteWithSubRoutes = (route) => {
             redirect = LOGOUT;
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
-          } else if (isAuthenticated && permLevel && !(user.permissions & permLevel)) {
+          } else if (
+            permLevel &&
+            (!isAuthenticated || !(user.permissions & permLevel))
+          ) {
             redirect = HOME;
           } else if (notLoggedInOnly && isAuthenticated) {
             const createPostRedirect = sessionStorage.getItem(
