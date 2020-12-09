@@ -67,7 +67,16 @@ const auditLogsColumns = [
     dataIndex: "postId",
     render: (postId) => (
       <>
-        <Link style={{ color: "blue" }} to={`post/${postId}`}>
+        <Link
+          style={{ color: "blue" }}
+          to={{
+            pathname: `/post/${postId}`,
+            state: {
+              postId: postId,
+              from: window.location.href,
+            },
+          }}
+        >
           View Post
         </Link>
       </>
@@ -75,8 +84,18 @@ const auditLogsColumns = [
   },
 ];
 
-function AuditLog({ logs }) {
-  return <Table dataSource={logs || []} columns={auditLogsColumns} />;
+function AuditLog({ logs, pagination, loadNextPage }) {
+  return (
+    <Table
+      dataSource={logs || []}
+      pagination={pagination}
+      columns={auditLogsColumns}
+      currentPage={pagination.current}
+      onChange={(pagination) =>
+        loadNextPage({ loadLogsPage: pagination.current - 1 })
+      }
+    />
+  );
 }
 
 export default AuditLog;

@@ -246,15 +246,15 @@ async function routes(app) {
 
       const aggregationPipelineResults = [
         {
+          $sort: {
+            createdAt: -1,
+          },
+        },
+        {
           $skip: parseInt(skip) || 0,
         },
         {
           $limit: Math.min(limit || MAX_REPORTS_PER_PAGE),
-        },
-        {
-          $sort: {
-            createdAt: -1,
-          },
         },
         {
           $lookup: {
@@ -288,6 +288,8 @@ async function routes(app) {
         },
       ];
 
+      const totalLogsCount = await Audit.countDocuments();
+
       const [logsErr, logs] = await app.to(
         Audit.aggregate(aggregationPipelineResults).then((logs) => {
           logs.forEach((log) => {
@@ -303,9 +305,19 @@ async function routes(app) {
         req.log.error(logsErr, "Failed requesting logs");
         throw app.httpErrors.internalServerError();
       } else if (logs === null) {
-        return { logs: [] };
+        return {
+          logs: [],
+          meta: {
+            total: 0,
+          },
+        };
       } else {
-        return { logs };
+        return {
+          logs,
+          meta: {
+            total: totalLogsCount || 0
+          },
+        };
       }
     },
   );

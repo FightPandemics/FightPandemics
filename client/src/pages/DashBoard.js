@@ -94,6 +94,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [totalLogsCount, setTotalLogsCount] = useState(0);
   const [queryParams, setQueryParams] = useState({});
   const {
     activePanel,
@@ -194,9 +195,10 @@ const Feed = (props) => {
       endpoint = `/api/reports/logs?limit=${limit}&skip=${skip}`;
       try {
         const {
-          data: { logs },
+          data: { logs, meta },
         } = await axios.get(endpoint);
         if (logs) {
+          setTotalLogsCount(meta.total);
           dispatchAction(SET_VALUE, "logs", logs);
           dispatch(postsActions.finishLoadingAction());
         }
@@ -318,7 +320,11 @@ const Feed = (props) => {
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
   const loadNextPage = useCallback(
-    ({ stopIndex }) => {
+    ({ stopIndex, loadLogsPage }) => {
+      if (loadLogsPage !== undefined) {
+        dispatch(postsActions.setPageAction(loadLogsPage));
+        return Promise.resolve();
+      }
       if (
         !isLoading &&
         loadMore &&
@@ -395,7 +401,18 @@ const Feed = (props) => {
           </SiderWrapper>
           <ContentWrapper>
             {(() => {
-              if (status === "LOGS") return <AuditLog logs={logs} />;
+              if (status === "LOGS")
+                return (
+                  <AuditLog
+                    logs={logs}
+                    pagination={{
+                      current: page + 1,
+                      pageSize: 10,
+                      total: totalLogsCount,
+                    }}
+                    loadNextPage={loadNextPage}
+                  />
+                );
               else if (status === "MANAGE")
                 return (
                   <AdminDashboard

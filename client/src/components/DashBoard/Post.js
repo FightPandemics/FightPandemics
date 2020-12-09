@@ -1,7 +1,6 @@
 // Core
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Divider, Tooltip } from "antd";
