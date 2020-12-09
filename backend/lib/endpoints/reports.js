@@ -95,15 +95,8 @@ async function routes(app) {
         };
       }
 
-      console.log(matchingStage);
       const aggregationPipelineResults = [
         matchingStage,
-        {
-          $skip: parseInt(skip) || 0,
-        },
-        {
-          $limit: Math.min(limit || MAX_REPORTS_PER_PAGE),
-        },
         {
           $set: {
             reportsCount: {
@@ -125,6 +118,12 @@ async function routes(app) {
           },
         },
         sortingStage,
+        {
+          $skip: parseInt(skip) || 0,
+        },
+        {
+          $limit: Math.min(limit || MAX_REPORTS_PER_PAGE),
+        },
       ];
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
