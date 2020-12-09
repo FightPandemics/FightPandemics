@@ -85,7 +85,7 @@ import zeplinLogo from "assets/supporters-logos/zeplin-logo.svg";
 
 // community partners logos import
 import alltogetherLALogo from "assets/community-partners-logos/all-together-la.png";
-import allNewbiLogo from "assets/community-partners-logos/ac_newbilogo_colour_blacktext.png";
+import autismCanadaLogo from "assets/community-partners-logos/ac_newbilogo_colour_blacktext.png";
 
 // social icons
 import instagramLogo from "assets/icons/social-instagram.svg";
@@ -109,7 +109,7 @@ const LogosMap = new Map([
   [accessibe, "https://accessibe.com/"],
   [algoliaLogo, "https://www.algolia.com/"],
   [alltogetherLALogo, FP_URL + "/organisation/5fc8798d4c08fc00111a930a"],
-  [allNewbiLogo, "https://autismcanada.org/"],
+  [autismCanadaLogo, "https://autismcanada.org/"],
   [airtableLogo, "https://airtable.com"],
   [awsLogo, "http://aws.amazon.com"],
   [akveo, "https://www.akveo.com"],
@@ -163,7 +163,7 @@ const LogosMap = new Map([
   [zendeskLogo, "http://www.zendesk.com"],
 ]);
 
-const communityPartnersLogos = [alltogetherLALogo, allNewbiLogo];
+const communityPartnersLogos = [alltogetherLALogo, autismCanadaLogo];
 const supporterLogosLifetime = [
   accessibe,
   algoliaLogo,
