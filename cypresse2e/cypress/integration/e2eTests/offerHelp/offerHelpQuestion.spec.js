@@ -26,34 +26,27 @@ describe("Fight Pandemics Offer Help Questionnaire", () => {
       var checkboxOptionOne = "As a Volunteer";
       var checkboxOptionTwo = "As a Donor/Investor";
       var checkboxOptionThree = "As an Organization";
-      offerHelpQuestion
-        .getCheckboxOptionOne()
-        .should("be.visible")
-        .contains(checkboxOptionOne);
-      offerHelpQuestion
-        .getCheckboxOptionTwo()
-        .should("be.visible")
-        .contains(checkboxOptionTwo);
-      offerHelpQuestion
-        .getCheckboxOptionThree()
-        .should("be.visible")
-        .contains(checkboxOptionThree);
-      offerHelpQuestion
-        .getCheckboxOne()
-        .should("be.visible")
-        .check({ force: true })
-        .should("be.checked");
-      offerHelpQuestion
-        .getCheckboxTwo()
-        .should("be.visible")
-        .check({ force: true })
-        .should("be.checked");
-      offerHelpQuestion
-        .getCheckboxThree()
-        .should("be.visible")
-        .check({ force: true })
-        .should("be.checked");
+      validateOfferHelpCheckboxes(
+        offerHelpQuestion.getCheckboxOptionOne(),
+        checkboxOptionOne,
+      );
+      validateOfferHelpCheckboxes(
+        offerHelpQuestion.getCheckboxOptionTwo(),
+        checkboxOptionTwo,
+      );
+      validateOfferHelpCheckboxes(
+        offerHelpQuestion.getCheckboxOptionThree(),
+        checkboxOptionThree,
+      );
     });
+
+    function validateOfferHelpCheckboxes(element, text) {
+      cy.get(element).should("be.visible").contains(text);
+      cy.get(element)
+        .click()
+        .should("have.attr", "class")
+        .and("include", "selected");
+    }
 
     it("Offer Help Question One Back Button is visible and clickable", () => {
       var backButton = offerHelpQuestion.getBackButtonOne();

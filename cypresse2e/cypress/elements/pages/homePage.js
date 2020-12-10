@@ -4,8 +4,8 @@ class HomePage {
   viewHelpBoardLink = "#HP_VHB";
   viewHelpBoardLinkParent = "#HP_VHB";
   h1Heading = "h1";
-  subHeading1 = "div > p:nth-child(3)";
-  subHeading2 = "div > p:nth-child(4)";
+  subHeading1 = "div > p:nth-child(2)";
+  subHeading2 = "div > p:nth-child(3)";
 
   constructor() {}
 
