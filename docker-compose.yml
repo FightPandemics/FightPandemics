@@ -96,6 +96,7 @@ services:
       context: cypresse2e
       dockerfile: Dockerfile
     container_name: cypress-e2e-report
+    entrypoint: ""
     command: ["bash", "-c", "npm run report"]
     volumes:
       - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/
